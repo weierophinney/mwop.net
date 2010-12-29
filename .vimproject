@@ -1,6 +1,7 @@
 mwop=/home/matthew/git/mwop CD=. filter="*.php *.xml *.txt" {
  library=library {
   mwop=mwop {
+   .classmap.php
    Controller=Controller {
    }
    DataSource=DataSource {
@@ -17,6 +18,7 @@ mwop=/home/matthew/git/mwop CD=. filter="*.php *.xml *.txt" {
     Permalink.php
     Tags.php
     Timestamp.php
+    Timezone.php
    }
    Resource=Resource {
    }

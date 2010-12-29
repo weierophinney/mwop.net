@@ -175,6 +175,36 @@ class EntryTest extends TestCase
         $this->assertEquals(array('foo', 'bar'), $this->entry->tags);
     }
 
+    public function testValidationFailsInitially()
+    {
+        $this->assertFalse($this->entry->isValid());
+    }
+
+    public function testValidEntryValidates()
+    {
+        $this->loadFromArray();
+        $valid    = $this->entry->isValid();
+        $messages = $this->entry->getInputFilter()->getMessages();
+        $this->assertTrue($valid, var_export($messages, 1));
+    }
+
+    public function testInputFilterOverwritesValuesWithFilteredVersions()
+    {
+        $this->loadFromArray();
+        $this->entry->setTitle('foo & bar')
+                    ->setId('foo-bar')
+                    ->setDraft(0)
+                    ->setPublic('')
+                    ->setBody('  Foo Bar. ')
+                    ->setAuthor(' matthew ');
+        $this->assertTrue($this->entry->isValid());
+        $this->assertEquals('foo &amp; bar', $this->entry->getTitle());
+        $this->assertFalse($this->entry->isDraft());
+        $this->assertFalse($this->entry->isPublic());
+        $this->assertEquals('Foo Bar.', $this->entry->getBody());
+        $this->assertEquals('matthew', $this->entry->getAuthor());
+    }
+
     public function loadFromArray()
     {
         $this->entry->fromArray(array(

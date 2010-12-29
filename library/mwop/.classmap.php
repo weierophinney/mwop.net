@@ -4,6 +4,7 @@ return array (
   'mwop\\Entity\\Entry' => __DIR__ . DIRECTORY_SEPARATOR . 'Entity/Entry.php',
   'mwop\\Filter\\Permalink' => __DIR__ . DIRECTORY_SEPARATOR . 'Filter/Permalink.php',
   'mwop\\Filter\\Tags' => __DIR__ . DIRECTORY_SEPARATOR . 'Filter/Tags.php',
+  'mwop\\Filter\\Timezone' => __DIR__ . DIRECTORY_SEPARATOR . 'Filter/Timezone.php',
   'mwop\\Filter\\Timestamp' => __DIR__ . DIRECTORY_SEPARATOR . 'Filter/Timestamp.php',
   'mwop\\DataSource\\Where' => __DIR__ . DIRECTORY_SEPARATOR . 'DataSource/Where.php',
   'mwop\\DataSource\\Query' => __DIR__ . DIRECTORY_SEPARATOR . 'DataSource/Query.php',
