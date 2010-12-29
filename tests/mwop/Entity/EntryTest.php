@@ -14,7 +14,7 @@ class EntryTest extends TestCase
 
     public function testUsesEntryFilterAsDefaultFilter()
     {
-        $filter = Entry::getDefaultInputFilter();
+        $filter = $this->entry->getInputFilter();
         $this->assertInstanceOf('mwop\Entity\Filter\Entry', $filter);
     }
 

@@ -417,14 +417,6 @@ class Entry implements EntityDefinition
         return $this;
     }
 
-    public static function getDefaultInputFilter()
-    {
-        if (null === static::$defaultFilter) {
-            static::$defaultFilter = new Filter\Entry();
-        }
-        return static::$defaultFilter;
-    }
-
     public function setInputFilter(InputFilter $filter)
     {
         $this->filter = $filter;
@@ -434,7 +426,7 @@ class Entry implements EntityDefinition
     public function getInputFilter()
     {
         if (null === $this->filter) {
-            $this->setInputFilter(static::getDefaultInputFilter());
+            $this->setInputFilter(new Filter\Entry());
         }
         return $this->filter;
     }
