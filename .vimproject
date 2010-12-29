@@ -1,0 +1,51 @@
+mwop=/home/matthew/git/mwop CD=. filter="*.php *.xml *.txt" {
+ library=library {
+  mwop=mwop {
+   Controller=Controller {
+   }
+   DataSource=DataSource {
+    Query.php
+    Where.php
+   }
+   Entity=Entity {
+    Entry.php
+    Filter=Filter {
+     Entry.php
+    }
+   }
+   Filter=Filter {
+    Permalink.php
+    Tags.php
+    Timestamp.php
+   }
+   Resource=Resource {
+   }
+   Stdlib=Stdlib {
+    ArraySerializable.php
+    DataSource.php
+    Entity.php
+    Query.php
+    Resource.php
+    Validatible.php
+   }
+  }
+ }
+ tests=tests CD=. {
+  Bootstrap.php
+  phpunit.xml
+  log=log {
+  }
+  mwop=mwop {
+   Controller=Controller {
+   }
+   DataSource=DataSource {
+    QueryTest.php
+   }
+   Entity=Entity {
+    EntryTest.php
+   }
+   Resource=Resource {
+   }
+  }
+ }
+}
