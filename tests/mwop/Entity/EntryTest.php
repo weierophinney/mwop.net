@@ -205,6 +205,23 @@ class EntryTest extends TestCase
         $this->assertEquals('matthew', $this->entry->getAuthor());
     }
 
+    public function testVersionIs2ByDefault()
+    {
+        $this->assertEquals(2, $this->entry->getVersion());
+    }
+
+    public function testSerializingVersion1EntryIncludesComments()
+    {
+        $this->loadFromArray();
+        $this->entry->setVersion(1);
+        $data = $this->entry->toArray();
+        $this->assertArrayHasKey('comments', $data);
+        $this->assertEquals(2, count($data['comments']));
+        foreach ($data['comments'] as $comment) {
+            $this->assertInternalType('array', $comment);
+        }
+    }
+
     public function loadFromArray()
     {
         $this->entry->fromArray(array(
@@ -218,6 +235,22 @@ class EntryTest extends TestCase
             'updated'   => strtotime('today'),
             'timezone'  => 'America/Chicago',
             'tags'      => array('foo', 'bar'),
+            'comments'  => array(
+                array(
+                    'created'  => strtotime('today'),
+                    'timezone' => 'America/Chicago',
+                    'title'    => 'comment',
+                    'author'   => 'somebody',
+                    'type'     => 'comment',
+                ),
+                array(
+                    'created'  => strtotime('today'),
+                    'timezone' => 'America/Chicago',
+                    'title'    => 'trackback',
+                    'type'     => 'trackback',
+                    'url'      => 'http://example.com/foo',
+                ),
+            )
         ));
     }
 }

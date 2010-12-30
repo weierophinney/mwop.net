@@ -33,6 +33,8 @@ class Entry implements EntityDefinition
     protected $updated;
     protected $timezone = 'America/New_York';
     protected $tags = array();
+    protected $comments = array();
+    protected $version = 2;
 
     public static function makeStub($value)
     {
@@ -362,13 +364,67 @@ class Entry implements EntityDefinition
     }
 
     /**
+     * Set comments
+     *
+     * Only relevant to version 1 entries (imported from s9y).
+     *
+     * @param  array $comments
+     * @return Entry
+     */
+    public function setComments(array $comments)
+    {
+        $this->comments = $comments;
+        return $this;
+    }
+    
+    /**
+     * Get comments
+     *
+     * @return array
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+    /**
+     * Set API version
+     *
+     * Currently supported:
+     *
+     * - 1: entries imported from s9y
+     * - 2: new entries (utilizing disqus for comments)
+     *
+     * @param  int $value
+     * @return Entry
+     */
+    public function setVersion($version)
+    {
+        $this->version = (int) $version;
+        if (!in_array($this->version, array(1, 2))) {
+            $this->version = 2;
+        }
+        return $this;
+    }
+    
+    /**
+     * Get API version
+     *
+     * @return int
+     */
+    public function getVersion()
+    {
+        return $this->version;
+    }
+
+    /**
      * Cast object to array
      * 
      * @return array
      */
     public function toArray()
     {
-        return array(
+        $return = array(
             'id'        => $this->getId(),
             'title'     => $this->getTitle(),
             'body'      => $this->getBody(),
@@ -379,7 +435,12 @@ class Entry implements EntityDefinition
             'updated'   => $this->getUpdated(),
             'timezone'  => $this->getTimezone(),
             'tags'      => $this->getTags(),
+            'version'   => $this->getVersion(),
         );
+        if (1 == $this->getVersion()) {
+            $return['comments'] = $this->getComments();
+        }
+        return $return;
     }
 
     /**
@@ -400,6 +461,8 @@ class Entry implements EntityDefinition
                 case 'updated':
                 case 'timezone':
                 case 'tags':
+                case 'comments':
+                case 'version':
                     $method = 'set' . ucfirst($key);
                     $this->$method($value);
                     break;
