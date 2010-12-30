@@ -7,6 +7,7 @@ return array (
   'mwop\\Filter\\Timezone' => __DIR__ . DIRECTORY_SEPARATOR . 'Filter/Timezone.php',
   'mwop\\Filter\\Timestamp' => __DIR__ . DIRECTORY_SEPARATOR . 'Filter/Timestamp.php',
   'mwop\\DataSource\\Where' => __DIR__ . DIRECTORY_SEPARATOR . 'DataSource/Where.php',
+  'mwop\\DataSource\\Mock' => __DIR__ . DIRECTORY_SEPARATOR . 'DataSource/Mock.php',
   'mwop\\DataSource\\Query' => __DIR__ . DIRECTORY_SEPARATOR . 'DataSource/Query.php',
   'mwop\\Stdlib\\DataSource' => __DIR__ . DIRECTORY_SEPARATOR . 'Stdlib/DataSource.php',
   'mwop\\Stdlib\\Resource' => __DIR__ . DIRECTORY_SEPARATOR . 'Stdlib/Resource.php',

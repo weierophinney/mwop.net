@@ -90,4 +90,71 @@ class Query implements Queryable
     {
         return $this->offset;
     }
+
+    /**
+     * Serialize to array
+     * 
+     * @return array
+     */
+    public function toArray()
+    {
+        $where = array();
+        foreach ($this->getWhereClauses() as $clause) {
+            $where[] = (array) $clause;
+        }
+        return array(
+            'where'  => $where,
+            'limit'  => $this->getLimit(),
+            'offset' => $this->getOffset(),
+        );
+    }
+
+    /**
+     * Populate from array
+     * 
+     * @param  array $definition 
+     * @return Query
+     */
+    public function fromArray(array $definition)
+    {
+        $offset = 0;
+        $limit  = false;
+        foreach ($definition as $key => $value) {
+            switch (strtolower($key)) {
+                case 'offset':
+                    $offset = $value;
+                    break;
+                case 'limit':
+                    $limit = $value;
+                    break;
+                case 'where':
+                    if (!is_array($value)) {
+                        break;
+                    }
+                    foreach ($value as $args) {
+                        if (is_array($args) || $args instanceof Where) {
+                            if (is_array($args)) {
+                                $args = (object) $args;
+                            }
+                            $args->type = $args->type ?: 'and';
+                            switch (strtolower($args->type)) {
+                                case 'or':
+                                    $this->orWhere($args->key, $args->comparison, $args->value);
+                                    break;
+                                case 'and':
+                                default:
+                                    $this->where($args->key, $args->comparison, $args->value);
+                                    break;
+                            }
+                        }
+                    }
+                    break;
+            }
+        }
+        if (false !== $limit) {
+            $this->limit($limit, $offset);
+        }
+
+        return $this;
+    }
 }

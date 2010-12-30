@@ -5,6 +5,8 @@ mwop=/home/matthew/git/mwop CD=. filter="*.php *.xml *.txt" {
    Controller=Controller {
    }
    DataSource=DataSource {
+    Mock.php
+    Mongo.php
     Query.php
     Where.php
    }
@@ -41,6 +43,7 @@ mwop=/home/matthew/git/mwop CD=. filter="*.php *.xml *.txt" {
    Controller=Controller {
    }
    DataSource=DataSource {
+    MockTest.php
     QueryTest.php
    }
    Entity=Entity {

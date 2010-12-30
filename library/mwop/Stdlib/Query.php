@@ -1,7 +1,7 @@
 <?php
 namespace mwop\Stdlib;
 
-interface Query
+interface Query extends ArraySerializable
 {
     public function where($key, $comparison, $value = null);
     public function orWhere($key, $comparison, $value = null);
