@@ -233,7 +233,7 @@ class EntryResourceTest extends TestCase
     public function testCreateTriggersPreCreateSignal()
     {
         $o = new \stdClass();
-        EntryResource::signals()->connect('create.pre', function ($entry) use ($o) {
+        EntryResource::signals()->connect('create.pre', function ($resource, $entry) use ($o) {
             $o->entry = $entry;
         });
         $entry = $this->resource->create($this->getItem());
@@ -268,7 +268,7 @@ class EntryResourceTest extends TestCase
 
     public function testUpdateTriggersPreUpdateSignal()
     {
-        EntryResource::signals()->connect('update.pre', function($id, $spec) {
+        EntryResource::signals()->connect('update.pre', function($resource, $id, $spec) {
             throw new \Exception(sprintf(
                 'Received id "%s" and spec "%s"',
                 $id,
@@ -286,7 +286,7 @@ class EntryResourceTest extends TestCase
         $item = $this->getItem();
         $this->dataSource->create($item);
 
-        EntryResource::signals()->connect('update.pre', function($id, $spec) {
+        EntryResource::signals()->connect('update.pre', function($resource, $id, $spec) {
             $spec['updated'] = strtotime('tomorrow');
         });
 

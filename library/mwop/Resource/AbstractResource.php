@@ -83,10 +83,10 @@ abstract class AbstractResource implements Resource, AclResource
      * Get a single Entity by ID
      *
      * Emits two signals:
-     * - get.pre: Receives two arguments, the id and the current resource 
-     *   instance. If a signal returns an Entity object, the method returns it 
+     * - get.pre: Receives two arguments, the current resource instance and id. 
+     *   If a signal returns an Entity object, the method returns it 
      *   immediately.
-     * - get-all.post: Receives two arguments, the retrieved Entity, and the 
+     * - get.post: Receives two arguments, the retrieved Entity, and the 
      *   resource.
      * 
      * @param  string|int $id
@@ -97,7 +97,7 @@ abstract class AbstractResource implements Resource, AclResource
         $entityClass = $this->entityClass;
         $results = static::signals()->emitUntil(function($result) use ($entityClass) {
             return ($result instanceof $entityClass);
-        }, 'get.pre', $id, $this);
+        }, 'get.pre', $this, $id);
         $entity = $results->last();
         if ($entity instanceof $entityClass) {
             return $entity;
@@ -144,7 +144,7 @@ abstract class AbstractResource implements Resource, AclResource
             ));
         }
 
-        static::signals()->emit('create.pre', $spec, $this);
+        static::signals()->emit('create.pre', $this, $spec);
 
         if (!$spec->isValid()) {
             return $spec->getInputFilter();
@@ -198,7 +198,7 @@ abstract class AbstractResource implements Resource, AclResource
 
         // Cast the specification to an ArrayObject to send to signal handlers
         $spec = new ArrayObject($spec);
-        static::signals()->emit('update.pre', $id, $spec, $this);
+        static::signals()->emit('update.pre', $this, $id, $spec);
         $spec = $spec->getArrayCopy();
 
         // Update the entity from the spec and see if validations pass
@@ -244,7 +244,7 @@ abstract class AbstractResource implements Resource, AclResource
         // Emit signals. If a handler returns a boolean value, return it.
         $response = static::signals()->emitUntil(function ($result) {
             return is_bool($result);
-        }, 'delete.pre', $entity, $this);
+        }, 'delete.pre', $this, $entity);
         $last = $response->last();
         if (is_bool($last)) {
             return $last;

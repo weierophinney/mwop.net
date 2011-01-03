@@ -2,6 +2,11 @@ mwop=/home/matthew/git/mwop CD=. filter="*.php *.xml *.txt" {
  library=library {
   mwop=mwop {
    .classmap.php
+   Acl.php
+   Acl=Acl {
+    AclException.php
+    SignalHandler.php
+   }
    Controller=Controller {
    }
    DataSource=DataSource {
@@ -54,6 +59,7 @@ mwop=/home/matthew/git/mwop CD=. filter="*.php *.xml *.txt" {
     EntryTest.php
    }
    Resource=Resource {
+    AclIntegrationTest.php
     CollectionTest.php
     EntryResourceTest.php
    }
