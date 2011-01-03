@@ -11,6 +11,7 @@ mwop=/home/matthew/git/mwop CD=. filter="*.php *.xml *.txt" {
     Where.php
    }
    Entity=Entity {
+    AbstractEntity.php
     Entry.php
     Filter=Filter {
      Entry.php
@@ -23,6 +24,7 @@ mwop=/home/matthew/git/mwop CD=. filter="*.php *.xml *.txt" {
     Timezone.php
    }
    Resource=Resource {
+    AbstractResource.php
     Collection.php
     EntryResource.php
    }
