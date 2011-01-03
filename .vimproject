@@ -23,6 +23,8 @@ mwop=/home/matthew/git/mwop CD=. filter="*.php *.xml *.txt" {
     Timezone.php
    }
    Resource=Resource {
+    Collection.php
+    EntryResource.php
    }
    Stdlib=Stdlib {
     ArraySerializable.php
@@ -50,6 +52,8 @@ mwop=/home/matthew/git/mwop CD=. filter="*.php *.xml *.txt" {
     EntryTest.php
    }
    Resource=Resource {
+    CollectionTest.php
+    EntryResourceTest.php
    }
   }
  }

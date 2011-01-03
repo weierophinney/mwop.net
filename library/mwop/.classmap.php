@@ -15,4 +15,6 @@ return array (
   'mwop\\Stdlib\\ArraySerializable' => __DIR__ . DIRECTORY_SEPARATOR . 'Stdlib/ArraySerializable.php',
   'mwop\\Stdlib\\Entity' => __DIR__ . DIRECTORY_SEPARATOR . 'Stdlib/Entity.php',
   'mwop\\Stdlib\\Query' => __DIR__ . DIRECTORY_SEPARATOR . 'Stdlib/Query.php',
+  'mwop\\Resource\\EntryResource' => __DIR__ . DIRECTORY_SEPARATOR . 'Resource/EntryResource.php',
+  'mwop\\Resource\\Collection' => __DIR__ . DIRECTORY_SEPARATOR . 'Resource/Collection.php',
 );

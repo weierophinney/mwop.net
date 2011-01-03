@@ -8,8 +8,6 @@ interface Resource
     public function create($spec);
     public function update($id, $spec);
     public function delete($id);
-    public function getEntityType();
-    public function getValidatorChain();
     public function setDataSource(DataSource $data);
     public function getDataSource();
 }
