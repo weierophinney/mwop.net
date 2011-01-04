@@ -8,6 +8,7 @@ class Query implements Queryable
     protected $where  = array();
     protected $limit  = false;
     protected $offset = 0;
+    protected $sort   = false;
 
     /**
      * Add a where clause
@@ -92,6 +93,33 @@ class Query implements Queryable
     }
 
     /**
+     * Set sort field and direction
+     * 
+     * @param  string $key 
+     * @param  string $direction 
+     * @return Query
+     */
+    public function sort($key, $direction = 'ASC')
+    {
+        $direction = strtoupper($direction);
+        if (!in_array($direction, array('ASC', 'DESC'))) {
+            $direction = 'ASC';
+        }
+        $this->sort = $key . ' ' . $direction;
+        return $this;
+    }
+
+    /**
+     * Get sort criteria
+     * 
+     * @return string|false
+     */
+    public function getSort()
+    {
+        return $this->sort;
+    }
+
+    /**
      * Serialize to array
      * 
      * @return array
@@ -106,6 +134,7 @@ class Query implements Queryable
             'where'  => $where,
             'limit'  => $this->getLimit(),
             'offset' => $this->getOffset(),
+            'sort'   => $this->getSort(),
         );
     }
 
@@ -126,6 +155,14 @@ class Query implements Queryable
                     break;
                 case 'limit':
                     $limit = $value;
+                    break;
+                case 'sort':
+                    if (!$value) {
+                        $this->sort = false;
+                        break;
+                    }
+                    list($field, $direction) = explode(' ', $value);
+                    $this->sort($field, $direction);
                     break;
                 case 'where':
                     if (!is_array($value)) {

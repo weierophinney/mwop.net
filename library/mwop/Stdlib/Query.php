@@ -9,4 +9,5 @@ interface Query extends ArraySerializable
     public function getWhereClauses();
     public function getLimit();
     public function getOffset();
+    public function sort($key, $direction = 'ASC');
 }
