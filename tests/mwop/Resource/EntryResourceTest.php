@@ -5,7 +5,9 @@ use PHPUnit_Framework_TestCase as TestCase,
     mwop\DataSource\Mock as MockDataSource,
     mwop\DataSource\Query,
     mwop\Entity\Entry,
-    Zend\SignalSlot\Signals;
+    Zend\SignalSlot\Signals,
+    DateTime,
+    DateInterval;
 
 class EntryResourceTest extends TestCase
 {
@@ -77,6 +79,15 @@ class EntryResourceTest extends TestCase
                 'version'   => 2,
             )
         );
+    }
+
+    public function getQuery()
+    {
+        $query = new Query();
+        $query->where('is_draft', '=', false)
+              ->where('is_public', '=', true)
+              ->sort('created', 'DESC');
+        return $query;
     }
 
     public function testSignalsArePopulatedByDefault()
@@ -367,5 +378,108 @@ class EntryResourceTest extends TestCase
         $this->assertTrue($this->resource->delete($item['id']));
         $this->assertObjectHasAttribute('id', $test);
         $this->assertEquals($item['id'], $test->id);
+    }
+
+    public function runQueryComparisonTests($query, $method)
+    {
+        $args  = func_get_args();
+        $args  = array_slice($args, 2);
+        $items = $this->getItems();
+        $this->dataSource->when($query, $items);
+        $collection = call_user_func_array(array($this->resource, $method), $args);
+        $test = array();
+        foreach ($collection as $entity) {
+            $test[] = $entity->toArray();
+        }
+        $this->assertEquals($items, $test);
+    }
+
+    public function testCanGetRecentEntries()
+    {
+        $query = $this->getQuery();
+        $query->where('created', '<=', $_SERVER['REQUEST_TIME'])
+              ->limit(15, 0);
+        $this->runQueryComparisonTests($query, 'getEntries', 0, 15);
+    }
+
+    public function testCanGetEntriesByYear()
+    {
+        $query = $this->getQuery();
+        $start = new DateTime('2007-01-01');
+        $end   = clone $start;
+        $end->add(new DateInterval('P1Y'));
+
+        $query->where('created', '>=', $start->getTimestamp())
+              ->where('created', '<', $end->getTimestamp())
+              ->limit(15, 0);
+        $this->runQueryComparisonTests($query, 'getEntriesByYear', 2007, 0, 15);
+    }
+
+    public function testFetchingEntriesByYearWillNotSetEndDateGreaterThanCurrentDate()
+    {
+        $query = $this->getQuery();
+        $start = new DateTime(date('Y') . '-01-01');
+
+        $query->where('created', '>=', $start->getTimestamp())
+              ->where('created', '<', $_SERVER['REQUEST_TIME'])
+              ->limit(15, 0);
+        $this->runQueryComparisonTests($query, 'getEntriesByYear', date('Y'), 0, 15);
+    }
+
+    public function testCanGetEntriesByMonth()
+    {
+        $query = $this->getQuery();
+        $start = new DateTime('2007-01-01');
+        $end   = clone $start;
+        $end->add(new DateInterval('P1M'));
+
+        $query->where('created', '>=', $start->getTimestamp())
+              ->where('created', '<', $end->getTimestamp())
+              ->limit(15, 0);
+        $this->runQueryComparisonTests($query, 'getEntriesByMonth', 1, 2007, 0, 15);
+    }
+
+    public function testFetchingEntriesByMonthWillNotSetEndDateGreaterThanCurrentDate()
+    {
+        $query = $this->getQuery();
+        $start = new DateTime(date('Y-m') . '-01');
+
+        $query->where('created', '>=', $start->getTimestamp())
+              ->where('created', '<', $_SERVER['REQUEST_TIME'])
+              ->limit(15, 0);
+        $this->runQueryComparisonTests($query, 'getEntriesByMonth', date('n'), date('Y'), 0, 15);
+    }
+
+    public function testCanGetEntriesByDay()
+    {
+        $query = $this->getQuery();
+        $start = new DateTime('2007-01-01');
+        $end   = clone $start;
+        $end->add(new DateInterval('P1D'));
+
+        $query->where('created', '>=', $start->getTimestamp())
+              ->where('created', '<', $end->getTimestamp())
+              ->limit(15, 0);
+        $this->runQueryComparisonTests($query, 'getEntriesByDay', 1, 1, 2007, 0, 15);
+    }
+
+    public function testFetchingEntriesByDayWillNotSetEndDateGreaterThanCurrentDate()
+    {
+        $query = $this->getQuery();
+        $start = new DateTime('tomorrow');
+
+        $query->where('created', '>=', $start->getTimestamp())
+              ->where('created', '<', $_SERVER['REQUEST_TIME'])
+              ->limit(15, 0);
+        $this->runQueryComparisonTests($query, 'getEntriesByDay', $start->format('j'), $start->format('n'), $start->format('Y'), 0, 15);
+    }
+
+    public function testCanGetEntriesByTag()
+    {
+        $query = $this->getQuery();
+        $query->where('tags', '=', 'foo')
+              ->where('created', '<=', $_SERVER['REQUEST_TIME'])
+              ->limit(15, 0);
+        $this->runQueryComparisonTests($query, 'getEntriesByTag', 'foo', 0, 15);
     }
 }

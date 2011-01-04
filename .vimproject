@@ -16,7 +16,6 @@ mwop=/home/matthew/git/mwop CD=. filter="*.php *.xml *.txt" {
     Where.php
    }
    Entity=Entity {
-    AbstractEntity.php
     Entry.php
     Filter=Filter {
      Entry.php
