@@ -14,9 +14,8 @@ class EntryResource extends AbstractResource
         $results = static::signals()->emitUntil(function($result) {
             return ($result instanceof Collection);
         }, 'get-entries.pre', $this, $offset, $limit);
-        $collection = $results->last();
-        if ($collection instanceof Collection) {
-            return $collection;
+        if ($results->stopped()) {
+            return $results->last();
         }
 
         $query = $this->getQuery();
@@ -35,9 +34,8 @@ class EntryResource extends AbstractResource
         $results = static::signals()->emitUntil(function($result) {
             return ($result instanceof Collection);
         }, 'get-entries-by-year.pre', $this, $year, $offset, $limit);
-        $collection = $results->last();
-        if ($collection instanceof Collection) {
-            return $collection;
+        if ($results->stopped()) {
+            return $results->last();
         }
 
         $query = $this->getQuery();
@@ -60,9 +58,8 @@ class EntryResource extends AbstractResource
         $results = static::signals()->emitUntil(function($result) {
             return ($result instanceof Collection);
         }, 'get-entries-by-month.pre', $this, $month, $year, $offset, $limit);
-        $collection = $results->last();
-        if ($collection instanceof Collection) {
-            return $collection;
+        if ($results->stopped()) {
+            return $results->last();
         }
 
         $query = $this->getQuery();
@@ -86,9 +83,8 @@ class EntryResource extends AbstractResource
         $results = static::signals()->emitUntil(function($result) {
             return ($result instanceof Collection);
         }, 'get-entries-by-day.pre', $this, $day, $month, $year, $offset, $limit);
-        $collection = $results->last();
-        if ($collection instanceof Collection) {
-            return $collection;
+        if ($results->stopped()) {
+            return $results->last();
         }
 
         $query = $this->getQuery();
@@ -113,9 +109,8 @@ class EntryResource extends AbstractResource
         $results = static::signals()->emitUntil(function($result) {
             return ($result instanceof Collection);
         }, 'get-entries-by-tag.pre', $this, $tag, $offset, $limit);
-        $collection = $results->last();
-        if ($collection instanceof Collection) {
-            return $collection;
+        if ($results->stopped()) {
+            return $results->last();
         }
 
         $query = $this->getQuery();

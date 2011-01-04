@@ -1,0 +1,8 @@
+Requirements
+============
+
+- ZF2 library (https://github.com/zendframework/zf2.git)
+  Install or symlink the library/Zend/ directory to library/Zend/.
+- Fig library (https://github.com/weierophinney/fig-library.git)
+  Use the "zf-implementation" branch.
+  Install or symlink the library/Fig/ directory to library/Fig/.
