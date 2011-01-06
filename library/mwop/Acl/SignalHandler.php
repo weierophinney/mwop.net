@@ -27,6 +27,13 @@ class SignalHandler
         }
     }
 
+    public function verifyReadUser($resource)
+    {
+        if (!$this->acl->isAllowed($this->role, $resource, 'read-user')) {
+            throw new AclException('Current user is not authorized to read the requested resource');
+        }
+    }
+
     public function verifyWrite($resource)
     {
         if (!$this->acl->isAllowed($this->role, $resource, 'write')) {

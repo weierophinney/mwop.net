@@ -12,7 +12,8 @@ class Acl extends AclDefinition
 
         $this->addResource('mwop\Resource\EntryResource');
 
-        $this->allow('guest', 'mwop\Resource\EntryResource', array('read'))
+        $this->allow('guest', 'mwop\Resource\EntryResource', array('read-user'))
+             ->allow('admin', 'mwop\Resource\EntryResource', array('read'))
              ->allow('admin', 'mwop\Resource\EntryResource', array('write'));
     }
 }

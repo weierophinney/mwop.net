@@ -8,12 +8,16 @@ mwop=/home/matthew/git/mwop CD=. filter="*.php *.xml *.txt" {
     SignalHandler.php
    }
    Controller=Controller {
+    Restful.php
    }
    DataSource=DataSource {
     Mock.php
     Mongo.php
     Query.php
     Where.php
+    Mongo=Mongo {
+     QueryParser.php
+    }
    }
    Entity=Entity {
     Entry.php
@@ -31,13 +35,16 @@ mwop=/home/matthew/git/mwop CD=. filter="*.php *.xml *.txt" {
     AbstractResource.php
     Collection.php
     EntryResource.php
+    MongoCollection.php
    }
    Stdlib=Stdlib {
     ArraySerializable.php
     DataSource.php
+    Dispatchable.php
     Entity.php
     Query.php
     Resource.php
+    ResourceCollection.php
     Validatible.php
    }
   }
@@ -61,6 +68,7 @@ mwop=/home/matthew/git/mwop CD=. filter="*.php *.xml *.txt" {
     AclIntegrationTest.php
     CollectionTest.php
     EntryResourceTest.php
+    MongoIntegrationTest.php
    }
   }
  }

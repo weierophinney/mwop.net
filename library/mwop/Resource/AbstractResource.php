@@ -2,6 +2,7 @@
 namespace mwop\Resource;
 
 use mwop\Stdlib\Resource,
+    mwop\Stdlib\ResourceCollection,
     mwop\Stdlib\DataSource,
     mwop\DataSource\Query,
     ArrayObject,
@@ -13,6 +14,7 @@ use mwop\Stdlib\Resource,
 abstract class AbstractResource implements Resource, AclResource
 {
     protected $entityClass;
+    protected $collectionClass = 'mwop\Resource\Collection';
     protected $dataSource;
     protected static $signals;
 
@@ -53,18 +55,18 @@ abstract class AbstractResource implements Resource, AclResource
      * Emits two signals:
      * - get-all.pre: Receives instance of resource as sole argument. If a 
      *   signal returns a collection, the method returns it immediately.
-     * - get-all.post: Receives two arguments, the items as a Collection object, 
-     *   and the resource.
+     * - get-all.post: Receives two arguments, the items as a ResourceCollection 
+     *   object, and the resource.
      * 
-     * @return Collection
+     * @return ResourceCollection
      */
     public function getAll()
     {
         $results = static::signals()->emitUntil(function($result) {
-            return ($result instanceof Collection);
+            return ($result instanceof ResourceCollection);
         }, 'get-all.pre', $this);
         $collection = $results->last();
-        if ($collection instanceof Collection) {
+        if ($collection instanceof ResourceCollection) {
             return $collection;
         }
 
@@ -73,7 +75,7 @@ abstract class AbstractResource implements Resource, AclResource
             $items = array();
         }
 
-        $items =  new Collection($items, $this->entityClass);
+        $items =  new $this->collectionClass($items, $this->entityClass);
 
         static::signals()->emit('get-all.post', $items, $this);
         return $items;
@@ -279,6 +281,28 @@ abstract class AbstractResource implements Resource, AclResource
     public function getDataSource()
     {
         return $this->dataSource;
+    }
+
+    /**
+     * Set collection class to utilize
+     *
+     * @param  string $class
+     * @return AbstractResource
+     */
+    public function setCollectionClass($class)
+    {
+        $this->collectionClass = (string) $class;
+        return $this;
+    }
+    
+    /**
+     * Get ollection class
+     *
+     * @return string
+     */
+    public function getCollectionClass()
+    {
+        return $this->collectionClass;
     }
 
     /**

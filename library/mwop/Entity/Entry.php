@@ -138,7 +138,9 @@ class Entry implements EntityDefinition
     public function setTitle($value)
     {
         $this->title = $value;
-        $this->setId(static::makeStub($value));
+        if (empty($this->id)) {
+            $this->setId(static::makeStub($value));
+        }
         return $this;
     }
     

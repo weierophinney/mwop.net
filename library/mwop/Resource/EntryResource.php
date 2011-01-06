@@ -2,6 +2,7 @@
 namespace mwop\Resource;
 
 use mwop\DataSource\Query,
+    mwop\Stdlib\ResourceCollection,
     DateTime,
     DateInterval;
 
@@ -12,7 +13,7 @@ class EntryResource extends AbstractResource
     public function getEntries($offset = 0, $limit = 15)
     {
         $results = static::signals()->emitUntil(function($result) {
-            return ($result instanceof Collection);
+            return ($result instanceof ResourceCollection);
         }, 'get-entries.pre', $this, $offset, $limit);
         if ($results->stopped()) {
             return $results->last();
@@ -22,7 +23,7 @@ class EntryResource extends AbstractResource
         $query->where('created', '<=', $_SERVER['REQUEST_TIME'])
               ->limit($limit, $offset);
         $entries = $this->getDataSource()->query($query);
-        $collection = new Collection($entries, $this->entityClass);
+        $collection = new $this->collectionClass($entries, $this->entityClass);
 
         static::signals()->emit('get-entries.post', $collection, $this, $offset, $limit);
 
@@ -32,7 +33,7 @@ class EntryResource extends AbstractResource
     public function getEntriesByYear($year, $offset = 0, $limit = 15)
     {
         $results = static::signals()->emitUntil(function($result) {
-            return ($result instanceof Collection);
+            return ($result instanceof ResourceCollection);
         }, 'get-entries-by-year.pre', $this, $year, $offset, $limit);
         if ($results->stopped()) {
             return $results->last();
@@ -46,7 +47,7 @@ class EntryResource extends AbstractResource
         $query->limit($limit, $offset);
 
         $entries = $this->getDataSource()->query($query);
-        $collection = new Collection($entries, $this->entityClass);
+        $collection = new $this->collectionClass($entries, $this->entityClass);
 
         static::signals()->emit('get-entries-by-year.post', $collection, $this, $year, $offset, $limit);
 
@@ -56,7 +57,7 @@ class EntryResource extends AbstractResource
     public function getEntriesByMonth($month, $year, $offset = 0, $limit = 15)
     {
         $results = static::signals()->emitUntil(function($result) {
-            return ($result instanceof Collection);
+            return ($result instanceof ResourceCollection);
         }, 'get-entries-by-month.pre', $this, $month, $year, $offset, $limit);
         if ($results->stopped()) {
             return $results->last();
@@ -71,7 +72,7 @@ class EntryResource extends AbstractResource
         $query->limit($limit, $offset);
 
         $entries = $this->getDataSource()->query($query);
-        $collection = new Collection($entries, $this->entityClass);
+        $collection = new $this->collectionClass($entries, $this->entityClass);
 
         static::signals()->emit('get-entries-by-month.post', $collection, $this, $month, $year, $offset, $limit);
 
@@ -81,7 +82,7 @@ class EntryResource extends AbstractResource
     public function getEntriesByDay($day, $month, $year, $offset = 0, $limit = 15)
     {
         $results = static::signals()->emitUntil(function($result) {
-            return ($result instanceof Collection);
+            return ($result instanceof ResourceCollection);
         }, 'get-entries-by-day.pre', $this, $day, $month, $year, $offset, $limit);
         if ($results->stopped()) {
             return $results->last();
@@ -97,7 +98,7 @@ class EntryResource extends AbstractResource
         $query->limit($limit, $offset);
 
         $entries = $this->getDataSource()->query($query);
-        $collection = new Collection($entries, $this->entityClass);
+        $collection = new $this->collectionClass($entries, $this->entityClass);
 
         static::signals()->emit('get-entries-by-day.post', $collection, $this, $day, $month, $year, $offset, $limit);
 
@@ -107,7 +108,7 @@ class EntryResource extends AbstractResource
     public function getEntriesByTag($tag, $offset = 0, $limit = 15)
     {
         $results = static::signals()->emitUntil(function($result) {
-            return ($result instanceof Collection);
+            return ($result instanceof ResourceCollection);
         }, 'get-entries-by-tag.pre', $this, $tag, $offset, $limit);
         if ($results->stopped()) {
             return $results->last();
@@ -119,7 +120,7 @@ class EntryResource extends AbstractResource
               ->limit($limit, $offset);
 
         $entries = $this->getDataSource()->query($query);
-        $collection = new Collection($entries, $this->entityClass);
+        $collection = new $this->collectionClass($entries, $this->entityClass);
 
         static::signals()->emit('get-entries-by-tag.post', $collection, $this, $tag, $offset, $limit);
 

@@ -10,4 +10,6 @@ interface Resource
     public function delete($id);
     public function setDataSource(DataSource $data);
     public function getDataSource();
+    public function setCollectionClass($class);
+    public function getCollectionClass();
 }

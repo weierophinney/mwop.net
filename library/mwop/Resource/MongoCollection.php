@@ -2,9 +2,9 @@
 namespace mwop\Resource;
 
 use mwop\Stdlib\ResourceCollection,
-    Iterator;
+    MongoCursor;
 
-class Collection implements ResourceCollection
+class MongoCollection implements ResourceCollection
 {
     protected $count;
     protected $items;
@@ -13,9 +13,17 @@ class Collection implements ResourceCollection
 
     public function __construct($items, $class)
     {
+        if (!$items instanceof MongoCursor) {
+            throw new \InvalidArgumentException(sprintf(
+                '%s expects a MongoCursor; received "%s"',
+                __CLASS__,
+                (is_object($items) ? get_class($items) : gettype($items))
+            ));
+        }
+
         $this->items = $items;
+        $this->count = $items->count(true);
         $this->class = $class;
-        $this->count = count($items);
     }
 
     public function count()
@@ -25,12 +33,18 @@ class Collection implements ResourceCollection
 
     public function current()
     {
-        $item = current($this->items);
-        if ($item === false) {
+        if (!$item = $this->items->current()) {
             return false;
         }
+
+
         $key  = $this->key();
         if (!isset($this->objects[$key])) {
+            // Normalize "id" field
+            if (array_key_exists('_id', $item)) {
+                $item['id'] = (string) $item['_id'];
+                unset($item['_id']);
+            }
             $object = new $this->class();
             $object->fromArray($item);
             $this->objects[$key] = $object;
@@ -40,12 +54,12 @@ class Collection implements ResourceCollection
 
     public function key()
     {
-        return key($this->items);
+        return $this->items->key();
     }
 
     public function next()
     {
-        return next($this->items);
+        return $this->items->next();
     }
 
     public function valid()
@@ -55,6 +69,6 @@ class Collection implements ResourceCollection
 
     public function rewind()
     {
-        reset($this->items);
+        $this->items->rewind();
     }
 }

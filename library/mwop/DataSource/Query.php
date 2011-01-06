@@ -95,6 +95,7 @@ class Query implements Queryable
     /**
      * Set sort field and direction
      * 
+     * @todo   Allow aggregating multiple sort statements
      * @param  string $key 
      * @param  string $direction 
      * @return Query
