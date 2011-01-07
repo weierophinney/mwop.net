@@ -65,9 +65,8 @@ abstract class AbstractResource implements Resource, AclResource
         $results = static::signals()->emitUntil(function($result) {
             return ($result instanceof ResourceCollection);
         }, 'get-all.pre', $this);
-        $collection = $results->last();
-        if ($collection instanceof ResourceCollection) {
-            return $collection;
+        if ($results->stopped()) {
+            return $results->last();
         }
 
         $items = $this->getDataSource()->query(new Query());
@@ -100,9 +99,8 @@ abstract class AbstractResource implements Resource, AclResource
         $results = static::signals()->emitUntil(function($result) use ($entityClass) {
             return ($result instanceof $entityClass);
         }, 'get.pre', $this, $id);
-        $entity = $results->last();
-        if ($entity instanceof $entityClass) {
-            return $entity;
+        if ($results->stopped()) {
+            return $results->last();
         }
 
         $data = $this->getDataSource()->get($id);
@@ -247,9 +245,8 @@ abstract class AbstractResource implements Resource, AclResource
         $response = static::signals()->emitUntil(function ($result) {
             return is_bool($result);
         }, 'delete.pre', $this, $entity);
-        $last = $response->last();
-        if (is_bool($last)) {
-            return $last;
+        if ($response->stopped()) {
+            return $response->last();
         }
 
         // Delete the item from the data source
