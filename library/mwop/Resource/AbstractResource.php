@@ -9,44 +9,33 @@ use mwop\Stdlib\Resource,
     DomainException,
     InvalidArgumentException,
     Zend\Acl\Resource as AclResource,
-    Zend\SignalSlot\Signals;
+    Zend\EventManager\EventCollection as Events,
+    Zend\EventManager\EventManager;
 
 abstract class AbstractResource implements Resource, AclResource
 {
     protected $entityClass;
     protected $collectionClass = 'mwop\Resource\Collection';
     protected $dataSource;
-    protected static $signals;
+    protected $events;
 
     /**
-     * Signal manager for entity resource
+     * Event manager for entity resource
      *
-     * Allows injecting a signal handler, or retrieving the signal handler for
+     * Allows injecting an event manager, or retrieving the event manager for
      * the purpose of connecting handlers.
      * 
-     * @param  null|Signals $signals 
-     * @return Signals
+     * @param  null|Events $events 
+     * @return Events
      */
-    public static function signals(Signals $signals = null)
+    public function events(Events $events = null)
     {
-        if (null !== $signals) {
-            static::$signals = $signals;
-        } elseif (null === static::$signals) {
-            static::$signals = new Signals();
+        if (null !== $events) {
+            $this->events = $events;
+        } elseif (null === $this->events) {
+            $this->events = new EventManager(array(get_called_class(), __CLASS__));
         }
-        return static::$signals;
-    }
-
-    /**
-     * Reset signals
-     *
-     * Clears all signal handlers
-     * 
-     * @return void
-     */
-    public static function resetSignals()
-    {
-        static::$signals = null;
+        return $this->events;
     }
 
     /**
@@ -62,9 +51,9 @@ abstract class AbstractResource implements Resource, AclResource
      */
     public function getAll()
     {
-        $results = static::signals()->emitUntil(function($result) {
+        $results = $this->events()->triggerUntil(__FUNCTION__ . '.pre', $this, array(), function($result) {
             return ($result instanceof ResourceCollection);
-        }, 'get-all.pre', $this);
+        });
         if ($results->stopped()) {
             return $results->last();
         }
@@ -76,7 +65,7 @@ abstract class AbstractResource implements Resource, AclResource
 
         $items =  new $this->collectionClass($items, $this->entityClass);
 
-        static::signals()->emit('get-all.post', $items, $this);
+        $this->events()->trigger(__FUNCTION__ . '.post', $this, array('items' => $items));
         return $items;
     }
 
@@ -96,9 +85,9 @@ abstract class AbstractResource implements Resource, AclResource
     public function get($id)
     {
         $entityClass = $this->entityClass;
-        $results = static::signals()->emitUntil(function($result) use ($entityClass) {
+        $results = $this->events()->triggerUntil(__FUNCTION__ . '.pre', $this, array('id' => $id), function($result) use ($entityClass) {
             return ($result instanceof $entityClass);
-        }, 'get.pre', $this, $id);
+        });
         if ($results->stopped()) {
             return $results->last();
         }
@@ -110,7 +99,7 @@ abstract class AbstractResource implements Resource, AclResource
         $entity = new $entityClass();
         $entity->fromArray($data);
 
-        static::signals()->emit('get.post', $entity, $this);
+        $this->events()->trigger(__FUNCTION__ . '.post', $this, array('entity' => $entity));
 
         return $entity;
     }
@@ -144,7 +133,7 @@ abstract class AbstractResource implements Resource, AclResource
             ));
         }
 
-        static::signals()->emit('create.pre', $this, $spec);
+        $this->events()->trigger(__FUNCTION__ . '.pre', $this, array('spec' => $spec));
 
         if (!$spec->isValid()) {
             return $spec->getInputFilter();
@@ -153,7 +142,7 @@ abstract class AbstractResource implements Resource, AclResource
         $result = $this->getDataSource()->create($spec->toArray());
         $spec->fromArray($result);
 
-        static::signals()->emit('create.post', $spec);
+        $this->events()->trigger(__FUNCTION__ . '.post', $this, array('entity' => $spec));
 
         return $spec;
     }
@@ -198,7 +187,7 @@ abstract class AbstractResource implements Resource, AclResource
 
         // Cast the specification to an ArrayObject to send to signal handlers
         $spec = new ArrayObject($spec);
-        static::signals()->emit('update.pre', $this, $id, $spec);
+        $this->events()->trigger(__FUNCTION__ . '.pre', $this, array('id' => $id, 'spec' => $spec));
         $spec = $spec->getArrayCopy();
 
         // Update the entity from the spec and see if validations pass
@@ -212,7 +201,7 @@ abstract class AbstractResource implements Resource, AclResource
         $entity->fromArray($spec);
 
         // Emit signals
-        static::signals()->emit('update.post', $entity);
+        $this->events()->trigger(__FUNCTION__ . '.post', $this, array('entity' => $entity));
 
         // Return the entity
         return $entity;
@@ -242,9 +231,9 @@ abstract class AbstractResource implements Resource, AclResource
         }
 
         // Emit signals. If a handler returns a boolean value, return it.
-        $response = static::signals()->emitUntil(function ($result) {
+        $response = $this->events()->triggerUntil('delete.pre', $this, array('entity' => $entity), function ($result) {
             return is_bool($result);
-        }, 'delete.pre', $this, $entity);
+        });
         if ($response->stopped()) {
             return $response->last();
         }
@@ -253,7 +242,7 @@ abstract class AbstractResource implements Resource, AclResource
         $this->getDataSource()->delete($id);
 
         // Emit post-deletion signals
-        static::signals()->emit('delete.post', $id);
+        $this->events()->trigger('delete.post', $this, array('id' => $id, 'entity' => $entity));
 
         return true;
     }

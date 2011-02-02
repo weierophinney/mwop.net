@@ -12,9 +12,10 @@ class EntryResource extends AbstractResource
 
     public function getEntries($offset = 0, $limit = 15)
     {
-        $results = static::signals()->emitUntil(function($result) {
+        $params  = compact('offset', 'limit');
+        $results = $this->events()->triggerUntil(__FUNCTION__ . '.pre', $this, $params, function($result) {
             return ($result instanceof ResourceCollection);
-        }, 'get-entries.pre', $this, $offset, $limit);
+        });
         if ($results->stopped()) {
             return $results->last();
         }
@@ -25,16 +26,18 @@ class EntryResource extends AbstractResource
         $entries = $this->getDataSource()->query($query);
         $collection = new $this->collectionClass($entries, $this->entityClass);
 
-        static::signals()->emit('get-entries.post', $collection, $this, $offset, $limit);
+        $params['__RESULT__'] = $collection;
+        $this->events()->trigger(__FUNCTION__ . '.post', $this, $params);
 
         return $collection;
     }
 
     public function getEntriesByYear($year, $offset = 0, $limit = 15)
     {
-        $results = static::signals()->emitUntil(function($result) {
+        $params = compact('year', 'offset', 'limit');
+        $results = $this->events()->triggerUntil(__FUNCTION__ . '.pre', $this, $params, function($result) {
             return ($result instanceof ResourceCollection);
-        }, 'get-entries-by-year.pre', $this, $year, $offset, $limit);
+        });
         if ($results->stopped()) {
             return $results->last();
         }
@@ -49,16 +52,18 @@ class EntryResource extends AbstractResource
         $entries = $this->getDataSource()->query($query);
         $collection = new $this->collectionClass($entries, $this->entityClass);
 
-        static::signals()->emit('get-entries-by-year.post', $collection, $this, $year, $offset, $limit);
+        $params['__RESULT__'] = $collection;
+        $this->events()->trigger(__FUNCTION__ . '.post', $this, $params);
 
         return $collection;
     }
 
     public function getEntriesByMonth($month, $year, $offset = 0, $limit = 15)
     {
-        $results = static::signals()->emitUntil(function($result) {
+        $params  = compact('month', 'year', 'offset', 'limit');
+        $results = $this->events()->triggerUntil(__FUNCTION__ . '.pre', $this, $params, function($result) {
             return ($result instanceof ResourceCollection);
-        }, 'get-entries-by-month.pre', $this, $month, $year, $offset, $limit);
+        });
         if ($results->stopped()) {
             return $results->last();
         }
@@ -74,16 +79,18 @@ class EntryResource extends AbstractResource
         $entries = $this->getDataSource()->query($query);
         $collection = new $this->collectionClass($entries, $this->entityClass);
 
-        static::signals()->emit('get-entries-by-month.post', $collection, $this, $month, $year, $offset, $limit);
+        $params['__RESULT__'] = $collection;
+        $this->events()->trigger(__FUNCTION__ . '.post', $this, $params);
 
         return $collection;
     }
 
     public function getEntriesByDay($day, $month, $year, $offset = 0, $limit = 15)
     {
-        $results = static::signals()->emitUntil(function($result) {
+        $params  = compact('day', 'month', 'year', 'offset', 'limit');
+        $results = $this->events()->triggerUntil(__FUNCTION__ . '.pre', $this, $params, function($result) {
             return ($result instanceof ResourceCollection);
-        }, 'get-entries-by-day.pre', $this, $day, $month, $year, $offset, $limit);
+        });
         if ($results->stopped()) {
             return $results->last();
         }
@@ -100,16 +107,18 @@ class EntryResource extends AbstractResource
         $entries = $this->getDataSource()->query($query);
         $collection = new $this->collectionClass($entries, $this->entityClass);
 
-        static::signals()->emit('get-entries-by-day.post', $collection, $this, $day, $month, $year, $offset, $limit);
+        $params['__RESULT__'] = $collection;
+        $this->events()->trigger(__FUNCTION__ . '.post', $this, $params);
 
         return $collection;
     }
 
     public function getEntriesByTag($tag, $offset = 0, $limit = 15)
     {
-        $results = static::signals()->emitUntil(function($result) {
+        $params  = compact('tag', 'offset', 'limit');
+        $results = $this->events()->triggerUntil(__FUNCTION__ . '.pre', $this, $params, function($result) {
             return ($result instanceof ResourceCollection);
-        }, 'get-entries-by-tag.pre', $this, $tag, $offset, $limit);
+        });
         if ($results->stopped()) {
             return $results->last();
         }
@@ -122,7 +131,8 @@ class EntryResource extends AbstractResource
         $entries = $this->getDataSource()->query($query);
         $collection = new $this->collectionClass($entries, $this->entityClass);
 
-        static::signals()->emit('get-entries-by-tag.post', $collection, $this, $tag, $offset, $limit);
+        $params['__RESULT__'] = $collection;
+        $this->events()->trigger(__FUNCTION__ . '.post', $this, $params);
 
         return $collection;
     }

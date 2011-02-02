@@ -5,7 +5,8 @@ use PHPUnit_Framework_TestCase as TestCase,
     mwop\DataSource\Mock as MockDataSource,
     mwop\DataSource\Query,
     mwop\Entity\Entry,
-    Zend\SignalSlot\Signals,
+    Zend\EventManager\StaticEventManager,
+    Zend\EventManager\EventManager,
     DateTime,
     DateInterval;
 
@@ -13,7 +14,7 @@ class EntryResourceTest extends TestCase
 {
     public function setUp()
     {
-        EntryResource::resetSignals();
+        StaticEventManager::resetInstance();
         $this->dataSource = new MockDataSource();
         $this->resource   = new EntryResource();
         $this->resource->setDataSource($this->dataSource);
@@ -90,26 +91,18 @@ class EntryResourceTest extends TestCase
         return $query;
     }
 
-    public function testSignalsArePopulatedByDefault()
+    public function testEventManagerIsPopulatedByDefault()
     {
-        $signals = EntryResource::signals();
-        $this->assertInstanceOf('Zend\SignalSlot\SignalSlot', $signals);
+        $events = $this->resource->events();
+        $this->assertInstanceOf('Zend\EventManager\EventManager', $events);
     }
 
-    public function testResettingSignalsCreatesNewSignalsObject()
+    public function testCanInjectEventManagerObject()
     {
-        $signals = EntryResource::signals();
-        EntryResource::resetSignals();
-        $test = EntryResource::signals();
-        $this->assertNotSame($signals, $test);
-    }
-
-    public function testCanInjectSignalsObject()
-    {
-        $signals = new Signals();
-        EntryResource::signals($signals);
-        $test = EntryResource::signals();
-        $this->assertSame($signals, $test);
+        $events = new EventManager();
+        $this->resource->events($events);
+        $test = $this->resource->events();
+        $this->assertSame($events, $test);
     }
 
     public function testIsAclResource()
@@ -128,13 +121,13 @@ class EntryResourceTest extends TestCase
         $this->assertInstanceOf('mwop\Resource\Collection', $test);
     }
 
-    public function testSignalHandlerCanShortCircuitGetAllExecutionIfItReturnsACollection()
+    public function testEventManagerCanShortCircuitGetAllExecutionIfItReturnsACollection()
     {
         $items = $this->getItems();
         $this->dataSource->when(new Query(), $items);
         $item  = $this->getItem();
         $collection = new Collection(array($item), 'mwop\Entity\Entry');
-        EntryResource::signals()->connect('get-all.pre', function($resource) use ($collection) {
+        $this->resource->events()->attach('getAll.pre', function($e) use ($collection) {
             return $collection;
         });
         $test = $this->resource->getAll();
@@ -148,8 +141,8 @@ class EntryResourceTest extends TestCase
         $this->dataSource->when(new Query(), $items);
 
         $result = new \stdClass();
-        EntryResource::signals()->connect('get-all.post', function($items) use ($result) {
-            $result->items = $items;
+        $this->resource->events()->attach('getAll.post', function($e) use ($result) {
+            $result->items = $e->getParam('items', false);
         });
 
         $collection = $this->resource->getAll();
@@ -170,35 +163,41 @@ class EntryResourceTest extends TestCase
         $this->assertInstanceOf('mwop\Entity\Entry', $test);
     }
 
-    public function testSignalHandlerCanShortCircuitGetExecutionIfItReturnsAnEntry()
+    public function testEventManagerCanShortCircuitGetExecutionIfItReturnsAnEntry()
     {
         $item  = $this->getItem();
         $entry = $this->resource->create($item);
 
         $test  = new Entry();
-        EntryResource::signals()->connect('get.pre', function ($id, $resource) use ($test) {
+        $this->resource->events()->attach('get.pre', function ($e) use ($test) {
             return $test;
         });
         $receive = $this->resource->get($entry->getId());
         $this->assertSame($test, $receive);
     }
 
-    public function testPostGetSignalTriggeredWithEntry()
+    public function testPostGetEventTriggeredWithEntry()
     {
         $item  = $this->getItem();
         $entry = $this->resource->create($item);
         $test  = new Entry();
-        EntryResource::signals()->connect('get.post', function ($entry, $resource) use ($test) {
+        $this->resource->events()->attach('get.post', function ($e) use ($test) {
+            if (!$entry = $e->getParam('entity', false)) {
+                return;
+            }
             $test->fromArray($entry->toArray());
         });
         $receive = $this->resource->get($entry->getId());
         $this->assertSame($receive->toArray(), $test->toArray());
     }
 
-    public function testPostGetSignalNotTriggeredIfEntryNotFound()
+    public function testPostGetEventNotTriggeredIfEntryNotFound()
     {
         $test  = new \stdClass;
-        EntryResource::signals()->connect('get.post', function ($entry, $resource) use ($test) {
+        $this->resource->events()->attach('get.post', function ($e) use ($test) {
+            if (!$entry = $e->getParam('entity', false)) {
+                return;
+            }
             $test->entry = $entry;
         });
         $this->assertNull($this->resource->get('foo-bar'));
@@ -241,10 +240,13 @@ class EntryResourceTest extends TestCase
         $this->resource->create('foo');
     }
 
-    public function testCreateTriggersPreCreateSignal()
+    public function testCreateTriggersPreCreateEvent()
     {
         $o = new \stdClass();
-        EntryResource::signals()->connect('create.pre', function ($resource, $entry) use ($o) {
+        $this->resource->events()->attach('create.pre', function ($e) use ($o) {
+            if (!$entry = $e->getParam('spec', false)) {
+                return;
+            }
             $o->entry = $entry;
         });
         $entry = $this->resource->create($this->getItem());
@@ -252,10 +254,13 @@ class EntryResourceTest extends TestCase
         $this->assertSame($entry, $o->entry);
     }
 
-    public function testCreateTriggersPostCreateSignal()
+    public function testCreateTriggersPostCreateEvent()
     {
         $o = new \stdClass();
-        EntryResource::signals()->connect('create.post', function ($entry) use ($o) {
+        $this->resource->events()->attach('create.post', function ($e) use ($o) {
+            if (!$entry = $e->getParam('entity', false)) {
+                return;
+            }
             $o->entry = $entry;
         });
         $entry = $this->resource->create($this->getItem());
@@ -277,9 +282,11 @@ class EntryResourceTest extends TestCase
         $this->resource->update('some-slug', 'foobar');
     }
 
-    public function testUpdateTriggersPreUpdateSignal()
+    public function testUpdateTriggersPreUpdateEvent()
     {
-        EntryResource::signals()->connect('update.pre', function($resource, $id, $spec) {
+        $this->resource->events()->attach('update.pre', function($e) {
+            $id   = $e->getParam('id', false);
+            $spec = $e->getParam('spec', new \ArrayObject());
             throw new \Exception(sprintf(
                 'Received id "%s" and spec "%s"',
                 $id,
@@ -292,12 +299,15 @@ class EntryResourceTest extends TestCase
         $this->resource->update('some-slug', array('title' => 'some title'));
     }
 
-    public function testPreUpdateSignalReceivesReferenceToSpecArray()
+    public function testPreUpdateEventReceivesReferenceToSpecArray()
     {
         $item = $this->getItem();
         $this->dataSource->create($item);
 
-        EntryResource::signals()->connect('update.pre', function($resource, $id, $spec) {
+        $this->resource->events()->attach('update.pre', function($e) {
+            if (!$spec = $e->getParam('spec', false)) {
+                return;
+            }
             $spec['updated'] = strtotime('tomorrow');
         });
 
@@ -306,10 +316,13 @@ class EntryResourceTest extends TestCase
         $this->assertEquals($expected, $entry->getUpdated());
     }
 
-    public function testPostUpdateSignalsAreTriggered()
+    public function testPostUpdateEventsAreTriggered()
     {
         $o = new \stdClass;
-        EntryResource::signals()->connect('update.post', function($entry) use ($o) {
+        $this->resource->events()->attach('update.post', function($e) use ($o) {
+            if (!$entry = $e->getParam('entity')) {
+                return;
+            }
             $o->entry = $entry;
         });
 
@@ -342,23 +355,23 @@ class EntryResourceTest extends TestCase
         $this->assertNull($this->resource->get($item['id']));
     }
 
-    public function testDeleteTriggersPreDeleteSignal()
+    public function testDeleteTriggersPreDeleteEvent()
     {
         $item  = $this->getItem();
         $entry = $this->resource->create($item);
         $test  = new \stdClass();
-        EntryResource::signals()->connect('delete.pre', function($entry, $resource) use ($test) {
+        $this->resource->events()->attach('delete.pre', function($e) use ($test) {
             $test->triggered = true;
         });
         $this->resource->delete($item['id']);
         $this->assertObjectHasAttribute('triggered', $test);
     }
 
-    public function testPreDeleteSignalHandlerCanCircumventDeletion()
+    public function testPreDeleteEventHandlerCanCircumventDeletion()
     {
         $item  = $this->getItem();
         $entry = $this->resource->create($item);
-        EntryResource::signals()->connect('delete.pre', function($entry, $resource) {
+        $this->resource->events()->attach('delete.pre', function($e) {
             return true;
         });
         $this->assertTrue($this->resource->delete($item['id']));
@@ -367,12 +380,15 @@ class EntryResourceTest extends TestCase
         $this->assertEquals($entry->toArray(), $test->toArray());
     }
 
-    public function testPostDeleteSignalIsCalled()
+    public function testPostDeleteEventIsCalled()
     {
         $item  = $this->getItem();
         $entry = $this->resource->create($item);
         $test  = new \stdClass;
-        EntryResource::signals()->connect('delete.post', function($id) use ($test) {
+        $this->resource->events()->attach('delete.post', function($e) use ($test) {
+            if (!$id = $e->getParam('id', false)) {
+                return;
+            }
             $test->id = $id;
         });
         $this->assertTrue($this->resource->delete($item['id']));
