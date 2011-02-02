@@ -6,14 +6,14 @@ use mwop\Stdlib\Dispatchable,
     Fig\Response,
     Zend\Http\Request as HttpRequest,
     Zend\Http\Response as HttpResponse,
-    Zend\SignalSlot\SignalSlot,
-    Zend\SignalSlot\Signals;
+    Zend\EventManager\EventCollection,
+    Zend\EventManager\EventManager;
 
 abstract class Restful implements Dispatchable
 {
     protected $request;
     protected $response;
-    protected static $signals;
+    protected $events;
 
     abstract public function getList();
     abstract public function get($id);
@@ -21,19 +21,14 @@ abstract class Restful implements Dispatchable
     abstract public function update($id, $data);
     abstract public function delete($id);
 
-    public static function signals(SignalSlot $signals = null)
+    public function events(EventCollection $events = null)
     {
-        if (null !== $signals) {
-            static::$signals = $signals;
-        } elseif (null === static::$signals) {
-            static::$signals = new Signals();
+        if (null !== $events) {
+            $this->events = $events;
+        } elseif (null === $this->events) {
+            $this->events = new EventManager(array(__CLASS__, get_called_class()));
         }
-        return static::$signals;
-    }
-
-    public static function resetSignals()
-    {
-        static::$signals = null;
+        return $this->events;
     }
 
     public function dispatch(Request $request, Response $response = null)
@@ -42,7 +37,16 @@ abstract class Restful implements Dispatchable
             throw new \InvalidArgumentException('Expected an HTTP request');
         }
 
-        static::signals()->emit('dispatch.pre', $request, $response);
+        // Emit pre-dispatch signal, passing:
+        // - request, response
+        // If a handler returns a response object, return it immediately
+        $params = compact('request', 'response');
+        $result = $this->events()->triggerUntil(__FUNCTION__ . '.pre', $this, $params, function($result) {
+            return ($result instanceof Response);
+        });
+        if ($result->stopped()) {
+            return $result->last();
+        }
 
         $this->setRequest($request)
              ->setResponse($response);
@@ -75,7 +79,17 @@ abstract class Restful implements Dispatchable
                 throw new \DomainException('Invalid HTTP method!');
         }
 
-        static::signals()->emit('dispatch.post', $return);
+        // Emit post-dispatch signal, passing:
+        // - return from method, request, response
+        // If a handler returns a response object, return it immediately
+        $params['__RESULT__'] = $return;
+        $result = $this->events()->triggerUntil(__FUNCTION__ . '.post', $this, $params, function($result) {
+            return ($result instanceof Response);
+        });
+        if ($result->stopped()) {
+            return $result->last();
+        }
+
         return $return;
     }
 
