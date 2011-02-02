@@ -498,4 +498,27 @@ class EntryResourceTest extends TestCase
               ->limit(15, 0);
         $this->runQueryComparisonTests($query, 'getEntriesByTag', 'foo', 0, 15);
     }
+
+    public function testStaticHandlersAreExecuted()
+    {
+        $test = new \stdClass();
+        $test->get         = false;
+        $test->getAbstract = false;
+        $test->getEntries  = false;
+
+        StaticEventManager::getInstance()->attach('mwop\Resource\EntryResource', 'get.pre', function($e) use ($test) {
+            $test->get = true;
+        });
+        StaticEventManager::getInstance()->attach('mwop\Resource\AbstractResource', 'get.pre', function($e) use ($test) {
+            $test->getAbstract = true;
+        });
+        StaticEventManager::getInstance()->attach('mwop\Resource\EntryResource', 'getEntries.pre', function($e) use ($test) {
+            $test->getEntries = true;
+        });
+        $this->resource->get('foo');
+        $this->assertTrue($test->get);
+        $this->assertTrue($test->getAbstract);
+        $this->resource->getEntries();
+        $this->assertTrue($test->getEntries);
+    }
 }
