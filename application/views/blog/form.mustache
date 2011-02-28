@@ -1,0 +1,36 @@
+{{!form}}
+{{%IMPLICIT-ITERATOR}}
+<form class="blog" action="{{url}}" method="post">
+<dl>
+    <dt><label for="title">Title</label></dt>
+    <dd>
+        <input name="title" type="text" value="" />
+        {{#errors}}
+            {{#title}}
+                <li>{{.}}</li>
+            {{/title}}
+        {{/errors}}
+    </dd>
+
+    <dt><label for="author">Author</label></dt>
+    <dd>
+        <input name="author" type="text" value="" />
+        {{#errors}}
+            {{#author}}
+                <li>{{.}}</li>
+            {{/author}}
+        {{/errors}}
+    </dd>
+
+    <dt><label for="body">Content</label></dt>
+    <dd>
+        <textarea name="body"></textarea>
+        {{#errors}}
+            {{#body}}
+                <li>{{.}}</li>
+            {{/body}}
+        {{/errors}}
+    </dd>
+</dl>
+<input name="save" type="submit" value="Save" />
+</form>

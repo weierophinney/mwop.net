@@ -1,4 +1,22 @@
 mwop=/home/matthew/git/mwop CD=. filter="*.php *.xml *.txt" {
+ application=application {
+  .classmap
+  Blog=Blog {
+   Controller=Controller {
+    Entry.php
+   }
+  }
+  views=views {
+   layout.mustache
+   blog=blog {
+    create.mustache
+    delete.mustache
+    entity.mustache
+    form.mustache
+    list.mustache
+   }
+  }
+ }
  library=library {
   mwop=mwop {
    .classmap.php
@@ -8,6 +26,7 @@ mwop=/home/matthew/git/mwop CD=. filter="*.php *.xml *.txt" {
     SignalHandler.php
    }
    Controller=Controller {
+    Front.php
     Restful.php
    }
    DataSource=DataSource {
@@ -31,6 +50,17 @@ mwop=/home/matthew/git/mwop CD=. filter="*.php *.xml *.txt" {
     Timestamp.php
     Timezone.php
    }
+   Mvc=Mvc {
+    Exception.php
+    Router.php
+    Exception=Exception {
+     InvalidRequestException.php
+     InvalidRouteException.php
+    }
+    Router=Router {
+     RegexRoute.php
+    }
+   }
    Resource=Resource {
     AbstractResource.php
     Collection.php
@@ -45,8 +75,18 @@ mwop=/home/matthew/git/mwop CD=. filter="*.php *.xml *.txt" {
     Query.php
     Resource.php
     ResourceCollection.php
+    Route.php
+    RouteStack.php
     Validatible.php
    }
+  }
+ }
+ public=public {
+  .htaccess
+  index.php
+  test.html
+  cgi-bin=cgi-bin {
+   php-5.3.3
   }
  }
  tests=tests CD=. {
