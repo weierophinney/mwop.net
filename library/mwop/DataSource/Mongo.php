@@ -3,10 +3,13 @@ namespace mwop\DataSource;
 
 use mwop\Stdlib\DataSource,
     mwop\Stdlib\Query as QueryDefinition,
-    MongoCollection;
+    MongoCollection,
+    Zend\EventManager\EventCollection,
+    Zend\EventManager\EventManager;
 
 class Mongo implements DataSource
 {
+    protected $events;
     protected $mongo;
     protected $insertOptions = array(
         'safe'  => true, 
@@ -24,13 +27,25 @@ class Mongo implements DataSource
         'justOne'  => true,
     );
 
-    public function __construct($options)
+    public function __construct($options = null)
     {
         if ($options instanceof MongoCollection) {
             $this->setConnection($options);
         } elseif (is_array($options) || $options instanceof \Traversable) {
             $this->setOptions($options);
         }
+    }
+
+    public function events(EventCollection $events = null)
+    {
+        if (null !== $events) {
+            $this->events = $events;
+        } elseif (null === $this->events) {
+            $this->events = new EventManager(array(
+                __CLASS__, get_called_class()
+            ));
+        }
+        return $this->events;
     }
 
     public function setOptions($options)
@@ -163,8 +178,15 @@ class Mongo implements DataSource
      */
     public function query(QueryDefinition $query)
     {
+        $params   = compact('query');
+        $events   = $this->events();
+        $events->trigger(__FUNCTION__ . '.pre', $this, $params);
+
         $parser   = new Mongo\QueryParser($query);
         $criteria = $parser->getCriteria();
+
+        $params['criteria'] = $criteria;
+        $events->trigger(__FUNCTION__ . '.criteria', $this, $params);
         $cursor   = $this->getConnection()->find($criteria);
         if (false !== ($sort = $parser->getSort())) {
             $cursor->sort($sort);
@@ -175,6 +197,8 @@ class Mongo implements DataSource
         if (false !== ($limit = $parser->getLimit())) {
             $cursor->limit($limit);
         }
+        $params['cursor'] = $cursor;
+        $events->trigger(__FUNCTION__ . '.post', $this, $params);
         return $cursor;
     }
 

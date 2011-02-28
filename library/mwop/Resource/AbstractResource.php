@@ -59,7 +59,8 @@ abstract class AbstractResource implements Resource, AclResource
         }
 
         $items = $this->getDataSource()->query(new Query());
-        if (empty($items)) {
+        $this->events()->trigger(__FUNCTION__ . '.post-query', $this, array('items' => $items));
+        if (is_scalar($items) && empty($items)) {
             $items = array();
         }
 

@@ -2,6 +2,7 @@
 namespace mwop\Resource;
 
 use mwop\Stdlib\ResourceCollection,
+    mwop\Stdlib\Entity,
     Iterator;
 
 class Collection implements ResourceCollection
@@ -56,5 +57,32 @@ class Collection implements ResourceCollection
     public function rewind()
     {
         reset($this->items);
+    }
+
+    /**
+     * Cast collection to multi-dimensional array
+     * 
+     * @return array
+     */
+    public function toArray()
+    {
+        $items = array();
+        foreach ($this as $key => $value) {
+            $items[$key] = $value->toArray();
+        }
+        return $items;
+    }
+
+    /**
+     * Populate from an array
+     * 
+     * @param  array $collection 
+     * @return Collection
+     */
+    public function fromArray(array $collection)
+    {
+        $this->items = $collection;
+        $this->count = count($collection);
+        return $this;
     }
 }
