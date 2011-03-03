@@ -6,3 +6,12 @@ Requirements
 - Fig library (https://github.com/weierophinney/fig-library.git)
   Use the "zf-implementation" branch.
   Install or symlink the library/Fig/ directory to library/Fig/.
+
+Using subtree merges
+====================
+
+- ZF2
+  - From projects/zf2 branch:
+    git subtree split --prefix=library --annotate="[zf2] " --rejoin -b subtrees/zf2
+  - From master:
+    git subtree merge --prefix=library/zf2 --squash subtrees/zf2
