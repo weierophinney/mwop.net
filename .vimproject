@@ -1,6 +1,6 @@
 mwop=/home/matthew/git/mwop CD=. filter="*.php *.xml *.txt" {
  application=application {
-  .classmap
+  .classmap.php
   Blog=Blog {
    Controller=Controller {
     Entry.php

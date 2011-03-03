@@ -10,7 +10,7 @@ use PHPUnit_Framework_TestCase as TestCase,
     DateInterval,
     Mongo;
 
-class EntryResourceTest extends TestCase
+class MongoIntegrationTest extends TestCase
 {
     public function setUp()
     {

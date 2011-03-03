@@ -1,21 +1,12 @@
 <?php
-require_once __DIR__ . '/../library/Zend/Loader/ClassMapAutoloader.php';
+require_once __DIR__ . '/../library/zf2/Zend/Loader/ClassMapAutoloader.php';
 $classmap = new Zend\Loader\ClassMapAutoloader(array(
-    __DIR__ . '/../library/Zend/.classmap.php',
-    __DIR__ . '/../library/mwop/.classmap.php',
+    __DIR__ . '/../library/.classmap.php',
     __DIR__ . '/../application/.classmap.php',
 ));
 $classmap->register();
 
 require_once __DIR__ . '/../library/Phly/Mustache/_autoload.php';
-
-$standard = new Zend\Loader\StandardAutoloader(array(
-    'namespaces' => array(
-        'Fig'  => '/home/matthew/git/fig-library/library/Fig',
-        'Zend' => '/home/matthew/git/fig-library/library/Zend',
-    ),
-));
-$standard->register();
 
 $logger = Zend\Log\Logger::factory(array(
     array(
