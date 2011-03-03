@@ -2,7 +2,9 @@
 <div class="content">
     <ul class="entity_list">
     {{#entities}}
-        <li><b><a href="/blog/{{id}}">{{title}}</a></b></li>
+    <li><h4><a href="/blog/{{id}}">{{title}}</a></h4>
+        <div class="body">{{{body}}}</div>
+    </li>
     {{/entities}}
     </ul>
 </div>

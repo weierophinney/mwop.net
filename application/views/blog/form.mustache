@@ -31,6 +31,16 @@
             {{/body}}
         {{/errors}}
     </dd>
+
+    <dt><label for="extended">Extended Content</label></dt>
+    <dd>
+        <textarea name="extended"></textarea>
+        {{#errors}}
+            {{#extended}}
+                <li>{{.}}</li>
+            {{/extended}}
+        {{/errors}}
+    </dd>
 </dl>
 <input name="save" type="submit" value="Save" />
 </form>

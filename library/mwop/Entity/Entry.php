@@ -26,6 +26,7 @@ class Entry implements EntityDefinition
     protected $id;
     protected $title;
     protected $body = '';
+    protected $extended = '';
     protected $author;
     protected $isDraft = true;
     protected $isPublic = true;
@@ -174,6 +175,28 @@ class Entry implements EntityDefinition
     public function getBody()
     {
         return $this->body;
+    }
+
+    /**
+     * Set value for extended body
+     *
+     * @param  string $value
+     * @return Entry
+     */
+    public function setExtended($value)
+    {
+        $this->extended = $value;
+        return $this;
+    }
+    
+    /**
+     * Get value for extended body
+     *
+     * @return string
+     */
+    public function getExtended()
+    {
+        return $this->extended;
     }
 
     /**
@@ -430,6 +453,7 @@ class Entry implements EntityDefinition
             'id'        => $this->getId(),
             'title'     => $this->getTitle(),
             'body'      => $this->getBody(),
+            'extended'  => $this->getExtended(),
             'author'    => $this->getAuthor(),
             'is_draft'  => $this->isDraft(),
             'is_public' => $this->isPublic(),
@@ -458,6 +482,7 @@ class Entry implements EntityDefinition
                 case 'id':
                 case 'title':
                 case 'body':
+                case 'extended':
                 case 'author':
                 case 'created':
                 case 'updated':
