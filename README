@@ -1,16 +1,43 @@
-Requirements
-============
+PURPOSE
+=======
 
-- ZF2 library (https://github.com/zendframework/zf2.git)
-  Install or symlink the library/Zend/ directory to library/Zend/.
-- Fig library (https://github.com/weierophinney/fig-library.git)
-  Use the "zf-implementation" branch.
-  Install or symlink the library/Fig/ directory to library/Fig/.
+This is a demonstration app, used for two purposes:
 
-Using subtree merges
-====================
+ * Sandbox for playing with model ideas, using a blog as the example
+ * Sandbox for prototyping ZF2 MVC ideas
 
-- ZF2
+The code does not work completely and makes a number of assumptions (e.g.,
+you're using PHP 5.3; ext/mongo is installed, and running on default ports;
+etc.). Some ideas are very much in flux (input validation and forms), others are
+relatively stable (event manager usage).
+
+Updating subtree merges
+=======================
+
+- library/Fig
+  - projects/fig branch tracks feature/zf-implementation branch of 
+    https://github.com/weierophinney/fig-library.git
+  - From projects/fig branch:
+    git subtree split --prefix=library/Fig --annotate="[fig] " --rejoin -b subtrees/fig
+  - From master:
+    git subtree merge --prefix=library/Fig --squash subtrees/fig
+- library/Zend
+  - projects/fig branch tracks feature/zf-implementation branch of 
+    https://github.com/weierophinney/fig-library.git
+  - From projects/fig branch:
+    git subtree split --prefix=library/Zend --annotate="[fig_zend] " --rejoin -b subtrees/fig_zend
+  - From master:
+    git subtree merge --prefix=library/Zend --squash subtrees/fig_zend
+- library/Phly
+  - projects/mustache branch tracks master branch of 
+    https://github.com/weierophinney/phly_mustache.git
+  - From projects/mustache branch:
+    git subtree split --prefix=library/Phly --annotate="[mustache] " --rejoin -b subtrees/mustache
+  - From master:
+    git subtree merge --prefix=library/Phly --squash subtrees/mustache
+- library/zf2
+  - projects/zf2 branch tracks master branch of
+    https://github.com/zendframework/zf2.git
   - From projects/zf2 branch:
     git subtree split --prefix=library --annotate="[zf2] " --rejoin -b subtrees/zf2
   - From master:
