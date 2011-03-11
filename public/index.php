@@ -31,34 +31,49 @@ $logger->info('Logger initialized');
 $di = new DiC();
 $injector = $di->getInjector();
 
-$blogCreateFormRoute = new DiDefinition('mwop\Mvc\Router\RegexRoute');
-$blogCreateFormRoute->setParam('regex', '#^/(?P<controller>blog)/admin/(?P<action>create)#')
-                    ->setParam('spec', '/blog/admin/create');
-$blogRoute = new DiDefinition('mwop\Mvc\Router\RegexRoute');
-$blogRoute->setParam('regex', '#^/(?P<controller>blog)(/(?P<id>[^/]+))?#')
-          ->setParam('spec', '/blog/{id}');
 $router = new DiDefinition('mwop\Mvc\Router');
 $router->addMethodCall('addRoutes', array(
     array(
-        'blog-create-form' => new DiReference('route-blog-create-form'),
-        'blog'             => new DiReference('route-blog'),
+        'blog-create-form' => array(
+            'params' => array(
+                '#^/(?P<controller>blog)/admin/(?P<action>create)#',
+                '/blog/admin/create',
+            ),
+        ),
+        'blog'             => array(
+            'params' => array(
+                '#^/(?P<controller>blog)(/(?P<id>[^/]+))?#',
+                '/blog/{id}',
+            ),
+        ),
     ),
 ));
 
-$injector->setDefinition($blogCreateFormRoute, 'route-blog-create-form')
-         ->setDefinition($blogRoute, 'route-blog')
-         ->setDefinition($router, 'router');
+$injector->setDefinition($router, 'router');
 
-$di->set('mongo-collection-entries', function() {
-    $mongo      = new Mongo();
-    $mongoDb    = $mongo->mwoptest;
-    $collection = $mongoDb->entries;
-    return $collection;
-});
+$mongoCxn = new DiDefinition('Mongo');
+$mongoDb  = new DiDefinition('MongoDB');
+$mongoDb->setParam('conn', new DiReference('mongocxn'))
+        ->setParam('name', 'mwoptest')
+        ->setParamMap(array(
+            'conn' => 0,
+            'name' => 1,
+        ));
+$mongoColl = new DiDefinition('MongoCollection');
+$mongoColl->setParam('db', new DiReference('mongodb'))
+          ->setParam('name', 'entries')
+          ->setParamMap(array(
+              'db'   => 0,
+              'name' => 1,
+          ));
+$injector->setDefinition($mongoCxn,  'mongocxn')
+         ->setDefinition($mongoDb,   'mongodb')
+         ->setDefinition($mongoColl, 'mongo-collection-entries');
+
 $mongo          = new DiDefinition('mwop\DataSource\Mongo');
 $mongo->setParam('options', new DiReference('mongo-collection-entries'))
       ->setParamMap(array('options' => 0));
-$entryResource  = new DiDefinition('mwop\Resource\Entry');
+$entryResource  = new DiDefinition('mwop\Resource\EntryResource');
 $entryResource->addMethodCall('setDataSource', array(
                     new DiReference('data-source'),
                 ))

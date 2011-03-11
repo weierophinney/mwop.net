@@ -11,20 +11,11 @@ class Entry extends RestfulController
 {
     public function resource(Resource $resource = null)
     {
-        $params = compact('resource');
-        $this->events()->trigger(__FUNCTION__ . '.pre', $this, $params);
         if (null !== $resource) {
-            $this->events()->trigger(__FUNCTION__ . '.set', $this, $params);
+            if (!$resource instanceof EntryResource) {
+                throw new \DomainException('Entry controller expects an Entry resource');
+            }
             $this->resource = $resource;
-        } elseif (null === $this->resource) {
-            $this->events()->trigger(__FUNCTION__ . '.init', $this, $params);
-            $this->resource = new EntryResource();
-            $mongo      = new Mongo();
-            $mongoDb    = $mongo->mwoptest;
-            $collection = $mongoDb->entries;
-            $dataSource = new MongoDataSource($collection);
-            $this->resource->setDataSource($dataSource)
-                           ->setCollectionClass('mwop\Resource\MongoCollection');
         }
         return $this->resource;
     }

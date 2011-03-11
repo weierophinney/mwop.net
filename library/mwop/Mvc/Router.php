@@ -6,7 +6,8 @@ use ArrayObject,
     Zend\EventManager\EventCollection,
     Zend\EventManager\EventManager,
     mwop\Stdlib\Route,
-    mwop\Stdlib\RouteStack;
+    mwop\Stdlib\RouteStack,
+    ReflectionClass;
 
 class Router extends ArrayObject implements RouteStack
 {
@@ -82,6 +83,13 @@ class Router extends ArrayObject implements RouteStack
     public function addRoutes($routes)
     {
         foreach ($routes as $name => $route) {
+            if (is_array($route) 
+                || (!($route instanceof Route)
+                    && $route instanceof \Traversable
+                )
+            ) {
+                $route = $this->getRouteFromConfig($route);
+            }
             $this->addRoute($route, $name);
         }
         return $this;
@@ -90,5 +98,25 @@ class Router extends ArrayObject implements RouteStack
     public function getCurrentRoute()
     {
         return $this->current;
+    }
+
+    protected function getRouteFromConfig($config)
+    {
+        $class  = __NAMESPACE__ . '\Router\RegexRoute';
+        $params = array();
+        foreach ($config as $key => $value) {
+            switch ($key) {
+                case 'class':
+                    $class = $value;
+                    break;
+                case 'params':
+                    $params = $value;
+                    break;
+                default:
+                    break;
+            }
+        }
+        $r = new ReflectionClass($class);
+        return $r->newInstanceArgs($params);
     }
 }
