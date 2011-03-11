@@ -8,7 +8,13 @@ $classmap->register();
 
 require_once __DIR__ . '/../library/Phly/Mustache/_autoload.php';
 
-$logger = Zend\Log\Logger::factory(array(
+use Zend\Log\Logger,
+    mwop\Controller\Front as FrontController,
+    Zend\Di\DependencyInjectionContainer as DiC,
+    Zend\Di\Definition as DiDefinition,
+    Zend\Di\Reference as DiReference;
+
+$logger = Logger::factory(array(
     array(
         'writerName'   => 'Stream',
         'writerParams' => array(
@@ -22,19 +28,50 @@ $logger = Zend\Log\Logger::factory(array(
 ));
 $logger->info('Logger initialized');
 
-$router = new mwop\Mvc\Router();
-$router->addRoute(new mwop\Mvc\Router\RegexRoute(
-    '#^/(?P<controller>blog)/admin/(?P<action>create)#',
-    '/blog/admin/create'
-), 'blog-create-form');
-$router->addRoute(new mwop\Mvc\Router\RegexRoute(
-    '#^/(?P<controller>blog)(/(?P<id>[^/]+))?#',
-    '/blog/{id}'
-), 'blog');
+$di = new DiC();
+$injector = $di->getInjector();
 
-$front = new mwop\Controller\Front();
-$front->addControllerMap('blog', 'Blog\Controller\Entry')
-      ->router($router);
+$blogCreateFormRoute = new DiDefinition('mwop\Mvc\Router\RegexRoute');
+$blogCreateFormRoute->setParam('regex', '#^/(?P<controller>blog)/admin/(?P<action>create)#')
+                    ->setParam('spec', '/blog/admin/create');
+$blogRoute = new DiDefinition('mwop\Mvc\Router\RegexRoute');
+$blogRoute->setParam('regex', '#^/(?P<controller>blog)(/(?P<id>[^/]+))?#')
+          ->setParam('spec', '/blog/{id}');
+$router = new DiDefinition('mwop\Mvc\Router');
+$router->addMethodCall('addRoutes', array(
+    array(
+        'blog-create-form' => new DiReference('route-blog-create-form'),
+        'blog'             => new DiReference('route-blog'),
+    ),
+));
+
+$injector->setDefinition($blogCreateFormRoute, 'route-blog-create-form')
+         ->setDefinition($blogRoute, 'route-blog')
+         ->setDefinition($router, 'router');
+
+$di->set('mongo-collection-entries', function() {
+    $mongo      = new Mongo();
+    $mongoDb    = $mongo->mwoptest;
+    $collection = $mongoDb->entries;
+    return $collection;
+});
+$mongo          = new DiDefinition('mwop\DataSource\Mongo');
+$mongo->setParam('options', new DiReference('mongo-collection-entries'))
+      ->setParamMap(array('options' => 0));
+$entryResource  = new DiDefinition('mwop\Resource\Entry');
+$entryResource->addMethodCall('setDataSource', array(
+                    new DiReference('data-source'),
+                ))
+              ->addMethodCall('setCollectionClass', array('mwop\Resource\MongoCollection'));
+$blogController = new DiDefinition('Blog\Controller\Entry');
+$blogController->addMethodCall('resource', array(new DiReference('resource-entry')));
+
+$injector->setDefinition($mongo, 'data-source')
+         ->setDefinition($entryResource, 'resource-entry')
+         ->setDefinition($blogController);
+
+$front = new mwop\Controller\Front($di);
+$front->addControllerMap('blog', 'Blog\Controller\Entry');
 
 $view = new Phly\Mustache\Mustache();
 $view->setTemplatePath(__DIR__ . '/../application/views');

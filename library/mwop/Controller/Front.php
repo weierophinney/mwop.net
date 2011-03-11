@@ -8,6 +8,7 @@ use mwop\Stdlib\Dispatchable,
     Zend\Http\Response as HttpResponse,
     Zend\EventManager\EventCollection,
     Zend\EventManager\EventManager,
+    Zend\Di\ServiceLocation,
     mwop\Stdlib\RouteStack,
     mwop\Mvc\Router;
 
@@ -17,13 +18,22 @@ class Front implements Dispatchable
     protected $events;
     protected $response;
     protected $router;
+    protected $services;
+
+    public function __construct(ServiceLocation $services)
+    {
+        $this->services = $services;
+    }
 
     public function events(EventCollection $events = null)
     {
         if (null !== $events) {
             $this->events = $events;
         } elseif (null === $this->events) {
-            $this->events = new EventManager(array(__CLASS__, get_called_class()));
+            if (!($events = $this->services->get('events'))) {
+                $events = new EventManager(array(__CLASS__, get_called_class()));
+            }
+            $this->events = $events;
         }
         return $this->events;
     }
@@ -33,7 +43,10 @@ class Front implements Dispatchable
         if (null !== $router) {
             $this->router = $router;
         } elseif (null === $this->router) {
-            $this->router = new Router();
+            if (!($router = $this->services->get('router'))) {
+                $router = new Router();
+            }
+            $this->router = $router;
         }
         return $this->router;
     }
@@ -43,7 +56,10 @@ class Front implements Dispatchable
         if (null !== $response) {
             $this->response = $response;
         } elseif (null === $this->response) {
-            $this->response = new HttpResponse();
+            if (!($response = $this->services->get('response'))) {
+                $response = new HttpResponse();
+            }
+            $this->response = $response;
         }
         return $this->response;
     }
@@ -111,7 +127,7 @@ class Front implements Dispatchable
         }
 
         $controllerClass = $this->controllerMap[$controller];
-        $dispatchable = new $controllerClass();
+        $dispatchable = $this->services->get($controllerClass);
         if (!$dispatchable instanceof Dispatchable) {
             throw new \DomainException(sprintf(
                 'Invalid controller "%s" mapped; does not implement Dispatchable',
