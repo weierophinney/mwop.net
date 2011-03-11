@@ -42,3 +42,10 @@ Updating subtree merges
     git subtree split --prefix=library --annotate="[zf2] " --rejoin -b subtrees/zf2
   - From master:
     git subtree merge --prefix=library/zf2 --squash subtrees/zf2
+- library/zf2-di
+  - projects/zf2-di branch tracks projects/zf2.di branch of 
+    https://github.com/weierophinney/zf-examples
+  - From projects/zf2-di branch:
+    git subtree split --prefix=zf2-di/library --annotate="[zf2.di] " --rejoin -b subtrees/zf2-di
+  - From master (originally feature/di-mvc):
+    git subtree merge --prefix=library/zf2-di --squash subtrees/zf2-di
