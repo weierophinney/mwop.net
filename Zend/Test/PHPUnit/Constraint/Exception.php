@@ -17,12 +17,11 @@
  * @subpackage PHPUnit
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Test\PHPUnit\Constraint;
+/** @see PHPUnit_Framework_ExpectationFailedException */
+require_once 'PHPUnit/Framework/ExpectationFailedException.php';
 
 /**
  * Zend_Test_PHPUnit_Constraint_Exception
@@ -34,6 +33,6 @@ namespace Zend\Test\PHPUnit\Constraint;
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-interface Exception extends \Zend\Test\PHPUnit\Exception
+class Zend_Test_PHPUnit_Constraint_Exception extends PHPUnit_Framework_ExpectationFailedException
 {
 }

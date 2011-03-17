@@ -17,25 +17,27 @@
  * @subpackage Framework
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Tool_Framework_Metadata_Interface
  */
-namespace Zend\Tool\Framework\Metadata;
-
-use Zend\Tool\Framework\Metadata;
+require_once 'Zend/Tool/Framework/Metadata/Interface.php';
 
 /**
- * @uses       \Zend\Tool\Framework\Metadata\Attributable
- * @uses       \Zend\Tool\Framework\Metadata
- * @uses       \Zend\Tool\Framework\Registry\Exception
+ * @see Zend_Tool_Framework_Metadata_Attributable
+ */
+require_once 'Zend/Tool/Framework/Metadata/Attributable.php';
+
+/**
  * @category   Zend
  * @package    Zend_Tool
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Dynamic implements Metadata, Attributable
+class Zend_Tool_Framework_Metadata_Dynamic
+    implements Zend_Tool_Framework_Metadata_Interface, Zend_Tool_Framework_Metadata_Attributable
 {
 
     /**
@@ -64,7 +66,7 @@ class Dynamic implements Metadata, Attributable
             $this->setOptions($options);
         }
     }
-    
+
     public function setOptions(Array $options = array())
     {
         foreach ($options as $optName => $optValue) {
@@ -72,19 +74,19 @@ class Dynamic implements Metadata, Attributable
             $this->{$methodName}($optValue);
         }
     }
-    
+
     /**
      * setType()
-     * 
-     * @param $type
-     * @return \Zend\Tool\Framework\Metadata\Dynamic
+     *
+     * @param string $type
+     * @return Zend_Tool_Framework_Metadata_Dynamic
      */
     public function setType($type)
     {
         $this->_type = $type;
         return $this;
     }
-    
+
     /**
      * getType()
      *
@@ -99,16 +101,16 @@ class Dynamic implements Metadata, Attributable
 
     /**
      * setName()
-     * 
-     * @param $name
-     * @return \Zend\Tool\Framework\Metadata\Dynamic
+     *
+     * @param string $name
+     * @return Zend_Tool_Framework_Metadata_Dynamic
      */
     public function setName($name)
     {
         $this->_name = $name;
         return $this;
     }
-    
+
     /**
      * getName()
      *
@@ -123,16 +125,16 @@ class Dynamic implements Metadata, Attributable
 
     /**
      * setValue()
-     * 
-     * @param $value
-     * @return \Zend\Tool\Framework\Metadata\Dynamic
+     *
+     * @param mixed $value
+     * @return Zend_Tool_Framework_Metadata_Dynamic
      */
     public function setValue($value)
     {
         $this->_value = $value;
         return $this;
     }
-    
+
     /**
      * getValue()
      *
@@ -188,7 +190,8 @@ class Dynamic implements Metadata, Attributable
         } elseif (array_key_exists($name, $this->_dynamicAttributes)) {
             return $this->_dynamicAttributes[$name];
         } else {
-            throw new \Zend\Tool\Framework\Exception\InvalidArgumentException('Property ' . $name . ' was not located in this metadata.');
+            require_once 'Zend/Tool/Framework/Registry/Exception.php';
+            throw new Zend_Tool_Framework_Registry_Exception('Property ' . $name . ' was not located in this metadata.');
         }
     }
 
@@ -207,6 +210,10 @@ class Dynamic implements Metadata, Attributable
             $this->_dynamicAttributes[$name] = $value;
             return $this;
         }
+//        {
+//            require_once 'Zend/Tool/Framework/Registry/Exception.php';
+//            throw new Zend_Tool_Framework_Registry_Exception('Property ' . $name . ' was not located in this registry.');
+//        }
     }
 
 }

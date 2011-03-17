@@ -17,25 +17,28 @@
  * @subpackage Zend_Cache_Backend
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Cache\Backend;
-use Zend\Cache,
-    Zend\Cache\Backend;
 
 /**
- * @uses       \Zend\Cache\Cache
- * @uses       \Zend\Cache\Backend
- * @uses       \Zend\Cache\Backend\AbstractBackend
+ * @see Zend_Cache_Backend_Interface
+ */
+require_once 'Zend/Cache/Backend/Interface.php';
+
+/**
+ * @see Zend_Cache_Backend
+ */
+require_once 'Zend/Cache/Backend.php';
+
+
+/**
  * @package    Zend_Cache
  * @subpackage Zend_Cache_Backend
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Xcache extends AbstractBackend implements Backend
+class Zend_Cache_Backend_Xcache extends Zend_Cache_Backend implements Zend_Cache_Backend_Interface
 {
 
     /**
@@ -64,13 +67,13 @@ class Xcache extends AbstractBackend implements Backend
      * Constructor
      *
      * @param  array $options associative array of options
-     * @throws \Zend\Cache\Exception
+     * @throws Zend_Cache_Exception
      * @return void
      */
     public function __construct(array $options = array())
     {
         if (!extension_loaded('xcache')) {
-            Cache\Cache::throwException('The xcache extension must be loaded for using this backend !');
+            Zend_Cache::throwException('The xcache extension must be loaded for using this backend !');
         }
         parent::__construct($options);
     }
@@ -158,13 +161,13 @@ class Xcache extends AbstractBackend implements Backend
      *
      * @param  string $mode clean mode
      * @param  array  $tags array of tags
-     * @throws \Zend\Cache\Exception
+     * @throws Zend_Cache_Exception
      * @return boolean true if no problem
      */
-    public function clean($mode = Cache\CacheCache\Cache::CLEANING_MODE_ALL, $tags = array())
+    public function clean($mode = Zend_Cache::CLEANING_MODE_ALL, $tags = array())
     {
         switch ($mode) {
-            case Cache\Cache::CLEANING_MODE_ALL:
+            case Zend_Cache::CLEANING_MODE_ALL:
                 // Necessary because xcache_clear_cache() need basic authentification
                 $backup = array();
                 if (isset($_SERVER['PHP_AUTH_USER'])) {
@@ -179,23 +182,28 @@ class Xcache extends AbstractBackend implements Backend
                 if ($this->_options['password']) {
                     $_SERVER['PHP_AUTH_PW'] = $this->_options['password'];
                 }
-                xcache_clear_cache(XC_TYPE_VAR, 0);
+
+                $cnt = xcache_count(XC_TYPE_VAR);
+                for ($i=0; $i < $cnt; $i++) {
+                    xcache_clear_cache(XC_TYPE_VAR, $i);
+                }
+
                 if (isset($backup['PHP_AUTH_USER'])) {
                     $_SERVER['PHP_AUTH_USER'] = $backup['PHP_AUTH_USER'];
                     $_SERVER['PHP_AUTH_PW'] = $backup['PHP_AUTH_PW'];
                 }
                 return true;
                 break;
-            case Cache\Cache::CLEANING_MODE_OLD:
+            case Zend_Cache::CLEANING_MODE_OLD:
                 $this->_log("Zend_Cache_Backend_Xcache::clean() : CLEANING_MODE_OLD is unsupported by the Xcache backend");
                 break;
-            case Cache\Cache::CLEANING_MODE_MATCHING_TAG:
-            case Cache\Cache::CLEANING_MODE_NOT_MATCHING_TAG:
-            case Cache\Cache::CLEANING_MODE_MATCHING_ANY_TAG:
+            case Zend_Cache::CLEANING_MODE_MATCHING_TAG:
+            case Zend_Cache::CLEANING_MODE_NOT_MATCHING_TAG:
+            case Zend_Cache::CLEANING_MODE_MATCHING_ANY_TAG:
                 $this->_log(self::TAGS_UNSUPPORTED_BY_CLEAN_OF_XCACHE_BACKEND);
                 break;
             default:
-                Cache\Cache::throwException('Invalid mode for clean() method');
+                Zend_Cache::throwException('Invalid mode for clean() method');
                 break;
         }
     }

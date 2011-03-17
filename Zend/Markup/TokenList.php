@@ -16,22 +16,21 @@
  * @package    Zend_Markup
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Markup_Token
  */
-namespace Zend\Markup;
+require_once 'Zend/Markup/Token.php';
 
 /**
- * @uses       RecursiveIterator
- * @uses       \Zend\Markup\Token
  * @category   Zend
  * @package    Zend_Markup
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class TokenList implements \RecursiveIterator
+class Zend_Markup_TokenList implements RecursiveIterator
 {
 
     /**
@@ -44,7 +43,7 @@ class TokenList implements \RecursiveIterator
     /**
      * Get the current token
      *
-     * @return \Zend\Markup\Token
+     * @return Zend_Markup_Token
      */
     public function current()
     {
@@ -54,7 +53,7 @@ class TokenList implements \RecursiveIterator
     /**
      * Get the children of the current token
      *
-     * @return \Zend\Markup\TokenList
+     * @return Zend_Markup_TokenList
      */
     public function getChildren()
     {
@@ -64,11 +63,11 @@ class TokenList implements \RecursiveIterator
     /**
      * Add a new child token
      *
-     * @param \Zend\Markup\Token $child
+     * @param Zend_Markup_Token $child
      *
      * @return void
      */
-    public function addChild(Token $child)
+    public function addChild(Zend_Markup_Token $child)
     {
         $this->_tokens[] = $child;
     }
@@ -96,7 +95,7 @@ class TokenList implements \RecursiveIterator
     /**
      * Go to the next token
      *
-     * @return \Zend\Markup\Token
+     * @return Zend_Markup_Token
      */
     public function next()
     {

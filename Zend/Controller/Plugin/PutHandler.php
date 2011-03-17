@@ -17,33 +17,37 @@
  * @subpackage Zend_Controller_Plugin
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Controller_Plugin_Abstract
  */
-namespace Zend\Controller\Plugin;
+require_once 'Zend/Controller/Plugin/Abstract.php';
+
+/**
+ * @see Zend_Controller_Request_Http
+ */
+require_once 'Zend/Controller/Request/Http.php';
 
 /**
  * Plugin to digest PUT request body and make params available just like POST
  *
- * @uses       \Zend\Controller\Plugin\AbstractPlugin
- * @uses       \Zend\Controller\Request\Http
  * @package    Zend_Controller
  * @subpackage Zend_Controller_Plugin
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class PutHandler extends AbstractPlugin
+class Zend_Controller_Plugin_PutHandler extends Zend_Controller_Plugin_Abstract
 {
     /**
      * Before dispatching, digest PUT request body and set params
      *
-     * @param \Zend\Controller\Request\AbstractRequest $request
+     * @param Zend_Controller_Request_Abstract $request
      */
-    public function preDispatch(\Zend\Controller\Request\AbstractRequest $request)
+    public function preDispatch(Zend_Controller_Request_Abstract $request)
     {
-        if (!$request instanceof \Zend\Controller\Request\Http) {
+        if (!$request instanceof Zend_Controller_Request_Http) {
             return;
         }
 

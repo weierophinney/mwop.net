@@ -17,33 +17,34 @@
  * @subpackage Plugin
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Wildfire\Plugin;
-use Zend\Wildfire,
-    Zend\Wildfire\Plugin\Exception;
+/** Zend_Controller_Request_Abstract */
+require_once('Zend/Controller/Request/Abstract.php');
+
+/** Zend_Controller_Response_Abstract */
+require_once('Zend/Controller/Response/Abstract.php');
+
+/** Zend_Wildfire_Channel_HttpHeaders */
+require_once 'Zend/Wildfire/Channel/HttpHeaders.php';
+
+/** Zend_Wildfire_Protocol_JsonStream */
+require_once 'Zend/Wildfire/Protocol/JsonStream.php';
+
+/** Zend_Wildfire_Plugin_Interface */
+require_once 'Zend/Wildfire/Plugin/Interface.php';
 
 /**
  * Primary class for communicating with the FirePHP Firefox Extension.
  *
- * @uses       ReflectionClass
- * @uses       \Zend\Controller\Request\AbstractRequest
- * @uses       \Zend\Controller\Response\AbstractResponse
- * @uses       \Zend\Loader
- * @uses       \Zend\Wildfire\Channel\HttpHeaders
- * @uses       \Zend\Wildfire\Exception
- * @uses       \Zend\Wildfire\Plugin
- * @uses       \Zend\Wildfire\Protocol\JsonStream
  * @category   Zend
  * @package    Zend_Wildfire
  * @subpackage Plugin
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class FirePhp implements Wildfire\Plugin
+class Zend_Wildfire_Plugin_FirePhp implements Zend_Wildfire_Plugin_Interface
 {
     /**
      * Plain log style.
@@ -104,7 +105,7 @@ class FirePhp implements Wildfire\Plugin
     /**
      * The protocol URI for this plugin
      */
-    const PROTOCOL_URI = Wildfire\Protocol\JsonStream::PROTOCOL_URI;
+    const PROTOCOL_URI = Zend_Wildfire_Protocol_JsonStream::PROTOCOL_URI;
 
     /**
      * The structure URI for the Dump structure
@@ -118,7 +119,7 @@ class FirePhp implements Wildfire\Plugin
 
     /**
      * Singleton instance
-     * @var \Zend\Wildfire\Plugin\FirePhp
+     * @var Zend_Wildfire_Plugin_FirePhp
      */
     protected static $_instance = null;
 
@@ -130,7 +131,7 @@ class FirePhp implements Wildfire\Plugin
 
     /**
      * The channel via which to send the encoded messages.
-     * @var \Zend\Wildfire\Channel
+     * @var Zend_Wildfire_Channel_Interface
      */
     protected $_channel = null;
 
@@ -167,24 +168,31 @@ class FirePhp implements Wildfire\Plugin
     /**
      * Create singleton instance.
      *
-     * @param string $class OPTIONAL Subclass of \Zend\Wildfire\Plugin\FirePhp
-     * @return \Zend\Wildfire\Plugin\FirePhp Returns the singleton \Zend\Wildfire\Plugin\FirePhp instance
-     * @throws \Zend\Wildfire\Exception
+     * @param string $class OPTIONAL Subclass of Zend_Wildfire_Plugin_FirePhp
+     * @return Zend_Wildfire_Plugin_FirePhp Returns the singleton Zend_Wildfire_Plugin_FirePhp instance
+     * @throws Zend_Wildfire_Exception
      */
     public static function init($class = null)
     {
         if (self::$_instance !== null) {
-            throw new Exception\RuntimeException('Singleton instance of Zend_Wildfire_Plugin_FirePhp already exists!');
+            require_once 'Zend/Wildfire/Exception.php';
+            throw new Zend_Wildfire_Exception('Singleton instance of Zend_Wildfire_Plugin_FirePhp already exists!');
         }
         if ($class !== null) {
             if (!is_string($class)) {
-                throw new Exception\InvalidArgumentException('Third argument is not a class string');
+                require_once 'Zend/Wildfire/Exception.php';
+                throw new Zend_Wildfire_Exception('Third argument is not a class string');
             }
 
+            if (!class_exists($class)) {
+                require_once 'Zend/Loader.php';
+                Zend_Loader::loadClass($class);
+            }
             self::$_instance = new $class();
-            if (!self::$_instance instanceof self) {
+            if (!self::$_instance instanceof Zend_Wildfire_Plugin_FirePhp) {
                 self::$_instance = null;
-                throw new Exception\InvalidArgumentException('Invalid class to third argument. Must be subclass of Zend_Wildfire_Plugin_FirePhp.');
+                require_once 'Zend/Wildfire/Exception.php';
+                throw new Zend_Wildfire_Exception('Invalid class to third argument. Must be subclass of Zend_Wildfire_Plugin_FirePhp.');
             }
         } else {
             self::$_instance = new self();
@@ -199,15 +207,15 @@ class FirePhp implements Wildfire\Plugin
      */
     protected function __construct()
     {
-        $this->_channel = Wildfire\Channel\HttpHeaders::getInstance();
+        $this->_channel = Zend_Wildfire_Channel_HttpHeaders::getInstance();
         $this->_channel->getProtocol(self::PROTOCOL_URI)->registerPlugin($this);
     }
 
     /**
      * Get or create singleton instance
      *
-     * @param $skipCreate boolean True if an instance should not be created
-     * @return \Zend\Wildfire\Plugin\FirePhp
+     * @param bool $skipCreate True if an instance should not be created
+     * @return Zend_Wildfire_Plugin_FirePhp
      */
     public static function getInstance($skipCreate=false)
     {
@@ -267,7 +275,7 @@ class FirePhp implements Wildfire\Plugin
     public function setOption($key, $value)
     {
       if (!array_key_exists($key,$this->_options)) {
-        throw new Exception\OutOfBoundsException('Option with name "'.$key.'" does not exist!');
+        throw new Zend_Wildfire_Exception('Option with name "'.$key.'" does not exist!');
       }
       $previous = $this->_options[$key];
       $this->_options[$key] = $value;
@@ -283,7 +291,7 @@ class FirePhp implements Wildfire\Plugin
     public function getOption($key)
     {
       if (!array_key_exists($key,$this->_options)) {
-        throw new Exception\OutOfBoundsException('Option with name "'.$key.'" does not exist!');
+        throw new Zend_Wildfire_Exception('Option with name "'.$key.'" does not exist!');
       }
       return $this->_options[$key];
     }
@@ -315,11 +323,12 @@ class FirePhp implements Wildfire\Plugin
      * Starts a group in the Firebug Console
      *
      * @param string $title The title of the group
+     * @param array $options OPTIONAL Setting 'Collapsed' to true will initialize group collapsed instead of expanded
      * @return TRUE if the group instruction was added to the response headers or buffered.
      */
-    public static function group($title)
+    public static function group($title, $options=array())
     {
-        return self::send(null, $title, self::GROUP_START);
+        return self::send(null, $title, self::GROUP_START, $options);
     }
 
     /**
@@ -341,7 +350,7 @@ class FirePhp implements Wildfire\Plugin
      * @param  string  $style  OPTIONAL Style of the log event.
      * @param  array  $options OPTIONAL Options to change how messages are processed and sent
      * @return boolean Returns TRUE if the variable was added to the response headers or buffered.
-     * @throws \Zend\Wildfire\Exception
+     * @throws Zend_Wildfire_Exception
      */
     public static function send($var, $label=null, $style=null, $options=array())
     {
@@ -351,7 +360,7 @@ class FirePhp implements Wildfire\Plugin
             return false;
         }
 
-        if ($var instanceof FirePhp\Message) {
+        if ($var instanceof Zend_Wildfire_Plugin_FirePhp_Message) {
 
             if ($var->getBuffered()) {
                 if (!in_array($var, self::$_instance->_messages)) {
@@ -388,7 +397,7 @@ class FirePhp implements Wildfire\Plugin
         $meta = array();
         $meta['Type'] = $style;
 
-        if ($var instanceof \Exception) {
+        if ($var instanceof Exception) {
 
             $eTrace = $var->getTrace();
             $eTrace = array_splice($eTrace, 0, $options['maxTraceDepth']);
@@ -458,7 +467,8 @@ class FirePhp implements Wildfire\Plugin
             case self::GROUP_END:
                 break;
             default:
-                throw new Exception\UnexpectedValueException('Log style "'.$meta['Type'].'" not recognized!');
+                require_once 'Zend/Wildfire/Exception.php';
+                throw new Zend_Wildfire_Exception('Log style "'.$meta['Type'].'" not recognized!');
                 break;
         }
 
@@ -466,7 +476,8 @@ class FirePhp implements Wildfire\Plugin
             if (!isset($meta['File']) || !isset($meta['Line'])) {
 
                 if (!$trace) {
-                    $trace = $firephp->_getStackTrace($options);
+                    $trace = $firephp->_getStackTrace(array_merge($options,
+                                                                  array('maxTraceDepth'=>$options['maxTraceDepth']+1)));
                 }
 
                 $meta['File'] = isset($trace[0]['file'])?$trace[0]['file']:'';
@@ -476,6 +487,12 @@ class FirePhp implements Wildfire\Plugin
         } else {
             unset($meta['File']);
             unset($meta['Line']);
+        }
+
+        if ($meta['Type'] == self::GROUP_START) {
+            if (isset($options['Collapsed'])) {
+                $meta['Collapsed'] = ($options['Collapsed'])?'true':'false';
+            }
         }
 
         if ($meta['Type'] == self::DUMP) {
@@ -504,7 +521,22 @@ class FirePhp implements Wildfire\Plugin
     {
         $trace = debug_backtrace();
 
-        return array_splice($trace, $options['traceOffset'], $options['maxTraceDepth']);
+        $trace = array_splice($trace, $options['traceOffset']);
+
+        if (!count($trace)) {
+            return $trace;
+        }
+
+        if (isset($options['fixZendLogOffsetIfApplicable']) && $options['fixZendLogOffsetIfApplicable']) {
+            if (count($trace) >=3 &&
+                isset($trace[0]['file']) && substr($trace[0]['file'], -7, 7)=='Log.php' &&
+                isset($trace[1]['function']) && $trace[1]['function']=='__call') {
+
+                $trace = array_splice($trace, 2);
+            }
+        }
+
+        return array_splice($trace, 0, $options['maxTraceDepth']);
     }
 
     /**
@@ -514,7 +546,7 @@ class FirePhp implements Wildfire\Plugin
      * @param array $data The data to be recorded
      * @param boolean $skipEncode TRUE if variable encoding should be skipped
      * @return boolean Returns TRUE if message was recorded
-     * @throws \Zend\Wildfire\Exception
+     * @throws Zend_Wildfire_Exception
      */
     protected function _recordMessage($structure, $data, $skipEncode=false)
     {
@@ -523,10 +555,12 @@ class FirePhp implements Wildfire\Plugin
             case self::STRUCTURE_URI_DUMP:
 
                 if (!isset($data['key'])) {
-                    throw new Exception\InvalidArgumentException('You must supply a key.');
+                    require_once 'Zend/Wildfire/Exception.php';
+                    throw new Zend_Wildfire_Exception('You must supply a key.');
                 }
                 if (!array_key_exists('data',$data)) {
-                    throw new Exception\InvalidArgumentException('You must supply data.');
+                    require_once 'Zend/Wildfire/Exception.php';
+                    throw new Zend_Wildfire_Exception('You must supply data.');
                 }
 
                 $value = $data['data'];
@@ -545,10 +579,12 @@ class FirePhp implements Wildfire\Plugin
                     !is_array($data['meta']) ||
                     !array_key_exists('Type',$data['meta'])) {
 
-                    throw new Exception\InvalidArgumentException('You must supply a "Type" in the meta information.');
+                    require_once 'Zend/Wildfire/Exception.php';
+                    throw new Zend_Wildfire_Exception('You must supply a "Type" in the meta information.');
                 }
                 if (!array_key_exists('data',$data)) {
-                    throw new Exception\InvalidArgumentException('You must supply data.');
+                    require_once 'Zend/Wildfire/Exception.php';
+                    throw new Zend_Wildfire_Exception('You must supply data.');
                 }
 
                 $value = $data['data'];
@@ -563,7 +599,8 @@ class FirePhp implements Wildfire\Plugin
                                                $value));
 
             default:
-                throw new Exception\InvalidArgumentException('Structure of name "'.$structure.'" is not recognized.');
+                require_once 'Zend/Wildfire/Exception.php';
+                throw new Zend_Wildfire_Exception('Structure of name "'.$structure.'" is not recognized.');
                 break;
         }
         return false;
@@ -642,7 +679,7 @@ class FirePhp implements Wildfire\Plugin
 
             $return['__className'] = $class = get_class($object);
 
-            $reflectionClass = new \ReflectionClass($class);
+            $reflectionClass = new ReflectionClass($class);
             $properties = array();
             foreach ( $reflectionClass->getProperties() as $property) {
                 $properties[$property->getName()] = $property;

@@ -16,26 +16,28 @@
  * @package    Zend_Mail
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
+
 /**
- * @namespace
+ * @see Zend_Mime_Decode
  */
-namespace Zend\Mail\Part;
-
-use Zend\Mail\Part,
-    Zend\Mime;
+require_once 'Zend/Mime/Decode.php';
 
 /**
- * @uses       \Zend\Mail\Exception
- * @uses       \Zend\Mail\Part
- * @uses       \Zend\Mime\Decode
+ * @see Zend_Mail_Part
+ */
+require_once 'Zend/Mail/Part.php';
+
+
+/**
  * @category   Zend
  * @package    Zend_Mail
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class File extends Part
+class Zend_Mail_Part_File extends Zend_Mail_Part
 {
     protected $_contentPos = array();
     protected $_partPos = array();
@@ -50,12 +52,16 @@ class File extends Part
      * - endPos   end position of message or part in file (default: end of file)
      *
      * @param   array $params  full message with or without headers
-     * @throws  \Zend\Mail\Exception
+     * @throws  Zend_Mail_Exception
      */
     public function __construct(array $params)
     {
         if (empty($params['file'])) {
-            throw new Exception\InvalidArgumentException('no file given in params');
+            /**
+             * @see Zend_Mail_Exception
+             */
+            require_once 'Zend/Mail/Exception.php';
+            throw new Zend_Mail_Exception('no file given in params');
         }
 
         if (!is_resource($params['file'])) {
@@ -64,7 +70,11 @@ class File extends Part
             $this->_fh = $params['file'];
         }
         if (!$this->_fh) {
-            throw new Exception\RuntimeException('could not open file');
+            /**
+             * @see Zend_Mail_Exception
+             */
+            require_once 'Zend/Mail/Exception.php';
+            throw new Zend_Mail_Exception('could not open file');
         }
         if (isset($params['startPos'])) {
             fseek($this->_fh, $params['startPos']);
@@ -75,8 +85,7 @@ class File extends Part
             $header .= $line;
         }
 
-        $body = null; // "Declare" variable since it's passed by reference
-        Mime\Decode::splitMessage($header, $this->_headers, $body);
+        Zend_Mime_Decode::splitMessage($header, $this->_headers, $null);
 
         $this->_contentPos[0] = ftell($this->_fh);
         if ($endPos !== null) {
@@ -91,7 +100,11 @@ class File extends Part
 
         $boundary = $this->getHeaderField('content-type', 'boundary');
         if (!$boundary) {
-            throw new Exception\RuntimeException('no boundary found in content type to split message');
+            /**
+             * @see Zend_Mail_Exception
+             */
+            require_once 'Zend/Mail/Exception.php';
+            throw new Zend_Mail_Exception('no boundary found in content type to split message');
         }
 
         $part = array();
@@ -103,7 +116,11 @@ class File extends Part
                 if (feof($this->_fh)) {
                     break;
                 }
-                throw new Exception\RuntimeException('error reading file');
+                /**
+                 * @see Zend_Mail_Exception
+                 */
+                require_once 'Zend/Mail/Exception.php';
+                throw new Zend_Mail_Exception('error reading file');
             }
 
             $lastPos = $pos;
@@ -134,7 +151,7 @@ class File extends Part
      * If part is multipart the raw content of this part with all sub parts is returned
      *
      * @return string body
-     * @throws \Zend\Mail\Exception
+     * @throws Zend_Mail_Exception
      */
     public function getContent($stream = null)
     {
@@ -161,14 +178,18 @@ class File extends Part
      * Get part of multipart message
      *
      * @param  int $num number of part starting with 1 for first part
-     * @return \Zend\Mail\Part wanted part
-     * @throws \Zend\Mail\Exception
+     * @return Zend_Mail_Part wanted part
+     * @throws Zend_Mail_Exception
      */
     public function getPart($num)
     {
         --$num;
         if (!isset($this->_partPos[$num])) {
-            throw new Exception\RuntimeException('part not found');
+            /**
+             * @see Zend_Mail_Exception
+             */
+            require_once 'Zend/Mail/Exception.php';
+            throw new Zend_Mail_Exception('part not found');
         }
 
         return new self(array('file' => $this->_fh, 'startPos' => $this->_partPos[$num][0],

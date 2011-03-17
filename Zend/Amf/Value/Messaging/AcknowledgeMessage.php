@@ -17,12 +17,11 @@
  * @subpackage Value
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Amf\Value\Messaging;
+/** Zend_Amf_Value_Messaging_AsyncMessage */
+require_once 'Zend/Amf/Value/Messaging/AsyncMessage.php';
 
 /**
  * This is the type of message returned by the MessageBroker
@@ -31,13 +30,12 @@ namespace Zend\Amf\Value\Messaging;
  *
  * flex.messaging.messages.AcknowledgeMessage
  *
- * @uses       \Zend\Amf\Value\Messaging\AsyncMessage
  * @package    Zend_Amf
  * @subpackage Value
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class AcknowledgeMessage extends AsyncMessage
+class Zend_Amf_Value_Messaging_AcknowledgeMessage extends Zend_Amf_Value_Messaging_AsyncMessage
 {
     /**
      * Create a new Acknowledge Message
@@ -51,7 +49,7 @@ class AcknowledgeMessage extends AsyncMessage
         $this->messageId   = $this->generateId();
         $this->timestamp   = time().'00';
         $this->timeToLive  = 0;
-        $this->headers     = new \STDClass();
+        $this->headers     = new STDClass();
         $this->body        = null;
 
         // correleate the two messages

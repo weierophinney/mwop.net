@@ -19,10 +19,8 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * @namespace
- */
-namespace Zend\Form\Decorator;
+/** Zend_Form_Decorator_Abstract */
+require_once 'Zend/Form/Decorator/Abstract.php';
 
 /**
  * Zend_Form_Decorator_Description
@@ -36,15 +34,14 @@ namespace Zend\Form\Decorator;
  *
  * Any other options passed will be used as HTML attributes of the HTML tag used.
  *
- * @uses       \Zend\Form\Decorator\AbstractDecorator
- * @uses       \Zend\Form\Decorator\HtmlTag
  * @category   Zend
  * @package    Zend_Form
  * @subpackage Decorator
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
-class Description extends AbstractDecorator
+class Zend_Form_Decorator_Description extends Zend_Form_Decorator_Abstract
 {
     /**
      * Whether or not to escape the description
@@ -68,7 +65,7 @@ class Description extends AbstractDecorator
      * Set HTML tag with which to surround description
      *
      * @param  string $tag
-     * @return \Zend\Form\Decorator\Description
+     * @return Zend_Form_Decorator_Description
      */
     public function setTag($tag)
     {
@@ -120,7 +117,7 @@ class Description extends AbstractDecorator
      * Set whether or not to escape description
      *
      * @param  bool $flag
-     * @return \Zend\Form\Decorator\Description
+     * @return Zend_Form_Decorator_Description
      */
     public function setEscape($flag)
     {
@@ -185,9 +182,10 @@ class Description extends AbstractDecorator
         }
 
         if (!empty($tag)) {
+            require_once 'Zend/Form/Decorator/HtmlTag.php';
             $options['tag'] = $tag;
-            $decorator      = new HtmlTag($options);
-            $description    = $decorator->render($description);
+            $decorator = new Zend_Form_Decorator_HtmlTag($options);
+            $description = $decorator->render($description);
         }
 
         switch ($placement) {

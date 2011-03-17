@@ -17,23 +17,18 @@
  * @subpackage Protocol
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Mail\Protocol;
-use Zend\Mail\Protocol\Exception;
 
 /**
- * @uses       \Zend\Mail\Protocol\Exception
  * @category   Zend
  * @package    Zend_Mail
  * @subpackage Protocol
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Imap
+class Zend_Mail_Protocol_Imap
 {
     /**
      * Default timeout in seconds for initiating session
@@ -58,7 +53,7 @@ class Imap
      * @param  string   $host  hostname or IP address of IMAP server, if given connect() is called
      * @param  int|null $port  port of IMAP server, null for default (143 or 993 for ssl)
      * @param  bool     $ssl   use ssl? 'SSL', 'TLS' or false
-     * @throws \Zend\Mail\Protocol\Exception
+     * @throws Zend_Mail_Protocol_Exception
      */
     function __construct($host = '', $port = null, $ssl = false)
     {
@@ -82,7 +77,7 @@ class Imap
      * @param  int|null    $port  of IMAP server, default is 143 (993 for ssl)
      * @param  string|bool $ssl   use 'SSL', 'TLS' or false
      * @return string welcome message
-     * @throws \Zend\Mail\Protocol\Exception
+     * @throws Zend_Mail_Protocol_Exception
      */
     public function connect($host, $port = null, $ssl = false)
     {
@@ -98,19 +93,31 @@ class Imap
         $errstr = '';
         $this->_socket = @fsockopen($host, $port, $errno, $errstr, self::TIMEOUT_CONNECTION);
         if (!$this->_socket) {
-            throw new Exception\RuntimeException('cannot connect to host; error = ' . $errstr .
+            /**
+             * @see Zend_Mail_Protocol_Exception
+             */
+            require_once 'Zend/Mail/Protocol/Exception.php';
+            throw new Zend_Mail_Protocol_Exception('cannot connect to host; error = ' . $errstr .
                                                    ' (errno = ' . $errno . ' )');
         }
 
         if (!$this->_assumedNextLine('* OK')) {
-            throw new Exception\RuntimeException('host doesn\'t allow connection');
+            /**
+             * @see Zend_Mail_Protocol_Exception
+             */
+            require_once 'Zend/Mail/Protocol/Exception.php';
+            throw new Zend_Mail_Protocol_Exception('host doesn\'t allow connection');
         }
 
         if ($ssl === 'TLS') {
             $result = $this->requestAndResponse('STARTTLS');
             $result = $result && stream_socket_enable_crypto($this->_socket, true, STREAM_CRYPTO_METHOD_TLS_CLIENT);
             if (!$result) {
-                throw new Exception\RuntimeException('cannot enable TLS');
+                /**
+                 * @see Zend_Mail_Protocol_Exception
+                 */
+                require_once 'Zend/Mail/Protocol/Exception.php';
+                throw new Zend_Mail_Protocol_Exception('cannot enable TLS');
             }
         }
     }
@@ -119,13 +126,17 @@ class Imap
      * get the next line from socket with error checking, but nothing else
      *
      * @return string next line
-     * @throws \Zend\Mail\Protocol\Exception
+     * @throws Zend_Mail_Protocol_Exception
      */
     protected function _nextLine()
     {
         $line = @fgets($this->_socket);
         if ($line === false) {
-            throw new Exception\RuntimeException('cannot read - connection closed?');
+            /**
+             * @see Zend_Mail_Protocol_Exception
+             */
+            require_once 'Zend/Mail/Protocol/Exception.php';
+            throw new Zend_Mail_Protocol_Exception('cannot read - connection closed?');
         }
 
         return $line;
@@ -137,6 +148,7 @@ class Imap
      *
      * @param  string $start the first bytes we assume to be in the next line
      * @return bool line starts with $start
+     * @throws Zend_Mail_Protocol_Exception
      */
     protected function _assumedNextLine($start)
     {
@@ -149,6 +161,7 @@ class Imap
      *
      * @param  string $tag tag of line is returned by reference
      * @return string next line
+     * @throws Zend_Mail_Protocol_Exception
      */
     protected function _nextTaggedLine(&$tag)
     {
@@ -165,6 +178,7 @@ class Imap
      *
      * @param  string $line line to decode
      * @return array tokens, literals are returned as string, lists as array
+     * @throws Zend_Mail_Protocol_Exception
      */
     protected function _decodeLine($line)
     {
@@ -264,11 +278,11 @@ class Imap
      *                                  continuation tag.
      * @param  bool          $dontParse if true only the unparsed line is returned $tokens
      * @return bool if returned tag matches wanted tag
+     * @throws Zend_Mail_Protocol_Exception
      */
     public function readLine(&$tokens = array(), $wantedTag = '*', $dontParse = false)
     {
-        $tag  = null;                         // define $tag variable before first use
-        $line = $this->_nextTaggedLine($tag); // get next tag
+        $line = $this->_nextTaggedLine($tag);
         if (!$dontParse) {
             $tokens = $this->_decodeLine($line);
         } else {
@@ -288,11 +302,11 @@ class Imap
      * @param  bool         $dontParse if true every line is returned unparsed instead of
      *                                 the decoded tokens
      * @return null|bool|array tokens if success, false if error, null if bad request
+     * @throws Zend_Mail_Protocol_Exception
      */
     public function readResponse($tag, $dontParse = false)
     {
         $lines = array();
-        $tokens = null; // define $tokens variable before first use
         while (!$this->readLine($tokens, $tag, $dontParse)) {
             $lines[] = $tokens;
         }
@@ -317,7 +331,7 @@ class Imap
      * @param  array  $tokens  additional parameters to command, use escapeString() to prepare
      * @param  string $tag     provide a tag otherwise an autogenerated is returned
      * @return null
-     * @throws \Zend\Mail\Protocol\Exception
+     * @throws Zend_Mail_Protocol_Exception
      */
     public function sendRequest($command, $tokens = array(), &$tag = null)
     {
@@ -331,10 +345,18 @@ class Imap
         foreach ($tokens as $token) {
             if (is_array($token)) {
                 if (@fputs($this->_socket, $line . ' ' . $token[0] . "\r\n") === false) {
-                    throw new Exception\RuntimeException('cannot write - connection closed?');
+                    /**
+                     * @see Zend_Mail_Protocol_Exception
+                     */
+                    require_once 'Zend/Mail/Protocol/Exception.php';
+                    throw new Zend_Mail_Protocol_Exception('cannot write - connection closed?');
                 }
                 if (!$this->_assumedNextLine('+ ')) {
-                    throw new Exception\RuntimeException('cannot send literal string');
+                    /**
+                     * @see Zend_Mail_Protocol_Exception
+                     */
+                    require_once 'Zend/Mail/Protocol/Exception.php';
+                    throw new Zend_Mail_Protocol_Exception('cannot send literal string');
                 }
                 $line = $token[1];
             } else {
@@ -343,7 +365,11 @@ class Imap
         }
 
         if (@fputs($this->_socket, $line . "\r\n") === false) {
-            throw new Exception\RuntimeException('cannot write - connection closed?');
+            /**
+             * @see Zend_Mail_Protocol_Exception
+             */
+            require_once 'Zend/Mail/Protocol/Exception.php';
+            throw new Zend_Mail_Protocol_Exception('cannot write - connection closed?');
         }
     }
 
@@ -354,10 +380,10 @@ class Imap
      * @param  array  $tokens    parameters as in sendRequest()
      * @param  bool   $dontParse if true unparsed lines are returned instead of tokens
      * @return mixed response as in readResponse()
+     * @throws Zend_Mail_Protocol_Exception
      */
     public function requestAndResponse($command, $tokens = array(), $dontParse = false)
     {
-        $tag = null; // define $tag variable before first use
         $this->sendRequest($command, $tokens, $tag);
         $response = $this->readResponse($tag, $dontParse);
 
@@ -413,6 +439,7 @@ class Imap
      * @param  string $user      username
      * @param  string $password  password
      * @return bool success
+     * @throws Zend_Mail_Protocol_Exception
      */
     public function login($user, $password)
     {
@@ -430,7 +457,7 @@ class Imap
         if ($this->_socket) {
             try {
                 $result = $this->requestAndResponse('LOGOUT', array(), true);
-            } catch (Exception $e) {
+            } catch (Zend_Mail_Protocol_Exception $e) {
                 // ignoring exception
             }
             fclose($this->_socket);
@@ -444,7 +471,7 @@ class Imap
      * Get capabilities from IMAP server
      *
      * @return array list of capabilities
-     * @throws \Zend\Mail\Protocol\Exception
+     * @throws Zend_Mail_Protocol_Exception
      */
     public function capability()
     {
@@ -469,15 +496,13 @@ class Imap
      * @param  string $box which folder to change to or examine
      * @return bool|array false if error, array with returned information
      *                    otherwise (flags, exists, recent, uidvalidity)
-     * @throws \Zend\Mail\Protocol\Exception
+     * @throws Zend_Mail_Protocol_Exception
      */
     public function examineOrSelect($command = 'EXAMINE', $box = 'INBOX')
     {
-        $tag = null; // define $tag variable before first use
         $this->sendRequest($command, array($this->escapeString($box)), $tag);
 
         $result = array();
-        $tokens = null; // define $tokens variable before first use
         while (!$this->readLine($tokens, $tag)) {
             if ($tokens[0] == 'FLAGS') {
                 array_shift($tokens);
@@ -508,7 +533,7 @@ class Imap
      *
      * @param  string $box change to this folder
      * @return bool|array see examineOrselect()
-     * @throws \Zend\Mail\Protocol\Exception
+     * @throws Zend_Mail_Protocol_Exception
      */
     public function select($box = 'INBOX')
     {
@@ -520,7 +545,7 @@ class Imap
      *
      * @param  string $box examine this folder
      * @return bool|array see examineOrselect()
-     * @throws \Zend\Mail\Protocol\Exception
+     * @throws Zend_Mail_Protocol_Exception
      */
     public function examine($box = 'INBOX')
     {
@@ -539,7 +564,7 @@ class Imap
      *                      if items of one message are fetched it's returned as (name => value)
      *                      if one items of messages are fetched it's returned as (msgno => value)
      *                      if items of messages are fetchted it's returned as (msgno => (name => value))
-     * @throws \Zend\Mail\Protocol\Exception
+     * @throws Zend_Mail_Protocol_Exception
      */
     public function fetch($items, $from, $to = null)
     {
@@ -556,11 +581,9 @@ class Imap
         $items = (array)$items;
         $itemList = $this->escapeList($items);
 
-        $tag = null;  // define $tag variable before first use
         $this->sendRequest('FETCH', array($set, $itemList), $tag);
 
         $result = array();
-        $tokens = null; // define $tokens variable before first use
         while (!$this->readLine($tokens, $tag)) {
             // ignore other responses
             if ($tokens[1] != 'FETCH') {
@@ -603,7 +626,11 @@ class Imap
         }
 
         if ($to === null && !is_array($from)) {
-            throw new Exception\RuntimeException('the single id was not found in response');
+            /**
+             * @see Zend_Mail_Protocol_Exception
+             */
+            require_once 'Zend/Mail/Protocol/Exception.php';
+            throw new Zend_Mail_Protocol_Exception('the single id was not found in response');
         }
 
         return $result;
@@ -617,7 +644,7 @@ class Imap
      * @param  string $reference mailbox reference for list
      * @param  string $mailbox   mailbox name match with wildcards
      * @return array mailboxes that matched $mailbox as array(globalName => array('delim' => .., 'flags' => ..))
-     * @throws \Zend\Mail\Protocol\Exception
+     * @throws Zend_Mail_Protocol_Exception
      */
     public function listMailbox($reference = '', $mailbox = '*')
     {
@@ -647,7 +674,7 @@ class Imap
      * @param  string|null $mode   '+' to add flags, '-' to remove flags, everything else sets the flags as given
      * @param  bool        $silent if false the return values are the new flags for the wanted messages
      * @return bool|array new flags if $silent is false, else true or false depending on success
-     * @throws \Zend\Mail\Protocol\Exception
+     * @throws Zend_Mail_Protocol_Exception
      */
     public function store(array $flags, $from, $to = null, $mode = null, $silent = true)
     {
@@ -691,7 +718,7 @@ class Imap
      * @param array  $flags   flags for new message
      * @param string $date    date for new message
      * @return bool success
-     * @throws \Zend\Mail\Protocol\Exception
+     * @throws Zend_Mail_Protocol_Exception
      */
     public function append($folder, $message, $flags = null, $date = null)
     {
@@ -715,7 +742,7 @@ class Imap
      * @param int|null $to     if null only one message ($from) is fetched, else it's the
      *                         last message, INF means last message avaible
      * @return bool success
-     * @throws \Zend\Mail\Protocol\Exception
+     * @throws Zend_Mail_Protocol_Exception
      */
     public function copy($folder, $from, $to = null)
     {

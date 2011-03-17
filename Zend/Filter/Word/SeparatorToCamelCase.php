@@ -16,28 +16,23 @@
  * @package    Zend_Filter
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Filter_PregReplace
  */
-namespace Zend\Filter\Word;
+require_once 'Zend/Filter/Word/Separator/Abstract.php';
 
 /**
- * @uses       \Zend\Filter\Word\AbstractSeparator
  * @category   Zend
  * @package    Zend_Filter
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class SeparatorToCamelCase extends AbstractSeparator
+class Zend_Filter_Word_SeparatorToCamelCase extends Zend_Filter_Word_Separator_Abstract
 {
-    /**
-     * Defined by Zend\Filter\Filter
-     * 
-     * @param  string $value 
-     * @return string
-     */
+
     public function filter($value)
     {
         // a unicode safe way of converting characters to \x00\x00 notation
@@ -53,4 +48,5 @@ class SeparatorToCamelCase extends AbstractSeparator
 
         return parent::filter($value);
     }
+
 }

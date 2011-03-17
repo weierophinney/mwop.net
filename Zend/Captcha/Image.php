@@ -17,30 +17,24 @@
  * @subpackage Adapter
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Captcha;
-use Zend\Captcha\Exception\NoFontProvidedException,
- Zend\Captcha\Exception\ExtensionNotLoadedException,
-    Zend\Captcha\Exception\ImageNotLoadableException;
+/** @see Zend_Captcha_Word */
+require_once 'Zend/Captcha/Word.php';
 
 /**
  * Image-based captcha element
  *
  * Generates image displaying random word
  *
- * @uses       \Zend\Captcha\Exception
- * @uses       \Zend\Captcha\Word
  * @category   Zend
  * @package    Zend_Captcha
  * @subpackage Adapter
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Image extends Word
+class Zend_Captcha_Image extends Zend_Captcha_Word
 {
     /**
      * Directory for generated images
@@ -105,7 +99,6 @@ class Image extends Word
      * @var string
      */
     protected $_startImage;
-
     /**
      * How frequently to execute garbage collection
      *
@@ -127,7 +120,6 @@ class Image extends Word
      * @var int
      */
     protected $_dotNoiseLevel = 100;
-
     /**
      * Number of noise lines on image
      * Used twice - before and after transform
@@ -135,30 +127,6 @@ class Image extends Word
      * @var int
      */
     protected $_lineNoiseLevel = 5;
-
-    /**
-     * Constructor
-     *
-     * @param  array|Zend\Config\Config $options
-     * @return void
-     */
-    public function __construct($options = null)
-    {
-        if (!extension_loaded("gd")) {
-            throw new ExtensionNotLoadedException("Image CAPTCHA requires GD extension");
-        }
-
-        if (!function_exists("imagepng")) {
-            throw new ExtensionNotLoadedException("Image CAPTCHA requires PNG support");
-        }
-
-        if (!function_exists("imageftbbox")) {
-            throw new ExtensionNotLoadedException("Image CAPTCHA requires FT fonts support");
-        }
-
-        parent::__construct($options);
-    }
-
     /**
      * @return string
      */
@@ -166,7 +134,6 @@ class Image extends Word
     {
         return $this->_imgAlt;
     }
-
     /**
      * @return string
      */
@@ -174,7 +141,6 @@ class Image extends Word
     {
         return $this->_startImage;
     }
-
     /**
      * @return int
      */
@@ -182,7 +148,6 @@ class Image extends Word
     {
         return $this->_dotNoiseLevel;
     }
-
     /**
      * @return int
      */
@@ -190,7 +155,6 @@ class Image extends Word
     {
         return $this->_lineNoiseLevel;
     }
-
     /**
      * Get captcha expiration
      *
@@ -210,7 +174,6 @@ class Image extends Word
     {
         return $this->_gcFreq;
     }
-
     /**
      * Get font to use when generating captcha
      *
@@ -250,7 +213,6 @@ class Image extends Word
     {
         return $this->_imgDir;
     }
-
     /**
      * Get captcha image base URL
      *
@@ -260,7 +222,6 @@ class Image extends Word
     {
         return $this->_imgUrl;
     }
-
     /**
      * Get captcha image file suffix
      *
@@ -270,7 +231,6 @@ class Image extends Word
     {
         return $this->_suffix;
     }
-
     /**
      * Get captcha image width
      *
@@ -280,7 +240,6 @@ class Image extends Word
     {
         return $this->_width;
     }
-
     /**
      * @param string $startImage
      */
@@ -289,7 +248,6 @@ class Image extends Word
         $this->_startImage = $startImage;
         return $this;
     }
-
     /**
      * @param int $dotNoiseLevel
      */
@@ -298,8 +256,7 @@ class Image extends Word
         $this->_dotNoiseLevel = $dotNoiseLevel;
         return $this;
     }
-
-    /**
+   /**
      * @param int $lineNoiseLevel
      */
     public function setLineNoiseLevel ($lineNoiseLevel)
@@ -312,7 +269,7 @@ class Image extends Word
      * Set captcha expiration
      *
      * @param int $expiration
-     * @return \Zend\Captcha\Image
+     * @return Zend_Captcha_Image
      */
     public function setExpiration($expiration)
     {
@@ -324,7 +281,7 @@ class Image extends Word
      * Set garbage collection frequency
      *
      * @param int $gcFreq
-     * @return \Zend\Captcha\Image
+     * @return Zend_Captcha_Image
      */
     public function setGcFreq($gcFreq)
     {
@@ -336,7 +293,7 @@ class Image extends Word
      * Set captcha font
      *
      * @param  string $font
-     * @return \Zend\Captcha\Image
+     * @return Zend_Captcha_Image
      */
     public function setFont($font)
     {
@@ -348,7 +305,7 @@ class Image extends Word
      * Set captcha font size
      *
      * @param  int $fsize
-     * @return \Zend\Captcha\Image
+     * @return Zend_Captcha_Image
      */
     public function setFontSize($fsize)
     {
@@ -360,7 +317,7 @@ class Image extends Word
      * Set captcha image height
      *
      * @param  int $height
-     * @return \Zend\Captcha\Image
+     * @return Zend_Captcha_Image
      */
     public function setHeight($height)
     {
@@ -372,7 +329,7 @@ class Image extends Word
      * Set captcha image storage directory
      *
      * @param  string $imgDir
-     * @return \Zend\Captcha\Image
+     * @return Zend_Captcha_Image
      */
     public function setImgDir($imgDir)
     {
@@ -384,7 +341,7 @@ class Image extends Word
      * Set captcha image base URL
      *
      * @param  string $imgUrl
-     * @return \Zend\Captcha\Image
+     * @return Zend_Captcha_Image
      */
     public function setImgUrl($imgUrl)
     {
@@ -404,7 +361,7 @@ class Image extends Word
      * Set captch image filename suffix
      *
      * @param  string $suffix
-     * @return \Zend\Captcha\Image
+     * @return Zend_Captcha_Image
      */
     public function setSuffix($suffix)
     {
@@ -416,7 +373,7 @@ class Image extends Word
      * Set captcha image width
      *
      * @param  int $width
-     * @return \Zend\Captcha\Image
+     * @return Zend_Captcha_Image
      */
     public function setWidth($width)
     {
@@ -488,10 +445,26 @@ class Image extends Word
      */
     protected function _generateImage($id, $word)
     {
+        if (!extension_loaded("gd")) {
+            require_once 'Zend/Captcha/Exception.php';
+            throw new Zend_Captcha_Exception("Image CAPTCHA requires GD extension");
+        }
+
+        if (!function_exists("imagepng")) {
+            require_once 'Zend/Captcha/Exception.php';
+            throw new Zend_Captcha_Exception("Image CAPTCHA requires PNG support");
+        }
+
+        if (!function_exists("imageftbbox")) {
+            require_once 'Zend/Captcha/Exception.php';
+            throw new Zend_Captcha_Exception("Image CAPTCHA requires FT fonts support");
+        }
+
         $font = $this->getFont();
 
         if (empty($font)) {
-            throw new NoFontProvidedException("Image CAPTCHA requires font");
+            require_once 'Zend/Captcha/Exception.php';
+            throw new Zend_Captcha_Exception("Image CAPTCHA requires font");
         }
 
         $w     = $this->getWidth();
@@ -500,12 +473,12 @@ class Image extends Word
 
         $img_file   = $this->getImgDir() . $id . $this->getSuffix();
         if(empty($this->_startImage)) {
-            $img = imagecreatetruecolor($w, $h);
+            $img        = imagecreatetruecolor($w, $h);
         } else {
-            // Potential error is change to exception
-            $img = @imagecreatefrompng($this->_startImage);
+            $img = imagecreatefrompng($this->_startImage);
             if(!$img) {
-                throw new ImageNotLoadableException("Can not load start image");
+                require_once 'Zend/Captcha/Exception.php';
+                throw new Zend_Captcha_Exception("Can not load start image");
             }
             $w = imagesx($img);
             $h = imagesy($img);
@@ -605,7 +578,7 @@ class Image extends Word
             return;
         }
         $suffixLength = strlen($this->_suffix);
-        foreach (new \DirectoryIterator($imgdir) as $file) {
+        foreach (new DirectoryIterator($imgdir) as $file) {
             if (!$file->isDot() && !$file->isDir()) {
                 if ($file->getMTime() < $expire) {
                     // only deletes files ending with $this->_suffix
@@ -624,7 +597,7 @@ class Image extends Word
      * @param mixed $element
      * @return string
      */
-    public function render(\Zend\View\ViewEngine $view = null, $element = null)
+    public function render(Zend_View_Interface $view = null, $element = null)
     {
         return '<img width="' . $this->getWidth() . '" height="' . $this->getHeight() . '" alt="' . $this->getImgAlt()
              . '" src="' . $this->getImgUrl() . $this->getId() . $this->getSuffix() . '" />';

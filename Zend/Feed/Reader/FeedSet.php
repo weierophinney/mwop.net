@@ -16,23 +16,26 @@
  * @package    Zend_Feed_Reader
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
-* @namespace
-*/
-namespace Zend\Feed\Reader;
-use Zend\Uri;
+ * @see Zend_Feed_Reader
+ */
+require_once 'Zend/Feed/Reader.php';
 
 /**
-* @uses \Zend\Feed\Reader\Reader
-* @uses \Zend\Uri\Uri
-* @category Zend
-* @package Zend_Feed_Reader
-* @copyright Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
-* @license http://framework.zend.com/license/new-bsd New BSD License
-*/
-class FeedSet extends \ArrayObject
+ * @see Zend_Uri
+ */
+require_once 'Zend/Uri.php';
+
+/**
+ * @category   Zend
+ * @package    Zend_Feed_Reader
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
+class Zend_Feed_Reader_FeedSet extends ArrayObject
 {
 
     public $rss = null;
@@ -57,7 +60,7 @@ class FeedSet extends \ArrayObject
      * @param string $uri
      * @return void
      */
-    public function addLinks(\DOMNodeList $links, $uri)
+    public function addLinks(DOMNodeList $links, $uri)
     {
         foreach ($links as $link) {
             if (strtolower($link->getAttribute('rel')) !== 'alternate'
@@ -78,29 +81,29 @@ class FeedSet extends \ArrayObject
             ));
         }
     }
-    
+
     /**
      *  Attempt to turn a relative URI into an absolute URI
      */
     protected function _absolutiseUri($link, $uri = null)
     {
-        if (!Uri\Url::validate($link)) {
+        if (!Zend_Uri::check($link)) {
             if ($uri !== null) {
-                $uri = new Uri\Url($uri);
+                $uri = Zend_Uri::factory($uri);
 
                 if ($link[0] !== '/') {
                     $link = $uri->getPath() . '/' . $link;
                 }
 
                 $link = $uri->getScheme() . '://' . $uri->getHost() . '/' . $this->_canonicalizePath($link);
-                if (!URI\URL::validate($link)) {
+                if (!Zend_Uri::check($link)) {
                     $link = null;
                 }
             }
         }
         return $link;
     }
-    
+
     /**
      *  Canonicalize relative path
      */
@@ -135,7 +138,7 @@ class FeedSet extends \ArrayObject
             if (!$this->offsetExists('href')) {
                 return null;
             }
-            $feed = Reader::import($this->offsetGet('href'));
+            $feed = Zend_Feed_Reader::import($this->offsetGet('href'));
             $this->offsetSet('feed', $feed);
             return $feed;
         }

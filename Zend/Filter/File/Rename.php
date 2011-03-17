@@ -16,24 +16,21 @@
  * @package    Zend_Filter
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Filter_Interface
  */
-namespace Zend\Filter\File;
-use Zend\Filter,
-    Zend\Filter\Exception;
+require_once 'Zend/Filter/Interface.php';
 
 /**
- * @uses       Zend\Filter\Exception
- * @uses       Zend\Filter\AbstractFilter
  * @category   Zend
  * @package    Zend_Filter
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Rename extends Filter\AbstractFilter
+class Zend_Filter_File_Rename implements Zend_Filter_Interface
 {
     /**
      * Internal array of array(source, target, overwrite)
@@ -56,12 +53,13 @@ class Rename extends Filter\AbstractFilter
      */
     public function __construct($options)
     {
-        if ($options instanceof \Zend\Config\Config) {
+        if ($options instanceof Zend_Config) {
             $options = $options->toArray();
         } elseif (is_string($options)) {
             $options = array('target' => $options);
         } elseif (!is_array($options)) {
-            throw new Exception\InvalidArgumentException('Invalid options argument provided to filter');
+            require_once 'Zend/Filter/Exception.php';
+            throw new Zend_Filter_Exception('Invalid options argument provided to filter');
         }
 
         if (1 < func_num_args()) {
@@ -98,7 +96,7 @@ class Rename extends Filter\AbstractFilter
      * 'overwrite' => Shall existing files be overwritten ?
      *
      * @param  string|array $options Old file or directory to be rewritten
-     * @return \Zend\Filter\File\Rename
+     * @return Zend_Filter_File_Rename
      */
     public function setFile($options)
     {
@@ -117,14 +115,15 @@ class Rename extends Filter\AbstractFilter
      * 'overwrite' => Shall existing files be overwritten ?
      *
      * @param  string|array $options Old file or directory to be rewritten
-     * @return \Zend\Filter\File\Rename
+     * @return Zend_Filter_File_Rename
      */
     public function addFile($options)
     {
         if (is_string($options)) {
             $options = array('target' => $options);
         } elseif (!is_array($options)) {
-            throw new Exception\InvalidArgumentException('Invalid options to rename filter provided');
+            require_once 'Zend/Filter/Exception.php';
+            throw new Zend_Filter_Exception ('Invalid options to rename filter provided');
         }
 
         $this->_convertOptions($options);
@@ -156,7 +155,8 @@ class Rename extends Filter\AbstractFilter
         }
 
         if (file_exists($file['target'])) {
-            throw new Exception\InvalidArgumentException(sprintf("File '%s' could not be renamed. It already exists.", $value));
+            require_once 'Zend/Filter/Exception.php';
+            throw new Zend_Filter_Exception(sprintf("File '%s' could not be renamed. It already exists.", $value));
         }
 
         if ($source) {
@@ -167,13 +167,13 @@ class Rename extends Filter\AbstractFilter
     }
 
     /**
-     * Defined by Zend\Filter\Filter
+     * Defined by Zend_Filter_Interface
      *
      * Renames the file $value to the new name set before
      * Returns the file $value, removing all but digit characters
      *
      * @param  string $value Full path of file to change
-     * @throws \Zend\Filter\Exception
+     * @throws Zend_Filter_Exception
      * @return string The new filename which has been set, or false when there were errors
      */
     public function filter($value)
@@ -185,11 +185,12 @@ class Rename extends Filter\AbstractFilter
 
         $result = rename($file['source'], $file['target']);
 
-        if ($result !== true) {
-            throw new Exception\RuntimeException(sprintf("File '%s' could not be renamed. An error occured while processing the file.", $value));
+        if ($result === true) {
+            return $file['target'];
         }
 
-        return $file['target'];
+        require_once 'Zend/Filter/Exception.php';
+        throw new Zend_Filter_Exception(sprintf("File '%s' could not be renamed. An error occured while processing the file.", $value));
     }
 
     /**
@@ -199,8 +200,7 @@ class Rename extends Filter\AbstractFilter
      * @param  array $options
      * @return array
      */
-    protected function _convertOptions($options) 
-    {
+    protected function _convertOptions($options) {
         $files = array();
         foreach ($options as $key => $value) {
             if (is_array($value)) {

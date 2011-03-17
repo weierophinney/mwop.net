@@ -19,10 +19,8 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * @namespace
- */
-namespace Zend\Form\Decorator;
+/** Zend_Form_Decorator_Abstract */
+require_once 'Zend/Form/Decorator/Abstract.php';
 
 /**
  * Zend_Form_Decorator_Image
@@ -34,15 +32,14 @@ namespace Zend\Form\Decorator;
  *
  * Any other options passed will be used as HTML attributes of the image tag.
  *
- * @uses       \Zend\Form\Decorator\AbstractDecorator
- * @uses       \Zend\Form\Decorator\HtmlTag;
  * @category   Zend
  * @package    Zend_Form
  * @subpackage Decorator
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
-class Image extends AbstractDecorator
+class Zend_Form_Decorator_Image extends Zend_Form_Decorator_Abstract
 {
     /**
      * Attributes that should not be passed to helper
@@ -66,7 +63,7 @@ class Image extends AbstractDecorator
      * Set HTML tag with which to surround label
      *
      * @param  string $tag
-     * @return \Zend\Form\Decorator\Image
+     * @return Zend_Form_Decorator_Image
      */
     public function setTag($tag)
     {
@@ -140,7 +137,8 @@ class Image extends AbstractDecorator
         $image = $view->formImage($name, $element->getImageValue(), $attribs);
 
         if (null !== $tag) {
-            $decorator = new HtmlTag();
+            require_once 'Zend/Form/Decorator/HtmlTag.php';
+            $decorator = new Zend_Form_Decorator_HtmlTag();
             $decorator->setOptions(array('tag' => $tag));
             $image = $decorator->render($image);
         }

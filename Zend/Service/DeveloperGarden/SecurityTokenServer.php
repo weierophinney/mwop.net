@@ -17,13 +17,30 @@
  * @subpackage DeveloperGarden
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @uses       Zend_Service_DeveloperGarden_Client_AbstractClient
- * @uses       Zend_Service_DeveloperGarden_Response_SecurityTokenServer_GetTokensResponse
- * @uses       Zend_Service_DeveloperGarden_Response_SecurityTokenServer_SecurityTokenResponse
- * @uses       Zend_Service_DeveloperGarden_SecurityTokenServer_Cache
+ * @see Zend_Service_DeveloperGarden_SecurityTokenServer_Cache
+ */
+require_once 'Zend/Service/DeveloperGarden/SecurityTokenServer/Cache.php';
+
+/**
+ * @see Zend_Service_DeveloperGarden_Client_ClientAbstract
+ */
+require_once 'Zend/Service/DeveloperGarden/Client/ClientAbstract.php';
+
+/**
+ * @see Zend_Service_DeveloperGarden_Response_SecurityTokenServer_SecurityTokenResponse
+ */
+require_once 'Zend/Service/DeveloperGarden/Response/SecurityTokenServer/SecurityTokenResponse.php';
+
+/**
+ * @see Zend_Service_DeveloperGarden_Response_SecurityTokenServer_GetTokensResponse
+ */
+require_once 'Zend/Service/DeveloperGarden/Response/SecurityTokenServer/GetTokensResponse.php';
+
+/**
  * @category   Zend
  * @package    Zend_Service
  * @subpackage DeveloperGarden
@@ -32,7 +49,7 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Service_DeveloperGarden_SecurityTokenServer
-    extends Zend_Service_DeveloperGarden_Client_AbstractClient
+    extends Zend_Service_DeveloperGarden_Client_ClientAbstract
 {
     /**
      * wsdl file

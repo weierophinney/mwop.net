@@ -16,29 +16,23 @@
  * @package   Zend_File_Transfer
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_File_Transfer_Adapter_Abstract
  */
-namespace Zend\File\Transfer\Adapter;
-use Zend\File\Transfer,
-    Zend\File\Transfer\Exception,
-    Zend\ProgressBar\Adapter,
-    Zend\ProgressBar;
+require_once 'Zend/File/Transfer/Adapter/Abstract.php';
 
 /**
  * File transfer adapter class for the HTTP protocol
  *
- * @uses      \Zend\File\Transfer\Adapter\AbstractAdapter
- * @uses      \Zend\File\Transfer\Exception
- * @uses      \Zend\ProgressBar\ProgressBar
  * @category  Zend
  * @package   Zend_File_Transfer
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Http extends AbstractAdapter
+class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstract
 {
     protected static $_callbackApc            = 'apc_fetch';
     protected static $_callbackUploadProgress = 'uploadprogress_get_info';
@@ -51,7 +45,8 @@ class Http extends AbstractAdapter
     public function __construct($options = array())
     {
         if (ini_get('file_uploads') == false) {
-            throw new Exception\PhpEnvironmentException('File uploads are not allowed in your php config!');
+            require_once 'Zend/File/Transfer/Exception.php';
+            throw new Zend_File_Transfer_Exception('File uploads are not allowed in your php config!');
         }
 
         $this->setOptions($options);
@@ -76,7 +71,7 @@ class Http extends AbstractAdapter
      * Remove an individual validator
      *
      * @param  string $name
-     * @return \Zend\File\Transfer\Adapter\AbstractAdapter
+     * @return Zend_File_Transfer_Adapter_Abstract
      */
     public function removeValidator($name)
     {
@@ -91,7 +86,7 @@ class Http extends AbstractAdapter
      * Remove an individual validator
      *
      * @param  string $name
-     * @return \Zend\File\Transfer\Adapter\AbstractAdapter
+     * @return Zend_File_Transfer_Adapter_Abstract
      */
     public function clearValidators()
     {
@@ -106,11 +101,12 @@ class Http extends AbstractAdapter
      *
      * @param  string|array $options Options for the file(s) to send
      * @return void
-     * @throws \Zend\File\Transfer\Exception Not implemented
+     * @throws Zend_File_Transfer_Exception Not implemented
      */
     public function send($options = null)
     {
-        throw new Exception\RuntimeException('Method not implemented');
+        require_once 'Zend/File/Transfer/Exception.php';
+        throw new Zend_File_Transfer_Exception('Method not implemented');
     }
 
     /**
@@ -138,7 +134,7 @@ class Http extends AbstractAdapter
             $temp = array($files => array(
                 'name'  => $files,
                 'error' => 1));
-            $validator = $this->_validators['Zend\Validator\File\Upload'];
+            $validator = $this->_validators['Zend_Validate_File_Upload'];
             $validator->setFiles($temp)
                       ->isValid($files, null);
             $this->_messages += $validator->getMessages();
@@ -224,11 +220,12 @@ class Http extends AbstractAdapter
      *
      * @param  string|array $file Files to check
      * @return bool
-     * @throws \Zend\File\Transfer\Exception Not implemented
+     * @throws Zend_File_Transfer_Exception Not implemented
      */
     public function isSent($files = null)
     {
-        throw new Exception\RuntimeException('Method not implemented');
+        require_once 'Zend/File/Transfer/Exception.php';
+        throw new Zend_File_Transfer_Exception('Method not implemented');
     }
 
     /**
@@ -306,10 +303,11 @@ class Http extends AbstractAdapter
     public static function getProgress($id = null)
     {
         if (!function_exists('apc_fetch') and !function_exists('uploadprogress_get_info')) {
-            throw new Exception\PhpEnvironmentException('Neither APC nor uploadprogress extension installed');
+            require_once 'Zend/File/Transfer/Exception.php';
+            throw new Zend_File_Transfer_Exception('Neither APC nor uploadprogress extension installed');
         }
 
-        $session = 'Zend\File\Transfer\Adapter\Http\ProgressBar';
+        $session = 'Zend_File_Transfer_Adapter_Http_ProgressBar';
         $status  = array(
             'total'    => 0,
             'current'  => 0,
@@ -334,7 +332,7 @@ class Http extends AbstractAdapter
             }
         }
 
-        if (!empty($id) && (($id instanceof Adapter\Adapter) || ($id instanceof ProgressBar\ProgressBar))) {
+        if (!empty($id) && (($id instanceof Zend_ProgressBar_Adapter) || ($id instanceof Zend_ProgressBar))) {
             $adapter = $id;
             unset($id);
         }
@@ -382,12 +380,14 @@ class Http extends AbstractAdapter
         }
 
         if (isset($adapter) && isset($status['id'])) {
-            if ($adapter instanceof Adapter\Adapter) {
-                $adapter = new ProgressBar\ProgressBar($adapter, 0, $status['total'], $session);
+            if ($adapter instanceof Zend_ProgressBar_Adapter) {
+                require_once 'Zend/ProgressBar.php';
+                $adapter = new Zend_ProgressBar($adapter, 0, $status['total'], $session);
             }
 
-            if (!($adapter instanceof ProgressBar\ProgressBar)) {
-                throw new Exception\RuntimeException('Unknown Adapter given');
+            if (!($adapter instanceof Zend_ProgressBar)) {
+                require_once 'Zend/File/Transfer/Exception.php';
+                throw new Zend_File_Transfer_Exception('Unknown Adapter given');
             }
 
             if ($status['done']) {

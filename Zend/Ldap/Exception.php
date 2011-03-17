@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -17,22 +16,22 @@
  * @package    Zend_Ldap
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Exception
  */
-namespace Zend\Ldap;
+require_once 'Zend/Exception.php';
 
 /**
- * @uses       \Zend\Exception
  * @category   Zend
  * @package    Zend_Ldap
- * @uses       \Zend\Exception
+ * @uses       Zend_Exception
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Exception extends \Zend\Exception
+class Zend_Ldap_Exception extends Zend_Exception
 {
     const LDAP_SUCCESS                        = 0x00;
     const LDAP_OPERATIONS_ERROR               = 0x01;
@@ -117,11 +116,11 @@ class Exception extends \Zend\Exception
     const LDAP_X_EXTENSION_NOT_LOADED         = 0x7002;
 
     /**
-     * @param \Zend\Ldap\Ldap $ldap A \Zend\Ldap\Ldap object
+     * @param Zend_Ldap $ldap A Zend_Ldap object
      * @param string    $str  An informtive exception message
      * @param int       $code An LDAP error code
      */
-    public function __construct(LDAP $ldap = null, $str = null, $code = 0)
+    public function __construct(Zend_Ldap $ldap = null, $str = null, $code = 0)
     {
         $errorMessages = array();
         $message = '';
@@ -151,10 +150,10 @@ class Exception extends \Zend\Exception
 
     /**
      * @deprecated not necessary any more - will be removed
-     * @param \Zend\Ldap\Ldap $ldap A \Zend\Ldap\Ldap object
+     * @param Zend_Ldap $ldap A Zend_Ldap object
      * @return int The current error code for the resource
      */
-    public static function getLDAPCode(LDAP $ldap = null)
+    public static function getLdapCode(Zend_Ldap $ldap = null)
     {
         if ($ldap !== null) {
             return $ldap->getLastErrorCode();

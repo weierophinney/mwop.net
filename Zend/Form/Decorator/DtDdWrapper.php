@@ -19,10 +19,8 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * @namespace
- */
-namespace Zend\Form\Decorator;
+/** Zend_Form_Decorator_Abstract */
+require_once 'Zend/Form/Decorator/Abstract.php';
 
 /**
  * Zend_Form_Decorator_DtDdWrapper
@@ -30,14 +28,14 @@ namespace Zend\Form\Decorator;
  * Creates an empty <dt> item, and wraps the content in a <dd>. Used as a
  * default decorator for subforms and display groups.
  *
- * @uses       \Zend\Form\Decorator\AbstractDecorator
  * @category   Zend
  * @package    Zend_Form
  * @subpackage Decorator
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
-class DtDdWrapper extends AbstractDecorator
+class Zend_Form_Decorator_DtDdWrapper extends Zend_Form_Decorator_Abstract
 {
     /**
      * Default placement: surround content
@@ -53,14 +51,14 @@ class DtDdWrapper extends AbstractDecorator
      * <dd>$content</dd>
      *
      * $dtLabel can be set via 'dtLabel' option, defaults to '\&#160;'
-     * 
+     *
      * @param  string $content
      * @return string
      */
     public function render($content)
     {
         $elementName = $this->getElement()->getName();
-        
+
         $dtLabel = $this->getOption('dtLabel');
         if( null === $dtLabel ) {
             $dtLabel = '&#160;';

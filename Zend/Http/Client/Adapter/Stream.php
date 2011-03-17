@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework
  *
@@ -15,14 +16,10 @@
  * @category   Zend
  * @package    Zend_Http
  * @subpackage Client_Adapter
+ * @version    $Id$
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-
-/**
- * @namespace
- */
-namespace Zend\Http\Client\Adapter;
 
 /**
  * An interface description for Zend_Http_Client_Adapter_Stream classes.
@@ -35,15 +32,15 @@ namespace Zend\Http\Client\Adapter;
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-interface Stream
+interface Zend_Http_Client_Adapter_Stream
 {
     /**
      * Set output stream
-     * 
+     *
      * This function sets output stream where the result will be stored.
-     * 
+     *
      * @param resource $stream Stream to write the output to
-     * 
+     *
      */
-    function setOutputStream($stream);
+    public function setOutputStream($stream);
 }

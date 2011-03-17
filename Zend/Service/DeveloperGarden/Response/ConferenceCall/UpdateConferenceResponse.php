@@ -17,10 +17,15 @@
  * @subpackage DeveloperGarden
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @uses       Zend_Service_DeveloperGarden_Response_ConferenceCall_AbstractConferenceCall
+ * @see Zend_Service_DeveloperGarden_Response_ConferenceCall_ConferenceCallAbstract
+ */
+require_once 'Zend/Service/DeveloperGarden/Response/ConferenceCall/ConferenceCallAbstract.php';
+
+/**
  * @category   Zend
  * @package    Zend_Service
  * @subpackage DeveloperGarden
@@ -29,7 +34,7 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Service_DeveloperGarden_Response_ConferenceCall_UpdateConferenceResponse
-    extends Zend_Service_DeveloperGarden_Response_ConferenceCall_AbstractConferenceCall
+    extends Zend_Service_DeveloperGarden_Response_ConferenceCall_ConferenceCallAbstract
 {
     /**
      * response data

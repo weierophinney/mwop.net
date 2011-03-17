@@ -16,22 +16,21 @@
  * @package    Zend_Filter
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Filter_Interface
  */
-namespace Zend\Filter;
+require_once 'Zend/Filter/Interface.php';
 
 /**
- * @uses       Zend\Filter\Exception
- * @uses       Zend\Filter\AbstractFilter
  * @category   Zend
  * @package    Zend_Filter
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class StringToUpper extends AbstractFilter
+class Zend_Filter_StringToUpper implements Zend_Filter_Interface
 {
     /**
      * Encoding for the input string
@@ -47,7 +46,7 @@ class StringToUpper extends AbstractFilter
      */
     public function __construct($options = null)
     {
-        if ($options instanceof \Zend\Config\Config) {
+        if ($options instanceof Zend_Config) {
             $options = $options->toArray();
         } else if (!is_array($options)) {
             $options = func_get_args();
@@ -81,19 +80,21 @@ class StringToUpper extends AbstractFilter
      * Set the input encoding for the given string
      *
      * @param  string $encoding
-     * @return \Zend\Filter\StringToUpper Provides a fluent interface
-     * @throws \Zend\Filter\Exception
+     * @return Zend_Filter_StringToUpper Provides a fluent interface
+     * @throws Zend_Filter_Exception
      */
     public function setEncoding($encoding = null)
     {
         if ($encoding !== null) {
             if (!function_exists('mb_strtoupper')) {
-                throw new Exception\ExtensionNotLoadedException('mbstring is required for this feature');
+                require_once 'Zend/Filter/Exception.php';
+                throw new Zend_Filter_Exception('mbstring is required for this feature');
             }
 
             $encoding = (string) $encoding;
             if (!in_array(strtolower($encoding), array_map('strtolower', mb_list_encodings()))) {
-                throw new Exception\InvalidArgumentException("The given encoding '$encoding' is not supported by mbstring");
+                require_once 'Zend/Filter/Exception.php';
+                throw new Zend_Filter_Exception("The given encoding '$encoding' is not supported by mbstring");
             }
         }
 

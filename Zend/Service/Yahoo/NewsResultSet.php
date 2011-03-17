@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework
  *
@@ -17,11 +18,23 @@
  * @subpackage Yahoo
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
+
 /**
- * @uses       Zend_Service_Yahoo_NewsResult
- * @uses       Zend_Service_Yahoo_ResultSet
+ * @see Zend_Service_Yahoo_ResultSet
+ */
+require_once 'Zend/Service/Yahoo/ResultSet.php';
+
+
+/**
+ * @see Zend_Service_Yahoo_NewsResult
+ */
+require_once 'Zend/Service/Yahoo/NewsResult.php';
+
+
+/**
  * @category   Zend
  * @package    Zend_Service
  * @subpackage Yahoo

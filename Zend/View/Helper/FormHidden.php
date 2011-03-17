@@ -17,24 +17,26 @@
  * @subpackage Helper
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
+
 /**
- * @namespace
+ * Abstract class for extension
  */
-namespace Zend\View\Helper;
+require_once 'Zend/View/Helper/FormElement.php';
+
 
 /**
  * Helper to generate a "hidden" element
  *
- * @uses       \Zend\View\Helper\FormElement
  * @category   Zend
  * @package    Zend_View
  * @subpackage Helper
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class FormHidden extends FormElement
+class Zend_View_Helper_FormHidden extends Zend_View_Helper_FormElement
 {
     /**
      * Generates a 'hidden' element.
@@ -48,12 +50,8 @@ class FormHidden extends FormElement
      * @param array $attribs Attributes for the element tag.
      * @return string The element XHTML.
      */
-    public function direct($name = null, $value = null, array $attribs = null)
+    public function formHidden($name, $value = null, array $attribs = null)
     {
-        if ($name == null) {
-            throw new \InvalidArgumentException('FormHidden: missing argument. $name is required in formHidden($name, $value = null, array $attribs = null)');
-        }
-        
         $info = $this->_getInfo($name, $value, $attribs);
         extract($info); // name, value, attribs, options, listsep, disable
         if (isset($id)) {

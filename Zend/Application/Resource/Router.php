@@ -17,36 +17,37 @@
  * @subpackage Resource
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Application_Resource_ResourceAbstract
  */
-namespace Zend\Application\Resource;
+require_once 'Zend/Application/Resource/ResourceAbstract.php';
+
 
 /**
  * Resource for initializing the locale
  *
- * @uses       \Zend\Application\Resource\AbstractResource
- * @uses       \Zend\Config\Config
+ * @uses       Zend_Application_Resource_Base
  * @category   Zend
  * @package    Zend_Application
  * @subpackage Resource
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Router
-    extends AbstractResource
+class Zend_Application_Resource_Router
+    extends Zend_Application_Resource_ResourceAbstract
 {
     /**
-     * @var \Zend\Controller\Router\Rewrite
+     * @var Zend_Controller_Router_Rewrite
      */
     protected $_router;
 
     /**
      * Defined by Zend_Application_Resource_Resource
      *
-     * @return \Zend\Controller\Router\Rewrite
+     * @return Zend_Controller_Router_Rewrite
      */
     public function init()
     {
@@ -56,13 +57,13 @@ class Router
     /**
      * Retrieve router object
      *
-     * @return \Zend\Controller\Router\Rewrite
+     * @return Zend_Controller_Router_Rewrite
      */
     public function getRouter()
     {
         if (null === $this->_router) {
             $bootstrap = $this->getBootstrap();
-            $bootstrap->bootstrap('frontcontroller');
+            $bootstrap->bootstrap('FrontController');
             $this->_router = $bootstrap->getContainer()->frontcontroller->getRouter();
 
             $options = $this->getOptions();
@@ -78,7 +79,7 @@ class Router
                 $this->_router->useRequestParametersAsGlobal($options['useRequestParametersAsGlobal']);
             }
 
-            $this->_router->addConfig(new \Zend\Config\Config($options['routes']));
+            $this->_router->addConfig(new Zend_Config($options['routes']));
         }
 
         return $this->_router;

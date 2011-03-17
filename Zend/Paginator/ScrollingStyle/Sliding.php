@@ -16,14 +16,13 @@
  * @package    Zend_Paginator
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Paginator_ScrollingStyle_Interface
  */
-namespace Zend\Paginator\ScrollingStyle;
-
-use Zend\Paginator\ScrollingStyle;
+require_once 'Zend/Paginator/ScrollingStyle/Interface.php';
 
 /**
  * A Yahoo! Search-like scrolling style.  The cursor will advance to
@@ -31,23 +30,22 @@ use Zend\Paginator\ScrollingStyle;
  * the end of the page set, at which point it will continue on to
  * the end of the range and the last page in the set.
  *
- * @uses       \Zend\Paginator\ScrollingStyle
  * @link       http://search.yahoo.com/search?p=Zend+Framework
  * @category   Zend
  * @package    Zend_Paginator
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Sliding implements ScrollingStyle
+class Zend_Paginator_ScrollingStyle_Sliding implements Zend_Paginator_ScrollingStyle_Interface
 {
     /**
      * Returns an array of "local" pages given a page number and range.
      *
-     * @param  \Zend\Paginator\Paginator $paginator
+     * @param  Zend_Paginator $paginator
      * @param  integer $pageRange (Optional) Page range
      * @return array
      */
-    public function getPages(\Zend\Paginator\Paginator $paginator, $pageRange = null)
+    public function getPages(Zend_Paginator $paginator, $pageRange = null)
     {
         if ($pageRange === null) {
             $pageRange = $paginator->getPageRange();

@@ -17,12 +17,9 @@
  * @subpackage Zend_Cache_Backend
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Cache;
 
 /**
  * @package    Zend_Cache
@@ -30,72 +27,242 @@ namespace Zend\Cache;
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-interface Backend
+class Zend_Cache_Backend
 {
+    /**
+     * Frontend or Core directives
+     *
+     * =====> (int) lifetime :
+     * - Cache lifetime (in seconds)
+     * - If null, the cache is valid forever
+     *
+     * =====> (int) logging :
+     * - if set to true, a logging is activated throw Zend_Log
+     *
+     * @var array directives
+     */
+    protected $_directives = array(
+        'lifetime' => 3600,
+        'logging'  => false,
+        'logger'   => null
+    );
+
+    /**
+     * Available options
+     *
+     * @var array available options
+     */
+    protected $_options = array();
+
+    /**
+     * Constructor
+     *
+     * @param  array $options Associative array of options
+     * @throws Zend_Cache_Exception
+     * @return void
+     */
+    public function __construct(array $options = array())
+    {
+        while (list($name, $value) = each($options)) {
+            $this->setOption($name, $value);
+        }
+    }
+
     /**
      * Set the frontend directives
      *
-     * @param array $directives assoc of directives
+     * @param  array $directives Assoc of directives
+     * @throws Zend_Cache_Exception
+     * @return void
      */
-    public function setDirectives($directives);
+    public function setDirectives($directives)
+    {
+        if (!is_array($directives)) Zend_Cache::throwException('Directives parameter must be an array');
+        while (list($name, $value) = each($directives)) {
+            if (!is_string($name)) {
+                Zend_Cache::throwException("Incorrect option name : $name");
+            }
+            $name = strtolower($name);
+            if (array_key_exists($name, $this->_directives)) {
+                $this->_directives[$name] = $value;
+            }
+
+        }
+
+        $this->_loggerSanity();
+    }
 
     /**
-     * Test if a cache is available for the given id and (if yes) return it (false else)
+     * Set an option
      *
-     * Note : return value is always "string" (unserialization is done by the core not by the backend)
-     *
-     * @param  string  $id                     Cache id
-     * @param  boolean $doNotTestCacheValidity If set to true, the cache validity won't be tested
-     * @return string|false cached datas
+     * @param  string $name
+     * @param  mixed  $value
+     * @throws Zend_Cache_Exception
+     * @return void
      */
-    public function load($id, $doNotTestCacheValidity = false);
+    public function setOption($name, $value)
+    {
+        if (!is_string($name)) {
+            Zend_Cache::throwException("Incorrect option name : $name");
+        }
+        $name = strtolower($name);
+        if (array_key_exists($name, $this->_options)) {
+            $this->_options[$name] = $value;
+        }
+    }
 
     /**
-     * Test if a cache is available or not (for the given id)
+     * Get the life time
      *
-     * @param  string $id cache id
-     * @return mixed|false (a cache is not available) or "last modified" timestamp (int) of the available cache record
+     * if $specificLifetime is not false, the given specific life time is used
+     * else, the global lifetime is used
+     *
+     * @param  int $specificLifetime
+     * @return int Cache life time
      */
-    public function test($id);
+    public function getLifetime($specificLifetime)
+    {
+        if ($specificLifetime === false) {
+            return $this->_directives['lifetime'];
+        }
+        return $specificLifetime;
+    }
 
     /**
-     * Save some string datas into a cache record
+     * Return true if the automatic cleaning is available for the backend
      *
-     * Note : $data is always "string" (serialization is done by the
-     * core not by the backend)
+     * DEPRECATED : use getCapabilities() instead
      *
-     * @param  string $data            Datas to cache
-     * @param  string $id              Cache id
-     * @param  array $tags             Array of strings, the cache record will be tagged by each string entry
-     * @param  int   $specificLifetime If != false, set a specific lifetime for this cache record (null => infinite lifetime)
-     * @return boolean true if no problem
+     * @deprecated
+     * @return boolean
      */
-    public function save($data, $id, $tags = array(), $specificLifetime = false);
+    public function isAutomaticCleaningAvailable()
+    {
+        return true;
+    }
 
     /**
-     * Remove a cache record
+     * Determine system TMP directory and detect if we have read access
      *
-     * @param  string $id Cache id
-     * @return boolean True if no problem
+     * inspired from Zend_File_Transfer_Adapter_Abstract
+     *
+     * @return string
+     * @throws Zend_Cache_Exception if unable to determine directory
      */
-    public function remove($id);
+    public function getTmpDir()
+    {
+        $tmpdir = array();
+        foreach (array($_ENV, $_SERVER) as $tab) {
+            foreach (array('TMPDIR', 'TEMP', 'TMP', 'windir', 'SystemRoot') as $key) {
+                if (isset($tab[$key])) {
+                    if (($key == 'windir') or ($key == 'SystemRoot')) {
+                        $dir = realpath($tab[$key] . '\\temp');
+                    } else {
+                        $dir = realpath($tab[$key]);
+                    }
+                    if ($this->_isGoodTmpDir($dir)) {
+                        return $dir;
+                    }
+                }
+            }
+        }
+        $upload = ini_get('upload_tmp_dir');
+        if ($upload) {
+            $dir = realpath($upload);
+            if ($this->_isGoodTmpDir($dir)) {
+                return $dir;
+            }
+        }
+        if (function_exists('sys_get_temp_dir')) {
+            $dir = sys_get_temp_dir();
+            if ($this->_isGoodTmpDir($dir)) {
+                return $dir;
+            }
+        }
+        // Attemp to detect by creating a temporary file
+        $tempFile = tempnam(md5(uniqid(rand(), TRUE)), '');
+        if ($tempFile) {
+            $dir = realpath(dirname($tempFile));
+            unlink($tempFile);
+            if ($this->_isGoodTmpDir($dir)) {
+                return $dir;
+            }
+        }
+        if ($this->_isGoodTmpDir('/tmp')) {
+            return '/tmp';
+        }
+        if ($this->_isGoodTmpDir('\\temp')) {
+            return '\\temp';
+        }
+        Zend_Cache::throwException('Could not determine temp directory, please specify a cache_dir manually');
+    }
 
     /**
-     * Clean some cache records
+     * Verify if the given temporary directory is readable and writable
      *
-     * Available modes are :
-     * Cache::CLEANING_MODE_ALL (default)    => remove all cache entries ($tags is not used)
-     * Cache::CLEANING_MODE_OLD              => remove too old cache entries ($tags is not used)
-     * Cache::CLEANING_MODE_MATCHING_TAG     => remove cache entries matching all given tags
-     *                                               ($tags can be an array of strings or a single string)
-     * Cache::CLEANING_MODE_NOT_MATCHING_TAG => remove cache entries not {matching one of the given tags}
-     *                                               ($tags can be an array of strings or a single string)
-     * Cache::CLEANING_MODE_MATCHING_ANY_TAG => remove cache entries matching any given tags
-     *                                               ($tags can be an array of strings or a single string)
-     *
-     * @param  string $mode Clean mode
-     * @param  array  $tags Array of tags
-     * @return boolean true if no problem
+     * @param string $dir temporary directory
+     * @return boolean true if the directory is ok
      */
-    public function clean($mode = Cache::CLEANING_MODE_ALL, $tags = array());
+    protected function _isGoodTmpDir($dir)
+    {
+        if (is_readable($dir)) {
+            if (is_writable($dir)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Make sure if we enable logging that the Zend_Log class
+     * is available.
+     * Create a default log object if none is set.
+     *
+     * @throws Zend_Cache_Exception
+     * @return void
+     */
+    protected function _loggerSanity()
+    {
+        if (!isset($this->_directives['logging']) || !$this->_directives['logging']) {
+            return;
+        }
+
+        if (isset($this->_directives['logger'])) {
+            if ($this->_directives['logger'] instanceof Zend_Log) {
+                return;
+            }
+            Zend_Cache::throwException('Logger object is not an instance of Zend_Log class.');
+        }
+
+        // Create a default logger to the standard output stream
+        require_once 'Zend/Log.php';
+        require_once 'Zend/Log/Writer/Stream.php';
+        require_once 'Zend/Log/Filter/Priority.php';
+        $logger = new Zend_Log(new Zend_Log_Writer_Stream('php://output'));
+        $logger->addFilter(new Zend_Log_Filter_Priority(Zend_Log::WARN, '<='));
+        $this->_directives['logger'] = $logger;
+    }
+
+    /**
+     * Log a message at the WARN (4) priority.
+     *
+     * @param  string $message
+     * @throws Zend_Cache_Exception
+     * @return void
+     */
+    protected function _log($message, $priority = 4)
+    {
+        if (!$this->_directives['logging']) {
+            return;
+        }
+
+        if (!isset($this->_directives['logger'])) {
+            Zend_Cache::throwException('Logging is enabled but logger is not set.');
+        }
+        $logger = $this->_directives['logger'];
+        if (!$logger instanceof Zend_Log) {
+            Zend_Cache::throwException('Logger object is not an instance of Zend_Log class.');
+        }
+        $logger->log($message, $priority);
+    }
 }

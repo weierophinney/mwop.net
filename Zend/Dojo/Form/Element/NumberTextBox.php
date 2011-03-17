@@ -19,22 +19,20 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * @namespace
- */
-namespace Zend\Dojo\Form\Element;
+/** Zend_Dojo_Form_Element_ValidationTextBox */
+require_once 'Zend/Dojo/Form/Element/ValidationTextBox.php';
 
 /**
  * NumberTextBox dijit
  *
- * @uses       \Zend\Dojo\Form\Element\ValidationTextBox
- * @uses       \Zend\Form\ElementException
+ * @uses       Zend_Dojo_Form_Element_ValidationTextBox
  * @package    Zend_Dojo
  * @subpackage Form_Element
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
-class NumberTextBox extends ValidationTextBox
+class Zend_Dojo_Form_Element_NumberTextBox extends Zend_Dojo_Form_Element_ValidationTextBox
 {
     /**
      * Use NumberTextBox dijit view helper
@@ -57,7 +55,7 @@ class NumberTextBox extends ValidationTextBox
      * Set locale
      *
      * @param  string $locale
-     * @return \Zend\Dojo\Form\Element\NumberTextBox
+     * @return Zend_Dojo_Form_Element_NumberTextBox
      */
     public function setLocale($locale)
     {
@@ -79,7 +77,7 @@ class NumberTextBox extends ValidationTextBox
      * Set numeric format pattern
      *
      * @param  string $pattern
-     * @return \Zend\Dojo\Form\Element\NumberTextBox
+     * @return Zend_Dojo_Form_Element_NumberTextBox
      */
     public function setPattern($pattern)
     {
@@ -102,13 +100,14 @@ class NumberTextBox extends ValidationTextBox
      *
      * @see    $_allowedTypes
      * @param  string $type
-     * @return \Zend\Dojo\Form\Element\NumberTextBox
+     * @return Zend_Dojo_Form_Element_NumberTextBox
      */
     public function setType($type)
     {
         $type = strtolower($type);
         if (!in_array($type, $this->_allowedTypes)) {
-            throw new \Zend\Form\ElementException(sprintf('Invalid numeric type "%s" specified', $type));
+            require_once 'Zend/Form/Element/Exception.php';
+            throw new Zend_Form_Element_Exception(sprintf('Invalid numeric type "%s" specified', $type));
         }
 
         $this->setConstraint('type', $type);
@@ -129,7 +128,7 @@ class NumberTextBox extends ValidationTextBox
      * Set decimal places
      *
      * @param  int $places
-     * @return \Zend\Dojo\Form\Element\NumberTextBox
+     * @return Zend_Dojo_Form_Element_NumberTextBox
      */
     public function setPlaces($places)
     {
@@ -151,7 +150,7 @@ class NumberTextBox extends ValidationTextBox
      * Set strict flag
      *
      * @param  bool $strict
-     * @return \Zend\Dojo\Form\Element\NumberTextBox
+     * @return Zend_Dojo_Form_Element_NumberTextBox
      */
     public function setStrict($flag)
     {

@@ -17,37 +17,26 @@
  * @subpackage Framework
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Tool_Framework_Registry_EnabledInterface
  */
-namespace Zend\Tool\Framework\Manifest;
-
-use Zend\Tool\Framework\Manifest,
-    Zend\Tool\Framework\Registry,
-    Zend\Tool\Framework\RegistryEnabled,
-    Zend\Tool\Framework\Metadata,
-    Zend\Tool\Framework\Manifest\Exception;
+require_once 'Zend/Tool/Framework/Registry/EnabledInterface.php';
 
 /**
- * @uses       ArrayIterator
- * @uses       Countable
- * @uses       IteratorAggregate
- * @uses       \Zend\Tool\Framework\Action\Base
- * @uses       \Zend\Tool\Framework\Manifest\Exception
- * @uses       \Zend\Tool\Framework\Metadata\Dynamic
- * @uses       \Zend\Tool\Framework\RegistryEnabled
  * @category   Zend
  * @package    Zend_Tool
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Repository implements RegistryEnabled, \IteratorAggregate, \Countable
+class Zend_Tool_Framework_Manifest_Repository
+    implements Zend_Tool_Framework_Registry_EnabledInterface, IteratorAggregate, Countable
 {
 
     /**
-     * @var Zend\Tool\Framework\Provider\Registry
+     * @var Zend_Tool_Framework_Provider_Registry_Interface
      */
     protected $_registry = null;
 
@@ -57,17 +46,17 @@ class Repository implements RegistryEnabled, \IteratorAggregate, \Countable
     protected $_manifests = array();
 
     /**
-     * @var array Array of \Zend\Tool\Framework\Metadata
+     * @var array Array of Zend_Tool_Framework_Metadata_Interface
      */
     protected $_metadatas = array();
 
     /**
      * setRegistry()
      *
-     * @param \Zend\Tool\Framework\Registry $registry
+     * @param Zend_Tool_Framework_Registry_Interface $registry
      * @return unknown
      */
-    public function setRegistry(Registry $registry)
+    public function setRegistry(Zend_Tool_Framework_Registry_Interface $registry)
     {
         $this->_registry = $registry;
         return $this;
@@ -76,21 +65,21 @@ class Repository implements RegistryEnabled, \IteratorAggregate, \Countable
     /**
      * addManifest() - Add a manifest for later processing
      *
-     * @param \Zend\Tool\Framework\Manifest $manifest
-     * @return \Zend\Tool\Framework\Manifest\Repository
+     * @param Zend_Tool_Framework_Manifest_Interface $manifest
+     * @return Zend_Tool_Framework_Manifest_Repository
      */
-    public function addManifest(Manifest $manifest)
+    public function addManifest(Zend_Tool_Framework_Manifest_Interface $manifest)
     {
         // we need to get an index number so that manifests with
         // higher indexes have priority over others
         $index = count($this->_manifests);
 
-        if ($manifest instanceof RegistryEnabled) {
+        if ($manifest instanceof Zend_Tool_Framework_Registry_EnabledInterface) {
             $manifest->setRegistry($this->_registry);
         }
 
         // if the manifest supplies a getIndex() method, use it
-        if ($manifest instanceof Indexable) {
+        if ($manifest instanceof Zend_Tool_Framework_Manifest_Indexable) {
             $index = $manifest->getIndex();
         }
 
@@ -99,7 +88,7 @@ class Repository implements RegistryEnabled, \IteratorAggregate, \Countable
         $providerRepository = $this->_registry->getProviderRepository();
 
         // load providers if interface supports that method
-        if ($manifest instanceof ProviderManifestable) {
+        if ($manifest instanceof Zend_Tool_Framework_Manifest_ProviderManifestable) {
             $providers = $manifest->getProviders();
             if (!is_array($providers)) {
                 $providers = array($providers);
@@ -111,9 +100,10 @@ class Repository implements RegistryEnabled, \IteratorAggregate, \Countable
                 if (is_string($provider)) {
                     $provider = new $provider();
                 }
-                
-                if (!$provider instanceof \Zend\Tool\Framework\Provider) {
-                    throw new Exception\InvalidArgumentException(
+
+                if (!$provider instanceof Zend_Tool_Framework_Provider_Interface) {
+                    require_once 'Zend/Tool/Framework/Manifest/Exception.php';
+                    throw new Zend_Tool_Framework_Manifest_Exception(
                         'A provider provided by the ' . get_class($manifest)
                         . ' does not implement Zend_Tool_Framework_Provider_Interface'
                         );
@@ -126,7 +116,7 @@ class Repository implements RegistryEnabled, \IteratorAggregate, \Countable
         }
 
         // load actions if interface supports that method
-        if ($manifest instanceof ActionManifestable) {
+        if ($manifest instanceof Zend_Tool_Framework_Manifest_ActionManifestable) {
             $actions = $manifest->getActions();
             if (!is_array($actions)) {
                 $actions = array($actions);
@@ -134,7 +124,7 @@ class Repository implements RegistryEnabled, \IteratorAggregate, \Countable
 
             foreach ($actions as $action) {
                 if (is_string($action)) {
-                    $action = new \Zend\Tool\Framework\Action\Base($action);
+                    $action = new Zend_Tool_Framework_Action_Base($action);
                 }
                 $actionRepository->addAction($action);
             }
@@ -150,7 +140,7 @@ class Repository implements RegistryEnabled, \IteratorAggregate, \Countable
     /**
      * getManifests()
      *
-     * @return \Zend\Tool\Framework\Manifest\Manifest[]
+     * @return Zend_Tool_Framework_Manifest_Interface[]
      */
     public function getManifests()
     {
@@ -161,9 +151,9 @@ class Repository implements RegistryEnabled, \IteratorAggregate, \Countable
      * addMetadata() - add a metadata peice by peice
      *
      * @param Zend_Tool_Framework_Manifest_Metadata $metadata
-     * @return \Zend\Tool\Framework\Manifest\Repository
+     * @return Zend_Tool_Framework_Manifest_Repository
      */
-    public function addMetadata(Metadata $metadata)
+    public function addMetadata(Zend_Tool_Framework_Metadata_Interface $metadata)
     {
         $this->_metadatas[] = $metadata;
         return $this;
@@ -174,13 +164,13 @@ class Repository implements RegistryEnabled, \IteratorAggregate, \Countable
      * By this time, the loader has run and loaded any found manifests into the repository
      * for loading
      *
-     * @return \Zend\Tool\Framework\Manifest\Repository
+     * @return Zend_Tool_Framework_Manifest_Repository
      */
     public function process()
     {
 
         foreach ($this->_manifests as $manifest) {
-            if ($manifest instanceof MetadataManifestable) {
+            if ($manifest instanceof Zend_Tool_Framework_Manifest_MetadataManifestable) {
                 $metadatas = $manifest->getMetadata();
                 if (!is_array($metadatas)) {
                     $metadatas = array($metadatas);
@@ -188,11 +178,15 @@ class Repository implements RegistryEnabled, \IteratorAggregate, \Countable
 
                 foreach ($metadatas as $metadata) {
                     if (is_array($metadata)) {
-                        $metadata = new Metadata\Dynamic($metadata);
+                        if (!class_exists('Zend_Tool_Framework_Metadata_Dynamic')) {
+                            require_once 'Zend/Tool/Framework/Metadata/Dynamic.php';
+                        }
+                        $metadata = new Zend_Tool_Framework_Metadata_Dynamic($metadata);
                     }
-                    
-                    if (!$metadata instanceof Metadata) {
-                        throw new Exception\RuntimeException(
+
+                    if (!$metadata instanceof Zend_Tool_Framework_Metadata_Interface) {
+                        require_once 'Zend/Tool/Framework/Manifest/Exception.php';
+                        throw new Zend_Tool_Framework_Manifest_Exception(
                             'A Zend_Tool_Framework_Metadata_Interface object was not found in manifest ' . get_class($manifest)
                             );
                     }
@@ -313,7 +307,7 @@ class Repository implements RegistryEnabled, \IteratorAggregate, \Countable
      */
     public function getIterator()
     {
-        return new \ArrayIterator($this->_metadatas);
+        return new ArrayIterator($this->_metadatas);
     }
 
 }

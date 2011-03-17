@@ -17,27 +17,21 @@
  * @subpackage Storage
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Mail\Storage;
-use Zend\Mail\Storage\Exception;
 
 /**
- * @uses       RecursiveIterator
- * @uses       \Zend\Mail\Storage\Exception
  * @category   Zend
  * @package    Zend_Mail
  * @subpackage Storage
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Folder implements \RecursiveIterator
+class Zend_Mail_Storage_Folder implements RecursiveIterator
 {
     /**
-     * subfolders of folder array(localName => \Zend\Mail\Storage\Folder folder)
+     * subfolders of folder array(localName => Zend_Mail_Storage_Folder folder)
      * @var array
      */
     protected $_folders;
@@ -66,7 +60,7 @@ class Folder implements \RecursiveIterator
      * @param string $localName  name of folder in current subdirectory
      * @param string $globalName absolute name of folder
      * @param bool   $selectable if true folder holds messages, if false it's just a parent for subfolders
-     * @param array  $folders    init with given instances of \Zend\Mail\Storage\Folder as subfolders
+     * @param array  $folders    init with given instances of Zend_Mail_Storage_Folder as subfolders
      */
     public function __construct($localName, $globalName = '', $selectable = true, array $folders = array())
     {
@@ -84,13 +78,13 @@ class Folder implements \RecursiveIterator
     public function hasChildren()
     {
         $current = $this->current();
-        return $current && $current instanceof Folder && !$current->isLeaf();
+        return $current && $current instanceof Zend_Mail_Storage_Folder && !$current->isLeaf();
     }
 
     /**
      * implements RecursiveIterator::getChildren()
      *
-     * @return \Zend\Mail\Storage\Folder same as self::current()
+     * @return Zend_Mail_Storage_Folder same as self::current()
      */
     public function getChildren()
     {
@@ -130,7 +124,7 @@ class Folder implements \RecursiveIterator
     /**
      * implements Iterator::current()
      *
-     * @return \Zend\Mail\Storage\Folder current folder
+     * @return Zend_Mail_Storage_Folder current folder
      */
     public function current()
     {
@@ -151,13 +145,17 @@ class Folder implements \RecursiveIterator
      * get subfolder named $name
      *
      * @param  string $name wanted subfolder
-     * @return \Zend\Mail\Storage\Folder folder named $folder
-     * @throws \Zend\Mail\Storage\Exception
+     * @return Zend_Mail_Storage_Folder folder named $folder
+     * @throws Zend_Mail_Storage_Exception
      */
     public function __get($name)
     {
         if (!isset($this->_folders[$name])) {
-            throw new Exception\InvalidArgumentException("no subfolder named $name");
+            /**
+             * @see Zend_Mail_Storage_Exception
+             */
+            require_once 'Zend/Mail/Storage/Exception.php';
+            throw new Zend_Mail_Storage_Exception("no subfolder named $name");
         }
 
         return $this->_folders[$name];
@@ -167,10 +165,10 @@ class Folder implements \RecursiveIterator
      * add or replace subfolder named $name
      *
      * @param string $name local name of subfolder
-     * @param \Zend\Mail\Storage\Folder $folder instance for new subfolder
+     * @param Zend_Mail_Storage_Folder $folder instance for new subfolder
      * @return null
      */
-    public function __set($name, Folder $folder)
+    public function __set($name, Zend_Mail_Storage_Folder $folder)
     {
         $this->_folders[$name] = $folder;
     }

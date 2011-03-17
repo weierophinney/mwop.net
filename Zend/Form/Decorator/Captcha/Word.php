@@ -19,26 +19,22 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * @namespace
- */
-namespace Zend\Form\Decorator\Captcha;
-
-use Zend\Form\Decorator\AbstractDecorator;
+/** @see Zend_Form_Decorator_Abstract */
+require_once 'Zend/Form/Decorator/Abstract.php';
 
 /**
  * Word-based captcha decorator
  *
  * Adds hidden field for ID and text input field for captcha text
  *
- * @uses       \Zend\Form\Decorator\AbstractDecorator
  * @category   Zend
  * @package    Zend_Form
  * @subpackage Element
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
-class Word extends AbstractDecorator
+class Zend_Form_Decorator_Captcha_Word extends Zend_Form_Decorator_Abstract
 {
     /**
      * Render captcha

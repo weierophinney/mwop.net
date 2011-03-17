@@ -17,28 +17,24 @@
  * @subpackage Page
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Navigation_Page_Abstract
  */
-namespace Zend\Navigation\Page;
-
-use Zend\Navigation\AbstractPage,
-    Zend\Navigation\Exception\InvalidArgumentException;
+require_once 'Zend/Navigation/Page.php';
 
 /**
  * Represents a page that is defined by specifying a URI
  *
- * @uses       \Zend\Navigation\Exception
- * @uses       \Zend\Navigation\Page\Page
  * @category   Zend
  * @package    Zend_Navigation
  * @subpackage Page
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Uri extends AbstractPage
+class Zend_Navigation_Page_Uri extends Zend_Navigation_Page
 {
     /**
      * Page URI
@@ -51,13 +47,14 @@ class Uri extends AbstractPage
      * Sets page URI
      *
      * @param  string $uri                page URI, must a string or null
-     * @return \Zend\Navigation\Page\Uri   fluent interface, returns self
-     * @throws \Zend\Navigation\InvalidArgumentException  if $uri is invalid
+     * @return Zend_Navigation_Page_Uri   fluent interface, returns self
+     * @throws Zend_Navigation_Exception  if $uri is invalid
      */
     public function setUri($uri)
     {
         if (null !== $uri && !is_string($uri)) {
-            throw new InvalidArgumentException(
+            require_once 'Zend/Navigation/Exception.php';
+            throw new Zend_Navigation_Exception(
                     'Invalid argument: $uri must be a string or null');
         }
 

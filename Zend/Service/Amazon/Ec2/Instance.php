@@ -17,28 +17,25 @@
  * @subpackage Ec2
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Service_Amazon_Ec2_Abstract
  */
-namespace Zend\Service\Amazon\Ec2;
-use Zend\Service\Amazon,
-    Zend\Service\Amazon\Ec2\Exception;
+require_once 'Zend/Service/Amazon/Ec2/Abstract.php';
 
 /**
  * An Amazon EC2 interface that allows yout to run, terminate, reboot and describe Amazon
  * Ec2 Instances.
  *
- * @uses       Zend\Service\Amazon\AbstractEc2
- * @uses       Zend\Service\Amazon\Ec2\Exception
  * @category   Zend
  * @package    Zend_Service_Amazon
  * @subpackage Ec2
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Instance extends AbstractEc2
+class Zend_Service_Amazon_Ec2_Instance extends Zend_Service_Amazon_Ec2_Abstract
 {
     /**
      * Constant for Small Instance TYpe
@@ -111,16 +108,17 @@ class Instance extends AbstractEc2
     public function run(array $options)
     {
         $_defaultOptions = array(
-            'minCount'     => 1,
-            'maxCount'     => 1,
-            'instanceType' => self::SMALL
+            'minCount'  => 1,
+            'maxCount'  => 1,
+            'instanceType' => Zend_Service_Amazon_Ec2_Instance::SMALL
         );
 
         // set / override the defualt optoins if they are not passed into the array;
         $options = array_merge($_defaultOptions, $options);
 
         if(!isset($options['imageId'])) {
-            throw new Exception\InvalidArgumentException('No Image Id Provided');
+            require_once 'Zend/Service/Amazon/Ec2/Exception.php';
+            throw new Zend_Service_Amazon_Ec2_Exception('No Image Id Provided');
         }
 
 

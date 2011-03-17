@@ -17,32 +17,25 @@
  * @subpackage View
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Dojo\View\Helper;
-
-use Zend\Json\Json,
-    Zend\View\Renderer as View,
-    Zend\View\Helper\HtmlElement;
+/** Zend_View_Helper_HtmlElement */
+require_once 'Zend/View/Helper/HtmlElement.php';
 
 /**
  * Dojo dijit base class
  *
- * @uses       \Zend\Dojo\View\Helper\Dojo
- * @uses       \Zend\Json\Json
- * @uses       \Zend\View\Helper\HtmlElement
+ * @uses       Zend_View_Helper_Abstract
  * @package    Zend_Dojo
  * @subpackage View
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- */
-abstract class Dijit extends HtmlElement
+  */
+abstract class Zend_Dojo_View_Helper_Dijit extends Zend_View_Helper_HtmlElement
 {
     /**
-     * @var \Zend\Dojo\View\Helper\Dojo\Container
+     * @var Zend_Dojo_View_Helper_Dojo_Container
      */
     public $dojo;
 
@@ -81,13 +74,13 @@ abstract class Dijit extends HtmlElement
      *
      * Set view and enable dojo
      *
-     * @param  \Zend\View\ViewEngine $view
-     * @return \Zend\Dojo\View\Helper\Dijit
+     * @param  Zend_View_Interface $view
+     * @return Zend_Dojo_View_Helper_Dijit
      */
-    public function setView(View $view)
+    public function setView(Zend_View_Interface $view)
     {
         parent::setView($view);
-        $this->dojo = $this->view->broker('dojo');
+        $this->dojo = $this->view->dojo();
         $this->dojo->enable();
         return $this;
     }
@@ -107,7 +100,7 @@ abstract class Dijit extends HtmlElement
      * Set root node type
      *
      * @param  string $value
-     * @return \Zend\Dojo\View\Helper\Dijit
+     * @return Zend_Dojo_View_Helper_Dijit
      */
     public function setRootNode($value)
     {
@@ -122,7 +115,7 @@ abstract class Dijit extends HtmlElement
      */
     protected function _useDeclarative()
     {
-        return Dojo::useDeclarative();
+        return Zend_Dojo_View_Helper_Dojo::useDeclarative();
     }
 
     /**
@@ -132,7 +125,7 @@ abstract class Dijit extends HtmlElement
      */
     protected function _useProgrammatic()
     {
-        return Dojo::useProgrammatic();
+        return Zend_Dojo_View_Helper_Dojo::useProgrammatic();
     }
 
     /**
@@ -142,7 +135,7 @@ abstract class Dijit extends HtmlElement
      */
     protected function _useProgrammaticNoScript()
     {
-        return Dojo::useProgrammaticNoScript();
+        return Zend_Dojo_View_Helper_Dojo::useProgrammaticNoScript();
     }
 
     /**
@@ -241,6 +234,8 @@ abstract class Dijit extends HtmlElement
         // Normalize constraints, if present
         foreach ($this->_jsonParams as $param) {
             if (array_key_exists($param, $params)) {
+                require_once 'Zend/Json.php';
+
                 if (is_array($params[$param])) {
                     $values = array();
                     foreach ($params[$param] as $key => $value) {
@@ -254,7 +249,7 @@ abstract class Dijit extends HtmlElement
                 } else {
                     $values = array();
                 }
-                $values = Json::encode($values);
+                $values = Zend_Json::encode($values);
                 if ($this->_useDeclarative()) {
                     $values = str_replace('"', "'", $values);
                 }

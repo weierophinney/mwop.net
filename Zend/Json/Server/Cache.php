@@ -17,24 +17,22 @@
  * @subpackage Server
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Json\Server;
+/** Zend_Server_Cache */
+require_once 'Zend/Server/Cache.php';
 
 /**
  * Zend_Json_Server_Cache: cache Zend_Json_Server server definition and SMD
  *
- * @uses       \Zend\Server\Cache
  * @category   Zend
  * @package    Zend_Json
  * @subpackage Server
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Cache extends \Zend\Server\Cache
+class Zend_Json_Server_Cache extends Zend_Server_Cache
 {
     /**
      * Cache a service map description (SMD) to a file
@@ -42,10 +40,10 @@ class Cache extends \Zend\Server\Cache
      * Returns true on success, false on failure
      *
      * @param  string $filename
-     * @param  \Zend\Json\Server\Server $server
+     * @param  Zend_Json_Server $server
      * @return boolean
      */
-    public static function saveSmd($filename, Server $server)
+    public static function saveSmd($filename, Zend_Json_Server $server)
     {
         if (!is_string($filename)
             || (!file_exists($filename) && !is_writable(dirname($filename))))

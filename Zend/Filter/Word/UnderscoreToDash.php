@@ -16,21 +16,21 @@
  * @package    Zend_Filter
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Filter_PregReplace
  */
-namespace Zend\Filter\Word;
+require_once 'Zend/Filter/Word/SeparatorToSeparator.php';
 
 /**
- * @uses       \Zend\Filter\Word\SeparatorToSeparator
  * @category   Zend
  * @package    Zend_Filter
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class UnderscoreToDash extends SeparatorToSeparator
+class Zend_Filter_Word_UnderscoreToDash extends Zend_Filter_Word_SeparatorToSeparator
 {
     /**
      * Constructor

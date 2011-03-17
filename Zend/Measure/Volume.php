@@ -16,23 +16,25 @@
  * @package   Zend_Measure
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id$
  */
 
 /**
- * @namespace
+ * Implement needed classes
  */
-namespace Zend\Measure;
+require_once 'Zend/Measure/Abstract.php';
+require_once 'Zend/Locale.php';
 
 /**
  * Class for handling acceleration conversions
  *
- * @uses       Zend\Measure\Abstract
  * @category   Zend
  * @package    Zend_Measure
+ * @subpackage Zend_Measure_Volume
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Volume extends AbstractMeasure
+class Zend_Measure_Volume extends Zend_Measure_Abstract
 {
     const STANDARD = 'CUBIC_METER';
 

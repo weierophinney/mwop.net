@@ -16,12 +16,8 @@
  * @package    Zend_Tool
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
-
-/**
- * @namespace
- */
-namespace Zend\Tool\Framework\Metadata;
 
 /**
  * @category   Zend
@@ -29,7 +25,7 @@ namespace Zend\Tool\Framework\Metadata;
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-interface Attributable
+interface Zend_Tool_Framework_Metadata_Attributable
 {
     public function getAttributes();
 }

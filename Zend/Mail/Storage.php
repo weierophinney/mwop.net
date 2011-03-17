@@ -16,12 +16,8 @@
  * @package    Zend_Mail
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
-
-/**
- * @namespace
- */
-namespace Zend\Mail;
 
 /**
  * @category   Zend
@@ -29,7 +25,7 @@ namespace Zend\Mail;
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Storage
+class Zend_Mail_Storage
 {
     // maildir and IMAP flags, using IMAP names, where possible to be able to distinguish between IMAP
     // system flags and other flags

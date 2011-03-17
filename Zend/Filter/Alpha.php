@@ -16,23 +16,25 @@
  * @package    Zend_Filter
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Filter_Interface
  */
-namespace Zend\Filter;
-use Zend\Locale\Locale;
+require_once 'Zend/Filter/Interface.php';
+/**
+ * @see Zend_Locale
+ */
+require_once 'Zend/Locale.php';
 
 /**
- * @uses       Zend\Filter\AbstractFilter
- * @uses       Zend\Locale\Locale
  * @category   Zend
  * @package    Zend_Filter
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Alpha extends AbstractFilter
+class Zend_Filter_Alpha implements Zend_Filter_Interface
 {
     /**
      * Whether to allow white space characters; off by default
@@ -52,7 +54,7 @@ class Alpha extends AbstractFilter
     /**
      * Locale in browser.
      *
-     * @var \Zend\Locale\Locale object
+     * @var Zend_Locale object
      */
     protected $_locale;
 
@@ -71,7 +73,7 @@ class Alpha extends AbstractFilter
      */
     public function __construct($allowWhiteSpace = false)
     {
-        if ($allowWhiteSpace instanceof \Zend\Config\Config) {
+        if ($allowWhiteSpace instanceof Zend_Config) {
             $allowWhiteSpace = $allowWhiteSpace->toArray();
         } else if (is_array($allowWhiteSpace)) {
             if (array_key_exists('allowwhitespace', $allowWhiteSpace)) {
@@ -87,7 +89,7 @@ class Alpha extends AbstractFilter
         }
 
         if (null === self::$_meansEnglishAlphabet) {
-            $this->_locale = new Locale('auto');
+            $this->_locale = new Zend_Locale('auto');
             self::$_meansEnglishAlphabet = in_array($this->_locale->getLanguage(),
                                                     array('ja', 'ko', 'zh')
                                                     );
@@ -109,7 +111,7 @@ class Alpha extends AbstractFilter
      * Sets the allowWhiteSpace option
      *
      * @param boolean $allowWhiteSpace
-     * @return \Zend\Filter\Alpha Provides a fluent interface
+     * @return Zend_Filter_Alpha Provides a fluent interface
      */
     public function setAllowWhiteSpace($allowWhiteSpace)
     {

@@ -16,23 +16,25 @@
  * @package   Zend_Measure
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id$
  */
 
 /**
- * @namespace
+ * Implement needed classes
  */
-namespace Zend\Measure;
+require_once 'Zend/Measure/Abstract.php';
+require_once 'Zend/Locale.php';
 
 /**
  * Class for handling speed conversions
  *
- * @uses       Zend\Measure\Abstract
  * @category   Zend
  * @package    Zend_Measure
+ * @subpackage Zend_Measure_Speed
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Speed extends AbstractMeasure
+class Zend_Measure_Speed extends Zend_Measure_Abstract
 {
     const STANDARD = 'METER_PER_SECOND';
 

@@ -17,24 +17,18 @@
  * @subpackage Util
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
-
-/**
- * @namespace
- */
-namespace Zend\Amf\Util;
-use Zend\Amf\Exception;
 
 /**
  * Utility class to walk through a data stream byte by byte with conventional names
  *
- * @uses       Zend\Amf\Exception
  * @package    Zend_Amf
  * @subpackage Util
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class BinaryStream
+class Zend_Amf_Util_BinaryStream
 {
     /**
      * @var string Byte stream
@@ -69,7 +63,8 @@ class BinaryStream
     public function __construct($stream)
     {
         if (!is_string($stream)) {
-            throw new Exception\InvalidArgumentException('Inputdata is not of type String');
+            require_once 'Zend/Amf/Exception.php';
+            throw new Zend_Amf_Exception('Inputdata is not of type String');
         }
 
         $this->_stream       = $stream;
@@ -94,12 +89,13 @@ class BinaryStream
      * @todo   Should check that there are enough bytes left in the stream we are about to read.
      * @param  int $length
      * @return string
-     * @throws Zend\Amf\Exception for buffer underrun
+     * @throws Zend_Amf_Exception for buffer underrun
      */
     public function readBytes($length)
     {
         if (($length + $this->_needle) > $this->_streamLength) {
-            throw new Exception\LengthException('Buffer underrun at needle position: ' . $this->_needle . ' while requesting length: ' . $length);
+            require_once 'Zend/Amf/Exception.php';
+            throw new Zend_Amf_Exception('Buffer underrun at needle position: ' . $this->_needle . ' while requesting length: ' . $length);
         }
         $bytes = substr($this->_stream, $this->_needle, $length);
         $this->_needle+= $length;
@@ -112,7 +108,7 @@ class BinaryStream
      * Usually a string.
      *
      * @param  string $bytes
-     * @return Zend\Amf\Util\BinaryStream
+     * @return Zend_Amf_Util_BinaryStream
      */
     public function writeBytes($bytes)
     {
@@ -128,7 +124,8 @@ class BinaryStream
     public function readByte()
     {
         if (($this->_needle + 1) > $this->_streamLength) {
-            throw new Exception\UnderflowException('Buffer underrun at needle position: ' . $this->_needle . ' while requesting length: 1');
+            require_once 'Zend/Amf/Exception.php';
+            throw new Zend_Amf_Exception('Buffer underrun at needle position: ' . $this->_needle . ' while requesting length: ' . $length);
         }
 
         return ord($this->_stream{$this->_needle++});
@@ -138,7 +135,7 @@ class BinaryStream
      * Writes the passed string into a signed byte on the stream.
      *
      * @param  string $stream
-     * @return Zend\Amf\Util\BinaryStream
+     * @return Zend_Amf_Util_BinaryStream
      */
     public function writeByte($stream)
     {
@@ -160,7 +157,7 @@ class BinaryStream
      * Write an the integer to the output stream as a 32 bit signed integer
      *
      * @param  int $stream
-     * @return Zend\Amf\Util\BinaryStream
+     * @return Zend_Amf_Util_BinaryStream
      */
     public function writeInt($stream)
     {
@@ -183,7 +180,7 @@ class BinaryStream
      * Wite a UTF-8 string to the outputstream
      *
      * @param  string $stream
-     * @return Zend\Amf\Util\BinaryStream
+     * @return Zend_Amf_Util_BinaryStream
      */
     public function writeUtf($stream)
     {
@@ -208,7 +205,7 @@ class BinaryStream
      * Write a long UTF string to the buffer
      *
      * @param  string $stream
-     * @return Zend\Amf\Util\BinaryStream
+     * @return Zend_Amf_Util_BinaryStream
      */
     public function writeLongUtf($stream)
     {
@@ -230,7 +227,7 @@ class BinaryStream
      * Write long numeric value to output stream
      *
      * @param  int|string $stream
-     * @return Zend\Amf\Util\BinaryStream
+     * @return Zend_Amf_Util_BinaryStream
      */
     public function writeLong($stream)
     {
@@ -273,7 +270,7 @@ class BinaryStream
      * Writes an IEEE 754 double-precision floating point number from the data stream.
      *
      * @param  string|double $stream
-     * @return Zend\Amf\Util\BinaryStream
+     * @return Zend_Amf_Util_BinaryStream
      */
     public function writeDouble($stream)
     {

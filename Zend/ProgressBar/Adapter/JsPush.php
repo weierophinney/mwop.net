@@ -14,35 +14,37 @@
  * @package    Zend_ProgressBar
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Json
  */
-namespace Zend\ProgressBar\Adapter;
+require_once 'Zend/Json.php';
 
-use Zend\Json\Json;
+/**
+ * @see Zend_ProgressBar_Adapter
+ */
+require_once 'Zend/ProgressBar/Adapter.php';
 
 /**
  * Zend_ProgressBar_Adapter_JsPush offers a simple method for updating a
  * progressbar in a browser.
  *
- * @uses      \Zend\Json\Json
- * @uses      \Zend\ProgressBar\Adapter\Adapter
  * @category  Zend
  * @package   Zend_ProgressBar
  * @uses      Zend_ProgressBar_Adapter_Interface
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd     New BSD License
  */
-class JsPush extends AbstractAdapter
+class Zend_ProgressBar_Adapter_JsPush extends Zend_ProgressBar_Adapter
 {
     /**
      * Name of the JavaScript method to call on update
      *
      * @var string
      */
-    protected $_updateMethodName = 'Zend\ProgressBar\ProgressBar\Update';
+    protected $_updateMethodName = 'Zend_ProgressBar_Update';
 
     /**
      * Name of the JavaScript method to call on finish
@@ -55,7 +57,7 @@ class JsPush extends AbstractAdapter
      * Set the update method name
      *
      * @param  string $methodName
-     * @return \Zend\ProgressBar\Adapter\JsPush
+     * @return Zend_ProgressBar_Adapter_JsPush
      */
     public function setUpdateMethodName($methodName)
     {
@@ -68,7 +70,7 @@ class JsPush extends AbstractAdapter
      * Set the finish method name
      *
      * @param  string $methodName
-     * @return \Zend\ProgressBar\Adapter\JsPush
+     * @return Zend_ProgressBar_Adapter_JsPush
      */
     public function setFinishMethodName($methodName)
     {
@@ -100,7 +102,7 @@ class JsPush extends AbstractAdapter
         );
 
         $data = '<script type="text/javascript">'
-              . 'parent.' . $this->_updateMethodName . '(' . Json::encode($arguments) . ');'
+              . 'parent.' . $this->_updateMethodName . '(' . Zend_Json::encode($arguments) . ');'
               . '</script>';
 
         // Output the data

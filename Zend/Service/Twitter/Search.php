@@ -17,7 +17,23 @@
  * @subpackage Twitter
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
+
+/**
+ * @see Zend_Http_Client
+ */
+require_once 'Zend/Rest/Client.php';
+
+/**
+ * @see Zend_Json
+ */
+require_once 'Zend/Json.php';
+
+/**
+ * @see Zend_Feed
+ */
+require_once 'Zend/Feed.php';
 
 /**
  * @category   Zend
@@ -26,17 +42,8 @@
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
- 
-/**
- * @namespace
- */
-namespace Zend\Service\Twitter;
-use Zend\Http;
-use Zend\Rest;
-use Zend\Feed;
-use Zend\Json;
 
-class Search extends Rest\Client\RestClient
+class Zend_Service_Twitter_Search extends Zend_Rest_Client
 {
     /**
      * Return Type
@@ -84,7 +91,8 @@ class Search extends Rest\Client\RestClient
     public function setResponseType($responseType = 'json')
     {
         if(!in_array($responseType, $this->_responseTypes, TRUE)) {
-            throw new Exception('Invalid Response Type');
+            require_once 'Zend/Service/Twitter/Exception.php';
+            throw new Zend_Service_Twitter_Exception('Invalid Response Type');
         }
         $this->_responseType = $responseType;
         return $this;
@@ -110,7 +118,7 @@ class Search extends Rest\Client\RestClient
     {
         $response     = $this->restGet('/trends.json');
 
-        return Json::decode($response->getBody());
+        return Zend_Json::decode($response->getBody());
     }
 
     /**
@@ -147,10 +155,10 @@ class Search extends Rest\Client\RestClient
 
         switch($this->_responseType) {
             case 'json':
-                return Json::decode($response->getBody());
+                return Zend_Json::decode($response->getBody());
                 break;
             case 'atom':
-                return Feed\Reader::importString($response->getBody());
+                return Zend_Feed::importString($response->getBody());
                 break;
         }
 

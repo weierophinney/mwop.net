@@ -19,21 +19,20 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * @namespace
- */
-namespace Zend\Dojo\Form\Element;
+/** Zend_Dojo_Form_Element_Slider */
+require_once 'Zend/Dojo/Form/Element/Slider.php';
 
 /**
  * VerticalSlider dijit
  *
- * @uses       \Zend\Dojo\Form\Element\Slider
+ * @uses       Zend_Dojo_Form_Element_Slider
  * @package    Zend_Dojo
  * @subpackage Form_Element
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
-class VerticalSlider extends Slider
+class Zend_Dojo_Form_Element_VerticalSlider extends Zend_Dojo_Form_Element_Slider
 {
     /**
      * Use VerticalSlider dijit view helper
@@ -58,7 +57,7 @@ class VerticalSlider extends Slider
      * Set dijit to use with left decoration
      *
      * @param mixed $dijit
-     * @return \Zend\Dojo\Form\Element\HorizontalSlider
+     * @return Zend_Dojo_Form_Element_HorizontalSlider
      */
     public function setLeftDecorationDijit($dijit)
     {
@@ -72,7 +71,7 @@ class VerticalSlider extends Slider
      * Set container to use with left decoration
      *
      * @param mixed $container
-     * @return \Zend\Dojo\Form\Element\HorizontalSlider
+     * @return Zend_Dojo_Form_Element_HorizontalSlider
      */
     public function setLeftDecorationContainer($container)
     {
@@ -86,7 +85,7 @@ class VerticalSlider extends Slider
      * Set labels to use with left decoration
      *
      * @param  array $labels
-     * @return \Zend\Dojo\Form\Element\HorizontalSlider
+     * @return Zend_Dojo_Form_Element_HorizontalSlider
      */
     public function setLeftDecorationLabels(array $labels)
     {
@@ -100,7 +99,7 @@ class VerticalSlider extends Slider
      * Set params to use with left decoration
      *
      * @param  array $params
-     * @return \Zend\Dojo\Form\Element\HorizontalSlider
+     * @return Zend_Dojo_Form_Element_HorizontalSlider
      */
     public function setLeftDecorationParams(array $params)
     {
@@ -114,7 +113,7 @@ class VerticalSlider extends Slider
      * Set attribs to use with left decoration
      *
      * @param  array $attribs
-     * @return \Zend\Dojo\Form\Element\HorizontalSlider
+     * @return Zend_Dojo_Form_Element_HorizontalSlider
      */
     public function setLeftDecorationAttribs(array $attribs)
     {
@@ -141,7 +140,7 @@ class VerticalSlider extends Slider
      * Set dijit to use with right decoration
      *
      * @param mixed $dijit
-     * @return \Zend\Dojo\Form\Element\HorizontalSlider
+     * @return Zend_Dojo_Form_Element_HorizontalSlider
      */
     public function setRightDecorationDijit($dijit)
     {
@@ -155,7 +154,7 @@ class VerticalSlider extends Slider
      * Set container to use with right decoration
      *
      * @param mixed $container
-     * @return \Zend\Dojo\Form\Element\HorizontalSlider
+     * @return Zend_Dojo_Form_Element_HorizontalSlider
      */
     public function setRightDecorationContainer($container)
     {
@@ -169,7 +168,7 @@ class VerticalSlider extends Slider
      * Set labels to use with right decoration
      *
      * @param  array $labels
-     * @return \Zend\Dojo\Form\Element\HorizontalSlider
+     * @return Zend_Dojo_Form_Element_HorizontalSlider
      */
     public function setRightDecorationLabels(array $labels)
     {
@@ -183,7 +182,7 @@ class VerticalSlider extends Slider
      * Set params to use with right decoration
      *
      * @param  array $params
-     * @return \Zend\Dojo\Form\Element\HorizontalSlider
+     * @return Zend_Dojo_Form_Element_HorizontalSlider
      */
     public function setRightDecorationParams(array $params)
     {
@@ -197,7 +196,7 @@ class VerticalSlider extends Slider
      * Set attribs to use with right decoration
      *
      * @param  array $attribs
-     * @return \Zend\Dojo\Form\Element\HorizontalSlider
+     * @return Zend_Dojo_Form_Element_HorizontalSlider
      */
     public function setRightDecorationAttribs(array $attribs)
     {

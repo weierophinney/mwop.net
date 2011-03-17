@@ -16,36 +16,26 @@
  * @package    Zend_Dojo
  * @subpackage View
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @version    $Id$
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * @namespace
- */
-namespace Zend\Dojo\View\Helper\Dojo;
-
-use Zend\Dojo\View\Exception,
-    Zend\Dojo\View\Helper\Dojo as DojoHelper,
-    Zend\Config\Config,
-    Zend\View\Renderer as View,
-    Zend\Json\Json;
+/** Zend_Dojo */
+require_once 'Zend/Dojo.php';
 
 /**
  * Container for  Dojo View Helper
  *
- * @uses       \Zend\Dojo\Dojo
- * @uses       \Zend\Dojo\View\Exception
- * @uses       \Zend\Dojo\View\Helper\Dojo
- * @uses       \Zend\Json\Json
+ *
  * @package    Zend_Dojo
  * @subpackage View
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Container
+class Zend_Dojo_View_Helper_Dojo_Container
 {
     /**
-     * @var \Zend\View\ViewEngine
+     * @var Zend_View_Interface
      */
     public $view;
 
@@ -65,19 +55,19 @@ class Container
      * Base CDN url to utilize
      * @var string
      */
-    protected $_cdnBase = \Zend\Dojo\Dojo::CDN_BASE_GOOGLE;
+    protected $_cdnBase = Zend_Dojo::CDN_BASE_GOOGLE;
 
     /**
      * Path segment following version string of CDN path
      * @var string
      */
-    protected $_cdnDojoPath = \Zend\Dojo\Dojo::CDN_DOJO_PATH_GOOGLE;
+    protected $_cdnDojoPath = Zend_Dojo::CDN_DOJO_PATH_GOOGLE;
 
     /**
      * Dojo version to use from CDN
      * @var string
      */
-    protected $_cdnVersion = '1.4.1';
+    protected $_cdnVersion = '1.5.0';
 
     /**
      * Has the dijit loader been registered?
@@ -178,10 +168,10 @@ class Container
     /**
      * Set view object
      *
-     * @param  Zend\View\Interface $view
+     * @param  Zend_Dojo_View_Interface $view
      * @return void
      */
-    public function setView(View $view)
+    public function setView(Zend_View_Interface $view)
     {
         $this->view = $view;
     }
@@ -189,7 +179,7 @@ class Container
     /**
      * Enable dojo
      *
-     * @return \Zend\Dojo\View\Helper\Dojo\Container
+     * @return Zend_Dojo_View_Helper_Dojo_Container
      */
     public function enable()
     {
@@ -200,7 +190,7 @@ class Container
     /**
      * Disable dojo
      *
-     * @return \Zend\Dojo\View\Helper\Dojo\Container
+     * @return Zend_Dojo_View_Helper_Dojo_Container
      */
     public function disable()
     {
@@ -221,12 +211,12 @@ class Container
     /**
      * Add options for the Dojo Container to use
      *
-     * @param array|\Zend\Config\Config Array or \Zend\Config\Config object with options to use
-     * @return \Zend\Dojo\View\Helper\Dojo\Container
+     * @param array|Zend_Config Array or Zend_Config object with options to use
+     * @return Zend_Dojo_View_Helper_Dojo_Container
      */
     public function setOptions($options)
     {
-        if($options instanceof Config) {
+        if($options instanceof Zend_Config) {
             $options = $options->toArray();
         }
 
@@ -293,19 +283,21 @@ class Container
      * Specify one or multiple modules to require
      *
      * @param  string|array $modules
-     * @return \Zend\Dojo\View\Helper\Dojo\Container
+     * @return Zend_Dojo_View_Helper_Dojo_Container
      */
     public function requireModule($modules)
     {
         if (!is_string($modules) && !is_array($modules)) {
-            throw new Exception\InvalidArgumentException('Invalid module name specified; must be a string or an array of strings');
+            require_once 'Zend/Dojo/View/Exception.php';
+            throw new Zend_Dojo_View_Exception('Invalid module name specified; must be a string or an array of strings');
         }
 
         $modules = (array) $modules;
 
         foreach ($modules as $mod) {
             if (!preg_match('/^[a-z][a-z0-9._-]+$/i', $mod)) {
-                throw new Exception\InvalidArgumentException(sprintf('Module name specified, "%s", contains invalid characters', (string) $mod));
+                require_once 'Zend/Dojo/View/Exception.php';
+                throw new Zend_Dojo_View_Exception(sprintf('Module name specified, "%s", contains invalid characters', (string) $mod));
             }
 
             if (!in_array($mod, $this->_modules)) {
@@ -331,7 +323,7 @@ class Container
      *
      * @param  string $module The module to register a path for
      * @param  string $path The path to register for the module
-     * @return \Zend\Dojo\View\Helper\Dojo\Container
+     * @return Zend_Dojo_View_Helper_Dojo_Container
      */
     public function registerModulePath($module, $path)
     {
@@ -357,7 +349,7 @@ class Container
      * Add layer (custom build) path
      *
      * @param  string $path
-     * @return \Zend\Dojo\View\Helper\Dojo\Container
+     * @return Zend_Dojo_View_Helper_Dojo_Container
      */
     public function addLayer($path)
     {
@@ -383,7 +375,7 @@ class Container
      * Remove a registered layer
      *
      * @param  string $path
-     * @return \Zend\Dojo\View\Helper\Dojo\Container
+     * @return Zend_Dojo_View_Helper_Dojo_Container
      */
     public function removeLayer($path)
     {
@@ -399,7 +391,7 @@ class Container
     /**
      * Clear all registered layers
      *
-     * @return \Zend\Dojo\View\Helper\Dojo\Container
+     * @return Zend_Dojo_View_Helper_Dojo_Container
      */
     public function clearLayers()
     {
@@ -411,7 +403,7 @@ class Container
      * Set CDN base path
      *
      * @param  string $url
-     * @return \Zend\Dojo\View\Helper\Dojo\Container
+     * @return Zend_Dojo_View_Helper_Dojo_Container
      */
     public function setCdnBase($url)
     {
@@ -433,7 +425,7 @@ class Container
      * Use CDN, using version specified
      *
      * @param  string $version
-     * @return \Zend\Dojo\View\Helper\Dojo\Container
+     * @return Zend_Dojo_View_Helper_Dojo_Container
      */
     public function setCdnVersion($version = null)
     {
@@ -458,7 +450,7 @@ class Container
      * Set CDN path to dojo (relative to CDN base + version)
      *
      * @param  string $path
-     * @return \Zend\Dojo\View\Helper\Dojo\Container
+     * @return Zend_Dojo_View_Helper_Dojo_Container
      */
     public function setCdnDojoPath($path)
     {
@@ -490,7 +482,7 @@ class Container
      * Set path to local dojo
      *
      * @param  string $path
-     * @return \Zend\Dojo\View\Helper\Dojo\Container
+     * @return Zend_Dojo_View_Helper_Dojo_Container
      */
     public function setLocalPath($path)
     {
@@ -524,7 +516,7 @@ class Container
      *
      * @param  string $option
      * @param  mixed $value
-     * @return \Zend\Dojo\View\Helper\Dojo\Container
+     * @return Zend_Dojo_View_Helper_Dojo_Container
      */
     public function setDjConfig(array $config)
     {
@@ -537,7 +529,7 @@ class Container
      *
      * @param  string $option
      * @param  mixed $value
-     * @return \Zend\Dojo\View\Helper\Dojo\Container
+     * @return Zend_Dojo_View_Helper_Dojo_Container
      */
     public function setDjConfigOption($option, $value)
     {
@@ -576,12 +568,13 @@ class Container
      * Add a stylesheet by module name
      *
      * @param  string $module
-     * @return \Zend\Dojo\View\Helper\Dojo\Container
+     * @return Zend_Dojo_View_Helper_Dojo_Container
      */
     public function addStylesheetModule($module)
     {
         if (!preg_match('/^[a-z0-9]+\.[a-z0-9_-]+(\.[a-z0-9_-]+)*$/i', $module)) {
-            throw new Exception\InvalidArgumentException('Invalid stylesheet module specified');
+            require_once 'Zend/Dojo/View/Exception.php';
+            throw new Zend_Dojo_View_Exception('Invalid stylesheet module specified');
         }
         if (!in_array($module, $this->_stylesheetModules)) {
             $this->_stylesheetModules[] = $module;
@@ -603,7 +596,7 @@ class Container
      * Add a stylesheet
      *
      * @param  string $path
-     * @return \Zend\Dojo\View\Helper\Dojo\Container
+     * @return Zend_Dojo_View_Helper_Dojo_Container
      */
     public function addStylesheet($path)
     {
@@ -621,7 +614,7 @@ class Container
      * the flag and returns the object.
      *
      * @param  null|bool $flag
-     * @return \Zend\Dojo\View\Helper\Dojo\Container|bool
+     * @return Zend_Dojo_View_Helper_Dojo_Container|bool
      */
     public function registerDojoStylesheet($flag = null)
     {
@@ -651,7 +644,7 @@ class Container
      * - lambda
      *
      * @param  string $callback Lambda
-     * @return \Zend\Dojo\View\Helper\Dojo\Container
+     * @return Zend_Dojo_View_Helper_Dojo_Container
      */
     public function addOnLoad($callback)
     {
@@ -665,7 +658,7 @@ class Container
      * Prepend an onLoad event to the list of onLoad actions
      *
      * @param  string $callback Lambda
-     * @return \Zend\Dojo\View\Helper\Dojo\Container
+     * @return Zend_Dojo_View_Helper_Dojo_Container
      */
     public function prependOnLoad($callback)
     {
@@ -693,7 +686,8 @@ class Container
     public function onLoadCaptureStart()
     {
         if ($this->_captureLock) {
-            throw new Exception\RuntimeException('Cannot nest onLoad captures');
+            require_once 'Zend/Dojo/View/Exception.php';
+            throw new Zend_Dojo_View_Exception('Cannot nest onLoad captures');
         }
 
         $this->_captureLock = true;
@@ -720,12 +714,13 @@ class Container
      *
      * @param  string $id
      * @param  array $params
-     * @return \Zend\Dojo\View\Helper\Dojo\Container
+     * @return Zend_Dojo_View_Helper_Dojo_Container
      */
     public function addDijit($id, array $params)
     {
         if (array_key_exists($id, $this->_dijits)) {
-            throw new Exception\InvalidArgumentException(sprintf('Duplicate dijit with id "%s" already registered', $id));
+            require_once 'Zend/Dojo/View/Exception.php';
+            throw new Zend_Dojo_View_Exception(sprintf('Duplicate dijit with id "%s" already registered', $id));
         }
 
         $this->_dijits[$id] = array(
@@ -741,7 +736,7 @@ class Container
      *
      * @param  string $id
      * @param  array $params
-     * @return \Zend\Dojo\View\Helper\Dojo\Container
+     * @return Zend_Dojo_View_Helper_Dojo_Container
      */
     public function setDijit($id, array $params)
     {
@@ -755,7 +750,7 @@ class Container
      * Expects an array of id => array $params pairs
      *
      * @param  array $dijits
-     * @return \Zend\Dojo\View\Helper\Dojo\Container
+     * @return Zend_Dojo_View_Helper_Dojo_Container
      */
     public function addDijits(array $dijits)
     {
@@ -771,7 +766,7 @@ class Container
      * Expects an array of id => array $params pairs
      *
      * @param  array $dijits
-     * @return \Zend\Dojo\View\Helper\Dojo\Container
+     * @return Zend_Dojo_View_Helper_Dojo_Container
      */
     public function setDijits(array $dijits)
     {
@@ -820,7 +815,7 @@ class Container
      * Remove a programmatic dijit if it exists
      *
      * @param  string $id
-     * @return \Zend\Dojo\View\Helper\Dojo\Container
+     * @return Zend_Dojo_View_Helper_Dojo_Container
      */
     public function removeDijit($id)
     {
@@ -834,7 +829,7 @@ class Container
     /**
      * Clear all dijits
      *
-     * @return \Zend\Dojo\View\Helper\Dojo\Container
+     * @return Zend_Dojo_View_Helper_Dojo_Container
      */
     public function clearDijits()
     {
@@ -849,7 +844,8 @@ class Container
      */
     public function dijitsToJson()
     {
-        return Json::encode($this->getDijits());
+        require_once 'Zend/Json.php';
+        return Zend_Json::encode($this->getDijits(), false, array('enableJsonExprFinder' => true));
     }
 
     /**
@@ -882,7 +878,7 @@ EOJ;
      * Add arbitrary javascript to execute in dojo JS container
      *
      * @param  string $js
-     * @return \Zend\Dojo\View\Helper\Dojo\Container
+     * @return Zend_Dojo_View_Helper_Dojo_Container
      */
     public function addJavascript($js)
     {
@@ -912,7 +908,7 @@ EOJ;
     /**
      * Clear arbitrary javascript stack
      *
-     * @return \Zend\Dojo\View\Helper\Dojo\Container
+     * @return Zend_Dojo_View_Helper_Dojo_Container
      */
     public function clearJavascript()
     {
@@ -928,7 +924,8 @@ EOJ;
     public function javascriptCaptureStart()
     {
         if ($this->_captureLock) {
-            throw new Exception\RuntimeException('Cannot nest captures');
+            require_once 'Zend/Dojo/View/Exception.php';
+            throw new Zend_Dojo_View_Exception('Cannot nest captures');
         }
 
         $this->_captureLock = true;
@@ -961,9 +958,9 @@ EOJ;
             return '';
         }
 
-        $this->_isXhtml = $this->view->broker('doctype')->isXhtml();
+        $this->_isXhtml = $this->view->doctype()->isXhtml();
 
-        if (DojoHelper::useDeclarative()) {
+        if (Zend_Dojo_View_Helper_Dojo::useDeclarative()) {
             if (null === $this->getDjConfigOption('parseOnLoad')) {
                 $this->setDjConfigOption('parseOnLoad', true);
             }
@@ -1053,9 +1050,10 @@ EOJ;
             return '';
         }
 
+        require_once 'Zend/Json.php';
         $scriptTag = '<script type="text/javascript">' . PHP_EOL
                    . (($this->_isXhtml) ? '//<![CDATA[' : '//<!--') . PHP_EOL
-                   . '    var djConfig = ' . Json::encode($djConfigValues) . ';' . PHP_EOL
+                   . '    var djConfig = ' . Zend_Json::encode($djConfigValues) . ';' . PHP_EOL
                    . (($this->_isXhtml) ? '//]]>' : '//-->') . PHP_EOL
                    . '</script>';
 
@@ -1098,7 +1096,7 @@ EOJ;
         }
 
         $enc = 'UTF-8';
-        if ($this->view instanceof View
+        if ($this->view instanceof Zend_View_Interface
             && method_exists($this->view, 'getEncoding')
         ) {
             $enc = $this->view->getEncoding();
@@ -1126,19 +1124,19 @@ EOJ;
         $modulePaths = $this->getModulePaths();
         if (!empty($modulePaths)) {
             foreach ($modulePaths as $module => $path) {
-                $js[] =  'dojo.registerModulePath("' . $this->view->vars()->escape($module) . '", "' . $this->view->vars()->escape($path) . '");';
+                $js[] =  'dojo.registerModulePath("' . $this->view->escape($module) . '", "' . $this->view->escape($path) . '");';
             }
         }
 
         $modules = $this->getModules();
         if (!empty($modules)) {
             foreach ($modules as $module) {
-                $js[] = 'dojo.require("' . $this->view->vars()->escape($module) . '");';
+                $js[] = 'dojo.require("' . $this->view->escape($module) . '");';
             }
         }
 
         $onLoadActions = array();
-        // Get Zend specific onLoad actions; these will always be first to 
+        // Get Zend specific onLoad actions; these will always be first to
         // ensure that dijits are created in the correct order
         foreach ($this->_getZendLoadActions() as $callback) {
             $onLoadActions[] = 'dojo.addOnLoad(' . $callback . ');';
@@ -1179,13 +1177,13 @@ EOJ;
     /**
      * Add an onLoad action related to ZF dijit creation
      *
-     * This method is public, but prefixed with an underscore to indicate that 
+     * This method is public, but prefixed with an underscore to indicate that
      * it should not normally be called by userland code. It is pertinent to
-     * ensuring that the correct order of operations occurs during dijit 
+     * ensuring that the correct order of operations occurs during dijit
      * creation.
-     * 
-     * @param  string $callback 
-     * @return \Zend\Dojo\View\Helper\Dojo\Container
+     *
+     * @param  string $callback
+     * @return Zend_Dojo_View_Helper_Dojo_Container
      */
     public function _addZendLoad($callback)
     {
@@ -1197,7 +1195,7 @@ EOJ;
 
     /**
      * Retrieve all ZF dijit callbacks
-     * 
+     *
      * @return array
      */
     public function _getZendLoadActions()

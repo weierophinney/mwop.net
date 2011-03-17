@@ -17,23 +17,21 @@
  * @subpackage Object
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Barcode\Object;
+/** @see Zend_Barcode_Object_ObjectAbstract */
+require_once 'Zend/Barcode/Object/ObjectAbstract.php';
 
 /**
  * Class for generate Barcode
  *
- * @uses       \Zend\Barcode\Object\AbstractObject
  * @category   Zend
  * @package    Zend_Barcode
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Error extends AbstractObject
+class Zend_Barcode_Object_Error extends Zend_Barcode_Object_ObjectAbstract
 {
     /**
      * All texts are accepted

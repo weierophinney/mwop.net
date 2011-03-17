@@ -17,34 +17,32 @@
  * @subpackage Writer
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Log\Writer;
-use Zend\Log;
+/** Zend_Log_Writer_Abstract */
+require_once 'Zend/Log/Writer/Abstract.php';
 
 /**
- * @uses       \Zend\Log\Exception\InvalidArgumentException
- * @uses       \Zend\Log\Exception\RuntimeException
- * @uses       \Zend\Log\Writer\AbstractWriter
  * @category   Zend
  * @package    Zend_Log
  * @subpackage Writer
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
-class Db extends AbstractWriter
+class Zend_Log_Writer_Db extends Zend_Log_Writer_Abstract
 {
     /**
      * Database adapter instance
+     *
      * @var Zend_Db_Adapter
      */
     private $_db;
 
     /**
      * Name of the log table in the database
+     *
      * @var string
      */
     private $_table;
@@ -62,21 +60,22 @@ class Db extends AbstractWriter
      * @param Zend_Db_Adapter $db   Database adapter instance
      * @param string $table         Log table in database
      * @param array $columnMap
+     * @return void
      */
     public function __construct($db, $table, $columnMap = null)
     {
-        $this->_db        = $db;
-        $this->_table     = $table;
+        $this->_db    = $db;
+        $this->_table = $table;
         $this->_columnMap = $columnMap;
     }
 
     /**
      * Create a new instance of Zend_Log_Writer_Db
-     * 
-     * @param  array|\Zend\Config\Config $config
-     * @return \Zend\Log\Writer\Db
+     *
+     * @param  array|Zend_Config $config
+     * @return Zend_Log_Writer_Db
      */
-    static public function factory($config = array())
+    static public function factory($config)
     {
         $config = self::_parseConfig($config);
         $config = array_merge(array(
@@ -98,12 +97,14 @@ class Db extends AbstractWriter
 
     /**
      * Formatting is not possible on this writer
-     * 
-     * @throws \Zend\Log\Exception\InvalidArgumentException
+     *
+     * @return void
+     * @throws Zend_Log_Exception
      */
-    public function setFormatter(\Zend\Log\Formatter $formatter)
+    public function setFormatter(Zend_Log_Formatter_Interface $formatter)
     {
-        throw new Log\Exception\InvalidArgumentException(get_class() . ' does not support formatting');
+        require_once 'Zend/Log/Exception.php';
+        throw new Zend_Log_Exception(get_class($this) . ' does not support formatting');
     }
 
     /**
@@ -120,13 +121,14 @@ class Db extends AbstractWriter
      * Write a message to the log.
      *
      * @param  array  $event  event data
-     * @throws \Zend\Log\Exception\RuntimeException
      * @return void
+     * @throws Zend_Log_Exception
      */
     protected function _write($event)
     {
         if ($this->_db === null) {
-            throw new Log\Exception\RuntimeException('Database adapter is null');
+            require_once 'Zend/Log/Exception.php';
+            throw new Zend_Log_Exception('Database adapter is null');
         }
 
         if ($this->_columnMap === null) {

@@ -17,35 +17,20 @@
  * @subpackage Index
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Search\Lucene\Index\SegmentWriter;
-use Zend\Search\Lucene;
-use Zend\Search\Lucene\Index;
-use Zend\Search\Lucene\Analysis\Analyzer;
-use Zend\Search\Lucene\Storage\Directory;
-use Zend\Search\Lucene\Document;
-use Zend\Search\Lucene\Search\Similarity;
+/** Zend_Search_Lucene_Index_SegmentWriter */
+require_once 'Zend/Search/Lucene/Index/SegmentWriter.php';
 
 /**
- * @uses       \Zend\Search\Lucene\Analysis\Analyzer
- * @uses       \Zend\Search\Lucene\Exception
- * @uses       \Zend\Search\Lucene\Index\SegmentInfo
- * @uses       \Zend\Search\Lucene\Index\SegmentWriter\AbstractSegmentWriter
- * @uses       \Zend\Search\Lucene\Index\Term
- * @uses       \Zend\Search\Lucene\Search\Similarity
- * @uses       \Zend\Search\Lucene\Storage\Directory
- * @uses       \Zend\Search\Lucene\Document;
  * @category   Zend
  * @package    Zend_Search_Lucene
  * @subpackage Index
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class DocumentWriter extends AbstractSegmentWriter
+class Zend_Search_Lucene_Index_SegmentWriter_DocumentWriter extends Zend_Search_Lucene_Index_SegmentWriter
 {
     /**
      * Term Dictionary
@@ -66,10 +51,10 @@ class DocumentWriter extends AbstractSegmentWriter
     /**
      * Object constructor.
      *
-     * @param \Zend\Search\Lucene\Storage\Directory $directory
+     * @param Zend_Search_Lucene_Storage_Directory $directory
      * @param string $name
      */
-    public function __construct(Directory $directory, $name)
+    public function __construct(Zend_Search_Lucene_Storage_Directory $directory, $name)
     {
         parent::__construct($directory, $name);
 
@@ -81,14 +66,17 @@ class DocumentWriter extends AbstractSegmentWriter
     /**
      * Adds a document to this segment.
      *
-     * @param \Zend\Search\Lucene\Document $document
-     * @throws \Zend\Search\Lucene\Exception
+     * @param Zend_Search_Lucene_Document $document
+     * @throws Zend_Search_Lucene_Exception
      */
-    public function addDocument(Document $document)
+    public function addDocument(Zend_Search_Lucene_Document $document)
     {
+        /** Zend_Search_Lucene_Search_Similarity */
+        require_once 'Zend/Search/Lucene/Search/Similarity.php';
+
         $storedFields = array();
         $docNorms     = array();
-        $similarity   = Similarity::getDefault();
+        $similarity   = Zend_Search_Lucene_Search_Similarity::getDefault();
 
         foreach ($document->getFieldNames() as $fieldName) {
             $field = $document->getField($fieldName);
@@ -97,12 +85,16 @@ class DocumentWriter extends AbstractSegmentWriter
                 /**
                  * @todo term vector storing support
                  */
-                throw new Lucene\Exception('Store term vector functionality is not supported yet.');
+                require_once 'Zend/Search/Lucene/Exception.php';
+                throw new Zend_Search_Lucene_Exception('Store term vector functionality is not supported yet.');
             }
 
             if ($field->isIndexed) {
                 if ($field->isTokenized) {
-                    $analyzer = Analyzer\Analyzer::getDefault();
+                    /** Zend_Search_Lucene_Analysis_Analyzer */
+                    require_once 'Zend/Search/Lucene/Analysis/Analyzer.php';
+
+                    $analyzer = Zend_Search_Lucene_Analysis_Analyzer::getDefault();
                     $analyzer->setInput($field->value, $field->encoding);
 
                     $position     = 0;
@@ -110,7 +102,7 @@ class DocumentWriter extends AbstractSegmentWriter
                     while (($token = $analyzer->nextToken()) !== null) {
                         $tokenCounter++;
 
-                        $term = new Index\Term($token->getTermText(), $field->name);
+                        $term = new Zend_Search_Lucene_Index_Term($token->getTermText(), $field->name);
                         $termKey = $term->key();
 
                         if (!isset($this->_termDictionary[$termKey])) {
@@ -141,7 +133,7 @@ class DocumentWriter extends AbstractSegmentWriter
                     $field = clone($field);
                     $field->isIndexed = $field->isTokenized = false;
                 } else {
-                    $term = new Index\Term($fieldUtf8Value, $field->name);
+                    $term = new Zend_Search_Lucene_Index_Term($fieldUtf8Value, $field->name);
                     $termKey = $term->key();
 
                     if (!isset($this->_termDictionary[$termKey])) {
@@ -209,7 +201,7 @@ class DocumentWriter extends AbstractSegmentWriter
     /**
      * Close segment, write it to disk and return segment info
      *
-     * @return \Zend\Search\Lucene\Index\SegmentInfo
+     * @return Zend_Search_Lucene_Index_SegmentInfo
      */
     public function close()
     {
@@ -222,13 +214,16 @@ class DocumentWriter extends AbstractSegmentWriter
 
         $this->_generateCFS();
 
-        return new Index\SegmentInfo($this->_directory,
-                                     $this->_name,
-                                     $this->_docCount,
-                                     -1,
-                                     null,
-                                     true,
-                                     true);
+        /** Zend_Search_Lucene_Index_SegmentInfo */
+        require_once 'Zend/Search/Lucene/Index/SegmentInfo.php';
+
+        return new Zend_Search_Lucene_Index_SegmentInfo($this->_directory,
+                                                        $this->_name,
+                                                        $this->_docCount,
+                                                        -1,
+                                                        null,
+                                                        true,
+                                                        true);
     }
 
 }

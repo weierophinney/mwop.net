@@ -17,22 +17,21 @@
  * @subpackage Framework
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Tool_Framework_Manifest_Interface.php
  */
-namespace Zend\Tool\Framework\Manifest;
-use Zend\Tool\Framework\Manifest;
+require_once 'Zend/Tool/Framework/Manifest/Interface.php';
 
 /**
- * @uses       \Zend\Tool\Framework\Manifest
  * @category   Zend
  * @package    Zend_Tool
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-interface MetadataManifestable extends Manifest
+interface Zend_Tool_Framework_Manifest_MetadataManifestable extends Zend_Tool_Framework_Manifest_Interface
 {
 
     /**

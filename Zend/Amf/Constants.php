@@ -16,12 +16,8 @@
  * @package    Zend_Amf
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
-
-/**
- * @namespace
- */
-namespace Zend\Amf;
 
 /**
  * The following constants are used throughout serialization and
@@ -31,7 +27,7 @@ namespace Zend\Amf;
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-final class Constants
+final class Zend_Amf_Constants
 {
     const AMF0_NUMBER            = 0x00;
     const AMF0_BOOLEAN           = 0x01;

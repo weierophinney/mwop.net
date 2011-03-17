@@ -17,26 +17,23 @@
  * @subpackage PHPUnit
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Test\PHPUnit\Constraint;
-use Zend\Controller\Response;
+/** @see PHPUnit_Framework_Constraint */
+require_once 'PHPUnit/Framework/Constraint.php';
 
 /**
  * Response header PHPUnit Constraint
  *
  * @uses       PHPUnit_Framework_Constraint
- * @uses       \Zend\Test\PHPUnit\Constraint\Exception\ConstraintException
  * @category   Zend
  * @package    Zend_Test
  * @subpackage PHPUnit
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class ResponseHeader extends \PHPUnit_Framework_Constraint
+class Zend_Test_PHPUnit_Constraint_ResponseHeader extends PHPUnit_Framework_Constraint
 {
     /**#@+
      * Assertion type constants
@@ -108,14 +105,15 @@ class ResponseHeader extends \PHPUnit_Framework_Constraint
     /**
      * Evaluate an object to see if it fits the constraints
      *
-     * @param  \Zend\Controller\Response\AbstractResponse $other String to examine
+     * @param  Zend_Controller_Response_Abstract $other String to examine
      * @param  null|string Assertion type
      * @return bool
      */
     public function evaluate($other, $assertType = null)
     {
-        if (!$other instanceof Response\AbstractResponse) {
-            throw new Exception\ConstraintException('Header constraint assertions require a response object');
+        if (!$other instanceof Zend_Controller_Response_Abstract) {
+            require_once 'Zend/Test/PHPUnit/Constraint/Exception.php';
+            throw new Zend_Test_PHPUnit_Constraint_Exception('Header constraint assertions require a response object');
         }
 
         if (strstr($assertType, 'Not')) {
@@ -124,7 +122,8 @@ class ResponseHeader extends \PHPUnit_Framework_Constraint
         }
 
         if (!in_array($assertType, $this->_assertTypes)) {
-            throw new Exception\ConstraintException(sprintf('Invalid assertion type "%s" provided to %s constraint', $assertType, __CLASS__));
+            require_once 'Zend/Test/PHPUnit/Constraint/Exception.php';
+            throw new Zend_Test_PHPUnit_Constraint_Exception(sprintf('Invalid assertion type "%s" provided to %s constraint', $assertType, __CLASS__));
         }
 
         $this->_assertType = $assertType;
@@ -136,7 +135,8 @@ class ResponseHeader extends \PHPUnit_Framework_Constraint
         switch ($assertType) {
             case self::ASSERT_RESPONSE_CODE:
                 if (3 > $argc) {
-                    throw new Exception\ConstraintException('No response code provided against which to match');
+                    require_once 'Zend/Test/PHPUnit/Constraint/Exception.php';
+                    throw new Zend_Test_PHPUnit_Constraint_Exception('No response code provided against which to match');
                 }
                 $this->_code = $code = $argv[2];
                 return ($this->_negate)
@@ -144,7 +144,8 @@ class ResponseHeader extends \PHPUnit_Framework_Constraint
                     : $this->_code($response, $code);
             case self::ASSERT_HEADER:
                 if (3 > $argc) {
-                    throw new Exception\ConstraintException('No header provided against which to match');
+                    require_once 'Zend/Test/PHPUnit/Constraint/Exception.php';
+                    throw new Zend_Test_PHPUnit_Constraint_Exception('No header provided against which to match');
                 }
                 $this->_header = $header = $argv[2];
                 return ($this->_negate)
@@ -152,7 +153,8 @@ class ResponseHeader extends \PHPUnit_Framework_Constraint
                     : $this->_header($response, $header);
             case self::ASSERT_HEADER_CONTAINS:
                 if (4 > $argc) {
-                    throw new Exception\ConstraintException('Both a header name and content to match are required for ' . __FUNCTION__);
+                    require_once 'Zend/Test/PHPUnit/Constraint/Exception.php';
+                    throw new Zend_Test_PHPUnit_Constraint_Exception('Both a header name and content to match are required for ' . __FUNCTION__);
                 }
                 $this->_header = $header = $argv[2];
                 $this->_match  = $match  = $argv[3];
@@ -161,7 +163,8 @@ class ResponseHeader extends \PHPUnit_Framework_Constraint
                     : $this->_headerContains($response, $header, $match);
             case self::ASSERT_HEADER_REGEX:
                 if (4 > $argc) {
-                    throw new Exception\ConstraintException('Both a header name and content to match are required for ' . __FUNCTION__);
+                    require_once 'Zend/Test/PHPUnit/Constraint/Exception.php';
+                    throw new Zend_Test_PHPUnit_Constraint_Exception('Both a header name and content to match are required for ' . __FUNCTION__);
                 }
                 $this->_header = $header = $argv[2];
                 $this->_match  = $match  = $argv[3];
@@ -169,7 +172,8 @@ class ResponseHeader extends \PHPUnit_Framework_Constraint
                     ? $this->_notHeaderRegex($response, $header, $match)
                     : $this->_headerRegex($response, $header, $match);
             default:
-                throw new Exception\ConstraintException('Invalid assertion type ' . __FUNCTION__);
+                require_once 'Zend/Test/PHPUnit/Constraint/Exception.php';
+                throw new Zend_Test_PHPUnit_Constraint_Exception('Invalid assertion type ' . __FUNCTION__);
         }
     }
 
@@ -185,6 +189,7 @@ class ResponseHeader extends \PHPUnit_Framework_Constraint
      */
     public function fail($other, $description, $not = false)
     {
+        require_once 'Zend/Test/PHPUnit/Constraint/Exception.php';
         switch ($this->_assertType) {
             case self::ASSERT_RESPONSE_CODE:
                 $failure = 'Failed asserting response code "%s"';
@@ -215,14 +220,14 @@ class ResponseHeader extends \PHPUnit_Framework_Constraint
                 $failure = sprintf($failure, $this->_header, $this->_match);
                 break;
             default:
-                throw new Exception\ConstraintException('Invalid assertion type ' . __FUNCTION__);
+                throw new Zend_Test_PHPUnit_Constraint_Exception('Invalid assertion type ' . __FUNCTION__);
         }
 
         if (!empty($description)) {
             $failure = $description . "\n" . $failure;
         }
 
-        throw new Exception\ConstraintException($failure);
+        throw new Zend_Test_PHPUnit_Constraint_Exception($failure);
     }
 
     /**
@@ -238,11 +243,11 @@ class ResponseHeader extends \PHPUnit_Framework_Constraint
     /**
      * Compare response code for positive match
      *
-     * @param  \Zend\Controller\Response\AbstractResponse $response
+     * @param  Zend_Controller_Response_Abstract $response
      * @param  int $code
      * @return bool
      */
-    protected function _code(Response\AbstractResponse $response, $code)
+    protected function _code(Zend_Controller_Response_Abstract $response, $code)
     {
         $test = $this->_getCode($response);
         return ($test == $code);
@@ -251,11 +256,11 @@ class ResponseHeader extends \PHPUnit_Framework_Constraint
     /**
      * Compare response code for negative match
      *
-     * @param  \Zend\Controller\Response\AbstractResponse $response
+     * @param  Zend_Controller_Response_Abstract $response
      * @param  int $code
      * @return bool
      */
-    protected function _notCode(Response\AbstractResponse $response, $code)
+    protected function _notCode(Zend_Controller_Response_Abstract $response, $code)
     {
         $test = $this->_getCode($response);
         return ($test != $code);
@@ -264,10 +269,10 @@ class ResponseHeader extends \PHPUnit_Framework_Constraint
     /**
      * Retrieve response code
      *
-     * @param  \Zend\Controller\Response\AbstractResponse $response
+     * @param  Zend_Controller_Response_Abstract $response
      * @return int
      */
-    protected function _getCode(Response\AbstractResponse $response)
+    protected function _getCode(Zend_Controller_Response_Abstract $response)
     {
         $test = $response->getHttpResponseCode();
         if (null === $test) {
@@ -279,11 +284,11 @@ class ResponseHeader extends \PHPUnit_Framework_Constraint
     /**
      * Positive check for response header presence
      *
-     * @param  \Zend\Controller\Response\AbstractResponse $response
+     * @param  Zend_Controller_Response_Abstract $response
      * @param  string $header
      * @return bool
      */
-    protected function _header(Response\AbstractResponse $response, $header)
+    protected function _header(Zend_Controller_Response_Abstract $response, $header)
     {
         return (null !== $this->_getHeader($response, $header));
     }
@@ -291,11 +296,11 @@ class ResponseHeader extends \PHPUnit_Framework_Constraint
     /**
      * Negative check for response header presence
      *
-     * @param  \Zend\Controller\Response\AbstractResponse $response
+     * @param  Zend_Controller_Response_Abstract $response
      * @param  string $header
      * @return bool
      */
-    protected function _notHeader(Response\AbstractResponse $response, $header)
+    protected function _notHeader(Zend_Controller_Response_Abstract $response, $header)
     {
         return (null === $this->_getHeader($response, $header));
     }
@@ -303,11 +308,11 @@ class ResponseHeader extends \PHPUnit_Framework_Constraint
     /**
      * Retrieve response header
      *
-     * @param  \Zend\Controller\Response\AbstractResponse $response
+     * @param  Zend_Controller_Response_Abstract $response
      * @param  string $header
      * @return string|null
      */
-    protected function _getHeader(Response\AbstractResponse $response, $header)
+    protected function _getHeader(Zend_Controller_Response_Abstract $response, $header)
     {
         $headers = $response->sendHeaders();
         $header  = strtolower($header);
@@ -320,12 +325,12 @@ class ResponseHeader extends \PHPUnit_Framework_Constraint
     /**
      * Positive check for header contents matching pattern
      *
-     * @param  \Zend\Controller\Response\AbstractResponse $response
+     * @param  Zend_Controller_Response_Abstract $response
      * @param  string $header
      * @param  string $match
      * @return bool
      */
-    protected function _headerContains(Response\AbstractResponse $response, $header, $match)
+    protected function _headerContains(Zend_Controller_Response_Abstract $response, $header, $match)
     {
         if (null === ($fullHeader = $this->_getHeader($response, $header))) {
             return false;
@@ -339,12 +344,12 @@ class ResponseHeader extends \PHPUnit_Framework_Constraint
     /**
      * Negative check for header contents matching pattern
      *
-     * @param  \Zend\Controller\Response\AbstractResponse $response
+     * @param  Zend_Controller_Response_Abstract $response
      * @param  string $header
      * @param  string $match
      * @return bool
      */
-    protected function _notHeaderContains(Response\AbstractResponse $response, $header, $match)
+    protected function _notHeaderContains(Zend_Controller_Response_Abstract $response, $header, $match)
     {
         if (null === ($fullHeader = $this->_getHeader($response, $header))) {
             return true;
@@ -358,12 +363,12 @@ class ResponseHeader extends \PHPUnit_Framework_Constraint
     /**
      * Positive check for header contents matching regex
      *
-     * @param  \Zend\Controller\Response\AbstractResponse $response
+     * @param  Zend_Controller_Response_Abstract $response
      * @param  string $header
      * @param  string $pattern
      * @return bool
      */
-    protected function _headerRegex(Response\AbstractResponse $response, $header, $pattern)
+    protected function _headerRegex(Zend_Controller_Response_Abstract $response, $header, $pattern)
     {
         if (null === ($fullHeader = $this->_getHeader($response, $header))) {
             return false;
@@ -377,12 +382,12 @@ class ResponseHeader extends \PHPUnit_Framework_Constraint
     /**
      * Negative check for header contents matching regex
      *
-     * @param  \Zend\Controller\Response\AbstractResponse $response
+     * @param  Zend_Controller_Response_Abstract $response
      * @param  string $header
      * @param  string $pattern
      * @return bool
      */
-    protected function _notHeaderRegex(Response\AbstractResponse $response, $header, $pattern)
+    protected function _notHeaderRegex(Zend_Controller_Response_Abstract $response, $header, $pattern)
     {
         if (null === ($fullHeader = $this->_getHeader($response, $header))) {
             return true;

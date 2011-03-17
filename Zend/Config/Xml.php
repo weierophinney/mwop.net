@@ -16,24 +16,23 @@
  * @package   Zend_Config
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Config
  */
-namespace Zend\Config;
+require_once 'Zend/Config.php';
 
 /**
  * XML Adapter for Zend_Config
  *
- * @uses      \Zend\Config\Config
- * @uses      \Zend\Config\Exception
  * @category  Zend
  * @package   Zend_Config
- * @copyright Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Xml extends Config
+class Zend_Config_Xml extends Zend_Config
 {
     /**
      * XML namespace for ZF-related tags and attributes
@@ -63,13 +62,14 @@ class Xml extends Config
      * @param  string  $xml     XML file or string to process
      * @param  mixed   $section Section to process
      * @param  boolean $options Whether modifications are allowed at runtime
-     * @throws \Zend\Config\Exception When xml is not set or cannot be loaded
-     * @throws \Zend\Config\Exception When section $sectionName cannot be found in $xml
+     * @throws Zend_Config_Exception When xml is not set or cannot be loaded
+     * @throws Zend_Config_Exception When section $sectionName cannot be found in $xml
      */
     public function __construct($xml, $section = null, $options = false)
     {
         if (empty($xml)) {
-            throw new Exception\InvalidArgumentException('Filename is not set');
+            require_once 'Zend/Config/Exception.php';
+            throw new Zend_Config_Exception('Filename is not set');
         }
 
         $allowModifications = false;
@@ -85,7 +85,7 @@ class Xml extends Config
         }
 
         set_error_handler(array($this, '_loadFileErrorHandler')); // Warnings and errors are suppressed
-        if (strstr($xml, '<' . '?xml')) { // string concat to fix syntax highlighting
+        if (strstr($xml, '<?xml')) {
             $config = simplexml_load_string($xml);
         } else {
             $config = simplexml_load_file($xml);
@@ -94,7 +94,8 @@ class Xml extends Config
         restore_error_handler();
         // Check if there was a error while loading file
         if ($this->_loadFileErrorStr !== null) {
-            throw new Exception\InvalidArgumentException($this->_loadFileErrorStr);
+            require_once 'Zend/Config/Exception.php';
+            throw new Zend_Config_Exception($this->_loadFileErrorStr);
         }
 
         if ($section === null) {
@@ -108,7 +109,8 @@ class Xml extends Config
             $dataArray = array();
             foreach ($section as $sectionName) {
                 if (!isset($config->$sectionName)) {
-                    throw new Exception\InvalidArgumentException("Section '$sectionName' cannot be found in $xml");
+                    require_once 'Zend/Config/Exception.php';
+                    throw new Zend_Config_Exception("Section '$sectionName' cannot be found in $xml");
                 }
 
                 $dataArray = array_merge($this->_processExtends($config, $sectionName), $dataArray);
@@ -117,7 +119,8 @@ class Xml extends Config
             parent::__construct($dataArray, $allowModifications);
         } else {
             if (!isset($config->$section)) {
-                throw new Exception\InvalidArgumentException("Section '$section' cannot be found in $xml");
+                require_once 'Zend/Config/Exception.php';
+                throw new Zend_Config_Exception("Section '$section' cannot be found in $xml");
             }
 
             $dataArray = $this->_processExtends($config, $section);
@@ -139,13 +142,14 @@ class Xml extends Config
      * @param  SimpleXMLElement $element XML Element to process
      * @param  string           $section Section to process
      * @param  array            $config  Configuration which was parsed yet
-     * @throws \Zend\Config\Exception When $section cannot be found
+     * @throws Zend_Config_Exception When $section cannot be found
      * @return array
      */
-    protected function _processExtends(\SimpleXMLElement $element, $section, array $config = array())
+    protected function _processExtends(SimpleXMLElement $element, $section, array $config = array())
     {
         if (!isset($element->$section)) {
-            throw new Exception\RuntimeException("Section '$section' cannot be found");
+            require_once 'Zend/Config/Exception.php';
+            throw new Zend_Config_Exception("Section '$section' cannot be found");
         }
 
         $thisSection  = $element->$section;
@@ -172,7 +176,7 @@ class Xml extends Config
      * @param  SimpleXMLElement $xmlObject Convert a SimpleXMLElement into an array
      * @return array|string
      */
-    protected function _toArray(\SimpleXMLElement $xmlObject)
+    protected function _toArray(SimpleXMLElement $xmlObject)
     {
         $config       = array();
         $nsAttributes = $xmlObject->attributes(self::XML_NAMESPACE);
@@ -201,7 +205,8 @@ class Xml extends Config
         // Search for local 'const' nodes and replace them
         if (count($xmlObject->children(self::XML_NAMESPACE)) > 0) {
             if (count($xmlObject->children()) > 0) {
-                throw new Exception\RuntimeException("A node with a 'const' childnode may not have any other children");
+                require_once 'Zend/Config/Exception.php';
+                throw new Zend_Config_Exception("A node with a 'const' childnode may not have any other children");
             }
 
             $dom                 = dom_import_simplexml($xmlObject);
@@ -210,7 +215,7 @@ class Xml extends Config
             // We have to store them in an array, as replacing nodes will
             // confuse the DOMNodeList later
             foreach ($dom->childNodes as $node) {
-                if ($node instanceof \DOMElement && $node->namespaceURI === self::XML_NAMESPACE) {
+                if ($node instanceof DOMElement && $node->namespaceURI === self::XML_NAMESPACE) {
                     $namespaceChildNodes[] = $node;
                 }
             }
@@ -219,13 +224,15 @@ class Xml extends Config
                 switch ($node->localName) {
                     case 'const':
                         if (!$node->hasAttributeNS(self::XML_NAMESPACE, 'name')) {
-                            throw new Exception\RuntimeException("Misssing 'name' attribute in 'const' node");
+                            require_once 'Zend/Config/Exception.php';
+                            throw new Zend_Config_Exception("Misssing 'name' attribute in 'const' node");
                         }
 
                         $constantName = $node->getAttributeNS(self::XML_NAMESPACE, 'name');
 
                         if (!defined($constantName)) {
-                            throw new Exception\RuntimeException("Constant with name '$constantName' was not defined");
+                            require_once 'Zend/Config/Exception.php';
+                            throw new Zend_Config_Exception("Constant with name '$constantName' was not defined");
                         }
 
                         $constantValue = constant($constantName);
@@ -234,7 +241,8 @@ class Xml extends Config
                         break;
 
                     default:
-                        throw new Exception\RuntimeException("Unknown node with name '$node->localName' found");
+                        require_once 'Zend/Config/Exception.php';
+                        throw new Zend_Config_Exception("Unknown node with name '$node->localName' found");
                 }
             }
 

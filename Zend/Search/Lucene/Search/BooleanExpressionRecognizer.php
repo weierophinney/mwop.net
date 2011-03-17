@@ -17,26 +17,21 @@
  * @subpackage Search
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Search\Lucene\Search;
-use Zend\Search\Lucene;
+
+/** Zend_Search_Lucene_FSM */
+require_once 'Zend/Search/Lucene/FSM.php';
 
 /**
- * @uses       \Zend\Search\Lucene\Exception\UnexpectedValueException
- * @uses       \Zend\Search\Lucene\AbstractFSM
- * @uses       \Zend\Search\Lucene\FSMAction
- * @uses       \Zend\Search\Lucene\Search\QueryParser
  * @category   Zend
  * @package    Zend_Search_Lucene
  * @subpackage Search
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class BooleanExpressionRecognizer extends Lucene\AbstractFSM
+class Zend_Search_Lucene_Search_BooleanExpressionRecognizer extends Zend_Search_Lucene_FSM
 {
     /** State Machine states */
     const ST_START           = 0;
@@ -115,8 +110,8 @@ class BooleanExpressionRecognizer extends Lucene\AbstractFSM
                                    self::IN_AND_OPERATOR,
                                    self::IN_OR_OPERATOR));
 
-        $emptyOperatorAction    = new Lucene\FSMAction($this, 'emptyOperatorAction');
-        $emptyNotOperatorAction = new Lucene\FSMAction($this, 'emptyNotOperatorAction');
+        $emptyOperatorAction    = new Zend_Search_Lucene_FSMAction($this, 'emptyOperatorAction');
+        $emptyNotOperatorAction = new Zend_Search_Lucene_FSMAction($this, 'emptyNotOperatorAction');
 
         $this->addRules(array( array(self::ST_START,        self::IN_LITERAL,        self::ST_LITERAL),
                                array(self::ST_START,        self::IN_NOT_OPERATOR,   self::ST_NOT_OPERATOR),
@@ -135,9 +130,9 @@ class BooleanExpressionRecognizer extends Lucene\AbstractFSM
                                array(self::ST_OR_OPERATOR,  self::IN_NOT_OPERATOR,   self::ST_NOT_OPERATOR),
                              ));
 
-        $notOperatorAction     = new Lucene\FSMAction($this, 'notOperatorAction');
-        $orOperatorAction      = new Lucene\FSMAction($this, 'orOperatorAction');
-        $literalAction         = new Lucene\FSMAction($this, 'literalAction');
+        $notOperatorAction     = new Zend_Search_Lucene_FSMAction($this, 'notOperatorAction');
+        $orOperatorAction      = new Zend_Search_Lucene_FSMAction($this, 'orOperatorAction');
+        $literalAction         = new Zend_Search_Lucene_FSMAction($this, 'literalAction');
 
 
         $this->addEntryAction(self::ST_NOT_OPERATOR, $notOperatorAction);
@@ -193,13 +188,14 @@ class BooleanExpressionRecognizer extends Lucene\AbstractFSM
      *        ...
      *      ) // end of structure
      *
-     * @throws \Zend\Search\Lucene\Exception\UnexpectedValueException
      * @return array
+     * @throws Zend_Search_Lucene_Exception
      */
     public function finishExpression()
     {
         if ($this->getState() != self::ST_LITERAL) {
-            throw new Lucene\Exception\UnexpectedValueException('Literal expected.');
+            require_once 'Zend/Search/Lucene/Exception.php';
+            throw new Zend_Search_Lucene_Exception('Literal expected.');
         }
 
         $this->_conjunctions[] = $this->_currentConjunction;
@@ -218,7 +214,10 @@ class BooleanExpressionRecognizer extends Lucene\AbstractFSM
      */
     public function emptyOperatorAction()
     {
-        if (QueryParser::getDefaultOperator() == QueryParser::B_AND) {
+        /** Zend_Search_Lucene_Search_QueryParser */
+        require_once 'Zend/Search/Lucene/Search/QueryParser.php';
+
+        if (Zend_Search_Lucene_Search_QueryParser::getDefaultOperator() == Zend_Search_Lucene_Search_QueryParser::B_AND) {
             // Do nothing
         } else {
             $this->orOperatorAction();
@@ -233,7 +232,10 @@ class BooleanExpressionRecognizer extends Lucene\AbstractFSM
      */
     public function emptyNotOperatorAction()
     {
-        if (QueryParser::getDefaultOperator() == QueryParser::B_AND) {
+        /** Zend_Search_Lucene_Search_QueryParser */
+        require_once 'Zend/Search/Lucene/Search/QueryParser.php';
+
+        if (Zend_Search_Lucene_Search_QueryParser::getDefaultOperator() == Zend_Search_Lucene_Search_QueryParser::B_AND) {
             // Do nothing
         } else {
             $this->orOperatorAction();

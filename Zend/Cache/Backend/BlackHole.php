@@ -17,24 +17,28 @@
  * @subpackage Zend_Cache_Backend
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Cache_Backend_Interface
  */
-namespace Zend\Cache\Backend;
-use Zend\Cache;
+require_once 'Zend/Cache/Backend/ExtendedInterface.php';
 
 /**
- * @uses       \Zend\Cache\Cache
- * @uses       \Zend\Cache\Backend\AbstractBackend
- * @uses       \Zend\Cache\Backend\ExtendedBackend
+ * @see Zend_Cache_Backend
+ */
+require_once 'Zend/Cache/Backend.php';
+
+/**
  * @package    Zend_Cache
  * @subpackage Zend_Cache_Backend
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class BlackHole extends AbstractBackend implements ExtendedBackend
+class Zend_Cache_Backend_BlackHole
+    extends Zend_Cache_Backend
+    implements Zend_Cache_Backend_ExtendedInterface
 {
     /**
      * Test if a cache is available for the given id and (if yes) return it (false else)
@@ -104,7 +108,7 @@ class BlackHole extends AbstractBackend implements ExtendedBackend
      * @param  tags array $tags array of tags
      * @return boolean true if no problem
      */
-    public function clean($mode = Cache\CacheCache\Cache::CLEANING_MODE_ALL, $tags = array())
+    public function clean($mode = Zend_Cache::CLEANING_MODE_ALL, $tags = array())
     {
         return true;
     }
@@ -172,7 +176,7 @@ class BlackHole extends AbstractBackend implements ExtendedBackend
      * Return the filling percentage of the backend storage
      *
      * @return int integer between 0 and 100
-     * @throws \Zend\Cache\Exception
+     * @throws Zend_Cache_Exception
      */
     public function getFillingPercentage()
     {

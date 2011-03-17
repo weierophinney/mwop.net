@@ -20,10 +20,14 @@
  */
 
 /**
- * @namespace
+ * @see Zend_Service_Amazon_Authentication
  */
-namespace Zend\Service\Amazon\Authentication;
-use Zend\Crypt;
+require_once 'Zend/Service/Amazon/Authentication.php';
+
+/**
+ * @see Zend_Crypt_Hmac
+ */
+require_once 'Zend/Crypt/Hmac.php';
 
 /**
  * @category   Zend
@@ -32,7 +36,7 @@ use Zend\Crypt;
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class V1 extends Authentication
+class Zend_Service_Amazon_Authentication_V1 extends Zend_Service_Amazon_Authentication
 {
     /**
      * Signature Version
@@ -43,7 +47,7 @@ class V1 extends Authentication
      * Signature Encoding Method
      */
     protected $_signatureMethod = 'HmacSHA256';
-    
+
     /**
      * Generate the required attributes for the signature
      * @param string $url
@@ -60,7 +64,7 @@ class V1 extends Authentication
         }
 
         $data = $this->_signParameters($url, $parameters);
-        
+
         return $data;
     }
 
@@ -95,10 +99,10 @@ class V1 extends Authentication
             $data .= $key . $value;
         }
 
-        $hmac = Crypt\Hmac::compute($this->_secretKey, 'SHA1', $data, Crypt\Hmac::BINARY);
+        $hmac = Zend_Crypt_Hmac::compute($this->_secretKey, 'SHA1', $data, Zend_Crypt_Hmac::BINARY);
 
         $paramaters['Signature'] = base64_encode($hmac);
-        
+
         return $data;
     }
 }

@@ -16,28 +16,23 @@
  * @package    Zend_Controller
  * @subpackage Router
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @version    $Id$
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * @namespace
- */
-namespace Zend\Controller\Router\Route;
-use Zend\Config;
+/** Zend_Controller_Router_Route_Abstract */
+require_once 'Zend/Controller/Router/Route/Abstract.php';
 
 /**
  * Hostname Route
  *
- * @uses       \Zend\Controller\Front
- * @uses       \Zend\Controller\Router\Exception
- * @uses       \Zend\Controller\Router\Route\AbstractRoute
  * @package    Zend_Controller
  * @subpackage Router
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @see        http://manuals.rubyonrails.com/read/chapter/65
  */
-class Hostname extends AbstractRoute
+class Zend_Controller_Router_Route_Hostname extends Zend_Controller_Router_Route_Abstract
 {
 
     protected $_hostVariable   = ':';
@@ -86,7 +81,7 @@ class Hostname extends AbstractRoute
     /**
      * Current request object
      *
-     * @var \Zend\Controller\Request\AbstractRequest
+     * @var Zend_Controller_Request_Abstract
      */
     protected $_request;
 
@@ -100,10 +95,10 @@ class Hostname extends AbstractRoute
     /**
      * Set the request object
      *
-     * @param  \Zend\Controller\Request\AbstractRequest|null $request
+     * @param  Zend_Controller_Request_Abstract|null $request
      * @return void
      */
-    public function setRequest(\Zend\Controller\Request\AbstractRequest $request = null)
+    public function setRequest(Zend_Controller_Request_Abstract $request = null)
     {
         $this->_request = $request;
     }
@@ -111,12 +106,13 @@ class Hostname extends AbstractRoute
     /**
      * Get the request object
      *
-     * @return \Zend\Controller\Request\AbstractRequest $request
+     * @return Zend_Controller_Request_Abstract $request
      */
     public function getRequest()
     {
         if ($this->_request === null) {
-            $this->_request = \Zend\Controller\Front::getInstance()->getRequest();
+            require_once 'Zend/Controller/Front.php';
+            $this->_request = Zend_Controller_Front::getInstance()->getRequest();
         }
 
         return $this->_request;
@@ -125,12 +121,12 @@ class Hostname extends AbstractRoute
     /**
      * Instantiates route based on passed Zend_Config structure
      *
-     * @param \Zend\Config\Config $config Configuration object
+     * @param Zend_Config $config Configuration object
      */
-    public static function getInstance(Config\Config $config)
+    public static function getInstance(Zend_Config $config)
     {
-        $reqs   = ($config->reqs instanceof Config\Config) ? $config->reqs->toArray() : array();
-        $defs   = ($config->defaults instanceof Config\Config) ? $config->defaults->toArray() : array();
+        $reqs   = ($config->reqs instanceof Zend_Config) ? $config->reqs->toArray() : array();
+        $defs   = ($config->defaults instanceof Zend_Config) ? $config->defaults->toArray() : array();
         $scheme = (isset($config->scheme)) ? $config->scheme : null;
         return new self($config->route, $defs, $reqs, $scheme);
     }
@@ -170,7 +166,7 @@ class Hostname extends AbstractRoute
      * Matches a user submitted path with parts defined by a map. Assigns and
      * returns an array of variables on a successful match.
      *
-     * @param \Zend\Controller\Request\Http $request Request to get the host from
+     * @param Zend_Controller_Request_Http $request Request to get the host from
      * @return array|false An array of assigned values or a false on a mismatch
      */
     public function match($request)
@@ -185,7 +181,7 @@ class Hostname extends AbstractRoute
         }
 
         // Get the host and remove unnecessary port information
-        $host = $request->getHTTPHost();
+        $host = $request->getHttpHost();
         if (preg_match('#:\d+$#', $host, $result) === 1) {
             $host = substr($host, 0, -strlen($result[0]));
         }
@@ -275,7 +271,8 @@ class Hostname extends AbstractRoute
                 } elseif (isset($this->_defaults[$name])) {
                     $host[$key] = $this->_defaults[$name];
                 } else {
-                    throw new \Zend\Controller\Router\Exception($name . ' is not specified');
+                    require_once 'Zend/Controller/Router/Exception.php';
+                    throw new Zend_Controller_Router_Exception($name . ' is not specified');
                 }
             } else {
                 $host[$key] = $part;
@@ -298,7 +295,7 @@ class Hostname extends AbstractRoute
             $scheme = $this->_scheme;
         } else {
             $request = $this->getRequest();
-            if ($request instanceof \Zend\Controller\Request\Http) {
+            if ($request instanceof Zend_Controller_Request_Http) {
                 $scheme = $request->getScheme();
             } else {
                 $scheme = 'http';

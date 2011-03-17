@@ -17,36 +17,35 @@
  * @subpackage Zend_Cache_Backend
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Cache\Backend\ZendServer;
-use Zend\Cache,
-    Zend\Cache\Backend;
+
+/** @see Zend_Cache_Backend_Interface */
+require_once 'Zend/Cache/Backend/Interface.php';
+
+/** @see Zend_Cache_Backend_ZendServer */
+require_once 'Zend/Cache/Backend/ZendServer.php';
+
 
 /**
- * @uses       \Zend\Cache\Cache
- * @uses       \Zend\Cache\Backend
- * @uses       \Zend\Cache\Backend\ZendServer\AbstractZendServer
  * @package    Zend_Cache
  * @subpackage Zend_Cache_Backend
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Disk extends AbstractZendServer implements Backend
+class Zend_Cache_Backend_ZendServer_Disk extends Zend_Cache_Backend_ZendServer implements Zend_Cache_Backend_Interface
 {
     /**
      * Constructor
      *
      * @param  array $options associative array of options
-     * @throws \Zend\Cache\Exception
+     * @throws Zend_Cache_Exception
      */
     public function __construct(array $options = array())
     {
         if (!function_exists('zend_disk_cache_store')) {
-            Cache\Cache::throwException('Zend_Cache_ZendServer_Disk backend has to be used within Zend Server environment.');
+            Zend_Cache::throwException('Zend_Cache_ZendServer_Disk backend has to be used within Zend Server environment.');
         }
         parent::__construct($options);
     }

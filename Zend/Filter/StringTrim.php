@@ -16,21 +16,21 @@
  * @package    Zend_Filter
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Filter_Interface
  */
-namespace Zend\Filter;
+require_once 'Zend/Filter/Interface.php';
 
 /**
- * @uses       Zend\Filter\AbstractFilter
  * @category   Zend
  * @package    Zend_Filter
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class StringTrim extends AbstractFilter
+class Zend_Filter_StringTrim implements Zend_Filter_Interface
 {
     /**
      * List of characters provided to the trim() function
@@ -45,14 +45,14 @@ class StringTrim extends AbstractFilter
     /**
      * Sets filter options
      *
-     * @param  string|array|\Zend\Config\Config $options
+     * @param  string|array|Zend_Config $options
      * @return void
      */
     public function __construct($options = null)
     {
-        if ($options instanceof \Zend\Config\Config) {
+        if ($options instanceof Zend_Config) {
             $options = $options->toArray();
-        } elseif (!is_array($options)) {
+        } else if (!is_array($options)) {
             $options          = func_get_args();
             $temp['charlist'] = array_shift($options);
             $options          = $temp;
@@ -77,7 +77,7 @@ class StringTrim extends AbstractFilter
      * Sets the charList option
      *
      * @param  string|null $charList
-     * @return \Zend\Filter\StringTrim Provides a fluent interface
+     * @return Zend_Filter_StringTrim Provides a fluent interface
      */
     public function setCharList($charList)
     {
@@ -97,9 +97,9 @@ class StringTrim extends AbstractFilter
     {
         if (null === $this->_charList) {
             return $this->_unicodeTrim((string) $value);
+        } else {
+            return $this->_unicodeTrim((string) $value, $this->_charList);
         }
-
-        return $this->_unicodeTrim((string) $value, $this->_charList);
     }
 
     /**
@@ -119,6 +119,6 @@ class StringTrim extends AbstractFilter
         );
 
         $pattern = '^[' . $chars . ']*|[' . $chars . ']*$';
-        return preg_replace("/$pattern/usSD", '', $value);
+        return preg_replace("/$pattern/sSD", '', $value);
     }
 }

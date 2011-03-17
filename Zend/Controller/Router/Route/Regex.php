@@ -16,27 +16,22 @@
  * @package    Zend_Controller
  * @subpackage Router
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @version    $Id$
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * @namespace
- */
-namespace Zend\Controller\Router\Route;
-use Zend\Config;
-use Zend\Controller\Router;
+/** Zend_Controller_Router_Route_Abstract */
+require_once 'Zend/Controller/Router/Route/Abstract.php';
 
 /**
  * Regex Route
  *
- * @uses       \Zend\Controller\Router\Exception
- * @uses       \Zend\Controller\Router\Route\AbstractRoute
  * @package    Zend_Controller
  * @subpackage Router
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Regex extends AbstractRoute
+class Zend_Controller_Router_Route_Regex extends Zend_Controller_Router_Route_Abstract
 {
     protected $_regex = null;
     protected $_defaults = array();
@@ -47,12 +42,12 @@ class Regex extends AbstractRoute
     /**
      * Instantiates route based on passed Zend_Config structure
      *
-     * @param \Zend\Config\Config $config Configuration object
+     * @param Zend_Config $config Configuration object
      */
-    public static function getInstance(Config\Config $config)
+    public static function getInstance(Zend_Config $config)
     {
-        $defs = ($config->defaults instanceof Config\Config) ? $config->defaults->toArray() : array();
-        $map = ($config->map instanceof Config\Config) ? $config->map->toArray() : array();
+        $defs = ($config->defaults instanceof Zend_Config) ? $config->defaults->toArray() : array();
+        $map = ($config->map instanceof Zend_Config) ? $config->map->toArray() : array();
         $reverse = (isset($config->reverse)) ? $config->reverse : null;
         return new self($config->route, $defs, $map, $reverse);
     }
@@ -170,7 +165,8 @@ class Regex extends AbstractRoute
     public function assemble($data = array(), $reset = false, $encode = false, $partial = false)
     {
         if ($this->_reverse === null) {
-            throw new Router\Exception('Cannot assemble. Reversed route is not specified.');
+            require_once 'Zend/Controller/Router/Exception.php';
+            throw new Zend_Controller_Router_Exception('Cannot assemble. Reversed route is not specified.');
         }
 
         $defaultValuesMapped  = $this->_getMappedValues($this->_defaults, true, false);
@@ -203,7 +199,8 @@ class Regex extends AbstractRoute
         $return = @vsprintf($this->_reverse, $mergedData);
 
         if ($return === false) {
-            throw new Router\Exception('Cannot assemble. Too few arguments?');
+            require_once 'Zend/Controller/Router/Exception.php';
+            throw new Zend_Controller_Router_Exception('Cannot assemble. Too few arguments?');
         }
 
         return $return;

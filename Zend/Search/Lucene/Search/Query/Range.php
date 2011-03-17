@@ -17,49 +17,34 @@
  * @subpackage Search
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Search\Lucene\Search\Query;
 
-use Zend\Search\Lucene,
-	Zend\Search\Lucene\Index,
-	Zend\Search\Lucene\Search\Highlighter,
-	Zend\Search\Lucence\Exception\UnsupportedMethodCallException,
-	Zend\Search\Lucence\Exception\InvalidArgumentException,
-	Zend\Search\Lucence\Exception\RuntimeException,
-	Zend\Search\Lucence\Exception\OutOfBoundsException;
+/** Zend_Search_Lucene_Search_Query */
+require_once 'Zend/Search/Lucene/Search/Query.php';
+
 
 /**
- * @uses       \Zend\Search\Lucene\Index
- * @uses       \Zend\Search\Lucene\Analysis\Analyzer\Analyzer
- * @uses       \Zend\Search\Lucene\Exception
- * @uses       \Zend\Search\Lucene\Index\Term
- * @uses       \Zend\Search\Lucene\Search\Query\AbstractQuery
- * @uses       \Zend\Search\Lucene\Search\Query\EmptyResult
- * @uses       \Zend\Search\Lucene\Search\Query\MultiTerm
- * @uses       \Zend\Search\Lucene\Search\Query\Term
  * @category   Zend
  * @package    Zend_Search_Lucene
  * @subpackage Search
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Range extends AbstractQuery
+class Zend_Search_Lucene_Search_Query_Range extends Zend_Search_Lucene_Search_Query
 {
     /**
      * Lower term.
      *
-     * @var \Zend\Search\Lucene\Index\Term
+     * @var Zend_Search_Lucene_Index_Term
      */
     private $_lowerTerm;
 
     /**
      * Upper term.
      *
-     * @var \Zend\Search\Lucene\Index\Term
+     * @var Zend_Search_Lucene_Index_Term
      */
     private $_upperTerm;
 
@@ -95,18 +80,20 @@ class Range extends AbstractQuery
     /**
      * Zend_Search_Lucene_Search_Query_Range constructor.
      *
-     * @param \Zend\Search\Lucene\Index\Term|null $lowerTerm
-     * @param \Zend\Search\Lucene\Index\Term|null $upperTerm
+     * @param Zend_Search_Lucene_Index_Term|null $lowerTerm
+     * @param Zend_Search_Lucene_Index_Term|null $upperTerm
      * @param boolean $inclusive
-     * @throws \Zend\Search\Lucene\Exception\InvalidArgumentException
+     * @throws Zend_Search_Lucene_Exception
      */
     public function __construct($lowerTerm, $upperTerm, $inclusive)
     {
         if ($lowerTerm === null  &&  $upperTerm === null) {
-            throw new InvalidArgumentException('At least one term must be non-null');
+            require_once 'Zend/Search/Lucene/Exception.php';
+            throw new Zend_Search_Lucene_Exception('At least one term must be non-null');
         }
         if ($lowerTerm !== null  &&  $upperTerm !== null  &&  $lowerTerm->field != $upperTerm->field) {
-            throw new InvalidArgumentException('Both terms must be for the same field');
+            require_once 'Zend/Search/Lucene/Exception.php';
+            throw new Zend_Search_Lucene_Exception('Both terms must be for the same field');
         }
 
         $this->_field     = ($lowerTerm !== null)? $lowerTerm->field : $upperTerm->field;
@@ -128,7 +115,7 @@ class Range extends AbstractQuery
     /**
      * Get lower term
      *
-     * @return \Zend\Search\Lucene\Index\Term|null
+     * @return Zend_Search_Lucene_Index_Term|null
      */
     public function getLowerTerm()
     {
@@ -138,7 +125,7 @@ class Range extends AbstractQuery
     /**
      * Get upper term
      *
-     * @return \Zend\Search\Lucene\Index\Term|null
+     * @return Zend_Search_Lucene_Index_Term|null
      */
     public function getUpperTerm()
     {
@@ -158,11 +145,10 @@ class Range extends AbstractQuery
     /**
      * Re-write query into primitive queries in the context of specified index
      *
-     * @param \Zend\Search\Lucene\SearchIndex $index
-     * @throws \Zend\Search\Lucene\Exception\OutOfBoundsException
-     * @return \Zend\Search\Lucene\Search\Query\AbstractQuery
+     * @param Zend_Search_Lucene_Interface $index
+     * @return Zend_Search_Lucene_Search_Query
      */
-    public function rewrite(Lucene\SearchIndex $index)
+    public function rewrite(Zend_Search_Lucene_Interface $index)
     {
         $this->_matches = array();
 
@@ -173,12 +159,14 @@ class Range extends AbstractQuery
             $fields = array($this->_field);
         }
 
-        $maxTerms = Lucene\Lucene::getTermsPerQueryLimit();
+        require_once 'Zend/Search/Lucene.php';
+        $maxTerms = Zend_Search_Lucene::getTermsPerQueryLimit();
         foreach ($fields as $field) {
             $index->resetTermsStream();
 
+            require_once 'Zend/Search/Lucene/Index/Term.php';
             if ($this->_lowerTerm !== null) {
-                $lowerTerm = new Index\Term($this->_lowerTerm->text, $field);
+                $lowerTerm = new Zend_Search_Lucene_Index_Term($this->_lowerTerm->text, $field);
 
                 $index->skipTo($lowerTerm);
 
@@ -188,21 +176,22 @@ class Range extends AbstractQuery
                     $index->nextTerm();
                 }
             } else {
-                $index->skipTo(new Index\Term('', $field));
+                $index->skipTo(new Zend_Search_Lucene_Index_Term('', $field));
             }
 
 
             if ($this->_upperTerm !== null) {
                 // Walk up to the upper term
-                $upperTerm = new Index\Term($this->_upperTerm->text, $field);
+                $upperTerm = new Zend_Search_Lucene_Index_Term($this->_upperTerm->text, $field);
 
                 while ($index->currentTerm() !== null          &&
                        $index->currentTerm()->field == $field  &&
-                       $index->currentTerm()->text  <  $upperTerm->text) {
+                       strcmp($index->currentTerm()->text, $upperTerm->text) < 0) {
                     $this->_matches[] = $index->currentTerm();
 
                     if ($maxTerms != 0  &&  count($this->_matches) > $maxTerms) {
-                        throw new OutOfBoundsException('Terms per query limit is reached.');
+                        require_once 'Zend/Search/Lucene/Exception.php';
+                        throw new Zend_Search_Lucene_Exception('Terms per query limit is reached.');
                     }
 
                     $index->nextTerm();
@@ -218,7 +207,8 @@ class Range extends AbstractQuery
                     $this->_matches[] = $index->currentTerm();
 
                     if ($maxTerms != 0  &&  count($this->_matches) > $maxTerms) {
-                        throw new OutOfBoundsException('Terms per query limit is reached.');
+                        require_once 'Zend/Search/Lucene/Exception.php';
+                        throw new Zend_Search_Lucene_Exception('Terms per query limit is reached.');
                     }
 
                     $index->nextTerm();
@@ -229,11 +219,14 @@ class Range extends AbstractQuery
         }
 
         if (count($this->_matches) == 0) {
-            return new EmptyResult();
+            require_once 'Zend/Search/Lucene/Search/Query/Empty.php';
+            return new Zend_Search_Lucene_Search_Query_Empty();
         } else if (count($this->_matches) == 1) {
-            return new Term(reset($this->_matches));
+            require_once 'Zend/Search/Lucene/Search/Query/Term.php';
+            return new Zend_Search_Lucene_Search_Query_Term(reset($this->_matches));
         } else {
-            $rewrittenQuery = new MultiTerm();
+            require_once 'Zend/Search/Lucene/Search/Query/MultiTerm.php';
+            $rewrittenQuery = new Zend_Search_Lucene_Search_Query_MultiTerm();
 
             foreach ($this->_matches as $matchedTerm) {
                 $rewrittenQuery->addTerm($matchedTerm);
@@ -246,27 +239,26 @@ class Range extends AbstractQuery
     /**
      * Optimize query in the context of specified index
      *
-     * @param \Zend\Search\Lucene\SearchIndex $index
-     * @throws \Zend\Search\Lucene\Exception\UnsupportedMethodCallException
-     * @return \Zend\Search\Lucene\Search\Query\AbstractQuery
+     * @param Zend_Search_Lucene_Interface $index
+     * @return Zend_Search_Lucene_Search_Query
      */
-    public function optimize(Lucene\SearchIndex $index)
+    public function optimize(Zend_Search_Lucene_Interface $index)
     {
-        throw new UnsupportedMethodCallException(
-        	'Range query should not be directly used for search. Use $query->rewrite($index)'
-        );
+        require_once 'Zend/Search/Lucene/Exception.php';
+        throw new Zend_Search_Lucene_Exception('Range query should not be directly used for search. Use $query->rewrite($index)');
     }
 
     /**
      * Return query terms
      *
      * @return array
-     * @throws \Zend\Search\Lucene\Exception\RuntimeException
+     * @throws Zend_Search_Lucene_Exception
      */
     public function getQueryTerms()
     {
         if ($this->_matches === null) {
-            throw new RuntimeException('Search or rewrite operations have to be performed before.');
+            require_once 'Zend/Search/Lucene/Exception.php';
+            throw new Zend_Search_Lucene_Exception('Search or rewrite operations have to be performed before.');
         }
 
         return $this->_matches;
@@ -275,15 +267,14 @@ class Range extends AbstractQuery
     /**
      * Constructs an appropriate Weight implementation for this query.
      *
-     * @param \Zend\Search\Lucene\SearchIndex $reader
-     * @throws \Zend\Search\Lucene\Exception\UnsupportedMethodCallException
-     * @return \Zend\Search\Lucene\Search\Weight\Weight
+     * @param Zend_Search_Lucene_Interface $reader
+     * @return Zend_Search_Lucene_Search_Weight
+     * @throws Zend_Search_Lucene_Exception
      */
-    public function createWeight(Lucene\SearchIndex $reader)
+    public function createWeight(Zend_Search_Lucene_Interface $reader)
     {
-        throw new UnsupportedMethodCallException(
-        	'Range query should not be directly used for search. Use $query->rewrite($index)'
-        );
+        require_once 'Zend/Search/Lucene/Exception.php';
+        throw new Zend_Search_Lucene_Exception('Range query should not be directly used for search. Use $query->rewrite($index)');
     }
 
 
@@ -291,15 +282,14 @@ class Range extends AbstractQuery
      * Execute query in context of index reader
      * It also initializes necessary internal structures
      *
-     * @param \Zend\Search\Lucene\SearchIndex $reader
-     * @param \Zend\Search\Lucene\Index\DocsFilter|null $docsFilter
-     * @throws \Zend\Search\Lucene\Exception\UnsupportedMethodCallException
+     * @param Zend_Search_Lucene_Interface $reader
+     * @param Zend_Search_Lucene_Index_DocsFilter|null $docsFilter
+     * @throws Zend_Search_Lucene_Exception
      */
-    public function execute(Lucene\SearchIndex $reader, $docsFilter = null)
+    public function execute(Zend_Search_Lucene_Interface $reader, $docsFilter = null)
     {
-        throw new UnsupportedMethodCallException(
-        	'Range query should not be directly used for search. Use $query->rewrite($index)'
-        );
+        require_once 'Zend/Search/Lucene/Exception.php';
+        throw new Zend_Search_Lucene_Exception('Range query should not be directly used for search. Use $query->rewrite($index)');
     }
 
     /**
@@ -307,42 +297,41 @@ class Range extends AbstractQuery
      *
      * It's an array with document ids as keys (performance considerations)
      *
-     * @throws \Zend\Search\Lucene\Exception\UnsupportedMethodCallException
      * @return array
+     * @throws Zend_Search_Lucene_Exception
      */
     public function matchedDocs()
     {
-        throw new UnsupportedMethodCallException(
-        	'Range query should not be directly used for search. Use $query->rewrite($index)'
-        );
+        require_once 'Zend/Search/Lucene/Exception.php';
+        throw new Zend_Search_Lucene_Exception('Range query should not be directly used for search. Use $query->rewrite($index)');
     }
 
     /**
      * Score specified document
      *
      * @param integer $docId
-     * @param \Zend\Search\Lucene\SearchIndex $reader
-     * @throws \Zend\Search\Lucene\Exception\UnsupportedMethodCallException
+     * @param Zend_Search_Lucene_Interface $reader
      * @return float
+     * @throws Zend_Search_Lucene_Exception
      */
-    public function score($docId, Lucene\SearchIndex $reader)
+    public function score($docId, Zend_Search_Lucene_Interface $reader)
     {
-        throw new UnsupportedMethodCallException(
-        	'Range query should not be directly used for search. Use $query->rewrite($index)'
-        );
+        require_once 'Zend/Search/Lucene/Exception.php';
+        throw new Zend_Search_Lucene_Exception('Range query should not be directly used for search. Use $query->rewrite($index)');
     }
 
     /**
      * Query specific matches highlighting
      *
-     * @param \Zend\Search\Lucene\Search\Highlighter $highlighter  Highlighter object (also contains doc for highlighting)
+     * @param Zend_Search_Lucene_Search_Highlighter_Interface $highlighter  Highlighter object (also contains doc for highlighting)
      */
-    protected function _highlightMatches(Highlighter $highlighter)
+    protected function _highlightMatches(Zend_Search_Lucene_Search_Highlighter_Interface $highlighter)
     {
         $words = array();
 
         $docBody = $highlighter->getDocument()->getFieldUtf8Value('body');
-        $tokens = Lucene\Analysis\Analyzer\Analyzer::getDefault()->tokenize($docBody, 'UTF-8');
+        require_once 'Zend/Search/Lucene/Analysis/Analyzer.php';
+        $tokens = Zend_Search_Lucene_Analysis_Analyzer::getDefault()->tokenize($docBody, 'UTF-8');
 
         $lowerTermText = ($this->_lowerTerm !== null)? $this->_lowerTerm->text : null;
         $upperTermText = ($this->_upperTerm !== null)? $this->_upperTerm->text : null;
@@ -385,3 +374,4 @@ class Range extends AbstractQuery
              . (($this->getBoost() != 1)? '^' . round($this->getBoost(), 4) : '');
     }
 }
+

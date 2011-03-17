@@ -18,12 +18,8 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * @namespace
- */
-namespace Zend\Form\Decorator;
-
-use Zend\Form\Element;
+/** Zend_Form_Decorator_Abstract */
+require_once 'Zend/Form/Decorator/Abstract.php';
 
 /**
  * Zend_Form_Decorator_ViewHelper
@@ -38,24 +34,23 @@ use Zend\Form\Element;
  * Assumes the view helper accepts three parameters, the name, value, and
  * optional attributes; these will be provided by the element.
  *
- * @uses       \Zend\Form\Decorator\AbstractDecorator
- * @uses       \Zend\Form\Decorator\Exception
  * @category   Zend
  * @package    Zend_Form
  * @subpackage Decorator
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
-class ViewHelper extends AbstractDecorator
+class Zend_Form_Decorator_ViewHelper extends Zend_Form_Decorator_Abstract
 {
     /**
      * Element types that represent buttons
      * @var array
      */
     protected $_buttonTypes = array(
-        'Zend\Form\Element\Button',
-        'Zend\Form\Element\Reset',
-        'Zend\Form\Element\Submit',
+        'Zend_Form_Element_Button',
+        'Zend_Form_Element_Reset',
+        'Zend_Form_Element_Submit',
     );
 
     /**
@@ -95,7 +90,7 @@ class ViewHelper extends AbstractDecorator
                         $this->setHelper($helper);
                     } else {
                         $type = $element->getType();
-                        if ($pos = strrpos($type, '\\')) {
+                        if ($pos = strrpos($type, '_')) {
                             $type = substr($type, $pos + 1);
                         }
                         $this->setHelper('form' . ucfirst($type));
@@ -123,7 +118,7 @@ class ViewHelper extends AbstractDecorator
 
         $name = $element->getName();
 
-        if (!$element instanceof Element) {
+        if (!$element instanceof Zend_Form_Element) {
             return $name;
         }
 
@@ -170,7 +165,7 @@ class ViewHelper extends AbstractDecorator
 
         $id = $element->getName();
 
-        if ($element instanceof Element) {
+        if ($element instanceof Zend_Form_Element) {
             if (null !== ($belongsTo = $element->getBelongsTo())) {
                 $belongsTo = preg_replace('/\[([^\]]+)\]/', '-$1', $belongsTo);
                 $id = $belongsTo . '-' . $id;
@@ -188,12 +183,12 @@ class ViewHelper extends AbstractDecorator
      *
      * If element type is one of the button types, returns the label.
      *
-     * @param  \Zend\Form\Element $element
+     * @param  Zend_Form_Element $element
      * @return string|null
      */
     public function getValue($element)
     {
-        if (!$element instanceof Element) {
+        if (!$element instanceof Zend_Form_Element) {
             return null;
         }
 
@@ -219,7 +214,7 @@ class ViewHelper extends AbstractDecorator
      *
      * @param  string $content
      * @return string
-     * @throws \Zend\Form\Decorator\Exception if element or view are not registered
+     * @throws Zend_Form_Decorator_Exception if element or view are not registered
      */
     public function render($content)
     {
@@ -227,7 +222,8 @@ class ViewHelper extends AbstractDecorator
 
         $view = $element->getView();
         if (null === $view) {
-            throw new Exception\UnexpectedValueException('ViewHelper decorator cannot render without a registered view object');
+            require_once 'Zend/Form/Decorator/Exception.php';
+            throw new Zend_Form_Decorator_Exception('ViewHelper decorator cannot render without a registered view object');
         }
 
         if (method_exists($element, 'getMultiOptions')) {
@@ -242,12 +238,12 @@ class ViewHelper extends AbstractDecorator
         $id            = $element->getId();
         $attribs['id'] = $id;
 
-        $helperObject  = $view->broker($helper);
+        $helperObject  = $view->getHelper($helper);
         if (method_exists($helperObject, 'setTranslator')) {
             $helperObject->setTranslator($element->getTranslator());
         }
 
-        $elementContent = $view->broker($helper)->direct($name, $value, $attribs, $element->options);
+        $elementContent = $view->$helper($name, $value, $attribs, $element->options);
         switch ($this->getPlacement()) {
             case self::APPEND:
                 return $content . $separator . $elementContent;

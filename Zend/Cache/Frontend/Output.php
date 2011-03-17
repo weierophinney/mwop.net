@@ -17,22 +17,23 @@
  * @subpackage Zend_Cache_Frontend
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Cache\Frontend;
-use Zend\Cache\Cache;
 
 /**
- * @uses       \Zend\Cache\Core
+ * @see Zend_Cache_Core
+ */
+require_once 'Zend/Cache/Core.php';
+
+
+/**
  * @package    Zend_Cache
  * @subpackage Zend_Cache_Frontend
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Output extends Core
+class Zend_Cache_Frontend_Output extends Zend_Cache_Core
 {
 
     private $_idStack = array();
@@ -87,14 +88,13 @@ class Output extends Core
     public function end($tags = array(), $specificLifetime = false, $forcedDatas = null, $echoData = true, $priority = 8)
     {
         if ($forcedDatas === null) {
-            $data = ob_get_contents();
-            ob_end_clean();
+            $data = ob_get_clean();
         } else {
             $data =& $forcedDatas;
         }
         $id = array_pop($this->_idStack);
         if ($id === null) {
-            Cache::throwException('use of end() without a start()');
+            Zend_Cache::throwException('use of end() without a start()');
         }
         $this->save($data, $id, $tags, $specificLifetime, $priority);
         if ($echoData) {

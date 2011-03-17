@@ -19,22 +19,20 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * @namespace
- */
-namespace Zend\Form\Element;
+/** Zend_Form_Element_Xhtml */
+require_once 'Zend/Form/Element/Xhtml.php';
 
 /**
  * Image form element
  *
- * @uses       \Zend\Form\Element\Xhtml
  * @category   Zend
  * @package    Zend_Form
  * @subpackage Element
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
-class Image extends Xhtml
+class Zend_Form_Element_Image extends Zend_Form_Element_Xhtml
 {
     /**
      * What view helper to use when using view helper decorator
@@ -80,7 +78,7 @@ class Image extends Xhtml
      * Set image path
      *
      * @param  string $path
-     * @return \Zend\Form\Element\Image
+     * @return Zend_Form_Element_Image
      */
     public function setImage($path)
     {
@@ -102,7 +100,7 @@ class Image extends Xhtml
      * Set image value to use when submitted
      *
      * @param  mixed $value
-     * @return \Zend\Form\Element\Image
+     * @return Zend_Form_Element_Image
      */
     public function setImageValue($value)
     {

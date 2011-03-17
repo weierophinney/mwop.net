@@ -13,37 +13,30 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    Zend_PDF
+ * @package    Zend_Pdf
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Pdf;
 
 /**
  * Style object.
  * Style object doesn't directly correspond to any PDF file object.
  * It's utility class, used as a container for style information.
- * It's used by \Zend\Pdf\Page class for draw operations.
+ * It's used by Zend_Pdf_Page class in draw operations.
  *
- * @uses       \Zend\Pdf\Color\
- * @uses       \Zend\Pdf\InternalType
- * @uses       \Zend\Pdf\Page
- * @uses       \Zend\Pdf\Resource\Font\AbstractFont
- * @package    Zend_PDF
+ * @package    Zend_Pdf
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Style
+class Zend_Pdf_Style
 {
     /**
      * Fill color.
      * Used to fill geometric shapes or text.
      *
-     * @var \Zend\Pdf\Color|null
+     * @var Zend_Pdf_Color|null
      */
     private $_fillColor = null;
 
@@ -51,7 +44,7 @@ class Style
      * Line color.
      * Current color, used for lines and font outlines.
      *
-     * @var \Zend\Pdf\Color|null
+     * @var Zend_Pdf_Color|null
      */
 
     private $_color;
@@ -59,7 +52,7 @@ class Style
     /**
      * Line width.
      *
-     * @var \Zend\Pdf\InternalType\NumericObject
+     * @var Zend_Pdf_Element_Numeric
      */
     private $_lineWidth;
 
@@ -82,7 +75,7 @@ class Style
     /**
      * Current font
      *
-     * @var \Zend\Pdf\Resource\Font\AbstractFont
+     * @var Zend_Pdf_Resource_Font
      */
     private $_font;
 
@@ -98,7 +91,7 @@ class Style
     /**
      * Create style.
      *
-     * @param \Zend\Pdf\Style $anotherStyle
+     * @param Zend_Pdf_Style $anotherStyle
      */
     public function __construct($anotherStyle = null)
     {
@@ -117,9 +110,9 @@ class Style
     /**
      * Set fill color.
      *
-     * @param \Zend\Pdf\Color $color
+     * @param Zend_Pdf_Color $color
      */
-    public function setFillColor(Color $color)
+    public function setFillColor(Zend_Pdf_Color $color)
     {
         $this->_fillColor = $color;
     }
@@ -127,9 +120,9 @@ class Style
     /**
      * Set line color.
      *
-     * @param \Zend\Pdf\Color $color
+     * @param Zend_Pdf_Color $color
      */
-    public function setLineColor(Color $color)
+    public function setLineColor(Zend_Pdf_Color $color)
     {
         $this->_color = $color;
     }
@@ -141,7 +134,8 @@ class Style
      */
     public function setLineWidth($width)
     {
-        $this->_lineWidth = new InternalType\NumericObject($width);
+        require_once 'Zend/Pdf/Element/Numeric.php';
+        $this->_lineWidth = new Zend_Pdf_Element_Numeric($width);
     }
 
 
@@ -153,23 +147,25 @@ class Style
      */
     public function setLineDashingPattern($pattern, $phase = 0)
     {
-        if ($pattern === Page::LINE_DASHING_SOLID) {
+        require_once 'Zend/Pdf/Page.php';
+        if ($pattern === Zend_Pdf_Page::LINE_DASHING_SOLID) {
             $pattern = array();
             $phase   = 0;
         }
 
+        require_once 'Zend/Pdf/Element/Numeric.php';
         $this->_lineDashingPattern = $pattern;
-        $this->_lineDashingPhase   = new InternalType\NumericObject($phase);
+        $this->_lineDashingPhase   = new Zend_Pdf_Element_Numeric($phase);
     }
 
 
     /**
      * Set current font.
      *
-     * @param \Zend\Pdf\Resource\Font\AbstractFont $font
+     * @param Zend_Pdf_Resource_Font $font
      * @param float $fontSize
      */
-    public function setFont(Resource\Font\AbstractFont $font, $fontSize)
+    public function setFont(Zend_Pdf_Resource_Font $font, $fontSize)
     {
         $this->_font = $font;
         $this->_fontSize = $fontSize;
@@ -188,7 +184,7 @@ class Style
     /**
      * Get fill color.
      *
-     * @return \Zend\Pdf\Color|null
+     * @return Zend_Pdf_Color|null
      */
     public function getFillColor()
     {
@@ -198,7 +194,7 @@ class Style
     /**
      * Get line color.
      *
-     * @return \Zend\Pdf\Color|null
+     * @return Zend_Pdf_Color|null
      */
     public function getLineColor()
     {
@@ -229,7 +225,7 @@ class Style
     /**
      * Get current font.
      *
-     * @return \Zend\Pdf\Resource\Font\AbstractFont $font
+     * @return Zend_Pdf_Resource_Font $font
      */
     public function getFont()
     {
@@ -279,10 +275,12 @@ class Style
         }
 
         if ($this->_lineDashingPattern !== null) {
-            $dashPattern = new InternalType\ArrayObject();
+            require_once 'Zend/Pdf/Element/Array.php';
+            $dashPattern = new Zend_Pdf_Element_Array();
 
+            require_once 'Zend/Pdf/Element/Numeric.php';
             foreach ($this->_lineDashingPattern as $dashItem) {
-                $dashElement = new InternalType\NumericObject($dashItem);
+                $dashElement = new Zend_Pdf_Element_Numeric($dashItem);
                 $dashPattern->items[] = $dashElement;
             }
 
@@ -292,4 +290,5 @@ class Style
 
         return $instructions;
     }
+
 }

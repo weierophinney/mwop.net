@@ -17,32 +17,30 @@
  * @subpackage Adapter
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
+
 /**
- * @namespace
+ * @see Zend_Db_Adapter_Pdo_Abstract
  */
-namespace Zend\Db\Adapter\Pdo;
-use Zend\Db;
-use Zend\Db\Adapter;
+require_once 'Zend/Db/Adapter/Pdo/Abstract.php';
+
 
 /**
  * Class for connecting to PostgreSQL databases and performing common operations.
  *
- * @uses       \Zend\Db\Db
- * @uses       \Zend\Db\Adapter\Exception
- * @uses       \Zend\Db\Adapter\Pdo\AbstractPdo
  * @category   Zend
  * @package    Zend_Db
  * @subpackage Adapter
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Pgsql extends \Zend\Db\Adapter\AbstractPdoAdapter
+class Zend_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Abstract
 {
 
     /**
-     * Pdo type.
+     * PDO type.
      *
      * @var string
      */
@@ -60,25 +58,25 @@ class Pgsql extends \Zend\Db\Adapter\AbstractPdoAdapter
      * @var array Associative array of datatypes to values 0, 1, or 2.
      */
     protected $_numericDataTypes = array(
-        Db\Db::INT_TYPE    => Db\Db::INT_TYPE,
-        Db\Db::BIGINT_TYPE => Db\Db::BIGINT_TYPE,
-        Db\Db::FLOAT_TYPE  => Db\Db::FLOAT_TYPE,
-        'INTEGER'            => Db\Db::INT_TYPE,
-        'SERIAL'             => Db\Db::INT_TYPE,
-        'SMALLINT'           => Db\Db::INT_TYPE,
-        'BIGINT'             => Db\Db::BIGINT_TYPE,
-        'BIGSERIAL'          => Db\Db::BIGINT_TYPE,
-        'DECIMAL'            => Db\Db::FLOAT_TYPE,
-        'DOUBLE PRECISION'   => Db\Db::FLOAT_TYPE,
-        'NUMERIC'            => Db\Db::FLOAT_TYPE,
-        'REAL'               => Db\Db::FLOAT_TYPE
+        Zend_Db::INT_TYPE    => Zend_Db::INT_TYPE,
+        Zend_Db::BIGINT_TYPE => Zend_Db::BIGINT_TYPE,
+        Zend_Db::FLOAT_TYPE  => Zend_Db::FLOAT_TYPE,
+        'INTEGER'            => Zend_Db::INT_TYPE,
+        'SERIAL'             => Zend_Db::INT_TYPE,
+        'SMALLINT'           => Zend_Db::INT_TYPE,
+        'BIGINT'             => Zend_Db::BIGINT_TYPE,
+        'BIGSERIAL'          => Zend_Db::BIGINT_TYPE,
+        'DECIMAL'            => Zend_Db::FLOAT_TYPE,
+        'DOUBLE PRECISION'   => Zend_Db::FLOAT_TYPE,
+        'NUMERIC'            => Zend_Db::FLOAT_TYPE,
+        'REAL'               => Zend_Db::FLOAT_TYPE
     );
 
     /**
-     * Creates a Pdo object and connects to the database.
+     * Creates a PDO object and connects to the database.
      *
      * @return void
-     * @throws \Zend\Db\Adapter\Exception
+     * @throws Zend_Db_Adapter_Exception
      */
     protected function _connect()
     {
@@ -178,8 +176,8 @@ class Pgsql extends \Zend\Db\Adapter\AbstractPdoAdapter
 
         $stmt = $this->query($sql);
 
-        // Use FETCH_NUM so we are not dependent on the CASE attribute of the Pdo connection
-        $result = $stmt->fetchAll(Db\Db::FETCH_NUM);
+        // Use FETCH_NUM so we are not dependent on the CASE attribute of the PDO connection
+        $result = $stmt->fetchAll(Zend_Db::FETCH_NUM);
 
         $attnum        = 0;
         $nspname       = 1;
@@ -248,12 +246,20 @@ class Pgsql extends \Zend\Db\Adapter\AbstractPdoAdapter
     {
         $count = intval($count);
         if ($count <= 0) {
-            throw new Adapter\Exception("LIMIT argument count=$count is not valid");
+            /**
+             * @see Zend_Db_Adapter_Exception
+             */
+            require_once 'Zend/Db/Adapter/Exception.php';
+            throw new Zend_Db_Adapter_Exception("LIMIT argument count=$count is not valid");
         }
 
         $offset = intval($offset);
         if ($offset < 0) {
-            throw new Adapter\Exception("LIMIT argument offset=$offset is not valid");
+            /**
+             * @see Zend_Db_Adapter_Exception
+             */
+            require_once 'Zend/Db/Adapter/Exception.php';
+            throw new Zend_Db_Adapter_Exception("LIMIT argument offset=$offset is not valid");
         }
 
         $sql .= " LIMIT $count";
@@ -267,7 +273,7 @@ class Pgsql extends \Zend\Db\Adapter\AbstractPdoAdapter
     /**
      * Return the most recent value from the specified sequence in the database.
      * This is supported only on RDBMS brands that support sequences
-     * (e.g. Oracle, PostgreSQL, Db2).  Other RDBMS brands return null.
+     * (e.g. Oracle, PostgreSQL, DB2).  Other RDBMS brands return null.
      *
      * @param string $sequenceName
      * @return string
@@ -275,7 +281,7 @@ class Pgsql extends \Zend\Db\Adapter\AbstractPdoAdapter
     public function lastSequenceId($sequenceName)
     {
         $this->_connect();
-        $sequenceName = trim((string) $sequenceName, $this->getQuoteIdentifierSymbol());
+        $sequenceName = str_replace($this->getQuoteIdentifierSymbol(), '', (string) $sequenceName);
         $value = $this->fetchOne("SELECT CURRVAL("
                . $this->quote($this->quoteIdentifier($sequenceName, true))
                . ")");
@@ -285,7 +291,7 @@ class Pgsql extends \Zend\Db\Adapter\AbstractPdoAdapter
     /**
      * Generate a new value from the specified sequence in the database, and return it.
      * This is supported only on RDBMS brands that support sequences
-     * (e.g. Oracle, PostgreSQL, Db2).  Other RDBMS brands return null.
+     * (e.g. Oracle, PostgreSQL, DB2).  Other RDBMS brands return null.
      *
      * @param string $sequenceName
      * @return string
@@ -293,7 +299,7 @@ class Pgsql extends \Zend\Db\Adapter\AbstractPdoAdapter
     public function nextSequenceId($sequenceName)
     {
         $this->_connect();
-        $sequenceName = trim((string) $sequenceName, $this->getQuoteIdentifierSymbol());
+        $sequenceName = str_replace($this->getQuoteIdentifierSymbol(), '', (string) $sequenceName);
         $value = $this->fetchOne("SELECT NEXTVAL("
                . $this->quote($this->quoteIdentifier($sequenceName, true))
                . ")");
@@ -304,7 +310,7 @@ class Pgsql extends \Zend\Db\Adapter\AbstractPdoAdapter
      * Gets the last ID generated automatically by an IDENTITY/AUTOINCREMENT column.
      *
      * As a convention, on RDBMS brands that support sequences
-     * (e.g. Oracle, PostgreSQL, Db2), this method forms the name of a sequence
+     * (e.g. Oracle, PostgreSQL, DB2), this method forms the name of a sequence
      * from the arguments and returns the last id generated by that sequence.
      * On RDBMS brands that support IDENTITY/AUTOINCREMENT columns, this method
      * returns the last value generated for such a column, and the table name

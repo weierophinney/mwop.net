@@ -19,21 +19,20 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * @namespace
- */
-namespace Zend\Dojo\Form\Element;
+/** Zend_Dojo_Form_Element_Slider */
+require_once 'Zend/Dojo/Form/Element/Slider.php';
 
 /**
  * HorizontalSlider dijit
  *
- * @uses       \Zend\Dojo\Form\Element\Slider
+ * @uses       Zend_Dojo_Form_Element_Slider
  * @package    Zend_Dojo
  * @subpackage Form_Element
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
-class HorizontalSlider extends Slider
+class Zend_Dojo_Form_Element_HorizontalSlider extends Zend_Dojo_Form_Element_Slider
 {
     /**
      * Use HorizontalSlider dijit view helper
@@ -58,7 +57,7 @@ class HorizontalSlider extends Slider
      * Set dijit to use with top decoration
      *
      * @param mixed $dijit
-     * @return \Zend\Dojo\Form\Element\HorizontalSlider
+     * @return Zend_Dojo_Form_Element_HorizontalSlider
      */
     public function setTopDecorationDijit($dijit)
     {
@@ -72,7 +71,7 @@ class HorizontalSlider extends Slider
      * Set container to use with top decoration
      *
      * @param mixed $container
-     * @return \Zend\Dojo\Form\Element\HorizontalSlider
+     * @return Zend_Dojo_Form_Element_HorizontalSlider
      */
     public function setTopDecorationContainer($container)
     {
@@ -86,7 +85,7 @@ class HorizontalSlider extends Slider
      * Set labels to use with top decoration
      *
      * @param  array $labels
-     * @return \Zend\Dojo\Form\Element\HorizontalSlider
+     * @return Zend_Dojo_Form_Element_HorizontalSlider
      */
     public function setTopDecorationLabels(array $labels)
     {
@@ -100,7 +99,7 @@ class HorizontalSlider extends Slider
      * Set params to use with top decoration
      *
      * @param  array $params
-     * @return \Zend\Dojo\Form\Element\HorizontalSlider
+     * @return Zend_Dojo_Form_Element_HorizontalSlider
      */
     public function setTopDecorationParams(array $params)
     {
@@ -114,7 +113,7 @@ class HorizontalSlider extends Slider
      * Set attribs to use with top decoration
      *
      * @param  array $attribs
-     * @return \Zend\Dojo\Form\Element\HorizontalSlider
+     * @return Zend_Dojo_Form_Element_HorizontalSlider
      */
     public function setTopDecorationAttribs(array $attribs)
     {
@@ -141,7 +140,7 @@ class HorizontalSlider extends Slider
      * Set dijit to use with bottom decoration
      *
      * @param mixed $dijit
-     * @return \Zend\Dojo\Form\Element\HorizontalSlider
+     * @return Zend_Dojo_Form_Element_HorizontalSlider
      */
     public function setBottomDecorationDijit($dijit)
     {
@@ -155,7 +154,7 @@ class HorizontalSlider extends Slider
      * Set container to use with bottom decoration
      *
      * @param mixed $container
-     * @return \Zend\Dojo\Form\Element\HorizontalSlider
+     * @return Zend_Dojo_Form_Element_HorizontalSlider
      */
     public function setBottomDecorationContainer($container)
     {
@@ -169,7 +168,7 @@ class HorizontalSlider extends Slider
      * Set labels to use with bottom decoration
      *
      * @param  array $labels
-     * @return \Zend\Dojo\Form\Element\HorizontalSlider
+     * @return Zend_Dojo_Form_Element_HorizontalSlider
      */
     public function setBottomDecorationLabels(array $labels)
     {
@@ -183,7 +182,7 @@ class HorizontalSlider extends Slider
      * Set params to use with bottom decoration
      *
      * @param  array $params
-     * @return \Zend\Dojo\Form\Element\HorizontalSlider
+     * @return Zend_Dojo_Form_Element_HorizontalSlider
      */
     public function setBottomDecorationParams(array $params)
     {
@@ -197,7 +196,7 @@ class HorizontalSlider extends Slider
      * Set attribs to use with bottom decoration
      *
      * @param  array $attribs
-     * @return \Zend\Dojo\Form\Element\HorizontalSlider
+     * @return Zend_Dojo_Form_Element_HorizontalSlider
      */
     public function setBottomDecorationAttribs(array $attribs)
     {

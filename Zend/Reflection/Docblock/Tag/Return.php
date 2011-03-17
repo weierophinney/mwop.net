@@ -16,24 +16,19 @@
  * @package    Zend_Reflection
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Reflection\Docblock\Tag;
-use Zend\Reflection,
-    Zend\Reflection\Exception;
+/** Zend_Reflection_Docblock_Tag */
+require_once 'Zend/Reflection/Docblock/Tag.php';
 
 /**
- * @uses       \Zend\Reflection\Exception
- * @uses       \Zend\Reflection\ReflectionDocblockTag
  * @category   Zend
  * @package    Zend_Reflection
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class ReturnTag extends Reflection\ReflectionDocblockTag
+class Zend_Reflection_Docblock_Tag_Return extends Zend_Reflection_Docblock_Tag
 {
     /**
      * @var string
@@ -49,11 +44,13 @@ class ReturnTag extends Reflection\ReflectionDocblockTag
     public function __construct($tagDocblockLine)
     {
         if (!preg_match('#^@(\w+)\s+([\w|\\\]+)(?:\s+(.*))?#', $tagDocblockLine, $matches)) {
-            throw new Exception\InvalidArgumentException('Provided docblock line is does not contain a valid tag');
+            require_once 'Zend/Reflection/Exception.php';
+            throw new Zend_Reflection_Exception('Provided docblock line is does not contain a valid tag');
         }
 
         if ($matches[1] != 'return') {
-            throw new Exception\InvalidArgumentException('Provided docblock line is does not contain a valid @return tag');
+            require_once 'Zend/Reflection/Exception.php';
+            throw new Zend_Reflection_Exception('Provided docblock line is does not contain a valid @return tag');
         }
 
         $this->_name = 'return';

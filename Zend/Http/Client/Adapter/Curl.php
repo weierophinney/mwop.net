@@ -16,35 +16,36 @@
  * @category   Zend
  * @package    Zend_Http
  * @subpackage Client_Adapter
+ * @version    $Id$
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
 /**
- * @namespace
+ * @see Zend_Uri_Http
  */
-namespace Zend\Http\Client\Adapter;
-use Zend\Http\Client\Adapter as HttpAdapter,
-    Zend\Http\Client\Adapter\Exception as AdapterException,
-    Zend\Http\Client;
+require_once 'Zend/Uri/Http.php';
 
 /**
- * An adapter class for Zend\Http\Client based on the curl extension.
+ * @see Zend_Http_Client_Adapter_Interface
+ */
+require_once 'Zend/Http/Client/Adapter/Interface.php';
+/**
+ * @see Zend_Http_Client_Adapter_Stream
+ */
+require_once 'Zend/Http/Client/Adapter/Stream.php';
+
+/**
+ * An adapter class for Zend_Http_Client based on the curl extension.
  * Curl requires libcurl. See for full requirements the PHP manual: http://php.net/curl
  *
- * @uses       \Zend\Http\Client
- * @uses       \Zend\Http\Client\Exception
- * @uses       \Zend\Http\Client\Adapter\Exception
- * @uses       \Zend\Http\Client\Adapter
- * @uses       \Zend\Http\Client\Adapter\Stream
- * @uses       \Zend\Uri\Url
  * @category   Zend
  * @package    Zend_Http
  * @subpackage Client_Adapter
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Curl implements HttpAdapter, Stream
+class Zend_Http_Client_Adapter_Curl implements Zend_Http_Client_Adapter_Interface, Zend_Http_Client_Adapter_Stream
 {
     /**
      * Parameters array
@@ -94,12 +95,13 @@ class Curl implements HttpAdapter, Stream
      * Config is set using setConfig()
      *
      * @return void
-     * @throws \Zend\Http\Client\Adapter\Exception
+     * @throws Zend_Http_Client_Adapter_Exception
      */
     public function __construct()
     {
         if (!extension_loaded('curl')) {
-            throw new AdapterException\InitializationException('cURL extension has to be loaded to use this Zend\Http\Client adapter');
+            require_once 'Zend/Http/Client/Adapter/Exception.php';
+            throw new Zend_Http_Client_Adapter_Exception('cURL extension has to be loaded to use this Zend_Http_Client adapter.');
         }
         $this->_invalidOverwritableCurlOptions = array(
             CURLOPT_HTTPGET,
@@ -123,18 +125,19 @@ class Curl implements HttpAdapter, Stream
     /**
      * Set the configuration array for the adapter
      *
-     * @throws \Zend\Http\Client\Adapter\Exception
-     * @param  \Zend\Config\Config | array $config
-     * @return \Zend\Http\Client\Adapter\Curl
+     * @throws Zend_Http_Client_Adapter_Exception
+     * @param  Zend_Config | array $config
+     * @return Zend_Http_Client_Adapter_Curl
      */
     public function setConfig($config = array())
     {
-        if ($config instanceof \Zend\Config\Config) {
+        if ($config instanceof Zend_Config) {
             $config = $config->toArray();
 
         } elseif (! is_array($config)) {
-            throw new AdapterException\InvalidArgumentException(
-                'Array or Zend\Config\Config object expected, got ' . gettype($config)
+            require_once 'Zend/Http/Client/Adapter/Exception.php';
+            throw new Zend_Http_Client_Adapter_Exception(
+                'Array or Zend_Config object expected, got ' . gettype($config)
             );
         }
 
@@ -176,7 +179,7 @@ class Curl implements HttpAdapter, Stream
      *
      * @param  string|int $option
      * @param  mixed $value
-     * @return Zend\Http\Adapter\Curl
+     * @return Zend_Http_Adapter_Curl
      */
     public function setCurlOption($option, $value)
     {
@@ -194,7 +197,7 @@ class Curl implements HttpAdapter, Stream
      * @param  int     $port
      * @param  boolean $secure
      * @return void
-     * @throws \Zend\Http\Client\Adapter\Exception if unable to connect
+     * @throws Zend_Http_Client_Adapter_Exception if unable to connect
      */
     public function connect($host, $port = 80, $secure = false)
     {
@@ -227,11 +230,12 @@ class Curl implements HttpAdapter, Stream
         if (!$this->_curl) {
             $this->close();
 
-            throw new AdapterException\RuntimeException('Unable to Connect to ' .  $host . ':' . $port);
+            require_once 'Zend/Http/Client/Adapter/Exception.php';
+            throw new Zend_Http_Client_Adapter_Exception('Unable to Connect to ' .  $host . ':' . $port);
         }
 
         if ($secure !== false) {
-            // Behave the same like Zend\Http\Adapter\Socket on SSL options.
+            // Behave the same like Zend_Http_Adapter_Socket on SSL options.
             if (isset($this->_config['sslcert'])) {
                 curl_setopt($this->_curl, CURLOPT_SSLCERT, $this->_config['sslcert']);
             }
@@ -248,22 +252,24 @@ class Curl implements HttpAdapter, Stream
      * Send request to the remote server
      *
      * @param  string        $method
-     * @param  \Zend\Uri\Url $uri
+     * @param  Zend_Uri_Http $uri
      * @param  float         $http_ver
      * @param  array         $headers
      * @param  string        $body
      * @return string        $request
-     * @throws \Zend\Http\Client\Adapter\Exception If connection fails, connected to wrong host, no PUT file defined, unsupported method, or unsupported cURL option
+     * @throws Zend_Http_Client_Adapter_Exception If connection fails, connected to wrong host, no PUT file defined, unsupported method, or unsupported cURL option
      */
     public function write($method, $uri, $httpVersion = 1.1, $headers = array(), $body = '')
     {
         // Make sure we're properly connected
         if (!$this->_curl) {
-            throw new AdapterException\RuntimeException("Trying to write but we are not connected");
+            require_once 'Zend/Http/Client/Adapter/Exception.php';
+            throw new Zend_Http_Client_Adapter_Exception("Trying to write but we are not connected");
         }
 
         if ($this->_connected_to[0] != $uri->getHost() || $this->_connected_to[1] != $uri->getPort()) {
-            throw new AdapterException\RuntimeException("Trying to write but we are connected to the wrong host");
+            require_once 'Zend/Http/Client/Adapter/Exception.php';
+            throw new Zend_Http_Client_Adapter_Exception("Trying to write but we are connected to the wrong host");
         }
 
         // set URL
@@ -272,15 +278,15 @@ class Curl implements HttpAdapter, Stream
         // ensure correct curl call
         $curlValue = true;
         switch ($method) {
-            case Client::GET:
+            case Zend_Http_Client::GET:
                 $curlMethod = CURLOPT_HTTPGET;
                 break;
 
-            case Client::POST:
+            case Zend_Http_Client::POST:
                 $curlMethod = CURLOPT_POST;
                 break;
 
-            case Client::PUT:
+            case Zend_Http_Client::PUT:
                 // There are two different types of PUT request, either a Raw Data string has been set
                 // or CURLOPT_INFILE and CURLOPT_INFILESIZE are used.
                 if(is_resource($body)) {
@@ -299,7 +305,8 @@ class Curl implements HttpAdapter, Stream
                     }
 
                     if (!isset($this->_config['curloptions'][CURLOPT_INFILESIZE])) {
-                        throw new AdapterException\RuntimeException("Cannot set a file-handle for cURL option CURLOPT_INFILE without also setting its size in CURLOPT_INFILESIZE.");
+                        require_once 'Zend/Http/Client/Adapter/Exception.php';
+                        throw new Zend_Http_Client_Adapter_Exception("Cannot set a file-handle for cURL option CURLOPT_INFILE without also setting its size in CURLOPT_INFILESIZE.");
                     }
 
                     if(is_resource($body)) {
@@ -313,33 +320,35 @@ class Curl implements HttpAdapter, Stream
                 }
                 break;
 
-            case Client::DELETE:
+            case Zend_Http_Client::DELETE:
                 $curlMethod = CURLOPT_CUSTOMREQUEST;
                 $curlValue = "DELETE";
                 break;
 
-            case Client::OPTIONS:
+            case Zend_Http_Client::OPTIONS:
                 $curlMethod = CURLOPT_CUSTOMREQUEST;
                 $curlValue = "OPTIONS";
                 break;
 
-            case Client::TRACE:
+            case Zend_Http_Client::TRACE:
                 $curlMethod = CURLOPT_CUSTOMREQUEST;
                 $curlValue = "TRACE";
                 break;
-            
-            case Client::HEAD:
+
+            case Zend_Http_Client::HEAD:
                 $curlMethod = CURLOPT_CUSTOMREQUEST;
                 $curlValue = "HEAD";
                 break;
 
             default:
                 // For now, through an exception for unsupported request methods
-                throw new AdapterException\InvalidArgumentException("Method currently not supported");
+                require_once 'Zend/Http/Client/Adapter/Exception.php';
+                throw new Zend_Http_Client_Adapter_Exception("Method currently not supported");
         }
 
         if(is_resource($body) && $curlMethod != CURLOPT_PUT) {
-            throw new AdapterException\RuntimeException("Streaming requests are allowed only with PUT");
+            require_once 'Zend/Http/Client/Adapter/Exception.php';
+            throw new Zend_Http_Client_Adapter_Exception("Streaming requests are allowed only with PUT");
         }
 
         // get http version to use
@@ -371,7 +380,7 @@ class Curl implements HttpAdapter, Stream
          * Make sure POSTFIELDS is set after $curlMethod is set:
          * @link http://de2.php.net/manual/en/function.curl-setopt.php#81161
          */
-        if ($method == Client::POST) {
+        if ($method == Zend_Http_Client::POST) {
             curl_setopt($this->_curl, CURLOPT_POSTFIELDS, $body);
         } elseif ($curlMethod == CURLOPT_PUT) {
             // this covers a PUT by file-handle:
@@ -381,7 +390,7 @@ class Curl implements HttpAdapter, Stream
             curl_setopt($this->_curl, CURLOPT_INFILESIZE, $this->_config['curloptions'][CURLOPT_INFILESIZE]);
             unset($this->_config['curloptions'][CURLOPT_INFILE]);
             unset($this->_config['curloptions'][CURLOPT_INFILESIZE]);
-        } elseif ($method == Client::PUT) {
+        } elseif ($method == Zend_Http_Client::PUT) {
             // This is a PUT by a setRawData string, not by file-handle
             curl_setopt($this->_curl, CURLOPT_POSTFIELDS, $body);
         }
@@ -391,7 +400,8 @@ class Curl implements HttpAdapter, Stream
             foreach ((array)$this->_config['curloptions'] as $k => $v) {
                 if (!in_array($k, $this->_invalidOverwritableCurlOptions)) {
                     if (curl_setopt($this->_curl, $k, $v) == false) {
-                        throw new AdapterException\RuntimeException(sprintf("Unknown or erroreous cURL option '%s' set", $k));
+                        require_once 'Zend/Http/Client/Exception.php';
+                        throw new Zend_Http_Client_Exception(sprintf("Unknown or erroreous cURL option '%s' set", $k));
                     }
                 }
             }
@@ -409,10 +419,11 @@ class Curl implements HttpAdapter, Stream
         $request .= $body;
 
         if (empty($this->_response)) {
-            throw new AdapterException\RuntimeException("Error in cURL request: " . curl_error($this->_curl));
+            require_once 'Zend/Http/Client/Exception.php';
+            throw new Zend_Http_Client_Exception("Error in cURL request: " . curl_error($this->_curl));
         }
 
-        // cURL automatically decodes chunked-messages, this means we have to disallow the Zend\Http\Response to do it again
+        // cURL automatically decodes chunked-messages, this means we have to disallow the Zend_Http_Response to do it again
         if (stripos($this->_response, "Transfer-Encoding: chunked\r\n")) {
             $this->_response = str_ireplace("Transfer-Encoding: chunked\r\n", '', $this->_response);
         }
@@ -473,7 +484,7 @@ class Curl implements HttpAdapter, Stream
      * Set output stream for the response
      *
      * @param resource $stream
-     * @return \Zend\Http\Client\Adapter\Socket
+     * @return Zend_Http_Client_Adapter_Socket
      */
     public function setOutputStream($stream)
     {

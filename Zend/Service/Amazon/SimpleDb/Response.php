@@ -20,10 +20,9 @@
  */
 
 /**
- * @namespace
+ * @see Zend_Http_Response
  */
-namespace Zend\Service\Amazon\SimpleDb;
-use Zend\Http;
+require_once 'Zend/Http/Response.php';
 
 /**
  * @category   Zend
@@ -32,7 +31,7 @@ use Zend\Http;
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Response 
+class Zend_Service_Amazon_SimpleDb_Response
 {
     /**
      * XML namespace used for SimpleDB responses.
@@ -44,7 +43,7 @@ class Response
      *
      * This contains the response body and headers.
      *
-     * @var Zend\Http\Response
+     * @var Zend_Http_Response
      */
     private $_httpResponse = null;
 
@@ -79,10 +78,10 @@ class Response
     /**
      * Creates a new high-level SimpleDB response object
      *
-     * @param  Zend\Http\Response $httpResponse the HTTP response.
+     * @param  Zend_Http_Response $httpResponse the HTTP response.
      * @return void
      */
-    public function __construct(Http\Response $httpResponse)
+    public function __construct(Zend_Http_Response $httpResponse)
     {
         $this->_httpResponse = $httpResponse;
     }
@@ -99,7 +98,7 @@ class Response
             if ($document === false) {
                 $this->_xpath = false;
             } else {
-                $this->_xpath = new \DOMXPath($document);
+                $this->_xpath = new DOMXPath($document);
                 $this->_xpath->registerNamespace('sdb',
                     $this->getNamespace());
             }
@@ -117,23 +116,24 @@ class Response
     {
         try {
             $body = $this->_httpResponse->getBody();
-        } catch (Http\Exception $e) {
+        } catch (Zend_Http_Exception $e) {
             $body = false;
         }
-       
+
+
         return simplexml_load_string($body);
     }
-    
+
     /**
      * Get HTTP response object
-     * 
-     * @return Zend\Http\Response
+     *
+     * @return Zend_Http_Response
      */
-    public function getHttpResponse() 
+    public function getHttpResponse()
     {
         return $this->_httpResponse;
     }
-    
+
     /**
      * Gets the document object for this response
      *
@@ -143,7 +143,7 @@ class Response
     {
         try {
             $body = $this->_httpResponse->getBody();
-        } catch (Http\Exception $e) {
+        } catch (Zend_Http_Exception $e) {
             $body = false;
         }
 
@@ -152,11 +152,11 @@ class Response
                 // turn off libxml error handling
                 $errors = libxml_use_internal_errors();
 
-                $this->_document = new \DOMDocument();
+                $this->_document = new DOMDocument();
                 if (!$this->_document->loadXML($body)) {
                     $this->_document = false;
                 }
-                
+
                 // reset libxml error handling
                 libxml_clear_errors();
                 libxml_use_internal_errors($errors);

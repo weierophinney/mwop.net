@@ -17,30 +17,35 @@
  * @subpackage PHPUnit
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Db_Adapter_Abstract
  */
-namespace Zend\Test\PHPUnit\Db\Metadata;
+require_once "Zend/Db/Adapter/Abstract.php";
+
+/**
+ * @see PHPUnit_Extensions_Database_DB_IMetaData
+ */
+require_once "PHPUnit/Extensions/Database/DB/IMetaData.php";
 
 /**
  * Generic Metadata accessor for the Zend_Db adapters
  *
  * @uses       PHPUnit_Extensions_Database_DB_IMetaData
- * @uses       \Zend\Db\Adapter\AbstractAdapter
  * @category   Zend
  * @package    Zend_Test
  * @subpackage PHPUnit
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Generic implements \PHPUnit_Extensions_Database_DB_IMetaData
+class Zend_Test_PHPUnit_Db_Metadata_Generic implements PHPUnit_Extensions_Database_DB_IMetaData
 {
     /**
      * Zend_Db Connection
      *
-     * @var \Zend\Db\Adapter\AbstractAdapter
+     * @var Zend_Db_Adapter_Abstract
      */
     protected $_connection;
 
@@ -65,7 +70,7 @@ class Generic implements \PHPUnit_Extensions_Database_DB_IMetaData
      * @param PDO $pdo
      * @param string $schema
      */
-    public final function __construct(\Zend\Db\Adapter\AbstractAdapter $db, $schema)
+    public final function __construct(Zend_Db_Adapter_Abstract $db, $schema)
     {
         $this->_connection = $db;
         $this->_schema     = $schema;

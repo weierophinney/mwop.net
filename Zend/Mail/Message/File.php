@@ -16,25 +16,27 @@
  * @package    Zend_Mail
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
+
 /**
- * @namespace
+ * Zend_Mail_Part
  */
-namespace Zend\Mail\Message;
-
-use Zend\Mail\MailMessage,
-    Zend\Mail\Part\File as FilePart;
+require_once 'Zend/Mail/Part/File.php';
 
 /**
- * @uses       \Zend\Mail\MailMessage
- * @uses       \Zend\Mail\Part\File
+ * Zend_Mail_Message_Interface
+ */
+require_once 'Zend/Mail/Message/Interface.php';
+
+/**
  * @category   Zend
  * @package    Zend_Mail
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class File extends FilePart implements MailMessage
+class Zend_Mail_Message_File extends Zend_Mail_Part_File implements Zend_Mail_Message_Interface
 {
     /**
      * flags for this message
@@ -49,7 +51,7 @@ class File extends FilePart implements MailMessage
      * - flags array with flags for message, keys are ignored, use constants defined in Zend_Mail_Storage
      *
      * @param  string $rawMessage  full message with or without headers
-     * @throws \Zend\Mail\Exception
+     * @throws Zend_Mail_Exception
      */
     public function __construct(array $params)
     {
@@ -74,7 +76,7 @@ class File extends FilePart implements MailMessage
     /**
      * check if flag is set
      *
-     * @param mixed $flag a flag name, use constants defined in \Zend\Mail\Storage
+     * @param mixed $flag a flag name, use constants defined in Zend_Mail_Storage
      * @return bool true if set, otherwise false
      */
     public function hasFlag($flag)

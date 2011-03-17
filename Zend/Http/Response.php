@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework
  *
@@ -15,28 +16,22 @@
  * @category   Zend
  * @package    Zend_Http
  * @subpackage Response
+ * @version    $Id$
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-
-/**
- * @namespace
- */
-namespace Zend\Http;
 
 /**
  * Zend_Http_Response represents an HTTP 1.0 / 1.1 response message. It
  * includes easy access to all the response's different elemts, as well as some
  * convenience methods for parsing and validating HTTP responses.
  *
- * @uses       \Zend\Http\Exception
- * @uses       \Zend\Http\Response
  * @package    Zend_Http
  * @subpackage Response
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Response
+class Zend_Http_Response
 {
     /**
      * List of all known HTTP response codes - used by responseCodeAsText() to
@@ -146,30 +141,34 @@ class Response
      *
      * If no message is passed, the message will be guessed according to the response code.
      *
-     * @param int $code Response code (200, 404, ...)
-     * @param array $headers Headers array
+     * @param int    $code Response code (200, 404, ...)
+     * @param array  $headers Headers array
      * @param string $body Response body
      * @param string $version HTTP version
      * @param string $message Response code as text
-     * @throws \Zend\Http\Exception
+     * @throws Zend_Http_Exception
      */
-    public function __construct($code, $headers, $body = null, $version = '1.1', $message = null)
+    public function __construct($code, array $headers, $body = null, $version = '1.1', $message = null)
     {
         // Make sure the response code is valid and set it
         if (self::responseCodeAsText($code) === null) {
-            throw new Exception\InvalidArgumentException("{$code} is not a valid HTTP response code");
+            require_once 'Zend/Http/Exception.php';
+            throw new Zend_Http_Exception("{$code} is not a valid HTTP response code");
         }
 
         $this->code = $code;
 
-        // Make sure we got valid headers and set them
-        if (! is_array($headers)) {
-            throw new Exception\InvalidArgumentException('No valid headers were passed');
-    }
-
         foreach ($headers as $name => $value) {
-            if (is_int($name))
-                list($name, $value) = explode(": ", $value, 1);
+            if (is_int($name)) {
+                $header = explode(":", $value, 2);
+                if (count($header) != 2) {
+                    require_once 'Zend/Http/Exception.php';
+                    throw new Zend_Http_Exception("'{$value}' is not a valid HTTP header");
+                }
+
+                $name  = trim($header[0]);
+                $value = trim($header[1]);
+            }
 
             $this->headers[ucwords(strtolower($name))] = $value;
         }
@@ -179,7 +178,8 @@ class Response
 
         // Set the HTTP version
         if (! preg_match('|^\d\.\d$|', $version)) {
-            throw new Exception\InvalidArgumentException("Invalid HTTP response version: $version");
+            require_once 'Zend/Http/Exception.php';
+            throw new Zend_Http_Exception("Invalid HTTP response version: $version");
         }
 
         $this->version = $version;
@@ -489,8 +489,8 @@ class Response
     /**
      * Extract the headers from a response string
      *
-     * @param  string $response_str
-     * @return array
+     * @param   string $response_str
+     * @return  array
      */
     public static function extractHeaders($response_str)
     {
@@ -575,7 +575,8 @@ class Response
 
         while (trim($body)) {
             if (! preg_match("/^([\da-fA-F]+)[^\r\n]*\r\n/sm", $body, $m)) {
-                throw new Exception\RuntimeException("Error parsing body - doesn't seem to be a chunked message");
+                require_once 'Zend/Http/Exception.php';
+                throw new Zend_Http_Exception("Error parsing body - doesn't seem to be a chunked message");
             }
 
             $length = hexdec(trim($m[1]));
@@ -602,7 +603,8 @@ class Response
     public static function decodeGzip($body)
     {
         if (! function_exists('gzinflate')) {
-            throw new Exception\RuntimeException(
+            require_once 'Zend/Http/Exception.php';
+            throw new Zend_Http_Exception(
                 'zlib extension is required in order to decode "gzip" encoding'
             );
         }
@@ -621,7 +623,8 @@ class Response
     public static function decodeDeflate($body)
     {
         if (! function_exists('gzuncompress')) {
-            throw new Exception\RuntimeException(
+            require_once 'Zend/Http/Exception.php';
+            throw new Zend_Http_Exception(
                 'zlib extension is required in order to decode "deflate" encoding'
             );
         }
@@ -649,7 +652,7 @@ class Response
      * Create a new Zend_Http_Response object from a string
      *
      * @param string $response_str
-     * @return \Zend\Http\Response
+     * @return Zend_Http_Response
      */
     public static function fromString($response_str)
     {
@@ -659,6 +662,6 @@ class Response
         $version = self::extractVersion($response_str);
         $message = self::extractMessage($response_str);
 
-        return new Response($code, $headers, $body, $version, $message);
+        return new Zend_Http_Response($code, $headers, $body, $version, $message);
     }
 }

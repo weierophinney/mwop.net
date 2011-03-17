@@ -18,44 +18,48 @@
  * @subpackage Zend_OpenId_Provider
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_OpenId_Provider_User
  */
-namespace Zend\OpenId\Provider\User;
+require_once "Zend/OpenId/Provider/User.php";
+
+/**
+ * @see Zend_Session_Namespace
+ */
+require_once "Zend/Session/Namespace.php";
 
 /**
  * Class to get/store information about logged in user in Web Browser using
  * PHP session
  *
- * @uses       Zend\OpenId\Provider\User\AbstractUser
- * @uses       Zend\Session\Container
  * @category   Zend
  * @package    Zend_OpenId
  * @subpackage Zend_OpenId_Provider
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Session extends AbstractUser
+class Zend_OpenId_Provider_User_Session extends Zend_OpenId_Provider_User
 {
     /**
      * Reference to an implementation of Zend_Session_Namespace object
      *
-     * @var \Zend\Session\Container $_session
+     * @var Zend_Session_Namespace $_session
      */
     private $_session = null;
 
     /**
-     * Creates \Zend\OpenId\Provider\User\Session object with given session
+     * Creates Zend_OpenId_Provider_User_Session object with given session
      * namespace or creates new session namespace named "openid"
      *
-     * @param \Zend\Session\Container $session
+     * @param Zend_Session_Namespace $session
      */
-    public function __construct(\Zend\Session\Container $session = null)
+    public function __construct(Zend_Session_Namespace $session = null)
     {
         if ($session === null) {
-            $this->_session = new \Zend\Session\Container("openid");
+            $this->_session = new Zend_Session_Namespace("openid");
         } else {
             $this->_session = $session;
         }

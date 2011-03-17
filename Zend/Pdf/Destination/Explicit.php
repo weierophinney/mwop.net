@@ -13,37 +13,35 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    Zend_PDF
- * @subpackage Zend_PDF_Destination
+ * @package    Zend_Pdf
+ * @subpackage Destination
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Pdf\Destination;
-use Zend\Pdf\Exception;
-use Zend\Pdf\InternalType;
-use Zend\Pdf;
+
+/** Internally used classes */
+require_once 'Zend/Pdf/Element.php';
+
+
+/** Zend_Pdf_Destination */
+require_once 'Zend/Pdf/Destination.php';
 
 /**
  * Abstract PDF explicit destination representation class
  *
- * @uses       \Zend\Pdf\Destination\AbstractDestination
- * @uses       \Zend\Pdf\InternalType\AbstractTypeObject
- * @uses       \Zend\Pdf\Exception
- * @package    Zend_PDF
- * @subpackage Zend_PDF_Destination
+ * @package    Zend_Pdf
+ * @subpackage Destination
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-abstract class Explicit extends AbstractDestination
+abstract class Zend_Pdf_Destination_Explicit extends Zend_Pdf_Destination
 {
     /**
      * Destination description array
      *
-     * @var \Zend\Pdf\InternalType\ArrayObject
+     * @var Zend_Pdf_Element_Array
      */
     protected $_destinationArray;
 
@@ -57,24 +55,27 @@ abstract class Explicit extends AbstractDestination
     /**
      * Explicit destination object constructor
      *
-     * @param \Zend\Pdf\InternalType\AbstractTypeObject $destinationArray
-     * @throws \Zend\Pdf\Exception
+     * @param Zend_Pdf_Element $destinationArray
+     * @throws Zend_Pdf_Exception
      */
-    public function __construct(InternalType\AbstractTypeObject $destinationArray)
+    public function __construct(Zend_Pdf_Element $destinationArray)
     {
-        if ($destinationArray->getType() != InternalType\AbstractTypeObject::TYPE_ARRAY) {
-            throw new Exception\CorruptedPdfException('Explicit destination resource Array must be a direct or an indirect array object.');
+        if ($destinationArray->getType() != Zend_Pdf_Element::TYPE_ARRAY) {
+            require_once 'Zend/Pdf/Exception.php';
+            throw new Zend_Pdf_Exception('Explicit destination resource Array must be a direct or an indirect array object.');
         }
 
         $this->_destinationArray = $destinationArray;
 
         switch (count($this->_destinationArray->items)) {
             case 0:
-                throw new Exception\CorruptedPdfException('Destination array must contain a page reference.');
+                require_once 'Zend/Pdf/Exception.php';
+                throw new Zend_Pdf_Exception('Destination array must contain a page reference.');
                 break;
 
             case 1:
-                throw new Exception\CorruptedPdfException('Destination array must contain a destination type name.');
+                require_once 'Zend/Pdf/Exception.php';
+                throw new Zend_Pdf_Exception('Destination array must contain a destination type name.');
                 break;
 
             default:
@@ -83,16 +84,17 @@ abstract class Explicit extends AbstractDestination
         }
 
         switch ($this->_destinationArray->items[0]->getType()) {
-            case InternalType\AbstractTypeObject::TYPE_NUMERIC:
+            case Zend_Pdf_Element::TYPE_NUMERIC:
                 $this->_isRemote = true;
                 break;
 
-            case InternalType\AbstractTypeObject::TYPE_DICTIONARY:
+            case Zend_Pdf_Element::TYPE_DICTIONARY:
                 $this->_isRemote = false;
                 break;
 
             default:
-                throw new Exception\CorruptedPdfException('Destination target must be a page number or page dictionary object.');
+                require_once 'Zend/Pdf/Exception.php';
+                throw new Zend_Pdf_Exception('Destination target must be a page number or page dictionary object.');
                 break;
         }
     }
@@ -111,7 +113,7 @@ abstract class Explicit extends AbstractDestination
      * Get resource
      *
      * @internal
-     * @return \Zend\Pdf\InternalType\AbstractTypeObject
+     * @return Zend_Pdf_Element
      */
     public function getResource()
     {

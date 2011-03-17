@@ -17,58 +17,46 @@
  * @subpackage Resource
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Application_Resource_ResourceAbstract
  */
-namespace Zend\Application\Resource;
-
-use Zend\Loader,
-    Zend\Application\ResourceException;
+require_once 'Zend/Application/Resource/ResourceAbstract.php';
 
 /**
  * Resource for setting up Mail Transport and default From & ReplyTo addresses
  *
- * @uses       \Zend\Application\ResourceException
- * @uses       \Zend\Application\Resource\AbstractResource
- * @uses       \Zend\Loader\Autoloader
- * @uses       \Zend\Mail\Mail
- * @uses       \Zend\Mail\Transport\Sendmail
- * @uses       \Zend\Mail\Transport\Smtp
+ * @uses       Zend_Application_Resource_ResourceAbstract
  * @category   Zend
  * @package    Zend_Application
  * @subpackage Resource
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Mail extends AbstractResource
+class Zend_Application_Resource_Mail extends Zend_Application_Resource_ResourceAbstract
 {
 
     /**
-     * @var \Zend\Mail\AbstractTransport
+     * @var Zend_Mail_Transport_Abstract
      */
     protected $_transport;
 
-    /**
-     * Initialize mail resource
-     * 
-     * @return \Zend\Mail\AbstractTransport
-     */
-    public function init() 
-    {
+    public function init() {
         return $this->getMail();
     }
-    
+
     /**
-     * @return \Zend\Mail\AbstractTransport|null
+     *
+     * @return Zend_Mail_Transport_Abstract|null
      */
     public function getMail()
     {
         if (null === $this->_transport) {
             $options = $this->getOptions();
             foreach($options as $key => $option) {
-                $options[strtolower($key)] = $option;         
+                $options[strtolower($key)] = $option;
             }
             $this->setOptions($options);
 
@@ -82,82 +70,72 @@ class Mail extends AbstractResource
                         !is_numeric($options['transport']['register']) &&
                         (bool) $options['transport']['register'] == true))
                 {
-                    \Zend\Mail\Mail::setDefaultTransport($this->_transport);
+                    Zend_Mail::setDefaultTransport($this->_transport);
                 }
             }
-            
+
             $this->_setDefaults('from');
             $this->_setDefaults('replyTo');
         }
 
         return $this->_transport;
     }
-    
-    /**
-     * Set transport/message defaults
-     * 
-     * @param  string $type 
-     * @return void
-     */
-    protected function _setDefaults($type) 
-    {
+
+    protected function _setDefaults($type) {
         $key = strtolower('default' . $type);
         $options = $this->getOptions();
 
         if(isset($options[$key]['email']) &&
            !is_numeric($options[$key]['email']))
         {
-            $method = 'setDefault' . ucfirst($type);
+            $method = array('Zend_Mail', 'setDefault' . ucfirst($type));
             if(isset($options[$key]['name']) &&
                !is_numeric($options[$key]['name']))
             {
-                \Zend\Mail\Mail::$method($options[$key]['email'], $options[$key]['name']);
+                call_user_func($method, $options[$key]['email'],
+                                        $options[$key]['name']);
             } else {
-                \Zend\Mail\Mail::$method($options[$key]['email']);
+                call_user_func($method, $options[$key]['email']);
             }
         }
     }
-    
-    /**
-     * Setup mail transport
-     * 
-     * @param  array $options 
-     * @return void
-     */
-    protected function _setupTransport(array $options)
+
+    protected function _setupTransport($options)
     {
-    	if(!isset($options['type'])) {
-    		$options['type'] = 'sendmail';
-    	}
-    	
+        if(!isset($options['type'])) {
+            $options['type'] = 'sendmail';
+        }
+        
         $transportName = $options['type'];
-        if(!Loader\Autoloader::autoload($transportName)) {
+        if(!Zend_Loader_Autoloader::autoload($transportName))
+        {
             $transportName = ucfirst(strtolower($transportName));
 
-            if(!Loader\Autoloader::autoload($transportName)) {
-                $transportName = 'Zend\\Mail\\Transport\\' . $transportName;
-                if(!Loader\Autoloader::autoload($transportName)) {
-                    throw new Exception\InitializationException(
+            if(!Zend_Loader_Autoloader::autoload($transportName))
+            {
+                $transportName = 'Zend_Mail_Transport_' . $transportName;
+                if(!Zend_Loader_Autoloader::autoload($transportName)) {
+                    throw new Zend_Application_Resource_Exception(
                         "Specified Mail Transport '{$transportName}'"
                         . 'could not be found'
                     );
                 }
             }
         }
-        
+
         unset($options['type']);
-        
+
         switch($transportName) {
-            case 'Zend\\Mail\\Transport\\Smtp':
+            case 'Zend_Mail_Transport_Smtp':
                 if(!isset($options['host'])) {
-                    throw new Exception\InitializationException(
+                    throw new Zend_Application_Resource_Exception(
                         'A host is necessary for smtp transport,'
                         .' but none was given');
                 }
-                
+
                 $transport = new $transportName($options['host'], $options);
                 break;
-            case 'Zend\\Mail\\Transport\\Sendmail':
+            case 'Zend_Mail_Transport_Sendmail':
             default:
                 $transport = new $transportName($options);
                 break;

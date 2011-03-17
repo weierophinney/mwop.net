@@ -16,12 +16,13 @@
  * @subpackage Server
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * Zend_XmlRpc_Value
  */
-namespace Zend\XmlRpc;
+require_once 'Zend/XmlRpc/Value.php';
 
 /**
  * XMLRPC Faults
@@ -33,15 +34,12 @@ namespace Zend\XmlRpc;
  * To allow method chaining, you may only use the {@link getInstance()} factory
  * to instantiate a Zend_XmlRpc_Server_Fault.
  *
- * @uses       SimpleXMLElement
- * @uses       Zend\XmlRpc\Exception
- * @uses       Zend\XmlRpc\Value\Value
  * @category   Zend
  * @package    Zend_XmlRpc
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Fault
+class Zend_XmlRpc_Fault
 {
     /**
      * Fault code
@@ -102,7 +100,7 @@ class Fault
     /**
      * Constructor
      *
-     * @return void
+     * @return Zend_XmlRpc_Fault
      */
     public function __construct($code = 404, $message = '')
     {
@@ -121,7 +119,7 @@ class Fault
      * Set the fault code
      *
      * @param int $code
-     * @return Zend\XmlRpc\Fault
+     * @return Zend_XmlRpc_Fault
      */
     public function setCode($code)
     {
@@ -143,7 +141,7 @@ class Fault
      * Retrieve fault message
      *
      * @param string
-     * @return Zend\XmlRpc\Fault
+     * @return Zend_XmlRpc_Fault
      */
     public function setMessage($message)
     {
@@ -165,12 +163,12 @@ class Fault
      * Set encoding to use in fault response
      *
      * @param string $encoding
-     * @return Zend\XmlRpc\Fault
+     * @return Zend_XmlRpc_Fault
      */
     public function setEncoding($encoding)
     {
         $this->_encoding = $encoding;
-        Value::setEncoding($encoding);
+        Zend_XmlRpc_Value::setEncoding($encoding);
         return $this;
     }
 
@@ -190,20 +188,22 @@ class Fault
      * @param string $fault
      * @return boolean Returns true if successfully loaded fault response, false
      * if response was not a fault response
-     * @throws Zend\XmlRpc\Exception if no or faulty XML provided, or if fault
+     * @throws Zend_XmlRpc_Exception if no or faulty XML provided, or if fault
      * response does not contain either code or message
      */
     public function loadXml($fault)
     {
         if (!is_string($fault)) {
-            throw new Exception\InvalidArgumentException('Invalid XML provided to fault');
+            require_once 'Zend/XmlRpc/Exception.php';
+            throw new Zend_XmlRpc_Exception('Invalid XML provided to fault');
         }
 
         try {
-            $xml = new \SimpleXMLElement($fault);
-        } catch (\Exception $e) {
+            $xml = @new SimpleXMLElement($fault);
+        } catch (Exception $e) {
             // Not valid XML
-            throw new Exception\InvalidArgumentException('Failed to parse XML fault: ' .  $e->getMessage(), 500, $e);
+            require_once 'Zend/XmlRpc/Exception.php';
+            throw new Zend_XmlRpc_Exception('Failed to parse XML fault: ' .  $e->getMessage(), 500, $e);
         }
 
         // Check for fault
@@ -214,11 +214,12 @@ class Fault
 
         if (!$xml->fault->value->struct) {
             // not a proper fault
-            throw new Exception\InvalidArgumentException('Invalid fault structure', 500);
+            require_once 'Zend/XmlRpc/Exception.php';
+            throw new Zend_XmlRpc_Exception('Invalid fault structure', 500);
         }
 
         $structXml = $xml->fault->value->asXML();
-        $struct    = Value::getXmlRpcValue($structXml, Value::XML_STRING);
+        $struct    = Zend_XmlRpc_Value::getXmlRpcValue($structXml, Zend_XmlRpc_Value::XML_STRING);
         $struct    = $struct->getValue();
 
         if (isset($struct['faultCode'])) {
@@ -229,7 +230,8 @@ class Fault
         }
 
         if (empty($code) && empty($message)) {
-            throw new Exception\InvalidArgumentException('Fault code and string required');
+            require_once 'Zend/XmlRpc/Exception.php';
+            throw new Zend_XmlRpc_Exception('Fault code and string required');
         }
 
         if (empty($code)) {
@@ -259,9 +261,10 @@ class Fault
     public static function isFault($xml)
     {
         $fault = new self();
+        require_once 'Zend/XmlRpc/Exception.php';
         try {
             $isFault = $fault->loadXml($xml);
-        } catch (Exception $e) {
+        } catch (Zend_XmlRpc_Exception $e) {
             $isFault = false;
         }
 
@@ -280,9 +283,9 @@ class Fault
             'faultCode'   => $this->getCode(),
             'faultString' => $this->getMessage()
         );
-        $value = Value::getXmlRpcValue($faultStruct);
+        $value = Zend_XmlRpc_Value::getXmlRpcValue($faultStruct);
 
-        $generator = Value::getGenerator();
+        $generator = Zend_XmlRpc_Value::getGenerator();
         $generator->openElement('methodResponse')
                   ->openElement('fault');
         $value->generateXml();

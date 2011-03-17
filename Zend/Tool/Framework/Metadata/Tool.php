@@ -17,21 +17,21 @@
  * @subpackage Framework
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Tool_Framework_Metadata_Basic
  */
-namespace Zend\Tool\Framework\Metadata;
+require_once 'Zend/Tool/Framework/Metadata/Basic.php';
 
 /**
- * @uses       \Zend\Tool\Framework\Metadata\Basic
  * @category   Zend
  * @package    Zend_Tool
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Tool extends Basic
+class Zend_Tool_Framework_Metadata_Tool extends Zend_Tool_Framework_Metadata_Basic
 {
 
     /**
@@ -71,7 +71,7 @@ class Tool extends Basic
      * setActionName()
      *
      * @param string $actionName
-     * @return \Zend\Tool\Framework\Metadata\Tool
+     * @return Zend_Tool_Framework_Metadata_Tool
      */
     public function setActionName($actionName)
     {
@@ -93,7 +93,7 @@ class Tool extends Basic
      * setProviderName()
      *
      * @param string $providerName
-     * @return \Zend\Tool\Framework\Metadata\Tool
+     * @return Zend_Tool_Framework_Metadata_Tool
      */
     public function setProviderName($providerName)
     {
@@ -115,7 +115,7 @@ class Tool extends Basic
      * setSpecialtyName()
      *
      * @param string $specialtyName
-     * @return \Zend\Tool\Framework\Metadata\Tool
+     * @return Zend_Tool_Framework_Metadata_Tool
      */
     public function setSpecialtyName($specialtyName)
     {
@@ -136,10 +136,10 @@ class Tool extends Basic
     /**
      * setClientReference()
      *
-     * @param \Zend\Tool\Framework\Client\AbstractClient $client
-     * @return \Zend\Tool\Framework\Metadata\Tool
+     * @param Zend_Tool_Framework_Client_Abstract $client
+     * @return Zend_Tool_Framework_Metadata_Tool
      */
-    public function setClientReference(\Zend\Tool\Framework\Client\AbstractClient $client)
+    public function setClientReference(Zend_Tool_Framework_Client_Abstract $client)
     {
         $this->_clientReference = $client;
         return $this;
@@ -148,7 +148,7 @@ class Tool extends Basic
     /**
      * getClientReference()
      *
-     * @return \Zend\Tool\Framework\Client\AbstractClient
+     * @return Zend_Tool_Framework_Client_Abstract
      */
     public function getClientReference()
     {
@@ -158,10 +158,10 @@ class Tool extends Basic
     /**
      * setActionReference()
      *
-     * @param \Zend\Tool\Framework\Action $action
-     * @return \Zend\Tool\Framework\Metadata\Tool
+     * @param Zend_Tool_Framework_Action_Interface $action
+     * @return Zend_Tool_Framework_Metadata_Tool
      */
-    public function setActionReference(\Zend\Tool\Framework\Action $action)
+    public function setActionReference(Zend_Tool_Framework_Action_Interface $action)
     {
         $this->_actionReference = $action;
         return $this;
@@ -170,7 +170,7 @@ class Tool extends Basic
     /**
      * getActionReference()
      *
-     * @return \Zend\Tool\Framework\Action
+     * @return Zend_Tool_Framework_Action_Interface
      */
     public function getActionReference()
     {
@@ -180,10 +180,10 @@ class Tool extends Basic
     /**
      * setProviderReference()
      *
-     * @param \Zend\Tool\Framework\Provider $provider
-     * @return \Zend\Tool\Framework\Metadata\Tool
+     * @param Zend_Tool_Framework_Provider_Interface $provider
+     * @return Zend_Tool_Framework_Metadata_Tool
      */
-    public function setProviderReference(\Zend\Tool\Framework\Provider $provider)
+    public function setProviderReference(Zend_Tool_Framework_Provider_Interface $provider)
     {
         $this->_providerReference = $provider;
         return $this;
@@ -192,7 +192,7 @@ class Tool extends Basic
     /**
      * getProviderReference()
      *
-     * @return \Zend\Tool\Framework\Provider
+     * @return Zend_Tool_Framework_Provider_Interface
      */
     public function getProviderReference()
     {

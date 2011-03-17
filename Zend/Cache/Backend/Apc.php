@@ -17,42 +17,46 @@
  * @subpackage Zend_Cache_Backend
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Cache\Backend;
-use Zend\Cache;
 
 /**
- * @uses       \Zend\Cache\Cache
- * @uses       \Zend\Cache\Backend\AbstractBackend
- * @uses       \Zend\Cache\Backend\ExtendedBackend
+ * @see Zend_Cache_Backend_Interface
+ */
+require_once 'Zend/Cache/Backend/ExtendedInterface.php';
+
+/**
+ * @see Zend_Cache_Backend
+ */
+require_once 'Zend/Cache/Backend.php';
+
+
+/**
  * @package    Zend_Cache
  * @subpackage Zend_Cache_Backend
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Apc extends AbstractBackend implements ExtendedBackend
+class Zend_Cache_Backend_Apc extends Zend_Cache_Backend implements Zend_Cache_Backend_ExtendedInterface
 {
     /**
      * Log message
      */
-    const TAGS_UNSUPPORTED_BY_CLEAN_OF_APC_BACKEND = 'Zend\\Cache\\Backend\\Apc::clean() : tags are unsupported by the Apc backend';
-    const TAGS_UNSUPPORTED_BY_SAVE_OF_APC_BACKEND =  'Zend\\Cache\\Backend\\Apc::save() : tags are unsupported by the Apc backend';
+    const TAGS_UNSUPPORTED_BY_CLEAN_OF_APC_BACKEND = 'Zend_Cache_Backend_Apc::clean() : tags are unsupported by the Apc backend';
+    const TAGS_UNSUPPORTED_BY_SAVE_OF_APC_BACKEND =  'Zend_Cache_Backend_Apc::save() : tags are unsupported by the Apc backend';
 
     /**
      * Constructor
      *
      * @param  array $options associative array of options
-     * @throws \Zend\Cache\Exception
+     * @throws Zend_Cache_Exception
      * @return void
      */
     public function __construct(array $options = array())
     {
         if (!extension_loaded('apc')) {
-            Cache\Cache::throwException('The apc extension must be loaded for using this backend !');
+            Zend_Cache::throwException('The apc extension must be loaded for using this backend !');
         }
         parent::__construct($options);
     }
@@ -135,25 +139,25 @@ class Apc extends AbstractBackend implements ExtendedBackend
      *
      * @param  string $mode clean mode
      * @param  array  $tags array of tags
-     * @throws \Zend\Cache\Exception
+     * @throws Zend_Cache_Exception
      * @return boolean true if no problem
      */
-    public function clean($mode = Cache\CacheCache\Cache::CLEANING_MODE_ALL, $tags = array())
+    public function clean($mode = Zend_Cache::CLEANING_MODE_ALL, $tags = array())
     {
         switch ($mode) {
-            case Cache\Cache::CLEANING_MODE_ALL:
+            case Zend_Cache::CLEANING_MODE_ALL:
                 return apc_clear_cache('user');
                 break;
-            case Cache\Cache::CLEANING_MODE_OLD:
+            case Zend_Cache::CLEANING_MODE_OLD:
                 $this->_log("Zend_Cache_Backend_Apc::clean() : CLEANING_MODE_OLD is unsupported by the Apc backend");
                 break;
-            case Cache\Cache::CLEANING_MODE_MATCHING_TAG:
-            case Cache\Cache::CLEANING_MODE_NOT_MATCHING_TAG:
-            case Cache\Cache::CLEANING_MODE_MATCHING_ANY_TAG:
+            case Zend_Cache::CLEANING_MODE_MATCHING_TAG:
+            case Zend_Cache::CLEANING_MODE_NOT_MATCHING_TAG:
+            case Zend_Cache::CLEANING_MODE_MATCHING_ANY_TAG:
                 $this->_log(self::TAGS_UNSUPPORTED_BY_CLEAN_OF_APC_BACKEND);
                 break;
             default:
-                Cache\Cache::throwException('Invalid mode for clean() method');
+                Zend_Cache::throwException('Invalid mode for clean() method');
                 break;
         }
     }
@@ -174,7 +178,7 @@ class Apc extends AbstractBackend implements ExtendedBackend
     /**
      * Return the filling percentage of the backend storage
      *
-     * @throws \Zend\Cache\Exception
+     * @throws Zend_Cache_Exception
      * @return int integer between 0 and 100
      */
     public function getFillingPercentage()
@@ -184,7 +188,7 @@ class Apc extends AbstractBackend implements ExtendedBackend
         $memAvailable= $mem['avail_mem'];
         $memUsed = $memSize - $memAvailable;
         if ($memSize == 0) {
-            Cache\Cache::throwException('can\'t get apc memory size');
+            Zend_Cache::throwException('can\'t get apc memory size');
         }
         if ($memUsed > $memSize) {
             return 100;
