@@ -16,22 +16,22 @@
  * @package    Zend_Feed_Writer
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
- 
-/**
-* @namespace
-*/
-namespace Zend\Feed\Writer\Extension\Slash\Renderer;
-use Zend\Feed\Writer\Extension;
 
 /**
-* @uses \Zend\Feed\Writer\Extension\AbstractRenderer
-* @category Zend
-* @package Zend_Feed_Writer
-* @copyright Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
-* @license http://framework.zend.com/license/new-bsd New BSD License
-*/
-class Entry extends Extension\AbstractRenderer
+ * @see Zend_Feed_Writer_Extension_RendererAbstract
+ */
+require_once 'Zend/Feed/Writer/Extension/RendererAbstract.php';
+
+/**
+ * @category   Zend
+ * @package    Zend_Feed_Writer
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
+class Zend_Feed_Writer_Extension_Slash_Renderer_Entry
+    extends Zend_Feed_Writer_Extension_RendererAbstract
 {
 
     /**
@@ -42,10 +42,10 @@ class Entry extends Extension\AbstractRenderer
      * @var bool
      */
     protected $_called = false;
-    
+
     /**
      * Render entry
-     * 
+     *
      * @return void
      */
     public function render()
@@ -58,30 +58,30 @@ class Entry extends Extension\AbstractRenderer
             $this->_appendNamespaces();
         }
     }
-    
+
     /**
      * Append entry namespaces
-     * 
+     *
      * @return void
      */
     protected function _appendNamespaces()
     {
         $this->getRootElement()->setAttribute('xmlns:slash',
-            'http://purl.org/rss/1.0/modules/slash/');  
+            'http://purl.org/rss/1.0/modules/slash/');
     }
 
     /**
      * Set entry comment count
-     * 
-     * @param  DOMDocument $dom 
-     * @param  DOMElement $root 
+     *
+     * @param  DOMDocument $dom
+     * @param  DOMElement $root
      * @return void
      */
-    protected function _setCommentCount(\DOMDocument $dom, \DOMElement $root)
+    protected function _setCommentCount(DOMDocument $dom, DOMElement $root)
     {
         $count = $this->getDataContainer()->getCommentCount();
         if (!$count) {
-            $count = 0;
+            return;
         }
         $tcount = $this->_dom->createElement('slash:comments');
         $tcount->nodeValue = $count;

@@ -17,22 +17,23 @@
  * @subpackage Math
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Crypt_Math_BigInteger
  */
-namespace Zend\Crypt;
+require_once 'Zend/Crypt/Math/BigInteger.php';
 
 /**
- * @uses       Zend\Crypt\Math\BigInteger
  * @category   Zend
  * @package    Zend_Crypt
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Math extends Math\BigInteger
+class Zend_Crypt_Math extends Zend_Crypt_Math_BigInteger
 {
+
     /**
      * Generate a pseudorandom number within the given range.
      * Will attempt to read from a systems RNG if it exists or else utilises
@@ -70,8 +71,7 @@ class Math extends Math\BigInteger
      * @param string $long
      * @return string
      */
-    public function btwoc($long)
-    {
+    public function btwoc($long) {
         if (ord($long[0]) > 127) {
             return "\x00" . $long;
         }
@@ -84,8 +84,7 @@ class Math extends Math\BigInteger
      * @param string $binary
      * @return string
      */
-    public function fromBinary($binary)
-    {
+    public function fromBinary($binary) {
         return $this->_math->binaryToInteger($binary);
     }
 
@@ -99,4 +98,5 @@ class Math extends Math\BigInteger
     {
         return $this->_math->integerToBinary($integer);
     }
+
 }

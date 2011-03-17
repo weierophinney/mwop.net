@@ -17,12 +17,13 @@
  * @subpackage Amazon
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * Zend_Service_Exception
  */
-namespace Zend\Service\Amazon;
+require_once 'Zend/Service/Exception.php';
 
 /**
  * @category   Zend
@@ -30,5 +31,5 @@ namespace Zend\Service\Amazon;
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-interface Exception
+class Zend_Service_Amazon_Exception extends Zend_Service_Exception
 {}

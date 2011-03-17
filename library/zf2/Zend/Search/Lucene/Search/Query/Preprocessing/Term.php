@@ -17,35 +17,18 @@
  * @subpackage Search
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Search\Lucene\Search\Query\Preprocessing;
 
-use Zend\Search\Lucene,
-	Zend\Search\Lucene\Index,
-	Zend\Search\Lucene\Search\Query,
-	Zend\Search\Lucene\Analysis\Analyzer,
-	Zend\Search\Lucene\Search\Highlighter,
-	Zend\Search\Lucence\Search\Exception\QueryParserException;
+/** Zend_Search_Lucene_Search_Query_Processing */
+require_once 'Zend/Search/Lucene/Search/Query/Preprocessing.php';
+
 
 /**
  * It's an internal abstract class intended to finalize ase a query processing after query parsing.
  * This type of query is not actually involved into query execution.
  *
- * @uses       \Zend\Search\Lucene\Index
- * @uses       \Zend\Search\Lucene\Analysis\Analyzer
- * @uses       \Zend\Search\Lucene\Index\Term
- * @uses       \Zend\Search\Lucene\Search\Exception\QueryParserException
- * @uses       \Zend\Search\Lucene\Search\Query\EmptyResult
- * @uses       \Zend\Search\Lucene\Search\Query\Insignificant
- * @uses       \Zend\Search\Lucene\Search\Query\MultiTerm
- * @uses       \Zend\Search\Lucene\Search\Query\Preprocessing\AbstractPreprocessing
- * @uses       \Zend\Search\Lucene\Search\Query\Preprocessing\Term
- * @uses       \Zend\Search\Lucene\Search\Query\Term
- * @uses       \Zend\Search\Lucene\Search\Query\Wildcard
  * @category   Zend
  * @package    Zend_Search_Lucene
  * @subpackage Search
@@ -53,7 +36,7 @@ use Zend\Search\Lucene,
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Term extends AbstractPreprocessing
+class Zend_Search_Lucene_Search_Query_Preprocessing_Term extends Zend_Search_Lucene_Search_Query_Preprocessing
 {
     /**
      * word (query parser lexeme) to find.
@@ -94,34 +77,36 @@ class Term extends AbstractPreprocessing
     /**
      * Re-write query into primitive queries in the context of specified index
      *
-     * @param \Zend\Search\Lucene\SearchIndex $index
-     * @throws \Zend\Search\Lucence\Search\Exception\QueryParserException
-     * @return \Zend\Search\Lucene\Search\Query\AbstractQuery
+     * @param Zend_Search_Lucene_Interface $index
+     * @return Zend_Search_Lucene_Search_Query
      */
-    public function rewrite(Lucene\SearchIndex $index)
+    public function rewrite(Zend_Search_Lucene_Interface $index)
     {
         if ($this->_field === null) {
-            $query = new Query\MultiTerm();
+            require_once 'Zend/Search/Lucene/Search/Query/MultiTerm.php';
+            $query = new Zend_Search_Lucene_Search_Query_MultiTerm();
             $query->setBoost($this->getBoost());
 
             $hasInsignificantSubqueries = false;
 
-            if (Lucene\Lucene::getDefaultSearchField() === null) {
+            require_once 'Zend/Search/Lucene.php';
+            if (Zend_Search_Lucene::getDefaultSearchField() === null) {
                 $searchFields = $index->getFieldNames(true);
             } else {
-                $searchFields = array(Lucene\Lucene::getDefaultSearchField());
+                $searchFields = array(Zend_Search_Lucene::getDefaultSearchField());
             }
 
+            require_once 'Zend/Search/Lucene/Search/Query/Preprocessing/Term.php';
             foreach ($searchFields as $fieldName) {
-                $subquery = new Term($this->_word,
-                                     $this->_encoding,
-                                     $fieldName);
+                $subquery = new Zend_Search_Lucene_Search_Query_Preprocessing_Term($this->_word,
+                                                                                   $this->_encoding,
+                                                                                   $fieldName);
                 $rewrittenSubquery = $subquery->rewrite($index);
                 foreach ($rewrittenSubquery->getQueryTerms() as $term) {
                     $query->addTerm($term);
                 }
 
-                if ($rewrittenSubquery instanceof Query\Insignificant) {
+                if ($rewrittenSubquery instanceof Zend_Search_Lucene_Search_Query_Insignificant) {
                     $hasInsignificantSubqueries = true;
                 }
             }
@@ -129,9 +114,11 @@ class Term extends AbstractPreprocessing
             if (count($query->getTerms()) == 0) {
                 $this->_matches = array();
                 if ($hasInsignificantSubqueries) {
-                    return new Query\Insignificant();
+                    require_once 'Zend/Search/Lucene/Search/Query/Insignificant.php';
+                    return new Zend_Search_Lucene_Search_Query_Insignificant();
                 } else {
-                    return new Query\EmptyResult();
+                    require_once 'Zend/Search/Lucene/Search/Query/Empty.php';
+                    return new Zend_Search_Lucene_Search_Query_Empty();
                 }
             }
 
@@ -142,9 +129,11 @@ class Term extends AbstractPreprocessing
         // -------------------------------------
         // Recognize exact term matching (it corresponds to Keyword fields stored in the index)
         // encoding is not used since we expect binary matching
-        $term = new Index\Term($this->_word, $this->_field);
+        require_once 'Zend/Search/Lucene/Index/Term.php';
+        $term = new Zend_Search_Lucene_Index_Term($this->_word, $this->_field);
         if ($index->hasTerm($term)) {
-            $query = new Query\Term($term);
+            require_once 'Zend/Search/Lucene/Search/Query/Term.php';
+            $query = new Zend_Search_Lucene_Search_Query_Term($term);
             $query->setBoost($this->getBoost());
 
             $this->_matches = $query->getQueryTerms();
@@ -173,6 +162,7 @@ class Term extends AbstractPreprocessing
 
             $pattern = '';
 
+            require_once 'Zend/Search/Lucene/Analysis/Analyzer.php';
             foreach ($subPatterns as $id => $subPattern) {
                 // Append corresponding wildcard character to the pattern before each sub-pattern (except first)
                 if ($id != 0) {
@@ -180,17 +170,20 @@ class Term extends AbstractPreprocessing
                 }
 
                 // Check if each subputtern is a single word in terms of current analyzer
-                $tokens = Analyzer\Analyzer::getDefault()->tokenize($subPattern[0], $subPatternsEncoding);
+                $tokens = Zend_Search_Lucene_Analysis_Analyzer::getDefault()->tokenize($subPattern[0], $subPatternsEncoding);
                 if (count($tokens) > 1) {
-                    throw new QueryParserException('Wildcard search is supported only for non-multiple word terms');
+                    require_once 'Zend/Search/Lucene/Search/QueryParserException.php';
+                    throw new Zend_Search_Lucene_Search_QueryParserException('Wildcard search is supported only for non-multiple word terms');
                 }
                 foreach ($tokens as $token) {
                     $pattern .= $token->getTermText();
                 }
             }
 
-            $term  = new Index\Term($pattern, $this->_field);
-            $query = new Query\Wildcard($term);
+            require_once 'Zend/Search/Lucene/Index/Term.php';
+            $term  = new Zend_Search_Lucene_Index_Term($pattern, $this->_field);
+            require_once 'Zend/Search/Lucene/Search/Query/Wildcard.php';
+            $query = new Zend_Search_Lucene_Search_Query_Wildcard($term);
             $query->setBoost($this->getBoost());
 
             // Get rewritten query. Important! It also fills terms matching container.
@@ -203,16 +196,20 @@ class Term extends AbstractPreprocessing
 
         // -------------------------------------
         // Recognize one-term multi-term and "insignificant" queries
-        $tokens = Analyzer\Analyzer::getDefault()->tokenize($this->_word, $this->_encoding);
+        require_once 'Zend/Search/Lucene/Analysis/Analyzer.php';
+        $tokens = Zend_Search_Lucene_Analysis_Analyzer::getDefault()->tokenize($this->_word, $this->_encoding);
 
         if (count($tokens) == 0) {
             $this->_matches = array();
-            return new Query\Insignificant();
+            require_once 'Zend/Search/Lucene/Search/Query/Insignificant.php';
+            return new Zend_Search_Lucene_Search_Query_Insignificant();
         }
 
         if (count($tokens) == 1) {
-            $term  = new Index\Term($tokens[0]->getTermText(), $this->_field);
-            $query = new Query\Term($term);
+            require_once 'Zend/Search/Lucene/Index/Term.php';
+            $term  = new Zend_Search_Lucene_Index_Term($tokens[0]->getTermText(), $this->_field);
+            require_once 'Zend/Search/Lucene/Search/Query/Term.php';
+            $query = new Zend_Search_Lucene_Search_Query_Term($term);
             $query->setBoost($this->getBoost());
 
             $this->_matches = $query->getQueryTerms();
@@ -220,14 +217,16 @@ class Term extends AbstractPreprocessing
         }
 
         //It's not insignificant or one term query
-        $query = new Query\MultiTerm();
+        require_once 'Zend/Search/Lucene/Search/Query/MultiTerm.php';
+        $query = new Zend_Search_Lucene_Search_Query_MultiTerm();
 
         /**
          * @todo Process $token->getPositionIncrement() to support stemming, synonyms and other
          * analizer design features
          */
+        require_once 'Zend/Search/Lucene/Index/Term.php';
         foreach ($tokens as $token) {
-            $term = new Index\Term($token->getTermText(), $this->_field);
+            $term = new Zend_Search_Lucene_Index_Term($token->getTermText(), $this->_field);
             $query->addTerm($term, true); // all subterms are required
         }
 
@@ -240,9 +239,9 @@ class Term extends AbstractPreprocessing
     /**
      * Query specific matches highlighting
      *
-     * @param \Zend\Search\Lucene\Search\Highlighter $highlighter  Highlighter object (also contains doc for highlighting)
+     * @param Zend_Search_Lucene_Search_Highlighter_Interface $highlighter  Highlighter object (also contains doc for highlighting)
      */
-    protected function _highlightMatches(Highlighter $highlighter)
+    protected function _highlightMatches(Zend_Search_Lucene_Search_Highlighter_Interface $highlighter)
     {
         /** Skip fields detection. We don't need it, since we expect all fields presented in the HTML body and don't differentiate them */
 
@@ -266,6 +265,7 @@ class Term extends AbstractPreprocessing
 
             $pattern = '';
 
+            require_once 'Zend/Search/Lucene/Analysis/Analyzer.php';
             foreach ($subPatterns as $id => $subPattern) {
                 // Append corresponding wildcard character to the pattern before each sub-pattern (except first)
                 if ($id != 0) {
@@ -273,7 +273,7 @@ class Term extends AbstractPreprocessing
                 }
 
                 // Check if each subputtern is a single word in terms of current analyzer
-                $tokens = Analyzer\Analyzer::getDefault()->tokenize($subPattern[0], $subPatternsEncoding);
+                $tokens = Zend_Search_Lucene_Analysis_Analyzer::getDefault()->tokenize($subPattern[0], $subPatternsEncoding);
                 if (count($tokens) > 1) {
                     // Do nothing (nothing is highlighted)
                     return;
@@ -283,8 +283,10 @@ class Term extends AbstractPreprocessing
                 }
             }
 
-            $term  = new Index\Term($pattern, $this->_field);
-            $query = new Query\Wildcard($term);
+            require_once 'Zend/Search/Lucene/Index/Term.php';
+            $term  = new Zend_Search_Lucene_Index_Term($pattern, $this->_field);
+            require_once 'Zend/Search/Lucene/Search/Query/Wildcard.php';
+            $query = new Zend_Search_Lucene_Search_Query_Wildcard($term);
 
             $query->_highlightMatches($highlighter);
             return;
@@ -293,7 +295,8 @@ class Term extends AbstractPreprocessing
 
         // -------------------------------------
         // Recognize one-term multi-term and "insignificant" queries
-        $tokens = Analyzer\Analyzer::getDefault()->tokenize($this->_word, $this->_encoding);
+        require_once 'Zend/Search/Lucene/Analysis/Analyzer.php';
+        $tokens = Zend_Search_Lucene_Analysis_Analyzer::getDefault()->tokenize($this->_word, $this->_encoding);
 
         if (count($tokens) == 0) {
             // Do nothing

@@ -16,25 +16,22 @@
  * @package    Zend_View
  * @subpackage Helper
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @version    $Id$
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * @namespace
- */
-namespace Zend\View\Helper;
+/** Zend_View_Helper_Abstract.php */
+require_once 'Zend/View/Helper/Abstract.php';
 
 /**
  * Helper for making easy links and getting urls that depend on the routes and router
  *
- * @uses       \Zend\Controller\Front
- * @uses       \Zend\View\Helper\AbstractHelper
  * @package    Zend_View
  * @subpackage Helper
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Url extends AbstractHelper
+class Zend_View_Helper_Url extends Zend_View_Helper_Abstract
 {
     /**
      * Generates an url given the name of a route.
@@ -46,9 +43,9 @@ class Url extends AbstractHelper
      * @param  bool $reset Whether or not to reset the route defaults with those provided
      * @return string Url for the link href attribute.
      */
-    public function direct(array $urlOptions = array(), $name = null, $reset = false, $encode = true)
+    public function url(array $urlOptions = array(), $name = null, $reset = false, $encode = true)
     {
-        $router = \Zend\Controller\Front::getInstance()->getRouter();
+        $router = Zend_Controller_Front::getInstance()->getRouter();
         return $router->assemble($urlOptions, $name, $reset, $encode);
     }
 }

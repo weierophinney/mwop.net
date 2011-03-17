@@ -17,26 +17,22 @@
  * @subpackage View
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Dojo\View\Helper;
-
-use Zend\Dojo\View\Exception;
+/** Zend_Dojo_View_Helper_Dijit */
+require_once 'Zend/Dojo/View/Helper/Dijit.php';
 
 /**
  * Abstract class for Dojo Slider dijits
  *
- * @uses       \Zend\Dojo\View\Exception
- * @uses       \Zend\Dojo\View\Helper\Dijit
+ * @uses       Zend_Dojo_View_Helper_Dijit
  * @package    Zend_Dojo
  * @subpackage View
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
   */
-abstract class Slider extends Dijit
+abstract class Zend_Dojo_View_Helper_Slider extends Zend_Dojo_View_Helper_Dijit
 {
     /**
      * Dojo module to use
@@ -75,7 +71,8 @@ abstract class Slider extends Dijit
 
         foreach ($this->_requiredParams as $param) {
             if (!array_key_exists($param, $params)) {
-                throw new Exception\InvalidArgumentException('prepareSlider() requires minimally the "minimum", "maximum", and "discreteValues" parameters');
+                require_once 'Zend/Dojo/View/Exception.php';
+                throw new Zend_Dojo_View_Exception('prepareSlider() requires minimally the "minimum", "maximum", and "discreteValues" parameters');
             }
         }
 
@@ -131,7 +128,8 @@ abstract class Slider extends Dijit
                 }
                 break;
             default:
-                throw new Exception\InvalidArgumentException('Invalid slider type; slider must be horizontal or vertical');
+                require_once 'Zend/Dojo/View/Exception.php';
+                throw new Zend_Dojo_View_Exception('Invalid slider type; slider must be horizontal or vertical');
         }
 
         return $hidden . $this->_createLayoutContainer($id, $content, $params, $attribs);

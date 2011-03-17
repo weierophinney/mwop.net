@@ -16,26 +16,27 @@
  * @package    Zend_Amf
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Amf\Adobe;
+/** @see Zend_Amf_Parse_TypeLoader */
+require_once 'Zend/Amf/Parse/TypeLoader.php';
+
+/** @see Zend_Reflection_Class */
+require_once 'Zend/Reflection/Class.php';
+
+/** @see Zend_Server_Reflection */
+require_once 'Zend/Server/Reflection.php';
 
 /**
  * This class implements a service for generating AMF service descriptions as XML.
  *
- * @uses       Zend\Amf\Parser\TypeLoader
- * @uses       Zend\Loader
- * @uses       Zend\Reflection\ReflectionClass
- * @uses       Zend\Server\Reflection
  * @package    Zend_Amf
  * @subpackage Adobe
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Introspector
+class Zend_Amf_Adobe_Introspector
 {
     /**
      * Options used:
@@ -68,7 +69,7 @@ class Introspector
      */
     public function __construct()
     {
-        $this->_xml = new \DOMDocument('1.0', 'utf-8');
+        $this->_xml = new DOMDocument('1.0', 'utf-8');
     }
 
     /**
@@ -86,12 +87,13 @@ class Introspector
             return $this->_returnError('Invalid service name');
         }
 
-        // Transform com.foo.Bar into com\foo\Bar
-        $serviceClass = str_replace('.' , '\\', $serviceClass);
+        // Transform com.foo.Bar into com_foo_Bar
+        $serviceClass = str_replace('.' , '_', $serviceClass);
 
         // Introspect!
         if (!class_exists($serviceClass)) {
-            \Zend\Loader::loadClass($serviceClass, $this->_getServicePath());
+            require_once 'Zend/Loader.php';
+            Zend_Loader::loadClass($serviceClass, $this->_getServicePath());
         }
 
         $serv = $this->_xml->createElement('service-description');
@@ -100,7 +102,7 @@ class Introspector
         $this->_types = $this->_xml->createElement('types');
         $this->_ops   = $this->_xml->createElement('operations');
 
-        $r = \Zend\Server\Reflection::reflectClass($serviceClass);
+        $r = Zend_Server_Reflection::reflectClass($serviceClass);
         $this->_addService($r, $this->_ops);
 
         $serv->appendChild($this->_types);
@@ -113,10 +115,10 @@ class Introspector
     /**
      * Authentication handler
      *
-     * @param  \Zend\Acl\Acl $acl
+     * @param  Zend_Acl $acl
      * @return unknown_type
      */
-    public function initAcl(\Zend\Acl\Acl $acl)
+    public function initAcl(Zend_Acl $acl)
     {
         return false; // we do not need auth for this class
     }
@@ -128,7 +130,7 @@ class Introspector
      * @param  DOMElement $typexml target XML element
      * @return void
      */
-    protected function _addClassAttributes($typename, \DOMElement $typexml)
+    protected function _addClassAttributes($typename, DOMElement $typexml)
     {
         // Do not try to autoload here because _phpTypeToAS should
         // have already attempted to load this class
@@ -136,7 +138,7 @@ class Introspector
             return;
         }
 
-        $rc = new \Zend\Reflection\ReflectionClass($typename);
+        $rc = new Zend_Reflection_Class($typename);
         foreach ($rc->getProperties() as $prop) {
             if (!$prop->isPublic()) {
                 continue;
@@ -155,11 +157,11 @@ class Introspector
     /**
      * Build XML service description from reflection class
      *
-     * @param  \Zend\Server\Reflection\ReflectionClass $refclass
+     * @param  Zend_Server_Reflection_Class $refclass
      * @param  DOMElement $target target XML element
      * @return void
      */
-    protected function _addService(\Zend\Server\Reflection\ReflectionClass $refclass, \DOMElement $target)
+    protected function _addService(Zend_Server_Reflection_Class $refclass, DOMElement $target)
     {
         foreach ($refclass->getMethods() as $method) {
             if (!$method->isPublic()
@@ -203,10 +205,10 @@ class Introspector
     /**
      * Extract type of the property from DocBlock
      *
-     * @param  \Zend\Reflection\ReflectionProperty $prop reflection property object
+     * @param  Zend_Reflection_Property $prop reflection property object
      * @return string Property type
      */
-    protected function _getPropertyType(\Zend\Reflection\ReflectionProperty $prop)
+    protected function _getPropertyType(Zend_Reflection_Property $prop)
     {
         $docBlock = $prop->getDocComment();
 
@@ -256,7 +258,7 @@ class Introspector
             }
         }
 
-        if (false !== ($asname = \Zend\Amf\Parser\TypeLoader::getMappedClassName($typename))) {
+        if (false !== ($asname = Zend_Amf_Parse_TypeLoader::getMappedClassName($typename))) {
             return $asname;
         }
 
@@ -281,7 +283,12 @@ class Introspector
             return 'Unknown';
         }
 
-        if (in_array($typename, array('int', 'integer', 'bool', 'boolean', 'float', 'string', 'object', 'Unknown', 'stdClass', 'array'))) {
+        // Arrays
+        if ('array' == $typename) {
+            return 'Unknown[]';
+        }
+
+        if (in_array($typename, array('int', 'integer', 'bool', 'boolean', 'float', 'string', 'object', 'Unknown', 'stdClass'))) {
             return $typename;
         }
 

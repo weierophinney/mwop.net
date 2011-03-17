@@ -17,26 +17,25 @@
  * @subpackage Framework
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Tool_Framework_Client_Storage_AdapterInterface
  */
-namespace Zend\Tool\Framework\Client;
+require_once 'Zend/Tool/Framework/Client/Storage/AdapterInterface.php';
 
 /**
- * @uses       \Zend\Loader
- * @uses       \Zend\Tool\Framework\Client\Storage\Adapter
  * @category   Zend
  * @package    Zend_Tool
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Storage
+class Zend_Tool_Framework_Client_Storage
 {
 
     /**
-     * @var \Zend\Tool\Framework\Client\Storage\Adapter
+     * @var Zend_Tool_Framework_Client_Storage_AdapterInterface
      */
     protected $_adapter = null;
 
@@ -50,8 +49,8 @@ class Storage
     public function setAdapter($adapter)
     {
         if (is_string($adapter)) {
-            $storageAdapterClass = 'Zend\Tool\Framework\Client\Storage\\' . ucfirst($adapter);
-            \Zend\Loader::loadClass($storageAdapterClass);
+            $storageAdapterClass = 'Zend_Tool_Framework_Client_Storage_' . ucfirst($adapter);
+            Zend_Loader::loadClass($storageAdapterClass);
             $adapter = new $storageAdapterClass();
         }
         $this->_adapter = $adapter;
@@ -59,7 +58,7 @@ class Storage
 
     public function isEnabled()
     {
-        return ($this->_adapter instanceof Storage\Adapter);
+        return ($this->_adapter instanceof Zend_Tool_Framework_Client_Storage_AdapterInterface);
     }
 
     public function put($name, $value)

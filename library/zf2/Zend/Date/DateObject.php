@@ -15,23 +15,18 @@
  * @category   Zend
  * @package    Zend_Date
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @version    $Id$
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
 /**
- * @namespace
- */
-namespace Zend\Date;
-
-/**
- * @uses       \Zend\Date\Exception
  * @category   Zend
  * @package    Zend_Date
  * @subpackage Zend_Date_DateObject
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-abstract class DateObject {
+abstract class Zend_Date_DateObject {
 
     /**
      * UNIX Timestamp
@@ -79,7 +74,7 @@ abstract class DateObject {
      *
      * @param  string|integer  $timestamp  OPTIONAL timestamp; defaults to local time using time()
      * @return string|integer  old timestamp
-     * @throws \Zend\Date\Exception
+     * @throws Zend_Date_Exception
      */
     protected function setUnixTimestamp($timestamp = null)
     {
@@ -90,7 +85,8 @@ abstract class DateObject {
         } else if ($timestamp === null) {
             $this->_unixTimestamp = time();
         } else {
-            throw new Exception\InvalidArgumentException('\'' . $timestamp . '\' is not a valid UNIX timestamp');
+            require_once 'Zend/Date/Exception.php';
+            throw new Zend_Date_Exception('\'' . $timestamp . '\' is not a valid UNIX timestamp', 0, null, $timestamp);
         }
 
         return $old;
@@ -259,11 +255,11 @@ abstract class DateObject {
         }
 
         if (isset(self::$_cache)) {
-          if (self::$_cacheTags) {
-            self::$_cache->save( serialize($date), $id, array('Zend_Date'));
-          } else {
+            if (self::$_cacheTags) {
+                self::$_cache->save( serialize($date), $id, array('Zend_Date'));
+            } else {
                 self::$_cache->save( serialize($date), $id);
-          }
+            }
         }
 
         return $date;
@@ -349,11 +345,11 @@ abstract class DateObject {
             }
 
             if (isset(self::$_cache)) {
-              if (self::$_cacheTags) {
-                self::$_cache->save( serialize($timestamp), $idstamp, array('Zend_Date'));
-              } else {
+                if (self::$_cacheTags) {
+                    self::$_cache->save( serialize($timestamp), $idstamp, array('Zend_Date'));
+                } else {
                     self::$_cache->save( serialize($timestamp), $idstamp);
-              }
+                }
             }
         }
 
@@ -841,11 +837,11 @@ abstract class DateObject {
         }
 
         if (isset(self::$_cache)) {
-          if (self::$_cacheTags) {
-            self::$_cache->save( serialize($array), $id, array('Zend_Date'));
-          } else {
+            if (self::$_cacheTags) {
+                self::$_cache->save( serialize($array), $id, array('Zend_Date'));
+            } else {
                 self::$_cache->save( serialize($array), $id);
-          }
+            }
         }
 
         return $array;
@@ -890,8 +886,7 @@ abstract class DateObject {
      * @param float $a - value to correct
      * @param float $b - maximum range to set
      */
-    private function _range($a, $b)
-    {
+    private function _range($a, $b) {
         while ($a < 0) {
             $a += $b;
         }
@@ -1006,8 +1001,8 @@ abstract class DateObject {
      * If no timezone can be detected or the given timezone is wrong UTC will be set.
      *
      * @param  string  $zone      OPTIONAL timezone for date calculation; defaults to date_default_timezone_get()
-     * @return \Zend\Date\DateObject Provides fluent interface
-     * @throws \Zend\Date\Exception
+     * @return Zend_Date_DateObject Provides fluent interface
+     * @throws Zend_Date_Exception
      */
     public function setTimezone($zone = null)
     {
@@ -1019,7 +1014,8 @@ abstract class DateObject {
         // throw an error on false input, but only if the new date extension is available
         if (function_exists('timezone_open')) {
             if (!@timezone_open($zone)) {
-                throw new Exception\InvalidArgumentException("timezone ($zone) is not a known timezone");
+                require_once 'Zend/Date/Exception.php';
+                throw new Zend_Date_Exception("timezone ($zone) is not a known timezone", 0, null, $zone);
             }
         }
         // this can generate an error if the date extension is not available and a false timezone is given
@@ -1081,7 +1077,7 @@ abstract class DateObject {
     protected static function _getTagSupportForCache()
     {
         $backend = self::$_cache->getBackend();
-        if ($backend instanceof \Zend\Cache\Backend\ExtendedInterface) {
+        if ($backend instanceof Zend_Cache_Backend_ExtendedInterface) {
             $cacheOptions = $backend->getCapabilities();
             self::$_cacheTags = $cacheOptions['tags'];
         } else {

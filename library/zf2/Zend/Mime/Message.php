@@ -16,24 +16,28 @@
  * @package    Zend_Mime
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Mime;
 
 /**
- * @uses       \Zend\Exception
- * @uses       \Zend\Mime\Mime
- * @uses       \Zend\Mime\Decode
- * @uses       \Zend\Mime\Part
+ * Zend_Mime
+ */
+require_once 'Zend/Mime.php';
+
+/**
+ * Zend_Mime_Part
+ */
+require_once 'Zend/Mime/Part.php';
+
+
+/**
  * @category   Zend
  * @package    Zend_Mime
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Message
+class Zend_Mime_Message
 {
 
     protected $_parts = array();
@@ -42,7 +46,7 @@ class Message
     /**
      * Returns the list of all Zend_Mime_Parts in the message
      *
-     * @return array of \Zend\Mime\Part
+     * @return array of Zend_Mime_Part
      */
     public function getParts()
     {
@@ -62,9 +66,9 @@ class Message
     /**
      * Append a new Zend_Mime_Part to the current message
      *
-     * @param \Zend\Mime\Part $part
+     * @param Zend_Mime_Part $part
      */
-    public function addPart(Part $part)
+    public function addPart(Zend_Mime_Part $part)
     {
         /**
          * @todo check for duplicate object handle
@@ -89,9 +93,9 @@ class Message
      * This can be used to set the boundary specifically or to use a subclass of
      * Zend_Mime for generating the boundary.
      *
-     * @param \Zend\Mime\Mime $mime
+     * @param Zend_Mime $mime
      */
-    public function setMime(Mime $mime)
+    public function setMime(Zend_Mime $mime)
     {
         $this->_mime = $mime;
     }
@@ -102,12 +106,12 @@ class Message
      * If the object was not present, it is created and returned. Can be used to
      * determine the boundary used in this message.
      *
-     * @return \Zend\Mime\Mime
+     * @return Zend_Mime
      */
     public function getMime()
     {
         if ($this->_mime === null) {
-            $this->_mime = new Mime();
+            $this->_mime = new Zend_Mime();
         }
 
         return $this->_mime;
@@ -128,7 +132,7 @@ class Message
      * @param string $EOL EOL string; defaults to {@link Zend_Mime::LINEEND}
      * @return string
      */
-    public function generateMessage($EOL = Mime::LINEEND)
+    public function generateMessage($EOL = Zend_Mime::LINEEND)
     {
         if (! $this->isMultiPart()) {
             $body = array_shift($this->_parts);
@@ -170,7 +174,7 @@ class Message
      * @param int $partnum
      * @return string
      */
-    public function getPartHeaders($partnum, $EOL = Mime::LINEEND)
+    public function getPartHeaders($partnum, $EOL = Zend_Mime::LINEEND)
     {
         return $this->_parts[$partnum]->getHeaders($EOL);
     }
@@ -181,7 +185,7 @@ class Message
      * @param int $partnum
      * @return string
      */
-    public function getPartContent($partnum, $EOL = Mime::LINEEND)
+    public function getPartContent($partnum, $EOL = Zend_Mime::LINEEND)
     {
         return $this->_parts[$partnum]->getContent($EOL);
     }
@@ -219,7 +223,7 @@ class Message
         // no more parts, find end boundary
         $p = strpos($body, '--' . $boundary . '--', $start);
         if ($p===false) {
-            throw new Exception\RuntimeException('Not a valid Mime Message: End Missing');
+            throw new Zend_Exception('Not a valid Mime Message: End Missing');
         }
 
         // the remaining part also needs to be parsed:
@@ -234,16 +238,17 @@ class Message
      * @param string $message
      * @param string $boundary
      * @param string $EOL EOL string; defaults to {@link Zend_Mime::LINEEND}
-     * @return \Zend\Mime\Message
+     * @return Zend_Mime_Message
      */
-    public static function createFromMessage($message, $boundary, $EOL = Mime::LINEEND)
+    public static function createFromMessage($message, $boundary, $EOL = Zend_Mime::LINEEND)
     {
-        $parts = Decode::splitMessageStruct($message, $boundary, $EOL);
+        require_once 'Zend/Mime/Decode.php';
+        $parts = Zend_Mime_Decode::splitMessageStruct($message, $boundary, $EOL);
 
         $res = new self();
         foreach ($parts as $part) {
             // now we build a new MimePart for the current Message Part:
-            $newPart = new Part($part['body']);
+            $newPart = new Zend_Mime_Part($part['body']);
             foreach ($part['header'] as $key => $value) {
                 /**
                  * @todo check for characterset and filename
@@ -271,7 +276,7 @@ class Message
                         $newPart->language = $value;
                         break;
                     default:
-                        throw new Exception\RuntimeException('Unknown header ignored for MimePart:' . $key);
+                        throw new Zend_Exception('Unknown header ignored for MimePart:' . $key);
                 }
             }
             $res->addPart($newPart);

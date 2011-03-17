@@ -19,24 +19,22 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * @namespace
- */
-namespace Zend\Form\Decorator;
+/** Zend_Form_Decorator_Abstract */
+require_once 'Zend/Form/Decorator/Abstract.php';
 
 /**
  * Zend_Form_Decorator_Fieldset
  *
  * Any options passed will be used as HTML attributes of the fieldset tag.
  *
- * @uses       \Zend\Form\Decorator\AbstractDecorator
  * @category   Zend
  * @package    Zend_Form
  * @subpackage Decorator
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
-class Fieldset extends AbstractDecorator
+class Zend_Form_Decorator_Fieldset extends Zend_Form_Decorator_Abstract
 {
     /**
      * Attribs that should be removed prior to rendering
@@ -74,7 +72,7 @@ class Fieldset extends AbstractDecorator
         $options = parent::getOptions();
         if (null !== ($element = $this->getElement())) {
             $attribs = $element->getAttribs();
-            $options = array_merge($options, $attribs);
+            $options = array_merge($attribs, $options);
             $this->setOptions($options);
         }
         return $options;
@@ -84,7 +82,7 @@ class Fieldset extends AbstractDecorator
      * Set legend
      *
      * @param  string $value
-     * @return \Zend\Form\Decorator\Fieldset
+     * @return Zend_Form_Decorator_Fieldset
      */
     public function setLegend($value)
     {
@@ -152,6 +150,6 @@ class Fieldset extends AbstractDecorator
             }
         }
 
-        return $view->broker('fieldset')->direct($name, $content, $attribs);
+        return $view->fieldset($name, $content, $attribs);
     }
 }

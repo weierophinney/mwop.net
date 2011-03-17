@@ -16,23 +16,21 @@
  * @package    Zend_Feed_Reader
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
-* @namespace
-*/
-namespace Zend\Feed\Reader\Extension\Podcast;
-use Zend\Feed\Reader\Extension;
+ * @see Zend_Feed_Reader_Extension_FeedAbstract
+ */
+require_once 'Zend/Feed/Reader/Extension/FeedAbstract.php';
 
 /**
-* @uses \Zend\Feed\Reader\Reader
-* @uses \Zend\Feed\Reader\Extension\EntryAbstract
-* @category Zend
-* @package Zend_Feed_Reader
-* @copyright Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
-* @license http://framework.zend.com/license/new-bsd New BSD License
-*/
-class Feed extends Extension\AbstractFeed
+ * @category   Zend
+ * @package    Zend_Feed_Reader
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
+class Zend_Feed_Reader_Extension_Podcast_Feed extends Zend_Feed_Reader_Extension_FeedAbstract
 {
     /**
      * Get the entry author
@@ -83,7 +81,7 @@ class Feed extends Extension\AbstractFeed
      *
      * @return string
      */
-    public function getItunesCategories()
+    public function getCategories()
     {
         if (isset($this->_data['categories'])) {
             return $this->_data['categories'];
@@ -101,7 +99,7 @@ class Feed extends Extension\AbstractFeed
                     $children = array();
 
                     foreach ($node->childNodes as $childNode) {
-                        if (!($childNode instanceof \DOMText)) {
+                        if (!($childNode instanceof DOMText)) {
                             $children[$childNode->getAttribute('text')] = null;
                         }
                     }
@@ -148,7 +146,7 @@ class Feed extends Extension\AbstractFeed
      *
      * @return string
      */
-    public function getItunesImage()
+    public function getImage()
     {
         if (isset($this->_data['image'])) {
             return $this->_data['image'];

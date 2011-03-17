@@ -17,21 +17,22 @@
  * @subpackage Zend_InfoCard_Cipher
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * Zend_InfoCard_Exception
  */
-namespace Zend\InfoCard\Cipher;
+require_once 'Zend/InfoCard/Exception.php';
+
 
 /**
- * @uses       \Zend\InfoCard\Exception
  * @category   Zend
  * @package    Zend_InfoCard
  * @subpackage Zend_InfoCard_Cipher
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-interface Exception extends \Zend\InfoCard\Exception
+class Zend_InfoCard_Cipher_Exception extends Zend_InfoCard_Exception
 {
 }

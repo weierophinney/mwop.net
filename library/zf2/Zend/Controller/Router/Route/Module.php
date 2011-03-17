@@ -16,33 +16,25 @@
  * @package    Zend_Controller
  * @subpackage Router
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @version    $Id$
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * @namespace
- */
-namespace Zend\Controller\Router\Route;
-use Zend\Controller\Request;
-
-use Zend\Controller\Dispatcher;
-
-use Zend\Config;
+/** Zend_Controller_Router_Route_Abstract */
+require_once 'Zend/Controller/Router/Route/Abstract.php';
 
 /**
  * Module Route
  *
  * Default route for module functionality
  *
- * @uses       \Zend\Controller\Front
- * @uses       \Zend\Controller\Router\Route\AbstractRoute
  * @package    Zend_Controller
  * @subpackage Router
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @see        http://manuals.rubyonrails.com/read/chapter/65
  */
-class Module extends AbstractRoute
+class Zend_Controller_Router_Route_Module extends Zend_Controller_Router_Route_Abstract
 {
     /**
      * URI delimiter
@@ -69,12 +61,12 @@ class Module extends AbstractRoute
     /**#@-*/
 
     /**
-     * @var \Zend\Controller\Dispatcher
+     * @var Zend_Controller_Dispatcher_Interface
      */
     protected $_dispatcher;
 
     /**
-     * @var \Zend\Controller\Request\AbstractRequest
+     * @var Zend_Controller_Request_Abstract
      */
     protected $_request;
 
@@ -85,11 +77,11 @@ class Module extends AbstractRoute
     /**
      * Instantiates route based on passed Zend_Config structure
      */
-    public static function getInstance(Config\Config $config)
+    public static function getInstance(Zend_Config $config)
     {
-        $frontController = \Zend\Controller\Front::getInstance();
+        $frontController = Zend_Controller_Front::getInstance();
 
-        $defs       = ($config->defaults instanceof Config\Config) ? $config->defaults->toArray() : array();
+        $defs       = ($config->defaults instanceof Zend_Config) ? $config->defaults->toArray() : array();
         $dispatcher = $frontController->getDispatcher();
         $request    = $frontController->getRequest();
 
@@ -100,12 +92,12 @@ class Module extends AbstractRoute
      * Constructor
      *
      * @param array $defaults Defaults for map variables with keys as variable names
-     * @param \Zend\Controller\Dispatcher $dispatcher Dispatcher object
-     * @param \Zend\Controller\Request\AbstractRequest $request Request object
+     * @param Zend_Controller_Dispatcher_Interface $dispatcher Dispatcher object
+     * @param Zend_Controller_Request_Abstract $request Request object
      */
     public function __construct(array $defaults = array(),
-                \Zend\Controller\Dispatcher $dispatcher = null,
-                \Zend\Controller\Request\AbstractRequest $request = null)
+                Zend_Controller_Dispatcher_Interface $dispatcher = null,
+                Zend_Controller_Request_Abstract $request = null)
     {
         $this->_defaults = $defaults;
 

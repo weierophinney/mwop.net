@@ -17,35 +17,27 @@
  * @subpackage Search
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Search\Lucene\Search\Query;
-use Zend\Search\Lucene\Index;
-use Zend\Search\Lucene;
-use Zend\Search\Lucene\Search\Weight;
-use Zend\Search\Lucene\Search\Highlighter;
+
+/** Zend_Search_Lucene_Search_Query */
+require_once 'Zend/Search/Lucene/Search/Query.php';
+
 
 /**
- * @uses       \Zend\Search\Lucene\Index\Term
- * @uses       \Zend\Search\Lucene\Search\Query\AbstractQuery
- * @uses       \Zend\Search\Lucene\Search\Query\EmptyResult
- * @uses       \Zend\Search\Lucene\Search\Query\MultiTerm
- * @uses       \Zend\Search\Lucene\Search\Weight\Term
  * @category   Zend
  * @package    Zend_Search_Lucene
  * @subpackage Search
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Term extends AbstractQuery
+class Zend_Search_Lucene_Search_Query_Term extends Zend_Search_Lucene_Search_Query
 {
     /**
      * Term to find.
      *
-     * @var \Zend\Search\Lucene\Index\Term
+     * @var Zend_Search_Lucene_Index_Term
      */
     private $_term;
 
@@ -68,10 +60,10 @@ class Term extends AbstractQuery
     /**
      * Zend_Search_Lucene_Search_Query_Term constructor
      *
-     * @param \Zend\Search\Lucene\Index\Term $term
+     * @param Zend_Search_Lucene_Index_Term $term
      * @param boolean $sign
      */
-    public function __construct(Index\Term $term)
+    public function __construct(Zend_Search_Lucene_Index_Term $term)
     {
         $this->_term = $term;
     }
@@ -79,19 +71,21 @@ class Term extends AbstractQuery
     /**
      * Re-write query into primitive queries in the context of specified index
      *
-     * @param \Zend\Search\Lucene\SearchIndex $index
-     * @return \Zend\Search\Lucene\Search\Query\AbstractQuery
+     * @param Zend_Search_Lucene_Interface $index
+     * @return Zend_Search_Lucene_Search_Query
      */
-    public function rewrite(Lucene\SearchIndex $index)
+    public function rewrite(Zend_Search_Lucene_Interface $index)
     {
         if ($this->_term->field != null) {
             return $this;
         } else {
-            $query = new MultiTerm();
+            require_once 'Zend/Search/Lucene/Search/Query/MultiTerm.php';
+            $query = new Zend_Search_Lucene_Search_Query_MultiTerm();
             $query->setBoost($this->getBoost());
 
+            require_once 'Zend/Search/Lucene/Index/Term.php';
             foreach ($index->getFieldNames(true) as $fieldName) {
-                $term = new Index\Term($this->_term->text, $fieldName);
+                $term = new Zend_Search_Lucene_Index_Term($this->_term->text, $fieldName);
 
                 $query->addTerm($term);
             }
@@ -103,14 +97,15 @@ class Term extends AbstractQuery
     /**
      * Optimize query in the context of specified index
      *
-     * @param \Zend\Search\Lucene\SearchIndex $index
-     * @return \Zend\Search\Lucene\Search\Query\AbstractQuery
+     * @param Zend_Search_Lucene_Interface $index
+     * @return Zend_Search_Lucene_Search_Query
      */
-    public function optimize(Lucene\SearchIndex $index)
+    public function optimize(Zend_Search_Lucene_Interface $index)
     {
         // Check, that index contains specified term
         if (!$index->hasTerm($this->_term)) {
-            return new EmptyResult();
+            require_once 'Zend/Search/Lucene/Search/Query/Empty.php';
+            return new Zend_Search_Lucene_Search_Query_Empty();
         }
 
         return $this;
@@ -120,12 +115,13 @@ class Term extends AbstractQuery
     /**
      * Constructs an appropriate Weight implementation for this query.
      *
-     * @param \Zend\Search\Lucene\SearchIndex $reader
-     * @return \Zend\Search\Lucene\Search\Weight\Weight
+     * @param Zend_Search_Lucene_Interface $reader
+     * @return Zend_Search_Lucene_Search_Weight
      */
-    public function createWeight(Lucene\SearchIndex $reader)
+    public function createWeight(Zend_Search_Lucene_Interface $reader)
     {
-        $this->_weight = new Weight\Term($this->_term, $this, $reader);
+        require_once 'Zend/Search/Lucene/Search/Weight/Term.php';
+        $this->_weight = new Zend_Search_Lucene_Search_Weight_Term($this->_term, $this, $reader);
         return $this->_weight;
     }
 
@@ -133,10 +129,10 @@ class Term extends AbstractQuery
      * Execute query in context of index reader
      * It also initializes necessary internal structures
      *
-     * @param \Zend\Search\Lucene\SearchIndex $reader
-     * @param \Zend\Search\Lucene\Index\DocsFilter|null $docsFilter
+     * @param Zend_Search_Lucene_Interface $reader
+     * @param Zend_Search_Lucene_Index_DocsFilter|null $docsFilter
      */
-    public function execute(Lucene\SearchIndex $reader, $docsFilter = null)
+    public function execute(Zend_Search_Lucene_Interface $reader, $docsFilter = null)
     {
         $this->_docVector = array_flip($reader->termDocs($this->_term, $docsFilter));
         $this->_termFreqs = $reader->termFreqs($this->_term, $docsFilter);
@@ -161,10 +157,10 @@ class Term extends AbstractQuery
      * Score specified document
      *
      * @param integer $docId
-     * @param \Zend\Search\Lucene\SearchIndex $reader
+     * @param Zend_Search_Lucene_Interface $reader
      * @return float
      */
-    public function score($docId, Lucene\SearchIndex $reader)
+    public function score($docId, Zend_Search_Lucene_Interface $reader)
     {
         if (isset($this->_docVector[$docId])) {
             return $reader->getSimilarity()->tf($this->_termFreqs[$docId]) *
@@ -189,7 +185,7 @@ class Term extends AbstractQuery
     /**
      * Return query term
      *
-     * @return \Zend\Search\Lucene\Index\Term
+     * @return Zend_Search_Lucene_Index_Term
      */
     public function getTerm()
     {
@@ -199,9 +195,9 @@ class Term extends AbstractQuery
     /**
      * Query specific matches highlighting
      *
-     * @param \Zend\Search\Lucene\Search\Highlighter $highlighter  Highlighter object (also contains doc for highlighting)
+     * @param Zend_Search_Lucene_Search_Highlighter_Interface $highlighter  Highlighter object (also contains doc for highlighting)
      */
-    protected function _highlightMatches(Highlighter $highlighter)
+    protected function _highlightMatches(Zend_Search_Lucene_Search_Highlighter_Interface $highlighter)
     {
         $highlighter->highlight($this->_term->text);
     }

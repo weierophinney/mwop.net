@@ -16,23 +16,18 @@
  * @package    Zend_Server
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
- */
-namespace Zend\Server;
-
-/**
- * \Zend\Server\Cache: cache server definitions
+ * Zend_Server_Cache: cache server definitions
  *
- * @uses       \Zend\Server\Definition
  * @category   Zend
  * @package    Zend_Server
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Cache
+class Zend_Server_Cache
 {
     /**
      * @var array Methods to skip when caching server
@@ -49,10 +44,10 @@ class Cache
      * on success.
      *
      * @param  string $filename
-     * @param  \Zend\Server\Server $server
+     * @param  Zend_Server_Interface $server
      * @return bool
      */
-    public static function save($filename, Server $server)
+    public static function save($filename, Zend_Server_Interface $server)
     {
         if (!is_string($filename)
             || (!file_exists($filename) && !is_writable(dirname($filename))))
@@ -62,8 +57,8 @@ class Cache
 
         $methods = $server->getFunctions();
 
-        if ($methods instanceof Definition) {
-            $definition = new Definition();
+        if ($methods instanceof Zend_Server_Definition) {
+            $definition = new Zend_Server_Definition();
             foreach ($methods as $method) {
                 if (in_array($method->getName(), self::$_skipMethods)) {
                     continue;
@@ -90,17 +85,17 @@ class Cache
      * request. Sample usage:
      *
      * <code>
-     * if (!Zend\Server\Cache::get($filename, $server)) {
-     *     require_once 'Some/Service/ServiceClass.php';
-     *     require_once 'Another/Service/ServiceClass.php';
+     * if (!Zend_Server_Cache::get($filename, $server)) {
+     *     require_once 'Some/Service/Class.php';
+     *     require_once 'Another/Service/Class.php';
      *
-     *     // Attach Some\Service\ServiceClass with namespace 'some'
-     *     $server->attach('Some\Service\ServiceClass', 'some');
+     *     // Attach Some_Service_Class with namespace 'some'
+     *     $server->attach('Some_Service_Class', 'some');
      *
-     *     // Attach Another\Service\ServiceClass with namespace 'another'
-     *     $server->attach('Another\Service\ServiceClass', 'another');
+     *     // Attach Another_Service_Class with namespace 'another'
+     *     $server->attach('Another_Service_Class', 'another');
      *
-     *     Zend\Server\Cache::save($filename, $server);
+     *     Zend_Server_Cache::save($filename, $server);
      * }
      *
      * $response = $server->handle();
@@ -108,10 +103,10 @@ class Cache
      * </code>
      *
      * @param  string $filename
-     * @param  \Zend\Server\Server $server
+     * @param  Zend_Server_Interface $server
      * @return bool
      */
-    public static function get($filename, Server $server)
+    public static function get($filename, Zend_Server_Interface $server)
     {
         if (!is_string($filename)
             || !file_exists($filename)

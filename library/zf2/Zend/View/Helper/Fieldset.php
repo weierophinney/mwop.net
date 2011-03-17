@@ -16,24 +16,22 @@
  * @package    Zend_View
  * @subpackage Helper
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @version    $Id$
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * @namespace
- */
-namespace Zend\View\Helper;
+/** Zend_View_Helper_FormElement */
+require_once 'Zend/View/Helper/FormElement.php';
 
 /**
  * Helper for rendering fieldsets
  *
- * @uses       \Zend\View\Helper\FormElement
  * @package    Zend_View
  * @subpackage Helper
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Fieldset extends FormElement
+class Zend_View_Helper_Fieldset extends Zend_View_Helper_FormElement
 {
     /**
      * Render HTML form
@@ -43,10 +41,9 @@ class Fieldset extends FormElement
      * @param  array $attribs HTML form attributes
      * @return string
      */
-    public function direct($name = null, $content = null, $attribs = null)
+    public function fieldset($name, $content, $attribs = null)
     {
         $info = $this->_getInfo($name, $content, $attribs);
-        $escape = $id = null;
         extract($info);
 
         // get legend
@@ -55,7 +52,7 @@ class Fieldset extends FormElement
             $legendString = trim($attribs['legend']);
             if (!empty($legendString)) {
                 $legend = '<legend>'
-                        . (($escape) ? $this->view->vars()->escape($legendString) : $legendString)
+                        . (($escape) ? $this->view->escape($legendString) : $legendString)
                         . '</legend>' . PHP_EOL;
             }
             unset($attribs['legend']);
@@ -63,7 +60,7 @@ class Fieldset extends FormElement
 
         // get id
         if (!empty($id)) {
-            $id = ' id="' . $this->view->vars()->escape($id) . '"';
+            $id = ' id="' . $this->view->escape($id) . '"';
         } else {
             $id = '';
         }

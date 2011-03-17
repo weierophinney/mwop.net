@@ -17,23 +17,23 @@
  * @package    Zend_OpenId
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Exception
  */
-namespace Zend\OpenId;
+require_once "Zend/Exception.php";
 
 /**
- * Exception class for Zend\OpenId
+ * Exception class for Zend_OpenId
  *
- * @uses       Zend\Exception
  * @category   Zend
  * @package    Zend_OpenId
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Exception extends \Zend\Exception
+class Zend_OpenId_Exception extends Zend_Exception
 {
 
     /**

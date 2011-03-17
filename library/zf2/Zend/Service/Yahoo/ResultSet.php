@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework
  *
@@ -17,13 +18,11 @@
  * @subpackage Yahoo
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
+
 /**
- * @uses       DOMXPath
- * @uses       OutOfBoundsException
- * @uses       SeekableIterator
- * @uses       Zend\Service\Exception
  * @category   Zend
  * @package    Zend_Service
  * @subpackage Yahoo
@@ -119,12 +118,16 @@ class Zend_Service_Yahoo_ResultSet implements SeekableIterator
      *
      * Must be implemented by child classes
      *
-     * @throws Zend\Service\Exception
+     * @throws Zend_Service_Exception
      * @return Zend_Service_Yahoo_Result
      */
     public function current()
     {
-        throw new Zend\Service\Exception('Zend_Service_Yahoo_ResultSet::current() must be implemented by child '
+        /**
+         * @see Zend_Service_Exception
+         */
+        require_once 'Zend/Service/Exception.php';
+        throw new Zend_Service_Exception('Zend_Service_Yahoo_ResultSet::current() must be implemented by child '
                                        . 'classes');
     }
 

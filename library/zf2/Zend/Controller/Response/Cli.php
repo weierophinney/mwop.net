@@ -16,25 +16,26 @@
  * @package    Zend_Controller
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Controller\Response;
+
+/** Zend_Controller_Response_Abstract */
+require_once 'Zend/Controller/Response/Abstract.php';
+
 
 /**
  * Zend_Controller_Response_Cli
  *
  * CLI response for controllers
  *
- * @uses       \Zend\Controller\Response\AbstractResponse
- * @package    Zend_Controller
+ * @uses Zend_Controller_Response_Abstract
+ * @package Zend_Controller
  * @subpackage Response
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Cli extends AbstractResponse
+class Zend_Controller_Response_Cli extends Zend_Controller_Response_Abstract
 {
     /**
      * Flag; if true, when header operations are called after headers have been

@@ -17,24 +17,26 @@
  * @subpackage Table
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
+
 /**
- * @namespace
+ * @see Zend_Db_Table_Row_Abstract
  */
-namespace Zend\Db\Table;
+require_once 'Zend/Db/Table/Row/Abstract.php';
+
 
 /**
  * Reference concrete class that extends Zend_Db_Table_Row_Abstract.
  * Developers may also create their own classes that extend the abstract class.
  *
- * @uses       \Zend\Db\Table\AbstractRow
  * @category   Zend
  * @package    Zend_Db
  * @subpackage Table
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Row extends AbstractRow
+class Zend_Db_Table_Row extends Zend_Db_Table_Row_Abstract
 {
 }

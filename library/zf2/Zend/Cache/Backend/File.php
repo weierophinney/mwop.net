@@ -17,24 +17,27 @@
  * @subpackage Zend_Cache_Backend
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Cache_Backend_Interface
  */
-namespace Zend\Cache\Backend;
-use Zend\Cache;
+require_once 'Zend/Cache/Backend/ExtendedInterface.php';
 
 /**
- * @uses       \Zend\Cache\Cache
- * @uses       \Zend\Cache\Backend\AbstractBackend
- * @uses       \Zend\Cache\Backend\ExtendedBackend
+ * @see Zend_Cache_Backend
+ */
+require_once 'Zend/Cache/Backend.php';
+
+
+/**
  * @package    Zend_Cache
  * @subpackage Zend_Cache_Backend
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class File extends AbstractBackend implements ExtendedBackend
+class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_Backend_ExtendedInterface
 {
     /**
      * Available options
@@ -108,7 +111,7 @@ class File extends AbstractBackend implements ExtendedBackend
      * Constructor
      *
      * @param  array $options associative array of options
-     * @throws \Zend\Cache\Exception
+     * @throws Zend_Cache_Exception
      * @return void
      */
     public function __construct(array $options = array())
@@ -121,11 +124,11 @@ class File extends AbstractBackend implements ExtendedBackend
         }
         if (isset($this->_options['file_name_prefix'])) { // particular case for this option
             if (!preg_match('~^[a-zA-Z0-9_]+$~D', $this->_options['file_name_prefix'])) {
-                Cache\Cache::throwException('Invalid file_name_prefix : must use only [a-zA-Z0-9_]');
+                Zend_Cache::throwException('Invalid file_name_prefix : must use only [a-zA-Z0-9_]');
             }
         }
         if ($this->_options['metadatas_array_max_size'] < 10) {
-            Cache\Cache::throwException('Invalid metadatas_array_max_size, must be > 10');
+            Zend_Cache::throwException('Invalid metadatas_array_max_size, must be > 10');
         }
         if (isset($options['hashed_directory_umask']) && is_string($options['hashed_directory_umask'])) {
             // See #ZF-4422
@@ -142,16 +145,16 @@ class File extends AbstractBackend implements ExtendedBackend
      *
      * @param  string  $value
      * @param  boolean $trailingSeparator If true, add a trailing separator is necessary
-     * @throws \Zend\Cache\Exception
+     * @throws Zend_Cache_Exception
      * @return void
      */
     public function setCacheDir($value, $trailingSeparator = true)
     {
         if (!is_dir($value)) {
-            Cache\Cache::throwException('cache_dir must be a directory');
+            Zend_Cache::throwException('cache_dir must be a directory');
         }
         if (!is_writable($value)) {
-            Cache\Cache::throwException('cache_dir is not writable');
+            Zend_Cache::throwException('cache_dir is not writable');
         }
         if ($trailingSeparator) {
             // add a trailing DIRECTORY_SEPARATOR if necessary
@@ -278,7 +281,7 @@ class File extends AbstractBackend implements ExtendedBackend
      * @param tags array $tags array of tags
      * @return boolean true if no problem
      */
-    public function clean($mode = Cache\Cache::CLEANING_MODE_ALL, $tags = array())
+    public function clean($mode = Zend_Cache::CLEANING_MODE_ALL, $tags = array())
     {
         // We use this protected method to hide the recursive stuff
         clearstatcache();
@@ -347,7 +350,7 @@ class File extends AbstractBackend implements ExtendedBackend
     /**
      * Return the filling percentage of the backend storage
      *
-     * @throws \Zend\Cache\Exception
+     * @throws Zend_Cache_Exception
      * @return int integer between 0 and 100
      */
     public function getFillingPercentage()
@@ -355,7 +358,7 @@ class File extends AbstractBackend implements ExtendedBackend
         $free = disk_free_space($this->_options['cache_dir']);
         $total = disk_total_space($this->_options['cache_dir']);
         if ($total == 0) {
-            Cache\Cache::throwException('can\'t get disk_total_space');
+            Zend_Cache::throwException('can\'t get disk_total_space');
         } else {
             if ($free >= $total) {
                 return 100;
@@ -632,10 +635,10 @@ class File extends AbstractBackend implements ExtendedBackend
      * @param  string $dir  Directory to clean
      * @param  string $mode Clean mode
      * @param  array  $tags Array of tags
-     * @throws \Zend\Cache\Exception
+     * @throws Zend_Cache_Exception
      * @return boolean True if no problem
      */
-    protected function _clean($dir, $mode = Cache\Cache::CLEANING_MODE_ALL, $tags = array())
+    protected function _clean($dir, $mode = Zend_Cache::CLEANING_MODE_ALL, $tags = array())
     {
         if (!is_dir($dir)) {
             return false;
@@ -652,7 +655,7 @@ class File extends AbstractBackend implements ExtendedBackend
                 $fileName = basename($file);
                 if ($this->_isMetadatasFile($fileName)) {
                     // in CLEANING_MODE_ALL, we drop anything, even remainings old metadatas files
-                    if ($mode != Cache\Cache::CLEANING_MODE_ALL) {
+                    if ($mode != Zend_Cache::CLEANING_MODE_ALL) {
                         continue;
                     }
                 }
@@ -662,7 +665,7 @@ class File extends AbstractBackend implements ExtendedBackend
                     $metadatas = array('expire' => 1, 'tags' => array());
                 }
                 switch ($mode) {
-                    case Cache\Cache::CLEANING_MODE_ALL:
+                    case Zend_Cache::CLEANING_MODE_ALL:
                         $res = $this->remove($id);
                         if (!$res) {
                             // in this case only, we accept a problem with the metadatas file drop
@@ -670,12 +673,12 @@ class File extends AbstractBackend implements ExtendedBackend
                         }
                         $result = $result && $res;
                         break;
-                    case Cache\Cache::CLEANING_MODE_OLD:
+                    case Zend_Cache::CLEANING_MODE_OLD:
                         if (time() > $metadatas['expire']) {
                             $result = $this->remove($id) && $result;
                         }
                         break;
-                    case Cache\Cache::CLEANING_MODE_MATCHING_TAG:
+                    case Zend_Cache::CLEANING_MODE_MATCHING_TAG:
                         $matching = true;
                         foreach ($tags as $tag) {
                             if (!in_array($tag, $metadatas['tags'])) {
@@ -687,7 +690,7 @@ class File extends AbstractBackend implements ExtendedBackend
                             $result = $this->remove($id) && $result;
                         }
                         break;
-                    case Cache\Cache::CLEANING_MODE_NOT_MATCHING_TAG:
+                    case Zend_Cache::CLEANING_MODE_NOT_MATCHING_TAG:
                         $matching = false;
                         foreach ($tags as $tag) {
                             if (in_array($tag, $metadatas['tags'])) {
@@ -699,7 +702,7 @@ class File extends AbstractBackend implements ExtendedBackend
                             $result = $this->remove($id) && $result;
                         }
                         break;
-                    case Cache\Cache::CLEANING_MODE_MATCHING_ANY_TAG:
+                    case Zend_Cache::CLEANING_MODE_MATCHING_ANY_TAG:
                         $matching = false;
                         foreach ($tags as $tag) {
                             if (in_array($tag, $metadatas['tags'])) {
@@ -712,7 +715,7 @@ class File extends AbstractBackend implements ExtendedBackend
                         }
                         break;
                     default:
-                        Cache\Cache::throwException('Invalid mode for clean() method');
+                        Zend_Cache::throwException('Invalid mode for clean() method');
                         break;
                 }
             }
@@ -795,7 +798,7 @@ class File extends AbstractBackend implements ExtendedBackend
                         }
                         break;
                     default:
-                        Cache\Cache::throwException('Invalid mode for _get() method');
+                        Zend_Cache::throwException('Invalid mode for _get() method');
                         break;
                 }
             }
@@ -830,7 +833,7 @@ class File extends AbstractBackend implements ExtendedBackend
      *
      * @param  string $data        Data
      * @param  string $controlType Type of control 'md5', 'crc32' or 'strlen'
-     * @throws \Zend\Cache\Exception
+     * @throws Zend_Cache_Exception
      * @return string Control key
      */
     protected function _hash($data, $controlType)
@@ -845,7 +848,7 @@ class File extends AbstractBackend implements ExtendedBackend
         case 'adler32':
             return hash('adler32', $data);
         default:
-            Cache\Cache::throwException("Incorrect hash function : $controlType");
+            Zend_Cache::throwException("Incorrect hash function : $controlType");
         }
     }
 

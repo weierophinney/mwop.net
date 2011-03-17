@@ -17,7 +17,13 @@
  * @subpackage DeveloperGarden
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
+
+/**
+ * @see Zend_Service_DeveloperGarden_Response_BaseType
+ */
+require_once 'Zend/Service/DeveloperGarden/Response/BaseType.php';
 
 /**
  * @category   Zend

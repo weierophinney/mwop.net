@@ -19,25 +19,22 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * @namespace
- */
-namespace Zend\Captcha;
+/** @see Zend_Captcha_Base */
+require_once 'Zend/Captcha/Base.php';
 
 /**
  * Word-based captcha adapter
  *
  * Generates random word which user should recognise
  *
- * @uses       Zend\Captcha\AbstractAdapter
- * @uses       Zend\Loader
  * @category   Zend
  * @package    Zend_Captcha
  * @subpackage Adapter
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
-abstract class Word extends AbstractAdapter
+abstract class Zend_Captcha_Word extends Zend_Captcha_Base
 {
     /**#@+
      * @var array Character sets
@@ -65,7 +62,7 @@ abstract class Word extends AbstractAdapter
     /**
      * Session
      *
-     * @var \Zend\Session\Container
+     * @var Zend_Session_Namespace
      */
     protected $_session;
 
@@ -74,7 +71,7 @@ abstract class Word extends AbstractAdapter
      *
      * @var string
      */
-    protected $_sessionClass = 'Zend\\Session\\Container';
+    protected $_sessionClass = 'Zend_Session_Namespace';
 
     /**
      * Should the numbers be used or only letters
@@ -96,10 +93,10 @@ abstract class Word extends AbstractAdapter
      * @var integer
      */
     protected $_timeout = 300;
-    
+
     /**
      * Should generate() keep session or create a new one?
-     * 
+     *
      * @var boolean
      */
     protected $_keepSession = false;
@@ -134,7 +131,7 @@ abstract class Word extends AbstractAdapter
      *
      * @return string
      */
-	public function getSessionClass()
+    public function getSessionClass()
     {
         return $this->_sessionClass;
     }
@@ -143,7 +140,7 @@ abstract class Word extends AbstractAdapter
      * Set session class for persistence
      *
      * @param  string $_sessionClass
-     * @return \Zend\Captcha\Word
+     * @return Zend_Captcha_Word
      */
     public function setSessionClass($_sessionClass)
     {
@@ -165,7 +162,7 @@ abstract class Word extends AbstractAdapter
      * Set word length of captcha
      *
      * @param integer $wordlen
-     * @return \Zend\Captcha\Word
+     * @return Zend_Captcha_Word
      */
     public function setWordlen($wordlen)
     {
@@ -202,7 +199,7 @@ abstract class Word extends AbstractAdapter
      * Set timeout for session token
      *
      * @param  int $ttl
-     * @return \Zend\Captcha\Word
+     * @return Zend_Captcha_Word
      */
     public function setTimeout($ttl)
     {
@@ -220,21 +217,21 @@ abstract class Word extends AbstractAdapter
         return $this->_timeout;
     }
 
-	/**
-	 * Sets if session should be preserved on generate()
-	 * 
-	 * @param $keepSession Should session be kept on generate()?
-	 * @return \Zend\Captcha\Word
-	 */
-	public function setKeepSession($keepSession) 
-	{
-		$this->_keepSession = $keepSession;
-		return $this;
-	}
+    /**
+     * Sets if session should be preserved on generate()
+     *
+     * @param bool $keepSession Should session be kept on generate()?
+     * @return Zend_Captcha_Word
+     */
+    public function setKeepSession($keepSession)
+    {
+        $this->_keepSession = $keepSession;
+        return $this;
+    }
 
     /**
      * Numbers should be included in the pattern?
-     * 
+     *
      * @return bool
      */
     public function getUseNumbers()
@@ -242,10 +239,10 @@ abstract class Word extends AbstractAdapter
         return $this->_useNumbers;
     }
 
-	/**
-	 * Set if numbers should be included in the pattern
-	 * 
-     * @param $_useNumbers numbers should be included in the pattern?
+    /**
+     * Set if numbers should be included in the pattern
+     *
+     * @param bool $_useNumbers numbers should be included in the pattern?
      * @return Zend_Captcha_Word
      */
     public function setUseNumbers($_useNumbers)
@@ -253,18 +250,19 @@ abstract class Word extends AbstractAdapter
         $this->_useNumbers = $_useNumbers;
         return $this;
     }
-	
-	/**
+    
+    /**
      * Get session object
      *
-     * @return \Zend\Session\Container
+     * @return Zend_Session_Namespace
      */
     public function getSession()
     {
         if (!isset($this->_session) || (null === $this->_session)) {
             $id = $this->getId();
             if (!class_exists($this->_sessionClass)) {
-                \Zend\Loader::loadClass($this->_sessionClass);
+                require_once 'Zend/Loader.php';
+                Zend_Loader::loadClass($this->_sessionClass);
             }
             $this->_session = new $this->_sessionClass('Zend_Form_Captcha_' . $id);
             $this->_session->setExpirationHops(1, null, true);
@@ -276,10 +274,10 @@ abstract class Word extends AbstractAdapter
     /**
      * Set session namespace object
      *
-     * @param  \Zend\Session\Container $session
-     * @return \Zend\Captcha\Word
+     * @param  Zend_Session_Namespace $session
+     * @return Zend_Captcha_Word
      */
-    public function setSession(\Zend\Session\Container $session)
+    public function setSession(Zend_Session_Namespace $session)
     {
         $this->_session = $session;
         if($session) {
@@ -306,7 +304,7 @@ abstract class Word extends AbstractAdapter
      * Set captcha word
      *
      * @param  string $word
-     * @return \Zend\Captcha\Word
+     * @return Zend_Captcha_Word
      */
     protected function _setWord($word)
     {
@@ -350,7 +348,7 @@ abstract class Word extends AbstractAdapter
     public function generate()
     {
         if(!$this->_keepSession) {
-            $this->_session = null;   
+            $this->_session = null;
         }
         $id = $this->_generateRandomId();
         $this->_setId($id);
@@ -367,7 +365,7 @@ abstract class Word extends AbstractAdapter
     /**
      * Validate the word
      *
-     * @see    Zend\Validator\Validator::isValid()
+     * @see    Zend_Validate_Interface::isValid()
      * @param  mixed $value
      * @return boolean
      */
@@ -415,6 +413,6 @@ abstract class Word extends AbstractAdapter
      */
     public function getDecorator()
     {
-        return "Captcha\Word";
+        return "Captcha_Word";
     }
 }

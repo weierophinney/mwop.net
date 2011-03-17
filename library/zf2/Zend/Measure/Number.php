@@ -16,28 +16,27 @@
  * @package   Zend_Measure
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id$
  */
 
 /**
- * @namespace
+ * Implement needed classes
  */
-namespace Zend\Measure;
-use Zend\Locale;
-use Zend\Locale\Math;
+require_once 'Zend/Measure/Abstract.php';
+require_once 'Zend/Locale.php';
 
 /**
  * Class for handling number conversions
  *
  * This class can only handle numbers without precision
  *
- * @uses       Zend\Locale
- * @uses       Zend\Locale\Math
  * @category   Zend
  * @package    Zend_Measure
+ * @subpackage Zend_Measure_Number
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Number extends AbstractMeasure
+class Zend_Measure_Number extends Zend_Measure_Abstract
 {
     const STANDARD = 'DECIMAL';
 
@@ -135,31 +134,32 @@ class Number extends AbstractMeasure
     );
 
     /**
-     * Zend\Measure\AbstractMeasure is an abstract class for the different measurement types
+     * Zend_Measure_Abstract is an abstract class for the different measurement types
      *
-     * @param  integer                   $value  Value
-     * @param  string                    $type   (Optional) A Zend\Measure\Number Type
-     * @param  string|Zend\Locale\Locale $locale (Optional) A Zend\Locale\Locale
-     * @throws Zend\Measure\Exception When language is unknown
-     * @throws Zend\Measure\Exception When type is unknown
+     * @param  integer            $value  Value
+     * @param  string             $type   (Optional) A Zend_Measure_Number Type
+     * @param  string|Zend_Locale $locale (Optional) A Zend_Locale
+     * @throws Zend_Measure_Exception When language is unknown
+     * @throws Zend_Measure_Exception When type is unknown
      */
     public function __construct($value, $type, $locale = null)
     {
-        if (($type !== null) and (Locale\Locale::isLocale($type))) {
+        if (($type !== null) and (Zend_Locale::isLocale($type, null, false))) {
             $locale = $type;
             $type = null;
         }
 
         if ($locale === null) {
-            $locale = new Locale\Locale();
+            $locale = new Zend_Locale();
         }
 
-        if (!Locale\Locale::isLocale($locale, true)) {
-            if (!Locale\Locale::isLocale($locale, false)) {
-                throw new Exception("Language (" . (string) $locale . ") is unknown");
+        if (!Zend_Locale::isLocale($locale, true, false)) {
+            if (!Zend_Locale::isLocale($locale, true, false)) {
+                require_once 'Zend/Measure/Exception.php';
+                throw new Zend_Measure_Exception("Language (" . (string) $locale . ") is unknown");
             }
 
-            $locale = new Locale\Locale($locale);
+            $locale = new Zend_Locale($locale);
         }
 
         $this->_locale = (string) $locale;
@@ -169,7 +169,8 @@ class Number extends AbstractMeasure
         }
 
         if (isset($this->_units[$type]) === false) {
-            throw new Exception("Type ($type) is unknown");
+            require_once 'Zend/Measure/Exception.php';
+            throw new Zend_Measure_Exception("Type ($type) is unknown");
         }
 
         $this->setValue($value, $type, $this->_locale);
@@ -178,10 +179,10 @@ class Number extends AbstractMeasure
     /**
      * Set a new value
      *
-     * @param  integer                   $value  Value
-     * @param  string                    $type   (Optional) A Zend\Measure\Number Type
-     * @param  string|Zend\Locale\Locale $locale (Optional) A Zend\Locale\Locale Type
-     * @throws Zend\Measure\Exception
+     * @param  integer            $value  Value
+     * @param  string             $type   (Optional) A Zend_Measure_Number Type
+     * @param  string|Zend_Locale $locale (Optional) A Zend_Locale Type
+     * @throws Zend_Measure_Exception
      */
     public function setValue($value, $type = null, $locale = null)
     {
@@ -190,7 +191,8 @@ class Number extends AbstractMeasure
         }
 
         if (empty($this->_units[$type])) {
-            throw new Exception('unknown type of number:' . $type);
+            require_once 'Zend/Measure/Exception.php';
+            throw new Zend_Measure_Exception('unknown type of number:' . $type);
         }
 
         switch($type) {
@@ -251,12 +253,13 @@ class Number extends AbstractMeasure
 
             default:
                 try {
-                    $value = Locale\Format::getInteger($value, array('locale' => $locale));
-                } catch (\Exception $e) {
-                    throw new Exception($e->getMessage(), $e->getCode(), $e);
+                    $value = Zend_Locale_Format::getInteger($value, array('locale' => $locale));
+                } catch (Exception $e) {
+                    require_once 'Zend/Measure/Exception.php';
+                    throw new Zend_Measure_Exception($e->getMessage(), $e->getCode(), $e);
                 }
-                if (call_user_func(Math::$comp, $value, 0) < 0) {
-                    $value = call_user_func(Math::$sqrt, call_user_func(Math::$pow, $value, 2));
+                if (call_user_func(Zend_Locale_Math::$comp, $value, 0) < 0) {
+                    $value = call_user_func(Zend_Locale_Math::$sqrt, call_user_func(Zend_Locale_Math::$pow, $value, 2));
                 }
                 break;
         }
@@ -281,9 +284,9 @@ class Number extends AbstractMeasure
             $length = strlen($input);
             for ($x = 0; $x < $length; ++$x) {
                 $split[$x] = hexdec($split[$x]);
-                $value     = call_user_func(Math::$add, $value,
-                            call_user_func(Math::$mul, $split[$x],
-                            call_user_func(Math::$pow, $this->_units[$type][0], ($length - $x - 1))));
+                $value     = call_user_func(Zend_Locale_Math::$add, $value,
+                            call_user_func(Zend_Locale_Math::$mul, $split[$x],
+                            call_user_func(Zend_Locale_Math::$pow, $this->_units[$type][0], ($length - $x - 1))));
             }
         }
 
@@ -319,7 +322,7 @@ class Number extends AbstractMeasure
      * @param  integer $value Input string
      * @param  string  $type  Type to convert to
      * @return string
-     * @throws Zend\Measure\Exception When more than 200 digits are calculated
+     * @throws Zend_Measure_Exception When more than 200 digits are calculated
      */
     private function _fromDecimal($value, $type)
     {
@@ -329,17 +332,18 @@ class Number extends AbstractMeasure
             $count    = 200;
             $base     = $this->_units[$type][0];
 
-            while (call_user_func(Math::$comp, $value, 0, 25) <> 0) {
-                $target = call_user_func(Math::$mod, $value, $base);
+            while (call_user_func(Zend_Locale_Math::$comp, $value, 0, 25) <> 0) {
+                $target = call_user_func(Zend_Locale_Math::$mod, $value, $base);
 
                 $newvalue = strtoupper(dechex($target)) . $newvalue;
 
-                $value = call_user_func(Math::$sub, $value, $target, 0);
-                $value = call_user_func(Math::$div, $value, $base, 0);
+                $value = call_user_func(Zend_Locale_Math::$sub, $value, $target, 0);
+                $value = call_user_func(Zend_Locale_Math::$div, $value, $base, 0);
 
                 --$count;
                 if ($count === 0) {
-                    throw new Exception("Your value '$tempvalue' cannot be processed because it extends 200 digits");
+                    require_once 'Zend/Measure/Exception.php';
+                    throw new Zend_Measure_Exception("Your value '$tempvalue' cannot be processed because it extends 200 digits");
                 }
             }
 
@@ -354,7 +358,7 @@ class Number extends AbstractMeasure
             $romanval = array_values(array_reverse(self::$_roman));
             $romankey = array_keys(array_reverse(self::$_roman));
             $count    = 200;
-            while (call_user_func(Math::$comp, $value, 0, 25) <> 0) {
+            while (call_user_func(Zend_Locale_Math::$comp, $value, 0, 25) <> 0) {
                 while ($value >= $romanval[$i]) {
                     $value    -= $romanval[$i];
                     $newvalue .= $romankey[$i];
@@ -365,7 +369,8 @@ class Number extends AbstractMeasure
 
                     --$count;
                     if ($count === 0) {
-                        throw new Exception("Your value '$tempvalue' cannot be processed because it extends 200 digits");
+                        require_once 'Zend/Measure/Exception.php';
+                        throw new Zend_Measure_Exception("Your value '$tempvalue' cannot be processed because it extends 200 digits");
                     }
                 }
 
@@ -382,13 +387,14 @@ class Number extends AbstractMeasure
      * Set a new type, and convert the value
      *
      * @param  string $type New type to set
-     * @throws Zend\Measure\Exception When a unknown type is given
+     * @throws Zend_Measure_Exception When a unknown type is given
      * @return void
      */
     public function setType($type)
     {
         if (empty($this->_units[$type]) === true) {
-            throw new Exception('Unknown type of number:' . $type);
+            require_once 'Zend/Measure/Exception.php';
+            throw new Zend_Measure_Exception('Unknown type of number:' . $type);
         }
 
         $value = $this->_toDecimal($this->getValue(-1), $this->getType(-1));

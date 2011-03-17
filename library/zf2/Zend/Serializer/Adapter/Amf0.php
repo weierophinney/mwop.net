@@ -17,67 +17,72 @@
  * @subpackage Adapter
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Serializer\Adapter;
+/** @see Zend_Serializer_Adapter_AdapterAbstract */
+require_once 'Zend/Serializer/Adapter/AdapterAbstract.php';
 
-use Zend\Serializer\Exception\RuntimeException,
-    Zend\Amf\Parser as AmfParser;
+/** @see Zend_Amf_Parse_OutputStream */
+require_once 'Zend/Amf/Parse/OutputStream.php';
+
+/** @see Zend_Amf_Parse_Amf0_Serializer */
+require_once 'Zend/Amf/Parse/Amf0/Serializer.php';
+
+/** @see Zend_Amf_Parse_InputStream */
+require_once 'Zend/Amf/Parse/InputStream.php';
+
+/** @see Zend_Amf_Parse_Amf0_Deserializer */
+require_once 'Zend/Amf/Parse/Amf0/Deserializer.php';
 
 /**
- * @uses       Zend\Amf\Parser\Amf0\Deserializer
- * @uses       Zend\Amf\Parser\Amf0\Serializer
- * @uses       Zend\Amf\Parser\InputStream
- * @uses       Zend\Amf\Parser\OutputStream
- * @uses       Zend\Serializer\Adapter\AbstractAdapter
- * @uses       Zend\Serializer\Exception\RuntimeException
  * @category   Zend
  * @package    Zend_Serializer
  * @subpackage Adapter
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Amf0 extends AbstractAdapter
+class Zend_Serializer_Adapter_Amf0 extends Zend_Serializer_Adapter_AdapterAbstract
 {
     /**
      * Serialize a PHP value to AMF0 format
-     * 
-     * @param  mixed $value 
-     * @param  array $opts 
+     *
+     * @param  mixed $value
+     * @param  array $opts
      * @return string
-     * @throws Zend\Serializer\Exception
+     * @throws Zend_Serializer_Exception
      */
     public function serialize($value, array $opts = array())
     {
         try  {
-            $stream     = new AmfParser\OutputStream();
-            $serializer = new AmfParser\Amf0\Serializer($stream);
+            $stream     = new Zend_Amf_Parse_OutputStream();
+            $serializer = new Zend_Amf_Parse_Amf0_Serializer($stream);
             $serializer->writeTypeMarker($value);
             return $stream->getStream();
-        } catch (\Exception $e) {
-            throw new RuntimeException('Serialization failed: ' . $e->getMessage(), 0, $e);
+        } catch (Exception $e) {
+            require_once 'Zend/Serializer/Exception.php';
+            throw new Zend_Serializer_Exception('Serialization failed by previous error', 0, $e);
         }
     }
 
     /**
      * Unserialize an AMF0 value to PHP
-     * 
-     * @param  mixed $value 
-     * @param  array $opts 
+     *
+     * @param  mixed $value
+     * @param  array $opts
      * @return void
-     * @throws Zend\Serializer\Exception
+     * @throws Zend_Serializer_Exception
      */
     public function unserialize($value, array $opts = array())
     {
         try {
-            $stream       = new AmfParser\InputStream($value);
-            $deserializer = new AmfParser\Amf0\Deserializer($stream);
+            $stream       = new Zend_Amf_Parse_InputStream($value);
+            $deserializer = new Zend_Amf_Parse_Amf0_Deserializer($stream);
             return $deserializer->readTypeMarker();
-        } catch (\Exception $e) {
-            throw new RuntimeException('Unserialization failed: ' . $e->getMessage(), 0, $e);
+        } catch (Exception $e) {
+            require_once 'Zend/Serializer/Exception.php';
+            throw new Zend_Serializer_Exception('Unserialization failed by previous error', 0, $e);
         }
     }
+
 }

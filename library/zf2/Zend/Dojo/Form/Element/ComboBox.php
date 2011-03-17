@@ -19,21 +19,20 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * @namespace
- */
-namespace Zend\Dojo\Form\Element;
+/** Zend_Dojo_Form_Element_DijitMulti */
+require_once 'Zend/Dojo/Form/Element/DijitMulti.php';
 
 /**
  * ComboBox dijit
  *
- * @uses       \Zend\Dojo\Form\Element\DijitMulti
+ * @uses       Zend_Dojo_Form_Element_DijitMulti
  * @package    Zend_Dojo
  * @subpackage Form_Element
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
-class ComboBox extends DijitMulti
+class Zend_Dojo_Form_Element_ComboBox extends Zend_Dojo_Form_Element_DijitMulti
 {
     /**
      * Use ComboBox dijit view helper
@@ -64,7 +63,7 @@ class ComboBox extends DijitMulti
      * Set datastore identifier
      *
      * @param  string $identifier
-     * @return \Zend\Dojo\Form\Element\ComboBox
+     * @return Zend_Dojo_Form_Element_ComboBox
      */
     public function setStoreId($identifier)
     {
@@ -92,7 +91,7 @@ class ComboBox extends DijitMulti
      * Set datastore dijit type
      *
      * @param  string $dojoType
-     * @return \Zend\Dojo\Form\Element\ComboBox
+     * @return Zend_Dojo_Form_Element_ComboBox
      */
     public function setStoreType($dojoType)
     {
@@ -120,7 +119,7 @@ class ComboBox extends DijitMulti
      * Set datastore parameters
      *
      * @param  array $params
-     * @return \Zend\Dojo\Form\Element\ComboBox
+     * @return Zend_Dojo_Form_Element_ComboBox
      */
     public function setStoreParams(array $params)
     {
@@ -148,7 +147,7 @@ class ComboBox extends DijitMulti
      * Set autocomplete flag
      *
      * @param  bool $flag
-     * @return \Zend\Dojo\Form\Element\ComboBox
+     * @return Zend_Dojo_Form_Element_ComboBox
      */
     public function setAutocomplete($flag)
     {

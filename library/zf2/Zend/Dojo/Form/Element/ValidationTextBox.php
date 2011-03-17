@@ -19,21 +19,20 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * @namespace
- */
-namespace Zend\Dojo\Form\Element;
+/** Zend_Dojo_Form_Element_TextBox */
+require_once 'Zend/Dojo/Form/Element/TextBox.php';
 
 /**
  * ValidationTextBox dijit
  *
- * @uses       \Zend\Dojo\Form\Element\TextBox
+ * @uses       Zend_Dojo_Form_Element_TextBox
  * @package    Zend_Dojo
  * @subpackage Form_Element
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
-class ValidationTextBox extends TextBox
+class Zend_Dojo_Form_Element_ValidationTextBox extends Zend_Dojo_Form_Element_TextBox
 {
     /**
      * Use ValidationTextBox dijit view helper
@@ -45,7 +44,7 @@ class ValidationTextBox extends TextBox
      * Set invalidMessage
      *
      * @param  string $message
-     * @return \Zend\Dojo\Form\Element\ValidationTextBox
+     * @return Zend_Dojo_Form_Element_ValidationTextBox
      */
     public function setInvalidMessage($message)
     {
@@ -67,7 +66,7 @@ class ValidationTextBox extends TextBox
      * Set promptMessage
      *
      * @param  string $message
-     * @return \Zend\Dojo\Form\Element\ValidationTextBox
+     * @return Zend_Dojo_Form_Element_ValidationTextBox
      */
     public function setPromptMessage($message)
     {
@@ -89,7 +88,7 @@ class ValidationTextBox extends TextBox
      * Set regExp
      *
      * @param  string $regexp
-     * @return \Zend\Dojo\Form\Element\ValidationTextBox
+     * @return Zend_Dojo_Form_Element_ValidationTextBox
      */
     public function setRegExp($regexp)
     {
@@ -112,7 +111,7 @@ class ValidationTextBox extends TextBox
      *
      * @param  string $key
      * @param  mixed $value
-     * @return \Zend\Dojo\Form\Element\ValidationTextBox
+     * @return Zend_Dojo_Form_Element_ValidationTextBox
      */
     public function setConstraint($key, $value)
     {
@@ -129,7 +128,7 @@ class ValidationTextBox extends TextBox
      * structure.
      *
      * @param  array $constraints
-     * @return \Zend\Dojo\Form\Element\ValidationTextBox
+     * @return Zend_Dojo_Form_Element_ValidationTextBox
      */
     public function setConstraints(array $constraints)
     {
@@ -182,7 +181,7 @@ class ValidationTextBox extends TextBox
      * Remove a single constraint
      *
      * @param  string $key
-     * @return \Zend\Dojo\Form\Element\ValidationTextBox
+     * @return Zend_Dojo_Form_Element_ValidationTextBox
      */
     public function removeConstraint($key)
     {
@@ -196,7 +195,7 @@ class ValidationTextBox extends TextBox
     /**
      * Clear all constraints
      *
-     * @return \Zend\Dojo\Form\Element\ValidationTextBox
+     * @return Zend_Dojo_Form_Element_ValidationTextBox
      */
     public function clearConstraints()
     {

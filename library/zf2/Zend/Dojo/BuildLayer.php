@@ -16,26 +16,17 @@
  * @package    Zend_Dojo
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
-
-/**
- * @namespace
- */
-namespace Zend\Dojo;
-
-use Zend\Config\Config,
-    Zend\Json\Json,
-    Zend\View\ViewEngine;
 
 /**
  * Dojo module layer and custom build profile generation support
  *
- * @uses       \Zend\Json\Json
  * @package    Zend_Dojo
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class BuildLayer
+class Zend_Dojo_BuildLayer
 {
     /**
      * Flag: whether or not to consume JS aggregated in the dojo() view
@@ -54,7 +45,7 @@ class BuildLayer
 
     /**
      * Dojo view helper reference
-     * @var \Zend\Dojo\View\Helper\Dojo\Container
+     * @var Zend_Dojo_View_Helper_Dojo_Container
      */
     protected $_dojo;
 
@@ -92,24 +83,25 @@ class BuildLayer
 
     /**
      * Zend_View reference
-     * @var \Zend\View\ViewEngine
+     * @var Zend_View_Interface
      */
     protected $_view;
 
     /**
      * Constructor
      *
-     * @param  array|\Zend\Config\Config $options
+     * @param  array|Zend_Config $options
      * @return void
-     * @throws \Zend\Dojo\Exception for invalid option argument
+     * @throws Zend_Dojo_Exception for invalid option argument
      */
     public function __construct($options = null)
     {
         if (null !== $options) {
-            if ($options instanceof Config) {
+            if ($options instanceof Zend_Config) {
                 $options = $options->toArray();
             } elseif (!is_array($options)) {
-                throw new Exception\InvalidArgumentException('Invalid options provided to constructor');
+                require_once 'Zend/Dojo/Exception.php';
+                throw new Zend_Dojo_Exception('Invalid options provided to constructor');
             }
             $this->setOptions($options);
         }
@@ -121,7 +113,7 @@ class BuildLayer
      * Proxies to any setter that matches an option key.
      *
      * @param  array $options
-     * @return \Zend\Dojo\BuildLayer
+     * @return Zend_Dojo_BuildLayer
      */
     public function setOptions(array $options)
     {
@@ -138,10 +130,10 @@ class BuildLayer
     /**
      * Set View object
      *
-     * @param  \Zend\View\ViewEngine $view
-     * @return \Zend\Dojo\BuildLayer
+     * @param  Zend_View_Interface $view
+     * @return Zend_Dojo_BuildLayer
      */
-    public function setView(ViewEngine $view)
+    public function setView(Zend_View_Interface $view)
     {
         $this->_view = $view;
         return $this;
@@ -150,7 +142,7 @@ class BuildLayer
     /**
      * Retrieve view object
      *
-     * @return \Zend\View\ViewEngine|null
+     * @return Zend_View_Interface|null
      */
     public function getView()
     {
@@ -160,10 +152,10 @@ class BuildLayer
     /**
      * Set dojo() view helper instance
      *
-     * @param  \Zend\Dojo\View\Helper\Dojo\Container $helper
-     * @return \Zend\Dojo\BuildLayer
+     * @param  Zend_Dojo_View_Helper_Dojo_Container $helper
+     * @return Zend_Dojo_BuildLayer
      */
-    public function setDojoHelper(View\Helper\Dojo\Container $helper)
+    public function setDojoHelper(Zend_Dojo_View_Helper_Dojo_Container $helper)
     {
         $this->_dojo = $helper;
         return $this;
@@ -174,14 +166,15 @@ class BuildLayer
      *
      * Will retrieve it from the view object if not registered.
      *
-     * @return \Zend\Dojo\View\Helper\Dojo\Container
-     * @throws \Zend\Dojo\Exception if not registered and no view object found
+     * @return Zend_Dojo_View_Helper_Dojo_Container
+     * @throws Zend_Dojo_Exception if not registered and no view object found
      */
     public function getDojoHelper()
     {
         if (null === $this->_dojo) {
             if (null === ($view = $this->getView())) {
-                throw new Exception\RuntimeException('View object not registered; cannot retrieve dojo helper');
+                require_once 'Zend/Dojo/Exception.php';
+                throw new Zend_Dojo_Exception('View object not registered; cannot retrieve dojo helper');
             }
             $helper = $view->getHelper('dojo');
             $this->setDojoHelper($view->dojo());
@@ -193,12 +186,13 @@ class BuildLayer
      * Set custom layer name; e.g. "custom.main"
      *
      * @param  string $name
-     * @return \Zend\Dojo\BuildLayer
+     * @return Zend_Dojo_BuildLayer
      */
     public function setLayerName($name)
     {
         if (!preg_match('/^[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+$/i', $name)) {
-            throw new Exception\InvalidArgumentException('Invalid layer name provided; must be of form[a-z][a-z0-9_](\.[a-z][a-z0-9_])+');
+            require_once 'Zend/Dojo/Exception.php';
+            throw new Zend_Dojo_Exception('Invalid layer name provided; must be of form[a-z][a-z0-9_](\.[a-z][a-z0-9_])+');
         }
         $this->_layerName = $name;
         return $this;
@@ -220,7 +214,7 @@ class BuildLayer
      * Should be a path relative to dojo.js
      *
      * @param  string $path
-     * @return \Zend\Dojo\BuildLayer
+     * @return Zend_Dojo_BuildLayer
      */
     public function setLayerScriptPath($path)
     {
@@ -243,7 +237,7 @@ class BuildLayer
      * view helper
      *
      * @param  bool $flag
-     * @return \Zend\Dojo\BuildLayer
+     * @return Zend_Dojo_BuildLayer
      */
     public function setConsumeJavascript($flag)
     {
@@ -267,7 +261,7 @@ class BuildLayer
      * aggregated in dojo() view helper
      *
      * @param  bool $flag
-     * @return \Zend\Dojo\BuildLayer
+     * @return Zend_Dojo_BuildLayer
      */
     public function setConsumeOnLoad($flag)
     {
@@ -289,7 +283,7 @@ class BuildLayer
      * Set many build profile options at once
      *
      * @param  array $options
-     * @return \Zend\Dojo\BuildLayer
+     * @return Zend_Dojo_BuildLayer
      */
     public function setProfileOptions(array $options)
     {
@@ -301,7 +295,7 @@ class BuildLayer
      * Add many build profile options at once
      *
      * @param  array $options
-     * @return \Zend\Dojo\BuildLayer
+     * @return Zend_Dojo_BuildLayer
      */
     public function addProfileOptions(array $options)
     {
@@ -314,7 +308,7 @@ class BuildLayer
      *
      * @param  string $key
      * @param  value $value
-     * @return \Zend\Dojo\BuildLayer
+     * @return Zend_Dojo_BuildLayer
      */
     public function addProfileOption($key, $value)
     {
@@ -363,7 +357,7 @@ class BuildLayer
      * Remove a build profile option
      *
      * @param  string $name
-     * @return \Zend\Dojo\BuildLayer
+     * @return Zend_Dojo_BuildLayer
      */
     public function removeProfileOption($name)
     {
@@ -376,7 +370,7 @@ class BuildLayer
     /**
      * Remove all build profile options
      *
-     * @return \Zend\Dojo\BuildLayer
+     * @return Zend_Dojo_BuildLayer
      */
     public function clearProfileOptions()
     {
@@ -391,7 +385,7 @@ class BuildLayer
      *
      * @param  string $prefix
      * @param  null|string $path
-     * @return \Zend\Dojo\BuildLayer
+     * @return Zend_Dojo_BuildLayer
      */
     public function addProfilePrefix($prefix, $path = null)
     {
@@ -406,7 +400,7 @@ class BuildLayer
      * Set multiple dependency prefixes for bulid profile
      *
      * @param  array $prefixes
-     * @return \Zend\Dojo\BuildLayer
+     * @return Zend_Dojo_BuildLayer
      */
     public function setProfilePrefixes(array $prefixes)
     {
@@ -533,8 +527,9 @@ class BuildLayer
      */
     protected function _filterJsonProfileToJavascript($profile)
     {
-        $profile = Json::encode($profile);
-        $profile = preg_replace('/"([^"]*)":/', '$1:', $profile);
+        require_once 'Zend/Json.php';
+        $profile = Zend_Json::encode($profile);
+        $profile = trim($profile, '"');
         $profile = preg_replace('/' . preg_quote('\\') . '/', '', $profile);
         return $profile;
     }

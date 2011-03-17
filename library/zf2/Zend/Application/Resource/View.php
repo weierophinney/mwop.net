@@ -17,67 +17,66 @@
  * @subpackage Resource
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Application_Resource_ResourceAbstract
  */
-namespace Zend\Application\Resource;
+require_once 'Zend/Application/Resource/ResourceAbstract.php';
 
-use Zend\Controller\Action\Helper\ViewRenderer;
 
 /**
  * Resource for settings view options
  *
+ * @uses       Zend_Application_Resource_ResourceAbstract
  * @category   Zend
  * @package    Zend_Application
  * @subpackage Resource
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class View extends AbstractResource
+class Zend_Application_Resource_View extends Zend_Application_Resource_ResourceAbstract
 {
     /**
-     * @var \Zend\View\ViewEngine
+     * @var Zend_View_Interface
      */
     protected $_view;
 
     /**
      * Defined by Zend_Application_Resource_Resource
      *
-     * @return \Zend\View\View
+     * @return Zend_View
      */
     public function init()
     {
-        $front     = false;
-        $bootstrap = $this->getBootstrap();
-        if ($bootstrap->getBroker()->hasPlugin('frontcontroller')) {
-            $bootstrap->bootstrap('frontcontroller');
-            $front = $bootstrap->getResource('frontcontroller');
-        }
         $view = $this->getView();
 
-        if ($front) {
-            $viewRenderer = new ViewRenderer();
-            $viewRenderer->setView($view);
-            $front->getHelperBroker()->register('viewrenderer', $viewRenderer);
-        }
+        $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer();
+        $viewRenderer->setView($view);
+        Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
         return $view;
     }
 
     /**
      * Retrieve view object
      *
-     * @return \Zend\View\View
+     * @return Zend_View
      */
     public function getView()
     {
         if (null === $this->_view) {
             $options = $this->getOptions();
-            $this->_view = new \Zend\View\PhpRenderer($options);
+            $this->_view = new Zend_View($options);
 
-            if(isset($options['doctype'])) {
-                $this->_view->broker('doctype')->setDoctype(strtoupper($options['doctype']));
+            if (isset($options['doctype'])) {
+                $this->_view->doctype()->setDoctype(strtoupper($options['doctype']));
+                if (isset($options['charset']) && $this->_view->doctype()->isHtml5()) {
+                    $this->_view->headMeta()->setCharset($options['charset']);
+                }
+            }
+            if (isset($options['contentType'])) {
+                $this->_view->headMeta()->appendHttpEquiv('Content-Type', $options['contentType']);
             }
         }
         return $this->_view;

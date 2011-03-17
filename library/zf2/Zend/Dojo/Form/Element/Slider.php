@@ -19,27 +19,26 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * @namespace
- */
-namespace Zend\Dojo\Form\Element;
+/** Zend_Dojo_Form_Element_Dijit */
+require_once 'Zend/Dojo/Form/Element/Dijit.php';
 
 /**
  * Abstract Slider dijit
  *
- * @uses       \Zend\Dojo\Form\Element\Dijit
+ * @uses       Zend_Dojo_Form_Element_Dijit
  * @package    Zend_Dojo
  * @subpackage Form_Element
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
-abstract class Slider extends Dijit
+abstract class Zend_Dojo_Form_Element_Slider extends Zend_Dojo_Form_Element_Dijit
 {
     /**
      * Set clickSelect flag
      *
      * @param  bool $clickSelect
-     * @return \Zend\Dojo\Form\Element\TextBox
+     * @return Zend_Dojo_Form_Element_TextBox
      */
     public function setClickSelect($flag)
     {
@@ -64,7 +63,7 @@ abstract class Slider extends Dijit
      * Set intermediateChanges flag
      *
      * @param  bool $intermediateChanges
-     * @return \Zend\Dojo\Form\Element\TextBox
+     * @return Zend_Dojo_Form_Element_TextBox
      */
     public function setIntermediateChanges($flag)
     {
@@ -89,7 +88,7 @@ abstract class Slider extends Dijit
      * Set showButtons flag
      *
      * @param  bool $showButtons
-     * @return \Zend\Dojo\Form\Element\TextBox
+     * @return Zend_Dojo_Form_Element_TextBox
      */
     public function setShowButtons($flag)
     {
@@ -114,7 +113,7 @@ abstract class Slider extends Dijit
      * Set discreteValues
      *
      * @param  int $value
-     * @return \Zend\Dojo\Form\Element\TextBox
+     * @return Zend_Dojo_Form_Element_TextBox
      */
     public function setDiscreteValues($value)
     {
@@ -136,7 +135,7 @@ abstract class Slider extends Dijit
      * Set maximum
      *
      * @param  int $value
-     * @return \Zend\Dojo\Form\Element\TextBox
+     * @return Zend_Dojo_Form_Element_TextBox
      */
     public function setMaximum($value)
     {
@@ -158,7 +157,7 @@ abstract class Slider extends Dijit
      * Set minimum
      *
      * @param  int $value
-     * @return \Zend\Dojo\Form\Element\TextBox
+     * @return Zend_Dojo_Form_Element_TextBox
      */
     public function setMinimum($value)
     {
@@ -180,7 +179,7 @@ abstract class Slider extends Dijit
      * Set pageIncrement
      *
      * @param  int $value
-     * @return \Zend\Dojo\Form\Element\TextBox
+     * @return Zend_Dojo_Form_Element_TextBox
      */
     public function setPageIncrement($value)
     {

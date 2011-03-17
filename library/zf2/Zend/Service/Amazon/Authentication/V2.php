@@ -20,10 +20,14 @@
  */
 
 /**
- * @namespace
+ * @see Zend_Service_Amazon_Authentication
  */
-namespace Zend\Service\Amazon\Authentication;
-use Zend\Crypt;
+require_once 'Zend/Service/Amazon/Authentication.php';
+
+/**
+ * @see Zend_Crypt_Hmac
+ */
+require_once 'Zend/Crypt/Hmac.php';
 
 /**
  * @category   Zend
@@ -32,7 +36,7 @@ use Zend\Crypt;
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class V2 extends Authentication
+class Zend_Service_Amazon_Authentication_V2 extends Zend_Service_Amazon_Authentication
 {
     /**
      * Signature Version
@@ -43,7 +47,7 @@ class V2 extends Authentication
      * Signature Encoding Method
      */
     protected $_signatureMethod = 'HmacSHA256';
-    
+
     /**
      * Type of http request
      * @var string
@@ -67,18 +71,18 @@ class V2 extends Authentication
         }
 
         $data = $this->_signParameters($url, $parameters);
-        
+
         return $data;
     }
-    
+
     /**
      * Set http request type to POST or GET
-     * @param $method string
+     * @param string $method
      */
     public function setHttpMethod($method = "POST") {
         $this->_httpMethod = strtoupper($method);
     }
-    
+
     /**
      * Get the current http request type
      * @return string
@@ -125,7 +129,7 @@ class V2 extends Authentication
 
         $data .= implode('&', $arrData);
 
-        $hmac = Crypt\Hmac::compute($this->_secretKey, 'SHA256', $data, Crypt\Hmac::BINARY);
+        $hmac = Zend_Crypt_Hmac::compute($this->_secretKey, 'SHA256', $data, Zend_Crypt_Hmac::BINARY);
 
         $paramaters['Signature'] = base64_encode($hmac);
 

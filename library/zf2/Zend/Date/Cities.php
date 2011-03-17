@@ -16,12 +16,8 @@
  * @package   Zend_Date
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id$
  */
-
-/**
- * @namespace
- */
-namespace Zend\Date;
 
 /**
  * Additional data for sunset/sunrise calculations
@@ -29,14 +25,13 @@ namespace Zend\Date;
  * Holds the geographical data for all capital cities and many others worldwide
  * Original data from http://www.fallingrain.com/world/
  *
- * @uses       \Zend\Date\Exception
  * @category   Zend
  * @package    Zend_Date
  * @subpackage Zend_Date_Cities
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Cities
+class Zend_Date_Cities
 {
     /**
      * Array Collection of known cities
@@ -300,7 +295,7 @@ class Cities
      *                         default: effective
      *                         others are civil, nautic, astronomic
      * @return array
-     * @throws \Zend\Date\Exception When city is unknown
+     * @throws Zend_Date_Exception When city is unknown
      */
     public static function City($city, $horizon = false)
     {
@@ -311,7 +306,8 @@ class Cities
                 return $return;
             }
         }
-        throw new Exception\InvalidArgumentException('unknown city');
+        require_once 'Zend/Date/Exception.php';
+        throw new Zend_Date_Exception('unknown city');
     }
 
     /**
@@ -324,11 +320,3 @@ class Cities
         return array_keys(self::$cities);
     }
 }
-
-
-/**
-
-
-
-
- */

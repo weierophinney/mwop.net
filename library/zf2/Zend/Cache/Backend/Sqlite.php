@@ -17,24 +17,27 @@
  * @subpackage Zend_Cache_Backend
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Cache\Backend;
-use Zend\Cache;
 
 /**
- * @uses       \Zend\Cache\Cache
- * @uses       \Zend\Cache\Backend\AbstractBackend
- * @uses       \Zend\Cache\Backend\ExtendedBackend
+ * @see Zend_Cache_Backend_Interface
+ */
+require_once 'Zend/Cache/Backend/ExtendedInterface.php';
+
+/**
+ * @see Zend_Cache_Backend
+ */
+require_once 'Zend/Cache/Backend.php';
+
+/**
  * @package    Zend_Cache
  * @subpackage Zend_Cache_Backend
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Sqlite extends AbstractBackend implements ExtendedBackend
+class Zend_Cache_Backend_Sqlite extends Zend_Cache_Backend implements Zend_Cache_Backend_ExtendedInterface
 {
     /**
      * Available options
@@ -82,10 +85,10 @@ class Sqlite extends AbstractBackend implements ExtendedBackend
     {
         parent::__construct($options);
         if ($this->_options['cache_db_complete_path'] === null) {
-            Cache\Cache::throwException('cache_db_complete_path option has to set');
+            Zend_Cache::throwException('cache_db_complete_path option has to set');
         }
         if (!extension_loaded('sqlite')) {
-            Cache\Cache::throwException("Cannot use SQLite storage because the 'sqlite' extension is not loaded in the current PHP environment");
+            Zend_Cache::throwException("Cannot use SQLite storage because the 'sqlite' extension is not loaded in the current PHP environment");
         }
         $this->_getConnection();
     }
@@ -150,7 +153,7 @@ class Sqlite extends AbstractBackend implements ExtendedBackend
      * @param  string $id               Cache id
      * @param  array  $tags             Array of strings, the cache record will be tagged by each string entry
      * @param  int    $specificLifetime If != false, set a specific lifetime for this cache record (null => infinite lifetime)
-     * @throws \Zend\Cache\Exception
+     * @throws Zend_Cache_Exception
      * @return boolean True if no problem
      */
     public function save($data, $id, $tags = array(), $specificLifetime = false)
@@ -212,7 +215,7 @@ class Sqlite extends AbstractBackend implements ExtendedBackend
      * @param  array  $tags Array of tags
      * @return boolean True if no problem
      */
-    public function clean($mode = Cache\Cache::CLEANING_MODE_ALL, $tags = array())
+    public function clean($mode = Zend_Cache::CLEANING_MODE_ALL, $tags = array())
     {
         $this->_checkAndBuildStructure();
         $return = $this->_clean($mode, $tags);
@@ -360,7 +363,7 @@ class Sqlite extends AbstractBackend implements ExtendedBackend
     /**
      * Return the filling percentage of the backend storage
      *
-     * @throws \Zend\Cache\Exception
+     * @throws Zend_Cache_Exception
      * @return int integer between 0 and 100
      */
     public function getFillingPercentage()
@@ -369,7 +372,7 @@ class Sqlite extends AbstractBackend implements ExtendedBackend
         $free = disk_free_space($dir);
         $total = disk_total_space($dir);
         if ($total == 0) {
-            Cache\Cache::throwException('can\'t get disk_total_space');
+            Zend_Cache::throwException('can\'t get disk_total_space');
         } else {
             if ($free >= $total) {
                 return 100;
@@ -480,7 +483,7 @@ class Sqlite extends AbstractBackend implements ExtendedBackend
      *
      * If we are not connected, the connection is made
      *
-     * @throws \Zend\Cache\Exception
+     * @throws Zend_Cache_Exception
      * @return resource Connection resource
      */
     private function _getConnection()
@@ -490,7 +493,7 @@ class Sqlite extends AbstractBackend implements ExtendedBackend
         } else {
             $this->_db = @sqlite_open($this->_options['cache_db_complete_path']);
             if (!(is_resource($this->_db))) {
-                Cache\Cache::throwException("Impossible to open " . $this->_options['cache_db_complete_path'] . " cache DB file");
+                Zend_Cache::throwException("Impossible to open " . $this->_options['cache_db_complete_path'] . " cache DB file");
             }
             return $this->_db;
         }
@@ -609,21 +612,21 @@ class Sqlite extends AbstractBackend implements ExtendedBackend
      * @param  array  $tags Array of tags
      * @return boolean True if no problem
      */
-    private function _clean($mode = Cache\Cache::CLEANING_MODE_ALL, $tags = array())
+    private function _clean($mode = Zend_Cache::CLEANING_MODE_ALL, $tags = array())
     {
         switch ($mode) {
-            case Cache\Cache::CLEANING_MODE_ALL:
+            case Zend_Cache::CLEANING_MODE_ALL:
                 $res1 = $this->_query('DELETE FROM cache');
                 $res2 = $this->_query('DELETE FROM tag');
                 return $res1 && $res2;
                 break;
-            case Cache\Cache::CLEANING_MODE_OLD:
+            case Zend_Cache::CLEANING_MODE_OLD:
                 $mktime = time();
                 $res1 = $this->_query("DELETE FROM tag WHERE id IN (SELECT id FROM cache WHERE expire>0 AND expire<=$mktime)");
                 $res2 = $this->_query("DELETE FROM cache WHERE expire>0 AND expire<=$mktime");
                 return $res1 && $res2;
                 break;
-            case Cache\Cache::CLEANING_MODE_MATCHING_TAG:
+            case Zend_Cache::CLEANING_MODE_MATCHING_TAG:
                 $ids = $this->getIdsMatchingTags($tags);
                 $result = true;
                 foreach ($ids as $id) {
@@ -631,7 +634,7 @@ class Sqlite extends AbstractBackend implements ExtendedBackend
                 }
                 return $result;
                 break;
-            case Cache\Cache::CLEANING_MODE_NOT_MATCHING_TAG:
+            case Zend_Cache::CLEANING_MODE_NOT_MATCHING_TAG:
                 $ids = $this->getIdsNotMatchingTags($tags);
                 $result = true;
                 foreach ($ids as $id) {
@@ -639,7 +642,7 @@ class Sqlite extends AbstractBackend implements ExtendedBackend
                 }
                 return $result;
                 break;
-            case Cache\Cache::CLEANING_MODE_MATCHING_ANY_TAG:
+            case Zend_Cache::CLEANING_MODE_MATCHING_ANY_TAG:
                 $ids = $this->getIdsMatchingAnyTags($tags);
                 $result = true;
                 foreach ($ids as $id) {
@@ -656,7 +659,7 @@ class Sqlite extends AbstractBackend implements ExtendedBackend
     /**
      * Check if the database structure is ok (with the good version), if no : build it
      *
-     * @throws \Zend\Cache\Exception
+     * @throws Zend_Cache_Exception
      * @return boolean True if ok
      */
     private function _checkAndBuildStructure()
@@ -665,7 +668,7 @@ class Sqlite extends AbstractBackend implements ExtendedBackend
             if (!$this->_checkStructureVersion()) {
                 $this->_buildStructure();
                 if (!$this->_checkStructureVersion()) {
-                    Cache\Cache::throwException("Impossible to build cache structure in " . $this->_options['cache_db_complete_path']);
+                    Zend_Cache::throwException("Impossible to build cache structure in " . $this->_options['cache_db_complete_path']);
                 }
             }
             $this->_structureChecked = true;

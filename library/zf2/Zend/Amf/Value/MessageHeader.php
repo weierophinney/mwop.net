@@ -17,12 +17,8 @@
  * @subpackage Value
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
-
-/**
- * @namespace
- */
-namespace Zend\Amf\Value;
 
 /**
  * Message Headers provide context for the processing of the
@@ -35,7 +31,7 @@ namespace Zend\Amf\Value;
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class MessageHeader
+class Zend_Amf_Value_MessageHeader
 {
     /**
      * Name of the header

@@ -17,39 +17,35 @@
  * @subpackage Framework
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Tool\Framework\System;
+require_once 'Zend/Tool/Framework/Manifest/ProviderManifestable.php';
+require_once 'Zend/Tool/Framework/Manifest/ActionManifestable.php';
+require_once 'Zend/Tool/Framework/System/Provider/Version.php';
+require_once 'Zend/Tool/Framework/System/Provider/Config.php';
+require_once 'Zend/Tool/Framework/System/Provider/Phpinfo.php';
+require_once 'Zend/Tool/Framework/System/Provider/Manifest.php';
+require_once 'Zend/Tool/Framework/System/Action/Create.php';
+require_once 'Zend/Tool/Framework/System/Action/Delete.php';
 
 /**
- * @uses       \Zend\Tool\Framework\Manifest\ActionManifestable
- * @uses       \Zend\Tool\Framework\Manifest\ProviderManifestable
- * @uses       \Zend\Tool\Framework\System\Action\Create
- * @uses       \Zend\Tool\Framework\System\Action\Delete
- * @uses       \Zend\Tool\Framework\System\Provider\Config
- * @uses       \Zend\Tool\Framework\System\Provider\Manifest
- * @uses       \Zend\Tool\Framework\System\Provider\Phpinfo
- * @uses       \Zend\Tool\Framework\System\Provider\Version
  * @category   Zend
  * @package    Zend_Tool
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Manifest
-    implements \Zend\Tool\Framework\Manifest\ProviderManifestable, 
-               \Zend\Tool\Framework\Manifest\ActionManifestable
+class Zend_Tool_Framework_System_Manifest
+    implements Zend_Tool_Framework_Manifest_ProviderManifestable, Zend_Tool_Framework_Manifest_ActionManifestable
 {
 
     public function getProviders()
     {
         $providers = array(
-            new Provider\Version(),
-            new Provider\Config(),
-            new Provider\Phpinfo(),
-            new Provider\Manifest()
+            new Zend_Tool_Framework_System_Provider_Version(),
+            new Zend_Tool_Framework_System_Provider_Config(),
+            new Zend_Tool_Framework_System_Provider_Phpinfo(),
+            new Zend_Tool_Framework_System_Provider_Manifest()
             );
 
         return $providers;
@@ -58,8 +54,8 @@ class Manifest
     public function getActions()
     {
         $actions = array(
-            new Action\Create(),
-            new Action\Delete()
+            new Zend_Tool_Framework_System_Action_Create(),
+            new Zend_Tool_Framework_System_Action_Delete()
             );
 
         return $actions;

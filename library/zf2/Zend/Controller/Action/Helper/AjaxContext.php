@@ -17,25 +17,25 @@
  * @subpackage Zend_Controller_Action_Helper
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Controller_Action_Helper_ContextSwitch
  */
-namespace Zend\Controller\Action\Helper;
+require_once 'Zend/Controller/Action/Helper/ContextSwitch.php';
 
 /**
  * Simplify AJAX context switching based on requested format
  *
- * @uses       \Zend\Controller\Action\Helper\AbstractHelper
- * @uses       \Zend\Controller\Action\Helper\ContextSwitch
+ * @uses       Zend_Controller_Action_Helper_Abstract
  * @category   Zend
  * @package    Zend_Controller
  * @subpackage Zend_Controller_Action_Helper
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class AjaxContext extends ContextSwitch
+class Zend_Controller_Action_Helper_AjaxContext extends Zend_Controller_Action_Helper_ContextSwitch
 {
     /**
      * Controller property to utilize for context switching
@@ -68,7 +68,7 @@ class AjaxContext extends ContextSwitch
     {
         $this->_currentContext = null;
 
-        if (!$this->getRequest()->isXmlHTTPRequest()) {
+        if (!$this->getRequest()->isXmlHttpRequest()) {
             return;
         }
 

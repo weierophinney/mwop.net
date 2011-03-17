@@ -16,25 +16,24 @@
  * @package    Zend_Feed_Reader
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
-* @namespace
-*/
-namespace Zend\Feed\Reader\Extension\Syndication;
-use Zend\Feed\Reader;
-use Zend\Feed\Reader\Extension;
-use Zend\Date;
+ * @see Zend_Feed_Reader_Extension_FeedAbstract
+ */
+require_once 'Zend/Feed/Reader/Extension/FeedAbstract.php';
+
+require_once 'Zend/Date.php';
 
 /**
- * @uses       \Zend\Date\Date
- * @uses       \Zend\Feed\Reader\Extension\AbstractFeed
  * @category   Zend
  * @package    Zend_Feed_Reader
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Feed extends \Zend\Feed\Reader\Extension\AbstractFeed
+class Zend_Feed_Reader_Extension_Syndication_Feed
+    extends Zend_Feed_Reader_Extension_FeedAbstract
 {
     /**
      * Get update period
@@ -58,7 +57,7 @@ class Feed extends \Zend\Feed\Reader\Extension\AbstractFeed
             case 'yearly':
                 return $period;
             default:
-                throw new Reader\Exception("Feed specified invalid update period: '$period'."
+                throw new Zend_Feed_Exception("Feed specified invalid update period: '$period'."
                     .  " Must be one of hourly, daily, weekly or yearly"
                 );
         }
@@ -120,15 +119,15 @@ class Feed extends \Zend\Feed\Reader\Extension\AbstractFeed
     /**
      * Get update base
      *
-     * @return Date\Date|null
+     * @return Zend_Date|null
      */
     public function getUpdateBase()
     {
         $updateBase = $this->_getData('updateBase');
         $date = null;
         if ($updateBase) {
-            $date = new Date\Date;
-            $date->set($updateBase, Date\Date::W3C);
+            $date = new Zend_Date;
+            $date->set($updateBase, Zend_Date::W3C);
         }
         return $date;
     }

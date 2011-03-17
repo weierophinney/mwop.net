@@ -16,21 +16,21 @@
  * @package    Zend_Filter
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Filter_Interface
  */
-namespace Zend\Filter\Word;
+require_once 'Zend/Filter/Word/CamelCaseToSeparator.php';
 
 /**
- * @uses       \Zend\Filter\Word\CamelCaseToSeparator
  * @category   Zend
  * @package    Zend_Filter
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class CamelCaseToDash extends CamelCaseToSeparator
+class Zend_Filter_Word_CamelCaseToDash extends Zend_Filter_Word_CamelCaseToSeparator
 {
     /**
      * Constructor

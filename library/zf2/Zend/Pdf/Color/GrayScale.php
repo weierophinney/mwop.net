@@ -13,38 +13,35 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    Zend_PDF
- * @subpackage Zend_PDF_Color
+ * @package    Zend_Pdf
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Pdf\Color;
 
-use Zend\Pdf\Color,
-    Zend\Pdf\InternalType;
+/** Internally used classes */
+require_once 'Zend/Pdf/Element/Numeric.php';
+
+
+/** Zend_Pdf_Color */
+require_once 'Zend/Pdf/Color.php';
 
 /**
  * GrayScale color implementation
  *
- * @uses       \Zend\Pdf\Color
- * @uses       \Zend\Pdf\InternalType\NumericObject
  * @category   Zend
- * @package    Zend_PDF
- * @subpackage Zend_PDF_Color
+ * @package    Zend_Pdf
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class GrayScale implements Color
+class Zend_Pdf_Color_GrayScale extends Zend_Pdf_Color
 {
     /**
      * GrayLevel.
      * 0.0 (black) - 1.0 (white)
      *
-     * @var \Zend\Pdf\InternalType\NumericObject
+     * @var Zend_Pdf_Element_Numeric
      */
     private $_grayLevel;
 
@@ -58,7 +55,7 @@ class GrayScale implements Color
         if ($grayLevel < 0) { $grayLevel = 0; }
         if ($grayLevel > 1) { $grayLevel = 1; }
 
-        $this->_grayLevel = new InternalType\NumericObject($grayLevel);
+        $this->_grayLevel = new Zend_Pdf_Element_Numeric($grayLevel);
     }
 
     /**

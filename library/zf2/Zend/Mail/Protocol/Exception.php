@@ -14,23 +14,26 @@
  *
  * @category   Zend
  * @package    Zend_Mail
+ * @subpackage Protocol
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Mail\Protocol;
-use Zend\Mail;
 
 /**
- * @uses       \Zend\Exception
+ * @see Zend_Exception
+ */
+require_once 'Zend/Mail/Exception.php';
+
+
+/**
  * @category   Zend
  * @package    Zend_Mail
+ * @subpackage Protocol
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-interface Exception extends Mail\Exception
-{
-}
+class Zend_Mail_Protocol_Exception extends Zend_Mail_Exception
+{}
+

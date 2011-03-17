@@ -17,29 +17,27 @@
  * @subpackage Statement
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Db_Statement_Pdo
  */
-namespace Zend\Db\Statement\Pdo;
-
-use Zend\Db\Statement\Pdo;
+require_once 'Zend/Db/Statement/Pdo.php';
 
 /**
- * Proxy class to wrap a PDOStatement object for Ibm Databases.
+ * Proxy class to wrap a PDOStatement object for IBM Databases.
  * Matches the interface of PDOStatement.  All methods simply proxy to the
  * matching method in PDOStatement.  PDOExceptions thrown by PDOStatement
  * are re-thrown as Zend_Db_Statement_Exception.
  *
- * @uses       \Zend\Db\Statement\Pdo\Pdo
  * @category   Zend
  * @package    Zend_Db
  * @subpackage Statement
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Oci extends Pdo
+class Zend_Db_Statement_Pdo_Oci extends Zend_Db_Statement_Pdo
 {
 
     /**
@@ -52,7 +50,7 @@ class Oci extends Pdo
     * @param int $style OPTIONAL Fetch mode.
     * @param int $col   OPTIONAL Column number, if fetch mode is by column.
     * @return array Collection of rows, each in a format by the fetch mode.
-    * @throws \Zend\Db\Statement\Exception
+    * @throws Zend_Db_Statement_Exception
     */
     public function fetchAll($style = null, $col = null)
     {
@@ -77,7 +75,7 @@ class Oci extends Pdo
      * @param int $cursor OPTIONAL Absolute, relative, or other.
      * @param int $offset OPTIONAL Number for absolute or relative cursors.
      * @return mixed Array, object, or scalar depending on fetch mode.
-     * @throws \Zend\Db\Statement\Exception
+     * @throws Zend_Db_Statement_Exception
      */
     public function fetch($style = null, $cursor = null, $offset = null)
     {

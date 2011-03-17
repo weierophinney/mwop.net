@@ -16,24 +16,26 @@
  * @package    Zend_Config
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Config_Writer
  */
-namespace Zend\Config\Writer;
-use Zend\Config;
+require_once 'Zend/Config/Writer/FileAbstract.php';
 
 /**
- * @uses       \Zend\Config\Exception
- * @uses       \Zend\Config\Writer\FileAbstract
- * @uses       \Zend\Config\Xml
+ * @see Zend_Config_Xml
+ */
+require_once 'Zend/Config/Xml.php';
+
+/**
  * @category   Zend
  * @package    Zend_Config
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Xml extends AbstractFileWriter
+class Zend_Config_Writer_Xml extends Zend_Config_Writer_FileAbstract
 {
     /**
      * Render a Zend_Config into a XML config string.
@@ -43,7 +45,7 @@ class Xml extends AbstractFileWriter
      */
     public function render()
     {
-        $xml         = new \SimpleXMLElement('<zend-config xmlns:zf="' . Config\Xml::XML_NAMESPACE . '"/>');
+        $xml         = new SimpleXMLElement('<zend-config xmlns:zf="' . Zend_Config_Xml::XML_NAMESPACE . '"/>');
         $extends     = $this->_config->getExtends();
         $sectionName = $this->_config->getSectionName();
 
@@ -53,13 +55,13 @@ class Xml extends AbstractFileWriter
             $this->_addBranch($this->_config, $child, $xml);
         } else {
             foreach ($this->_config as $sectionName => $data) {
-                if (!($data instanceof Config\Config)) {
+                if (!($data instanceof Zend_Config)) {
                     $xml->addChild($sectionName, (string) $data);
                 } else {
                     $child = $xml->addChild($sectionName);
 
                     if (isset($extends[$sectionName])) {
-                        $child->addAttribute('zf:extends', $extends[$sectionName], Config\Xml::XML_NAMESPACE);
+                        $child->addAttribute('zf:extends', $extends[$sectionName], Zend_Config_Xml::XML_NAMESPACE);
                     }
 
                     $this->_addBranch($data, $child, $xml);
@@ -78,12 +80,12 @@ class Xml extends AbstractFileWriter
     /**
      * Add a branch to an XML object recursively
      *
-     * @param  \Zend\Config\Config      $config
+     * @param  Zend_Config      $config
      * @param  SimpleXMLElement $xml
      * @param  SimpleXMLElement $parent
      * @return void
      */
-    protected function _addBranch(Config\Config $config, \SimpleXMLElement $xml, \SimpleXMLElement $parent)
+    protected function _addBranch(Zend_Config $config, SimpleXMLElement $xml, SimpleXMLElement $parent)
     {
         $branchType = null;
 
@@ -99,11 +101,12 @@ class Xml extends AbstractFileWriter
                     $branchType = 'string';
                 }
             } else if ($branchType !== (is_numeric($key) ? 'numeric' : 'string')) {
-                throw new Config\Exception\RuntimeException('Mixing of string and numeric keys is not allowed');
+                require_once 'Zend/Config/Exception.php';
+                throw new Zend_Config_Exception('Mixing of string and numeric keys is not allowed');
             }
 
             if ($branchType === 'numeric') {
-                if ($value instanceof Config\Config) {
+                if ($value instanceof Zend_Config) {
                     $child = $parent->addChild($branchName);
 
                     $this->_addBranch($value, $child, $parent);
@@ -111,7 +114,7 @@ class Xml extends AbstractFileWriter
                     $parent->addChild($branchName, (string) $value);
                 }
             } else {
-                if ($value instanceof Config\Config) {
+                if ($value instanceof Zend_Config) {
                     $child = $xml->addChild($key);
 
                     $this->_addBranch($value, $child, $xml);

@@ -17,25 +17,20 @@
  * @subpackage Search
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Search\Lucene\Search\QueryEntry;
+/** Zend_Search_Lucene_Search_QueryEntry */
+require_once 'Zend/Search/Lucene/Search/QueryEntry.php';
 
 /**
- * @uses       \Zend\Search\Lucene\Search\QueryEntry\AbstractQueryEntry
- * @uses       \Zend\Search\Lucene\Search\Query\Fuzzy
- * @uses       \Zend\Search\Lucene\Search\Query\Preprocessing\Fuzzy
- * @uses       \Zend\Search\Lucene\Search\Query\Preprocessing\Term
  * @category   Zend
  * @package    Zend_Search_Lucene
  * @subpackage Search
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Term extends AbstractQueryEntry
+class Zend_Search_Lucene_Search_QueryEntry_Term extends Zend_Search_Lucene_Search_QueryEntry
 {
     /**
      * Term value
@@ -91,7 +86,9 @@ class Term extends AbstractQueryEntry
         if ($parameter !== null) {
             $this->_similarity = $parameter;
         } else {
-            $this->_similarity = \Zend\Search\Lucene\Search\Query\Fuzzy::DEFAULT_MIN_SIMILARITY;
+            /** Zend_Search_Lucene_Search_Query_Fuzzy */
+            require_once 'Zend/Search/Lucene/Search/Query/Fuzzy.php';
+            $this->_similarity = Zend_Search_Lucene_Search_Query_Fuzzy::DEFAULT_MIN_SIMILARITY;
         }
     }
 
@@ -99,13 +96,15 @@ class Term extends AbstractQueryEntry
      * Transform entry to a subquery
      *
      * @param string $encoding
-     * @return \Zend\Search\Lucene\Search\Query\AbstractQuery
-     * @throws \Zend\Search\Lucene\Search\Exception\QueryParserException
+     * @return Zend_Search_Lucene_Search_Query
+     * @throws Zend_Search_Lucene_Search_QueryParserException
      */
     public function getQuery($encoding)
     {
         if ($this->_fuzzyQuery) {
-            $query = new \Zend\Search\Lucene\Search\Query\Preprocessing\Fuzzy($this->_term,
+            /** Zend_Search_Lucene_Search_Query_Preprocessing_Fuzzy */
+            require_once 'Zend/Search/Lucene/Search/Query/Preprocessing/Fuzzy.php';
+            $query = new Zend_Search_Lucene_Search_Query_Preprocessing_Fuzzy($this->_term,
                                                                              $encoding,
                                                                              ($this->_field !== null)?
                                                                                   iconv($encoding, 'UTF-8', $this->_field) :
@@ -117,7 +116,9 @@ class Term extends AbstractQueryEntry
         }
 
 
-        $query = new \Zend\Search\Lucene\Search\Query\Preprocessing\Term($this->_term,
+        /** Zend_Search_Lucene_Search_Query_Preprocessing_Term */
+        require_once 'Zend/Search/Lucene/Search/Query/Preprocessing/Term.php';
+        $query = new Zend_Search_Lucene_Search_Query_Preprocessing_Term($this->_term,
                                                                         $encoding,
                                                                         ($this->_field !== null)?
                                                                               iconv($encoding, 'UTF-8', $this->_field) :

@@ -16,24 +16,21 @@
  * @package    Zend_Filter
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Filter_Interface
  */
-namespace Zend\Filter;
-use Zend\Locale\Locale;
+require_once 'Zend/Filter/Interface.php';
 
 /**
- * @uses       Zend\Filter\Exception
- * @uses       Zend\Filter\AbstractFilter
- * @uses       Zend\Locale\Locale
  * @category   Zend
  * @package    Zend_Filter
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Boolean extends AbstractFilter
+class Zend_Filter_Boolean implements Zend_Filter_Interface
 {
     const BOOLEAN      = 1;
     const INTEGER      = 2;
@@ -85,11 +82,11 @@ class Boolean extends AbstractFilter
     /**
      * Constructor
      *
-     * @param string|array|\Zend\Config\Config $options OPTIONAL
+     * @param string|array|Zend_Config $options OPTIONAL
      */
     public function __construct($options = null)
     {
-        if ($options instanceof \Zend\Config\Config) {
+        if ($options instanceof Zend_Config) {
             $options = $options->toArray();
         } elseif (!is_array($options)) {
             $options = func_get_args();
@@ -136,8 +133,8 @@ class Boolean extends AbstractFilter
      * Set the null types
      *
      * @param  integer|array $type
-     * @throws \Zend\Filter\Exception
-     * @return \Zend\Filter\Boolean
+     * @throws Zend_Filter_Exception
+     * @return Zend_Filter_Boolean
      */
     public function setType($type = null)
     {
@@ -157,7 +154,8 @@ class Boolean extends AbstractFilter
         }
 
         if (!is_int($type) || ($type < 0) || ($type > self::ALL)) {
-            throw new Exception\InvalidArgumentException('Unknown type');
+            require_once 'Zend/Filter/Exception.php';
+            throw new Zend_Filter_Exception('Unknown type');
         }
 
         $this->_type = $type;
@@ -177,23 +175,26 @@ class Boolean extends AbstractFilter
     /**
      * Set the locales which are accepted
      *
-     * @param  string|array|\Zend\Locale\Locale $locale
-     * @throws \Zend\Filter\Exception
-     * @return \Zend\Filter\Boolean
+     * @param  string|array|Zend_Locale $locale
+     * @throws Zend_Filter_Exception
+     * @return Zend_Filter_Boolean
      */
     public function setLocale($locale = null)
     {
         if (is_string($locale)) {
             $locale = array($locale);
-        } elseif ($locale instanceof Locale) {
+        } elseif ($locale instanceof Zend_Locale) {
             $locale = array($locale->toString());
         } elseif (!is_array($locale)) {
-            throw new Exception\InvalidArgumentException('Locale has to be string, array or an instance of Zend_Locale');
+            require_once 'Zend/Filter/Exception.php';
+            throw new Zend_Filter_Exception('Locale has to be string, array or an instance of Zend_Locale');
         }
 
+        require_once 'Zend/Locale.php';
         foreach ($locale as $single) {
-            if (!Locale::isLocale($single)) {
-                throw new Exception\InvalidArgumentException("Unknown locale '$single'");
+            if (!Zend_Locale::isLocale($single)) {
+                require_once 'Zend/Filter/Exception.php';
+                throw new Zend_Filter_Exception("Unknown locale '$single'");
             }
         }
 
@@ -217,8 +218,8 @@ class Boolean extends AbstractFilter
      * @param  boolean $locale When true this filter works like cast
      *                         When false it recognises only true and false
      *                         and all other values are returned as is
-     * @throws \Zend\Filter\Exception
-     * @return \Zend\Filter\Boolean
+     * @throws Zend_Filter_Exception
+     * @return Zend_Filter_Boolean
      */
     public function setCasting($casting = true)
     {
@@ -243,6 +244,7 @@ class Boolean extends AbstractFilter
         if ($type >= self::YES) {
             $type -= self::YES;
             if (is_string($value)) {
+                require_once 'Zend/Locale.php';
                 $locales = $this->getLocale();
                 foreach ($locales as $locale) {
                     if ($this->_getLocalizedQuestion($value, false, $locale) === false) {
@@ -360,7 +362,7 @@ class Boolean extends AbstractFilter
             $question = 'no';
             $return   = false;
         }
-        $str = Locale::getTranslation($question, 'question', $locale);
+        $str = Zend_Locale::getTranslation($question, 'question', $locale);
         $str = explode(':', $str);
         if (!empty($str)) {
             foreach($str as $no) {

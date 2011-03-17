@@ -17,23 +17,23 @@
  * @subpackage Zend_Cache_Frontend
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Cache\Frontend;
-use Zend\Cache\Cache;
 
 /**
- * @uses       \Zend\Cache\Cache
- * @uses       \Zend\Cache\Frontend\Core
+ * @see Zend_Cache_Core
+ */
+require_once 'Zend/Cache/Core.php';
+
+
+/**
  * @package    Zend_Cache
  * @subpackage Zend_Cache_Frontend
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Page extends Core
+class Zend_Cache_Frontend_Page extends Zend_Cache_Core
 {
     /**
      * This frontend specific options
@@ -124,7 +124,7 @@ class Page extends Core
      *
      * @param  array   $options                Associative array of options
      * @param  boolean $doNotTestCacheValidity If set to true, the cache validity won't be tested
-     * @throws \Zend\Cache\Exception
+     * @throws Zend_Cache_Exception
      * @return void
      */
     public function __construct(array $options = array())
@@ -147,7 +147,7 @@ class Page extends Core
         }
         if (isset($this->_specificOptions['http_conditional'])) {
             if ($this->_specificOptions['http_conditional']) {
-                Cache::throwException('http_conditional is not implemented for the moment !');
+                Zend_Cache::throwException('http_conditional is not implemented for the moment !');
             }
         }
         $this->setOption('automatic_serialization', true);
@@ -157,17 +157,17 @@ class Page extends Core
      * Specific setter for the 'default_options' option (with some additional tests)
      *
      * @param  array $options Associative array
-     * @throws \Zend\Cache\Exception
+     * @throws Zend_Cache_Exception
      * @return void
      */
     protected function _setDefaultOptions($options)
     {
         if (!is_array($options)) {
-            Cache::throwException('default_options must be an array !');
+            Zend_Cache::throwException('default_options must be an array !');
         }
         foreach ($options as $key=>$value) {
             if (!is_string($key)) {
-                Cache::throwException("invalid option [$key] !");
+                Zend_Cache::throwException("invalid option [$key] !");
             }
             $key = strtolower($key);
             if (isset($this->_specificOptions['default_options'][$key])) {
@@ -206,22 +206,22 @@ class Page extends Core
      * Specific setter for the 'regexps' option (with some additional tests)
      *
      * @param  array $options Associative array
-     * @throws \Zend\Cache\Exception
+     * @throws Zend_Cache_Exception
      * @return void
      */
     protected function _setRegexps($regexps)
     {
         if (!is_array($regexps)) {
-            Cache::throwException('regexps option must be an array !');
+            Zend_Cache::throwException('regexps option must be an array !');
         }
         foreach ($regexps as $regexp=>$conf) {
             if (!is_array($conf)) {
-                Cache::throwException('regexps option must be an array of arrays !');
+                Zend_Cache::throwException('regexps option must be an array of arrays !');
             }
             $validKeys = array_keys($this->_specificOptions['default_options']);
             foreach ($conf as $key=>$value) {
                 if (!is_string($key)) {
-                    Cache::throwException("unknown option [$key] !");
+                    Zend_Cache::throwException("unknown option [$key] !");
                 }
                 $key = strtolower($key);
                 if (!in_array($key, $validKeys)) {
@@ -243,9 +243,11 @@ class Page extends Core
     {
         $this->_cancel = false;
         $lastMatchingRegexp = null;
-        foreach ($this->_specificOptions['regexps'] as $regexp => $conf) {
-            if (preg_match("`$regexp`", $_SERVER['REQUEST_URI'])) {
-                $lastMatchingRegexp = $regexp;
+        if (isset($_SERVER['REQUEST_URI'])) {
+            foreach ($this->_specificOptions['regexps'] as $regexp => $conf) {
+                if (preg_match("`$regexp`", $_SERVER['REQUEST_URI'])) {
+                    $lastMatchingRegexp = $regexp;
+                }
             }
         }
         $this->_activeOptions = $this->_specificOptions['default_options'];

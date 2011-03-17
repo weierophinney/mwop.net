@@ -16,27 +16,28 @@
  * @package    Zend_Filter
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Filter_Interface
  */
-namespace Zend\Filter;
-use Zend\Locale\Format,
-    Zend\Date\Date;
+require_once 'Zend/Filter/Interface.php';
+
+/**
+ * @see Zend_Loader
+ */
+require_once 'Zend/Locale/Format.php';
 
 /**
  * Localizes given normalized input
  *
- * @uses       Zend\Date\Date
- * @uses       Zend\Filter\AbstractFilter
- * @uses       Zend\Locale\Format
  * @category   Zend
  * @package    Zend_Filter
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class NormalizedToLocalized extends AbstractFilter
+class Zend_Filter_NormalizedToLocalized implements Zend_Filter_Interface
 {
     /**
      * Set options
@@ -50,11 +51,11 @@ class NormalizedToLocalized extends AbstractFilter
     /**
      * Class constructor
      *
-     * @param string|\Zend\Locale\Locale $locale (Optional) Locale to set
+     * @param string|Zend_Locale $locale (Optional) Locale to set
      */
     public function __construct($options = null)
     {
-        if ($options instanceof \Zend\Config\Config) {
+        if ($options instanceof Zend_Config) {
             $options = $options->toArray();
         }
 
@@ -77,7 +78,7 @@ class NormalizedToLocalized extends AbstractFilter
      * Sets options to use
      *
      * @param  array $options (Optional) Options to use
-     * @return \Zend\Filter\LocalizedToNormalized
+     * @return Zend_Filter_LocalizedToNormalized
      */
     public function setOptions(array $options = null)
     {
@@ -96,14 +97,15 @@ class NormalizedToLocalized extends AbstractFilter
     public function filter($value)
     {
         if (is_array($value)) {
-            $date = new Date($value, $this->_options['locale']);
+            require_once 'Zend/Date.php';
+            $date = new Zend_Date($value, $this->_options['locale']);
             return $date->toString($this->_options['date_format']);
         } else if ($this->_options['precision'] === 0) {
-            return Format::toInteger($value, $this->_options);
+            return Zend_Locale_Format::toInteger($value, $this->_options);
         } else if ($this->_options['precision'] === null) {
-            return Format::toFloat($value, $this->_options);
+            return Zend_Locale_Format::toFloat($value, $this->_options);
         }
 
-        return Format::toNumber($value, $this->_options);
+        return Zend_Locale_Format::toNumber($value, $this->_options);
     }
 }

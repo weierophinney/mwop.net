@@ -17,23 +17,28 @@
  * @subpackage Object
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Barcode_Object_ObjectAbstract
  */
-namespace Zend\Barcode\Object;
+require_once 'Zend/Barcode/Object/ObjectAbstract.php';
+
+/**
+ * @see Zend_Validate_Barcode
+ */
+require_once 'Zend/Validate/Barcode.php';
 
 /**
  * Class for generate Interleaved 2 of 5 barcode
  *
- * @uses       \Zend\Barcode\Object\AbstractObject
  * @category   Zend
  * @package    Zend_Barcode
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Code25 extends AbstractObject
+class Zend_Barcode_Object_Code25 extends Zend_Barcode_Object_ObjectAbstract
 {
     /**
      * Coding map
@@ -92,7 +97,7 @@ class Code25 extends AbstractObject
         $barcodeTable[] = array(1 , $this->_barThickWidth , 0 , 1);
         $barcodeTable[] = array(0 , $this->_barThinWidth , 0 , 1);
         $barcodeTable[] = array(1 , $this->_barThinWidth , 0 , 1);
-        $barcodeTable[] = array(0 , 1);
+        $barcodeTable[] = array(0 , $this->_barThinWidth);
 
         $text = str_split($this->getText());
         foreach ($text as $char) {
@@ -101,7 +106,7 @@ class Code25 extends AbstractObject
                 /* visible, width, top, length */
                 $width = $c ? $this->_barThickWidth : $this->_barThinWidth;
                 $barcodeTable[] = array(1 , $width , 0 , 1);
-                $barcodeTable[] = array(0 , 1);
+                $barcodeTable[] = array(0 , $this->_barThinWidth);
             }
         }
 

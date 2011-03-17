@@ -17,23 +17,21 @@
  * @subpackage Index
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Search\Lucene;
+/** Zend_Search_Lucene_Index_TermsStream_Interface */
+require_once 'Zend/Search/Lucene/Index/TermsStream/Interface.php';
+
 
 /**
- * @uses       \Zend\Search\Lucene\Index\TermsPriorityQueue
- * @uses       \Zend\Search\Lucene\Index\TermsStream
  * @category   Zend
  * @package    Zend_Search_Lucene
  * @subpackage Index
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class TermStreamsPriorityQueue implements Index\TermsStream
+class Zend_Search_Lucene_TermStreamsPriorityQueue implements Zend_Search_Lucene_Index_TermsStream_Interface
 {
     /**
      * Array of term streams (Zend_Search_Lucene_Index_TermsStream_Interface objects)
@@ -45,14 +43,14 @@ class TermStreamsPriorityQueue implements Index\TermsStream
     /**
      * Terms stream queue
      *
-     * @var \Zend\Search\Lucene\Index\TermsPriorityQueue
+     * @var Zend_Search_Lucene_Index_TermsPriorityQueue
      */
     protected $_termsStreamQueue = null;
 
     /**
      * Last Term in a terms stream
      *
-     * @var \Zend\Search\Lucene\Index\Term
+     * @var Zend_Search_Lucene_Index_Term
      */
     protected $_lastTerm = null;
 
@@ -60,7 +58,7 @@ class TermStreamsPriorityQueue implements Index\TermsStream
     /**
      * Object constructor
      *
-     * @param array $termStreams  array of term streams (\Zend\Search\Lucene\Index\TermsStream objects)
+     * @param array $termStreams  array of term streams (Zend_Search_Lucene_Index_TermsStream_Interface objects)
      */
     public function __construct(array $termStreams)
     {
@@ -74,7 +72,10 @@ class TermStreamsPriorityQueue implements Index\TermsStream
      */
     public function resetTermsStream()
     {
-        $this->_termsStreamQueue = new Index\TermsPriorityQueue();
+        /** Zend_Search_Lucene_Index_TermsPriorityQueue */
+        require_once 'Zend/Search/Lucene/Index/TermsPriorityQueue.php';
+
+        $this->_termsStreamQueue = new Zend_Search_Lucene_Index_TermsPriorityQueue();
 
         foreach ($this->_termStreams as $termStream) {
             $termStream->resetTermsStream();
@@ -89,21 +90,17 @@ class TermStreamsPriorityQueue implements Index\TermsStream
     }
 
     /**
-     * Skip terms stream up to specified term preffix.
+     * Skip terms stream up to the specified term preffix.
      *
      * Prefix contains fully specified field info and portion of searched term
      *
-     * @param \Zend\Search\Lucene\Index\Term $prefix
+     * @param Zend_Search_Lucene_Index_Term $prefix
      */
-    public function skipTo(Index\Term $prefix)
+    public function skipTo(Zend_Search_Lucene_Index_Term $prefix)
     {
-        $termStreams = array();
+        $this->_termsStreamQueue = new Zend_Search_Lucene_Index_TermsPriorityQueue();
 
-        while (($termStream = $this->_termsStreamQueue->pop()) !== null) {
-            $termStreams[] = $termStream;
-        }
-
-        foreach ($termStreams as $termStream) {
+        foreach ($this->_termStreams as $termStream) {
             $termStream->skipTo($prefix);
 
             if ($termStream->currentTerm() !== null) {
@@ -111,13 +108,13 @@ class TermStreamsPriorityQueue implements Index\TermsStream
             }
         }
 
-        $this->nextTerm();
+        return $this->nextTerm();
     }
 
     /**
      * Scans term streams and returns next term
      *
-     * @return \Zend\Search\Lucene\Index\Term|null
+     * @return Zend_Search_Lucene_Index_Term|null
      */
     public function nextTerm()
     {
@@ -151,7 +148,7 @@ class TermStreamsPriorityQueue implements Index\TermsStream
     /**
      * Returns term in current position
      *
-     * @return \Zend\Search\Lucene\Index\Term|null
+     * @return Zend_Search_Lucene_Index_Term|null
      */
     public function currentTerm()
     {

@@ -17,13 +17,13 @@
  * @subpackage Framework
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Tool_Project_Context_Filesystem_File
  */
-namespace Zend\Tool\Project\Context\Zf;
-use Zend\Tool\Project\Context\Exception;
+require_once 'Zend/Tool/Project/Context/Filesystem/File.php';
 
 /**
  * This class is the front most class for utilizing Zend_Tool_Project
@@ -31,14 +31,12 @@ use Zend\Tool\Project\Context\Exception;
  * A profile is a hierarchical set of resources that keep track of
  * items within a specific project.
  *
- * @uses       \Zend\Tool\Project\Context\Filesystem\File
- * @uses       \Zend\Tool\Project\Exception
  * @category   Zend
  * @package    Zend_Tool
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class LayoutScriptFile extends \Zend\Tool\Project\Context\Filesystem\File
+class Zend_Tool_Project_Context_Zf_LayoutScriptFile extends Zend_Tool_Project_Context_Filesystem_File
 {
 
     /**
@@ -64,14 +62,14 @@ class LayoutScriptFile extends \Zend\Tool\Project\Context\Filesystem\File
     /**
      * init()
      *
-     * @return \Zend\Tool\Project\Context\Zf\ViewScriptFile
+     * @return Zend_Tool_Project_Context_Zf_ViewScriptFile
      */
     public function init()
     {
         if ($layoutName = $this->_resource->getAttribute('layoutName')) {
             $this->_layoutName = $layoutName;
         } else {
-            throw new Exception\RuntimeException('Either a forActionName or scriptName is required.');
+            throw new Exception('Either a forActionName or scriptName is required.');
         }
 
         parent::init();
@@ -101,9 +99,8 @@ class LayoutScriptFile extends \Zend\Tool\Project\Context\Filesystem\File
      */
     public function getContents()
     {
-        $contents = <<<'EOS'
-<?php echo $this->broker('layout')->getLayout()->content; ?>
-
+        $contents = <<<EOS
+<?php echo \$this->layout()->content; ?>
 EOS;
 
         return $contents;

@@ -17,42 +17,38 @@
  * @subpackage Resource
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Application_Resource_ResourceAbstract
  */
-namespace Zend\Application\Resource;
+require_once 'Zend/Application/Resource/ResourceAbstract.php';
 
-use Zend\Registry,
-    Zend\Translator\Translator;
 
 /**
  * Resource for setting translation options
  *
- * @uses       \Zend\Application\ResourceException
- * @uses       \Zend\Application\Resource\AbstractResource
- * @uses       \Zend\Registry
- * @uses       \Zend\Translator\Translator
+ * @uses       Zend_Application_Resource_ResourceAbstract
  * @category   Zend
  * @package    Zend_Application
  * @subpackage Resource
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Translate extends AbstractResource
+class Zend_Application_Resource_Translate extends Zend_Application_Resource_ResourceAbstract
 {
     const DEFAULT_REGISTRY_KEY = 'Zend_Translate';
 
     /**
-     * @var \Zend\Translator\Translator
+     * @var Zend_Translate
      */
     protected $_translate;
 
     /**
      * Defined by Zend_Application_Resource_Resource
      *
-     * @return \Zend\Translator\Translator
+     * @return Zend_Translate
      */
     public function init()
     {
@@ -62,8 +58,8 @@ class Translate extends AbstractResource
     /**
      * Retrieve translate object
      *
-     * @return \Zend\Translator\Translator
-     * @throws \Zend\Application\ResourceException if registry key was used
+     * @return Zend_Translate
+     * @throws Zend_Application_Resource_Exception if registry key was used
      *          already but is no instance of Zend_Translate
      */
     public function getTranslate()
@@ -71,12 +67,18 @@ class Translate extends AbstractResource
         if (null === $this->_translate) {
             $options = $this->getOptions();
 
-            if (!isset($options['data'])) {
-                throw new Exception\InitializationException('No translation source data provided.');
+            if (!isset($options['content']) && !isset($options['data'])) {
+                require_once 'Zend/Application/Resource/Exception.php';
+                throw new Zend_Application_Resource_Exception('No translation source data provided.');
+            } else if (array_key_exists('content', $options) && array_key_exists('data', $options)) {
+                require_once 'Zend/Application/Resource/Exception.php';
+                throw new Zend_Application_Resource_Exception(
+                    'Conflict on translation source data: choose only one key between content and data.'
+                );
             }
 
             if (empty($options['adapter'])) {
-                $options['adapter'] = Translator::AN_ARRAY;
+                $options['adapter'] = Zend_Translate::AN_ARRAY;
             }
 
             if (!empty($options['data'])) {
@@ -92,7 +94,7 @@ class Translate extends AbstractResource
 
             if (!empty($options['cache']) && is_string($options['cache'])) {
                 $bootstrap = $this->getBootstrap();
-                if ($bootstrap instanceof \Zend\Application\ResourceBootstrapper &&
+                if ($bootstrap instanceof Zend_Application_Bootstrap_ResourceBootstrapper &&
                     $bootstrap->hasPluginResource('CacheManager')
                 ) {
                     $cacheManager = $bootstrap->bootstrap('CacheManager')
@@ -110,10 +112,11 @@ class Translate extends AbstractResource
                  : self::DEFAULT_REGISTRY_KEY;
             unset($options['registry_key']);
 
-            if(Registry::isRegistered($key)) {
-                $translate = Registry::get($key);
-                if(!$translate instanceof Translator) {
-                    throw new Exception\InitializationException($key
+            if(Zend_Registry::isRegistered($key)) {
+                $translate = Zend_Registry::get($key);
+                if(!$translate instanceof Zend_Translate) {
+                    require_once 'Zend/Application/Resource/Exception.php';
+                    throw new Zend_Application_Resource_Exception($key
                                    . ' already registered in registry but is '
                                    . 'no instance of Zend_Translate');
                 }
@@ -121,8 +124,8 @@ class Translate extends AbstractResource
                 $translate->addTranslation($options);
                 $this->_translate = $translate;
             } else {
-                $this->_translate = new Translator($options);
-                Registry::set($key, $this->_translate);
+                $this->_translate = new Zend_Translate($options);
+                Zend_Registry::set($key, $this->_translate);
             }
         }
 

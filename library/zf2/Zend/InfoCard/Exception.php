@@ -17,12 +17,18 @@
  * @subpackage Zend_InfoCard
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\InfoCard;
+if (class_exists("Zend_Exception")) {
+    abstract class Zend_InfoCard_Exception_Abstract extends Zend_Exception
+    {
+    }
+} else {
+    abstract class Zend_InfoCard_Exception_Abstract extends Exception
+    {
+    }
+}
 
 /**
  * Base Exception class for the InfoCard component
@@ -32,6 +38,6 @@ namespace Zend\InfoCard;
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-interface Exception
+class Zend_InfoCard_Exception extends Zend_InfoCard_Exception_Abstract
 {
 }

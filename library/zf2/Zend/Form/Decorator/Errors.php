@@ -19,24 +19,22 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * @namespace
- */
-namespace Zend\Form\Decorator;
+/** Zend_Form_Decorator_Abstract */
+require_once 'Zend/Form/Decorator/Abstract.php';
 
 /**
  * Zend_Form_Decorator_Errors
  *
  * Any options passed will be used as HTML attributes of the ul tag for the errors.
  *
- * @uses       \Zend\Form\Decorator\AbstractDecorator
  * @category   Zend
  * @package    Zend_Form
  * @subpackage Decorator
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
-class Errors extends AbstractDecorator
+class Zend_Form_Decorator_Errors extends Zend_Form_Decorator_Abstract
 {
     /**
      * Render errors
@@ -59,7 +57,7 @@ class Errors extends AbstractDecorator
 
         $separator = $this->getSeparator();
         $placement = $this->getPlacement();
-        $errors    = $view->broker('formErrors')->direct($errors, $this->getOptions());
+        $errors    = $view->formErrors($errors, $this->getOptions());
 
         switch ($placement) {
             case self::APPEND:

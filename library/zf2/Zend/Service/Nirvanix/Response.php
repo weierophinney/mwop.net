@@ -17,6 +17,7 @@
  * @subpackage Nirvanix
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
@@ -24,7 +25,6 @@
  * response.  It is primarily exists to provide a convenience feature that
  * throws an exception when <ResponseCode> contains an error.
  *
- * @uses       Zend_Service_Nirvanix_Exception
  * @category   Zend
  * @package    Zend_Service
  * @subpackage Nirvanix
@@ -112,6 +112,11 @@ class Zend_Service_Nirvanix_Response
      */
     protected function _throwException($message, $code = null)
     {
+        /**
+         * @see Zend_Service_Nirvanix_Exception
+         */
+        require_once 'Zend/Service/Nirvanix/Exception.php';
+
         throw new Zend_Service_Nirvanix_Exception($message, $code);
     }
 

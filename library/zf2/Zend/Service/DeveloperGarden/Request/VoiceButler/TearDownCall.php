@@ -17,10 +17,15 @@
  * @subpackage DeveloperGarden
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @uses       Zend_Service_DeveloperGarden_VoiceButler_AbstractVoiceButler
+ * @see Zend_Service_DeveloperGarden_VoiceButler_VoiceButlerAbstract
+ */
+require_once 'Zend/Service/DeveloperGarden/Request/VoiceButler/VoiceButlerAbstract.php';
+
+/**
  * @category   Zend
  * @package    Zend_Service
  * @subpackage DeveloperGarden
@@ -29,7 +34,7 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Service_DeveloperGarden_Request_VoiceButler_TearDownCall
-    extends Zend_Service_DeveloperGarden_Request_VoiceButler_AbstractVoiceButler
+    extends Zend_Service_DeveloperGarden_Request_VoiceButler_VoiceButlerAbstract
 {
     /**
      * the session id
@@ -43,7 +48,7 @@ class Zend_Service_DeveloperGarden_Request_VoiceButler_TearDownCall
      *
      * @param integer $environment
      * @param string $sessionId
-     * @return Zend_Service_DeveloperGarden_Request_AbstractRequest
+     * @return Zend_Service_DeveloperGarden_Request_RequestAbstract
      */
     public function __construct($environment, $sessionId)
     {

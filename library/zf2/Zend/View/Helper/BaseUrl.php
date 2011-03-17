@@ -16,25 +16,22 @@
  * @package    Zend_View
  * @subpackage Helper
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @version    $Id$
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * @namespace
- */
-namespace Zend\View\Helper;
+/** @see Zend_View_Helper_Abstract */
+require_once 'Zend/View/Helper/Abstract.php';
 
 /**
  * Helper for retrieving the BaseUrl
  *
- * @uses       \Zend\Controller\Front
- * @uses       \Zend\View\Helper\AbstractHelper
  * @package    Zend_View
  * @subpackage Helper
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class BaseUrl extends AbstractHelper
+class Zend_View_Helper_BaseUrl extends Zend_View_Helper_Abstract
 {
     /**
      * BaseUrl
@@ -51,7 +48,7 @@ class BaseUrl extends AbstractHelper
      * @param  string|null $file
      * @return string
      */
-    public function direct($file = null)
+    public function baseUrl($file = null)
     {
         // Get baseUrl
         $baseUrl = $this->getBaseUrl();
@@ -68,7 +65,7 @@ class BaseUrl extends AbstractHelper
      * Set BaseUrl
      *
      * @param  string $base
-     * @return \Zend\View\Helper\BaseUrl
+     * @return Zend_View_Helper_BaseUrl
      */
     public function setBaseUrl($base)
     {
@@ -84,7 +81,9 @@ class BaseUrl extends AbstractHelper
     public function getBaseUrl()
     {
         if ($this->_baseUrl === null) {
-            $baseUrl = \Zend\Controller\Front::getInstance()->getBaseUrl();
+            /** @see Zend_Controller_Front */
+            require_once 'Zend/Controller/Front.php';
+            $baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
 
             // Remove scriptname, eg. index.php from baseUrl
             $baseUrl = $this->_removeScriptName($baseUrl);

@@ -17,42 +17,47 @@
  * @subpackage Framework
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Console_GetOpt
  */
-namespace Zend\Tool\Framework\Client\Console;
-use Zend\Tool\Framework\Client,
-    Zend\Tool\Framework\Registry,
-    Zend\Tool\Framework\RegistryEnabled,
-    Zend\Tool\Framework\Exception;
+require_once 'Zend/Console/Getopt.php';
 
 /**
- * @uses       Zend_Console_GetOpt
- * @uses       \Zend\Tool\Framework\Client\Console\HelpSystem
- * @uses       \Zend\Tool\Framework\Client\Exception
- * @uses       \Zend\Tool\Framework\RegistryEnabled
+ * @see Zend_Tool_Framework_Registry_EnabledInterface
+ */
+require_once 'Zend/Tool/Framework/Registry/EnabledInterface.php';
+
+/**
  * @category   Zend
  * @package    Zend_Tool
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class ArgumentParser implements RegistryEnabled
+class Zend_Tool_Framework_Client_Console_ArgumentParser implements Zend_Tool_Framework_Registry_EnabledInterface
 {
 
     /**
-     * @var \Zend\Tool\Framework\Registry
+     * @var Zend_Tool_Framework_Registry_Interface
      */
     protected $_registry = null;
 
     /**
-     * @var \Zend\Tool\Framework\Client\Request
+     * Holds the manifest repository taken from the registry.
+     *
+     * @var Zend_Tool_Framework_Manifest_Repository
+     */
+      protected $_manifestRepository = null;
+
+    /**
+     * @var Zend_Tool_Framework_Client_Request
      */
     protected $_request = null;
 
     /**
-     * @var \Zend\Tool\Framework\Client\Response
+     * @var Zend_Tool_Framework_Client_Response
      */
     protected $_response = null;
 
@@ -76,7 +81,7 @@ class ArgumentParser implements RegistryEnabled
      * setArguments
      *
      * @param array $arguments
-     * @return \Zend\Tool\Framework\Client\Console\ArgumentParser
+     * @return Zend_Tool_Framework_Client_Console_ArgumentParser
      */
     public function setArguments(Array $arguments)
     {
@@ -87,10 +92,10 @@ class ArgumentParser implements RegistryEnabled
     /**
      * setRegistry()
      *
-     * @param \Zend\Tool\Framework\Registry $registry
-     * @return \Zend\Tool\Framework\Client\Console\ArgumentParser
+     * @param Zend_Tool_Framework_Registry_Interface $registry
+     * @return Zend_Tool_Framework_Client_Console_ArgumentParser
      */
-    public function setRegistry(Registry $registry)
+    public function setRegistry(Zend_Tool_Framework_Registry_Interface $registry)
     {
         // get the client registry
         $this->_registry = $registry;
@@ -112,7 +117,8 @@ class ArgumentParser implements RegistryEnabled
     {
 
         if ($this->_request == null || $this->_response == null) {
-            throw new Client\Exception\RuntimeException('The client registry must have both a request and response registered.');
+            require_once 'Zend/Tool/Framework/Client/Exception.php';
+            throw new Zend_Tool_Framework_Client_Exception('The client registry must have both a request and response registered.');
         }
 
         // setup the help options
@@ -126,7 +132,7 @@ class ArgumentParser implements RegistryEnabled
         // process global options
         try {
             $this->_parseGlobalPart();
-        } catch (Client\Exception $exception) {
+        } catch (Zend_Tool_Framework_Client_Exception $exception) {
             $this->_createHelpResponse(array('error' => $exception->getMessage()));
             return;
         }
@@ -147,7 +153,7 @@ class ArgumentParser implements RegistryEnabled
         // process the action part of the command line
         try {
             $this->_parseActionPart();
-        } catch (Client\Exception $exception) {
+        } catch (Zend_Tool_Framework_Client_Exception $exception) {
             $this->_request->setDispatchable(false);
             $this->_createHelpResponse(array('error' => $exception->getMessage()));
             return;
@@ -179,7 +185,7 @@ class ArgumentParser implements RegistryEnabled
         // process the provider part of the command line
         try {
             $this->_parseProviderPart();
-        } catch (Client\Exception $exception) {
+        } catch (Zend_Tool_Framework_Client_Exception $exception) {
             $this->_request->setDispatchable(false);
             $this->_createHelpResponse(array('error' => $exception->getMessage()));
             return;
@@ -239,7 +245,7 @@ class ArgumentParser implements RegistryEnabled
         $getoptOptions['verbose|v'] = 'VERBOSE';
         $getoptOptions['pretend|p'] = 'PRETEND';
         $getoptOptions['debug|d']   = 'DEBUG';
-        $getoptParser = new \Zend\Console\Getopt($getoptOptions, $this->_argumentsWorking, array('parseAll' => false));
+        $getoptParser = new Zend_Console_Getopt($getoptOptions, $this->_argumentsWorking, array('parseAll' => false));
 
         // @todo catch any exceptions here
         $getoptParser->parse();
@@ -283,7 +289,7 @@ class ArgumentParser implements RegistryEnabled
             'value'      => $consoleActionName,
             'clientName' => 'console'
             );
-        
+
         // is the action name valid?
         $actionMetadata = $this->_manifestRepository->getMetadata($actionSearchCriteria);
 
@@ -294,10 +300,11 @@ class ArgumentParser implements RegistryEnabled
             $actionSearchCriteria['clientName'] = 'all';
             $actionMetadata = $this->_manifestRepository->getMetadata($actionSearchCriteria);
         }
-        
+
         // if no action, handle error
         if (!$actionMetadata) {
-            throw new Client\Exception\RuntimeException('Action \'' . $consoleActionName . '\' is not a valid action.');
+            require_once 'Zend/Tool/Framework/Client/Exception.php';
+            throw new Zend_Tool_Framework_Client_Exception('Action \'' . $consoleActionName . '\' is not a valid action.');
         }
 
         // prepare action request name
@@ -335,7 +342,7 @@ class ArgumentParser implements RegistryEnabled
             'value'      => $consoleProviderName,
             'clientName' => 'console'
             );
-        
+
         // get the cli provider names from the manifest
         $providerMetadata = $this->_manifestRepository->getMetadata($providerSearchCriteria);
 
@@ -346,9 +353,10 @@ class ArgumentParser implements RegistryEnabled
             $providerSearchCriteria['clientName'] = 'all';
             $providerMetadata = $this->_manifestRepository->getMetadata($providerSearchCriteria);
         }
-            
+
         if (!$providerMetadata) {
-            throw new Client\Exception\RuntimeException(
+            require_once 'Zend/Tool/Framework/Client/Exception.php';
+            throw new Zend_Tool_Framework_Client_Exception(
                 'Provider \'' . $consoleProviderFull . '\' is not a valid provider.'
                 );
         }
@@ -368,7 +376,7 @@ class ArgumentParser implements RegistryEnabled
             'providerName' => $providerMetadata->getProviderName(),
             'clientName'   => 'console'
             );
-        
+
         $providerSpecialtyMetadata = $this->_manifestRepository->getMetadata($providerSpecialtySearchCriteria);
 
         if (!$providerSpecialtyMetadata) {
@@ -377,9 +385,10 @@ class ArgumentParser implements RegistryEnabled
             $providerSpecialtySearchCriteria['clientName'] = 'all';
             $providerSpecialtyMetadata = $this->_manifestRepository->getMetadata($providerSpecialtySearchCriteria);
         }
-        
+
         if (!$providerSpecialtyMetadata) {
-            throw new Client\Exception\RuntimeException(
+            require_once 'Zend/Tool/Framework/Client/Exception.php';
+            throw new Zend_Tool_Framework_Client_Exception(
                 'Provider \'' . $consoleSpecialtyName . '\' is not a valid specialty.'
                 );
         }
@@ -487,7 +496,7 @@ class ArgumentParser implements RegistryEnabled
             }
         }
 
-        $getoptParser = new \Zend\Console\Getopt($getoptOptions, $this->_argumentsWorking, array('parseAll' => false));
+        $getoptParser = new Zend_Console_Getopt($getoptOptions, $this->_argumentsWorking, array('parseAll' => false));
         $getoptParser->parse();
         foreach ($getoptParser->getOptions() as $option) {
             $value = $getoptParser->getOption($option);
@@ -507,7 +516,8 @@ class ArgumentParser implements RegistryEnabled
      */
     protected function _createHelpResponse($options = array())
     {
-        $helpSystem = new HelpSystem();
+        require_once 'Zend/Tool/Framework/Client/Console/HelpSystem.php';
+        $helpSystem = new Zend_Tool_Framework_Client_Console_HelpSystem();
         $helpSystem->setRegistry($this->_registry);
 
         if (isset($options['error'])) {

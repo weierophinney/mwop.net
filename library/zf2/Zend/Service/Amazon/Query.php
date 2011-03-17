@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework
  *
@@ -17,24 +18,24 @@
  * @subpackage Amazon
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Service\Amazon;
-use Zend\Service\Amazon\Exception;
 
 /**
- * @uses       Zend_Service_Amazon
- * @uses       \Zend\Service\Amazon\Exception
+ * @see Zend_Service_Amazon
+ */
+require_once 'Zend/Service/Amazon.php';
+
+
+/**
  * @category   Zend
  * @package    Zend_Service
  * @subpackage Amazon
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Query extends Amazon
+class Zend_Service_Amazon_Query extends Zend_Service_Amazon
 {
     /**
      * Search parameters
@@ -55,7 +56,7 @@ class Query extends Amazon
      *
      * @param  string $method
      * @param  array  $args
-     * @throws \Zend\Service\Amazon\Exception
+     * @throws Zend_Service_Exception
      * @return Zend_Service_Amazon_Query Provides a fluent interface
      */
     public function __call($method, $args)
@@ -72,7 +73,11 @@ class Query extends Amazon
         } else if (isset($this->_search['SearchIndex']) || $this->_searchIndex !== null || $this->_searchIndex === 'asin') {
             $this->_search[$method] = $args[0];
         } else {
-            throw new Exception\RuntimeException('You must set a category before setting the search parameters');
+            /**
+             * @see Zend_Service_Exception
+             */
+            require_once 'Zend/Service/Exception.php';
+            throw new Zend_Service_Exception('You must set a category before setting the search parameters');
         }
 
         return $this;

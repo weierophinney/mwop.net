@@ -17,23 +17,22 @@
  * @subpackage View
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Dojo\View\Helper;
+/** Zend_Dojo_View_Helper_Slider */
+require_once 'Zend/Dojo/View/Helper/Slider.php';
 
 /**
  * Dojo VerticalSlider dijit
  *
- * @uses       \Zend\Dojo\View\Helper\Slider
+ * @uses       Zend_Dojo_View_Helper_Slider
  * @package    Zend_Dojo
  * @subpackage View
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
   */
-class VerticalSlider extends Slider
+class Zend_Dojo_View_Helper_VerticalSlider extends Zend_Dojo_View_Helper_Slider
 {
     /**
      * Dijit being used
@@ -56,7 +55,7 @@ class VerticalSlider extends Slider
      * @param  array $attribs HTML attributes
      * @return string
      */
-    public function direct($id = null, $value = null, array $params = array(), array $attribs = array())
+    public function verticalSlider($id, $value = null, array $params = array(), array $attribs = array())
     {
         return $this->prepareSlider($id, $value, $params, $attribs);
     }

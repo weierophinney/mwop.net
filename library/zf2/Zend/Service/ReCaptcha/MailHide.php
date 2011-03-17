@@ -19,32 +19,28 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * @namespace
- */
-namespace Zend\Service\ReCaptcha;
+/** @see Zend_Service_ReCaptcha */
+require_once 'Zend/Service/ReCaptcha.php';
 
 /**
  * Zend_Service_ReCaptcha_MailHide
  *
- * @uses       \Zend\Service\ReCaptcha\ReCaptcha
- * @uses       \Zend\Service\ReCaptcha\MailHideException
- * @uses       \Zend\Validator\EmailAddress
  * @category   Zend
  * @package    Zend_Service
  * @subpackage ReCaptcha
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
-class MailHide extends ReCaptcha
+class Zend_Service_ReCaptcha_MailHide extends Zend_Service_ReCaptcha
 {
     /**#@+
      * Encryption constants
      */
-    const ENCRYPTION_MODE       = MCRYPT_MODE_CBC;
-    const ENCRYPTION_CIPHER     = MCRYPT_RIJNDAEL_128;
+    const ENCRYPTION_MODE = MCRYPT_MODE_CBC;
+    const ENCRYPTION_CIPHER = MCRYPT_RIJNDAEL_128;
     const ENCRYPTION_BLOCK_SIZE = 16;
-    const ENCRYPTION_IV         = "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0";
+    const ENCRYPTION_IV = "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0";
     /**#@-*/
 
     /**
@@ -62,7 +58,7 @@ class MailHide extends ReCaptcha
     protected $_email = null;
 
     /**
-     * @var \Zend\Validator\Validator
+     * @var Zend_Validate_Interface
      */
     protected $_emailValidator;
 
@@ -93,7 +89,7 @@ class MailHide extends ReCaptcha
      * @param string $publicKey
      * @param string $privateKey
      * @param string $email
-     * @param array|\Zend\Config\Config $options
+     * @param array|Zend_Config $options
      */
     public function __construct($publicKey = null, $privateKey = null, $email = null, $options = null)
     {
@@ -101,7 +97,7 @@ class MailHide extends ReCaptcha
         $this->_requireMcrypt();
 
         /* If options is a Zend_Config object we want to convert it to an array so we can merge it with the default options */
-        if ($options instanceof \Zend\Config\Config) {
+        if ($options instanceof Zend_Config) {
             $options = $options->toArray();
         }
 
@@ -123,12 +119,13 @@ class MailHide extends ReCaptcha
     /**
      * Get emailValidator
      *
-     * @return \Zend\Validator\Validator
+     * @return Zend_Validate_Interface
      */
     public function getEmailValidator()
     {
         if (null === $this->_emailValidator) {
-            $this->setEmailValidator(new \Zend\Validator\EmailAddress());
+            require_once 'Zend/Validate/EmailAddress.php';
+            $this->setEmailValidator(new Zend_Validate_EmailAddress());
         }
         return $this->_emailValidator;
     }
@@ -136,10 +133,10 @@ class MailHide extends ReCaptcha
     /**
      * Set email validator
      *
-     * @param  \Zend\Validator\Validator $validator
-     * @return \Zend\Service\ReCaptcha\MailHide
+     * @param  Zend_Validate_Interface $validator
+     * @return Zend_Service_ReCaptcha_MailHide
      */
-    public function setEmailValidator(\Zend\Validator\Validator $validator)
+    public function setEmailValidator(Zend_Validate_Interface $validator)
     {
         $this->_emailValidator = $validator;
         return $this;
@@ -149,12 +146,15 @@ class MailHide extends ReCaptcha
     /**
      * See if the mcrypt extension is available
      *
-     * @throws \Zend\Service\ReCaptcha\MailHideException
+     * @throws Zend_Service_ReCaptcha_MailHide_Exception
      */
     protected function _requireMcrypt()
     {
         if (!extension_loaded('mcrypt')) {
-            throw new MailHideException('Use of the Zend\\Service\\ReCaptcha\\MailHide component requires the mcrypt extension to be enabled in PHP');
+            /** @see Zend_Service_ReCaptcha_MailHide_Exception */
+            require_once 'Zend/Service/ReCaptcha/MailHide/Exception.php';
+
+            throw new Zend_Service_ReCaptcha_MailHide_Exception('Use of the Zend_Service_ReCaptcha_MailHide component requires the mcrypt extension to be enabled in PHP');
         }
     }
 
@@ -170,7 +170,7 @@ class MailHide extends ReCaptcha
     {
         try {
             $return = $this->getHtml();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $return = '';
             trigger_error($e->getMessage(), E_USER_WARNING);
         }
@@ -200,7 +200,7 @@ class MailHide extends ReCaptcha
      * Override the parent method to store a binary representation of the private key as well.
      *
      * @param string $privateKey
-     * @return \Zend\Service\ReCaptcha\MailHide
+     * @return Zend_Service_ReCaptcha_MailHide
      */
     public function setPrivateKey($privateKey)
     {
@@ -218,7 +218,7 @@ class MailHide extends ReCaptcha
      * This method will set the email property along with the local and domain parts
      *
      * @param string $email
-     * @return \Zend\Service\ReCaptcha\MailHide
+     * @return Zend_Service_ReCaptcha_MailHide
      */
     public function setEmail($email)
     {
@@ -226,7 +226,8 @@ class MailHide extends ReCaptcha
 
         $validator = $this->getEmailValidator();
         if (!$validator->isValid($email)) {
-            throw new MailHideException('Invalid email address provided');
+            require_once 'Zend/Service/ReCaptcha/MailHide/Exception.php';
+            throw new Zend_Service_ReCaptcha_MailHide_Exception('Invalid email address provided');
         }
 
         $emailParts = explode('@', $email, 2);
@@ -281,22 +282,28 @@ class MailHide extends ReCaptcha
      *
      * @param string $email
      * @return string
-     * @throws \Zend\Service\ReCaptcha\MailHideException
+     * @throws Zend_Service_ReCaptcha_MailHide_Exception
      */
     public function getHtml($email = null)
     {
         if ($email !== null) {
             $this->setEmail($email);
         } elseif (null === ($email = $this->getEmail())) {
-            throw new MailHideException('Missing email address');
+            /** @see Zend_Service_ReCaptcha_MailHide_Exception */
+            require_once 'Zend/Service/ReCaptcha/MailHide/Exception.php';
+            throw new Zend_Service_ReCaptcha_MailHide_Exception('Missing email address');
         }
 
         if ($this->_publicKey === null) {
-            throw new MailHideException('Missing public key');
+            /** @see Zend_Service_ReCaptcha_MailHide_Exception */
+            require_once 'Zend/Service/ReCaptcha/MailHide/Exception.php';
+            throw new Zend_Service_ReCaptcha_MailHide_Exception('Missing public key');
         }
 
         if ($this->_privateKey === null) {
-            throw new MailHideException('Missing private key');
+            /** @see Zend_Service_ReCaptcha_MailHide_Exception */
+            require_once 'Zend/Service/ReCaptcha/MailHide/Exception.php';
+            throw new Zend_Service_ReCaptcha_MailHide_Exception('Missing private key');
         }
 
         /* Generate the url */
@@ -305,18 +312,18 @@ class MailHide extends ReCaptcha
         $enc = $this->getOption('encoding');
 
         /* Genrate the HTML used to represent the email address */
-        $html = htmlentities($this->getEmailLocalPart(), ENT_COMPAT, $enc) 
-            . '<a href="' 
-                . htmlentities($url, ENT_COMPAT, $enc) 
-                . '" onclick="window.open(\'' 
-                    . htmlentities($url, ENT_COMPAT, $enc) 
+        $html = htmlentities($this->getEmailLocalPart(), ENT_COMPAT, $enc)
+            . '<a href="'
+                . htmlentities($url, ENT_COMPAT, $enc)
+                . '" onclick="window.open(\''
+                    . htmlentities($url, ENT_COMPAT, $enc)
                     . '\', \'\', \'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width='
-                    . $this->_options['popupWidth'] 
-                    . ',height=' 
-                    . $this->_options['popupHeight'] 
-                . '\'); return false;" title="' 
-                . $this->_options['linkTitle'] 
-                . '">' . $this->_options['linkHiddenText'] . '</a>@' 
+                    . $this->_options['popupWidth']
+                    . ',height='
+                    . $this->_options['popupHeight']
+                . '\'); return false;" title="'
+                . $this->_options['linkTitle']
+                . '">' . $this->_options['linkHiddenText'] . '</a>@'
                 . htmlentities($this->getEmailDomainPart(), ENT_COMPAT, $enc);
 
         return $html;

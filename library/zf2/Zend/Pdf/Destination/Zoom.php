@@ -13,22 +13,25 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    Zend_PDF
- * @subpackage Zend_PDF_Destination
+ * @package    Zend_Pdf
+ * @subpackage Destination
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Pdf\Destination;
-use Zend\Pdf\Exception;
-use Zend\Pdf\InternalType;
-use Zend\Pdf;
+/** Internally used classes */
+require_once 'Zend/Pdf/Element/Array.php';
+require_once 'Zend/Pdf/Element/Name.php';
+require_once 'Zend/Pdf/Element/Null.php';
+require_once 'Zend/Pdf/Element/Numeric.php';
+
+
+/** Zend_Pdf_Destination_Explicit */
+require_once 'Zend/Pdf/Destination/Explicit.php';
 
 /**
- * \Zend\Pdf\Destination\Zoom explicit detination
+ * Zend_Pdf_Destination_Zoom explicit detination
  *
  * Destination array: [page /XYZ left top zoom]
  *
@@ -38,62 +41,57 @@ use Zend\Pdf;
  * or zoom specifies that the current value of that parameter is to be retained unchanged.
  * A zoom value of 0 has the same meaning as a null value.
  *
- * @uses       \Zend\Pdf\Destination\Explicit
- * @uses       \Zend\Pdf\InternalType\ArrayObject
- * @uses       \Zend\Pdf\InternalType\NameObject
- * @uses       \Zend\Pdf\InternalType\NullObject
- * @uses       \Zend\Pdf\InternalType\NumericObject
- * @uses       \Zend\Pdf\Exception
- * @package    Zend_PDF
- * @subpackage Zend_PDF_Destination
+ * @package    Zend_Pdf
+ * @subpackage Destination
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zoom extends Explicit
+class Zend_Pdf_Destination_Zoom extends Zend_Pdf_Destination_Explicit
 {
     /**
      * Create destination object
      *
-     * @param \Zend\Pdf\Page|integer $page  Page object or page number
+     * @param Zend_Pdf_Page|integer $page  Page object or page number
      * @param float $left  Left edge of displayed page
      * @param float $top   Top edge of displayed page
      * @param float $zoom  Zoom factor
-     * @return \Zend\Pdf\Destination\Zoom
-     * @throws \Zend\Pdf\Exception
+     * @return Zend_Pdf_Destination_Zoom
+     * @throws Zend_Pdf_Exception
      */
     public static function create($page, $left = null, $top = null, $zoom = null)
     {
-        $destinationArray = new InternalType\ArrayObject();
+        $destinationArray = new Zend_Pdf_Element_Array();
 
-        if ($page instanceof Pdf\Page) {
+        if ($page instanceof Zend_Pdf_Page) {
             $destinationArray->items[] = $page->getPageDictionary();
         } else if (is_integer($page)) {
-            $destinationArray->items[] = new InternalType\NumericObject($page);
+            $destinationArray->items[] = new Zend_Pdf_Element_Numeric($page);
         } else {
-            throw new Exception\InvalidArgumentException('$page parametr must be a \Zend\Pdf\Page object or a page number.');
+            require_once 'Zend/Pdf/Exception.php';
+            throw new Zend_Pdf_Exception('Page entry must be a Zend_Pdf_Page object or a page number.');
         }
 
-        $destinationArray->items[] = new InternalType\NameObject('XYZ');
+        $destinationArray->items[] = new Zend_Pdf_Element_Name('XYZ');
 
         if ($left === null) {
-            $destinationArray->items[] = new InternalType\NullObject();
+            $destinationArray->items[] = new Zend_Pdf_Element_Null();
         } else {
-            $destinationArray->items[] = new InternalType\NumericObject($left);
+            $destinationArray->items[] = new Zend_Pdf_Element_Numeric($left);
         }
 
         if ($top === null) {
-            $destinationArray->items[] = new InternalType\NullObject();
+            $destinationArray->items[] = new Zend_Pdf_Element_Null();
         } else {
-            $destinationArray->items[] = new InternalType\NumericObject($top);
+            $destinationArray->items[] = new Zend_Pdf_Element_Numeric($top);
         }
 
         if ($zoom === null) {
-            $destinationArray->items[] = new InternalType\NullObject();
+            $destinationArray->items[] = new Zend_Pdf_Element_Null();
         } else {
-            $destinationArray->items[] = new InternalType\NumericObject($zoom);
+            $destinationArray->items[] = new Zend_Pdf_Element_Numeric($zoom);
         }
 
-        return new self($destinationArray);
+        return new Zend_Pdf_Destination_Zoom($destinationArray);
     }
 
     /**
@@ -110,14 +108,14 @@ class Zoom extends Explicit
      * Set left edge of the displayed page (null means viewer application 'current value')
      *
      * @param float $left
-     * @return \Zend\Pdf\Action\Zoom
+     * @return Zend_Pdf_Action_Zoom
      */
     public function setLeftEdge($left)
     {
         if ($left === null) {
-            $this->_destinationArray->items[2] = new InternalType\NullObject();
+            $this->_destinationArray->items[2] = new Zend_Pdf_Element_Null();
         } else {
-            $this->_destinationArray->items[2] = new InternalType\NumericObject($left);
+            $this->_destinationArray->items[2] = new Zend_Pdf_Element_Numeric($left);
         }
 
         return $this;
@@ -137,14 +135,14 @@ class Zoom extends Explicit
      * Set top edge of the displayed page (null means viewer application 'current viewer')
      *
      * @param float $top
-     * @return \Zend\Pdf\Action\Zoom
+     * @return Zend_Pdf_Action_Zoom
      */
     public function setTopEdge($top)
     {
         if ($top === null) {
-            $this->_destinationArray->items[3] = new InternalType\NullObject();
+            $this->_destinationArray->items[3] = new Zend_Pdf_Element_Null();
         } else {
-            $this->_destinationArray->items[3] = new InternalType\NumericObject($top);
+            $this->_destinationArray->items[3] = new Zend_Pdf_Element_Numeric($top);
         }
 
         return $this;
@@ -164,14 +162,14 @@ class Zoom extends Explicit
      * Set ZoomFactor of the displayed page (null or 0 means viewer application 'current viewer')
      *
      * @param float $zoom
-     * @return \Zend\Pdf\Action\Zoom
+     * @return Zend_Pdf_Action_Zoom
      */
     public function setZoomFactor($zoom)
     {
         if ($zoom === null) {
-            $this->_destinationArray->items[4] = new InternalType\NullObject();
+            $this->_destinationArray->items[4] = new Zend_Pdf_Element_Null();
         } else {
-            $this->_destinationArray->items[4] = new InternalType\NumericObject($zoom);
+            $this->_destinationArray->items[4] = new Zend_Pdf_Element_Numeric($zoom);
         }
 
         return $this;

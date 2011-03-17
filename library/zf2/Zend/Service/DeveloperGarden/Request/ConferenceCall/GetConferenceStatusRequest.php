@@ -17,11 +17,15 @@
  * @subpackage DeveloperGarden
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @uses       Zend_Service_DeveloperGarden_Request_AbstractRequest
- * @uses       Zend_Service_DeveloperGarden_Request_Exception
+ * @see Zend_Service_DeveloperGarden_Request_RequestAbstract
+ */
+require_once 'Zend/Service/DeveloperGarden/Request/RequestAbstract.php';
+
+/**
  * @category   Zend
  * @package    Zend_Service
  * @subpackage DeveloperGarden
@@ -30,7 +34,7 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Service_DeveloperGarden_Request_ConferenceCall_GetConferenceStatusRequest
-    extends Zend_Service_DeveloperGarden_Request_AbstractRequest
+    extends Zend_Service_DeveloperGarden_Request_RequestAbstract
 {
     /**
      * the conference id
@@ -93,6 +97,7 @@ class Zend_Service_DeveloperGarden_Request_ConferenceCall_GetConferenceStatusReq
     public function setWhat($what)
     {
         if (!array_key_exists($what, $this->_whatValues)) {
+            require_once 'Zend/Service/DeveloperGarden/Request/Exception.php';
             throw new Zend_Service_DeveloperGarden_Request_Exception('What value not allowed.');
         }
         $this->what = $what;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework
  *
@@ -16,33 +17,41 @@
  * @package    Zend_Session
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-namespace Zend\Session\SaveHandler;
-
-use Zend\Session\SaveHandler as Savable,
-    Zend\Session\Container,
-    Zend\Session\Manager,
-    Zend\Db\Table\AbstractTable,
-    Zend\Db\Table\AbstractRow;
+/**
+ * @see Zend_Session
+ */
+require_once 'Zend/Session.php';
 
 /**
- * DB Table session save handler
+ * @see Zend_Db_Table_Abstract
+ */
+require_once 'Zend/Db/Table/Abstract.php';
+
+/**
+ * @see Zend_Db_Table_Row_Abstract
+ */
+require_once 'Zend/Db/Table/Row/Abstract.php';
+
+/**
+ * @see Zend_Config
+ */
+require_once 'Zend/Config.php';
+
+/**
+ * Zend_Session_SaveHandler_DbTable
  *
- * @uses       Zend\Config
- * @uses       Zend_Db_Table_Abstract
- * @uses       Zend_Db_Table_Row_Abstract
- * @uses       Zend\Session\Manager
- * @uses       Zend\Session\SaveHandler\Exception
  * @category   Zend
  * @package    Zend_Session
  * @subpackage SaveHandler
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class DbTable
-    extends AbstractTable
-    implements Savable
+class Zend_Session_SaveHandler_DbTable
+    extends Zend_Db_Table_Abstract
+    implements Zend_Session_SaveHandler_Interface
 {
     const PRIMARY_ASSIGNMENT                   = 'primaryAssignment';
     const PRIMARY_ASSIGNMENT_SESSION_SAVE_PATH = 'sessionSavePath';
@@ -60,11 +69,6 @@ class DbTable
     const PRIMARY_TYPE_PRIMARYNUM  = 'PRIMARY_TYPE_PRIMARYNUM';
     const PRIMARY_TYPE_ASSOC       = 'PRIMARY_TYPE_ASSOC';
     const PRIMARY_TYPE_WHERECLAUSE = 'PRIMARY_TYPE_WHERECLAUSE';
-
-    /**
-     * @var Zend\Session\Handler
-     */
-    protected $_manager;
 
     /**
      * Session table primary key value assignment
@@ -158,20 +162,22 @@ class DbTable
      */
     public function __construct($config)
     {
-        if ($config instanceof \Zend\Config\Config) {
+        if ($config instanceof Zend_Config) {
             $config = $config->toArray();
         } else if (!is_array($config)) {
-            throw new Exception\InvalidArgumentException(
-                '$config must be an instance of Zend\\Config or array of key/value pairs containing '
-              . 'configuration options for Zend\\Session\\SaveHandler\\DbTable and Zend\\Db\\Table\\Abstract.');
+            /**
+             * @see Zend_Session_SaveHandler_Exception
+             */
+            require_once 'Zend/Session/SaveHandler/Exception.php';
+
+            throw new Zend_Session_SaveHandler_Exception(
+                '$config must be an instance of Zend_Config or array of key/value pairs containing '
+              . 'configuration options for Zend_Session_SaveHandler_DbTable and Zend_Db_Table_Abstract.');
         }
 
         foreach ($config as $key => $value) {
             do {
                 switch ($key) {
-                    case 'manager':
-                        $this->setManager($value);
-                        break;
                     case self::PRIMARY_ASSIGNMENT:
                         $this->_primaryAssignment = $value;
                         break;
@@ -202,38 +208,13 @@ class DbTable
     }
 
     /**
-     * Set session manager
-     * 
-     * @param  Manager $manager 
-     * @return DbTable
-     */
-    public function setManager(Manager $manager)
-    {
-        $this->_manager = $manager;
-        return $this;
-    }
-
-    /**
-     * Get Session Manager
-     * 
-     * @return Manager
-     */
-    public function getManager()
-    {
-        if (null === $this->_manager) {
-            $this->setManager(Container::getDefaultManager());
-        }
-        return $this->_manager;
-    }
-
-    /**
      * Destructor
      *
      * @return void
      */
     public function __destruct()
     {
-        $this->getManager()->writeClose();
+        Zend_Session::writeClose();
     }
 
     /**
@@ -243,12 +224,16 @@ class DbTable
      *
      * @param int $lifetime
      * @param boolean $overrideLifetime (optional)
-     * @return DbTable
+     * @return Zend_Session_SaveHandler_DbTable
      */
     public function setLifetime($lifetime, $overrideLifetime = null)
     {
         if ($lifetime < 0) {
-            throw new Exception\InvalidArgumentException('Lifetime must be greater than 0');
+            /**
+             * @see Zend_Session_SaveHandler_Exception
+             */
+            require_once 'Zend/Session/SaveHandler/Exception.php';
+            throw new Zend_Session_SaveHandler_Exception();
         } else if (empty($lifetime)) {
             $this->_lifetime = (int) ini_get('session.gc_maxlifetime');
         } else {
@@ -276,7 +261,7 @@ class DbTable
      * Set whether or not the lifetime of an existing session should be overridden
      *
      * @param boolean $overrideLifetime
-     * @return DbTable
+     * @return Zend_Session_SaveHandler_DbTable
      */
     public function setOverrideLifetime($overrideLifetime)
     {
@@ -401,8 +386,8 @@ class DbTable
      */
     public function gc($maxlifetime)
     {
-        $this->delete($this->getAdapter()->quoteIdentifier($this->_modifiedColumn) . ' + '
-                    . $this->getAdapter()->quoteIdentifier($this->_lifetimeColumn) . ' < '
+        $this->delete($this->getAdapter()->quoteIdentifier($this->_modifiedColumn, true) . ' + '
+                    . $this->getAdapter()->quoteIdentifier($this->_lifetimeColumn, true) . ' < '
                     . $this->getAdapter()->quote(time()));
 
         return true;
@@ -427,14 +412,17 @@ class DbTable
      * Initialize table and schema names
      *
      * @return void
-     * @throws Exception
+     * @throws Zend_Session_SaveHandler_Exception
      */
     protected function _setupTableName()
     {
-        $config = $this->getManager()->getConfig();
+        if (empty($this->_name) && basename(($this->_name = session_save_path())) != $this->_name) {
+            /**
+             * @see Zend_Session_SaveHandler_Exception
+             */
+            require_once 'Zend/Session/SaveHandler/Exception.php';
 
-        if (empty($this->_name) && basename(($this->_name = $config->getSavePath())) != $this->_name) {
-            throw new Exception\RuntimeException('session.save_path is a path and not a table name.');
+            throw new Zend_Session_SaveHandler_Exception('session.save_path is a path and not a table name.');
         }
 
         if (strpos($this->_name, '.')) {
@@ -446,7 +434,7 @@ class DbTable
      * Initialize session table primary key value assignment
      *
      * @return void
-     * @throws Exception
+     * @throws Zend_Session_SaveHandler_Exception
      */
     protected function _setupPrimaryAssignment()
     {
@@ -461,11 +449,21 @@ class DbTable
         }
 
         if (count($this->_primaryAssignment) !== count($this->_primary)) {
-            throw new Exception\RuntimeException(
+            /**
+             * @see Zend_Session_SaveHandler_Exception
+             */
+            require_once 'Zend/Session/SaveHandler/Exception.php';
+
+            throw new Zend_Session_SaveHandler_Exception(
                 "Value for configuration option '" . self::PRIMARY_ASSIGNMENT . "' must have an assignment "
               . "for each session table primary key.");
         } else if (!in_array(self::PRIMARY_ASSIGNMENT_SESSION_ID, $this->_primaryAssignment)) {
-            throw new Exception\RuntimeException(
+            /**
+             * @see Zend_Session_SaveHandler_Exception
+             */
+            require_once 'Zend/Session/SaveHandler/Exception.php';
+
+            throw new Zend_Session_SaveHandler_Exception(
                 "Value for configuration option '" . self::PRIMARY_ASSIGNMENT . "' must have an assignment "
               . "for the session id ('" . self::PRIMARY_ASSIGNMENT_SESSION_ID . "').");
         }
@@ -475,20 +473,35 @@ class DbTable
      * Check for required session table columns
      *
      * @return void
-     * @throws Exception
+     * @throws Zend_Session_SaveHandler_Exception
      */
     protected function _checkRequiredColumns()
     {
         if ($this->_modifiedColumn === null) {
-            throw new Exception\RuntimeException(
+            /**
+             * @see Zend_Session_SaveHandler_Exception
+             */
+            require_once 'Zend/Session/SaveHandler/Exception.php';
+
+            throw new Zend_Session_SaveHandler_Exception(
                 "Configuration must define '" . self::MODIFIED_COLUMN . "' which names the "
               . "session table last modification time column.");
         } else if ($this->_lifetimeColumn === null) {
-            throw new Exception\RuntimeException(
+            /**
+             * @see Zend_Session_SaveHandler_Exception
+             */
+            require_once 'Zend/Session/SaveHandler/Exception.php';
+
+            throw new Zend_Session_SaveHandler_Exception(
                 "Configuration must define '" . self::LIFETIME_COLUMN . "' which names the "
               . "session table lifetime column.");
         } else if ($this->_dataColumn === null) {
-            throw new Exception\RuntimeException(
+            /**
+             * @see Zend_Session_SaveHandler_Exception
+             */
+            require_once 'Zend/Session/SaveHandler/Exception.php';
+
+            throw new Zend_Session_SaveHandler_Exception(
                 "Configuration must define '" . self::DATA_COLUMN . "' which names the "
               . "session table data column.");
         }
@@ -535,7 +548,7 @@ class DbTable
                     $primaryArray[$primary] = $value;
                     break;
                 case self::PRIMARY_TYPE_WHERECLAUSE:
-                    $primaryArray[] = $this->getAdapter()->quoteIdentifier($primary) . ' = '
+                    $primaryArray[] = $this->getAdapter()->quoteIdentifier($primary, true) . ' = '
                                     . $this->getAdapter()->quote($value);
                     break;
                 case self::PRIMARY_TYPE_NUM:
@@ -549,12 +562,12 @@ class DbTable
     }
 
     /**
-     * Retrieve session lifetime considering DbTable::OVERRIDE_LIFETIME
+     * Retrieve session lifetime considering Zend_Session_SaveHandler_DbTable::OVERRIDE_LIFETIME
      *
      * @param Zend_Db_Table_Row_Abstract $row
      * @return int
      */
-    protected function _getLifetime(AbstractRow $row)
+    protected function _getLifetime(Zend_Db_Table_Row_Abstract $row)
     {
         $return = $this->_lifetime;
 
@@ -571,7 +584,7 @@ class DbTable
      * @param Zend_Db_Table_Row_Abstract $row
      * @return int
      */
-    protected function _getExpirationTime(AbstractRow $row)
+    protected function _getExpirationTime(Zend_Db_Table_Row_Abstract $row)
     {
         return (int) $row->{$this->_modifiedColumn} + $this->_getLifetime($row);
     }

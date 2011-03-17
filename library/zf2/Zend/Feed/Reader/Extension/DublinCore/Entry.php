@@ -13,32 +13,35 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    Reader\Reader
+ * @package    Zend_Feed_Reader
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
-* @namespace
-*/
-namespace Zend\Feed\Reader\Extension\DublinCore;
-use Zend\Feed\Reader;
-use Zend\Feed\Reader\Collection;
-use Zend\Feed\Reader\Extension;
-use Zend\Date;
+ * @see Zend_Feed_Reader
+ */
+require_once 'Zend/Feed/Reader.php';
 
 /**
-* @uses \Zend\Date\Date
-* @uses \Zend\Feed\Reader\Reader
-* @uses \Zend\Feed\Reader\Collection\Author
-* @uses \Zend\Feed\Reader\Collection\Category
-* @uses \Zend\Feed\Reader\Extension\EntryAbstract
-* @category Zend
-* @package Reader\Reader
-* @copyright Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
-* @license http://framework.zend.com/license/new-bsd New BSD License
-*/
-class Entry extends Extension\AbstractEntry
+ * @see Zend_Feed_Reader_Extension_EntryAbstract
+ */
+require_once 'Zend/Feed/Reader/Extension/EntryAbstract.php';
+
+/**
+ * @see Zend_Date
+ */
+require_once 'Zend/Date.php';
+
+/**
+ * @category   Zend
+ * @package    Zend_Feed_Reader
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
+class Zend_Feed_Reader_Extension_DublinCore_Entry
+    extends Zend_Feed_Reader_Extension_EntryAbstract
 {
     /**
      * Get an author entry
@@ -88,8 +91,8 @@ class Entry extends Extension\AbstractEntry
                     'name' => $author->nodeValue
                 );
             }
-            $authors = new Collection\Author(
-                Reader\Reader::arrayUnique($authors)
+            $authors = new Zend_Feed_Reader_Collection_Author(
+                Zend_Feed_Reader::arrayUnique($authors)
             );
         } else {
             $authors = null;
@@ -99,26 +102,26 @@ class Entry extends Extension\AbstractEntry
 
         return $this->_data['authors'];
     }
-    
+
     /**
      * Get categories (subjects under DC)
      *
-     * @return Reader\Reader_Collection_Category
+     * @return Zend_Feed_Reader_Collection_Category
      */
     public function getCategories()
     {
         if (array_key_exists('categories', $this->_data)) {
             return $this->_data['categories'];
         }
-        
+
         $list = $this->_xpath->evaluate($this->getXpathPrefix() . '//dc11:subject');
 
         if (!$list->length) {
             $list = $this->_xpath->evaluate($this->getXpathPrefix() . '//dc10:subject');
         }
-        
+
         if ($list->length) {
-            $categoryCollection = new Collection\Category;
+            $categoryCollection = new Zend_Feed_Reader_Collection_Category;
             foreach ($list as $category) {
                 $categoryCollection[] = array(
                     'term' => $category->nodeValue,
@@ -127,13 +130,13 @@ class Entry extends Extension\AbstractEntry
                 );
             }
         } else {
-            $categoryCollection = new Collection\Category;
+            $categoryCollection = new Zend_Feed_Reader_Collection_Category;
         }
-        
+
         $this->_data['categories'] = $categoryCollection;
-        return $this->_data['categories'];  
+        return $this->_data['categories'];
     }
-    
+
 
     /**
      * Get the entry content
@@ -225,7 +228,7 @@ class Entry extends Extension\AbstractEntry
     /**
      *
      *
-     * @return Date\Date|null
+     * @return Zend_Date|null
      */
     public function getDate()
     {
@@ -241,8 +244,8 @@ class Entry extends Extension\AbstractEntry
         }
 
         if ($date) {
-            $d = new Date\Date;
-            $d->set($date, Date\Date::ISO_8601);
+            $d = new Zend_Date;
+            $d->set($date, Zend_Date::ISO_8601);
         }
 
         $this->_data['date'] = $d;

@@ -16,21 +16,26 @@
  * @package    Zend_Session
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  * @since      Preview Release 0.2
  */
 
-namespace Zend\Session;
+
+/**
+ * @see Zend_Exception
+ */
+require_once 'Zend/Exception.php';
+
 
 /**
  * Zend_Session_Exception
  *
- * @uses       Zend\Exception
  * @category   Zend
  * @package    Zend_Session
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-interface Exception
+class Zend_Session_Exception extends Zend_Exception
 {
     /**
      * sessionStartError
@@ -38,7 +43,7 @@ interface Exception
      * @see http://framework.zend.com/issues/browse/ZF-1325
      * @var string PHP Error Message
      */
-    //static public $sessionStartError = null;
+    static public $sessionStartError = null;
 
     /**
      * handleSessionStartError() - interface for set_error_handler()
@@ -48,10 +53,10 @@ interface Exception
      * @param  string $errstr
      * @return void
      */
-//    static public function handleSessionStartError($errno, $errstr, $errfile, $errline, $errcontext)
-//    {
-//        self::$sessionStartError = $errfile . '(Line:' . $errline . '): Error #' . $errno . ' ' . $errstr . ' ' . $errcontext;
-//    }
+    static public function handleSessionStartError($errno, $errstr, $errfile, $errline, $errcontext)
+    {
+        self::$sessionStartError = $errfile . '(Line:' . $errline . '): Error #' . $errno . ' ' . $errstr;
+    }
 
     /**
      * handleSilentWriteClose() - interface for set_error_handler()
@@ -61,9 +66,9 @@ interface Exception
      * @param  string $errstr
      * @return void
      */
-//    static public function handleSilentWriteClose($errno, $errstr, $errfile, $errline, $errcontext)
-//    {
-//        self::$sessionStartError .= PHP_EOL . $errfile . '(Line:' . $errline . '): Error #' . $errno . ' ' . $errstr . ' ' . $errcontext;
-//    }
+    static public function handleSilentWriteClose($errno, $errstr, $errfile, $errline, $errcontext)
+    {
+        self::$sessionStartError .= PHP_EOL . $errfile . '(Line:' . $errline . '): Error #' . $errno . ' ' . $errstr;
+    }
 }
 

@@ -19,22 +19,20 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * @namespace
- */
-namespace Zend\Form\Element;
+/** Zend_Form_Element_Submit */
+require_once 'Zend/Form/Element/Submit.php';
 
 /**
  * Reset form element
  *
- * @uses       \Zend\Form\Element\Submit
  * @category   Zend
  * @package    Zend_Form
  * @subpackage Element
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
-class Reset extends Submit
+class Zend_Form_Element_Reset extends Zend_Form_Element_Submit
 {
     /**
      * Use formReset view helper by default

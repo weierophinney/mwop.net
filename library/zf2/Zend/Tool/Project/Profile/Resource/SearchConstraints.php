@@ -17,23 +17,18 @@
  * @subpackage Framework
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
-
-/**
- * @namespace
- */
-namespace Zend\Tool\Project\Profile\Resource;
 
 /**
  * This class is an iterator that will iterate only over enabled resources
  *
- * @uses       ArrayObject
  * @category   Zend
  * @package    Zend_Tool
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class SearchConstraints
+class Zend_Tool_Project_Profile_Resource_SearchConstraints
 {
 
     /**
@@ -59,7 +54,7 @@ class SearchConstraints
      * setOptions()
      *
      * @param array $option
-     * @return \Zend\Tool\Project\Profile\Resource\SearchConstraints
+     * @return Zend_Tool_Project_Profile_Resource_SearchConstraints
      */
     public function setOptions(Array $option)
     {
@@ -78,7 +73,7 @@ class SearchConstraints
      * addConstraint()
      *
      * @param string|array $constraint
-     * @return \Zend\Tool\Project\Profile\Resource\SearchConstraints
+     * @return Zend_Tool_Project_Profile_Resource_SearchConstraints
      */
     public function addConstraint($constraint)
     {
@@ -116,7 +111,7 @@ class SearchConstraints
     protected function _makeConstraint($name, $params)
     {
         $value = array('name' => $name, 'params' => $params);
-        return new \ArrayObject($value, \ArrayObject::ARRAY_AS_PROPS);
+        return new ArrayObject($value, ArrayObject::ARRAY_AS_PROPS);
     }
 
 }

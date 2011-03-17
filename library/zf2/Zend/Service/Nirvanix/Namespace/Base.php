@@ -17,15 +17,24 @@
  * @subpackage Nirvanix
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
+
+/**
+ * @see Zend_Http_Client
+ */
+require_once 'Zend/Http/Client.php';
+
+/**
+ * @see Zend_Service_Nirvanix_Response
+ */
+require_once 'Zend/Service/Nirvanix/Response.php';
 
 /**
  * The Nirvanix web services are split into namespaces.  This is a proxy class
  * representing one namespace.  It allows calls to the namespace to be made by
  * PHP object calls rather than by having to construct HTTP client requests.
  *
- * @uses       Zend_Http_Client
- * @uses       Zend_Service_Nirvanix_Response
  * @category   Zend
  * @package    Zend_Service
  * @subpackage Nirvanix
@@ -67,7 +76,7 @@ class Zend_Service_Nirvanix_Namespace_Base
     /**
      * Class constructor.
      *
-     * @param  $options  array  Options and dependency injection
+     * @param array $options Options and dependency injection
      */
     public function __construct($options = array())
     {
@@ -84,7 +93,7 @@ class Zend_Service_Nirvanix_Namespace_Base
         }
 
         if (! isset($options['httpClient'])) {
-            $options['httpClient'] = new Zend\Http\Client();
+            $options['httpClient'] = new Zend_Http_Client();
         }
         $this->_httpClient = $options['httpClient'];
     }
@@ -120,7 +129,7 @@ class Zend_Service_Nirvanix_Namespace_Base
         $this->_httpClient->resetParameters();
         $this->_httpClient->setParameterPost($params);
 
-        $httpResponse = $this->_httpClient->request(Zend\Http\Client::POST);
+        $httpResponse = $this->_httpClient->request(Zend_Http_Client::POST);
         return $this->_wrapResponse($httpResponse);
     }
 

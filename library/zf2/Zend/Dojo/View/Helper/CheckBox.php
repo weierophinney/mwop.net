@@ -17,26 +17,22 @@
  * @subpackage View
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Dojo\View\Helper;
-
-use Zend\View\Helper\FormCheckbox as FormCheckboxHelper;
+/** Zend_Dojo_View_Helper_Dijit */
+require_once 'Zend/Dojo/View/Helper/Dijit.php';
 
 /**
  * Dojo CheckBox dijit
  *
- * @uses       \Zend\Dojo\View\Helper\Dijit
- * @uses       \Zend\View\Helper\FormCheckbox
+ * @uses       Zend_Dojo_View_Helper_Dijit
  * @package    Zend_Dojo
  * @subpackage View
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
   */
-class CheckBox extends Dijit
+class Zend_Dojo_View_Helper_CheckBox extends Zend_Dojo_View_Helper_Dijit
 {
     /**
      * Dijit being used
@@ -66,16 +62,17 @@ class CheckBox extends Dijit
      * @param  array $checkedOptions Should contain either two items, or the keys checkedValue and uncheckedValue
      * @return string
      */
-    public function direct($id = null, $value = null, array $params = array(), array $attribs = array(), array $checkedOptions = null)
+    public function checkBox($id, $value = null, array $params = array(), array $attribs = array(), array $checkedOptions = null)
     {
         // Prepare the checkbox options
+        require_once 'Zend/View/Helper/FormCheckbox.php';
         $checked = false;
         if (isset($attribs['checked']) && $attribs['checked']) {
             $checked = true;
         } elseif (isset($attribs['checked'])) {
             $checked = false;
         }
-        $checkboxInfo = FormCheckboxHelper::determineCheckboxInfo($value, $checked, $checkedOptions);
+        $checkboxInfo = Zend_View_Helper_FormCheckbox::determineCheckboxInfo($value, $checked, $checkedOptions);
         $attribs['checked'] = $checkboxInfo['checked'];
         if (!array_key_exists('id', $attribs)) {
             $attribs['id'] = $id;

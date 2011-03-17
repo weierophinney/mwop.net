@@ -17,20 +17,28 @@
  * @subpackage PHPUnit
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see PHPUnit_Extensions_Database_DB_DefaultDatabaseConnection
  */
-namespace Zend\Test\PHPUnit\Db;
+require_once "PHPUnit/Extensions/Database/DB/DefaultDatabaseConnection.php";
+
+/**
+ * @see Zend_Test_PHPUnit_Db_DataSet_QueryTable
+ */
+require_once "Zend/Test/PHPUnit/Db/DataSet/QueryTable.php";
+
+/**
+ * @see Zend_Test_PHPUnit_Db_Metadata_Generic
+ */
+require_once "Zend/Test/PHPUnit/Db/Metadata/Generic.php";
 
 /**
  * Generic Abstraction of Zend_Db Connections in the PHPUnit Database Extension context.
  *
- * @uses       PHPUnit_Extensions_Database_DB_DefaultDatabaseConnection
- * @uses       \Zend\Db\Adapter\AbstractAdapter
- * @uses       \Zend\Test\PHPUnit\Db\DataSet\QueryTable
- * @uses       \Zend\Test\PHPUnit\Db\Metadata\Generic
+ * @uses       Zend_Db_Adapter_Abstract
  * @uses       PHPUnit_Extensions_Database_DB_DefaultDatabaseConnection
  * @category   Zend
  * @package    Zend_Test
@@ -38,12 +46,12 @@ namespace Zend\Test\PHPUnit\Db;
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Connection extends \PHPUnit_Extensions_Database_DB_DefaultDatabaseConnection
+class Zend_Test_PHPUnit_Db_Connection extends PHPUnit_Extensions_Database_DB_DefaultDatabaseConnection
 {
     /**
      * Zend_Db_Adapter_Abstract
      *
-     * @var \Zend\Db\Adapter\AbstractAdapter
+     * @var Zend_Db_Adapter_Abstract
      */
     protected $_connection;
 
@@ -64,10 +72,10 @@ class Connection extends \PHPUnit_Extensions_Database_DB_DefaultDatabaseConnecti
     /**
      * Construct Connection based on Zend_Db_Adapter_Abstract
      *
-     * @param \Zend\Db\Adapter\AbstractAdapter $db
+     * @param Zend_Db_Adapter_Abstract $db
      * @param string $schema
      */
-    public function __construct(\Zend\Db\Adapter\AbstractAdapter $db, $schema)
+    public function __construct(Zend_Db_Adapter_Abstract $db, $schema)
     {
         $this->_connection = $db;
         $this->_schema = $schema;
@@ -92,13 +100,13 @@ class Connection extends \PHPUnit_Extensions_Database_DB_DefaultDatabaseConnecti
      */
     public function createQueryTable($resultName, $sql)
     {
-        return new DataSet\QueryTable($resultName, $sql, $this);
+        return new Zend_Test_PHPUnit_Db_DataSet_QueryTable($resultName, $sql, $this);
     }
 
     /**
      * Returns a Zend_Db Connection
      *
-     * @return \Zend\Db\Adapter\AbstractAdapter
+     * @return Zend_Db_Adapter_Abstract
      */
     public function getConnection()
     {
@@ -114,7 +122,7 @@ class Connection extends \PHPUnit_Extensions_Database_DB_DefaultDatabaseConnecti
     public function getMetaData()
     {
         if($this->_metaData === null) {
-            $this->_metaData = new Metadata\Generic($this->getConnection(), $this->getSchema());
+            $this->_metaData = new Zend_Test_PHPUnit_Db_Metadata_Generic($this->getConnection(), $this->getSchema());
         }
         return $this->_metaData;
     }

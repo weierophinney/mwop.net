@@ -19,22 +19,20 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * @namespace
- */
-namespace Zend\Dojo\Form\Element;
+/** Zend_Dojo_Form_Element_DateTextBox */
+require_once 'Zend/Dojo/Form/Element/DateTextBox.php';
 
 /**
  * TimeTextBox dijit
  *
- * @uses       \Zend\Dojo\Form\Element\DateTextBox
- * @uses       \Zend\Form\ElementException
+ * @uses       Zend_Dojo_Form_Element_DateTextBox
  * @package    Zend_Dojo
  * @subpackage Form_Element
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
-class TimeTextBox extends DateTextBox
+class Zend_Dojo_Form_Element_TimeTextBox extends Zend_Dojo_Form_Element_DateTextBox
 {
     /**
      * Use TimeTextBox dijit view helper
@@ -47,12 +45,13 @@ class TimeTextBox extends DateTextBox
      *
      * @param  string $format
      * @return true
-     * @throws \Zend\Form\ElementException
+     * @throws Zend_Form_Element_Exception
      */
     protected function _validateIso8601($format)
     {
         if (!preg_match('/^T\d{2}:\d{2}:\d{2}$/', $format)) {
-            throw new \Zend\Form\ElementException(sprintf('Invalid format "%s" provided; must match T:00:00:00 format', $format));
+            require_once 'Zend/Form/Element/Exception.php';
+            throw new Zend_Form_Element_Exception(sprintf('Invalid format "%s" provided; must match T:00:00:00 format', $format));
         }
         return true;
     }
@@ -61,7 +60,7 @@ class TimeTextBox extends DateTextBox
      * Set time format pattern
      *
      * @param  string $pattern
-     * @return \Zend\Dojo\Form\Element\NumberTextBox
+     * @return Zend_Dojo_Form_Element_NumberTextBox
      */
     public function setTimePattern($pattern)
     {
@@ -83,7 +82,7 @@ class TimeTextBox extends DateTextBox
      * Set clickableIncrement
      *
      * @param  string $format
-     * @return \Zend\Dojo\Form\Element\NumberTextBox
+     * @return Zend_Dojo_Form_Element_NumberTextBox
      */
     public function setClickableIncrement($format)
     {
@@ -107,7 +106,7 @@ class TimeTextBox extends DateTextBox
      * Set visibleIncrement
      *
      * @param  string $format
-     * @return \Zend\Dojo\Form\Element\NumberTextBox
+     * @return Zend_Dojo_Form_Element_NumberTextBox
      */
     public function setVisibleIncrement($format)
     {
@@ -131,7 +130,7 @@ class TimeTextBox extends DateTextBox
      * Set visibleRange
      *
      * @param  string $format
-     * @return \Zend\Dojo\Form\Element\NumberTextBox
+     * @return Zend_Dojo_Form_Element_NumberTextBox
      */
     public function setVisibleRange($format)
     {

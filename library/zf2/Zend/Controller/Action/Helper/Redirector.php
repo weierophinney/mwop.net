@@ -17,25 +17,22 @@
  * @subpackage Zend_Controller_Action_Helper
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Controller_Action_Helper_Abstract
  */
-namespace Zend\Controller\Action\Helper;
-use Zend\Controller\Action;
-use Zend\Session;
+require_once 'Zend/Controller/Action/Helper/Abstract.php';
 
 /**
- * @uses       \Zend\Controller\Action\Exception
- * @uses       \Zend\Controller\Action\Helper\AbstractHelper
  * @category   Zend
  * @package    Zend_Controller
  * @subpackage Zend_Controller_Action_Helper
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Redirector extends AbstractHelper
+class Zend_Controller_Action_Helper_Redirector extends Zend_Controller_Action_Helper_Abstract
 {
     /**
      * HTTP status code for redirects
@@ -88,14 +85,15 @@ class Redirector extends AbstractHelper
      * Validate HTTP status redirect code
      *
      * @param  int $code
-     * @throws \Zend\Controller\Action\Exception on invalid HTTP status code
+     * @throws Zend_Controller_Action_Exception on invalid HTTP status code
      * @return true
      */
     protected function _checkCode($code)
     {
         $code = (int)$code;
         if ((300 > $code) || (307 < $code) || (304 == $code) || (306 == $code)) {
-            throw new Action\Exception('Invalid redirect HTTP status code (' . $code  . ')');
+            require_once 'Zend/Controller/Action/Exception.php';
+            throw new Zend_Controller_Action_Exception('Invalid redirect HTTP status code (' . $code  . ')');
         }
 
         return true;
@@ -105,7 +103,7 @@ class Redirector extends AbstractHelper
      * Retrieve HTTP status code for {@link _redirect()} behaviour
      *
      * @param  int $code
-     * @return \Zend\Controller\Action\Helper\Redirector Provides a fluent interface
+     * @return Zend_Controller_Action_Helper_Redirector Provides a fluent interface
      */
     public function setCode($code)
     {
@@ -128,7 +126,7 @@ class Redirector extends AbstractHelper
      * Retrieve exit flag for {@link _redirect()} behaviour
      *
      * @param  boolean $flag
-     * @return \Zend\Controller\Action\Helper\Redirector Provides a fluent interface
+     * @return Zend_Controller_Action_Helper_Redirector Provides a fluent interface
      */
     public function setExit($flag)
     {
@@ -151,7 +149,7 @@ class Redirector extends AbstractHelper
      * Retrieve 'prepend base' flag for {@link _redirect()} behaviour
      *
      * @param  boolean $flag
-     * @return \Zend\Controller\Action\Helper\Redirector Provides a fluent interface
+     * @return Zend_Controller_Action_Helper_Redirector Provides a fluent interface
      */
     public function setPrependBase($flag)
     {
@@ -174,7 +172,7 @@ class Redirector extends AbstractHelper
      * Set flag for whether or not {@link redirectAndExit()} shall close the session before exiting.
      *
      * @param  boolean $flag
-     * @return \Zend\Controller\Action\Helper\Redirector Provides a fluent interface
+     * @return Zend_Controller_Action_Helper_Redirector Provides a fluent interface
      */
     public function setCloseSessionOnExit($flag)
     {
@@ -196,7 +194,7 @@ class Redirector extends AbstractHelper
      * Set use absolute URI flag
      *
      * @param  boolean $flag
-     * @return \Zend\Controller\Action\Helper\Redirector Provides a fluent interface
+     * @return Zend_Controller_Action_Helper_Redirector Provides a fluent interface
      */
     public function setUseAbsoluteUri($flag = true)
     {
@@ -217,7 +215,10 @@ class Redirector extends AbstractHelper
             $port  = (isset($_SERVER['SERVER_PORT'])?$_SERVER['SERVER_PORT']:80);
             $uri   = $proto . '://' . $host;
             if ((('http' == $proto) && (80 != $port)) || (('https' == $proto) && (443 != $port))) {
-                $uri .= ':' . $port;
+                // do not append if HTTP_HOST already contains port
+                if (strrchr($host, ':') === false) {
+                    $uri .= ':' . $port;
+                }
             }
             $url = $uri . '/' . ltrim($url, '/');
         }
@@ -245,7 +246,7 @@ class Redirector extends AbstractHelper
     {
         if ($this->getPrependBase()) {
             $request = $this->getRequest();
-            if ($request instanceof \Zend\Controller\Request\Http) {
+            if ($request instanceof Zend_Controller_Request_Http) {
                 $base = rtrim($request->getBaseUrl(), '/');
                 if (!empty($base) && ('/' != $base)) {
                     $url = $base . '/' . ltrim($url, '/');
@@ -298,7 +299,7 @@ class Redirector extends AbstractHelper
         $params['action']     = $action;
 
         $router = $this->getFrontController()->getRouter();
-        $url    = $router->assemble($params, 'application', true);
+        $url    = $router->assemble($params, 'default', true);
 
         $this->_redirect($url);
     }
@@ -465,7 +466,7 @@ class Redirector extends AbstractHelper
      */
     public function gotoUrlAndExit($url, array $options = array())
     {
-        $this->gotoUrl($url, $options);
+        $this->setGotoUrl($url, $options);
         $this->redirectAndExit();
     }
 
@@ -476,6 +477,15 @@ class Redirector extends AbstractHelper
      */
     public function redirectAndExit()
     {
+        if ($this->getCloseSessionOnExit()) {
+            // Close session, if started
+            if (class_exists('Zend_Session', false) && Zend_Session::isStarted()) {
+                Zend_Session::writeClose();
+            } elseif (isset($_SESSION)) {
+                session_write_close();
+            }
+        }
+
         $this->getResponse()->sendHeaders();
         exit();
     }
@@ -503,7 +513,7 @@ class Redirector extends AbstractHelper
      * @param  string $method
      * @param  array $args
      * @return mixed
-     * @throws \Zend\Controller\Action\Exception for invalid methods
+     * @throws Zend_Controller_Action_Exception for invalid methods
      */
     public function __call($method, $args)
     {
@@ -518,6 +528,7 @@ class Redirector extends AbstractHelper
             return call_user_func_array(array($this, 'gotoSimpleAndExit'), $args);
         }
 
-        throw new Action\Exception(sprintf('Invalid method "%s" called on redirector', $method));
+        require_once 'Zend/Controller/Action/Exception.php';
+        throw new Zend_Controller_Action_Exception(sprintf('Invalid method "%s" called on redirector', $method));
     }
 }

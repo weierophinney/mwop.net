@@ -17,13 +17,13 @@
  * @subpackage Framework
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Tool_Project_Context_Filesystem_File
  */
-namespace Zend\Tool\Project\Context\Zf;
-use Zend\CodeGenerator\Php;
+require_once 'Zend/Tool/Project/Context/Filesystem/File.php';
 
 /**
  * This class is the front most class for utilizing Zend_Tool_Project
@@ -31,17 +31,12 @@ use Zend\CodeGenerator\Php;
  * A profile is a hierarchical set of resources that keep track of
  * items within a specific project.
  *
- * @uses       \Zend\CodeGenerator\Php\PhpClass
- * @uses       \Zend\CodeGenerator\Php\PhpFile
- * @uses       \Zend\CodeGenerator\Php\PhpMethod
- * @uses       \Zend\Filter\Word\DashToCamelCase
- * @uses       \Zend\Tool\Project\Context\Filesystem\File
  * @category   Zend
  * @package    Zend_Tool
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class TestApplicationControllerFile extends \Zend\Tool\Project\Context\Filesystem\File
+class Zend_Tool_Project_Context_Zf_TestApplicationControllerFile extends Zend_Tool_Project_Context_Filesystem_File
 {
 
     /**
@@ -62,7 +57,7 @@ class TestApplicationControllerFile extends \Zend\Tool\Project\Context\Filesyste
     /**
      * init()
      *
-     * @return \Zend\Tool\Project\Context\Zf\TestApplicationControllerFile
+     * @return Zend_Tool_Project_Context_Zf_TestApplicationControllerFile
      */
     public function init()
     {
@@ -73,6 +68,27 @@ class TestApplicationControllerFile extends \Zend\Tool\Project\Context\Filesyste
     }
 
     /**
+     * getPersistentAttributes()
+     *
+     * @return unknown
+     */
+    public function getPersistentAttributes()
+    {
+        $attributes = array();
+
+        if ($this->_forControllerName) {
+            $attributes['forControllerName'] = $this->getForControllerName();
+        }
+
+        return $attributes;
+    }
+    
+    public function getForControllerName()
+    {
+        return $this->_forControllerName;
+    }
+    
+    /**
      * getContents()
      *
      * @return string
@@ -80,26 +96,29 @@ class TestApplicationControllerFile extends \Zend\Tool\Project\Context\Filesyste
     public function getContents()
     {
 
-        $filter = new \Zend\Filter\Word\DashToCamelCase();
+        $filter = new Zend_Filter_Word_DashToCamelCase();
 
         $className = $filter->filter($this->_forControllerName) . 'ControllerTest';
-
-        $codeGenFile = new Php\PhpFile(array(
-            'requiredFiles' => array(
-                'PHPUnit/Framework/TestCase.php'
-                ),
+        
+        /* @var $controllerDirectoryResource Zend_Tool_Project_Profile_Resource */
+        $controllerDirectoryResource = $this->_resource->getParentResource();
+        if ($controllerDirectoryResource->getParentResource()->getName() == 'TestApplicationModuleDirectory') {
+            $className = ucfirst($controllerDirectoryResource->getParentResource()->getForModuleName())
+                . '_' . $className;
+        }        
+        
+        $codeGenFile = new Zend_CodeGenerator_Php_File(array(
             'classes' => array(
-                new Php\PhpClass(array(
+                new Zend_CodeGenerator_Php_Class(array(
                     'name' => $className,
-                    'extendedClass' => 'PHPUnit_Framework_TestCase',
+                    'extendedClass' => 'Zend_Test_PHPUnit_ControllerTestCase',
                     'methods' => array(
-                        new Php\PhpMethod(array(
+                        new Zend_CodeGenerator_Php_Method(array(
                             'name' => 'setUp',
-                            'body' => '        /* Setup Routine */'
-                            )),
-                        new Php\PhpMethod(array(
-                            'name' => 'tearDown',
-                            'body' => '        /* Tear Down Routine */'
+                            'body' => <<<EOS
+\$this->bootstrap = new Zend_Application(APPLICATION_ENV, APPLICATION_PATH . '/configs/application.ini');
+parent::setUp();
+EOS
                             ))
                         )
                     ))

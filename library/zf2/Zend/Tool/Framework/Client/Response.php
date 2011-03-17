@@ -17,21 +17,16 @@
  * @subpackage Framework
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
- */
-namespace Zend\Tool\Framework\Client;
-
-/**
- * @uses       \Zend\Tool\Framework\Client\Exception
  * @category   Zend
  * @package    Zend_Tool
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Response
+class Zend_Tool_Framework_Client_Response
 {
     /**
      * @var callback|null
@@ -44,7 +39,7 @@ class Response
     protected $_content = array();
 
     /**
-     * @var \Zend\Tool\Framework\Exception
+     * @var Zend_Tool_Framework_Exception
      */
     protected $_exception = null;
 
@@ -62,12 +57,13 @@ class Response
      * setContentCallback()
      *
      * @param callback $callback
-     * @return \Zend\Tool\Framework\Client\Response
+     * @return Zend_Tool_Framework_Client_Response
      */
     public function setContentCallback($callback)
     {
         if (!is_callable($callback)) {
-            throw new Exception\InvalidArgumentException('The callback provided is not callable');
+            require_once 'Zend/Tool/Framework/Client/Exception.php';
+            throw new Zend_Tool_Framework_Client_Exception('The callback provided is not callable');
         }
         $this->_callback = $callback;
         return $this;
@@ -77,7 +73,7 @@ class Response
      * setContent()
      *
      * @param string $content
-     * @return \Zend\Tool\Framework\Client\Response
+     * @return Zend_Tool_Framework_Client_Response
      */
     public function setContent($content, Array $decoratorOptions = array())
     {
@@ -92,7 +88,7 @@ class Response
      * appendCallback
      *
      * @param string $content
-     * @return \Zend\Tool\Framework\Client\Response
+     * @return Zend_Tool_Framework_Client_Response
      */
     public function appendContent($content, Array $decoratorOptions = array())
     {
@@ -112,7 +108,7 @@ class Response
      *
      * @param array $decoratorOptions
      * @param bool $mergeIntoExisting
-     * @return \Zend\Tool\Framework\Client\Response
+     * @return Zend_Tool_Framework_Client_Response
      */
     public function setDefaultDecoratorOptions(Array $decoratorOptions, $mergeIntoExisting = false)
     {
@@ -148,9 +144,9 @@ class Response
      * setException()
      *
      * @param Exception $exception
-     * @return \Zend\Tool\Framework\Client\Response
+     * @return Zend_Tool_Framework_Client_Response
      */
-    public function setException(\Exception $exception)
+    public function setException(Exception $exception)
     {
         $this->_exception = $exception;
         return $this;
@@ -169,10 +165,10 @@ class Response
     /**
      * Add Content Decorator
      *
-     * @param \Zend\Tool\Framework\Client\Response\ContentDecorator $contentDecorator
+     * @param Zend_Tool_Framework_Client_Response_ContentDecorator_Interface $contentDecorator
      * @return unknown
      */
-    public function addContentDecorator(Response\ContentDecorator $contentDecorator)
+    public function addContentDecorator(Zend_Tool_Framework_Client_Response_ContentDecorator_Interface $contentDecorator)
     {
         $decoratorName = strtolower($contentDecorator->getName());
         $this->_decorators[$decoratorName] = $contentDecorator;

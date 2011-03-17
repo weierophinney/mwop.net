@@ -17,24 +17,24 @@
  * @subpackage Value
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\XmlRpc\Value;
-use Zend\XmlRpc\Exception;
 
 /**
- * @uses       \Zend\XmlRpc\Value\Exception
- * @uses       \Zend\XmlRpc\Value\Scalar
+ * Zend_XmlRpc_Value_Scalar
+ */
+require_once 'Zend/XmlRpc/Value/Scalar.php';
+
+
+/**
  * @category   Zend
  * @package    Zend_XmlRpc
  * @subpackage Value
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Integer extends Scalar
+class Zend_XmlRpc_Value_Integer extends Zend_XmlRpc_Value_Scalar
 {
 
     /**
@@ -45,7 +45,8 @@ class Integer extends Scalar
     public function __construct($value)
     {
         if ($value > PHP_INT_MAX) {
-            throw new Exception\ValueException('Overlong integer given');
+            require_once 'Zend/XmlRpc/Value/Exception.php';
+            throw new Zend_XmlRpc_Value_Exception('Overlong integer given');
         }
 
         $this->_type = self::XMLRPC_TYPE_INTEGER;

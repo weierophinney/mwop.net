@@ -19,43 +19,43 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * @namespace
- */
-namespace Zend\Captcha;
+/** @see Zend_Captcha_Word */
+require_once 'Zend/Captcha/Word.php';
+
+/** @see Zend_Text_Figlet */
+require_once 'Zend/Text/Figlet.php';
 
 /**
  * Captcha based on figlet text rendering service
  *
  * Note that this engine seems not to like numbers
  *
- * @uses       Zend\Captcha\Word
- * @uses       Zend\Text\Figlet\Figlet
  * @category   Zend
  * @package    Zend_Captcha
  * @subpackage Adapter
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
-class Figlet extends Word
+class Zend_Captcha_Figlet extends Zend_Captcha_Word
 {
     /**
      * Figlet text renderer
      *
-     * @var \Zend\Text\Figlet\Figlet
+     * @var Zend_Text_Figlet
      */
     protected $_figlet;
 
     /**
      * Constructor
      *
-     * @param  null|string|array|\Zend\Config\Config $options
+     * @param  null|string|array|Zend_Config $options
      * @return void
      */
     public function __construct($options = null)
     {
         parent::__construct($options);
-        $this->_figlet = new \Zend\Text\Figlet\Figlet($options);
+        $this->_figlet = new Zend_Text_Figlet($options);
     }
 
     /**
@@ -76,7 +76,7 @@ class Figlet extends Word
      * @param mixed $element
      * @return string
      */
-    public function render(\Zend\View\ViewEngine $view = null, $element = null)
+    public function render(Zend_View_Interface $view = null, $element = null)
     {
         return '<pre>'
              . $this->_figlet->render($this->getWord())
