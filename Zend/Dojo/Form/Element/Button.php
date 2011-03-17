@@ -19,22 +19,20 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * @namespace
- */
-namespace Zend\Dojo\Form\Element;
+/** Zend_Dojo_Form_Element_Dijit */
+require_once 'Zend/Dojo/Form/Element/Dijit.php';
 
 /**
  * Button dijit
  *
- * @uses       \Zend\Dojo\Form\Element\Dijit
  * @category   Zend
  * @package    Zend_Dojo
  * @subpackage Form_Element
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
-class Button extends Dijit
+class Zend_Dojo_Form_Element_Button extends Zend_Dojo_Form_Element_Dijit
 {
     /**
      * Use Button dijit view helper
@@ -45,8 +43,8 @@ class Button extends Dijit
     /**
      * Constructor
      *
-     * @param  string|array|\Zend\Config\Config $spec Element name or configuration
-     * @param  string|array|\Zend\Config\Config $options Element value or configuration
+     * @param  string|array|Zend_Config $spec Element name or configuration
+     * @param  string|array|Zend_Config $options Element value or configuration
      * @return void
      */
     public function __construct($spec, $options = null)

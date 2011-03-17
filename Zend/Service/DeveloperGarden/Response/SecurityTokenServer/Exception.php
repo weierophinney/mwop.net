@@ -17,10 +17,15 @@
  * @subpackage DeveloperGarden
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @uses       Zend_Service_DeveloperGarden_Response_Exception
+ * Zend_Service_Response_Exception
+ */
+require_once 'Zend/Service/DeveloperGarden/Response/Exception.php';
+
+/**
  * @category   Zend
  * @package    Zend_Service
  * @subpackage DeveloperGarden

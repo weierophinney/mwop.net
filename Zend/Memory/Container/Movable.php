@@ -16,30 +16,26 @@
  * @package    Zend_Memory
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Memory\Container;
-use Zend\Memory,
-    Zend\Memory\Exception;
+/** Zend_Memory_Container */
+require_once 'Zend/Memory/Container.php';
+
+/** Zend_Memory_Value */
+require_once 'Zend/Memory/Value.php';
 
 /**
  * Memory value container
  *
  * Movable (may be swapped with specified backend and unloaded).
  *
- * @uses       \Zend\Memory\Container\AbstractContainer
- * @uses       \Zend\Memory\Exception
- * @uses       \Zend\Memory\Value
  * @category   Zend
  * @package    Zend_Memory
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Movable extends AbstractContainer
-{
+class Zend_Memory_Container_Movable extends Zend_Memory_Container {
     /**
      * Internal object Id
      *
@@ -50,14 +46,14 @@ class Movable extends AbstractContainer
     /**
      * Memory manager reference
      *
-     * @var \Zend\Memory\MemoryManager
+     * @var Zend_Memory_Manager
      */
     private $_memManager;
 
     /**
      * Value object
      *
-     * @var \Zend\Memory\Value
+     * @var Zend_Memory_Value
      */
     private $_value;
 
@@ -76,16 +72,16 @@ class Movable extends AbstractContainer
     /**
      * Object constructor
      *
-     * @param \Zend\Memory\MemoryManager $memoryManager
+     * @param Zend_Memory_Manager $memoryManager
      * @param integer $id
      * @param string $value
      */
-    public function __construct(Memory\MemoryManager $memoryManager, $id, $value)
+    public function __construct(Zend_Memory_Manager $memoryManager, $id, $value)
     {
         $this->_memManager = $memoryManager;
         $this->_id    = $id;
         $this->_state = self::LOADED;
-        $this->_value = new Memory\Value($value, $this);
+        $this->_value = new Zend_Memory_Value($value, $this);
     }
 
     /**
@@ -134,12 +130,13 @@ class Movable extends AbstractContainer
      *
      * @param string $property
      * @return string
-     * @throws \Zend\Memory\Exception
+     * @throws Zend_Memory_Exception
      */
     public function __get($property)
     {
         if ($property != 'value') {
-            throw new Exception\InvalidArgumentException('Unknown property: \Zend\Memory\Container\Movable::$' . $property);
+            require_once 'Zend/Memory/Exception.php';
+            throw new Zend_Memory_Exception('Unknown property: Zend_Memory_container::$' . $property);
         }
 
         if ( !($this->_state & self::LOADED) ) {
@@ -155,16 +152,17 @@ class Movable extends AbstractContainer
      *
      * @param string $property
      * @param  string $value
-     * @throws \Zend\Exception
+     * @throws Zend_Exception
      */
     public function __set($property, $value)
     {
         if ($property != 'value') {
-            throw new Exception\InvalidArgumentException('Unknown property: \Zend\Memory\Container\Movable::$' . $property);
+            require_once 'Zend/Memory/Exception.php';
+            throw new Zend_Memory_Exception('Unknown property: Zend_Memory_container::$' . $property);
         }
 
         $this->_state = self::LOADED;
-        $this->_value = new Memory\Value($value, $this);
+        $this->_value = new Zend_Memory_Value($value, $this);
 
         $this->_memManager->processUpdate($this, $this->_id);
     }
@@ -234,7 +232,7 @@ class Movable extends AbstractContainer
      */
     public function setValue($value)
     {
-        $this->_value = new Memory\Value($value, $this);
+        $this->_value = new Zend_Memory_Value($value, $this);
     }
 
     /**

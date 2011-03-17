@@ -17,22 +17,22 @@
  * @subpackage Helper
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_View_Helper_HtmlObject
  */
-namespace Zend\View\Helper;
+require_once 'Zend/View/Helper/HtmlObject.php';
 
 /**
- * @uses       \Zend\View\Helper\HtmlObject
  * @category   Zend
  * @package    Zend_View
  * @subpackage Helper
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class HtmlPage extends HtmlObject
+class Zend_View_Helper_HtmlPage extends Zend_View_Helper_HtmlObject
 {
     /**
      * Default file type for html
@@ -62,18 +62,14 @@ class HtmlPage extends HtmlObject
      * @param string $content Alternative content
      * @return string
      */
-    public function direct($data = null, array $attribs = array(), array $params = array(), $content = null)
+    public function htmlPage($data, array $attribs = array(), array $params = array(), $content = null)
     {
-        if ($data == null) {
-            throw new \InvalidArgumentException('HTMLPage: missing argument. $data is required in htmlObject($data, array $attribs = array(), array $params = array(), $content = null)');
-        }
-        
         // Attrs
         $attribs = array_merge($this->_attribs, $attribs);
 
         // Params
         $params = array_merge(array('data' => $data), $params);
 
-        return parent::direct($data, self::TYPE, $attribs, $params, $content);
+        return $this->htmlObject($data, self::TYPE, $attribs, $params, $content);
     }
 }

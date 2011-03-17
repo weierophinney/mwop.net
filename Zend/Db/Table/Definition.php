@@ -17,26 +17,19 @@
  * @subpackage Table
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
-
-/**
- * @namespace
- */
-namespace Zend\Db\Table;
-
-use Zend\Config\Config;
 
 /**
  * Class for SQL table interface.
  *
- * @uses       \Zend\Db\Table\Table
  * @category   Zend
  * @package    Zend_Db
  * @subpackage Table
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Definition
+class Zend_Db_Table_Definition
 {
 
     /**
@@ -47,11 +40,11 @@ class Definition
     /**
      * __construct()
      *
-     * @param array|\Zend\Config\Config $options
+     * @param array|Zend_Config $options
      */
     public function __construct($options = null)
     {
-        if ($options instanceof Config) {
+        if ($options instanceof Zend_Config) {
             $this->setConfig($options);
         } elseif (is_array($options)) {
             $this->setOptions($options);
@@ -61,10 +54,10 @@ class Definition
     /**
      * setConfig()
      *
-     * @param \Zend\Config\Config $config
-     * @return \Zend\Db\Table\Definition
+     * @param Zend_Config $config
+     * @return Zend_Db_Table_Definition
      */
-    public function setConfig(Config $config)
+    public function setConfig(Zend_Config $config)
     {
         $this->setOptions($config->toArray());
         return $this;
@@ -74,7 +67,7 @@ class Definition
      * setOptions()
      *
      * @param array $options
-     * @return \Zend\Db\Table\Definition
+     * @return Zend_Db_Table_Definition
      */
     public function setOptions(Array $options)
     {
@@ -87,16 +80,16 @@ class Definition
     /**
      * @param string $tableName
      * @param array  $tableConfig
-     * @return \Zend\Db\Table\Definition
+     * @return Zend_Db_Table_Definition
      */
     public function setTableConfig($tableName, array $tableConfig)
     {
         // @todo logic here
-        $tableConfig[Table::DEFINITION_CONFIG_NAME] = $tableName;
-        $tableConfig[Table::DEFINITION] = $this;
+        $tableConfig[Zend_Db_Table::DEFINITION_CONFIG_NAME] = $tableName;
+        $tableConfig[Zend_Db_Table::DEFINITION] = $this;
 
-        if (!isset($tableConfig[Table::NAME])) {
-            $tableConfig[Table::NAME] = $tableName;
+        if (!isset($tableConfig[Zend_Db_Table::NAME])) {
+            $tableConfig[Zend_Db_Table::NAME] = $tableName;
         }
 
         $this->_tableConfigs[$tableName] = $tableConfig;

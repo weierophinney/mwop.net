@@ -16,24 +16,22 @@
  * @package    Zend_View
  * @subpackage Helper
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @version    $Id$
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * @namespace
- */
-namespace Zend\View\Helper;
+/** Zend_View_Helper_FormElement */
+require_once 'Zend/View/Helper/FormElement.php';
 
 /**
  * Helper for rendering HTML forms
  *
- * @uses       \Zend\View\Helper\FormElement
  * @package    Zend_View
  * @subpackage Helper
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Form extends FormElement
+class Zend_View_Helper_Form extends Zend_View_Helper_FormElement
 {
     /**
      * Render HTML form
@@ -43,14 +41,13 @@ class Form extends FormElement
      * @param  false|string $content Form content
      * @return string
      */
-    public function direct($name = null, $attribs = null, $content = false)
+    public function form($name, $attribs = null, $content = false)
     {
         $info = $this->_getInfo($name, $content, $attribs);
-        $id = null;
         extract($info);
 
         if (!empty($id)) {
-            $id = ' id="' . $this->view->vars()->escape($id) . '"';
+            $id = ' id="' . $this->view->escape($id) . '"';
         } else {
             $id = '';
         }

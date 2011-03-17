@@ -19,22 +19,20 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * @namespace
- */
-namespace Zend\Form\Element;
+/** Zend_Form_Element_Select */
+require_once 'Zend/Form/Element/Select.php';
 
 /**
  * Multiselect form element
  *
- * @uses       \Zend\Form\Element\Select
  * @category   Zend
  * @package    Zend_Form
  * @subpackage Element
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
-class Multiselect extends Select
+class Zend_Form_Element_Multiselect extends Zend_Form_Element_Select
 {
     /**
      * 'multiple' attribute

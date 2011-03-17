@@ -17,12 +17,15 @@
  * @subpackage Helper
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
+
 /**
- * @namespace
+ * Abstract class for extension
  */
-namespace Zend\View\Helper;
+require_once 'Zend/View/Helper/FormElement.php';
+
 
 /**
  * Helper to generate an "image" element
@@ -33,7 +36,7 @@ namespace Zend\View\Helper;
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class FormImage extends FormElement
+class Zend_View_Helper_FormImage extends Zend_View_Helper_FormElement
 {
     /**
      * Generates an 'image' element.
@@ -50,27 +53,23 @@ class FormImage extends FormElement
      *
      * @return string The element XHTML.
      */
-    public function direct($name = null, $value = null, $attribs = null)
+    public function formImage($name, $value = null, $attribs = null)
     {
-        if ($name == null) {
-            throw new \InvalidArgumentException('FormImage: missing argument. $name is required in formImage($name, $value = null, $attribs = null)');
-        }
-        
         $info = $this->_getInfo($name, $value, $attribs);
         extract($info); // name, value, attribs, options, listsep, disable
 
         // Determine if we should use the value or the src attribute
         if (isset($attribs['src'])) {
-            $src = ' src="' . $this->view->vars()->escape($attribs['src']) . '"';
+            $src = ' src="' . $this->view->escape($attribs['src']) . '"';
             unset($attribs['src']);
         } else {
-            $src = ' src="' . $this->view->vars()->escape($value) . '"';
+            $src = ' src="' . $this->view->escape($value) . '"';
             unset($value);
         }
 
         // Do we have a value?
         if (isset($value) && !empty($value)) {
-            $value = ' value="' . $this->view->vars()->escape($value) . '"';
+            $value = ' value="' . $this->view->escape($value) . '"';
         } else {
             $value = '';
         }
@@ -83,14 +82,14 @@ class FormImage extends FormElement
 
         // XHTML or HTML end tag?
         $endTag = ' />';
-        if (($this->view instanceof \Zend\View\AbstractView) && !$this->view->broker('doctype')->isXhtml()) {
+        if (($this->view instanceof Zend_View_Abstract) && !$this->view->doctype()->isXhtml()) {
             $endTag= '>';
         }
 
         // build the element
         $xhtml = '<input type="image"'
-                . ' name="' . $this->view->vars()->escape($name) . '"'
-                . ' id="' . $this->view->vars()->escape($id) . '"'
+                . ' name="' . $this->view->escape($name) . '"'
+                . ' id="' . $this->view->escape($id) . '"'
                 . $src
                 . $value
                 . $disabled

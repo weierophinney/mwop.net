@@ -17,23 +17,23 @@
  * @subpackage Zend_Cache_Frontend
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Cache\Frontend;
-use Zend\Cache\Cache;
 
 /**
- * @uses       \Zend\Cache\Cache
- * @uses       \Zend\Cache\Frontend\Core
+ * @see Zend_Cache_Core
+ */
+require_once 'Zend/Cache/Core.php';
+
+
+/**
  * @package    Zend_Cache
  * @subpackage Zend_Cache_Frontend
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class File extends Core
+class Zend_Cache_Frontend_File extends Zend_Cache_Core
 {
 
     /**
@@ -83,7 +83,7 @@ class File extends Core
      * Constructor
      *
      * @param  array $options Associative array of options
-     * @throws \Zend\Cache\Exception
+     * @throws Zend_Cache_Exception
      * @return void
      */
     public function __construct(array $options = array())
@@ -92,27 +92,40 @@ class File extends Core
             $this->setOption($name, $value);
         }
         if (!isset($this->_specificOptions['master_files'])) {
-            Cache::throwException('master_files option must be set');
+            Zend_Cache::throwException('master_files option must be set');
         }
     }
 
     /**
-     * Change the master_file option
+     * Change the master_files option
      *
-     * @param string $masterFile the complete path and name of the master file
+     * @param array $masterFiles the complete paths and name of the master files
      */
-    public function setMasterFiles($masterFiles)
+    public function setMasterFiles(array $masterFiles)
     {
-        clearstatcache();
-        $this->_specificOptions['master_file'] = $masterFiles[0]; // to keep a compatibility
-        $this->_specificOptions['master_files'] = $masterFiles;
+        $this->_specificOptions['master_file']  = null; // to keep a compatibility
+        $this->_specificOptions['master_files'] = null;
         $this->_masterFile_mtimes = array();
+
+        clearstatcache();
         $i = 0;
         foreach ($masterFiles as $masterFile) {
-            $this->_masterFile_mtimes[$i] = @filemtime($masterFile);
-            if ((!($this->_specificOptions['ignore_missing_master_files'])) && (!($this->_masterFile_mtimes[$i]))) {
-                Cache::throwException('Unable to read master_file : '.$masterFile);
+            if (file_exists($masterFile)) {
+                $mtime = filemtime($masterFile);
+            } else {
+                $mtime = false;
             }
+
+            if (!$this->_specificOptions['ignore_missing_master_files'] && !$mtime) {
+                Zend_Cache::throwException('Unable to read master_file : ' . $masterFile);
+            }
+
+            $this->_masterFile_mtimes[$i] = $mtime;
+            $this->_specificOptions['master_files'][$i] = $masterFile;
+            if ($i === 0) { // to keep a compatibility
+                $this->_specificOptions['master_files'] = $masterFile;
+            }
+
             $i++;
         }
     }
@@ -127,7 +140,7 @@ class File extends Core
      */
     public function setMasterFile($masterFile)
     {
-          $this->setMasterFiles(array(0 => $masterFile));
+          $this->setMasterFiles(array($masterFile));
     }
 
     /**
@@ -137,7 +150,7 @@ class File extends Core
      *
      * @param  string $name  Name of the option
      * @param  mixed  $value Value of the option
-     * @throws \Zend\Cache\Exception
+     * @throws Zend_Cache_Exception
      * @return void
      */
     public function setOption($name, $value)

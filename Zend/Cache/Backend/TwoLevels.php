@@ -17,24 +17,29 @@
  * @subpackage Zend_Cache_Backend
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Cache\Backend;
-use Zend\Cache;
 
 /**
- * @uses       \Zend\Cache\Cache
- * @uses       \Zend\Cache\Backend\AbstractBackend
- * @uses       \Zend\Cache\Backend\ExtendedBackend
+ * @see Zend_Cache_Backend_ExtendedInterface
+ */
+require_once 'Zend/Cache/Backend/ExtendedInterface.php';
+
+/**
+ * @see Zend_Cache_Backend
+ */
+require_once 'Zend/Cache/Backend.php';
+
+
+/**
  * @package    Zend_Cache
  * @subpackage Zend_Cache_Backend
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class TwoLevels extends AbstractBackend implements ExtendedBackend
+
+class Zend_Cache_Backend_TwoLevels extends Zend_Cache_Backend implements Zend_Cache_Backend_ExtendedInterface
 {
     /**
      * Available options
@@ -88,14 +93,14 @@ class TwoLevels extends AbstractBackend implements ExtendedBackend
     /**
      * Slow Backend
      *
-     * @var \Zend\Cache\Backend\Backend
+     * @var Zend_Cache_Backend_ExtendedInterface
      */
     protected $_slowBackend;
 
     /**
      * Fast Backend
      *
-     * @var \Zend\Cache\Backend\Backend
+     * @var Zend_Cache_Backend_ExtendedInterface
      */
     protected $_fastBackend;
 
@@ -110,7 +115,7 @@ class TwoLevels extends AbstractBackend implements ExtendedBackend
      * Constructor
      *
      * @param  array $options Associative array of options
-     * @throws \Zend\Cache\Exception
+     * @throws Zend_Cache_Exception
      * @return void
      */
     public function __construct(array $options = array())
@@ -118,34 +123,34 @@ class TwoLevels extends AbstractBackend implements ExtendedBackend
         parent::__construct($options);
 
         if ($this->_options['slow_backend'] === null) {
-            Cache\Cache::throwException('slow_backend option has to set');
-        } elseif ($this->_options['slow_backend'] instanceof ExtendedBackend) {
+            Zend_Cache::throwException('slow_backend option has to set');
+        } elseif ($this->_options['slow_backend'] instanceof Zend_Cache_Backend_ExtendedInterface) {
             $this->_slowBackend = $this->_options['slow_backend'];
         } else {
-            $this->_slowBackend = Cache\Cache::_makeBackend(
+            $this->_slowBackend = Zend_Cache::_makeBackend(
                 $this->_options['slow_backend'],
                 $this->_options['slow_backend_options'],
                 $this->_options['slow_backend_custom_naming'],
                 $this->_options['slow_backend_autoload']
             );
-            if (!in_array('Zend\Cache\Backend\ExtendedBackend', class_implements($this->_slowBackend))) {
-                Cache\Cache::throwException('slow_backend must implement the Zend\Cache\Backend\ExtendedBackend interface');
+            if (!in_array('Zend_Cache_Backend_ExtendedInterface', class_implements($this->_slowBackend))) {
+                Zend_Cache::throwException('slow_backend must implement the Zend_Cache_Backend_ExtendedInterface interface');
             }
         }
 
         if ($this->_options['fast_backend'] === null) {
-            Cache\Cache::throwException('fast_backend option has to set');
-        } elseif ($this->_options['fast_backend'] instanceof ExtendedBackend) {
+            Zend_Cache::throwException('fast_backend option has to set');
+        } elseif ($this->_options['fast_backend'] instanceof Zend_Cache_Backend_ExtendedInterface) {
             $this->_fastBackend = $this->_options['fast_backend'];
         } else {
-            $this->_fastBackend = Cache\Cache::_makeBackend(
+            $this->_fastBackend = Zend_Cache::_makeBackend(
                 $this->_options['fast_backend'],
                 $this->_options['fast_backend_options'],
                 $this->_options['fast_backend_custom_naming'],
                 $this->_options['fast_backend_autoload']
             );
-            if (!in_array('Zend\Cache\Backend\ExtendedBackend', class_implements($this->_fastBackend))) {
-                Zend_Cache::throwException('fast_backend must implement the Zend\Cache\Backend\ExtendedBackend interface');
+            if (!in_array('Zend_Cache_Backend_ExtendedInterface', class_implements($this->_fastBackend))) {
+                Zend_Cache::throwException('fast_backend must implement the Zend_Cache_Backend_ExtendedInterface interface');
             }
         }
 
@@ -196,6 +201,11 @@ class TwoLevels extends AbstractBackend implements ExtendedBackend
             $boolSlow = $this->_slowBackend->save($preparedData, $id, $tags, $lifetime);
             if ($boolSlow === true) {
                 $boolFast = $this->_fastBackend->remove($id);
+                if (!$boolFast && !$this->_fastBackend->test($id)) {
+                    // some backends return false on remove() even if the key never existed. (and it won't if fast is full)
+                    // all we care about is that the key doesn't exist now
+                    $boolFast = true;
+                }
             }
         }
 
@@ -268,20 +278,20 @@ class TwoLevels extends AbstractBackend implements ExtendedBackend
      *
      * @param  string $mode Clean mode
      * @param  array  $tags Array of tags
-     * @throws \Zend\Cache\Exception
+     * @throws Zend_Cache_Exception
      * @return boolean true if no problem
      */
-    public function clean($mode = Cache\CacheCache\Cache::CLEANING_MODE_ALL, $tags = array())
+    public function clean($mode = Zend_Cache::CLEANING_MODE_ALL, $tags = array())
     {
         switch($mode) {
-            case Cache\Cache::CLEANING_MODE_ALL:
-                $boolFast = $this->_fastBackend->clean(Cache\Cache::CLEANING_MODE_ALL);
-                $boolSlow = $this->_slowBackend->clean(Cache\Cache::CLEANING_MODE_ALL);
+            case Zend_Cache::CLEANING_MODE_ALL:
+                $boolFast = $this->_fastBackend->clean(Zend_Cache::CLEANING_MODE_ALL);
+                $boolSlow = $this->_slowBackend->clean(Zend_Cache::CLEANING_MODE_ALL);
                 return $boolFast && $boolSlow;
                 break;
-            case Cache\Cache::CLEANING_MODE_OLD:
-                return $this->_slowBackend->clean(Cache\Cache::CLEANING_MODE_OLD);
-            case Cache\Cache::CLEANING_MODE_MATCHING_TAG:
+            case Zend_Cache::CLEANING_MODE_OLD:
+                return $this->_slowBackend->clean(Zend_Cache::CLEANING_MODE_OLD);
+            case Zend_Cache::CLEANING_MODE_MATCHING_TAG:
                 $ids = $this->_slowBackend->getIdsMatchingTags($tags);
                 $res = true;
                 foreach ($ids as $id) {
@@ -290,7 +300,7 @@ class TwoLevels extends AbstractBackend implements ExtendedBackend
                 }
                 return $res;
                 break;
-            case Cache\Cache::CLEANING_MODE_NOT_MATCHING_TAG:
+            case Zend_Cache::CLEANING_MODE_NOT_MATCHING_TAG:
                 $ids = $this->_slowBackend->getIdsNotMatchingTags($tags);
                 $res = true;
                 foreach ($ids as $id) {
@@ -299,7 +309,7 @@ class TwoLevels extends AbstractBackend implements ExtendedBackend
                 }
                 return $res;
                 break;
-            case Cache\Cache::CLEANING_MODE_MATCHING_ANY_TAG:
+            case Zend_Cache::CLEANING_MODE_MATCHING_ANY_TAG:
                 $ids = $this->_slowBackend->getIdsMatchingAnyTags($tags);
                 $res = true;
                 foreach ($ids as $id) {
@@ -309,7 +319,7 @@ class TwoLevels extends AbstractBackend implements ExtendedBackend
                 return $res;
                 break;
             default:
-                Cache\Cache::throwException('Invalid mode for clean() method');
+                Zend_Cache::throwException('Invalid mode for clean() method');
                 break;
         }
     }

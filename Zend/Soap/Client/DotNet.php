@@ -17,18 +17,16 @@
  * @subpackage Client
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Soap\Client;
+/** Zend_Soap_Client */
+require_once 'Zend/Soap/Client.php';
 
-use Zend\Soap\Client as SOAPClient,
-    Zend\Soap\Exception;
+if (extension_loaded('soap')) {
 
 /**
- * .NET SOAP client
+ * Zend_Soap_Client_Local
  *
  * Class is intended to be used with .Net Web Services.
  *
@@ -36,13 +34,11 @@ use Zend\Soap\Client as SOAPClient,
  * Please leave your notes, compatiblity issues reports or
  * suggestions in fw-webservices@lists.zend.com or fw-general@lists.com
  *
- * @uses       \Zend\Soap\Client
- * @uses       \Zend\Soap\ClientException
  * @category   Zend
  * @package    Zend_Soap
  * @subpackage Client
  */
-class DotNet extends SOAPClient
+class Zend_Soap_Client_DotNet extends Zend_Soap_Client
 {
     /**
      * Constructor
@@ -65,14 +61,15 @@ class DotNet extends SOAPClient
      * My be overridden in descendant classes
      *
      * @param array $arguments
-     * @throws \Zend\Soap\ClientException
+     * @throws Zend_Soap_Client_Exception
      */
     protected function _preProcessArguments($arguments)
     {
         if (count($arguments) > 1  ||
             (count($arguments) == 1  &&  !is_array(reset($arguments)))
            ) {
-            throw new Exception\RuntimeException('.Net webservice arguments have to be grouped into array: array(\'a\' => $a, \'b\' => $b, ...).');
+            require_once 'Zend/Soap/Client/Exception.php';
+            throw new Zend_Soap_Client_Exception('.Net webservice arguments have to be grouped into array: array(\'a\' => $a, \'b\' => $b, ...).');
         }
 
         // Do nothing
@@ -94,3 +91,5 @@ class DotNet extends SOAPClient
     }
 
 }
+
+} // end if (extension_loaded('soap')

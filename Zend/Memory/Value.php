@@ -16,12 +16,9 @@
  * @package    Zend_Memory
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Memory;
 
 /**
  * String value object
@@ -29,15 +26,13 @@ namespace Zend\Memory;
  * It's an OO string wrapper.
  * Used to intercept string updates.
  *
- * @uses       ArrayAccess
- * @uses       Countable
  * @category   Zend
  * @package    Zend_Memory
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @todo       also implement Countable for PHP 5.1 but not yet to stay 5.0 compatible
  */
-class Value implements \ArrayAccess,\Countable
-{
+class Zend_Memory_Value implements ArrayAccess {
     /**
      * Value
      *
@@ -48,7 +43,7 @@ class Value implements \ArrayAccess,\Countable
     /**
      * Container
      *
-     * @var \Zend\Memory\Container
+     * @var Zend_Memory_Container_Interface
      */
     private $_container;
 
@@ -64,9 +59,9 @@ class Value implements \ArrayAccess,\Countable
      * Object constructor
      *
      * @param string $value
-     * @param \Zend\Memory\Container\Movable $container
+     * @param Zend_Memory_Container_Movable $container
      */
-    public function __construct($value, Container\Movable $container)
+    public function __construct($value, Zend_Memory_Container_Movable $container)
     {
         $this->_container = $container;
 
@@ -83,15 +78,6 @@ class Value implements \ArrayAccess,\Countable
         $this->_trace = false;
     }
 
-    /**
-     * Countable
-     * 
-     * @return int
-     */
-    public function count()
-    {
-        return strlen($this->_value);
-    }
 
     /**
      * ArrayAccess interface method

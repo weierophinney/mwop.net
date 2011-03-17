@@ -13,18 +13,16 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    Zend_PDF
- * @subpackage Zend_PDF_Font
+ * @package    Zend_Pdf
+ * @subpackage Fonts
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Pdf\Cmap;
-use Zend\Pdf\Exception;
-use Zend\Pdf;
+/** Zend_Pdf_Cmap */
+require_once 'Zend/Pdf/Cmap.php';
+
 
 /**
  * Implements the "segment mapping to delta values" character map (type 4).
@@ -33,16 +31,14 @@ use Zend\Pdf;
  * provides the ability to cover multiple contiguous ranges of the Unicode
  * character set, with the exception of Unicode Surrogates (U+D800 - U+DFFF).
  *
- * @uses       \Zend\Pdf\Cmap\AbstractCmap
- * @uses       \Zend\Pdf\Exception
- * @package    Zend_PDF
- * @subpackage Zend_PDF_Font
+ * @package    Zend_Pdf
+ * @subpackage Fonts
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class SegmentToDelta extends AbstractCmap
+class Zend_Pdf_Cmap_SegmentToDelta extends Zend_Pdf_Cmap
 {
-    /**** Instance Variables ****/
+  /**** Instance Variables ****/
 
 
     /**
@@ -103,10 +99,10 @@ class SegmentToDelta extends AbstractCmap
 
 
 
-    /**** Public Interface ****/
+  /**** Public Interface ****/
 
 
-    /* Concrete Class Implementation */
+  /* Concrete Class Implementation */
 
     /**
      * Returns an array of glyph numbers corresponding to the Unicode characters.
@@ -127,7 +123,7 @@ class SegmentToDelta extends AbstractCmap
             /* These tables only cover the 16-bit character range.
              */
             if ($characterCode > 0xffff) {
-                $glyphNumbers[$key] = AbstractCmap::MISSING_CHARACTER_GLYPH;
+                $glyphNumbers[$key] = Zend_Pdf_Cmap::MISSING_CHARACTER_GLYPH;
                 continue;
             }
 
@@ -166,7 +162,7 @@ class SegmentToDelta extends AbstractCmap
              * that character is not represented in this font. Move on.
              */
             if ($this->_segmentTableStartCodes[$subtableIndex] > $characterCode) {
-                $glyphNumbers[$key] = AbstractCmap::MISSING_CHARACTER_GLYPH;
+                $glyphNumbers[$key] = Zend_Pdf_Cmap::MISSING_CHARACTER_GLYPH;
                 continue;
             }
 
@@ -215,7 +211,7 @@ class SegmentToDelta extends AbstractCmap
          */
 
         if ($characterCode > 0xffff) {
-            return AbstractCmap::MISSING_CHARACTER_GLYPH;
+            return Zend_Pdf_Cmap::MISSING_CHARACTER_GLYPH;
         }
 
         if ($this->_searchRangeEndCode >= $characterCode) {
@@ -234,7 +230,7 @@ class SegmentToDelta extends AbstractCmap
         }
 
         if ($this->_segmentTableStartCodes[$subtableIndex] > $characterCode) {
-            return AbstractCmap::MISSING_CHARACTER_GLYPH;
+            return Zend_Pdf_Cmap::MISSING_CHARACTER_GLYPH;
         }
 
         if ($this->_segmentTableIdRangeOffsets[$subtableIndex] == 0) {
@@ -308,7 +304,7 @@ class SegmentToDelta extends AbstractCmap
 
 
 
-    /* Object Lifecycle */
+  /* Object Lifecycle */
 
     /**
      * Object constructor
@@ -317,7 +313,7 @@ class SegmentToDelta extends AbstractCmap
      * malformed.
      *
      * @param string $cmapData Raw binary cmap table data.
-     * @throws \Zend\Pdf\Exception
+     * @throws Zend_Pdf_Exception
      */
     public function __construct($cmapData)
     {
@@ -325,19 +321,25 @@ class SegmentToDelta extends AbstractCmap
          */
         $actualLength = strlen($cmapData);
         if ($actualLength < 23) {
-            throw new Exception\CorruptedFontException('Insufficient table data');
+            require_once 'Zend/Pdf/Exception.php';
+            throw new Zend_Pdf_Exception('Insufficient table data',
+                                         Zend_Pdf_Exception::CMAP_TABLE_DATA_TOO_SMALL);
         }
 
         /* Sanity check: Make sure this is right data for this table type.
          */
         $type = $this->_extractUInt2($cmapData, 0);
-        if ($type != AbstractCmap::TYPE_SEGMENT_TO_DELTA) {
-            throw new Exception\CorruptedFontException('Wrong cmap table type');
+        if ($type != Zend_Pdf_Cmap::TYPE_SEGMENT_TO_DELTA) {
+            require_once 'Zend/Pdf/Exception.php';
+            throw new Zend_Pdf_Exception('Wrong cmap table type',
+                                         Zend_Pdf_Exception::CMAP_WRONG_TABLE_TYPE);
         }
 
         $length = $this->_extractUInt2($cmapData, 2);
         if ($length != $actualLength) {
-            throw new Exception\CorruptedFontException("Table length ($length) does not match actual length ($actualLength)");
+            require_once 'Zend/Pdf/Exception.php';
+            throw new Zend_Pdf_Exception("Table length ($length) does not match actual length ($actualLength)",
+                                         Zend_Pdf_Exception::CMAP_WRONG_TABLE_LENGTH);
         }
 
         /* Mapping tables should be language-independent. The font may not work
@@ -396,7 +398,10 @@ class SegmentToDelta extends AbstractCmap
          * of the table.
          */
         if ($offset != $length) {
-            throw new Exception\CorruptedFontException("Ending offset ($offset) does not match length ($length)");
+            require_once 'Zend/Pdf/Exception.php';
+            throw new Zend_Pdf_Exception("Ending offset ($offset) does not match length ($length)",
+                                         Zend_Pdf_Exception::CMAP_FINAL_OFFSET_NOT_LENGTH);
         }
     }
+
 }

@@ -16,12 +16,8 @@
  * @package    Zend_Debug
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
-
-/**
- * @namespace
- */
-namespace Zend;
 
 /**
  * Concrete class for generating debug dumps related to the output source.
@@ -31,7 +27,8 @@ namespace Zend;
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Debug
+
+class Zend_Debug
 {
 
     /**

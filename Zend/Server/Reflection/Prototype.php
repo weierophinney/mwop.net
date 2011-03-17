@@ -14,51 +14,55 @@
  *
  * @category   Zend
  * @package    Zend_Server
- * @subpackage Zend_Server_Reflection
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
 /**
- * @namespace
+ * Zend_Server_Reflection_ReturnValue
  */
-namespace Zend\Server\Reflection;
+require_once 'Zend/Server/Reflection/ReturnValue.php';
+
+/**
+ * Zend_Server_Reflection_Parameter
+ */
+require_once 'Zend/Server/Reflection/Parameter.php';
 
 /**
  * Method/Function prototypes
  *
  * Contains accessors for the return value and all method arguments.
  *
- * @uses       \Zend\Server\Reflection\Exception
- * @uses       \Zend\Server\Reflection\ReflectionParameter
- * @uses       \Zend\Server\Reflection\ReflectionReturnValue
  * @category   Zend
  * @package    Zend_Server
- * @subpackage Zend_Server_Reflection
+ * @subpackage Reflection
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version $Id$
  */
-class Prototype
+class Zend_Server_Reflection_Prototype
 {
     /**
      * Constructor
      *
-     * @param Zend\Server\Reflection\ReflectionReturnValue $return
+     * @param Zend_Server_Reflection_ReturnValue $return
      * @param array $params
      * @return void
      */
-    public function __construct(ReflectionReturnValue $return, $params = null)
+    public function __construct(Zend_Server_Reflection_ReturnValue $return, $params = null)
     {
         $this->_return = $return;
 
         if (!is_array($params) && (null !== $params)) {
-            throw new Exception\InvalidArgumentException('Invalid parameters');
+            require_once 'Zend/Server/Reflection/Exception.php';
+            throw new Zend_Server_Reflection_Exception('Invalid parameters');
         }
 
         if (is_array($params)) {
             foreach ($params as $param) {
-                if (!$param instanceof ReflectionParameter) {
-                    throw new Exception\InvalidArgumentException('One or more params are invalid');
+                if (!$param instanceof Zend_Server_Reflection_Parameter) {
+                    require_once 'Zend/Server/Reflection/Exception.php';
+                    throw new Zend_Server_Reflection_Exception('One or more params are invalid');
                 }
             }
         }
@@ -80,7 +84,7 @@ class Prototype
      * Retrieve the return value object
      *
      * @access public
-     * @return Zend\Server\Reflection\ReflectionReturnValue
+     * @return Zend_Server_Reflection_ReturnValue
      */
     public function getReturnValue()
     {
@@ -90,7 +94,7 @@ class Prototype
     /**
      * Retrieve method parameters
      *
-     * @return array Array of {@link \Zend\Server\Reflection\ReflectionParameter}s
+     * @return array Array of {@link Zend_Server_Reflection_Parameter}s
      */
     public function getParameters()
     {

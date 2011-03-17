@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework
  *
@@ -17,30 +18,20 @@
  * @subpackage Delicious
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Service\Delicious;
 
 /**
  * List of posts retrived from the del.icio.us web service
  *
- * @uses       ArrayAccess
- * @uses       Countable
- * @uses       Iterator
- * @uses       OutOfBoundsException
- * @uses       Zend_Service_Delicious_Exception
- * @uses       Zend_Service_Delicious_Post
- * @uses       Zend_Service_Delicious_SimplePost
  * @category   Zend
  * @package    Zend_Service
  * @subpackage Delicious
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class PostList implements \Countable, \Iterator, \ArrayAccess
+class Zend_Service_Delicious_PostList implements Countable, Iterator, ArrayAccess
 {
     /**
      * @var array Array of Zend_Service_Delicious_Post
@@ -62,10 +53,10 @@ class PostList implements \Countable, \Iterator, \ArrayAccess
      * @param  DOMNodeList|array      $posts
      * @return void
      */
-    public function __construct(Delicious $service, $posts = null)
+    public function __construct(Zend_Service_Delicious $service, $posts = null)
     {
         $this->_service = $service;
-        if ($posts instanceof \DOMNodeList) {
+        if ($posts instanceof DOMNodeList) {
             $this->_constructFromNodeList($posts);
         } else if (is_array($posts)) {
             $this->_constructFromArray($posts);
@@ -78,12 +69,12 @@ class PostList implements \Countable, \Iterator, \ArrayAccess
      * @param  DOMNodeList $nodeList
      * @return void
      */
-    private function _constructFromNodeList(\DOMNodeList $nodeList)
+    private function _constructFromNodeList(DOMNodeList $nodeList)
     {
         for ($i = 0; $i < $nodeList->length; $i++) {
             $curentNode = $nodeList->item($i);
             if($curentNode->nodeName == 'post') {
-                $this->_addPost(new Post($this->_service, $curentNode));
+                $this->_addPost(new Zend_Service_Delicious_Post($this->_service, $curentNode));
             }
         }
     }
@@ -97,7 +88,7 @@ class PostList implements \Countable, \Iterator, \ArrayAccess
     private function _constructFromArray(array $postList)
     {
         foreach ($postList as $f_post) {
-            $this->_addPost(new SimplePost($f_post));
+            $this->_addPost(new Zend_Service_Delicious_SimplePost($f_post));
         }
     }
 
@@ -107,7 +98,7 @@ class PostList implements \Countable, \Iterator, \ArrayAccess
      * @param  Zend_Service_Delicious_SimplePost $post
      * @return Zend_Service_Delicious_PostList
      */
-    protected function _addPost(SimplePost $post)
+    protected function _addPost(Zend_Service_Delicious_SimplePost $post)
     {
         $this->_posts[] = $post;
 
@@ -268,7 +259,7 @@ class PostList implements \Countable, \Iterator, \ArrayAccess
         if ($this->offsetExists($offset)) {
             return $this->_posts[$offset];
         } else {
-            throw new \OutOfBoundsException('Illegal index');
+            throw new OutOfBoundsException('Illegal index');
         }
     }
 
@@ -283,7 +274,11 @@ class PostList implements \Countable, \Iterator, \ArrayAccess
      */
     public function offsetSet($offset, $value)
     {
-        throw new Exception('You are trying to set read-only property');
+        /**
+         * @see Zend_Service_Delicious_Exception
+         */
+        require_once 'Zend/Service/Delicious/Exception.php';
+        throw new Zend_Service_Delicious_Exception('You are trying to set read-only property');
     }
 
     /**
@@ -296,6 +291,10 @@ class PostList implements \Countable, \Iterator, \ArrayAccess
      */
     public function offsetUnset($offset)
     {
-        throw new Exception('You are trying to unset read-only property');
+        /**
+         * @see Zend_Service_Delicious_Exception
+         */
+        require_once 'Zend/Service/Delicious/Exception.php';
+        throw new Zend_Service_Delicious_Exception('You are trying to unset read-only property');
     }
 }

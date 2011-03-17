@@ -17,13 +17,15 @@
  * @subpackage DeveloperGarden
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @uses       DOMDocument
- * @uses       SoapHeader
- * @uses       SoapVar
- * @uses       Zend_Soap_Client
+ * @see Zend_Soap_Client
+ */
+require_once 'Zend/Soap/Client.php';
+
+/**
  * @category   Zend
  * @package    Zend_Service
  * @subpackage DeveloperGarden
@@ -31,7 +33,7 @@
  * @author     Marco Kaiser
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Service_DeveloperGarden_Client_Soap extends Zend\Soap\Client
+class Zend_Service_DeveloperGarden_Client_Soap extends Zend_Soap_Client
 {
     /**
      * class with credential interface

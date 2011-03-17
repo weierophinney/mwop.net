@@ -17,26 +17,22 @@
  * @subpackage View
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Dojo\View\Helper;
-
-use Zend\Json\Json;
+/** Zend_Dojo_View_Helper_Dijit */
+require_once 'Zend/Dojo/View/Helper/Dijit.php';
 
 /**
  * Dojo ComboBox dijit
  *
- * @uses       \Zend\Dojo\View\Helper\Dijit
- * @uses       \Zend\Json\Json
+ * @uses       Zend_Dojo_View_Helper_Dijit
  * @package    Zend_Dojo
  * @subpackage View
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- */
-class ComboBox extends Dijit
+  */
+class Zend_Dojo_View_Helper_ComboBox extends Zend_Dojo_View_Helper_Dijit
 {
     /**
      * Dijit being used
@@ -66,7 +62,7 @@ class ComboBox extends Dijit
      * @param  array|null $options Select options
      * @return string
      */
-    public function direct($id = null, $value = null, array $params = array(), array $attribs = array(), array $options = null)
+    public function comboBox($id, $value = null, array $params = array(), array $attribs = array(), array $options = null)
     {
         $html = '';
         if (!array_key_exists('id', $attribs)) {
@@ -138,10 +134,11 @@ class ComboBox extends Dijit
 
         if ($this->_useProgrammatic()) {
             if (!$this->_useProgrammaticNoScript()) {
+                require_once 'Zend/Json.php';
                 $this->dojo->addJavascript('var ' . $storeParams['jsId'] . ";\n");
                 $js = $storeParams['jsId'] . ' = '
                     . 'new ' . $storeParams['dojoType'] . '('
-                    .     Json::encode($extraParams)
+                    .     Zend_Json::encode($extraParams)
                     . ");\n";
                 $js = "function() {\n$js\n}";
                 $this->dojo->_addZendLoad($js);

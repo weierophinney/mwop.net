@@ -17,23 +17,23 @@
  * @subpackage View
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Dojo\View\Helper;
+/** Zend_Dojo_View_Helper_Dijit */
+require_once 'Zend/Dojo/View/Helper/Dijit.php';
 
 /**
  * dijit.form.SimpleTextarea view helper
  *
- * @uses       \Zend\Dojo\View\Helper\Dijit
+ * @uses       Zend_Dojo_View_Helper_Dijit
  * @package    Zend_Dojo
  * @subpackage View
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
-class SimpleTextarea extends Dijit
+class Zend_Dojo_View_Helper_SimpleTextarea extends Zend_Dojo_View_Helper_Dijit
 {
     /**
      * @var string Dijit type
@@ -59,7 +59,7 @@ class SimpleTextarea extends Dijit
      * @param  array $attribs HTML attributes
      * @return string
      */
-    public function direct($id = null, $value = null, array $params = array(), array $attribs = array())
+    public function simpleTextarea($id, $value = null, array $params = array(), array $attribs = array())
     {
         if (!array_key_exists('id', $attribs)) {
             $attribs['id']    = $id;
@@ -70,7 +70,7 @@ class SimpleTextarea extends Dijit
         $attribs = $this->_prepareDijit($attribs, $params, 'textarea');
 
         $html = '<textarea' . $this->_htmlAttribs($attribs) . '>'
-              . $this->view->vars()->escape($value)
+              . $this->view->escape($value)
               . "</textarea>\n";
 
         return $html;

@@ -17,32 +17,24 @@
  * @subpackage Adapter
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Serializer\Adapter;
-
-use Zend\Serializer\Exception\InvalidArgumentException,
-    Zend\Serializer\Exception\RuntimeException;
+/** @see Zend_Serializer_Adapter_AdapterAbstract */
+require_once 'Zend/Serializer/Adapter/AdapterAbstract.php';
 
 /**
  * @link       http://www.python.org
  * @see        Phython3.1/Lib/pickle.py
  * @see        Phython3.1/Modules/_pickle.c
  * @link       http://pickle-js.googlecode.com
- * @uses       stdClass
- * @uses       Zend\Serializer\Adapter\AbstractAdapter
- * @uses       Zend\Serializer\Exception\InvalidArgumentException
- * @uses       Zend\Serializer\Exception\RuntimeException
  * @category   Zend
  * @package    Zend_Serializer
  * @subpackage Adapter
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class PythonPickle extends AbstractAdapter
+class Zend_Serializer_Adapter_PythonPickle extends Zend_Serializer_Adapter_AdapterAbstract
 {
     /* Pickle opcodes. See pickletools.py for extensive docs.  The listing
        here is in kind-of alphabetical order of 1-character pickle code.
@@ -108,6 +100,11 @@ class PythonPickle extends AbstractAdapter
     const OP_SHORT_BINBYTES  = 'C';     //  "     "   ;    "      "       "      " < 256 bytes
 
     /**
+     * @var bool Whether or not this is a PHP 6 binary
+     */
+    protected static $_isPhp6 = null;
+
+    /**
      * @var bool Whether or not the system is little-endian
      */
     protected static $_isLittleEndian = null;
@@ -132,7 +129,7 @@ class PythonPickle extends AbstractAdapter
      * @var array Default options
      */
     protected $_options = array(
-        'protocol' => 0,
+        'protocol'           => 0,
     );
 
     // process vars
@@ -158,8 +155,11 @@ class PythonPickle extends AbstractAdapter
         if (self::$_isLittleEndian === null) {
             self::$_isLittleEndian = (pack('l', 1) === "\x01\x00\x00\x00");
         }
+        if (self::$_isPhp6 === null) {
+            self::$_isPhp6 = !version_compare(PHP_VERSION, '6.0.0', '<');
+        }
 
-        $this->_marker = new \stdClass();
+        $this->_marker = new stdClass();
     }
 
     /**
@@ -168,16 +168,13 @@ class PythonPickle extends AbstractAdapter
      * @link   Zend_Serializer_Adapter_AdapterAbstract::setOption()
      * @param  string $name
      * @param  mixed $value
-     * @return Zend\Serializer\Adapter\PythonPickle
+     * @return Zend_Serializer_Adapter_PythonPickle
      */
     public function setOption($name, $value)
     {
         switch ($name) {
             case 'protocol':
                 $value = $this->_checkProtocolNumber($value);
-                if ($value === false) {
-                    throw new InvalidArgumentException("Invalid or unknown protocol version '{$number}'");
-                }
                 break;
         }
 
@@ -189,13 +186,14 @@ class PythonPickle extends AbstractAdapter
      *
      * @param  int $number
      * @return int
-     * @throws Zend\Serializer\Exception
+     * @throws Zend_Serializer_Exception
      */
     protected function _checkProtocolNumber($number)
     {
         $int = (int) $number;
         if ($int < 0 || $int > 3) {
-            return false;
+            require_once 'Zend/Serializer/Exception.php';
+            throw new Zend_Serializer_Exception('Invalid or unknown protocol version "'.$number.'"');
         }
         return $int;
     }
@@ -240,7 +238,7 @@ class PythonPickle extends AbstractAdapter
      *
      * @param  mixed $value
      * @return void
-     * @throws Zend\Serializer\Exception on invalid or unrecognized value type
+     * @throws Zend_Serializer_Exception on invalid or unrecognized value type
      */
     protected function _write($value)
     {
@@ -266,7 +264,8 @@ class PythonPickle extends AbstractAdapter
         } elseif (is_object($value)) {
             $this->_writeObject($value);
         } else {
-            throw new RuntimeException(
+            require_once 'Zend/Serializer/Exception.php';
+            throw new Zend_Serializer_Exception(
                 'PHP-Type "'.gettype($value).'" isn\'t serializable with '.get_class($this)
             );
         }
@@ -437,7 +436,7 @@ class PythonPickle extends AbstractAdapter
      */
     protected function _writeString($value)
     {
-        if ( ($id=$this->_searchMemo($value)) !== false ) {
+        if ( ($id=$this->_searchMomo($value)) !== false ) {
             $this->_writeGet($id);
             return;
         }
@@ -459,24 +458,24 @@ class PythonPickle extends AbstractAdapter
             $this->_pickle .= self::OP_STRING . $this->_quoteString($value) . "\r\n";
         }
 
-        $this->_memorize($value);
+        $this->_momorize($value);
     }
 
     /**
      * Write an associative array value as dictionary
      *
-     * @param  array|Traversable $value
+     * @param  array $value
      * @return void
      */
-    protected function _writeArrayDict($value)
+    protected function _writeArrayDict(array $value)
     {
-        if (($id=$this->_searchMemo($value)) !== false) {
-            $this->_writeGet($id);
+        if (($id=$this->_searchMomo($value)) !== false) {
+            $this->_writeGet($id);;
             return;
         }
 
         $this->_pickle .= self::OP_MARK . self::OP_DICT;
-        $this->_memorize($value);
+        $this->_momorize($value);
 
         foreach ($value as $k => $v) {
             $this->_pickle .= $this->_write($k)
@@ -493,15 +492,15 @@ class PythonPickle extends AbstractAdapter
      */
     protected function _writeArrayList(array $value)
     {
-        if (($id = $this->_searchMemo($value)) !== false) {
+        if (($id = $this->_searchMomo($value)) !== false) {
             $this->_writeGet($id);
             return;
         }
 
         $this->_pickle .= self::OP_MARK . self::OP_LIST;
-        $this->_memorize($value);
+        $this->_momorize($value);
 
-        foreach ($value as $v) {
+        foreach ($value as $k => $v) {
             $this->_pickle .= $this->_write($v) . self::OP_APPEND;
         }
     }
@@ -514,25 +513,8 @@ class PythonPickle extends AbstractAdapter
      */
     protected function _writeObject($value)
     {
-        // The main differences between a SplFixedArray and a normal PHP array is
-        // that the SplFixedArray is of fixed length and allows only integers
-        // within the range as indexes.
-        if ($value instanceof \SplFixedArray) {
-            $this->_writeArrayList($value->toArray());
-
-        // Use the object method toArray if available
-        } elseif (method_exists($value, 'toArray')) {
-            $this->_writeArrayDict($value->toArray());
-
-        // If the object is an iterator simply iterate it
-        // and convert it to an dictionary
-        } elseif ($value instanceof \Traversable) {
-            $this->_writeArrayDict($value);
-
-        // other objects are simply converted by using its properties
-        } else {
-            $this->_writeArrayDict(get_object_vars($value));
-        }
+        // can't serialize php objects to python objects yet
+        $this->_writeArrayDict(get_object_vars($value));
     }
 
     /**
@@ -553,7 +535,7 @@ class PythonPickle extends AbstractAdapter
      * @param mixed $value
      * @return void
      */
-    protected function _memorize($value)
+    protected function _momorize($value)
     {
         $id = count($this->_memo);
         $this->_memo[$id] = $value;
@@ -561,12 +543,12 @@ class PythonPickle extends AbstractAdapter
     }
 
     /**
-     * Search a value in the memo and return  the id
+     * Search a value in the meno and return  the id
      *
      * @param  mixed $value
      * @return int|false The id or false
      */
-    protected function _searchMemo($value)
+    protected function _searchMomo($value)
     {
         return array_search($value, $this->_memo, true);
     }
@@ -614,7 +596,7 @@ class PythonPickle extends AbstractAdapter
      * @param  string $pickle
      * @param  array $opts
      * @return mixed
-     * @throws Zend\Serializer\Exception on invalid Pickle string
+     * @throws Zend_Serializer_Exception on invalid Pickle string
      */
     public function unserialize($pickle, array $opts = array())
     {
@@ -631,7 +613,8 @@ class PythonPickle extends AbstractAdapter
         }
 
         if (!count($this->_stack)) {
-            throw new RuntimeException('No data found');
+            require_once 'Zend/Serializer/Exception.php';
+            throw new Zend_Serializer_Exception('No data found');
         }
 
         $ret = array_pop($this->_stack);
@@ -651,7 +634,7 @@ class PythonPickle extends AbstractAdapter
      *
      * @param  string $op
      * @return void
-     * @throws Zend\Serializer\Exception on invalid opcode
+     * @throws Zend_Serializer_Exception on invalid opcode
      */
     protected function _load($op)
     {
@@ -774,7 +757,8 @@ class PythonPickle extends AbstractAdapter
                 $this->_loadProto();
                 break;
             default:
-                throw new RuntimeException('Invalid or unknown opcode "'.$op.'"');
+                require_once 'Zend/Serializer/Exception.php';
+                throw new Zend_Serializer_Exception('Invalid or unknown opcode "'.$op.'"');
         }
     }
 
@@ -782,7 +766,7 @@ class PythonPickle extends AbstractAdapter
      * Load a PUT opcode
      *
      * @return void
-     * @throws Zend\Serializer\Exception on missing stack
+     * @throws Zend_Serializer_Exception on missing stack
      */
     protected function _loadPut()
     {
@@ -790,7 +774,8 @@ class PythonPickle extends AbstractAdapter
 
         $lastStack = count($this->_stack)-1;
         if (!isset($this->_stack[$lastStack])) {
-            throw new RuntimeException('No stack exist');
+            require_once 'Zend/Serializer/Exception.php';
+            throw new Zend_Serializer_Exception('No stack exist');
         }
         $this->_memo[$id] = & $this->_stack[$lastStack];
     }
@@ -799,7 +784,7 @@ class PythonPickle extends AbstractAdapter
      * Load a binary PUT
      *
      * @return void
-     * @throws Zend\Serializer\Exception on missing stack
+     * @throws Zend_Serializer_Exception on missing stack
      */
     protected function _loadBinPut()
     {
@@ -807,7 +792,8 @@ class PythonPickle extends AbstractAdapter
 
         $lastStack = count($this->_stack)-1;
         if (!isset($this->_stack[$lastStack])) {
-            throw new RuntimeException('No stack exist');
+            require_once 'Zend/Serializer/Exception.php';
+            throw new Zend_Serializer_Exception('No stack exist');
         }
         $this->_memo[$id] = & $this->_stack[$lastStack];
     }
@@ -816,7 +802,7 @@ class PythonPickle extends AbstractAdapter
      * Load a long binary PUT
      *
      * @return void
-     * @throws Zend\Serializer\Exception on missing stack
+     * @throws Zend_Serializer_Exception on missing stack
      */
     protected function _loadLongBinPut()
     {
@@ -828,7 +814,8 @@ class PythonPickle extends AbstractAdapter
 
         $lastStack = count($this->_stack)-1;
         if (!isset($this->_stack[$lastStack])) {
-            throw new RuntimeException('No stack exist');
+            require_once 'Zend/Serializer/Exception.php';
+            throw new Zend_Serializer_Exception('No stack exist');
         }
         $this->_memo[$id] = & $this->_stack[$lastStack];
     }
@@ -837,14 +824,15 @@ class PythonPickle extends AbstractAdapter
      * Load a GET operation
      *
      * @return void
-     * @throws Zend\Serializer\Exception on missing GET identifier
+     * @throws Zend_Serializer_Exception on missing GET identifier
      */
     protected function _loadGet()
     {
         $id = (int)$this->_readline();
 
         if (!array_key_exists($id, $this->_memo)) {
-            throw new RuntimeException('Get id "' . $id . '" not found in memo');
+            require_once 'Zend/Serializer/Exception.php';
+            throw new Zend_Serializer_Exception('Get id "' . $id . '" not found in momo');
         }
         $this->_stack[] = & $this->_memo[$id];
     }
@@ -853,14 +841,15 @@ class PythonPickle extends AbstractAdapter
      * Load a binary GET operation
      *
      * @return void
-     * @throws Zend\Serializer\Exception on missing GET identifier
+     * @throws Zend_Serializer_Exception on missing GET identifier
      */
     protected function _loadBinGet()
     {
         $id = ord($this->_read(1));
 
         if (!array_key_exists($id, $this->_memo)) {
-            throw new RuntimeException('Get id "' . $id . '" not found in memo');
+            require_once 'Zend/Serializer/Exception.php';
+            throw new Zend_Serializer_Exception('Get id "' . $id . '" not found in momo');
         }
         $this->_stack[] = & $this->_memo[$id];
     }
@@ -869,7 +858,7 @@ class PythonPickle extends AbstractAdapter
      * Load a long binary GET operation
      *
      * @return void
-     * @throws Zend\Serializer\Exception on missing GET identifier
+     * @throws Zend_Serializer_Exception on missing GET identifier
      */
     protected function _loadLongBinGet()
     {
@@ -880,7 +869,8 @@ class PythonPickle extends AbstractAdapter
         list(, $id) = unpack('l', $bin);
 
         if (!array_key_exists($id, $this->_memo)) {
-            throw new RuntimeException('Get id "' . $id . '" not found in memo');
+            require_once 'Zend/Serializer/Exception.php';
+            throw new Zend_Serializer_Exception('Get id "' . $id . '" not found in momo');
         }
         $this->_stack[] = & $this->_memo[$id];
     }
@@ -1113,6 +1103,10 @@ class PythonPickle extends AbstractAdapter
         $pattern = '/\\\\u([a-fA-F0-9]{4})/u'; // \uXXXX
         $data    = preg_replace_callback($pattern, array($this, '_convertMatchingUnicodeSequence2Utf8'), $data);
 
+        if (self::$_isPhp6) {
+            $data = unicode_decode($data, 'UTF-8');
+        }
+
         $this->_stack[] = $data;
     }
 
@@ -1132,7 +1126,7 @@ class PythonPickle extends AbstractAdapter
      *
      * @param  string $sequence
      * @return string
-     * @throws \Zend\Serializer\Exception on unmatched unicode sequence
+     * @throws Zend_Serializer_Exception on unmatched unicode sequence
      */
     protected function _hex2Utf8($hex)
     {
@@ -1156,7 +1150,8 @@ class PythonPickle extends AbstractAdapter
                        . chr(0x80 | $uniCode >> 6 & 0x3F)
                        . chr(0x80 | $uniCode & 0x3F);
         } else {
-            throw new RuntimeException('Unsupported unicode character found "' . dechex($uniCode) . '"');
+            require_once 'Zend/Serializer/Exception.php';
+            throw new Zend_Serializer_Exception('Unsupported unicode character found "' . dechex($uniCode) . '"');
         }
 
         return $utf8Char;
@@ -1176,6 +1171,10 @@ class PythonPickle extends AbstractAdapter
         }
         list(, $n) = unpack('l', $n);
         $data      = $this->_read($n);
+
+        if (self::$_isPhp6) {
+            $data = unicode_decode($data, 'UTF-8');
+        }
 
         $this->_stack[] = $data;
     }
@@ -1361,13 +1360,14 @@ class PythonPickle extends AbstractAdapter
      * Load a proto value
      *
      * @return void
-     * @throws Zend\Serializer\Exception if Pickle version does not support this feature
+     * @throws Zend_Serializer_Exception if Pickle version does not support this feature
      */
     protected function _loadProto()
     {
         $proto = ord($this->_read(1));
         if ($proto < 2 || $proto > 3) {
-            throw new RuntimeException("Invalid or unknown protocol version '{$proto}' detected");
+            require_once 'Zend/Serializer/Exception.php';
+            throw new Zend_Serializer_Exception('Invalid protocol version detected');
         }
         $this->_protocol = $proto;
     }
@@ -1379,12 +1379,13 @@ class PythonPickle extends AbstractAdapter
      *
      * @param  mixed $len
      * @return string
-     * @throws Zend\Serializer\Exception if position matches end of data
+     * @throws Zend_Serializer_Exception if position matches end of data
      */
     protected function _read($len)
     {
         if (($this->_pos + $len) > $this->_pickleLen) {
-            throw new RuntimeException('End of data');
+            require_once 'Zend/Serializer/Exception.php';
+            throw new Zend_Serializer_Exception('End of data');
         }
 
         $this->_pos+= $len;
@@ -1395,7 +1396,7 @@ class PythonPickle extends AbstractAdapter
      * Read a line of the pickle at once
      *
      * @return string
-     * @throws Zend\Serializer\Exception if no EOL character found
+     * @throws Zend_Serializer_Exception if no EOL character found
      */
     protected function _readline()
     {
@@ -1407,7 +1408,8 @@ class PythonPickle extends AbstractAdapter
         }
 
         if ($eolPos === false) {
-            throw new RuntimeException('No new line found');
+            require_once 'Zend/Serializer/Exception.php';
+            throw new Zend_Serializer_Exception('No new line found');
         }
         $ret        = substr($this->_pickle, $this->_pos, $eolPos-$this->_pos);
         $this->_pos = $eolPos + $eolLen;

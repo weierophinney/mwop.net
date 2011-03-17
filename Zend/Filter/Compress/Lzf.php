@@ -16,25 +16,23 @@
  * @package    Zend_Filter
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Filter_Compress_CompressInterface
  */
-namespace Zend\Filter\Compress;
-use Zend\Filter\Exception;
+require_once 'Zend/Filter/Compress/CompressInterface.php';
 
 /**
  * Compression adapter for Lzf
  *
- * @uses       \Zend\Filter\Compress\CompressionAlgorithm
- * @uses       \Zend\Filter\Exception
  * @category   Zend
  * @package    Zend_Filter
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Lzf implements CompressionAlgorithm
+class Zend_Filter_Compress_Lzf implements Zend_Filter_Compress_CompressInterface
 {
     /**
      * Class constructor
@@ -42,7 +40,8 @@ class Lzf implements CompressionAlgorithm
     public function __construct()
     {
         if (!extension_loaded('lzf')) {
-            throw new Exception\ExtensionNotLoadedException('This filter needs the lzf extension');
+            require_once 'Zend/Filter/Exception.php';
+            throw new Zend_Filter_Exception('This filter needs the lzf extension');
         }
     }
 
@@ -56,7 +55,8 @@ class Lzf implements CompressionAlgorithm
     {
         $compressed = lzf_compress($content);
         if (!$compressed) {
-            throw new Exception\RuntimeException('Error during compression');
+            require_once 'Zend/Filter/Exception.php';
+            throw new Zend_Filter_Exception('Error during compression');
         }
 
         return $compressed;
@@ -72,7 +72,8 @@ class Lzf implements CompressionAlgorithm
     {
         $compressed = lzf_decompress($content);
         if (!$compressed) {
-            throw new Exception\RuntimeException('Error during compression');
+            require_once 'Zend/Filter/Exception.php';
+            throw new Zend_Filter_Exception('Error during compression');
         }
 
         return $compressed;

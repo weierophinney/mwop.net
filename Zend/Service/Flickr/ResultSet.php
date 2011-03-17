@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework
  *
@@ -17,13 +18,17 @@
  * @subpackage Flickr
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
+
 /**
- * @uses       DOMXPath
- * @uses       OutOfBoundsException
- * @uses       SeekableIterator
- * @uses       Zend_Service_Flickr_Result
+ * @see Zend_Service_Flickr_Result
+ */
+require_once 'Zend/Service/Flickr/Result.php';
+
+
+/**
  * @category   Zend
  * @package    Zend_Service
  * @subpackage Flickr

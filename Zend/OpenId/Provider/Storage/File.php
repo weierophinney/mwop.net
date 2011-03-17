@@ -18,26 +18,24 @@
  * @subpackage Zend_OpenId_Provider
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_OpenId_Provider_Storage
  */
-namespace Zend\OpenId\Provider\Storage;
-use Zend\OpenId;
+require_once "Zend/OpenId/Provider/Storage.php";
 
 /**
  * External storage implemmentation using serialized files
  *
- * @uses       Zend\OpenId\Exception
- * @uses       Zend\OpenId\Provider\Storage
  * @category   Zend
  * @package    Zend_OpenId
  * @subpackage Zend_OpenId_Provider
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class File extends AbstractStorage
+class Zend_OpenId_Provider_Storage_File extends Zend_OpenId_Provider_Storage
 {
 
     /**
@@ -51,7 +49,7 @@ class File extends AbstractStorage
      * Constructs storage object and creates storage directory
      *
      * @param string $dir directory name to store data files in
-     * @throws Zend\OpenId\Exception
+     * @throws Zend_OpenId_Exception
      */
     public function __construct($dir = null)
     {
@@ -72,21 +70,21 @@ class File extends AbstractStorage
         $this->_dir = $dir;
         if (!is_dir($this->_dir)) {
             if (!@mkdir($this->_dir, 0700, 1)) {
-                throw new OpenId\Exception(
+                throw new Zend_OpenId_Exception(
                     "Cannot access storage directory $dir",
-                    OpenId\Exception::ERROR_STORAGE);
+                    Zend_OpenId_Exception::ERROR_STORAGE);
             }
         }
         if (($f = fopen($this->_dir.'/assoc.lock', 'w+')) === null) {
-            throw new OpenId\Exception(
+            throw new Zend_OpenId_Exception(
                 'Cannot create a lock file in the directory ' . $dir,
-                OpenId\Exception::ERROR_STORAGE);
+                Zend_OpenId_Exception::ERROR_STORAGE);
         }
         fclose($f);
         if (($f = fopen($this->_dir.'/user.lock', 'w+')) === null) {
-            throw new OpenId\Exception(
+            throw new Zend_OpenId_Exception(
                 'Cannot create a lock file in the directory ' . $dir,
-                OpenId\Exception::ERROR_STORAGE);
+                Zend_OpenId_Exception::ERROR_STORAGE);
         }
         fclose($f);
     }
@@ -122,7 +120,7 @@ class File extends AbstractStorage
             fclose($f);
             fclose($lock);
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             fclose($lock);
             throw $e;
         }
@@ -172,7 +170,7 @@ class File extends AbstractStorage
             fclose($f);
             fclose($lock);
             return $ret;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             fclose($lock);
             throw $e;
         }
@@ -199,7 +197,7 @@ class File extends AbstractStorage
             @unlink($name);
             fclose($lock);
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             fclose($lock);
             throw $e;
         }
@@ -236,7 +234,7 @@ class File extends AbstractStorage
             fclose($f);
             fclose($lock);
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             fclose($lock);
             throw $e;
         }
@@ -259,7 +257,7 @@ class File extends AbstractStorage
             fclose($lock);
             return false;
         }
-        try { 
+        try {
             $f = @fopen($name, 'r');
             if ($f === false) {
                 fclose($lock);
@@ -276,7 +274,7 @@ class File extends AbstractStorage
             fclose($f);
             fclose($lock);
             return $ret;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             fclose($lock);
             throw $e;
         }
@@ -317,7 +315,7 @@ class File extends AbstractStorage
             fclose($f);
             fclose($lock);
             return $ret;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             fclose($lock);
             throw $e;
         }
@@ -344,7 +342,7 @@ class File extends AbstractStorage
             @unlink($name);
             fclose($lock);
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             fclose($lock);
             throw $e;
         }
@@ -385,7 +383,7 @@ class File extends AbstractStorage
             fclose($f);
             fclose($lock);
             return $ret;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             fclose($lock);
             throw $e;
         }
@@ -436,7 +434,7 @@ class File extends AbstractStorage
             fclose($f);
             fclose($lock);
             return $ret;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             fclose($lock);
             throw $e;
         }

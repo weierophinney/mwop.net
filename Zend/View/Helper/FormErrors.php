@@ -17,27 +17,28 @@
  * @subpackage Helper
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * Abstract class for extension
  */
-namespace Zend\View\Helper;
+require_once 'Zend/View/Helper/FormElement.php';
+
 
 /**
  * Helper to render errors for a form element
  *
- * @uses       \Zend\View\Helper\FormElement
  * @category   Zend
  * @package    Zend_View
  * @subpackage Helper
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class FormErrors extends FormElement
+class Zend_View_Helper_FormErrors extends Zend_View_Helper_FormElement
 {
     /**
-     * @var \Zend\Form\Element\Element
+     * @var Zend_Form_Element
      */
     protected $_element;
 
@@ -56,12 +57,8 @@ class FormErrors extends FormElement
      * @param  array $options
      * @return string
      */
-    public function direct($errors = null, array $options = null)
+    public function formErrors($errors, array $options = null)
     {
-        if ($errors === null) { // can be empty array()
-            throw new \InvalidArgumentException('FormErrors: missing argument. $errors is required in form($errors, array $options = null)');
-        }
-        
         $escape = true;
         if (isset($options['escape'])) {
             $escape = (bool) $options['escape'];
@@ -80,7 +77,7 @@ class FormErrors extends FormElement
 
         if ($escape) {
             foreach ($errors as $key => $error) {
-                $errors[$key] = $this->view->vars()->escape($error);
+                $errors[$key] = $this->view->escape($error);
             }
         }
 
@@ -95,7 +92,7 @@ class FormErrors extends FormElement
      * Set end string for displaying errors
      *
      * @param  string $string
-     * @return \Zend\View\Helper\FormErrors
+     * @return Zend_View_Helper_FormErrors
      */
     public function setElementEnd($string)
     {
@@ -117,7 +114,7 @@ class FormErrors extends FormElement
      * Set separator string for displaying errors
      *
      * @param  string $string
-     * @return \Zend\View\Helper\FormErrors
+     * @return Zend_View_Helper_FormErrors
      */
     public function setElementSeparator($string)
     {
@@ -139,7 +136,7 @@ class FormErrors extends FormElement
      * Set start string for displaying errors
      *
      * @param  string $string
-     * @return \Zend\View\Helper\FormErrors
+     * @return Zend_View_Helper_FormErrors
      */
     public function setElementStart($string)
     {

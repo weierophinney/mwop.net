@@ -16,26 +16,23 @@
  * @package    Zend_View
  * @subpackage Helper
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @version    $Id$
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * @namespace
- */
-namespace Zend\View\Helper;
+/** Zend_View_Helper_Partial */
+require_once 'Zend/View/Helper/Partial.php';
 
 /**
  * Helper for rendering a template fragment in its own variable scope; iterates
  * over data provided and renders for each iteration.
  *
- * @uses       \Zend\View\Helper\Partial\Partial
- * @uses       \Zend\View\Helper\Partial\Exception
  * @package    Zend_View
  * @subpackage Helper
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class PartialLoop extends Partial
+class Zend_View_Helper_PartialLoop extends Zend_View_Helper_Partial
 {
 
     /**
@@ -58,7 +55,7 @@ class PartialLoop extends Partial
      * @param  array $model Variables to populate in the view
      * @return string
      */
-    public function direct($name = null, $module = null, $model = null)
+    public function partialLoop($name = null, $module = null, $model = null)
     {
         if (0 == func_num_args()) {
             return $this;
@@ -70,16 +67,17 @@ class PartialLoop extends Partial
         }
 
         if (!is_array($model)
-            && (!$model instanceof \Traversable)
+            && (!$model instanceof Traversable)
             && (is_object($model) && !method_exists($model, 'toArray'))
         ) {
-            $e = new Partial\Exception('PartialLoop helper requires iterable data');
+            require_once 'Zend/View/Helper/Partial/Exception.php';
+            $e = new Zend_View_Helper_Partial_Exception('PartialLoop helper requires iterable data');
             $e->setView($this->view);
             throw $e;
         }
 
         if (is_object($model)
-            && (!$model instanceof \Traversable)
+            && (!$model instanceof Traversable)
             && method_exists($model, 'toArray')
         ) {
             $model = $model->toArray();
@@ -92,7 +90,7 @@ class PartialLoop extends Partial
             // increment the counter variable
             $this->partialCounter++;
 
-            $content .= parent::direct($name, $module, $item);
+            $content .= $this->partial($name, $module, $item);
         }
 
         return $content;

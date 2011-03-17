@@ -16,12 +16,8 @@
  * @package    Zend_Amf
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
-
-/**
- * @namespace
- */
-namespace Zend\Amf\Adobe;
 
 /**
  * This class implements authentication against XML file with roles for Flex Builder.
@@ -31,22 +27,23 @@ namespace Zend\Amf\Adobe;
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class DbInspector
+class Zend_Amf_Adobe_DbInspector
 {
+
     /**
      * Connect to the database
      *
-     * @see    Zend_Db::factory()
-     * @param  string $dbType Database adapter type for Zend_Db
-     * @param  array|object $dbDescription Adapter-specific connection settings
+     * @param string $dbType Database adapter type for Zend_Db
+     * @param array|object $dbDescription Adapter-specific connection settings
      * @return Zend_Db_Adapter_Abstract
+     * @see Zend_Db::factory()
      */
     protected function _connect($dbType, $dbDescription)
     {
-        if (is_object($dbDescription)) {
+        if(is_object($dbDescription)) {
             $dbDescription = get_object_vars($dbDescription);
         }
-        return \Zend_Db::factory($dbType, $dbDescription);
+        return Zend_Db::factory($dbType, $dbDescription);
     }
 
     /**
@@ -63,12 +60,12 @@ class DbInspector
      *     'mytable'
      * );
      *
-     * @see    Zend_Db::describeTable()
-     * @see    Zend_Db::factory()
-     * @param  string $dbType Database adapter type for Zend_Db
-     * @param  array|object $dbDescription Adapter-specific connection settings
-     * @param  string $tableName Table name
+     * @param string $dbType Database adapter type for Zend_Db
+     * @param array|object $dbDescription Adapter-specific connection settings
+     * @param string $tableName Table name
      * @return array Table description
+     * @see Zend_Db::describeTable()
+     * @see Zend_Db::factory()
      */
     public function describeTable($dbType, $dbDescription, $tableName)
     {
@@ -79,10 +76,10 @@ class DbInspector
     /**
      * Test database connection
      *
-     * @see    Zend_Db::factory()
-     * @param  string $dbType Database adapter type for Zend_Db
-     * @param  array|object $dbDescription Adapter-specific connection settings
+     * @param string $dbType Database adapter type for Zend_Db
+     * @param array|object $dbDescription Adapter-specific connection settings
      * @return bool
+     * @see Zend_Db::factory()
      */
     public function connect($dbType, $dbDescription)
     {
@@ -94,8 +91,8 @@ class DbInspector
     /**
      * Get the list of database tables
      *
-     * @param  string $dbType Database adapter type for Zend_Db
-     * @param  array|object $dbDescription Adapter-specific connection settings
+     * @param string $dbType Database adapter type for Zend_Db
+     * @param array|object $dbDescription Adapter-specific connection settings
      * @return array List of the tables
      */
     public function getTables($dbType, $dbDescription)

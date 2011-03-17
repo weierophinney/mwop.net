@@ -13,16 +13,12 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    Zend_PDF
- * @subpackage Zend_PDF_Color
+ * @package    Zend_Pdf
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Pdf;
 
 /**
  * PDF provides a powerfull facilities for specifying the colors of graphics objects.
@@ -31,12 +27,11 @@ namespace Zend\Pdf;
  * Some colors interact with PDF document (create additional objects in a PDF),
  * others don't do it. That is defined in a subclasses.
  *
- * @package    Zend_PDF
- * @subpackage Zend_PDF_Color
+ * @package    Zend_Pdf
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-interface Color
+abstract class Zend_Pdf_Color
 {
     /**
      * Instructions, which can be directly inserted into content stream
@@ -46,13 +41,13 @@ interface Color
      * @param boolean $stroking
      * @return string
      */
-    public function instructions($stroking);
+    abstract public function instructions($stroking);
 
     /**
      * Get color components (color space dependent)
      *
      * @return array
      */
-    public function getComponents();
+    abstract public function getComponents();
 }
 

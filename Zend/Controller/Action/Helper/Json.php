@@ -17,23 +17,25 @@
  * @subpackage Zend_Controller_Action_Helper
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Controller_Action_Helper_Abstract
  */
-namespace Zend\Controller\Action\Helper;
+require_once 'Zend/Controller/Action/Helper/Abstract.php';
 
 /**
  * Simplify AJAX context switching based on requested format
  *
+ * @uses       Zend_Controller_Action_Helper_Abstract
  * @category   Zend
  * @package    Zend_Controller
  * @subpackage Zend_Controller_Action_Helper
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Json extends AbstractHelper
+class Zend_Controller_Action_Helper_Json extends Zend_Controller_Action_Helper_Abstract
 {
     /**
      * Suppress exit when sendJson() called
@@ -57,16 +59,24 @@ class Json extends AbstractHelper
      *         then, the array can contains a 'keepLayout'=>true|false
      *         that will not be passed to Zend_Json::encode method but will be passed
      *         to Zend_View_Helper_Json
-     * @throws \Zend\Controller\Action\Helper\Json
+     * @throws Zend_Controller_Action_Helper_Json
      * @return string
      */
     public function encodeJson($data, $keepLayouts = false)
     {
-        $jsonHelper = new \Zend\View\Helper\Json();
-        $data = $jsonHelper->direct($data, $keepLayouts);
+        /**
+         * @see Zend_View_Helper_Json
+         */
+        require_once 'Zend/View/Helper/Json.php';
+        $jsonHelper = new Zend_View_Helper_Json();
+        $data = $jsonHelper->json($data, $keepLayouts);
 
         if (!$keepLayouts) {
-            $this->getBroker()->load('viewRenderer')->setNoRender(true);
+            /**
+             * @see Zend_Controller_Action_HelperBroker
+             */
+            require_once 'Zend/Controller/Action/HelperBroker.php';
+            Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer')->setNoRender(true);
         }
 
         return $data;

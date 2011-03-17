@@ -16,24 +16,27 @@
  * @package    Zend_Mail
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Mail;
-use Zend\Mail\Exception;
 
 /**
- * @uses       \Zend\Mail\Exception
- * @uses       \Zend\Mail\Message\MessageInterface
- * @uses       \Zend\Mail\Part
+ * Zend_Mail_Part
+ */
+require_once 'Zend/Mail/Part.php';
+
+/**
+ * Zend_Mail_Message_Interface
+ */
+require_once 'Zend/Mail/Message/Interface.php';
+
+/**
  * @category   Zend
  * @package    Zend_Mail
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Message extends Part implements MailMessage
+class Zend_Mail_Message extends Zend_Mail_Part implements Zend_Mail_Message_Interface
 {
     /**
      * flags for this message
@@ -49,7 +52,7 @@ class Message extends Part implements MailMessage
      * - flags array with flags for message, keys are ignored, use constants defined in Zend_Mail_Storage
      *
      * @param  string $rawMessage  full message with or without headers
-     * @throws \Zend\Mail\Exception
+     * @throws Zend_Mail_Exception
      */
     public function __construct(array $params)
     {
@@ -57,7 +60,11 @@ class Message extends Part implements MailMessage
             if (!is_resource($params['file'])) {
                 $params['raw'] = @file_get_contents($params['file']);
                 if ($params['raw'] === false) {
-                    throw new Exception\RuntimeException('could not open file');
+                    /**
+                     * @see Zend_Mail_Exception
+                     */
+                    require_once 'Zend/Mail/Exception.php';
+                    throw new Zend_Mail_Exception('could not open file');
                 }
             } else {
                 $params['raw'] = stream_get_contents($params['file']);
@@ -85,7 +92,7 @@ class Message extends Part implements MailMessage
     /**
      * check if flag is set
      *
-     * @param mixed $flag a flag name, use constants defined in \Zend\Mail\Storage\Storage
+     * @param mixed $flag a flag name, use constants defined in Zend_Mail_Storage
      * @return bool true if set, otherwise false
      */
     public function hasFlag($flag)

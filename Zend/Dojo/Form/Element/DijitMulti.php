@@ -19,23 +19,22 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * @namespace
- */
-namespace Zend\Dojo\Form\Element;
+/** Zend_Dojo_Form_Element_Dijit */
+require_once 'Zend/Dojo/Form/Element/Dijit.php';
 
 /**
  * CheckBox dijit
  *
  * Note: this would be easier with mixins or traits...
  *
- * @uses       \Zend\Dojo\Form\Element\Dijit
+ * @uses       Zend_Dojo_Form_Element_Dijit
  * @package    Zend_Dojo
  * @subpackage Form_Element
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
-abstract class DijitMulti extends Dijit
+abstract class Zend_Dojo_Form_Element_DijitMulti extends Zend_Dojo_Form_Element_Dijit
 {
     /**
      * Array of options for multi-item
@@ -102,7 +101,7 @@ abstract class DijitMulti extends Dijit
      *
      * @param  string $option
      * @param  string $value
-     * @return \Zend\Form\Element\Multi
+     * @return Zend_Form_Element_Multi
      */
     public function addMultiOption($option, $value = '')
     {
@@ -119,7 +118,7 @@ abstract class DijitMulti extends Dijit
      * Add many options at once
      *
      * @param  array $options
-     * @return \Zend\Form\Element\Multi
+     * @return Zend_Form_Element_Multi
      */
     public function addMultiOptions(array $options)
     {
@@ -140,7 +139,7 @@ abstract class DijitMulti extends Dijit
      * Set all options at once (overwrites)
      *
      * @param  array $options
-     * @return \Zend\Form\Element\Multi
+     * @return Zend_Form_Element_Multi
      */
     public function setMultiOptions(array $options)
     {
@@ -204,7 +203,7 @@ abstract class DijitMulti extends Dijit
     /**
      * Clear all options
      *
-     * @return \Zend\Form\Element\Multi
+     * @return Zend_Form_Element_Multi
      */
     public function clearMultiOptions()
     {
@@ -217,7 +216,7 @@ abstract class DijitMulti extends Dijit
      * Set flag indicating whether or not to auto-register inArray validator
      *
      * @param  bool $flag
-     * @return \Zend\Form\Element\Multi
+     * @return Zend_Form_Element_Multi
      */
     public function setRegisterInArrayValidator($flag)
     {

@@ -17,27 +17,23 @@
  * @subpackage Analysis
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Search\Lucene\Analysis\Analyzer\Common;
 
-use Zend\Search\Lucene\Analysis,
-	Zend\Search\Lucene,
-	Zend\Search\Lucene\Exception\RuntimeException;
+/** Zend_Search_Lucene_Analysis_Analyzer_Common */
+require_once 'Zend/Search/Lucene/Analysis/Analyzer/Common.php';
+
 
 /**
- * @uses       \Zend\Search\Lucene\Analysis\Token
- * @uses       \Zend\Search\Lucene\Exception\RuntimeException
  * @category   Zend
  * @package    Zend_Search_Lucene
  * @subpackage Analysis
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Utf8Num extends AbstractCommon
+
+class Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8Num extends Zend_Search_Lucene_Analysis_Analyzer_Common
 {
     /**
      * Current char position in an UTF-8 stream
@@ -56,13 +52,14 @@ class Utf8Num extends AbstractCommon
     /**
      * Object constructor
      *
-     * @throws \Zend\Search\Lucene\Exception\RuntimeException
+     * @throws Zend_Search_Lucene_Exception
      */
     public function __construct()
     {
         if (@preg_match('/\pL/u', 'a') != 1) {
             // PCRE unicode support is turned off
-            throw new RuntimeException('Utf8Num analyzer needs PCRE unicode support to be enabled.');
+            require_once 'Zend/Search/Lucene/Exception.php';
+            throw new Zend_Search_Lucene_Exception('Utf8Num analyzer needs PCRE unicode support to be enabled.');
         }
     }
 
@@ -87,7 +84,7 @@ class Utf8Num extends AbstractCommon
      * Get next token
      * Returns null at the end of stream
      *
-     * @return \Zend\Search\Lucene\Analysis\Token|null
+     * @return Zend_Search_Lucene_Analysis_Token|null
      */
     public function nextToken()
     {
@@ -120,7 +117,7 @@ class Utf8Num extends AbstractCommon
             $this->_bytePosition = $binStartPos + strlen($matchedWord);
             $this->_position     = $endPos;
 
-            $token = $this->normalize(new Analysis\Token($matchedWord, $startPos, $endPos));
+            $token = $this->normalize(new Zend_Search_Lucene_Analysis_Token($matchedWord, $startPos, $endPos));
         } while ($token === null); // try again if token is skipped
 
         return $token;

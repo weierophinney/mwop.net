@@ -13,19 +13,22 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    Zend_PDF
- * @subpackage Zend_PDF_Internal
+ * @package    Zend_Pdf
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id:
  */
 
-/**
- * @namespace
- */
-namespace Zend\Pdf\Resource;
-use Zend\Pdf\InternalType;
-use Zend\Pdf\ObjectFactory;
-use Zend\Pdf;
+/** Internally used classes */
+require_once 'Zend/Pdf/Element.php';
+require_once 'Zend/Pdf/Element/Array.php';
+require_once 'Zend/Pdf/Element/String/Binary.php';
+require_once 'Zend/Pdf/Element/Boolean.php';
+require_once 'Zend/Pdf/Element/Dictionary.php';
+require_once 'Zend/Pdf/Element/Name.php';
+require_once 'Zend/Pdf/Element/Null.php';
+require_once 'Zend/Pdf/Element/Numeric.php';
+require_once 'Zend/Pdf/Element/String.php';
 
 
 /**
@@ -44,12 +47,12 @@ use Zend\Pdf;
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Extractor
+class Zend_Pdf_Resource_Extractor
 {
     /**
      * PDF objects factory.
      *
-     * @var \Zend\Pdf\ObjectFactory
+     * @var Zend_Pdf_ElementFactory_Interface
      */
     protected $_factory;
 
@@ -65,7 +68,7 @@ class Extractor
      */
     public function __construct()
     {
-        $this->_factory   = Pdf\ObjectFactory::createFactory(1);
+        $this->_factory   = Zend_Pdf_ElementFactory::createFactory(1);
         $this->_processed = array();
     }
 
@@ -73,10 +76,11 @@ class Extractor
      * Clone page, extract it and dependent objects from the current document,
      * so it can be used within other docs
      *
-     * return \Zend\Pdf\Page
+     * return Zend_Pdf_Page
      */
-    public function clonePage(Pdf\Page $page)
+    public function clonePage(Zend_Pdf_Page $page)
     {
         return $page->clonePage($this->_factory, $this->_processed);
     }
 }
+

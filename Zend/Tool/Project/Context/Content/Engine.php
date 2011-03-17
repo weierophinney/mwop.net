@@ -17,12 +17,18 @@
  * @subpackage Framework
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Tool_Project_Context_Content_Engine_CodeGenerator
  */
-namespace Zend\Tool\Project\Context\Content;
+require_once 'Zend/Tool/Project/Context/Content/Engine/CodeGenerator.php';
+
+/**
+ * @see Zend_Tool_Project_Context_Content_Engine_Phtml
+ */
+require_once 'Zend/Tool/Project/Context/Content/Engine/Phtml.php';
 
 /**
  * This class is the front most class for utilizing Zend_Tool_Project
@@ -30,17 +36,15 @@ namespace Zend\Tool\Project\Context\Content;
  * A profile is a hierarchical set of resources that keep track of
  * items within a specific project.
  *
- * @uses       \Zend\Tool\Project\Context\Content\Engine\CodeGenerator
- * @uses       \Zend\Tool\Project\Context\Content\Engine\Phtml
  * @category   Zend
  * @package    Zend_Tool
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Engine
+class Zend_Tool_Project_Context_Content_Engine
 {
     /**
-     * @var \Zend\Tool\Framework\Client\Storage
+     * @var Zend_Tool_Framework_Client_Storage
      */
     protected $_storage = null;
 
@@ -57,26 +61,26 @@ class Engine
     /**
      * __construct()
      *
-     * @param \Zend\Tool\Framework\Client\Storage $storage
+     * @param Zend_Tool_Framework_Client_Storage $storage
      */
-    public function __construct(\Zend\Tool\Framework\Client\Storage $storage)
+    public function __construct(Zend_Tool_Framework_Client_Storage $storage)
     {
         $this->_storage = $storage;
         $this->_engines = array(
-            new Engine\CodeGenerator($storage, $this->_keyInStorage),
-            new Engine\Phtml($storage, $this->_keyInStorage),
+            new Zend_Tool_Project_Context_Content_Engine_CodeGenerator($storage, $this->_keyInStorage),
+            new Zend_Tool_Project_Context_Content_Engine_Phtml($storage, $this->_keyInStorage),
             );
     }
 
     /**
      * getContent()
      *
-     * @param \Zend\Tool\Project\Context $context
+     * @param Zend_Tool_Project_Context_Interface $context
      * @param string $methodName
      * @param mixed $parameters
      * @return string
      */
-    public function getContent(\Zend\Tool\Project\Context $context, $methodName, $parameters)
+    public function getContent(Zend_Tool_Project_Context_Interface $context, $methodName, $parameters)
     {
         $content = null;
 

@@ -17,40 +17,39 @@
  * @subpackage Resource
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Application_Resource_ResourceAbstract
  */
-namespace Zend\Application\Resource;
+require_once 'Zend/Application/Resource/ResourceAbstract.php';
 
-use Zend\Locale as SystemLocale;
 
 /**
  * Resource for initializing the locale
  *
- * @uses       \Zend\Application\Resource\AbstractResource
- * @uses       \Zend\Locale\Locale
- * @uses       \Zend\Registry
+ * @uses       Zend_Application_Resource_Base
  * @category   Zend
  * @package    Zend_Application
  * @subpackage Resource
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Locale extends AbstractResource
+class Zend_Application_Resource_Locale
+    extends Zend_Application_Resource_ResourceAbstract
 {
     const DEFAULT_REGISTRY_KEY = 'Zend_Locale';
 
     /**
-     * @var \Zend\Locale\Locale
+     * @var Zend_Locale
      */
     protected $_locale;
 
     /**
      * Defined by Zend_Application_Resource_Resource
      *
-     * @return \Zend\Locale\Locale
+     * @return Zend_Locale
      */
     public function init()
     {
@@ -60,30 +59,59 @@ class Locale extends AbstractResource
     /**
      * Retrieve locale object
      *
-     * @return \Zend\Locale\Locale
+     * @return Zend_Locale
      */
     public function getLocale()
     {
         if (null === $this->_locale) {
             $options = $this->getOptions();
-            if(!isset($options['default'])) {
-                $this->_locale = new SystemLocale\Locale();
+
+            if (!isset($options['default'])) {
+                $this->_locale = new Zend_Locale();
             } elseif(!isset($options['force']) ||
                      (bool) $options['force'] == false)
             {
                 // Don't force any locale, just go for auto detection
-                SystemLocale\Locale::setDefault($options['default']);
-                $this->_locale = new SystemLocale\Locale();
+                Zend_Locale::setDefault($options['default']);
+                $this->_locale = new Zend_Locale();
             } else {
-                $this->_locale = new SystemLocale\Locale($options['default']);
+                $this->_locale = new Zend_Locale($options['default']);
             }
 
             $key = (isset($options['registry_key']) && !is_numeric($options['registry_key']))
                 ? $options['registry_key']
                 : self::DEFAULT_REGISTRY_KEY;
-            \Zend\Registry::set($key, $this->_locale);
+            Zend_Registry::set($key, $this->_locale);
         }
 
         return $this->_locale;
+    }
+
+    /**
+     * Set the cache
+     *
+     * @param string|Zend_Cache_Core $cache
+     * @return Zend_Application_Resource_Locale
+     */
+    public function setCache($cache)
+    {
+        if (is_string($cache)) {
+            $bootstrap = $this->getBootstrap();
+            if ($bootstrap instanceof Zend_Application_Bootstrap_ResourceBootstrapper
+                && $bootstrap->hasPluginResource('CacheManager')
+            ) {
+                $cacheManager = $bootstrap->bootstrap('CacheManager')
+                    ->getResource('CacheManager');
+                if (null !== $cacheManager && $cacheManager->hasCache($cache)) {
+                    $cache = $cacheManager->getCache($cache);
+                }
+            }
+        }
+
+        if ($cache instanceof Zend_Cache_Core) {
+            Zend_Locale::setCache($cache);
+        }
+
+        return $this;
     }
 }

@@ -17,16 +17,14 @@
  * @subpackage Element
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Form\Element;
+/** @see Zend_Form_Element_Xhtml */
+require_once 'Zend/Form/Element/Xhtml.php';
 
-use Zend\Captcha\Adapter as CaptchaAdapter,
-    Zend\View\ViewEngine as View,
-    Zend\Loader\PluginLoader;
+/** @see Zend_Captcha_Adapter */
+require_once 'Zend/Captcha/Adapter.php';
 
 /**
  * Generic captcha element
@@ -37,17 +35,13 @@ use Zend\Captcha\Adapter as CaptchaAdapter,
  *
  * @see http://en.wikipedia.org/wiki/Captcha
  *
- * @uses       ReflectionClass
- * @uses       \Zend\Captcha\Adapter
- * @uses       \Zend\Form\Element\Xhtml
- * @uses       \Zend\Loader\PluginLoader
  * @category   Zend
  * @package    Zend_Form
  * @subpackage Element
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Captcha extends Xhtml
+class Zend_Form_Element_Captcha extends Zend_Form_Element_Xhtml
 {
     /**
      * Captcha plugin type constant
@@ -57,14 +51,14 @@ class Captcha extends Xhtml
     /**
      * Captcha adapter
      *
-     * @var \Zend\Captcha\Adapter
+     * @var Zend_Captcha_Adapter
      */
     protected $_captcha;
 
     /**
      * Get captcha adapter
      *
-     * @return \Zend\Captcha\Adapter
+     * @return Zend_Captcha_Adapter
      */
     public function getCaptcha()
     {
@@ -74,12 +68,12 @@ class Captcha extends Xhtml
     /**
      * Set captcha adapter
      *
-     * @param string|array|\Zend\Captcha\Adapter $captcha
+     * @param string|array|Zend_Captcha_Adapter $captcha
      * @param array $options
      */
     public function setCaptcha($captcha, $options = array())
     {
-        if ($captcha instanceof CaptchaAdapter) {
+        if ($captcha instanceof Zend_Captcha_Adapter) {
             $instance = $captcha;
         } else {
             if (is_array($captcha)) {
@@ -98,7 +92,7 @@ class Captcha extends Xhtml
             if (empty($options)) {
                 $instance = new $name;
             } else {
-                $r = new \ReflectionClass($name);
+                $r = new ReflectionClass($name);
                 if ($r->hasMethod('__construct')) {
                     $instance = $r->newInstanceArgs(array($options));
                 } else {
@@ -120,7 +114,7 @@ class Captcha extends Xhtml
      * - array: options with which to configure element
      * - Zend_Config: Zend_Config with options for configuring element
      *
-     * @param  string|array|\Zend\Config\Config $spec
+     * @param  string|array|Zend_Config $spec
      * @return void
      */
     public function __construct($spec, $options = null)
@@ -156,7 +150,7 @@ class Captcha extends Xhtml
      * Overrides to allow passing captcha options
      *
      * @param  array $options
-     * @return \Zend\Form\Element\Captcha
+     * @return Zend_Form_Element_Captcha
      */
     public function setOptions(array $options)
     {
@@ -176,10 +170,10 @@ class Captcha extends Xhtml
     /**
      * Render form element
      *
-     * @param  \Zend\View\ViewEngine $view
+     * @param  Zend_View_Interface $view
      * @return string
      */
-    public function render(View $view = null)
+    public function render(Zend_View_Interface $view = null)
     {
         $captcha    = $this->getCaptcha();
         $captcha->setName($this->getFullyQualifiedName());
@@ -207,16 +201,17 @@ class Captcha extends Xhtml
      * Support for plugin loader for Captcha adapters
      *
      * @param  string $type
-     * @return \Zend\Loader\PrefixPathMapper
-     * @throws \Zend\Loader\Exception on invalid type.
+     * @return Zend_Loader_PluginLoader
+     * @throws Zend_Loader_Exception on invalid type.
      */
     public function getPluginLoader($type)
     {
         $type = strtoupper($type);
         if ($type == self::CAPTCHA) {
             if (!isset($this->_loaders[$type])) {
-                $this->_loaders[$type] = new PluginLoader(
-                    array('Zend\\Captcha' => 'Zend/Captcha/')
+                require_once 'Zend/Loader/PluginLoader.php';
+                $this->_loaders[$type] = new Zend_Loader_PluginLoader(
+                    array('Zend_Captcha' => 'Zend/Captcha/')
                 );
             }
             return $this->_loaders[$type];
@@ -233,7 +228,7 @@ class Captcha extends Xhtml
      * @param  string $prefix
      * @param  string $path
      * @param  string $type
-     * @return \Zend\Form\Element
+     * @return Zend_Form_Element
      * @see Zend_Form_Element::addPrefixPath
      */
     public function addPrefixPath($prefix, $path, $type = null)
@@ -242,7 +237,7 @@ class Captcha extends Xhtml
         switch ($type) {
             case null:
                 $loader = $this->getPluginLoader(self::CAPTCHA);
-                $cPrefix = rtrim($prefix, '\\') . '\Captcha';
+                $cPrefix = rtrim($prefix, '_') . '_Captcha';
                 $cPath   = rtrim($path, '/\\') . '/Captcha';
                 $loader->addPrefixPath($cPrefix, $cPath);
                 return parent::addPrefixPath($prefix, $path);

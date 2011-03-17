@@ -13,22 +13,25 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    Zend_PDF
- * @subpackage Zend_PDF_Destination
+ * @package    Zend_Pdf
+ * @subpackage Destination
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Pdf\Destination;
-use Zend\Pdf\Exception;
-use Zend\Pdf\InternalType;
-use Zend\Pdf;
+
+/** Internally used classes */
+require_once 'Zend/Pdf/Element/Array.php';
+require_once 'Zend/Pdf/Element/Name.php';
+require_once 'Zend/Pdf/Element/Numeric.php';
+
+
+/** Zend_Pdf_Destination_Explicit */
+require_once 'Zend/Pdf/Destination/Explicit.php';
 
 /**
- * \Zend\Pdf\Destination\FitBoundingBox explicit detination
+ * Zend_Pdf_Destination_FitBoundingBox explicit detination
  *
  * Destination array: [page /FitB]
  *
@@ -38,39 +41,35 @@ use Zend\Pdf;
  * factors are different, use the smaller of the two, centering the bounding box
  * within the window in the other dimension.
  *
- * @uses       \Zend\Pdf\Destination\Explicit
- * @uses       \Zend\Pdf\InternalType\ArrayObject
- * @uses       \Zend\Pdf\InternalType\NameObject
- * @uses       \Zend\Pdf\InternalType\NumericObject
- * @uses       \Zend\Pdf\Exception
- * @package    Zend_PDF
- * @subpackage Zend_PDF_Destination
+ * @package    Zend_Pdf
+ * @subpackage Destination
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class FitBoundingBox extends Explicit
+class Zend_Pdf_Destination_FitBoundingBox extends Zend_Pdf_Destination_Explicit
 {
     /**
      * Create destination object
      *
-     * @param \Zend\Pdf\Page|integer $page  Page object or page number
-     * @return \Zend\Pdf\Destination\FitBoundingBox
-     * @throws \Zend\Pdf\Exception
+     * @param Zend_Pdf_Page|integer $page  Page object or page number
+     * @return Zend_Pdf_Destination_FitBoundingBox
+     * @throws Zend_Pdf_Exception
      */
     public static function create($page)
     {
-        $destinationArray = new InternalType\ArrayObject();
+        $destinationArray = new Zend_Pdf_Element_Array();
 
-        if ($page instanceof Pdf\Page) {
+        if ($page instanceof Zend_Pdf_Page) {
             $destinationArray->items[] = $page->getPageDictionary();
         } else if (is_integer($page)) {
-            $destinationArray->items[] = new InternalType\NumericObject($page);
+            $destinationArray->items[] = new Zend_Pdf_Element_Numeric($page);
         } else {
-            throw new Exception\InvalidArgumentException('$page parametr must be a \Zend\Pdf\Page object or a page number.');
+            require_once 'Zend/Pdf/Exception.php';
+            throw new Zend_Pdf_Exception('Page entry must be a Zend_Pdf_Page object or a page number.');
         }
 
-        $destinationArray->items[] = new InternalType\NameObject('FitB');
+        $destinationArray->items[] = new Zend_Pdf_Element_Name('FitB');
 
-        return new self($destinationArray);
+        return new Zend_Pdf_Destination_FitBoundingBox($destinationArray);
     }
 }

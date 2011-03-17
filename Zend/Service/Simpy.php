@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework
  *
@@ -17,17 +18,15 @@
  * @subpackage Simpy
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @uses       DOMDocument
- * @uses       DOMXPath
- * @uses       Zend_Http_Client
- * @uses       Zend\Service\Exception
- * @uses       Zend_Service_Simpy_LinkSet
- * @uses       Zend_Service_Simpy_NoteSet
- * @uses       Zend_Service_Simpy_TagSet
- * @uses       Zend_Service_Simpy_Watchlist
+ * @see Zend_Http_Client
+ */
+require_once 'Zend/Http/Client.php';
+
+/**
  * @category   Zend
  * @package    Zend_Service
  * @subpackage Simpy
@@ -81,7 +80,7 @@ class Zend_Service_Simpy
      *
      * @param  string $op    Name of the operation for the request
      * @param  array  $query Query data for the request (optional)
-     * @throws Zend\Service\Exception
+     * @throws Zend_Service_Exception
      * @return DOMDocument Parsed XML response
      */
     protected function _makeRequest($op, $query = null)
@@ -106,14 +105,22 @@ class Zend_Service_Simpy
                 if ($code != 0) {
                     $list = $xpath->query('/status/message');
                     $message = $list->item(0)->nodeValue;
-                    throw new Zend\Service\Exception($message, $code);
+                    /**
+                     * @see Zend_Service_Exception
+                     */
+                    require_once 'Zend/Service/Exception.php';
+                    throw new Zend_Service_Exception($message, $code);
                 }
             }
 
             return $doc;
         }
 
-        throw new Zend\Service\Exception($response->getMessage(), $response->getStatus());
+        /**
+         * @see Zend_Service_Exception
+         */
+        require_once 'Zend/Service/Exception.php';
+        throw new Zend_Service_Exception($response->getMessage(), $response->getStatus());
     }
 
     /**
@@ -122,7 +129,7 @@ class Zend_Service_Simpy
      *
      * @param  int $limit Limits the number of tags returned (optional)
      * @link   http://www.simpy.com/doc/api/rest/GetTags
-     * @throws Zend\Service\Exception
+     * @throws Zend_Service_Exception
      * @return Zend_Service_Simpy_TagSet
      */
     public function getTags($limit = null)
@@ -133,6 +140,10 @@ class Zend_Service_Simpy
 
         $doc = $this->_makeRequest('GetTags', $query);
 
+        /**
+         * @see Zend_Service_Simpy_TagSet
+         */
+        require_once 'Zend/Service/Simpy/TagSet.php';
         return new Zend_Service_Simpy_TagSet($doc);
     }
 
@@ -242,6 +253,10 @@ class Zend_Service_Simpy
             $doc = $this->_makeRequest('GetLinks');
         }
 
+        /**
+         * @see Zend_Service_Simpy_LinkSet
+         */
+        require_once 'Zend/Service/Simpy/LinkSet.php';
         return new Zend_Service_Simpy_LinkSet($doc);
     }
 
@@ -309,6 +324,11 @@ class Zend_Service_Simpy
     public function getWatchlists()
     {
         $doc = $this->_makeRequest('GetWatchlists');
+
+        /**
+         * @see Zend_Service_Simpy_WatchlistSet
+         */
+        require_once 'Zend/Service/Simpy/WatchlistSet.php';
         return new Zend_Service_Simpy_WatchlistSet($doc);
     }
 
@@ -326,6 +346,11 @@ class Zend_Service_Simpy
         );
 
         $doc = $this->_makeRequest('GetWatchlist', $query);
+
+        /**
+         * @see Zend_Service_Simpy_Watchlist
+         */
+        require_once 'Zend/Service/Simpy/Watchlist.php';
         return new Zend_Service_Simpy_Watchlist($doc->documentElement);
     }
 
@@ -349,6 +374,11 @@ class Zend_Service_Simpy
         );
 
         $doc = $this->_makeRequest('GetNotes', $query);
+
+        /**
+         * @see Zend_Service_Simpy_NoteSet
+         */
+        require_once 'Zend/Service/Simpy/NoteSet.php';
         return new Zend_Service_Simpy_NoteSet($doc);
     }
 

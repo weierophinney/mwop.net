@@ -17,26 +17,22 @@
  * @subpackage View
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Dojo\View\Helper;
-
-use Zend\Filter\Alnum as AlnumFilter;
+/** Zend_Dojo_View_Helper_Dijit */
+require_once 'Zend/Dojo/View/Helper/Dijit.php';
 
 /**
  * Dojo RadioButton dijit
  *
- * @uses       \Zend\Dojo\View\Helper\Dijit
- * @uses       \Zend\Filter\Alnum
+ * @uses       Zend_Dojo_View_Helper_Dijit
  * @package    Zend_Dojo
  * @subpackage View
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
   */
-class RadioButton extends Dijit
+class Zend_Dojo_View_Helper_RadioButton extends Zend_Dojo_View_Helper_Dijit
 {
     /**
      * Dijit being used
@@ -61,8 +57,8 @@ class RadioButton extends Dijit
      * @param  string $listsep String with which to separate options
      * @return string
      */
-    public function direct(
-        $id = null,
+    public function radioButton(
+        $id,
         $value = null,
         array $params = array(),
         array $attribs = array(),
@@ -80,7 +76,8 @@ class RadioButton extends Dijit
             if (array_key_exists('id', $attribs)) {
                 $baseId = $attribs['id'];
             }
-            $filter = new AlnumFilter();
+            require_once 'Zend/Filter/Alnum.php';
+            $filter = new Zend_Filter_Alnum();
             foreach (array_keys($options) as $key) {
                 $optId = $baseId . '-' . $filter->filter($key);
                 $this->_createDijit($this->_dijit, $optId, array());

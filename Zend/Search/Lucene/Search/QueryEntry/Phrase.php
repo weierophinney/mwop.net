@@ -17,23 +17,20 @@
  * @subpackage Search
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Search\Lucene\Search\QueryEntry;
+/** Zend_Search_Lucene_Search_QueryEntry */
+require_once 'Zend/Search/Lucene/Search/QueryEntry.php';
 
 /**
- * @uses       \Zend\Search\Lucene\Search\QueryEntry\AbstractQueryEntry
- * @uses       \Zend\Search\Lucene\Search\Query\Preprocessing\Phrase
  * @category   Zend
  * @package    Zend_Search_Lucene
  * @subpackage Search
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Phrase extends AbstractQueryEntry
+class Zend_Search_Lucene_Search_QueryEntry_Phrase extends Zend_Search_Lucene_Search_QueryEntry
 {
     /**
      * Phrase value
@@ -95,12 +92,14 @@ class Phrase extends AbstractQueryEntry
      * Transform entry to a subquery
      *
      * @param string $encoding
-     * @throws \Zend\Search\Lucene\Search\Exception\QueryParserException
-     * @return \Zend\Search\Lucene\Search\Query\AbstractQuery
+     * @return Zend_Search_Lucene_Search_Query
+     * @throws Zend_Search_Lucene_Search_QueryParserException
      */
     public function getQuery($encoding)
     {
-        $query = new \Zend\Search\Lucene\Search\Query\Preprocessing\Phrase($this->_phrase,
+        /** Zend_Search_Lucene_Search_Query_Preprocessing_Phrase */
+        require_once 'Zend/Search/Lucene/Search/Query/Preprocessing/Phrase.php';
+        $query = new Zend_Search_Lucene_Search_Query_Preprocessing_Phrase($this->_phrase,
                                                                           $encoding,
                                                                           ($this->_field !== null)?
                                                                               iconv($encoding, 'UTF-8', $this->_field) :

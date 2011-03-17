@@ -16,25 +16,24 @@
  * @package   Zend_Text_Table
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Text_Table_Decorator_Interface
  */
-namespace Zend\Text\Table\Decorator;
-
-use Zend\Text\Table\Decorator;
+require_once 'Zend/Text/Table/Decorator/Interface.php';
 
 /**
  * ASCII Decorator for Zend_Text_Table
  *
- * @uses      \Zend\Text\Table\Decorator
  * @category  Zend
  * @package   Zend_Text_Table
- * @copyright Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @uses      Zend_Text_Table_Decorator_Interface
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Ascii implements Decorator
+class Zend_Text_Table_Decorator_Ascii implements Zend_Text_Table_Decorator_Interface
 {
     /**
      * Defined by Zend_Text_Table_Decorator_Interface

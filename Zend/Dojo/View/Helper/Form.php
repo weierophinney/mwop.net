@@ -17,26 +17,22 @@
  * @subpackage View
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Dojo\View\Helper;
-
-use Zend\View\Helper\Form as FormHelper;
+/** Zend_Dojo_View_Helper_Dijit */
+require_once 'Zend/Dojo/View/Helper/Dijit.php';
 
 /**
  * Dojo Form dijit
  *
- * @uses       \Zend\Dojo\View\Helper\Dijit
- * @uses       \Zend\View\Helper\Form
+ * @uses       Zend_Dojo_View_Helper_Dijit
  * @package    Zend_Dojo
  * @subpackage View
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- */
-class Form extends Dijit
+  */
+class Zend_Dojo_View_Helper_Form extends Zend_Dojo_View_Helper_Dijit
 {
     /**
      * Dijit being used
@@ -51,7 +47,7 @@ class Form extends Dijit
     protected $_module = 'dijit.form.Form';
 
     /**
-     * @var \Zend\View\Helper\Form
+     * @var Zend_View_Helper_Form
      */
     protected $_helper;
 
@@ -63,7 +59,7 @@ class Form extends Dijit
      * @param  false|string $content
      * @return string
      */
-    public function direct($id = null, $attribs = null, $content = false)
+    public function form($id, $attribs = null, $content = false)
     {
         if (!is_array($attribs)) {
             $attribs = (array) $attribs;
@@ -80,18 +76,19 @@ class Form extends Dijit
 
         $attribs = $this->_prepareDijit($attribs, array(), 'layout');
 
-        return $this->getFormHelper()->direct($id, $attribs, $content);
+        return $this->getFormHelper()->form($id, $attribs, $content);
     }
 
     /**
      * Get standard form helper
      *
-     * @return \Zend\View\Helper\Form
+     * @return Zend_View_Helper_Form
      */
     public function getFormHelper()
     {
         if (null === $this->_helper) {
-            $this->_helper = new FormHelper();
+            require_once 'Zend/View/Helper/Form.php';
+            $this->_helper = new Zend_View_Helper_Form;
             $this->_helper->setView($this->view);
         }
         return $this->_helper;

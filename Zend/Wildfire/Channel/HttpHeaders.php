@@ -17,36 +17,37 @@
  * @subpackage Channel
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Wildfire\Channel;
-use Zend\Wildfire;
-use Zend\Wildfire\Protocol;
-use Zend\Controller;
+/** Zend_Wildfire_Channel_Interface */
+require_once 'Zend/Wildfire/Channel/Interface.php';
+
+/** Zend_Controller_Request_Abstract */
+require_once('Zend/Controller/Request/Abstract.php');
+
+/** Zend_Controller_Response_Abstract */
+require_once('Zend/Controller/Response/Abstract.php');
+
+/** Zend_Controller_Plugin_Abstract */
+require_once 'Zend/Controller/Plugin/Abstract.php';
+
+/** Zend_Wildfire_Protocol_JsonStream */
+require_once 'Zend/Wildfire/Protocol/JsonStream.php';
+
+/** Zend_Controller_Front **/
+require_once 'Zend/Controller/Front.php';
 
 /**
  * Implements communication via HTTP request and response headers for Wildfire Protocols.
  *
- * @uses       \Zend\Controller\Front
- * @uses       \Zend\Controller\Plugin\AbstractPlugin
- * @uses       \Zend\Controller\Request\AbstractRequest
- * @uses       \Zend\Controller\Response\AbstractResponse
- * @uses       \Zend\Loader
- * @uses       \Zend\Wildfire\Channel
- * @uses       \Zend\Wildfire\Exception
- * @uses       \Zend\Wildfire\Protocol\JsonStream
  * @category   Zend
  * @package    Zend_Wildfire
  * @subpackage Channel
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class HttpHeaders
-    extends Controller\Plugin\AbstractPlugin
-    implements Wildfire\Channel
+class Zend_Wildfire_Channel_HttpHeaders extends Zend_Controller_Plugin_Abstract implements Zend_Wildfire_Channel_Interface
 {
     /**
      * The string to be used to prefix the headers.
@@ -56,7 +57,7 @@ class HttpHeaders
 
     /**
      * Singleton instance
-     * @var \Zend\Wildfire\Channel\HttpHeaders
+     * @var Zend_Wildfire_Channel_HttpHeaders
      */
     protected static $_instance = null;
 
@@ -75,25 +76,33 @@ class HttpHeaders
     /**
      * Initialize singleton instance.
      *
-     * @param string $class OPTIONAL Subclass of \Zend\Wildfire\Channel\HttpHeaders
-     * @return \Zend\Wildfire\Channel\HttpHeaders Returns the singleton \Zend\Wildfire\Channel\HttpHeaders instance
-     * @throws \Zend\Wildfire\Exception
+     * @param string $class OPTIONAL Subclass of Zend_Wildfire_Channel_HttpHeaders
+     * @return Zend_Wildfire_Channel_HttpHeaders Returns the singleton Zend_Wildfire_Channel_HttpHeaders instance
+     * @throws Zend_Wildfire_Exception
      */
     public static function init($class = null)
     {
         if (self::$_instance !== null) {
-            throw new Exception\RuntimeException('Singleton instance of Zend_Wildfire_Channel_HttpHeaders already exists!');
+            require_once 'Zend/Wildfire/Exception.php';
+            throw new Zend_Wildfire_Exception('Singleton instance of Zend_Wildfire_Channel_HttpHeaders already exists!');
         }
         if ($class !== null) {
             if (!is_string($class)) {
-                throw new Exception\InvalidArgumentException('Third argument is not a class string');
+                require_once 'Zend/Wildfire/Exception.php';
+                throw new Zend_Wildfire_Exception('Third argument is not a class string');
+            }
+
+            if (!class_exists($class)) {
+                require_once 'Zend/Loader.php';
+                Zend_Loader::loadClass($class);
             }
 
             self::$_instance = new $class();
 
-            if (!self::$_instance instanceof HttpHeaders) {
+            if (!self::$_instance instanceof Zend_Wildfire_Channel_HttpHeaders) {
                 self::$_instance = null;
-                throw new Exception\InvalidArgumentException('Invalid class to third argument. Must be subclass of Zend_Wildfire_Channel_HttpHeaders.');
+                require_once 'Zend/Wildfire/Exception.php';
+                throw new Zend_Wildfire_Exception('Invalid class to third argument. Must be subclass of Zend_Wildfire_Channel_HttpHeaders.');
             }
         } else {
             self::$_instance = new self();
@@ -106,8 +115,8 @@ class HttpHeaders
     /**
      * Get or create singleton instance
      *
-     * @param $skipCreate boolean True if an instance should not be created
-     * @return \Zend\Wildfire\Channel\HttpHeaders
+     * @param bool $skipCreate True if an instance should not be created
+     * @return Zend_Wildfire_Channel_HttpHeaders
      */
     public static function getInstance($skipCreate=false)
     {
@@ -151,15 +160,16 @@ class HttpHeaders
      *
      * @param string $uri The URI for the protocol to be initialized
      * @return object Returns the new initialized protocol instance
-     * @throws \Zend\Wildfire\Exception
+     * @throws Zend_Wildfire_Exception
      */
     protected function _initProtocol($uri)
     {
         switch ($uri) {
-            case Protocol\JsonStream::PROTOCOL_URI;
-                return new Protocol\JsonStream();
+            case Zend_Wildfire_Protocol_JsonStream::PROTOCOL_URI;
+                return new Zend_Wildfire_Protocol_JsonStream();
         }
-        throw new Channel\InvalidArgumentException('Tyring to initialize unknown protocol for URI "'.$uri.'".');
+        require_once 'Zend/Wildfire/Exception.php';
+        throw new Zend_Wildfire_Exception('Tyring to initialize unknown protocol for URI "'.$uri.'".');
     }
 
 
@@ -209,7 +219,7 @@ class HttpHeaders
      */
     protected function _registerControllerPlugin()
     {
-        $controller = Controller\Front::getInstance();
+        $controller = Zend_Controller_Front::getInstance();
         if (!$controller->hasPlugin(get_class($this))) {
             $controller->registerPlugin($this, self::$_controllerPluginStackIndex);
         }
@@ -260,6 +270,10 @@ class HttpHeaders
             return true;
         }
 
+        if (!($this->getRequest() instanceof Zend_Controller_Request_Http)) {
+            return false;
+        }
+
         return ($this->getResponse()->canSendHeaders()
                 && (preg_match_all(
                         '/\s?FirePHP\/([\.\d]*)\s?/si',
@@ -290,17 +304,18 @@ class HttpHeaders
     /**
      * Get the request object
      *
-     * @return \Zend\Controller\Request\AbstractRequest
-     * @throws \Zend\Wildfire\Exception
+     * @return Zend_Controller_Request_Abstract
+     * @throws Zend_Wildfire_Exception
      */
     public function getRequest()
     {
         if (!$this->_request) {
-            $controller = Controller\Front::getInstance();
+            $controller = Zend_Controller_Front::getInstance();
             $this->setRequest($controller->getRequest());
         }
         if (!$this->_request) {
-            throw new Channel\RuntimeException('Request objects not initialized.');
+            require_once 'Zend/Wildfire/Exception.php';
+            throw new Zend_Wildfire_Exception('Request objects not initialized.');
         }
         return $this->_request;
     }
@@ -308,19 +323,20 @@ class HttpHeaders
     /**
      * Get the response object
      *
-     * @return \Zend\Controller\Response\AbstractResponse
-     * @throws \Zend\Wildfire\Exception
+     * @return Zend_Controller_Response_Abstract
+     * @throws Zend_Wildfire_Exception
      */
     public function getResponse()
     {
         if (!$this->_response) {
-            $response = Controller\Front::getInstance()->getResponse();
+            $response = Zend_Controller_Front::getInstance()->getResponse();
             if ($response) {
                 $this->setResponse($response);
             }
         }
         if (!$this->_response) {
-            throw new Channel\RuntimeException('Response objects not initialized.');
+            require_once 'Zend/Wildfire/Exception.php';
+            throw new Zend_Wildfire_Exception('Response objects not initialized.');
         }
         return $this->_response;
     }

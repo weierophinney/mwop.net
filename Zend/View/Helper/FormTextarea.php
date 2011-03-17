@@ -17,24 +17,26 @@
  * @subpackage Helper
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
+
 /**
- * @namespace
+ * Abstract class for extension
  */
-namespace Zend\View\Helper;
+require_once 'Zend/View/Helper/FormElement.php';
+
 
 /**
  * Helper to generate a "textarea" element
  *
- * @uses       \Zend\View\Helper\FormElement
  * @category   Zend
  * @package    Zend_View
  * @subpackage Helper
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class FormTextarea extends FormElement
+class Zend_View_Helper_FormTextarea extends Zend_View_Helper_FormElement
 {
     /**
      * The default number of rows for a textarea.
@@ -69,12 +71,8 @@ class FormTextarea extends FormElement
      *
      * @return string The element XHTML.
      */
-    public function direct($name = null, $value = null, $attribs = null)
+    public function formTextarea($name, $value = null, $attribs = null)
     {
-        if ($name == null) {
-            throw new \InvalidArgumentException('FormTextarea: missing argument. $name is required in formTextarea($name, $value = null, $attribs = null)');
-        }
-        
         $info = $this->_getInfo($name, $value, $attribs);
         extract($info); // name, value, attribs, options, listsep, disable
 
@@ -95,11 +93,11 @@ class FormTextarea extends FormElement
         }
 
         // build the element
-        $xhtml = '<textarea name="' . $this->view->vars()->escape($name) . '"'
-                . ' id="' . $this->view->vars()->escape($id) . '"'
+        $xhtml = '<textarea name="' . $this->view->escape($name) . '"'
+                . ' id="' . $this->view->escape($id) . '"'
                 . $disabled
                 . $this->_htmlAttribs($attribs) . '>'
-                . $this->view->vars()->escape($value) . '</textarea>';
+                . $this->view->escape($value) . '</textarea>';
 
         return $xhtml;
     }

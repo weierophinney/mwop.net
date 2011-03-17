@@ -17,27 +17,33 @@
  * @subpackage Adapter
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  *
  */
 
 /**
- * @namespace
+ * @see Zend_Db
  */
-namespace Zend\Db\Adapter;
-
-use Zend\Db;
+require_once 'Zend/Db.php';
 
 /**
- * @uses       \Zend\Db\Db
- * @uses       \Zend\Db\Adapter\AbstractAdapter
- * @uses       \Zend\Db\Adapter\Db2Exception
- * @uses       \Zend\Db\Statement\Db2
- * @uses       \Zend\Loader
+ * @see Zend_Db_Adapter_Abstract
+ */
+require_once 'Zend/Db/Adapter/Abstract.php';
+
+/**
+ * @see Zend_Db_Statement_Db2
+ */
+require_once 'Zend/Db/Statement/Db2.php';
+
+
+/**
  * @package    Zend_Db
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Db2 extends AbstractAdapter
+
+class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
 {
     /**
      * User-provided configuration.
@@ -71,16 +77,16 @@ class Db2 extends AbstractAdapter
     /**
      * Execution mode
      *
-     * @var int execution flag (Db2_AUTOCOMMIT_ON or Db2_AUTOCOMMIT_OFF)
+     * @var int execution flag (DB2_AUTOCOMMIT_ON or DB2_AUTOCOMMIT_OFF)
      */
-    protected $_execute_mode = Db2_AUTOCOMMIT_ON;
+    protected $_execute_mode = DB2_AUTOCOMMIT_ON;
 
     /**
      * Default class name for a DB statement.
      *
      * @var string
      */
-    protected $_defaultStmtClass = 'Zend\Db\Statement\Db2';
+    protected $_defaultStmtClass = 'Zend_Db_Statement_Db2';
     protected $_isI5 = false;
 
     /**
@@ -95,14 +101,14 @@ class Db2 extends AbstractAdapter
      * @var array Associative array of datatypes to values 0, 1, or 2.
      */
     protected $_numericDataTypes = array(
-        Db\Db::INT_TYPE    => Db\Db::INT_TYPE,
-        Db\Db::BIGINT_TYPE => Db\Db::BIGINT_TYPE,
-        Db\Db::FLOAT_TYPE  => Db\Db::FLOAT_TYPE,
-        'INTEGER'            => Db\Db::INT_TYPE,
-        'SMALLINT'           => Db\Db::INT_TYPE,
-        'BIGINT'             => Db\Db::BIGINT_TYPE,
-        'DECIMAL'            => Db\Db::FLOAT_TYPE,
-        'NUMERIC'            => Db\Db::FLOAT_TYPE
+        Zend_Db::INT_TYPE    => Zend_Db::INT_TYPE,
+        Zend_Db::BIGINT_TYPE => Zend_Db::BIGINT_TYPE,
+        Zend_Db::FLOAT_TYPE  => Zend_Db::FLOAT_TYPE,
+        'INTEGER'            => Zend_Db::INT_TYPE,
+        'SMALLINT'           => Zend_Db::INT_TYPE,
+        'BIGINT'             => Zend_Db::BIGINT_TYPE,
+        'DECIMAL'            => Zend_Db::FLOAT_TYPE,
+        'NUMERIC'            => Zend_Db::FLOAT_TYPE
     );
 
     /**
@@ -118,7 +124,11 @@ class Db2 extends AbstractAdapter
         }
 
         if (!extension_loaded('ibm_db2')) {
-            throw new Db2Exception('The Ibm Db2 extension is required for this adapter but the extension is not loaded');
+            /**
+             * @see Zend_Db_Adapter_Db2_Exception
+             */
+            require_once 'Zend/Db/Adapter/Db2/Exception.php';
+            throw new Zend_Db_Adapter_Db2_Exception('The IBM DB2 extension is required for this adapter but the extension is not loaded');
         }
 
         $this->_determineI5();
@@ -135,18 +145,26 @@ class Db2 extends AbstractAdapter
             $this->_config['driver_options']['autocommit'] = &$this->_execute_mode;
         }
 
-        if (isset($this->_config['options'][Db\Db::CASE_FOLDING])) {
+        if (isset($this->_config['options'][Zend_Db::CASE_FOLDING])) {
             $caseAttrMap = array(
-                Db\Db::CASE_NATURAL => Db2_CASE_NATURAL,
-                Db\Db::CASE_UPPER   => Db2_CASE_UPPER,
-                Db\Db::CASE_LOWER   => Db2_CASE_LOWER
+                Zend_Db::CASE_NATURAL => DB2_CASE_NATURAL,
+                Zend_Db::CASE_UPPER   => DB2_CASE_UPPER,
+                Zend_Db::CASE_LOWER   => DB2_CASE_LOWER
             );
-            $this->_config['driver_options']['Db2_ATTR_CASE'] = $caseAttrMap[$this->_config['options'][Db\Db::CASE_FOLDING]];
+            $this->_config['driver_options']['DB2_ATTR_CASE'] = $caseAttrMap[$this->_config['options'][Zend_Db::CASE_FOLDING]];
+        }
+
+        if ($this->_isI5 && isset($this->_config['driver_options']['i5_naming'])) {
+            if ($this->_config['driver_options']['i5_naming']) {
+                $this->_config['driver_options']['i5_naming'] = DB2_I5_NAMING_ON;
+            } else {
+                $this->_config['driver_options']['i5_naming'] = DB2_I5_NAMING_OFF;
+            }
         }
 
         if ($this->_config['host'] !== 'localhost' && !$this->_isI5) {
             // if the host isn't localhost, use extended connection params
-            $dbname = 'DRIVER={Ibm Db2 ODBC DRIVER}' .
+            $dbname = 'DRIVER={IBM DB2 ODBC DRIVER}' .
                      ';DATABASE=' . $this->_config['dbname'] .
                      ';HOSTNAME=' . $this->_config['host'] .
                      ';PORT='     . $this->_config['port'] .
@@ -171,7 +189,11 @@ class Db2 extends AbstractAdapter
 
         // check the connection
         if (!$this->_connection) {
-            throw new Db2Exception(db2_conn_errormsg(), db2_conn_error());
+            /**
+             * @see Zend_Db_Adapter_Db2_Exception
+             */
+            require_once 'Zend/Db/Adapter/Db2/Exception.php';
+            throw new Zend_Db_Adapter_Db2_Exception(db2_conn_errormsg(), db2_conn_error());
         }
     }
 
@@ -183,7 +205,7 @@ class Db2 extends AbstractAdapter
     public function isConnected()
     {
         return ((bool) (is_resource($this->_connection)
-                     && get_resource_type($this->_connection) == 'Db2 Connection'));
+                     && get_resource_type($this->_connection) == 'DB2 Connection'));
     }
 
     /**
@@ -203,14 +225,15 @@ class Db2 extends AbstractAdapter
      * Returns an SQL statement for preparation.
      *
      * @param string $sql The SQL statement with placeholders.
-     * @return \Zend\Db\Statement\Db2
+     * @return Zend_Db_Statement_Db2
      */
     public function prepare($sql)
     {
         $this->_connect();
         $stmtClass = $this->_defaultStmtClass;
         if (!class_exists($stmtClass)) {
-            \Zend\Loader::loadClass($stmtClass);
+            require_once 'Zend/Loader.php';
+            Zend_Loader::loadClass($stmtClass);
         }
         $stmt = new $stmtClass($this, $sql);
         $stmt->setFetchMode($this->_fetchMode);
@@ -220,7 +243,7 @@ class Db2 extends AbstractAdapter
     /**
      * Gets the execution mode
      *
-     * @return int the execution mode (Db2_AUTOCOMMIT_ON or Db2_AUTOCOMMIT_OFF)
+     * @return int the execution mode (DB2_AUTOCOMMIT_ON or DB2_AUTOCOMMIT_OFF)
      */
     public function _getExecuteMode()
     {
@@ -234,13 +257,17 @@ class Db2 extends AbstractAdapter
     public function _setExecuteMode($mode)
     {
         switch ($mode) {
-            case Db2_AUTOCOMMIT_OFF:
-            case Db2_AUTOCOMMIT_ON:
+            case DB2_AUTOCOMMIT_OFF:
+            case DB2_AUTOCOMMIT_ON:
                 $this->_execute_mode = $mode;
                 db2_autocommit($this->_connection, $mode);
                 break;
             default:
-                throw new Db2Exception("execution mode not supported");
+                /**
+                 * @see Zend_Db_Adapter_Db2_Exception
+                 */
+                require_once 'Zend/Db/Adapter/Db2/Exception.php';
+                throw new Zend_Db_Adapter_Db2_Exception("execution mode not supported");
                 break;
         }
     }
@@ -257,7 +284,7 @@ class Db2 extends AbstractAdapter
             return $value;
         }
         /**
-         * Use db2_escape_string() if it is present in the Ibm Db2 extension.
+         * Use db2_escape_string() if it is present in the IBM DB2 extension.
          * But some supported versions of PHP do not include this function,
          * so fall back to default quoting in the parent class.
          */
@@ -337,7 +364,7 @@ class Db2 extends AbstractAdapter
      * SCALE            => number; scale of NUMERIC/DECIMAL
      * PRECISION        => number; precision of NUMERIC/DECIMAL
      * UNSIGNED         => boolean; unsigned property of an integer type
-     *                     Db2 not supports UNSIGNED integer.
+     *                     DB2 not supports UNSIGNED integer.
      * PRIMARY          => boolean; true if column is part of the primary key
      * PRIMARY_POSITION => integer; position of column in primary key
      * IDENTITY         => integer; true if column is auto-generated with unique values
@@ -379,7 +406,7 @@ class Db2 extends AbstractAdapter
 
         } else {
 
-            // Db2 On I5 specific query
+            // DB2 On I5 specific query
             $sql = "SELECT DISTINCT C.TABLE_SCHEMA, C.TABLE_NAME, C.COLUMN_NAME, C.ORDINAL_POSITION,
                 C.DATA_TYPE, C.COLUMN_DEFAULT, C.NULLS ,C.LENGTH, C.SCALE, LEFT(C.IDENTITY,1),
                 LEFT(tc.TYPE, 1) AS tabconsttype, k.COLSEQ
@@ -392,7 +419,7 @@ class Db2 extends AbstractAdapter
                        AND C.TABLE_NAME = k.TABLE_NAME
                        AND C.COLUMN_NAME = k.COLUMN_NAME)
                 WHERE "
-                 . $this->quoteInto('UPPER(C.TABLE_NAME) = UPPER(?)', $tableName);
+                . $this->quoteInto('UPPER(C.TABLE_NAME) = UPPER(?)', $tableName);
 
             if ($schemaName) {
                 $sql .= $this->quoteInto(' AND UPPER(C.TABLE_SCHEMA) = UPPER(?)', $schemaName);
@@ -407,7 +434,7 @@ class Db2 extends AbstractAdapter
         /**
          * To avoid case issues, fetch using FETCH_NUM
          */
-        $result = $stmt->fetchAll(Db\Db::FETCH_NUM);
+        $result = $stmt->fetchAll(Zend_Db::FETCH_NUM);
 
         /**
          * The ordering of columns is defined by the query so we can map
@@ -433,7 +460,7 @@ class Db2 extends AbstractAdapter
                 $primaryPosition = $row[$colseq];
             }
             /**
-             * In Ibm Db2, an column can be IDENTITY
+             * In IBM DB2, an column can be IDENTITY
              * even if it is not part of the PRIMARY KEY.
              */
             if ($row[$identityCol] == 'Y') {
@@ -465,7 +492,7 @@ class Db2 extends AbstractAdapter
     /**
      * Return the most recent value from the specified sequence in the database.
      * This is supported only on RDBMS brands that support sequences
-     * (e.g. Oracle, PostgreSQL, Db2).  Other RDBMS brands return null.
+     * (e.g. Oracle, PostgreSQL, DB2).  Other RDBMS brands return null.
      *
      * @param string $sequenceName
      * @return string
@@ -476,7 +503,7 @@ class Db2 extends AbstractAdapter
 
         if (!$this->_isI5) {
             $quotedSequenceName = $this->quoteIdentifier($sequenceName, true);
-            $sql = 'SELECT PREVVAL FOR ' . $quotedSequenceName . ' AS VAL FROM SYSIbm.SYSDUMMY1';
+            $sql = 'SELECT PREVVAL FOR ' . $quotedSequenceName . ' AS VAL FROM SYSIBM.SYSDUMMY1';
         } else {
             $quotedSequenceName = $sequenceName;
             $sql = 'SELECT PREVVAL FOR ' . $this->quoteIdentifier($sequenceName, true) . ' AS VAL FROM QSYS2.QSQPTABL';
@@ -489,7 +516,7 @@ class Db2 extends AbstractAdapter
     /**
      * Generate a new value from the specified sequence in the database, and return it.
      * This is supported only on RDBMS brands that support sequences
-     * (e.g. Oracle, PostgreSQL, Db2).  Other RDBMS brands return null.
+     * (e.g. Oracle, PostgreSQL, DB2).  Other RDBMS brands return null.
      *
      * @param string $sequenceName
      * @return string
@@ -497,7 +524,7 @@ class Db2 extends AbstractAdapter
     public function nextSequenceId($sequenceName)
     {
         $this->_connect();
-        $sql = 'SELECT NEXTVAL FOR '.$this->quoteIdentifier($sequenceName, true).' AS VAL FROM SYSIbm.SYSDUMMY1';
+        $sql = 'SELECT NEXTVAL FOR '.$this->quoteIdentifier($sequenceName, true).' AS VAL FROM SYSIBM.SYSDUMMY1';
         $value = $this->fetchOne($sql);
         return (string) $value;
     }
@@ -506,7 +533,7 @@ class Db2 extends AbstractAdapter
      * Gets the last ID generated automatically by an IDENTITY/AUTOINCREMENT column.
      *
      * As a convention, on RDBMS brands that support sequences
-     * (e.g. Oracle, PostgreSQL, Db2), this method forms the name of a sequence
+     * (e.g. Oracle, PostgreSQL, DB2), this method forms the name of a sequence
      * from the arguments and returns the last id generated by that sequence.
      * On RDBMS brands that support IDENTITY/AUTOINCREMENT columns, this method
      * returns the last value generated for such a column, and the table name
@@ -538,7 +565,7 @@ class Db2 extends AbstractAdapter
             return $this->lastSequenceId($sequenceName);
         }
 
-        $sql = 'SELECT IDENTITY_VAL_LOCAL() AS VAL FROM SYSIbm.SYSDUMMY1';
+        $sql = 'SELECT IDENTITY_VAL_LOCAL() AS VAL FROM SYSIBM.SYSDUMMY1';
         $value = $this->fetchOne($sql);
         return (string) $value;
     }
@@ -550,7 +577,7 @@ class Db2 extends AbstractAdapter
      */
     protected function _beginTransaction()
     {
-        $this->_setExecuteMode(Db2_AUTOCOMMIT_OFF);
+        $this->_setExecuteMode(DB2_AUTOCOMMIT_OFF);
     }
 
     /**
@@ -561,12 +588,16 @@ class Db2 extends AbstractAdapter
     protected function _commit()
     {
         if (!db2_commit($this->_connection)) {
-            throw new Db2Exception(
+            /**
+             * @see Zend_Db_Adapter_Db2_Exception
+             */
+            require_once 'Zend/Db/Adapter/Db2/Exception.php';
+            throw new Zend_Db_Adapter_Db2_Exception(
                 db2_conn_errormsg($this->_connection),
                 db2_conn_error($this->_connection));
         }
 
-        $this->_setExecuteMode(Db2_AUTOCOMMIT_ON);
+        $this->_setExecuteMode(DB2_AUTOCOMMIT_ON);
     }
 
     /**
@@ -577,11 +608,15 @@ class Db2 extends AbstractAdapter
     protected function _rollBack()
     {
         if (!db2_rollback($this->_connection)) {
-            throw new Db2Exception(
+            /**
+             * @see Zend_Db_Adapter_Db2_Exception
+             */
+            require_once 'Zend/Db/Adapter/Db2/Exception.php';
+            throw new Zend_Db_Adapter_Db2_Exception(
                 db2_conn_errormsg($this->_connection),
                 db2_conn_error($this->_connection));
         }
-        $this->_setExecuteMode(Db2_AUTOCOMMIT_ON);
+        $this->_setExecuteMode(DB2_AUTOCOMMIT_ON);
     }
 
     /**
@@ -589,22 +624,30 @@ class Db2 extends AbstractAdapter
      *
      * @param integer $mode
      * @return void
-     * @throws \Zend\Db\Adapter\Db2Exception
+     * @throws Zend_Db_Adapter_Db2_Exception
      */
     public function setFetchMode($mode)
     {
         switch ($mode) {
-            case Db\Db::FETCH_NUM:   // seq array
-            case Db\Db::FETCH_ASSOC: // assoc array
-            case Db\Db::FETCH_BOTH:  // seq+assoc array
-            case Db\Db::FETCH_OBJ:   // object
+            case Zend_Db::FETCH_NUM:   // seq array
+            case Zend_Db::FETCH_ASSOC: // assoc array
+            case Zend_Db::FETCH_BOTH:  // seq+assoc array
+            case Zend_Db::FETCH_OBJ:   // object
                 $this->_fetchMode = $mode;
                 break;
-            case Db\Db::FETCH_BOUND:   // bound to PHP variable
-                throw new Db2Exception('FETCH_BOUND is not supported yet');
+            case Zend_Db::FETCH_BOUND:   // bound to PHP variable
+                /**
+                 * @see Zend_Db_Adapter_Db2_Exception
+                 */
+                require_once 'Zend/Db/Adapter/Db2/Exception.php';
+                throw new Zend_Db_Adapter_Db2_Exception('FETCH_BOUND is not supported yet');
                 break;
             default:
-                throw new Db2Exception("Invalid fetch mode '$mode' specified");
+                /**
+                 * @see Zend_Db_Adapter_Db2_Exception
+                 */
+                require_once 'Zend/Db/Adapter/Db2/Exception.php';
+                throw new Zend_Db_Adapter_Db2_Exception("Invalid fetch mode '$mode' specified");
                 break;
         }
     }
@@ -621,12 +664,20 @@ class Db2 extends AbstractAdapter
     {
         $count = intval($count);
         if ($count <= 0) {
-            throw new Db2Exception("LIMIT argument count=$count is not valid");
+            /**
+             * @see Zend_Db_Adapter_Db2_Exception
+             */
+            require_once 'Zend/Db/Adapter/Db2/Exception.php';
+            throw new Zend_Db_Adapter_Db2_Exception("LIMIT argument count=$count is not valid");
         }
 
         $offset = intval($offset);
         if ($offset < 0) {
-            throw new Db2Exception("LIMIT argument offset=$offset is not valid");
+            /**
+             * @see Zend_Db_Adapter_Db2_Exception
+             */
+            require_once 'Zend/Db/Adapter/Db2/Exception.php';
+            throw new Zend_Db_Adapter_Db2_Exception("LIMIT argument offset=$offset is not valid");
         }
 
         if ($offset == 0) {
@@ -635,7 +686,7 @@ class Db2 extends AbstractAdapter
         }
 
         /**
-         * Db2 does not implement the LIMIT clause as some RDBMS do.
+         * DB2 does not implement the LIMIT clause as some RDBMS do.
          * We have to simulate it with subqueries and ROWNUM.
          * Unfortunately because we use the column wildcard "*",
          * this puts an extra column into the query result set.
@@ -728,7 +779,7 @@ class Db2 extends AbstractAdapter
      * Db2 On I5 specific method
      *
      * Returns a list of the tables in the database .
-     * Used only for Db2/400.
+     * Used only for DB2/400.
      *
      * @return array
      */

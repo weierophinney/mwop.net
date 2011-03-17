@@ -19,24 +19,22 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * @namespace
- */
-namespace Zend\Captcha;
+/** @see Zend_Validate_Interface */
+require_once 'Zend/Validate/Interface.php';
 
 /**
  * Generic Captcha adapter interface
  *
  * Each specific captcha implementation should implement this interface
  *
- * @uses       Zend\Validator\Validator
  * @category   Zend
  * @package    Zend_Captcha
  * @subpackage Adapter
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
-interface Adapter extends \Zend\Validator\Validator
+interface Zend_Captcha_Adapter extends Zend_Validate_Interface
 {
     /**
      * Generate a new captcha
@@ -52,13 +50,13 @@ interface Adapter extends \Zend\Validator\Validator
      * @param  mixed $element
      * @return string
      */
-    public function render(\Zend\View\ViewEngine $view = null, $element = null);
+    public function render(Zend_View_Interface $view = null, $element = null);
 
     /**
      * Set captcha name
      *
      * @param  string $name
-     * @return \Zend\Captcha\Adapter
+     * @return Zend_Captcha_Adapter
      */
     public function setName($name);
 
@@ -72,7 +70,7 @@ interface Adapter extends \Zend\Validator\Validator
     /**
      * Get optional private decorator for this captcha type
      *
-     * @return \Zend_Form_Decorator_Interface|string
+     * @return Zend_Form_Decorator_Interface|string
      */
     public function getDecorator();
 }

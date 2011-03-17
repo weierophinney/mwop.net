@@ -16,13 +16,15 @@
  * @package    Zend_View
  * @subpackage Helper
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @version    $Id$
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * @namespace
- */
-namespace Zend\View\Helper;
+/** Zend_View_Helper_Placeholder_Registry */
+require_once 'Zend/View/Helper/Placeholder/Registry.php';
+
+/** Zend_View_Helper_Abstract.php */
+require_once 'Zend/View/Helper/Abstract.php';
 
 /**
  * Helper for passing data between otherwise segregated Views. It's called
@@ -30,14 +32,12 @@ namespace Zend\View\Helper;
  * for non-Placeholder things. That said, the support for this is only
  * guaranteed to effect subsequently rendered templates, and of course Layouts.
  *
- * @uses       \Zend\View\Helper\AbstractHelper.php
- * @uses       \Zend\View\Helper\Placeholder\Registry
  * @package    Zend_View
  * @subpackage Helper
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Placeholder extends AbstractHelper
+class Zend_View_Helper_Placeholder extends Zend_View_Helper_Abstract
 {
     /**
      * Placeholder items
@@ -46,7 +46,7 @@ class Placeholder extends AbstractHelper
     protected $_items = array();
 
     /**
-     * @var \Zend\View\Helper\Placeholder\Registry
+     * @var Zend_View_Helper_Placeholder_Registry
      */
     protected $_registry;
 
@@ -59,7 +59,7 @@ class Placeholder extends AbstractHelper
      */
     public function __construct()
     {
-        $this->_registry = Placeholder\Registry::getRegistry();
+        $this->_registry = Zend_View_Helper_Placeholder_Registry::getRegistry();
     }
 
 
@@ -67,14 +67,10 @@ class Placeholder extends AbstractHelper
      * Placeholder helper
      *
      * @param  string $name
-     * @return \Zend\View\Helper\Placeholder\Container\AbstractContainer
+     * @return Zend_View_Helper_Placeholder_Container_Abstract
      */
-    public function direct($name = null)
+    public function placeholder($name)
     {
-        if ($name == null) {
-            throw new \InvalidArgumentException('Placeholder: missing argument.  $name is required by placeholder($name)');
-        }
-        
         $name = (string) $name;
         return $this->_registry->getContainer($name);
     }
@@ -82,7 +78,7 @@ class Placeholder extends AbstractHelper
     /**
      * Retrieve the registry
      *
-     * @return \Zend\View\Helper\Placeholder\Registry
+     * @return Zend_View_Helper_Placeholder_Registry
      */
     public function getRegistry()
     {

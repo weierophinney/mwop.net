@@ -17,22 +17,24 @@
  * @subpackage Value
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\XmlRpc\Value;
 
 /**
- * @uses       \Zend\XmlRpc\Value\Scalar
+ * Zend_XmlRpc_Value_Scalar
+ */
+require_once 'Zend/XmlRpc/Value/Scalar.php';
+
+
+/**
  * @category   Zend
  * @package    Zend_XmlRpc
  * @subpackage Value
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Nil extends Scalar
+class Zend_XmlRpc_Value_Nil extends Zend_XmlRpc_Value_Scalar
 {
 
     /**

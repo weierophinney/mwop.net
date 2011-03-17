@@ -17,38 +17,34 @@
  * @subpackage Search
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Search\Lucene\Search\Weight;
-use Zend\Search\Lucene\Search\Query;
-use Zend\Search\Lucene;
+
+/** Zend_Search_Lucene_Search_Weight */
+require_once 'Zend/Search/Lucene/Search/Weight.php';
+
 
 /**
- * @uses       \Zend\Search\Lucene\Search\Weight\AbstractWeight
- * @uses       \Zend\Search\Lucene\Search\Query\AbstractQuery
- * @uses       \Zend\Search\Lucene\SearchIndex
  * @category   Zend
  * @package    Zend_Search_Lucene
  * @subpackage Search
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class MultiTerm extends AbstractWeight
+class Zend_Search_Lucene_Search_Weight_MultiTerm extends Zend_Search_Lucene_Search_Weight
 {
     /**
      * IndexReader.
      *
-     * @var \Zend\Search\Lucene\SearchIndex
+     * @var Zend_Search_Lucene_Interface
      */
     private $_reader;
 
     /**
      * The query that this concerns.
      *
-     * @var \Zend\Search\Lucene\Search\Query\AbstractQuery
+     * @var Zend_Search_Lucene_Search_Query
      */
     private $_query;
 
@@ -66,10 +62,11 @@ class MultiTerm extends AbstractWeight
      * query - the query that this concerns.
      * reader - index reader
      *
-     * @param \Zend\Search\Lucene\Search\Query\AbstractQuery $query
-     * @param \Zend\Search\Lucene\SearchIndex             $reader
+     * @param Zend_Search_Lucene_Search_Query $query
+     * @param Zend_Search_Lucene_Interface    $reader
      */
-    public function __construct(Query\AbstractQuery $query, Lucene\SearchIndex $reader)
+    public function __construct(Zend_Search_Lucene_Search_Query $query,
+                                Zend_Search_Lucene_Interface    $reader)
     {
         $this->_query   = $query;
         $this->_reader  = $reader;
@@ -79,7 +76,8 @@ class MultiTerm extends AbstractWeight
 
         foreach ($query->getTerms() as $id => $term) {
             if ($signs === null || $signs[$id] === null || $signs[$id]) {
-                $this->_weights[$id] = new Term($term, $query, $reader);
+                require_once 'Zend/Search/Lucene/Search/Weight/Term.php';
+                $this->_weights[$id] = new Zend_Search_Lucene_Search_Weight_Term($term, $query, $reader);
                 $query->setWeight($id, $this->_weights[$id]);
             }
         }
@@ -137,3 +135,5 @@ class MultiTerm extends AbstractWeight
         }
     }
 }
+
+

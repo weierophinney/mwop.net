@@ -16,21 +16,16 @@
  * @package    Zend_Json
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
- */
-namespace Zend\Json\Server;
-
-/**
- * @uses       \Zend\Json\Json
  * @category   Zend
  * @package    Zend_Json
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Error
+class Zend_Json_Server_Error
 {
     const ERROR_PARSE           = -32768;
     const ERROR_INVALID_REQUEST = -32600;
@@ -89,7 +84,7 @@ class Error
      * Set error code
      *
      * @param  int $code
-     * @return \Zend\Json\Server\Error
+     * @return Zend_Json_Server_Error
      */
     public function setCode($code)
     {
@@ -121,7 +116,7 @@ class Error
      * Set error message
      *
      * @param  string $message
-     * @return \Zend\Json\Server\Error
+     * @return Zend_Json_Server_Error
      */
     public function setMessage($message)
     {
@@ -147,7 +142,7 @@ class Error
      * Set error data
      *
      * @param  mixed $data
-     * @return \Zend\Json\Server\Error
+     * @return Zend_Json_Server_Error
      */
     public function setData($data)
     {
@@ -186,7 +181,8 @@ class Error
      */
     public function toJson()
     {
-        return \Zend\Json\Json::encode($this->toArray());
+        require_once 'Zend/Json.php';
+        return Zend_Json::encode($this->toArray());
     }
 
     /**

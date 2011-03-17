@@ -17,33 +17,26 @@
  * @subpackage Framework
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Tool_Framework_Registry_EnabledInterface
  */
-namespace Zend\Tool\Framework\Action;
-
-use \Zend\Tool\Framework\Action,
-    \Zend\Tool\Framework\RegistryEnabled,
-    \Zend\Tool\Framework\Exception;
+require_once 'Zend/Tool/Framework/Registry/EnabledInterface.php';
 
 /**
- * @uses       ArrayIterator
- * @uses       Countable
- * @uses       IteratorAggregate
- * @uses       \Zend\Tool\Framework\Action\Exception
- * @uses       \Zend\Tool\Framework\RegistryEnabled
  * @category   Zend
  * @package    Zend_Tool
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Repository implements RegistryEnabled, \IteratorAggregate, \Countable
+class Zend_Tool_Framework_Action_Repository
+    implements Zend_Tool_Framework_Registry_EnabledInterface, IteratorAggregate, Countable
 {
 
     /**
-     * @var \Zend\Tool\Framework\Registry
+     * @var Zend_Tool_Framework_Registry_Interface
      */
     protected $_registry = null;
 
@@ -55,9 +48,9 @@ class Repository implements RegistryEnabled, \IteratorAggregate, \Countable
     /**
      * setRegistry()
      *
-     * @param \Zend\Tool\Framework\Registry $registry
+     * @param Zend_Tool_Framework_Registry_Interface $registry
      */
-    public function setRegistry(\Zend\Tool\Framework\Registry $registry)
+    public function setRegistry(Zend_Tool_Framework_Registry_Interface $registry)
     {
         $this->_registry = $registry;
     }
@@ -65,19 +58,21 @@ class Repository implements RegistryEnabled, \IteratorAggregate, \Countable
     /**
      * addAction()
      *
-     * @param \Zend\Tool\Framework\Action $action
-     * @return \Zend\Tool\Framework\Action\Repository
+     * @param Zend_Tool_Framework_Action_Interface $action
+     * @return Zend_Tool_Framework_Action_Repository
      */
-    public function addAction(Action $action, $overrideExistingAction = false)
+    public function addAction(Zend_Tool_Framework_Action_Interface $action, $overrideExistingAction = false)
     {
         $actionName = $action->getName();
 
         if ($actionName == '' || $actionName == 'Base') {
-            throw new Exception\InvalidArgumentException('An action name for the provided action could not be determined.');
+            require_once 'Zend/Tool/Framework/Action/Exception.php';
+            throw new Zend_Tool_Framework_Action_Exception('An action name for the provided action could not be determined.');
         }
 
         if (!$overrideExistingAction && array_key_exists(strtolower($actionName), $this->_actions)) {
-            throw new Exception\InvalidArgumentException('An action by the name ' . $actionName
+            require_once 'Zend/Tool/Framework/Action/Exception.php';
+            throw new Zend_Tool_Framework_Action_Exception('An action by the name ' . $actionName
                 . ' is already registered and $overrideExistingAction is set to false.');
         }
 
@@ -109,7 +104,7 @@ class Repository implements RegistryEnabled, \IteratorAggregate, \Countable
      * getAction() - get an action by a specific name
      *
      * @param string $actionName
-     * @return \Zend\Tool\Framework\Action
+     * @return Zend_Tool_Framework_Action_Interface
      */
     public function getAction($actionName)
     {
@@ -137,7 +132,7 @@ class Repository implements RegistryEnabled, \IteratorAggregate, \Countable
      */
     public function getIterator()
     {
-        return new \ArrayIterator($this->_actions);
+        return new ArrayIterator($this->_actions);
     }
 
 }

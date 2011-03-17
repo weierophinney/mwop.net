@@ -13,18 +13,16 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    Zend_PDF
- * @subpackage Zend_PDF_Fonts
+ * @package    Zend_Pdf
+ * @subpackage Fonts
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Pdf\Resource\Font;
-use Zend\Pdf\Exception;
-use Zend\Pdf;
+
+/** @see Zend_Pdf_Resource_Font */
+require_once 'Zend/Pdf/Resource/Font.php';
 
 /**
  * Extracted fonts implementation
@@ -32,14 +30,12 @@ use Zend\Pdf;
  * Thes class allows to extract fonts already mentioned within PDF document and use them
  * for text drawing.
  *
- * @uses       \Zend\Pdf\Exception
- * @uses       \Zend\Pdf\Resource\Font\AbstractFont
- * @package    Zend_PDF
- * @subpackage Zend_PDF_Fonts
+ * @package    Zend_Pdf
+ * @subpackage Fonts
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Extracted extends AbstractFont
+class Zend_Pdf_Resource_Font_Extracted extends Zend_Pdf_Resource_Font
 {
     /**
      * Messages
@@ -60,11 +56,10 @@ class Extracted extends AbstractFont
     /**
      * Object constructor
      *
-     * $fontDictionary is a \Zend\Pdf\InternalType\IndirectObjectReference or
-     * \Zend\Pdf\InternalType\IndirectObject object
+     * $fontDictionary is a Zend_Pdf_Element_Reference or Zend_Pdf_Element_Object object
      *
      * @param mixed $fontDictionary
-     * @throws \Zend\Pdf\Exception
+     * @throws Zend_Pdf_Exception
      */
     public function __construct($fontDictionary)
     {
@@ -81,7 +76,8 @@ class Extracted extends AbstractFont
                 // Composite type 0 font
                 if (count($fontDictionary->DescendantFonts->items) != 1) {
                     // Multiple descendant fonts are not supported
-                    throw new Exception\NotImplementedException(self::TYPE_NOT_SUPPORTED);
+                    require_once 'Zend/Pdf/Exception.php';
+                    throw new Zend_Pdf_Exception(self::TYPE_NOT_SUPPORTED);
                 }
 
                 $fontDictionaryIterator = $fontDictionary->DescendantFonts->items->getIterator();
@@ -93,7 +89,7 @@ class Extracted extends AbstractFont
             case 'Type1':
                 if ($fontDictionary->FontDescriptor === null) {
                     // That's one of the standard fonts
-                    $standardFont = Pdf\Font::fontWithName($fontDictionary->BaseFont->value);
+                    $standardFont = Zend_Pdf_Font::fontWithName($fontDictionary->BaseFont->value);
 
                     $this->_fontNames          = $standardFont->getFontNames();
                     $this->_isBold             = $standardFont->isBold();
@@ -119,10 +115,11 @@ class Extracted extends AbstractFont
                 break;
 
             default:
-                throw new Exception\NotImplementedException(self::TYPE_NOT_SUPPORTED);
+                require_once 'Zend/Pdf/Exception.php';
+                throw new Zend_Pdf_Exception(self::TYPE_NOT_SUPPORTED);
         }
 
-        $this->_fontNames[Pdf\Font::NAME_POSTSCRIPT]['en'] = iconv('UTF-8', 'UTF-16BE', $fontDictionary->BaseFont->value);
+        $this->_fontNames[Zend_Pdf_Font::NAME_POSTSCRIPT]['en'] = iconv('UTF-8', 'UTF-16BE', $fontDictionary->BaseFont->value);
 
         $this->_isBold             = false; // this property is actually not used anywhere
         $this->_isItalic           = ( ($fontDescriptor->Flags->value & (1 << 6)) != 0 ); // Bit-7 is set
@@ -150,7 +147,8 @@ class Extracted extends AbstractFont
      */
     public function glyphNumbersForCharacters($characterCodes)
     {
-        throw new Exception\NotImplementedException(self::OPERATION_NOT_SUPPORTED);
+        require_once 'Zend/Pdf/Exception.php';
+        throw new Zend_Pdf_Exception(self::OPERATION_NOT_SUPPORTED);
     }
 
     /**
@@ -167,7 +165,8 @@ class Extracted extends AbstractFont
      */
     public function glyphNumberForCharacter($characterCode)
     {
-        throw new Exception\NotImplementedException(self::OPERATION_NOT_SUPPORTED);
+        require_once 'Zend/Pdf/Exception.php';
+        throw new Zend_Pdf_Exception(self::OPERATION_NOT_SUPPORTED);
     }
 
     /**
@@ -190,7 +189,8 @@ class Extracted extends AbstractFont
      */
     public function getCoveredPercentage($string, $charEncoding = '')
     {
-        throw new Exception\NotImplementedException(self::OPERATION_NOT_SUPPORTED);
+        require_once 'Zend/Pdf/Exception.php';
+        throw new Zend_Pdf_Exception(self::OPERATION_NOT_SUPPORTED);
     }
 
     /**
@@ -203,11 +203,12 @@ class Extracted extends AbstractFont
      *
      * @param array $glyphNumbers Array of glyph numbers.
      * @return array Array of glyph widths (integers).
-     * @throws \Zend\Pdf\Exception
+     * @throws Zend_Pdf_Exception
      */
     public function widthsForGlyphs($glyphNumbers)
     {
-        throw new Exception\NotImplementedException(self::OPERATION_NOT_SUPPORTED);
+        require_once 'Zend/Pdf/Exception.php';
+        throw new Zend_Pdf_Exception(self::OPERATION_NOT_SUPPORTED);
     }
 
     /**
@@ -217,11 +218,12 @@ class Extracted extends AbstractFont
      *
      * @param integer $glyphNumber
      * @return integer
-     * @throws \Zend\Pdf\Exception
+     * @throws Zend_Pdf_Exception
      */
     public function widthForGlyph($glyphNumber)
     {
-        throw new Exception\NotImplementedException(self::OPERATION_NOT_SUPPORTED);
+        require_once 'Zend/Pdf/Exception.php';
+        throw new Zend_Pdf_Exception(self::OPERATION_NOT_SUPPORTED);
     }
 
     /**
@@ -243,7 +245,8 @@ class Extracted extends AbstractFont
             return iconv($charEncoding, 'CP1252//IGNORE', $string);
         }
 
-        throw new Exception\CorruptedPdfException(self::ENCODING_NOT_SUPPORTED);
+        require_once 'Zend/Pdf/Exception.php';
+        throw new Zend_Pdf_Exception(self::ENCODING_NOT_SUPPORTED);
     }
 
     /**
@@ -265,6 +268,7 @@ class Extracted extends AbstractFont
             return iconv('CP1252', $charEncoding, $string);
         }
 
-        throw new Exception\CorruptedPdfException(self::ENCODING_NOT_SUPPORTED);
+        require_once 'Zend/Pdf/Exception.php';
+        throw new Zend_Pdf_Exception(self::ENCODING_NOT_SUPPORTED);
     }
 }

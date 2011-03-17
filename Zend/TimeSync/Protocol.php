@@ -16,26 +16,18 @@
  * @package   Zend_TimeSync
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id$
  */
-
-/**
- * @namespace
- */
-namespace Zend\TimeSync;
-use Zend\TimeSync\Exception;
 
 /**
  * Abstract class definition for all timeserver protocols
  *
- * @uses      \Zend\Date\Date
- * @uses      \Zend\TimeSync\TimeSync
- * @uses      \Zend\TimeSync\Exception
  * @category  Zend
  * @package   Zend_TimeSync
- * @copyright Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd     New BSD License
  */
-abstract class Protocol
+abstract class Zend_TimeSync_Protocol
 {
     /**
      * Holds the current socket connection
@@ -99,14 +91,14 @@ abstract class Protocol
      * Connect to the specified timeserver.
      *
      * @return void
-     * @throws \Zend\TimeSync\Exception When the connection failed
+     * @throws Zend_TimeSync_Exception When the connection failed
      */
     protected function _connect()
     {
         $socket = @fsockopen($this->_timeserver, $this->_port, $errno, $errstr,
-                             TimeSync::$options['timeout']);
+                             Zend_TimeSync::$options['timeout']);
         if ($socket === false) {
-            throw new Exception\RuntimeException('could not connect to ' .
+            throw new Zend_TimeSync_Exception('could not connect to ' .
                 "'$this->_timeserver' on port '$this->_port', reason: '$errstr'");
         }
 
@@ -142,15 +134,15 @@ abstract class Protocol
     /**
      * Query this timeserver without using the fallback mechanism
      *
-     * @param  string|\Zend\Locale\Locale $locale (Optional) Locale
-     * @return \Zend\Date\Date
+     * @param  string|Zend_Locale $locale (Optional) Locale
+     * @return Zend_Date
      */
     public function getDate($locale = null)
     {
         $this->_write($this->_prepare());
         $timestamp = $this->_extract($this->_read());
 
-        $date = new \Zend\Date\Date($this, null, $locale);
+        $date = new Zend_Date($this, null, $locale);
         return $date;
     }
 }

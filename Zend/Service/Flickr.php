@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework
  *
@@ -17,17 +18,11 @@
  * @subpackage Flickr
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
+
 /**
- * @uses       DOMDocument
- * @uses       DOMXPath
- * @uses       Zend_Rest_Client
- * @uses       Zend\Service\Exception
- * @uses       Zend_Service_Flickr_Image
- * @uses       Zend_Service_Flickr_ResultSet
- * @uses       Zend\Validator\Between
- * @uses       Zend\Validator\Int
  * @category   Zend
  * @package    Zend_Service
  * @subpackage Flickr
@@ -88,7 +83,7 @@ class Zend_Service_Flickr
      * @param  string|array $query   A single tag or an array of tags.
      * @param  array        $options Additional parameters to refine your query.
      * @return Zend_Service_Flickr_ResultSet
-     * @throws Zend\Service\Exception
+     * @throws Zend_Service_Exception
      */
     public function tagSearch($query, array $options = array())
     {
@@ -110,7 +105,11 @@ class Zend_Service_Flickr
         $response = $restClient->restGet('/services/rest/', $options);
 
         if ($response->isError()) {
-            throw new Zend\Service\Exception('An error occurred sending request. Status code: '
+            /**
+             * @see Zend_Service_Exception
+             */
+            require_once 'Zend/Service/Exception.php';
+            throw new Zend_Service_Exception('An error occurred sending request. Status code: '
                                            . $response->getStatus());
         }
 
@@ -119,6 +118,10 @@ class Zend_Service_Flickr
 
         self::_checkErrors($dom);
 
+        /**
+         * @see Zend_Service_Flickr_ResultSet
+         */
+        require_once 'Zend/Service/Flickr/ResultSet.php';
         return new Zend_Service_Flickr_ResultSet($dom, $this);
     }
 
@@ -138,7 +141,7 @@ class Zend_Service_Flickr
      * @param  string $query   username or email
      * @param  array  $options Additional parameters to refine your query.
      * @return Zend_Service_Flickr_ResultSet
-     * @throws Zend\Service\Exception
+     * @throws Zend_Service_Exception
      */
     public function userSearch($query, array $options = null)
     {
@@ -166,7 +169,11 @@ class Zend_Service_Flickr
         $response = $restClient->restGet('/services/rest/', $options);
 
         if ($response->isError()) {
-            throw new Zend\Service\Exception('An error occurred sending request. Status code: '
+            /**
+             * @see Zend_Service_Exception
+             */
+            require_once 'Zend/Service/Exception.php';
+            throw new Zend_Service_Exception('An error occurred sending request. Status code: '
                                            . $response->getStatus());
         }
 
@@ -175,6 +182,10 @@ class Zend_Service_Flickr
 
         self::_checkErrors($dom);
 
+        /**
+         * @see Zend_Service_Flickr_ResultSet
+         */
+        require_once 'Zend/Service/Flickr/ResultSet.php';
         return new Zend_Service_Flickr_ResultSet($dom, $this);
     }
 
@@ -184,7 +195,7 @@ class Zend_Service_Flickr
      * @param  string $query   group id
      * @param  array  $options Additional parameters to refine your query.
      * @return Zend_Service_Flickr_ResultSet
-     * @throws Zend\Service\Exception
+     * @throws Zend_Service_Exception
      */
     public function groupPoolGetPhotos($query, array $options = array())
     {
@@ -194,7 +205,11 @@ class Zend_Service_Flickr
                                        'extras'   => 'license, date_upload, date_taken, owner_name, icon_server');
 
         if (empty($query) || !is_string($query)) {
-            throw new Zend\Service\Exception('You must supply a group id');
+            /**
+             * @see Zend_Service_Exception
+             */
+            require_once 'Zend/Service/Exception.php';
+            throw new Zend_Service_Exception('You must supply a group id');
         }
 
         $options['group_id'] = $query;
@@ -209,7 +224,11 @@ class Zend_Service_Flickr
         $response = $restClient->restGet('/services/rest/', $options);
 
         if ($response->isError()) {
-            throw new Zend\Service\Exception('An error occurred sending request. Status code: '
+            /**
+            * @see Zend_Service_Exception
+            */
+            require_once 'Zend/Service/Exception.php';
+            throw new Zend_Service_Exception('An error occurred sending request. Status code: '
                                            . $response->getStatus());
         }
 
@@ -218,6 +237,10 @@ class Zend_Service_Flickr
 
         self::_checkErrors($dom);
 
+        /**
+        * @see Zend_Service_Flickr_ResultSet
+        */
+        require_once 'Zend/Service/Flickr/ResultSet.php';
         return new Zend_Service_Flickr_ResultSet($dom, $this);
     }
 
@@ -230,7 +253,7 @@ class Zend_Service_Flickr
      *
      * @param  string $username the username
      * @return string the NSID (userid)
-     * @throws Zend\Service\Exception
+     * @throws Zend_Service_Exception
      */
     public function getIdByUsername($username)
     {
@@ -239,7 +262,11 @@ class Zend_Service_Flickr
         $options = array('api_key' => $this->apiKey, 'method' => $method, 'username' => (string) $username);
 
         if (empty($username)) {
-            throw new Zend\Service\Exception('You must supply a username');
+            /**
+             * @see Zend_Service_Exception
+             */
+            require_once 'Zend/Service/Exception.php';
+            throw new Zend_Service_Exception('You must supply a username');
         }
 
         $restClient = $this->getRestClient();
@@ -247,7 +274,11 @@ class Zend_Service_Flickr
         $response = $restClient->restGet('/services/rest/', $options);
 
         if ($response->isError()) {
-            throw new Zend\Service\Exception('An error occurred sending request. Status code: '
+            /**
+             * @see Zend_Service_Exception
+             */
+            require_once 'Zend/Service/Exception.php';
+            throw new Zend_Service_Exception('An error occurred sending request. Status code: '
                                            . $response->getStatus());
         }
 
@@ -266,14 +297,18 @@ class Zend_Service_Flickr
      *
      * @param  string $email the email
      * @return string the NSID (userid)
-     * @throws Zend\Service\Exception
+     * @throws Zend_Service_Exception
      */
     public function getIdByEmail($email)
     {
         static $method = 'flickr.people.findByEmail';
 
         if (empty($email)) {
-            throw new Zend\Service\Exception('You must supply an e-mail address');
+            /**
+             * @see Zend_Service_Exception
+             */
+            require_once 'Zend/Service/Exception.php';
+            throw new Zend_Service_Exception('You must supply an e-mail address');
         }
 
         $options = array('api_key' => $this->apiKey, 'method' => $method, 'find_email' => (string) $email);
@@ -283,7 +318,11 @@ class Zend_Service_Flickr
         $response = $restClient->restGet('/services/rest/', $options);
 
         if ($response->isError()) {
-            throw new Zend\Service\Exception('An error occurred sending request. Status code: '
+            /**
+             * @see Zend_Service_Exception
+             */
+            require_once 'Zend/Service/Exception.php';
+            throw new Zend_Service_Exception('An error occurred sending request. Status code: '
                                            . $response->getStatus());
         }
 
@@ -300,14 +339,18 @@ class Zend_Service_Flickr
      *
      * @param  string $id the NSID
      * @return array of Zend_Service_Flickr_Image, details for the specified image
-     * @throws Zend\Service\Exception
+     * @throws Zend_Service_Exception
      */
     public function getImageDetails($id)
     {
         static $method = 'flickr.photos.getSizes';
 
         if (empty($id)) {
-            throw new Zend\Service\Exception('You must supply a photo ID');
+            /**
+             * @see Zend_Service_Exception
+             */
+            require_once 'Zend/Service/Exception.php';
+            throw new Zend_Service_Exception('You must supply a photo ID');
         }
 
         $options = array('api_key' => $this->apiKey, 'method' => $method, 'photo_id' => $id);
@@ -321,6 +364,10 @@ class Zend_Service_Flickr
         $xpath = new DOMXPath($dom);
         self::_checkErrors($dom);
         $retval = array();
+        /**
+         * @see Zend_Service_Flickr_Image
+         */
+        require_once 'Zend/Service/Flickr/Image.php';
         foreach ($xpath->query('//size') as $size) {
             $label = (string) $size->getAttribute('label');
             $retval[$label] = new Zend_Service_Flickr_Image($size);
@@ -338,7 +385,11 @@ class Zend_Service_Flickr
     public function getRestClient()
     {
         if (null === $this->_restClient) {
-            $this->_restClient = new Zend\Rest\Client\RestClient(self::URI_BASE);
+            /**
+             * @see Zend_Rest_Client
+             */
+            require_once 'Zend/Rest/Client.php';
+            $this->_restClient = new Zend_Rest_Client(self::URI_BASE);
         }
 
         return $this->_restClient;
@@ -350,7 +401,7 @@ class Zend_Service_Flickr
      *
      * @param  array $options
      * @return void
-     * @throws Zend\Service\Exception
+     * @throws Zend_Service_Exception
      */
     protected function _validateUserSearch(array $options)
     {
@@ -359,14 +410,30 @@ class Zend_Service_Flickr
 
         $this->_compareOptions($options, $validOptions);
 
-        $between = new Zend\Validator\Between(1, 500, true);
+        /**
+         * @see Zend_Validate_Between
+         */
+        require_once 'Zend/Validate/Between.php';
+        $between = new Zend_Validate_Between(1, 500, true);
         if (!$between->isValid($options['per_page'])) {
-            throw new Zend\Service\Exception($options['per_page'] . ' is not valid for the "per_page" option');
+            /**
+             * @see Zend_Service_Exception
+             */
+            require_once 'Zend/Service/Exception.php';
+            throw new Zend_Service_Exception($options['per_page'] . ' is not valid for the "per_page" option');
         }
 
-        $int = new Zend\Validator\Int();
+        /**
+         * @see Zend_Validate_Int
+         */
+        require_once 'Zend/Validate/Int.php';
+        $int = new Zend_Validate_Int();
         if (!$int->isValid($options['page'])) {
-            throw new Zend\Service\Exception($options['page'] . ' is not valid for the "page" option');
+            /**
+             * @see Zend_Service_Exception
+             */
+            require_once 'Zend/Service/Exception.php';
+            throw new Zend_Service_Exception($options['page'] . ' is not valid for the "page" option');
         }
 
         // validate extras, which are delivered in csv format
@@ -388,7 +455,7 @@ class Zend_Service_Flickr
      *
      * @param  array $options
      * @return void
-     * @throws Zend\Service\Exception
+     * @throws Zend_Service_Exception
      */
     protected function _validateTagSearch(array $options)
     {
@@ -401,14 +468,30 @@ class Zend_Service_Flickr
 
         $this->_compareOptions($options, $validOptions);
 
-        $between = new Zend\Validator\Between(1, 500, true);
+        /**
+         * @see Zend_Validate_Between
+         */
+        require_once 'Zend/Validate/Between.php';
+        $between = new Zend_Validate_Between(1, 500, true);
         if (!$between->isValid($options['per_page'])) {
-            throw new Zend\Service\Exception($options['per_page'] . ' is not valid for the "per_page" option');
+            /**
+             * @see Zend_Service_Exception
+             */
+            require_once 'Zend/Service/Exception.php';
+            throw new Zend_Service_Exception($options['per_page'] . ' is not valid for the "per_page" option');
         }
 
-        $int = new Zend\Validator\Int();
+        /**
+         * @see Zend_Validate_Int
+         */
+        require_once 'Zend/Validate/Int.php';
+        $int = new Zend_Validate_Int();
         if (!$int->isValid($options['page'])) {
-            throw new Zend\Service\Exception($options['page'] . ' is not valid for the "page" option');
+            /**
+             * @see Zend_Service_Exception
+             */
+            require_once 'Zend/Service/Exception.php';
+            throw new Zend_Service_Exception($options['page'] . ' is not valid for the "page" option');
         }
 
         // validate extras, which are delivered in csv format
@@ -430,7 +513,7 @@ class Zend_Service_Flickr
     * Validate Group Search Options
     *
     * @param  array $options
-    * @throws Zend\Service\Exception
+    * @throws Zend_Service_Exception
     * @return void
     */
     protected function _validateGroupPoolGetPhotos(array $options)
@@ -439,15 +522,31 @@ class Zend_Service_Flickr
 
         $this->_compareOptions($options, $validOptions);
 
-        $between = new Zend\Validator\Between(1, 500, true);
+        /**
+        * @see Zend_Validate_Between
+        */
+        require_once 'Zend/Validate/Between.php';
+        $between = new Zend_Validate_Between(1, 500, true);
         if (!$between->isValid($options['per_page'])) {
-            throw new Zend\Service\Exception($options['per_page'] . ' is not valid for the "per_page" option');
+            /**
+            * @see Zend_Service_Exception
+            */
+            require_once 'Zend/Service/Exception.php';
+            throw new Zend_Service_Exception($options['per_page'] . ' is not valid for the "per_page" option');
         }
 
-        $int = new Zend\Validator\Int();
+        /**
+        * @see Zend_Validate_Int
+        */
+        require_once 'Zend/Validate/Int.php';
+        $int = new Zend_Validate_Int();
 
         if (!$int->isValid($options['page'])) {
-            throw new Zend\Service\Exception($options['page'] . ' is not valid for the "page" option');
+            /**
+            * @see Zend_Service_Exception
+            */
+            require_once 'Zend/Service/Exception.php';
+            throw new Zend_Service_Exception($options['page'] . ' is not valid for the "page" option');
         }
 
         // validate extras, which are delivered in csv format
@@ -469,14 +568,18 @@ class Zend_Service_Flickr
      *
      * @param  DOMDocument $dom
      * @return void
-     * @throws Zend\Service\Exception
+     * @throws Zend_Service_Exception
      */
     protected static function _checkErrors(DOMDocument $dom)
     {
         if ($dom->documentElement->getAttribute('stat') === 'fail') {
             $xpath = new DOMXPath($dom);
             $err = $xpath->query('//err')->item(0);
-            throw new Zend\Service\Exception('Search failed due to error: ' . $err->getAttribute('msg')
+            /**
+             * @see Zend_Service_Exception
+             */
+            require_once 'Zend/Service/Exception.php';
+            throw new Zend_Service_Exception('Search failed due to error: ' . $err->getAttribute('msg')
                                            . ' (error #' . $err->getAttribute('code') . ')');
         }
     }
@@ -505,13 +608,17 @@ class Zend_Service_Flickr
      * @param  array $options      User options
      * @param  array $validOptions Valid options
      * @return void
-     * @throws Zend\Service\Exception
+     * @throws Zend_Service_Exception
      */
     protected function _compareOptions(array $options, array $validOptions)
     {
         $difference = array_diff(array_keys($options), $validOptions);
         if ($difference) {
-            throw new Zend\Service\Exception('The following parameters are invalid: ' . implode(',', $difference));
+            /**
+             * @see Zend_Service_Exception
+             */
+            require_once 'Zend/Service/Exception.php';
+            throw new Zend_Service_Exception('The following parameters are invalid: ' . implode(',', $difference));
         }
     }
 }

@@ -17,31 +17,31 @@
  * @subpackage Adapter
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * Zend_Db_Exception
  */
-namespace Zend\Db\Adapter;
+require_once 'Zend/Db/Exception.php';
 
 /**
- * @uses       \Zend\Db\Exception
  * @category   Zend
  * @package    Zend_Db
  * @subpackage Adapter
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Exception extends \Zend\Db\Exception
+class Zend_Db_Adapter_Exception extends Zend_Db_Exception
 {
     protected $_chainedException = null;
 
-    public function __construct($message = '', $code = 0, \Exception $e = null)
+    public function __construct($message = '', $code = 0, Exception $e = null)
     {
         if ($e && (0 === $code)) {
             $code = $e->getCode();
         }
-        parent::__construct($message, (int) $code, $e);
+        parent::__construct($message, $code, $e);
     }
 
     public function hasChainedException()

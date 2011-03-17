@@ -16,39 +16,38 @@
  * @package    Zend_Tool
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Tool\Project\Provider;
-
-use Zend\Tool\Project\Profile\Profile as ProjectProfile;
+/** @see Zend_Tool_Project_Provider_Abstract */
+require_once 'Zend/Tool/Project/Provider/Abstract.php';
 
 /**
- * @uses       \Zend\Tool\Project\Provider\AbstractProvider
- * @uses       \Zend\Tool\Project\Provider\Exception
  * @category   Zend
  * @package    Zend_Tool
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class ProjectProvider extends AbstractProvider
+class Zend_Tool_Project_Provider_ProjectProvider extends Zend_Tool_Project_Provider_Abstract
 {
 
     /**
      * createResource()
      *
-     * @param \Zend\Tool\Project\Profile\Profile $profile
+     * @param Zend_Tool_Project_Profile $profile
      * @param string $projectProviderName
      * @param string $actionNames
-     * @return \Zend\Tool\Project\Profile\Resource\Resource
+     * @return Zend_Tool_Project_Profile_Resource
      */
-    public static function createResource(ProjectProfile $profile, $projectProviderName, $actionNames = null)
+    public static function createResource(Zend_Tool_Project_Profile $profile, $projectProviderName, $actionNames = null)
     {
 
         if (!is_string($projectProviderName)) {
-            throw new Exception\RuntimeException('Zend\Tool\Project\Provider\Controller::createResource() expects \"projectProviderName\" is the name of a project provider resource to create.');
+            /**
+             * @see Zend_Tool_Project_Provider_Exception
+             */
+            require_once 'Zend/Tool/Project/Provider/Exception.php';
+            throw new Zend_Tool_Project_Provider_Exception('Zend_Tool_Project_Provider_Controller::createResource() expects \"projectProviderName\" is the name of a project provider resource to create.');
         }
 
         $profileSearchParams = array();
@@ -74,7 +73,7 @@ class ProjectProvider extends AbstractProvider
      *
      * @var string       $name            class name for new Zend_Tool Project Provider
      * @var array|string $actions         list of provider methods
-     * @throws \Zend\Tool\Project\Provider\Exception
+     * @throws Zend_Tool_Project_Provider_Exception
      */
     public function create($name, $actions = null)
     {

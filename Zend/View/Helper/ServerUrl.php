@@ -17,12 +17,8 @@
  * @subpackage Helper
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
-
-/**
- * @namespace
- */
-namespace Zend\View\Helper;
 
 /**
  * Helper for returning the current server URL (optionally with request URI)
@@ -33,7 +29,7 @@ namespace Zend\View\Helper;
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class ServerUrl extends AbstractHelper
+class Zend_View_Helper_ServerUrl
 {
     /**
      * Scheme
@@ -56,9 +52,13 @@ class ServerUrl extends AbstractHelper
      */
     public function __construct()
     {
-        if (isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == 'on' || $_SERVER['HTTPS'] === true)) {
-            $scheme = 'https';
-        } else {
+        switch (true) {
+            case (isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == 'on' || $_SERVER['HTTPS'] === true)):
+            case (isset($_SERVER['HTTP_SCHEME']) && ($_SERVER['HTTP_SCHEME'] == 'https')):
+            case (isset($_SERVER['SERVER_PORT']) && ($_SERVER['SERVER_PORT'] == 443)):
+                $scheme = 'https';
+                break;
+            default:
             $scheme = 'http';
         }
         $this->setScheme($scheme);
@@ -89,7 +89,7 @@ class ServerUrl extends AbstractHelper
      *                                     is to not append any path.
      * @return string                      server url
      */
-    public function direct($requestUri = null)
+    public function serverUrl($requestUri = null)
     {
         if ($requestUri === true) {
             $path = $_SERVER['REQUEST_URI'];
@@ -116,7 +116,7 @@ class ServerUrl extends AbstractHelper
      * Sets host
      *
      * @param  string $host                new host
-     * @return \Zend\View\Helper\ServerUrl  fluent interface, returns self
+     * @return Zend_View_Helper_ServerUrl  fluent interface, returns self
      */
     public function setHost($host)
     {
@@ -138,7 +138,7 @@ class ServerUrl extends AbstractHelper
      * Sets scheme (typically http or https)
      *
      * @param  string $scheme              new scheme (typically http or https)
-     * @return \Zend\View\Helper\ServerUrl  fluent interface, returns self
+     * @return Zend_View_Helper_ServerUrl  fluent interface, returns self
      */
     public function setScheme($scheme)
     {

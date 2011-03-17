@@ -16,24 +16,24 @@
  * @package    Zend_View
  * @subpackage Helper
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @version    $Id$
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * @namespace
- */
-namespace Zend\View\Helper\Placeholder\Container;
+
+/** Zend_View_Exception */
+require_once 'Zend/View/Exception.php';
+
 
 /**
  * Exception for Zend_View_Helper_Placeholder_Container class.
  *
- * @uses       \Zend\View\Exception
  * @category   Zend
  * @package    Zend_View
  * @subpackage Helper
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Exception extends \Zend\View\Exception
+class Zend_View_Helper_Placeholder_Container_Exception extends Zend_View_Exception
 {
 }

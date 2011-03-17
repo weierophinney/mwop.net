@@ -19,10 +19,8 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * @namespace
- */
-namespace Zend\Form\Decorator;
+/** Zend_Form_Decorator_Abstract */
+require_once 'Zend/Form/Decorator/Abstract.php';
 
 /**
  * Zend_Form_Decorator_Label
@@ -38,16 +36,14 @@ namespace Zend\Form\Decorator;
  *
  * Any other options passed will be used as HTML attributes of the label tag.
  *
- * @uses       \Zend\Form\Decorator\AbstractDecorator
- * @uses       \Zend\Form\Decorator\HtmlTag
- * @uses       \Zend\Form\Decorator\Exception
  * @category   Zend
  * @package    Zend_Form
  * @subpackage Decorator
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
-class Label extends AbstractDecorator
+class Zend_Form_Decorator_Label extends Zend_Form_Decorator_Abstract
 {
     /**
      * Default placement: prepend
@@ -62,10 +58,16 @@ class Label extends AbstractDecorator
     protected $_tag;
 
     /**
+     * Class for the HTML tag with which to surround label
+     * @var string
+     */
+    protected $_tagClass;
+
+    /**
      * Set element ID
      *
      * @param  string $id
-     * @return \Zend\Form\Decorator\Label
+     * @return Zend_Form_Decorator_Label
      */
     public function setId($id)
     {
@@ -98,7 +100,7 @@ class Label extends AbstractDecorator
      * Set HTML tag with which to surround label
      *
      * @param  string $tag
-     * @return \Zend\Form\Decorator\Label
+     * @return Zend_Form_Decorator_Label
      */
     public function setTag($tag)
     {
@@ -130,6 +132,43 @@ class Label extends AbstractDecorator
         }
 
         return $this->_tag;
+    }
+
+    /**
+     * Set the class to apply to the HTML tag with which to surround label
+     *
+     * @param  string $tagClass
+     * @return Zend_Form_Decorator_Label
+     */
+    public function setTagClass($tagClass)
+    {
+        if (empty($tagClass)) {
+            $this->_tagClass = null;
+        } else {
+            $this->_tagClass = (string) $tagClass;
+        }
+
+        $this->removeOption('tagClass');
+
+        return $this;
+    }
+
+    /**
+     * Get the class to apply to the HTML tag, if any, with which to surround label
+     *
+     * @return void
+     */
+    public function getTagClass()
+    {
+        if (null === $this->_tagClass) {
+            $tagClass = $this->getOption('tagClass');
+            if (null !== $tagClass) {
+                $this->removeOption('tagClass');
+                $this->setTagClass($tagClass);
+            }
+        }
+
+        return $this->_tagClass;
     }
 
     /**
@@ -194,7 +233,7 @@ class Label extends AbstractDecorator
      * @param  string $method
      * @param  array $args
      * @return mixed
-     * @throws \Zend\Form\Decorator\Exception for unsupported methods
+     * @throws Zend_Form_Exception for unsupported methods
      */
     public function __call($method, $args)
     {
@@ -213,13 +252,15 @@ class Label extends AbstractDecorator
                     $key = 'optional' . $position;
                     break;
                 default:
-                    throw new Exception\BadMethodCallException(sprintf('Invalid method "%s" called in Label decorator, and detected as type %s', $method, $type));
+                    require_once 'Zend/Form/Exception.php';
+                    throw new Zend_Form_Exception(sprintf('Invalid method "%s" called in Label decorator, and detected as type %s', $method, $type));
             }
 
             switch ($head) {
                 case 'set':
                     if (0 === count($args)) {
-                        throw new Exception\InvalidArgumentException(sprintf('Method "%s" requires at least one argument; none provided', $method));
+                        require_once 'Zend/Form/Exception.php';
+                        throw new Zend_Form_Exception(sprintf('Method "%s" requires at least one argument; none provided', $method));
                     }
                     $value = array_shift($args);
                     $this->$key = $value;
@@ -237,7 +278,8 @@ class Label extends AbstractDecorator
             }
         }
 
-        throw new Exception\BadMethodCallException(sprintf('Invalid method "%s" called in Label decorator', $method));
+        require_once 'Zend/Form/Exception.php';
+        throw new Zend_Form_Exception(sprintf('Invalid method "%s" called in Label decorator', $method));
     }
 
     /**
@@ -298,6 +340,7 @@ class Label extends AbstractDecorator
         $separator = $this->getSeparator();
         $placement = $this->getPlacement();
         $tag       = $this->getTag();
+        $tagClass  = $this->getTagClass();
         $id        = $this->getId();
         $class     = $this->getClass();
         $options   = $this->getOptions();
@@ -309,15 +352,22 @@ class Label extends AbstractDecorator
 
         if (!empty($label)) {
             $options['class'] = $class;
-            $label = $view->broker('formLabel')->direct($element->getFullyQualifiedName(), trim($label), $options);
+            $label = $view->formLabel($element->getFullyQualifiedName(), trim($label), $options);
         } else {
             $label = '&#160;';
         }
 
         if (null !== $tag) {
-            $decorator = new HtmlTag();
-            $decorator->setOptions(array('tag' => $tag,
-                                         'id'  => $id . '-label'));
+            require_once 'Zend/Form/Decorator/HtmlTag.php';
+            $decorator = new Zend_Form_Decorator_HtmlTag();
+            if (null !== $this->_tagClass) {
+                $decorator->setOptions(array('tag'   => $tag,
+                                             'id'    => $id . '-label',
+                                             'class' => $tagClass));
+            } else {
+                $decorator->setOptions(array('tag'   => $tag,
+                                             'id'    => $id . '-label'));
+            }
 
             $label = $decorator->render($label);
         }

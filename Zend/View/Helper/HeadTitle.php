@@ -16,28 +16,23 @@
  * @package    Zend_View
  * @subpackage Helper
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @version    $Id$
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * @namespace
- */
-namespace Zend\View\Helper;
-use Zend;
+/** Zend_View_Helper_Placeholder_Container_Standalone */
+require_once 'Zend/View/Helper/Placeholder/Container/Standalone.php';
 
 /**
  * Helper for setting and retrieving title element for HTML head
  *
- * @uses       \Zend\Registry
- * @uses       \Zend\View\Exception
- * @uses       \Zend\View\Helper\Placeholder\Container\AbstractContainer
- * @uses       \Zend\View\Helper\Placeholder\Container\Standalone
+ * @uses       Zend_View_Helper_Placeholder_Container_Standalone
  * @package    Zend_View
  * @subpackage Helper
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class HeadTitle extends Placeholder\Container\Standalone
+class Zend_View_Helper_HeadTitle extends Zend_View_Helper_Placeholder_Container_Standalone
 {
     /**
      * Registry key for placeholder
@@ -54,7 +49,7 @@ class HeadTitle extends Placeholder\Container\Standalone
     /**
      * Translation object
      *
-     * @var \Zend\Translator\Adapter\Adapter
+     * @var Zend_Translate_Adapter
      */
     protected $_translator;
 
@@ -70,21 +65,20 @@ class HeadTitle extends Placeholder\Container\Standalone
      *
      * @param  string $title
      * @param  string $setType
-     * @param  string $separator
-     * @return \Zend\View\Helper\HeadTitle
+     * @return Zend_View_Helper_HeadTitle
      */
-    public function direct($title = null, $setType = null)
+    public function headTitle($title = null, $setType = null)
     {
-        if ($setType === null && is_null($this->getDefaultAttachOrder())) {
-            $setType = Placeholder\Container\AbstractContainer::APPEND;
-        } elseif ($setType === null && !is_null($this->getDefaultAttachOrder())) {
-            $setType = $this->getDefaultAttachOrder();
+        if (null === $setType) {
+            $setType = (null === $this->getDefaultAttachOrder())
+                     ? Zend_View_Helper_Placeholder_Container_Abstract::APPEND
+                     : $this->getDefaultAttachOrder();
         }
         $title = (string) $title;
         if ($title !== '') {
-            if ($setType == Placeholder\Container\AbstractContainer::SET) {
+            if ($setType == Zend_View_Helper_Placeholder_Container_Abstract::SET) {
                 $this->set($title);
-            } elseif ($setType == Placeholder\Container\AbstractContainer::PREPEND) {
+            } elseif ($setType == Zend_View_Helper_Placeholder_Container_Abstract::PREPEND) {
                 $this->prepend($title);
             } else {
                 $this->append($title);
@@ -102,13 +96,16 @@ class HeadTitle extends Placeholder\Container\Standalone
     public function setDefaultAttachOrder($setType)
     {
         if (!in_array($setType, array(
-            Placeholder\Container\AbstractContainer::APPEND,
-            Placeholder\Container\AbstractContainer::SET,
-            Placeholder\Container\AbstractContainer::PREPEND
+            Zend_View_Helper_Placeholder_Container_Abstract::APPEND,
+            Zend_View_Helper_Placeholder_Container_Abstract::SET,
+            Zend_View_Helper_Placeholder_Container_Abstract::PREPEND
         ))) {
-            throw new Zend\View\Exception("You must use a valid attach order: 'PREPEND', 'APPEND' or 'SET'");
+            require_once 'Zend/View/Exception.php';
+            throw new Zend_View_Exception("You must use a valid attach order: 'PREPEND', 'APPEND' or 'SET'");
         }
+
         $this->_defaultAttachOrder = $setType;
+        return $this;
     }
 
     /**
@@ -124,24 +121,25 @@ class HeadTitle extends Placeholder\Container\Standalone
     /**
      * Sets a translation Adapter for translation
      *
-     * @param  Zend_Translate|\Zend\Translator\Adapter\Adapter $translate
-     * @return \Zend\View\Helper\HeadTitle
+     * @param  Zend_Translate|Zend_Translate_Adapter $translate
+     * @return Zend_View_Helper_HeadTitle
      */
     public function setTranslator($translate)
     {
-        if ($translate instanceof \Zend\Translator\Adapter) {
+        if ($translate instanceof Zend_Translate_Adapter) {
             $this->_translator = $translate;
-        } elseif ($translate instanceof \Zend\Translator\Translator) {
+        } elseif ($translate instanceof Zend_Translate) {
             $this->_translator = $translate->getAdapter();
         } else {
-            $e = new \Zend\View\Exception("You must set an instance of Zend_Translate or Zend_Translate_Adapter");
+            require_once 'Zend/View/Exception.php';
+            $e = new Zend_View_Exception("You must set an instance of Zend_Translate or Zend_Translate_Adapter");
             $e->setView($this->view);
             throw $e;
         }
         return $this;
     }
 
-    /*
+    /**
      * Retrieve translation object
      *
      * If none is currently registered, attempts to pull it from the registry
@@ -152,8 +150,9 @@ class HeadTitle extends Placeholder\Container\Standalone
     public function getTranslator()
     {
         if (null === $this->_translator) {
-            if (\Zend\Registry::isRegistered('Zend_Translate')) {
-                $this->setTranslator(\Zend\Registry::get('Zend_Translate'));
+            require_once 'Zend/Registry.php';
+            if (Zend_Registry::isRegistered('Zend_Translate')) {
+                $this->setTranslator(Zend_Registry::get('Zend_Translate'));
             }
         }
         return $this->_translator;
@@ -162,7 +161,7 @@ class HeadTitle extends Placeholder\Container\Standalone
     /**
      * Enables translation
      *
-     * @return \Zend\View\Helper\HeadTitle
+     * @return Zend_View_Helper_HeadTitle
      */
     public function enableTranslation()
     {
@@ -173,7 +172,7 @@ class HeadTitle extends Placeholder\Container\Standalone
     /**
      * Disables translation
      *
-     * @return \Zend\View\Helper\HeadTitle
+     * @return Zend_View_Helper_HeadTitle
      */
     public function disableTranslation()
     {

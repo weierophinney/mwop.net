@@ -17,35 +17,37 @@
  * @subpackage Resource
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Application_Resource_ResourceAbstract
  */
-namespace Zend\Application\Resource;
+require_once 'Zend/Application/Resource/ResourceAbstract.php';
+
 
 /**
  * Resource for settings Dojo options
  *
- * @uses       \Zend\Application\Resource\AbstractResource
- * @uses       \Zend\Dojo\Dojo
+ * @uses       Zend_Application_Resource_ResourceAbstract
  * @category   Zend
  * @package    Zend_Application
  * @subpackage Resource
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Dojo extends AbstractResource
+class Zend_Application_Resource_Dojo
+    extends Zend_Application_Resource_ResourceAbstract
 {
     /**
-     * @var \Zend\Dojo\View\Helper\Dojo\Container
+     * @var Zend_Dojo_View_Helper_Dojo_Container
      */
     protected $_dojo;
 
     /**
      * Defined by Zend_Application_Resource_Resource
      *
-     * @return \Zend\Dojo\View\Helper\Dojo\Container
+     * @return Zend_Dojo_View_Helper_Dojo_Container
      */
     public function init()
     {
@@ -63,7 +65,7 @@ class Dojo extends AbstractResource
             $this->getBootstrap()->bootstrap('view');
             $view = $this->getBootstrap()->view;
 
-            \Zend\Dojo\Dojo::enableView($view);
+            Zend_Dojo::enableView($view);
             $view->dojo()->setOptions($this->getOptions());
 
             $this->_dojo = $view->dojo();

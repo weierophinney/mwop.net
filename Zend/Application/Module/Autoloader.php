@@ -16,35 +16,32 @@
  * @package    Zend_Application
  * @subpackage Module
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @version    $Id$
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * @namespace
- */
-namespace Zend\Application\Module;
-
-use Zend\Loader\ResourceAutoloader;
+/** @see Zend_Loader_Autoloader_Resource */
+require_once 'Zend/Loader/Autoloader/Resource.php';
 
 /**
  * Resource loader for application module classes
  *
- * @uses       \Zend\Loader\ResourceAutoloader
+ * @uses       Zend_Loader_Autoloader_Resource
  * @category   Zend
  * @package    Zend_Application
  * @subpackage Module
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Autoloader extends ResourceAutoloader
+class Zend_Application_Module_Autoloader extends Zend_Loader_Autoloader_Resource
 {
     /**
      * Constructor
      *
-     * @param  array|\Zend\Config\Config $options
+     * @param  array|Zend_Config $options
      * @return void
      */
-    public function __construct($options = null)
+    public function __construct($options)
     {
         parent::__construct($options);
         $this->initDefaultResourceTypes();
@@ -60,11 +57,11 @@ class Autoloader extends ResourceAutoloader
         $basePath = $this->getBasePath();
         $this->addResourceTypes(array(
             'dbtable' => array(
-                'namespace' => 'Model\\DbTable',
+                'namespace' => 'Model_DbTable',
                 'path'      => 'models/DbTable',
             ),
             'mappers' => array(
-                'namespace' => 'Model\\Mapper',
+                'namespace' => 'Model_Mapper',
                 'path'      => 'models/mappers',
             ),
             'form'    => array(
@@ -84,11 +81,11 @@ class Autoloader extends ResourceAutoloader
                 'path'      => 'services',
             ),
             'viewhelper' => array(
-                'namespace' => 'View\\Helper',
+                'namespace' => 'View_Helper',
                 'path'      => 'views/helpers',
             ),
             'viewfilter' => array(
-                'namespace' => 'View\\Filter',
+                'namespace' => 'View_Filter',
                 'path'      => 'views/filters',
             ),
         ));

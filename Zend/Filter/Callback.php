@@ -16,22 +16,21 @@
  * @package    Zend_Filter
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Filter_Interface
  */
-namespace Zend\Filter;
+require_once 'Zend/Filter/Interface.php';
 
 /**
- * @uses       Zend\Filter\Exception
- * @uses       Zend\Filter\AbstractFilter
  * @category   Zend
  * @package    Zend_Filter
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Callback extends AbstractFilter
+class Zend_Filter_Callback implements Zend_Filter_Interface
 {
     /**
      * Callback in a call_user_func format
@@ -55,7 +54,7 @@ class Callback extends AbstractFilter
      */
     public function __construct($options)
     {
-        if ($options instanceof \Zend\Config\Config) {
+        if ($options instanceof Zend_Config) {
             $options = $options->toArray();
         } else if (!is_array($options) || !array_key_exists('callback', $options)) {
             $options          = func_get_args();
@@ -68,7 +67,8 @@ class Callback extends AbstractFilter
         }
 
         if (!array_key_exists('callback', $options)) {
-            throw new Exception\InvalidArgumentException('Missing callback to use');
+            require_once 'Zend/Filter/Exception.php';
+            throw new Zend_Filter_Exception('Missing callback to use');
         }
 
         $this->setCallback($options['callback']);
@@ -96,7 +96,8 @@ class Callback extends AbstractFilter
     public function setCallback($callback, $options = null)
     {
         if (!is_callable($callback)) {
-            throw new Exception\InvalidArgumentException('Callback can not be accessed');
+            require_once 'Zend/Filter/Exception.php';
+            throw new Zend_Filter_Exception('Callback can not be accessed');
         }
 
         $this->_callback = $callback;
@@ -118,7 +119,7 @@ class Callback extends AbstractFilter
      * Sets new default options to the callback filter
      *
      * @param mixed $options Default options to set
-     * @return \Zend\Filter\Callback
+     * @return Zend_Filter_Callback
      */
     public function setOptions($options)
     {
@@ -129,8 +130,8 @@ class Callback extends AbstractFilter
     /**
      * Calls the filter per callback
      *
-     * @param  mixed $value Options for the set callback
-     * @return mixed Result from the filter which was callbacked
+     * @param mixed $value Options for the set callback
+     * @return mixed       Result from the filter which was callbacked
      */
     public function filter($value)
     {

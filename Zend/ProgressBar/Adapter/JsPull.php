@@ -14,28 +14,30 @@
  * @package    Zend_ProgressBar
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Json
  */
-namespace Zend\ProgressBar\Adapter;
+require_once 'Zend/Json.php';
 
-use Zend\Json\Json;
+/**
+ * @see Zend_ProgressBar_Adapter
+ */
+require_once 'Zend/ProgressBar/Adapter.php';
 
 /**
  * Zend_ProgressBar_Adapter_JsPull offers a simple method for updating a
  * progressbar in a browser.
  *
- * @uses      \Zend\Json\Json
- * @uses      \Zend\ProgressBar\Adapter\Adapter
  * @category  Zend
  * @package   Zend_ProgressBar
  * @uses      Zend_ProgressBar_Adapter_Interface
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd     New BSD License
  */
-class JsPull extends AbstractAdapter
+class Zend_ProgressBar_Adapter_JsPull extends Zend_ProgressBar_Adapter
 {
     /**
      * Wether to exit after json data send or not
@@ -48,7 +50,7 @@ class JsPull extends AbstractAdapter
      * Set wether to exit after json data send or not
      *
      * @param  boolean $exitAfterSend
-     * @return \Zend\ProgressBar\Adapter\JsPull
+     * @return Zend_ProgressBar_Adapter_JsPull
      */
     public function setExitAfterSend($exitAfterSend)
     {
@@ -78,7 +80,7 @@ class JsPull extends AbstractAdapter
             'finished'      => false
         );
 
-        $data = Json::encode($arguments);
+        $data = Zend_Json::encode($arguments);
 
         // Output the data
         $this->_outputData($data);
@@ -91,7 +93,7 @@ class JsPull extends AbstractAdapter
      */
     public function finish()
     {
-        $data = Json::encode(array('finished' => true));
+        $data = Zend_Json::encode(array('finished' => true));
 
         $this->_outputData($data);
     }

@@ -13,28 +13,27 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    Zend_PDF
- * @subpackage Zend_PDF_Action
+ * @package    Zend_Pdf
+ * @subpackage Actions
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Pdf\Action;
+/** Zend_Pdf_Action */
+require_once 'Zend/Pdf/Action.php';
+
 
 /**
  * PDF 'Controls the playing of multimedia content' action
  * PDF 1.5+ feature
  *
- * @uses       \Zend\Pdf\Action\AbstractAction
- * @package    Zend_PDF
- * @subpackage Zend_PDF_Action
+ * @package    Zend_Pdf
+ * @subpackage Actions
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Rendition extends AbstractAction
+class Zend_Pdf_Action_Rendition extends Zend_Pdf_Action
 {
 }
 

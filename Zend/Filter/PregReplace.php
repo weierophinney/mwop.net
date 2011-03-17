@@ -16,22 +16,21 @@
  * @package    Zend_Filter
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Filter_Interface
  */
-namespace Zend\Filter;
+require_once 'Zend/Filter/Interface.php';
 
 /**
- * @uses       Zend\Filter\Exception
- * @uses       Zend\Filter\AbstractFilter
  * @category   Zend
  * @package    Zend_Filter
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class PregReplace extends AbstractFilter
+class Zend_Filter_PregReplace implements Zend_Filter_Interface
 {
     /**
      * Pattern to match
@@ -87,7 +86,7 @@ class PregReplace extends AbstractFilter
      */
     public function __construct($options = null)
     {
-        if ($options instanceof \Zend\Config\Config) {
+        if ($options instanceof Zend_Config) {
             $options = $options->toArray();
         } else if (!is_array($options)) {
             $options = func_get_args();
@@ -116,7 +115,7 @@ class PregReplace extends AbstractFilter
      * Set the match pattern for the regex being called within filter()
      *
      * @param mixed $match - same as the first argument of preg_replace
-     * @return \Zend\Filter\PregReplace
+     * @return Zend_Filter_PregReplace
      */
     public function setMatchPattern($match)
     {
@@ -138,7 +137,7 @@ class PregReplace extends AbstractFilter
      * Set the Replacement pattern/string for the preg_replace called in filter
      *
      * @param mixed $replacement - same as the second argument of preg_replace
-     * @return \Zend\Filter\PregReplace
+     * @return Zend_Filter_PregReplace
      */
     public function setReplacement($replacement)
     {
@@ -165,9 +164,11 @@ class PregReplace extends AbstractFilter
     public function filter($value)
     {
         if ($this->_matchPattern == null) {
-            throw new Exception\RuntimeException(get_class($this) . ' does not have a valid MatchPattern set.');
+            require_once 'Zend/Filter/Exception.php';
+            throw new Zend_Filter_Exception(get_class($this) . ' does not have a valid MatchPattern set.');
         }
 
         return preg_replace($this->_matchPattern, $this->_replacement, $value);
     }
+
 }

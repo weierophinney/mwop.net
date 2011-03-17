@@ -17,22 +17,22 @@
  * @subpackage Table
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * Zend_Db_Exception
  */
-namespace Zend\Db\Table;
+require_once 'Zend/Db/Exception.php';
 
 /**
- * @uses       \Zend\Db\Exception
  * @category   Zend
  * @package    Zend_Db
  * @subpackage Table
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Exception extends \Zend\Db\Exception
+class Zend_Db_Table_Exception extends Zend_Db_Exception
 {
 }
 

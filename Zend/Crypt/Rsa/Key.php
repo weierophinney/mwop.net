@@ -17,21 +17,16 @@
  * @subpackage Rsa
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
- */
-namespace Zend\Crypt\Rsa;
-
-/**
- * @uses       Zend\Crypt\Exception
  * @category   Zend
  * @package    Zend_Crypt
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Key implements \Countable
+class Zend_Crypt_Rsa_Key implements Countable
 {
     /**
      * @var string
@@ -64,7 +59,7 @@ class Key implements \Countable
 
     /**
      * @return string
-     * @throws Zend\Crypt\Exception
+     * @throws Zend_Crypt_Exception
      */
     public function toString()
     {
@@ -73,7 +68,11 @@ class Key implements \Countable
         } elseif (!empty($this->_certificateString)) {
             return $this->_certificateString;
         }
-        throw new \Zend\Crypt\Exception('No public key string representation is available');
+        /**
+         * @see Zend_Crypt_Exception
+         */
+        require_once 'Zend/Crypt/Exception.php';
+        throw new Zend_Crypt_Exception('No public key string representation is available');
     }
 
     /**

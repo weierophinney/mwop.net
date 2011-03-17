@@ -17,43 +17,42 @@
  * @subpackage Framework
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Tool_Project_Provider_Abstract
  */
-namespace Zend\Tool\Project\Provider;
-
-use Zend\Tool\Project\Profile\Profile as ProjectProfile;
+require_once 'Zend/Tool/Project/Provider/Abstract.php';
 
 /**
- * @uses       \Zend\Tool\Project\Provider\AbstractProvider
- * @uses       \Zend\Tool\Project\Provider\Exception
  * @category   Zend
  * @package    Zend_Tool
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class View extends AbstractProvider
+class Zend_Tool_Project_Provider_View extends Zend_Tool_Project_Provider_Abstract
 {
 
     /**
      * createResource()
      *
-     * @param \Zend\Tool\Project\Profile\Profile $profile
+     * @param Zend_Tool_Project_Profile $profile
      * @param string $actionName
      * @param string $controllerName
      * @param string $moduleName
-     * @return \Zend\Tool\Project\Profile\Resource\Resource
+     * @return Zend_Tool_Project_Profile_Resource
      */
-    public static function createResource(ProjectProfile $profile, $actionName, $controllerName, $moduleName = null)
+    public static function createResource(Zend_Tool_Project_Profile $profile, $actionName, $controllerName, $moduleName = null)
     {
         if (!is_string($actionName)) {
-            throw new Exception\RuntimeException('Zend_Tool_Project_Provider_View::createResource() expects \"actionName\" is the name of a controller resource to create.');
+            require_once 'Zend/Tool/Project/Provider/Exception.php';
+            throw new Zend_Tool_Project_Provider_Exception('Zend_Tool_Project_Provider_View::createResource() expects \"actionName\" is the name of a controller resource to create.');
         }
 
         if (!is_string($controllerName)) {
-            throw new Exception\RuntimeException('Zend_Tool_Project_Provider_View::createResource() expects \"controllerName\" is the name of a controller resource to create.');
+            require_once 'Zend/Tool/Project/Provider/Exception.php';
+            throw new Zend_Tool_Project_Provider_Exception('Zend_Tool_Project_Provider_View::createResource() expects \"controllerName\" is the name of a controller resource to create.');
         }
 
         $profileSearchParams = array();
@@ -69,7 +68,8 @@ class View extends AbstractProvider
         $profileSearchParams[] = 'viewScriptsDirectory';
 
         if (($viewScriptsDirectory = $profile->search($profileSearchParams, $noModuleSearch)) === false) {
-            throw new Exception\RuntimeException('This project does not have a viewScriptsDirectory resource.');
+            require_once 'Zend/Tool/Project/Provider/Exception.php';
+            throw new Zend_Tool_Project_Provider_Exception('This project does not have a viewScriptsDirectory resource.');
         }
 
         $profileSearchParams['viewControllerScriptsDirectory'] = array('forControllerName' => $controllerName);
@@ -94,7 +94,8 @@ class View extends AbstractProvider
     {
 
         if ($controllerName == '' || $actionNameOrSimpleName == '') {
-            throw new Exception\RuntimeException('ControllerName and/or ActionName are empty.');
+            require_once 'Zend/Tool/Project/Provider/Exception.php';
+            throw new Zend_Tool_Project_Provider_Exception('ControllerName and/or ActionName are empty.');
         }
 
         $profile = $this->_loadProfile();

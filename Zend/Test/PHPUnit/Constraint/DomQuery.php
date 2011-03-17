@@ -17,26 +17,26 @@
  * @subpackage PHPUnit
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Test\PHPUnit\Constraint;
+/** @see PHPUnit_Framework_Constraint */
+require_once 'PHPUnit/Framework/Constraint.php';
+
+/** @see Zend_Dom_Query */
+require_once 'Zend/Dom/Query.php';
 
 /**
  * Zend_Dom_Query-based PHPUnit Constraint
  *
  * @uses       PHPUnit_Framework_Constraint
- * @uses       \Zend\Dom\Query
- * @uses       \Zend\Test\PHPUnit\Constraint\Exception\ConstraintException
  * @category   Zend
  * @package    Zend_Test
  * @subpackage PHPUnit
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class DomQuery extends \PHPUnit_Framework_Constraint
+class Zend_Test_PHPUnit_Constraint_DomQuery extends PHPUnit_Framework_Constraint
 {
     /**#@+
      * Assertion type constants
@@ -124,7 +124,7 @@ class DomQuery extends \PHPUnit_Framework_Constraint
      * Whether or not path is a straight XPath expression
      *
      * @param  bool $flag
-     * @return \Zend\Test\PHPUnit\Constraint\DomQuery
+     * @return Zend_Test_PHPUnit_Constraint_DomQuery
      */
     public function setUseXpath($flag = true)
     {
@@ -152,13 +152,14 @@ class DomQuery extends \PHPUnit_Framework_Constraint
         }
 
         if (!in_array($assertType, $this->_assertTypes)) {
-            throw new Exception\ConstraintException(sprintf('Invalid assertion type "%s" provided to %s constraint', $assertType, __CLASS__));
+            require_once 'Zend/Test/PHPUnit/Constraint/Exception.php';
+            throw new Zend_Test_PHPUnit_Constraint_Exception(sprintf('Invalid assertion type "%s" provided to %s constraint', $assertType, __CLASS__));
         }
 
         $this->_assertType = $assertType;
 
-        $method   = $this->_useXpath ? 'queryXpath' : 'execute';
-        $domQuery = new \Zend\Dom\Query($other);
+        $method   = $this->_useXpath ? 'queryXpath' : 'query';
+        $domQuery = new Zend_Dom_Query($other);
         $domQuery->registerXpathNamespaces($this->_xpathNamespaces);
         $result   = $domQuery->$method($this->_path);
         $argv     = func_get_args();
@@ -167,7 +168,8 @@ class DomQuery extends \PHPUnit_Framework_Constraint
         switch ($assertType) {
             case self::ASSERT_CONTENT_CONTAINS:
                 if (3 > $argc) {
-                    throw new Exception\ConstraintException('No content provided against which to match');
+                    require_once 'Zend/Test/PHPUnit/Constraint/Exception.php';
+                    throw new Zend_Test_PHPUnit_Constraint_Exception('No content provided against which to match');
                 }
                 $this->_content = $content = $argv[2];
                 return ($this->_negate)
@@ -175,7 +177,8 @@ class DomQuery extends \PHPUnit_Framework_Constraint
                     : $this->_matchContent($result, $content);
             case self::ASSERT_CONTENT_REGEX:
                 if (3 > $argc) {
-                    throw new Exception\ConstraintException('No pattern provided against which to match');
+                    require_once 'Zend/Test/PHPUnit/Constraint/Exception.php';
+                    throw new Zend_Test_PHPUnit_Constraint_Exception('No pattern provided against which to match');
                 }
                 $this->_content = $content = $argv[2];
                 return ($this->_negate)
@@ -185,7 +188,8 @@ class DomQuery extends \PHPUnit_Framework_Constraint
             case self::ASSERT_CONTENT_COUNT_MIN:
             case self::ASSERT_CONTENT_COUNT_MAX:
                 if (3 > $argc) {
-                    throw new Exception\ConstraintException('No count provided against which to compare');
+                    require_once 'Zend/Test/PHPUnit/Constraint/Exception.php';
+                    throw new Zend_Test_PHPUnit_Constraint_Exception('No count provided against which to compare');
                 }
                 $this->_content = $content = $argv[2];
                 return $this->_countContent($result, $content, $assertType);
@@ -211,6 +215,7 @@ class DomQuery extends \PHPUnit_Framework_Constraint
      */
     public function fail($other, $description, $not = false)
     {
+        require_once 'Zend/Test/PHPUnit/Constraint/Exception.php';
         switch ($this->_assertType) {
             case self::ASSERT_CONTENT_CONTAINS:
                 $failure = 'Failed asserting node denoted by %s CONTAINS content "%s"';
@@ -255,7 +260,7 @@ class DomQuery extends \PHPUnit_Framework_Constraint
             $failure = $description . "\n" . $failure;
         }
 
-        throw new Exception\ConstraintException($failure);
+        throw new Zend_Test_PHPUnit_Constraint_Exception($failure);
     }
 
     /**
@@ -282,7 +287,7 @@ class DomQuery extends \PHPUnit_Framework_Constraint
     /**
      * Check to see if content is matched in selected nodes
      *
-     * @param  \Zend\Dom\NodeList $result
+     * @param  Zend_Dom_Query_Result $result
      * @param  string $match Content to match
      * @return bool
      */
@@ -307,7 +312,7 @@ class DomQuery extends \PHPUnit_Framework_Constraint
     /**
      * Check to see if content is NOT matched in selected nodes
      *
-     * @param  \Zend\Dom\NodeList $result
+     * @param  Zend_Dom_Query_Result $result
      * @param  string $match
      * @return bool
      */
@@ -330,7 +335,7 @@ class DomQuery extends \PHPUnit_Framework_Constraint
     /**
      * Check to see if content is matched by regex in selected nodes
      *
-     * @param  \Zend\Dom\NodeList $result
+     * @param  Zend_Dom_Query_Result $result
      * @param  string $pattern
      * @return bool
      */
@@ -353,7 +358,7 @@ class DomQuery extends \PHPUnit_Framework_Constraint
     /**
      * Check to see if content is NOT matched by regex in selected nodes
      *
-     * @param  \Zend\Dom\NodeList $result
+     * @param  Zend_Dom_Query_Result $result
      * @param  string $pattern
      * @return bool
      */
@@ -376,7 +381,7 @@ class DomQuery extends \PHPUnit_Framework_Constraint
     /**
      * Determine if content count matches criteria
      *
-     * @param  \Zend\Dom\NodeList $result
+     * @param  Zend_Dom_Query_Result $result
      * @param  int $test Value against which to test
      * @param  string $type assertion type
      * @return boolean
@@ -405,9 +410,9 @@ class DomQuery extends \PHPUnit_Framework_Constraint
      * @param  DOMNode $node
      * @return string
      */
-    protected function _getNodeContent(\DOMNode $node)
+    protected function _getNodeContent(DOMNode $node)
     {
-        if ($node instanceof \DOMAttr) {
+        if ($node instanceof DOMAttr) {
             return $node->value;
         } else {
             $doc     = $node->ownerDocument;

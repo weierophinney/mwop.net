@@ -17,13 +17,8 @@
  * @subpackage Framework
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
-
-/**
- * @namespace
- */
-namespace Zend\Tool\Project\Context\Zf;
-use Zend\Tool\Project\Context\Exception;
 
 /**
  * This class is the front most class for utilizing Zend_Tool_Project
@@ -31,17 +26,12 @@ use Zend\Tool\Project\Context\Exception;
  * A profile is a hierarchical set of resources that keep track of
  * items within a specific project.
  *
- * @uses       \Zend\Application\Application
- * @uses       \Zend\CodeGenerator\Php\PhpClass
- * @uses       \Zend\CodeGenerator\Php\PhpFile
- * @uses       \Zend\Tool\Project\Context\Filesystem\File
- * @uses       \Zend\Tool\Project\Exception
  * @category   Zend
  * @package    Zend_Tool
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class BootstrapFile extends \Zend\Tool\Project\Context\Filesystem\File
+class Zend_Tool_Project_Context_Zf_BootstrapFile extends Zend_Tool_Project_Context_Filesystem_File
 {
 
     /**
@@ -50,17 +40,17 @@ class BootstrapFile extends \Zend\Tool\Project\Context\Filesystem\File
     protected $_filesystemName = 'Bootstrap.php';
 
     /**
-     * @var \Zend\Tool\Project\Profile\Resource\Resource
+     * @var Zend_Tool_Project_Profile_Resource
      */
     protected $_applicationConfigFile = null;
-    
+
     /**
-     * @var \Zend\Tool\Project\Profile\Resource\Resource
+     * @var Zend_Tool_Project_Profile_Resource
      */
     protected $_applicationDirectory = null;
-    
+
     /**
-     * @var \Zend\Application\Application
+     * @var Zend_Application
      */
     protected $_applicationInstance = null;
 
@@ -83,7 +73,7 @@ class BootstrapFile extends \Zend\Tool\Project\Context\Filesystem\File
         $this->_applicationDirectory = $this->_resource->getProfile()->search('ApplicationDirectory');
 
         if (($this->_applicationConfigFile === false) || ($this->_applicationDirectory === false)) {
-            throw new Exception\RuntimeException('To use the BootstrapFile context, your project requires the use of both the "ApplicationConfigFile" and "ApplicationDirectory" contexts.');
+            throw new Exception('To use the BootstrapFile context, your project requires the use of both the "ApplicationConfigFile" and "ApplicationDirectory" contexts.');
         }
 
 
@@ -97,18 +87,18 @@ class BootstrapFile extends \Zend\Tool\Project\Context\Filesystem\File
     public function getContents()
     {
 
-        $codeGenFile = new \Zend\CodeGenerator\Php\PhpFile(array(
+        $codeGenFile = new Zend_CodeGenerator_Php_File(array(
             'classes' => array(
-                new \Zend\CodeGenerator\Php\PhpClass(array(
+                new Zend_CodeGenerator_Php_Class(array(
                     'name' => 'Bootstrap',
-                    'extendedClass' => '\Zend\Application\Bootstrap',
+                    'extendedClass' => 'Zend_Application_Bootstrap_Bootstrap',
                     )),
                 )
             ));
 
         return $codeGenFile->generate();
     }
-    
+
     public function getApplicationInstance()
     {
         if ($this->_applicationInstance == null) {
@@ -116,14 +106,14 @@ class BootstrapFile extends \Zend\Tool\Project\Context\Filesystem\File
                 define('APPLICATION_PATH', $this->_applicationDirectory->getPath());
                 $applicationOptions = array();
                 $applicationOptions['config'] = $this->_applicationConfigFile->getPath();
-    
-                $this->_applicationInstance = new \Zend\Application\Application(
+
+                $this->_applicationInstance = new Zend_Application(
                     'development',
                     $applicationOptions
                     );
             }
         }
-        
+
         return $this->_applicationInstance;
     }
 }

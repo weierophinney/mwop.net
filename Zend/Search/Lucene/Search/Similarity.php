@@ -17,31 +17,23 @@
  * @subpackage Search
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Search\Lucene\Search;
 
 /**
- * @todo !!!!!!! This class is actually used as singleton. It has to be redesigned.
- */
-
-/**
- * @uses       \Zend\Search\Lucene\Search\Similarity\DefaultSimilarity
  * @category   Zend
  * @package    Zend_Search_Lucene
  * @subpackage Search
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-abstract class Similarity
+abstract class Zend_Search_Lucene_Search_Similarity
 {
     /**
      * The Similarity implementation used by default.
      *
-     * @var \Zend\Search\Lucene\Search\Similarity
+     * @var Zend_Search_Lucene_Search_Similarity
      */
     private static $_defaultImpl;
 
@@ -313,9 +305,9 @@ abstract class Similarity
      * Set the default Similarity implementation used by indexing and search
      * code.
      *
-     * @param \Zend\Search\Lucene\Search\Similarity $similarity
+     * @param Zend_Search_Lucene_Search_Similarity $similarity
      */
-    public static function setDefault(Similarity $similarity)
+    public static function setDefault(Zend_Search_Lucene_Search_Similarity $similarity)
     {
         self::$_defaultImpl = $similarity;
     }
@@ -325,12 +317,13 @@ abstract class Similarity
      * Return the default Similarity implementation used by indexing and search
      * code.
      *
-     * @return \Zend\Search\Lucene\Search\Similarity
+     * @return Zend_Search_Lucene_Search_Similarity
      */
     public static function getDefault()
     {
-        if (!self::$_defaultImpl instanceof Similarity) {
-            self::$_defaultImpl = new Similarity\DefaultSimilarity();
+        if (!self::$_defaultImpl instanceof Zend_Search_Lucene_Search_Similarity) {
+            require_once 'Zend/Search/Lucene/Search/Similarity/Default.php';
+            self::$_defaultImpl = new Zend_Search_Lucene_Search_Similarity_Default();
         }
 
         return self::$_defaultImpl;
@@ -500,10 +493,10 @@ abstract class Similarity
      * Returns a score factor for the term
      *
      * @param mixed $input
-     * @param \Zend\Search\Lucene\SearchIndex $reader
+     * @param Zend_Search_Lucene_Interface $reader
      * @return a score factor for the term
      */
-    public function idf($input, \Zend\Search\Lucene\SearchIndex $reader)
+    public function idf($input, Zend_Search_Lucene_Interface $reader)
     {
         if (!is_array($input)) {
             return $this->idfFreq($reader->docFreq($input), $reader->count());
@@ -555,3 +548,4 @@ abstract class Similarity
      */
     abstract public function coord($overlap, $maxOverlap);
 }
+

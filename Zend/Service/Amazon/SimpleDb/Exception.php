@@ -20,18 +20,47 @@
  */
 
 /**
- * @namespace
+ * @see Zend_Service_Amazon_Exception
  */
-namespace Zend\Service\Amazon\SimpleDb;
+require_once 'Zend/Service/Amazon/Exception.php';
 
 /**
- * @uses       Zend\Service\Amazon\Exception
+ * The Custom Exception class that allows you to have access to the AWS Error Code.
+ *
  * @category   Zend
  * @package    Zend_Service_Amazon
  * @subpackage SimpleDb
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-interface Exception 
-    extends \Zend\Service\Amazon\Exception
-{}
+class Zend_Service_Amazon_SimpleDb_Exception extends Zend_Service_Amazon_Exception
+{
+    /**
+     * @var string
+     */
+    private $_awsErrorCode = '';
+
+    /**
+     * Constructor
+     *
+     * @param string $message
+     * @param int $code
+     * @param string $awsErrorCode
+     * @return void
+     */
+    public function __construct($message, $code = 0, $awsErrorCode = '')
+    {
+        parent::__construct($message, $code);
+        $this->_awsErrorCode = $awsErrorCode;
+    }
+
+    /**
+     * Get AWS error code
+     *
+     * @return string
+     */
+    public function getErrorCode()
+    {
+        return $this->_awsErrorCode;
+    }
+}

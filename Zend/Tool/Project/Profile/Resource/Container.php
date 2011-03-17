@@ -17,32 +17,23 @@
  * @subpackage Framework
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Tool_Project_Profile_Resource_SearchConstraints
  */
-namespace Zend\Tool\Project\Profile\Resource;
-use Zend\Tool\Project\Profile,
-    Zend\Tool\Project\Profile\Exception;
+require_once 'Zend/Tool/Project/Profile/Resource/SearchConstraints.php';
 
 /**
  * This class is an iterator that will iterate only over enabled resources
  *
- * @uses       Countable
- * @uses       RecursiveIterator
- * @uses       RecursiveIteratorIterator
- * @uses       \Zend\Tool\Project\Context\Repository
- * @uses       \Zend\Tool\Project\Profile\Exception
- * @uses       \Zend\Tool\Project\Profile\Iterator\ContextFilter
- * @uses       \Zend\Tool\Project\Profile\Resource\Resource
- * @uses       \Zend\Tool\Project\Profile\Resource\SearchConstraints
  * @category   Zend
  * @package    Zend_Tool
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Container implements \RecursiveIterator, \Countable
+class Zend_Tool_Project_Profile_Resource_Container implements RecursiveIterator, Countable
 {
 
     /**
@@ -59,7 +50,7 @@ class Container implements \RecursiveIterator, \Countable
      * @var bool
      */
     protected $_appendable = true;
-    
+
     /**
      * @var array
      */
@@ -73,13 +64,13 @@ class Container implements \RecursiveIterator, \Countable
      *
      * </code>
      *
-     * @param \Zend\Tool\Project\Profile\Resource\SearchConstraints|string|array $searchParameters
-     * @return \Zend\Tool\Project\Profile\Resource\Resource
+     * @param Zend_Tool_Project_Profile_Resource_SearchConstraints|string|array $searchParameters
+     * @return Zend_Tool_Project_Profile_Resource
      */
     public function search($matchSearchConstraints, $nonMatchSearchConstraints = null)
     {
-        if (!$matchSearchConstraints instanceof SearchConstraints) {
-            $matchSearchConstraints = new SearchConstraints($matchSearchConstraints);
+        if (!$matchSearchConstraints instanceof Zend_Tool_Project_Profile_Resource_SearchConstraints) {
+            $matchSearchConstraints = new Zend_Tool_Project_Profile_Resource_SearchConstraints($matchSearchConstraints);
         }
 
         $this->rewind();
@@ -89,10 +80,10 @@ class Container implements \RecursiveIterator, \Countable
          */
 
         if ($nonMatchSearchConstraints) {
-            $filterIterator = new Profile\Iterator\ContextFilter($this, array('denyNames' => $nonMatchSearchConstraints));
-            $riIterator = new \RecursiveIteratorIterator($filterIterator, \RecursiveIteratorIterator::SELF_FIRST);
+            $filterIterator = new Zend_Tool_Project_Profile_Iterator_ContextFilter($this, array('denyNames' => $nonMatchSearchConstraints));
+            $riIterator = new RecursiveIteratorIterator($filterIterator, RecursiveIteratorIterator::SELF_FIRST);
         } else {
-            $riIterator = new \RecursiveIteratorIterator($this, \RecursiveIteratorIterator::SELF_FIRST);
+            $riIterator = new RecursiveIteratorIterator($this, RecursiveIteratorIterator::SELF_FIRST);
         }
 
         $foundResource     = false;
@@ -114,7 +105,8 @@ class Container implements \RecursiveIterator, \Countable
                 if (count($currentConstraint->params) > 0) {
                     $currentResourceAttributes = $currentResource->getAttributes();
                     if (!is_array($currentConstraint->params)) {
-                        throw new Exception\RuntimeException('Search parameter specifics must be in the form of an array for key "'
+                        require_once 'Zend/Tool/Project/Profile/Exception.php';
+                        throw new Zend_Tool_Project_Profile_Exception('Search parameter specifics must be in the form of an array for key "'
                             . $currentConstraint->name .'"');
                     }
                     foreach ($currentConstraint->params as $paramName => $paramValue) {
@@ -144,16 +136,17 @@ class Container implements \RecursiveIterator, \Countable
     /**
      * createResourceAt()
      *
-     * @param array|\Zend\Tool\Project\Profile\Resource\SearchConstraints $appendResourceOrSearchConstraints
+     * @param array|Zend_Tool_Project_Profile_Resource_SearchConstraints $appendResourceOrSearchConstraints
      * @param string $context
      * @param array $attributes
-     * @return \Zend\Tool\Project\Profile\Resource\Resource
+     * @return Zend_Tool_Project_Profile_Resource
      */
     public function createResourceAt($appendResourceOrSearchConstraints, $context, Array $attributes = array())
     {
-        if (!$appendResourceOrSearchConstraints instanceof Container) {
+        if (!$appendResourceOrSearchConstraints instanceof Zend_Tool_Project_Profile_Resource_Container) {
             if (($parentResource = $this->search($appendResourceOrSearchConstraints)) == false) {
-                throw new Exception\InvalidArgumentException('No node was found to append to.');
+                require_once 'Zend/Tool/Project/Profile/Exception.php';
+                throw new Zend_Tool_Project_Profile_Exception('No node was found to append to.');
             }
         } else {
             $parentResource = $appendResourceOrSearchConstraints;
@@ -169,22 +162,24 @@ class Container implements \RecursiveIterator, \Countable
      *
      * @param string $context
      * @param array $attributes
-     * @return \Zend\Tool\Project\Profile\Resource\Resource
+     * @return Zend_Tool_Project_Profile_Resource
      */
     public function createResource($context, Array $attributes = array())
     {
         if (is_string($context)) {
-            $contextRegistry = \Zend\Tool\Project\Context\Repository::getInstance();
+            $contextRegistry = Zend_Tool_Project_Context_Repository::getInstance();
             if ($contextRegistry->hasContext($context)) {
                 $context = $contextRegistry->getContext($context);
             } else {
-                throw new Exception\InvalidArgumentException('Context by name ' . $context . ' was not found in the context registry.');
+                require_once 'Zend/Tool/Project/Profile/Exception.php';
+                throw new Zend_Tool_Project_Profile_Exception('Context by name ' . $context . ' was not found in the context registry.');
             }
-        } elseif (!$context instanceof \Zend\Tool\Project\Context) {
-            throw new Exception\InvalidArgumentException('Context must be of type string or Zend_Tool_Project_Context_Interface.');
+        } elseif (!$context instanceof Zend_Tool_Project_Context_Interface) {
+            require_once 'Zend/Tool/Project/Profile/Exception.php';
+            throw new Zend_Tool_Project_Profile_Exception('Context must be of type string or Zend_Tool_Project_Context_Interface.');
         }
 
-        $newResource = new Resource($context);
+        $newResource = new Zend_Tool_Project_Profile_Resource($context);
 
         if ($attributes) {
             $newResource->setAttributes($attributes);
@@ -210,7 +205,7 @@ class Container implements \RecursiveIterator, \Countable
      * persist the attributes if the resource will accept them
      *
      * @param array $attributes
-     * @return \Zend\Tool\Project\Profile\Resource\Container
+     * @return Zend_Tool_Project_Profile_Resource_Container
      */
     public function setAttributes(Array $attributes)
     {
@@ -240,7 +235,7 @@ class Container implements \RecursiveIterator, \Countable
      *
      * @param string $name
      * @param mixed $value
-     * @return \Zend\Tool\Project\Profile\Resource\Container
+     * @return Zend_Tool_Project_Profile_Resource_Container
      */
     public function setAttribute($name, $value)
     {
@@ -252,16 +247,16 @@ class Container implements \RecursiveIterator, \Countable
      * getAttribute()
      *
      * @param string $name
-     * @return \Zend\Tool\Project\Profile\Resource\Container
+     * @return Zend_Tool_Project_Profile_Resource_Container
      */
     public function getAttribute($name)
     {
         return (array_key_exists($name, $this->_attributes)) ? $this->_attributes[$name] : null;
     }
-    
+
     /**
      * hasAttribute()
-     * 
+     *
      * @param string $name
      * @return bool
      */
@@ -274,7 +269,7 @@ class Container implements \RecursiveIterator, \Countable
      * setAppendable()
      *
      * @param bool $appendable
-     * @return \Zend\Tool\Project\Profile\Resource\Container
+     * @return Zend_Tool_Project_Profile_Resource_Container
      */
     public function setAppendable($appendable)
     {
@@ -295,10 +290,10 @@ class Container implements \RecursiveIterator, \Countable
     /**
      * setParentResource()
      *
-     * @param \Zend\Tool\Project\Profile\Resource\Container $parentResource
-     * @return \Zend\Tool\Project\Profile\Resource\Container
+     * @param Zend_Tool_Project_Profile_Resource_Container $parentResource
+     * @return Zend_Tool_Project_Profile_Resource_Container
      */
-    public function setParentResource(Container $parentResource)
+    public function setParentResource(Zend_Tool_Project_Profile_Resource_Container $parentResource)
     {
         $this->_parentResource = $parentResource;
         return $this;
@@ -307,7 +302,7 @@ class Container implements \RecursiveIterator, \Countable
     /**
      * getParentResource()
      *
-     * @return \Zend\Tool\Project\Profile\Resource\Container
+     * @return Zend_Tool_Project_Profile_Resource_Container
      */
     public function getParentResource()
     {
@@ -317,13 +312,13 @@ class Container implements \RecursiveIterator, \Countable
     /**
      * append()
      *
-     * @param \Zend\Tool\Project\Profile\Resource\Container $resource
-     * @return \Zend\Tool\Project\Profile\Resource\Container
+     * @param Zend_Tool_Project_Profile_Resource_Container $resource
+     * @return Zend_Tool_Project_Profile_Resource_Container
      */
-    public function append(Container $resource)
+    public function append(Zend_Tool_Project_Profile_Resource_Container $resource)
     {
         if (!$this->isAppendable()) {
-            throw new Exception\InvalidArgumentException('Resource by name ' . (string) $this . ' is not appendable');
+            throw new Exception('Resource by name ' . (string) $this . ' is not appendable');
         }
         array_push($this->_subResources, $resource);
         $resource->setParentResource($this);
@@ -334,7 +329,7 @@ class Container implements \RecursiveIterator, \Countable
     /**
      * current() - required by RecursiveIterator
      *
-     * @return \Zend\Tool\Project\Profile\Resource\Resource
+     * @return Zend_Tool_Project_Profile_Resource
      */
     public function current()
     {

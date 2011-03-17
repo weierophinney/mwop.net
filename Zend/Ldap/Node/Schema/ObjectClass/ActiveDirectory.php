@@ -17,29 +17,30 @@
  * @subpackage Schema
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Ldap_Node_Schema_Item
  */
-namespace Zend\Ldap\Node\Schema\ObjectClass;
-
-use Zend\Ldap\Node\Schema\ObjectClass,
-    Zend\Ldap\Node\Schema;
+require_once 'Zend/Ldap/Node/Schema/Item.php';
+/**
+ * @see Zend_Ldap_Node_Schema_ObjectClass_Interface
+ */
+require_once 'Zend/Ldap/Node/Schema/ObjectClass/Interface.php';
 
 /**
  * Zend_Ldap_Node_Schema_ObjectClass_ActiveDirectory provides access to the objectClass
  * schema information on an Active Directory server.
  *
- * @uses       \Zend\Ldap\Node\Schema\Item
- * @uses       \Zend\Ldap\Node\Schema\ObjectClass
  * @category   Zend
  * @package    Zend_Ldap
  * @subpackage Schema
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class ActiveDirectory extends Schema\Item implements ObjectClass
+class Zend_Ldap_Node_Schema_ObjectClass_ActiveDirectory extends Zend_Ldap_Node_Schema_Item
+    implements Zend_Ldap_Node_Schema_ObjectClass_Interface
 {
     /**
      * Gets the objectClass name

@@ -17,12 +17,18 @@
  * @subpackage Framework
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Tool_Project_Context_Filesystem_File
  */
-namespace Zend\Tool\Project\Context\Zf;
+require_once 'Zend/Tool/Project/Context/Filesystem/File.php';
+
+/**
+ * @see Zend_CodeGenerator_Php_File
+ */
+require_once 'Zend/CodeGenerator/Php/File.php';
 
 /**
  * This class is the front most class for utilizing Zend_Tool_Project
@@ -30,17 +36,12 @@ namespace Zend\Tool\Project\Context\Zf;
  * A profile is a hierarchical set of resources that keep track of
  * items within a specific project.
  *
- * @uses       \Zend\CodeGenerator\Php\PhpClass
- * @uses       \Zend\CodeGenerator\Php\PhpFile
- * @uses       \Zend\CodeGenerator\Php\PhpMethod
- * @uses       \Zend\Filter\Word\DashToCamelCase
- * @uses       \Zend\Tool\Project\Context\Filesystem\File
  * @category   Zend
  * @package    Zend_Tool
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class ProjectProviderFile extends \Zend\Tool\Project\Context\Filesystem\File
+class Zend_Tool_Project_Context_Zf_ProjectProviderFile extends Zend_Tool_Project_Context_Filesystem_File
 {
 
     /**
@@ -56,7 +57,7 @@ class ProjectProviderFile extends \Zend\Tool\Project\Context\Filesystem\File
     /**
      * init()
      *
-     * @return \Zend\Tool\Project\Context\Zf\ProjectProviderFile
+     * @return Zend_Tool_Project_Context_Zf_ProjectProviderFile
      */
     public function init()
     {
@@ -116,18 +117,18 @@ class ProjectProviderFile extends \Zend\Tool\Project\Context\Filesystem\File
     public function getContents()
     {
 
-        $filter = new \Zend\Filter\Word\DashToCamelCase();
+        $filter = new Zend_Filter_Word_DashToCamelCase();
 
         $className = $filter->filter($this->_projectProviderName) . 'Provider';
 
-        $class = new \Zend\CodeGenerator\Php\PhpClass(array(
+        $class = new Zend_CodeGenerator_Php_Class(array(
             'name' => $className,
-            'extendedClass' => '\Zend\Tool\Project\Provider\AbstractProvider'
+            'extendedClass' => 'Zend_Tool_Project_Provider_Abstract'
             ));
 
         $methods = array();
         foreach ($this->_actionNames as $actionName) {
-            $methods[] = new \Zend\CodeGenerator\Php\PhpMethod(array(
+            $methods[] = new Zend_CodeGenerator_Php_Method(array(
                 'name' => $actionName,
                 'body' => '        /** @todo Implementation */'
                 ));
@@ -137,7 +138,11 @@ class ProjectProviderFile extends \Zend\Tool\Project\Context\Filesystem\File
             $class->setMethods($methods);
         }
 
-        $codeGenFile = new \Zend\CodeGenerator\Php\PhpFile(array(
+        $codeGenFile = new Zend_CodeGenerator_Php_File(array(
+            'requiredFiles' => array(
+                'Zend/Tool/Project/Provider/Abstract.php',
+                'Zend/Tool/Project/Provider/Exception.php'
+                ),
             'classes' => array($class)
             ));
 

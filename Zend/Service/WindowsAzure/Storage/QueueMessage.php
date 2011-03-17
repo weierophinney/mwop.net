@@ -17,43 +17,49 @@
  * @subpackage Storage
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @uses       Zend_Service_WindowsAzure_Exception
+ * @see Zend_Service_WindowsAzure_Exception
+ */
+require_once 'Zend/Service/WindowsAzure/Exception.php';
+
+/**
+ * @see Zend_Service_WindowsAzure_Storage_StorageEntityAbstract
+ */
+require_once 'Zend/Service/WindowsAzure/Storage/StorageEntityAbstract.php';
+
+/**
  * @category   Zend
  * @package    Zend_Service_WindowsAzure
  * @subpackage Storage
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- *   
+ *
  * @property string $MessageId         Message ID
  * @property string $InsertionTime     Insertion time
  * @property string $ExpirationTime    Expiration time
- * @property string $PopReceipt  	   Receipt verification for deleting the message from queue.
+ * @property string $PopReceipt         Receipt verification for deleting the message from queue.
  * @property string $TimeNextVisible   Next time the message is visible in the queue
+ * @property int    $DequeueCount      Number of times the message has been dequeued. This value is incremented each time the message is subsequently dequeued.
  * @property string $MessageText       Message text
  */
 class Zend_Service_WindowsAzure_Storage_QueueMessage
+    extends Zend_Service_WindowsAzure_Storage_StorageEntityAbstract
 {
     /**
-     * Data
-     * 
-     * @var array
-     */
-    protected $_data = null;
-    
-    /**
      * Constructor
-     * 
+     *
      * @param string $messageId         Message ID
      * @param string $insertionTime     Insertion time
      * @param string $expirationTime    Expiration time
-     * @param string $popReceipt  	    Receipt verification for deleting the message from queue.
+     * @param string $popReceipt          Receipt verification for deleting the message from queue.
      * @param string $timeNextVisible   Next time the message is visible in the queue
+     * @param int    $dequeueCount      Number of times the message has been dequeued. This value is incremented each time the message is subsequently dequeued.
      * @param string $messageText       Message text
      */
-    public function __construct($messageId, $insertionTime, $expirationTime, $popReceipt, $timeNextVisible, $messageText) 
+    public function __construct($messageId, $insertionTime, $expirationTime, $popReceipt, $timeNextVisible, $dequeueCount, $messageText)
     {
         $this->_data = array(
             'messageid'       => $messageId,
@@ -61,35 +67,8 @@ class Zend_Service_WindowsAzure_Storage_QueueMessage
             'expirationtime'  => $expirationTime,
             'popreceipt'      => $popReceipt,
             'timenextvisible' => $timeNextVisible,
+            'dequeuecount'    => $dequeueCount,
             'messagetext'     => $messageText
         );
-    }
-    
-    /**
-     * Magic overload for setting properties
-     * 
-     * @param string $name     Name of the property
-     * @param string $value    Value to set
-     */
-    public function __set($name, $value) {
-        if (array_key_exists(strtolower($name), $this->_data)) {
-            $this->_data[strtolower($name)] = $value;
-            return;
-        }
-
-        throw new Zend_Service_WindowsAzure_Exception("Unknown property: " . $name);
-    }
-
-    /**
-     * Magic overload for getting properties
-     * 
-     * @param string $name     Name of the property
-     */
-    public function __get($name) {
-        if (array_key_exists(strtolower($name), $this->_data)) {
-            return $this->_data[strtolower($name)];
-        }
-
-        throw new Zend_Service_WindowsAzure_Exception("Unknown property: " . $name);
     }
 }

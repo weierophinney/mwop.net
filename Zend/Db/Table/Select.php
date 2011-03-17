@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework
  *
@@ -17,27 +18,32 @@
  * @subpackage Select
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
+
 /**
- * @namespace
+ * @see Zend_Db_Select
  */
-namespace Zend\Db\Table;
+require_once 'Zend/Db/Select.php';
+
+
+/**
+ * @see Zend_Db_Table_Abstract
+ */
+require_once 'Zend/Db/Table/Abstract.php';
+
 
 /**
  * Class for SQL SELECT query manipulation for the Zend_Db_Table component.
  *
- * @uses       \Zend\Db\Select
- * @uses       \Zend\Db\Table\AbstractTable
- * @uses       \Zend\Db\Table\Select
- * @uses       \Zend\Db\Table\SelectException
  * @category   Zend
  * @package    Zend_Db
  * @subpackage Table
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Select extends \Zend\Db\Select
+class Zend_Db_Table_Select extends Zend_Db_Select
 {
     /**
      * Table schema for parent Zend_Db_Table.
@@ -56,16 +62,16 @@ class Select extends \Zend\Db\Select
     /**
      * Table instance that created this select object
      *
-     * @var \Zend\Db\Table\AbstractTable
+     * @var Zend_Db_Table_Abstract
      */
     protected $_table;
 
     /**
      * Class constructor
      *
-     * @param \Zend\Db\Table\AbstractTable $adapter
+     * @param Zend_Db_Table_Abstract $adapter
      */
-    public function __construct(AbstractTable $table)
+    public function __construct(Zend_Db_Table_Abstract $table)
     {
         parent::__construct($table->getAdapter());
 
@@ -75,7 +81,7 @@ class Select extends \Zend\Db\Select
     /**
      * Return the table that created this select object
      *
-     * @return \Zend\Db\Table\AbstractTable
+     * @return Zend_Db_Table_Abstract
      */
     public function getTable()
     {
@@ -85,10 +91,10 @@ class Select extends \Zend\Db\Select
     /**
      * Sets the primary table name and retrieves the table schema.
      *
-     * @param \Zend\Db\Table\AbstractTable $adapter
-     * @return \Zend\Db\Select This \Zend\Db\Select object.
+     * @param Zend_Db_Table_Abstract $adapter
+     * @return Zend_Db_Select This Zend_Db_Select object.
      */
-    public function setTable(AbstractTable $table)
+    public function setTable(Zend_Db_Table_Abstract $table)
     {
         $this->_adapter = $table->getAdapter();
         $this->_info    = $table->info();
@@ -103,8 +109,8 @@ class Select extends \Zend\Db\Select
      * Setting this flag to false skips the checks for table joins, allowing
      * 'hybrid' table rows to be created.
      *
-     * @param \Zend\Db\Table\AbstractTable $adapter
-     * @return \Zend\Db\Select This \Zend\Db\Select object.
+     * @param Zend_Db_Table_Abstract $adapter
+     * @return Zend_Db_Select This Zend_Db_Select object.
      */
     public function setIntegrityCheck($flag = true)
     {
@@ -120,8 +126,8 @@ class Select extends \Zend\Db\Select
     public function isReadOnly()
     {
         $readOnly = false;
-        $fields   = $this->getPart(self::COLUMNS);
-        $cols     = $this->_info[AbstractTable::COLS];
+        $fields   = $this->getPart(Zend_Db_Table_Select::COLUMNS);
+        $cols     = $this->_info[Zend_Db_Table_Abstract::COLS];
 
         if (!count($fields)) {
             return $readOnly;
@@ -139,7 +145,7 @@ class Select extends \Zend\Db\Select
                 case ($column == self::SQL_WILDCARD):
                     break;
 
-                case ($column instanceof \Zend\Db\Expr):
+                case ($column instanceof Zend_Db_Expr):
                 case (!in_array($column, $cols)):
                     $readOnly = true;
                     break 2;
@@ -154,21 +160,21 @@ class Select extends \Zend\Db\Select
      *
      * The table name can be expressed
      *
-     * @param  array|string|Zend_Db_Expr|\Zend\Db\Table\AbstractTable $name The table name or an
+     * @param  array|string|Zend_Db_Expr|Zend_Db_Table_Abstract $name The table name or an
                                                                       associative array relating
                                                                       table name to correlation
                                                                       name.
-     * @param  array|string|\Zend\Db\Expr $cols The columns to select from this table.
+     * @param  array|string|Zend_Db_Expr $cols The columns to select from this table.
      * @param  string $schema The schema name to specify, if any.
-     * @return \Zend\Db\Table\Select This \Zend\Db\Table\Select object.
+     * @return Zend_Db_Table_Select This Zend_Db_Table_Select object.
      */
     public function from($name, $cols = self::SQL_WILDCARD, $schema = null)
     {
-        if ($name instanceof AbstractTable) {
+        if ($name instanceof Zend_Db_Table_Abstract) {
             $info = $name->info();
-            $name = $info[AbstractTable::NAME];
-            if (isset($info[AbstractTable::SCHEMA])) {
-                $schema = $info[AbstractTable::SCHEMA];
+            $name = $info[Zend_Db_Table_Abstract::NAME];
+            if (isset($info[Zend_Db_Table_Abstract::SCHEMA])) {
+                $schema = $info[Zend_Db_Table_Abstract::SCHEMA];
             }
         }
 
@@ -183,9 +189,9 @@ class Select extends \Zend\Db\Select
      */
     public function assemble()
     {
-        $fields  = $this->getPart(self::COLUMNS);
-        $primary = $this->_info[AbstractTable::NAME];
-        $schema  = $this->_info[AbstractTable::SCHEMA];
+        $fields  = $this->getPart(Zend_Db_Table_Select::COLUMNS);
+        $primary = $this->_info[Zend_Db_Table_Abstract::NAME];
+        $schema  = $this->_info[Zend_Db_Table_Abstract::SCHEMA];
 
 
         if (count($this->_parts[self::UNION]) == 0) {
@@ -193,10 +199,10 @@ class Select extends \Zend\Db\Select
             // If no fields are specified we assume all fields from primary table
             if (!count($fields)) {
                 $this->from($primary, self::SQL_WILDCARD, $schema);
-                $fields = $this->getPart(self::COLUMNS);
+                $fields = $this->getPart(Zend_Db_Table_Select::COLUMNS);
             }
 
-            $from = $this->getPart(Select::FROM);
+            $from = $this->getPart(Zend_Db_Table_Select::FROM);
 
             if ($this->_integrityCheck !== false) {
                 foreach ($fields as $columnEntry) {
@@ -205,7 +211,8 @@ class Select extends \Zend\Db\Select
                     // Check each column to ensure it only references the primary table
                     if ($column) {
                         if (!isset($from[$table]) || $from[$table]['tableName'] != $primary) {
-                            throw new SelectException('Select query cannot join with another table');
+                            require_once 'Zend/Db/Table/Select/Exception.php';
+                            throw new Zend_Db_Table_Select_Exception('Select query cannot join with another table');
                         }
                     }
                 }
