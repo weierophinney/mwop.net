@@ -15,21 +15,21 @@
  * @category   Zend
  * @package    Zend_Memory
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
- * @version    $Id$
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-
-/** Zend_Controller_Exception */
-require_once 'Zend/Exception.php';
-
+/**
+ * @namespace
+ */
+namespace Zend\Memory;
 
 /**
+ * @uses       \Zend\Exception
  * @category   Zend
  * @package    Zend_Memory
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Memory_Exception extends Zend_Exception
+interface Exception
 {}
 

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -18,15 +17,15 @@
  * @subpackage LiveDocx
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id$
  */
 
 /**
- * @see Zend_Service_Exception
+ * @namespace
  */
-require_once 'Zend/Service/Exception.php';
+namespace Zend\Service\LiveDocx;
 
 /**
+ * @uses       Zend\Service\Exception
  * @category   Zend
  * @package    Zend_Service
  * @subpackage LiveDocx
@@ -34,6 +33,5 @@ require_once 'Zend/Service/Exception.php';
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @since      LiveDocx 1.0
  */
-class Zend_Service_LiveDocx_Exception extends Zend_Service_Exception
-{
-}
+class Exception extends \Zend\Exception
+{}

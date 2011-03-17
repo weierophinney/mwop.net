@@ -15,35 +15,21 @@
  * @category   Zend
  * @package    Zend_Date
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
- * @version    $Id$
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-
 /**
- * Zend_Exception
+ * @namespace
  */
-require_once 'Zend/Exception.php';
-
+namespace Zend\Date;
 
 /**
+ * @uses       \Zend\Exception
  * @category   Zend
  * @package    Zend_Date
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Date_Exception extends Zend_Exception
+interface Exception
 {
-    protected $operand = null;
-
-    public function __construct($message, $code = 0, $e = null, $op = null)
-    {
-        $this->operand = $op;
-        parent::__construct($message, $code, $e);
-    }
-
-    public function getOperand()
-    {
-        return $this->operand;
-    }
 }

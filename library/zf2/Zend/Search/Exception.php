@@ -16,15 +16,12 @@
  * @package    Zend_Search
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id$
  */
-
 
 /**
- * Framework base exception
+ * @namespace
  */
-require_once 'Zend/Exception.php';
-
+namespace Zend\Search;
 
 /**
  * @category   Zend
@@ -32,6 +29,6 @@ require_once 'Zend/Exception.php';
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Search_Exception extends Zend_Exception
+interface Exception
 {}
 

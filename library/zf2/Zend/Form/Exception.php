@@ -15,21 +15,20 @@
  * @category   Zend
  * @package    Zend_Form
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
- * @version    $Id$
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/** Zend_Exception */
-require_once 'Zend/Exception.php';
+/**
+ * @namespace
+ */
+namespace Zend\Form;
 
 /**
- * Exception for Zend_Form component.
- *
  * @category   Zend
  * @package    Zend_Form
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Form_Exception extends Zend_Exception
-{
-}
+interface Exception
+{}

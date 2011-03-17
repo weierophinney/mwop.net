@@ -16,28 +16,29 @@
  * @package    Zend_Application
  * @subpackage Module
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
- * @version    $Id$
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
 /**
- * @see Zend_Application_Bootstrap_Bootstrap
+ * @namespace
  */
-require_once 'Zend/Application/Bootstrap/Bootstrap.php';
+namespace Zend\Application\Module;
+
+use Zend\Application\Bootstrap as ApplicationBootstrap;
 
 /**
  * Base bootstrap class for modules
  *
- * @uses       Zend_Loader_Autoloader_Resource
- * @uses       Zend_Application_Bootstrap_Bootstrap
+ * @uses       \Zend\Loader\ResourceAutoloader
+ * @uses       \Zend\Application\Bootstrap
  * @category   Zend
  * @package    Zend_Application
  * @subpackage Module
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-abstract class Zend_Application_Module_Bootstrap
-    extends Zend_Application_Bootstrap_Bootstrap
+abstract class Bootstrap
+    extends ApplicationBootstrap
 {
     /**
      * Set this explicitly to reduce impact of determining module name
@@ -48,16 +49,16 @@ abstract class Zend_Application_Module_Bootstrap
     /**
      * Constructor
      *
-     * @param  Zend_Application|Zend_Application_Bootstrap_Bootstrapper $application
+     * @param  Zend_Application|\Zend\Application\Bootstrapper $application
      * @return void
      */
     public function __construct($application)
     {
         $this->setApplication($application);
 
-        // Use same plugin loader as parent bootstrap
-        if ($application instanceof Zend_Application_Bootstrap_ResourceBootstrapper) {
-            $this->setPluginLoader($application->getPluginLoader());
+        // Use same plugin broker as parent bootstrap
+        if ($application instanceof \Zend\Application\ResourceBootstrapper) {
+            $this->setBroker($application->getBroker());
         }
 
         $key = strtolower($this->getModuleName());
@@ -73,14 +74,18 @@ abstract class Zend_Application_Module_Bootstrap
         }
         $this->initResourceLoader();
 
+        $broker = $this->getBroker();
+
         // ZF-6545: ensure front controller resource is loaded
-        if (!$this->hasPluginResource('FrontController')) {
-            $this->registerPluginResource('FrontController');
+        if (!$broker->hasPlugin('frontcontroller')) {
+            $broker->registerSpec('frontcontroller');
         }
 
         // ZF-6545: prevent recursive registration of modules
-        if ($this->hasPluginResource('modules')) {
-            $this->unregisterPluginResource('modules');
+        if ($broker->hasPlugin('modules')) {
+            // Both unregister the resource and spec
+            $broker->unregister('modules');
+            $broker->unregisterSpec('modules');
         }
     }
 
@@ -97,9 +102,9 @@ abstract class Zend_Application_Module_Bootstrap
     /**
      * Get default application namespace
      *
-     * Proxies to {@link getModuleName()}, and returns the current module
+     * Proxies to {@link getModuleName()}, and returns the current module 
      * name
-     *
+     * 
      * @return string
      */
     public function getAppNamespace()
@@ -116,7 +121,7 @@ abstract class Zend_Application_Module_Bootstrap
     {
         if (empty($this->_moduleName)) {
             $class = get_class($this);
-            if (preg_match('/^([a-z][a-z0-9]*)_/i', $class, $matches)) {
+            if (preg_match('/^([a-z][a-z0-9]*)\\\\/i', $class, $matches)) {
                 $prefix = $matches[1];
             } else {
                 $prefix = $class;

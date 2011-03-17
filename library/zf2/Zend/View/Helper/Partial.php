@@ -16,22 +16,26 @@
  * @package    Zend_View
  * @subpackage Helper
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
- * @version    $Id$
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/** Zend_View_Helper_Abstract.php */
-require_once 'Zend/View/Helper/Abstract.php';
+/**
+ * @namespace
+ */
+namespace Zend\View\Helper;
 
 /**
  * Helper for rendering a template fragment in its own variable scope.
  *
+ * @uses       \Zend\Controller\Front
+ * @uses       \Zend\View\Helper\AbstractHelper
+ * @uses       \Zend\View\Helper\Partial\Exception
  * @package    Zend_View
  * @subpackage Helper
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_View_Helper_Partial extends Zend_View_Helper_Abstract
+class Partial extends AbstractHelper
 {
     /**
      * Variable to which object will be assigned
@@ -59,9 +63,9 @@ class Zend_View_Helper_Partial extends Zend_View_Helper_Abstract
      *                              view. Otherwise, the module in which the
      *                              partial resides
      * @param  array $model Variables to populate in the view
-     * @return string|Zend_View_Helper_Partial
+     * @return string|\Zend\View\Helper\Partial\Partial
      */
-    public function partial($name = null, $module = null, $model = null)
+    public function direct($name = null, $module = null, $model = null)
     {
         if (0 == func_num_args()) {
             return $this;
@@ -72,11 +76,9 @@ class Zend_View_Helper_Partial extends Zend_View_Helper_Abstract
             $view->partialCounter = $this->partialCounter;
         }
         if ((null !== $module) && is_string($module)) {
-            require_once 'Zend/Controller/Front.php';
-            $moduleDir = Zend_Controller_Front::getInstance()->getControllerDirectory($module);
+            $moduleDir = \Zend\Controller\Front::getInstance()->getControllerDirectory($module);
             if (null === $moduleDir) {
-                require_once 'Zend/View/Helper/Partial/Exception.php';
-                $e = new Zend_View_Helper_Partial_Exception('Cannot render partial; module does not exist');
+                $e = new Partial\Exception('Cannot render partial; module does not exist');
                 $e->setView($this->view);
                 throw $e;
             }
@@ -90,14 +92,14 @@ class Zend_View_Helper_Partial extends Zend_View_Helper_Abstract
 
         if (!empty($model)) {
             if (is_array($model)) {
-                $view->assign($model);
+                $view->vars()->assign($model);
             } elseif (is_object($model)) {
                 if (null !== ($objectKey = $this->getObjectKey())) {
-                    $view->assign($objectKey, $model);
+                    $view->vars()->assign($objectKey, $model);
                 } elseif (method_exists($model, 'toArray')) {
-                    $view->assign($model->toArray());
+                    $view->vars()->assign($model->toArray());
                 } else {
-                    $view->assign(get_object_vars($model));
+                    $view->vars()->assign(get_object_vars($model));
                 }
             }
         }
@@ -108,12 +110,12 @@ class Zend_View_Helper_Partial extends Zend_View_Helper_Abstract
     /**
      * Clone the current View
      *
-     * @return Zend_View_Interface
+     * @return \Zend\View\ViewEngine
      */
     public function cloneView()
     {
         $view = clone $this->view;
-        $view->clearVars();
+        $view->vars()->clear();
         return $view;
     }
 
@@ -121,7 +123,7 @@ class Zend_View_Helper_Partial extends Zend_View_Helper_Abstract
      * Set object key
      *
      * @param  string $key
-     * @return Zend_View_Helper_Partial
+     * @return \Zend\View\Helper\Partial\Partial
      */
     public function setObjectKey($key)
     {

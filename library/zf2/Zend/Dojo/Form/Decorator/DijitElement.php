@@ -18,8 +18,13 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/** Zend_Form_Decorator_ViewHelper */
-require_once 'Zend/Form/Decorator/ViewHelper.php';
+/**
+ * @namespace
+ */
+namespace Zend\Dojo\Form\Decorator;
+
+use Zend\Form\Decorator\ViewHelper as ViewHelperDecorator,
+    Zend\Form\Decorator\Exception as DecoratorException;
 
 /**
  * Zend_Dojo_Form_Decorator_DijitElement
@@ -34,13 +39,14 @@ require_once 'Zend/Form/Decorator/ViewHelper.php';
  * Assumes the view helper accepts three parameters, the name, value, and
  * optional attributes; these will be provided by the element.
  *
+ * @uses       \Zend\Form\Decorator\Exception
+ * @uses       \Zend\Form\Decorator\ViewHelper
  * @package    Zend_Dojo
  * @subpackage Form_Decorator
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id$
  */
-class Zend_Dojo_Form_Decorator_DijitElement extends Zend_Form_Decorator_ViewHelper
+class DijitElement extends ViewHelperDecorator
 {
     /**
      * Element attributes
@@ -53,10 +59,10 @@ class Zend_Dojo_Form_Decorator_DijitElement extends Zend_Form_Decorator_ViewHelp
      * @var array
      */
     protected $_buttonTypes = array(
-        'Zend_Dojo_Form_Element_Button',
-        'Zend_Form_Element_Button',
-        'Zend_Form_Element_Reset',
-        'Zend_Form_Element_Submit',
+        'Zend\Dojo\Form\Element\Button',
+        'Zend\Form\Element\Button',
+        'Zend\Form\Element\Reset',
+        'Zend\Form\Element\Submit',
     );
 
     /**
@@ -88,7 +94,7 @@ class Zend_Dojo_Form_Decorator_DijitElement extends Zend_Form_Decorator_ViewHelp
      *
      * @param  string $key
      * @param  mixed $value
-     * @return Zend_Dojo_Form_Decorator_DijitContainer
+     * @return \Zend\Dojo\Form\Decorator\DijitContainer
      */
     public function setDijitParam($key, $value)
     {
@@ -100,7 +106,7 @@ class Zend_Dojo_Form_Decorator_DijitElement extends Zend_Form_Decorator_ViewHelp
      * Set dijit option parameters
      *
      * @param  array $params
-     * @return Zend_Dojo_Form_Decorator_DijitContainer
+     * @return \Zend\Dojo\Form\Decorator\DijitContainer
      */
     public function setDijitParams(array $params)
     {
@@ -145,15 +151,14 @@ class Zend_Dojo_Form_Decorator_DijitElement extends Zend_Form_Decorator_ViewHelp
      *
      * @param  string $content
      * @return string
-     * @throws Zend_Form_Decorator_Exception if element or view are not registered
+     * @throws \Zend\Form\Decorator\Exception if element or view are not registered
      */
     public function render($content)
     {
         $element = $this->getElement();
         $view = $element->getView();
         if (null === $view) {
-            require_once 'Zend/Form/Decorator/Exception.php';
-            throw new Zend_Form_Decorator_Exception('DijitElement decorator cannot render without a registered view object');
+            throw new DecoratorException('DijitElement decorator cannot render without a registered view object');
         }
 
         $options = null;

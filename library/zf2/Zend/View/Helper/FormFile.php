@@ -17,26 +17,24 @@
  * @subpackage Helper
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id$
  */
-
 
 /**
- * Abstract class for extension
+ * @namespace
  */
-require_once 'Zend/View/Helper/FormElement.php';
-
+namespace Zend\View\Helper;
 
 /**
  * Helper to generate a "file" element
  *
+ * @uses       \Zend\View\Helper\FormElement
  * @category   Zend
  * @package    Zend_View
  * @subpackage Helper
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_View_Helper_FormFile extends Zend_View_Helper_FormElement
+class FormFile extends FormElement
 {
     /**
      * Generates a 'file' element.
@@ -51,8 +49,12 @@ class Zend_View_Helper_FormFile extends Zend_View_Helper_FormElement
      *
      * @return string The element XHTML.
      */
-    public function formFile($name, $attribs = null)
+    public function direct($name = null, $attribs = null)
     {
+        if ($name == null) {
+            throw new \InvalidArgumentException('FormFile: missing argument. $name is required in formFile($name, $attribs = null)');
+        }
+        
         $info = $this->_getInfo($name, null, $attribs);
         extract($info); // name, id, value, attribs, options, listsep, disable
 
@@ -64,14 +66,14 @@ class Zend_View_Helper_FormFile extends Zend_View_Helper_FormElement
 
         // XHTML or HTML end tag?
         $endTag = ' />';
-        if (($this->view instanceof Zend_View_Abstract) && !$this->view->doctype()->isXhtml()) {
+        if (($this->view instanceof \Zend\View\PhpRenderer) && !$this->view->broker('doctype')->isXhtml()) {
             $endTag= '>';
         }
 
         // build the element
         $xhtml = '<input type="file"'
-                . ' name="' . $this->view->escape($name) . '"'
-                . ' id="' . $this->view->escape($id) . '"'
+                . ' name="' . $this->view->vars()->escape($name) . '"'
+                . ' id="' . $this->view->vars()->escape($id) . '"'
                 . $disabled
                 . $this->_htmlAttribs($attribs)
                 . $endTag;

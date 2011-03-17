@@ -17,20 +17,20 @@
  * @subpackage Framework
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id$
  */
 
 /**
- * @see Zend_Tool_Framework_Exception
+ * @namespace
  */
-require_once 'Zend/Tool/Framework/Exception.php';
+namespace Zend\Tool\Framework\Client;
 
 /**
+ * @uses       \Zend\Tool\Framework\Exception
  * @category   Zend
  * @package    Zend_Tool
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Tool_Framework_Client_Exception extends Zend_Tool_Framework_Exception
+interface Exception
 {
 }

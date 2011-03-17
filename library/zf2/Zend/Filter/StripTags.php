@@ -16,23 +16,21 @@
  * @package    Zend_Filter
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id$
  */
 
-
 /**
- * @see Zend_Filter_Interface
+ * @namespace
  */
-require_once 'Zend/Filter/Interface.php';
-
+namespace Zend\Filter;
 
 /**
+ * @uses       Zend\Filter\AbstractFilter
  * @category   Zend
  * @package    Zend_Filter
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Filter_StripTags implements Zend_Filter_Interface
+class StripTags extends AbstractFilter
 {
     /**
      * Unique ID prefix used for allowing comments
@@ -77,12 +75,12 @@ class Zend_Filter_StripTags implements Zend_Filter_Interface
      *     'allowAttribs'  => Attributes which are allowed
      *     'allowComments' => Are comments allowed ?
      *
-     * @param  string|array|Zend_Config $options
+     * @param  string|array|\Zend\Config\Config $options
      * @return void
      */
     public function __construct($options = null)
     {
-        if ($options instanceof Zend_Config) {
+        if ($options instanceof \Zend\Config\Config) {
             $options = $options->toArray();
         } else if ((!is_array($options)) || (is_array($options) && !array_key_exists('allowTags', $options) &&
             !array_key_exists('allowAttribs', $options) && !array_key_exists('allowComments', $options))) {
@@ -132,7 +130,7 @@ class Zend_Filter_StripTags implements Zend_Filter_Interface
      *
      * @deprecated
      * @param  boolean $commentsAllowed
-     * @return Zend_Filter_StripTags Provides a fluent interface
+     * @return \Zend\Filter\StripTags Provides a fluent interface
      */
     public function setCommentsAllowed($commentsAllowed)
     {
@@ -154,7 +152,7 @@ class Zend_Filter_StripTags implements Zend_Filter_Interface
      * Sets the tagsAllowed option
      *
      * @param  array|string $tagsAllowed
-     * @return Zend_Filter_StripTags Provides a fluent interface
+     * @return \Zend\Filter\StripTags Provides a fluent interface
      */
     public function setTagsAllowed($tagsAllowed)
     {
@@ -207,7 +205,7 @@ class Zend_Filter_StripTags implements Zend_Filter_Interface
      * Sets the attributesAllowed option
      *
      * @param  array|string $attributesAllowed
-     * @return Zend_Filter_StripTags Provides a fluent interface
+     * @return \Zend\Filter\StripTags Provides a fluent interface
      */
     public function setAttributesAllowed($attributesAllowed)
     {

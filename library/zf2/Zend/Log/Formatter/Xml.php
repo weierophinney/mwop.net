@@ -17,21 +17,27 @@
  * @subpackage Formatter
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id$
  */
 
-/** Zend_Log_Formatter_Abstract */
-require_once 'Zend/Log/Formatter/Abstract.php';
+/**
+ * @namespace
+ */
+namespace Zend\Log\Formatter;
+
+use \Zend\Log\Formatter,
+    \Zend\Config\Config;
 
 /**
+ * @uses       DOMDocument
+ * @uses       DOMElement
+ * @uses       \Zend\Log\Formatter\AbstractFormatter
  * @category   Zend
  * @package    Zend_Log
  * @subpackage Formatter
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id$
  */
-class Zend_Log_Formatter_Xml extends Zend_Log_Formatter_Abstract
+class Xml extends AbstractFormatter
 {
     /**
      * @var string Name of root element
@@ -52,12 +58,12 @@ class Zend_Log_Formatter_Xml extends Zend_Log_Formatter_Abstract
      * Class constructor
      * (the default encoding is UTF-8)
      *
-     * @param array|Zend_Config $options
+     * @param array|\Zend\Config\Config $options
      * @return void
      */
     public function __construct($options = array())
     {
-        if ($options instanceof Zend_Config) {
+        if ($options instanceof Config) {
             $options = $options->toArray();
         } elseif (!is_array($options)) {
             $args = func_get_args();
@@ -94,10 +100,10 @@ class Zend_Log_Formatter_Xml extends Zend_Log_Formatter_Abstract
     /**
 	 * Factory for Zend_Log_Formatter_Xml classe
 	 *
-	 * @param array|Zend_Config $options
-	 * @return Zend_Log_Formatter_Xml
+	 * @param array|\Zend\Config\Config $options
+	 * @return \Zend\Log\Formatter\Xml
      */
-    public static function factory($options)
+    public static function factory($options = array())
     {
         return new self($options);
     }
@@ -116,7 +122,7 @@ class Zend_Log_Formatter_Xml extends Zend_Log_Formatter_Abstract
      * Set encoding
      *
      * @param  string $value
-     * @return Zend_Log_Formatter_Xml
+     * @return \Zend\Log\Formatter\Xml
      */
     public function setEncoding($value)
     {
@@ -142,14 +148,14 @@ class Zend_Log_Formatter_Xml extends Zend_Log_Formatter_Abstract
         }
 
         $enc = $this->getEncoding();
-        $dom = new DOMDocument('1.0', $enc);
-        $elt = $dom->appendChild(new DOMElement($this->_rootElement));
+        $dom = new \DOMDocument('1.0', $enc);
+        $elt = $dom->appendChild(new \DOMElement($this->_rootElement));
 
         foreach ($dataToInsert as $key => $value) {
             if($key == "message") {
                 $value = htmlspecialchars($value, ENT_COMPAT, $enc);
             }
-            $elt->appendChild(new DOMElement($key, $value));
+            $elt->appendChild(new \DOMElement($key, $value));
         }
 
         $xml = $dom->saveXML();

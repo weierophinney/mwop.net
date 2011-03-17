@@ -16,21 +16,21 @@
  * @package    Zend_Filter
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id$
  */
 
 /**
- * @see Zend_Filter_Interface
+ * @namespace
  */
-require_once 'Zend/Filter/Interface.php';
+namespace Zend\Filter;
 
 /**
+ * @uses       Zend\Filter\AbstractFilter
  * @category   Zend
  * @package    Zend_Filter
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Filter_HtmlEntities implements Zend_Filter_Interface
+class HtmlEntities extends AbstractFilter
 {
     /**
      * Corresponds to the second htmlentities() argument
@@ -62,9 +62,9 @@ class Zend_Filter_HtmlEntities implements Zend_Filter_Interface
      */
     public function __construct($options = array())
     {
-        if ($options instanceof Zend_Config) {
+        if ($options instanceof \Zend\Config\Config) {
             $options = $options->toArray();
-        } else if (!is_array($options)) {
+        } elseif (!is_array($options)) {
             $options = func_get_args();
             $temp['quotestyle'] = array_shift($options);
             if (!empty($options)) {
@@ -108,7 +108,7 @@ class Zend_Filter_HtmlEntities implements Zend_Filter_Interface
      * Sets the quoteStyle option
      *
      * @param  integer $quoteStyle
-     * @return Zend_Filter_HtmlEntities Provides a fluent interface
+     * @return \Zend\Filter\HtmlEntities Provides a fluent interface
      */
     public function setQuoteStyle($quoteStyle)
     {
@@ -131,7 +131,7 @@ class Zend_Filter_HtmlEntities implements Zend_Filter_Interface
      * Set encoding
      *
      * @param  string $value
-     * @return Zend_Filter_HtmlEntities
+     * @return \Zend\Filter\HtmlEntities
      */
     public function setEncoding($value)
     {
@@ -157,7 +157,7 @@ class Zend_Filter_HtmlEntities implements Zend_Filter_Interface
      * Proxies to {@link setEncoding()}
      *
      * @param  string $charSet
-     * @return Zend_Filter_HtmlEntities Provides a fluent interface
+     * @return \Zend\Filter\HtmlEntities Provides a fluent interface
      */
     public function setCharSet($charSet)
     {
@@ -178,7 +178,7 @@ class Zend_Filter_HtmlEntities implements Zend_Filter_Interface
      * Sets the doubleQuote option
      *
      * @param boolean $doubleQuote
-     * @return Zend_Filter_HtmlEntities Provides a fluent interface
+     * @return \Zend\Filter\HtmlEntities Provides a fluent interface
      */
     public function setDoubleQuote($doubleQuote)
     {
@@ -197,6 +197,11 @@ class Zend_Filter_HtmlEntities implements Zend_Filter_Interface
      */
     public function filter($value)
     {
-        return htmlentities((string) $value, $this->getQuoteStyle(), $this->getEncoding(), $this->getDoubleQuote());
+        return htmlentities(
+            (string) $value, 
+            $this->getQuoteStyle(), 
+            $this->getEncoding(), 
+            $this->getDoubleQuote()
+        );
     }
 }

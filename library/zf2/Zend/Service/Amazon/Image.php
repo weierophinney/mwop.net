@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -18,18 +17,23 @@
  * @subpackage Amazon
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id$
  */
 
+/**
+ * @namespace
+ */
+namespace Zend\Service\Amazon;
 
 /**
+ * @uses       DOMXPath
+ * @uses       Zend_Uri
  * @category   Zend
  * @package    Zend_Service
  * @subpackage Amazon
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Service_Amazon_Image
+class Image
 {
     /**
      * Image URL
@@ -58,11 +62,11 @@ class Zend_Service_Amazon_Image
      * @param  DOMElement $dom
      * @return void
      */
-    public function __construct(DOMElement $dom)
+    public function __construct(\DOMElement $dom)
     {
-        $xpath = new DOMXPath($dom->ownerDocument);
+        $xpath = new \DOMXPath($dom->ownerDocument);
         $xpath->registerNamespace('az', 'http://webservices.amazon.com/AWSECommerceService/2005-10-05');
-        $this->Url = Zend_Uri::factory($xpath->query('./az:URL/text()', $dom)->item(0)->data);
+        $this->Url = new \Zend\Uri\Url($xpath->query('./az:URL/text()', $dom)->item(0)->data);
         $this->Height = (int) $xpath->query('./az:Height/text()', $dom)->item(0)->data;
         $this->Width = (int) $xpath->query('./az:Width/text()', $dom)->item(0)->data;
     }

@@ -16,20 +16,21 @@
  * @package    Zend_Dojo
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id$
  */
 
-/** Zend_Exception */
-require_once 'Zend/Exception.php';
+/**
+ * @namespace
+ */
+namespace Zend\Dojo;
 
 /**
  * Exception class for Zend_Dojo
  *
- * @uses       Zend_Exception
+ * @uses       \Zend\Exception
  * @package    Zend_Dojo
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Dojo_Exception extends Zend_Exception
+interface Exception
 {
 }

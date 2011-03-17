@@ -16,8 +16,12 @@
  * @package    Zend_Tool
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id$
  */
+
+/**
+ * @namespace
+ */
+namespace Zend\Tool\Framework\Client\Interactive;
 
 /**
  * @category   Zend
@@ -25,7 +29,7 @@
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Tool_Framework_Client_Interactive_InputResponse
+class InputResponse
 {
 
     protected $_content = null;
