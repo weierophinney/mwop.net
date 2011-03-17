@@ -17,11 +17,15 @@
  * @subpackage DeveloperGarden
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @uses       Zend_Service_DeveloperGarden_Request_AbstractRequest
- * @uses       Zend_Service_DeveloperGarden_Request_Exception
+ * @see Zend_Service_DeveloperGarden_Request_RequestAbstract
+ */
+require_once 'Zend/Service/DeveloperGarden/Request/RequestAbstract.php';
+
+/**
  * @category   Zend
  * @package    Zend_Service
  * @subpackage DeveloperGarden
@@ -30,7 +34,7 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Service_DeveloperGarden_Request_ConferenceCall_GetConferenceListRequest
-    extends Zend_Service_DeveloperGarden_Request_AbstractRequest
+    extends Zend_Service_DeveloperGarden_Request_RequestAbstract
 {
     /**
      * @var integer
@@ -79,6 +83,7 @@ class Zend_Service_DeveloperGarden_Request_ConferenceCall_GetConferenceListReque
     public function setWhat($what)
     {
         if (!array_key_exists($what, $this->_whatValues)) {
+            require_once 'Zend/Service/DeveloperGarden/Request/Exception.php';
             throw new Zend_Service_DeveloperGarden_Request_Exception('What value not allowed.');
         }
         $this->what = $what;
@@ -88,7 +93,7 @@ class Zend_Service_DeveloperGarden_Request_ConferenceCall_GetConferenceListReque
     /**
      * sets $ownerId
      *
-     * @param $ownerId
+     * @param int $ownerId
      * @return Zend_Service_DeveloperGarden_Request_ConferenceCall_GetConferenceListRequest
      */
     public function setOwnerId($ownerId)

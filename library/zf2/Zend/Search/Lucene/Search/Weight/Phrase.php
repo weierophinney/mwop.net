@@ -17,38 +17,36 @@
  * @subpackage Search
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Search\Lucene\Search\Weight;
-use Zend\Search\Lucene\Search\Query;
-use Zend\Search\Lucene;
 
 /**
- * @uses       \Zend\Search\Lucene\Search\Weight\AbstractWeight
- * @uses       \Zend\Search\Lucene\Search\Query\Phrase
- * @uses       \Zend\Search\Lucene\SearchIndex
+ * Zend_Search_Lucene_Search_Weight
+ */
+require_once 'Zend/Search/Lucene/Search/Weight.php';
+
+
+/**
  * @category   Zend
  * @package    Zend_Search_Lucene
  * @subpackage Search
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Phrase extends AbstractWeight
+class Zend_Search_Lucene_Search_Weight_Phrase extends Zend_Search_Lucene_Search_Weight
 {
     /**
      * IndexReader.
      *
-     * @var \Zend\Search\Lucene\SearchIndex
+     * @var Zend_Search_Lucene_Interface
      */
     private $_reader;
 
     /**
      * The query that this concerns.
      *
-     * @var \Zend\Search\Lucene\Search\Query\Phrase
+     * @var Zend_Search_Lucene_Search_Query_Phrase
      */
     private $_query;
 
@@ -62,10 +60,11 @@ class Phrase extends AbstractWeight
     /**
      * Zend_Search_Lucene_Search_Weight_Phrase constructor
      *
-     * @param \Zend\Search\Lucene\Search\Query\Phrase $query
-     * @param \Zend\Search\Lucene\SearchIndex      $reader
+     * @param Zend_Search_Lucene_Search_Query_Phrase $query
+     * @param Zend_Search_Lucene_Interface           $reader
      */
-    public function __construct(Query\Phrase $query, Lucene\SearchIndex $reader)
+    public function __construct(Zend_Search_Lucene_Search_Query_Phrase $query,
+                                Zend_Search_Lucene_Interface           $reader)
     {
         $this->_query  = $query;
         $this->_reader = $reader;
@@ -105,3 +104,5 @@ class Phrase extends AbstractWeight
         $this->_value = $this->_queryWeight * $this->_idf;
     }
 }
+
+

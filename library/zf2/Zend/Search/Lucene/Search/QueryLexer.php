@@ -17,27 +17,23 @@
  * @subpackage Search
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Search\Lucene\Search;
+/** Zend_Search_Lucene_FSM */
+require_once 'Zend/Search/Lucene/FSM.php';
 
-use Zend\Search\Lucene,
-	Zend\Search\Lucene\Search\Exception\QueryParserException;
+/** Zend_Search_Lucene_Search_QueryParser */
+require_once 'Zend/Search/Lucene/Search/QueryToken.php';
 
 /**
- * @uses       \Zend\Search\Lucene\AbstractFSM
- * @uses       \Zend\Search\Lucene\FSMAction
- * @uses	   \Zend\Search\Lucene\Search\Exception\QueryParserException
  * @category   Zend
  * @package    Zend_Search_Lucene
  * @subpackage Search
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class QueryLexer extends Lucene\AbstractFSM
+class Zend_Search_Lucene_Search_QueryLexer extends Zend_Search_Lucene_FSM
 {
     /** State Machine states */
     const ST_WHITE_SPACE     = 0;
@@ -121,9 +117,9 @@ class QueryLexer extends Lucene\AbstractFSM
                                    self::IN_CHAR));
 
 
-        $lexemeModifierErrorAction    = new Lucene\FSMAction($this, 'lexModifierErrException');
-        $quoteWithinLexemeErrorAction = new Lucene\FSMAction($this, 'quoteWithinLexemeErrException');
-        $wrongNumberErrorAction       = new Lucene\FSMAction($this, 'wrongNumberErrException');
+        $lexemeModifierErrorAction    = new Zend_Search_Lucene_FSMAction($this, 'lexModifierErrException');
+        $quoteWithinLexemeErrorAction = new Zend_Search_Lucene_FSMAction($this, 'quoteWithinLexemeErrException');
+        $wrongNumberErrorAction       = new Zend_Search_Lucene_FSMAction($this, 'wrongNumberErrException');
 
 
 
@@ -247,12 +243,12 @@ class QueryLexer extends Lucene\AbstractFSM
 
 
         /** Actions */
-        $syntaxLexemeAction    = new Lucene\FSMAction($this, 'addQuerySyntaxLexeme');
-        $lexemeModifierAction  = new Lucene\FSMAction($this, 'addLexemeModifier');
-        $addLexemeAction       = new Lucene\FSMAction($this, 'addLexeme');
-        $addQuotedLexemeAction = new Lucene\FSMAction($this, 'addQuotedLexeme');
-        $addNumberLexemeAction = new Lucene\FSMAction($this, 'addNumberLexeme');
-        $addLexemeCharAction   = new Lucene\FSMAction($this, 'addLexemeChar');
+        $syntaxLexemeAction    = new Zend_Search_Lucene_FSMAction($this, 'addQuerySyntaxLexeme');
+        $lexemeModifierAction  = new Zend_Search_Lucene_FSMAction($this, 'addLexemeModifier');
+        $addLexemeAction       = new Zend_Search_Lucene_FSMAction($this, 'addLexeme');
+        $addQuotedLexemeAction = new Zend_Search_Lucene_FSMAction($this, 'addQuotedLexeme');
+        $addNumberLexemeAction = new Zend_Search_Lucene_FSMAction($this, 'addNumberLexeme');
+        $addLexemeCharAction   = new Zend_Search_Lucene_FSMAction($this, 'addLexemeChar');
 
 
         /** Syntax lexeme */
@@ -331,7 +327,7 @@ class QueryLexer extends Lucene\AbstractFSM
      * @param string $inputString
      * @param string $encoding
      * @return array
-     * @throws \Zend\Search\Lucene\Search\Exception\QueryParserException
+     * @throws Zend_Search_Lucene_Search_QueryParserException
      */
     public function tokenize($inputString, $encoding)
     {
@@ -361,7 +357,8 @@ class QueryLexer extends Lucene\AbstractFSM
         $this->process(self::IN_WHITE_SPACE);
 
         if ($this->getState() != self::ST_WHITE_SPACE) {
-            throw new QueryParserException('Unexpected end of query');
+            require_once 'Zend/Search/Lucene/Search/QueryParserException.php';
+            throw new Zend_Search_Lucene_Search_QueryParserException('Unexpected end of query');
         }
 
         $this->_queryString = null;
@@ -380,7 +377,7 @@ class QueryLexer extends Lucene\AbstractFSM
     /**
      * Add query syntax lexeme
      *
-     * @throws \Zend\Search\Lucene\Search\Exception\QueryParserException
+     * @throws Zend_Search_Lucene_Search_QueryParserException
      */
     public function addQuerySyntaxLexeme()
     {
@@ -394,25 +391,28 @@ class QueryLexer extends Lucene\AbstractFSM
             // check,
             if ($this->_queryStringPosition == count($this->_queryString)  ||
                 $this->_queryString[$this->_queryStringPosition] != $lexeme) {
-                    throw new QueryParserException('Two chars lexeme expected. ' . $this->_positionMsg());
+                    require_once 'Zend/Search/Lucene/Search/QueryParserException.php';
+                    throw new Zend_Search_Lucene_Search_QueryParserException('Two chars lexeme expected. ' . $this->_positionMsg());
                 }
 
             // duplicate character
             $lexeme .= $lexeme;
         }
 
-        $token = new QueryToken(QueryToken::TC_SYNTAX_ELEMENT,
+        $token = new Zend_Search_Lucene_Search_QueryToken(
+                                Zend_Search_Lucene_Search_QueryToken::TC_SYNTAX_ELEMENT,
                                 $lexeme,
                                 $this->_queryStringPosition);
 
         // Skip this lexeme if it's a field indicator ':' and treat previous as 'field' instead of 'word'
-        if ($token->type == QueryToken::TT_FIELD_INDICATOR) {
+        if ($token->type == Zend_Search_Lucene_Search_QueryToken::TT_FIELD_INDICATOR) {
             $token = array_pop($this->_lexemes);
-            if ($token === null  ||  $token->type != QueryToken::TT_WORD) {
-                throw new QueryParserException('Field mark \':\' must follow field name. ' . $this->_positionMsg());
+            if ($token === null  ||  $token->type != Zend_Search_Lucene_Search_QueryToken::TT_WORD) {
+                require_once 'Zend/Search/Lucene/Search/QueryParserException.php';
+                throw new Zend_Search_Lucene_Search_QueryParserException('Field mark \':\' must follow field name. ' . $this->_positionMsg());
             }
 
-            $token->type = QueryToken::TT_FIELD;
+            $token->type = Zend_Search_Lucene_Search_QueryToken::TT_FIELD;
         }
 
         $this->_lexemes[] = $token;
@@ -423,9 +423,10 @@ class QueryLexer extends Lucene\AbstractFSM
      */
     public function addLexemeModifier()
     {
-        $this->_lexemes[] = new QueryToken(QueryToken::TC_SYNTAX_ELEMENT,
-                                           $this->_queryString[$this->_queryStringPosition],
-                                           $this->_queryStringPosition);
+        $this->_lexemes[] = new Zend_Search_Lucene_Search_QueryToken(
+                                    Zend_Search_Lucene_Search_QueryToken::TC_SYNTAX_ELEMENT,
+                                    $this->_queryString[$this->_queryStringPosition],
+                                    $this->_queryStringPosition);
     }
 
 
@@ -434,9 +435,10 @@ class QueryLexer extends Lucene\AbstractFSM
      */
     public function addLexeme()
     {
-        $this->_lexemes[] = new QueryToken(QueryToken::TC_WORD,
-                                           $this->_currentLexeme,
-                                           $this->_queryStringPosition - 1);
+        $this->_lexemes[] = new Zend_Search_Lucene_Search_QueryToken(
+                                    Zend_Search_Lucene_Search_QueryToken::TC_WORD,
+                                    $this->_currentLexeme,
+                                    $this->_queryStringPosition - 1);
 
         $this->_currentLexeme = '';
     }
@@ -446,9 +448,10 @@ class QueryLexer extends Lucene\AbstractFSM
      */
     public function addQuotedLexeme()
     {
-        $this->_lexemes[] = new QueryToken(QueryToken::TC_PHRASE,
-                                           $this->_currentLexeme,
-                                           $this->_queryStringPosition);
+        $this->_lexemes[] = new Zend_Search_Lucene_Search_QueryToken(
+                                    Zend_Search_Lucene_Search_QueryToken::TC_PHRASE,
+                                    $this->_currentLexeme,
+                                    $this->_queryStringPosition);
 
         $this->_currentLexeme = '';
     }
@@ -458,9 +461,10 @@ class QueryLexer extends Lucene\AbstractFSM
      */
     public function addNumberLexeme()
     {
-        $this->_lexemes[] = new QueryToken(QueryToken::TC_NUMBER,
-                                           $this->_currentLexeme,
-                                           $this->_queryStringPosition - 1);
+        $this->_lexemes[] = new Zend_Search_Lucene_Search_QueryToken(
+                                    Zend_Search_Lucene_Search_QueryToken::TC_NUMBER,
+                                    $this->_currentLexeme,
+                                    $this->_queryStringPosition - 1);
         $this->_currentLexeme = '';
     }
 
@@ -489,15 +493,18 @@ class QueryLexer extends Lucene\AbstractFSM
      *********************************************************************/
     public function lexModifierErrException()
     {
-        throw new QueryParserException('Lexeme modifier character can be followed only by number, white space or query syntax element. ' . $this->_positionMsg());
+        require_once 'Zend/Search/Lucene/Search/QueryParserException.php';
+        throw new Zend_Search_Lucene_Search_QueryParserException('Lexeme modifier character can be followed only by number, white space or query syntax element. ' . $this->_positionMsg());
     }
     public function quoteWithinLexemeErrException()
     {
-        throw new QueryParserException('Quote within lexeme must be escaped by \'\\\' char. ' . $this->_positionMsg());
+        require_once 'Zend/Search/Lucene/Search/QueryParserException.php';
+        throw new Zend_Search_Lucene_Search_QueryParserException('Quote within lexeme must be escaped by \'\\\' char. ' . $this->_positionMsg());
     }
     public function wrongNumberErrException()
     {
-        throw new QueryParserException('Wrong number syntax.' . $this->_positionMsg());
+        require_once 'Zend/Search/Lucene/Search/QueryParserException.php';
+        throw new Zend_Search_Lucene_Search_QueryParserException('Wrong number syntax.' . $this->_positionMsg());
     }
 }
 

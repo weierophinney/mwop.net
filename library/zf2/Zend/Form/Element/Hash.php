@@ -19,26 +19,20 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * @namespace
- */
-namespace Zend\Form\Element;
-
-use Zend\Session\Container as SessionContainer,
-    Zend\View\ViewEngine as View;
+/** Zend_Form_Element_Xhtml */
+require_once 'Zend/Form/Element/Xhtml.php';
 
 /**
  * CSRF form protection
  *
- * @uses       \Zend\Form\Element\Xhtml
- * @uses       \Zend\Session\Container
  * @category   Zend
  * @package    Zend_Form
  * @subpackage Element
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
-class Hash extends Xhtml
+class Zend_Form_Element_Hash extends Zend_Form_Element_Xhtml
 {
     /**
      * Use formHidden view helper by default
@@ -60,7 +54,7 @@ class Hash extends Xhtml
     protected $_salt = 'salt';
 
     /**
-     * @var \Zend\Session\Container
+     * @var Zend_Session_Namespace
      */
     protected $_session;
 
@@ -76,8 +70,8 @@ class Hash extends Xhtml
      * Creates session namespace for CSRF token, and adds validator for CSRF
      * token.
      *
-     * @param  string|array|\Zend\Config\Config $spec
-     * @param  array|\Zend\Config\Config $options
+     * @param  string|array|Zend_Config $spec
+     * @param  array|Zend_Config $options
      * @return void
      */
     public function __construct($spec, $options = null)
@@ -92,8 +86,8 @@ class Hash extends Xhtml
     /**
      * Set session object
      *
-     * @param  \Zend\Session\Container $session
-     * @return \Zend\Form\Element\Hash
+     * @param  Zend_Session_Namespace $session
+     * @return Zend_Form_Element_Hash
      */
     public function setSession($session)
     {
@@ -106,12 +100,13 @@ class Hash extends Xhtml
      *
      * Instantiate session object if none currently exists
      *
-     * @return \Zend\Session\Container
+     * @return Zend_Session_Namespace
      */
     public function getSession()
     {
         if (null === $this->_session) {
-            $this->_session = new SessionContainer($this->getSessionName());
+            require_once 'Zend/Session/Namespace.php';
+            $this->_session = new Zend_Session_Namespace($this->getSessionName());
         }
         return $this->_session;
     }
@@ -122,7 +117,7 @@ class Hash extends Xhtml
      * Creates Session namespace, and initializes CSRF token in session.
      * Additionally, adds validator for validating CSRF token.
      *
-     * @return \Zend\Form\Element\Hash
+     * @return Zend_Form_Element_Hash
      */
     public function initCsrfValidator()
     {
@@ -141,7 +136,7 @@ class Hash extends Xhtml
      * Salt for CSRF token
      *
      * @param  string $salt
-     * @return \Zend\Form\Element\Hash
+     * @return Zend_Form_Element_Hash
      */
     public function setSalt($salt)
     {
@@ -183,14 +178,14 @@ class Hash extends Xhtml
      */
     public function getSessionName()
     {
-        return str_replace('\\', '_', __CLASS__) . '_' . $this->getSalt() . '_' . $this->getName();
+        return __CLASS__ . '_' . $this->getSalt() . '_' . $this->getName();
     }
 
     /**
      * Set timeout for CSRF session token
      *
      * @param  int $ttl
-     * @return \Zend\Form\Element\Hash
+     * @return Zend_Form_Element_Hash
      */
     public function setTimeout($ttl)
     {
@@ -234,10 +229,10 @@ class Hash extends Xhtml
     /**
      * Render CSRF token in form
      *
-     * @param  \Zend\View\ViewEngine $view
+     * @param  Zend_View_Interface $view
      * @return string
      */
-    public function render(View $view = null)
+    public function render(Zend_View_Interface $view = null)
     {
         $this->initCsrfToken();
         return parent::render($view);

@@ -15,22 +15,22 @@
  * @category   Zend
  * @package    Zend_Http
  * @subpackage Client_Exception
+ * @version    $Id$
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
 /**
- * @namespace
+ * @see Zend_Http_Exception
  */
-namespace Zend\Http\Client;
+require_once 'Zend/Http/Exception.php';
 
 /**
- * @uses       \Zend\Http\Exception
  * @category   Zend
  * @package    Zend_Http
  * @subpackage Client
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-interface Exception extends \Zend\Http\Exception
+class Zend_Http_Client_Exception extends Zend_Http_Exception
 {}

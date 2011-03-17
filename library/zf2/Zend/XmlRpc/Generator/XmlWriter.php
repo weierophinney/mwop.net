@@ -17,23 +17,18 @@
  * @subpackage Generator
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @var Zend_XmlRpc_Generator_GeneratorAbstract
  */
-namespace Zend\XmlRpc\Generator;
+require_once 'Zend/XmlRpc/Generator/GeneratorAbstract.php';
 
 /**
  * XML generator adapter based on XMLWriter
- *
- * @uses       XMLWriter
- * @uses       Zend\XmlRpc\Generator\AbstractGenerator
- * @category   Zend
- * @package    Zend_XmlRpc
- * @subpackage Generator
  */
-class XmlWriter extends AbstractGenerator
+class Zend_XmlRpc_Generator_XmlWriter extends Zend_XmlRpc_Generator_GeneratorAbstract
 {
     /**
      * XMLWriter instance
@@ -49,7 +44,7 @@ class XmlWriter extends AbstractGenerator
      */
     protected function _init()
     {
-        $this->_xmlWriter = new \XMLWriter();
+        $this->_xmlWriter = new XMLWriter();
         $this->_xmlWriter->openMemory();
         $this->_xmlWriter->startDocument('1.0', $this->_encoding);
     }
@@ -90,11 +85,6 @@ class XmlWriter extends AbstractGenerator
         return $this;
     }
 
-    /**
-     * Emit XML document
-     * 
-     * @return string
-     */
     public function saveXml()
     {
         return $this->_xmlWriter->flush(false);

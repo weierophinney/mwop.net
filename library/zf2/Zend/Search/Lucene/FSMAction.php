@@ -16,12 +16,9 @@
  * @package    Zend_Search_Lucene
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Search\Lucene;
 
 /**
  * Abstract Finite State Machine
@@ -32,7 +29,7 @@ namespace Zend\Search\Lucene;
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class FSMAction
+class Zend_Search_Lucene_FSMAction
 {
     /**
      * Object reference
@@ -66,3 +63,4 @@ class FSMAction
         $this->_object->$methodName();
     }
 }
+

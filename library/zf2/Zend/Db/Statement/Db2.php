@@ -17,25 +17,23 @@
  * @subpackage Statement
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Db_Statement
  */
-namespace Zend\Db\Statement;
+require_once 'Zend/Db/Statement.php';
 
 /**
- * Extends for Db2 native adapter.
+ * Extends for DB2 native adapter.
  *
- * @uses       \Zend\Db\Db
- * @uses       \Zend\Db\Statement\AbstractStatement
- * @uses       \Zend\Db\Statement\Db2Exception
  * @package    Zend_Db
  * @subpackage Statement
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Db2 extends AbstractStatement
+class Zend_Db_Statement_Db2 extends Zend_Db_Statement
 {
 
     /**
@@ -53,7 +51,7 @@ class Db2 extends AbstractStatement
      *
      * @param string $sql
      * @return void
-     * @throws \Zend\Db\Statement\Db2Exception
+     * @throws Zend_Db_Statement_Db2_Exception
      */
     public function _prepare($sql)
     {
@@ -64,7 +62,11 @@ class Db2 extends AbstractStatement
         $this->_stmt = @db2_prepare($connection, $sql);
 
         if (!$this->_stmt) {
-            throw new Db2Exception(
+            /**
+             * @see Zend_Db_Statement_Db2_Exception
+             */
+            require_once 'Zend/Db/Statement/Db2/Exception.php';
+            throw new Zend_Db_Statement_Db2_Exception(
                 db2_stmt_errormsg(),
                 db2_stmt_error()
             );
@@ -80,22 +82,26 @@ class Db2 extends AbstractStatement
      * @param mixed $length    OPTIONAL Length of SQL parameter.
      * @param mixed $options   OPTIONAL Other options.
      * @return bool
-     * @throws \Zend\Db\Statement\Db2Exception
+     * @throws Zend_Db_Statement_Db2_Exception
      */
     public function _bindParam($parameter, &$variable, $type = null, $length = null, $options = null)
     {
         if ($type === null) {
-            $type = Db2_PARAM_IN;
+            $type = DB2_PARAM_IN;
         }
 
         if (isset($options['data-type'])) {
             $datatype = $options['data-type'];
         } else {
-            $datatype = Db2_CHAR;
+            $datatype = DB2_CHAR;
         }
 
         if (!db2_bind_param($this->_stmt, $position, "variable", $type, $datatype)) {
-            throw new Db2Exception(
+            /**
+             * @see Zend_Db_Statement_Db2_Exception
+             */
+            require_once 'Zend/Db/Statement/Db2/Exception.php';
+            throw new Zend_Db_Statement_Db2_Exception(
                 db2_stmt_errormsg(),
                 db2_stmt_error()
             );
@@ -168,7 +174,7 @@ class Db2 extends AbstractStatement
         }
 
         /*
-         * Return three-valued array like PDO.  But Db2 does not distinguish
+         * Return three-valued array like PDO.  But DB2 does not distinguish
          * between SQLCODE and native RDBMS error code, so repeat the SQLCODE.
          */
         return array(
@@ -183,7 +189,7 @@ class Db2 extends AbstractStatement
      *
      * @param array $params OPTIONAL Values to bind to parameter placeholders.
      * @return bool
-     * @throws \Zend\Db\Statement\Db2Exception
+     * @throws Zend_Db_Statement_Db2_Exception
      */
     public function _execute(array $params = null)
     {
@@ -199,7 +205,11 @@ class Db2 extends AbstractStatement
         }
 
         if ($retval === false) {
-            throw new Db2Exception(
+            /**
+             * @see Zend_Db_Statement_Db2_Exception
+             */
+            require_once 'Zend/Db/Statement/Db2/Exception.php';
+            throw new Zend_Db_Statement_Db2_Exception(
                 db2_stmt_errormsg(),
                 db2_stmt_error());
         }
@@ -227,7 +237,7 @@ class Db2 extends AbstractStatement
      * @param int $cursor OPTIONAL Absolute, relative, or other.
      * @param int $offset OPTIONAL Number for absolute or relative cursors.
      * @return mixed Array, object, or scalar depending on fetch mode.
-     * @throws \Zend\Db\Statement\Db2Exception
+     * @throws Zend_Db_Statement_Db2_Exception
      */
     public function fetch($style = null, $cursor = null, $offset = null)
     {
@@ -240,26 +250,30 @@ class Db2 extends AbstractStatement
         }
 
         switch ($style) {
-            case Db\Db::FETCH_NUM :
+            case Zend_Db::FETCH_NUM :
                 $row = db2_fetch_array($this->_stmt);
                 break;
-            case Db\Db::FETCH_ASSOC :
+            case Zend_Db::FETCH_ASSOC :
                 $row = db2_fetch_assoc($this->_stmt);
                 break;
-            case Db\Db::FETCH_BOTH :
+            case Zend_Db::FETCH_BOTH :
                 $row = db2_fetch_both($this->_stmt);
                 break;
-            case Db\Db::FETCH_OBJ :
+            case Zend_Db::FETCH_OBJ :
                 $row = db2_fetch_object($this->_stmt);
                 break;
-            case Db\Db::FETCH_BOUND:
+            case Zend_Db::FETCH_BOUND:
                 $row = db2_fetch_both($this->_stmt);
                 if ($row !== false) {
                     return $this->_fetchBound($row);
                 }
                 break;
             default:
-                throw new Db2Exception("Invalid fetch mode '$style' specified");
+                /**
+                 * @see Zend_Db_Statement_Db2_Exception
+                 */
+                require_once 'Zend/Db/Statement/Db2/Exception.php';
+                throw new Zend_Db_Statement_Db2_Exception("Invalid fetch mode '$style' specified");
                 break;
         }
 
@@ -275,7 +289,7 @@ class Db2 extends AbstractStatement
      */
     public function fetchObject($class = 'stdClass', array $config = array())
     {
-        $obj = $this->fetch(Db\Db::FETCH_OBJ);
+        $obj = $this->fetch(Zend_Db::FETCH_OBJ);
         return $obj;
     }
 
@@ -285,11 +299,15 @@ class Db2 extends AbstractStatement
      * the results of multiple queries.
      *
      * @return bool
-     * @throws \Zend\Db\Statement\Db2Exception
+     * @throws Zend_Db_Statement_Db2_Exception
      */
     public function nextRowset()
     {
-        throw new Db2Exception(__FUNCTION__ . '() is not implemented');
+        /**
+         * @see Zend_Db_Statement_Db2_Exception
+         */
+        require_once 'Zend/Db/Statement/Db2/Exception.php';
+        throw new Zend_Db_Statement_Db2_Exception(__FUNCTION__ . '() is not implemented');
     }
 
     /**

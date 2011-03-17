@@ -16,29 +16,23 @@
  * @package    Zend_View
  * @subpackage Helper
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @version    $Id$
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * @namespace
- */
-namespace Zend\View\Helper;
-use Zend\View;
+/** Zend_View_Helper_Placeholder_Container_Standalone */
+require_once 'Zend/View/Helper/Placeholder/Container/Standalone.php';
 
 /**
  * Helper for setting and retrieving stylesheets
  *
- * @uses       stdClass
- * @uses       \Zend\View\Helper\Placeholder\Container\AbstractContainer
- * @uses       \Zend\View\Helper\Placeholder\Container\Exception
- * @uses       \Zend\View\Helper\Placeholder\Container\Standalone
- * @uses       \Zend\View\Exception
+ * @uses       Zend_View_Helper_Placeholder_Container_Standalone
  * @package    Zend_View
  * @subpackage Helper
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class HeadStyle extends Placeholder\Container\Standalone
+class Zend_View_Helper_HeadStyle extends Zend_View_Helper_Placeholder_Container_Standalone
 {
     /**
      * Registry key for placeholder
@@ -100,9 +94,9 @@ class HeadStyle extends Placeholder\Container\Standalone
      * @param  string $content Stylesheet contents
      * @param  string $placement Append, prepend, or set
      * @param  string|array $attributes Optional attributes to utilize
-     * @return \Zend\View\Helper\HeadStyle
+     * @return Zend_View_Helper_HeadStyle
      */
-    public function direct($content = null, $placement = 'APPEND', $attributes = array())
+    public function headStyle($content = null, $placement = 'APPEND', $attributes = array())
     {
         if ((null !== $content) && is_string($content)) {
             switch (strtoupper($placement)) {
@@ -135,7 +129,7 @@ class HeadStyle extends Placeholder\Container\Standalone
      * @param  string $method
      * @param  array $args
      * @return void
-     * @throws \Zend\View\Exception When no $content provided or invalid method
+     * @throws Zend_View_Exception When no $content provided or invalid method
      */
     public function __call($method, $args)
     {
@@ -152,7 +146,8 @@ class HeadStyle extends Placeholder\Container\Standalone
             }
 
             if (1 > $argc) {
-                $e = new View\Exception(sprintf('Method "%s" requires minimally content for the stylesheet', $method));
+                require_once 'Zend/View/Exception.php';
+                $e = new Zend_View_Exception(sprintf('Method "%s" requires minimally content for the stylesheet', $method));
                 $e->setView($this->view);
                 throw $e;
             }
@@ -186,7 +181,7 @@ class HeadStyle extends Placeholder\Container\Standalone
      */
     protected function _isValid($value)
     {
-        if ((!$value instanceof \stdClass)
+        if ((!$value instanceof stdClass)
             || !isset($value->content)
             || !isset($value->attributes))
         {
@@ -205,7 +200,8 @@ class HeadStyle extends Placeholder\Container\Standalone
     public function append($value)
     {
         if (!$this->_isValid($value)) {
-            $e = new View\Exception('Invalid value passed to append; please use appendStyle()');
+            require_once 'Zend/View/Exception.php';
+            $e = new Zend_View_Exception('Invalid value passed to append; please use appendStyle()');
             $e->setView($this->view);
             throw $e;
         }
@@ -223,7 +219,8 @@ class HeadStyle extends Placeholder\Container\Standalone
     public function offsetSet($index, $value)
     {
         if (!$this->_isValid($value)) {
-            $e = new View\Exception('Invalid value passed to offsetSet; please use offsetSetStyle()');
+            require_once 'Zend/View/Exception.php';
+            $e = new Zend_View_Exception('Invalid value passed to offsetSet; please use offsetSetStyle()');
             $e->setView($this->view);
             throw $e;
         }
@@ -240,7 +237,8 @@ class HeadStyle extends Placeholder\Container\Standalone
     public function prepend($value)
     {
         if (!$this->_isValid($value)) {
-            $e = new View\Exception('Invalid value passed to prepend; please use prependStyle()');
+            require_once 'Zend/View/Exception.php';
+            $e = new Zend_View_Exception('Invalid value passed to prepend; please use prependStyle()');
             $e->setView($this->view);
             throw $e;
         }
@@ -257,7 +255,8 @@ class HeadStyle extends Placeholder\Container\Standalone
     public function set($value)
     {
         if (!$this->_isValid($value)) {
-            $e = new View\Exception('Invalid value passed to set; please use setStyle()');
+            require_once 'Zend/View/Exception.php';
+            $e = new Zend_View_Exception('Invalid value passed to set; please use setStyle()');
             $e->setView($this->view);
             throw $e;
         }
@@ -272,10 +271,11 @@ class HeadStyle extends Placeholder\Container\Standalone
      * @param  string $typeOrAttrs
      * @return void
      */
-    public function captureStart($type = Placeholder\Container\AbstractContainer::APPEND, $attrs = null)
+    public function captureStart($type = Zend_View_Helper_Placeholder_Container_Abstract::APPEND, $attrs = null)
     {
         if ($this->_captureLock) {
-            $e = new Placeholder\Container\Exception('Cannot nest headStyle captures');
+            require_once 'Zend/View/Helper/Placeholder/Container/Exception.php';
+            $e = new Zend_View_Helper_Placeholder_Container_Exception('Cannot nest headStyle captures');
             $e->setView($this->view);
             throw $e;
         }
@@ -299,13 +299,13 @@ class HeadStyle extends Placeholder\Container\Standalone
         $this->_captureLock  = false;
 
         switch ($this->_captureType) {
-            case Placeholder\Container\AbstractContainer::SET:
+            case Zend_View_Helper_Placeholder_Container_Abstract::SET:
                 $this->setStyle($content, $attrs);
                 break;
-            case Placeholder\Container\AbstractContainer::PREPEND:
+            case Zend_View_Helper_Placeholder_Container_Abstract::PREPEND:
                 $this->prependStyle($content, $attrs);
                 break;
-            case Placeholder\Container\AbstractContainer::APPEND:
+            case Zend_View_Helper_Placeholder_Container_Abstract::APPEND:
             default:
                 $this->appendStyle($content, $attrs);
                 break;
@@ -319,12 +319,12 @@ class HeadStyle extends Placeholder\Container\Standalone
      * @param  string $indent Indentation to use
      * @return string
      */
-    public function itemToString(\stdClass $item, $indent)
+    public function itemToString(stdClass $item, $indent)
     {
         $attrString = '';
         if (!empty($item->attributes)) {
             $enc = 'UTF-8';
-            if ($this->view instanceof View\ViewEngine
+            if ($this->view instanceof Zend_View_Interface
                 && method_exists($this->view, 'getEncoding')
             ) {
                 $enc = $this->view->getEncoding();
@@ -417,7 +417,7 @@ class HeadStyle extends Placeholder\Container\Standalone
             $attributes['media'] = implode(',', $attributes['media']);
         }
 
-        $data = new \stdClass();
+        $data = new stdClass();
         $data->content    = $content;
         $data->attributes = $attributes;
 

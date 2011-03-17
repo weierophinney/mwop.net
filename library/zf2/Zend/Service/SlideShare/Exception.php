@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework
  *
@@ -17,12 +18,13 @@
  * @subpackage SlideShare
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Service_Exception
  */
-namespace Zend\Service\SlideShare;
+require_once 'Zend/Service/Exception.php';
 
 /**
  * @category   Zend
@@ -31,6 +33,6 @@ namespace Zend\Service\SlideShare;
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-interface Exception
+class Zend_Service_SlideShare_Exception extends Zend_Service_Exception
 {
 }

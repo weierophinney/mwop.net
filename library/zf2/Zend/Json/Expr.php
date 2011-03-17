@@ -17,12 +17,8 @@
  * @subpackage Expr
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
-
-/**
- * @namespace
- */
-namespace Zend\Json;
 
 /**
  * Class for Zend_Json encode method.
@@ -52,7 +48,7 @@ namespace Zend\Json;
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Expr
+class Zend_Json_Expr
 {
     /**
      * Storage for javascript expression.

@@ -17,14 +17,8 @@
  * @subpackage Framework
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
-
-/**
- * @namespace
- */
-namespace Zend\Tool\Project\Context\Zf;
-
-use Zend\Tool\Project\Profile\Resource\Resource;
 
 /**
  * This class is the front most class for utilizing Zend_Tool_Project
@@ -32,21 +26,19 @@ use Zend\Tool\Project\Profile\Resource\Resource;
  * A profile is a hierarchical set of resources that keep track of
  * items within a specific project.
  *
- * @uses       \Zend\Tool\Project\Context\Filesystem\File
  * @category   Zend
  * @package    Zend_Tool
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-abstract class AbstractClassFile 
-    extends \Zend\Tool\Project\Context\Filesystem\File
+abstract class Zend_Tool_Project_Context_Zf_AbstractClassFile extends Zend_Tool_Project_Context_Filesystem_File
 {
-    
+
     /**
      * getFullClassName()
-     * 
-     * @param $localClassName
-     * @param $classContextName
+     *
+     * @param string $localClassName
+     * @param string $classContextName
      */
     public function getFullClassName($localClassName, $classContextName = null)
     {
@@ -59,9 +51,9 @@ abstract class AbstractClassFile
                 $containingResource = $currentResource;
                 break;
             }
-        } while ($currentResource instanceof Resource
+        } while ($currentResource instanceof Zend_Tool_Project_Profile_Resource
             && $currentResource = $currentResource->getParentResource());
-        
+
         $fullClassName = '';
 
         // go find the proper prefix
@@ -70,13 +62,13 @@ abstract class AbstractClassFile
                 $prefix = $containingResource->getAttribute('classNamePrefix');
                 $fullClassName = $prefix;
             } elseif ($containingResource->getName() == 'ModuleDirectory') {
-                $prefix = $containingResource->getAttribute('moduleName') . '\\';
-                $fullClassName = $prefix;    
+                $prefix = ucfirst($containingResource->getAttribute('moduleName')) . '_';
+                $fullClassName = $prefix;
             }
         }
 
         if ($classContextName) {
-            $fullClassName .= rtrim($classContextName, '\\') . '\\';
+            $fullClassName .= rtrim($classContextName, '_') . '_';
         }
         $fullClassName .= $localClassName;
 

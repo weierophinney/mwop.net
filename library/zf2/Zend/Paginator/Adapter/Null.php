@@ -16,23 +16,21 @@
  * @package    Zend_Paginator
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Paginator_Adapter_Interface
  */
-namespace Zend\Paginator\Adapter;
-
-use Zend\Paginator\Adapter;
+require_once 'Zend/Paginator/Adapter/Interface.php';
 
 /**
- * @uses       \Zend\Paginator\Adapter
  * @category   Zend
  * @package    Zend_Paginator
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Null implements Adapter
+class Zend_Paginator_Adapter_Null implements Zend_Paginator_Adapter_Interface
 {
     /**
      * Item count
@@ -47,7 +45,7 @@ class Null implements Adapter
      * @param array $count Total item count
      */
     public function __construct($count = 0)
-    {;
+    {
         $this->_count = $count;
     }
 

@@ -17,12 +17,9 @@
  * @subpackage Storage
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Search\Lucene\Storage;
 
 /**
  * @category   Zend
@@ -31,7 +28,7 @@ namespace Zend\Search\Lucene\Storage;
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-interface Directory
+abstract class Zend_Search_Lucene_Storage_Directory
 {
 
     /**
@@ -39,22 +36,22 @@ interface Directory
      *
      * @return void
      */
-    public function close();
+    abstract public function close();
 
     /**
      * Returns an array of strings, one for each file in the directory.
      *
      * @return array
      */
-    public function fileList();
+    abstract public function fileList();
 
     /**
      * Creates a new, empty file in the directory with the given $filename.
      *
      * @param string $filename
-     * @return \Zend\Search\Lucene\Storage\File
+     * @return Zend_Search_Lucene_Storage_File
      */
-    public function createFile($filename);
+    abstract public function createFile($filename);
 
 
     /**
@@ -63,7 +60,7 @@ interface Directory
      * @param string $filename
      * @return void
      */
-    public function deleteFile($filename);
+    abstract public function deleteFile($filename);
 
     /**
      * Purge file if it's cached by directory object
@@ -73,7 +70,7 @@ interface Directory
      * @param string $filename
      * @return void
      */
-    public function purgeFile($filename);
+    abstract public function purgeFile($filename);
 
     /**
      * Returns true if a file with the given $filename exists.
@@ -81,7 +78,7 @@ interface Directory
      * @param string $filename
      * @return boolean
      */
-    public function fileExists($filename);
+    abstract public function fileExists($filename);
 
 
     /**
@@ -90,7 +87,7 @@ interface Directory
      * @param string $filename
      * @return integer
      */
-    public function fileLength($filename);
+    abstract public function fileLength($filename);
 
 
     /**
@@ -99,7 +96,7 @@ interface Directory
      * @param string $filename
      * @return integer
      */
-    public function fileModified($filename);
+    abstract public function fileModified($filename);
 
 
     /**
@@ -109,7 +106,7 @@ interface Directory
      * @param string $to
      * @return void
      */
-    public function renameFile($from, $to);
+    abstract public function renameFile($from, $to);
 
 
     /**
@@ -118,7 +115,7 @@ interface Directory
      * @param string $filename
      * @return void
      */
-    public function touchFile($filename);
+    abstract public function touchFile($filename);
 
 
     /**
@@ -131,7 +128,9 @@ interface Directory
      *
      * @param string $filename
      * @param boolean $shareHandler
-     * @return \Zend\Search\Lucene\Storage\File
+     * @return Zend_Search_Lucene_Storage_File
      */
-    public function getFileObject($filename, $shareHandler = true);
+    abstract public function getFileObject($filename, $shareHandler = true);
+
 }
+

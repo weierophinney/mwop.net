@@ -17,29 +17,28 @@
  * @subpackage Adapter
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Db\Adapter\Pdo\Ibm;
-use Zend\Db\Adapter;
+
+/** @see Zend_Db_Adapter_Pdo_Ibm */
+require_once 'Zend/Db/Adapter/Pdo/Ibm.php';
+
+/** @see Zend_Db_Statement_Pdo_Ibm */
+require_once 'Zend/Db/Statement/Pdo/Ibm.php';
+
 
 /**
- * @uses       \Zend\Db\Db
- * @uses       \Zend\Db\Adapter\Exception
- * @uses       \Zend\Db\Adapter\Pdo\Ibm\Ibm
- * @uses       \Zend\Db\Statement\Pdo\Ibm
  * @category   Zend
  * @package    Zend_Db
  * @subpackage Adapter
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Db2
+class Zend_Db_Adapter_Pdo_Ibm_Db2
 {
     /**
-     * @var \Zend\Db\Adapter\AbstractAdapter
+     * @var Zend_Db_Adapter_Abstract
      */
     protected $_adapter = null;
 
@@ -49,7 +48,7 @@ class Db2
      * It will be used to generate non-generic SQL
      * for a particular data server
      *
-     * @param \Zend\Db\Adapter\AbstractAdapter $adapter
+     * @param Zend_Db_Adapter_Abstract $adapter
      */
     public function __construct($adapter)
     {
@@ -69,7 +68,7 @@ class Db2
     }
 
     /**
-     * Db2 catalog lookup for describe table
+     * DB2 catalog lookup for describe table
      *
      * @param string $tableName
      * @param string $schemaName OPTIONAL
@@ -101,7 +100,7 @@ class Db2
         /**
          * To avoid case issues, fetch using FETCH_NUM
          */
-        $result = $stmt->fetchAll(\Zend\Db\Db::FETCH_NUM);
+        $result = $stmt->fetchAll(Zend_Db::FETCH_NUM);
 
         /**
          * The ordering of columns is defined by the query so we can map
@@ -127,7 +126,7 @@ class Db2
                 $primaryPosition = $row[$colseq];
             }
             /**
-             * In Ibm Db2, an column can be IDENTITY
+             * In IBM DB2, an column can be IDENTITY
              * even if it is not part of the PRIMARY KEY.
              */
             if ($row[$identityCol] == 'Y') {
@@ -156,23 +155,27 @@ class Db2
     }
 
     /**
-     * Adds a Db2-specific LIMIT clause to the SELECT statement.
+     * Adds a DB2-specific LIMIT clause to the SELECT statement.
      *
      * @param string $sql
      * @param integer $count
      * @param integer $offset OPTIONAL
-     * @throws \Zend\Db\Adapter\Exception
+     * @throws Zend_Db_Adapter_Exception
      * @return string
      */
     public function limit($sql, $count, $offset = 0)
     {
         $count = intval($count);
         if ($count < 0) {
-            throw new Adapter\Exception("LIMIT argument count=$count is not valid");
+            /** @see Zend_Db_Adapter_Exception */
+            require_once 'Zend/Db/Adapter/Exception.php';
+            throw new Zend_Db_Adapter_Exception("LIMIT argument count=$count is not valid");
         } else {
             $offset = intval($offset);
             if ($offset < 0) {
-                throw new Adapter\Exception("LIMIT argument offset=$offset is not valid");
+                /** @see Zend_Db_Adapter_Exception */
+                require_once 'Zend/Db/Adapter/Exception.php';
+                throw new Zend_Db_Adapter_Exception("LIMIT argument offset=$offset is not valid");
             }
 
             if ($offset == 0 && $count > 0) {
@@ -180,7 +183,7 @@ class Db2
                 return $limit_sql;
             }
             /**
-             * Db2 does not implement the LIMIT clause as some RDBMS do.
+             * DB2 does not implement the LIMIT clause as some RDBMS do.
              * We have to simulate it with subqueries and ROWNUM.
              * Unfortunately because we use the column wildcard "*",
              * this puts an extra column into the query result set.
@@ -198,27 +201,27 @@ class Db2
     }
 
     /**
-     * Db2-specific last sequence id
+     * DB2-specific last sequence id
      *
      * @param string $sequenceName
      * @return integer
      */
     public function lastSequenceId($sequenceName)
     {
-        $sql = 'SELECT PREVVAL FOR '.$this->_adapter->quoteIdentifier($sequenceName).' AS VAL FROM SYSIbm.SYSDUMMY1';
+        $sql = 'SELECT PREVVAL FOR '.$this->_adapter->quoteIdentifier($sequenceName).' AS VAL FROM SYSIBM.SYSDUMMY1';
         $value = $this->_adapter->fetchOne($sql);
         return $value;
     }
 
     /**
-     * Db2-specific sequence id value
+     * DB2-specific sequence id value
      *
      *  @param string $sequenceName
      *  @return integer
      */
     public function nextSequenceId($sequenceName)
     {
-        $sql = 'SELECT NEXTVAL FOR '.$this->_adapter->quoteIdentifier($sequenceName).' AS VAL FROM SYSIbm.SYSDUMMY1';
+        $sql = 'SELECT NEXTVAL FOR '.$this->_adapter->quoteIdentifier($sequenceName).' AS VAL FROM SYSIBM.SYSDUMMY1';
         $value = $this->_adapter->fetchOne($sql);
         return $value;
     }

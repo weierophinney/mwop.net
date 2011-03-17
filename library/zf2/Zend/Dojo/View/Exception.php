@@ -17,21 +17,21 @@
  * @subpackage View
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Dojo_Exception
  */
-namespace Zend\Dojo\View;
+require_once 'Zend/Dojo/Exception.php';
 
 /**
- * @uses       \Zend\Dojo\Exception
  * @category   Zend
  * @package    Zend_Dojo
  * @subpackage View
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-interface Exception extends \Zend\Dojo\Exception
+class Zend_Dojo_View_Exception extends Zend_Dojo_Exception
 {
 }

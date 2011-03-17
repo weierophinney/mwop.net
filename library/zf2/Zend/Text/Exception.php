@@ -16,19 +16,23 @@
  * @package   Zend_Text
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id$
  */
 
 /**
- * @namespace
+ * Zend_Exception
  */
-namespace Zend\Text;
+require_once 'Zend/Exception.php';
 
 /**
- * @uses       Zend\Exception
- * @category   Zend
- * @package    Zend_Text
+ * Exception class for Zend_Text
+ *
+ * @category  Zend
+ * @package   Zend_Text
+ * @uses      Zend_Exception
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
  */
-interface Exception
-{}
+class Zend_Text_Exception extends Zend_Exception
+{
+}

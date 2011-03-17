@@ -17,22 +17,24 @@
  * @subpackage Value
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\XmlRpc\Value;
 
 /**
- * @uses       \Zend\XmlRpc\Value\Collection
+ * Zend_XmlRpc_Value_Collection
+ */
+require_once 'Zend/XmlRpc/Value/Collection.php';
+
+
+/**
  * @category   Zend
  * @package    Zend_XmlRpc
  * @subpackage Value
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Struct extends Collection
+class Zend_XmlRpc_Value_Struct extends Zend_XmlRpc_Value_Collection
 {
     /**
      * Set the value of an struct native type
@@ -59,6 +61,7 @@ class Struct extends Collection
 
         if (is_array($this->_value)) {
             foreach ($this->_value as $name => $val) {
+                /* @var $val Zend_XmlRpc_Value */
                 $generator->openElement('member')
                           ->openElement('name', $name)
                           ->closeElement('name');

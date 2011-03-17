@@ -17,12 +17,9 @@
  * @subpackage Analysis
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Search\Lucene\Analysis;
 
 /**
  * @category   Zend
@@ -31,7 +28,7 @@ namespace Zend\Search\Lucene\Analysis;
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Token
+class Zend_Search_Lucene_Analysis_Token
 {
     /**
      * The text of the term.

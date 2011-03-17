@@ -15,28 +15,30 @@
  * @category   Zend
  * @package    Zend_Date
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @version    $Id$
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
+
 /**
- * @namespace
+ * Zend_Exception
  */
-namespace Zend\View;
+require_once 'Zend/Exception.php';
+
 
 /**
  * Exception for Zend_View class.
  *
- * @uses       \Zend\Exception
  * @category   Zend
  * @package    Zend_Date
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Exception extends \Zend\Exception
+class Zend_View_Exception extends Zend_Exception
 {
     protected $view = null;
 
-    public function setView(Renderer $view = null)
+    public function setView(Zend_View_Interface $view = null)
     {
         $this->view = $view;
         return $this;

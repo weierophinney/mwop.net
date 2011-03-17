@@ -16,30 +16,20 @@
  * @package    Zend_Tool
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Tool\Project\Context;
-
-use Zend\Tool\Project\Context;
+require_once 'Zend/Tool/Project/Context/System/Interface.php';
+require_once 'Zend/Tool/Project/Context/System/TopLevelRestrictable.php';
+require_once 'Zend/Tool/Project/Context/System/NotOverwritable.php';
 
 /**
- * @uses       Countable
- * @uses       DirectoryIterator
- * @uses       ReflectionClass
- * @uses       \Zend\Loader
- * @uses       \Zend\Tool\Project\Context\Exception
- * @uses       \Zend\Tool\Project\Context\System
- * @uses       \Zend\Tool\Project\Context\System\NotOverwritable
- * @uses       \Zend\Tool\Project\Context\System\TopLevelRestrictable
  * @category   Zend
  * @package    Zend_Tool
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Repository implements \Countable
+class Zend_Tool_Project_Context_Repository implements Countable
 {
 
     protected static $_instance = null;
@@ -51,7 +41,7 @@ class Repository implements \Countable
     /**
      * Enter description here...
      *
-     * @return \Zend\Tool\Project\Context\Repository
+     * @return Zend_Tool_Project_Context_Repository
      */
     public static function getInstance()
     {
@@ -71,17 +61,17 @@ class Repository implements \Countable
     protected function __construct()
     {
         if (self::$_isInitialized == false) {
-            $this->addContextClass('Zend\Tool\Project\Context\System\ProjectDirectory')
-                 ->addContextClass('Zend\Tool\Project\Context\System\ProjectProfileFile')
-                 ->addContextClass('Zend\Tool\Project\Context\System\ProjectProvidersDirectory');
+            $this->addContextClass('Zend_Tool_Project_Context_System_ProjectDirectory')
+                 ->addContextClass('Zend_Tool_Project_Context_System_ProjectProfileFile')
+                 ->addContextClass('Zend_Tool_Project_Context_System_ProjectProvidersDirectory');
             self::$_isInitialized = true;
         }
     }
 
     public function addContextsFromDirectory($directory, $prefix)
     {
-        $prefix = trim($prefix, '\\') . '\\';
-        foreach (new \DirectoryIterator($directory) as $directoryItem) {
+        $prefix = trim($prefix, '_') . '_';
+        foreach (new DirectoryIterator($directory) as $directoryItem) {
             if ($directoryItem->isDot() || (substr($directoryItem->getFilename(), -4) !== '.php')) {
                 continue;
             }
@@ -94,9 +84,10 @@ class Repository implements \Countable
     public function addContextClass($contextClass)
     {
         if (!class_exists($contextClass)) {
-            \Zend\Loader::loadClass($contextClass);
+            require_once 'Zend/Loader.php';
+            Zend_Loader::loadClass($contextClass);
         }
-        $reflectionContextClass = new \ReflectionClass($contextClass);
+        $reflectionContextClass = new ReflectionClass($contextClass);
         if ($reflectionContextClass->isInstantiable()) {
             $context = new $contextClass();
             return $this->addContext($context);
@@ -107,21 +98,22 @@ class Repository implements \Countable
     /**
      * Enter description here...
      *
-     * @param \Zend\Tool\Project\Context $context
-     * @return \Zend\Tool\Project\Context\Repository
+     * @param Zend_Tool_Project_Context_Interface $context
+     * @return Zend_Tool_Project_Context_Repository
      */
-    public function addContext(Context\Context $context)
+    public function addContext(Zend_Tool_Project_Context_Interface $context)
     {
-        $isSystem       = ($context instanceof System);
-        $isTopLevel     = ($context instanceof System\TopLevelRestrictable);
-        $isOverwritable = !($context instanceof System\NotOverwritable);
+        $isSystem       = ($context instanceof Zend_Tool_Project_Context_System_Interface);
+        $isTopLevel     = ($context instanceof Zend_Tool_Project_Context_System_TopLevelRestrictable);
+        $isOverwritable = !($context instanceof Zend_Tool_Project_Context_System_NotOverwritable);
 
         $index = (count($this->_contexts)) ? max(array_keys($this->_contexts)) + 1 : 1;
 
         $normalName = $this->_normalizeName($context->getName());
 
         if (isset($this->_shortContextNames[$normalName]) && ($this->_contexts[$this->_shortContextNames[$normalName]]['isOverwritable'] === false) ) {
-            throw new Exception\InvalidArgumentException('Context ' . $context->getName() . ' is not overwriteable.');
+            require_once 'Zend/Tool/Project/Context/Exception.php';
+            throw new Zend_Tool_Project_Context_Exception('Context ' . $context->getName() . ' is not overwriteable.');
         }
 
         $this->_shortContextNames[$normalName] = $index;
@@ -139,7 +131,8 @@ class Repository implements \Countable
     public function getContext($name)
     {
         if (!$this->hasContext($name)) {
-            throw new Exception\InvalidArgumentException('Context by name ' . $name . ' does not exist in the registry.');
+            require_once 'Zend/Tool/Project/Context/Exception.php';
+            throw new Zend_Tool_Project_Context_Exception('Context by name ' . $name . ' does not exist in the registry.');
         }
 
         $name = $this->_normalizeName($name);

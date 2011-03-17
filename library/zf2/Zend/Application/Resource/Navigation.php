@@ -17,19 +17,19 @@
  * @subpackage Resource
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Application_Resource_ResourceAbstract
  */
-namespace Zend\Application\Resource;
+require_once 'Zend/Application/Resource/ResourceAbstract.php';
+
 
 /**
  * Resource for setting navigation structure
  *
- * @uses       \Zend\Application\Resource\AbstractResource
- * @uses       \Zend\Navigation\Navigation
- * @uses       \Zend\Registry
+ * @uses       Zend_Application_Resource_ResourceAbstract
  * @category   Zend
  * @package    Zend_Application
  * @subpackage Resource
@@ -37,27 +37,31 @@ namespace Zend\Application\Resource;
  * @author     Dolf Schimmel
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Navigation
-    extends AbstractResource
+class Zend_Application_Resource_Navigation
+    extends Zend_Application_Resource_ResourceAbstract
 {
     const DEFAULT_REGISTRY_KEY = 'Zend_Navigation';
 
     /**
-     * @var \Zend\Navigation\Navigation
+     * @var Zend_Navigation
      */
     protected $_container;
 
     /**
      * Defined by Zend_Application_Resource_Resource
      *
-     * @return \Zend\Navigation\Navigation
+     * @return Zend_Navigation
      */
     public function init()
     {
         if (!$this->_container) {
             $options = $this->getOptions();
             $pages = isset($options['pages']) ? $options['pages'] : array();
-            $this->_container = new \Zend\Navigation\Navigation($pages);
+            $this->_container = new Zend_Navigation($pages);
+
+            if(isset($options['defaultPageType'])) {
+                Zend_Navigation_Page::setDefaultPageType($options['defaultPageType']);
+            }
         }
 
         $this->store();
@@ -96,7 +100,7 @@ class Navigation
             $key = self::DEFAULT_REGISTRY_KEY;
         }
 
-        \Zend\Registry::set($key,$this->getContainer());
+        Zend_Registry::set($key,$this->getContainer());
     }
 
     /**
@@ -108,13 +112,13 @@ class Navigation
     {
         $this->getBootstrap()->bootstrap('view');
         $view = $this->getBootstrap()->view;
-        $view->getHelper('navigation')->setContainer($this->getContainer());
+        $view->getHelper('navigation')->navigation($this->getContainer());
     }
 
     /**
      * Returns navigation container
      *
-     * @return \Zend\Navigation\Navigation
+     * @return Zend_Navigation
      */
     public function getContainer()
     {

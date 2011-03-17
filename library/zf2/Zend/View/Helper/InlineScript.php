@@ -16,13 +16,12 @@
  * @package    Zend_View
  * @subpackage Helper
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @version    $Id$
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * @namespace
- */
-namespace Zend\View\Helper;
+/** Zend_View_Helper_HeadScript */
+require_once 'Zend/View/Helper/HeadScript.php';
 
 /**
  * Helper for setting and retrieving script elements for inclusion in HTML body
@@ -34,7 +33,7 @@ namespace Zend\View\Helper;
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class InlineScript extends HeadScript
+class Zend_View_Helper_InlineScript extends Zend_View_Helper_HeadScript
 {
     /**
      * Registry key for placeholder
@@ -53,10 +52,10 @@ class InlineScript extends HeadScript
      * @param  string $placement Append, prepend, or set
      * @param  array $attrs Array of script attributes
      * @param  string $type Script type and/or array of script attributes
-     * @return \Zend\View\Helper\InlineScript
+     * @return Zend_View_Helper_InlineScript
      */
-    public function direct($mode = HeadScript::FILE, $spec = null, $placement = 'APPEND', array $attrs = array(), $type = 'text/javascript')
+    public function inlineScript($mode = Zend_View_Helper_HeadScript::FILE, $spec = null, $placement = 'APPEND', array $attrs = array(), $type = 'text/javascript')
     {
-        return parent::direct($mode, $spec, $placement, $attrs, $type);
+        return $this->headScript($mode, $spec, $placement, $attrs, $type);
     }
 }

@@ -17,23 +17,22 @@
  * @subpackage View
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Dojo\View\Helper;
+/** Zend_Dojo_View_Helper_ValidationTextBox */
+require_once 'Zend/Dojo/View/Helper/ValidationTextBox.php';
 
 /**
  * Dojo ValidationTextBox dijit tied to password input
  *
- * @uses       \Zend\Dojo\View\Helper\ValidationTextBox
+ * @uses       Zend_Dojo_View_Helper_Dijit
  * @package    Zend_Dojo
  * @subpackage View
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- */
-class PasswordTextBox extends ValidationTextBox
+  */
+class Zend_Dojo_View_Helper_PasswordTextBox extends Zend_Dojo_View_Helper_ValidationTextBox
 {
     /**
      * HTML element type
@@ -50,7 +49,7 @@ class PasswordTextBox extends ValidationTextBox
      * @param  array $attribs HTML attributes
      * @return string
      */
-    public function direct($id = null, $value = null, array $params = array(), array $attribs = array())
+    public function passwordTextBox($id, $value = null, array $params = array(), array $attribs = array())
     {
         return $this->_createFormElement($id, $value, $params, $attribs);
     }

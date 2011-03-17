@@ -17,24 +17,27 @@
  * @subpackage Framework
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Tool_Framework_Metadata_Interface
  */
-namespace Zend\Tool\Framework\Metadata;
-use Zend\Tool\Framework\Metadata;
+require_once 'Zend/Tool/Framework/Metadata/Interface.php';
 
 /**
- * @uses       ReflectionObject
- * @uses       \Zend\Tool\Framework\Metadata\Attributable
- * @uses       \Zend\Tool\Framework\Metadata
+ * @see Zend_Tool_Framework_Metadata_Attributable
+ */
+require_once 'Zend/Tool/Framework/Metadata/Attributable.php';
+
+/**
  * @category   Zend
  * @package    Zend_Tool
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Basic implements Metadata, Attributable
+class Zend_Tool_Framework_Metadata_Basic
+    implements Zend_Tool_Framework_Metadata_Interface, Zend_Tool_Framework_Metadata_Attributable
 {
 
     /**#@+
@@ -74,7 +77,7 @@ class Basic implements Metadata, Attributable
      * options that are supported via a set method.
      *
      * @param array $options
-     * @return \Zend\Tool\Framework\Metadata\Basic
+     * @return Zend_Tool_Framework_Metadata_Basic
      */
     public function setOptions(Array $options)
     {
@@ -102,7 +105,7 @@ class Basic implements Metadata, Attributable
      * setType()
      *
      * @param string $type
-     * @return \Zend\Tool\Framework\Metadata\Basic
+     * @return Zend_Tool_Framework_Metadata_Basic
      */
     public function setType($type)
     {
@@ -124,7 +127,7 @@ class Basic implements Metadata, Attributable
      * setName()
      *
      * @param string $name
-     * @return \Zend\Tool\Framework\Metadata\Basic
+     * @return Zend_Tool_Framework_Metadata_Basic
      */
     public function setName($name)
     {
@@ -146,7 +149,7 @@ class Basic implements Metadata, Attributable
      * setValue()
      *
      * @param unknown_type $Value
-     * @return \Zend\Tool\Framework\Metadata\Basic
+     * @return Zend_Tool_Framework_Metadata_Basic
      */
     public function setValue($value)
     {
@@ -158,7 +161,7 @@ class Basic implements Metadata, Attributable
      * setReference()
      *
      * @param mixed $reference
-     * @return \Zend\Tool\Framework\Metadata\Basic
+     * @return Zend_Tool_Framework_Metadata_Basic
      */
     public function setReference($reference)
     {
@@ -185,12 +188,12 @@ class Basic implements Metadata, Attributable
      */
     public function getAttributes($type = self::ATTRIBUTES_ALL, $stringRepresentationOfNonScalars = false)
     {
-        $thisReflection = new \ReflectionObject($this);
+        $thisReflection = new ReflectionObject($this);
 
         $metadataPairValues = array();
 
         foreach (get_object_vars($this) as $varName => $varValue) {
-            if ($type == self::ATTRIBUTES_NO_PARENT && ($thisReflection->getProperty($varName)->getDeclaringClass()->getName() == 'Zend\Tool\Framework\Metadata\Basic')) {
+            if ($type == self::ATTRIBUTES_NO_PARENT && ($thisReflection->getProperty($varName)->getDeclaringClass()->getName() == 'Zend_Tool_Framework_Metadata_Basic')) {
                 continue;
             }
 

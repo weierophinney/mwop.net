@@ -17,23 +17,22 @@
  * @subpackage Helper
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_View_Helper_Abstract
  */
-namespace Zend\View\Helper;
+require_once 'Zend/View/Helper/Abstract.php';
 
 /**
- * @uses       \Zend\Json\Json
- * @uses       \Zend\View\Helper\AbstractHelper
  * @category   Zend
  * @package    Zend_View
  * @subpackage Helper
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-abstract class HtmlElement extends AbstractHelper
+abstract class Zend_View_Helper_HtmlElement extends Zend_View_Helper_Abstract
 {
     /**
      * EOL character
@@ -72,7 +71,7 @@ abstract class HtmlElement extends AbstractHelper
      */
     protected function _isXhtml()
     {
-        $doctype = $this->view->broker('doctype');
+        $doctype = $this->view->doctype();
         return $doctype->isXhtml();
     }
 
@@ -90,20 +89,21 @@ abstract class HtmlElement extends AbstractHelper
     {
         $xhtml = '';
         foreach ((array) $attribs as $key => $val) {
-            $key = $this->view->vars()->escape($key);
+            $key = $this->view->escape($key);
 
             if (('on' == substr($key, 0, 2)) || ('constraints' == $key)) {
                 // Don't escape event attributes; _do_ substitute double quotes with singles
                 if (!is_scalar($val)) {
                     // non-scalar data should be cast to JSON first
-                    $val = \Zend\Json\Json::encode($val);
+                    require_once 'Zend/Json.php';
+                    $val = Zend_Json::encode($val);
                 }
                 $val = preg_replace('/"([^"]*)":/', '$1:', $val);
             } else {
                 if (is_array($val)) {
                     $val = implode(' ', $val);
                 }
-                $val = $this->view->vars()->escape($val);
+                $val = $this->view->escape($val);
             }
 
             if ('id' == $key) {

@@ -17,12 +17,13 @@
  * @subpackage Twitter
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Service_Exception
  */
-namespace Zend\Service\Twitter;
+require_once 'Zend/Service/Exception.php';
 
 /**
  * @category   Zend
@@ -31,6 +32,6 @@ namespace Zend\Service\Twitter;
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Exception extends \Zend\Service\Exception
+class Zend_Service_Twitter_Exception extends Zend_Service_Exception
 {
 }

@@ -19,25 +19,22 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * @namespace
- */
-namespace Zend\Controller\Plugin;
-use Zend\Controller;
-use Zend\Controller\Request;
+/** Zend_Controller_Plugin_Abstract */
+require_once 'Zend/Controller/Plugin/Abstract.php';
 
 /**
  * Handle exceptions that bubble up based on missing controllers, actions, or
  * application errors, and forward to an error handler.
  *
- * @uses       \Zend\Controller\Plugin\AbstractPlugin
+ * @uses       Zend_Controller_Plugin_Abstract
  * @category   Zend
  * @package    Zend_Controller
  * @subpackage Plugins
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
-class ErrorHandler extends AbstractPlugin
+class Zend_Controller_Plugin_ErrorHandler extends Zend_Controller_Plugin_Abstract
 {
     /**
      * Const - No controller exception; controller does not exist
@@ -109,7 +106,7 @@ class ErrorHandler extends AbstractPlugin
      * setErrorHandler() - setup the error handling options
      *
      * @param  array $options
-     * @return \Zend\Controller\Plugin\ErrorHandler
+     * @return Zend_Controller_Plugin_ErrorHandler
      */
     public function setErrorHandler(Array $options = array())
     {
@@ -129,7 +126,7 @@ class ErrorHandler extends AbstractPlugin
      * Set the module name for the error handler
      *
      * @param  string $module
-     * @return \Zend\Controller\Plugin\ErrorHandler
+     * @return Zend_Controller_Plugin_ErrorHandler
      */
     public function setErrorHandlerModule($module)
     {
@@ -145,7 +142,7 @@ class ErrorHandler extends AbstractPlugin
     public function getErrorHandlerModule()
     {
         if (null === $this->_errorModule) {
-            $this->_errorModule = Controller\Front::getInstance()->getDispatcher()->getDefaultModule();
+            $this->_errorModule = Zend_Controller_Front::getInstance()->getDispatcher()->getDefaultModule();
         }
         return $this->_errorModule;
     }
@@ -154,7 +151,7 @@ class ErrorHandler extends AbstractPlugin
      * Set the controller name for the error handler
      *
      * @param  string $controller
-     * @return \Zend\Controller\Plugin\ErrorHandler
+     * @return Zend_Controller_Plugin_ErrorHandler
      */
     public function setErrorHandlerController($controller)
     {
@@ -176,7 +173,7 @@ class ErrorHandler extends AbstractPlugin
      * Set the action name for the error handler
      *
      * @param  string $action
-     * @return \Zend\Controller\Plugin\ErrorHandler
+     * @return Zend_Controller_Plugin_ErrorHandler
      */
     public function setErrorHandlerAction($action)
     {
@@ -196,10 +193,10 @@ class ErrorHandler extends AbstractPlugin
 
     /**
      * Route shutdown hook -- Ccheck for router exceptions
-     * 
-     * @param \Zend\Controller\Request\AbstractRequest $request 
+     *
+     * @param Zend_Controller_Request_Abstract $request
      */
-    public function routeShutdown(Request\AbstractRequest $request)
+    public function routeShutdown(Zend_Controller_Request_Abstract $request)
     {
         $this->_handleError($request);
     }
@@ -208,9 +205,9 @@ class ErrorHandler extends AbstractPlugin
      * Post dispatch hook -- check for exceptions and dispatch error handler if
      * necessary
      *
-     * @param \Zend\Controller\Request\AbstractRequest $request
+     * @param Zend_Controller_Request_Abstract $request
      */
-    public function postDispatch(Request\AbstractRequest $request)
+    public function postDispatch(Zend_Controller_Request_Abstract $request)
     {
         $this->_handleError($request);
     }
@@ -221,12 +218,12 @@ class ErrorHandler extends AbstractPlugin
      * If the 'noErrorHandler' front controller flag has been set,
      * returns early.
      *
-     * @param  \Zend\Controller\Request\AbstractRequest $request
+     * @param  Zend_Controller_Request_Abstract $request
      * @return void
      */
-    protected function _handleError(Request\AbstractRequest $request)
+    protected function _handleError(Zend_Controller_Request_Abstract $request)
     {
-        $frontController = Controller\Front::getInstance();
+        $frontController = Zend_Controller_Front::getInstance();
         if ($frontController->getParam('noErrorHandler')) {
             return;
         }
@@ -247,23 +244,23 @@ class ErrorHandler extends AbstractPlugin
             $this->_isInsideErrorHandlerLoop = true;
 
             // Get exception information
-            $error            = new \ArrayObject(array(), \ArrayObject::ARRAY_AS_PROPS);
+            $error            = new ArrayObject(array(), ArrayObject::ARRAY_AS_PROPS);
             $exceptions       = $response->getException();
             $exception        = $exceptions[0];
             $exceptionType    = get_class($exception);
             $error->exception = $exception;
             switch ($exceptionType) {
-                case 'Zend\Controller\Router\Exception':
+                case 'Zend_Controller_Router_Exception':
                     if (404 == $exception->getCode()) {
                         $error->type = self::EXCEPTION_NO_ROUTE;
                     } else {
                         $error->type = self::EXCEPTION_OTHER;
                     }
                     break;
-                case 'Zend\Controller\Dispatcher\Exception':
+                case 'Zend_Controller_Dispatcher_Exception':
                     $error->type = self::EXCEPTION_NO_CONTROLLER;
                     break;
-                case 'Zend\Controller\Action\Exception':
+                case 'Zend_Controller_Action_Exception':
                     if (404 == $exception->getCode()) {
                         $error->type = self::EXCEPTION_NO_ACTION;
                     } else {

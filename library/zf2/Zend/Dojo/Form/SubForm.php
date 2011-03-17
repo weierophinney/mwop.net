@@ -19,21 +19,20 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * @namespace
- */
-namespace Zend\Dojo\Form;
+/** Zend_Form_SubForm */
+require_once 'Zend/Form/SubForm.php';
 
 /**
  * Dijit-enabled SubForm
  *
- * @uses       \Zend\Form\SubForm
+ * @uses       Zend_Form_SubForm
  * @package    Zend_Dojo
  * @subpackage Form
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
-class SubForm extends \Zend\Form\SubForm
+class Zend_Dojo_Form_SubForm extends Zend_Form_SubForm
 {
     /**
      * Has the dojo view helper path been registered?
@@ -44,16 +43,16 @@ class SubForm extends \Zend\Form\SubForm
     /**
      * Constructor
      *
-     * @param  array|\Zend\Config\Config|null $options
+     * @param  array|Zend_Config|null $options
      * @return void
      */
     public function __construct($options = null)
     {
-        $this->addPrefixPath('Zend\Dojo\Form\Decorator', 'Zend/Dojo/Form/Decorator', 'decorator')
-             ->addPrefixPath('Zend\Dojo\Form\Element', 'Zend/Dojo/Form/Element', 'element')
-             ->addElementPrefixPath('Zend\Dojo\Form\Decorator', 'Zend/Dojo/Form/Decorator', 'decorator')
-             ->addDisplayGroupPrefixPath('Zend\Dojo\Form\Decorator', 'Zend/Dojo/Form/Decorator')
-             ->setDefaultDisplayGroupClass('Zend\Dojo\Form\DisplayGroup');
+        $this->addPrefixPath('Zend_Dojo_Form_Decorator', 'Zend/Dojo/Form/Decorator', 'decorator')
+             ->addPrefixPath('Zend_Dojo_Form_Element', 'Zend/Dojo/Form/Element', 'element')
+             ->addElementPrefixPath('Zend_Dojo_Form_Decorator', 'Zend/Dojo/Form/Decorator', 'decorator')
+             ->addDisplayGroupPrefixPath('Zend_Dojo_Form_Decorator', 'Zend/Dojo/Form/Decorator')
+             ->setDefaultDisplayGroupClass('Zend_Dojo_Form_DisplayGroup');
         parent::__construct($options);
     }
 
@@ -79,14 +78,14 @@ class SubForm extends \Zend\Form\SubForm
     /**
      * Get view
      *
-     * @return \Zend\View\ViewEngine
+     * @return Zend_View_Interface
      */
     public function getView()
     {
         $view = parent::getView();
         if (!$this->_dojoViewPathRegistered) {
-            if (false === $view->getPluginLoader('helper')->getPaths('Zend\Dojo\View\Helper')) {
-                $view->addHelperPath('Zend/Dojo/View/Helper', 'Zend\Dojo\View\Helper');
+            if (false === $view->getPluginLoader('helper')->getPaths('Zend_Dojo_View_Helper')) {
+                $view->addHelperPath('Zend/Dojo/View/Helper', 'Zend_Dojo_View_Helper');
             }
             $this->_dojoViewPathRegistered = true;
         }

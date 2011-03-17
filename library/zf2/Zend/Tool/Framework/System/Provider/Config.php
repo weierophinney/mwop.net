@@ -20,27 +20,37 @@
  */
 
 /**
- * @namespace
+ * @see Zend_Tool_Framework_Provider_Abstract
  */
-namespace Zend\Tool\Framework\System\Provider;
-use Zend\Tool\Framework;
+require_once "Zend/Tool/Framework/Provider/Abstract.php";
+
+/**
+ * @see Zend_Config
+ */
+require_once "Zend/Config.php";
+
+/**
+ * @see Zend_Config_Writer_Ini
+ */
+require_once "Zend/Config/Writer/Ini.php";
+
+/**
+ * @see Zend_Loader
+ */
+require_once "Zend/Loader.php";
 
 /**
  * Configuration Provider
  *
- * @uses       ReflectionClass
- * @uses       \Zend\Config\Config
- * @uses       \Zend\Config\Writer\Ini
- * @uses       \Zend\Loader
- * @uses       \Zend\Tool\Framework\Exception
- * @uses       \Zend\Tool\Framework\Provider\AbstractProvider
  * @category   Zend
  * @package    Zend_Tool
  * @package    Framework
+ * @uses       Zend_Tool_Framework_Provider_Abstract
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
-class Config extends Framework\Provider\AbstractProvider
+class Zend_Tool_Framework_System_Provider_Config extends Zend_Tool_Framework_Provider_Abstract
 {
     /**
      * @var array
@@ -49,11 +59,11 @@ class Config extends Framework\Provider\AbstractProvider
 
     /**
      * array of specialties handled by this provider
-     * 
+     *
      * @var array
      */
     protected $_specialties = array('Manifest', 'Provider');
-    
+
     /**
      * @param string $type
      */
@@ -64,22 +74,23 @@ class Config extends Framework\Provider\AbstractProvider
 
         $resp = $this->_registry->getResponse();
         if ($userConfig->exists()) {
-            throw new Framework\Exception(
+            require_once "Zend/Tool/Framework/Exception.php";
+            throw new Zend_Tool_Framework_Exception(
                 "A configuration already exists, cannot create a new one.");
         }
 
         $homeDirectory = $this->_detectHomeDirectory();
 
-        $writer = new end\Config\Writer\Ini();
+        $writer = new Zend_Config_Writer_Ini();
         $writer->setRenderWithoutSections();
         $filename = $homeDirectory."/.zf.ini";
 
         $config = array(
             'php' => array(
-                'includepath' => get_include_path(),
+                'include_path' => get_include_path(),
             ),
         );
-        $writer->write($filename, new end\Config\Config($config));
+        $writer->write($filename, new Zend_Config($config));
 
         $resp = $this->_registry->getResponse();
         $resp->appendContent("Successfully written Zend Tool config.");
@@ -98,7 +109,8 @@ class Config extends Framework\Provider\AbstractProvider
                 return $homeDirectory;
             }
         }
-        throw new Framework\Exception("Cannot detect user home directory, set ZF_HOME enviroment variable.");
+        require_once "Zend/Tool/Framework/Exception.php";
+        throw new Zend_Tool_Framework_Exception("Cannot detect user home directory, set ZF_HOME enviroment variable.");
     }
 
     /**
@@ -185,10 +197,11 @@ class Config extends Framework\Provider\AbstractProvider
      */
     public function enableProvider($className)
     {
-        end\Loader::loadClass($className);
-        $reflClass = new \ReflectionClass($className);
+        Zend_Loader::loadClass($className);
+        $reflClass = new ReflectionClass($className);
         if (!in_array("Zend_Tool_Framework_Provider_Interface", $reflClass->getInterfaceNames())) {
-            throw new Framework\Exception("Given class is not a provider");
+            require_once "Zend/Tool/Framework/Exception.php";
+            throw new Zend_Tool_Framework_Exception("Given class is not a provider");
         }
         $this->_doEnable($className);
     }
@@ -220,12 +233,14 @@ class Config extends Framework\Provider\AbstractProvider
                     array("color" => "green", "aligncenter" => true)
                 );
             } else {
-                throw new Framework\Exception(
+                require_once "Zend/Tool/Framework/Exception.php";
+                throw new Zend_Tool_Framework_Exception(
                     "Could not write user configuration to persistence."
                 );
             }
         } else {
-            throw new Framework\Exception(
+            require_once "Zend/Tool/Framework/Exception.php";
+            throw new Zend_Tool_Framework_Exception(
                 "Provider/Manifest '".$className."' is already enabled."
             );
         }
@@ -236,10 +251,11 @@ class Config extends Framework\Provider\AbstractProvider
      */
     public function enableManifest($className)
     {
-        end\Loader::loadClass($className);
-        $reflClass = new \ReflectionClass($className);
+        Zend_Loader::loadClass($className);
+        $reflClass = new ReflectionClass($className);
         if (!in_array("Zend_Tool_Framework_Manifest_Interface", $reflClass->getInterfaceNames())) {
-            throw new Framework\Exception("Given class is not a manifest.");
+            require_once "Zend/Tool/Framework/Exception.php";
+            throw new Zend_Tool_Framework_Exception("Given class is not a manifest.");
         }
         $this->_doEnable($className);
     }
@@ -276,19 +292,21 @@ class Config extends Framework\Provider\AbstractProvider
                     array("color" => "green", "aligncenter" => true)
                 );
             } else {
-                throw new Framework\Exception(
+                require_once "Zend/Tool/Framework/Exception.php";
+                throw new Zend_Tool_Framework_Exception(
                     "Could not write user configuration to persistence."
                 );
             }
         } else {
-            throw new Framework\Exception(
+            require_once "Zend/Tool/Framework/Exception.php";
+            throw new Zend_Tool_Framework_Exception(
                 "Provider/Manifest '".$className."' is not enabled."
             );
         }
     }
 
     /**
-     * @return \Zend\Tool\Framework\Client\Config
+     * @return Zend_Tool_Framework_Client_Config
      */
     protected function _loadUserConfigIfExists()
     {

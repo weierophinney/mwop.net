@@ -17,23 +17,21 @@
  * @subpackage Filter
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Log\Filter;
+/** Zend_Log_Filter_Abstract */
+require_once 'Zend/Log/Filter/Abstract.php';
 
 /**
- * @uses       \Zend\Log\Exception\InvalidArgumentException
- * @uses       \Zend\Log\Filter\AbstractFilter
  * @category   Zend
  * @package    Zend_Log
  * @subpackage Filter
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
-class Message extends AbstractFilter
+class Zend_Log_Filter_Message extends Zend_Log_Filter_Abstract
 {
     /**
      * @var string
@@ -44,23 +42,25 @@ class Message extends AbstractFilter
      * Filter out any log messages not matching $regexp.
      *
      * @param  string  $regexp     Regular expression to test the log message
-     * @throws \Zend\Log\Exception\InvalidArgumentException
+     * @return void
+     * @throws Zend_Log_Exception
      */
     public function __construct($regexp)
     {
         if (@preg_match($regexp, '') === false) {
-            throw new \Zend\Log\Exception\InvalidArgumentException("Invalid regular expression '$regexp'");
+            require_once 'Zend/Log/Exception.php';
+            throw new Zend_Log_Exception("Invalid regular expression '$regexp'");
         }
         $this->_regexp = $regexp;
     }
 
     /**
      * Create a new instance of Zend_Log_Filter_Message
-     * 
-     * @param  array|\Zend\Config\Config $config
-     * @return \Zend\Log\Filter\Message
+     *
+     * @param  array|Zend_Config $config
+     * @return Zend_Log_Filter_Message
      */
-    static public function factory($config = array()) 
+    static public function factory($config)
     {
         $config = self::_parseConfig($config);
         $config = array_merge(array(

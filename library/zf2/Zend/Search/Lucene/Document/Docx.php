@@ -17,34 +17,22 @@
  * @subpackage Document
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Search\Lucene\Document;
-
-use Zend\Search\Lucene,
-	Zend\Search\Lucene\Exception\ExtensionNotLoadedException,
-	Zend\Search\Lucene\Exception\RuntimeException,
-	Zend\Search\Lucene\Document\Exception\InvalidArgumentException;
+/** Zend_Search_Lucene_Document_OpenXml */
+require_once 'Zend/Search/Lucene/Document/OpenXml.php';
 
 /**
  * Docx document.
  *
- * @uses       \Zend\Search\Lucene\Exception\ExtensionNotLoadedException
- * @uses	   \Zend\Search\Lucene\Exception\RuntimeException
- * @uses	   \Zend\Search\Lucene\Document\Exception\InvalidArgumentException
- * @uses       \Zend\Search\Lucene\Document\AbstractOpenXML
- * @uses       \Zend\Search\Lucene\Document\Field
- * @uses       ZipArchive
  * @category   Zend
  * @package    Zend_Search_Lucene
  * @subpackage Document
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Docx extends AbstractOpenXML {
+class Zend_Search_Lucene_Document_Docx extends Zend_Search_Lucene_Document_OpenXml {
     /**
      * Xml Schema - WordprocessingML
      *
@@ -57,33 +45,31 @@ class Docx extends AbstractOpenXML {
      *
      * @param string  $fileName
      * @param boolean $storeContent
-     * @throws \Zend\Search\Lucene\Exception\ExtensionNotLoadedException
-     * @throws \Zend\Search\Lucene\Exception\RuntimeException
+     * @throws Zend_Search_Lucene_Exception
      */
-    private function __construct($fileName, $storeContent)
-    {
+    private function __construct($fileName, $storeContent) {
         if (!class_exists('ZipArchive', false)) {
-            throw new ExtensionNotLoadedException(
-            	'MS Office documents processing functionality requires Zip extension to be loaded'
-            );
+            require_once 'Zend/Search/Lucene/Exception.php';
+            throw new Zend_Search_Lucene_Exception('MS Office documents processing functionality requires Zip extension to be loaded');
         }
 
         // Document data holders
         $documentBody = array();
         $coreProperties = array();
 
-        // Open AbstractOpenXML package
-        $package = new \ZipArchive();
+        // Open OpenXML package
+        $package = new ZipArchive();
         $package->open($fileName);
 
         // Read relations and search for officeDocument
         $relationsXml = $package->getFromName('_rels/.rels');
         if ($relationsXml === false) {
-            throw new RuntimeException('Invalid archive or corrupted .docx file.');
+            require_once 'Zend/Search/Lucene/Exception.php';
+            throw new Zend_Search_Lucene_Exception('Invalid archive or corrupted .docx file.');
         }
         $relations = simplexml_load_string($relationsXml);
         foreach($relations->Relationship as $rel) {
-            if ($rel ["Type"] == AbstractOpenXML::SCHEMA_OFFICEDOCUMENT) {
+            if ($rel ["Type"] == Zend_Search_Lucene_Document_OpenXml::SCHEMA_OFFICEDOCUMENT) {
                 // Found office document! Read in contents...
                 $contents = simplexml_load_string($package->getFromName(
                                                                 $this->absoluteZipPath(dirname($rel['Target'])
@@ -91,7 +77,7 @@ class Docx extends AbstractOpenXML {
                                                               . basename($rel['Target']))
                                                                        ));
 
-                $contents->registerXPathNamespace('w', self::SCHEMA_WORDPROCESSINGML);
+                $contents->registerXPathNamespace('w', Zend_Search_Lucene_Document_Docx::SCHEMA_WORDPROCESSINGML);
                 $paragraphs = $contents->xpath('//w:body/w:p');
 
                 foreach ($paragraphs as $paragraph) {
@@ -126,23 +112,23 @@ class Docx extends AbstractOpenXML {
         $package->close();
 
         // Store filename
-        $this->addField(Field::Text('filename', $fileName, 'UTF-8'));
+        $this->addField(Zend_Search_Lucene_Field::Text('filename', $fileName, 'UTF-8'));
 
         // Store contents
         if ($storeContent) {
-            $this->addField(Field::Text('body', implode('', $documentBody), 'UTF-8'));
+            $this->addField(Zend_Search_Lucene_Field::Text('body', implode('', $documentBody), 'UTF-8'));
         } else {
-            $this->addField(Field::UnStored('body', implode('', $documentBody), 'UTF-8'));
+            $this->addField(Zend_Search_Lucene_Field::UnStored('body', implode('', $documentBody), 'UTF-8'));
         }
 
         // Store meta data properties
         foreach ($coreProperties as $key => $value) {
-            $this->addField(Field::Text($key, $value, 'UTF-8'));
+            $this->addField(Zend_Search_Lucene_Field::Text($key, $value, 'UTF-8'));
         }
 
         // Store title (if not present in meta data)
         if (! isset($coreProperties['title'])) {
-            $this->addField(Field::Text('title', $fileName, 'UTF-8'));
+            $this->addField(Zend_Search_Lucene_Field::Text('title', $fileName, 'UTF-8'));
         }
     }
 
@@ -151,15 +137,15 @@ class Docx extends AbstractOpenXML {
      *
      * @param string  $fileName
      * @param boolean $storeContent
-     * @throws \Zend\Search\Lucene\Document\Exception\InvalidArgumentException
-     * @return \Zend\Search\Lucene\Document\Docx
+     * @return Zend_Search_Lucene_Document_Docx
+     * @throws Zend_Search_Lucene_Document_Exception
      */
-    public static function loadDocxFile($fileName, $storeContent = false)
-    {
+    public static function loadDocxFile($fileName, $storeContent = false) {
         if (!is_readable($fileName)) {
-            throw new InvalidArgumentException('Provided file \'' . $fileName . '\' is not readable.');
+            require_once 'Zend/Search/Lucene/Document/Exception.php';
+            throw new Zend_Search_Lucene_Document_Exception('Provided file \'' . $fileName . '\' is not readable.');
         }
 
-        return new self($fileName, $storeContent);
+        return new Zend_Search_Lucene_Document_Docx($fileName, $storeContent);
     }
 }

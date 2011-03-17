@@ -17,40 +17,38 @@
  * @subpackage Analysis
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Search\Lucene\Analysis\TokenFilter;
 
-use Zend\Search\Lucene\Analysis\TokenFilter,
-    Zend\Search\Lucene\Analysis\Token;
+/** Zend_Search_Lucene_Analysis_TokenFilter */
+require_once 'Zend/Search/Lucene/Analysis/TokenFilter.php';
+
 
 /**
  * Lower case Token filter.
  *
- * @uses       \Zend\Search\Lucene\Analysis\Token
- * @uses       \Zend\Search\Lucene\Analysis\TokenFilter
  * @category   Zend
  * @package    Zend_Search_Lucene
  * @subpackage Analysis
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class LowerCase implements TokenFilter
+
+class Zend_Search_Lucene_Analysis_TokenFilter_LowerCase extends Zend_Search_Lucene_Analysis_TokenFilter
 {
     /**
      * Normalize Token or remove it (if null is returned)
      *
-     * @param \Zend\Search\Lucene\Analysis\Token $srcToken
-     * @return \Zend\Search\Lucene\Analysis\Token
+     * @param Zend_Search_Lucene_Analysis_Token $srcToken
+     * @return Zend_Search_Lucene_Analysis_Token
      */
-    public function normalize(Token $srcToken)
+    public function normalize(Zend_Search_Lucene_Analysis_Token $srcToken)
     {
-        $newToken = new Token(strtolower( $srcToken->getTermText() ),
-                                       $srcToken->getStartOffset(),
-                                       $srcToken->getEndOffset());
+        $newToken = new Zend_Search_Lucene_Analysis_Token(
+                                     strtolower( $srcToken->getTermText() ),
+                                     $srcToken->getStartOffset(),
+                                     $srcToken->getEndOffset());
 
         $newToken->setPositionIncrement($srcToken->getPositionIncrement());
 

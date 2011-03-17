@@ -17,37 +17,37 @@
  * @subpackage Resource
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Application_Resource_ResourceAbstract
  */
-namespace Zend\Application\Resource;
+require_once 'Zend/Application/Resource/ResourceAbstract.php';
 
-use Zend\Log as ZendLog;
 
 /**
  * Resource for initializing the locale
  *
- * @uses       \Zend\Application\Resource\AbstractResource
- * @uses       \Zend\Log\Logger
+ * @uses       Zend_Application_Resource_ResourceAbstract
  * @category   Zend
  * @package    Zend_Application
  * @subpackage Resource
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Log extends AbstractResource
+class Zend_Application_Resource_Log
+    extends Zend_Application_Resource_ResourceAbstract
 {
     /**
-     * @var \Zend\Log\Logger
+     * @var Zend_Log
      */
     protected $_log;
 
     /**
      * Defined by Zend_Application_Resource_Resource
      *
-     * @return \Zend\Log\Logger
+     * @return Zend_Log
      */
     public function init()
     {
@@ -56,26 +56,21 @@ class Log extends AbstractResource
 
     /**
      * Attach logger
-     * 
-     * @param  \Zend\Log\Logger $log 
-     * @return \Zend\Application\Resource\Log
+     *
+     * @param  Zend_Log $log
+     * @return Zend_Application_Resource_Log
      */
-    public function setLog(ZendLog\Logger $log)
+    public function setLog(Zend_Log $log)
     {
         $this->_log = $log;
         return $this;
     }
 
-    /**
-     * Retrieve logger
-     * 
-     * @return \Zend\Log\Logger
-     */
     public function getLog()
     {
         if (null === $this->_log) {
             $options = $this->getOptions();
-            $log = ZendLog\Logger::factory($options);
+            $log = Zend_Log::factory($options);
             $this->setLog($log);
         }
         return $this->_log;

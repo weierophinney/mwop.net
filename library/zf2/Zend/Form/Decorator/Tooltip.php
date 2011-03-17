@@ -19,24 +19,22 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * @namespace
- */
-namespace Zend\Form\Decorator;
+/** Zend_Form_Decorator_Abstract */
+require_once 'Zend/Form/Decorator/Abstract.php';
 
 /**
  * Zend_Form_Decorator_Tooltip
  *
  * Will translate the title attribute, if available
  *
- * @uses       \Zend\Form\Decorator\AbstractDecorator
  * @category   Zend
  * @package    Zend_Form
  * @subpackage Decorator
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id: Tooltip.php$
  */
-class Tooltip extends AbstractDecorator
+class Zend_Form_Decorator_Tooltip extends Zend_Form_Decorator_Abstract
 {
     /**
      * Translates the title attribute if it is available, if the translator is available
@@ -56,4 +54,5 @@ class Tooltip extends AbstractDecorator
         $this->getElement()->setAttrib('title', $title);
         return $content;
     }
+
 }

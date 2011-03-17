@@ -17,31 +17,28 @@
  * @subpackage Document
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Search\Lucene;
 
-use Zend\Search\Lucene\Exception\InvalidArgumentException;
+/** Zend_Search_Lucene_Field */
+require_once 'Zend/Search/Lucene/Field.php';
+
 
 /**
  * A Document is a set of fields. Each field has a name and a textual value.
  *
- * @uses       \Zend\Search\Lucene\Exception\InvalidArgumentException
- * @uses       \Zend\Search\Lucene\Document\Field
  * @category   Zend
  * @package    Zend_Search_Lucene
  * @subpackage Document
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Document
+class Zend_Search_Lucene_Document
 {
 
     /**
-     * Associative array \Zend\Search\Lucene\Document\Field objects where the keys to the
+     * Associative array Zend_Search_Lucene_Field objects where the keys to the
      * array are the names of the fields.
      *
      * @var array
@@ -60,7 +57,7 @@ class Document
      * Proxy method for getFieldValue(), provides more convenient access to
      * the string value of a field.
      *
-     * @param  $offset
+     * @param  string $offset
      * @return string
      */
     public function __get($offset)
@@ -72,10 +69,10 @@ class Document
     /**
      * Add a field object to this document.
      *
-     * @param \Zend\Search\Lucene\Document\Field $field
-     * @return \Zend\Search\Lucene\Document
+     * @param Zend_Search_Lucene_Field $field
+     * @return Zend_Search_Lucene_Document
      */
-    public function addField(Document\Field $field)
+    public function addField(Zend_Search_Lucene_Field $field)
     {
         $this->_fields[$field->name] = $field;
 
@@ -95,16 +92,16 @@ class Document
 
 
     /**
-     * Returns {@link \Zend\Search\Lucene\Document\Field} object for a named field in this document.
+     * Returns Zend_Search_Lucene_Field object for a named field in this document.
      *
      * @param string $fieldName
-     * @throws \Zend\Search\Lucene\Exception\InvalidArgumentException
-     * @return \Zend\Search\Lucene\Document\Field
+     * @return Zend_Search_Lucene_Field
      */
     public function getField($fieldName)
     {
         if (!array_key_exists($fieldName, $this->_fields)) {
-            throw new InvalidArgumentException("Field name \"$fieldName\" not found in document.");
+            require_once 'Zend/Search/Lucene/Exception.php';
+            throw new Zend_Search_Lucene_Exception("Field name \"$fieldName\" not found in document.");
         }
         return $this->_fields[$fieldName];
     }

@@ -17,14 +17,13 @@
  * @subpackage Framework
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Tool_Project_Context_Filesystem_Abstract
  */
-namespace Zend\Tool\Project\Context\Filesystem;
-
-use Zend\Tool\Project\Profile\Resource\Resource;
+require_once 'Zend/Tool/Project/Context/Filesystem/Abstract.php';
 
 /**
  * This class is the front most class for utilizing Zend_Tool_Project
@@ -32,47 +31,46 @@ use Zend\Tool\Project\Profile\Resource\Resource;
  * A profile is a hierarchical set of resources that keep track of
  * items within a specific project.
  *
- * @uses       \Zend\Tool\Project\Context\Filesystem\AbstractFilesystem
  * @category   Zend
  * @package    Zend_Tool
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class File extends AbstractFilesystem
+class Zend_Tool_Project_Context_Filesystem_File extends Zend_Tool_Project_Context_Filesystem_Abstract
 {
 
     protected $_fileOnlyContext = null;
-    
+
     protected $_filesystemName = null;
-    
+
     protected $_content = null;
-    
+
     /**
      * getName()
-     * 
+     *
      * @return string
      */
     public function getName()
     {
         return 'file';
     }
-    
+
     /**
      * init()
      *
-     * @return \Zend\Tool\Project\Context\Filesystem\File
+     * @return Zend_Tool_Project_Context_Filesystem_File
      */
     public function init()
     {
         if ($this->_resource->hasAttribute('filesystemName')) {
             $this->_filesystemName = $this->_resource->getAttribute('filesystemName');
         }
-        
-        // check to see if this file is 
+
+        // check to see if this file is
         if ($this->getName() == 'file') {
             $this->_initFileOnlyContext();
         }
-        
+
         // @potential-todo check to ensure that this 'file' resource has no children
         parent::init();
         return $this;
@@ -91,23 +89,23 @@ class File extends AbstractFilesystem
         }
         return $returnAttrs;
     }
-    
+
     /**
      * setResource()
      *
      * @param unknown_type $resource
      */
-    public function setResource(Resource $resource)
+    public function setResource(Zend_Tool_Project_Profile_Resource $resource)
     {
         $this->_resource = $resource;
         $this->_resource->setAppendable(false);
         return $this;
     }
-    
+
     /**
      * getResource()
-     * 
-     * @return \Zend\Tool\Project\Profile\Resource\Resource
+     *
+     * @return Zend_Tool_Project_Profile_Resource
      */
     public function getResource()
     {
@@ -117,13 +115,13 @@ class File extends AbstractFilesystem
     /**
      * create()
      *
-     * @return \Zend\Tool\Project\Context\Filesystem\File
+     * @return Zend_Tool_Project_Context_Filesystem_File
      */
     public function create()
     {
         // check to ensure the parent exists, if not, call it and create it
-        if (($parentResource = $this->_resource->getParentResource()) instanceof Resource) {
-            if ((($parentContext = $parentResource->getContext()) instanceof AbstractFilesystem)
+        if (($parentResource = $this->_resource->getParentResource()) instanceof Zend_Tool_Project_Profile_Resource) {
+            if ((($parentContext = $parentResource->getContext()) instanceof Zend_Tool_Project_Context_Filesystem_Abstract)
                 && (!$parentContext->exists())) {
                 $parentResource->create();
             }
@@ -141,7 +139,7 @@ class File extends AbstractFilesystem
     /**
      * delete()
      *
-     * @return \Zend\Tool\Project\Context\Filesystem\File
+     * @return Zend_Tool_Project_Context_Filesystem_File
      */
     public function delete()
     {
@@ -165,12 +163,12 @@ class File extends AbstractFilesystem
         if ($this->_resource->hasAttribute('defaultContentCallback')) {
             $contentFunc = $this->_resource->getAttribute('defaultContentCallback');
             if (is_callable($contentFunc)) {
-                $this->_content = call_user_func($contentFunc, $this);
+                $this->_content = call_user_func_array($contentFunc, array($this));
             }
         }
         if ($this->_filesystemName == null) {
             $this->_filesystemName = 'file.txt';
         }
     }
-    
+
 }

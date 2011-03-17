@@ -17,26 +17,26 @@
  * @subpackage Statement
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
+
 /**
- * @namespace
+ * @see Zend_Db_Statement
  */
-namespace Zend\Db\Statement;
+require_once 'Zend/Db/Statement.php';
+
 
 /**
  * Extends for Mysqli
  *
- * @uses       \Zend\Db\Db
- * @uses       \Zend\Db\Statement\AbstractStatement
- * @uses       \Zend\Db\Statement\MysqliException
  * @category   Zend
  * @package    Zend_Db
  * @subpackage Statement
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Mysqli extends AbstractStatement
+class Zend_Db_Statement_Mysqli extends Zend_Db_Statement
 {
 
     /**
@@ -61,7 +61,7 @@ class Mysqli extends AbstractStatement
     /**
      * @param  string $sql
      * @return void
-     * @throws \Zend\Db\Statement\MysqliException
+     * @throws Zend_Db_Statement_Mysqli_Exception
      */
     public function _prepare($sql)
     {
@@ -70,7 +70,11 @@ class Mysqli extends AbstractStatement
         $this->_stmt = $mysqli->prepare($sql);
 
         if ($this->_stmt === false || $mysqli->errno) {
-            throw new MysqliException("Mysqli prepare error: " . $mysqli->error, $mysqli->errno);
+            /**
+             * @see Zend_Db_Statement_Mysqli_Exception
+             */
+            require_once 'Zend/Db/Statement/Mysqli/Exception.php';
+            throw new Zend_Db_Statement_Mysqli_Exception("Mysqli prepare error: " . $mysqli->error, $mysqli->errno);
         }
     }
 
@@ -83,7 +87,7 @@ class Mysqli extends AbstractStatement
      * @param mixed $length    OPTIONAL Length of SQL parameter.
      * @param mixed $options   OPTIONAL Other options.
      * @return bool
-     * @throws \Zend\Db\Statement\MysqliException
+     * @throws Zend_Db_Statement_Mysqli_Exception
      */
     protected function _bindParam($parameter, &$variable, $type = null, $length = null, $options = null)
     {
@@ -174,7 +178,7 @@ class Mysqli extends AbstractStatement
      *
      * @param array $params OPTIONAL Values to bind to parameter placeholders.
      * @return bool
-     * @throws \Zend\Db\Statement\MysqliException
+     * @throws Zend_Db_Statement_Mysqli_Exception
      */
     public function _execute(array $params = null)
     {
@@ -203,7 +207,11 @@ class Mysqli extends AbstractStatement
         // execute the statement
         $retval = $this->_stmt->execute();
         if ($retval === false) {
-            throw new MysqliException("Mysqli statement execute error : " . $this->_stmt->error, $this->_stmt->errno);
+            /**
+             * @see Zend_Db_Statement_Mysqli_Exception
+             */
+            require_once 'Zend/Db/Statement/Mysqli/Exception.php';
+            throw new Zend_Db_Statement_Mysqli_Exception("Mysqli statement execute error : " . $this->_stmt->error, $this->_stmt->errno);
         }
 
 
@@ -211,7 +219,11 @@ class Mysqli extends AbstractStatement
         if ($this->_meta === null) {
             $this->_meta = $this->_stmt->result_metadata();
             if ($this->_stmt->errno) {
-                throw new MysqliException("Mysqli statement metadata error: " . $this->_stmt->error, $this->_stmt->errno);
+                /**
+                 * @see Zend_Db_Statement_Mysqli_Exception
+                 */
+                require_once 'Zend/Db/Statement/Mysqli/Exception.php';
+                throw new Zend_Db_Statement_Mysqli_Exception("Mysqli statement metadata error: " . $this->_stmt->error, $this->_stmt->errno);
             }
         }
 
@@ -253,7 +265,7 @@ class Mysqli extends AbstractStatement
      * @param int $cursor OPTIONAL Absolute, relative, or other.
      * @param int $offset OPTIONAL Number for absolute or relative cursors.
      * @return mixed Array, object, or scalar depending on fetch mode.
-     * @throws \Zend\Db\Statement\MysqliException
+     * @throws Zend_Db_Statement_Mysqli_Exception
      */
     public function fetch($style = null, $cursor = null, $offset = null)
     {
@@ -285,26 +297,30 @@ class Mysqli extends AbstractStatement
 
         $row = false;
         switch ($style) {
-            case Db\Db::FETCH_NUM:
+            case Zend_Db::FETCH_NUM:
                 $row = $values;
                 break;
-            case Db\Db::FETCH_ASSOC:
+            case Zend_Db::FETCH_ASSOC:
                 $row = array_combine($this->_keys, $values);
                 break;
-            case Db\Db::FETCH_BOTH:
+            case Zend_Db::FETCH_BOTH:
                 $assoc = array_combine($this->_keys, $values);
                 $row = array_merge($values, $assoc);
                 break;
-            case Db\Db::FETCH_OBJ:
+            case Zend_Db::FETCH_OBJ:
                 $row = (object) array_combine($this->_keys, $values);
                 break;
-            case Db\Db::FETCH_BOUND:
+            case Zend_Db::FETCH_BOUND:
                 $assoc = array_combine($this->_keys, $values);
                 $row = array_merge($values, $assoc);
                 return $this->_fetchBound($row);
                 break;
             default:
-                throw new MysqliException("Invalid fetch mode '$style' specified");
+                /**
+                 * @see Zend_Db_Statement_Mysqli_Exception
+                 */
+                require_once 'Zend/Db/Statement/Mysqli/Exception.php';
+                throw new Zend_Db_Statement_Mysqli_Exception("Invalid fetch mode '$style' specified");
                 break;
         }
         return $row;
@@ -316,11 +332,15 @@ class Mysqli extends AbstractStatement
      * the results of multiple queries.
      *
      * @return bool
-     * @throws \Zend\Db\Statement\MysqliException
+     * @throws Zend_Db_Statement_Mysqli_Exception
      */
     public function nextRowset()
     {
-        throw new MysqliException(__FUNCTION__.'() is not implemented');
+        /**
+         * @see Zend_Db_Statement_Mysqli_Exception
+         */
+        require_once 'Zend/Db/Statement/Mysqli/Exception.php';
+        throw new Zend_Db_Statement_Mysqli_Exception(__FUNCTION__.'() is not implemented');
     }
 
     /**

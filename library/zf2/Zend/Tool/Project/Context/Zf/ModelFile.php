@@ -17,12 +17,8 @@
  * @subpackage Framework
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
-
-/**
- * @namespace
- */
-namespace Zend\Tool\Project\Context\Zf;
 
 /**
  * This class is the front most class for utilizing Zend_Tool_Project
@@ -30,27 +26,24 @@ namespace Zend\Tool\Project\Context\Zf;
  * A profile is a hierarchical set of resources that keep track of
  * items within a specific project.
  *
- * @uses       \Zend\CodeGenerator\Php\PhpClass
- * @uses       \Zend\CodeGenerator\Php\PhpFile
- * @uses       \Zend\Tool\Project\Context\Zf\AbstractClassFile
  * @category   Zend
  * @package    Zend_Tool
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class ModelFile extends AbstractClassFile
+class Zend_Tool_Project_Context_Zf_ModelFile extends Zend_Tool_Project_Context_Zf_AbstractClassFile
 {
 
     /**
      * @var string
      */
     protected $_modelName = 'Base';
-    
+
     /**
      * @var string
      */
     protected $_filesystemName = 'modelName';
-    
+
     /**
      * init()
      *
@@ -73,7 +66,7 @@ class ModelFile extends AbstractClassFile
             'modelName' => $this->getModelName()
             );
     }
-    
+
     /**
      * getName()
      *
@@ -88,22 +81,22 @@ class ModelFile extends AbstractClassFile
     {
         return $this->_modelName;
     }
-    
+
     public function getContents()
     {
-        
+
         $className = $this->getFullClassName($this->_modelName, 'Model');
-        
-        $codeGenFile = new \Zend\CodeGenerator\Php\PhpFile(array(
+
+        $codeGenFile = new Zend_CodeGenerator_Php_File(array(
             'fileName' => $this->getPath(),
             'classes' => array(
-                new \Zend\CodeGenerator\Php\PhpClass(array(
+                new Zend_CodeGenerator_Php_Class(array(
                     'name' => $className,
                     ))
                 )
             ));
         return $codeGenFile->generate();
     }
-    
-    
+
+
 }

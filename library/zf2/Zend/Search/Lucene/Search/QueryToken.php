@@ -17,23 +17,17 @@
  * @subpackage Search
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
- */
-namespace Zend\Search\Lucene\Search;
-use Zend\Search\Lucene;
-
-/**
- * @uses       \Zend\Search\Lucene\Exception\InvalidArgumentException
  * @category   Zend
  * @package    Zend_Search_Lucene
  * @subpackage Search
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class QueryToken
+class Zend_Search_Lucene_Search_QueryToken
 {
     /**
      * Token types.
@@ -127,7 +121,6 @@ class QueryToken
      * @param integer $tokenCategory
      * @param string  $tokText
      * @param integer $position
-     * @throws \Zend\Search\Lucene\Exception\InvalidArgumentException
      */
     public function __construct($tokenCategory, $tokenText, $position)
     {
@@ -216,9 +209,8 @@ class QueryToken
                         break;
 
                     default:
-                        throw new Lucene\Exception\InvalidArgumentException(
-                        	'Unrecognized query syntax lexeme: \'' . $tokenText . '\''
-                        );
+                        require_once 'Zend/Search/Lucene/Exception.php';
+                        throw new Zend_Search_Lucene_Exception('Unrecognized query syntax lexeme: \'' . $tokenText . '\'');
                 }
                 break;
 
@@ -226,9 +218,8 @@ class QueryToken
                 $this->type = self::TT_NUMBER;
 
             default:
-                throw new Lucene\Exception\InvalidArgumentException(
-                	'Unrecognized lexeme type: \'' . $tokenCategory . '\''
-                );
+                require_once 'Zend/Search/Lucene/Exception.php';
+                throw new Zend_Search_Lucene_Exception('Unrecognized lexeme type: \'' . $tokenCategory . '\'');
         }
     }
 }

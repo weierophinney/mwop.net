@@ -16,29 +16,22 @@
  * @package    Zend_Server
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
-
-/**
- * @namespace
- */
-namespace Zend\Server;
 
 /**
  * Server methods metadata
  *
- * @uses       Countable
- * @uses       Iterator
- * @uses       \Zend\Server\Exception
- * @uses       \Zend\Server\Method\Definition
+ * @todo       Implement iterator
  * @category   Zend
  * @package    Zend_Server
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Definition implements \Countable, \Iterator
+class Zend_Server_Definition implements Countable, Iterator
 {
     /**
-     * @var array Array of \Zend\Server\Method\Definition objects
+     * @var array Array of Zend_Server_Method_Definition objects
      */
     protected $_methods = array();
 
@@ -75,17 +68,19 @@ class Definition implements \Countable, \Iterator
     /**
      * Add method to definition
      *
-     * @param  array|\Zend\Server\Method\Definition $method
+     * @param  array|Zend_Server_Method_Definition $method
      * @param  null|string $name
-     * @return \Zend\Server\Definition
-     * @throws \Zend\Server\Exception if duplicate or invalid method provided
+     * @return Zend_Server_Definition
+     * @throws Zend_Server_Exception if duplicate or invalid method provided
      */
     public function addMethod($method, $name = null)
     {
         if (is_array($method)) {
-            $method = new Method\Definition($method);
-        } elseif (!$method instanceof Method\Definition) {
-            throw new Exception\InvalidArgumentException('Invalid method provided');
+            require_once 'Zend/Server/Method/Definition.php';
+            $method = new Zend_Server_Method_Definition($method);
+        } elseif (!$method instanceof Zend_Server_Method_Definition) {
+            require_once 'Zend/Server/Exception.php';
+            throw new Zend_Server_Exception('Invalid method provided');
         }
 
         if (is_numeric($name)) {
@@ -97,11 +92,13 @@ class Definition implements \Countable, \Iterator
             $name = $method->getName();
         }
         if (null === $name) {
-            throw new Exception\InvalidArgumentException('No method name provided');
+            require_once 'Zend/Server/Exception.php';
+            throw new Zend_Server_Exception('No method name provided');
         }
 
         if (!$this->_overwriteExistingMethods && array_key_exists($name, $this->_methods)) {
-            throw new Exception\InvalidArgumentException(sprintf('Method by name of "%s" already exists', $name));
+            require_once 'Zend/Server/Exception.php';
+            throw new Zend_Server_Exception(sprintf('Method by name of "%s" already exists', $name));
         }
         $this->_methods[$name] = $method;
         return $this;
@@ -110,8 +107,8 @@ class Definition implements \Countable, \Iterator
     /**
      * Add multiple methods
      *
-     * @param  array $methods Array of \Zend\Server\Method\Definition objects or arrays
-     * @return \Zend\Server\Definition
+     * @param  array $methods Array of Zend_Server_Method_Definition objects or arrays
+     * @return Zend_Server_Definition
      */
     public function addMethods(array $methods)
     {
@@ -124,8 +121,8 @@ class Definition implements \Countable, \Iterator
     /**
      * Set all methods at once (overwrite)
      *
-     * @param  array $methods Array of \Zend\Server\Method\Definition objects or arrays
-     * @return \Zend\Server\Definition
+     * @param  array $methods Array of Zend_Server_Method_Definition objects or arrays
+     * @return Zend_Server_Definition
      */
     public function setMethods(array $methods)
     {
@@ -149,7 +146,7 @@ class Definition implements \Countable, \Iterator
      * Get a given method definition
      *
      * @param  string $method
-     * @return null|\Zend\Server\Method\Definition
+     * @return null|Zend_Server_Method_Definition
      */
     public function getMethod($method)
     {
@@ -162,7 +159,7 @@ class Definition implements \Countable, \Iterator
     /**
      * Get all method definitions
      *
-     * @return array Array of \Zend\Server\Method\Definition objects
+     * @return array Array of Zend_Server_Method_Definition objects
      */
     public function getMethods()
     {
@@ -173,7 +170,7 @@ class Definition implements \Countable, \Iterator
      * Remove a method definition
      *
      * @param  string $method
-     * @return \Zend\Server\Definition
+     * @return Zend_Server_Definition
      */
     public function removeMethod($method)
     {
@@ -186,7 +183,7 @@ class Definition implements \Countable, \Iterator
     /**
      * Clear all method definitions
      *
-     * @return \Zend\Server\Definition
+     * @return Zend_Server_Definition
      */
     public function clearMethods()
     {

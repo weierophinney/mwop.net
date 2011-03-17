@@ -17,24 +17,26 @@
  * @subpackage Helper
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
+
 /**
- * @namespace
+ * Abstract class for extension
  */
-namespace Zend\View\Helper;
+require_once 'Zend/View/Helper/FormElement.php';
+
 
 /**
  * Helper to generate a "submit" button
  *
- * @uses       \Zend\View\Helper\FormElement
  * @category   Zend
  * @package    Zend_View
  * @subpackage Helper
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class FormSubmit extends FormElement
+class Zend_View_Helper_FormSubmit extends Zend_View_Helper_FormElement
 {
     /**
      * Generates a 'submit' button.
@@ -51,32 +53,31 @@ class FormSubmit extends FormElement
      *
      * @return string The element XHTML.
      */
-    public function direct($name = null, $value = null, $attribs = null)
+    public function formSubmit($name, $value = null, $attribs = null)
     {
-        if ($name == null) {
-            throw new \InvalidArgumentException('FormSubmit: missing argument. $name is required in formSubmit($name, $value = null, $attribs = null)');
-        }
-        
         $info = $this->_getInfo($name, $value, $attribs);
-        extract($info); // name, value, attribs, options, listsep, disable
-
+        extract($info); // name, value, attribs, options, listsep, disable, id
         // check if disabled
         $disabled = '';
         if ($disable) {
             $disabled = ' disabled="disabled"';
         }
 
+        if ($id) {
+            $id = ' id="' . $this->view->escape($id) . '"';
+        }
+
         // XHTML or HTML end tag?
         $endTag = ' />';
-        if (($this->view instanceof \Zend\View\PhpRenderer) && !$this->view->broker('doctype')->isXhtml()) {
+        if (($this->view instanceof Zend_View_Abstract) && !$this->view->doctype()->isXhtml()) {
             $endTag= '>';
         }
 
         // Render the button.
         $xhtml = '<input type="submit"'
-               . ' name="' . $this->view->vars()->escape($name) . '"'
-               . ' id="' . $this->view->vars()->escape($id) . '"'
-               . ' value="' . $this->view->vars()->escape($value) . '"'
+               . ' name="' . $this->view->escape($name) . '"'
+               . $id
+               . ' value="' . $this->view->escape($value) . '"'
                . $disabled
                . $this->_htmlAttribs($attribs)
                . $endTag;

@@ -13,48 +13,39 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    Zend_PDF
- * @subpackage Zend_PDF_Image
+ * @package    Zend_Pdf
+ * @subpackage Images
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Pdf;
 
 /**
- * Abstract factory class which vends {@link \Zend\Pdf\Resource\Image\AbstractImage} objects.
+ * Abstract factory class which vends {@link Zend_Pdf_Resource_Image} objects.
  *
  * This class is also the home for image-related constants because the name of
- * the true base class ({@link \Zend\Pdf\Resource\Image\AbstractImage}) is not intuitive
- * for the end user.
+ * the true base class ({@link Zend_Pdf_Resource_Image}) is not intuitive for the
+ * end user.
  *
- * @uses       \Zend\Pdf\Exception
- * @uses       \Zend\Pdf\BinaryParser\DataSource
- * @uses       \Zend\Pdf\BinaryParser\Image
- * @uses       \Zend\Pdf\Resource\Image
- * @package    Zend_PDF
- * @subpackage Zend_PDF_Image
+ * @package    Zend_Pdf
+ * @subpackage Images
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-use Zend\Pdf\Exception;
-
-abstract class Image
+abstract class Zend_Pdf_Image
 {
-    /**** Class Constants ****/
+  /**** Class Constants ****/
 
 
-    /* Image Types */
+  /* Image Types */
 
     const TYPE_UNKNOWN = 0;
     const TYPE_JPEG = 1;
     const TYPE_PNG = 2;
     const TYPE_TIFF = 3;
 
-    /* TIFF Constants */
+  /* TIFF Constants */
 
     const TIFF_FIELD_TYPE_BYTE=1;
     const TIFF_FIELD_TYPE_ASCII=2;
@@ -89,7 +80,7 @@ abstract class Image
     const TIFF_PHOTOMETRIC_INTERPRETATION_YCBCR=6;
     const TIFF_PHOTOMETRIC_INTERPRETATION_CIELAB=8;
 
-    /* PNG Constants */
+  /* PNG Constants */
 
     const PNG_COMPRESSION_DEFAULT_STRATEGY = 0;
     const PNG_COMPRESSION_FILTERED = 1;
@@ -111,17 +102,17 @@ abstract class Image
     const PNG_CHANNEL_GRAY_ALPHA = 4;
     const PNG_CHANNEL_RGB_ALPHA = 6;
 
-    /**** Public Interface ****/
+  /**** Public Interface ****/
 
 
-    /* Factory Methods */
+  /* Factory Methods */
 
     /**
-     * Returns a {@link \Zend\Pdf\Resource\Image\AbstractImage} object by file path.
+     * Returns a {@link Zend_Pdf_Resource_Image} object by file path.
      *
      * @param string $filePath Full path to the image file.
-     * @return \Zend\Pdf\Resource\Image\AbstractImage
-     * @throws \Zend\Pdf\Exception
+     * @return Zend_Pdf_Resource_Image
+     * @throws Zend_Pdf_Exception
      */
     public static function imageWithPath($filePath)
     {
@@ -129,13 +120,15 @@ abstract class Image
          * use old implementation
          * @todo switch to new implementation
          */
-        return Resource\Image\ImageFactory::factory($filePath);
+        require_once 'Zend/Pdf/Resource/ImageFactory.php';
+        return Zend_Pdf_Resource_ImageFactory::factory($filePath);
 
 
         /* Create a file parser data source object for this file. File path and
          * access permission checks are handled here.
          */
-        $dataSource = new BinaryParser\DataSource\File($filePath);
+        require_once 'Zend/Pdf/FileParserDataSource/File.php';
+        $dataSource = new Zend_Pdf_FileParserDataSource_File($filePath);
 
         /* Attempt to determine the type of image. We can't always trust file
          * extensions, but try that first since it's fastest.
@@ -149,20 +142,21 @@ abstract class Image
             case 'tif':
                 //Fall through to next case;
             case 'tiff':
-                $image = self::_extractTiffImage($dataSource);
+                $image = Zend_Pdf_Image::_extractTiffImage($dataSource);
                 break;
             case 'png':
-                $image = self::_extractPngImage($dataSource);
+                $image = Zend_Pdf_Image::_extractPngImage($dataSource);
                 break;
             case 'jpg':
                 //Fall through to next case;
             case 'jpe':
                 //Fall through to next case;
             case 'jpeg':
-                $image = self::_extractJpegImage($dataSource);
+                $image = Zend_Pdf_Image::_extractJpegImage($dataSource);
                 break;
             default:
-                throw new Exception\DomainException('Cannot create image resource. File extension not known or unsupported type.');
+                require_once 'Zend/Pdf/Exception.php';
+                throw new Zend_Pdf_Exception("Cannot create image resource. File extension not known or unsupported type.");
                 break;
         }
 
@@ -176,7 +170,9 @@ abstract class Image
         } else {
             /* The type of image could not be determined. Give up.
              */
-            throw new Exception\DomainException("Cannot determine image type: $filePath");
+            require_once 'Zend/Pdf/Exception.php';
+            throw new Zend_Pdf_Exception("Cannot determine image type: $filePath",
+                                         Zend_Pdf_Exception::CANT_DETERMINE_IMAGE_TYPE);
          }
     }
 
@@ -190,17 +186,20 @@ abstract class Image
     /**
      * Attempts to extract a JPEG Image from the data source.
      *
-     * @param \Zend\Pdf\BinaryParser\DataSource\AbstractDataSource $dataSource
-     * @return \Zend\Pdf\Resource\Image\Jpeg May also return null if
+     * @param Zend_Pdf_FileParserDataSource $dataSource
+     * @return Zend_Pdf_Resource_Image_Jpeg May also return null if
      *   the data source does not appear to contain valid image data.
-     * @throws \Zend\Pdf\Exception
+     * @throws Zend_Pdf_Exception
      */
     protected static function _extractJpegImage($dataSource)
     {
-        throw new Exception\Exception\NotImplementedException('Jpeg image fileparser is not implemented. Old styly implementation has to be used.');
+        require_once 'Zend/Pdf/Exception.php';
+        throw new Zend_Pdf_Exception('Jpeg image fileparser is not implemented. Old styly implementation has to be used.');
 
-        $imageParser = new BinaryParser\Image\Jpeg($dataSource);
-        $image       = new Resource\Image\Jpeg($imageParser);
+        require_once 'Zend/Pdf/FileParser/Image/Jpeg.php';
+        $imageParser = new Zend_Pdf_FileParser_Image_Jpeg($dataSource);
+        require_once 'Zend/Pdf/Resource/Image/Jpeg.php';
+        $image = new Zend_Pdf_Resource_Image_Jpeg($imageParser);
         unset($imageParser);
 
         return $image;
@@ -209,14 +208,16 @@ abstract class Image
     /**
      * Attempts to extract a PNG Image from the data source.
      *
-     * @param \Zend\Pdf\BinaryParser\DataSource\AbstractDataSource $dataSource
-     * @return \Zend\Pdf\Resource\Image\Png May also return null if
+     * @param Zend_Pdf_FileParserDataSource $dataSource
+     * @return Zend_Pdf_Resource_Image_Png May also return null if
      *   the data source does not appear to contain valid image data.
      */
     protected static function _extractPngImage($dataSource)
     {
-        $imageParser = new BinaryParser\Image\Png($dataSource);
-        $image       = new Resource\Image\Png($imageParser);
+        require_once 'Zend/Pdf/FileParser/Image/Png.php';
+        $imageParser = new Zend_Pdf_FileParser_Image_Png($dataSource);
+        require_once 'Zend/Pdf/Resource/Image/Png.php';
+        $image = new Zend_Pdf_Resource_Image_Png($imageParser);
         unset($imageParser);
 
         return $image;
@@ -225,17 +226,20 @@ abstract class Image
     /**
      * Attempts to extract a TIFF Image from the data source.
      *
-     * @param \Zend\Pdf\BinaryParser\DataSource\AbstractDataSource $dataSource
-     * @return \Zend\Pdf\Resource\Image\Tiff May also return null if
+     * @param Zend_Pdf_FileParserDataSource $dataSource
+     * @return Zend_Pdf_Resource_Image_Tiff May also return null if
      *   the data source does not appear to contain valid image data.
-     * @throws \Zend\Pdf\Exception
+     * @throws Zend_Pdf_Exception
      */
     protected static function _extractTiffImage($dataSource)
     {
-        throw new Exception\NotImplementedException('Tiff image fileparser is not implemented. Old styly implementation has to be used.');
+        require_once 'Zend/Pdf/Exception.php';
+        throw new Zend_Pdf_Exception('Tiff image fileparser is not implemented. Old styly implementation has to be used.');
 
-        $imageParser = new BinaryParser\Image\Tiff($dataSource);
-        $image       = new Resource\Image\Tiff($imageParser);
+        require_once 'Zend/Pdf/FileParser/Image/Tiff.php';
+        $imageParser = new Zend_Pdf_FileParser_Image_Tiff($dataSource);
+        require_once 'Zend/Pdf/Resource/Image/Tiff.php';
+        $image = new Zend_Pdf_Resource_Image_Tiff($imageParser);
         unset($imageParser);
 
         return $image;

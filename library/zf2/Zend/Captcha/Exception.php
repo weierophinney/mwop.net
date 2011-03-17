@@ -15,23 +15,23 @@
  * @category   Zend
  * @package    Zend_Captcha
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @version    $Id$
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
 /**
- * @namespace
+ * @see Zend_Exception
  */
-namespace Zend\Captcha;
+require_once 'Zend/Exception.php';
 
 /**
  * Exception for Zend_Form component.
  *
- * @uses       Zend\Exception
  * @category   Zend
  * @package    Zend_Captcha
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-interface Exception
+class Zend_Captcha_Exception extends Zend_Exception
 {
 }

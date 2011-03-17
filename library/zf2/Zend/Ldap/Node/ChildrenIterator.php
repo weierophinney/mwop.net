@@ -17,30 +17,24 @@
  * @subpackage Node
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Ldap_Node
  */
-namespace Zend\Ldap\Node;
-
-use Zend\Ldap\Node;
+require_once 'Zend/Ldap/Node.php';
 
 /**
  * Zend_Ldap_Node_ChildrenIterator provides an iterator to a collection of children nodes.
  *
- * @uses       ArrayAccess
- * @uses       Countable
- * @uses       Iterator
- * @uses       RecursiveIterator
- * @uses       \Zend\Ldap\Node
  * @category   Zend
  * @package    Zend_Ldap
  * @subpackage Node
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class ChildrenIterator implements \Iterator, \Countable, \RecursiveIterator, \ArrayAccess
+class Zend_Ldap_Node_ChildrenIterator implements Iterator, Countable, RecursiveIterator, ArrayAccess
 {
     /**
      * An array of Zend_Ldap_Node objects
@@ -75,7 +69,7 @@ class ChildrenIterator implements \Iterator, \Countable, \RecursiveIterator, \Ar
      * Return the current child.
      * Implements Iterator
      *
-     * @return \Zend\Ldap\Node
+     * @return Zend_Ldap_Node
      */
     public function current()
     {
@@ -131,7 +125,7 @@ class ChildrenIterator implements \Iterator, \Countable, \RecursiveIterator, \Ar
      */
     public function hasChildren()
     {
-        if ($this->current() instanceof Node) {
+        if ($this->current() instanceof Zend_Ldap_Node) {
             return $this->current()->hasChildren();
         } else {
             return false;
@@ -141,11 +135,11 @@ class ChildrenIterator implements \Iterator, \Countable, \RecursiveIterator, \Ar
     /**
      * Returns the children for the current node.
      *
-     * @return \Zend\Ldap\Node\ChildrenIterator
+     * @return Zend_Ldap_Node_ChildrenIterator
      */
     public function getChildren()
     {
-        if ($this->current() instanceof Node) {
+        if ($this->current() instanceof Zend_Ldap_Node) {
             return $this->current()->getChildren();
         } else {
             return null;

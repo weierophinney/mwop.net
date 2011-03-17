@@ -20,13 +20,6 @@
  */
 
 /**
- * @namespace
- */
-namespace Zend\Service\ReCaptcha;
-
-use Zend\Http\Response as HTTPResponse;
-
-/**
  * Zend_Service_ReCaptcha_Response
  *
  * @category   Zend
@@ -34,8 +27,9 @@ use Zend\Http\Response as HTTPResponse;
  * @subpackage ReCaptcha
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
-class Response
+class Zend_Service_ReCaptcha_Response
 {
     /**
      * Status
@@ -61,9 +55,9 @@ class Response
      *
      * @param string $status
      * @param string $errorCode
-     * @param \Zend\Http\Response $httpResponse If this is set the content will override $status and $errorCode
+     * @param Zend_Http_Response $httpResponse If this is set the content will override $status and $errorCode
      */
-    public function __construct($status = null, $errorCode = null, HTTPResponse $httpResponse = null)
+    public function __construct($status = null, $errorCode = null, Zend_Http_Response $httpResponse = null)
     {
         if ($status !== null) {
             $this->setStatus($status);
@@ -82,7 +76,7 @@ class Response
      * Set the status
      *
      * @param string $status
-     * @return \Zend\Service\ReCaptcha\Response
+     * @return Zend_Service_ReCaptcha_Response
      */
     public function setStatus($status)
     {
@@ -119,7 +113,7 @@ class Response
      * Set the error code
      *
      * @param string $errorCode
-     * @return \Zend\Service\ReCaptcha\Response
+     * @return Zend_Service_ReCaptcha_Response
      */
     public function setErrorCode($errorCode)
     {
@@ -141,10 +135,10 @@ class Response
     /**
      * Populate this instance based on a Zend_Http_Response object
      *
-     * @param \Zend\Http\Response $response
-     * @return \Zend\Service\ReCaptcha\Response
+     * @param Zend_Http_Response $response
+     * @return Zend_Service_ReCaptcha_Response
      */
-    public function setFromHttpResponse(HTTPResponse $response)
+    public function setFromHttpResponse(Zend_Http_Response $response)
     {
         $body = $response->getBody();
 

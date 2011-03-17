@@ -17,20 +17,20 @@
  * @subpackage Math
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Crypt_Exception
  */
-namespace Zend\Crypt\Math;
+require_once 'Zend/Crypt/Exception.php';
 
 /**
- * @uses       \Zend\Crypt\Exception
  * @category   Zend
  * @package    Zend_Crypt
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Exception extends \Zend\Crypt\Exception
+class Zend_Crypt_Math_Exception extends Zend_Crypt_Exception
 {
 }

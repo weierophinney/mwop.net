@@ -17,35 +17,40 @@
  * @subpackage Storage
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
+
 /**
- * @namespace
+ * @see Zend_Mail_Storage_Abstract
  */
-namespace Zend\Mail\Storage;
-
-use Zend\Mail\AbstractStorage,
-    Zend\Mail\Storage\Exception,
-    Zend\Mail\Storage;
+require_once 'Zend/Mail/Storage/Abstract.php';
 
 /**
- * @uses       \Zend\Mail\Message\File
- * @uses       \Zend\Mail\Storage\Storage
- * @uses       \Zend\Mail\Storage\AbstractStorage
- * @uses       \Zend\Mail\Storage\Exception
+ * @see Zend_Mail_Message_File
+ */
+require_once 'Zend/Mail/Message/File.php';
+
+/**
+ * @see Zend_Mail_Storage
+ */
+require_once 'Zend/Mail/Storage.php';
+
+
+/**
  * @category   Zend
  * @package    Zend_Mail
  * @subpackage Storage
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Maildir extends AbstractStorage
+class Zend_Mail_Storage_Maildir extends Zend_Mail_Storage_Abstract
 {
     /**
      * used message class, change it in an extened class to extend the returned message class
      * @var string
      */
-    protected $_messageClass = '\Zend\Mail\Message\File';
+    protected $_messageClass = 'Zend_Mail_Message_File';
 
     /**
      * data of found message files in maildir dir
@@ -60,12 +65,12 @@ class Maildir extends AbstractStorage
      *
      * @var array
      */
-    protected static $_knownFlags = array('D' => Storage::FLAG_DRAFT,
-                                          'F' => Storage::FLAG_FLAGGED,
-                                          'P' => Storage::FLAG_PASSED,
-                                          'R' => Storage::FLAG_ANSWERED,
-                                          'S' => Storage::FLAG_SEEN,
-                                          'T' => Storage::FLAG_DELETED);
+    protected static $_knownFlags = array('D' => Zend_Mail_Storage::FLAG_DRAFT,
+                                          'F' => Zend_Mail_Storage::FLAG_FLAGGED,
+                                          'P' => Zend_Mail_Storage::FLAG_PASSED,
+                                          'R' => Zend_Mail_Storage::FLAG_ANSWERED,
+                                          'S' => Zend_Mail_Storage::FLAG_SEEN,
+                                          'T' => Zend_Mail_Storage::FLAG_DELETED);
 
     // TODO: getFlags($id) for fast access if headers are not needed (i.e. just setting flags)?
 
@@ -73,7 +78,7 @@ class Maildir extends AbstractStorage
      * Count messages all messages in current box
      *
      * @return int number of messages
-     * @throws \Zend\Mail\Storage\Exception
+     * @throws Zend_Mail_Storage_Exception
      */
     public function countMessages($flags = null)
     {
@@ -109,12 +114,16 @@ class Maildir extends AbstractStorage
      * @param  int         $id    message number
      * @param  string|null $field wanted field
      * @return string|array wanted field or all fields as array
-     * @throws \Zend\Mail\Storage\Exception
+     * @throws Zend_Mail_Storage_Exception
      */
     protected function _getFileData($id, $field = null)
     {
         if (!isset($this->_files[$id - 1])) {
-            throw new Exception\InvalidArgumentException('id does not exist');
+            /**
+             * @see Zend_Mail_Storage_Exception
+             */
+            require_once 'Zend/Mail/Storage/Exception.php';
+            throw new Zend_Mail_Storage_Exception('id does not exist');
         }
 
         if (!$field) {
@@ -122,7 +131,11 @@ class Maildir extends AbstractStorage
         }
 
         if (!isset($this->_files[$id - 1][$field])) {
-            throw new Exception\InvalidArgumentException('field does not exist');
+            /**
+             * @see Zend_Mail_Storage_Exception
+             */
+            require_once 'Zend/Mail/Storage/Exception.php';
+            throw new Zend_Mail_Storage_Exception('field does not exist');
         }
 
         return $this->_files[$id - 1][$field];
@@ -133,7 +146,7 @@ class Maildir extends AbstractStorage
      *
      * @param  int|null $id number of message or null for all messages
      * @return int|array size of given message of list with all messages as array(num => size)
-     * @throws \Zend\Mail\Storage\Exception
+     * @throws Zend_Mail_Storage_Exception
      */
     public function getSize($id = null)
     {
@@ -156,13 +169,13 @@ class Maildir extends AbstractStorage
      * Fetch a message
      *
      * @param  int $id number of message
-     * @return \Zend\Mail\Message\File
-     * @throws \Zend\Mail\Storage\Exception
+     * @return Zend_Mail_Message_File
+     * @throws Zend_Mail_Storage_Exception
      */
     public function getMessage($id)
     {
         // TODO that's ugly, would be better to let the message class decide
-        if (strtolower($this->_messageClass) == '\zend\mail\message\file' || is_subclass_of($this->_messageClass, '\Zend\Mail\Message\File')) {
+        if (strtolower($this->_messageClass) == 'zend_mail_message_file' || is_subclass_of($this->_messageClass, 'zend_mail_message_file')) {
             return new $this->_messageClass(array('file'  => $this->_getFileData($id, 'filename'),
                                                   'flags' => $this->_getFileData($id, 'flags')));
         }
@@ -178,13 +191,17 @@ class Maildir extends AbstractStorage
      * @param  null|array|string $part     path to part or null for messsage header
      * @param  int               $topLines include this many lines with header (after an empty line)
      * @return string raw header
-     * @throws \Zend\Mail\Storage\Exception
+     * @throws Zend_Mail_Storage_Exception
      */
     public function getRawHeader($id, $part = null, $topLines = 0)
     {
         if ($part !== null) {
             // TODO: implement
-            throw new Exception\RuntimeException('not implemented');
+            /**
+             * @see Zend_Mail_Storage_Exception
+             */
+            require_once 'Zend/Mail/Storage/Exception.php';
+            throw new Zend_Mail_Storage_Exception('not implemented');
         }
 
         $fh = fopen($this->_getFileData($id, 'filename'), 'r');
@@ -208,13 +225,17 @@ class Maildir extends AbstractStorage
      * @param  int               $id   number of message
      * @param  null|array|string $part path to part or null for messsage content
      * @return string raw content
-     * @throws \Zend\Mail\Storage\Exception
+     * @throws Zend_Mail_Storage_Exception
      */
     public function getRawContent($id, $part = null)
     {
         if ($part !== null) {
             // TODO: implement
-            throw new Exception\RuntimeException('not implemented');
+            /**
+             * @see Zend_Mail_Storage_Exception
+             */
+            require_once 'Zend/Mail/Storage/Exception.php';
+            throw new Zend_Mail_Storage_Exception('not implemented');
         }
 
         $fh = fopen($this->_getFileData($id, 'filename'), 'r');
@@ -236,8 +257,8 @@ class Maildir extends AbstractStorage
      * Supported parameters are:
      *   - dirname dirname of mbox file
      *
-     * @param  $params array mail reader specific parameters
-     * @throws \Zend\Mail\Storage\Exception
+     * @param array $params mail reader specific parameters
+     * @throws Zend_Mail_Storage_Exception
      */
     public function __construct($params)
     {
@@ -246,11 +267,19 @@ class Maildir extends AbstractStorage
         }
 
         if (!isset($params->dirname) || !is_dir($params->dirname)) {
-            throw new Exception\InvalidArgumentException('no valid dirname given in params');
+            /**
+             * @see Zend_Mail_Storage_Exception
+             */
+            require_once 'Zend/Mail/Storage/Exception.php';
+            throw new Zend_Mail_Storage_Exception('no valid dirname given in params');
         }
 
         if (!$this->_isMaildir($params->dirname)) {
-            throw new Exception\InvalidArgumentException('invalid maildir given');
+            /**
+             * @see Zend_Mail_Storage_Exception
+             */
+            require_once 'Zend/Mail/Storage/Exception.php';
+            throw new Zend_Mail_Storage_Exception('invalid maildir given');
         }
 
         $this->_has['top'] = true;
@@ -280,7 +309,7 @@ class Maildir extends AbstractStorage
      *
      * @param string $dirname name of maildir
      * @return null
-     * @throws \Zend\Mail\Storage\Exception
+     * @throws Zend_Mail_Storage_Exception
      */
     protected function _openMaildir($dirname)
     {
@@ -290,17 +319,25 @@ class Maildir extends AbstractStorage
 
         $dh = @opendir($dirname . '/cur/');
         if (!$dh) {
-            throw new Exception\RuntimeException('cannot open maildir');
+            /**
+             * @see Zend_Mail_Storage_Exception
+             */
+            require_once 'Zend/Mail/Storage/Exception.php';
+            throw new Zend_Mail_Storage_Exception('cannot open maildir');
         }
         $this->_getMaildirFiles($dh, $dirname . '/cur/');
         closedir($dh);
 
         $dh = @opendir($dirname . '/new/');
         if ($dh) {
-            $this->_getMaildirFiles($dh, $dirname . '/new/', array(Storage::FLAG_RECENT));
+            $this->_getMaildirFiles($dh, $dirname . '/new/', array(Zend_Mail_Storage::FLAG_RECENT));
             closedir($dh);
         } else if (file_exists($dirname . '/new/')) {
-            throw new Exception\RuntimeException('cannot read recent mails in maildir');
+            /**
+             * @see Zend_Mail_Storage_Exception
+             */
+            require_once 'Zend/Mail/Storage/Exception.php';
+            throw new Zend_Mail_Storage_Exception('cannot read recent mails in maildir');
         }
     }
 
@@ -378,11 +415,15 @@ class Maildir extends AbstractStorage
      * stub for not supported message deletion
      *
      * @return null
-     * @throws \Zend\Mail\Storage\Exception
+     * @throws Zend_Mail_Storage_Exception
      */
     public function removeMessage($id)
     {
-        throw new Exception\RuntimeException('maildir is (currently) read-only');
+        /**
+         * @see Zend_Mail_Storage_Exception
+         */
+        require_once 'Zend/Mail/Storage/Exception.php';
+        throw new Zend_Mail_Storage_Exception('maildir is (currently) read-only');
     }
 
     /**
@@ -392,7 +433,7 @@ class Maildir extends AbstractStorage
      *
      * @param int|null $id message number
      * @return array|string message number for given message or all messages as array
-     * @throws \Zend\Mail\Storage\Exception
+     * @throws Zend_Mail_Storage_Exception
      */
     public function getUniqueId($id = null)
     {
@@ -415,7 +456,7 @@ class Maildir extends AbstractStorage
      *
      * @param string $id unique id
      * @return int message number
-     * @throws \Zend\Mail\Storage\Exception
+     * @throws Zend_Mail_Storage_Exception
      */
     public function getNumberByUniqueId($id)
     {
@@ -425,6 +466,10 @@ class Maildir extends AbstractStorage
             }
         }
 
-        throw new Exception\InvalidArgumentException('unique id not found');
+        /**
+         * @see Zend_Mail_Storage_Exception
+         */
+        require_once 'Zend/Mail/Storage/Exception.php';
+        throw new Zend_Mail_Storage_Exception('unique id not found');
     }
 }

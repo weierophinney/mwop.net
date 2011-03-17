@@ -16,20 +16,21 @@
  * @package    Zend_Controller
  * @subpackage Router
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @version    $Id$
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * @namespace
- */
-namespace Zend\Controller\Router;
+
+/** Zend_Controller_Exception */
+require_once 'Zend/Controller/Exception.php';
+
 
 /**
- * @uses       \Zend\Controller\Exception
  * @package    Zend_Controller
  * @subpackage Router
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Exception extends \Zend\Controller\Exception
+class Zend_Controller_Router_Exception extends Zend_Controller_Exception
 {}
+

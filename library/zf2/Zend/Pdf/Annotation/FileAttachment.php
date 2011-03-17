@@ -13,54 +13,53 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    Zend_PDF
- * @subpackage Zend_PDF_Annotation
+ * @package    Zend_Pdf
+ * @subpackage Annotation
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Pdf\Annotation;
-use Zend\Pdf\Exception;
-use Zend\Pdf;
-use Zend\Pdf\InternalType;
+/** Internally used classes */
+require_once 'Zend/Pdf/Element.php';
+require_once 'Zend/Pdf/Element/Array.php';
+require_once 'Zend/Pdf/Element/Dictionary.php';
+require_once 'Zend/Pdf/Element/Name.php';
+require_once 'Zend/Pdf/Element/Numeric.php';
+require_once 'Zend/Pdf/Element/String.php';
+
+
+/** Zend_Pdf_Annotation */
+require_once 'Zend/Pdf/Annotation.php';
 
 /**
  * A file attachment annotation contains a reference to a file,
  * which typically is embedded in the PDF file.
  *
- * @uses       \Zend\Pdf\Annotation\AbstractAnnotation
- * @uses       \Zend\Pdf\InternalType\AbstractTypeObject
- * @uses       \Zend\Pdf\InternalType\ArrayObject
- * @uses       \Zend\Pdf\InternalType\DictionaryObject
- * @uses       \Zend\Pdf\InternalType\NameObject
- * @uses       \Zend\Pdf\InternalType\NumericObject
- * @uses       \Zend\Pdf\InternalType\StringObject
- * @uses       \Zend\Pdf\Exception
- * @package    Zend_PDF
- * @subpackage Zend_PDF_Annotation
+ * @package    Zend_Pdf
+ * @subpackage Annotation
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class FileAttachment extends AbstractAnnotation
+class Zend_Pdf_Annotation_FileAttachment extends Zend_Pdf_Annotation
 {
     /**
      * Annotation object constructor
      *
-     * @throws \Zend\Pdf\Exception
+     * @throws Zend_Pdf_Exception
      */
-    public function __construct(InternalType\AbstractTypeObject $annotationDictionary)
+    public function __construct(Zend_Pdf_Element $annotationDictionary)
     {
-        if ($annotationDictionary->getType() != InternalType\AbstractTypeObject::TYPE_DICTIONARY) {
-            throw new Exception\CorruptedPdfException('Annotation dictionary resource has to be a dictionary.');
+        if ($annotationDictionary->getType() != Zend_Pdf_Element::TYPE_DICTIONARY) {
+            require_once 'Zend/Pdf/Exception.php';
+            throw new Zend_Pdf_Exception('Annotation dictionary resource has to be a dictionary.');
         }
 
         if ($annotationDictionary->Subtype === null  ||
-            $annotationDictionary->Subtype->getType() != InternalType\AbstractTypeObject::TYPE_NAME  ||
+            $annotationDictionary->Subtype->getType() != Zend_Pdf_Element::TYPE_NAME  ||
             $annotationDictionary->Subtype->value != 'FileAttachment') {
-            throw new Exception\CorruptedPdfException('Subtype => FileAttachment entry is requires');
+            require_once 'Zend/Pdf/Exception.php';
+            throw new Zend_Pdf_Exception('Subtype => FileAttachment entry is requires');
         }
 
         parent::__construct($annotationDictionary);
@@ -74,29 +73,29 @@ class FileAttachment extends AbstractAnnotation
      * @param float $x2
      * @param float $y2
      * @param string $fileSpecification
-     * @return \Zend\Pdf\Annotation\FileAttachment
+     * @return Zend_Pdf_Annotation_FileAttachment
      */
     public static function create($x1, $y1, $x2, $y2, $fileSpecification)
     {
-        $annotationDictionary = new InternalType\DictionaryObject();
+        $annotationDictionary = new Zend_Pdf_Element_Dictionary();
 
-        $annotationDictionary->Type    = new InternalType\NameObject('Annot');
-        $annotationDictionary->Subtype = new InternalType\NameObject('FileAttachment');
+        $annotationDictionary->Type    = new Zend_Pdf_Element_Name('Annot');
+        $annotationDictionary->Subtype = new Zend_Pdf_Element_Name('FileAttachment');
 
-        $rectangle = new InternalType\ArrayObject();
-        $rectangle->items[] = new InternalType\NumericObject($x1);
-        $rectangle->items[] = new InternalType\NumericObject($y1);
-        $rectangle->items[] = new InternalType\NumericObject($x2);
-        $rectangle->items[] = new InternalType\NumericObject($y2);
+        $rectangle = new Zend_Pdf_Element_Array();
+        $rectangle->items[] = new Zend_Pdf_Element_Numeric($x1);
+        $rectangle->items[] = new Zend_Pdf_Element_Numeric($y1);
+        $rectangle->items[] = new Zend_Pdf_Element_Numeric($x2);
+        $rectangle->items[] = new Zend_Pdf_Element_Numeric($y2);
         $annotationDictionary->Rect = $rectangle;
 
-        $fsDictionary = new InternalType\DictionaryObject();
-        $fsDictionary->Type = new InternalType\NameObject('Filespec');
-        $fsDictionary->F    = new InternalType\StringObject($fileSpecification);
+        $fsDictionary = new Zend_Pdf_Element_Dictionary();
+        $fsDictionary->Type = new Zend_Pdf_Element_Name('Filespec');
+        $fsDictionary->F    = new Zend_Pdf_Element_String($fileSpecification);
 
         $annotationDictionary->FS = $fsDictionary;
 
 
-        return new self($annotationDictionary);
+        return new Zend_Pdf_Annotation_FileAttachment($annotationDictionary);
     }
 }

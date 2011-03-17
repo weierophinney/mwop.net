@@ -16,21 +16,22 @@
  * @package    Zend_Controller
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Controller_Response_Http
  */
-namespace Zend\Controller\Response;
+require_once 'Zend/Controller/Response/Http.php';
 
 /**
  * Zend_Controller_Response_HttpTestCase
  *
- * @uses       \Zend\Controller\Response\Http
- * @package    Zend_Controller
+ * @uses Zend_Controller_Response_Http
+ * @package Zend_Controller
  * @subpackage Response
  */
-class HttpTestCase extends Http
+class Zend_Controller_Response_HttpTestCase extends Zend_Controller_Response_Http
 {
     /**
      * "send" headers by returning array of all headers that would be sent

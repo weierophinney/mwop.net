@@ -16,29 +16,38 @@
  * @package    Zend_Controller
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Controller_Action_Helper_Abstract
  */
-namespace Zend\Controller\Action\Helper;
+require_once 'Zend/Controller/Action/Helper/Abstract.php';
 
 /**
- * @uses       \Zend\Controller\Action\Exception
- * @uses       \Zend\Controller\Action\Helper\AbstractHelper
- * @uses       \Zend\Cache\Manager
+ * @see Zend_Controller_Action_Exception
+ */
+require_once 'Zend/Controller/Action/Exception.php';
+
+/**
+ * @see Zend_Cache_Manager
+ */
+require_once 'Zend/Cache/Manager.php';
+
+/**
  * @category   Zend
  * @package    Zend_Controller
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Cache extends AbstractHelper
+class Zend_Controller_Action_Helper_Cache
+    extends Zend_Controller_Action_Helper_Abstract
 {
 
     /**
      * Local Cache Manager object used by Helper
      *
-     * @var \Zend\Cache\Manager
+     * @var Zend_Cache_Manager
      */
     protected $_manager = null;
 
@@ -55,7 +64,7 @@ class Cache extends AbstractHelper
      * @var array
      */
     protected $_tags = array();
-    
+
     /**
      * Indexed map of Extensions by Controller and Action
      *
@@ -120,10 +129,10 @@ class Cache extends AbstractHelper
      */
     public function removePage($relativeUrl, $recursive = false)
     {
-        $cache = $this->getCache(\Zend\Cache\Manager::PAGECACHE);
+        $cache = $this->getCache(Zend_Cache_Manager::PAGECACHE);
         if ($recursive) {
             $backend = $cache->getBackend();
-            if (($backend instanceof \Zend\Cache\Backend)
+            if (($backend instanceof Zend_Cache_Backend)
                 && method_exists($backend, 'removeRecursively')
             ) {
                 return $backend->removeRecursively($relativeUrl);
@@ -144,8 +153,8 @@ class Cache extends AbstractHelper
      */
     public function removePagesTagged(array $tags)
     {
-        return $this->getCache(\Zend\Cache\Manager::PAGECACHE)
-            ->clean(\Zend\Cache\Cache::CLEANING_MODE_MATCHING_ANY_TAG, $tags);
+        return $this->getCache(Zend_Cache_Manager::PAGECACHE)
+            ->clean(Zend_Cache::CLEANING_MODE_MATCHING_ANY_TAG, $tags);
     }
 
     /**
@@ -176,11 +185,11 @@ class Cache extends AbstractHelper
             if (isset($this->_extensions[$controller][$action])) {
                 $extension = $this->_extensions[$controller][$action];
             }
-            $this->getCache(\Zend\Cache\Manager::PAGECACHE)
+            $this->getCache(Zend_Cache_Manager::PAGECACHE)
                 ->start($this->_encodeCacheId($reqUri), $tags, $extension);
         }
     }
-    
+
     /**
      * Encode a Cache ID as hexadecimal. This is a workaround because Backend ID validation
      * is trapped in the Frontend classes. Will try to get this reversed for ZF 2.0
@@ -197,10 +206,10 @@ class Cache extends AbstractHelper
     /**
      * Set an instance of the Cache Manager for this helper
      *
-     * @param \Zend\Cache\Manager $manager
+     * @param Zend_Cache_Manager $manager
      * @return void
      */
-    public function setManager(\Zend\Cache\Manager $manager)
+    public function setManager(Zend_Cache_Manager $manager)
     {
         $this->_manager = $manager;
         return $this;
@@ -210,20 +219,20 @@ class Cache extends AbstractHelper
      * Get the Cache Manager instance or instantiate the object if not
      * exists. Attempts to load from bootstrap if available.
      *
-     * @return \Zend\Cache\Manager
+     * @return Zend_Cache_Manager
      */
     public function getManager()
     {
         if ($this->_manager !== null) {
             return $this->_manager;
         }
-        $front = \Zend\Controller\Front::getInstance();
+        $front = Zend_Controller_Front::getInstance();
         if ($front->getParam('bootstrap')
         && $front->getParam('bootstrap')->getResource('CacheManager')) {
             return $front->getParam('bootstrap')
                 ->getResource('CacheManager');
         }
-        $this->_manager = new \Zend\Cache\Manager;
+        $this->_manager = new Zend_Cache_Manager;
         return $this->_manager;
     }
 
@@ -263,7 +272,7 @@ class Cache extends AbstractHelper
                 array($this->getManager(), $method), $args
             );
         }
-        throw new \Zend\Controller\Action\Exception('Method does not exist:'
+        throw new Zend_Controller_Action_Exception('Method does not exist:'
             . $method);
     }
 

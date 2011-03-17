@@ -17,12 +17,9 @@
  * @subpackage Expr
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Db;
 
 /**
  * Class for SQL SELECT fragments.
@@ -49,7 +46,7 @@ namespace Zend\Db;
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Expr
+class Zend_Db_Expr
 {
     /**
      * Storage for the SQL expression.

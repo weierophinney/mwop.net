@@ -17,47 +17,46 @@
  * @subpackage Client
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Soap\Client;
+/** Zend_Soap_Server */
+require_once 'Zend/Soap/Server.php';
 
-use Zend\Soap\Client as SOAPClient,
-    Zend\Soap\Server as SOAPServer;
+/** Zend_Soap_Client */
+require_once 'Zend/Soap/Client.php';
+
+if (extension_loaded('soap')) {
 
 /**
- * \Zend\Soap\Client\Local
+ * Zend_Soap_Client_Local
  *
  * Class is intended to be used as local SOAP client which works
  * with a provided Server object.
  *
  * Could be used for development or testing purposes.
  *
- * @uses       \Zend\Soap\Client
- * @uses       \Zend\Soap\Server
  * @category   Zend
  * @package    Zend_Soap
  * @subpackage Client
  */
-class Local extends SOAPClient
+class Zend_Soap_Client_Local extends Zend_Soap_Client
 {
     /**
      * Server object
      *
-     * @var \Zend\Soap\Server
+     * @var Zend_Soap_Server
      */
     protected $_server;
 
     /**
      * Local client constructor
      *
-     * @param \Zend\Soap\Server $server
+     * @param Zend_Soap_Server $server
      * @param string $wsdl
      * @param array $options
      */
-    function __construct(SOAPServer $server, $wsdl, $options = null)
+    function __construct(Zend_Soap_Server $server, $wsdl, $options = null)
     {
         $this->_server = $server;
 
@@ -71,7 +70,7 @@ class Local extends SOAPClient
      * Actual "do request" method.
      *
      * @internal
-     * @param \Zend\Soap\Client\Common $client
+     * @param Zend_Soap_Client_Common $client
      * @param string $request
      * @param string $location
      * @param string $action
@@ -79,14 +78,15 @@ class Local extends SOAPClient
      * @param int    $one_way
      * @return mixed
      */
-    public function _doRequest(Common $client, $request, $location, $action, $version, $one_way = null)
+    public function _doRequest(Zend_Soap_Client_Common $client, $request, $location, $action, $version, $one_way = null)
     {
         // Perform request as is
         ob_start();
         $this->_server->handle($request);
-        $response = ob_get_contents();
-        ob_end_clean();
+        $response = ob_get_clean();
 
         return $response;
     }
 }
+
+} // end if (extension_loaded('soap')

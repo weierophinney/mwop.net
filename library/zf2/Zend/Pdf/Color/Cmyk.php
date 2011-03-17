@@ -13,38 +13,34 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    Zend_PDF
- * @subpackage Zend_PDF_Color
+ * @package    Zend_Pdf
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Pdf\Color;
+/** Internally used classes */
+require_once 'Zend/Pdf/Element/Numeric.php';
 
-use Zend\Pdf\Color,
-    Zend\Pdf\InternalType;
+
+/** Zend_Pdf_Color */
+require_once 'Zend/Pdf/Color.php';
 
 /**
  * CMYK color implementation
  *
- * @uses       \Zend\Pdf\Color
- * @uses       \Zend\Pdf\InternalType\NumericObject
  * @category   Zend
- * @package    Zend_PDF
- * @subpackage Zend_PDF_Color
+ * @package    Zend_Pdf
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Cmyk implements Color
+class Zend_Pdf_Color_Cmyk extends Zend_Pdf_Color
 {
     /**
      * Cyan level.
      * 0.0 (zero concentration) - 1.0 (maximum concentration)
      *
-     * @var \Zend\Pdf\InternalType\NumericObject
+     * @var Zend_Pdf_Element_Numeric
      */
     private $_c;
 
@@ -52,7 +48,7 @@ class Cmyk implements Color
      * Magenta level.
      * 0.0 (zero concentration) - 1.0 (maximum concentration)
      *
-     * @var \Zend\Pdf\InternalType\NumericObject
+     * @var Zend_Pdf_Element_Numeric
      */
     private $_m;
 
@@ -60,7 +56,7 @@ class Cmyk implements Color
      * Yellow level.
      * 0.0 (zero concentration) - 1.0 (maximum concentration)
      *
-     * @var \Zend\Pdf\InternalType\NumericObject
+     * @var Zend_Pdf_Element_Numeric
      */
     private $_y;
 
@@ -68,7 +64,7 @@ class Cmyk implements Color
      * Key (BlacK) level.
      * 0.0 (zero concentration) - 1.0 (maximum concentration)
      *
-     * @var \Zend\Pdf\InternalType\NumericObject
+     * @var Zend_Pdf_Element_Numeric
      */
     private $_k;
 
@@ -95,10 +91,10 @@ class Cmyk implements Color
         if ($k < 0) { $k = 0; }
         if ($k > 1) { $k = 1; }
 
-        $this->_c = new InternalType\NumericObject($c);
-        $this->_m = new InternalType\NumericObject($m);
-        $this->_y = new InternalType\NumericObject($y);
-        $this->_k = new InternalType\NumericObject($k);
+        $this->_c = new Zend_Pdf_Element_Numeric($c);
+        $this->_m = new Zend_Pdf_Element_Numeric($m);
+        $this->_y = new Zend_Pdf_Element_Numeric($y);
+        $this->_k = new Zend_Pdf_Element_Numeric($k);
     }
 
     /**

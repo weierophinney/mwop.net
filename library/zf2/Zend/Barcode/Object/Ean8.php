@@ -17,27 +17,28 @@
  * @subpackage Object
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Barcode_Object_Ean13
  */
-namespace Zend\Barcode\Object;
-use Zend\Validator\Barcode as BarcodeValidator,
-    Zend\Barcode\Object\Exception\BarcodeValidationException;
+require_once 'Zend/Barcode/Object/Ean13.php';
+
+/**
+ * @see Zend_Validate_Barcode
+ */
+require_once 'Zend/Validate/Barcode.php';
 
 /**
  * Class for generate Ean8 barcode
  *
- * @uses       \Zend\Barcode\Object\Ean13
- * @uses       \Zend\Barcode\Object\Exception
- * @uses       \Zend\Validator\Barcode\Barcode
  * @category   Zend
  * @package    Zend_Barcode
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Ean8 extends Ean13
+class Zend_Barcode_Object_Ean8 extends Zend_Barcode_Object_Ean13
 {
 
     /**
@@ -154,7 +155,7 @@ class Ean8 extends Ean13
      */
     protected function _validateText($value, $options = array())
     {
-        $validator = new BarcodeValidator(array(
+        $validator = new Zend_Validate_Barcode(array(
             'adapter'  => 'ean8',
             'checksum' => false,
         ));
@@ -163,7 +164,12 @@ class Ean8 extends Ean13
 
         if (!$validator->isValid($value)) {
             $message = implode("\n", $validator->getMessages());
-            throw new BarcodeValidationException($message);
+
+            /**
+             * @see Zend_Barcode_Object_Exception
+             */
+            require_once 'Zend/Barcode/Object/Exception.php';
+            throw new Zend_Barcode_Object_Exception($message);
         }
     }
 }

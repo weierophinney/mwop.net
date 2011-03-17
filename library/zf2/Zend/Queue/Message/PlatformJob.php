@@ -17,30 +17,27 @@
  * @subpackage Message
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Queue_Message
  */
-namespace Zend\Queue\Message;
-use Zend\Queue;
+require_once 'Zend/Queue/Message.php';
 
 /**
  * Class for managing Zend Platform JobQueue jobs via Zend_Queue
  *
- * @uses       \ZendAPI_Job
- * @uses       \Zend\Queue\Exception
- * @uses       \Zend\Queue\Message\Message
  * @category   Zend
  * @package    Zend_Queue
  * @subpackage Message
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class PlatformJob extends Message
+class Zend_Queue_Message_PlatformJob extends Zend_Queue_Message
 {
     /**
-     * @var \ZendAPI_Job
+     * @var ZendApi_Job
      */
     protected $_job;
 
@@ -55,23 +52,24 @@ class PlatformJob extends Message
      *
      * The constructor should be an array of options.
      *
-     * If the option 'data' is provided, and is an instance of \ZendAPI_Job,
+     * If the option 'data' is provided, and is an instance of ZendApi_Job,
      * that object will be used as the internal job; if that option is not a
-     * \ZendAPI_Job instance, an exception will be thrown.
+     * ZendApi_Job instance, an exception will be thrown.
      *
      * Alternately, you may specify the 'script' parameter, which should be a
-     * JobQueue script the job will request. A new \ZendAPI_Job object will then
+     * JobQueue script the job will request. A new ZendApi_Job object will then
      * be created using that script and any options you provide.
      *
      * @param  array $options
      * @return void
-     * @throws \Zend\Queue\Exception
+     * @throws Zend_Queue_Exception
      */
     public function __construct(array $options = array())
     {
         if (isset($options['data'])) {
-            if (!($options['data'] instanceof \ZendAPI_Job)) {
-                throw new Queue\Exception('Data must be an instance of \ZendAPI_Job');
+            if (!($options['data'] instanceof ZendApi_Job)) {
+                require_once 'Zend/Queue/Exception.php';
+                throw new Zend_Queue_Exception('Data must be an instance of ZendApi_Job');
             }
             $this->_job = $options['data'];
             parent::__construct($this->_job->getProperties());
@@ -79,10 +77,11 @@ class PlatformJob extends Message
             parent::__construct($options);
 
             if (!isset($options['script'])) {
-                throw new Queue\Exception('The script is mandatory data');
+                require_once 'Zend/Queue/Exception.php';
+                throw new Zend_Queue_Exception('The script is mandatory data');
             }
 
-            $this->_job = new \ZendAPI_Job($options['script']);
+            $this->_job = new ZendApi_Job($options['script']);
             $this->_setJobProperties();
         }
     }
@@ -93,7 +92,7 @@ class PlatformJob extends Message
      * Used within Zend_Queue only.
      *
      * @param  string $id
-     * @return \Zend\Queue\Message\PlatformJob
+     * @return Zend_Queue_Message_PlatformJob
      */
     public function setJobId($id)
     {
@@ -112,9 +111,9 @@ class PlatformJob extends Message
     }
 
     /**
-     * Retrieve the internal \ZendAPI_Job instance
+     * Retrieve the internal ZendApi_Job instance
      *
-     * @return \ZendAPI_Job
+     * @return ZendApi_Job
      */
     public function getJob()
     {
@@ -139,14 +138,14 @@ class PlatformJob extends Message
      */
     public function getQueueClass()
     {
-        return '\Zend\Queue\Adapter\PlatformJobQueue';
+        return 'Zend_Queue_Adapter_Platform_JQ';
     }
 
     /**
-     * Sets properties on the \ZendAPI_Job instance
+     * Sets properties on the ZendApi_Job instance
      *
      * Any options in the {@link $_data} array will be checked. Those matching
-     * options in \ZendAPI_Job will be used to set those options in that
+     * options in ZendApi_Job will be used to set those options in that
      * instance.
      *
      * @return void

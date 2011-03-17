@@ -16,22 +16,22 @@
  * @package    Zend_Feed_Writer
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
- 
-/**
-* @namespace
-*/
-namespace Zend\Feed\Writer\Extension\Atom\Renderer;
-use Zend\Feed\Writer\Extension;
 
 /**
-* @uses \Zend\Feed\Writer\Extension\AbstractRenderer
-* @category Zend
-* @package Zend_Feed_Writer
-* @copyright Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
-* @license http://framework.zend.com/license/new-bsd New BSD License
-*/
-class Feed extends Extension\AbstractRenderer
+ * @see Zend_Feed_Writer_Extension_RendererAbstract
+ */
+require_once 'Zend/Feed/Writer/Extension/RendererAbstract.php';
+
+/**
+ * @category   Zend
+ * @package    Zend_Feed_Writer
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
+class Zend_Feed_Writer_Extension_Atom_Renderer_Feed
+    extends Zend_Feed_Writer_Extension_RendererAbstract
 {
 
     /**
@@ -42,10 +42,10 @@ class Feed extends Extension\AbstractRenderer
      * @var bool
      */
     protected $_called = false;
-    
+
     /**
      * Render feed
-     * 
+     *
      * @return void
      */
     public function render()
@@ -63,26 +63,26 @@ class Feed extends Extension\AbstractRenderer
             $this->_appendNamespaces();
         }
     }
-    
+
     /**
      * Append namespaces to root element of feed
-     * 
+     *
      * @return void
      */
     protected function _appendNamespaces()
     {
         $this->getRootElement()->setAttribute('xmlns:atom',
-            'http://www.w3.org/2005/Atom');  
+            'http://www.w3.org/2005/Atom');
     }
 
     /**
      * Set feed link elements
-     * 
-     * @param  DOMDocument $dom 
-     * @param  DOMElement $root 
+     *
+     * @param  DOMDocument $dom
+     * @param  DOMElement $root
      * @return void
      */
-    protected function _setFeedLinks(\DOMDocument $dom, \DOMElement $root)
+    protected function _setFeedLinks(DOMDocument $dom, DOMElement $root)
     {
         $flinks = $this->getDataContainer()->getFeedLinks();
         if(!$flinks || empty($flinks)) {
@@ -98,15 +98,15 @@ class Feed extends Extension\AbstractRenderer
         }
         $this->_called = true;
     }
-    
+
     /**
      * Set PuSH hubs
-     * 
-     * @param  DOMDocument $dom 
-     * @param  DOMElement $root 
+     *
+     * @param  DOMDocument $dom
+     * @param  DOMElement $root
      * @return void
      */
-    protected function _setHubs(\DOMDocument $dom, \DOMElement $root)
+    protected function _setHubs(DOMDocument $dom, DOMElement $root)
     {
         $hubs = $this->getDataContainer()->getHubs();
         if (!$hubs || empty($hubs)) {

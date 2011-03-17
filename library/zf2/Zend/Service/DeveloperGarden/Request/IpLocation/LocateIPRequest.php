@@ -17,12 +17,20 @@
  * @subpackage DeveloperGarden
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @uses       Zend_Service_DeveloperGarden_IpLocation_IpAddress
- * @uses       Zend_Service_DeveloperGarden_Request_AbstractRequest
- * @uses       Zend_Service_DeveloperGarden_Request_Exception
+ * @see Zend_Service_DeveloperGarden_Request_RequestAbstract
+ */
+require_once 'Zend/Service/DeveloperGarden/Request/RequestAbstract.php';
+
+/**
+ * @see Zend_Service_DeveloperGarden_IpLocation_IpAddress
+ */
+require_once 'Zend/Service/DeveloperGarden/IpLocation/IpAddress.php';
+
+/**
  * @category   Zend
  * @package    Zend_Service
  * @subpackage DeveloperGarden
@@ -31,7 +39,7 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Service_DeveloperGarden_Request_IpLocation_LocateIPRequest
-    extends Zend_Service_DeveloperGarden_Request_AbstractRequest
+    extends Zend_Service_DeveloperGarden_Request_RequestAbstract
 {
     /**
      * the ip addresses to lookup for
@@ -53,7 +61,7 @@ class Zend_Service_DeveloperGarden_Request_IpLocation_LocateIPRequest
      * @param integer $environment
      * @param Zend_Service_DeveloperGarden_IpLocation_IpAddress|array $ip
      *
-     * @return Zend_Service_DeveloperGarden_Request_AbstractRequest
+     * @return Zend_Service_DeveloperGarden_Request_RequestAbstract
      */
     public function __construct($environment, $ip = null)
     {
@@ -86,6 +94,7 @@ class Zend_Service_DeveloperGarden_Request_IpLocation_LocateIPRequest
                 if (!$ipObject instanceof Zend_Service_DeveloperGarden_IpLocation_IpAddress
                     && !is_string($ipObject)
                 ) {
+                    require_once 'Zend/Service/DeveloperGarden/Request/Exception.php';
                     throw new Zend_Service_DeveloperGarden_Request_Exception(
                         'Not a valid Ip Address object found.'
                     );
@@ -96,6 +105,7 @@ class Zend_Service_DeveloperGarden_Request_IpLocation_LocateIPRequest
         }
 
         if (!is_string($ip)) {
+            require_once 'Zend/Service/DeveloperGarden/Request/Exception.php';
             throw new Zend_Service_DeveloperGarden_Request_Exception('Not a valid Ip Address object found.');
         }
 

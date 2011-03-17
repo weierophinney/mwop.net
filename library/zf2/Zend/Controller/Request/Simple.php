@@ -17,22 +17,20 @@
  * @subpackage Request
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Controller\Request;
+/** Zend_Controller_Request_Abstract */
+require_once 'Zend/Controller/Request/Abstract.php';
 
 /**
- * @uses       \Zend\Controller\Request\AbstractRequest
  * @category   Zend
  * @package    Zend_Controller
  * @subpackage Request
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Simple extends AbstractRequest
+class Zend_Controller_Request_Simple extends Zend_Controller_Request_Abstract
 {
 
     public function __construct($action = null, $controller = null, $module = null, array $params = array())

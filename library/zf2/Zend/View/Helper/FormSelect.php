@@ -17,24 +17,26 @@
  * @subpackage Helper
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
+
 /**
- * @namespace
+ * Abstract class for extension
  */
-namespace Zend\View\Helper;
+require_once 'Zend/View/Helper/FormElement.php';
+
 
 /**
  * Helper to generate "select" list of options
  *
- * @uses       \Zend\View\Helper\FormElement
  * @category   Zend
  * @package    Zend_View
  * @subpackage Helper
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class FormSelect extends FormElement
+class Zend_View_Helper_FormSelect extends Zend_View_Helper_FormElement
 {
     /**
      * Generates 'select' list of options.
@@ -59,12 +61,9 @@ class FormSelect extends FormElement
      *
      * @return string The select tag and options XHTML.
      */
-    public function direct($name = null, $value = null, $attribs = null, $options = null, $listsep = "<br />\n")
+    public function formSelect($name, $value = null, $attribs = null,
+        $options = null, $listsep = "<br />\n")
     {
-        if ($name == null) {
-            throw new \InvalidArgumentException('FormSelect: missing argument. $name is required in formSelect($name, $value = null, $attribs = null, $options = null, $listsep = "<br />\n")');
-        }
-        
         $info = $this->_getInfo($name, $value, $attribs, $options, $listsep);
         extract($info); // name, id, value, attribs, options, listsep, disable
 
@@ -105,8 +104,8 @@ class FormSelect extends FormElement
 
         // Build the surrounding select element first.
         $xhtml = '<select'
-                . ' name="' . $this->view->vars()->escape($name) . '"'
-                . ' id="' . $this->view->vars()->escape($id) . '"'
+                . ' name="' . $this->view->escape($name) . '"'
+                . ' id="' . $this->view->escape($id) . '"'
                 . $multiple
                 . $disabled
                 . $this->_htmlAttribs($attribs)
@@ -126,7 +125,7 @@ class FormSelect extends FormElement
                 }
                 $list[] = '<optgroup'
                         . $opt_disable
-                        . ' label="' . $this->view->vars()->escape($opt_value) .'">';
+                        . ' label="' . $this->view->escape($opt_value) .'">';
                 foreach ($opt_label as $val => $lab) {
                     $list[] = $this->_build($val, $lab, $value, $disable);
                 }
@@ -158,8 +157,8 @@ class FormSelect extends FormElement
         }
 
         $opt = '<option'
-             . ' value="' . $this->view->vars()->escape($value) . '"'
-             . ' label="' . $this->view->vars()->escape($label) . '"';
+             . ' value="' . $this->view->escape($value) . '"'
+             . ' label="' . $this->view->escape($label) . '"';
 
         // selected?
         if (in_array((string) $value, $selected)) {
@@ -171,7 +170,7 @@ class FormSelect extends FormElement
             $opt .= ' disabled="disabled"';
         }
 
-        $opt .= '>' . $this->view->vars()->escape($label) . "</option>";
+        $opt .= '>' . $this->view->escape($label) . "</option>";
 
         return $opt;
     }

@@ -17,46 +17,63 @@
  * @subpackage Framework
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Tool_Framework_Manifest_MetadataManifestable
  */
-namespace Zend\Tool\Framework\Client;
-use Zend\Tool\Framework\Metadata,
-    Zend\Tool\Framework\Manifest\MetadataManifestable,
-    Zend\Tool\Framework\Registry,
-    Zend\Tool\Framework\RegistryEnabled;
+require_once 'Zend/Tool/Framework/Manifest/MetadataManifestable.php';
+
+/**
+ * @see Zend_Filter
+ */
+require_once 'Zend/Filter.php';
+
+/**
+ * @see Zend_Filter_Word_CamelCaseToDash
+ */
+require_once 'Zend/Filter/Word/CamelCaseToDash.php';
+
+/**
+ * @see Zend_Filter_StringToLower
+ */
+require_once 'Zend/Filter/StringToLower.php';
+
+/**
+ * @see Zend_Tool_Framework_Metadata_Tool
+ */
+require_once 'Zend/Tool/Framework/Metadata/Tool.php';
+
+/**
+ * @see Zend_Tool_Framework_Registry_EnabledInterface
+ */
+require_once 'Zend/Tool/Framework/Registry/EnabledInterface.php';
 
 /**
  * Zend_Tool_Framework_Client_ConsoleClient_Manifest
- *
- * @uses       \Zend\Filter\FilterChain
- * @uses       \Zend\Filter\StringToLower
- * @uses       \Zend\Filter\Word\CamelCaseToDash
- * @uses       \Zend\Tool\Framework\Manifest\MetadataManifestable
- * @uses       \Zend\Tool\Framework\Metadata\Tool
- * @uses       \Zend\Tool\Framework\RegistryEnabled
  * @category   Zend
  * @package    Zend_Tool
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Manifest implements RegistryEnabled, MetadataManifestable
+class Zend_Tool_Framework_Client_Manifest
+    implements Zend_Tool_Framework_Registry_EnabledInterface,
+               Zend_Tool_Framework_Manifest_MetadataManifestable
 {
 
     /**
-     * @var \Zend\Tool\Framework\Registry
+     * @var Zend_Tool_Framework_Registry_Interface
      */
     protected $_registry = null;
 
     /**
-     * setRegistry() - Required for the Zend\Tool\Framework\RegistryEnabled interface
+     * setRegistry() - Required for the Zend_Tool_Framework_Registry_EnabledInterface interface
      *
-     * @param \Zend\Tool\Framework\Registry $registry
-     * @return \Zend\Tool\Framework\Client\Console\Manifest
+     * @param Zend_Tool_Framework_Registry_Interface $registry
+     * @return Zend_Tool_Framework_Client_Console_Manifest
      */
-    public function setRegistry(Registry $registry)
+    public function setRegistry(Zend_Tool_Framework_Registry_Interface $registry)
     {
         $this->_registry = $registry;
         return $this;
@@ -87,8 +104,8 @@ class Manifest implements RegistryEnabled, MetadataManifestable
         $metadatas = array();
 
         // setup the camelCase to dashed filter to use since cli expects dashed named
-        $lowerFilter = new \Zend\Filter\FilterChain();
-        $lowerFilter->attach(new \Zend\Filter\StringToLower());
+        $lowerFilter = new Zend_Filter();
+        $lowerFilter->addFilter(new Zend_Filter_StringToLower());
 
         // get the registry to get the action and provider repository
         $actionRepository   = $this->_registry->getActionRepository();
@@ -97,7 +114,7 @@ class Manifest implements RegistryEnabled, MetadataManifestable
         // loop through all actions and create a metadata for each
         foreach ($actionRepository->getActions() as $action) {
             // each action metadata will be called
-            $metadatas[] = new Metadata\Tool(array(
+            $metadatas[] = new Zend_Tool_Framework_Metadata_Tool(array(
                 'name'            => 'normalizedActionName',
                 'value'           => $lowerFilter->filter($action->getName()),
                 'reference'       => $action,
@@ -109,7 +126,7 @@ class Manifest implements RegistryEnabled, MetadataManifestable
         foreach ($providerRepository->getProviderSignatures() as $providerSignature) {
 
             // create the metadata for the provider's cliProviderName
-            $metadatas[] = new Metadata\Tool(array(
+            $metadatas[] = new Zend_Tool_Framework_Metadata_Tool(array(
                 'name'            => 'normalizedProviderName',
                 'value'           => $lowerFilter->filter($providerSignature->getName()),
                 'reference'       => $providerSignature,
@@ -123,8 +140,8 @@ class Manifest implements RegistryEnabled, MetadataManifestable
                 if ($specialty == '_Global') {
                     continue;
                 }
-                
-                $metadatas[] = new Metadata\Tool(array(
+
+                $metadatas[] = new Zend_Tool_Framework_Metadata_Tool(array(
                     'name'            => 'normalizedSpecialtyName',
                     'value'           => $lowerFilter->filter($specialty),
                     'reference'       => $providerSignature,
@@ -153,7 +170,7 @@ class Manifest implements RegistryEnabled, MetadataManifestable
                 }
 
                 // create metadata for the long name cliActionableMethodLongParameters
-                $metadatas[] = new Metadata\Tool(array(
+                $metadatas[] = new Zend_Tool_Framework_Metadata_Tool(array(
                     'name'            => 'normalizedActionableMethodLongParams',
                     'value'           => $methodLongParams,
                     'clientName'      => 'console',
@@ -164,7 +181,7 @@ class Manifest implements RegistryEnabled, MetadataManifestable
                     ));
 
                 // create metadata for the short name cliActionableMethodShortParameters
-                $metadatas[] = new Metadata\Tool(array(
+                $metadatas[] = new Zend_Tool_Framework_Metadata_Tool(array(
                     'name'            => 'normalizedActionableMethodShortParams',
                     'value'           => $methodShortParams,
                     'clientName'      => 'console',

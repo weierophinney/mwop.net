@@ -17,32 +17,22 @@
  * @subpackage Search
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Search\Lucene\Search\Query;
-use Zend\Search\Lucene;
-use Zend\Search\Lucene\Index;
-use Zend\Search\Lucene\Search\Weight;
-use Zend\Search\Lucene\Search\Highlighter;
+
+/** Zend_Search_Lucene_Search_Query */
+require_once 'Zend/Search/Lucene/Search/Query.php';
+
 
 /**
- * @uses       \Zend\Search\Lucene\Index\DocsFilter
- * @uses       \Zend\Search\Lucene\Search\Query\AbstractQuery
- * @uses       \Zend\Search\Lucene\Search\Query\EmptyResult
- * @uses       \Zend\Search\Lucene\Search\Query\Insignificant
- * @uses       \Zend\Search\Lucene\Search\Query\MultiTerm
- * @uses       \Zend\Search\Lucene\Search\Query\Term
- * @uses       \Zend\Search\Lucene\Search\Weight\Boolean
  * @category   Zend
  * @package    Zend_Search_Lucene
  * @subpackage Search
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Boolean extends AbstractQuery
+class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_Query
 {
 
     /**
@@ -120,11 +110,11 @@ class Boolean extends AbstractQuery
      *     FALSE - subquery is prohibited
      *     NULL  - subquery is neither prohibited, nor required
      *
-     * @param  \Zend\Search\Lucene\Search\Query\AbstractQuery $subquery
+     * @param  Zend_Search_Lucene_Search_Query $subquery
      * @param  boolean|null $sign
      * @return void
      */
-    public function addSubquery(AbstractQuery $subquery, $sign=null) {
+    public function addSubquery(Zend_Search_Lucene_Search_Query $subquery, $sign=null) {
         if ($sign !== true || $this->_signs !== null) {       // Skip, if all subqueries are required
             if ($this->_signs === null) {                     // Check, If all previous subqueries are required
                 $this->_signs = array();
@@ -141,12 +131,12 @@ class Boolean extends AbstractQuery
     /**
      * Re-write queries into primitive queries
      *
-     * @param \Zend\Search\Lucene\SearchIndex $index
-     * @return \Zend\Search\Lucene\Search\Query\AbstractQuery
+     * @param Zend_Search_Lucene_Interface $index
+     * @return Zend_Search_Lucene_Search_Query
      */
-    public function rewrite(Lucene\SearchIndex $index)
+    public function rewrite(Zend_Search_Lucene_Interface $index)
     {
-        $query = new self();
+        $query = new Zend_Search_Lucene_Search_Query_Boolean();
         $query->setBoost($this->getBoost());
 
         foreach ($this->_subqueries as $subqueryId => $subquery) {
@@ -160,10 +150,10 @@ class Boolean extends AbstractQuery
     /**
      * Optimize query in the context of specified index
      *
-     * @param \Zend\Search\Lucene\SearchIndex $index
-     * @return \Zend\Search\Lucene\Search\Query\AbstractQuery
+     * @param Zend_Search_Lucene_Interface $index
+     * @return Zend_Search_Lucene_Search_Query
      */
-    public function optimize(Lucene\SearchIndex $index)
+    public function optimize(Zend_Search_Lucene_Interface $index)
     {
         $subqueries = array();
         $signs      = array();
@@ -176,7 +166,7 @@ class Boolean extends AbstractQuery
 
         // Remove insignificant subqueries
         foreach ($subqueries as $id => $subquery) {
-            if ($subquery instanceof Insignificant) {
+            if ($subquery instanceof Zend_Search_Lucene_Search_Query_Insignificant) {
                 // Insignificant subquery has to be removed anyway
                 unset($subqueries[$id]);
                 unset($signs[$id]);
@@ -184,7 +174,8 @@ class Boolean extends AbstractQuery
         }
         if (count($subqueries) == 0) {
             // Boolean query doesn't has non-insignificant subqueries
-            return new Insignificant();
+            require_once 'Zend/Search/Lucene/Search/Query/Insignificant.php';
+            return new Zend_Search_Lucene_Search_Query_Insignificant();
         }
         // Check if all non-insignificant subqueries are prohibited
         $allProhibited = true;
@@ -195,16 +186,18 @@ class Boolean extends AbstractQuery
             }
         }
         if ($allProhibited) {
-            return new Insignificant();
+            require_once 'Zend/Search/Lucene/Search/Query/Insignificant.php';
+            return new Zend_Search_Lucene_Search_Query_Insignificant();
         }
 
 
         // Check for empty subqueries
         foreach ($subqueries as $id => $subquery) {
-            if ($subquery instanceof EmptyResult) {
+            if ($subquery instanceof Zend_Search_Lucene_Search_Query_Empty) {
                 if ($signs[$id] === true) {
                     // Matching is required, but is actually empty
-                    return new EmptyResult();
+                    require_once 'Zend/Search/Lucene/Search/Query/Empty.php';
+                    return new Zend_Search_Lucene_Search_Query_Empty();
                 } else {
                     // Matching is optional or prohibited, but is empty
                     // Remove it from subqueries and signs list
@@ -216,7 +209,8 @@ class Boolean extends AbstractQuery
 
         // Check, if reduced subqueries list is empty
         if (count($subqueries) == 0) {
-            return new EmptyResult();
+            require_once 'Zend/Search/Lucene/Search/Query/Empty.php';
+            return new Zend_Search_Lucene_Search_Query_Empty();
         }
 
         // Check if all non-empty subqueries are prohibited
@@ -228,7 +222,8 @@ class Boolean extends AbstractQuery
             }
         }
         if ($allProhibited) {
-            return new EmptyResult();
+            require_once 'Zend/Search/Lucene/Search/Query/Empty.php';
+            return new Zend_Search_Lucene_Search_Query_Empty();
         }
 
 
@@ -249,7 +244,7 @@ class Boolean extends AbstractQuery
 
 
         // Prepare first candidate for optimized query
-        $optimizedQuery = new self($subqueries, $signs);
+        $optimizedQuery = new Zend_Search_Lucene_Search_Query_Boolean($subqueries, $signs);
         $optimizedQuery->setBoost($this->getBoost());
 
 
@@ -259,7 +254,7 @@ class Boolean extends AbstractQuery
 
         // Try to decompose term and multi-term subqueries
         foreach ($subqueries as $id => $subquery) {
-            if ($subquery instanceof Term) {
+            if ($subquery instanceof Zend_Search_Lucene_Search_Query_Term) {
                 $terms[]        = $subquery->getTerm();
                 $tsigns[]       = $signs[$id];
                 $boostFactors[] = $subquery->getBoost();
@@ -267,7 +262,7 @@ class Boolean extends AbstractQuery
                 // remove subquery from a subqueries list
                 unset($subqueries[$id]);
                 unset($signs[$id]);
-           } else if ($subquery instanceof MultiTerm) {
+           } else if ($subquery instanceof Zend_Search_Lucene_Search_Query_MultiTerm) {
                 $subTerms = $subquery->getTerms();
                 $subSigns = $subquery->getSigns();
 
@@ -362,7 +357,8 @@ class Boolean extends AbstractQuery
 
         // Check, if all subqueries have been decomposed and all terms has the same boost factor
         if (count($subqueries) == 0  &&  count(array_unique($boostFactors)) == 1) {
-            $optimizedQuery = new MultiTerm($terms, $tsigns);
+            require_once 'Zend/Search/Lucene/Search/Query/MultiTerm.php';
+            $optimizedQuery = new Zend_Search_Lucene_Search_Query_MultiTerm($terms, $tsigns);
             $optimizedQuery->setBoost(reset($boostFactors)*$this->getBoost());
 
             return $optimizedQuery;
@@ -385,7 +381,8 @@ class Boolean extends AbstractQuery
         }
 
         if (count($terms) == 1) {
-            $clause = new Term(reset($terms));
+            require_once 'Zend/Search/Lucene/Search/Query/Term.php';
+            $clause = new Zend_Search_Lucene_Search_Query_Term(reset($terms));
             $clause->setBoost(reset($boostFactors));
 
             $subqueries[] = $clause;
@@ -394,7 +391,8 @@ class Boolean extends AbstractQuery
             // Clear terms list
             $terms = array();
         } else if (count($terms) > 1  &&  count(array_unique($boostFactors)) == 1) {
-            $clause = new MultiTerm($terms, $tsigns);
+            require_once 'Zend/Search/Lucene/Search/Query/MultiTerm.php';
+            $clause = new Zend_Search_Lucene_Search_Query_MultiTerm($terms, $tsigns);
             $clause->setBoost(reset($boostFactors));
 
             $subqueries[] = $clause;
@@ -407,7 +405,8 @@ class Boolean extends AbstractQuery
 
         if (count($prohibitedTerms) == 1) {
             // (boost factors are not significant for prohibited clauses)
-            $subqueries[] = new Term(reset($prohibitedTerms));
+            require_once 'Zend/Search/Lucene/Search/Query/Term.php';
+            $subqueries[] = new Zend_Search_Lucene_Search_Query_Term(reset($prohibitedTerms));
             $signs[]      = false;
 
             // Clear prohibited terms list
@@ -421,7 +420,8 @@ class Boolean extends AbstractQuery
             }
 
             // (boost factors are not significant for prohibited clauses)
-            $subqueries[] = new MultiTerm($prohibitedTerms, $prohibitedSigns);
+            require_once 'Zend/Search/Lucene/Search/Query/MultiTerm.php';
+            $subqueries[] = new Zend_Search_Lucene_Search_Query_MultiTerm($prohibitedTerms, $prohibitedSigns);
             // Clause sign is 'prohibited'
             $signs[]      = false;
 
@@ -434,7 +434,7 @@ class Boolean extends AbstractQuery
         // Check, that all terms are processed
         // Replace candidate for optimized query
         if (count($terms) == 0  &&  count($prohibitedTerms) == 0) {
-            $optimizedQuery = new self($subqueries, $signs);
+            $optimizedQuery = new Zend_Search_Lucene_Search_Query_Boolean($subqueries, $signs);
             $optimizedQuery->setBoost($this->getBoost());
         }
 
@@ -466,12 +466,13 @@ class Boolean extends AbstractQuery
     /**
      * Constructs an appropriate Weight implementation for this query.
      *
-     * @param \Zend\Search\Lucene\SearchIndex $reader
-     * @return \Zend\Search\Lucene\Search\Weight\Weight
+     * @param Zend_Search_Lucene_Interface $reader
+     * @return Zend_Search_Lucene_Search_Weight
      */
-    public function createWeight(Lucene\SearchIndex $reader)
+    public function createWeight(Zend_Search_Lucene_Interface $reader)
     {
-        $this->_weight = new Weight\Boolean($this, $reader);
+        require_once 'Zend/Search/Lucene/Search/Weight/Boolean.php';
+        $this->_weight = new Zend_Search_Lucene_Search_Weight_Boolean($this, $reader);
         return $this->_weight;
     }
 
@@ -605,10 +606,10 @@ class Boolean extends AbstractQuery
      * Score calculator for conjunction queries (all subqueries are required)
      *
      * @param integer $docId
-     * @param \Zend\Search\Lucene\SearchIndex $reader
+     * @param Zend_Search_Lucene_Interface $reader
      * @return float
      */
-    public function _conjunctionScore($docId, Lucene\SearchIndex $reader)
+    public function _conjunctionScore($docId, Zend_Search_Lucene_Interface $reader)
     {
         if ($this->_coord === null) {
             $this->_coord = $reader->getSimilarity()->coord(count($this->_subqueries),
@@ -635,10 +636,10 @@ class Boolean extends AbstractQuery
      * Score calculator for non conjunction queries (not all subqueries are required)
      *
      * @param integer $docId
-     * @param \Zend\Search\Lucene\SearchIndex $reader
+     * @param Zend_Search_Lucene_Interface $reader
      * @return float
      */
-    public function _nonConjunctionScore($docId, Lucene\SearchIndex $reader)
+    public function _nonConjunctionScore($docId, Zend_Search_Lucene_Interface $reader)
     {
         if ($this->_coord === null) {
             $this->_coord = array();
@@ -683,17 +684,18 @@ class Boolean extends AbstractQuery
      * Execute query in context of index reader
      * It also initializes necessary internal structures
      *
-     * @param \Zend\Search\Lucene\SearchIndex $reader
-     * @param \Zend\Search\Lucene\Index\DocsFilter|null $docsFilter
+     * @param Zend_Search_Lucene_Interface $reader
+     * @param Zend_Search_Lucene_Index_DocsFilter|null $docsFilter
      */
-    public function execute(Lucene\SearchIndex $reader, $docsFilter = null)
+    public function execute(Zend_Search_Lucene_Interface $reader, $docsFilter = null)
     {
         // Initialize weight if it's not done yet
         $this->_initWeight($reader);
 
         if ($docsFilter === null) {
             // Create local documents filter if it's not provided by upper query
-            $docsFilter = new Index\DocsFilter();
+            require_once 'Zend/Search/Lucene/Index/DocsFilter.php';
+            $docsFilter = new Zend_Search_Lucene_Index_DocsFilter();
         }
 
         foreach ($this->_subqueries as $subqueryId => $subquery) {
@@ -730,10 +732,10 @@ class Boolean extends AbstractQuery
      * Score specified document
      *
      * @param integer $docId
-     * @param \Zend\Search\Lucene\SearchIndex $reader
+     * @param Zend_Search_Lucene_Interface $reader
      * @return float
      */
-    public function score($docId, Lucene\SearchIndex $reader)
+    public function score($docId, Zend_Search_Lucene_Interface $reader)
     {
         if (isset($this->_resVector[$docId])) {
             if ($this->_signs === null) {
@@ -767,9 +769,9 @@ class Boolean extends AbstractQuery
     /**
      * Query specific matches highlighting
      *
-     * @param \Zend\Search\Lucene\Search\Highlighter $highlighter  Highlighter object (also contains doc for highlighting)
+     * @param Zend_Search_Lucene_Search_Highlighter_Interface $highlighter  Highlighter object (also contains doc for highlighting)
      */
-    protected function _highlightMatches(Highlighter $highlighter)
+    protected function _highlightMatches(Zend_Search_Lucene_Search_Highlighter_Interface $highlighter)
     {
         foreach ($this->_subqueries as $id => $subquery) {
             if ($this->_signs === null  ||  $this->_signs[$id] !== false) {

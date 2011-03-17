@@ -17,13 +17,15 @@
  * @subpackage DeveloperGarden
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @uses       Zend_Service_DeveloperGarden_Response_BaseType
- * @uses       Zend_Service_DeveloperGarden_Response_IpLocation_CityType
- * @uses       Zend_Service_DeveloperGarden_Response_IpLocation_GeoCoordinatesType
- * @uses       Zend_Service_DeveloperGarden_Response_IpLocation_RegionType
+ * @see Zend_Service_DeveloperGarden_Response_BaseType
+ */
+require_once 'Zend/Service/DeveloperGarden/Response/BaseType.php';
+
+/**
  * @category   Zend
  * @package    Zend_Service
  * @subpackage DeveloperGarden
@@ -120,14 +122,17 @@ class Zend_Service_DeveloperGarden_Response_IpLocation_IPAddressLocationType
     {
         parent::parse();
         if ($this->isInCity === null) {
+            require_once 'Zend/Service/DeveloperGarden/Response/IpLocation/CityType.php';
             $this->isInCity = new Zend_Service_DeveloperGarden_Response_IpLocation_CityType();
         }
 
         if ($this->isInRegion === null) {
+            require_once 'Zend/Service/DeveloperGarden/Response/IpLocation/RegionType.php';
             $this->isInRegion = new Zend_Service_DeveloperGarden_Response_IpLocation_RegionType();
         }
 
         if ($this->isInGeo === null) {
+            require_once 'Zend/Service/DeveloperGarden/Response/IpLocation/GeoCoordinatesType.php';
             $this->isInGeo = new Zend_Service_DeveloperGarden_Response_IpLocation_GeoCoordinatesType();
         }
 

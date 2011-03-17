@@ -19,22 +19,20 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * @namespace
- */
-namespace Zend\Form\Element;
+/** Zend_Form_Element_Multi */
+require_once 'Zend/Form/Element/Multi.php';
 
 /**
  * Select.php form element
  *
- * @uses       \Zend\Form\Element\Multi
  * @category   Zend
  * @package    Zend_Form
  * @subpackage Element
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
-class Select extends Multi
+class Zend_Form_Element_Select extends Zend_Form_Element_Multi
 {
     /**
      * Use formSelect view helper by default

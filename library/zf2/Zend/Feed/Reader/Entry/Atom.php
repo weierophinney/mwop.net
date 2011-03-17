@@ -13,28 +13,39 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    Reader\Reader
+ * @package    Zend_Feed_Reader
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
-* @namespace
-*/
-namespace Zend\Feed\Reader\Entry;
-use Zend\Feed\Reader;
+ * @see Zend_Feed_Reader
+ */
+require_once 'Zend/Feed/Reader.php';
 
 /**
-* @uses \Zend\Feed\Reader\Reader
-* @uses \Zend\Feed\Reader\Entry\AbstractEntry
-* @uses \Zend\Feed\Reader\Entry
-* @uses \Zend\Feed\Reader\Extension\Atom\Entry
-* @category Zend
-* @package Zend_Feed_Reader
-* @copyright Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
-* @license http://framework.zend.com/license/new-bsd New BSD License
-*/
-class Atom extends AbstractEntry implements Reader\Entry
+ * @see Zend_Feed_Reader_EntryInterface
+ */
+require_once 'Zend/Feed/Reader/EntryInterface.php';
+
+/**
+ * @see Zend_Feed_Reader_EntryAbstract
+ */
+require_once 'Zend/Feed/Reader/EntryAbstract.php';
+
+/**
+ * @see Zend_Feed_Reader_Extension_Atom_Entry
+ */
+require_once 'Zend/Feed/Reader/Extension/Atom/Entry.php';
+
+/**
+ * @category   Zend
+ * @package    Zend_Feed_Reader
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
+class Zend_Feed_Reader_Entry_Atom extends Zend_Feed_Reader_EntryAbstract implements Zend_Feed_Reader_EntryInterface
 {
     /**
      * XPath query
@@ -51,21 +62,21 @@ class Atom extends AbstractEntry implements Reader\Entry
      * @param  string $type
      * @return void
      */
-    public function __construct(\DOMElement $entry, $entryKey, $type = null)
+    public function __construct(DOMElement $entry, $entryKey, $type = null)
     {
         parent::__construct($entry, $entryKey, $type);
 
         // Everyone by now should know XPath indices start from 1 not 0
         $this->_xpathQuery = '//atom:entry[' . ($this->_entryKey + 1) . ']';
 
-        $atomClass = Reader\Reader::getPluginLoader()->getClassName('Atom\\Entry');
-        $this->_extensions['Atom\\Entry'] = new $atomClass($entry, $entryKey, $type);
+        $atomClass = Zend_Feed_Reader::getPluginLoader()->getClassName('Atom_Entry');
+        $this->_extensions['Atom_Entry'] = new $atomClass($entry, $entryKey, $type);
 
-        $threadClass = Reader\Reader::getPluginLoader()->getClassName('Thread\\Entry');
-        $this->_extensions['Thread\\Entry'] = new $threadClass($entry, $entryKey, $type);
-        
-        $threadClass = Reader\Reader::getPluginLoader()->getClassName('DublinCore\\Entry');
-        $this->_extensions['DublinCore\\Entry'] = new $threadClass($entry, $entryKey, $type);
+        $threadClass = Zend_Feed_Reader::getPluginLoader()->getClassName('Thread_Entry');
+        $this->_extensions['Thread_Entry'] = new $threadClass($entry, $entryKey, $type);
+
+        $threadClass = Zend_Feed_Reader::getPluginLoader()->getClassName('DublinCore_Entry');
+        $this->_extensions['DublinCore_Entry'] = new $threadClass($entry, $entryKey, $type);
     }
 
     /**
@@ -333,11 +344,11 @@ class Atom extends AbstractEntry implements Reader\Entry
 
         return $this->_data['commentfeedlink'];
     }
-    
+
     /**
-     * Get category data as a Reader\Reader_Collection_Category object
+     * Get category data as a Zend_Feed_Reader_Collection_Category object
      *
-     * @return Reader\Reader_Collection_Category
+     * @return Zend_Feed_Reader_Collection_Category
      */
     public function getCategories()
     {
@@ -346,7 +357,7 @@ class Atom extends AbstractEntry implements Reader\Entry
         }
 
         $categoryCollection = $this->getExtension('Atom')->getCategories();
-        
+
         if (count($categoryCollection) == 0) {
             $categoryCollection = $this->getExtension('DublinCore')->getCategories();
         }
@@ -355,11 +366,11 @@ class Atom extends AbstractEntry implements Reader\Entry
 
         return $this->_data['categories'];
     }
-    
+
     /**
      * Get source feed metadata from the entry
      *
-     * @return Reader\Reader_Feed_Atom_Source|null
+     * @return Zend_Feed_Reader_Feed_Atom_Source|null
      */
     public function getSource()
     {
@@ -371,15 +382,15 @@ class Atom extends AbstractEntry implements Reader\Entry
 
         $this->_data['source'] = $source;
 
-        return $this->_data['source']; 
+        return $this->_data['source'];
     }
 
     /**
      * Set the XPath query (incl. on all Extensions)
      *
-     * @param \DOMXPath $xpath
+     * @param DOMXPath $xpath
      */
-    public function setXpath(\DOMXPath $xpath)
+    public function setXpath(DOMXPath $xpath)
     {
         parent::setXpath($xpath);
         foreach ($this->_extensions as $extension) {

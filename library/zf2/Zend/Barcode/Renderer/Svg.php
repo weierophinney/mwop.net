@@ -17,26 +17,21 @@
  * @subpackage Renderer
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id: Image.php 20366 2010-01-18 03:56:52Z ralph $
  */
 
-/**
- * @namespace
- */
-namespace Zend\Barcode\Renderer;
-use Zend\Barcode\Renderer\Exception\OutOfRangeException,
-    Zend\Barcode\Renderer\Exception\InvalidArgumentException;
+/** @see Zend_Barcode_Renderer_RendererAbstract*/
+require_once 'Zend/Barcode/Renderer/RendererAbstract.php';
 
 /**
  * Class for rendering the barcode as svg
  *
- * @uses       \Zend\Barcode\Renderer\Exception
- * @uses       \Zend\Barcode\Renderer\AbstractRenderer
  * @category   Zend
  * @package    Zend_Barcode
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Svg extends AbstractRenderer
+class Zend_Barcode_Renderer_Svg extends Zend_Barcode_Renderer_RendererAbstract
 {
 
     /**
@@ -66,13 +61,14 @@ class Svg extends AbstractRenderer
     /**
      * Set height of the result image
      * @param null|integer $value
-     * @return Zend\Barcode\Renderer\Svg
-     * @throw Zend\Barcode\Renderer\Exception
+     * @return Zend_Image_Barcode_Abstract
+     * @throw Zend_Image_Barcode_Exception
      */
     public function setHeight($value)
     {
         if (!is_numeric($value) || intval($value) < 0) {
-            throw new OutOfRangeException(
+            require_once 'Zend/Barcode/Renderer/Exception.php';
+            throw new Zend_Barcode_Renderer_Exception(
                 'Svg height must be greater than or equals 0'
             );
         }
@@ -99,7 +95,8 @@ class Svg extends AbstractRenderer
     public function setWidth($value)
     {
         if (!is_numeric($value) || intval($value) < 0) {
-            throw new OutOfRangeException(
+            require_once 'Zend/Barcode/Renderer/Exception.php';
+            throw new Zend_Barcode_Renderer_Exception(
                 'Svg width must be greater than or equals 0'
             );
         }
@@ -121,13 +118,14 @@ class Svg extends AbstractRenderer
      * Set an image resource to draw the barcode inside
      *
      * @param DOMDocument $value
-     * @return \Zend\Barcode\Renderer\AbstractRenderer
-     * @throw \Zend\Barcode\Renderer\Exception
+     * @return Zend_Barcode_Renderer
+     * @throw Zend_Barcode_Renderer_Exception
      */
     public function setResource($svg)
     {
-        if (!$svg instanceof \DOMDocument) {
-            throw new InvalidArgumentException(
+        if (!$svg instanceof DOMDocument) {
+            require_once 'Zend/Barcode/Renderer/Exception.php';
+            throw new Zend_Barcode_Renderer_Exception(
                 'Invalid DOMDocument resource provided to setResource()'
             );
         }
@@ -159,7 +157,7 @@ class Svg extends AbstractRenderer
             $height = $this->_userHeight;
         }
         if ($this->_resource === null) {
-            $this->_resource = new \DOMDocument('1.0', 'utf-8');
+            $this->_resource = new DOMDocument('1.0', 'utf-8');
             $this->_resource->formatOutput = true;
             $this->_rootElement = $this->_resource->createElement('svg');
             $this->_rootElement->setAttribute('xmlns', "http://www.w3.org/2000/svg");
@@ -220,7 +218,7 @@ class Svg extends AbstractRenderer
             $element->setAttribute($k, $v);
         }
         if ($textContent !== null) {
-            $element->appendChild(new \DOMText((string) $textContent));
+            $element->appendChild(new DOMText((string) $textContent));
         }
         return $element;
     }
@@ -246,7 +244,8 @@ class Svg extends AbstractRenderer
             $this->_readRootElement();
             $height = (float) $this->_rootElement->getAttribute('height');
             if ($height < $this->_barcode->getHeight(true)) {
-                throw new RuntimeException(
+                require_once 'Zend/Barcode/Renderer/Exception.php';
+                throw new Zend_Barcode_Renderer_Exception(
                     'Barcode is define outside the image (height)'
                 );
             }
@@ -254,7 +253,8 @@ class Svg extends AbstractRenderer
             if ($this->_userHeight) {
                 $height = $this->_barcode->getHeight(true);
                 if ($this->_userHeight < $height) {
-                    throw new RuntimeException(sprintf(
+                    require_once 'Zend/Barcode/Renderer/Exception.php';
+                    throw new Zend_Barcode_Renderer_Exception(sprintf(
                         "Barcode is define outside the image (calculated: '%d', provided: '%d')",
                         $height,
                         $this->_userHeight
@@ -266,7 +266,8 @@ class Svg extends AbstractRenderer
             $this->_readRootElement();
             $width = $this->_rootElement->getAttribute('width');
             if ($width < $this->_barcode->getWidth(true)) {
-                throw new RuntimeException(
+                require_once 'Zend/Barcode/Renderer/Exception.php';
+                throw new Zend_Barcode_Renderer_Exception(
                     'Barcode is define outside the image (width)'
                 );
             }
@@ -274,7 +275,8 @@ class Svg extends AbstractRenderer
             if ($this->_userWidth) {
                 $width = (float) $this->_barcode->getWidth(true);
                 if ($this->_userWidth < $width) {
-                    throw new RuntimeException(sprintf(
+                    require_once 'Zend/Barcode/Renderer/Exception.php';
+                    throw new Zend_Barcode_Renderer_Exception(sprintf(
                         "Barcode is define outside the image (calculated: '%d', provided: '%d')",
                         $width,
                         $this->_userWidth

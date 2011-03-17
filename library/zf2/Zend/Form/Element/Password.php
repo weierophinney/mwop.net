@@ -19,24 +19,20 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * @namespace
- */
-namespace Zend\Form\Element;
-
-use Zend\Validator\AbstractValidator;
+/** Zend_Form_Element_Xhtml */
+require_once 'Zend/Form/Element/Xhtml.php';
 
 /**
  * Password form element
  *
- * @uses       \Zend\Form\Element\Xhtml
  * @category   Zend
  * @package    Zend_Form
  * @subpackage Element
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
-class Password extends Xhtml
+class Zend_Form_Element_Password extends Zend_Form_Element_Xhtml
 {
     /**
      * Use formPassword view helper by default
@@ -53,7 +49,7 @@ class Password extends Xhtml
     /**
      * Set flag indicating whether or not to render the password
      * @param  bool $flag
-     * @return \Zend\Form\Element\Password
+     * @return Zend_Form_Element_Password
      */
     public function setRenderPassword($flag)
     {
@@ -83,7 +79,7 @@ class Password extends Xhtml
     public function isValid($value, $context = null)
     {
         foreach ($this->getValidators() as $validator) {
-            if ($validator instanceof AbstractValidator) {
+            if ($validator instanceof Zend_Validate_Abstract) {
                 $validator->setObscureValue(true);
             }
         }

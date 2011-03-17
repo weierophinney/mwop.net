@@ -17,30 +17,22 @@
  * @subpackage Adapter
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Serializer\Adapter;
-
-use Zend\Serializer\Exception\RuntimeException,
-    Zend\Serializer\Exception\ExtensionNotLoadedException;
+/** @see Zend_Serializer_Adapter_AdapterAbstract */
+require_once 'Zend/Serializer/Adapter/AdapterAbstract.php';
 
 /**
  * @link       http://www.infoloom.com/gcaconfs/WEB/chicago98/simeonov.HTM
  * @link       http://en.wikipedia.org/wiki/WDDX
- * @uses       SimpleXMLElement
- * @uses       Zend\Serializer\Adapter\AbstractAdapter
- * @uses       Zend\Serializer\Exception\RuntimeException
- * @uses       Zend\Serializer\Exception\ExtensionNotLoadedException
  * @category   Zend
  * @package    Zend_Serializer
  * @subpackage Adapter
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Wddx extends AbstractAdapter
+class Zend_Serializer_Adapter_Wddx extends Zend_Serializer_Adapter_AdapterAbstract
 {
     /**
      * @var array Default options
@@ -51,15 +43,16 @@ class Wddx extends AbstractAdapter
 
     /**
      * Constructor
-     * 
-     * @param  array $opts 
+     *
+     * @param  array $opts
      * @return void
-     * @throws Zend\Serializer\Exception if wddx extension not found
+     * @throws Zend_Serializer_Exception if wddx extension not found
      */
     public function __construct($opts = array())
     {
         if (!extension_loaded('wddx')) {
-            throw new ExtensionNotLoadedException('PHP extension "wddx" is required for this adapter');
+            require_once 'Zend/Serializer/Exception.php';
+            throw new Zend_Serializer_Exception('PHP extension "wddx" is required for this adapter');
         }
 
         parent::__construct($opts);
@@ -67,11 +60,11 @@ class Wddx extends AbstractAdapter
 
     /**
      * Serialize PHP to WDDX
-     * 
-     * @param  mixed $value 
-     * @param  array $opts 
+     *
+     * @param  mixed $value
+     * @param  array $opts
      * @return string
-     * @throws Zend\Serializer\Exception on wddx error
+     * @throws Zend_Serializer_Exception on wddx error
      */
     public function serialize($value, array $opts = array())
     {
@@ -85,35 +78,39 @@ class Wddx extends AbstractAdapter
 
         if ($wddx === false) {
             $lastErr = error_get_last();
-            throw new RuntimeException($lastErr['message']);
+            require_once 'Zend/Serializer/Exception.php';
+            throw new Zend_Serializer_Exception($lastErr['message']);
         }
         return $wddx;
     }
 
     /**
      * Unserialize from WDDX to PHP
-     * 
-     * @param  string $wddx 
-     * @param  array $opts 
+     *
+     * @param  string $wddx
+     * @param  array $opts
      * @return mixed
-     * @throws Zend\Serializer\Exception on wddx error
+     * @throws Zend_Serializer_Exception on wddx error
      */
     public function unserialize($wddx, array $opts = array())
     {
         $ret = wddx_deserialize($wddx);
 
-        if ($ret === null && class_exists('SimpleXMLElement', false)) {
+        if ($ret === null) {
             // check if the returned NULL is valid
             // or based on an invalid wddx string
             try {
-                $simpleXml = new \SimpleXMLElement($wddx);
+                $simpleXml = new SimpleXMLElement($wddx);
                 if (isset($simpleXml->data[0]->null[0])) {
                     return null; // valid null
                 }
-                throw new RuntimeException('Invalid wddx');
-            } catch (\Exception $e) {
-                throw new RuntimeException($e->getMessage(), 0, $e);
+                $errMsg = 'Can\'t unserialize wddx string';
+            } catch (Exception $e) {
+                $errMsg = $e->getMessage();
             }
+
+            require_once 'Zend/Serializer/Exception.php';
+            throw new Zend_Serializer_Exception($errMsg);
         }
 
         return $ret;

@@ -16,28 +16,18 @@
  * @package    Zend_Json
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
-
-/**
- * @namespace
- */
-namespace Zend\Json;
-
-use Zend\Json\Exception\RecursionException,
-    Zend\Json\Exception\InvalidArgumentException;
 
 /**
  * Encode PHP constructs to JSON
  *
- * @uses       ReflectionClass
- * @uses       Zend\Json\Exception\RecursionException
- * @uses       Zend\Json\Exception\InvalidArgumentException
  * @category   Zend
  * @package    Zend_Json
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Encoder
+class Zend_Json_Encoder
 {
     /**
      * Whether or not to check for possible cycling
@@ -95,7 +85,7 @@ class Encoder
      *    - arrays (returns from {@link _encodeArray()})
      *    - basic datums (e.g. numbers or strings) (returns from {@link _encodeDatum()})
      *
-     * @param $value mixed The value to be encoded
+     * @param mixed $value The value to be encoded
      * @return string Encoded value
      */
     protected function _encodeValue(&$value)
@@ -118,10 +108,9 @@ class Encoder
      * that contains the name of the class of $value. This is used to decode
      * the object on the client into a specific class.
      *
-     * @param $value object
+     * @param object $value
      * @return string
-     * @throws Zend\Json\Exception\RecursionException If recursive checks are enabled
-     *                                                and the object has been serialized previously
+     * @throws Zend_Json_Exception If recursive checks are enabled and the object has been serialized previously
      */
     protected function _encodeObject(&$value)
     {
@@ -131,10 +120,11 @@ class Encoder
                 if (isset($this->_options['silenceCyclicalExceptions'])
                     && $this->_options['silenceCyclicalExceptions']===true) {
 
-                    return '"* RECURSION (' . str_replace('\\', '\\\\', get_class($value)) . ') *"';
+                    return '"* RECURSION (' . get_class($value) . ') *"';
 
                 } else {
-                    throw new RecursionException(
+                    require_once 'Zend/Json/Exception.php';
+                    throw new Zend_Json_Exception(
                         'Cycles not supported in JSON encoding, cycle introduced by '
                         . 'class "' . get_class($value) . '"'
                     );
@@ -146,7 +136,7 @@ class Encoder
 
         $props = '';
 
-        if ($value instanceof \Iterator) {
+        if ($value instanceof Iterator) {
             $propCollection = $value;
         } else {
             $propCollection = get_object_vars($value);
@@ -155,15 +145,14 @@ class Encoder
         foreach ($propCollection as $name => $propValue) {
             if (isset($propValue)) {
                 $props .= ','
-                        . $this->_encodeValue($name)
+                        . $this->_encodeString($name)
                         . ':'
                         . $this->_encodeValue($propValue);
             }
         }
 
-        return '{"__className":"' 
-            . str_replace('\\', '\\\\', get_class($value)) . '"'
-            . $props . '}';
+        return '{"__className":"' . get_class($value) . '"'
+                . $props . '}';
     }
 
 
@@ -193,7 +182,7 @@ class Encoder
      * the last index is (count($array) -1); any deviation from that is
      * considered an associative array, and will be encoded as such.
      *
-     * @param $array array
+     * @param array& $array
      * @return string
      */
     protected function _encodeArray(&$array)
@@ -233,7 +222,7 @@ class Encoder
      * If value type is not a string, number, boolean, or null, the string
      * 'null' is returned.
      *
-     * @param $value mixed
+     * @param mixed& $value
      * @return string
      */
     protected function _encodeDatum(&$value)
@@ -256,7 +245,7 @@ class Encoder
     /**
      * JSON encode a string value by escaping characters as necessary
      *
-     * @param $value string
+     * @param string& $value
      * @return string
      */
     protected function _encodeString(&$string)
@@ -281,10 +270,10 @@ class Encoder
      * Encode the constants associated with the ReflectionClass
      * parameter. The encoding format is based on the class2 format
      *
-     * @param $cls ReflectionClass
+     * @param ReflectionClass $cls
      * @return string Encoded constant block in class2 format
      */
-    private static function _encodeConstants(\ReflectionClass $cls)
+    private static function _encodeConstants(ReflectionClass $cls)
     {
         $result    = "constants : {";
         $constants = $cls->getConstants();
@@ -306,11 +295,11 @@ class Encoder
      * Encode the public methods of the ReflectionClass in the
      * class2 format
      *
-     * @param $cls ReflectionClass
+     * @param ReflectionClass $cls
      * @return string Encoded method fragment
      *
      */
-    private static function _encodeMethods(\ReflectionClass $cls)
+    private static function _encodeMethods(ReflectionClass $cls)
     {
         $methods = $cls->getMethods();
         $result = 'methods:{';
@@ -370,11 +359,11 @@ class Encoder
      * Encode the public properties of the ReflectionClass in the class2
      * format.
      *
-     * @param $cls ReflectionClass
+     * @param ReflectionClass $cls
      * @return string Encode properties list
      *
      */
-    private static function _encodeVariables(\ReflectionClass $cls)
+    private static function _encodeVariables(ReflectionClass $cls)
     {
         $properties = $cls->getProperties();
         $propValues = get_class_vars($cls->getName());
@@ -402,18 +391,19 @@ class Encoder
      * NOTE: Currently only public methods and variables are proxied onto
      * the client machine
      *
-     * @param $className string The name of the class, the class must be
-     * instantiable using a null constructor
-     * @param $package string Optional package name appended to JavaScript
-     * proxy class name
+     * @param string $className The name of the class, the class must be
+     *  instantiable using a null constructor
+     * @param string $package Optional package name appended to JavaScript
+     *  proxy class name
      * @return string The class2 (JavaScript) encoding of the class
-     * @throws Zend\Json\Exception\InvalidArgumentException
+     * @throws Zend_Json_Exception
      */
     public static function encodeClass($className, $package = '')
     {
-        $cls = new \ReflectionClass($className);
+        $cls = new ReflectionClass($className);
         if (! $cls->isInstantiable()) {
-            throw new InvalidArgumentException("'{$className}' must be instantiable");
+            require_once 'Zend/Json/Exception.php';
+            throw new Zend_Json_Exception("$className must be instantiable");
         }
 
         return "Class.create('$package$className',{"
@@ -449,7 +439,7 @@ class Encoder
      * Solar Framework by Paul M. Jones
      *
      * @link   http://solarphp.com/
-     * @link   http://svn.solarphp.com/core/trunk/Solar/JSON.php
+     * @link   http://svn.solarphp.com/core/trunk/Solar/Json.php
      * @param  string $value
      * @return string
      */

@@ -17,15 +17,11 @@
  * @subpackage Ldif
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
- */
-namespace Zend\Ldap\Ldif;
-
-/**
- * Zend_Ldap_Ldif_Encoder provides methods to encode and decode LDAP data into/from Ldif.
+ * Zend_Ldap_Ldif_Encoder provides methods to encode and decode LDAP data into/from LDIF.
  *
  * @category   Zend
  * @package    Zend_Ldap
@@ -33,7 +29,7 @@ namespace Zend\Ldap\Ldif;
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Encoder
+class Zend_Ldap_Ldif_Encoder
 {
     /**
      * Additional options used during encoding
@@ -63,7 +59,7 @@ class Encoder
     }
 
     /**
-     * Decodes the string $string into an array of Ldif items
+     * Decodes the string $string into an array of LDIF items
      *
      * @param  string $string
      * @return array
@@ -75,7 +71,7 @@ class Encoder
     }
 
     /**
-     * Decodes the string $string into an array of Ldif items
+     * Decodes the string $string into an array of LDIF items
      *
      * @param  string $string
      * @return array
@@ -142,7 +138,7 @@ class Encoder
     }
 
     /**
-     * Encode $value into a Ldif representation
+     * Encode $value into a LDIF representation
      *
      * @param  mixed $value   The value to be encoded
      * @param  array $options Additional options used during encoding
@@ -167,7 +163,7 @@ class Encoder
             return $this->_encodeString($value);
         } else if (is_array($value)) {
             return $this->_encodeAttributes($value);
-        } else if ($value instanceof \Zend\Ldap\Node) {
+        } else if ($value instanceof Zend_Ldap_Node) {
             return $value->toLdif($this->_options);
         }
         return null;

@@ -17,12 +17,13 @@
  * @subpackage Framework
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @namespace
+ * @see Zend_Tool_Project_Context_Filesystem_Directory
  */
-namespace Zend\Tool\Project\Context\Zf;
+require_once 'Zend/Tool/Project/Context/Filesystem/Directory.php';
 
 /**
  * This class is the front most class for utilizing Zend_Tool_Project
@@ -30,17 +31,12 @@ namespace Zend\Tool\Project\Context\Zf;
  * A profile is a hierarchical set of resources that keep track of
  * items within a specific project.
  *
- * @uses       RecursiveDirectoryIterator
- * @uses       RecursiveIteratorIterator
- * @uses       \Zend\Loader
- * @uses       \Zend\Tool\Project\Context\Filesystem\Directory
  * @category   Zend
  * @package    Zend_Tool
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class ZfStandardLibraryDirectory 
-    extends \Zend\Tool\Project\Context\Filesystem\Directory
+class Zend_Tool_Project_Context_Zf_ZfStandardLibraryDirectory extends Zend_Tool_Project_Context_Filesystem_Directory
 {
 
     /**
@@ -67,8 +63,8 @@ class ZfStandardLibraryDirectory
         parent::create();
         $zfPath = $this->_getZfPath();
         if ($zfPath != false) {
-            $zfIterator = new \RecursiveDirectoryIterator($zfPath);
-            foreach ($rii = new \RecursiveIteratorIterator($zfIterator, \RecursiveIteratorIterator::SELF_FIRST) as $file) {
+            $zfIterator = new RecursiveDirectoryIterator($zfPath);
+            foreach ($rii = new RecursiveIteratorIterator($zfIterator, RecursiveIteratorIterator::SELF_FIRST) as $file) {
                 $relativePath = preg_replace('#^'.preg_quote(realpath($zfPath), '#').'#', '', realpath($file->getPath())) . DIRECTORY_SEPARATOR . $file->getFilename();
                 if (strpos($relativePath, DIRECTORY_SEPARATOR . '.') !== false) {
                     continue;
@@ -91,7 +87,8 @@ class ZfStandardLibraryDirectory
      */
     protected function _getZfPath()
     {
-        foreach (\Zend\Loader::explodeIncludePath() as $includePath) {
+        require_once 'Zend/Loader.php';
+        foreach (Zend_Loader::explodeIncludePath() as $includePath) {
             if (!file_exists($includePath) || $includePath[0] == '.') {
                 continue;
             }

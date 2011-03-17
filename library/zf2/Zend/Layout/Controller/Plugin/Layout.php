@@ -19,37 +19,36 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * @namespace
- */
-namespace Zend\Layout\Controller\Plugin;
+/** Zend_Controller_Plugin_Abstract */
+require_once 'Zend/Controller/Plugin/Abstract.php';
 
 /**
  * Render layouts
  *
- * @uses       \Zend\Controller\Plugin\AbstractPlugin
+ * @uses       Zend_Controller_Plugin_Abstract
  * @category   Zend
  * @package    Zend_Controller
  * @subpackage Plugins
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
-class Layout extends \Zend\Controller\Plugin\AbstractPlugin
+class Zend_Layout_Controller_Plugin_Layout extends Zend_Controller_Plugin_Abstract
 {
     protected $_layoutActionHelper = null;
 
     /**
-     * @var \Zend\Layout\Layout
+     * @var Zend_Layout
      */
     protected $_layout;
 
     /**
      * Constructor
      *
-     * @param  \Zend\Layout\Layout $layout
+     * @param  Zend_Layout $layout
      * @return void
      */
-    public function __construct(\Zend\Layout\Layout $layout = null)
+    public function __construct(Zend_Layout $layout = null)
     {
         if (null !== $layout) {
             $this->setLayout($layout);
@@ -59,7 +58,7 @@ class Layout extends \Zend\Controller\Plugin\AbstractPlugin
     /**
      * Retrieve layout object
      *
-     * @return \Zend\Layout\Layout
+     * @return Zend_Layout
      */
     public function getLayout()
     {
@@ -69,10 +68,10 @@ class Layout extends \Zend\Controller\Plugin\AbstractPlugin
     /**
      * Set layout object
      *
-     * @param  \Zend\Layout\Layout $layout
-     * @return \Zend\Layout\Controller\Plugin\Layout
+     * @param  Zend_Layout $layout
+     * @return Zend_Layout_Controller_Plugin_Layout
      */
-    public function setLayout(\Zend\Layout\Layout $layout)
+    public function setLayout(Zend_Layout $layout)
     {
         $this->_layout = $layout;
         return $this;
@@ -81,10 +80,10 @@ class Layout extends \Zend\Controller\Plugin\AbstractPlugin
     /**
      * Set layout action helper
      *
-     * @param  \Zend\Layout\Controller\Action\Helper\Layout $layoutActionHelper
-     * @return \Zend\Layout\Controller\Plugin\Layout
+     * @param  Zend_Layout_Controller_Action_Helper_Layout $layoutActionHelper
+     * @return Zend_Layout_Controller_Plugin_Layout
      */
-    public function setLayoutActionHelper(\Zend\Layout\Controller\Action\Helper\Layout $layoutActionHelper)
+    public function setLayoutActionHelper(Zend_Layout_Controller_Action_Helper_Layout $layoutActionHelper)
     {
         $this->_layoutActionHelper = $layoutActionHelper;
         return $this;
@@ -93,7 +92,7 @@ class Layout extends \Zend\Controller\Plugin\AbstractPlugin
     /**
      * Retrieve layout action helper
      *
-     * @return \Zend\Layout\Controller\Action\Helper\Layout
+     * @return Zend_Layout_Controller_Action_Helper_Layout
      */
     public function getLayoutActionHelper()
     {
@@ -103,10 +102,10 @@ class Layout extends \Zend\Controller\Plugin\AbstractPlugin
     /**
      * postDispatch() plugin hook -- render layout
      *
-     * @param  \Zend\Controller\Request\AbstractRequest $request
+     * @param  Zend_Controller_Request_Abstract $request
      * @return void
      */
-    public function postDispatch(\Zend\Controller\Request\AbstractRequest $request)
+    public function postDispatch(Zend_Controller_Request_Abstract $request)
     {
         $layout = $this->getLayout();
         $helper = $this->getLayoutActionHelper();
@@ -143,7 +142,7 @@ class Layout extends \Zend\Controller\Plugin\AbstractPlugin
         try {
             $fullContent = $layout->render();
             $response->setBody($fullContent);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             while (ob_get_level() > $obStartLevel) {
                 $fullContent .= ob_get_clean();
             }

@@ -16,24 +16,22 @@
  * @package    Zend_Form
  * @subpackage Decorator
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @version    $Id$
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * @namespace
- */
-namespace Zend\Form\Decorator;
+/** Zend_Form_Exception */
+require_once 'Zend/Form/Exception.php';
 
 /**
  * Exception for Zend_Form component.
  *
- * @uses       \Zend\Form\Exception
  * @category   Zend
  * @package    Zend_Form
  * @subpackage Decorator
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-interface Exception extends \Zend\Form\Exception
+class Zend_Form_Decorator_Exception extends Zend_Form_Exception
 {
 }

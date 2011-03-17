@@ -16,22 +16,22 @@
  * @package   Zend_Measure
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id$
  */
 
 /**
- * @namespace
+ * Zend_Exception
  */
-namespace Zend\Measure;
+require_once 'Zend/Exception.php';
 
 /**
  * Exception class
  *
- * @uses      Zend\Exception
  * @category  Zend
  * @package   Zend_Measure
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Exception extends \Zend\Exception
+class Zend_Measure_Exception extends Zend_Exception
 {
 }

@@ -17,31 +17,29 @@
  * @subpackage Adapter
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
+
 /**
- * @namespace
+ * @see Zend_Db_Adapter_Pdo_Abstract
  */
-namespace Zend\Db\Adapter\Pdo;
-use Zend\Db;
-use Zend\Db\Adapter;
+require_once 'Zend/Db/Adapter/Pdo/Abstract.php';
+
 
 /**
  * Class for connecting to Microsoft SQL Server databases and performing common operations.
  *
- * @uses       \Zend\Db\Db
- * @uses       \Zend\Db\Adapter\Exception
- * @uses       \Zend\Db\Adapter\Pdo\AbstractPdo
  * @category   Zend
  * @package    Zend_Db
  * @subpackage Adapter
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Mssql extends \Zend\Db\Adapter\AbstractPdoAdapter
+class Zend_Db_Adapter_Pdo_Mssql extends Zend_Db_Adapter_Pdo_Abstract
 {
     /**
-     * Pdo type.
+     * PDO type.
      *
      * @var string
      */
@@ -59,23 +57,23 @@ class Mssql extends \Zend\Db\Adapter\AbstractPdoAdapter
      * @var array Associative array of datatypes to values 0, 1, or 2.
      */
     protected $_numericDataTypes = array(
-        Db\Db::INT_TYPE    => Db\Db::INT_TYPE,
-        Db\Db::BIGINT_TYPE => Db\Db::BIGINT_TYPE,
-        Db\Db::FLOAT_TYPE  => Db\Db::FLOAT_TYPE,
-        'INT'                => Db\Db::INT_TYPE,
-        'SMALLINT'           => Db\Db::INT_TYPE,
-        'TINYINT'            => Db\Db::INT_TYPE,
-        'BIGINT'             => Db\Db::BIGINT_TYPE,
-        'DECIMAL'            => Db\Db::FLOAT_TYPE,
-        'FLOAT'              => Db\Db::FLOAT_TYPE,
-        'MONEY'              => Db\Db::FLOAT_TYPE,
-        'NUMERIC'            => Db\Db::FLOAT_TYPE,
-        'REAL'               => Db\Db::FLOAT_TYPE,
-        'SMALLMONEY'         => Db\Db::FLOAT_TYPE
+        Zend_Db::INT_TYPE    => Zend_Db::INT_TYPE,
+        Zend_Db::BIGINT_TYPE => Zend_Db::BIGINT_TYPE,
+        Zend_Db::FLOAT_TYPE  => Zend_Db::FLOAT_TYPE,
+        'INT'                => Zend_Db::INT_TYPE,
+        'SMALLINT'           => Zend_Db::INT_TYPE,
+        'TINYINT'            => Zend_Db::INT_TYPE,
+        'BIGINT'             => Zend_Db::BIGINT_TYPE,
+        'DECIMAL'            => Zend_Db::FLOAT_TYPE,
+        'FLOAT'              => Zend_Db::FLOAT_TYPE,
+        'MONEY'              => Zend_Db::FLOAT_TYPE,
+        'NUMERIC'            => Zend_Db::FLOAT_TYPE,
+        'REAL'               => Zend_Db::FLOAT_TYPE,
+        'SMALLMONEY'         => Zend_Db::FLOAT_TYPE
     );
 
     /**
-     * Creates a Pdo DSN for the adapter from $this->_config settings.
+     * Creates a PDO DSN for the adapter from $this->_config settings.
      *
      * @return string
      */
@@ -143,8 +141,8 @@ class Mssql extends \Zend\Db\Adapter\AbstractPdoAdapter
     /**
      * Begin a transaction.
      *
-     * It is necessary to override the abstract Pdo transaction functions here, as
-     * the Pdo driver for Mssql does not support transactions.
+     * It is necessary to override the abstract PDO transaction functions here, as
+     * the PDO driver for MSSQL does not support transactions.
      */
     protected function _beginTransaction()
     {
@@ -156,8 +154,8 @@ class Mssql extends \Zend\Db\Adapter\AbstractPdoAdapter
     /**
      * Commit a transaction.
      *
-     * It is necessary to override the abstract Pdo transaction functions here, as
-     * the Pdo driver for Mssql does not support transactions.
+     * It is necessary to override the abstract PDO transaction functions here, as
+     * the PDO driver for MSSQL does not support transactions.
      */
     protected function _commit()
     {
@@ -169,8 +167,8 @@ class Mssql extends \Zend\Db\Adapter\AbstractPdoAdapter
     /**
      * Roll-back a transaction.
      *
-     * It is necessary to override the abstract Pdo transaction functions here, as
-     * the Pdo driver for Mssql does not support transactions.
+     * It is necessary to override the abstract PDO transaction functions here, as
+     * the PDO driver for MSSQL does not support transactions.
      */
     protected function _rollBack() {
         $this->_connect();
@@ -237,7 +235,7 @@ class Mssql extends \Zend\Db\Adapter\AbstractPdoAdapter
         }
 
         $stmt = $this->query($sql);
-        $result = $stmt->fetchAll(Db\Db::FETCH_NUM);
+        $result = $stmt->fetchAll(Zend_Db::FETCH_NUM);
 
         $table_name  = 2;
         $column_name = 3;
@@ -258,7 +256,7 @@ class Mssql extends \Zend\Db\Adapter\AbstractPdoAdapter
         }
 
         $stmt = $this->query($sql);
-        $primaryKeysResult = $stmt->fetchAll(Db\Db::FETCH_NUM);
+        $primaryKeysResult = $stmt->fetchAll(Zend_Db::FETCH_NUM);
         $primaryKeyColumn = array();
         $pkey_column_name = 3;
         $pkey_key_seq = 4;
@@ -313,19 +311,23 @@ class Mssql extends \Zend\Db\Adapter\AbstractPdoAdapter
      * @param string $sql
      * @param integer $count
      * @param integer $offset OPTIONAL
-     * @throws \Zend\Db\Adapter\Exception
+     * @throws Zend_Db_Adapter_Exception
      * @return string
      */
      public function limit($sql, $count, $offset = 0)
      {
         $count = intval($count);
         if ($count <= 0) {
-            throw new Adapter\Exception("LIMIT argument count=$count is not valid");
+            /** @see Zend_Db_Adapter_Exception */
+            require_once 'Zend/Db/Adapter/Exception.php';
+            throw new Zend_Db_Adapter_Exception("LIMIT argument count=$count is not valid");
         }
 
         $offset = intval($offset);
         if ($offset < 0) {
-            throw new Adapter\Exception("LIMIT argument offset=$offset is not valid");
+            /** @see Zend_Db_Adapter_Exception */
+            require_once 'Zend/Db/Adapter/Exception.php';
+            throw new Zend_Db_Adapter_Exception("LIMIT argument offset=$offset is not valid");
         }
 
         $sql = preg_replace(
@@ -380,7 +382,7 @@ class Mssql extends \Zend\Db\Adapter\AbstractPdoAdapter
      * Gets the last ID generated automatically by an IDENTITY/AUTOINCREMENT column.
      *
      * As a convention, on RDBMS brands that support sequences
-     * (e.g. Oracle, PostgreSQL, Db2), this method forms the name of a sequence
+     * (e.g. Oracle, PostgreSQL, DB2), this method forms the name of a sequence
      * from the arguments and returns the last id generated by that sequence.
      * On RDBMS brands that support IDENTITY/AUTOINCREMENT columns, this method
      * returns the last value generated for such a column, and the table name
@@ -392,7 +394,7 @@ class Mssql extends \Zend\Db\Adapter\AbstractPdoAdapter
      * @param string $tableName   OPTIONAL Name of table.
      * @param string $primaryKey  OPTIONAL Name of primary key column.
      * @return string
-     * @throws \Zend\Db\Adapter\Exception
+     * @throws Zend_Db_Adapter_Exception
      */
     public function lastInsertId($tableName = null, $primaryKey = null)
     {
@@ -402,19 +404,19 @@ class Mssql extends \Zend\Db\Adapter\AbstractPdoAdapter
 
     /**
      * Retrieve server version in PHP style
-     * Pdo_Mssql doesn't support getAttribute(Pdo::ATTR_SERVER_VERSION)
+     * Pdo_Mssql doesn't support getAttribute(PDO::ATTR_SERVER_VERSION)
      * @return string
      */
     public function getServerVersion()
     {
         try {
             $stmt = $this->query("SELECT SERVERPROPERTY('productversion')");
-            $result = $stmt->fetchAll(Db\Db::FETCH_NUM);
+            $result = $stmt->fetchAll(Zend_Db::FETCH_NUM);
             if (count($result)) {
                 return $result[0][0];
             }
             return null;
-        } catch (\PDOException $e) {
+        } catch (PDOException $e) {
             return null;
         }
     }

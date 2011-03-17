@@ -17,12 +17,8 @@
  * @subpackage Value
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
-
-/**
- * @namespace
- */
-namespace Zend\Amf\Value;
 
 /**
  * Zend_Amf_Value_TraitsInfo
@@ -32,7 +28,7 @@ namespace Zend\Amf\Value;
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class TraitsInfo
+class Zend_Amf_Value_TraitsInfo
 {
     /**
      * @var string Class name
@@ -115,7 +111,7 @@ class TraitsInfo
      * Add an additional property
      *
      * @param  string $name
-     * @return \Zend\Amf\Value\TraitsInfo
+     * @return Zend_Amf_Value_TraitsInfo
      */
     public function addProperty($name)
     {
@@ -127,7 +123,7 @@ class TraitsInfo
      * Add all properties of the class.
      *
      * @param  array $props
-     * @return \Zend\Amf\Value\TraitsInfo
+     * @return Zend_Amf_Value_TraitsInfo
      */
     public function addAllProperties(array $props)
     {

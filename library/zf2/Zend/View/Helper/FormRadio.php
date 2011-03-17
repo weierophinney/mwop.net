@@ -17,25 +17,26 @@
  * @subpackage Helper
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
+
 /**
- * @namespace
+ * Abstract class for extension
  */
-namespace Zend\View\Helper;
+require_once 'Zend/View/Helper/FormElement.php';
+
 
 /**
  * Helper to generate a set of radio button elements
  *
- * @uses       \Zend\Filter\Alnum
- * @uses       \Zend\View\Helper\FormElement
  * @category   Zend
  * @package    Zend_View
  * @subpackage Helper
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class FormRadio extends FormElement
+class Zend_View_Helper_FormRadio extends Zend_View_Helper_FormElement
 {
     /**
      * Input type to use
@@ -67,12 +68,10 @@ class FormRadio extends FormElement
      *
      * @return string The radio buttons XHTML.
      */
-    public function direct($name = null, $value = null, $attribs = null, $options = null, $listsep = "<br />\n")
+    public function formRadio($name, $value = null, $attribs = null,
+        $options = null, $listsep = "<br />\n")
     {
-        if ($name == null) {
-            throw new \InvalidArgumentException('FormRadio: missing argument. $name is required in formRadio($name, $value = null, $attribs = null, $options = null, $listsep = "<br />\n")');
-        }
-        
+
         $info = $this->_getInfo($name, $value, $attribs, $options, $listsep);
         extract($info); // name, value, attribs, options, listsep, disable
 
@@ -116,7 +115,7 @@ class FormRadio extends FormElement
         $list  = array();
 
         // should the name affect an array collection?
-        $name = $this->view->vars()->escape($name);
+        $name = $this->view->escape($name);
         if ($this->_isArray && ('[]' != substr($name, -2))) {
             $name .= '[]';
         }
@@ -126,17 +125,18 @@ class FormRadio extends FormElement
 
         // XHTML or HTML end tag?
         $endTag = ' />';
-        if (($this->view instanceof \Zend\View\AbstractView) && !$this->view->broker('doctype')->isXhtml()) {
+        if (($this->view instanceof Zend_View_Abstract) && !$this->view->doctype()->isXhtml()) {
             $endTag= '>';
         }
 
         // add radio buttons to the list.
-        $filter = new \Zend\Filter\Alnum();
+        require_once 'Zend/Filter/Alnum.php';
+        $filter = new Zend_Filter_Alnum();
         foreach ($options as $opt_value => $opt_label) {
 
             // Should the label be escaped?
             if ($escape) {
-                $opt_label = $this->view->vars()->escape($opt_label);
+                $opt_label = $this->view->escape($opt_label);
             }
 
             // is it disabled?
@@ -163,7 +163,7 @@ class FormRadio extends FormElement
                     . '<input type="' . $this->_inputType . '"'
                     . ' name="' . $name . '"'
                     . ' id="' . $optId . '"'
-                    . ' value="' . $this->view->vars()->escape($opt_value) . '"'
+                    . ' value="' . $this->view->escape($opt_value) . '"'
                     . $checked
                     . $disabled
                     . $this->_htmlAttribs($attribs)

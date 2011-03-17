@@ -17,23 +17,24 @@
  * @subpackage Object
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * @namespace
- */
-namespace Zend\Barcode\Object;
+/** @see Zend_Barcode_Object_Code25 */
+require_once 'Zend/Barcode/Object/Code25.php';
+
+/** @see Zend_Validate_Barcode */
+require_once 'Zend/Validate/Barcode.php';
 
 /**
  * Class for generate Interleaved 2 of 5 barcode
  *
- * @uses       \Zend\Barcode\Object\Code25
  * @category   Zend
  * @package    Zend_Barcode
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Code25interleaved extends Code25
+class Zend_Barcode_Object_Code25interleaved extends Zend_Barcode_Object_Code25
 {
     /**
      * Drawing of bearer bars
@@ -53,7 +54,7 @@ class Code25interleaved extends Code25
     /**
      * Activate/deactivate drawing of bearer bars
      * @param boolean $value
-     * @return \Zend\Barcode\Object\Int25
+     * @return Zend_Barcode_Object_Int25
      */
     public function setWithBearerBars($value)
     {
