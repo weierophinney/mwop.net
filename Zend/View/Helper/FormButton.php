@@ -17,26 +17,24 @@
  * @subpackage Helper
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id$
  */
-
 
 /**
- * Abstract class for extension
+ * @namespace
  */
-require_once 'Zend/View/Helper/FormElement.php';
-
+namespace Zend\View\Helper;
 
 /**
  * Helper to generate a "button" element
  *
+ * @uses       \Zend\View\Helper\FormElement
  * @category   Zend
  * @package    Zend_View
  * @subpackage Helper
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_View_Helper_FormButton extends Zend_View_Helper_FormElement
+class FormButton extends FormElement
 {
     /**
      * Generates a 'button' element.
@@ -53,10 +51,13 @@ class Zend_View_Helper_FormButton extends Zend_View_Helper_FormElement
      *
      * @return string The element XHTML.
      */
-    public function formButton($name, $value = null, $attribs = null)
+    public function direct($name = null, $value = null, $attribs = null)
     {
-        $info    = $this->_getInfo($name, $value, $attribs);
-        extract($info); // name, id, value, attribs, options, listsep, disable, escape
+        $info = $this->_getInfo($name, $value, $attribs);
+
+        $id = $disable = $escape = null;
+
+        extract($info); // name, id, value, attribs, options, listsep, disable
 
         // Get content
         $content = '';
@@ -82,16 +83,16 @@ class Zend_View_Helper_FormButton extends Zend_View_Helper_FormElement
             $attribs['disabled'] = 'disabled';
         }
 
-        $content = ($escape) ? $this->view->escape($content) : $content;
+        $content = ($escape) ? $this->view->vars()->escape($content) : $content;
 
         $xhtml = '<button'
-                . ' name="' . $this->view->escape($name) . '"'
-                . ' id="' . $this->view->escape($id) . '"'
+                . ' name="' . $this->view->vars()->escape($name) . '"'
+                . ' id="' . $this->view->vars()->escape($id) . '"'
                 . ' type="' . $type . '"';
 
         // add a value if one is given
         if (!empty($value)) {
-            $xhtml .= ' value="' . $this->view->escape($value) . '"';
+            $xhtml .= ' value="' . $this->view->vars()->escape($value) . '"';
         }
 
         // add attributes and close start tag

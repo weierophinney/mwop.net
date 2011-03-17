@@ -16,19 +16,22 @@
  * @package    Zend_Tool
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id$
  */
 
-require_once "Zend/Tool/Framework/Client/Response/ContentDecorator/Interface.php";
+/**
+ * @namespace
+ */
+namespace Zend\Tool\Framework\Client\Console\ResponseDecorator;
 
 /**
+ * @uses       \Zend\Tool\Framework\Client\Response\ContentDecorator
  * @category   Zend
  * @package    Zend_Tool
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Tool_Framework_Client_Console_ResponseDecorator_Indention
-    implements Zend_Tool_Framework_Client_Response_ContentDecorator_Interface
+class Indention
+    implements \Zend\Tool\Framework\Client\Response\ContentDecorator
 {
     public function getName()
     {

@@ -19,20 +19,22 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/** Zend_Form_Element_Xhtml */
-require_once 'Zend/Form/Element/Xhtml.php';
+/**
+ * @namespace
+ */
+namespace Zend\Form\Element;
 
 /**
  * Submit form element
  *
+ * @uses       \Zend\Form\Element\Xhtml
  * @category   Zend
  * @package    Zend_Form
  * @subpackage Element
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id$
  */
-class Zend_Form_Element_Submit extends Zend_Form_Element_Xhtml
+class Submit extends Xhtml
 {
     /**
      * Default view helper to use
@@ -43,8 +45,8 @@ class Zend_Form_Element_Submit extends Zend_Form_Element_Xhtml
     /**
      * Constructor
      *
-     * @param  string|array|Zend_Config $spec Element name or configuration
-     * @param  string|array|Zend_Config $options Element value or configuration
+     * @param  string|array|\Zend\Config\Config $spec Element name or configuration
+     * @param  string|array|\Zend\Config\Config $options Element value or configuration
      * @return void
      */
     public function __construct($spec, $options = null)
@@ -52,7 +54,7 @@ class Zend_Form_Element_Submit extends Zend_Form_Element_Xhtml
         if (is_string($spec) && ((null !== $options) && is_string($options))) {
             $options = array('label' => $options);
         }
-
+        
         if (!isset($options['ignore'])) {
             $options['ignore'] = true;
         }

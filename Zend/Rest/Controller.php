@@ -16,23 +16,27 @@
  * @package    Zend_Rest
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id$
  */
 
-/** Zend_Controller_Action */
-require_once 'Zend/Controller/Action.php';
+/**
+ * @namespace
+ */
+namespace Zend\Rest;
+
+use Zend\Controller\Action as ActionController;
 
 /**
  * An abstract class to guide implementation of action controllers for use with
- * Zend_Rest_Route.
+ * Zend\Rest\Route.
  *
+ * @uses       Zend_Controller_Action
  * @category   Zend
- * @package Zend_Rest
- * @see Zend_Rest_Route
+ * @package    Zend_Rest
+ * @see        Zend_Rest_Route
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-abstract class Zend_Rest_Controller extends Zend_Controller_Action
+abstract class Controller extends ActionController
 {
     /**
      * The index action handles index/list requests; it should respond with a
@@ -46,13 +50,6 @@ abstract class Zend_Rest_Controller extends Zend_Controller_Action
      * by the 'id' value.
      */
     abstract public function getAction();
-
-    /**
-     * The head action handles HEAD requests and receives an 'id' parameter; it
-     * should respond with the server resource state of the resource identified
-     * by the 'id' value.
-     */
-    abstract public function headAction();
 
     /**
      * The post action handles POST requests; it should accept and digest a

@@ -16,18 +16,20 @@
  * @package    Zend_Serializer
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id$
  */
-
-/** @see Zend_Exception */
-require_once 'Zend/Exception.php';
 
 /**
- * @category   Zend
- * @package    Zend_Serializer
- * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @namespace
  */
-class Zend_Serializer_Exception extends Zend_Exception
+namespace Zend\Serializer;
+
+/**
+ * @uses      Zend\Exception
+ * @category  Zend
+ * @package   Zend_Serializer
+ * @copyright Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd New BSD License
+ */
+interface Exception
 {
 }

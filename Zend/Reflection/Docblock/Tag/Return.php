@@ -16,19 +16,24 @@
  * @package    Zend_Reflection
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id$
  */
 
-/** Zend_Reflection_Docblock_Tag */
-require_once 'Zend/Reflection/Docblock/Tag.php';
+/**
+ * @namespace
+ */
+namespace Zend\Reflection\Docblock\Tag;
+use Zend\Reflection,
+    Zend\Reflection\Exception;
 
 /**
+ * @uses       \Zend\Reflection\Exception
+ * @uses       \Zend\Reflection\ReflectionDocblockTag
  * @category   Zend
  * @package    Zend_Reflection
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Reflection_Docblock_Tag_Return extends Zend_Reflection_Docblock_Tag
+class ReturnTag extends Reflection\ReflectionDocblockTag
 {
     /**
      * @var string
@@ -44,13 +49,11 @@ class Zend_Reflection_Docblock_Tag_Return extends Zend_Reflection_Docblock_Tag
     public function __construct($tagDocblockLine)
     {
         if (!preg_match('#^@(\w+)\s+([\w|\\\]+)(?:\s+(.*))?#', $tagDocblockLine, $matches)) {
-            require_once 'Zend/Reflection/Exception.php';
-            throw new Zend_Reflection_Exception('Provided docblock line is does not contain a valid tag');
+            throw new Exception\InvalidArgumentException('Provided docblock line is does not contain a valid tag');
         }
 
         if ($matches[1] != 'return') {
-            require_once 'Zend/Reflection/Exception.php';
-            throw new Zend_Reflection_Exception('Provided docblock line is does not contain a valid @return tag');
+            throw new Exception\InvalidArgumentException('Provided docblock line is does not contain a valid @return tag');
         }
 
         $this->_name = 'return';

@@ -17,26 +17,24 @@
  * @subpackage Helper
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id$
  */
-
 
 /**
- * Abstract class for extension
+ * @namespace
  */
-require_once 'Zend/View/Helper/FormElement.php';
-
+namespace Zend\View\Helper;
 
 /**
  * Helper to generate a "text" element
  *
+ * @uses       \Zend\View\Helper\FormElement
  * @category   Zend
  * @package    Zend_View
  * @subpackage Helper
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_View_Helper_FormText extends Zend_View_Helper_FormElement
+class FormText extends FormElement
 {
     /**
      * Generates a 'text' element.
@@ -53,8 +51,12 @@ class Zend_View_Helper_FormText extends Zend_View_Helper_FormElement
      *
      * @return string The element XHTML.
      */
-    public function formText($name, $value = null, $attribs = null)
+    public function direct($name = null, $value = null, $attribs = null)
     {
+        if ($name == null) {
+            throw new \InvalidArgumentException('FormText: missing argument. $name is required in formText($name, $value = null, $attribs = null)');
+        }
+        
         $info = $this->_getInfo($name, $value, $attribs);
         extract($info); // name, value, attribs, options, listsep, disable
 
@@ -67,14 +69,14 @@ class Zend_View_Helper_FormText extends Zend_View_Helper_FormElement
 
         // XHTML or HTML end tag?
         $endTag = ' />';
-        if (($this->view instanceof Zend_View_Abstract) && !$this->view->doctype()->isXhtml()) {
+        if (($this->view instanceof \Zend\View\AbstractView) && !$this->view->broker('doctype')->isXhtml()) {
             $endTag= '>';
         }
 
         $xhtml = '<input type="text"'
-                . ' name="' . $this->view->escape($name) . '"'
-                . ' id="' . $this->view->escape($id) . '"'
-                . ' value="' . $this->view->escape($value) . '"'
+                . ' name="' . $this->view->vars()->escape($name) . '"'
+                . ' id="' . $this->view->vars()->escape($id) . '"'
+                . ' value="' . $this->view->vars()->escape($value) . '"'
                 . $disabled
                 . $this->_htmlAttribs($attribs)
                 . $endTag;

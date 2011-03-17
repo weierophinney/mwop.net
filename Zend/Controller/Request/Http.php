@@ -16,25 +16,27 @@
  * @package    Zend_Controller
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id$
  */
 
-/** @see Zend_Controller_Request_Abstract */
-require_once 'Zend/Controller/Request/Abstract.php';
-
-/** @see Zend_Uri */
-require_once 'Zend/Uri.php';
+/**
+ * @namespace
+ */
+namespace Zend\Controller\Request;
+use Zend\Uri;
+use Zend\Controller;
 
 /**
  * Zend_Controller_Request_Http
  *
  * HTTP request object for use with Zend_Controller family.
  *
- * @uses Zend_Controller_Request_Abstract
- * @package Zend_Controller
+ * @uses       \Zend\Controller\Request\AbstractRequest
+ * @uses       \Zend\Controller\Request\Exception
+ * @uses       \Zend\Uri\Uri
+ * @package    Zend_Controller
  * @subpackage Request
  */
-class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
+class Http extends AbstractRequest
 {
     /**
      * Scheme for http
@@ -102,17 +104,17 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
      * If a $uri is passed, the object will attempt to populate itself using
      * that information.
      *
-     * @param string|Zend_Uri $uri
+     * @param string|\Zend\Uri\Uri $uri
      * @return void
-     * @throws Zend_Controller_Request_Exception when invalid URI passed
+     * @throws \Zend\Controller\Request\Exception when invalid URI passed
      */
     public function __construct($uri = null)
     {
         if (null !== $uri) {
-            if (!$uri instanceof Zend_Uri) {
-                $uri = Zend_Uri::factory($uri);
+            if (!$uri instanceof Uri\Url) {
+                $uri = new Uri\Url($uri);
             }
-            if ($uri->valid()) {
+            if ($uri->isValid()) {
                 $path  = $uri->getPath();
                 $query = $uri->getQuery();
                 if (!empty($query)) {
@@ -121,8 +123,7 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
 
                 $this->setRequestUri($path);
             } else {
-                require_once 'Zend/Controller/Request/Exception.php';
-                throw new Zend_Controller_Request_Exception('Invalid URI provided to constructor');
+                throw new Exception('Invalid URI provided to constructor');
             }
         } else {
             $this->setRequestUri();
@@ -182,12 +183,11 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
      * @param string $key
      * @param mixed $value
      * @return void
-     * @throws Zend_Controller_Request_Exception
+     * @throws \Zend\Controller\Request\Exception
      */
     public function __set($key, $value)
     {
-        require_once 'Zend/Controller/Request/Exception.php';
-        throw new Zend_Controller_Request_Exception('Setting values in superglobals not allowed; please use setParam()');
+        throw new Exception('Setting values in superglobals not allowed; please use setParam()');
     }
 
     /**
@@ -244,13 +244,12 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
      *
      * @param  string|array $spec
      * @param  null|mixed $value
-     * @return Zend_Controller_Request_Http
+     * @return \Zend\Controller\Request\Http
      */
     public function setQuery($spec, $value = null)
     {
         if ((null === $value) && !is_array($spec)) {
-            require_once 'Zend/Controller/Exception.php';
-            throw new Zend_Controller_Exception('Invalid value passed to setQuery(); must be either array of values or key/value pair');
+            throw new Controller\Exception('Invalid value passed to setQuery(); must be either array of values or key/value pair');
         }
         if ((null === $value) && is_array($spec)) {
             foreach ($spec as $key => $value) {
@@ -286,13 +285,12 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
      *
      * @param  string|array $spec
      * @param  null|mixed $value
-     * @return Zend_Controller_Request_Http
+     * @return \Zend\Controller\Request\Http
      */
     public function setPost($spec, $value = null)
     {
         if ((null === $value) && !is_array($spec)) {
-            require_once 'Zend/Controller/Exception.php';
-            throw new Zend_Controller_Exception('Invalid value passed to setPost(); must be either array of values or key/value pair');
+            throw new Controller\Exception('Invalid value passed to setPost(); must be either array of values or key/value pair');
         }
         if ((null === $value) && is_array($spec)) {
             foreach ($spec as $key => $value) {
@@ -385,7 +383,7 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
      * $_SERVER['HTTP_X_REWRITE_URL'], or $_SERVER['ORIG_PATH_INFO'] + $_SERVER['QUERY_STRING'].
      *
      * @param string $requestUri
-     * @return Zend_Controller_Request_Http
+     * @return \Zend\Controller\Request\Http
      */
     public function setRequestUri($requestUri = null)
     {
@@ -402,10 +400,10 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
                 $requestUri = $_SERVER['UNENCODED_URL'];
             } elseif (isset($_SERVER['REQUEST_URI'])) {
                 $requestUri = $_SERVER['REQUEST_URI'];
-                // Http proxy reqs setup request uri with scheme and host [and port] + the url path, only use url path
-                $schemeAndHttpHost = $this->getScheme() . '://' . $this->getHttpHost();
-                if (strpos($requestUri, $schemeAndHttpHost) === 0) {
-                    $requestUri = substr($requestUri, strlen($schemeAndHttpHost));
+                // HTTP proxy reqs setup request uri with scheme and host [and port] + the url path, only use url path
+                $schemeAndHTTPHost = $this->getScheme() . '://' . $this->getHTTPHost();
+                if (strpos($requestUri, $schemeAndHTTPHost) === 0) {
+                    $requestUri = substr($requestUri, strlen($schemeAndHTTPHost));
                 }
             } elseif (isset($_SERVER['ORIG_PATH_INFO'])) { // IIS 5.0, PHP as CGI
                 $requestUri = $_SERVER['ORIG_PATH_INFO'];
@@ -464,7 +462,7 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
      * ORIG_SCRIPT_NAME in its determination.
      *
      * @param mixed $baseUrl
-     * @return Zend_Controller_Request_Http
+     * @return \Zend\Controller\Request\Http
      */
     public function setBaseUrl($baseUrl = null)
     {
@@ -551,14 +549,14 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
             $this->setBaseUrl();
         }
 
-        return urldecode($this->_baseUrl);
+        return $this->_baseUrl;
     }
 
     /**
      * Set the base path for the URL
      *
      * @param string|null $basePath
-     * @return Zend_Controller_Request_Http
+     * @return \Zend\Controller\Request\Http
      */
     public function setBasePath($basePath = null)
     {
@@ -607,7 +605,7 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
      * Set the PATH_INFO string
      *
      * @param string|null $pathInfo
-     * @return Zend_Controller_Request_Http
+     * @return \Zend\Controller\Request\Http
      */
     public function setPathInfo($pathInfo = null)
     {
@@ -623,19 +621,17 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
                 $requestUri = substr($requestUri, 0, $pos);
             }
 
-            $requestUri = urldecode($requestUri);
-
             if (null !== $baseUrl
-                && ((!empty($baseUrl) && 0 === strpos($requestUri, $baseUrl))
+                && ((!empty($baseUrl) && 0 === strpos($requestUri, $baseUrl)) 
                     || empty($baseUrl))
                     && false === ($pathInfo = substr($requestUri, strlen($baseUrl)))
-            ){
-                // If substr() returns false then PATH_INFO is set to an empty string
+            ){ 
+                // If substr() returns false then PATH_INFO is set to an empty string 
                 $pathInfo = '';
-            } elseif (null === $baseUrl
+            } elseif (null === $baseUrl 
                     || (!empty($baseUrl) && false === strpos($requestUri, $baseUrl))
-            ) {
-                $pathInfo = $requestUri;
+            ) { 
+                $pathInfo = $requestUri; 
             }
         }
 
@@ -665,7 +661,7 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
      * Can be empty array, or contain one or more of '_GET' or '_POST'.
      *
      * @param  array $paramSoures
-     * @return Zend_Controller_Request_Http
+     * @return \Zend\Controller\Request\Http
      */
     public function setParamSources(array $paramSources = array())
     {
@@ -691,7 +687,7 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
      *
      * @param mixed $key
      * @param mixed $value
-     * @return Zend_Controller_Request_Http
+     * @return \Zend\Controller\Request\Http
      */
     public function setParam($key, $value)
     {
@@ -764,7 +760,7 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
      * using the keys specified in the array.
      *
      * @param array $params
-     * @return Zend_Controller_Request_Http
+     * @return \Zend\Controller\Request\Http
      */
     public function setParams(array $params)
     {
@@ -782,7 +778,7 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
      *
      * @param string $name
      * @param string $target
-     * @return Zend_Controller_Request_Http
+     * @return \Zend\Controller\Request\Http
      */
     public function setAlias($name, $target)
     {
@@ -970,18 +966,17 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
      *
      * @param string $header HTTP header name
      * @return string|false HTTP header value, or false if not found
-     * @throws Zend_Controller_Request_Exception
+     * @throws \Zend\Controller\Request\Exception
      */
     public function getHeader($header)
     {
         if (empty($header)) {
-            require_once 'Zend/Controller/Request/Exception.php';
-            throw new Zend_Controller_Request_Exception('An HTTP header name is required');
+            throw new Exception('An HTTP header name is required');
         }
 
         // Try to get it from the $_SERVER array first
         $temp = 'HTTP_' . strtoupper(str_replace('-', '_', $header));
-        if (isset($_SERVER[$temp])) {
+        if (!empty($_SERVER[$temp])) {
             return $_SERVER[$temp];
         }
 
@@ -989,7 +984,7 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
         // Apache
         if (function_exists('apache_request_headers')) {
             $headers = apache_request_headers();
-            if (isset($headers[$header])) {
+            if (!empty($headers[$header])) {
                 return $headers[$header];
             }
             $header = strtolower($header);
@@ -1033,10 +1028,7 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
         $name   = $this->getServer('SERVER_NAME');
         $port   = $this->getServer('SERVER_PORT');
 
-        if(null === $name) {
-            return '';
-        }
-        elseif (($scheme == self::SCHEME_HTTP && $port == 80) || ($scheme == self::SCHEME_HTTPS && $port == 443)) {
+        if (($scheme == self::SCHEME_HTTP && $port == 80) || ($scheme == self::SCHEME_HTTPS && $port == 443)) {
             return $name;
         } else {
             return $name . ':' . $port;

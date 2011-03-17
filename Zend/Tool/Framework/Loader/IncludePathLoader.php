@@ -17,26 +17,25 @@
  * @subpackage Framework
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id$
  */
 
 /**
- * @see Zend_Tool_Framework_Loader_Abstract
+ * @namespace
  */
-require_once 'Zend/Tool/Framework/Loader/Abstract.php';
+namespace Zend\Tool\Framework\Loader;
 
 /**
- * @see Zend_Tool_Framework_Loader_IncludePathLoader_RecursiveFilterIterator
- */
-require_once 'Zend/Tool/Framework/Loader/IncludePathLoader/RecursiveFilterIterator.php';
-
-/**
+ * @uses       RecursiveDirectoryIterator
+ * @uses       RecursiveIteratorIterator
+ * @uses       \Zend\Loader
+ * @uses       \Zend\Tool\Framework\Loader\AbstractLoader
+ * @uses       \Zend\Tool\Framework\Loader\IncludePathLoader\RecursiveFilterIterator
  * @category   Zend
  * @package    Zend_Tool
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Tool_Framework_Loader_IncludePathLoader extends Zend_Tool_Framework_Loader_Abstract
+class IncludePathLoader extends AbstractLoader
 {
 
     /**
@@ -46,8 +45,7 @@ class Zend_Tool_Framework_Loader_IncludePathLoader extends Zend_Tool_Framework_L
      */
     protected function _getFiles()
     {
-        require_once 'Zend/Loader.php';
-        $paths = Zend_Loader::explodeIncludePath();
+        $paths = \Zend\Loader::explodeIncludePath();
 
         // used for checking similarly named files
         $relativeItems   = array();
@@ -77,17 +75,17 @@ class Zend_Tool_Framework_Loader_IncludePathLoader extends Zend_Tool_Framework_L
             }
 
             // create recursive directory iterator
-            $rdi = new RecursiveDirectoryIterator($path);
+            $rdi = new \RecursiveDirectoryIterator($path);
 
             // pass in the RecursiveDirectoryIterator & the patterns
-            $filter = new Zend_Tool_Framework_Loader_IncludePathLoader_RecursiveFilterIterator(
+            $filter = new RecursiveFilterIterator(
                 $rdi,
                 $filterDenyDirectoryPattern,
                 $filterAcceptFilePattern
                 );
 
             // build the rii with the filter
-            $iterator = new RecursiveIteratorIterator($filter);
+            $iterator = new \RecursiveIteratorIterator($filter);
 
             // iterate over the accepted items
             foreach ($iterator as $item) {

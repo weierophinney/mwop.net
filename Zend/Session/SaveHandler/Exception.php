@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -17,21 +16,19 @@
  * @package    Zend_Session
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id$
  */
 
-/**
- * @see Zend_Session_Exception
- */
-require_once 'Zend/Session/Exception.php';
+namespace Zend\Session\SaveHandler;
 
 /**
  * Zend_Session_SaveHandler_Exception
  *
+ * @uses       Zend\Session\Exception
  * @category   Zend
  * @package    Zend_Session
+ * @subpackage SaveHandler
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Session_SaveHandler_Exception extends Zend_Session_Exception
+interface Exception extends \Zend\Session\Exception
 {}

@@ -16,22 +16,19 @@
  * @package    Zend_XmlRpc
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id$
  */
 
-
 /**
- * Zend_Exception
+ * @namespace
  */
-require_once 'Zend/Exception.php';
-
+namespace Zend\XmlRpc;
 
 /**
+ * @uses       \Zend\Exception
  * @category   Zend
  * @package    Zend_XmlRpc
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_XmlRpc_Exception extends Zend_Exception
+interface Exception
 {}
-

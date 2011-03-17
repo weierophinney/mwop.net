@@ -20,9 +20,12 @@
  */
 
 /**
- * @see Zend_Form_Decorator_Abstract
+ * @namespace
  */
-require_once 'Zend/Form/Decorator/Abstract.php';
+namespace Zend\Form\Decorator;
+
+use Zend\Filter,
+    Zend\View\AbstractView;
 
 /**
  * Zend_Form_Decorator_Element_HtmlTag
@@ -40,14 +43,17 @@ require_once 'Zend/Form/Decorator/Abstract.php';
  *
  * Any other options passed are processed as HTML attributes of the tag.
  *
+ * @uses       \Zend\Filter\FilterChain
+ * @uses       \Zend\Filter\Alnum
+ * @uses       \Zend\Filter\StringToLower
+ * @uses       \Zend\Form\Decorator\AbstractDecorator
  * @category   Zend
  * @package    Zend_Form
  * @subpackage Decorator
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id$
  */
-class Zend_Form_Decorator_HtmlTag extends Zend_Form_Decorator_Abstract
+class HtmlTag extends AbstractDecorator
 {
     /**
      * Character encoding to use when escaping attributes
@@ -68,7 +74,7 @@ class Zend_Form_Decorator_HtmlTag extends Zend_Form_Decorator_Abstract
     protected $_tag;
 
     /**
-     * @var Zend_Filter
+     * @var \Zend\Filter\FilterChain
      */
     protected $_tagFilter;
 
@@ -108,12 +114,9 @@ class Zend_Form_Decorator_HtmlTag extends Zend_Form_Decorator_Abstract
     public function normalizeTag($tag)
     {
         if (!isset($this->_tagFilter)) {
-            require_once 'Zend/Filter.php';
-            require_once 'Zend/Filter/Alnum.php';
-            require_once 'Zend/Filter/StringToLower.php';
-            $this->_tagFilter = new Zend_Filter();
-            $this->_tagFilter->addFilter(new Zend_Filter_Alnum())
-                             ->addFilter(new Zend_Filter_StringToLower());
+            $this->_tagFilter = new Filter\FilterChain();
+            $this->_tagFilter->attach(new Filter\Alnum())
+                             ->attach(new Filter\StringToLower());
         }
         return $this->_tagFilter->filter($tag);
     }
@@ -122,7 +125,7 @@ class Zend_Form_Decorator_HtmlTag extends Zend_Form_Decorator_Abstract
      * Set tag to use
      *
      * @param  string $tag
-     * @return Zend_Form_Decorator_HtmlTag
+     * @return \Zend\Form\Decorator\HtmlTag
      */
     public function setTag($tag)
     {
@@ -231,7 +234,7 @@ class Zend_Form_Decorator_HtmlTag extends Zend_Form_Decorator_Abstract
 
     /**
      * Get encoding for use with htmlspecialchars()
-     *
+     * 
      * @return string
      */
     protected function _getEncoding()
@@ -244,7 +247,7 @@ class Zend_Form_Decorator_HtmlTag extends Zend_Form_Decorator_Abstract
             $this->_encoding = 'UTF-8';
         } elseif (null === ($view = $element->getView())) {
             $this->_encoding = 'UTF-8';
-        } elseif (!$view instanceof Zend_View_Abstract
+        } elseif (!$view instanceof AbstractView
             && !method_exists($view, 'getEncoding')
         ) {
             $this->_encoding = 'UTF-8';

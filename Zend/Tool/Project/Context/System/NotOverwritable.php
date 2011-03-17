@@ -17,8 +17,12 @@
  * @subpackage Framework
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id$
  */
+
+/**
+ * @namespace
+ */
+namespace Zend\Tool\Project\Context\System;
 
 /**
  * This class is the front most class for utilizing Zend_Tool_Project
@@ -31,7 +35,7 @@
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-interface Zend_Tool_Project_Context_System_NotOverwritable
+interface NotOverwritable
 {
 
 }

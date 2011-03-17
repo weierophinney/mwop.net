@@ -15,23 +15,17 @@
  * @category   Zend
  * @package    Zend_Http
  * @subpackage Client_Adapter
- * @version    $Id$
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
 /**
- * @see Zend_Uri_Http
+ * @namespace
  */
-require_once 'Zend/Uri/Http.php';
-/**
- * @see Zend_Http_Response
- */
-require_once 'Zend/Http/Response.php';
-/**
- * @see Zend_Http_Client_Adapter_Interface
- */
-require_once 'Zend/Http/Client/Adapter/Interface.php';
+namespace Zend\Http\Client\Adapter;
+use Zend\Http\Client\Adapter as HttpAdapter,
+    Zend\Http\Client\Adapter\Exception as AdapterException,
+    Zend\Http\Response;
 
 /**
  * A testing-purposes adapter.
@@ -41,13 +35,17 @@ require_once 'Zend/Http/Client/Adapter/Interface.php';
  * object manually, and then set it as the client's adapter. Then, you can
  * set the expected response using the setResponse() method.
  *
+ * @uses       \Zend\Http\Client\Adapter\Exception
+ * @uses       \Zend\Http\Client\Adapter
+ * @uses       \Zend\Http\Response
+ * @uses       \Zend\Uri\Url
  * @category   Zend
  * @package    Zend_Http
  * @subpackage Client_Adapter
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Http_Client_Adapter_Test implements Zend_Http_Client_Adapter_Interface
+class Test implements HttpAdapter
 {
     /**
      * Parameters array
@@ -89,7 +87,7 @@ class Zend_Http_Client_Adapter_Test implements Zend_Http_Client_Adapter_Interfac
      * Set the nextRequestWillFail flag
      *
      * @param boolean $flag
-     * @return Zend_Http_Client_Adapter_Test
+     * @return \Zend\Http\Client\Adapter\Test
      */
     public function setNextRequestWillFail($flag)
     {
@@ -101,17 +99,16 @@ class Zend_Http_Client_Adapter_Test implements Zend_Http_Client_Adapter_Interfac
     /**
      * Set the configuration array for the adapter
      *
-     * @param Zend_Config | array $config
+     * @param \Zend\Config\Config | array $config
      */
     public function setConfig($config = array())
     {
-        if ($config instanceof Zend_Config) {
+        if ($config instanceof \Zend\Config\Config) {
             $config = $config->toArray();
 
         } elseif (! is_array($config)) {
-            require_once 'Zend/Http/Client/Adapter/Exception.php';
-            throw new Zend_Http_Client_Adapter_Exception(
-                'Array or Zend_Config object expected, got ' . gettype($config)
+            throw new AdapterException\InvalidArgumentException(
+                'Array or Zend\Config\Config object expected, got ' . gettype($config)
             );
         }
 
@@ -128,14 +125,13 @@ class Zend_Http_Client_Adapter_Test implements Zend_Http_Client_Adapter_Interfac
      * @param int     $port
      * @param boolean $secure
      * @param int     $timeout
-     * @throws Zend_Http_Client_Adapter_Exception
+     * @throws \Zend\Http\Client\Adapter\Exception
      */
     public function connect($host, $port = 80, $secure = false)
     {
         if ($this->_nextRequestWillFail) {
             $this->_nextRequestWillFail = false;
-            require_once 'Zend/Http/Client/Adapter/Exception.php';
-            throw new Zend_Http_Client_Adapter_Exception('Request failed');
+            throw new AdapterException\RuntimeException('Request failed');
         }
     }
 
@@ -143,7 +139,7 @@ class Zend_Http_Client_Adapter_Test implements Zend_Http_Client_Adapter_Interfac
      * Send request to the remote server
      *
      * @param string        $method
-     * @param Zend_Uri_Http $uri
+     * @param \Zend\Uri\Url $uri
      * @param string        $http_ver
      * @param array         $headers
      * @param string        $body
@@ -156,6 +152,9 @@ class Zend_Http_Client_Adapter_Test implements Zend_Http_Client_Adapter_Interfac
 
         // Build request headers
         $path = $uri->getPath();
+        if (empty($path)) {
+            $path = '/';
+        }
         if ($uri->getQuery()) $path .= '?' . $uri->getQuery();
         $request = "{$method} {$path} HTTP/{$http_ver}\r\n";
         foreach ($headers as $k => $v) {
@@ -194,11 +193,11 @@ class Zend_Http_Client_Adapter_Test implements Zend_Http_Client_Adapter_Interfac
     /**
      * Set the HTTP response(s) to be returned by this adapter
      *
-     * @param Zend_Http_Response|array|string $response
+     * @param \Zend\Http\Response|array|string $response
      */
     public function setResponse($response)
     {
-        if ($response instanceof Zend_Http_Response) {
+        if ($response instanceof Response) {
             $response = $response->asString("\r\n");
         }
 
@@ -209,11 +208,11 @@ class Zend_Http_Client_Adapter_Test implements Zend_Http_Client_Adapter_Interfac
     /**
      * Add another response to the response buffer.
      *
-     * @param string Zend_Http_Response|$response
+     * @param string \Zend\Http\Response|$response
      */
     public function addResponse($response)
     {
-         if ($response instanceof Zend_Http_Response) {
+         if ($response instanceof Response) {
             $response = $response->asString("\r\n");
         }
 
@@ -229,8 +228,7 @@ class Zend_Http_Client_Adapter_Test implements Zend_Http_Client_Adapter_Interfac
     public function setResponseIndex($index)
     {
         if ($index < 0 || $index >= count($this->responses)) {
-            require_once 'Zend/Http/Client/Adapter/Exception.php';
-            throw new Zend_Http_Client_Adapter_Exception(
+            throw new AdapterException\OutOfRangeException(
                 'Index out of range of response buffer size');
         }
         $this->responseIndex = $index;

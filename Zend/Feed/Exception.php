@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -17,26 +16,24 @@
  * @package    Zend_Feed
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id$
  */
-
 
 /**
- * @see Zend_Exception
+ * @namespace
  */
-require_once 'Zend/Exception.php';
-
+namespace Zend\Feed;
 
 /**
  * Feed exceptions
  *
  * Class to represent exceptions that occur during Feed operations.
  *
+ * @uses       \Zend\Exception
  * @category   Zend
  * @package    Zend_Feed
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Feed_Exception extends Zend_Exception
+class Exception extends \Zend\Exception
 {}
 

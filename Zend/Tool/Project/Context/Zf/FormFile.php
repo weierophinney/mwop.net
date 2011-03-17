@@ -17,13 +17,12 @@
  * @subpackage Framework
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id$
  */
 
 /**
- * @see Zend_Tool_Project_Context_Zf_AbstractClassFile
+ * @namespace
  */
-require_once 'Zend/Tool/Project/Context/Zf/AbstractClassFile.php';
+namespace Zend\Tool\Project\Context\Zf;
 
 /**
  * This class is the front most class for utilizing Zend_Tool_Project
@@ -31,24 +30,28 @@ require_once 'Zend/Tool/Project/Context/Zf/AbstractClassFile.php';
  * A profile is a hierarchical set of resources that keep track of
  * items within a specific project.
  *
+ * @uses       \Zend\CodeGenerator\Php\PhpClass
+ * @uses       \Zend\CodeGenerator\Php\PhpFile
+ * @uses       \Zend\CodeGenerator\Php\PhpMethod
+ * @uses       \Zend\Tool\Project\Context\Zf\AbstractClassFile
  * @category   Zend
  * @package    Zend_Tool
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Tool_Project_Context_Zf_FormFile extends Zend_Tool_Project_Context_Zf_AbstractClassFile
+class FormFile extends AbstractClassFile
 {
 
     /**
      * @var string
      */
     protected $_formName = 'Base';
-
+    
     /**
      * @var string
      */
     protected $_filesystemName = 'formName';
-
+    
     /**
      * init()
      *
@@ -71,7 +74,7 @@ class Zend_Tool_Project_Context_Zf_FormFile extends Zend_Tool_Project_Context_Zf
             'formName' => $this->getFormName()
             );
     }
-
+    
     /**
      * getName()
      *
@@ -86,25 +89,25 @@ class Zend_Tool_Project_Context_Zf_FormFile extends Zend_Tool_Project_Context_Zf
     {
         return $this->_formName;
     }
-
+    
     public function getContents()
     {
-
+        
         $className = $this->getFullClassName($this->_formName, 'Form');
-
-        $codeGenFile = new Zend_CodeGenerator_Php_File(array(
+        
+        $codeGenFile = new \Zend\CodeGenerator\Php\PhpFile(array(
             'fileName' => $this->getPath(),
             'classes' => array(
-                new Zend_CodeGenerator_Php_Class(array(
+                new \Zend\CodeGenerator\Php\PhpClass(array(
                     'name' => $className,
-                    'extendedClass' => 'Zend_Form',
+                    'extendedClass' => '\Zend\Form\Form',
                     'methods' => array(
-                        new Zend_CodeGenerator_Php_Method(array(
+                        new \Zend\CodeGenerator\Php\PhpMethod(array(
                             'name' => 'init',
                             'body' => '/* Form Elements & Other Definitions Here ... */',
                             ))
                         )
-
+                
                     ))
                 )
             ));

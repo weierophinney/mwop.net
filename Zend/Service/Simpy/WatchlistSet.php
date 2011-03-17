@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -18,17 +17,13 @@
  * @subpackage Simpy
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id$
  */
 
-
 /**
- * @see Zend_Service_Simpy_Watchlist
- */
-require_once 'Zend/Service/Simpy/Watchlist.php';
-
-
-/**
+ * @uses       ArrayIterator
+ * @uses       DOMXPath
+ * @uses       IteratorAggregate
+ * @uses       Zend_Service_Simpy_Watchlist
  * @category   Zend
  * @package    Zend_Service
  * @subpackage Simpy
