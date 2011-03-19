@@ -1,0 +1,103 @@
+{
+    "production": {
+        "definitions": [
+            {
+                "class": "mwop\\Mvc\\Router",
+                "methods":[
+                    {
+                        "name": "addRoutes",
+                        "args": [
+                            {
+                                "blog-create-form": {
+                                    "params": [
+                                        "#^/(?P<controller>blog)/admin/(?P<action>create)#",
+                                        "/blog/admin/create"
+                                    ]
+                                },
+                                "blog": {
+                                    "params": [
+                                        "#^/(?P<controller>blog)(/(?P<id>[^/]+))?#",
+                                        "/blog/{id}"
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "class": "Mongo"
+            },
+            {
+                "class": "MongoDB",
+                "params": {
+                    "conn": {"__reference": "mongocxn"},
+                    "name": "mwoptest"
+                },
+                "param_map": {
+                    "conn": 0,
+                    "name": 1
+                }
+            },
+            {
+                "class": "MongoCollection",
+                "params": {
+                    "db": {"__reference": "mongodb"},
+                    "name": "entries"
+                },
+                "param_map": {
+                    "db": 0,
+                    "name": 1
+                }
+            },
+            {
+                "class": "mwop\\DataSource\\Mongo",
+                "params": {
+                    "options": {"__reference": "mongo-collection-entries"}
+                },
+                "param_map": {
+                    "options": 0
+                }
+            },
+            {
+                "class": "mwop\\Resource\\EntryResource",
+                "methods": [
+                    {
+                        "name": "setDataSource",
+                        "args": [ {"__reference" : "data-source"} ]
+                    },
+                    {
+                        "name": "setCollectionClass",
+                        "args": ["mwop\\Resource\\MongoCollection"]
+                    }
+                ]
+            },
+            {
+                "class": "Blog\\Controller\\Entry",
+                "methods": [
+                    {
+                        "name": "resource",
+                        "args": [{"__reference": "resource-entry"}]
+                    }
+                ]
+            }
+        ],
+        "aliases": {
+            "router": "mwop\\Mvc\\Router",
+            "mongocxn": "Mongo",
+            "mongodb": "MongoDB",
+            "mongo-collection-entries": "MongoCollection",
+            "data-source": "mwop\\DataSource\\Mongo",
+            "resource-entry": "mwop\\Resource\\EntryResource"
+        }
+    },
+    "staging": {
+        "_extends": "production"
+    },
+    "testing": {
+        "_extends": "production"
+    },
+    "development": {
+        "_extends": "production"
+    }
+}
