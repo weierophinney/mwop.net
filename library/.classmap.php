@@ -2651,6 +2651,7 @@ return array (
   'Zend\\Di\\DependencyReference' => __DIR__ . DIRECTORY_SEPARATOR . 'zf2-di/Zend/Di/DependencyReference.php',
   'Zend\\Di\\Method' => __DIR__ . DIRECTORY_SEPARATOR . 'zf2-di/Zend/Di/Method.php',
   'Zend\\Di\\DependencyInjection' => __DIR__ . DIRECTORY_SEPARATOR . 'zf2-di/Zend/Di/DependencyInjection.php',
+  'Zend\\Di\\ContainerBuilder' => __DIR__ . DIRECTORY_SEPARATOR . 'zf2-di/Zend/Di/ContainerBuilder.php',
   'Zend\\Di\\ServiceLocation' => __DIR__ . DIRECTORY_SEPARATOR . 'zf2-di/Zend/Di/ServiceLocation.php',
   'Zend\\Di\\DependencyEnabled' => __DIR__ . DIRECTORY_SEPARATOR . 'zf2-di/Zend/Di/DependencyEnabled.php',
   'Zend\\Di\\DependencyInjectionContainer' => __DIR__ . DIRECTORY_SEPARATOR . 'zf2-di/Zend/Di/DependencyInjectionContainer.php',
