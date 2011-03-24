@@ -2670,6 +2670,7 @@ return array (
   'Zend\\Http\\Request' => __DIR__ . DIRECTORY_SEPARATOR . 'Zend/Http/Request.php',
   'Zend\\Http\\RequestHeaders' => __DIR__ . DIRECTORY_SEPARATOR . 'Zend/Http/RequestHeaders.php',
   'Zend\\Http\\Parameters' => __DIR__ . DIRECTORY_SEPARATOR . 'Zend/Http/Parameters.php',
+  'Zend\\Di\\Exception\\RuntimeException' => __DIR__ . DIRECTORY_SEPARATOR . 'Zend/Di/Exception/RuntimeException.php',
   'Zend\\Stdlib\\Message' => __DIR__ . DIRECTORY_SEPARATOR . 'Zend/Stdlib/Message.php',
   'Zend\\Stdlib\\Request' => __DIR__ . DIRECTORY_SEPARATOR . 'Zend/Stdlib/Request.php',
   'Zend\\Stdlib\\Response' => __DIR__ . DIRECTORY_SEPARATOR . 'Zend/Stdlib/Response.php',

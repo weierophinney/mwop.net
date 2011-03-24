@@ -1,6 +1,7 @@
 mwop=/home/matthew/git/mwop CD=. filter="*.php *.xml *.txt" {
  application=application {
   .classmap.php
+  AppContext.php
   configs=configs {
    di.json
   }
@@ -91,6 +92,9 @@ mwop=/home/matthew/git/mwop CD=. filter="*.php *.xml *.txt" {
   cgi-bin=cgi-bin {
    php-5.3.3
   }
+ }
+ scripts=scripts {
+  createAppContext.php
  }
  tests=tests CD=. {
   Bootstrap.php

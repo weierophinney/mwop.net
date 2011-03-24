@@ -8,21 +8,13 @@ $classmap->register();
 
 require_once __DIR__ . '/../library/Phly/Mustache/_autoload.php';
 
-use mwop\Controller\Front as FrontController,
-    Zend\Config\Json as JsonConfig,
-    Zend\Di\DependencyInjectionContainer as DiC,
-    Zend\Di\Configuration as DiConfig;
+use mwop\Controller\Front as FrontController;
 
-$di = new DiC();
-$injector = $di->getInjector();
-$diconfig = new DiConfig($injector);
-$config   = new JsonConfig(__DIR__ . '/../application/configs/di.json', 'development');
-$diconfig->fromConfig($config);
-
-$front = new mwop\Controller\Front($di);
+$app   = new AppContext();
+$front = new mwop\Controller\Front($app);
 $front->addControllerMap('blog', 'Blog\Controller\Entry');
 
-$router = $di->get('router');
+$router = $app->get('router');
 
 $view = new Phly\Mustache\Mustache();
 $view->setTemplatePath(__DIR__ . '/../application/views');
