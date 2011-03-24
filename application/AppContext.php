@@ -45,7 +45,7 @@ class AppContext extends DependencyInjectionContainer
             return $this->services['mwop\Mvc\Router'];
         }
         
-        $object = new mwop\Mvc\Router();
+        $object = new \mwop\Mvc\Router();
         $object->addRoutes(array (
           'blog-create-form' => 
           array (
@@ -74,7 +74,7 @@ class AppContext extends DependencyInjectionContainer
             return $this->services['Mongo'];
         }
         
-        $object = new Mongo();
+        $object = new \Mongo();
         $this->services['Mongo'] = $object;
         return $object;
     }
@@ -85,7 +85,7 @@ class AppContext extends DependencyInjectionContainer
             return $this->services['MongoDB'];
         }
         
-        $object = new MongoDB($this->getMongocxn(), 'mwoptest');
+        $object = new \MongoDB($this->getMongocxn(), 'mwoptest');
         $this->services['MongoDB'] = $object;
         return $object;
     }
@@ -96,7 +96,7 @@ class AppContext extends DependencyInjectionContainer
             return $this->services['MongoCollection'];
         }
         
-        $object = new MongoCollection($this->getMongoDB(), 'entries');
+        $object = new \MongoCollection($this->getMongoDB(), 'entries');
         $this->services['MongoCollection'] = $object;
         return $object;
     }
@@ -107,7 +107,7 @@ class AppContext extends DependencyInjectionContainer
             return $this->services['mwop\DataSource\Mongo'];
         }
         
-        $object = new mwop\DataSource\Mongo($this->getMongoCollectionEntries());
+        $object = new \mwop\DataSource\Mongo($this->getMongoCollectionEntries());
         $this->services['mwop\DataSource\Mongo'] = $object;
         return $object;
     }
@@ -118,7 +118,7 @@ class AppContext extends DependencyInjectionContainer
             return $this->services['mwop\Resource\EntryResource'];
         }
         
-        $object = new mwop\Resource\EntryResource();
+        $object = new \mwop\Resource\EntryResource();
         $object->setDataSource($this->getDataSource());
         $object->setCollectionClass('mwop\\Resource\\MongoCollection');
         $this->services['mwop\Resource\EntryResource'] = $object;
@@ -131,7 +131,7 @@ class AppContext extends DependencyInjectionContainer
             return $this->services['Blog\Controller\Entry'];
         }
         
-        $object = new Blog\Controller\Entry();
+        $object = new \Blog\Controller\Entry();
         $object->resource($this->getResourceEntry());
         $this->services['Blog\Controller\Entry'] = $object;
         return $object;
