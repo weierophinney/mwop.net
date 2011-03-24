@@ -42,7 +42,7 @@
             {
                 "class": "MongoCollection",
                 "params": {
-                    "db": {"__reference": "mongodb"},
+                    "db": {"__reference": "MongoDB"},
                     "name": "entries"
                 },
                 "param_map": {
@@ -85,7 +85,6 @@
         "aliases": {
             "router": "mwop\\Mvc\\Router",
             "mongocxn": "Mongo",
-            "mongodb": "MongoDB",
             "mongo-collection-entries": "MongoCollection",
             "data-source": "mwop\\DataSource\\Mongo",
             "resource-entry": "mwop\\Resource\\EntryResource"
