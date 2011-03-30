@@ -10,9 +10,23 @@ require_once __DIR__ . '/../library/Phly/Mustache/_autoload.php';
 
 use mwop\Controller\Front as FrontController;
 
+$events = Zend\EventManager\StaticEventManager::getInstance();
+
+/*
+$log = Zend\Log\Logger::factory(array(
+    'writer' => array(
+        'writerName'   => 'Stream',
+        'writerParams' => array(
+            'stream' => '/tmp/blog.log',
+        ),
+    )
+));
+ */
+
 $app   = new AppContext();
 $front = new mwop\Controller\Front($app);
-$front->addControllerMap('blog', 'Blog\Controller\Entry');
+$front->addControllerMap('blog', 'Blog\Controller\Entry')
+      ->addControllerMap('page', 'Site\Controller\Page');
 
 $router = $app->get('router');
 
@@ -21,7 +35,6 @@ $view->setTemplatePath(__DIR__ . '/../application/views');
 $view->getRenderer()->addPragma(new Phly\Mustache\Pragma\ImplicitIterator());
 $subViews = new Phly\Mustache\Pragma\SubViews($view);
 
-$events = Zend\EventManager\StaticEventManager::getInstance();
 $events->attach('mwop\Controller\Restful', 'dispatch.post', function($e) use ($view, $router) {
     $request    = $e->getParam('request');
     $response   = $e->getParam('response');
@@ -65,6 +78,20 @@ $events->attach('mwop\Controller\Restful', 'dispatch.post', function($e) use ($v
             break;
     }
     $subView = new Phly\Mustache\Pragma\SubView($template, $params);
+    $response->setContent($view->render('layout', array('content' => $subView)));
+});
+
+$events->attach('Site\Controller\Page', 'dispatch.post', function($e) use ($view, $router) {
+    $request    = $e->getParam('request');
+    $response   = $e->getParam('response');
+    $page       = $e->getParam('__RESULT__');
+    $template   = 'pages/' . $page;
+
+    if (404 == $page) {
+        $response->getHeaders()->setStatusCode(404);
+    }
+
+    $subView = new Phly\Mustache\Pragma\SubView($template);
     $response->setContent($view->render('layout', array('content' => $subView)));
 });
 

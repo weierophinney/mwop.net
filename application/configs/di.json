@@ -8,6 +8,20 @@
                         "name": "addRoutes",
                         "args": [
                             {
+                                "home": {
+                                    "class": "mwop\\Mvc\\Router\\StaticRoute",
+                                    "params": [
+                                        "/",
+                                        {"controller": "page", "page": "home"}
+                                    ]
+                                },
+                                "comics": {
+                                    "class": "mwop\\Mvc\\Router\\StaticRoute",
+                                    "params": [
+                                        "/comics",
+                                        {"controller": "page", "page": "comics"}
+                                    ]
+                                },
                                 "blog-create-form": {
                                     "params": [
                                         "#^/(?P<controller>blog)/admin/(?P<action>create)#",

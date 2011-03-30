@@ -47,6 +47,32 @@ class AppContext extends DependencyInjectionContainer
         
         $object = new \mwop\Mvc\Router();
         $object->addRoutes(array (
+          'home' => 
+          array (
+            'class' => 'mwop\\Mvc\\Router\\StaticRoute',
+            'params' => 
+            array (
+              0 => '/',
+              1 => 
+              array (
+                'controller' => 'page',
+                'page' => 'home',
+              ),
+            ),
+          ),
+          'comics' => 
+          array (
+            'class' => 'mwop\\Mvc\\Router\\StaticRoute',
+            'params' => 
+            array (
+              0 => '/comics',
+              1 => 
+              array (
+                'controller' => 'page',
+                'page' => 'comics',
+              ),
+            ),
+          ),
           'blog-create-form' => 
           array (
             'params' => 

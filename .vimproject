@@ -10,6 +10,11 @@ mwop=/home/matthew/git/mwop CD=. filter="*.php *.xml *.txt" {
     Entry.php
    }
   }
+  Site=Site {
+   Controller=Controller {
+    Page.php
+   }
+  }
   views=views {
    layout.mustache
    blog=blog {
@@ -18,6 +23,11 @@ mwop=/home/matthew/git/mwop CD=. filter="*.php *.xml *.txt" {
     entity.mustache
     form.mustache
     list.mustache
+   }
+   pages=pages {
+    404.mustache
+    comics.mustache
+    home.mustache
    }
   }
  }
@@ -63,6 +73,7 @@ mwop=/home/matthew/git/mwop CD=. filter="*.php *.xml *.txt" {
     }
     Router=Router {
      RegexRoute.php
+     StaticRoute.php
     }
    }
    Resource=Resource {
