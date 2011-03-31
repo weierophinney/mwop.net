@@ -75,10 +75,15 @@ class AppContext extends DependencyInjectionContainer
           ),
           'blog-create-form' => 
           array (
+            'class' => 'mwop\\Mvc\\Router\\StaticRoute',
             'params' => 
             array (
-              0 => '#^/(?P<controller>blog)/admin/(?P<action>create)#',
-              1 => '/blog/admin/create',
+              0 => '/blog/admin/create',
+              1 => 
+              array (
+                'controller' => 'blog',
+                'action' => 'create',
+              ),
             ),
           ),
           'blog' => 

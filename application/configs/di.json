@@ -23,9 +23,10 @@
                                     ]
                                 },
                                 "blog-create-form": {
+                                    "class": "mwop\\Mvc\\Router\\StaticRoute",
                                     "params": [
-                                        "#^/(?P<controller>blog)/admin/(?P<action>create)#",
-                                        "/blog/admin/create"
+                                        "/blog/admin/create",
+                                        {"controller": "blog", "action": "create"}
                                     ]
                                 },
                                 "blog": {
