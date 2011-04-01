@@ -21,6 +21,7 @@ mwop=/home/matthew/git/mwop CD=. filter="*.php *.xml *.txt" {
   }
   views=views filter="*.mustache" {
    layout.mustache
+   mobile.mustache
    paginator.mustache
    blog=blog {
     entity-short.mustache

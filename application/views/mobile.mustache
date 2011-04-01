@@ -1,0 +1,26 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+
+    <title>Blog Experiment</title>
+
+    <link href="http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojox/mobile/themes/{{theme}}" rel="stylesheet"></link>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojo/dojo.xd.js"
+        djConfig="isDebug:true, parseOnLoad:true"></script> 
+    <script language="JavaScript">
+    // Load the widget parser
+    dojo.require("dojox.mobile.parser");
+    // Load the base lib
+    dojo.require("dojox.mobile"); 
+    // If not a WebKit-based client, load compat
+    dojo.requireIf(!dojo.isWebKit, "dojox.mobile.compat")
+    </script>
+</head>
+<body>
+    {{content}}
+</body>
+</html>
+
