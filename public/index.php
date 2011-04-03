@@ -68,7 +68,7 @@ $events->attach('mwop\Controller\Restful', 'dispatch.post', function($e) use ($v
             break;
         case 'update':
             $template .= 'entity';
-            $params['updated'] = true;
+            $params['entity_updated'] = true;
             break;
         case 'delete':
             $response->getHeaders()->setStatusCode(204);

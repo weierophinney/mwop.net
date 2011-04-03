@@ -18,12 +18,22 @@ abstract class Restful implements Dispatchable
     protected $response;
     protected $events;
     protected $resource;
+    protected $views = array();
 
     abstract public function resource(Resource $resource = null);
 
     public function getList()
     {
-        $entities = $this->resource()->getAll()->toArray();
+        $entities = $this->resource()->getAll();
+        if (isset($this->views[__FUNCTION__])) {
+            $view = $this->views[__FUNCTION__];
+            return new $view(array(
+                'entities' => $entities,
+                'request'  => $this->getRequest(),
+            ));
+        }
+
+        $entities = $entities->toArray();
         return array( 
             'entities' => array_values($entities),
         );
@@ -31,8 +41,16 @@ abstract class Restful implements Dispatchable
 
     public function get($id)
     {
+        $entity = $this->resource()->get($id);
+        if (isset($this->views[__FUNCTION__])) {
+            $view = $this->views[__FUNCTION__];
+            return new $view(array(
+                'entity'  => $entity,
+                'request' => $this->getRequest(),
+            ));
+        }
         return array(
-            'entity' => $this->resource()->get($id)->toArray(),
+            'entity' => $entity->toArray(),
         );
     }
 

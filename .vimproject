@@ -9,17 +9,21 @@ mwop=/home/matthew/git/mwop CD=. filter="*.php *.xml *.txt" {
    Controller=Controller {
     Entry.php
    }
+   View=View {
+    Entries.php
+    Entry.php
+   }
   }
   Site=Site {
    Controller=Controller {
     Page.php
    }
   }
-  views=views {
+  views=views filter="*.mustache" {
    layout.mustache
+   paginator.mustache
    blog=blog {
-    create.mustache
-    delete.mustache
+    entity-short.mustache
     entity.mustache
     form.mustache
     list.mustache
@@ -106,6 +110,7 @@ mwop=/home/matthew/git/mwop CD=. filter="*.php *.xml *.txt" {
  }
  scripts=scripts {
   createAppContext.php
+  importFromS9y.php
  }
  tests=tests CD=. {
   Bootstrap.php

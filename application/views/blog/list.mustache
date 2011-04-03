@@ -1,10 +1,11 @@
+{{%IMPLICIT-ITERATOR}}
+{{%SUB-VIEWS}}
 <h2>Entries</h2>
 <div class="content">
     <ul class="entity_list">
     {{#entities}}
-    <li><h4><a href="/blog/{{id}}">{{title}}</a></h4>
-        <div class="body">{{{body}}}</div>
-    </li>
+    <li>{{> blog/entity-short}}</li>
     {{/entities}}
     </ul>
 </div>
+{{paginator}}

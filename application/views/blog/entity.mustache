@@ -1,7 +1,6 @@
-{{#updated}}
-<h2>Content updated</h2>
-{{/updated}}
-{{#entity}}
+{{#entity_updated}}
+<h2>Entry updated</h2>
+{{/entity_updated}}
 <div class="blog">
     <h2>{{title}}</h2>
     <h3 class="date">{{created}}</h3>
@@ -12,8 +11,6 @@
     <div class="metadata">
         Posted by <a href="/blog/author/{{author}}">{{author}}</a> at {{created}} | 
         Defined tags for this entry: 
-        {{%IMPLICIT-ITERATOR}}
-        <span class="tags">{{#tags}}<a href="/blog/tag/{{.}}">{{.}}</a>{{/tags}}</span>
+        <span class="tags">{{{tags}}}</span>
     </div>
 </div>
-{{/entity}}

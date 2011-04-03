@@ -22,6 +22,7 @@ class Entry implements EntityDefinition
      * created
      * updated
      * tags (array)
+     * metadata (array)
      */
     protected $id;
     protected $title;
@@ -34,6 +35,7 @@ class Entry implements EntityDefinition
     protected $updated;
     protected $timezone = 'America/New_York';
     protected $tags = array();
+    protected $metadata = array();
     protected $comments = array();
     protected $version = 2;
 
@@ -389,6 +391,70 @@ class Entry implements EntityDefinition
     }
 
     /**
+     * Set metadata
+     * 
+     * @param  array $metadata 
+     * @return Entry
+     */
+    public function setMetadata($metadata, $value = null) 
+    {
+        if (is_array($metadata)) {
+            array_merge($this->metadata, $metadata);
+        } elseif (is_scalar($metadata)) {
+            $this->metadata[$metadata] = $value;
+        }
+        return $this;
+    }
+
+    /**
+     * Get individual metadata or the entire set
+     * 
+     * @param  null|scalar $metadata 
+     * @param  mixed $default 
+     * @return mixed
+     */
+    public function getMetadata($metadata = null, $default = null)
+    {
+        if (null !== $metadata) {
+            if (isset($this->metadata[$metadata])) {
+                return $this->metadata[$metadata];
+            }
+            return $default;
+        }
+        return $this->metadata;
+    }
+
+    /**
+     * Does the specific metadata exist?
+     * 
+     * @param  scalar $metadata 
+     * @return bool
+     */
+    public function hasMetadata($metadata)
+    {
+        return (isset($this->metadata[$metadata]));
+    }
+
+    /**
+     * Remove a single metadatum
+     * 
+     * @param  null|scalar $key 
+     * @return bool
+     */
+    public function removeMetadata($key = null)
+    {
+        if (null === $key) {
+            $this->metadata = array();
+            return true;
+        }
+        if (is_scalar($key) && isset($this->metadata[$key])) {
+            unset($this->metadata[$key]);
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Set comments
      *
      * Only relevant to version 1 entries (imported from s9y).
@@ -461,6 +527,7 @@ class Entry implements EntityDefinition
             'updated'   => $this->getUpdated(),
             'timezone'  => $this->getTimezone(),
             'tags'      => $this->getTags(),
+            'metadata'  => $this->getMetadata(),
             'version'   => $this->getVersion(),
         );
         if (1 == $this->getVersion()) {
@@ -488,6 +555,7 @@ class Entry implements EntityDefinition
                 case 'updated':
                 case 'timezone':
                 case 'tags':
+                case 'metadata':
                 case 'comments':
                 case 'version':
                     $method = 'set' . ucfirst($key);
@@ -500,7 +568,8 @@ class Entry implements EntityDefinition
                     $this->setPublic($value);
                     break;
                 default:
-                    // ignore unknown data
+                    // Unknown data is assumed to be metadata
+                    $this->setMetadata($key, $value);
                     break;
             }
         }

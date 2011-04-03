@@ -9,6 +9,11 @@ use mwop\Controller\Restful as RestfulController,
 
 class Entry extends RestfulController
 {
+    protected $views = array(
+        'getList' => 'Blog\View\Entries',
+        'get'     => 'Blog\View\Entry',
+    );
+
     public function resource(Resource $resource = null)
     {
         if (null !== $resource) {
