@@ -21,8 +21,11 @@ class EntryResource extends AbstractResource
         }
 
         $query = $this->getQuery();
-        $query->where('created', '<=', $_SERVER['REQUEST_TIME'])
-              ->limit($limit, $offset);
+        $query->where('created', '<=', $_SERVER['REQUEST_TIME']);
+        if ($limit) {
+            $query->limit($limit, $offset);
+        }
+
         $entries = $this->getDataSource()->query($query);
         $collection = new $this->collectionClass($entries, $this->entityClass);
 

@@ -1,7 +1,8 @@
 <?php
 namespace Blog\Controller;
 
-use mwop\Controller\Restful as RestfulController,
+use Blog\View\Entries as EntriesView,
+    mwop\Controller\Restful as RestfulController,
     mwop\DataSource\Mongo as MongoDataSource,
     mwop\Stdlib\Resource,
     mwop\Resource\EntryResource,
@@ -23,6 +24,15 @@ class Entry extends RestfulController
             $this->resource = $resource;
         }
         return $this->resource;
+    }
+
+    public function getList()
+    {
+        $entries = $this->resource()->getEntries(0, false);
+        return new EntriesView(array(
+            'entities' => $entries,
+            'request'  => $this->getRequest(),
+        ));
     }
 
     public function createAction()
