@@ -3,6 +3,7 @@ namespace Blog\View;
 
 use Zend\Paginator\Paginator,
     Zend\Paginator\Adapter\Iterator as IteratorPaginator,
+    Zend\Tag\Cloud as TagCloud,
     Phly\Mustache\Pragma\SubView;
 
 class Entries
@@ -26,6 +27,24 @@ class Entries
 
         $this->entries = $entities;
         $this->request = $request;
+
+        if (isset($values['sidebar']) && isset($values['sidebar']['cloud'])) {
+            foreach ($values['sidebar']['cloud'] as $key => $tag) {
+                $values['sidebar']['cloud'][$key]['params'] = array(
+                    'url' => '/blog/tag/' . $tag,
+                );
+            }
+            $cloud = new TagCloud(array(
+                'tags' => $values['sidebar']['cloud'],
+            ));
+            unset($values['sidebar']['cloud']);
+            $values['sidebar']['cloud'] = function() use ($cloud) {
+                return array('content' => $cloud->render());
+            };
+        }
+        if (isset($values['sidebar'])) {
+            $this->sidebar = $values['sidebar'];
+        }
     }
 
     public function entities()

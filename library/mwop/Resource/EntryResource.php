@@ -4,7 +4,8 @@ namespace mwop\Resource;
 use mwop\DataSource\Query,
     mwop\Stdlib\ResourceCollection,
     DateTime,
-    DateInterval;
+    DateInterval,
+    MongoCode;
 
 class EntryResource extends AbstractResource
 {
@@ -138,6 +139,73 @@ class EntryResource extends AbstractResource
         $this->events()->trigger(__FUNCTION__ . '.post', $this, $params);
 
         return $collection;
+    }
+
+    public function getTagCloud()
+    {
+        $params  = array();
+        $results = $this->events()->triggerUntil(__FUNCTION__ . '.pre', $this, $params, function($result) {
+            return ($result instanceof ResourceCollection);
+        });
+        if ($results->stopped()) {
+            return $results->last();
+        }
+
+        $dataSource = $this->getDataSource();
+        switch (get_class($dataSource)) {
+            case 'mwop\DataSource\Mongo':
+                $data = $this->getTagCloudFromMongo($dataSource);
+                break;
+            default:
+                $data = array();
+                break;
+        }
+
+        $params['__RESULT__'] = $data;
+        $this->events()->trigger(__FUNCTION__ . '.post', $this, $params);
+
+        return $data;
+    }
+
+    protected function getTagCloudFromMongo($ds)
+    {
+        $db = $ds->getConnection()->db;
+        $map = new MongoCode("function() { 
+    if (!this.tags) {
+        return;
+    }
+
+    for (index in this.tags) {
+        emit(this.tags[index], 1);
+    }
+}");
+
+        $reduce = new MongoCode("function(previous, current) {
+    var count = 0;
+
+    for (index in current) {
+        count += current[index];
+    }
+
+    return count;
+}");
+
+        $result = $db->command(array(
+            "mapreduce" => "entries", 
+            "map"       => $map, 
+            "reduce"    => $reduce, 
+            "out"       => array("inline" => 1),
+        ));
+        $results = $db->selectCollection($result['result'])->find();
+
+        $tags = array();
+        foreach ($results as $tag) {
+            $tags[] = array(
+                'title'  => $tag['_id'],
+                'weight' => $tag['value'],
+            );
+        }
+        return $tags;
     }
 
     protected function getQuery()

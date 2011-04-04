@@ -1,5 +1,7 @@
 {{!form}}
 {{%IMPLICIT-ITERATOR}}
+<div class="grid_9 admin content">
+<h2>Create blog entry</h2>
 <form class="blog" action="{{url}}" method="post">
 <dl>
     <dt><label for="title">Title</label></dt>
@@ -44,3 +46,8 @@
 </dl>
 <input name="save" type="submit" value="Save" />
 </form>
+</div>
+
+<div class="grid_3 admin sidebar">
+    <h4>Admin Sidebar</h4>
+</div>

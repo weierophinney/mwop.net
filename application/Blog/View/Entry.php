@@ -13,16 +13,37 @@ class Entry
         }
         $entry = $data['entity'];
 
-        $this->entry = $entry;
-        $this->id    = $entry->getId();
-        $this->title = $entry->getTitle();
-        $this->body = $entry->getBody();
+        $this->entry    = $entry;
+        $this->id       = $entry->getId();
+        $this->title    = $entry->getTitle();
+        $this->body     = $entry->getBody();
         $this->extended = $entry->getExtended();
-        $this->author = $entry->getAuthor();
+        $this->author   = $entry->getAuthor();
 
         if (isset($data['request'])) {
             $this->request = $data['request'];
         }
+
+        $requires =<<<EOJ
+        dojo.require("dojox.highlight");
+        dojo.require("dojox.highlight.languages._all");
+        dojo.require("dojox.highlight.languages.pygments.css");
+        dojo.addOnLoad(function() {
+            dojo.query("code").forEach(dojox.highlight.init);
+        });
+EOJ;
+
+        $this->layout = array(
+            'js' => array(
+                'source' => array(
+                    array('code' => $requires),
+                )
+            ),
+            'css' => array(
+                array('url' => 'http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojox/highlight/resources/highlight.css'),
+                array('url' => 'http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojox/highlight/resources/pygments/autumn.css'),
+            ),
+        );
     }
 
     public function created()
@@ -44,6 +65,7 @@ class Entry
         }
         return implode('&nbsp;|&nbsp;', $tags);
     }
+
 
     protected function getDateString($ts)
     {

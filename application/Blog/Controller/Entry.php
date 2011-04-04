@@ -31,6 +31,9 @@ class Entry extends RestfulController
         $entries = $this->resource()->getEntries(0, false);
         return new EntriesView(array(
             'entities' => $entries,
+            'sidebar'  => array(
+                'cloud' => $this->resource()->getTagCloud(),
+            ),
             'request'  => $this->getRequest(),
         ));
     }

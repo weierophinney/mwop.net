@@ -77,8 +77,27 @@ $events->attach('mwop\Controller\Restful', 'dispatch.post', function($e) use ($v
         default:
             break;
     }
-    $subView = new Phly\Mustache\Pragma\SubView($template, $params);
-    $response->setContent($view->render('layout', array('content' => $subView)));
+
+    if ($request->isXmlHttpRequest()) {
+        $response->setContent($view->render($template, $params));
+    } else {
+        $subView = new Phly\Mustache\Pragma\SubView($template, $params);
+
+        if (is_array($params) && isset($params['layout'])) {
+            $params = array(
+                'layout'  => $params['layout'],
+                'content' => $subView,
+            );
+        } elseif (is_object($params) && isset($params->layout)) {
+            $params = array(
+                'layout'  => $params->layout,
+                'content' => $subView,
+            );
+        } else {
+            $params = array('content' => $subView);
+        }
+        $response->setContent($view->render('layout', $params));
+    }
 });
 
 $events->attach('Site\Controller\Page', 'dispatch.post', function($e) use ($view, $router) {
@@ -91,8 +110,25 @@ $events->attach('Site\Controller\Page', 'dispatch.post', function($e) use ($view
         $response->getHeaders()->setStatusCode(404);
     }
 
-    $subView = new Phly\Mustache\Pragma\SubView($template);
-    $response->setContent($view->render('layout', array('content' => $subView)));
+    if ($request->isXmlHttpRequest()) {
+        $response->setContent($view->render($template));
+    } else {
+        $subView = new Phly\Mustache\Pragma\SubView($template);
+        $response->setContent($view->render('layout', array('content' => $subView)));
+    }
+});
+
+$front->setNotFoundHandler(function($request, $response) use ($view) {
+    $response->getHeaders()->setStatusCode(404);
+
+    $template = 'pages/404';
+
+    if ($request->isXmlHttpRequest()) {
+        $response->setContent($view->render($template));
+    } else {
+        $subView = new Phly\Mustache\Pragma\SubView($template);
+        $response->setContent($view->render('layout', array('content' => $subView)));
+    }
 });
 
 $request  = new Zend\Http\Request();

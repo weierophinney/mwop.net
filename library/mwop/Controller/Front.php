@@ -19,6 +19,7 @@ class Front implements Dispatchable
     protected $response;
     protected $router;
     protected $services;
+    protected $notFoundHandler = 'static::prepare404';
 
     public function __construct(ServiceLocation $services)
     {
@@ -84,6 +85,15 @@ class Front implements Dispatchable
         return $this;
     }
 
+    public function setNotFoundHandler($callback)
+    {
+        if (!is_callable($callback)) {
+            throw new \InvalidArgumentException('Invalid callback provided for 404 handler');
+        }
+        $this->notFoundHandler = $callback;
+        return $this;
+    }
+
     public function dispatch(Request $request, Response $response = null)
     {
         if (null !== $response) {
@@ -104,7 +114,7 @@ class Front implements Dispatchable
         }
 
         if (!$result = $this->router()->match($request)) {
-            $this->prepare404();
+            call_user_func($this->notFoundHandler, $request, $response);
             return $response;
         }
         $request->setMetadata($result);
@@ -117,12 +127,12 @@ class Front implements Dispatchable
         }
 
         if (!$controller = $request->getMetadata('controller', false)) {
-            $this->prepare404();
+            call_user_func($this->notFoundHandler, $request, $response);
             return $response;
         }
 
         if (!isset($this->controllerMap[$controller])) {
-            $this->prepare404();
+            call_user_func($this->notFoundHandler, $request, $response);
             return $response;
         }
 
@@ -158,9 +168,8 @@ class Front implements Dispatchable
         return $response;
     }
 
-    public function prepare404()
+    public static function prepare404(Request $request, Response $response)
     {
-        $response = $this->response();
         $response->getHeaders()->setStatusCode(404);
         $response->setContent('<h1>Not Found</h1>');
     }

@@ -1,11 +1,25 @@
 {{%IMPLICIT-ITERATOR}}
 {{%SUB-VIEWS}}
-<h2>Entries</h2>
-<div class="content">
+<div class="grid_9 content">
+    <h2>Entries</h2>
+
     <ul class="entity_list">
     {{#entities}}
     <li>{{> blog/entity-short}}</li>
     {{/entities}}
     </ul>
+
+    {{paginator}}
 </div>
-{{paginator}}
+
+<div class="grid_3 sidebar">
+    {{#sidebar}}
+    {{#cloud}}
+    <div class="cloud">
+        <h4>Tags</h4>
+        {{{content}}}
+    </div>
+    {{/cloud}}
+
+    {{/sidebar}}
+</div>

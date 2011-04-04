@@ -105,6 +105,12 @@ mwop=/home/matthew/git/mwop CD=. filter="*.php *.xml *.txt" {
   .htaccess
   index.php
   test.html
+  css=css filter="*.css" {
+   960.css
+   reset.css
+   site.css
+   text.css
+  }
   cgi-bin=cgi-bin {
    php-5.3.3
   }
