@@ -2,10 +2,12 @@
 namespace Blog\Controller;
 
 use Blog\View\Entries as EntriesView,
+    Blog\View\TagCloud,
     mwop\Controller\Restful as RestfulController,
     mwop\DataSource\Mongo as MongoDataSource,
     mwop\Stdlib\Resource,
     mwop\Resource\EntryResource,
+    Phly\Mustache\Pragma\SubView,
     Mongo;
 
 class Entry extends RestfulController
@@ -14,6 +16,48 @@ class Entry extends RestfulController
         'getList' => 'Blog\View\Entries',
         'get'     => 'Blog\View\Entry',
     );
+
+    public function __construct()
+    {
+        $this->events()->attach('dispatch.post', function($e) {
+            $view       = $e->getParam('__RESULT__');
+            $controller = $e->getTarget();
+            $tags       = $controller->resource()->getTagCloud();
+            $subView    = new SubView('tag-cloud', new TagCloud($tags));
+
+            if (is_array($view)) {
+                if (isset($view[ 'layout' ])) {
+                    if (is_array($view[ 'layout' ])) {
+                        $view[ 'layout' ]['footer']['tags']['cloud'] = $subView;
+                    }
+                } else {
+                    $view[ 'layout' ] = array(
+                        'footer' => array(
+                            'tags' => array(
+                                'cloud' => $subView,
+                            ),
+                        ),
+                    );
+                }
+            } elseif (is_object($view)) {
+                if (isset($view->layout)) {
+                    if (is_array($view->layout)) {
+                        $view->layout['footer']['tags']['cloud'] = $subView;
+                    }
+                } else {
+                    $view->layout = array(
+                        'footer' => array(
+                            'tags' => array(
+                                'cloud' => $subView,
+                            ),
+                        ),
+                    );
+                }
+            }
+
+            $e->setParam('__RESULT__', $view);
+        });
+    }
 
     public function resource(Resource $resource = null)
     {

@@ -12,6 +12,7 @@ mwop=/home/matthew/git/mwop CD=. filter="*.php *.xml *.txt" {
    View=View {
     Entries.php
     Entry.php
+    TagCloud.php
    }
   }
   Site=Site {
@@ -23,6 +24,7 @@ mwop=/home/matthew/git/mwop CD=. filter="*.php *.xml *.txt" {
    layout.mustache
    mobile.mustache
    paginator.mustache
+   tag-cloud.mustache
    blog=blog {
     entity-short.mustache
     entity.mustache

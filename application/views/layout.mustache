@@ -30,9 +30,14 @@
     {{content}}
     <div class="clear"></div>
 
-    <div class="grid_4 about">About</div>
-    <div class="grid_4 projects">Projects</div>
-    <div class="grid_4 tags">Tags</div>
+    <div class="grid_4 footer about">About</div>
+    <div class="grid_4 footer projects">Projects</div>
+    <div class="grid_4 footer tags">
+        {{#layout}}{{#footer}}{{#tags}}
+        <h4>Tag Cloud</h4>
+        {{cloud}}
+        {{/tags}}{{/footer}}{{/layout}}
+    </div>
     <div class="clear"></div>
 </div>
 </body>

@@ -159,6 +159,7 @@ abstract class Restful implements Dispatchable
         // - return from method, request, response
         // If a handler returns a response object, return it immediately
         $params['__RESULT__'] = $return;
+        $params = $this->events()->prepareArgs($params);
         $result = $this->events()->triggerUntil(__FUNCTION__ . '.post', $this, $params, function($result) {
             return ($result instanceof Response);
         });
@@ -166,7 +167,7 @@ abstract class Restful implements Dispatchable
             return $result->last();
         }
 
-        return $return;
+        return $params['__RESULT__'];
     }
 
     /**
