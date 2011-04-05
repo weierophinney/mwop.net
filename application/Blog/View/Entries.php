@@ -27,6 +27,7 @@ class Entries
 
         $this->entries = $entities;
         $this->request = $request;
+        $this->layout  = new Layout();
     }
 
     public function entities()

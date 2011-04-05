@@ -24,26 +24,7 @@ class Entry
             $this->request = $data['request'];
         }
 
-        $requires =<<<EOJ
-        dojo.require("dojox.highlight");
-        dojo.require("dojox.highlight.languages._all");
-        dojo.require("dojox.highlight.languages.pygments.css");
-        dojo.addOnLoad(function() {
-            dojo.query("code").forEach(dojox.highlight.init);
-        });
-EOJ;
-
-        $this->layout = array(
-            'js' => array(
-                'source' => array(
-                    array('code' => $requires),
-                )
-            ),
-            'css' => array(
-                array('url' => 'http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojox/highlight/resources/highlight.css'),
-                array('url' => 'http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojox/highlight/resources/pygments/autumn.css'),
-            ),
-        );
+        $this->layout = new Layout();
     }
 
     public function created()

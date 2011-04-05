@@ -43,6 +43,12 @@ class Entry extends RestfulController
                 if (isset($view->layout)) {
                     if (is_array($view->layout)) {
                         $view->layout['footer']['tags']['cloud'] = $subView;
+                    } elseif (is_object($view->layout)) {
+                        if (isset($view->layout->footer)) {
+                            $view->layout->footer['tags']['cloud'] = $subView;
+                        } else {
+                            $view->layout->footer = array('tags' => array('cloud' => $subView));
+                        }
                     }
                 } else {
                     $view->layout = array(

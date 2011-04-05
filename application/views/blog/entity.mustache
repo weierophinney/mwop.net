@@ -3,18 +3,22 @@
 <h2 class="notification">Entry updated</h2>
 {{/entity_updated}}
 <h2>{{title}}</h2>
-<h3 class="date">{{created}}</h3>
 <div class="content">
     {{{body}}}
     {{{extended}}}
 </div>
-<div class="metadata">
-    Posted by <a href="/blog/author/{{author}}">{{author}}</a> at {{created}} | 
-    Defined tags for this entry: 
-    <span class="tags">{{{tags}}}</span>
-</div>
 </div>
 
 <div class="grid_3 sidebar blog">
-    <h4>Sidebar</h4>
+    <div class="metadata">
+        <p>
+            Posted by <a href="/blog/author/{{author}}">{{author}}</a> on
+            <b>{{created}}</b> and last updated on <b>{{updated}}</b>.
+        </p>
+
+        <p>
+            Defined tags for this entry: 
+            <span class="tags">{{{tags}}}</span>
+        </p>
+    </div>
 </div>

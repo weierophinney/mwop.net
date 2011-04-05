@@ -13,6 +13,7 @@ mwop=/home/matthew/git/mwop CD=. filter="*.php *.xml *.txt" {
     Entries.php
     Entry.php
     TagCloud.php
+    Layout.php
    }
   }
   Site=Site {
