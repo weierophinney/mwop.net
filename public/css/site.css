@@ -27,7 +27,7 @@ h1, h2, h3, h4 {
     background-color: #000033;
 }
 
-.header, .content, .sidebar, .footer1, .footer2 {
+.content, .sidebar {
     background-color: #FFFFFF;
     padding: 1em 0;
 }
@@ -43,10 +43,6 @@ h1, h2, h3, h4 {
 
 .content {
     overflow: auto;
-}
-
-.footer1, .footer2 {
-    text-align: center;
 }
 
 .content h2, .content p, .content dl {
@@ -88,7 +84,7 @@ body {
     margin: 0;
 }
 
-.footer h4 {
+#footer h4 {
     font-size: 1.5em;
     text-align: center;
 }
@@ -107,4 +103,60 @@ div.example {
     -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#000000')";
     /* For IE 5.5 - 7 */
     filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#000000');
+}
+
+.blog .metadata {
+    background-color: #F3F3F3;
+    padding: 3px;
+    margin: 1em;
+    border: 1px solid #000;
+    overflow: auto;
+    -moz-box-shadow: 3px 3px 4px #000;
+    -webkit-box-shadow: 3px 3px 4px #000;
+    box-shadow: 3px 3px 4px #000;
+    /* For IE 8 */
+    -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#000000')";
+    /* For IE 5.5 - 7 */
+    filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#000000');
+}
+
+.blog .metadata li {
+    padding-left: 0;
+    margin-left: 0;
+}
+
+#header {
+    margin-bottom: 1em;
+    padding-bottom: 0.5em;
+    border-bottom: 1px dotted #676767;
+}
+
+#header .main_title {
+    font-family: Cardo;
+    font-size: 1.8em;
+    font-style: oblique;
+    text-align: top;
+}
+
+#footer {
+    border-top: 1px dotted #676767;
+    border-left: 1px dotted #676767;
+    border-right: 1px dotted #676767;
+    background-color: #94FFDD;
+    /* padding-top: 1em; */
+}
+
+#footer .about {
+    border-right: 1px dotted #676767;
+    padding-right: 1em;
+}
+
+#footer .projects {
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+#footer .tags {
+    border-left: 1px dotted #676767;
+    padding-left: 1em;
 }

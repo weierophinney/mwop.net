@@ -23,21 +23,30 @@
 </head>
 <body>
 <div class="container_12">
-    <div class="grid_12 header">header</div>
+    <div class="grid_12" id="header">
+        <a href="/"><img src="/images/logo.gif" height="37" width="37"/></a>
+        <span class="main_title">phly, boy, phly: matthew weier o'phinney</span>
+    </div>
     <div class="clear"></div>
 
     {{content}}
     <div class="clear"></div>
 
-    <div class="grid_4 footer about">About</div>
-    <div class="grid_4 footer projects">Projects</div>
-    <div class="grid_4 footer tags">
-        {{#layout}}{{#footer}}{{#tags}}
-        <h4>Tag Cloud</h4>
-        {{cloud}}
-        {{/tags}}{{/footer}}{{/layout}}
+    <div class="grid_12" id="footer">
+        <div class="grid_4 about">
+            <h4>About</h4>
+        </div>
+        <div class="grid_4 projects">
+            <h4>Projects</h4>
+        </div>
+        {{! making this grid_3 to correct overflow issue }}
+        <div class="grid_3 tags">
+            {{#layout}}{{#footer}}{{#tags}}
+            <h4>Tag Cloud</h4>
+            {{cloud}}
+            {{/tags}}{{/footer}}{{/layout}}
+        </div>
     </div>
-    <div class="clear"></div>
 </div>
 </body>
 </html>

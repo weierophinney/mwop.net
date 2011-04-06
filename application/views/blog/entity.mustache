@@ -11,14 +11,15 @@
 
 <div class="grid_3 sidebar blog">
     <div class="metadata">
-        <p>
-            Posted by <a href="/blog/author/{{author}}">{{author}}</a> on
-            <b>{{created}}</b> and last updated on <b>{{updated}}</b>.
-        </p>
+        <ul>
+            <li>Posted by <a href="/blog/author/{{author}}">{{author}}</a>.</li> 
+            <li>Posted on <b>{{created}}</b>.</li>
+            <li>Last updated on <b>{{updated}}</b>.</li>
+        </ul>
+    </div>
 
-        <p>
-            Defined tags for this entry: 
-            <span class="tags">{{{tags}}}</span>
-        </p>
+    <div class="metadata">
+        <h4>Tags for this entry</h4>
+        <p class="tags">{{{tags}}}</p>
     </div>
 </div>
