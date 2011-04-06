@@ -20,9 +20,6 @@ EOJ;
             )
         );
         $this->css = array(
-            array('url' => 'http://fonts.googleapis.com/css?family=Cardo'),
-            array('url' => 'http://fonts.googleapis.com/css?family=Lato'),
-            array('url' => 'http://fonts.googleapis.com/css?family=Droid+Sans+Mono'),
             array('url' => 'http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojox/highlight/resources/pygments/autumn.css'),
             array('url' => 'http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojox/highlight/resources/highlight.css'),
         );
