@@ -86,6 +86,38 @@ class AppContext extends DependencyInjectionContainer
               ),
             ),
           ),
+          'blog-tag' => 
+          array (
+            'params' => 
+            array (
+              0 => '#^/(?P<controller>blog)/(?P<action>tag)/(?P<tag>[^/]+)#',
+              1 => '/blog/tag/{tag}',
+            ),
+          ),
+          'blog-year' => 
+          array (
+            'params' => 
+            array (
+              0 => '#^/(?P<controller>blog)/(?P<action>year)/(?P<year>\\d{4})#',
+              1 => '/blog/year/{year}',
+            ),
+          ),
+          'blog-month' => 
+          array (
+            'params' => 
+            array (
+              0 => '#^/(?P<controller>blog)/(?P<action>month)/(?P<year>\\d{4})/(?P<month>\\d{2})#',
+              1 => '/blog/month/{year}/{month}',
+            ),
+          ),
+          'blog-day' => 
+          array (
+            'params' => 
+            array (
+              0 => '#^/(?P<controller>blog)/(?P<action>day)/(?P<year>\\d{4})/(?P<month>\\d{2})/(?P<day>\\d{2})#',
+              1 => '/blog/day/{year}/{month}/{day}',
+            ),
+          ),
           'blog' => 
           array (
             'params' => 

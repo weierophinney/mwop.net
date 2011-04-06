@@ -1,7 +1,8 @@
 {{%IMPLICIT-ITERATOR}}
 {{%SUB-VIEWS}}
 <div class="grid_9 content">
-    <h2>Entries</h2>
+    {{#title}}<h2>{{text}}</h2>{{/title}}
+    {{^title}}<h2>Entries</h2>{{/title}}
 
     <ul class="entity_list">
     {{#entities}}

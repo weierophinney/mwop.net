@@ -51,7 +51,9 @@ class EntryResource extends AbstractResource
         $end   = clone $start;
         $end->add(new DateInterval('P1Y'));
         $this->createDateRange($query, $start, $end);
-        $query->limit($limit, $offset);
+        if (false !== $offset && $limit) {
+            $query->limit($limit, $offset);
+        }
 
         $entries = $this->getDataSource()->query($query);
         $collection = new $this->collectionClass($entries, $this->entityClass);
@@ -106,7 +108,9 @@ class EntryResource extends AbstractResource
         $end   = clone $start;
         $end->add(new DateInterval('P1D'));
         $this->createDateRange($query, $start, $end);
-        $query->limit($limit, $offset);
+        if (false !== $offset && $limit) {
+            $query->limit($limit, $offset);
+        }
 
         $entries = $this->getDataSource()->query($query);
         $collection = new $this->collectionClass($entries, $this->entityClass);
@@ -129,8 +133,11 @@ class EntryResource extends AbstractResource
 
         $query = $this->getQuery();
         $query->where('tags', '=', $tag)
-              ->where('created', '<=', $_SERVER['REQUEST_TIME'])
-              ->limit($limit, $offset);
+              ->where('created', '<=', $_SERVER['REQUEST_TIME']);
+        if (false !== $offset && $limit) {
+            $query->limit($limit, $offset);
+        }
+
 
         $entries = $this->getDataSource()->query($query);
         $collection = new $this->collectionClass($entries, $this->entityClass);

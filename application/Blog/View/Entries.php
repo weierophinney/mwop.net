@@ -10,6 +10,7 @@ class Entries
 {
     protected $entries;
     protected $request;
+    protected $paginatorUrl = '/blog';
 
     public function __construct(array $values)
     {
@@ -24,6 +25,13 @@ class Entries
         $entities->setCurrentPageNumber($page);
         $entities->setItemCountPerPage(10);
         $entities->setPageRange(10);
+
+        if (isset($values['title'])) {
+            $this->title = $values['title'];
+        }
+        if (isset($values['paginator_url'])) {
+            $this->paginatorUrl = $values['paginator_url'];
+        }
 
         $this->entries = $entities;
         $this->request = $request;
@@ -52,7 +60,7 @@ class Entries
         foreach ($pages->pagesInRange as $p) {
             $page = array(
                 'page' => array(
-                    'url'    => '/blog?page=' . $p,
+                    'url'    => $this->paginatorUrl . '?page=' . $p,
                     'number' => $p,
                 )
             );
@@ -67,15 +75,15 @@ class Entries
         }
 
         return new SubView('paginator', array(
-            'first'    => array('url' => '/blog'),
+            'first'    => array('url' => $this->paginatorUrl),
             'previous' => isset($pages->previous) 
-                        ? array('page' => '/blog?page=' . $pages->previous) 
+                        ? array('page' => $this->paginatorUrl . '?page=' . $pages->previous) 
                         : false,
             'pages'    => $pageList,
             'next'     => isset($pages->next)
-                        ? array('page' => '/blog?page=' . $pages->next)
+                        ? array('page' => $this->paginatorUrl . '?page=' . $pages->next)
                         : false,
-            'last'     => array('url' => '/blog?page=' . $pages->last),
+            'last'     => array('url' => $this->paginatorUrl . '?page=' . $pages->last),
         ));
     }
 }

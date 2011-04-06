@@ -57,7 +57,7 @@ class RegexRoute implements Route
         $uri = $request->getPathInfo();
         if (empty($uri)) {
             // Hack for when running under FastCGI
-            $uri = $request->getRequestUri();
+            $uri = parse_url($request->getRequestUri(), PHP_URL_PATH);
         }
 
         $this->events()->trigger(__FUNCTION__ . '.pre', $this, array('uri' => $uri, 'regex' => $this->regex));

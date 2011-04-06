@@ -29,6 +29,30 @@
                                         {"controller": "blog", "action": "create"}
                                     ]
                                 },
+                                "blog-tag": {
+                                    "params": [
+                                        "#^/(?P<controller>blog)/(?P<action>tag)/(?P<tag>[^/]+)#",
+                                        "/blog/tag/{tag}"
+                                    ]
+                                },
+                                "blog-year": {
+                                    "params": [
+                                        "#^/(?P<controller>blog)/(?P<action>year)/(?P<year>\\d{4})#",
+                                        "/blog/year/{year}"
+                                    ]
+                                },
+                                "blog-month": {
+                                    "params": [
+                                        "#^/(?P<controller>blog)/(?P<action>month)/(?P<year>\\d{4})/(?P<month>\\d{2})#",
+                                        "/blog/month/{year}/{month}"
+                                    ]
+                                },
+                                "blog-day": {
+                                    "params": [
+                                        "#^/(?P<controller>blog)/(?P<action>day)/(?P<year>\\d{4})/(?P<month>\\d{2})/(?P<day>\\d{2})#",
+                                        "/blog/day/{year}/{month}/{day}"
+                                    ]
+                                },
                                 "blog": {
                                     "params": [
                                         "#^/(?P<controller>blog)(/(?P<id>[^/]+))?#",

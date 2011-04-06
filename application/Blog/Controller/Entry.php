@@ -81,9 +81,6 @@ class Entry extends RestfulController
         $entries = $this->resource()->getEntries(0, false);
         return new EntriesView(array(
             'entities' => $entries,
-            'sidebar'  => array(
-                'cloud' => $this->resource()->getTagCloud(),
-            ),
             'request'  => $this->getRequest(),
         ));
     }
@@ -98,5 +95,70 @@ class Entry extends RestfulController
             return $response;
         }
         return array('url' => '/blog');
+    }
+
+    public function tagAction()
+    {
+        if (!$tag = $this->getRequest()->getMetadata('tag', false)) {
+            return $this->getList();
+        }
+        $entries = $this->resource()->getEntriesByTag($tag, false);
+        return new EntriesView(array(
+            'title'    => array('text' => 'Tag: ' . $tag),
+            'entities' => $entries,
+            'request'  => $this->getRequest(),
+            'paginator_url' => '/blog/tag/' . $tag,
+        ));
+    }
+
+    public function yearAction()
+    {
+        if (!$year = $this->getRequest()->getMetadata('year', false)) {
+            return $this->getList();
+        }
+        $entries = $this->resource()->getEntriesByYear($year, false);
+        return new EntriesView(array(
+            'title'    => array('text' => 'Entries for ' . $year),
+            'entities' => $entries,
+            'request'  => $this->getRequest(),
+            'paginator_url' => '/blog/year/' . $year,
+        ));
+    }
+
+    public function monthAction()
+    {
+        if (!$year = $this->getRequest()->getMetadata('year', false)) {
+            return $this->getList();
+        }
+        if (!$month = $this->getRequest()->getMetadata('month', false)) {
+            return $this->getList();
+        }
+        $entries = $this->resource()->getEntriesByMonth($month, $year, false);
+        return new EntriesView(array(
+            'title'    => array('text' => 'Entries for ' . date('F', strtotime($year . '-' . $month . '-01')) . ' ' . $year),
+            'entities' => $entries,
+            'request'  => $this->getRequest(),
+            'paginator_url' => '/blog/month/' . $year . '/' . $month,
+        ));
+    }
+
+    public function dayAction()
+    {
+        if (!$year = $this->getRequest()->getMetadata('year', false)) {
+            return $this->getList();
+        }
+        if (!$month = $this->getRequest()->getMetadata('month', false)) {
+            return $this->getList();
+        }
+        if (!$day = $this->getRequest()->getMetadata('day', false)) {
+            return $this->getList();
+        }
+        $entries = $this->resource()->getEntriesByDay($day, $month, $year, false);
+        return new EntriesView(array(
+            'title'    => array('text' => 'Entries for ' . $day . ' ' . date('F', strtotime($year . '-' . $month . '-' . $day)) . ' ' . $year),
+            'entities' => $entries,
+            'request'  => $this->getRequest(),
+            'paginator_url' => '/blog/day/' . $year . '/' . $month . '/'. $day,
+        ));
     }
 }
