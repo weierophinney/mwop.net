@@ -2,6 +2,7 @@ mwop=/home/matthew/git/mwop CD=. filter="*.php *.xml *.txt" {
  application=application {
   .classmap.php
   AppContext.php
+  Layout.php
   configs=configs {
    di.json
   }
@@ -22,11 +23,14 @@ mwop=/home/matthew/git/mwop CD=. filter="*.php *.xml *.txt" {
    }
   }
   views=views filter="*.mustache" {
+   about.mustache
    layout.mustache
    mobile.mustache
    paginator.mustache
+   projects.mustache
    tag-cloud.mustache
    blog=blog {
+    blogroll.mustache
     entity-short.mustache
     entity.mustache
     form.mustache
@@ -36,6 +40,7 @@ mwop=/home/matthew/git/mwop CD=. filter="*.php *.xml *.txt" {
     404.mustache
     comics.mustache
     home.mustache
+    resume.mustache
    }
   }
  }
@@ -74,10 +79,22 @@ mwop=/home/matthew/git/mwop CD=. filter="*.php *.xml *.txt" {
    }
    Mvc=Mvc {
     Exception.php
+    Presentation.php
     Router.php
     Exception=Exception {
      InvalidRequestException.php
      InvalidRouteException.php
+    }
+    Presentation=Presentation {
+     HelperBroker.php
+     HelperLoader.php
+     Helper=Helper {
+      BaseUrl.php
+      Url.php
+      CssLinks.php
+      JavaScripts.php
+      JavaScriptCode.php
+     }
     }
     Router=Router {
      RegexRoute.php
@@ -100,7 +117,9 @@ mwop=/home/matthew/git/mwop CD=. filter="*.php *.xml *.txt" {
     ResourceCollection.php
     Route.php
     RouteStack.php
+    UniqueFilteringIterator.php
     Validatible.php
+    ViewPresentation.php
    }
   }
  }
@@ -117,8 +136,8 @@ mwop=/home/matthew/git/mwop CD=. filter="*.php *.xml *.txt" {
   cgi-bin=cgi-bin {
    php-5.3.3
   }
- }
  scripts=scripts {
+ }
   createAppContext.php
   importFromS9y.php
  }
@@ -142,6 +161,9 @@ mwop=/home/matthew/git/mwop CD=. filter="*.php *.xml *.txt" {
     CollectionTest.php
     EntryResourceTest.php
     MongoIntegrationTest.php
+   }
+   Stdlib=Stdlib {
+    UniqueFilteringIteratorTest.php
    }
   }
  }

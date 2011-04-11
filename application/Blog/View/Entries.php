@@ -1,7 +1,8 @@
 <?php
 namespace Blog\View;
 
-use Zend\Paginator\Paginator,
+use mwop\Mvc\Presentation,
+    Zend\Paginator\Paginator,
     Zend\Paginator\Adapter\Iterator as IteratorPaginator,
     Zend\Tag\Cloud as TagCloud,
     Phly\Mustache\Pragma\SubView;
@@ -10,6 +11,7 @@ class Entries
 {
     protected $entries;
     protected $request;
+    protected $presentation;
     protected $paginatorUrl = '/blog';
 
     public function __construct(array $values)
@@ -35,7 +37,12 @@ class Entries
 
         $this->entries = $entities;
         $this->request = $request;
-        $this->layout  = new Layout();
+    }
+
+    public function setPresentation(Presentation $presentation)
+    {
+        $this->presentation = $presentation;
+        Layout::setup($presentation);
     }
 
     public function entities()
@@ -51,7 +58,7 @@ class Entries
     {
         $pages = $this->entries->getPages();
 
-        if (!$pages->pageCount) {
+        if (!$pages->pageCount || $pages->pageCount == 1) {
             return false;
         }
 
@@ -75,7 +82,7 @@ class Entries
         }
 
         return new SubView('paginator', array(
-            'first'    => array('url' => $this->paginatorUrl),
+            'first'    => (1 === $current) ? false : array('url' => $this->paginatorUrl),
             'previous' => isset($pages->previous) 
                         ? array('page' => $this->paginatorUrl . '?page=' . $pages->previous) 
                         : false,
@@ -83,7 +90,7 @@ class Entries
             'next'     => isset($pages->next)
                         ? array('page' => $this->paginatorUrl . '?page=' . $pages->next)
                         : false,
-            'last'     => array('url' => $this->paginatorUrl . '?page=' . $pages->last),
+            'last'     => ($current === $pages->last) ? false : array('url' => $this->paginatorUrl . '?page=' . $pages->last),
         ));
     }
 }

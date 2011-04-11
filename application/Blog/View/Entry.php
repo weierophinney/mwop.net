@@ -1,9 +1,12 @@
 <?php
 namespace Blog\View;
 
+use mwop\Mvc\Presentation;
+
 class Entry
 {
     protected $entry;
+    protected $presentation;
     protected $request;
 
     public function __construct(array $data)
@@ -23,8 +26,12 @@ class Entry
         if (isset($data['request'])) {
             $this->request = $data['request'];
         }
+    }
 
-        $this->layout = new Layout();
+    public function setPresentation(Presentation $presentation)
+    {
+        $this->presentation = $presentation;
+        Layout::setup($presentation);
     }
 
     public function created()
@@ -44,7 +51,7 @@ class Entry
             $tag = htmlspecialchars($tag, ENT_COMPAT, "UTF-8");
             $tags[] = sprintf('<a href="/blog/tag/%s">%s</a>', $tag, $tag);
         }
-        return implode('&nbsp;|&nbsp;', $tags);
+        return implode(', ', $tags);
     }
 
 

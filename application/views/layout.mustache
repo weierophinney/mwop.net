@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+{{%IMPLICIT-ITERATOR}}
 {{%SUB-VIEWS}}
 <html>
 <head>
@@ -7,18 +9,20 @@
     <link href="/css/text.css" rel="stylesheet" type="text/css"></link>
     <link href="/css/960.css" rel="stylesheet" type="text/css"></link>
     <link href="/css/site.css" rel="stylesheet" type="text/css"></link>
-{{#layout}}{{#css}}
+{{#cssLinks}}
     <link href="{{url}}" rel="stylesheet" type="text/css"></link>
-{{/css}}{{/layout}}
+{{/cssLinks}}
 
     <script src="http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojo/dojo.xd.js"
         djConfig="isDebug:true, parseOnLoad:true"></script> 
-{{#layout}}{{#js}}
-    {{#files}}<script src="{{url}}"></script>{{/files}}
-    {{#source}}<script language="JavaScript">
-        {{{code}}}
-    </script>{{/source}}
-{{/js}}{{/layout}}
+{{#javaScripts}}
+    <script src="{{url}}" language="JavaScript"></script>
+{{/javaScripts}}
+{{#javaScriptCode}}
+    <script language="JavaScript">
+{{{.}}}
+    </script>
+{{/javaScriptCode}}
 
 </head>
 <body>
@@ -27,25 +31,36 @@
         <a href="/"><img src="/images/logo.gif" height="37" width="37"/></a>
         <span class="main_title">phly, boy, phly: matthew weier o'phinney</span>
     </div>
-    <div class="clear"></div>
+
+    <div class="grid_12" id="menu">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="/comics">Comics</a></li>
+            <li><a href="/resume">R&eacute;sum&eacute;</a></li>
+        </ul>
+    </div>
 
     {{content}}
     <div class="clear"></div>
 
-    <div class="grid_12" id="footer">
-        <div class="grid_4 about">
-            <h4>About</h4>
-        </div>
-        <div class="grid_4 projects">
-            <h4>Projects</h4>
-        </div>
-        {{! making this grid_3 to correct overflow issue }}
-        <div class="grid_3 tags">
-            {{#layout}}{{#footer}}{{#tags}}
-            <h4>Tag Cloud</h4>
-            {{cloud}}
-            {{/tags}}{{/footer}}{{/layout}}
-        </div>
+    <div class="grid_12 divider">&nbsp;</div>
+
+    <div class="grid_4 footer about">
+        <h4>About</h4>
+        {{>about}}
+    </div>
+
+    <div class="grid_4 footer projects">
+        <h4>Projects</h4>
+        {{>projects}}
+    </div>
+
+    <div class="grid_4 footer tags">
+        {{#footer}}{{#tags}}
+        <h4>Tag Cloud</h4>
+        {{cloud}}
+        {{/tags}}{{/footer}}
     </div>
 </div>
 </body>

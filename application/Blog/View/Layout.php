@@ -1,10 +1,20 @@
 <?php
 namespace Blog\View;
 
+use mwop\Mvc\Presentation,
+    mwop\Stdlib\UniqueFilteringIterator;
+
 class Layout
 {
-    public function __construct()
+    public static function setup(Presentation $layout)
     {
+        if (!isset($layout->javaScriptCode)) {
+            $layout->javaScriptCode = new UniqueFilteringIterator;
+        }
+        if (!isset($layout->cssLinks)) {
+            $layout->cssLinks = new UniqueFilteringIterator;
+        }
+
         $requires =<<<EOJ
         dojo.require("dojox.highlight");
         dojo.require("dojox.highlight.languages._all");
@@ -13,15 +23,9 @@ class Layout
             dojo.query("div.example pre code").forEach(dojox.highlight.init);
         });
 EOJ;
+        $layout->javaScriptCode->push($requires);
 
-        $this->js = array(
-            'source' => array(
-                array('code' => $requires),
-            )
-        );
-        $this->css = array(
-            array('url' => 'http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojox/highlight/resources/pygments/autumn.css'),
-            array('url' => 'http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojox/highlight/resources/highlight.css'),
-        );
+        $layout->cssLinks->push(array('url' => 'http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojox/highlight/resources/pygments/autumn.css'));
+        $layout->cssLinks->push(array('url' => 'http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojox/highlight/resources/highlight.css'));
     }
 }

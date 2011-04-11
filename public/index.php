@@ -29,13 +29,14 @@ $front->addControllerMap('blog', 'Blog\Controller\Entry')
       ->addControllerMap('page', 'Site\Controller\Page');
 
 $router = $app->get('router');
+$layout = $app->get('presentation');
 
 $view = new Phly\Mustache\Mustache();
 $view->setTemplatePath(__DIR__ . '/../application/views');
 $view->getRenderer()->addPragma(new Phly\Mustache\Pragma\ImplicitIterator());
 $subViews = new Phly\Mustache\Pragma\SubViews($view);
 
-$events->attach('mwop\Controller\Restful', 'dispatch.post', function($e) use ($view, $router) {
+$events->attach('mwop\Controller\Restful', 'dispatch.post', function($e) use ($layout, $router, $view) {
     $request    = $e->getParam('request');
     $response   = $e->getParam('response');
     $params     = $e->getParam('__RESULT__');
@@ -83,20 +84,8 @@ $events->attach('mwop\Controller\Restful', 'dispatch.post', function($e) use ($v
     } else {
         $subView = new Phly\Mustache\Pragma\SubView($template, $params);
 
-        if (is_array($params) && isset($params['layout'])) {
-            $params = array(
-                'layout'  => $params['layout'],
-                'content' => $subView,
-            );
-        } elseif (is_object($params) && isset($params->layout)) {
-            $params = array(
-                'layout'  => $params->layout,
-                'content' => $subView,
-            );
-        } else {
-            $params = array('content' => $subView);
-        }
-        $response->setContent($view->render('layout', $params));
+        $layout->content = $subView;
+        $response->setContent($view->render($layout->layout(), $layout));
     }
 });
 
@@ -118,7 +107,7 @@ $events->attach('Site\Controller\Page', 'dispatch.post', function($e) use ($view
     }
 });
 
-$front->setNotFoundHandler(function($request, $response) use ($view) {
+$front->setNotFoundHandler(function($request, $response) use ($layout, $view) {
     $response->getHeaders()->setStatusCode(404);
 
     $template = 'pages/404';
@@ -127,10 +116,11 @@ $front->setNotFoundHandler(function($request, $response) use ($view) {
         $response->setContent($view->render($template));
     } else {
         $subView = new Phly\Mustache\Pragma\SubView($template);
-        $response->setContent($view->render('layout', array('content' => $subView)));
+        $layout->content = $subView;
+        $response->setContent($view->render($layout->layout(), $layout));
     }
 });
 
-$request  = new Zend\Http\Request();
+$request  = $app->get('request');
 $response = $front->dispatch($request);
 $response->send();

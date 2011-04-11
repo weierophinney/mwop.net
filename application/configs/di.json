@@ -2,6 +2,9 @@
     "production": {
         "definitions": [
             {
+                "class": "Zend\\Http\\Request"
+            },
+            {
                 "class": "mwop\\Mvc\\Router",
                 "methods":[
                     {
@@ -20,6 +23,13 @@
                                     "params": [
                                         "/comics",
                                         {"controller": "page", "page": "comics"}
+                                    ]
+                                },
+                                "resume": {
+                                    "class": "mwop\\Mvc\\Router\\StaticRoute",
+                                    "params": [
+                                        "/resume",
+                                        {"controller": "page", "page": "resume"}
                                     ]
                                 },
                                 "blog-create-form": {
@@ -112,17 +122,46 @@
                 ]
             },
             {
+                "class": "mwop\\Mvc\\Presentation\\HelperBroker",
+                "methods": [
+                    {
+                        "name": "register",
+                        "args": ["router", {"__referece" : "router"}]
+                    },
+                    {
+                        "name": "register",
+                        "args": ["request", {"__referece" : "request"}]
+                    }
+                ]
+            },
+            {
+                "class": "Layout",
+                "methods": [
+                    {
+                        "name": "helper",
+                        "args": [{"__reference" : "presentation-broker"}]
+                    }
+                ]
+            },
+            {
                 "class": "Blog\\Controller\\Entry",
                 "methods": [
                     {
                         "name": "resource",
                         "args": [{"__reference": "resource-entry"}]
+                    },
+                    {
+                        "name": "setPresentation",
+                        "args": [{"__reference": "presentation"}]
                     }
                 ]
             }
         ],
         "aliases": {
             "router": "mwop\\Mvc\\Router",
+            "request": "Zend\\Http\\Request",
+            "presentation-broker": "mwop\\Mvc\\Presentation\\HelperBroker",
+            "presentation": "Layout",
             "mongocxn": "Mongo",
             "mongo-collection-entries": "MongoCollection",
             "data-source": "mwop\\DataSource\\Mongo",

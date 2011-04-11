@@ -19,12 +19,74 @@
     src: local('Droid Sans Mono'), local('DroidSansMono'), url('/css/fonts/DroidSansMono.woff') format('woff');
 }
 
+body {
+}
+
 h1, h2, h3, h4 {
     font-family: 'Cardo', arial, serif;
 }
 
-.application {
-    background-color: #000033;
+#header {
+    margin-bottom: 1em;
+    background-color: #FFFFFF;
+}
+
+#header .main_title {
+    font-family: Cardo;
+    font-size: 1.8em;
+    font-style: oblique;
+    text-align: top;
+}
+
+#menu {
+    background-color: #F3F3F3;
+    border-top: 1px dotted #676767;
+    border-bottom: 1px dotted #676767;
+}
+
+#menu ul {
+    list-style-type: none;
+    font-family: "Cardo", arial, serif;
+    font-weight: bold;
+    display: block;
+    text-align: left;
+    padding: 0.5em 0 0 0;
+    margin: 0;
+}
+
+#menu ul li {
+    display: inline;
+    list-style: none;
+    padding-right: 1em;
+}
+
+#menu ul li a {
+    text-decoration: none;
+    color: #000000;
+}
+
+#menu ul li a:hover {
+    background-color: #FFFFFF;
+    font-weight: bolder;
+    color: #676767;
+}
+
+.divider {
+    border-top: 1px dotted #676767;
+}
+
+.footer h4 {
+    font-size: 1.5em;
+    text-align: left;
+}
+
+.footer.about {
+}
+
+.footer.projects {
+}
+
+.footer.tags {
 }
 
 .content, .sidebar {
@@ -36,45 +98,17 @@ h1, h2, h3, h4 {
     height: 1em;
 }
 
-.header h1 {
-    padding-left: 0.5em;
-    font-size: 3em;
-}
-
 .content {
     overflow: auto;
-}
-
-.content h2, .content p, .content dl {
-    margin-left: 0.5em;
-    margin-right: 0.5em;
-}
-
-dl dt {
-    font-weight: bold;
-}
-
-dl dt:after {
-    content: ":";
-}
-
-dl dd {
-    margin-left: 2em;
-    background-color: #FFCCFF;
-    border: 1px solid #003333;
-    padding: 0.5em;
 }
 
 .sidebar ul {
     list-style-type: none;
 }
 
-body {
-}
-
 .cloud ul {
     display: block;
-    text-align: center;
+    text-align: left;
 }
 
 .cloud ul li {
@@ -82,11 +116,6 @@ body {
     list-style: none;
     padding: 0;
     margin: 0;
-}
-
-#footer h4 {
-    font-size: 1.5em;
-    text-align: center;
 }
 
 div.example {
@@ -125,38 +154,43 @@ div.example {
     margin-left: 0;
 }
 
-#header {
-    margin-bottom: 1em;
-    padding-bottom: 0.5em;
-    border-bottom: 1px dotted #676767;
-}
-
-#header .main_title {
-    font-family: Cardo;
-    font-size: 1.8em;
-    font-style: oblique;
-    text-align: top;
-}
-
-#footer {
+dl.resume dt {
+    clear: both;
+    float: left;
+    width: 33%;
     border-top: 1px dotted #676767;
-    border-left: 1px dotted #676767;
-    border-right: 1px dotted #676767;
-    background-color: #94FFDD;
-    /* padding-top: 1em; */
+    padding-top: 3px;
+    padding-bottom: 0.5em;
+    font-family: 'Cardo', arial, serif;
+    font-size: 1.2em;
+    font-weight: bold;
 }
 
-#footer .about {
-    border-right: 1px dotted #676767;
-    padding-right: 1em;
+dl.resume dd {
+    float:left;
+    width:66%;
+    border-top: 1px dotted #676767;
+    padding-top: 3px;
+    padding-bottom: 0.5em;
 }
 
-#footer .projects {
-    padding-left: 1em;
-    padding-right: 1em;
+dl.resume dd p.metadata {
+    font-style: oblique;
 }
 
-#footer .tags {
-    border-left: 1px dotted #676767;
-    padding-left: 1em;
+.blog .tags {
+    text-align: left;
+    padding-bottom: 0.5em;
+    font-style: oblique;
+}
+
+.blog .date {
+    text-align: right;
+    padding-bottom: 0.5em;
+    font-weight: bold;
+}
+
+.blog h4.entry {
+    border-top: 1px dotted #676767;
+    padding-top: 0.5em;
 }

@@ -8,6 +8,10 @@ class AppContext extends DependencyInjectionContainer
     public function get($name, array $params = array())
     {
         switch ($name) {
+            case 'request':
+            case 'Zend\Http\Request':
+                return $this->getZendHttpRequest();
+        
             case 'router':
             case 'mwop\Mvc\Router':
                 return $this->getMwopMvcRouter();
@@ -31,12 +35,31 @@ class AppContext extends DependencyInjectionContainer
             case 'mwop\Resource\EntryResource':
                 return $this->getMwopResourceEntryResource();
         
+            case 'presentation-broker':
+            case 'mwop\Mvc\Presentation\HelperBroker':
+                return $this->getMwopMvcPresentationHelperBroker();
+        
+            case 'presentation':
+            case 'Layout':
+                return $this->getLayout();
+        
             case 'Blog\Controller\Entry':
                 return $this->getBlogControllerEntry();
         
             default:
                 return parent::get($name, $params);
         }
+    }
+
+    public function getZendHttpRequest()
+    {
+        if (isset($this->services['Zend\Http\Request'])) {
+            return $this->services['Zend\Http\Request'];
+        }
+        
+        $object = new \Zend\Http\Request();
+        $this->services['Zend\Http\Request'] = $object;
+        return $object;
     }
 
     public function getMwopMvcRouter()
@@ -70,6 +93,19 @@ class AppContext extends DependencyInjectionContainer
               array (
                 'controller' => 'page',
                 'page' => 'comics',
+              ),
+            ),
+          ),
+          'resume' => 
+          array (
+            'class' => 'mwop\\Mvc\\Router\\StaticRoute',
+            'params' => 
+            array (
+              0 => '/resume',
+              1 => 
+              array (
+                'controller' => 'page',
+                'page' => 'resume',
               ),
             ),
           ),
@@ -188,6 +224,35 @@ class AppContext extends DependencyInjectionContainer
         return $object;
     }
 
+    public function getMwopMvcPresentationHelperBroker()
+    {
+        if (isset($this->services['mwop\Mvc\Presentation\HelperBroker'])) {
+            return $this->services['mwop\Mvc\Presentation\HelperBroker'];
+        }
+        
+        $object = new \mwop\Mvc\Presentation\HelperBroker();
+        $object->register('router', array (
+          '__referece' => 'router',
+        ));
+        $object->register('request', array (
+          '__referece' => 'request',
+        ));
+        $this->services['mwop\Mvc\Presentation\HelperBroker'] = $object;
+        return $object;
+    }
+
+    public function getLayout()
+    {
+        if (isset($this->services['Layout'])) {
+            return $this->services['Layout'];
+        }
+        
+        $object = new \Layout();
+        $object->helper($this->getPresentationBroker());
+        $this->services['Layout'] = $object;
+        return $object;
+    }
+
     public function getBlogControllerEntry()
     {
         if (isset($this->services['Blog\Controller\Entry'])) {
@@ -196,6 +261,7 @@ class AppContext extends DependencyInjectionContainer
         
         $object = new \Blog\Controller\Entry();
         $object->resource($this->getResourceEntry());
+        $object->setPresentation($this->getPresentation());
         $this->services['Blog\Controller\Entry'] = $object;
         return $object;
     }
@@ -203,6 +269,21 @@ class AppContext extends DependencyInjectionContainer
     public function getRouter()
     {
         return $this->get('mwop\Mvc\Router');
+    }
+
+    public function getRequest()
+    {
+        return $this->get('Zend\Http\Request');
+    }
+
+    public function getPresentationBroker()
+    {
+        return $this->get('mwop\Mvc\Presentation\HelperBroker');
+    }
+
+    public function getPresentation()
+    {
+        return $this->get('Layout');
     }
 
     public function getMongocxn()

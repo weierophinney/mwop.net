@@ -5,6 +5,7 @@ use Blog\View\Entries as EntriesView,
     Blog\View\TagCloud,
     mwop\Controller\Restful as RestfulController,
     mwop\DataSource\Mongo as MongoDataSource,
+    mwop\Mvc\Presentation,
     mwop\Stdlib\Resource,
     mwop\Resource\EntryResource,
     Phly\Mustache\Pragma\SubView,
@@ -12,6 +13,8 @@ use Blog\View\Entries as EntriesView,
 
 class Entry extends RestfulController
 {
+    protected $presentation;
+
     protected $views = array(
         'getList' => 'Blog\View\Entries',
         'get'     => 'Blog\View\Entry',
@@ -20,48 +23,28 @@ class Entry extends RestfulController
     public function __construct()
     {
         $this->events()->attach('dispatch.post', function($e) {
-            $view       = $e->getParam('__RESULT__');
             $controller = $e->getTarget();
+            if (null === ($layout = $controller->getPresentation())) {
+                return;
+            }
+
+            $view       = $e->getParam('__RESULT__');
+            if (is_object($view) && method_exists($view, 'setPresentation')) {
+                $view->setPresentation($layout);
+            }
+
             $tags       = $controller->resource()->getTagCloud();
             $subView    = new SubView('tag-cloud', new TagCloud($tags));
 
-            if (is_array($view)) {
-                if (isset($view[ 'layout' ])) {
-                    if (is_array($view[ 'layout' ])) {
-                        $view[ 'layout' ]['footer']['tags']['cloud'] = $subView;
-                    }
-                } else {
-                    $view[ 'layout' ] = array(
-                        'footer' => array(
-                            'tags' => array(
-                                'cloud' => $subView,
-                            ),
-                        ),
-                    );
-                }
-            } elseif (is_object($view)) {
-                if (isset($view->layout)) {
-                    if (is_array($view->layout)) {
-                        $view->layout['footer']['tags']['cloud'] = $subView;
-                    } elseif (is_object($view->layout)) {
-                        if (isset($view->layout->footer)) {
-                            $view->layout->footer['tags']['cloud'] = $subView;
-                        } else {
-                            $view->layout->footer = array('tags' => array('cloud' => $subView));
-                        }
-                    }
-                } else {
-                    $view->layout = array(
-                        'footer' => array(
-                            'tags' => array(
-                                'cloud' => $subView,
-                            ),
-                        ),
-                    );
+            if (!isset($layout->footer)) {
+                $layout->footer = array('tags' => array('cloud' => $subView));
+            } elseif (is_array($layout->footer)) {
+                if (!isset($layout->footer['tags'])) {
+                    $layout->footer['tags'] = array('cloud' => $subView);
+                } elseif (is_array($layout->footer['tags'])) {
+                    $layout->footer['tags']['cloud'] = $subView;
                 }
             }
-
-            $e->setParam('__RESULT__', $view);
         });
     }
 
@@ -74,6 +57,17 @@ class Entry extends RestfulController
             $this->resource = $resource;
         }
         return $this->resource;
+    }
+
+    public function setPresentation(Presentation $presentation)
+    {
+        $this->presentation = $presentation;
+        return $this;
+    }
+
+    public function getPresentation()
+    {
+        return $this->presentation;
     }
 
     public function getList()
@@ -102,6 +96,7 @@ class Entry extends RestfulController
         if (!$tag = $this->getRequest()->getMetadata('tag', false)) {
             return $this->getList();
         }
+        $tag     = urldecode($tag);
         $entries = $this->resource()->getEntriesByTag($tag, false);
         return new EntriesView(array(
             'title'    => array('text' => 'Tag: ' . $tag),
