@@ -126,11 +126,11 @@
                 "methods": [
                     {
                         "name": "register",
-                        "args": ["router", {"__referece" : "router"}]
+                        "args": ["router", {"__reference" : "router"}]
                     },
                     {
                         "name": "register",
-                        "args": ["request", {"__referece" : "request"}]
+                        "args": ["request", {"__reference" : "request"}]
                     }
                 ]
             },

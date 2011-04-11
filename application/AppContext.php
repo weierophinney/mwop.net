@@ -231,12 +231,8 @@ class AppContext extends DependencyInjectionContainer
         }
         
         $object = new \mwop\Mvc\Presentation\HelperBroker();
-        $object->register('router', array (
-          '__referece' => 'router',
-        ));
-        $object->register('request', array (
-          '__referece' => 'request',
-        ));
+        $object->register('router', $this->getRouter());
+        $object->register('request', $this->getRequest());
         $this->services['mwop\Mvc\Presentation\HelperBroker'] = $object;
         return $object;
     }

@@ -46,10 +46,19 @@ class Entry
 
     public function tags()
     {
+        $base = '';
         $tags = array();
-        foreach ($this->entry->getTags() as $tag) {
-            $tag = htmlspecialchars($tag, ENT_COMPAT, "UTF-8");
-            $tags[] = sprintf('<a href="/blog/tag/%s">%s</a>', $tag, $tag);
+        if (null !== $this->presentation) {
+            $base   = $this->presentation->helper('request')->getBaseUrl();
+            $router = $this->presentation->helper('router');
+            foreach ($this->entry->getTags() as $tag) {
+                $tags[] = sprintf('<a href="%s">%s</a>', $base . $router->assemble(array('tag' => $tag), array('name' => 'blog-tag')), $tag);
+            }
+        } else {
+            foreach ($this->entry->getTags() as $tag) {
+                $tag = htmlspecialchars($tag, ENT_COMPAT, "UTF-8");
+                $tags[] = sprintf('<a href="/blog/tag/%s">%s</a>', $tag, $tag);
+            }
         }
         return implode(', ', $tags);
     }
@@ -62,5 +71,14 @@ class Entry
         $date->setTimezone(new \DateTimeZone($tz));
         $date->setTimestamp($ts);
         return $date->format('Y-m-d H:i:s');
+    }
+
+    public function author_url()
+    {
+        $base = '';
+        if (null !== $this->presentation) {
+            $base = $this->presentation->helper('request')->getBaseUrl();
+        }
+        return $base . '/blog/author/' . $this->author;
     }
 }

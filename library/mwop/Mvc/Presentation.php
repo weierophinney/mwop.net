@@ -22,7 +22,7 @@ class Presentation implements ViewPresentation
     public function helper($spec = null)
     {
         if (null !== $spec) {
-            if ($spec instanceof LazyLoadingBroker) {
+            if ($spec instanceof Broker) {
                 // Register new broker instance
                 $this->broker = $spec;
                 return $spec;
@@ -45,7 +45,7 @@ class Presentation implements ViewPresentation
             }
         } elseif (null === $this->broker) {
             // lazy-load the broker
-            $this->broker = new PluginSpecBroker();
+            $this->broker = new Presentation\HelperBroker();
         }
         // Return the broker
         return $this->broker;
