@@ -63,7 +63,7 @@ class Router extends ArrayObject implements RouteStack
             unset($options['name']);
         }
         if (null !== $this->request) {
-            $route->setRequest($request);
+            $route->setRequest($this->request);
         }
         return $route->assemble($params, $options);
     }

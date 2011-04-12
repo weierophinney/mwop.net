@@ -89,7 +89,7 @@ $events->attach('mwop\Controller\Restful', 'dispatch.post', function($e) use ($l
     }
 });
 
-$events->attach('Site\Controller\Page', 'dispatch.post', function($e) use ($view, $router) {
+$events->attach('Site\Controller\Page', 'dispatch.post', function($e) use ($layout, $view, $router) {
     $request    = $e->getParam('request');
     $response   = $e->getParam('response');
     $page       = $e->getParam('__RESULT__');
@@ -102,8 +102,8 @@ $events->attach('Site\Controller\Page', 'dispatch.post', function($e) use ($view
     if ($request->isXmlHttpRequest()) {
         $response->setContent($view->render($template));
     } else {
-        $subView = new Phly\Mustache\Pragma\SubView($template);
-        $response->setContent($view->render('layout', array('content' => $subView)));
+        $layout->content = new Phly\Mustache\Pragma\SubView($template);
+        $response->setContent($view->render($layout->layout(), $layout));
     }
 });
 

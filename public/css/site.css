@@ -178,14 +178,14 @@ dl.resume dd p.metadata {
     font-style: oblique;
 }
 
-.blog .tags {
-    text-align: left;
+.blog .entry.tags {
+    text-align: right;
     padding-bottom: 0.5em;
     font-style: oblique;
 }
 
-.blog .date {
-    text-align: right;
+.blog .entry.date {
+    text-align: left;
     padding-bottom: 0.5em;
     font-weight: bold;
 }
@@ -193,4 +193,8 @@ dl.resume dd p.metadata {
 .blog h4.entry {
     border-top: 1px dotted #676767;
     padding-top: 0.5em;
+}
+
+.blog .entry.body {
+    padding-left: 2em;
 }

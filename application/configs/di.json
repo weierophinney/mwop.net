@@ -63,10 +63,17 @@
                                         "/blog/day/{year}/{month}/{day}"
                                     ]
                                 },
-                                "blog": {
+                                "blog-entry": {
                                     "params": [
-                                        "#^/(?P<controller>blog)(/(?P<id>[^/]+))?#",
+                                        "#^/(?P<controller>blog)/(?P<id>[^/]+)#",
                                         "/blog/{id}"
+                                    ]
+                                },
+                                "blog": {
+                                    "class": "mwop\\Mvc\\Router\\StaticRoute",
+                                    "params": [
+                                        "/blog",
+                                        {"controller": "blog"}
                                     ]
                                 }
                             }
@@ -122,6 +129,14 @@
                 ]
             },
             {
+                "class": "mwop\\Mvc\\Presentation\\Helper\\Url",
+                "param_map": {"request": 0, "router": 1},
+                "params": {
+                    "request": {"__reference": "request"},
+                    "router": {"__reference": "router"}
+                }
+            },
+            {
                 "class": "mwop\\Mvc\\Presentation\\HelperBroker",
                 "methods": [
                     {
@@ -131,6 +146,10 @@
                     {
                         "name": "register",
                         "args": ["request", {"__reference" : "request"}]
+                    },
+                    {
+                        "name": "register",
+                        "args": ["url", {"__reference": "url-helper"}]
                     }
                 ]
             },
@@ -160,6 +179,7 @@
         "aliases": {
             "router": "mwop\\Mvc\\Router",
             "request": "Zend\\Http\\Request",
+            "url-helper": "mwop\\Mvc\\Presentation\\Helper\\Url",
             "presentation-broker": "mwop\\Mvc\\Presentation\\HelperBroker",
             "presentation": "Layout",
             "mongocxn": "Mongo",

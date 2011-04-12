@@ -6,6 +6,7 @@ use mwop\Mvc\Presentation;
 class Entry
 {
     protected $entry;
+    protected $entryUrl;
     protected $presentation;
     protected $request;
 
@@ -32,6 +33,19 @@ class Entry
     {
         $this->presentation = $presentation;
         Layout::setup($presentation);
+    }
+
+    public function url()
+    {
+        if (isset($this->entryUrl)) {
+            return $this->entryUrl;
+        }
+        if (!$this->presentation) {
+            $this->entryUrl = '';
+        } else {
+            $this->entryUrl = $this->presentation->helper('url')->generate(array('id' => $this->id), array('name' => 'blog-entry'));
+        }
+        return $this->entryUrl;
     }
 
     public function created()

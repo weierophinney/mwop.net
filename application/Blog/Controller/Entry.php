@@ -34,7 +34,7 @@ class Entry extends RestfulController
             }
 
             $tags       = $controller->resource()->getTagCloud();
-            $subView    = new SubView('tag-cloud', new TagCloud($tags));
+            $subView    = new SubView('tag-cloud', new TagCloud($tags, $layout));
 
             if (!isset($layout->footer)) {
                 $layout->footer = array('tags' => array('cloud' => $subView));

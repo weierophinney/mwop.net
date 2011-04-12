@@ -49,7 +49,11 @@ class Entries
     {
         $array = array();
         foreach ($this->entries as $entry) {
-            $array[] = new Entry(array('entity' => $entry, 'request' => $this->request));
+            $entry = new Entry(array('entity' => $entry, 'request' => $this->request));
+            if ($this->presentation) {
+                $entry->setPresentation($this->presentation);
+            }
+            $array[] = $entry;
         }
         return $array;
     }

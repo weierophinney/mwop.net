@@ -5,5 +5,7 @@ use Zend\Loader\PluginClassLoader;
 
 class HelperLoader extends PluginClassLoader
 {
-    protected $plugins = array();
+    protected $plugins = array(
+        'url' => 'mwop\Mvc\Presentation\Url',
+    );
 }

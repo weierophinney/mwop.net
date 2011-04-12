@@ -35,6 +35,10 @@ class AppContext extends DependencyInjectionContainer
             case 'mwop\Resource\EntryResource':
                 return $this->getMwopResourceEntryResource();
         
+            case 'url-helper':
+            case 'mwop\Mvc\Presentation\Helper\Url':
+                return $this->getMwopMvcPresentationHelperUrl();
+        
             case 'presentation-broker':
             case 'mwop\Mvc\Presentation\HelperBroker':
                 return $this->getMwopMvcPresentationHelperBroker();
@@ -154,12 +158,24 @@ class AppContext extends DependencyInjectionContainer
               1 => '/blog/day/{year}/{month}/{day}',
             ),
           ),
-          'blog' => 
+          'blog-entry' => 
           array (
             'params' => 
             array (
-              0 => '#^/(?P<controller>blog)(/(?P<id>[^/]+))?#',
+              0 => '#^/(?P<controller>blog)/(?P<id>[^/]+)#',
               1 => '/blog/{id}',
+            ),
+          ),
+          'blog' => 
+          array (
+            'class' => 'mwop\\Mvc\\Router\\StaticRoute',
+            'params' => 
+            array (
+              0 => '/blog',
+              1 => 
+              array (
+                'controller' => 'blog',
+              ),
             ),
           ),
         ));
@@ -224,6 +240,17 @@ class AppContext extends DependencyInjectionContainer
         return $object;
     }
 
+    public function getMwopMvcPresentationHelperUrl()
+    {
+        if (isset($this->services['mwop\Mvc\Presentation\Helper\Url'])) {
+            return $this->services['mwop\Mvc\Presentation\Helper\Url'];
+        }
+        
+        $object = new \mwop\Mvc\Presentation\Helper\Url($this->getRequest(), $this->getRouter());
+        $this->services['mwop\Mvc\Presentation\Helper\Url'] = $object;
+        return $object;
+    }
+
     public function getMwopMvcPresentationHelperBroker()
     {
         if (isset($this->services['mwop\Mvc\Presentation\HelperBroker'])) {
@@ -233,6 +260,7 @@ class AppContext extends DependencyInjectionContainer
         $object = new \mwop\Mvc\Presentation\HelperBroker();
         $object->register('router', $this->getRouter());
         $object->register('request', $this->getRequest());
+        $object->register('url', $this->getUrlHelper());
         $this->services['mwop\Mvc\Presentation\HelperBroker'] = $object;
         return $object;
     }
@@ -270,6 +298,11 @@ class AppContext extends DependencyInjectionContainer
     public function getRequest()
     {
         return $this->get('Zend\Http\Request');
+    }
+
+    public function getUrlHelper()
+    {
+        return $this->get('mwop\Mvc\Presentation\Helper\Url');
     }
 
     public function getPresentationBroker()

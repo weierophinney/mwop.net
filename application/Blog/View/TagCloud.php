@@ -5,12 +5,12 @@ use Zend\Tag\Cloud;
 
 class TagCloud
 {
-    public function __construct($tags)
+    public function __construct($tags, $presentation)
     {
-        $this->cloud = function() use ($tags) {
+        $this->cloud = function() use ($tags, $presentation) {
             foreach ($tags as $key => $tag) {
                 $tags[$key]['params'] = array(
-                    'url' => '/blog/tag/' . $tag['title'],
+                    'url' => $presentation->helper('url')->generate(array('tag' => $tag['title']), array('name' => 'blog-tag')),
                 );
             }
             $cloud = new Cloud(array(

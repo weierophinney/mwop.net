@@ -98,7 +98,7 @@ class RegexRoute implements Route
                     $token
                 ));
             }
-            str_replace("{$token}", $params[$token], $uri);
+            $uri = str_replace('{' . $token . '}', urlencode($params[$token]), $uri);
         }
         return $uri;
     }

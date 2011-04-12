@@ -1,9 +1,9 @@
 <?php
 namespace mwop\Mvc\Presentation;
 
-use Zend\Loader\PluginBroker;
+use Zend\Loader\PluginSpecBroker;
 
-class HelperBroker extends PluginBroker
+class HelperBroker extends PluginSpecBroker
 {
     protected $defaultClassLoader = 'mwop\Mvc\Presentation\HelperLoader';
 }

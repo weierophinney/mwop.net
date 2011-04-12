@@ -5,24 +5,20 @@
 <head>
     <title>Blog Experiment</title>
 
-    <link href="/css/reset.css" rel="stylesheet" type="text/css"></link>
-    <link href="/css/text.css" rel="stylesheet" type="text/css"></link>
-    <link href="/css/960.css" rel="stylesheet" type="text/css"></link>
-    <link href="/css/site.css" rel="stylesheet" type="text/css"></link>
-{{#cssLinks}}
-    <link href="{{url}}" rel="stylesheet" type="text/css"></link>
-{{/cssLinks}}
+{{#css}}
+    <link href="{{.}}" rel="stylesheet" type="text/css"></link>
+{{/css}}
 
-    <script src="http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojo/dojo.xd.js"
-        djConfig="isDebug:true, parseOnLoad:true"></script> 
-{{#javaScripts}}
-    <script src="{{url}}" language="JavaScript"></script>
-{{/javaScripts}}
-{{#javaScriptCode}}
+{{#js_src}}
+    <script src="{{url}}" {{#attributes}}{{key}}="{{value}}"{{/attributes}}></script>
+{{/js_src}}
+{{#js_code}}
     <script language="JavaScript">
+  {{#code}}
 {{{.}}}
+  {{/code}}
     </script>
-{{/javaScriptCode}}
+{{/js_code}}
 
 </head>
 <body>
@@ -34,10 +30,10 @@
 
     <div class="grid_12" id="menu">
         <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/blog">Blog</a></li>
-            <li><a href="/comics">Comics</a></li>
-            <li><a href="/resume">R&eacute;sum&eacute;</a></li>
+            <li><a href="{{home_url}}">Home</a></li>
+            <li><a href="{{blog_url}}">Blog</a></li>
+            <li><a href="{{comics_url}}">Comics</a></li>
+            <li><a href="{{resume_url}}">R&eacute;sum&eacute;</a></li>
         </ul>
     </div>
 

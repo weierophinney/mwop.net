@@ -25,7 +25,7 @@ class Layout
 EOJ;
         $layout->javaScriptCode->push($requires);
 
-        $layout->cssLinks->push(array('url' => 'http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojox/highlight/resources/pygments/autumn.css'));
-        $layout->cssLinks->push(array('url' => 'http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojox/highlight/resources/highlight.css'));
+        $layout->cssLinks->push('http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojox/highlight/resources/pygments/autumn.css');
+        $layout->cssLinks->push('http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojox/highlight/resources/highlight.css');
     }
 }
