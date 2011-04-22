@@ -20,7 +20,7 @@ class Router extends ArrayObject implements RouteStack
         if (null !== $events) {
             $this->events = $events;
         } elseif (null === $this->events) {
-            $this->events = new EventManager(array(__CLASS__, get_called_class()));
+            $this->events = new EventManager(array(__CLASS__, get_called_class(), 'router'));
         }
         return $this->events;
     }
@@ -32,19 +32,21 @@ class Router extends ArrayObject implements RouteStack
 
     public function match(Request $request)
     {
+        $events = $this->events();
+        $params = compact('request');
+        $events->trigger(__FUNCTION__ . '.pre', $this, $params);
         foreach ($this as $name => $route) {
             $params = array('request' => $request, 'route' => array('name' => $name, 'route' => $route));
-            $this->events()->trigger(__FUNCTION__ . '.route.pre', $this, $params);
             if (false !== $result = $route->match($request)) {
                 $route->setRequest($request);
                 $this->current     = $route;
                 $params['success'] = true;
-                $this->events()->trigger(__FUNCTION__ . '.route.post', $this, $params);
+                $events->trigger(__FUNCTION__ . '.post', $this, $params);
                 return $result;
             }
             $params['success'] = false;
-            $this->events()->trigger(__FUNCTION__ . '.route.post', $this, $params);
         }
+        $events->trigger(__FUNCTION__ . '.post', $this, $params);
         return false;
     }
 

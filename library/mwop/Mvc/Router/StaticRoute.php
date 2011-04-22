@@ -63,18 +63,19 @@ class StaticRoute implements Route
             ));
         }
 
-        $uri = $request->getPathInfo();
+        $events = $this->events();
+        $uri    = $request->getPathInfo();
         if (empty($uri)) {
             // Hack for when running under FastCGI
             $uri = $request->getRequestUri();
         }
 
-        $this->events()->trigger(__FUNCTION__ . '.pre', $this, array('uri' => $uri, 'path' => $this->path));
+        $events()->trigger(__FUNCTION__ . '.pre', $this, array('uri' => $uri, 'path' => $this->path));
         if ($uri != $this->path) {
-            $this->events()->trigger(__FUNCTION__ . '.post', $this, array('uri' => $uri, 'path' => $this->path, 'success' => false));
+            $events()->trigger(__FUNCTION__ . '.post', $this, array('uri' => $uri, 'path' => $this->path, 'success' => false));
             return false;
         }
-        $this->events()->trigger(__FUNCTION__ . '.post', $this, array('uri' => $uri, 'success' => true));
+        $events()->trigger(__FUNCTION__ . '.post', $this, array('uri' => $uri, 'success' => true));
         return $this->params;
     }
 

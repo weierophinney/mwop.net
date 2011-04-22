@@ -28,7 +28,7 @@ class RegexRoute implements Route
         if (null !== $events) {
             $this->events = $events;
         } elseif (null === $this->events) {
-            $this->events = new EventManager(array(__CLASS__, get_called_class()));
+            $this->events = new EventManager(array(__CLASS__, get_called_class(), 'route'));
         }
         return $this->events;
     }
@@ -54,19 +54,20 @@ class RegexRoute implements Route
             ));
         }
 
-        $uri = $request->getPathInfo();
+        $events = $this->events();
+        $uri    = $request->getPathInfo();
         if (empty($uri)) {
             // Hack for when running under FastCGI
             $uri = parse_url($request->getRequestUri(), PHP_URL_PATH);
         }
 
-        $this->events()->trigger(__FUNCTION__ . '.pre', $this, array('uri' => $uri, 'regex' => $this->regex));
+        $events()->trigger(__FUNCTION__ . '.pre', $this, array('uri' => $uri, 'regex' => $this->regex));
         if (!preg_match($this->regex, $uri, $matches)) {
-            $this->events()->trigger(__FUNCTION__ . '.post', $this, array('uri' => $uri, 'regex' => $this->regex, 'success' => false));
+            $events()->trigger(__FUNCTION__ . '.post', $this, array('uri' => $uri, 'regex' => $this->regex, 'success' => false));
             return false;
         }
         $this->matches = $matches;
-        $this->events()->trigger(__FUNCTION__ . '.post', $this, array('uri' => $uri, 'success' => true));
+        $events()->trigger(__FUNCTION__ . '.post', $this, array('uri' => $uri, 'success' => true));
         return $matches;
     }
 
