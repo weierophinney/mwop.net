@@ -70,12 +70,12 @@ class StaticRoute implements Route
             $uri = $request->getRequestUri();
         }
 
-        $events()->trigger(__FUNCTION__ . '.pre', $this, array('uri' => $uri, 'path' => $this->path));
+        $events->trigger(__FUNCTION__ . '.pre', $this, array('uri' => $uri, 'path' => $this->path));
         if ($uri != $this->path) {
-            $events()->trigger(__FUNCTION__ . '.post', $this, array('uri' => $uri, 'path' => $this->path, 'success' => false));
+            $events->trigger(__FUNCTION__ . '.post', $this, array('uri' => $uri, 'path' => $this->path, 'success' => false));
             return false;
         }
-        $events()->trigger(__FUNCTION__ . '.post', $this, array('uri' => $uri, 'success' => true));
+        $events->trigger(__FUNCTION__ . '.post', $this, array('uri' => $uri, 'success' => true));
         return $this->params;
     }
 
