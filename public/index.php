@@ -12,7 +12,6 @@ use mwop\Controller\Front as FrontController;
 
 $events = Zend\EventManager\StaticEventManager::getInstance();
 
-/*
 $log = Zend\Log\Logger::factory(array(
     'writer' => array(
         'writerName'   => 'Stream',
@@ -21,7 +20,6 @@ $log = Zend\Log\Logger::factory(array(
         ),
     )
 ));
- */
 
 $app   = new AppContext();
 $front = new mwop\Controller\Front($app);
@@ -120,6 +118,39 @@ $front->setNotFoundHandler(function($request, $response) use ($layout, $view) {
         $response->setContent($view->render($layout->layout(), $layout));
     }
 });
+
+$cache = new Zend\Cache\Manager();
+$cache->getCache('default')->getBackend()->setCacheDir(__DIR__ . '/../cache/static');
+
+$front->events()->attach('dispatch.router.post', function($e) use ($cache) {
+    $request = $e->getParam('request');
+    if (!$request instanceof Zend\Http\Request || !$request->isGet()) {
+        return;
+    }
+
+    $metadata = json_encode(array_merge($request->getMetadata(), $request->query()->toArray()));
+    $key      = hash('md5', $metadata);
+    $backend  = $cache->getCache('default');
+    if (false !== ($content = $backend->load($key))) {
+        $response = $e->getParam('response');
+        $response->setContent($content);
+        return $response;
+    }
+    return;
+}, 100);
+
+$front->events()->attach('dispatch.post', function($e) use ($cache) {
+    $request = $e->getParam('request');
+    if (!$request instanceof Zend\Http\Request || !$request->isGet()) {
+        return;
+    }
+
+    $metadata = json_encode(array_merge($request->getMetadata(), $request->query()->toArray()));
+    $key      = hash('md5', $metadata);
+    $backend  = $cache->getCache('default');
+    $response = $e->getParam('response');
+    $backend->save($response->getContent(), $key);
+}, -100);
 
 $request  = $app->get('request');
 $response = $front->dispatch($request);

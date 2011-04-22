@@ -61,13 +61,13 @@ class RegexRoute implements Route
             $uri = parse_url($request->getRequestUri(), PHP_URL_PATH);
         }
 
-        $events()->trigger(__FUNCTION__ . '.pre', $this, array('uri' => $uri, 'regex' => $this->regex));
+        $events->trigger(__FUNCTION__ . '.pre', $this, array('uri' => $uri, 'regex' => $this->regex));
         if (!preg_match($this->regex, $uri, $matches)) {
-            $events()->trigger(__FUNCTION__ . '.post', $this, array('uri' => $uri, 'regex' => $this->regex, 'success' => false));
+            $events->trigger(__FUNCTION__ . '.post', $this, array('uri' => $uri, 'regex' => $this->regex, 'success' => false));
             return false;
         }
         $this->matches = $matches;
-        $events()->trigger(__FUNCTION__ . '.post', $this, array('uri' => $uri, 'success' => true));
+        $events->trigger(__FUNCTION__ . '.post', $this, array('uri' => $uri, 'success' => true));
         return $matches;
     }
 

@@ -146,7 +146,7 @@ class Front implements Dispatchable
         }
 
         $result = $this->events()->triggerUntil(
-            __FUNCTION__ . '.dispatch.pre', $this, $params, $responseComplete
+            __FUNCTION__ . '.pre', $this, $params, $responseComplete
         );
         if ($result->stopped()) {
             return $result->last();
@@ -159,7 +159,7 @@ class Front implements Dispatchable
         }
 
         $result = $this->events()->triggerUntil(
-            __FUNCTION__ . '.dispatch.post', $this, $params, $responseComplete
+            __FUNCTION__ . '.post', $this, $params, $responseComplete
         );
         if ($result->stopped()) {
             return $result->last();
