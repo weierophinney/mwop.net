@@ -1,4 +1,6 @@
 <?php
+ini_set("display_errors", true);
+error_reporting(E_ALL | E_STRICT);
 require_once __DIR__ . '/../library/zf2/Zend/Loader/ClassMapAutoloader.php';
 $classmap = new Zend\Loader\ClassMapAutoloader(array(
     __DIR__ . '/../library/.classmap.php',

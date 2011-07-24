@@ -234,7 +234,7 @@ class Request extends BaseRequest implements HttpRequest
 
     public function getPathInfo()
     {
-        return $this->server('PATH_INFO');
+        return parse_url($this->getRequestUri(), PHP_URL_PATH);
     }
 
 
