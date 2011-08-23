@@ -16,6 +16,16 @@ For deployment on site
 * Add caching for individual entries
   * Ideally also add for listings, and have publishing a post expire them
 
+### Prior to deployment
+
+* Delete comments on test site on disqus
+* Close commenting on s97
+* Export all entries and comments from s9y
+* Export comments to disqus
+
+### After deployment
+
+* Notify Planet PHP about change in feed
 
 In general
 ----------
