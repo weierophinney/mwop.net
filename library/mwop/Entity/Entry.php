@@ -398,9 +398,9 @@ class Entry implements EntityDefinition
      */
     public function setMetadata($metadata, $value = null) 
     {
-        if (is_array($metadata)) {
-            array_merge($this->metadata, $metadata);
-        } elseif (is_scalar($metadata)) {
+        if (is_array($metadata) && !empty($metadata)) {
+            $this->metadata = array_merge($this->metadata, $metadata);
+        } elseif (is_scalar($metadata) && !empty($metadata)) {
             $this->metadata[$metadata] = $value;
         }
         return $this;

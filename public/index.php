@@ -132,12 +132,14 @@ $front->events()->attach('dispatch.router.post', function($e) use ($cache) {
 
     $metadata = json_encode(array_merge($request->getMetadata(), $request->query()->toArray()));
     $key      = hash('md5', $metadata);
+    /*
     $backend  = $cache->getCache('default');
     if (false !== ($content = $backend->load($key))) {
         $response = $e->getParam('response');
         $response->setContent($content);
         return $response;
     }
+     */
     return;
 }, 100);
 
@@ -147,11 +149,13 @@ $front->events()->attach('dispatch.post', function($e) use ($cache) {
         return;
     }
 
+    /*
     $metadata = json_encode(array_merge($request->getMetadata(), $request->query()->toArray()));
     $key      = hash('md5', $metadata);
     $backend  = $cache->getCache('default');
     $response = $e->getParam('response');
     $backend->save($response->getContent(), $key);
+     */
 }, -100);
 
 $request  = $app->get('request');

@@ -8,12 +8,18 @@ class Layout extends Presentation
     public $javaScripts;
     public $javaScriptCode;
     public $cssLinks;
+    public $disqusKey;
 
     public function __construct()
     {
         $this->javaScripts    = new UniqueFilteringIterator();
         $this->javaScriptCode = new UniqueFilteringIterator();
         $this->cssLinks       = new UniqueFilteringIterator();
+    }
+
+    public function setDisqusKey($key)
+    {
+        $this->disqusKey = $key;
     }
 
     public function css()

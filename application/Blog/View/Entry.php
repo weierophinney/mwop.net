@@ -35,6 +35,11 @@ class Entry
         Layout::setup($presentation);
     }
 
+    public function disqusKey()
+    {
+        return $this->presentation->disqusKey;
+    }
+
     public function url()
     {
         if (isset($this->entryUrl)) {

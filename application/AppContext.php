@@ -273,6 +273,7 @@ class AppContext extends DependencyInjectionContainer
         
         $object = new \Layout();
         $object->helper($this->getPresentationBroker());
+        $object->setDisqusKey('testphlyboyphly');
         $this->services['Layout'] = $object;
         return $object;
     }

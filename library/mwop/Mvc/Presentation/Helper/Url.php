@@ -13,7 +13,7 @@ class Url
     public function __construct(Request $request, Router $router)
     {
         if ($request instanceof HttpRequest) {
-            $this->baseUrl = $request->getBaseUrl();
+            $this->baseUrl = 'http://' . $_SERVER['HTTP_HOST'] . $request->getBaseUrl();
         }
         $this->router = $router;
     }

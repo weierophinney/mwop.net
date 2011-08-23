@@ -203,10 +203,9 @@ class EntryResource extends AbstractResource
             "reduce"    => $reduce, 
             "out"       => array("inline" => 1),
         ));
-        $results = $db->selectCollection($result['result'])->find();
 
         $tags = array();
-        foreach ($results as $tag) {
+        foreach ($result['results'] as $tag) {
             $tags[] = array(
                 'title'  => $tag['_id'],
                 'weight' => $tag['value'],

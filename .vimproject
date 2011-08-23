@@ -136,10 +136,20 @@ mwop=/home/matthew/git/mwop CD=. filter="*.php *.xml *.txt" {
   cgi-bin=cgi-bin {
    php-5.3.3
   }
- scripts=scripts {
  }
+ scripts=scripts {
   createAppContext.php
+  fixPublicAccess.php
   importFromS9y.php
+  wxrCommentExport.php
+  helpers=helpers {
+   GmtDate.php
+  }
+  templates=templates {
+   comments_wxr.xml
+   item.xml
+   comment.xml
+  }
  }
  tests=tests CD=. {
   Bootstrap.php

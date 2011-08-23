@@ -16,7 +16,7 @@ class BaseUrl
     public function get()
     {
         if (null === $this->baseUrl) {
-            $this->baseUrl = $this->request->getBaseUrl();
+            $this->baseUrl = 'http://' . $_SERVER['HTTP_HOST'] . $this->request->getBaseUrl();
         }
         return $this->baseUrl;
     }

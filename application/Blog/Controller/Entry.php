@@ -22,7 +22,22 @@ class Entry extends RestfulController
 
     public function __construct()
     {
-        $this->events()->attach('dispatch.post', function($e) {
+        $events = $this->events();
+
+        // Normalize ID
+        $events->attach('dispatch.pre', function($e) {
+            $request = $e->getParam('request');
+            $id      = $request->getMetadata('id', false);
+            if (!$id) {
+                return;
+            }
+
+            $id = urldecode($id);
+            $request->setMetadata('id', $id);
+        });
+
+        // Setup presentation
+        $events->attach('dispatch.post', function($e) {
             $controller = $e->getTarget();
             if (null === ($layout = $controller->getPresentation())) {
                 return;
