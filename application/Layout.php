@@ -9,9 +9,11 @@ class Layout extends Presentation
     public $javaScriptCode;
     public $cssLinks;
     public $disqusKey;
+    public $titleSegments;
 
     public function __construct()
     {
+        $this->titleSegments  = new UniqueFilteringIterator();
         $this->javaScripts    = new UniqueFilteringIterator();
         $this->javaScriptCode = new UniqueFilteringIterator();
         $this->cssLinks       = new UniqueFilteringIterator();
@@ -20,6 +22,13 @@ class Layout extends Presentation
     public function setDisqusKey($key)
     {
         $this->disqusKey = $key;
+    }
+
+    public function title()
+    {
+        $this->titleSegments->push('phly, boy, phly');
+        $segments = $this->titleSegments->toArray();
+        return implode(' :: ', $segments);
     }
 
     public function css()

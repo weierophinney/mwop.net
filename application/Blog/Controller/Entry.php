@@ -3,13 +3,14 @@ namespace Blog\Controller;
 
 use Blog\View\Entries as EntriesView,
     Blog\View\TagCloud,
+    Mongo,
     mwop\Controller\Restful as RestfulController,
     mwop\DataSource\Mongo as MongoDataSource,
     mwop\Mvc\Presentation,
     mwop\Stdlib\Resource,
     mwop\Resource\EntryResource,
     Phly\Mustache\Pragma\SubView,
-    Mongo;
+    Zend\Feed\Writer\Feed as FeedWriter;
 
 class Entry extends RestfulController
 {
@@ -46,6 +47,12 @@ class Entry extends RestfulController
             $view       = $e->getParam('__RESULT__');
             if (is_object($view) && method_exists($view, 'setPresentation')) {
                 $view->setPresentation($layout);
+            }
+
+            if (isset($view->title) && isset($view->title['text'])) {
+                $layout->titleSegments->unshift($view->title['text']);
+            } elseif (isset($view->entity)) {
+                $layout->titleSegments->unshift($view->entity->getTitle());
             }
 
             $tags       = $controller->resource()->getTagCloud();

@@ -14,6 +14,11 @@ class Layout
         if (!isset($layout->cssLinks)) {
             $layout->cssLinks = new UniqueFilteringIterator;
         }
+        if (!isset($layout->titleSegments)) {
+            $layout->titleSegments = new UniqueFilteringIterator;
+        }
+        $layout->titleSegments->unshift('Blog');
+
 
         $requires =<<<EOJ
         dojo.require("dojox.highlight");
