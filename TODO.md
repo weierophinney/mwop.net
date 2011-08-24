@@ -4,9 +4,6 @@ TODO
 For deployment on site
 ----------------------
 
-* Feeds need to be in place
-  * At the very least, full blog feed
-  * Ideally also per-tag
 * Authentication/Authorization for blog posters (me!)
   * Require authorization key for posting entries
 * Rewrite map of old URLs to new

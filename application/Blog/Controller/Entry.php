@@ -10,7 +10,7 @@ use Blog\View\Entries as EntriesView,
     mwop\Stdlib\Resource,
     mwop\Resource\EntryResource,
     Phly\Mustache\Pragma\SubView,
-    Zend\Feed\Writer\Feed as FeedWriter;
+    Zend_Feed_Writer_Feed as FeedWriter;
 
 class Entry extends RestfulController
 {
@@ -66,8 +66,7 @@ class Entry extends RestfulController
             if (isset($view->title) && isset($view->title['text'])) {
                 $layout->titleSegments->unshift($view->title['text']);
             }
-            $titleSegments = $layout->titleSegments->toArray();
-            $title         = implode(' - ', $titleSegments);
+            $title         = $layout->title();
 
             $urlHelper     = $layout->helper('url');
             if (false !== strstr($title, 'Tag: ')) {
@@ -81,18 +80,10 @@ class Entry extends RestfulController
             $feed = new FeedWriter();
             $feed->setTitle($title);
             $feed->setLink($link);
-            $feed->setFeedLink($feedLink);
-            /**
-             * @todo inject this info!
-             */
-            $feed->setAuthor(array(
-                'name'  => "Matthew Weier O'Phinney",
-                'email' => 'matthew@weierophinney.net',
-                'uri'   => $link,
-            ));
+            $feed->setFeedLink($feedLink, 'atom');
 
             $latest = false;
-            foreach ($entries as $post) {
+            foreach ($view->entries->getIterator() as $post) {
                 if (!$latest) {
                     $latest = $post;
                 }
@@ -118,7 +109,7 @@ class Entry extends RestfulController
 
             $response = $e->getParam('response');
             $response->setContent($feed->export('atom'));
-            $response->setMetadata('Content-Type', 'application/atom+xml');
+            $response->getHeaders()->addHeader('Content-Type', 'application/atom+xml');
 
             $e->stopPropagation(true);
             return $response;

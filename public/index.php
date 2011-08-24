@@ -1,12 +1,20 @@
 <?php
 ini_set("display_errors", true);
 error_reporting(E_ALL | E_STRICT);
+set_include_path('.');
 require_once __DIR__ . '/../library/zf2/Zend/Loader/ClassMapAutoloader.php';
 $classmap = new Zend\Loader\ClassMapAutoloader(array(
     __DIR__ . '/../library/.classmap.php',
     __DIR__ . '/../application/.classmap.php',
 ));
 $classmap->register();
+
+$psr0 = new Zend\Loader\StandardAutoloader(array(
+    'prefixes' => array(
+        'Zend_' => __DIR__ . '/../library/feed/Zend',
+    ),
+));
+$psr0->register();
 
 require_once __DIR__ . '/../library/Phly/Mustache/_autoload.php';
 
