@@ -182,16 +182,24 @@ dl.resume dd p.metadata {
     font-style: oblique;
 }
 
-.blog .entry.tags {
+.blog .entry.meta {
+    border-top: 3px solid #676767;
     text-align: right;
-    padding-bottom: 0.5em;
-    font-style: oblique;
+    background-color: #F3F3F3;
 }
 
-.blog .entry.date {
-    text-align: left;
+.blog .entry.meta p {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+}
+
+.blog p.tags {
     padding-bottom: 0.5em;
     font-weight: bold;
+}
+
+.blog p.date {
+    font-size: 0.8em;
 }
 
 .blog h4.entry {

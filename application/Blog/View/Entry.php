@@ -79,7 +79,7 @@ class Entry
                 $tags[] = sprintf('<a href="/blog/tag/%s">%s</a>', $tag, $tag);
             }
         }
-        return implode(', ', $tags);
+        return implode("<br/>\n", $tags);
     }
 
 

@@ -1,9 +1,12 @@
-<h4 class="entry"><a href="{{url}}">{{title}}</a></h4>
+<div class="grid_2 entry meta">
+    <p class="tags">{{{tags}}}</p>
+    <p class="date">{{created}}</p>
+</div>
+<div class="grid_6">
+    <h4 class="entry"><a href="{{url}}">{{title}}</a></h4>
 
-<div class="grid_4 entry date">{{created}}</div>
-<div class="grid_4 entry tags">In {{{tags}}}</div>
+    <div class="entry body">{{{body}}}</div>
+
+    <p><a href="{{url}}">Continue reading...</a></p>
+</div>
 <div class="clear"></div>
-
-<div class="entry body">{{{body}}}</div>
-
-<p><a href="{{url}}">Continue reading...</a></p>

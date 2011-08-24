@@ -362,7 +362,8 @@ class Entry implements EntityDefinition
      */
     public function getTags()
     {
-        return $this->tags;
+        $tags = array_unique($this->tags, SORT_STRING);
+        return $tags;
     }
 
     /**
