@@ -39,6 +39,12 @@
                                         {"controller": "blog", "action": "create"}
                                     ]
                                 },
+                                "blog-tag-feed": {
+                                    "params": [
+                                        "#^/(?P<controller>blog)/(?P<action>tag)/(?P<tag>[^/]+)\\.(?P<format>xml)#",
+                                        "/blog/tag/{tag}.xml"
+                                    ]
+                                },
                                 "blog-tag": {
                                     "params": [
                                         "#^/(?P<controller>blog)/(?P<action>tag)/(?P<tag>[^/]+)#",
@@ -67,6 +73,13 @@
                                     "params": [
                                         "#^/(?P<controller>blog)/(?P<id>[^/]+)#",
                                         "/blog/{id}"
+                                    ]
+                                },
+                                "blog-feed": {
+                                    "class": "mwop\\Mvc\\Router\\StaticRoute",
+                                    "params": [
+                                        "/blog.xml",
+                                        {"controller": "blog", "format": "xml"}
                                     ]
                                 },
                                 "blog": {

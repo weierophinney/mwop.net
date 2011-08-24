@@ -126,6 +126,14 @@ class AppContext extends DependencyInjectionContainer
               ),
             ),
           ),
+          'blog-tag-feed' => 
+          array (
+            'params' => 
+            array (
+              0 => '#^/(?P<controller>blog)/(?P<action>tag)/(?P<tag>[^/]+)\\.(?P<format>xml)#',
+              1 => '/blog/tag/{tag}.xml',
+            ),
+          ),
           'blog-tag' => 
           array (
             'params' => 
@@ -164,6 +172,19 @@ class AppContext extends DependencyInjectionContainer
             array (
               0 => '#^/(?P<controller>blog)/(?P<id>[^/]+)#',
               1 => '/blog/{id}',
+            ),
+          ),
+          'blog-feed' => 
+          array (
+            'class' => 'mwop\\Mvc\\Router\\StaticRoute',
+            'params' => 
+            array (
+              0 => '/blog.xml',
+              1 => 
+              array (
+                'controller' => 'blog',
+                'format' => 'xml',
+              ),
             ),
           ),
           'blog' => 

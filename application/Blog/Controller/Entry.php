@@ -37,6 +37,93 @@ class Entry extends RestfulController
             $request->setMetadata('id', $id);
         });
 
+        // Setup feeds
+        $events->attach('dispatch.post', function($e) {
+            $request    = $e->getParam('request');
+            $format     = $request->getMetadata('format', false);
+            if ($format !== 'xml') {
+                return;
+            }
+
+            $view       = $e->getParam('__RESULT__');
+            if (!$view instanceof EntriesView) {
+                // No entities, thus no feed
+                return;
+            }
+            if (isset($view->paginatorUrl) && empty($view->tag)) {
+                // only doing feeds for main list and tags
+                return;
+            }
+
+            $controller = $e->getTarget();
+            if (null === ($layout = $controller->getPresentation())) {
+                return;
+            }
+            if (is_object($view) && method_exists($view, 'setPresentation')) {
+                $view->setPresentation($layout);
+            }
+
+            if (isset($view->title) && isset($view->title['text'])) {
+                $layout->titleSegments->unshift($view->title['text']);
+            }
+            $titleSegments = $layout->titleSegments->toArray();
+            $title         = implode(' - ', $titleSegments);
+
+            $urlHelper     = $layout->helper('url');
+            if (false !== strstr($title, 'Tag: ')) {
+                $link      = $urlHelper->generate(array('tag' => $view->tag), array('name' => 'blog-tag'));
+                $feedLink  = $urlHelper->generate(array('tag' => $view->tag), array('name' => 'blog-tag-feed'));
+            } else {
+                $link      = $urlHelper->generate(array(), array('name' => 'blog'));
+                $feedLink  = $urlHelper->generate(array(), array('name' => 'blog-feed'));
+            }
+
+            $feed = new FeedWriter();
+            $feed->setTitle($title);
+            $feed->setLink($link);
+            $feed->setFeedLink($feedLink);
+            /**
+             * @todo inject this info!
+             */
+            $feed->setAuthor(array(
+                'name'  => "Matthew Weier O'Phinney",
+                'email' => 'matthew@weierophinney.net',
+                'uri'   => $link,
+            ));
+
+            $latest = false;
+            foreach ($entries as $post) {
+                if (!$latest) {
+                    $latest = $post;
+                }
+                $entry = $feed->createEntry();
+                $entry->setTitle($post->getTitle());
+                $entry->setLink($urlHelper->generate(array('id' => $post->getId()), array('name' => 'blog-entry')));
+                /**
+                 * @todo inject this info!
+                 */
+                $entry->addAuthor(array(
+                    'name'  => "Matthew Weier O'Phinney",
+                    'email' => 'matthew@weierophinney.net',
+                    'uri'   => $link,
+                ));
+                $entry->setDateModified($post->getUpdated());
+                $entry->setDateCreated($post->getCreated());
+                $entry->setContent($post->getBody());
+                $feed->addEntry($entry);
+            }
+
+            // Set feed date
+            $feed->setDateModified($latest->getUpdated());
+
+            $response = $e->getParam('response');
+            $response->setContent($feed->export('atom'));
+            $response->setMetadata('Content-Type', 'application/atom+xml');
+
+            $e->stopPropagation(true);
+            return $response;
+        }, 100);
+
         // Setup presentation
         $events->attach('dispatch.post', function($e) {
             $controller = $e->getTarget();
@@ -121,6 +208,7 @@ class Entry extends RestfulController
         $tag     = urldecode($tag);
         $entries = $this->resource()->getEntriesByTag($tag, false);
         return new EntriesView(array(
+            'tag'      => $tag,
             'title'    => array('text' => 'Tag: ' . $tag),
             'entities' => $entries,
             'request'  => $this->getRequest(),

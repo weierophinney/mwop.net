@@ -9,7 +9,8 @@ use mwop\Mvc\Presentation,
 
 class Entries
 {
-    protected $entries;
+    public $entries;
+    public $tag;
     protected $request;
     protected $presentation;
     protected $paginatorUrl = '/blog';
@@ -30,6 +31,9 @@ class Entries
 
         if (isset($values['title'])) {
             $this->title = $values['title'];
+        }
+        if (isset($values['tag'])) {
+            $this->tag = $values['tag'];
         }
         if (isset($values['paginator_url'])) {
             $this->paginatorUrl = $values['paginator_url'];
