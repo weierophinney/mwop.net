@@ -26,6 +26,10 @@ h1, h2, h3, h4 {
     font-family: 'Cardo', arial, serif;
 }
 
+a {
+    color: #676767;
+}
+
 #header {
     margin-bottom: 1em;
     background-color: #FFFFFF;
