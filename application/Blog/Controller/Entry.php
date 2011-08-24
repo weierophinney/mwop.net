@@ -127,8 +127,12 @@ class Entry extends RestfulController
                 $view->setPresentation($layout);
             }
 
-            if (isset($view->title) && isset($view->title['text'])) {
-                $layout->titleSegments->unshift($view->title['text']);
+            if (isset($view->title)) {
+                if (is_string($view->title)) {
+                    $layout->titleSegments->unshift($view->title);
+                } elseif (is_array($view->title) && isset($view->title['text'])) {
+                    $layout->titleSegments->unshift($view->title['text']);
+                }
             } elseif (isset($view->entity)) {
                 $layout->titleSegments->unshift($view->entity->getTitle());
             }
