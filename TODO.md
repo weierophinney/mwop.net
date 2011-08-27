@@ -4,8 +4,14 @@ TODO
 For deployment on site
 ----------------------
 
-* Authentication/Authorization for blog posters (me!)
-  * Require authorization key for posting entries
+* Posting entries
+  * Needs some sort of authentication
+  * Perhaps make it an API *only*?
+* Comics
+  * Require authorization of some sort; digest, maybe?
+  * Broken comics
+    * FBOFW is not fetching
+    * Missing basic instructions, penny arcade, multiverse, g-g
 * Rewrite map of old URLs to new
 * Mobile layout
   * Barebones -- just a changed stylesheet, potentially with fewer items
