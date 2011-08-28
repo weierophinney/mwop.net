@@ -35,3 +35,7 @@ In general
 * Create a renderer platform, and potentially rewrite to use PHP driven
   templating (instead of mustache)
 * Add caching support
+* Consolidate several classes from Comic component
+  * RSS class: Basic Instructions, XKCD, G-G, SfaM
+  * DomQuery class: GoComics, PennyArcade, NIH, Dilbert, FoxTrot, Ctrl-Alt-Del,
+    UF
