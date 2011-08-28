@@ -15,6 +15,11 @@ abstract class ComicFactory
         'mwop\Comic\ComicSource\UserFriendly',
         'mwop\Comic\ComicSource\Xkcd',
         'mwop\Comic\ComicSource\CtrlAltDel',
+        'mwop\Comic\ComicSource\BasicInstructions',
+        'mwop\Comic\ComicSource\ScenesFromAMultiverse',
+        'mwop\Comic\ComicSource\GarfieldMinusGarfield',
+        'mwop\Comic\ComicSource\PennyArcade',
+        'mwop\Comic\ComicSource\FoxTrot',
     );
     protected static $supported = array();
 
@@ -49,8 +54,8 @@ abstract class ComicFactory
     {
         foreach (static::$comicClasses as $class) {
             $supported = call_user_func($class . '::supports');
-            foreach ($supported as $comic) {
-                static::$supported[$comic] = $class;
+            foreach ($supported as $alias => $comic) {
+                static::$supported[$alias] = $class;
             }
         }
     }

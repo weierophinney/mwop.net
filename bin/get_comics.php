@@ -15,18 +15,24 @@ $scan = array_merge(
     ComicSource\NotInventedHere::supports(),
     ComicSource\UserFriendly::supports(),
     ComicSource\CtrlAltDel::supports(),
-    ComicSource\Xkcd::supports()
+    ComicSource\Xkcd::supports(),
+    ComicSource\BasicInstructions::supports(),
+    ComicSource\ScenesFromAMultiverse::supports(),
+    ComicSource\GarfieldMinusGarfield::supports(),
+    ComicSource\PennyArcade::supports(),
+    ComicSource\FoxTrot::supports()
 );
+ksort($scan);
 
 $comics = array();
-foreach ($scan as $name) {
-    $source = ComicFactory::factory($name);
+foreach ($scan as $alias => $name) {
+    $source = ComicFactory::factory($alias);
     try {
         $comic  = $source->fetch();
     } catch (\Exception $e) {
         file_put_contents('php://stderr', sprintf(
             'Unable to fetch comic "%s": %s',
-            $name,
+            $alias,
             $e->getMessage()
         ));
         continue;

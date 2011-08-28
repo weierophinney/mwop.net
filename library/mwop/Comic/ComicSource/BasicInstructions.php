@@ -6,20 +6,20 @@ use mwop\Comic\Comic,
     SimpleXMLElement;
 
 /**
- * @todo merge this, Basic Instructions, and G-G into generic "RSS" class
+ * @todo merge this, XKCD, and G-G into generic "RSS" class
  */
-class Xkcd extends AbstractComicSource
+class BasicInstructions extends AbstractComicSource
 {
     protected static $comics = array(
-        'xkcd' => 'XKCD',
+        'basicinstructions' => 'Basic Instructions',
     );
 
-    protected $comicBase = 'http://xkcd.com';
-    protected $feedUrl = 'http://xkcd.com/rss.xml';
+    protected $comicBase = 'http://basicinstructions.net/basic-instructions/';
+    protected $feedUrl   = 'http://basicinstructions.net/basic-instructions/rss.xml';
 
     public function fetch()
     {
-        // will need to parse feed at http://xkcd.com/rss.xml
+        // will need to parse feed
         $sxl = new SimpleXMLElement($this->feedUrl, 0, true);
 
         // Iterate <item> elements, breaking after first
@@ -32,7 +32,7 @@ class Xkcd extends AbstractComicSource
         $desc  = (string) $latest->description;
         if (!preg_match('/src="(?P<src>[^"]+)"/', $desc, $matches)) {
             $this->registerError(sprintf(
-                'XKCD feed does not include image description containing image URL: %s',
+                'Basic Instructions feed does not include image description containing image URL: %s',
                 $desc
             ));
             return false;
@@ -40,7 +40,7 @@ class Xkcd extends AbstractComicSource
         $image = $matches['src'];
 
         $comic = new Comic(
-            /* 'name'  => */ static::$comics['xkcd'],
+            /* 'name'  => */ static::$comics['basicinstructions'],
             /* 'link'  => */ $this->comicBase,
             /* 'daily' => */ $daily,
             /* 'image' => */ $image
@@ -49,4 +49,5 @@ class Xkcd extends AbstractComicSource
         return $comic;
     }
 }
+
 

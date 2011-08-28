@@ -9,9 +9,6 @@ For deployment on site
   * Perhaps make it an API *only*?
 * Comics
   * Require authorization of some sort; digest, maybe?
-  * Broken comics
-    * FBOFW is not fetching
-    * Missing basic instructions, penny arcade, multiverse, g-g
 * Rewrite map of old URLs to new
 * Mobile layout
   * Barebones -- just a changed stylesheet, potentially with fewer items

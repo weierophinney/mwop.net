@@ -18,7 +18,7 @@ abstract class AbstractComicSource implements ComicSource
 
     public static function supports()
     {
-        return array_keys(static::$comics);
+        return static::$comics;
     }
 
     protected function registerError($message)

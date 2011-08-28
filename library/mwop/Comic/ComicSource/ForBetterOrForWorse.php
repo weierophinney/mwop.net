@@ -14,11 +14,20 @@ class ForBetterOrForWorse extends AbstractComicSource
 
     protected $dailyFormat = 'http://fborfw.com/strip_fix/%s/%s/%s.php';
     protected $imageFormat = 'http://fborfw.com/strip_fix/strips/fb_c%s.gif';
+    protected $sundayImageFormat = 'http://fborfw.com/strip_fix/strips/%s.jpg';
 
     public function fetch()
     {
         $daily = sprintf($this->dailyFormat, date('Y'), date('m'), strtolower(date('l-F-j-Y')));
-        $image = sprintf($this->imageFormat, date('ymd'));
+
+        switch (strtolower(date('l'))) {
+            case 'sunday':
+                $image = sprintf($this->sundayImageFormat, date('ymd'));
+                break;
+            default:
+                $image = sprintf($this->imageFormat, date('ymd'));
+                break;
+        }
 
         $comic = new Comic(
             /* 'name'  => */ static::$comics['fborfw'],
@@ -26,5 +35,6 @@ class ForBetterOrForWorse extends AbstractComicSource
             /* 'daily' => */ $daily,
             /* 'image' => */ $image
         );
+        return $comic;
     }
 }

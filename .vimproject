@@ -47,13 +47,39 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md *.php *.xml *.txt" {
    }
   }
  }
+ bin=bin {
+  get_comics.php
+  get_one_comic.php
+ }
  library=library {
+  .classmap.php
   mwop=mwop {
    .classmap.php
    Acl.php
    Acl=Acl {
     AclException.php
     SignalHandler.php
+   }
+   Comic=Comic {
+    Comic.php
+    ComicDescription.php
+    ComicFactory.php
+    ComicSource.php
+    ComicSource=ComicSource {
+     AbstractComicSource.php
+     BasicInstructions.php
+     CtrlAltDel.php
+     Dilbert.php
+     ForBetterOrForWorse.php
+     FoxTrot.php
+     GarfieldMinusGarfield.php
+     GoComics.php
+     NotInventedHere.php
+     PennyArcade.php
+     ScenesFromAMultiverse.php
+     UserFriendly.php
+     Xkcd.php
+    }
    }
    Controller=Controller {
     Front.php
