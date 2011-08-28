@@ -11,17 +11,16 @@ class CtrlAltDel extends AbstractComicSource
         'ctrlaltdel' => 'Ctrl+Alt+Del',
     );
 
-    protected $comicBase = 'http://www.cad-comic.com';
+    protected $comicBase = 'http://www.cad-comic.com/cad/';
     protected $dailyFormat = 'http://www.cad-comic.com/cad/%s/';
 
     public function fetch()
     {
-        $url = sprintf($this->dailyFormat, date('Ymd'));
-        $page = file_get_contents($url);
+        $page = file_get_contents($this->comicBase);
         if (!$page) {
             $this->registerError(sprintf(
                 'Comic at "%s" is unreachable',
-                $url
+                $this->comicBase
             ));
             return false;
         }
@@ -42,6 +41,7 @@ class CtrlAltDel extends AbstractComicSource
                 $src = $node->getAttribute('src');
                 if (strstr($src, 'cad-comic.com/comics/cad-')) {
                     $imgUrl = $src;
+                    break;
                 }
             }
         }
@@ -54,10 +54,15 @@ class CtrlAltDel extends AbstractComicSource
             return false;
         }
 
+        $daily  = sprintf($this->dailyFormat, date('Ymd'));
+        if (preg_match('#cad-(?P<date>\d{8})-[a-z0-9]+\.png#', $imgUrl, $matches)) {
+            $daily = sprintf($this->dailyFormat, $matches['date']);
+        }
+
         $comic = new Comic(
             /* 'name'  => */ static::$comics['ctrlaltdel'],
             /* 'link'  => */ $this->comicBase,
-            /* 'daily' => */ $url,
+            /* 'daily' => */ $daily,
             /* 'image' => */ $imgUrl
         );
 

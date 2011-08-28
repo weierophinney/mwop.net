@@ -7,7 +7,10 @@ use DomainException,
 
 abstract class ComicFactory
 {
-    public static $comicClasses = array(
+    /**
+     * @var array List of comic source classes
+     */
+    protected static $comicClasses = array(
         'mwop\Comic\ComicSource\GoComics',
         'mwop\Comic\ComicSource\Dilbert',
         'mwop\Comic\ComicSource\ForBetterOrForWorse',
@@ -21,13 +24,21 @@ abstract class ComicFactory
         'mwop\Comic\ComicSource\PennyArcade',
         'mwop\Comic\ComicSource\FoxTrot',
     );
+
+    /**
+     * @var array List of comic => array( 'name' => name, 'class' => source class)
+     */
     protected static $supported = array();
 
+    /**
+     * Retrieve a source class for a given comic
+     * 
+     * @param  string $name Comic "alias" used within a comic source
+     * @return ComicSource
+     */
     public static function factory($name)
     {
-        if (empty(static::$supported)) {
-            static::initSupported();
-        }
+        static::initSupported();
 
         if (!isset(static::$supported[$name])) {
             throw new InvalidArgumentException(sprintf(
@@ -36,7 +47,7 @@ abstract class ComicFactory
             ));
         }
 
-        $class  = static::$supported[$name];
+        $class  = static::$supported[$name]['class'];
         $source = new $class($name);
 
         if (!$source instanceof ComicSource) {
@@ -50,12 +61,54 @@ abstract class ComicFactory
         return $source;
     }
 
+    /**
+     * Add a comic source class to use with the factory
+     *
+     * Must implement ComicSource.
+     * 
+     * @param  string $classname 
+     * @return void
+     */
+    public static function addSourceClass($classname)
+    {
+        static::$comicClasses[] = $classname;
+        static::$supported = array();
+    }
+
+    /**
+     * Get list of supported comics
+     *
+     * Returns a list of supported comics. Each key is a comic "alias" used by 
+     * the comic source, pointing to an array with "name" and "class" keys; the 
+     * "name" is the comic name, and the "class" is the comic source class used
+     * to retrieve it.
+     * 
+     * @return array
+     */
+    public static function getSupported()
+    {
+        static::initSupported();
+        return static::$supported;
+    }
+
+    /**
+     * Initialize the {@link $supported} list
+     * 
+     * @return void
+     */
     protected static function initSupported()
     {
+        if (!empty(static::$supported)) {
+            return;
+        }
+
         foreach (static::$comicClasses as $class) {
             $supported = call_user_func($class . '::supports');
             foreach ($supported as $alias => $comic) {
-                static::$supported[$alias] = $class;
+                static::$supported[$alias] = array(
+                    'name'  => $comic,
+                    'class' => $class,
+                );
             }
         }
     }

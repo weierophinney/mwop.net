@@ -9,25 +9,11 @@ $classmap = new Zend\Loader\ClassMapAutoloader(array(
 $classmap->register();
 
 use mwop\Comic\ComicFactory,
-    mwop\Comic\ComicSource,
     Zend\Console\Getopt,
     Zend\Console\Exception as GetoptException;
 
-$scan = array_merge(
-    ComicSource\GoComics::supports(), 
-    ComicSource\Dilbert::supports(),
-    ComicSource\ForBetterOrForWorse::supports(),
-    ComicSource\NotInventedHere::supports(),
-    ComicSource\UserFriendly::supports(),
-    ComicSource\CtrlAltDel::supports(),
-    ComicSource\Xkcd::supports(),
-    ComicSource\BasicInstructions::supports(),
-    ComicSource\ScenesFromAMultiverse::supports(),
-    ComicSource\GarfieldMinusGarfield::supports(),
-    ComicSource\PennyArcade::supports(),
-    ComicSource\FoxTrot::supports()
-);
-ksort($scan);
+$comics = ComicFactory::getSupported();
+ksort($comics);
 
 $comic = false;
 $list  = false;
@@ -52,13 +38,13 @@ if ($options->getOption('l')) {
     echo "Supported comics:\n";
     $mapped = array_map(function($name) {
         return strlen($name);
-    }, array_keys($scan));
+    }, array_keys($comics));
     $longest = array_reduce($mapped, function($count, $longest) {
         $longest = ($count > $longest) ? $count : $longest;
         return $longest;
     }, 0);
-    foreach ($scan as $alias => $name) {
-        printf("    %${longest}s: %s\n", $alias, $name);
+    foreach ($comics as $alias => $info) {
+        printf("    %${longest}s: %s\n", $alias, $info['name']);
     }
     exit(0);
 }
@@ -71,7 +57,7 @@ if (!isset($options->c)) {
 }
 
 $comicName  = $options->getOption('c');
-if (!in_array($comicName, array_keys($scan))) {
+if (!in_array($comicName, array_keys($comics))) {
     $message = sprintf('Comic "%s" is unsupported; please use --list to find supported comics', $comicName);
     file_put_contents('php://stderr', $message);
     exit(1);

@@ -1,31 +1,21 @@
 <?php
+ini_set('display_errors', true);
+error_reporting(-1);
+
 require_once __DIR__ . '/../library/zf2/Zend/Loader/ClassMapAutoloader.php';
 $classmap = new Zend\Loader\ClassMapAutoloader(array(
     __DIR__ . '/../library/.classmap.php',
 ));
 $classmap->register();
 
-use mwop\Comic\ComicFactory,
-    mwop\Comic\ComicSource;
 
-$scan = array_merge(
-    ComicSource\GoComics::supports(), 
-    ComicSource\Dilbert::supports(),
-    ComicSource\ForBetterOrForWorse::supports(),
-    ComicSource\NotInventedHere::supports(),
-    ComicSource\UserFriendly::supports(),
-    ComicSource\CtrlAltDel::supports(),
-    ComicSource\Xkcd::supports(),
-    ComicSource\BasicInstructions::supports(),
-    ComicSource\ScenesFromAMultiverse::supports(),
-    ComicSource\GarfieldMinusGarfield::supports(),
-    ComicSource\PennyArcade::supports(),
-    ComicSource\FoxTrot::supports()
-);
-ksort($scan);
+use mwop\Comic\ComicFactory;
+
+$supported = ComicFactory::getSupported();
+ksort($supported);
 
 $comics = array();
-foreach ($scan as $alias => $name) {
+foreach (array_keys($supported) as $alias) {
     $source = ComicFactory::factory($alias);
     try {
         $comic  = $source->fetch();
