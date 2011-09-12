@@ -48,7 +48,7 @@ class GoComics extends AbstractComicSource
         $dom  = new DomQuery($page);
         $r    = $dom->execute('img.strip');
         if (!$r->count()) {
-            continue;
+            return false;
         }
 
         $imgUrl = false;
