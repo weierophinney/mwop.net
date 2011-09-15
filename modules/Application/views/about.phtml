@@ -1,12 +1,16 @@
+<?php
+$resumeUrl = $this->plugin('url')->direct(array(), array('name' => 'resume'));
+?>
 <p>
     I'm a husband, father of two, slave to a Basset Hound, and web architect by
     day.
 </p>
 
 <ul class="resume">
-    <li><a href="{{resume_url}}">Resume</a></li>
+    <li><a href="<?php echo $resumeUrl ?>">Resume</a></li>
     <li><a href="http://twitter.com/weierophinney">Twitter</a></li>
     <li><a href="http://identi.ca/weierophinney">Identica</a></li>
     <li><a href="http://www.linkedin.com/in/mweierophinney">LinkedIn</a></li>
     <li><a href="http://www.ohloh.net/accounts/weierophinney">OhLoh</a></li>
 </ul>
+

@@ -1,0 +1,58 @@
+<?php 
+$url       = $this->plugin('url');
+$homeUrl   = $url->direct(array(), array('name' => 'home'));
+$comicsUrl = $url->direct(array(), array('name' => 'comics'));
+$resumeUrl = $url->direct(array(), array('name' => 'resume'));
+
+echo $this->plugin('doctype') ?>
+<html>
+<head>
+    <title><?php echo $this->plugin('headTitle') ?></title>
+    
+    <?php echo $this->plugin('headLink') ?>
+
+    <?php echo $this->plugin('headScript') ?>
+
+</head>
+<body>
+<div class="container_12">
+    <div class="grid_12" id="header">
+    <a href="<?php echo $homeUrl ?>"><img src="/images/logo.gif" height="37" width="37"/></a>
+        <span class="main_title">phly, boy, phly: matthew weier o'phinney</span>
+    </div>
+
+    <div class="grid_12" id="menu">
+        <ul>
+            <li><a href="<?php echo $homeUrl ?>">Home</a></li>
+            <?php // <li><a href="{{blog_url}}">Blog</a></li> ?>
+            <li><a href="<?php echo $comicsUrl ?>">Comics</a></li>
+            <li><a href="<?php echo $resumeUrl ?>">R&eacute;sum&eacute;</a></li>
+        </ul>
+    </div>
+
+    {{content}}
+    <div class="clear"></div>
+
+    <div class="grid_12 divider">&nbsp;</div>
+
+    <div class="grid_4 footer about">
+        <h4>About</h4>
+        <?php echo $this->render('about.phtml') ?>
+    </div>
+
+    <div class="grid_4 footer projects">
+        <h4>Projects</h4>
+        <?php echo $this->render('projects.phtml') ?>
+    </div>
+
+    <div class="grid_4 footer tags">
+        <?php /*
+        {{#footer}}{{#tags}}
+        <h4>Tag Cloud</h4>
+        {{cloud}}
+        {{/tags}}{{/footer}}
+         */ ?>
+    </div>
+</div>
+</body>
+</html>

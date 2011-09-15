@@ -113,14 +113,14 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md *.php *.xml *.txt" {
     }
    }
    views=views filter="*.mustache *.phtml" {
-    about.mustache
-    layout.mustache
-    projects.mustache
+    about.phtml
+    layout.phtml
+    projects.phtml
     pages=pages {
-     404.mustache
-     comics.mustache
-     home.mustache
-     resume.mustache
+     404.phtml
+     comics.phtml
+     home.phtml
+     resume.phtml
     }
    }
   }
