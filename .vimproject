@@ -105,8 +105,12 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md *.php *.xml *.txt" {
    configs=configs filter="*.ini *.xml *.php" {
     module.config.php
    }
-   Controller=Controller {
-    PageController.php
+   src=src {
+    Application=Application {
+     Controller=Controller {
+      PageController.php
+     }
+    }
    }
    views=views filter="*.mustache *.phtml" {
     about.mustache
@@ -124,6 +128,7 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md *.php *.xml *.txt" {
    autoload_classmap.php
    autoload_function.php
    autoload_register.php
+   Module.php
    bin=bin {
     get_comics.php
     get_one_comic.php
