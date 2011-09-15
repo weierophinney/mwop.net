@@ -92,9 +92,11 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md *.php *.xml *.txt" {
    tests=tests filter="*.xml *.php" {
     phpunit.xml
     bootstrap.php
+    bootstrap.php.dist
     Blog=Blog {
      EntryEntityTest.php
      EntryResourceTest.php
+     MongoIntegrationTest.php
     }
     log=log {
     }
