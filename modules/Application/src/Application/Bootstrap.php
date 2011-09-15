@@ -88,7 +88,15 @@ class Bootstrap
 
             $response = $e->getParam('response');
             if ($response->getStatusCode() == 404) {
+                return;
+            } 
+
+            $request    = $e->getParam('request');
+            $routeMatch = $request->getMetadata('route-match', false);
+            if (!$routeMatch) {
                 $page = '404';
+            } else {
+                $page = $routeMatch->getParam('page', '404');
             }
 
             $script     = 'pages/' . $page . '.phtml';
@@ -141,7 +149,7 @@ class Bootstrap
         });
 
         // Render 404 pages
-        $events->attach('Zf2Mvc\Controller\ActionController', 'dispatch.post', function($e) use ($view, $layoutHandler) {
+        $events->attach('Zf2Mvc\Controller\Dispatchable', 'dispatch.post', function($e) use ($view, $layoutHandler) {
             $vars       = $e->getParam('__RESULT__');
             if ($vars instanceof Response) {
                 return;
@@ -153,6 +161,7 @@ class Bootstrap
                 return;
             }
 
+            $view->plugin('headTitle')->prepend('Page Not Found');
             $content = $view->render('page/404.phtml', $vars);
 
             // Layout
@@ -174,6 +183,7 @@ class Bootstrap
                     break;
             }
 
+            $view->plugin('headTitle')->prepend('Application Error');
             $content = $view->render($script);
 
             // Layout
@@ -190,7 +200,9 @@ class Bootstrap
         $url    = $view->plugin('url');
         $url->setRouter($app->getRouter());
 
-        $view->plugin('headTitle')->append('phly, boy, phly');
+        $view->plugin('headTitle')->setSeparator(' :: ')
+                                  ->setAutoEscape(false)
+                                  ->append('phly, boy, phly');
         $view->plugin('headLink')->appendStylesheet('/css/reset.css')
                                  ->appendStylesheet('/css/text.css')
                                  ->appendStylesheet('/css/960.css')
