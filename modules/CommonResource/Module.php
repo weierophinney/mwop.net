@@ -3,6 +3,16 @@ namespace CommonResource;
 
 class Module
 {
+    public function init()
+    {
+        $this->initAutoloader();
+    }
+
+    public function initAutoloader()
+    {
+        include __DIR__ . '/autoload_register.php';
+    }
+
     public function getDependencies()
     {
         return array(
