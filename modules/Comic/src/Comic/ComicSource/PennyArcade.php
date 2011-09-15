@@ -1,23 +1,23 @@
 <?php
 
-namespace mwop\Comic\ComicSource;
+namespace Comic\ComicSource;
 
-use mwop\Comic\Comic,
+use Comic\Comic,
     Zend\Dom\Query as DomQuery;
 
-class Dilbert extends AbstractComicSource
+class PennyArcade extends AbstractComicSource
 {
     protected static $comics = array(
-        'dilbert' => 'Dilbert',
+        'pennyarcade' => 'Penny Arcade',
     );
 
-    protected $comicFormat = 'http://dilbert.com';
+    protected $comicFormat = 'http://penny-arcade.com/comic';
 
-    protected $dailyFormat = 'http://dilbert.com/strips/comic/%s/';
+    protected $dailyFormat = 'http://penny-arcade.com/comic/%s';
 
     public function fetch()
     {
-        $url  = sprintf($this->dailyFormat, date('Y-m-d'));
+        $url  = sprintf($this->dailyFormat, date('Y/m/d'));
         $page = file_get_contents($url);
         if (!$page) {
             return $this->registerError(sprintf(
@@ -27,7 +27,7 @@ class Dilbert extends AbstractComicSource
         }
 
         $dom  = new DomQuery($page);
-        $r    = $dom->execute('div.STR_Image img');
+        $r    = $dom->execute('div.post.comic img');
         if (!$r->count()) {
             return $this->registerError(sprintf(
                 'Comic at "%s" is unreachable',
@@ -38,7 +38,7 @@ class Dilbert extends AbstractComicSource
         $imgUrl = false;
         foreach ($r as $node) {
             if ($node->hasAttribute('src')) {
-                $imgUrl = $this->comicFormat . $node->getAttribute('src');
+                $imgUrl = $node->getAttribute('src');
             }
         }
 
@@ -50,7 +50,7 @@ class Dilbert extends AbstractComicSource
         }
 
         $comic = new Comic(
-            /* 'name'  => */ static::$comics['dilbert'],
+            /* 'name'  => */ static::$comics['pennyarcade'],
             /* 'link'  => */ $this->comicFormat,
             /* 'daily' => */ $url,
             /* 'image' => */ $imgUrl
@@ -62,7 +62,7 @@ class Dilbert extends AbstractComicSource
     protected function registerError($message)
     {
         $comic = new Comic(
-            /* 'name'  => */ static::$comics['dilbert'],
+            /* 'name'  => */ static::$comics['pennyarcade'],
             /* 'link'  => */ $this->comicFormat
         );
         $comic->setError($message);

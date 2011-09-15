@@ -2,14 +2,12 @@
 ini_set('display_errors', true);
 error_reporting(-1);
 
-require_once __DIR__ . '/../library/zf2/Zend/Loader/ClassMapAutoloader.php';
-$classmap = new Zend\Loader\ClassMapAutoloader(array(
-    __DIR__ . '/../library/.classmap.php',
-));
-$classmap->register();
+include __DIR__ . '/../autoload_register.php';
+require_once 'Zend/Loader/StandardAutoloader.php';
+$loader = new Zend\Loader\StandardAutoloader();
+$loader->register();
 
-
-use mwop\Comic\ComicFactory;
+use Comic\ComicFactory;
 
 $supported = ComicFactory::getSupported();
 ksort($supported);

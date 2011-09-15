@@ -1,8 +1,8 @@
 <?php
 
-namespace mwop\Comic\ComicSource;
+namespace Comic\ComicSource;
 
-use mwop\Comic\Comic,
+use Comic\Comic,
     SimpleXMLElement;
 
 /**

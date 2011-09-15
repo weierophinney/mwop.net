@@ -1,25 +1,25 @@
 <?php
 
-namespace mwop\Comic\ComicSource;
+namespace Comic\ComicSource;
 
-use mwop\Comic\Comic,
+use Comic\Comic,
     SimpleXMLElement;
 
 /**
- * @todo merge this, XKCD, and G-G into generic "RSS" class
+ * @todo merge this, Basic Instructions, and G-G into generic "RSS" class
  */
-class BasicInstructions extends AbstractComicSource
+class Xkcd extends AbstractComicSource
 {
     protected static $comics = array(
-        'basicinstructions' => 'Basic Instructions',
+        'xkcd' => 'XKCD',
     );
 
-    protected $comicBase = 'http://basicinstructions.net/basic-instructions/';
-    protected $feedUrl   = 'http://basicinstructions.net/basic-instructions/rss.xml';
+    protected $comicBase = 'http://xkcd.com';
+    protected $feedUrl = 'http://xkcd.com/rss.xml';
 
     public function fetch()
     {
-        // will need to parse feed
+        // will need to parse feed at http://xkcd.com/rss.xml
         $sxl = new SimpleXMLElement($this->feedUrl, 0, true);
 
         // Iterate <item> elements, breaking after first
@@ -32,14 +32,14 @@ class BasicInstructions extends AbstractComicSource
         $desc  = (string) $latest->description;
         if (!preg_match('/src="(?P<src>[^"]+)"/', $desc, $matches)) {
             return $this->registerError(sprintf(
-                'Basic Instructions feed does not include image description containing image URL: %s',
+                'XKCD feed does not include image description containing image URL: %s',
                 $desc
             ));
         }
         $image = $matches['src'];
 
         $comic = new Comic(
-            /* 'name'  => */ static::$comics['basicinstructions'],
+            /* 'name'  => */ static::$comics['xkcd'],
             /* 'link'  => */ $this->comicBase,
             /* 'daily' => */ $daily,
             /* 'image' => */ $image
@@ -51,7 +51,7 @@ class BasicInstructions extends AbstractComicSource
     protected function registerError($message)
     {
         $comic = new Comic(
-            /* 'name'  => */ static::$comics['basicinstructions'],
+            /* 'name'  => */ static::$comics['xkcd'],
             /* 'link'  => */ $this->comicBase
         );
         $comic->setError($message);

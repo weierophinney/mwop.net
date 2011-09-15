@@ -1,33 +1,31 @@
 <?php
 
-namespace mwop\Comic\ComicSource;
+namespace Comic\ComicSource;
 
-use mwop\Comic\Comic,
+use Comic\Comic,
     Zend\Dom\Query as DomQuery;
 
-class UserFriendly extends AbstractComicSource
+class CtrlAltDel extends AbstractComicSource
 {
     protected static $comics = array(
-        'uf' => 'User Friendly',
+        'ctrlaltdel' => 'Ctrl+Alt+Del',
     );
 
-    protected $comicBase = 'http://www.userfriendly.org';
-
-    protected $dailyFormat = 'http://ars.userfriendly.org/cartoons/?id=%s';
+    protected $comicBase = 'http://www.cad-comic.com/cad/';
+    protected $dailyFormat = 'http://www.cad-comic.com/cad/%s/';
 
     public function fetch()
     {
-        $url  = sprintf($this->dailyFormat, date('Ymd'));
-        $page = file_get_contents($url);
+        $page = file_get_contents($this->comicBase);
         if (!$page) {
             return $this->registerError(sprintf(
                 'Comic at "%s" is unreachable',
-                $url
+                $this->comicBase
             ));
         }
 
         $dom  = new DomQuery($page);
-        $r    = $dom->execute('a img');
+        $r    = $dom->execute('#content img');
         if (!$r->count()) {
             return $this->registerError(sprintf(
                 'Comic at "%s" is unreachable',
@@ -39,8 +37,9 @@ class UserFriendly extends AbstractComicSource
         foreach ($r as $node) {
             if ($node->hasAttribute('src')) {
                 $src = $node->getAttribute('src');
-                if (strstr($src, 'cartoons/archives/')) {
+                if (strstr($src, 'cad-comic.com/comics/cad-')) {
                     $imgUrl = $src;
+                    break;
                 }
             }
         }
@@ -52,10 +51,15 @@ class UserFriendly extends AbstractComicSource
             ));
         }
 
+        $daily  = sprintf($this->dailyFormat, date('Ymd'));
+        if (preg_match('#cad-(?P<date>\d{8})-[a-z0-9]+\.png#', $imgUrl, $matches)) {
+            $daily = sprintf($this->dailyFormat, $matches['date']);
+        }
+
         $comic = new Comic(
-            /* 'name'  => */ static::$comics['uf'],
+            /* 'name'  => */ static::$comics['ctrlaltdel'],
             /* 'link'  => */ $this->comicBase,
-            /* 'daily' => */ $url,
+            /* 'daily' => */ $daily,
             /* 'image' => */ $imgUrl
         );
 
@@ -65,7 +69,7 @@ class UserFriendly extends AbstractComicSource
     protected function registerError($message)
     {
         $comic = new Comic(
-            /* 'name'  => */ static::$comics['uf'],
+            /* 'name'  => */ static::$comics['ctrlaltdel'],
             /* 'link'  => */ $this->comicBase
         );
         $comic->setError($message);

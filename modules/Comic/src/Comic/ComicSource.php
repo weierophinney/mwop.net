@@ -1,6 +1,6 @@
 <?php
 
-namespace mwop\Comic;
+namespace Comic;
 
 /**
  * Describes a comic source

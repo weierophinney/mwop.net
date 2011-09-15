@@ -1,6 +1,6 @@
 <?php
 
-namespace mwop\Comic;
+namespace Comic;
 
 use DomainException,
     InvalidArgumentException;
@@ -11,18 +11,18 @@ abstract class ComicFactory
      * @var array List of comic source classes
      */
     protected static $comicClasses = array(
-        'mwop\Comic\ComicSource\GoComics',
-        'mwop\Comic\ComicSource\Dilbert',
-        'mwop\Comic\ComicSource\ForBetterOrForWorse',
-        'mwop\Comic\ComicSource\NotInventedHere',
-        'mwop\Comic\ComicSource\UserFriendly',
-        'mwop\Comic\ComicSource\Xkcd',
-        'mwop\Comic\ComicSource\CtrlAltDel',
-        'mwop\Comic\ComicSource\BasicInstructions',
-        'mwop\Comic\ComicSource\ScenesFromAMultiverse',
-        'mwop\Comic\ComicSource\GarfieldMinusGarfield',
-        'mwop\Comic\ComicSource\PennyArcade',
-        'mwop\Comic\ComicSource\FoxTrot',
+        'Comic\ComicSource\GoComics',
+        'Comic\ComicSource\Dilbert',
+        'Comic\ComicSource\ForBetterOrForWorse',
+        'Comic\ComicSource\NotInventedHere',
+        'Comic\ComicSource\UserFriendly',
+        'Comic\ComicSource\Xkcd',
+        'Comic\ComicSource\CtrlAltDel',
+        'Comic\ComicSource\BasicInstructions',
+        'Comic\ComicSource\ScenesFromAMultiverse',
+        'Comic\ComicSource\GarfieldMinusGarfield',
+        'Comic\ComicSource\PennyArcade',
+        'Comic\ComicSource\FoxTrot',
     );
 
     /**

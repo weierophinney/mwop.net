@@ -1,31 +1,33 @@
 <?php
 
-namespace mwop\Comic\ComicSource;
+namespace Comic\ComicSource;
 
-use mwop\Comic\Comic,
+use Comic\Comic,
     Zend\Dom\Query as DomQuery;
 
-class CtrlAltDel extends AbstractComicSource
+class NotInventedHere extends AbstractComicSource
 {
     protected static $comics = array(
-        'ctrlaltdel' => 'Ctrl+Alt+Del',
+        'nih' => 'Not Invented Here',
     );
 
-    protected $comicBase = 'http://www.cad-comic.com/cad/';
-    protected $dailyFormat = 'http://www.cad-comic.com/cad/%s/';
+    protected $comicBase = 'http://notinventedhe.re';
+    protected $dailyFormat = 'http://notinventedhe.re/on/%s';
 
     public function fetch()
     {
-        $page = file_get_contents($this->comicBase);
+        $url = sprintf($this->dailyFormat, date('Y-n-j'));
+        $page = file_get_contents($url);
         if (!$page) {
             return $this->registerError(sprintf(
                 'Comic at "%s" is unreachable',
-                $this->comicBase
+                $url
             ));
         }
 
-        $dom  = new DomQuery($page);
-        $r    = $dom->execute('#content img');
+        $dom  = new DomQuery();
+        $dom->setDocumentHtml($page); // force loading as HTML
+        $r    = $dom->execute('#comic-content img');
         if (!$r->count()) {
             return $this->registerError(sprintf(
                 'Comic at "%s" is unreachable',
@@ -36,11 +38,7 @@ class CtrlAltDel extends AbstractComicSource
         $imgUrl = false;
         foreach ($r as $node) {
             if ($node->hasAttribute('src')) {
-                $src = $node->getAttribute('src');
-                if (strstr($src, 'cad-comic.com/comics/cad-')) {
-                    $imgUrl = $src;
-                    break;
-                }
+                $imgUrl = $node->getAttribute('src');
             }
         }
 
@@ -51,15 +49,10 @@ class CtrlAltDel extends AbstractComicSource
             ));
         }
 
-        $daily  = sprintf($this->dailyFormat, date('Ymd'));
-        if (preg_match('#cad-(?P<date>\d{8})-[a-z0-9]+\.png#', $imgUrl, $matches)) {
-            $daily = sprintf($this->dailyFormat, $matches['date']);
-        }
-
         $comic = new Comic(
-            /* 'name'  => */ static::$comics['ctrlaltdel'],
+            /* 'name'  => */ static::$comics['nih'],
             /* 'link'  => */ $this->comicBase,
-            /* 'daily' => */ $daily,
+            /* 'daily' => */ $url,
             /* 'image' => */ $imgUrl
         );
 
@@ -69,7 +62,7 @@ class CtrlAltDel extends AbstractComicSource
     protected function registerError($message)
     {
         $comic = new Comic(
-            /* 'name'  => */ static::$comics['ctrlaltdel'],
+            /* 'name'  => */ static::$comics['nih'],
             /* 'link'  => */ $this->comicBase
         );
         $comic->setError($message);

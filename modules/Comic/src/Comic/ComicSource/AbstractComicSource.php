@@ -1,8 +1,8 @@
 <?php
 
-namespace mwop\Comic\ComicSource;
+namespace Comic\ComicSource;
 
-use mwop\Comic\ComicSource;
+use Comic\ComicSource;
 
 /**
  * Provides shared functionality for most comic source classes

@@ -1,23 +1,23 @@
 <?php
 
-namespace mwop\Comic\ComicSource;
+namespace Comic\ComicSource;
 
-use mwop\Comic\Comic,
+use Comic\Comic,
     Zend\Dom\Query as DomQuery;
 
-class PennyArcade extends AbstractComicSource
+class UserFriendly extends AbstractComicSource
 {
     protected static $comics = array(
-        'pennyarcade' => 'Penny Arcade',
+        'uf' => 'User Friendly',
     );
 
-    protected $comicFormat = 'http://penny-arcade.com/comic';
+    protected $comicBase = 'http://www.userfriendly.org';
 
-    protected $dailyFormat = 'http://penny-arcade.com/comic/%s';
+    protected $dailyFormat = 'http://ars.userfriendly.org/cartoons/?id=%s';
 
     public function fetch()
     {
-        $url  = sprintf($this->dailyFormat, date('Y/m/d'));
+        $url  = sprintf($this->dailyFormat, date('Ymd'));
         $page = file_get_contents($url);
         if (!$page) {
             return $this->registerError(sprintf(
@@ -27,7 +27,7 @@ class PennyArcade extends AbstractComicSource
         }
 
         $dom  = new DomQuery($page);
-        $r    = $dom->execute('div.post.comic img');
+        $r    = $dom->execute('a img');
         if (!$r->count()) {
             return $this->registerError(sprintf(
                 'Comic at "%s" is unreachable',
@@ -38,7 +38,10 @@ class PennyArcade extends AbstractComicSource
         $imgUrl = false;
         foreach ($r as $node) {
             if ($node->hasAttribute('src')) {
-                $imgUrl = $node->getAttribute('src');
+                $src = $node->getAttribute('src');
+                if (strstr($src, 'cartoons/archives/')) {
+                    $imgUrl = $src;
+                }
             }
         }
 
@@ -50,8 +53,8 @@ class PennyArcade extends AbstractComicSource
         }
 
         $comic = new Comic(
-            /* 'name'  => */ static::$comics['pennyarcade'],
-            /* 'link'  => */ $this->comicFormat,
+            /* 'name'  => */ static::$comics['uf'],
+            /* 'link'  => */ $this->comicBase,
             /* 'daily' => */ $url,
             /* 'image' => */ $imgUrl
         );
@@ -62,8 +65,8 @@ class PennyArcade extends AbstractComicSource
     protected function registerError($message)
     {
         $comic = new Comic(
-            /* 'name'  => */ static::$comics['pennyarcade'],
-            /* 'link'  => */ $this->comicFormat
+            /* 'name'  => */ static::$comics['uf'],
+            /* 'link'  => */ $this->comicBase
         );
         $comic->setError($message);
         return $comic;
