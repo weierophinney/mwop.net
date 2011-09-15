@@ -30,7 +30,7 @@ echo $this->plugin('doctype') ?>
         </ul>
     </div>
 
-    {{content}}
+    <?php echo $this->vars()->getRawValue('content') ?>
     <div class="clear"></div>
 
     <div class="grid_12 divider">&nbsp;</div>

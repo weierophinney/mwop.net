@@ -96,17 +96,22 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md *.php *.xml *.txt" {
    }
   }
  }
+ configs=configs filter="*.php *.ini *.xml *.json *.yml" {
+  application.config.dist.php
+  application.config.php
+ }
  modules=modules {
   Application=Application {
+   Module.php
    autoload_classmap.php
    autoload_function.php
    autoload_register.php
-   Module.php
    configs=configs filter="*.ini *.xml *.php" {
     module.config.php
    }
    src=src {
     Application=Application {
+     Bootstrap.php
      Controller=Controller {
       PageController.php
      }
@@ -114,6 +119,7 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md *.php *.xml *.txt" {
    }
    views=views filter="*.mustache *.phtml" {
     about.phtml
+    error.phtml
     layout.phtml
     projects.phtml
     pages=pages {

@@ -4,8 +4,8 @@ namespace Application\Controller;
 use Zend\EventManager\EventCollection,
     Zend\EventManager\EventManager,
     Zend\Stdlib\Dispatchable,
-    Zend\Stdlib\RequestDefinition as Request,
-    Zend\Stdlib\ResponseDefinition as Response;
+    Zend\Stdlib\RequestDescription as Request,
+    Zend\Stdlib\ResponseDescription as Response;
 
 class PageController implements Dispatchable
 {
@@ -17,7 +17,9 @@ class PageController implements Dispatchable
             $this->events = $events;
         } elseif (null === $this->events) {
             $this->events = new EventManager(array(
-                'Zend\Stdlib\Dispatchable', __CLASS__, get_called_class()
+                'Zend\Stdlib\Dispatchable', 
+                __CLASS__, 
+                get_called_class(),
             ));
         }
         return $this->events;
