@@ -163,6 +163,55 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md *.php *.xml *.txt" {
     }
    }
   }
+  CommonResource=CommonResource {
+   autoload_classmap.php
+   autoload_function.php
+   autoload_register.php
+   Module.php
+   src=src {
+    CommonResource=CommonResource {
+     ArraySerializable.php
+     DataSource.php
+     Entity.php
+     Query.php
+     Resource.php
+     ResourceCollection.php
+     Validatible.php
+     DataSource=DataSource {
+      Mock.php
+      Mongo.php
+      Query.php
+      Where.php
+      Mongo=Mongo {
+       QueryParser.php
+      }
+     }
+     Filter=Filter {
+      Timestamp.php
+      Timezone.php
+     }
+     Resource=Resource {
+      AbstractResource.php
+      Collection.php
+      MongoCollection.php
+     }
+    }
+   }
+   tests=tests {
+    CommonResource=CommonResource {
+     DataSource=DataSource {
+      MockTest.php
+      QueryTest.php
+     }
+     Resource=Resource {
+      CollectionTest.php
+      TestAsset=TestAsset {
+       TestEntity.php
+      }
+     }
+    }
+   }
+  }
  }
  public=public {
   .htaccess
