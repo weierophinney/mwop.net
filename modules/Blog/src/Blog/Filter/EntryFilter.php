@@ -1,11 +1,10 @@
 <?php
-namespace mwop\Entity\Filter;
+namespace Blog\Filter;
 
-use Zend\Filter\InputFilter,
-    mwop\Filter\Tags as TagsValidator,
-    mwop\Filter\Timezone as TimezoneValidator;
+use CommonResource\Filter\Timezone as TimezoneValidator,
+    Zend\Filter\InputFilter;
 
-class Entry extends InputFilter
+class EntryFilter extends InputFilter
 {
     public function __construct()
     {
@@ -38,7 +37,7 @@ class Entry extends InputFilter
             ),
             'is_draft'  => array(array('callback', 'is_bool'), 'presence' => 'required', 'allowEmpty' => true, 'message' => 'Please select a flag indicating draft status.'),
             'is_public' => array(array('callback', 'is_bool'), 'presence' => 'required', 'allowEmpty' => true, 'message' => 'Please select a flag indicating publication status.'),
-            'tags'      => new TagsValidator(),
+            'tags'      => new Tags(),
             'timezone'  => array(new TimezoneValidator(), 'required' => true),
         );
 

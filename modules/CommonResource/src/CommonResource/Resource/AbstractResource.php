@@ -15,7 +15,7 @@ use CommonResource\Resource,
 abstract class AbstractResource implements Resource, AclResource
 {
     protected $entityClass;
-    protected $collectionClass = 'mwop\Resource\Collection';
+    protected $collectionClass = 'CommonResource\Resource\Collection';
     protected $dataSource;
     protected $events;
 

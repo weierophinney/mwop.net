@@ -1,22 +1,21 @@
 <?php
-namespace mwop\Resource;
+namespace Blog;
 
-use PHPUnit_Framework_TestCase as TestCase,
-    mwop\DataSource\Mongo as MongoDataSource,
-    mwop\DataSource\Query,
-    mwop\Entity\Entry,
-    Zend\SignalSlot\Signals,
-    DateTime,
+use CommonResource\DataSource\Mongo as MongoDataSource,
+    CommonResource\DataSource\Query,
     DateInterval,
-    Mongo;
+    DateTime,
+    Mongo,
+    PHPUnit_Framework_TestCase as TestCase,
+    Zend\EventManager\StaticEventManager;
 
 class MongoIntegrationTest extends TestCase
 {
     public function setUp()
     {
-        EntryResource::resetSignals();
+        StaticEventManager::resetInstance();
         $this->mongo      = new Mongo();
-        $this->mongoDb    = $this->mongo->mwoptest;
+        $this->mongoDb    = $this->mongo->blogtest;
         $this->collection = $this->mongoDb->entries;
 
         $this->collection->drop();
@@ -24,7 +23,7 @@ class MongoIntegrationTest extends TestCase
         $this->dataSource = new MongoDataSource($this->collection);
         $this->resource   = new EntryResource();
         $this->resource->setDataSource($this->dataSource)
-                       ->setCollectionClass('mwop\Resource\MongoCollection');
+                       ->setCollectionClass('CommonResource\Resource\MongoCollection');
     }
 
     public function getItem()
@@ -33,6 +32,7 @@ class MongoIntegrationTest extends TestCase
             'id'        => 'some-slug',
             'title'     => 'Some Slug',
             'body'      => 'Some Slug.',
+            'extended'  => '',
             'author'    => 'matthew',
             'is_draft'  => false,
             'is_public' => true,
@@ -40,6 +40,7 @@ class MongoIntegrationTest extends TestCase
             'updated'   => strtotime('today'),
             'timezone'  => 'America/New_York',
             'tags'      => array('foo', 'bar'),
+            'metadata'  => array(),
             'version'   => 2,
         );
     }
@@ -51,6 +52,7 @@ class MongoIntegrationTest extends TestCase
                 'id'        => 'some-slug',
                 'title'     => 'Some Slug',
                 'body'      => 'Some Slug.',
+                'extended'  => '',
                 'author'    => 'matthew',
                 'is_draft'  => false,
                 'is_public' => true,
@@ -58,12 +60,14 @@ class MongoIntegrationTest extends TestCase
                 'updated'   => strtotime('today'),
                 'timezone'  => 'America/New_York',
                 'tags'      => array('foo', 'bar'),
+                'metadata'  => array(),
                 'version'   => 2,
             ),
             array(
                 'id'        => 'some-other-slug',
                 'title'     => 'Some Other Slug',
                 'body'      => 'Some other slug.',
+                'extended'  => '',
                 'author'    => 'matthew',
                 'is_draft'  => true,
                 'is_public' => true,
@@ -71,12 +75,14 @@ class MongoIntegrationTest extends TestCase
                 'updated'   => strtotime('today'),
                 'timezone'  => 'America/New_York',
                 'tags'      => array('foo'),
+                'metadata'  => array(),
                 'version'   => 2,
             ),
             array(
                 'id'        => 'some-final-slug',
                 'title'     => 'Some Final Slug',
                 'body'      => 'Some final slug.',
+                'extended'  => '',
                 'author'    => 'matthew',
                 'is_draft'  => false,
                 'is_public' => true,
@@ -84,6 +90,7 @@ class MongoIntegrationTest extends TestCase
                 'updated'   => strtotime('yesterday'),
                 'timezone'  => 'America/New_York',
                 'tags'      => array('bar'),
+                'metadata'  => array(),
                 'version'   => 2,
             )
         );
@@ -92,7 +99,7 @@ class MongoIntegrationTest extends TestCase
     public function testGetAllReturnsMongoCollection()
     {
         $test = $this->resource->getAll();
-        $this->assertInstanceOf('mwop\Resource\MongoCollection', $test);
+        $this->assertInstanceOf('CommonResource\Resource\MongoCollection', $test);
     }
 
     public function testGetReturnsNullIfItemNotFound()
@@ -106,24 +113,24 @@ class MongoIntegrationTest extends TestCase
         $item = $this->getItem();
         $this->dataSource->create($item);
         $test = $this->resource->get('some-slug');
-        $this->assertInstanceOf('mwop\Entity\Entry', $test);
+        $this->assertInstanceOf('Blog\EntryEntity', $test);
     }
 
     public function testCreateReturnsEntryWithValidArrayData()
     {
         $item  = $this->getItem();
         $entry = $this->resource->create($item);
-        $this->assertInstanceOf('mwop\Entity\Entry', $entry);
+        $this->assertInstanceOf('Blog\EntryEntity', $entry);
         $this->assertEquals($item['id'], $entry->getId());
     }
 
     public function testCreateAcceptsEntryObject()
     {
         $item  = $this->getItem();
-        $entry = new Entry();
+        $entry = new EntryEntity();
         $entry->fromArray($item);
         $test = $this->resource->create($entry);
-        $this->assertInstanceOf('mwop\Entity\Entry', $test);
+        $this->assertInstanceOf('Blog\EntryEntity', $test);
         $this->assertSame($entry, $test);
     }
 
@@ -135,7 +142,7 @@ class MongoIntegrationTest extends TestCase
 
     public function testCreateReturnsInputFilterForInvalidEntry()
     {
-        $entry = new Entry();
+        $entry = new EntryEntity();
         $test = $this->resource->create($entry);
         $this->assertInstanceOf('Zend\Filter\InputFilter', $test);
     }
@@ -231,14 +238,14 @@ class MongoIntegrationTest extends TestCase
 
     public function testCanGetRecentEntries()
     {
-        $date  = new \DateTime('2007-01-01');
+        $date  = new DateTime('2007-01-01');
         $item  = $this->getItem();
         $items = array();
         for ($i = 0; $i < 20; $i++) {
             $newItem       = $item;
 
             $newDate = clone $date;
-            $newDate->add(new \DateInterval('P' . ($i * 1) . 'D'));
+            $newDate->add(new DateInterval('P' . ($i * 1) . 'D'));
             $newItem['created'] = $newDate->getTimestamp();
 
             $id            = $newItem['id'] . '-' . $i;
@@ -250,14 +257,14 @@ class MongoIntegrationTest extends TestCase
 
     public function testCanGetEntriesByYear()
     {
-        $date  = new \DateTime('2007-01-01');
+        $date  = new DateTime('2007-01-01');
         $item  = $this->getItem();
         $items = array();
         for ($i = 0; $i < 20; $i++) {
             $newItem = $item;
 
             $newDate = clone $date;
-            $newDate->add(new \DateInterval('P' . ($i * 7) . 'D'));
+            $newDate->add(new DateInterval('P' . ($i * 7) . 'D'));
             $newItem['created'] = $newDate->getTimestamp();
 
             $id            = $newItem['id'] . '-' . $i;
@@ -270,14 +277,14 @@ class MongoIntegrationTest extends TestCase
 
     public function testCanGetEntriesByMonth()
     {
-        $date  = new \DateTime('2007-01-01');
+        $date  = new DateTime('2007-01-01');
         $item  = $this->getItem();
         $items = array();
         for ($i = 0; $i < 20; $i++) {
             $newItem = $item;
 
             $newDate = clone $date;
-            $newDate->add(new \DateInterval('P' . ($i * 2) . 'D'));
+            $newDate->add(new DateInterval('P' . ($i * 2) . 'D'));
             $newItem['created'] = $newDate->getTimestamp();
 
             $id            = $newItem['id'] . '-' . $i;
@@ -290,14 +297,14 @@ class MongoIntegrationTest extends TestCase
 
     public function testCanGetEntriesByDay()
     {
-        $date  = new \DateTime('2007-01-01');
+        $date  = new DateTime('2007-01-01');
         $item  = $this->getItem();
         $items = array();
         for ($i = 0; $i < 20; $i++) {
             $newItem = $item;
 
             $newDate = clone $date;
-            $newDate->add(new \DateInterval('PT' . $i . 'H'));
+            $newDate->add(new DateInterval('PT' . $i . 'H'));
             $newItem['created'] = $newDate->getTimestamp();
 
             $id            = $newItem['id'] . '-' . $i;
@@ -310,14 +317,14 @@ class MongoIntegrationTest extends TestCase
 
     public function testCanGetEntriesByTag()
     {
-        $date  = new \DateTime('2007-01-01');
+        $date  = new DateTime('2007-01-01');
         $item  = $this->getItem();
         $items = array();
         for ($i = 0; $i < 20; $i++) {
             $newItem       = $item;
 
             $newDate = clone $date;
-            $newDate->add(new \DateInterval('P' . ($i * 1) . 'D'));
+            $newDate->add(new DateInterval('P' . ($i * 1) . 'D'));
             $newItem['created'] = $newDate->getTimestamp();
 
             $id            = $newItem['id'] . '-' . $i;

@@ -1,18 +1,21 @@
 <?php
 namespace Blog\Controller;
 
-use Blog\View\Entries as EntriesView,
+use Blog\EntryResource,
+    Blog\View\Entries as EntriesView,
     Blog\View\TagCloud,
+    CommonResource\DataSource\Mongo as MongoDataSource,
+    CommonResource\Resource,
     Mongo,
-    mwop\Controller\Restful as RestfulController,
-    mwop\DataSource\Mongo as MongoDataSource,
-    mwop\Mvc\Presentation,
-    mwop\Stdlib\Resource,
-    mwop\Resource\EntryResource,
-    Phly\Mustache\Pragma\SubView,
-    Zend_Feed_Writer_Feed as FeedWriter;
+    Zend\Feed\Writer\Feed as FeedWriter,
+    Zf2Mvc\Controller\RestfulController;
 
-class Entry extends RestfulController
+/**
+ * @todo Needs heavy refactoring; made assumption previously that 
+ *       RestfulController had awareness of resources. Also, was using
+ *       ViewModel paradigm, which may not work with PhpRenderer.
+ */
+class EntryController extends RestfulController
 {
     protected $presentation;
 

@@ -1,21 +1,21 @@
 <?php
 
-namespace mwop\Entity;
+namespace Blog;
 
 use PHPUnit_Framework_TestCase as TestCase,
     DateTime;
 
-class EntryTest extends TestCase
+class EntryEntityTest extends TestCase
 {
     public function setUp()
     {
-        $this->entry = new Entry();
+        $this->entry = new EntryEntity();
     }
 
     public function testUsesEntryFilterAsDefaultFilter()
     {
         $filter = $this->entry->getInputFilter();
-        $this->assertInstanceOf('mwop\Entity\Filter\Entry', $filter);
+        $this->assertInstanceOf('Blog\Filter\EntryFilter', $filter);
     }
 
     public function testSettingTitleSetsId()

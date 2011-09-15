@@ -1,14 +1,15 @@
 <?php
-namespace mwop\Resource;
+namespace Blog;
 
-use PHPUnit_Framework_TestCase as TestCase,
-    mwop\DataSource\Mock as MockDataSource,
-    mwop\DataSource\Query,
-    mwop\Entity\Entry,
-    Zend\EventManager\StaticEventManager,
-    Zend\EventManager\EventManager,
+use CommonResource\DataSource\Mock as MockDataSource,
+    CommonResource\DataSource\Query,
+    CommonResource\Resource\Collection,
+    DateInterval,
     DateTime,
-    DateInterval;
+    PHPUnit_Framework_TestCase as TestCase,
+    stdClass,
+    Zend\EventManager\EventManager,
+    Zend\EventManager\StaticEventManager;
 
 class EntryResourceTest extends TestCase
 {
@@ -26,6 +27,7 @@ class EntryResourceTest extends TestCase
             'id'        => 'some-slug',
             'title'     => 'Some Slug',
             'body'      => 'Some Slug.',
+            'extended'  => '',
             'author'    => 'matthew',
             'is_draft'  => false,
             'is_public' => true,
@@ -33,6 +35,7 @@ class EntryResourceTest extends TestCase
             'updated'   => strtotime('today'),
             'timezone'  => 'America/New_York',
             'tags'      => array('foo', 'bar'),
+            'metadata'  => array(),
             'version'   => 2,
         );
     }
@@ -44,6 +47,7 @@ class EntryResourceTest extends TestCase
                 'id'        => 'some-slug',
                 'title'     => 'Some Slug',
                 'body'      => 'Some Slug.',
+                'extended'  => '',
                 'author'    => 'matthew',
                 'is_draft'  => false,
                 'is_public' => true,
@@ -51,12 +55,14 @@ class EntryResourceTest extends TestCase
                 'updated'   => strtotime('today'),
                 'timezone'  => 'America/New_York',
                 'tags'      => array('foo', 'bar'),
+                'metadata'  => array(),
                 'version'   => 2,
             ),
             array(
                 'id'        => 'some-other-slug',
                 'title'     => 'Some Other Slug',
                 'body'      => 'Some other slug.',
+                'extended'  => '',
                 'author'    => 'matthew',
                 'is_draft'  => true,
                 'is_public' => true,
@@ -64,12 +70,14 @@ class EntryResourceTest extends TestCase
                 'updated'   => strtotime('today'),
                 'timezone'  => 'America/New_York',
                 'tags'      => array('foo'),
+                'metadata'  => array(),
                 'version'   => 2,
             ),
             array(
                 'id'        => 'some-final-slug',
                 'title'     => 'Some Final Slug',
                 'body'      => 'Some final slug.',
+                'extended'  => '',
                 'author'    => 'matthew',
                 'is_draft'  => false,
                 'is_public' => true,
@@ -77,6 +85,7 @@ class EntryResourceTest extends TestCase
                 'updated'   => strtotime('yesterday'),
                 'timezone'  => 'America/New_York',
                 'tags'      => array('bar'),
+                'metadata'  => array(),
                 'version'   => 2,
             )
         );
@@ -118,7 +127,7 @@ class EntryResourceTest extends TestCase
     public function testGetAllReturnsCollection()
     {
         $test = $this->resource->getAll();
-        $this->assertInstanceOf('mwop\Resource\Collection', $test);
+        $this->assertInstanceOf('CommonResource\Resource\Collection', $test);
     }
 
     public function testEventManagerCanShortCircuitGetAllExecutionIfItReturnsACollection()
@@ -126,7 +135,7 @@ class EntryResourceTest extends TestCase
         $items = $this->getItems();
         $this->dataSource->when(new Query(), $items);
         $item  = $this->getItem();
-        $collection = new Collection(array($item), 'mwop\Entity\Entry');
+        $collection = new Collection(array($item), 'Blog\EntryEntity');
         $this->resource->events()->attach('getAll.pre', function($e) use ($collection) {
             return $collection;
         });
@@ -140,7 +149,7 @@ class EntryResourceTest extends TestCase
         $items  = $this->getItems();
         $this->dataSource->when(new Query(), $items);
 
-        $result = new \stdClass();
+        $result = new stdClass();
         $this->resource->events()->attach('getAll.post', function($e) use ($result) {
             $result->items = $e->getParam('items', false);
         });
@@ -160,7 +169,7 @@ class EntryResourceTest extends TestCase
         $item = $this->getItem();
         $this->dataSource->create($item);
         $test = $this->resource->get('some-slug');
-        $this->assertInstanceOf('mwop\Entity\Entry', $test);
+        $this->assertInstanceOf('Blog\EntryEntity', $test);
     }
 
     public function testEventManagerCanShortCircuitGetExecutionIfItReturnsAnEntry()
@@ -168,7 +177,7 @@ class EntryResourceTest extends TestCase
         $item  = $this->getItem();
         $entry = $this->resource->create($item);
 
-        $test  = new Entry();
+        $test  = new EntryEntity();
         $this->resource->events()->attach('get.pre', function ($e) use ($test) {
             return $test;
         });
@@ -180,7 +189,7 @@ class EntryResourceTest extends TestCase
     {
         $item  = $this->getItem();
         $entry = $this->resource->create($item);
-        $test  = new Entry();
+        $test  = new EntryEntity();
         $this->resource->events()->attach('get.post', function ($e) use ($test) {
             if (!$entry = $e->getParam('entity', false)) {
                 return;
@@ -193,7 +202,7 @@ class EntryResourceTest extends TestCase
 
     public function testPostGetEventNotTriggeredIfEntryNotFound()
     {
-        $test  = new \stdClass;
+        $test  = new stdClass;
         $this->resource->events()->attach('get.post', function ($e) use ($test) {
             if (!$entry = $e->getParam('entity', false)) {
                 return;
@@ -208,16 +217,16 @@ class EntryResourceTest extends TestCase
     {
         $item  = $this->getItem();
         $entry = $this->resource->create($item);
-        $this->assertInstanceOf('mwop\Entity\Entry', $entry);
+        $this->assertInstanceOf('Blog\EntryEntity', $entry);
     }
 
     public function testCreateAcceptsEntryObject()
     {
         $item  = $this->getItem();
-        $entry = new Entry();
+        $entry = new EntryEntity();
         $entry->fromArray($item);
         $test = $this->resource->create($entry);
-        $this->assertInstanceOf('mwop\Entity\Entry', $test);
+        $this->assertInstanceOf('Blog\EntryEntity', $test);
         $this->assertSame($entry, $test);
     }
 
@@ -229,7 +238,7 @@ class EntryResourceTest extends TestCase
 
     public function testCreateReturnsInputFilterForInvalidEntry()
     {
-        $entry = new Entry();
+        $entry = new EntryEntity();
         $test = $this->resource->create($entry);
         $this->assertInstanceOf('Zend\Filter\InputFilter', $test);
     }
@@ -242,7 +251,7 @@ class EntryResourceTest extends TestCase
 
     public function testCreateTriggersPreCreateEvent()
     {
-        $o = new \stdClass();
+        $o = new stdClass();
         $this->resource->events()->attach('create.pre', function ($e) use ($o) {
             if (!$entry = $e->getParam('spec', false)) {
                 return;
@@ -256,7 +265,7 @@ class EntryResourceTest extends TestCase
 
     public function testCreateTriggersPostCreateEvent()
     {
-        $o = new \stdClass();
+        $o = new stdClass();
         $this->resource->events()->attach('create.post', function ($e) use ($o) {
             if (!$entry = $e->getParam('entity', false)) {
                 return;
@@ -318,7 +327,7 @@ class EntryResourceTest extends TestCase
 
     public function testPostUpdateEventsAreTriggered()
     {
-        $o = new \stdClass;
+        $o = new stdClass;
         $this->resource->events()->attach('update.post', function($e) use ($o) {
             if (!$entry = $e->getParam('entity')) {
                 return;
@@ -359,7 +368,7 @@ class EntryResourceTest extends TestCase
     {
         $item  = $this->getItem();
         $entry = $this->resource->create($item);
-        $test  = new \stdClass();
+        $test  = new stdClass();
         $this->resource->events()->attach('delete.pre', function($e) use ($test) {
             $test->triggered = true;
         });
@@ -376,7 +385,7 @@ class EntryResourceTest extends TestCase
         });
         $this->assertTrue($this->resource->delete($item['id']));
         $test = $this->resource->get($item['id']);
-        $this->assertInstanceOf('mwop\Entity\Entry', $test);
+        $this->assertInstanceOf('Blog\EntryEntity', $test);
         $this->assertEquals($entry->toArray(), $test->toArray());
     }
 
@@ -384,7 +393,7 @@ class EntryResourceTest extends TestCase
     {
         $item  = $this->getItem();
         $entry = $this->resource->create($item);
-        $test  = new \stdClass;
+        $test  = new stdClass;
         $this->resource->events()->attach('delete.post', function($e) use ($test) {
             if (!$id = $e->getParam('id', false)) {
                 return;
@@ -407,7 +416,9 @@ class EntryResourceTest extends TestCase
         foreach ($collection as $entity) {
             $test[] = $entity->toArray();
         }
-        $this->assertEquals($items, $test);
+        $message = "Expected: " . var_export($items, 1) . "\n"
+                 . "Received: " . var_export($test, 1) . "\n";
+        $this->assertEquals($items, $test, $message);
     }
 
     public function testCanGetRecentEntries()
@@ -501,18 +512,18 @@ class EntryResourceTest extends TestCase
 
     public function testStaticHandlersAreExecuted()
     {
-        $test = new \stdClass();
+        $test = new stdClass();
         $test->get         = false;
         $test->getAbstract = false;
         $test->getEntries  = false;
 
-        StaticEventManager::getInstance()->attach('mwop\Resource\EntryResource', 'get.pre', function($e) use ($test) {
+        StaticEventManager::getInstance()->attach('Blog\EntryResource', 'get.pre', function($e) use ($test) {
             $test->get = true;
         });
-        StaticEventManager::getInstance()->attach('mwop\Resource\AbstractResource', 'get.pre', function($e) use ($test) {
+        StaticEventManager::getInstance()->attach('CommonResource\Resource\AbstractResource', 'get.pre', function($e) use ($test) {
             $test->getAbstract = true;
         });
-        StaticEventManager::getInstance()->attach('mwop\Resource\EntryResource', 'getEntries.pre', function($e) use ($test) {
+        StaticEventManager::getInstance()->attach('Blog\EntryResource', 'getEntries.pre', function($e) use ($test) {
             $test->getEntries = true;
         });
         $this->resource->get('foo');

@@ -13,6 +13,14 @@ class Module
         include __DIR__ . '/autoload_register.php';
     }
 
+    public function getProvides()
+    {
+        return array(
+            'name'    => 'CommonResource',
+            'version' => '0.1.0',
+        );
+    }
+
     public function getDependencies()
     {
         return array(

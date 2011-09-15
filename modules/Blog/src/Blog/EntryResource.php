@@ -1,15 +1,16 @@
 <?php
-namespace mwop\Resource;
+namespace Blog;
 
-use mwop\DataSource\Query,
-    mwop\Stdlib\ResourceCollection,
+use CommonResource\DataSource\Query,
+    CommonResource\ResourceCollection,
+    CommonResource\Resource\AbstractResource,
     DateTime,
     DateInterval,
     MongoCode;
 
 class EntryResource extends AbstractResource
 {
-    protected $entityClass = 'mwop\Entity\Entry';
+    protected $entityClass = 'Blog\EntryEntity';
 
     public function getEntries($offset = 0, $limit = 15)
     {

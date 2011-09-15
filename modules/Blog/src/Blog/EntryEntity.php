@@ -1,12 +1,11 @@
 <?php
-namespace mwop\Entity;
+namespace Blog;
 
-use mwop\Stdlib\Entity as EntityDefinition,
-    mwop\Filter\Permalink as PermalinkFilter,
-    mwop\Filter\Timestamp as TimestampFilter,
+use CommonResource\Entity as EntityDefinition,
+    CommonResource\Filter\Timestamp as TimestampFilter,
     Zend\Filter\InputFilter;
 
-class Entry implements EntityDefinition
+class EntryEntity implements EntityDefinition
 {
     protected static $defaultFilter;
     protected $filter;
@@ -41,7 +40,7 @@ class Entry implements EntityDefinition
 
     public static function makeStub($value)
     {
-        $filter = new PermalinkFilter();
+        $filter = new Filter\Permalink();
         return $filter->filter($value);
     }
 
@@ -586,7 +585,7 @@ class Entry implements EntityDefinition
     public function getInputFilter()
     {
         if (null === $this->filter) {
-            $this->setInputFilter(new Filter\Entry());
+            $this->setInputFilter(new Filter\EntryFilter());
         }
         return $this->filter;
     }

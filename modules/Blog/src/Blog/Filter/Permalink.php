@@ -1,6 +1,6 @@
 <?php
 
-namespace mwop\Filter;
+namespace Blog\Filter;
 
 use Zend\Filter\Filter;
 

@@ -10,9 +10,6 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md *.php *.xml *.txt" {
    di.json
   }
   Blog=Blog {
-   Controller=Controller {
-    Entry.php
-   }
    View=View {
     Entries.php
     Entry.php
@@ -24,13 +21,6 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md *.php *.xml *.txt" {
    mobile.mustache
    paginator.mustache
    tag-cloud.mustache
-   blog=blog {
-    blogroll.mustache
-    entity-short.mustache
-    entity.mustache
-    form.mustache
-    list.mustache
-   }
   }
  }
  library=library {
@@ -41,58 +31,6 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md *.php *.xml *.txt" {
    Acl=Acl {
     AclException.php
     SignalHandler.php
-   }
-   DataSource=DataSource {
-    Mock.php
-    Mongo.php
-    Query.php
-    Where.php
-    Mongo=Mongo {
-     QueryParser.php
-    }
-   }
-   Entity=Entity {
-    Entry.php
-    Filter=Filter {
-     Entry.php
-    }
-   }
-   Filter=Filter {
-    Permalink.php
-    Tags.php
-    Timestamp.php
-    Timezone.php
-   }
-   Mvc=Mvc {
-    Presentation.php
-    Presentation=Presentation {
-     HelperBroker.php
-     HelperLoader.php
-     Helper=Helper {
-      BaseUrl.php
-      Url.php
-      CssLinks.php
-      JavaScripts.php
-      JavaScriptCode.php
-     }
-    }
-   }
-   Resource=Resource {
-    AbstractResource.php
-    Collection.php
-    EntryResource.php
-    MongoCollection.php
-   }
-   Stdlib=Stdlib {
-    ArraySerializable.php
-    DataSource.php
-    Entity.php
-    Query.php
-    Resource.php
-    ResourceCollection.php
-    UniqueFilteringIterator.php
-    Validatible.php
-    ViewPresentation.php
    }
   }
  }
@@ -127,6 +65,47 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md *.php *.xml *.txt" {
      comics.phtml
      home.phtml
      resume.phtml
+    }
+   }
+  }
+  Blog=Blog {
+   Module.php
+   autoload_classmap.php
+   autoload_function.php
+   autoload_register.php
+   configs=configs filter="*.php *.yml *.json *.xml *.ini" {
+   }
+   src=src {
+    Blog=Blog {
+     EntryEntity.php
+     EntryResource.php
+     Controller=Controller {
+      EntryController.php
+     }
+     Filter=Filter {
+      EntryFilter.php
+      Permalink.php
+      Tags.php
+     }
+    }
+   }
+   tests=tests filter="*.xml *.php" {
+    phpunit.xml
+    bootstrap.php
+    Blog=Blog {
+     EntryEntityTest.php
+     EntryResourceTest.php
+    }
+    log=log {
+    }
+   }
+   views=views filter="*.phtml *.php *.mustache" {
+    blog=blog {
+     blogroll.mustache
+     entity-short.mustache
+     entity.mustache
+     form.mustache
+     list.mustache
     }
    }
   }
@@ -247,23 +226,9 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md *.php *.xml *.txt" {
   log=log {
   }
   mwop=mwop {
-   Controller=Controller {
-   }
-   DataSource=DataSource {
-    MockTest.php
-    QueryTest.php
-   }
-   Entity=Entity {
-    EntryTest.php
-   }
    Resource=Resource {
     AclIntegrationTest.php
-    CollectionTest.php
-    EntryResourceTest.php
     MongoIntegrationTest.php
-   }
-   Stdlib=Stdlib {
-    UniqueFilteringIteratorTest.php
    }
   }
  }
