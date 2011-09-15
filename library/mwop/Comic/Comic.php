@@ -11,8 +11,9 @@ class Comic implements ComicDescription
     protected $link;
     protected $daily;
     protected $image;
+    protected $error;
 
-    public function __construct($name, $link, $daily, $image)
+    public function __construct($name, $link = null, $daily = null, $image = null)
     {
         $this->name  = $name;
         $this->link  = $link;
@@ -38,5 +39,20 @@ class Comic implements ComicDescription
     public function getImage()
     {
         return $this->image;
+    }
+
+    public function setError($error)
+    {
+        $this->error = $error;
+    }
+
+    public function hasError()
+    {
+        return (null !== $this->error);
+    }
+
+    public function getError()
+    {
+        return $this->error;
     }
 }

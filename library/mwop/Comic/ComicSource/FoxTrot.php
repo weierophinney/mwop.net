@@ -20,21 +20,19 @@ class FoxTrot extends AbstractComicSource
     {
         $page = file_get_contents($this->comicFormat);
         if (!$page) {
-            $this->registerError(sprintf(
+            return $this->registerError(sprintf(
                 'Comic at "%s" is unreachable',
                 $url
             ));
-            return false;
         }
 
         $dom  = new DomQuery($page);
         $r    = $dom->execute('#comic img');
         if (!$r->count()) {
-            $this->registerError(sprintf(
+            return $this->registerError(sprintf(
                 'Comic at "%s" is unreachable',
                 $url
             ));
-            return false;
         }
 
         $imgUrl = false;
@@ -46,11 +44,10 @@ class FoxTrot extends AbstractComicSource
         }
 
         if (!$imgUrl) {
-            $this->registerError(sprintf(
+            return $this->registerError(sprintf(
                 'Unable to find image source in "%s"',
                 $url
             ));
-            return false;
         }
 
         $daily = $this->getDailyUrl();
@@ -79,5 +76,15 @@ class FoxTrot extends AbstractComicSource
 
         $url = sprintf($this->dailyFormat, $date->format('Y/m/d/'));
         return $url;
+    }
+
+    protected function registerError($message)
+    {
+        $comic = new Comic(
+            /* 'name'  => */ static::$comics['foxtrot'],
+            /* 'link'  => */ $this->comicFormat
+        );
+        $comic->setError($message);
+        return $comic;
     }
 }

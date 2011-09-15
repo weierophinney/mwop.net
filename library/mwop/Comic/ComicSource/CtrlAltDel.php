@@ -18,21 +18,19 @@ class CtrlAltDel extends AbstractComicSource
     {
         $page = file_get_contents($this->comicBase);
         if (!$page) {
-            $this->registerError(sprintf(
+            return $this->registerError(sprintf(
                 'Comic at "%s" is unreachable',
                 $this->comicBase
             ));
-            return false;
         }
 
         $dom  = new DomQuery($page);
         $r    = $dom->execute('#content img');
         if (!$r->count()) {
-            $this->registerError(sprintf(
+            return $this->registerError(sprintf(
                 'Comic at "%s" is unreachable',
                 $url
             ));
-            return false;
         }
 
         $imgUrl = false;
@@ -47,11 +45,10 @@ class CtrlAltDel extends AbstractComicSource
         }
 
         if (!$imgUrl) {
-            $this->registerError(sprintf(
+            return $this->registerError(sprintf(
                 'Unable to find image source in "%s"',
                 $url
             ));
-            return false;
         }
 
         $daily  = sprintf($this->dailyFormat, date('Ymd'));
@@ -66,6 +63,16 @@ class CtrlAltDel extends AbstractComicSource
             /* 'image' => */ $imgUrl
         );
 
+        return $comic;
+    }
+
+    protected function registerError($message)
+    {
+        $comic = new Comic(
+            /* 'name'  => */ static::$comics['ctrlaltdel'],
+            /* 'link'  => */ $this->comicBase
+        );
+        $comic->setError($message);
         return $comic;
     }
 }

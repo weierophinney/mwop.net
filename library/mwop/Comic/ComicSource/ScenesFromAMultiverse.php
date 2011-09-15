@@ -34,20 +34,18 @@ class ScenesFromAMultiverse extends AbstractComicSource
         $xpath  = new DOMXPath($dom);
         $result = $xpath->query('//a/img');
         if (!$result || !$result->length) {
-            $this->registerError(sprintf(
+            return $this->registerError(sprintf(
                 'Unable to find Scenes From A Multiverse comic image in description ("%s")',
                 $desc
             ));
-            return false;
         }
         $img = $result->item(0);
 
         if (!$img->hasAttribute('src')) {
-            $this->registerError(sprintf(
+            return $this->registerError(sprintf(
                 'Scenes From A Multiverse image does not contain a src attribute: %s',
                 $desc
             ));
-            return false;
         }
         $image = $img->getAttribute('src');
 
@@ -58,6 +56,16 @@ class ScenesFromAMultiverse extends AbstractComicSource
             /* 'image' => */ $image
         );
 
+        return $comic;
+    }
+
+    protected function registerError($message)
+    {
+        $comic = new Comic(
+            /* 'name'  => */ static::$comics['sfam'],
+            /* 'link'  => */ $this->comicBase
+        );
+        $comic->setError($message);
         return $comic;
     }
 }

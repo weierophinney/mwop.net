@@ -31,11 +31,10 @@ class GarfieldMinusGarfield extends AbstractComicSource
         // image is in <description> -- /src="([^"]+)"
         $desc  = (string) $latest->description;
         if (!preg_match('/src="(?P<src>[^"]+)"/', $desc, $matches)) {
-            $this->registerError(sprintf(
+            return $this->registerError(sprintf(
                 'Garfield Minus Garfield feed does not include image description containing image URL: %s',
                 $desc
             ));
-            return false;
         }
         $image = $matches['src'];
 
@@ -46,6 +45,16 @@ class GarfieldMinusGarfield extends AbstractComicSource
             /* 'image' => */ $image
         );
 
+        return $comic;
+    }
+
+    protected function registerError($message)
+    {
+        $comic = new Comic(
+            /* 'name'  => */ static::$comics['g-g'],
+            /* 'link'  => */ $this->comicBase
+        );
+        $comic->setError($message);
         return $comic;
     }
 }

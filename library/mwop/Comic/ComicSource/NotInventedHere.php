@@ -19,22 +19,20 @@ class NotInventedHere extends AbstractComicSource
         $url = sprintf($this->dailyFormat, date('Y-n-j'));
         $page = file_get_contents($url);
         if (!$page) {
-            $this->registerError(sprintf(
+            return $this->registerError(sprintf(
                 'Comic at "%s" is unreachable',
                 $url
             ));
-            return false;
         }
 
         $dom  = new DomQuery();
         $dom->setDocumentHtml($page); // force loading as HTML
         $r    = $dom->execute('#comic-content img');
         if (!$r->count()) {
-            $this->registerError(sprintf(
+            return $this->registerError(sprintf(
                 'Comic at "%s" is unreachable',
                 $url
             ));
-            return false;
         }
 
         $imgUrl = false;
@@ -45,11 +43,10 @@ class NotInventedHere extends AbstractComicSource
         }
 
         if (!$imgUrl) {
-            $this->registerError(sprintf(
+            return $this->registerError(sprintf(
                 'Unable to find image source in "%s"',
                 $url
             ));
-            return false;
         }
 
         $comic = new Comic(
@@ -59,6 +56,16 @@ class NotInventedHere extends AbstractComicSource
             /* 'image' => */ $imgUrl
         );
 
+        return $comic;
+    }
+
+    protected function registerError($message)
+    {
+        $comic = new Comic(
+            /* 'name'  => */ static::$comics['nih'],
+            /* 'link'  => */ $this->comicBase
+        );
+        $comic->setError($message);
         return $comic;
     }
 }

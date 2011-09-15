@@ -20,21 +20,19 @@ class PennyArcade extends AbstractComicSource
         $url  = sprintf($this->dailyFormat, date('Y/m/d'));
         $page = file_get_contents($url);
         if (!$page) {
-            $this->registerError(sprintf(
+            return $this->registerError(sprintf(
                 'Comic at "%s" is unreachable',
                 $url
             ));
-            return false;
         }
 
         $dom  = new DomQuery($page);
         $r    = $dom->execute('div.post.comic img');
         if (!$r->count()) {
-            $this->registerError(sprintf(
+            return $this->registerError(sprintf(
                 'Comic at "%s" is unreachable',
                 $url
             ));
-            return false;
         }
 
         $imgUrl = false;
@@ -45,11 +43,10 @@ class PennyArcade extends AbstractComicSource
         }
 
         if (!$imgUrl) {
-            $this->registerError(sprintf(
+            return $this->registerError(sprintf(
                 'Unable to find image source in "%s"',
                 $url
             ));
-            return false;
         }
 
         $comic = new Comic(
@@ -59,6 +56,16 @@ class PennyArcade extends AbstractComicSource
             /* 'image' => */ $imgUrl
         );
 
+        return $comic;
+    }
+
+    protected function registerError($message)
+    {
+        $comic = new Comic(
+            /* 'name'  => */ static::$comics['pennyarcade'],
+            /* 'link'  => */ $this->comicFormat
+        );
+        $comic->setError($message);
         return $comic;
     }
 }

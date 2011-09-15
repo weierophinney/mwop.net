@@ -85,5 +85,17 @@ $template =<<<EOT
     <p><a href="%s"><img src="%s"/></a></p>
 </div>
 EOT;
-$html = sprintf($template . "\n", $comic->getLink(), $comic->getName(), $comic->getDaily(), $comic->getImage());
+
+$errTemplate =<<<EOT
+<div class="comic">
+    <h4><a href="%s">%s</a></h4>
+    <p class="error">%s</p>
+</div>
+EOT;
+
+if ($comic->hasError()) {
+    $html = sprintf($errTemplate . "\n", $comic->getLink(), $comic->getName(), $comic->getError());
+} else {
+    $html = sprintf($template . "\n", $comic->getLink(), $comic->getName(), $comic->getDaily(), $comic->getImage());
+}
 echo $html, "\n";

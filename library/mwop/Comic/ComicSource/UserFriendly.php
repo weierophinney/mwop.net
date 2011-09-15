@@ -20,21 +20,19 @@ class UserFriendly extends AbstractComicSource
         $url  = sprintf($this->dailyFormat, date('Ymd'));
         $page = file_get_contents($url);
         if (!$page) {
-            $this->registerError(sprintf(
+            return $this->registerError(sprintf(
                 'Comic at "%s" is unreachable',
                 $url
             ));
-            return false;
         }
 
         $dom  = new DomQuery($page);
         $r    = $dom->execute('a img');
         if (!$r->count()) {
-            $this->registerError(sprintf(
+            return $this->registerError(sprintf(
                 'Comic at "%s" is unreachable',
                 $url
             ));
-            return false;
         }
 
         $imgUrl = false;
@@ -48,11 +46,10 @@ class UserFriendly extends AbstractComicSource
         }
 
         if (!$imgUrl) {
-            $this->registerError(sprintf(
+            return $this->registerError(sprintf(
                 'Unable to find image source in "%s"',
                 $url
             ));
-            return false;
         }
 
         $comic = new Comic(
@@ -62,6 +59,16 @@ class UserFriendly extends AbstractComicSource
             /* 'image' => */ $imgUrl
         );
 
+        return $comic;
+    }
+
+    protected function registerError($message)
+    {
+        $comic = new Comic(
+            /* 'name'  => */ static::$comics['uf'],
+            /* 'link'  => */ $this->comicBase
+        );
+        $comic->setError($message);
         return $comic;
     }
 }

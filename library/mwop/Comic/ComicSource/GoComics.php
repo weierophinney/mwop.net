@@ -38,11 +38,10 @@ class GoComics extends AbstractComicSource
         $url  = sprintf($this->dailyFormat, $this->name, date('Y/m/d'));
         $page = file_get_contents($url);
         if (!$page) {
-            $this->registerError(sprintf(
+            return $this->registerError(sprintf(
                 'Comic at "%s" is unreachable',
                 $url
             ));
-            return false;
         }
 
         $dom  = new DomQuery($page);
@@ -59,11 +58,10 @@ class GoComics extends AbstractComicSource
         }
 
         if (!$imgUrl) {
-            $this->registerError(sprintf(
+            return $this->registerError(sprintf(
                 'Unable to find image source in "%s"',
                 $url
             ));
-            return false;
         }
 
         $comic = new Comic(
@@ -73,6 +71,16 @@ class GoComics extends AbstractComicSource
             /* 'image' => */ $imgUrl
         );
 
+        return $comic;
+    }
+
+    protected function registerError($message)
+    {
+        $comic = new Comic(
+            /* 'name'  => */ static::$comics[$this->name],
+            /* 'link'  => */ sprintf($this->comicFormat, $this->name)
+        );
+        $comic->setError($message);
         return $comic;
     }
 }
