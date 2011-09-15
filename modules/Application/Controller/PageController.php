@@ -1,15 +1,13 @@
 <?php
-namespace Site\Controller;
+namespace Application\Controller;
 
-use mwop\Stdlib\Dispatchable,
-    Fig\Request,
-    Fig\Response,
-    Zend\Http\Request as HttpRequest,
-    Zend\Http\Response as HttpResponse,
-    Zend\EventManager\EventCollection,
-    Zend\EventManager\EventManager;
+use Zend\EventManager\EventCollection,
+    Zend\EventManager\EventManager,
+    Zend\Stdlib\Dispatchable,
+    Zend\Stdlib\RequestDefinition as Request,
+    Zend\Stdlib\ResponseDefinition as Response;
 
-class Page implements Dispatchable
+class PageController implements Dispatchable
 {
     protected $events;
 
@@ -19,7 +17,7 @@ class Page implements Dispatchable
             $this->events = $events;
         } elseif (null === $this->events) {
             $this->events = new EventManager(array(
-                'mwop\Stdlib\Dispatchable', __CLASS__, get_called_class()
+                'Zend\Stdlib\Dispatchable', __CLASS__, get_called_class()
             ));
         }
         return $this->events;
@@ -28,17 +26,22 @@ class Page implements Dispatchable
     public function dispatch(Request $request, Response $response = null)
     {
         $params = compact('request', 'response');
-        $result = $this->events()->triggerUntil(__FUNCTION__ . '.pre', $this, $params, function($result) {
+        $result = $this->events()->triggerUntil('dispatch.pre', $this, $params, function($result) {
             return ($result instanceof Response);
         });
         if ($result->stopped()) {
             return $result->last();
         }
 
-        $page = $request->getMetadata('page', '404');
+        $routeMatch = $request->getMetadata('route-match', false);
+        if ($routeMatch) {
+            $page = $routeMatch->getParam('page', 404);
+        } else {
+            $page = 'index';
+        }
 
         $params['__RESULT__'] = $page;
-        $result = $this->events()->triggerUntil(__FUNCTION__ . '.post', $this, $params, function($result) {
+        $result = $this->events()->triggerUntil('dispatch.post', $this, $params, function($result) {
             return ($result instanceof Response);
         });
         if ($result->stopped()) {

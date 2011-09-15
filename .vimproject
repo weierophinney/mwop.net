@@ -20,17 +20,9 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md *.php *.xml *.txt" {
     Layout.php
    }
   }
-  Site=Site {
-   Controller=Controller {
-    Page.php
-   }
-  }
   views=views filter="*.mustache" {
-   about.mustache
-   layout.mustache
    mobile.mustache
    paginator.mustache
-   projects.mustache
    tag-cloud.mustache
    blog=blog {
     blogroll.mustache
@@ -38,12 +30,6 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md *.php *.xml *.txt" {
     entity.mustache
     form.mustache
     list.mustache
-   }
-   pages=pages {
-    404.mustache
-    comics.mustache
-    home.mustache
-    resume.mustache
    }
   }
  }
@@ -111,6 +97,29 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md *.php *.xml *.txt" {
   }
  }
  modules=modules {
+  Application=Application {
+   autoload_classmap.php
+   autoload_function.php
+   autoload_register.php
+   Module.php
+   configs=configs filter="*.ini *.xml *.php" {
+    module.config.php
+   }
+   Controller=Controller {
+    PageController.php
+   }
+   views=views filter="*.mustache *.phtml" {
+    about.mustache
+    layout.mustache
+    projects.mustache
+    pages=pages {
+     404.mustache
+     comics.mustache
+     home.mustache
+     resume.mustache
+    }
+   }
+  }
   Comic=Comic {
    autoload_classmap.php
    autoload_function.php
