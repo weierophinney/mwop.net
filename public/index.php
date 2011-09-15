@@ -6,6 +6,10 @@ error_reporting(E_ALL | E_STRICT);
 defined('APPLICATION_ENV')
     || define('APPLICATION_ENV', (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'production'));
 
+// Define application path
+defined('APPLICATION_PATH')
+    || define('APPLICATION_PATH', (getenv('APPLICATION_PATH') ? getenv('APPLICATION_PATH') : realpath(__DIR__ . '/../')));
+
 // Ensure library/ is on include_path
 set_include_path(implode(PATH_SEPARATOR, array(
     '.',
