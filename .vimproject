@@ -47,10 +47,6 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md *.php *.xml *.txt" {
    }
   }
  }
- bin=bin {
-  get_comics.php
-  get_one_comic.php
- }
  library=library {
   .classmap.php
   mwop=mwop {
@@ -59,10 +55,6 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md *.php *.xml *.txt" {
    Acl=Acl {
     AclException.php
     SignalHandler.php
-   }
-   Controller=Controller {
-    Front.php
-    Restful.php
    }
    DataSource=DataSource {
     Mock.php
@@ -86,13 +78,7 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md *.php *.xml *.txt" {
     Timezone.php
    }
    Mvc=Mvc {
-    Exception.php
     Presentation.php
-    Router.php
-    Exception=Exception {
-     InvalidRequestException.php
-     InvalidRouteException.php
-    }
     Presentation=Presentation {
      HelperBroker.php
      HelperLoader.php
@@ -104,10 +90,6 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md *.php *.xml *.txt" {
       JavaScriptCode.php
      }
     }
-    Router=Router {
-     RegexRoute.php
-     StaticRoute.php
-    }
    }
    Resource=Resource {
     AbstractResource.php
@@ -118,13 +100,10 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md *.php *.xml *.txt" {
    Stdlib=Stdlib {
     ArraySerializable.php
     DataSource.php
-    Dispatchable.php
     Entity.php
     Query.php
     Resource.php
     ResourceCollection.php
-    Route.php
-    RouteStack.php
     UniqueFilteringIterator.php
     Validatible.php
     ViewPresentation.php
