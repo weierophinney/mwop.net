@@ -82,12 +82,12 @@ class Mongo implements DataSource
     /**
      * Set mongo connection
      *
-     * @param  MongoCollection $value
+     * @param  MongoCollection $connection
      * @return Mongo
      */
-    public function setConnection(MongoCollection $value)
+    public function setConnection(MongoCollection $connection)
     {
-        $this->mongo = $value;
+        $this->mongo = $connection;
         return $this;
     }
     

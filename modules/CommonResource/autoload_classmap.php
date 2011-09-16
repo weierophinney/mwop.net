@@ -1,5 +1,8 @@
 <?php
 return array (
+  'CommonResource\\Mongo' => __DIR__ . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'CommonResource' . DIRECTORY_SEPARATOR . 'Mongo.php',
+  'CommonResource\\MongoDB' => __DIR__ . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'CommonResource' . DIRECTORY_SEPARATOR . 'MongoDB.php',
+  'CommonResource\\MongoCollection' => __DIR__ . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'CommonResource' . DIRECTORY_SEPARATOR . 'MongoCollection.php',
   'CommonResource\\Entity' => __DIR__ . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'CommonResource' . DIRECTORY_SEPARATOR . 'Entity.php',
   'CommonResource\\Resource' => __DIR__ . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'CommonResource' . DIRECTORY_SEPARATOR . 'Resource.php',
   'CommonResource\\Filter\\Timezone' => __DIR__ . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'CommonResource' . DIRECTORY_SEPARATOR . 'Filter' . DIRECTORY_SEPARATOR . 'Timezone.php',

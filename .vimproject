@@ -3,19 +3,8 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md *.php *.xml *.txt" {
  TODO.md
  test.php
  application=application {
-  .classmap.php
-  AppContext.php
-  Layout.php
   configs=configs {
    di.json
-  }
-  Blog=Blog {
-   View=View {
-    Entries.php
-    Entry.php
-    TagCloud.php
-    Layout.php
-   }
   }
   views=views filter="*.mustache" {
    mobile.mustache
@@ -164,6 +153,9 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md *.php *.xml *.txt" {
      ArraySerializable.php
      DataSource.php
      Entity.php
+     Mongo.php
+     MongoCollection.php
+     MongoDB.php
      Query.php
      Resource.php
      ResourceCollection.php
@@ -240,7 +232,6 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md *.php *.xml *.txt" {
   mwop=mwop {
    Resource=Resource {
     AclIntegrationTest.php
-    MongoIntegrationTest.php
    }
   }
  }

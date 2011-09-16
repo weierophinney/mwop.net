@@ -39,7 +39,7 @@ class EntryControllerListener implements HandlerAggregate
         }
 
         $id      = urldecode($id);
-        $matches = $request->getParam('route-match');
+        $matches = $request->getMetadata('route-match');
         $matches->setParam('id', $id);
     }
 
@@ -152,11 +152,11 @@ class EntryControllerListener implements HandlerAggregate
         $renderer   = $controller->getView();
         $request    = $e->getParam('request');
         $response   = $e->getParam('response');
-        $matches    = $request->getParam('route-match');
+        $matches    = $request->getMetadata('route-match');
 
         $action     = $matches->getParam('action', false);
         if ($action) {
-            $content = $this->renderAction($action, $vars, $request, $response, $renderer);
+            $content = $this->renderAction($action, $vars, $renderer);
             $e->setParam('content', $content);
             return;
         }
@@ -206,7 +206,7 @@ class EntryControllerListener implements HandlerAggregate
         }
 
         // Action content
-        $content = $view->render($script, $vars);
+        $content = $renderer->render($script, $vars);
         $e->setParam('content', $content);
         return;
     }
@@ -248,7 +248,7 @@ class EntryControllerListener implements HandlerAggregate
         }
 
         // Action content
-        $content = $view->render($script, $vars);
+        $content = $renderer->render($script, $vars);
         return $content;
     }
 }

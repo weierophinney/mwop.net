@@ -14,7 +14,7 @@ $config['routes'] = array(
     'blog-tag-feed' => array(
         'type'    => 'Zf2Mvc\Router\Http\Regex',
         'options' => array(
-            'route' => '/blog/tag/(?P<tag>[^/]+)\\.xml',
+            'regex' => '/blog/tag/(?P<tag>[^/]+)\\.xml',
             'defaults' => array(
                 'controller' => 'Blog\Controller\EntryController',
                 'action'     => 'tag',
@@ -26,7 +26,7 @@ $config['routes'] = array(
     'blog-tag' => array(
         'type'    => 'Zf2Mvc\Router\Http\Regex',
         'options' => array(
-            'route' => '/blog/tag/(?P<tag>[^/]+)',
+            'regex' => '/blog/tag/(?P<tag>[^/]+)',
             'defaults' => array(
                 'controller' => 'Blog\Controller\EntryController',
                 'action'     => 'tag',
@@ -37,7 +37,7 @@ $config['routes'] = array(
     'blog-year' => array(
         'type'    => 'Zf2Mvc\Router\Http\Regex',
         'options' => array(
-            'route' => '/blog/year/(?P<year>\d{4})',
+            'regex' => '/blog/year/(?P<year>\d{4})',
             'defaults' => array(
                 'controller' => 'Blog\Controller\EntryController',
                 'action'     => 'year',
@@ -48,7 +48,7 @@ $config['routes'] = array(
     'blog-month' => array(
         'type'    => 'Zf2Mvc\Router\Http\Regex',
         'options' => array(
-            'route' => '/blog/month/(?P<year>\d{4})/(?P<month>\d{2})',
+            'regex' => '/blog/month/(?P<year>\d{4})/(?P<month>\d{2})',
             'defaults' => array(
                 'controller' => 'Blog\Controller\EntryController',
                 'action'     => 'month',
@@ -59,7 +59,7 @@ $config['routes'] = array(
     'blog-day' => array(
         'type'    => 'Zf2Mvc\Router\Http\Regex',
         'options' => array(
-            'route' => '/blog/day/(?P<year>\d{4})/(?P<month>\d{2})/(?P<day>\d{2})',
+            'regex' => '/blog/day/(?P<year>\d{4})/(?P<month>\d{2})/(?P<day>\d{2})',
             'defaults' => array(
                 'controller' => 'Blog\Controller\EntryController',
                 'action'     => 'day',
@@ -70,7 +70,7 @@ $config['routes'] = array(
     'blog-entry' => array(
         'type'    => 'Zf2Mvc\Router\Http\Regex',
         'options' => array(
-            'route' => '/blog/(?P<id>[^/]+)',
+            'regex' => '/blog/(?P<id>[^/]+)',
             'defaults' => array(
                 'controller' => 'Blog\Controller\EntryController',
             ),
@@ -99,19 +99,45 @@ $config['routes'] = array(
 );
 
 $config['di'] = array('instance' => array(
-    'MongoDB' => array( 'parameters' => array(
+    'CommonResource\Mongo' => array( 'parameters' => array(
+        'server'  => 'mongodb://localhost:27017',
+        'options' => array('connect' => true),
+    )),
+    'CommonResource\MongoDB' => array( 'parameters' => array(
+        'conn' => 'CommonResource\Mongo',
         'name' => 'mwoptest',
     )),
-    'MongoCollection' => array( 'parameters' => array(
+    'CommonResource\MongoCollection' => array('parameters' => array(
+        'db'   => 'CommonResource\MongoDB',
         'name' => 'entries',
     )),
     'Blog\EntryResource' => array('parameters' => array(
-        'dataSource' => 'CommonResource\DataSource\Mongo',
+        'dataSource'      => 'CommonResource\DataSource\Mongo',
         'collectionClass' => 'CommonResource\Resource\MongoCollection',
+    ), 'methods' => array(
+        'setCollectionClass' => array(
+            'class' => 'CommonResource\Resource\MongoCollection',
+        ),
     )), 
-    /**
-     * @todo EntryController injection
-     */
+    'Blog\Controller\EntryController' => array('parameters' => array(
+        'view'     => 'Zend\View\PhpRenderer',
+        'resource' => 'Blog\EntryResource',
+    )),
+    'CommonResource\DataSource\Mongo' => array('parameters' => array(
+        'connection' => 'CommonResource\MongoCollection',
+    )),
+    'Zend\View\PhpRenderer' => array(
+        'methods' => array(
+            'setResolver' => array(
+                'resolver' => 'Zend\View\TemplatePathStack',
+                'options' => array(
+                    'script_paths' => array(
+                        'blog' => __DIR__ . '/../views',
+                    ),
+                ),
+            ),
+        ),
+    ),
 ));
 
 return array(

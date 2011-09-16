@@ -8,6 +8,7 @@ use Blog\EntryResource,
     Zend\Filter\InputFilter,
     Zend\Paginator\Paginator,
     Zend\Paginator\Adapter\Iterator as IteratorPaginator,
+    Zend\View\Renderer,
     Zf2Mvc\Controller\RestfulController;
 
 class EntryController extends RestfulController
@@ -126,7 +127,7 @@ class EntryController extends RestfulController
     public function tagAction()
     {
         $request = $this->getRequest();
-        $matches = $request->getParam('route-match', false);
+        $matches = $request->getMetadata('route-match', false);
         $tag     = $matches->getParam('tag', false);
 
         if (!$tag) {
@@ -149,7 +150,7 @@ class EntryController extends RestfulController
     public function yearAction()
     {
         $request = $this->getRequest();
-        $matches = $request->getParam('route-match', false);
+        $matches = $request->getMetadata('route-match', false);
         $year    = $matches->getParam('year', false);
 
         if (!$year) {
@@ -168,7 +169,7 @@ class EntryController extends RestfulController
     public function monthAction()
     {
         $request = $this->getRequest();
-        $matches = $request->getParam('route-match', false);
+        $matches = $request->getMetadata('route-match', false);
         $year    = $matches->getParam('year', false);
 
         if (!$year) {
@@ -192,7 +193,7 @@ class EntryController extends RestfulController
     public function dayAction()
     {
         $request = $this->getRequest();
-        $matches = $request->getParam('route-match', false);
+        $matches = $request->getMetadata('route-match', false);
         $year    = $matches->getParam('year', false);
 
         if (!$year) {
@@ -221,7 +222,7 @@ class EntryController extends RestfulController
     public function getPaginator(Iterator $it, $page)
     {
         $paginator = new Paginator(new IteratorPaginator($it));
-        $paginator-setCurrentPageNumber($page);
+        $paginator->setCurrentPageNumber($page);
         $paginator->setItemCountPerPage(10);
         $paginator->setPageRange(10);
         return $paginator;

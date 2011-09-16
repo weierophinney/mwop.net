@@ -1,3 +1,4 @@
+<?php if ($this->vars('pageCount') < 2) return ?>
 <div class="paginationControl">
 <?php // First page link
     if ($this->vars('first') && $this->vars('first') != $this->vars('current')): ?>
@@ -10,8 +11,12 @@
 <?php endif;
 
     // Numbered page links
-    foreach ($this->vars('pagesInRange') as $page): ?>
+    foreach ($this->vars('pagesInRange') as $page):
+        if ($page == $this->vars('current')): ?>
+        <span class="current"><?php echo $page ?></span> |
+        <?php else: ?>
         <a href="<?php echo $this->vars('url') . '?page=' . $page ?>"><?php echo $page ?></a> |
+        <?php endif ?>
 <?php endforeach;
 
     // Next page link

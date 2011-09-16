@@ -1,13 +1,16 @@
-<?php $this->plugin('headTitle')->prepend($this->vars('title')) ?>
+<?php 
+$paginatorUrl = $this->vars('paginator_url');
+$this->plugin('headTitle')->prepend($this->vars('title')) ?>
 <div class="grid_9 content blog">
     <h2><?php echo $this->vars('title') ?></h2>
 
 <?php 
 $entries = $this->vars('entries');
 foreach ($entries as $entry) {
-    echo $this->partial('blog/entry-short.phtml', $entry->toArray());
+    echo $this->render('blog/entry-short.phtml', array('entry' => $entry));
 }
-echo $this->plugin('paginationControl')->direct($entries, 'Sliding', 'blog/paginator.phtml', array('url' => $this->vars('pagination_url')));
+
+echo $this->plugin('paginationControl')->direct($entries, 'Sliding', 'blog/paginator.phtml', array('url' => $paginatorUrl));
 ?>
 </div>
 
