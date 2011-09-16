@@ -2,188 +2,90 @@
 namespace Blog\Controller;
 
 use Blog\EntryResource,
-    Blog\View\Entries as EntriesView,
-    Blog\View\TagCloud,
-    CommonResource\DataSource\Mongo as MongoDataSource,
-    CommonResource\Resource,
+    Blog\EventListeners\EntryControllerListener,
+    Iterator,
     Mongo,
-    Zend\Feed\Writer\Feed as FeedWriter,
+    Zend\Filter\InputFilter,
+    Zend\Paginator\Paginator,
+    Zend\Paginator\Adapter\Iterator as IteratorPaginator,
     Zf2Mvc\Controller\RestfulController;
 
 /**
- * @todo Needs heavy refactoring; made assumption previously that 
- *       RestfulController had awareness of resources. Also, was using
- *       ViewModel paradigm, which may not work with PhpRenderer.
+ * @todo Ensure all REST methods are present (update, delete, etc.)
  */
 class EntryController extends RestfulController
 {
-    protected $presentation;
-
-    protected $views = array(
-        'getList' => 'Blog\View\Entries',
-        'get'     => 'Blog\View\Entry',
-    );
+    protected $resource;
+    protected $view;
 
     public function __construct()
     {
         $events = $this->events();
-
-        // Normalize ID
-        $events->attach('dispatch.pre', function($e) {
-            $request = $e->getParam('request');
-            $id      = $request->getMetadata('id', false);
-            if (!$id) {
-                return;
-            }
-
-            $id = urldecode($id);
-            $request->setMetadata('id', $id);
-        });
-
-        // Setup feeds
-        $events->attach('dispatch.post', function($e) {
-            $request    = $e->getParam('request');
-            $format     = $request->getMetadata('format', false);
-            if ($format !== 'xml') {
-                return;
-            }
-
-            $view       = $e->getParam('__RESULT__');
-            if (!$view instanceof EntriesView) {
-                // No entities, thus no feed
-                return;
-            }
-            if (isset($view->paginatorUrl) && empty($view->tag)) {
-                // only doing feeds for main list and tags
-                return;
-            }
-
-            $controller = $e->getTarget();
-            if (null === ($layout = $controller->getPresentation())) {
-                return;
-            }
-            if (is_object($view) && method_exists($view, 'setPresentation')) {
-                $view->setPresentation($layout);
-            }
-
-            if (isset($view->title) && isset($view->title['text'])) {
-                $layout->titleSegments->unshift($view->title['text']);
-            }
-            $title         = $layout->title();
-
-            $urlHelper     = $layout->helper('url');
-            if (false !== strstr($title, 'Tag: ')) {
-                $link      = $urlHelper->generate(array('tag' => $view->tag), array('name' => 'blog-tag'));
-                $feedLink  = $urlHelper->generate(array('tag' => $view->tag), array('name' => 'blog-tag-feed'));
-            } else {
-                $link      = $urlHelper->generate(array(), array('name' => 'blog'));
-                $feedLink  = $urlHelper->generate(array(), array('name' => 'blog-feed'));
-            }
-
-            $feed = new FeedWriter();
-            $feed->setTitle($title);
-            $feed->setLink($link);
-            $feed->setFeedLink($feedLink, 'atom');
-
-            $latest = false;
-            foreach ($view->entries->getIterator() as $post) {
-                if (!$latest) {
-                    $latest = $post;
-                }
-                $entry = $feed->createEntry();
-                $entry->setTitle($post->getTitle());
-                $entry->setLink($urlHelper->generate(array('id' => $post->getId()), array('name' => 'blog-entry')));
-                /**
-                 * @todo inject this info!
-                 */
-                $entry->addAuthor(array(
-                    'name'  => "Matthew Weier O'Phinney",
-                    'email' => 'matthew@weierophinney.net',
-                    'uri'   => $link,
-                ));
-                $entry->setDateModified($post->getUpdated());
-                $entry->setDateCreated($post->getCreated());
-                $entry->setContent($post->getBody());
-                $feed->addEntry($entry);
-            }
-
-            // Set feed date
-            $feed->setDateModified($latest->getUpdated());
-
-            $response = $e->getParam('response');
-            $response->setContent($feed->export('atom'));
-            $response->getHeaders()->addHeader('Content-Type', 'application/atom+xml');
-
-            $e->stopPropagation(true);
-            return $response;
-        }, 100);
-
-        // Setup presentation
-        $events->attach('dispatch.post', function($e) {
-            $controller = $e->getTarget();
-            if (null === ($layout = $controller->getPresentation())) {
-                return;
-            }
-
-            $view       = $e->getParam('__RESULT__');
-            if (is_object($view) && method_exists($view, 'setPresentation')) {
-                $view->setPresentation($layout);
-            }
-
-            if (isset($view->title)) {
-                if (is_string($view->title)) {
-                    $layout->titleSegments->unshift($view->title);
-                } elseif (is_array($view->title) && isset($view->title['text'])) {
-                    $layout->titleSegments->unshift($view->title['text']);
-                }
-            } elseif (isset($view->entity)) {
-                $layout->titleSegments->unshift($view->entity->getTitle());
-            }
-
-            $tags       = $controller->resource()->getTagCloud();
-            $subView    = new SubView('tag-cloud', new TagCloud($tags, $layout));
-
-            if (!isset($layout->footer)) {
-                $layout->footer = array('tags' => array('cloud' => $subView));
-            } elseif (is_array($layout->footer)) {
-                if (!isset($layout->footer['tags'])) {
-                    $layout->footer['tags'] = array('cloud' => $subView);
-                } elseif (is_array($layout->footer['tags'])) {
-                    $layout->footer['tags']['cloud'] = $subView;
-                }
-            }
-        });
+        $listeners = new EntryControllerListener;
+        $events->attachAggregate($listeners);
     }
 
-    public function resource(Resource $resource = null)
+    public function setResource(EntryResource $resource)
     {
-        if (null !== $resource) {
-            if (!$resource instanceof EntryResource) {
-                throw new \DomainException('Entry controller expects an Entry resource');
-            }
-            $this->resource = $resource;
-        }
-        return $this->resource;
-    }
-
-    public function setPresentation(Presentation $presentation)
-    {
-        $this->presentation = $presentation;
+        $this->resource = $resource;
         return $this;
     }
 
-    public function getPresentation()
+    public function resource()
     {
-        return $this->presentation;
+        return $this->resource;
+    }
+
+    public function setView(Renderer $view)
+    {
+        $this->view = $view;
+        return $this;
+    }
+
+    public function getView()
+    {
+        return $this->view;
     }
 
     public function getList()
     {
         $entries = $this->resource()->getEntries(0, false);
-        return new EntriesView(array(
-            'entities' => $entries,
-            'request'  => $this->getRequest(),
-        ));
+        $page    = $this->request->query()->get('page', 1);
+        return array(
+            'title'         => 'Entries',
+            'entries'       => $this->getPaginator($entries, $page),
+            'paginator_url' => '/blog',
+        );
+    }
+
+    public function get($id)
+    {
+        $entry = $this->resource()->get($id);
+        if (!$entry) {
+            return array(
+                'error' => 'Entry not found',
+            );
+        }
+        return array(
+            'entry' => $entry,
+        );
+    }
+
+    public function create($data)
+    {
+        $entry = $this->resource()->create($data);
+
+        if ($entry instanceof InputFilter) {
+            return array(
+                'url'    => '/blog',
+                'errors' => $entry->getMessages(),
+            );
+        }
+
+        return array(
+            'created' => true,
+            'entry'   => $entry,
+        );
     }
 
     public function createAction()
@@ -200,68 +102,105 @@ class EntryController extends RestfulController
 
     public function tagAction()
     {
-        if (!$tag = $this->getRequest()->getMetadata('tag', false)) {
+        $request = $this->getRequest();
+        $matches = $request->getParam('route-match', false);
+        $tag     = $matches->getParam('tag', false);
+
+        if (!$tag) {
             return $this->getList();
         }
+
+        $rawTag  = $tag;
         $tag     = urldecode($tag);
         $entries = $this->resource()->getEntriesByTag($tag, false);
-        return new EntriesView(array(
-            'tag'      => $tag,
-            'title'    => array('text' => 'Tag: ' . $tag),
-            'entities' => $entries,
-            'request'  => $this->getRequest(),
-            'paginator_url' => '/blog/tag/' . $tag,
-        ));
+        $page    = $this->request->query()->get('page', 1);
+
+        return array(
+            'title'         => 'Tag: ' . $tag,
+            'tag'           => $tag,
+            'entries'       => $this->getPaginator($entries, $page),
+            'paginator_url' => '/blog/tag/' . $rawTag,
+        );
     }
 
     public function yearAction()
     {
-        if (!$year = $this->getRequest()->getMetadata('year', false)) {
+        $request = $this->getRequest();
+        $matches = $request->getParam('route-match', false);
+        $year    = $matches->getParam('year', false);
+
+        if (!$year) {
             return $this->getList();
         }
+
         $entries = $this->resource()->getEntriesByYear($year, false);
-        return new EntriesView(array(
-            'title'    => array('text' => 'Entries for ' . $year),
-            'entities' => $entries,
-            'request'  => $this->getRequest(),
+        $page    = $this->request->query()->get('page', 1);
+        return array(
+            'title'         => 'Entries for ' . $year,
+            'entries'       => $this->getPaginator($entries, $page),
             'paginator_url' => '/blog/year/' . $year,
-        ));
+        );
     }
 
     public function monthAction()
     {
-        if (!$year = $this->getRequest()->getMetadata('year', false)) {
+        $request = $this->getRequest();
+        $matches = $request->getParam('route-match', false);
+        $year    = $matches->getParam('year', false);
+
+        if (!$year) {
             return $this->getList();
         }
-        if (!$month = $this->getRequest()->getMetadata('month', false)) {
+
+        $month = $matches->getParam('month', false);
+        if (!$month) {
             return $this->getList();
         }
+
         $entries = $this->resource()->getEntriesByMonth($month, $year, false);
-        return new EntriesView(array(
-            'title'    => array('text' => 'Entries for ' . date('F', strtotime($year . '-' . $month . '-01')) . ' ' . $year),
-            'entities' => $entries,
-            'request'  => $this->getRequest(),
+        $page    = $this->request->query()->get('page', 1);
+        return array(
+            'title'         => 'Entries for ' . date('F', strtotime($year . '-' . $month . '-01')) . ' ' . $year,
+            'entries'       => $this->getPaginator($entries, $page),
             'paginator_url' => '/blog/month/' . $year . '/' . $month,
-        ));
+        );
     }
 
     public function dayAction()
     {
-        if (!$year = $this->getRequest()->getMetadata('year', false)) {
+        $request = $this->getRequest();
+        $matches = $request->getParam('route-match', false);
+        $year    = $matches->getParam('year', false);
+
+        if (!$year) {
             return $this->getList();
         }
-        if (!$month = $this->getRequest()->getMetadata('month', false)) {
+
+        $month = $matches->getParam('month', false);
+        if (!$month) {
             return $this->getList();
         }
-        if (!$day = $this->getRequest()->getMetadata('day', false)) {
+
+        $day = $matches->getParam('day', false);
+        if (!$day) {
             return $this->getList();
         }
+
         $entries = $this->resource()->getEntriesByDay($day, $month, $year, false);
-        return new EntriesView(array(
-            'title'    => array('text' => 'Entries for ' . $day . ' ' . date('F', strtotime($year . '-' . $month . '-' . $day)) . ' ' . $year),
-            'entities' => $entries,
-            'request'  => $this->getRequest(),
+        $page    = $this->request->query()->get('page', 1);
+        return array(
+            'title'         => 'Entries for ' . $day . ' ' . date('F', strtotime($year . '-' . $month . '-' . $day)) . ' ' . $year,
+            'entries'       => $this->getPaginator($entries, $page),
             'paginator_url' => '/blog/day/' . $year . '/' . $month . '/'. $day,
-        ));
+        );
+    }
+
+    public function getPaginator(Iterator $it, $page)
+    {
+        $paginator = new Paginator(new IteratorPaginator($it));
+        $paginator-setCurrentPageNumber($page);
+        $paginator->setItemCountPerPage(10);
+        $paginator->setPageRange(10);
+        return $paginator;
     }
 }

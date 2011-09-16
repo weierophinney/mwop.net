@@ -200,6 +200,11 @@ class Bootstrap
         $url    = $view->plugin('url');
         $url->setRouter($app->getRouter());
 
+        if ($this->config->disqus) {
+            // Ensure disqus plugin is configured
+            $disqus = $view->plugin('disqus', $this->config->disqus->toArray());
+        }
+
         $view->plugin('headTitle')->setSeparator(' :: ')
                                   ->setAutoEscape(false)
                                   ->append('phly, boy, phly');

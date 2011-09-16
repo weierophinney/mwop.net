@@ -1,0 +1,43 @@
+<?php
+$entry = $this->vars('entry');
+$title = $entry->getTitle();
+$this->plugin('headTitle')->prepend($title);
+$title = $this->vars()->escape($title);
+$url   = $this->plugin('url')->direct(array('id' => $entry->id), array('name' => 'blog-entry'));
+$ds    = function($ts) use ($entry) {
+    $tz = $entry->getTimezone();
+    $date = new \DateTime();
+    $date->setTimezone(new \DateTimeZone($tz));
+    $date->setTimestamp($ts);
+    return $date->format('Y-m-d H:i:s');
+};
+?>
+<div class="grid_9 content blog">
+<?php if ($this->vars('entry_updated')): ?>
+<h2 class="notification">Entry updated</h2>
+<?php endif ?>
+<h2><?php echo $title ?></h2>
+<div class="content">
+<?php
+echo $entry->getBody();
+echo $entry->getExtended();
+echo $this->plugin('disqus')->direct($entry->getId(), $url, $title);
+?>
+</div>
+
+<div class="grid_3 sidebar blog">
+    <div class="metadata">
+        <ul>
+            <li>Posted on <b><?php echo $ds($entry->getCreated()) ?></b>.</li>
+            <li>Last updated on <b><?php echo $ds($entry->getUpdated()) ?></b>.</li>
+        </ul>
+    </div>
+
+    <div class="metadata">
+        <h4>Tags for this entry</h4>
+        <p class="tags"><?php echo $this->render('blog/tags.phtml', array('tags' => $entry->getTags())) ?></p>
+    </div>
+
+    <?php echo $this->render('blog/blogroll.phtml') ?>
+</div>
+

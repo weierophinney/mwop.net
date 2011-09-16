@@ -19,8 +19,6 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md *.php *.xml *.txt" {
   }
   views=views filter="*.mustache" {
    mobile.mustache
-   paginator.mustache
-   tag-cloud.mustache
   }
  }
  library=library {
@@ -53,6 +51,12 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md *.php *.xml *.txt" {
      Controller=Controller {
       PageController.php
      }
+     View=View {
+      Helper=Helper {
+       Disqus.php
+       Url.php
+      }
+     }
     }
    }
    views=views filter="*.mustache *.phtml" {
@@ -74,6 +78,7 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md *.php *.xml *.txt" {
    autoload_function.php
    autoload_register.php
    configs=configs filter="*.php *.yml *.json *.xml *.ini" {
+    module.config.php
    }
    src=src {
     Blog=Blog {
@@ -81,6 +86,9 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md *.php *.xml *.txt" {
      EntryResource.php
      Controller=Controller {
       EntryController.php
+     }
+     EventListeners=EventListeners {
+      EntryControllerListener.php
      }
      Filter=Filter {
       EntryFilter.php
@@ -103,11 +111,13 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md *.php *.xml *.txt" {
    }
    views=views filter="*.phtml *.php *.mustache" {
     blog=blog {
-     blogroll.mustache
-     entity-short.mustache
-     entity.mustache
-     form.mustache
-     list.mustache
+     blogroll.phtml
+     entity-short.phtml
+     entity.phtml
+     form.phtml
+     list.phtml
+     paginator.phtml
+     tags.phtml
     }
    }
   }

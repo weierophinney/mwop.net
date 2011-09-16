@@ -46,12 +46,23 @@ echo $this->plugin('doctype') ?>
     </div>
 
     <div class="grid_4 footer tags">
-        <?php /*
-        {{#footer}}{{#tags}}
-        <h4>Tag Cloud</h4>
-        {{cloud}}
-        {{/tags}}{{/footer}}
-         */ ?>
+    <?php while (isset($this->vars()->footer)):
+            if (is_string($this->vars()->footer)) {
+                echo $this->vars()->footer;
+                break;
+            }
+
+            $footer = $this->vars()->getRawValue('footer');
+            if (is_callable($footer)) {
+                echo call_user_func($footer);
+                break;
+            } 
+            if (is_object($footer) && method_exists($footer, '__toString'))  {
+                echo $footer;
+                break;
+            }
+            break;
+        endwhile; ?>
     </div>
 </div>
 </body>

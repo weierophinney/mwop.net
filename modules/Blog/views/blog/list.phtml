@@ -1,0 +1,17 @@
+<?php $this->plugin('headTitle')->prepend($this->vars('title')) ?>
+<div class="grid_9 content blog">
+    <h2><?php echo $this->vars('title') ?></h2>
+
+<?php 
+$entries = $this->vars('entries');
+foreach ($entries as $entry) {
+    echo $this->partial('blog/entity-short.phtml', $entry->toArray());
+}
+echo $this->plugin('paginationControl')->direct($entries, 'Sliding', 'blog/paginator.phtml', array('url' => $this->vars('pagination_url')));
+?>
+</div>
+
+<div class="grid_3 sidebar blog">
+<?php echo $this->render('blog/blogroll.phtml') ?>
+</div>
+

@@ -1,0 +1,27 @@
+<div class="paginationControl">
+<?php // First page link
+    if ($this->vars('first') && $this->vars('first') != $this->vars('current')): ?>
+        <a href="<?php echo $this->vars('url') ?>" class="first">&lt;&lt; First</a> |
+<?php endif;
+
+    // Previous page
+    if ($this->vars('previous')): ?>
+        <a href="<?php echo $this->vars('url') . '?page=' . $this->vars('previous') ?>"> &lt; Previous </a> |
+<?php endif;
+
+    // Numbered page links
+    foreach ($this->vars('pagesInRange') as $page): ?>
+        <a href="<?php echo $this->vars('url') . '?page=' . $page ?>"><?php echo $page ?></a> |
+<?php endforeach;
+
+    // Next page link
+    if ($this->vars('next')): ?>
+        <a href="<?php echo $this->vars('url') . '?page=' . $this->vars('next') ?>"> Next &gt;</a> |
+<?php endif;
+
+    // Last page link
+    if ($this->vars('last') && $this->vars('last') !== $this->vars('current')): ?>
+        <a href="<?php echo $this->vars('url') . '?page=' . $this->vars('last') ?>" class="last"> Last &gt;&gt;</a>
+<?php endif; ?>
+</div>
+

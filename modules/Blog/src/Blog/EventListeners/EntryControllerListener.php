@@ -1,0 +1,144 @@
+<?php
+
+namespace Blog\EventListeners;
+
+use Zend\EventManager\EventCollection,
+    Zend\EventManager\HandlerAggregate,
+    Zend\Feed\Writer\Feed as FeedWriter,
+    Zend\Tag\Cloud;
+
+class EntryControllerListener implements HandlerAggregate
+{
+    protected $listeners = array();
+
+    public function attach(EventCollection $events)
+    {
+        $this->listeners[] = $events->attach('dispatch.pre',  array($this, 'normalizeId'));
+        $this->listeners[] = $events->attach('dispatch.post', array($this, 'generateFeed'), 100);
+        $this->listeners[] = $events->attach('dispatch.post', array($this, 'injectTagCloud'));
+    }
+
+    public function detach(EventCollection $events)
+    {
+        foreach ($this->listeners as $listener) {
+            $events->detach($listener);
+        }
+
+        $this->listeners = array();
+    }
+
+    public function normalizeId($e)
+    {
+        $request = $e->getParam('request');
+        $id      = $request->getMetadata('id', false);
+        if (!$id) {
+            return;
+        }
+
+        $id      = urldecode($id);
+        $matches = $request->getParam('route-match');
+        $matches->setParam('id', $id);
+    }
+
+    public function generateFeed($e)
+    {
+        $request    = $e->getParam('request');
+        $format     = $request->getMetadata('format', false);
+        if ($format !== 'xml') {
+            return;
+        }
+
+        $view       = $e->getParam('__RESULT__');
+        if (isset($view['entries'])) {
+            // No entries, thus no feed
+            return;
+        }
+        if (isset($view['paginator_url']) && empty($view['tag'])) {
+            // only doing feeds for main list and tags
+            return;
+        }
+
+        $controller = $e->getTarget();
+        $renderer   = $controller->getView();
+        $headTitle  = $renderer->plugin('headTitle');
+        if (isset($view['title'])) {
+            $headTitle->prepend($view['title']);
+        }
+        $title      = $headTitle->toString();
+
+        $urlHelper     = $renderer->plugin('url');
+        if (false !== strstr($title, 'Tag: ')) {
+            $link      = $urlHelper->direct(array('tag' => $view['tag']), array('name' => 'blog-tag'));
+            $feedLink  = $urlHelper->direct(array('tag' => $view['tag']), array('name' => 'blog-tag-feed'));
+        } else {
+            $link      = $urlHelper->direct(array(), array('name' => 'blog'));
+            $feedLink  = $urlHelper->direct(array(), array('name' => 'blog-feed'));
+        }
+
+        $feed = new FeedWriter();
+        $feed->setTitle($title);
+        $feed->setLink($link);
+        $feed->setFeedLink($feedLink, 'atom');
+
+        $latest = false;
+        foreach ($view['entries']->getIterator() as $post) {
+            if (!$latest) {
+                $latest = $post;
+            }
+            $entry = $feed->createEntry();
+            $entry->setTitle($post->getTitle());
+            $entry->setLink($urlHelper->direct(array('id' => $post->getId()), array('name' => 'blog-entry')));
+            /**
+             * @todo inject this info!
+             */
+            $entry->addAuthor(array(
+                'name'  => "Matthew Weier O'Phinney",
+                'email' => 'matthew@weierophinney.net',
+                'uri'   => $link,
+            ));
+            $entry->setDateModified($post->getUpdated());
+            $entry->setDateCreated($post->getCreated());
+            $entry->setContent($post->getBody());
+            $feed->addEntry($entry);
+        }
+
+        // Set feed date
+        $feed->setDateModified($latest->getUpdated());
+
+        $response = $e->getParam('response');
+        $response->setContent($feed->export('atom'));
+        $response->headers()->addHeaderLine('Content-Type', 'application/atom+xml');
+
+        $e->stopPropagation(true);
+        return $response;
+    }
+
+    public function injectTagCloud($e)
+    {
+        $view       = $e->getParam('__RESULT__');
+        $controller = $e->getTarget();
+        $tags       = $controller->resource()->getTagCloud();
+        $renderer   = $controller->getView();
+        $cloud      = function() use ($tags, $renderer) {
+            $url = $renderer->plugin('url');
+            foreach ($tags as $key => $tag) {
+                $tags[$key]['params'] = array(
+                    'url' => $url->direct(array('tag' => $tag['title']), array('name' => 'blog-tag')),
+                );
+            }
+            $cloud = new Cloud(array(
+                'tags' => $tags,
+                'tagDecorator' => array(
+                    'decorator' => 'html_tag',
+                    'options'   => array(
+                        'fontSizeUnit' => '%',
+                        'minFontSize' => 80,
+                        'maxFontSize' => 300,
+                    ),
+                ),
+            ));
+            return "<h4>Tag Cloud</h4>\n<div class=\"cloud\">\n" . $cloud->render() . "</div>\n";
+        };
+        $view['footer'] = $cloud;
+    }
+}

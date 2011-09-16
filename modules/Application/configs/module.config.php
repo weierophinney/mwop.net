@@ -3,6 +3,11 @@ $config = array();
 $config['production'] = array(
     'bootstrap_class' => 'Application\Bootstrap',
 
+    'disqus' => array(
+        'key'         => 'testphlyboyphly',
+        'development' => 0,
+    ),
+
     'di' => array( 'instance' => array(
         'alias' => array(
             'view'  => 'Zend\View\PhpRenderer',
@@ -10,7 +15,8 @@ $config['production'] = array(
 
         'Zend\View\HelperLoader' => array('parameters' => array(
             'map' => array(
-                'url' => 'Application\View\Helper\Url',
+                'url'    => 'Application\View\Helper\Url',
+                'disqus' => 'Application\View\Helper\Disqus',
             ),
         )),
 
@@ -71,4 +77,6 @@ $config['production'] = array(
 $config['staging']     = $config['production'];
 $config['testing']     = $config['production'];
 $config['development'] = $config['production'];
+$config['development']['disqus']['key']         = "testphlyboyphly";
+$config['development']['disqus']['development'] = 1;
 return $config;
