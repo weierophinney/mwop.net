@@ -20,7 +20,7 @@ $config['routes'] = array(
                 'action'     => 'tag',
                 'format'     => 'xml',
             ),
-            'spec' => '/blog/tag/%s.xml',
+            'spec' => '/blog/tag/%tag%.xml',
         ),
     ),
     'blog-tag' => array(
@@ -31,7 +31,7 @@ $config['routes'] = array(
                 'controller' => 'Blog\Controller\EntryController',
                 'action'     => 'tag',
             ),
-            'spec' => '/blog/tag/%s',
+            'spec' => '/blog/tag/%tag%',
         ),
     ),
     'blog-year' => array(
@@ -42,7 +42,7 @@ $config['routes'] = array(
                 'controller' => 'Blog\Controller\EntryController',
                 'action'     => 'year',
             ),
-            'spec' => '/blog/year/%s',
+            'spec' => '/blog/year/%year%',
         ),
     ),
     'blog-month' => array(
@@ -53,7 +53,7 @@ $config['routes'] = array(
                 'controller' => 'Blog\Controller\EntryController',
                 'action'     => 'month',
             ),
-            'spec' => '/blog/month/%s/%s',
+            'spec' => '/blog/month/%year%/%month%',
         ),
     ),
     'blog-day' => array(
@@ -64,7 +64,7 @@ $config['routes'] = array(
                 'controller' => 'Blog\Controller\EntryController',
                 'action'     => 'day',
             ),
-            'spec' => '/blog/day/%s/%s/%s',
+            'spec' => '/blog/day/%year%/%month%/%day%',
         ),
     ),
     'blog-entry' => array(
@@ -74,7 +74,7 @@ $config['routes'] = array(
             'defaults' => array(
                 'controller' => 'Blog\Controller\EntryController',
             ),
-            'spec' => '/blog/%s',
+            'spec' => '/blog/%id%',
         ),
     ),
     'blog-feed' => array(

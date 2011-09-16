@@ -29,7 +29,7 @@ class Disqus extends AbstractHelper
                 case 'key':
                     $this->key = $value;
                     break;
-                case 'developer':
+                case 'development':
                     $this->developer = $value;
                     break;
                 default:

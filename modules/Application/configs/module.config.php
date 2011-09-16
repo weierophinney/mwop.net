@@ -4,7 +4,7 @@ $config['production'] = array(
     'bootstrap_class' => 'Application\Bootstrap',
 
     'disqus' => array(
-        'key'         => 'testphlyboyphly',
+        'key'         => 'phlyboyphly',
         'development' => 0,
     ),
 

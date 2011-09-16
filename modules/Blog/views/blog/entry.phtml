@@ -1,9 +1,14 @@
-<?php
+<?php if ($this->vars('error')): ?>
+<p class="error"><?php echo $this->vars('error') ?></p>
+<?php 
+    return;
+endif;
+
 $entry = $this->vars('entry');
 $title = $entry->getTitle();
 $this->plugin('headTitle')->prepend($title);
 $title = $this->vars()->escape($title);
-$url   = $this->plugin('url')->direct(array('id' => $entry->id), array('name' => 'blog-entry'));
+$url   = $this->plugin('url')->direct(array('id' => $entry->getId()), array('name' => 'blog-entry'));
 $ds    = function($ts) use ($entry) {
     $tz = $entry->getTimezone();
     $date = new \DateTime();

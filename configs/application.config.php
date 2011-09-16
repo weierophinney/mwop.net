@@ -8,5 +8,7 @@ return new Zend\Config\Config(array(
         'Zf2Mvc',
         'Application',
         'Comic',
+        'CommonResource',
+        'Blog',
     ),
 ));
