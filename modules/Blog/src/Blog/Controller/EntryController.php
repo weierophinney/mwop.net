@@ -10,9 +10,6 @@ use Blog\EntryResource,
     Zend\Paginator\Adapter\Iterator as IteratorPaginator,
     Zf2Mvc\Controller\RestfulController;
 
-/**
- * @todo Ensure all REST methods are present (update, delete, etc.)
- */
 class EntryController extends RestfulController
 {
     protected $resource;
@@ -85,6 +82,35 @@ class EntryController extends RestfulController
         return array(
             'created' => true,
             'entry'   => $entry,
+            'id'      => $id,
+        );
+    }
+
+    public function update($id, $data)
+    {
+        $entry = $this->resource()->update($id, $data);
+
+        if ($entry instanceof InputFilter) {
+            return array(
+                'url'    => '/blog',
+                'errors' => $entry->getMessages(),
+            );
+        }
+
+        return array(
+            'updated' => true,
+            'entry'   => $entry,
+            'id'      => $id,
+        );
+    }
+
+    public function delete($id)
+    {
+        $result = $this->resource()->delete($id);
+
+        return array(
+            'id'      => $id,
+            'deleted' => $result,
         );
     }
 
