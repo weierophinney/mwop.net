@@ -5,7 +5,7 @@
 <?php 
 $entries = $this->vars('entries');
 foreach ($entries as $entry) {
-    echo $this->partial('blog/entity-short.phtml', $entry->toArray());
+    echo $this->partial('blog/entry-short.phtml', $entry->toArray());
 }
 echo $this->plugin('paginationControl')->direct($entries, 'Sliding', 'blog/paginator.phtml', array('url' => $this->vars('pagination_url')));
 ?>

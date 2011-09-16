@@ -112,8 +112,8 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md *.php *.xml *.txt" {
    views=views filter="*.phtml *.php *.mustache" {
     blog=blog {
      blogroll.phtml
-     entity-short.phtml
-     entity.phtml
+     entry-short.phtml
+     entry.phtml
      form.phtml
      list.phtml
      paginator.phtml

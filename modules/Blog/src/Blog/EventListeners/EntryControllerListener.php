@@ -2,10 +2,12 @@
 
 namespace Blog\EventListeners;
 
-use Zend\EventManager\EventCollection,
+use Traversable,
+    Zend\EventManager\EventCollection,
     Zend\EventManager\HandlerAggregate,
     Zend\Feed\Writer\Feed as FeedWriter,
-    Zend\Tag\Cloud;
+    Zend\Tag\Cloud,
+    Zend\View\Variables as ViewVariables;
 
 class EntryControllerListener implements HandlerAggregate
 {
@@ -16,6 +18,7 @@ class EntryControllerListener implements HandlerAggregate
         $this->listeners[] = $events->attach('dispatch.pre',  array($this, 'normalizeId'));
         $this->listeners[] = $events->attach('dispatch.post', array($this, 'generateFeed'), 100);
         $this->listeners[] = $events->attach('dispatch.post', array($this, 'injectTagCloud'));
+        $this->listeners[] = $events->attach('dispatch.post', array($this, 'renderRestfulActions'), 50);
     }
 
     public function detach(EventCollection $events)
@@ -140,5 +143,112 @@ class EntryControllerListener implements HandlerAggregate
             return "<h4>Tag Cloud</h4>\n<div class=\"cloud\">\n" . $cloud->render() . "</div>\n";
         };
         $view['footer'] = $cloud;
+    }
+
+    public function renderRestfulActions($e)
+    {
+        $vars       = $e->getParam('__RESULT__', array());
+        $controller = $e->getTarget();
+        $renderer   = $controller->getView();
+        $request    = $e->getParam('request');
+        $response   = $e->getParam('response');
+        $matches    = $request->getParam('route-match');
+
+        $action     = $matches->getParam('action', false);
+        if ($action) {
+            $content = $this->renderAction($action, $vars, $request, $response, $renderer);
+            $e->setParam('content', $content);
+            return;
+        }
+
+        switch (strtolower($request->getMethod())) {
+            case 'get':
+                if (!$matches->getParam('id', false)) {
+                    $script = 'blog/list.phtml';
+                    break;
+                }
+                $script = 'blog/entry.phtml';
+                break;
+            case 'post':
+                if (isset($vars['errors'])) {
+                    $script = 'blog/form.phtml';
+                    break;
+                }
+                $script = 'blog/entry.phtml';
+                break;
+            case 'put':
+                if (isset($vars['errors'])) {
+                    $script = 'blog/form.phtml';
+                    break;
+                }
+                $script = 'blog/entry.phtml';
+                break;
+            case 'delete':
+                $script = 'blog/list.phtml';
+                break;
+            default:
+                $script = 'blog/list.phtml';
+                break;
+        }
+
+        if (is_object($vars)) {
+            if ($vars instanceof Traversable) {
+                $viewVars = new ViewVariables(array());
+                $vars = iterator_apply($vars, function($it) use ($viewVars) {
+                    $viewVars[$it->key()] = $it->current();
+                }, $it);
+                $vars = $viewVars;
+            } else {
+                $vars = new ViewVariables((array) $vars);
+            }
+        } else {
+            $vars = new ViewVariables($vars);
+        }
+
+        // Action content
+        $content = $view->render($script, $vars);
+        $e->setParam('content', $content);
+        return;
+    }
+
+    protected function renderAction($action, $vars, $renderer)
+    {
+        switch ($action) {
+            case 'create':
+                $script = 'blog/form.phtml';
+                break;
+            case 'tag':
+                $script = 'blog/list.phtml';
+                break;
+            case 'year':
+                $script = 'blog/list.phtml';
+                break;
+            case 'month':
+                $script = 'blog/list.phtml';
+                break;
+            case 'day':
+                $script = 'blog/list.phtml';
+                break;
+            default:
+                $script = 'blog/' . $action . '.phtml';
+                break;
+        }
+        if (is_object($vars)) {
+            if ($vars instanceof Traversable) {
+                $viewVars = new ViewVariables(array());
+                $vars = iterator_apply($vars, function($it) use ($viewVars) {
+                    $viewVars[$it->key()] = $it->current();
+                }, $it);
+                $vars = $viewVars;
+            } else {
+                $vars = new ViewVariables((array) $vars);
+            }
+        } else {
+            $vars = new ViewVariables($vars);
+        }
+
+        // Action content
+        $content = $view->render($script, $vars);
+        return $content;
     }
 }

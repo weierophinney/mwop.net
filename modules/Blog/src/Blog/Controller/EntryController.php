@@ -79,11 +79,10 @@ class EntryController extends RestfulController
             );
         }
 
-        return array(
-            'created' => true,
-            'entry'   => $entry,
-            'id'      => $id,
-        );
+        $url = $this->getView()->plugin('url')->direct(array('id' => $entry->getId()), array('name', 'blog-entry'));
+        $this->response->headers()->addHeaderLine('Location', $url);
+        $this->response->setStatusCode(201);
+        return $this->response;
     }
 
     public function update($id, $data)
@@ -108,10 +107,8 @@ class EntryController extends RestfulController
     {
         $result = $this->resource()->delete($id);
 
-        return array(
-            'id'      => $id,
-            'deleted' => $result,
-        );
+        $this->response->setStatusCode(204);
+        return $this->response;
     }
 
     public function createAction()

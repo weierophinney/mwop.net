@@ -79,6 +79,24 @@ class Bootstrap
 
         $events = StaticEventManager::getInstance();
 
+        // Layout Rendering
+        // If an event or caller sets a "content" parameter, we inject it into
+        // the layout and return immediately.
+        $events->attach('Zend\Stdlib\Dispatchable', 'dispatch.post', function($e) use ($view, $layoutHandler) {
+            $response = $e->getParam('response');
+            if ($response->getStatusCode() == 404 || $response->isRedirect() || $response->headers()->has('Location')) {
+                return;
+            } 
+
+            $content = $e->getParam('content', false);
+            if (!$content) {
+                return;
+            }
+
+            $layoutHandler($content, $response);
+            return $response;
+        });
+
         // View Rendering
         $events->attach('Application\Controller\PageController', 'dispatch.post', function($e) use ($view, $layoutHandler) {
             $page = $e->getParam('__RESULT__');
