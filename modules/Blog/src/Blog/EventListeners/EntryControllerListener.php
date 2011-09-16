@@ -142,7 +142,7 @@ class EntryControllerListener implements HandlerAggregate
             ));
             return "<h4>Tag Cloud</h4>\n<div class=\"cloud\">\n" . $cloud->render() . "</div>\n";
         };
-        $view['footer'] = $cloud;
+        $e->setParam('footer', $cloud);
     }
 
     public function renderRestfulActions($e)

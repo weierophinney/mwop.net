@@ -69,9 +69,14 @@ class Bootstrap
          */
         $view = $this->getView($app);
 
-        $layoutHandler = function($content, $response) use ($view) {
+        $layoutHandler = function($content, $response, $event = null) use ($view) {
             // Layout
-            $vars       = new ViewVariables(array('content' => $content));
+            $vars = array('content' => $content);
+            if ($event) {
+                $footer = $event->getParam('footer');
+                $vars['footer'] = $footer;
+            }
+            $vars       = new ViewVariables($vars);
             $layout     = $view->render('layout.phtml', $vars);
 
             $response->setContent($layout);
@@ -93,7 +98,7 @@ class Bootstrap
                 return;
             }
 
-            $layoutHandler($content, $response);
+            $layoutHandler($content, $response, $e);
             return $response;
         });
 
@@ -123,7 +128,7 @@ class Bootstrap
             $content    = $view->render($script);
 
             // Layout
-            $layoutHandler($content, $response);
+            $layoutHandler($content, $response, $e);
             return $response;
         });
 
@@ -162,7 +167,7 @@ class Bootstrap
             $content    = $view->render($script, $vars);
 
             // Layout
-            $layoutHandler($content, $response);
+            $layoutHandler($content, $response, $e);
             return $response;
         });
 
@@ -183,7 +188,7 @@ class Bootstrap
             $content = $view->render('page/404.phtml', $vars);
 
             // Layout
-            $layoutHandler($content, $response);
+            $layoutHandler($content, $response, $e);
             return $response;
         });
 
@@ -206,7 +211,7 @@ class Bootstrap
 
             // Layout
             $response = $app->getResponse();
-            $layoutHandler($content, $response);
+            $layoutHandler($content, $response, $e);
             return $response;
         });
     }

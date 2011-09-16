@@ -161,7 +161,7 @@ class EntryResource extends AbstractResource
 
         $dataSource = $this->getDataSource();
         switch (get_class($dataSource)) {
-            case 'mwop\DataSource\Mongo':
+            case 'CommonResource\DataSource\Mongo':
                 $data = $this->getTagCloudFromMongo($dataSource);
                 break;
             default:

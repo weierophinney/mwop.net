@@ -3,6 +3,8 @@ $url       = $this->plugin('url');
 $homeUrl   = $url->direct(array(), array('name' => 'home'));
 $comicsUrl = $url->direct(array(), array('name' => 'comics'));
 $resumeUrl = $url->direct(array(), array('name' => 'resume'));
+$content   = $this->vars('content');
+$footer    = $this->vars('footer');
 
 echo $this->plugin('doctype') ?>
 <html>
@@ -46,23 +48,16 @@ echo $this->plugin('doctype') ?>
     </div>
 
     <div class="grid_4 footer tags">
-    <?php while (isset($this->vars()->footer)):
-            if (is_string($this->vars()->footer)) {
-                echo $this->vars()->footer;
-                break;
-            }
-
-            $footer = $this->vars()->getRawValue('footer');
-            if (is_callable($footer)) {
-                echo call_user_func($footer);
-                break;
-            } 
-            if (is_object($footer) && method_exists($footer, '__toString'))  {
-                echo $footer;
-                break;
-            }
-            break;
-        endwhile; ?>
+<?php 
+    if (is_string($footer)) {
+        echo $this->vars()->escape($footer);
+    }
+    if (is_callable($footer)) {
+        echo call_user_func($footer);
+    } elseif (is_object($footer) && method_exists($footer, '__toString'))  {
+        echo $footer;
+    }
+?>
     </div>
 </div>
 </body>
