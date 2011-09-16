@@ -1,6 +1,7 @@
 <?php 
 $url       = $this->plugin('url');
 $homeUrl   = $url->direct(array(), array('name' => 'home'));
+$blogUrl   = $url->direct(array(), array('name' => 'blog'));
 $comicsUrl = $url->direct(array(), array('name' => 'comics'));
 $resumeUrl = $url->direct(array(), array('name' => 'resume'));
 $content   = $this->vars('content');
@@ -26,7 +27,7 @@ echo $this->plugin('doctype') ?>
     <div class="grid_12" id="menu">
         <ul>
             <li><a href="<?php echo $homeUrl ?>">Home</a></li>
-            <?php // <li><a href="{{blog_url}}">Blog</a></li> ?>
+            <li><a href="<?php echo $blogUrl ?>">Blog</a></li>
             <li><a href="<?php echo $comicsUrl ?>">Comics</a></li>
             <li><a href="<?php echo $resumeUrl ?>">R&eacute;sum&eacute;</a></li>
         </ul>
