@@ -16,6 +16,9 @@ For deployment on site
 * Comics
   * Require authorization of some sort; digest, maybe?
 * Rewrite map of old URLs to new
+* File assets
+  * Need to add file assets to website
+  * Update all paths to assets in blog posts
 * Mobile layout
   * Barebones -- just a changed stylesheet, potentially with fewer items
   * Ideally some JS functionality around the footers, sidebars, etc.
