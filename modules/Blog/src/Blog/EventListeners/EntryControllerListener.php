@@ -46,28 +46,34 @@ class EntryControllerListener implements HandlerAggregate
     public function generateFeed($e)
     {
         $request    = $e->getParam('request');
-        $format     = $request->getMetadata('format', false);
-        if ($format !== 'xml') {
+        $matches    = $request->getMetadata('route-match');
+        $format     = $matches->getParam('format', false);
+        if (strtolower($format) != 'xml') {
             return;
         }
 
         $view       = $e->getParam('__RESULT__');
-        if (isset($view['entries'])) {
+        if (!isset($view['entries'])) {
             // No entries, thus no feed
-            return;
-        }
-        if (isset($view['paginator_url']) && empty($view['tag'])) {
-            // only doing feeds for main list and tags
             return;
         }
 
         $controller = $e->getTarget();
         $renderer   = $controller->getView();
+        $request    = $e->getParam('request');
+        $uri        = $request->uri();
+        $baseUri    = (empty($_SERVER['HTTPS']) ? 'http://' : 'https://')
+                    . $_SERVER['HTTP_HOST'];
+
+        /**
+         * Get full feed title without HTML tags
+         */
         $headTitle  = $renderer->plugin('headTitle');
         if (isset($view['title'])) {
             $headTitle->prepend($view['title']);
         }
-        $title      = $headTitle->toString();
+        $title = $headTitle->toString();
+        $title = strip_tags($title);
 
         $urlHelper     = $renderer->plugin('url');
         if (false !== strstr($title, 'Tag: ')) {
@@ -77,6 +83,8 @@ class EntryControllerListener implements HandlerAggregate
             $link      = $urlHelper->direct(array(), array('name' => 'blog'));
             $feedLink  = $urlHelper->direct(array(), array('name' => 'blog-feed'));
         }
+        $link     = $baseUri . $link;
+        $feedLink = $baseUri . $feedLink;
 
         $feed = new FeedWriter();
         $feed->setTitle($title);
@@ -90,14 +98,15 @@ class EntryControllerListener implements HandlerAggregate
             }
             $entry = $feed->createEntry();
             $entry->setTitle($post->getTitle());
-            $entry->setLink($urlHelper->direct(array('id' => $post->getId()), array('name' => 'blog-entry')));
+            $entry->setLink($baseUri . $urlHelper->direct(array('id' => $post->getId()), array('name' => 'blog-entry')));
+
             /**
              * @todo inject this info!
              */
             $entry->addAuthor(array(
                 'name'  => "Matthew Weier O'Phinney",
                 'email' => 'matthew@weierophinney.net',
-                'uri'   => $link,
+                'uri'   => $baseUri,
             ));
             $entry->setDateModified($post->getUpdated());
             $entry->setDateCreated($post->getCreated());

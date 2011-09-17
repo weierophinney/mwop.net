@@ -11,6 +11,17 @@ $config['routes'] = array(
             ),
         ),
     ),
+    'blog-tag' => array(
+        'type'    => 'Zf2Mvc\Router\Http\Regex',
+        'options' => array(
+            'regex' => '/blog/tag/(?P<tag>[^/]+)',
+            'defaults' => array(
+                'controller' => 'Blog\Controller\EntryController',
+                'action'     => 'tag',
+            ),
+            'spec' => '/blog/tag/%tag%',
+        ),
+    ),
     'blog-tag-feed' => array(
         'type'    => 'Zf2Mvc\Router\Http\Regex',
         'options' => array(
@@ -21,17 +32,6 @@ $config['routes'] = array(
                 'format'     => 'xml',
             ),
             'spec' => '/blog/tag/%tag%.xml',
-        ),
-    ),
-    'blog-tag' => array(
-        'type'    => 'Zf2Mvc\Router\Http\Regex',
-        'options' => array(
-            'regex' => '/blog/tag/(?P<tag>[^/]+)',
-            'defaults' => array(
-                'controller' => 'Blog\Controller\EntryController',
-                'action'     => 'tag',
-            ),
-            'spec' => '/blog/tag/%tag%',
         ),
     ),
     'blog-year' => array(
@@ -77,6 +77,15 @@ $config['routes'] = array(
             'spec' => '/blog/%id%',
         ),
     ),
+    'blog' => array(
+        'type'    => 'Zf2Mvc\Router\Http\Literal',
+        'options' => array(
+            'route' => '/blog',
+            'defaults' => array(
+                'controller' => 'Blog\Controller\EntryController',
+            ),
+        ),
+    ),
     'blog-feed' => array(
         'type'    => 'Zf2Mvc\Router\Http\Literal',
         'options' => array(
@@ -84,15 +93,6 @@ $config['routes'] = array(
             'defaults' => array(
                 'controller' => 'Blog\Controller\EntryController',
                 'format'     => 'xml',
-            ),
-        ),
-    ),
-    'blog' => array(
-        'type'    => 'Zf2Mvc\Router\Http\Literal',
-        'options' => array(
-            'route' => '/blog',
-            'defaults' => array(
-                'controller' => 'Blog\Controller\EntryController',
             ),
         ),
     ),
