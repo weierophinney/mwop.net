@@ -34,4 +34,30 @@ class Module
 
         return $config->{$env};
     }
+
+    public function getProvides()
+    {
+        return array(
+            'name'    => 'Application',
+            'version' => '0.1.0',
+        );
+    }
+
+    public function getDependencies()
+    {
+        return array(
+            'php' => array(
+                'required' => true,
+                'version'  => '>=5.3.1',
+            ),
+            'ext/mongo' => array(
+                'required' => true,
+                'version'  => '>=1.2.0',
+            ),
+            'Blog' => array(
+                'required' => true,
+                'version'  => '>=0.1.0',
+            )
+        );
+    }
 }

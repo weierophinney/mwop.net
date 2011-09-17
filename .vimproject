@@ -34,6 +34,18 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md *.php *.xml *.txt" {
    configs=configs filter="*.ini *.xml *.php" {
     module.config.php
    }
+   public=public {
+    css=css filter="*.css" {
+     960.css
+     reset.css
+     site.css
+     text.css
+    }
+    images=images filter="*.jpg *.png *.gif *.ico" {
+     logo.gif
+     favicon.ico
+    }
+   }
    src=src {
     Application=Application {
      Bootstrap.php
@@ -68,6 +80,11 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md *.php *.xml *.txt" {
    autoload_register.php
    configs=configs filter="*.php *.yml *.json *.xml *.ini" {
     module.config.php
+   }
+   public=public {
+    css=css {
+     blog.css
+    }
    }
    src=src {
     Blog=Blog {
@@ -200,12 +217,6 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md *.php *.xml *.txt" {
   .htaccess
   index.php
   test.html
-  css=css filter="*.css" {
-   960.css
-   reset.css
-   site.css
-   text.css
-  }
   cgi-bin=cgi-bin {
    php-5.3.3
   }

@@ -231,10 +231,15 @@ class Bootstrap
         $view->plugin('headTitle')->setSeparator(' :: ')
                                   ->setAutoEscape(false)
                                   ->append('phly, boy, phly');
-        $view->plugin('headLink')->appendStylesheet('/css/reset.css')
-                                 ->appendStylesheet('/css/text.css')
-                                 ->appendStylesheet('/css/960.css')
-                                 ->appendStylesheet('/css/site.css');
+        $view->plugin('headLink')->appendStylesheet('/css/Application/reset.css')
+                                 ->appendStylesheet('/css/Application/text.css')
+                                 ->appendStylesheet('/css/Application/960.css')
+                                 ->appendStylesheet('/css/Application/site.css')
+                                 ->direct(array(
+                                     'rel'  => 'shortcut icon',
+                                     'type' => 'image/vnd.microsoft.icon',
+                                     'href' => '/images/Application/favicon.ico',
+                                 ));
         $view->plugin('headScript')->appendFile('http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojo/dojo.xd.js', 'text/javascript', array(
             'djConfig' => 'isDebug:true, parseOnLoad:true',
         ));

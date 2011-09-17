@@ -4,27 +4,7 @@ TODO
 For modules conversion
 ----------------------
 
-* Move generic resource code into a module (?)
-  * Would contain code and tests
-  * Potentially two modules: 
-    * Filter
-    * MapperBase
-  * Potentially, could contain views
-* Create a blog module
-  * Will contain all blog-specific resource/entity code
-  * Will contain blog-specific controller, views
-    * Views will be converted to PHP
-  * Is blog module a dependency for Application module (since tag cloud
-    technically goes in site template)?
-  * Will contain blog-specific configuration
-  * Will contain blog-specific CSS, JS
-    * Move these out of site.css, view scripts
-    * symlink into public asset directories
-  * Will contain blog-specific tests (Entry entity, Entry resource
-* Get rid of mwop\Mvc namespace, mwop\Stdlib\ViewPresentation,
-  UniqueFilteringIterator
-* Add logic for aggregating view script paths (? this might be in ModuleManager
-  already...)
+* Need to rewrite blog migration scripts to use new functionality
 
 
 For deployment on site

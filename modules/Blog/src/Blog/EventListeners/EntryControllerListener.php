@@ -163,6 +163,8 @@ class EntryControllerListener implements HandlerAggregate
         $response   = $e->getParam('response');
         $matches    = $request->getMetadata('route-match');
 
+        $renderer->plugin('headLink')->appendStylesheet('/css/Blog/blog.css');
+
         $action     = $matches->getParam('action', false);
         if ($action) {
             $content = $this->renderAction($action, $vars, $renderer);
