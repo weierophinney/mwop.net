@@ -85,6 +85,9 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md *.php *.xml *.txt" {
     css=css {
      blog.css
     }
+    js=js {
+     blog.js
+    }
    }
    src=src {
     Blog=Blog {

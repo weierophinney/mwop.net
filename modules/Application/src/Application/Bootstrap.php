@@ -6,6 +6,7 @@ use Zend\Config\Config,
     Zend\Di\Definition,
     Zend\Di\Definition\Builder,
     Zend\Di\DependencyInjector,
+    Zend\Dojo\View\HelperLoader as DojoLoader,
     Zend\EventManager\StaticEventManager,
     Zend\Stdlib\ResponseDescription as Response,
     Zend\View\Variables as ViewVariables,
@@ -228,6 +229,7 @@ class Bootstrap
             $disqus = $view->plugin('disqus', $this->config->disqus->toArray());
         }
 
+        $view->getBroker()->getClassLoader()->registerPlugins(new DojoLoader());
         $view->plugin('headTitle')->setSeparator(' :: ')
                                   ->setAutoEscape(false)
                                   ->append('phly, boy, phly');
@@ -240,9 +242,12 @@ class Bootstrap
                                      'type' => 'image/vnd.microsoft.icon',
                                      'href' => '/images/Application/favicon.ico',
                                  ));
-        $view->plugin('headScript')->appendFile('http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojo/dojo.xd.js', 'text/javascript', array(
-            'djConfig' => 'isDebug:true, parseOnLoad:true',
-        ));
+        $dojo = $view->plugin('dojo');
+        $dojo->setCdnVersion('1.6')
+             ->setDjConfig(array(
+                 'isDebug'     => true,
+                 'parseOnLoad' => true,
+             ));
 
         return $view;
     }

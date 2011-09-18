@@ -164,6 +164,9 @@ class EntryControllerListener implements HandlerAggregate
         $matches    = $request->getMetadata('route-match');
 
         $renderer->plugin('headLink')->appendStylesheet('/css/Blog/blog.css');
+        $renderer->plugin('dojo')->setDjConfigOption('baseUrl', '/js/dojo/')
+                                 ->setDjConfigOption('modulePaths', array('Blog', '/js/Blog'))
+                                 ->requireModule('Blog.blog');
 
         $action     = $matches->getParam('action', false);
         if ($action) {

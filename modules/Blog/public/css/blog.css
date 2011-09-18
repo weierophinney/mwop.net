@@ -1,3 +1,6 @@
+@import url(http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojox/highlight/resources/pygments/autumn.css);
+@import url(http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojox/highlight/resources/highlight.css);
+
 .cloud ul {
     display: block;
     text-align: left;
