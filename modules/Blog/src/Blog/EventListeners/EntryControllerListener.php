@@ -45,14 +45,14 @@ class EntryControllerListener implements ListenerAggregate
 
     public function generateFeed($e)
     {
-        $request    = $e->getParam('request');
-        $matches    = $request->getMetadata('route-match');
+        $request    = $e->getRequest();
+        $matches    = $e->getRouteMatch();
         $format     = $matches->getParam('format', false);
         if (strtolower($format) != 'xml') {
             return;
         }
 
-        $view       = $e->getParam('__RESULT__');
+        $view       = $e->getResult();
         if (!isset($view['entries'])) {
             // No entries, thus no feed
             return;
@@ -60,7 +60,6 @@ class EntryControllerListener implements ListenerAggregate
 
         $controller = $e->getTarget();
         $renderer   = $controller->getView();
-        $request    = $e->getParam('request');
         $uri        = $request->uri();
         $baseUri    = (empty($_SERVER['HTTPS']) ? 'http://' : 'https://')
                     . $_SERVER['HTTP_HOST'];
@@ -117,7 +116,7 @@ class EntryControllerListener implements ListenerAggregate
         // Set feed date
         $feed->setDateModified($latest->getUpdated());
 
-        $response = $e->getParam('response');
+        $response = $e->getResponse();
         $response->setContent($feed->export('atom'));
         $response->headers()->addHeaderLine('Content-Type', 'application/atom+xml');
 
@@ -127,7 +126,7 @@ class EntryControllerListener implements ListenerAggregate
 
     public function injectTagCloud($e)
     {
-        $view       = $e->getParam('__RESULT__');
+        $view       = $e->getResult();
         $controller = $e->getTarget();
         $tags       = $controller->resource()->getTagCloud();
         $renderer   = $controller->getView();
@@ -156,12 +155,15 @@ class EntryControllerListener implements ListenerAggregate
 
     public function renderRestfulActions($e)
     {
-        $vars       = $e->getParam('__RESULT__', array());
+        $vars       = $e->getResult();
+        if (!$vars) {
+            $vars = array();
+        }
         $controller = $e->getTarget();
         $renderer   = $controller->getView();
-        $request    = $e->getParam('request');
-        $response   = $e->getParam('response');
-        $matches    = $request->getMetadata('route-match');
+        $request    = $e->getRequest();
+        $response   = $e->getResponse();
+        $matches    = $e->getRouteMatch();
 
         $renderer->plugin('headLink')->appendStylesheet('/css/Blog/blog.css');
         $renderer->plugin('dojo')->setDjConfigOption('baseUrl', '/js/dojo/')
