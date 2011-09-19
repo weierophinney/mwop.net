@@ -1,12 +1,6 @@
 TODO
 ====
 
-For modules conversion
-----------------------
-
-* Need to rewrite blog migration scripts to use new functionality
-
-
 For deployment on site
 ----------------------
 
