@@ -3,12 +3,8 @@ set_include_path(implode(DIRECTORY_SEPARATOR, array(
     '/home/matthew/.local/lib/php/ZendFramework/library',
     get_include_path(),
 )));
-require_once __DIR__ . '/../library/zf2/Zend/Loader/ClassMapAutoloader.php';
-$classmap = new Zend\Loader\ClassMapAutoloader(array(
-    __DIR__ . '/../library/.classmap.php',
-    __DIR__ . '/../application/.classmap.php',
-));
-$classmap->register();
+putenv('APPLICATION_ENV=testing');
+require __DIR__ . '/../bootstrap.php';
 
 $standardAutoloader = new Zend\Loader\StandardAutoloader(array(
     'prefixes' => array(
@@ -17,19 +13,20 @@ $standardAutoloader = new Zend\Loader\StandardAutoloader(array(
 ));
 $standardAutoloader->register();
 
-// Get context
-$app    = new AppContext();
+// $application is already defined at this time as a Zf2Mvc\Application 
+// instance. We'll now pull the locator from it.
+$locator = $application->getLocator();
 
 // Ensure we have a clean DB
-$mongo  = $app->getMongo();
+$mongo  = $locator->get('Mongo');
 $dbs    = $mongo->listDBs();
-if (in_array('mwoptest', $dbs)) {
-    $mongo->dropDB('mwoptest');
+if (in_array('importtest', $dbs)) {
+    $mongo->dropDB('importtest');
 }
 
 // Initialize objects used throughout script
-$mongodb  = $app->getMongoDB();
-$resource = $app->getResourceEntry();
+$mongodb  = $locator->get('MongoDB');
+$resource = $locator->get('Blog\EntryResource');
 
 $db = Zend_Db::factory('mysqli', array(
     'host'     => 'localhost',

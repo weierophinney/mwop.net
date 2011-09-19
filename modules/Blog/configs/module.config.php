@@ -99,6 +99,12 @@ $config['routes'] = array(
 );
 
 $config['di'] = array('instance' => array(
+    'alias' => array(
+        'Mongo'           => 'CommonResource\Mongo',
+        'MongoDB'         => 'CommonResource\MongoDB',
+        'MongoCollection' => 'CommonResource\MongoCollection',
+    ),
+
     'CommonResource\Mongo' => array( 'parameters' => array(
         'server'  => 'mongodb://localhost:27017',
         'options' => array('connect' => true),
@@ -140,9 +146,13 @@ $config['di'] = array('instance' => array(
     ),
 ));
 
-return array(
+$config = array(
     'production'  => $config,
     'staging'     => $config,
     'testing'     => $config,
     'development' => $config,
 );
+
+$config['testing']['di']['instance']['CommonResource\MongoDB']['parameters']['name'] = 'importtest';
+
+return $config;

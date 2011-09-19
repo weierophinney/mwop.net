@@ -1,6 +1,7 @@
 mwop=/home/matthew/git/mwop CD=. filter="README TODO.md *.php *.xml *.txt" {
  README
  TODO.md
+ bootstrap.php
  test.php
  application=application {
   configs=configs {
