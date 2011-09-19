@@ -4,12 +4,12 @@ namespace Blog\EventListeners;
 
 use Traversable,
     Zend\EventManager\EventCollection,
-    Zend\EventManager\HandlerAggregate,
+    Zend\EventManager\ListenerAggregate,
     Zend\Feed\Writer\Feed as FeedWriter,
     Zend\Tag\Cloud,
     Zend\View\Variables as ViewVariables;
 
-class EntryControllerListener implements HandlerAggregate
+class EntryControllerListener implements ListenerAggregate
 {
     protected $listeners = array();
 
