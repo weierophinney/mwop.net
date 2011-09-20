@@ -105,18 +105,18 @@ class Bootstrap
 
         // View Rendering
         $events->attach('Application\Controller\PageController', 'dispatch.post', function($e) use ($view, $layoutHandler) {
-            $page = $e->getParam('__RESULT__');
+            $page = $e->getResult();
             if ($page instanceof Response) {
                 return;
             }
 
-            $response = $e->getParam('response');
+            $response = $e->getResponse();
             if ($response->getStatusCode() == 404) {
                 return;
             } 
 
-            $request    = $e->getParam('request');
-            $routeMatch = $request->getMetadata('route-match', false);
+            $request    = $e->getRequest();
+            $routeMatch = $e->getRouteMatch();
             if (!$routeMatch) {
                 $page = '404';
             } else {

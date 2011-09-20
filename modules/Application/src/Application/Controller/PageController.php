@@ -5,7 +5,8 @@ use Zend\EventManager\EventCollection,
     Zend\EventManager\EventManager,
     Zend\Stdlib\Dispatchable,
     Zend\Stdlib\RequestDescription as Request,
-    Zend\Stdlib\ResponseDescription as Response;
+    Zend\Stdlib\ResponseDescription as Response,
+    Zf2Mvc\MvcEvent;
 
 class PageController implements Dispatchable
 {
@@ -25,25 +26,30 @@ class PageController implements Dispatchable
         return $this->events;
     }
 
-    public function dispatch(Request $request, Response $response = null)
+    public function dispatch(Request $request, Response $response = null, $event = null)
     {
-        $params = compact('request', 'response');
-        $result = $this->events()->triggerUntil('dispatch.pre', $this, $params, function($result) {
+        if (!$event) {
+            $event = new MvcEvent();
+        }
+        $event->setRequest($request)
+              ->setResponse($response)
+              ->setTarget($this);
+        $result = $this->events()->triggerUntil('dispatch.pre', $event, function($result) {
             return ($result instanceof Response);
         });
         if ($result->stopped()) {
             return $result->last();
         }
 
-        $routeMatch = $request->getMetadata('route-match', false);
+        $routeMatch = $event->getRouteMatch();
         if ($routeMatch) {
             $page = $routeMatch->getParam('page', 404);
         } else {
             $page = 'index';
         }
 
-        $params['__RESULT__'] = $page;
-        $result = $this->events()->triggerUntil('dispatch.post', $this, $params, function($result) {
+        $event->setResult($page);
+        $result = $this->events()->triggerUntil('dispatch.post', $event, function($result) {
             return ($result instanceof Response);
         });
         if ($result->stopped()) {
