@@ -43,7 +43,7 @@ $config['production'] = array(
 
     'routes' => array(
         'home' => array(
-            'type'    => 'Zf2Mvc\Router\Http\Literal',
+            'type'    => 'Zend\Mvc\Router\Http\Literal',
             'options' => array(
                 'route' => '/',
                 'defaults' => array(
@@ -53,7 +53,7 @@ $config['production'] = array(
             ),
         ),
         'comics' => array(
-            'type'    => 'Zf2Mvc\Router\Http\Literal',
+            'type'    => 'Zend\Mvc\Router\Http\Literal',
             'options' => array(
                 'route' => '/comics',
                 'defaults' => array(
@@ -63,7 +63,7 @@ $config['production'] = array(
             ),
         ),
         'resume' => array(
-            'type'    => 'Zf2Mvc\Router\Http\Literal',
+            'type'    => 'Zend\Mvc\Router\Http\Literal',
             'options' => array(
                 'route' => '/resume',
                 'defaults' => array(

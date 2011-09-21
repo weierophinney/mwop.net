@@ -10,7 +10,7 @@ use Zend\Config\Config,
     Zend\EventManager\StaticEventManager,
     Zend\Stdlib\ResponseDescription as Response,
     Zend\View\Variables as ViewVariables,
-    Zf2Mvc\Application;
+    Zend\Mvc\Application;
 
 class Bootstrap
 {
@@ -52,7 +52,7 @@ class Bootstrap
          * Pull the routing table from configuration, and pass it to the
          * router composed in the Application instance.
          */
-        $router = $app->getLocator()->get('Zf2Mvc\Router\SimpleRouteStack');
+        $router = $app->getLocator()->get('Zend\Mvc\Router\SimpleRouteStack');
         foreach ($this->config->routes as $name => $config) {
             $class   = $config->type;
             $options = $config->options;

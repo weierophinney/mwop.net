@@ -2,7 +2,7 @@
 namespace Application\View\Helper;
 
 use Zend\View\Helper\AbstractHelper,
-    Zf2Mvc\Router\RouteStack;
+    Zend\Mvc\Router\RouteStack;
 
 class Url extends AbstractHelper
 {

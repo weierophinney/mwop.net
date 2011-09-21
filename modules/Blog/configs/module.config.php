@@ -2,7 +2,7 @@
 $config = array();
 $config['routes'] = array(
     'blog-create-form' => array(
-        'type'    => 'Zf2Mvc\Router\Http\Literal',
+        'type'    => 'Zend\Mvc\Router\Http\Literal',
         'options' => array(
             'route' => '/blog/admin/create',
             'defaults' => array(
@@ -12,7 +12,7 @@ $config['routes'] = array(
         ),
     ),
     'blog-tag' => array(
-        'type'    => 'Zf2Mvc\Router\Http\Regex',
+        'type'    => 'Zend\Mvc\Router\Http\Regex',
         'options' => array(
             'regex' => '/blog/tag/(?P<tag>[^/]+)',
             'defaults' => array(
@@ -23,7 +23,7 @@ $config['routes'] = array(
         ),
     ),
     'blog-tag-feed' => array(
-        'type'    => 'Zf2Mvc\Router\Http\Regex',
+        'type'    => 'Zend\Mvc\Router\Http\Regex',
         'options' => array(
             'regex' => '/blog/tag/(?P<tag>[^/]+)\\.xml',
             'defaults' => array(
@@ -35,7 +35,7 @@ $config['routes'] = array(
         ),
     ),
     'blog-year' => array(
-        'type'    => 'Zf2Mvc\Router\Http\Regex',
+        'type'    => 'Zend\Mvc\Router\Http\Regex',
         'options' => array(
             'regex' => '/blog/year/(?P<year>\d{4})',
             'defaults' => array(
@@ -46,7 +46,7 @@ $config['routes'] = array(
         ),
     ),
     'blog-month' => array(
-        'type'    => 'Zf2Mvc\Router\Http\Regex',
+        'type'    => 'Zend\Mvc\Router\Http\Regex',
         'options' => array(
             'regex' => '/blog/month/(?P<year>\d{4})/(?P<month>\d{2})',
             'defaults' => array(
@@ -57,7 +57,7 @@ $config['routes'] = array(
         ),
     ),
     'blog-day' => array(
-        'type'    => 'Zf2Mvc\Router\Http\Regex',
+        'type'    => 'Zend\Mvc\Router\Http\Regex',
         'options' => array(
             'regex' => '/blog/day/(?P<year>\d{4})/(?P<month>\d{2})/(?P<day>\d{2})',
             'defaults' => array(
@@ -68,7 +68,7 @@ $config['routes'] = array(
         ),
     ),
     'blog-entry' => array(
-        'type'    => 'Zf2Mvc\Router\Http\Regex',
+        'type'    => 'Zend\Mvc\Router\Http\Regex',
         'options' => array(
             'regex' => '/blog/(?P<id>[^/]+)',
             'defaults' => array(
@@ -78,7 +78,7 @@ $config['routes'] = array(
         ),
     ),
     'blog' => array(
-        'type'    => 'Zf2Mvc\Router\Http\Literal',
+        'type'    => 'Zend\Mvc\Router\Http\Literal',
         'options' => array(
             'route' => '/blog',
             'defaults' => array(
@@ -87,7 +87,7 @@ $config['routes'] = array(
         ),
     ),
     'blog-feed' => array(
-        'type'    => 'Zf2Mvc\Router\Http\Literal',
+        'type'    => 'Zend\Mvc\Router\Http\Literal',
         'options' => array(
             'route' => '/blog.xml',
             'defaults' => array(

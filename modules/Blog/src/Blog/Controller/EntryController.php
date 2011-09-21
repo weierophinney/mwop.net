@@ -9,7 +9,7 @@ use Blog\EntryResource,
     Zend\Paginator\Paginator,
     Zend\Paginator\Adapter\Iterator as IteratorPaginator,
     Zend\View\Renderer,
-    Zf2Mvc\Controller\RestfulController;
+    Zend\Mvc\Controller\RestfulController;
 
 class EntryController extends RestfulController
 {

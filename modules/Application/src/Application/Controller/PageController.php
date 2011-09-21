@@ -6,7 +6,7 @@ use Zend\EventManager\EventCollection,
     Zend\Stdlib\Dispatchable,
     Zend\Stdlib\RequestDescription as Request,
     Zend\Stdlib\ResponseDescription as Response,
-    Zf2Mvc\MvcEvent;
+    Zend\Mvc\MvcEvent;
 
 class PageController implements Dispatchable
 {
