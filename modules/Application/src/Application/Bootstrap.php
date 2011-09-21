@@ -88,7 +88,7 @@ class Bootstrap
         // Layout Rendering
         // If an event or caller sets a "content" parameter, we inject it into
         // the layout and return immediately.
-        $events->attach('Zend\Stdlib\Dispatchable', 'dispatch.post', function($e) use ($view, $layoutHandler) {
+        $events->attach('Zend\Stdlib\Dispatchable', 'dispatch', function($e) use ($view, $layoutHandler) {
             $response = $e->getParam('response');
             if ($response->getStatusCode() == 404 || $response->isRedirect() || $response->headers()->has('Location')) {
                 return;
@@ -101,10 +101,10 @@ class Bootstrap
 
             $layoutHandler($content, $response, $e);
             return $response;
-        });
+        }, -100);
 
         // View Rendering
-        $events->attach('Application\Controller\PageController', 'dispatch.post', function($e) use ($view, $layoutHandler) {
+        $events->attach('Application\Controller\PageController', 'dispatch', function($e) use ($view, $layoutHandler) {
             $page = $e->getResult();
             if ($page instanceof Response) {
                 return;
@@ -131,9 +131,9 @@ class Bootstrap
             // Layout
             $layoutHandler($content, $response, $e);
             return $response;
-        });
+        }, -50);
 
-        $events->attach('Zend\Controller\ActionController', 'dispatch.post', function($e) use ($view, $layoutHandler) {
+        $events->attach('Zend\Controller\ActionController', 'dispatch', function($e) use ($view, $layoutHandler) {
             $vars       = $e->getParam('__RESULT__');
             if ($vars instanceof Response) {
                 return;
@@ -170,16 +170,16 @@ class Bootstrap
             // Layout
             $layoutHandler($content, $response, $e);
             return $response;
-        });
+        }, -50);
 
         // Render 404 pages
-        $events->attach('Zf2Mvc\Controller\Dispatchable', 'dispatch.post', function($e) use ($view, $layoutHandler) {
-            $vars       = $e->getParam('__RESULT__');
+        $events->attach('Zend\Stdlib\Dispatchable', 'dispatch', function($e) use ($view, $layoutHandler) {
+            $vars       = $e->getResult();
             if ($vars instanceof Response) {
                 return;
             }
 
-            $response   = $e->getParam('response');
+            $response   = $e->getResponse();
             if ($response->getStatusCode() != 404) {
                 // Only handle 404's
                 return;
@@ -191,7 +191,7 @@ class Bootstrap
             // Layout
             $layoutHandler($content, $response, $e);
             return $response;
-        });
+        }, -100);
 
         // Error handling
         $app->events()->attach('dispatch.error', function($e) use ($view, $layoutHandler) {

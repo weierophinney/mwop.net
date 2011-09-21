@@ -43,8 +43,6 @@ class Application implements AppContext
      */
     public function setEventManager(EventCollection $events)
     {
-        $events->attach('route', array($this, 'route'));
-        $events->attach('dispatch', array($this, 'dispatch'));
         $this->events = $events;
         return $this;
     }
@@ -182,6 +180,7 @@ class Application implements AppContext
     {
         if (!$this->events instanceof EventCollection) {
             $this->setEventManager(new EventManager(array(__CLASS__, get_class($this))));
+            $this->attachDefaultListeners();
         }
         return $this->events;
     }
@@ -189,8 +188,18 @@ class Application implements AppContext
     /**
      * Run the application
      * 
-     * @events route.pre, route.post, dispatch.pre, dispatch.post, dispatch.error
-     * @return Response
+     * @triggers route(MvcEvent)
+     *           Routes the request, and sets the RouteMatch object in the event.
+     * @triggers dispatch(MvcEvent)
+     *           Dispatches a request, using the discovered RouteMatch and 
+     *           provided request.
+     * @triggers dispatch.error(MvcEvent)
+     *           On errors (controller not found, action not supported, etc.), 
+     *           populates the event with information about the error type, 
+     *           discovered controller, and controller class (if known). 
+     *           Typically, a handler should return a populated Response object
+     *           that can be returned immediately.
+     * @return SendableResponse
      */
     public function run()
     {
@@ -227,7 +236,7 @@ class Application implements AppContext
     /**
      * Route the request
      * 
-     * @events route.pre, route.post
+     * @param  MvcEvent $e 
      * @return Router\RouteMatch
      */
     public function route(MvcEvent $e)
@@ -253,8 +262,7 @@ class Application implements AppContext
     /**
      * Dispatch the matched route
      * 
-     * @events dispatch.pre, dispatch.post, dispatch.error
-     * @param  Router\RouteMatch $routeMatch 
+     * @param  MvcEvent $e 
      * @return mixed
      */
     public function dispatch(MvcEvent $e)
@@ -297,6 +305,10 @@ class Application implements AppContext
             goto complete;
         }
 
+        if ($controller instanceof LocatorAware) {
+            $controller->setLocator($locator);
+        }
+
         $request  = $e->getRequest();
         $response = $this->getResponse();
         $event    = clone $e;
@@ -311,5 +323,18 @@ class Application implements AppContext
         }
         $e->setResult($return);
         return $return;
+    }
+
+    /**
+     * Attach default listeners for route and dispatch events
+     * 
+     * @param  EventCollection $events 
+     * @return void
+     */
+    protected function attachDefaultListeners()
+    {
+        $events = $this->events();
+        $events->attach('route', array($this, 'route'));
+        $events->attach('dispatch', array($this, 'dispatch'));
     }
 }

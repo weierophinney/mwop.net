@@ -15,10 +15,10 @@ class EntryControllerListener implements ListenerAggregate
 
     public function attach(EventCollection $events)
     {
-        $this->listeners[] = $events->attach('dispatch.pre',  array($this, 'normalizeId'));
-        $this->listeners[] = $events->attach('dispatch.post', array($this, 'generateFeed'), 100);
-        $this->listeners[] = $events->attach('dispatch.post', array($this, 'injectTagCloud'));
-        $this->listeners[] = $events->attach('dispatch.post', array($this, 'renderRestfulActions'), 50);
+        $this->listeners[] = $events->attach('dispatch',  array($this, 'normalizeId'), 100);
+        $this->listeners[] = $events->attach('dispatch', array($this, 'generateFeed'), -10);
+        $this->listeners[] = $events->attach('dispatch', array($this, 'injectTagCloud'), -100);
+        $this->listeners[] = $events->attach('dispatch', array($this, 'renderRestfulActions'), -50);
     }
 
     public function detach(EventCollection $events)

@@ -22,6 +22,7 @@ class PageController implements Dispatchable
                 __CLASS__, 
                 get_called_class(),
             ));
+            $this->events->attach('dispatch', array($this, 'execute'));
         }
         return $this->events;
     }
@@ -34,13 +35,19 @@ class PageController implements Dispatchable
         $event->setRequest($request)
               ->setResponse($response)
               ->setTarget($this);
-        $result = $this->events()->triggerUntil('dispatch.pre', $event, function($result) {
-            return ($result instanceof Response);
+
+        $result = $this->events()->trigger('dispatch', $event, function($test) {
+            return ($test instanceof Response);
         });
         if ($result->stopped()) {
             return $result->last();
         }
 
+        return $event->getResult();
+    }
+
+    public function execute(MvcEvent $event)
+    {
         $routeMatch = $event->getRouteMatch();
         if ($routeMatch) {
             $page = $routeMatch->getParam('page', 404);
@@ -49,13 +56,6 @@ class PageController implements Dispatchable
         }
 
         $event->setResult($page);
-        $result = $this->events()->triggerUntil('dispatch.post', $event, function($result) {
-            return ($result instanceof Response);
-        });
-        if ($result->stopped()) {
-            return $result->last();
-        }
-
         return $page;
     }
 }

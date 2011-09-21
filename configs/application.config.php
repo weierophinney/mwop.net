@@ -1,6 +1,6 @@
 <?php
 return new Zend\Config\Config(array(
-    'modulePaths' => array(
+    'module_paths' => array(
         realpath(__DIR__ . '/../modules'),
     ),
     'modules' => array(
