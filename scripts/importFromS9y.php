@@ -20,7 +20,18 @@ $locator = $application->getLocator();
 // Ensure we have a clean DB
 $mongo  = $locator->get('Mongo');
 $dbs    = $mongo->listDBs();
-if (in_array('importtest', $dbs)) {
+$hasDb  = array_reduce($dbs['databases'], function($has, $current) {
+    if (!is_array($current) || !isset($current['name'])) {
+        return $has || false;
+    }
+
+    if ($current['name'] == 'importtest') {
+        return true;
+    }
+
+    return $has || false;
+}, false);
+if ($hasDb) {
     $mongo->dropDB('importtest');
 }
 
@@ -76,10 +87,12 @@ foreach ($rows as $row) {
 
     $body = preg_replace('#\[geshi( lang=([^\]])*)?\](.*?)(\[/geshi\])#se', "'<div class=\"example\"><pre><code\\1>'.htmlspecialchars('\\3', ENT_COMPAT, 'UTF-8').'</code></pre></div>'", $row['body']);
     $body = preg_replace('/lang=([^" >]*)/s', 'lang="$1"', $body);
+    $body = str_replace('matthew/uploads/', 'uploads/', $body);
     $body = iconv("ISO-8859-1", "UTF-8//TRANSLIT", $body);
 
     $extended = preg_replace('#\[geshi( lang=([^\]])*)?\](.*?)(\[/geshi\])#se', "'<div class=\"example\"><pre><code\\1>'.htmlspecialchars('\\3', ENT_COMPAT, 'UTF-8').'</code></pre></div>'", $row['extended']);
     $extended = preg_replace('/lang=([^" >]*)/s', 'lang="$1"', $extended);
+    $extended = str_replace('matthew/uploads/', 'uploads/', $extended);
     $extended = iconv("ISO-8859-1", "UTF-8//TRANSLIT", $extended);
 
     echo "        Creating entry entity... ";
