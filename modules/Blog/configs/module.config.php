@@ -111,7 +111,7 @@ $config['di'] = array('instance' => array(
     )),
     'CommonResource\MongoDB' => array( 'parameters' => array(
         'conn' => 'CommonResource\Mongo',
-        'name' => 'mwoptest',
+        'name' => 'wopnet',
     )),
     'CommonResource\MongoCollection' => array('parameters' => array(
         'db'   => 'CommonResource\MongoDB',
@@ -154,5 +154,6 @@ $config = array(
 );
 
 $config['testing']['di']['instance']['CommonResource\MongoDB']['parameters']['name'] = 'importtest';
+$config['development']['di']['instance']['CommonResource\MongoDB']['parameters']['name'] = 'mwoptest';
 
 return $config;
