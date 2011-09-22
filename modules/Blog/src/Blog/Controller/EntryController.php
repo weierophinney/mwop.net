@@ -126,8 +126,9 @@ class EntryController extends RestfulController
 
     public function tagAction()
     {
-        $request = $this->getRequest();
-        $matches = $request->getMetadata('route-match', false);
+        $event   = $this->getEvent();
+        $request = $event->getRequest();
+        $matches = $event->getRouteMatch();
         $tag     = $matches->getParam('tag', false);
 
         if (!$tag) {
@@ -149,8 +150,9 @@ class EntryController extends RestfulController
 
     public function yearAction()
     {
-        $request = $this->getRequest();
-        $matches = $request->getMetadata('route-match', false);
+        $event   = $this->getEvent();
+        $request = $event->getRequest();
+        $matches = $event->getRouteMatch();
         $year    = $matches->getParam('year', false);
 
         if (!$year) {
@@ -168,8 +170,9 @@ class EntryController extends RestfulController
 
     public function monthAction()
     {
-        $request = $this->getRequest();
-        $matches = $request->getMetadata('route-match', false);
+        $event   = $this->getEvent();
+        $request = $event->getRequest();
+        $matches = $event->getRouteMatch();
         $year    = $matches->getParam('year', false);
 
         if (!$year) {
@@ -192,8 +195,9 @@ class EntryController extends RestfulController
 
     public function dayAction()
     {
-        $request = $this->getRequest();
-        $matches = $request->getMetadata('route-match', false);
+        $event   = $this->getEvent();
+        $request = $event->getRequest();
+        $matches = $event->getRouteMatch();
         $year    = $matches->getParam('year', false);
 
         if (!$year) {
