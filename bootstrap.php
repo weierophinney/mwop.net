@@ -19,7 +19,7 @@ set_include_path(implode(PATH_SEPARATOR, array(
 
 require_once 'Zend/Loader/AutoloaderFactory.php';
 Zend\Loader\AutoloaderFactory::factory(array(
-    'Zend\Loader\ClassMapAutoloader' => array(__DIR__ . '/modules/Zf2Module/classmap.php'), // will not be needed later
+    'Zend\Loader\ClassMapAutoloader' => array(__DIR__ . '/modules/Zf2Module/autoload_classmap.php'), // will not be needed later
     'Zend\Loader\StandardAutoloader' => array(),
 ));
 
