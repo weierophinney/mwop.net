@@ -65,12 +65,27 @@ class Bootstrap
         $app->setRouter($router);
     }
 
+    /**
+     * Wire events into the Application's EventManager, and/or setup
+     * static listeners for events that may be invoked.
+     */
     protected function setupEvents(Application $app)
     {
-        /**
-         * Wire events into the Application's EventManager, and/or setup
-         * static listeners for events that may be invoked.
-         */
+        $locator = $app->getLocator();
+        $events  = StaticEventManager::getInstance();
+
+        foreach ($this->modules as $name => $module) {
+            if (method_exists($module, 'getApplicationListeners')) {
+                foreach ($module->getApplicationListeners($locator) as $listener) {
+                    $app->events()->attachAggregate($listener);
+                }
+            }
+
+            if (method_exists($module, 'registerStaticListeners')) {
+                $module->registerStaticListeners($events, $locator);
+            }
+        }
+
         $view = $this->getView($app);
 
         $layoutHandler = function($content, $response, $event = null) use ($view) {
