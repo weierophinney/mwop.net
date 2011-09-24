@@ -10,15 +10,18 @@ use Zend\Config\Config,
     Zend\EventManager\StaticEventManager,
     Zend\Stdlib\ResponseDescription as Response,
     Zend\View\Variables as ViewVariables,
+    Zend\Module\Manager as ModuleManager,
     Zend\Mvc\Application;
 
 class Bootstrap
 {
     protected $config;
+    protected $modules;
 
-    public function __construct(Config $config)
+    public function __construct(Config $config, ModuleManager $modules)
     {
-        $this->config = $config;
+        $this->config  = $config;
+        $this->modules = $modules; 
     }
 
     public function bootstrap(Application $app)
