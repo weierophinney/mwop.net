@@ -3,10 +3,17 @@
 namespace Application;
 
 use InvalidArgumentException,
-    Zend\Config\Config;
+    Zend\Config\Config,
+    Zend\Di\Locator,
+    Zend\EventManager\EventCollection,
+    Zend\EventManager\StaticEventCollection;
 
 class Module
 {
+    protected $appListeners    = array();
+    protected $staticListeners = array();
+    protected $viewListener;
+
     public function init()
     {
         $this->initAutoloader();
@@ -33,6 +40,32 @@ class Module
         }
 
         return $config->{$env};
+    }
+
+    public function registerApplicationListeners(EventCollection $events, Locator $locator)
+    {
+        $view          = $locator->get('view');
+        $viewListener  = $this->getViewListener($view);
+        $events->attachAggregate($viewListener);
+    }
+
+    public function registerStaticListeners(StaticEventCollection $events, Locator $locator)
+    {
+        $view         = $locator->get('view');
+        $viewListener = $this->getViewListener($view);
+
+        $viewListener->registerStaticListeners($events, $locator);
+    }
+
+    protected function getViewListener($view)
+    {
+        if ($this->viewListener instanceof View\Listener) {
+            return $this->viewListener;
+        }
+
+        $viewListener       = new View\Listener($view);
+        $this->viewListener = $viewListener;
+        return $viewListener;
     }
 
     public function getProvides()

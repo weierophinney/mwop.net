@@ -71,168 +71,20 @@ class Bootstrap
      */
     protected function setupEvents(Application $app)
     {
-        $locator = $app->getLocator();
-        $events  = StaticEventManager::getInstance();
+        $view         = $this->getView($app);
+        $locator      = $app->getLocator();
+        $events       = $app->events();
+        $staticEvents = StaticEventManager::getInstance();
 
-        foreach ($this->modules as $name => $module) {
-            if (method_exists($module, 'getApplicationListeners')) {
-                foreach ($module->getApplicationListeners($locator) as $listener) {
-                    $app->events()->attachAggregate($listener);
-                }
+        foreach ($this->modules->getLoadedModules() as $name => $module) {
+            if (method_exists($module, 'registerApplicationListeners')) {
+                $module->registerApplicationListeners($events, $locator);
             }
 
             if (method_exists($module, 'registerStaticListeners')) {
-                $module->registerStaticListeners($events, $locator);
+                $module->registerStaticListeners($staticEvents, $locator);
             }
         }
-
-        $view = $this->getView($app);
-
-        $layoutHandler = function($content, $response, $event = null) use ($view) {
-            // Layout
-            $vars = array('content' => $content);
-            if ($event) {
-                $footer = $event->getParam('footer');
-                $vars['footer'] = $footer;
-            }
-            $vars       = new ViewVariables($vars);
-            $layout     = $view->render('layout.phtml', $vars);
-
-            $response->setContent($layout);
-        };
-
-        $events = StaticEventManager::getInstance();
-
-        // Layout Rendering
-        // If an event or caller sets a "content" parameter, we inject it into
-        // the layout and return immediately.
-        $events->attach('Zend\Stdlib\Dispatchable', 'dispatch', function($e) use ($view, $layoutHandler) {
-            $response = $e->getParam('response');
-            if ($response->getStatusCode() == 404 || $response->isRedirect() || $response->headers()->has('Location')) {
-                return;
-            } 
-
-            $content = $e->getParam('content', false);
-            if (!$content) {
-                return;
-            }
-
-            $layoutHandler($content, $response, $e);
-            return $response;
-        }, -100);
-
-        // View Rendering
-        $events->attach('Application\Controller\PageController', 'dispatch', function($e) use ($view, $layoutHandler) {
-            $page = $e->getResult();
-            if ($page instanceof Response) {
-                return;
-            }
-
-            $response = $e->getResponse();
-            if ($response->getStatusCode() == 404) {
-                return;
-            } 
-
-            $request    = $e->getRequest();
-            $routeMatch = $e->getRouteMatch();
-            if (!$routeMatch) {
-                $page = '404';
-            } else {
-                $page = $routeMatch->getParam('page', '404');
-            }
-
-            $script     = 'pages/' . $page . '.phtml';
-
-            // Action content
-            $content    = $view->render($script);
-
-            // Layout
-            $layoutHandler($content, $response, $e);
-            return $response;
-        }, -50);
-
-        $events->attach('Zend\Controller\ActionController', 'dispatch', function($e) use ($view, $layoutHandler) {
-            $vars       = $e->getParam('__RESULT__');
-            if ($vars instanceof Response) {
-                return;
-            }
-
-            $response   = $e->getParam('response');
-            if ($response->getStatusCode() == 404) {
-                // Render 404 responses differently
-                return;
-            }
-
-            $request    = $e->getParam('request');
-            $routeMatch = $request->getMetadata('route-match');
-            $controller = $routeMatch->getParam('controller', 'error');
-            $action     = $routeMatch->getParam('action', 'index');
-            $script     = $controller . '/' . $action . '.phtml';
-            if (is_object($vars)) {
-                if ($vars instanceof Traversable) {
-                    $viewVars = new ViewVariables(array());
-                    $vars = iterator_apply($vars, function($it) use ($viewVars) {
-                        $viewVars[$it->key()] = $it->current();
-                    }, $it);
-                    $vars = $viewVars;
-                } else {
-                    $vars = new ViewVariables((array) $vars);
-                }
-            } else {
-                $vars = new ViewVariables($vars);
-            }
-
-            // Action content
-            $content    = $view->render($script, $vars);
-
-            // Layout
-            $layoutHandler($content, $response, $e);
-            return $response;
-        }, -50);
-
-        // Render 404 pages
-        $events->attach('Zend\Stdlib\Dispatchable', 'dispatch', function($e) use ($view, $layoutHandler) {
-            $vars       = $e->getResult();
-            if ($vars instanceof Response) {
-                return;
-            }
-
-            $response   = $e->getResponse();
-            if ($response->getStatusCode() != 404) {
-                // Only handle 404's
-                return;
-            }
-
-            $view->plugin('headTitle')->prepend('Page Not Found');
-            $content = $view->render('page/404.phtml', $vars);
-
-            // Layout
-            $layoutHandler($content, $response, $e);
-            return $response;
-        }, -100);
-
-        // Error handling
-        $app->events()->attach('dispatch.error', function($e) use ($view, $layoutHandler) {
-            $error   = $e->getParam('error');
-
-            switch ($error) {
-                case Application::ERROR_CONTROLLER_NOT_FOUND:
-                    $script = 'page/404.phtml';
-                    break;
-                case Application::ERROR_CONTROLLER_INVALID:
-                default:
-                    $script = 'error.phtml';
-                    break;
-            }
-
-            $view->plugin('headTitle')->prepend('Application Error');
-            $content = $view->render($script);
-
-            // Layout
-            $response = $app->getResponse();
-            $layoutHandler($content, $response, $e);
-            return $response;
-        });
     }
 
     protected function getView($app)

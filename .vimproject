@@ -54,6 +54,7 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md *.php *.xml *.txt" {
       PageController.php
      }
      View=View {
+      Listener.php
       Helper=Helper {
        Disqus.php
        Url.php
