@@ -60,6 +60,7 @@ class EntryController extends RestfulController
     {
         $entry = $this->resource()->get($id);
         if (!$entry) {
+            $this->response->setStatusCode(404);
             return array(
                 'error' => 'Entry not found',
             );

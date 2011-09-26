@@ -50,7 +50,7 @@ class PageController implements Dispatchable
     {
         $routeMatch = $event->getRouteMatch();
         if ($routeMatch) {
-            $page = $routeMatch->getParam('page', 404);
+            $page = $routeMatch->getParam('page', '404');
         } else {
             $page = 'index';
         }

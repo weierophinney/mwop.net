@@ -155,14 +155,20 @@ class EntryControllerListener implements ListenerAggregate
 
     public function renderRestfulActions($e)
     {
+        $response   = $e->getResponse();
+        if ($response->isNotFound()) {
+            // Don't render 404's
+            return;
+        }
+
         $vars       = $e->getResult();
         if (!$vars) {
             $vars = array();
         }
+
         $controller = $e->getTarget();
         $renderer   = $controller->getView();
         $request    = $e->getRequest();
-        $response   = $e->getResponse();
         $matches    = $e->getRouteMatch();
 
         $renderer->plugin('headLink')->appendStylesheet('/css/Blog/blog.css');

@@ -59,8 +59,8 @@ class Listener implements ListenerAggregate
         $handler = $events->attach($ident, 'dispatch', array($this, 'renderPageController'), -50);
         $this->staticListeners[] = array($ident, $handler);
 
-        $ident   = 'Zend\Mvc\Controller\PageController';
-        $handler = $events->attach('Zend\Mvc\Controller\ActionController', 'dispatch', array($this, 'renderView'), -50);
+        $ident   = 'Zend\Mvc\Controller\ActionController';
+        $handler = $events->attach($ident, 'dispatch', array($this, 'renderView'), -50);
         $this->staticListeners[] = array($ident, $handler);
     }
 
@@ -81,7 +81,7 @@ class Listener implements ListenerAggregate
         }
 
         $response = $e->getResponse();
-        if ($response->getStatusCode() == 404) {
+        if ($response->isNotFound()) {
             return;
         } 
 
@@ -91,6 +91,10 @@ class Listener implements ListenerAggregate
             $page = '404';
         } else {
             $page = $routeMatch->getParam('page', '404');
+        }
+
+        if ($page == '404') {
+            $response->setStatusCode(404);
         }
 
         $script     = 'pages/' . $page . '.phtml';

@@ -42,6 +42,16 @@ $config['production'] = array(
     )),
 
     'routes' => array(
+        'default' => array(
+            'type' => 'Zend\Mvc\Router\Http\Regex',
+            'options' => array(
+                'regex' => '/.*',
+                'defaults' => array(
+                    'controller' => 'Application\Controller\PageController',
+                    'page'       => '404',
+                ),
+            ),
+        ),
         'home' => array(
             'type'    => 'Zend\Mvc\Router\Http\Literal',
             'options' => array(
