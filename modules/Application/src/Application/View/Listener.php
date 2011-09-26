@@ -124,15 +124,13 @@ class Listener implements ListenerAggregate
 
     public function renderLayout(MvcEvent $e)
     {
-        $content  = $e->getResult();
         $footer   = $e->getParam('footer', false);
+        $vars     = array('footer' => $footer);
 
-        $vars     = $content;
-        if (is_array($content)) {
-            $vars     = array(
-                'content' => $content,
-                'footer'  => $footer,
-            );
+        if (false !== ($contentParam = $e->getParam('content', false))) {
+            $vars['content'] = $contentParam;
+        } else {
+            $vars['content'] = $e->getResult();
         }
 
         $layout   = $this->view->render($this->layout, $vars);

@@ -173,7 +173,7 @@ class EntryControllerListener implements ListenerAggregate
         $action     = $matches->getParam('action', false);
         if ($action) {
             $content = $this->renderAction($action, $vars, $renderer);
-            $e->setResult(array('content' => $content));
+            $e->setParam('content', $content);
             return;
         }
 
@@ -223,7 +223,7 @@ class EntryControllerListener implements ListenerAggregate
 
         // Action content
         $content = $renderer->render($script, $vars);
-        $e->setResult(array('content' => $content));
+        $e->setParam('content', $content);
         return;
     }
 

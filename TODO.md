@@ -4,6 +4,14 @@ TODO
 For deployment on site
 ----------------------
 
+* BUGS
+  * Blog 404 page needs spicing up
+    * Not creating a 404
+    * Text is really small
+    * Should likely show sidebar, tagcloud?
+  * by-month/day routes are not working
+  * un-matched routing is not working (results in uncaught exception)
+  * Unmatched route not being trapped
 * Posting entries
   * Needs some sort of authentication
   * Perhaps make it an API *only*?
