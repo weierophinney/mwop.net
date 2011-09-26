@@ -1,2 +1,3 @@
 cache/static/zend_cache*
 data/*.*
+data/htdigest

@@ -1,0 +1,24 @@
+<?php if ($this->vars('success')): ?>
+<h2>Logged in!</h2>
+
+<p>
+    You have successfully logged in.
+</p>
+<?php elseif ($this->vars('error')): ?>
+<h2>Error!</h2>
+
+<p><?php echo $this->vars('message') ?></p>
+
+<?php
+$form = $this->vars('form');
+echo $form->render($this);
+?>
+<?php else: ?>
+<h2>Log in</h2>
+
+<p>Please provide your credentials below.</p>
+<?php
+$form = $this->vars('form');
+echo $form->render($this);
+?>
+<?php endif ?>

@@ -76,6 +76,37 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md *.php *.xml *.txt" {
     }
    }
   }
+  Authentication=Authentication {
+   Module.php
+   autoload_classmap.php
+   autoload_function.php
+   autoload_register.php
+   configs=configs {
+    module.config.php
+   }
+   src=src {
+    Authentication=Authentication {
+     AuthenticationController.php
+     AuthenticationForm.php
+     AuthenticationService.php
+    }
+   }
+   tests=tests CD=. filter="*.php *.xml" {
+    bootstrap.php
+    phpunit.xml
+    Authentication=Authentication {
+     _files=_files filter="*.txt" {
+      htdigest.txt
+     }
+    }
+   }
+   views=views {
+    authentication=authentication {
+     login.phtml
+     logout.phtml
+    }
+   }
+  }
   Blog=Blog {
    Module.php
    autoload_classmap.php

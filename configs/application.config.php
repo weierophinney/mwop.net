@@ -7,6 +7,7 @@ return new Zend\Config\Config(array(
         'Zf2Module', // paradox?!
         'Zf2Mvc',
         'Application',
+        'Authentication',
         'Comic',
         'CommonResource',
         'Blog',

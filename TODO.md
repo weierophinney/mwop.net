@@ -5,10 +5,10 @@ For deployment on site
 ----------------------
 
 * Posting entries
-  * Needs some sort of authentication
+  * Needs some sort of *authorization*
   * Perhaps make it an API *only*?
 * Comics
-  * Require authorization of some sort; digest, maybe?
+  * Require *authorization* of some sort; digest, maybe?
 * Contact form!!!!
 * Rewrite map of old URLs to new
 * Mobile layout
