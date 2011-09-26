@@ -1,3 +1,5 @@
+<?php $this->plugin('headTitle')->prepend('Login') ?>
+<div class="grid_12 content authentication">
 <?php if ($this->vars('success')): ?>
 <h2>Logged in!</h2>
 
@@ -22,3 +24,4 @@ $form = $this->vars('form');
 echo $form->render($this);
 ?>
 <?php endif ?>
+</div>
