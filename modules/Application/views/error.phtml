@@ -4,6 +4,28 @@
 <p>
     An error occurred processing this page; please try again later.
 </p>
+
+<?php
+if (!$this->vars('display_exceptions')) {
+    echo "<p>Display exceptions is disabled</p>\n";
+    return;
+}
+$exception = $this->vars('exception');
+if (!$exception instanceof \Exception) {
+    echo "<p>Invalid exception found</p>\n";
+    return;
+}
+?>
+<h3>Exception information:</h3>
+<p>
+    <b>Message:</b> <?php echo $this->vars()->escape($exception->getMessage()) ?>
+</p>
+
+<h3>Stack trace:</h3>
+<pre>
+<?php echo $exception->getTraceAsString() ?> 
+</pre>
+
 </div>
 
 

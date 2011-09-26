@@ -78,11 +78,11 @@ class Bootstrap
 
         foreach ($this->modules->getLoadedModules() as $name => $module) {
             if (method_exists($module, 'registerApplicationListeners')) {
-                $module->registerApplicationListeners($events, $locator);
+                $module->registerApplicationListeners($events, $locator, $this->config);
             }
 
             if (method_exists($module, 'registerStaticListeners')) {
-                $module->registerStaticListeners($staticEvents, $locator);
+                $module->registerStaticListeners($staticEvents, $locator, $this->config);
             }
         }
     }

@@ -4,8 +4,6 @@ TODO
 For deployment on site
 ----------------------
 
-* BUGS
-  * by-month/day routes are not working
 * Posting entries
   * Needs some sort of authentication
   * Perhaps make it an API *only*?

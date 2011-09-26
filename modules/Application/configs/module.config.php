@@ -1,7 +1,9 @@
 <?php
 $config = array();
 $config['production'] = array(
-    'bootstrap_class' => 'Application\Bootstrap',
+    'bootstrap_class'    => 'Application\Bootstrap',
+    'display_exceptions' => false,
+    'layout'             => 'layout.phtml',
 
     'disqus' => array(
         'key'         => 'phlyboyphly',
@@ -84,9 +86,14 @@ $config['production'] = array(
         ),
     ),
 );
+
 $config['staging']     = $config['production'];
+
 $config['testing']     = $config['production'];
+$config['testing']['display_exceptions']    = true;
+
 $config['development'] = $config['production'];
 $config['development']['disqus']['key']         = "testphlyboyphly";
 $config['development']['disqus']['development'] = 1;
+$config['development']['display_exceptions']    = true;
 return $config;

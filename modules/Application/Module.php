@@ -42,28 +42,30 @@ class Module
         return $config->{$env};
     }
 
-    public function registerApplicationListeners(EventCollection $events, Locator $locator)
+    public function registerApplicationListeners(EventCollection $events, Locator $locator, Config $config)
     {
         $view          = $locator->get('view');
-        $viewListener  = $this->getViewListener($view);
+        $viewListener  = $this->getViewListener($view, $config);
         $events->attachAggregate($viewListener);
     }
 
-    public function registerStaticListeners(StaticEventCollection $events, Locator $locator)
+    public function registerStaticListeners(StaticEventCollection $events, Locator $locator, Config $config)
     {
         $view         = $locator->get('view');
-        $viewListener = $this->getViewListener($view);
+        $viewListener = $this->getViewListener($view, $config);
 
         $viewListener->registerStaticListeners($events, $locator);
     }
 
-    protected function getViewListener($view)
+    protected function getViewListener($view, $config)
     {
         if ($this->viewListener instanceof View\Listener) {
             return $this->viewListener;
         }
 
-        $viewListener       = new View\Listener($view);
+        $viewListener       = new View\Listener($view, $config->layout);
+        $viewListener->setDisplayExceptionsFlag($config->display_exceptions);
+
         $this->viewListener = $viewListener;
         return $viewListener;
     }

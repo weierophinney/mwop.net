@@ -76,7 +76,6 @@ class EntryResource extends AbstractResource
         }
 
         $query = $this->getQuery();
-        $month = ($month < 9) ? '0' . $month : $month;
         $start = new DateTime($year . '-' . $month . '-01');
         $end   = clone $start;
         $end->add(new DateInterval('P1M'));
@@ -103,8 +102,6 @@ class EntryResource extends AbstractResource
         }
 
         $query = $this->getQuery();
-        $month = ($month < 9) ? '0' . $month : $month;
-        $day   = ($day < 9) ? '0' . $day : $day;
         $start = new DateTime($year . '-' . $month . '-' . $day);
         $end   = clone $start;
         $end->add(new DateInterval('P1D'));
