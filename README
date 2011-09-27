@@ -11,41 +11,10 @@ you're using PHP 5.3; ext/mongo is installed, and running on default ports;
 etc.). Some ideas are very much in flux (input validation and forms), others are
 relatively stable (event manager usage).
 
-Updating subtree merges
-=======================
+You will need a current version (tested on 87504edc) of ZF2 from my repository:
 
-- library/Fig
-  - projects/fig branch tracks feature/zf-implementation branch of 
-    https://github.com/weierophinney/fig-library.git
-  - From projects/fig branch:
-    git subtree split --prefix=library/Fig --annotate="[fig] " --rejoin -b subtrees/fig
-  - From master:
-    git subtree merge --prefix=library/Fig --squash subtrees/fig
-- library/Zend
-  - projects/fig branch tracks feature/zf-implementation branch of 
-    https://github.com/weierophinney/fig-library.git
-  - From projects/fig branch:
-    git subtree split --prefix=library/Zend --annotate="[fig_zend] " --rejoin -b subtrees/fig_zend
-  - From master:
-    git subtree merge --prefix=library/Zend --squash subtrees/fig_zend
-- library/Phly
-  - projects/mustache branch tracks master branch of 
-    https://github.com/weierophinney/phly_mustache.git
-  - From projects/mustache branch:
-    git subtree split --prefix=library/Phly --annotate="[mustache] " --rejoin -b subtrees/mustache
-  - From master:
-    git subtree merge --prefix=library/Phly --squash subtrees/mustache
-- library/zf2
-  - projects/zf2 branch tracks master branch of
-    https://github.com/zendframework/zf2.git
-  - From projects/zf2 branch:
-    git subtree split --prefix=library --annotate="[zf2] " --rejoin -b subtrees/zf2
-  - From master:
-    git subtree merge --prefix=library/zf2 --squash subtrees/zf2
-- library/zf2-di
-  - projects/zf2-di branch tracks projects/zf2.di branch of 
-    https://github.com/weierophinney/zf-examples
-  - From projects/zf2-di branch:
-    git subtree split --prefix=zf2-di/library --annotate="[zf2.di] " --rejoin -b subtrees/zf2-di
-  - From master (originally feature/di-mvc):
-    git subtree merge --prefix=library/zf2-di --squash subtrees/zf2-di
+    https://github.com/weierophinney/zf2
+
+pointing at the branch "prototype/mvc-module". The library/ directory should
+either be on your include_path, or its "library/Zend" subdirectory symlinked
+into "library/" of your checkout.
