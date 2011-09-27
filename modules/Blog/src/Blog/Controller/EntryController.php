@@ -3,6 +3,8 @@ namespace Blog\Controller;
 
 use Blog\EntryResource,
     Blog\EventListeners\EntryControllerListener,
+    DateTime,
+    DateTimezone,
     Iterator,
     Mongo,
     Zend\Filter\InputFilter,
@@ -65,6 +67,18 @@ class EntryController extends RestfulController
                 'error' => 'Entry not found',
             );
         }
+
+        $published = $entry->getCreated();
+        $timezone  = $entry->getTimezone();
+        $now       = new DateTime('now', new DateTimezone($timezone));
+        if (!$entry->isPublic() || $entry->isDraft() || $now < $published)  {
+            $this->event->getRouteMatch()->setParam('action', 'preview');
+            $result = $this->events()->trigger('authenticate', $this->event);
+            if (!$result->last()) {
+                return false;
+            }
+        }
+
         return array(
             'entry' => $entry,
         );

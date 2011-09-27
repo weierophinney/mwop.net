@@ -41,5 +41,6 @@ class Module
     {
         $listener = $locator->get('Authentication\AuthenticationListener', array('config' => $config));
         $events->attach('Zend\Stdlib\Dispatchable', 'dispatch', array($listener, 'testAuthenticatedUser'), 100);
+        $events->attach('Zend\Stdlib\Dispatchable', 'authenticate', array($listener, 'testAuthenticatedUser'), 100);
     }
 }
