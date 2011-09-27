@@ -156,8 +156,8 @@ class EntryControllerListener implements ListenerAggregate
     public function renderRestfulActions($e)
     {
         $response   = $e->getResponse();
-        if ($response->isNotFound()) {
-            // Don't render 404's
+        if (!$response->isSuccess()) {
+            // Don't render 401's and 404's
             return;
         }
 

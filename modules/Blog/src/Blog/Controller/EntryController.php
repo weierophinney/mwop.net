@@ -68,17 +68,35 @@ class EntryController extends RestfulController
             );
         }
 
+        // Is the entry public?
         $published = $entry->getCreated();
-        $timezone  = $entry->getTimezone();
-        $now       = new DateTime('now', new DateTimezone($timezone));
+        $timezone  = new DateTimeZone($entry->getTimezone());
+        $published = new DateTime('@' . $published, $timezone);
+        $now       = new DateTime('now', $timezone);
         if (!$entry->isPublic() || $entry->isDraft() || $now < $published)  {
-            $this->event->getRouteMatch()->setParam('action', 'preview');
-            $result = $this->events()->trigger('authenticate', $this->event);
+            // Not public
+            $event      = clone $this->event;
+            $routeMatch = $event->getRouteMatch();
+
+            // Cache original action
+            $action     = $routeMatch->getParam('action');
+
+            // Override action for purposes of authentication
+            $routeMatch->setParam('action', 'preview');
+            $result = $this->events()->trigger('authenticate', $event);
+
+            // Reset original action
+            $routeMatch->setParam('action', $action);
+
+            // If authentication failed, set the content to whatwe received in 
+            // the event, and return early
             if (!$result->last()) {
+                $this->event->setParam('content', $event->getParam('content'));
                 return false;
             }
         }
 
+        // Display the entry
         return array(
             'entry' => $entry,
         );

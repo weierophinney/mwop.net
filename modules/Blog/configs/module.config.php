@@ -1,5 +1,11 @@
 <?php
 $config = array();
+$config['authentication'] = array(
+    'Blog\Controller\EntryController' => array(
+        'preview',
+    ),
+);
+
 $config['routes'] = array(
     'blog-create-form' => array(
         'type'    => 'Zend\Mvc\Router\Http\Literal',
