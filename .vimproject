@@ -3,14 +3,6 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md *.php *.xml *.txt" {
  TODO.md
  bootstrap.php
  test.php
- application=application {
-  configs=configs {
-   di.json
-  }
-  views=views filter="*.mustache" {
-   mobile.mustache
-  }
- }
  library=library {
   .classmap.php
   mwop=mwop {
@@ -67,6 +59,7 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md *.php *.xml *.txt" {
     about.phtml
     error.phtml
     layout.phtml
+    mobile.phtml
     projects.phtml
     pages=pages {
      404.phtml
@@ -88,6 +81,7 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md *.php *.xml *.txt" {
     Authentication=Authentication {
      AuthenticationController.php
      AuthenticationForm.php
+     AuthenticationListener.php
      AuthenticationService.php
     }
    }
@@ -102,6 +96,7 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md *.php *.xml *.txt" {
    }
    views=views {
     authentication=authentication {
+     401.phtml
      login.phtml
      logout.phtml
     }

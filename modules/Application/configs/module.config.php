@@ -2,9 +2,15 @@
 $config = array();
 $config['production'] = array(
     'bootstrap_class'    => 'Application\Bootstrap',
+
+    'authentication' => array(
+        'Application\Controller\PageController' => array(
+            'comics',
+        ),
+    ),
+
     'display_exceptions' => false,
     'layout'             => 'layout.phtml',
-
     'disqus' => array(
         'key'         => 'phlyboyphly',
         'development' => 0,
@@ -50,7 +56,7 @@ $config['production'] = array(
                 'regex' => '/.*',
                 'defaults' => array(
                     'controller' => 'Application\Controller\PageController',
-                    'page'       => '404',
+                    'action'     => '404',
                 ),
             ),
         ),
@@ -60,7 +66,7 @@ $config['production'] = array(
                 'route' => '/',
                 'defaults' => array(
                     'controller' => 'Application\Controller\PageController',
-                    'page'       => 'home',
+                    'action'     => 'home',
                 ),
             ),
         ),
@@ -70,7 +76,7 @@ $config['production'] = array(
                 'route' => '/comics',
                 'defaults' => array(
                     'controller' => 'Application\Controller\PageController',
-                    'page'       => 'comics',
+                    'action'     => 'comics',
                 ),
             ),
         ),
@@ -80,7 +86,7 @@ $config['production'] = array(
                 'route' => '/resume',
                 'defaults' => array(
                     'controller' => 'Application\Controller\PageController',
-                    'page'       => 'resume',
+                    'action'     => 'resume',
                 ),
             ),
         ),

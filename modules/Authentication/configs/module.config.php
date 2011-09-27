@@ -27,6 +27,10 @@ $config['production'] = array(
         'Authentication\AuthenticationController' => array('parameters' => array(
             'auth' => 'Authentication\AuthenticationService',
         )),
+        'Authentication\AuthenticationListener' => array('parameters' => array(
+            'auth'     => 'Authentication\AuthenticationService',
+            'renderer' => 'Zend\View\PhpRenderer',
+        )),
         'Authentication\AuthenticationService' => array('parameters' => array(
             'filename' => APPLICATION_PATH . '/data/htdigest',
             'realm'    => 'mwop',

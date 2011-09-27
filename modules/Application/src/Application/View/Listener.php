@@ -90,7 +90,7 @@ class Listener implements ListenerAggregate
         if (!$routeMatch) {
             $page = '404';
         } else {
-            $page = $routeMatch->getParam('page', '404');
+            $page = $routeMatch->getParam('action', '404');
         }
 
         if ($page == '404') {
@@ -108,6 +108,11 @@ class Listener implements ListenerAggregate
 
     public function renderView(MvcEvent $e)
     {
+        $response = $e->getResponse();
+        if (!$response->isSuccess()) {
+            return;
+        }
+
         $routeMatch = $e->getRouteMatch();
         $controller = $routeMatch->getParam('controller', 'index');
         $action     = $routeMatch->getParam('action', 'index');
@@ -128,6 +133,15 @@ class Listener implements ListenerAggregate
 
     public function renderLayout(MvcEvent $e)
     {
+        $response = $e->getResponse();
+        if (!$response) {
+            $response = new Response();
+            $e->setResponse($response);
+        }
+        if ($response->isRedirect()) {
+            return $response;
+        }
+
         $footer   = $e->getParam('footer', false);
         $vars     = array('footer' => $footer);
 
@@ -138,11 +152,6 @@ class Listener implements ListenerAggregate
         }
 
         $layout   = $this->view->render($this->layout, $vars);
-        $response = $e->getResponse();
-        if (!$response) {
-            $response = new Response();
-            $e->setResponse($response);
-        }
         $response->setContent($layout);
         return $response;
     }

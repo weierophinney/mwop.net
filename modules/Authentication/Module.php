@@ -3,7 +3,9 @@
 namespace Authentication;
 
 use InvalidArgumentException,
-    Zend\Config\Config;
+    Zend\Config\Config,
+    Zend\Di\Locator,
+    Zend\EventManager\StaticEventCollection;
 
 class Module
 {
@@ -33,5 +35,11 @@ class Module
         }
 
         return $config->{$env};
+    }
+
+    public function registerStaticListeners(StaticEventCollection $events, Locator $locator, Config $config)
+    {
+        $listener = $locator->get('Authentication\AuthenticationListener', array('config' => $config));
+        $events->attach('Zend\Stdlib\Dispatchable', 'dispatch', array($listener, 'testAuthenticatedUser'), 100);
     }
 }
