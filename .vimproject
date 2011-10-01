@@ -122,11 +122,15 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md *.php *.xml *.txt" {
     Blog=Blog {
      EntryEntity.php
      EntryResource.php
+     Exception.php
      Controller=Controller {
       EntryController.php
      }
      EventListeners=EventListeners {
       EntryControllerListener.php
+     }
+     Exception=Exception {
+      UnauthorizedAccessException.php
      }
      Filter=Filter {
       EntryFilter.php

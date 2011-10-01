@@ -15,6 +15,7 @@ use Blog\EntryResource,
 
 class EntryController extends RestfulController
 {
+    protected $apiKey;
     protected $resource;
     protected $view;
 
@@ -45,6 +46,18 @@ class EntryController extends RestfulController
     public function getView()
     {
         return $this->view;
+    }
+
+    public function setApiKeyLocation($key)
+    {
+        if (file_exists($key)) {
+            $this->apiKey = file_get_contents($key);
+        }
+    }
+
+    public function getApiKey()
+    {
+        return $this->apiKey;
     }
 
     public function getList()
@@ -113,7 +126,7 @@ class EntryController extends RestfulController
             );
         }
 
-        $url = $this->getView()->plugin('url')->direct(array('id' => $entry->getId()), array('name', 'blog-entry'));
+        $url = $this->getView()->url(array('id' => $entry->getId()), array('name', 'blog-entry'));
         $this->response->headers()->addHeaderLine('Location', $url);
         $this->response->setStatusCode(201);
         return $this->response;

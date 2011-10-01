@@ -134,6 +134,10 @@ $config['di'] = array('instance' => array(
     'Blog\Controller\EntryController' => array('parameters' => array(
         'view'     => 'Zend\View\PhpRenderer',
         'resource' => 'Blog\EntryResource',
+    ), 'methods' => array(
+        'setApiKeyLocation' => array(
+            'key' => APPLICATION_PATH . '/data/api-key.txt',
+        ),
     )),
     'CommonResource\DataSource\Mongo' => array('parameters' => array(
         'connection' => 'CommonResource\MongoCollection',

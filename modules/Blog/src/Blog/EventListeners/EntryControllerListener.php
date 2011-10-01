@@ -2,7 +2,8 @@
 
 namespace Blog\EventListeners;
 
-use Traversable,
+use Blog\Exception,
+    Traversable,
     Zend\EventManager\EventCollection,
     Zend\EventManager\ListenerAggregate,
     Zend\Feed\Writer\Feed as FeedWriter,
@@ -15,6 +16,7 @@ class EntryControllerListener implements ListenerAggregate
 
     public function attach(EventCollection $events)
     {
+        $this->listeners[] = $events->attach('dispatch',  array($this, 'verifyApiKey'), 200);
         $this->listeners[] = $events->attach('dispatch',  array($this, 'normalizeId'), 100);
         $this->listeners[] = $events->attach('dispatch', array($this, 'generateFeed'), -10);
         $this->listeners[] = $events->attach('dispatch', array($this, 'injectTagCloud'), -100);
@@ -272,5 +274,37 @@ class EntryControllerListener implements ListenerAggregate
         // Action content
         $content = $renderer->render($script, $vars);
         return $content;
+    }
+
+    public function verifyApiKey($e)
+    {
+        $routeMatch = $e->getRouteMatch();
+        $action     = $routeMatch->getParam('action', false);
+        if ($action) {
+            // If we have an action, then we're not RESTful
+            return;
+        }
+
+        $request = $e->getRequest();
+        if ($request->isGet()) {
+            // If we have a GET request, nothing to worry about
+            return;
+        }
+
+        $headers = $request->headers();
+        if ($headers->has('X-MWOP-APIKEY')) {
+            $key  = $e->getTarget()->getApiKey();
+            $test = $headers->get('X-MWOP-APIKEY')->getFieldValue();
+            if ($key && $key == $test) {
+                // We have a matching key
+                return;
+            }
+        }
+
+        // No key provided, or invalid
+        $response = $e->getResponse();
+        $response->setStatusCode(401);
+        $response->setContent('Unauthorized');
+        return $response;
     }
 }
