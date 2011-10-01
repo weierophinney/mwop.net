@@ -100,18 +100,18 @@ class Bootstrap
         }
 
         $view->getBroker()->getClassLoader()->registerPlugins(new DojoLoader());
-        $view->plugin('headTitle')->setSeparator(' :: ')
-                                  ->setAutoEscape(false)
-                                  ->append('phly, boy, phly');
-        $view->plugin('headLink')->appendStylesheet('/css/Application/reset.css')
-                                 ->appendStylesheet('/css/Application/text.css')
-                                 ->appendStylesheet('/css/Application/960.css')
-                                 ->appendStylesheet('/css/Application/site.css')
-                                 ->direct(array(
-                                     'rel'  => 'shortcut icon',
-                                     'type' => 'image/vnd.microsoft.icon',
-                                     'href' => '/images/Application/favicon.ico',
-                                 ));
+        $view->headTitle()->setSeparator(' :: ')
+                          ->setAutoEscape(false)
+                          ->append('phly, boy, phly');
+        $view->headLink()->appendStylesheet('/css/Application/reset.css')
+                         ->appendStylesheet('/css/Application/text.css')
+                         ->appendStylesheet('/css/Application/960.css')
+                         ->appendStylesheet('/css/Application/site.css');
+        $view->headLink(array(
+            'rel'  => 'shortcut icon',
+            'type' => 'image/vnd.microsoft.icon',
+            'href' => '/images/Application/favicon.ico',
+        ));
         $dojo = $view->plugin('dojo');
         $dojo->setCdnVersion('1.6')
              ->setDjConfig(array(

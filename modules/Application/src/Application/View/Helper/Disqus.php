@@ -38,7 +38,7 @@ class Disqus extends AbstractHelper
         }
     }
 
-    public function direct($identifier = '', $url = '', $title = '', $key = false, $developer = false)
+    public function __invoke($identifier = '', $url = '', $title = '', $key = false, $developer = false)
     {
         if (!$key && !$this->key) {
             throw new DomainException('No disqus key provided');

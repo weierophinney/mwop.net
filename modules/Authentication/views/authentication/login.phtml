@@ -1,18 +1,18 @@
-<?php $this->plugin('headTitle')->prepend('Login') ?>
+<?php $this->headTitle()->prepend('Login') ?>
 <div class="grid_12 content authentication">
-<?php if ($this->vars('success')): ?>
+<?php if ($this->success): ?>
 <h2>Logged in!</h2>
 
 <p>
     You have successfully logged in.
 </p>
-<?php elseif ($this->vars('error')): ?>
+<?php elseif ($this->error): ?>
 <h2>Error!</h2>
 
-<p><?php echo $this->vars('message') ?></p>
+<p><?php echo $this->message ?></p>
 
 <?php
-$form = $this->vars('form');
+$form = $this->form;
 echo $form->render($this);
 ?>
 <?php else: ?>
@@ -20,7 +20,7 @@ echo $form->render($this);
 
 <p>Please provide your credentials below.</p>
 <?php
-$form = $this->vars('form');
+$form = $this->form;
 echo $form->render($this);
 ?>
 <?php endif ?>

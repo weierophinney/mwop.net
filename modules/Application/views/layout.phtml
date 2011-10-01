@@ -1,22 +1,22 @@
 <?php 
 $url       = $this->plugin('url');
-$homeUrl   = $url->direct(array(), array('name' => 'home'));
-$blogUrl   = $url->direct(array(), array('name' => 'blog'));
-$comicsUrl = $url->direct(array(), array('name' => 'comics'));
-$resumeUrl = $url->direct(array(), array('name' => 'resume'));
-$content   = $this->vars('content');
-$footer    = $this->vars('footer');
+$homeUrl   = $url(array(), array('name' => 'home'));
+$blogUrl   = $url(array(), array('name' => 'blog'));
+$comicsUrl = $url(array(), array('name' => 'comics'));
+$resumeUrl = $url(array(), array('name' => 'resume'));
+$content   = $this->content;
+$footer    = $this->footer;
 
-echo $this->plugin('doctype') ?>
+echo $this->doctype() ?>
 <html>
 <head>
-    <?php echo $this->plugin('headTitle') ?>
+    <?php echo $this->headTitle() ?>
     
-    <?php echo $this->plugin('headLink') ?>
+    <?php echo $this->headLink() ?>
 
-    <?php echo $this->plugin('dojo')->direct() ?>
+    <?php echo $this->dojo() ?>
 
-    <?php echo $this->plugin('headScript') ?>
+    <?php echo $this->headScript() ?>
 
 </head>
 <body>
@@ -35,7 +35,7 @@ echo $this->plugin('doctype') ?>
         </ul>
     </div>
 
-    <?php echo $this->vars()->getRawValue('content') ?>
+    <?php echo $this->raw('content') ?>
     <div class="clear"></div>
 
     <div class="grid_12 divider">&nbsp;</div>

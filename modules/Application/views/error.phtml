@@ -6,11 +6,11 @@
 </p>
 
 <?php
-if (!$this->vars('display_exceptions')) {
+if (!$this->display_exceptions) {
     echo "<p>Display exceptions is disabled</p>\n";
     return;
 }
-$exception = $this->vars('exception');
+$exception = $this->exception;
 if (!$exception instanceof \Exception) {
     echo "<p>Invalid exception found</p>\n";
     return;

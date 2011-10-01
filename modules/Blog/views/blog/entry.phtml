@@ -1,16 +1,16 @@
-<?php if ($this->vars('error')): ?>
-<p class="error"><?php echo $this->vars('error') ?></p>
+<?php if ($this->error): ?>
+<p class="error"><?php echo $this->error ?></p>
 <?php 
     return;
 endif;
 
-$entry = $this->vars('entry');
+$entry = $this->entry;
 $title = $entry->getTitle();
-$this->plugin('headTitle')->prepend($title);
+$this->headTitle()->prepend($title);
 $title = $this->vars()->escape($title);
-$url   = $this->plugin('url')->direct(array('id' => $entry->getId()), array('name' => 'blog-entry'));
+$url   = $this->url(array('id' => $entry->getId()), array('name' => 'blog-entry'));
 $ds    = function($ts) use ($entry) {
-    $tz = $entry->getTimezone();
+    $tz   = $entry->getTimezone();
     $date = new \DateTime();
     $date->setTimezone(new \DateTimeZone($tz));
     $date->setTimestamp($ts);
@@ -18,7 +18,7 @@ $ds    = function($ts) use ($entry) {
 };
 ?>
 <div class="grid_9 content blog">
-<?php if ($this->vars('entry_updated')): ?>
+<?php if ($this->entry_updated): ?>
 <h2 class="notification">Entry updated</h2>
 <?php endif ?>
 <h2><?php echo $title ?></h2>
@@ -26,7 +26,7 @@ $ds    = function($ts) use ($entry) {
 <?php
 echo $entry->getBody();
 echo $entry->getExtended();
-echo $this->plugin('disqus')->direct($entry->getId(), $url, $title);
+echo $this->disqus($entry->getId(), $url, $title);
 ?>
 </div>
 
