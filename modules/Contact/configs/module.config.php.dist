@@ -1,0 +1,26 @@
+<?php
+$config['production'] = array(
+    'di' => array('instance' => array(
+        'preferences' => array(
+            'Zend\Mail\AbstractTransport' => 'Zend\Mail\Transport\Smtp',
+        ),
+        'Zend\Mail\Mail' => array('methods' => array(
+            'addTo' => array(
+                'email' => 'your@emailhe.re',
+                'name'  => "Your Name Here",
+            ),
+        )),
+        'Zend\Mail\Transport\Smtp' => array('methods' => array(
+            '__construct'  => array(
+                'host'   => 'localhost',
+                'config' => array(
+                    'port' => 25,
+                ),
+            ),
+        )),
+    )),
+);
+$config['staging']     = $config['production'];
+$config['testing']     = $config['production'];
+$config['development'] = $config['production'];
+return $config;

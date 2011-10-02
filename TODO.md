@@ -5,8 +5,9 @@ For deployment on site
 ----------------------
 
 * Posting entries
-  * Needs some sort of *authorization*
-  * Perhaps make it an API *only*?
+  (X) Needs some sort of *authorization*
+  (X) Perhaps make it an API *only*?
+  ( ) Need a script that can post to it
 * Contact form!!!!
 * Rewrite map of old URLs to new
 * Mobile layout

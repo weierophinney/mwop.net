@@ -248,6 +248,30 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md *.php *.xml *.txt" {
     }
    }
   }
+  Contact=Contact {
+   Module.php
+   autoload_classmap.php
+   autoload_function.php
+   autoload_register.php
+   configs=configs {
+    module.config.php.dist
+    module.config.php
+   }
+   src=src {
+    Contact=Contact {
+     Controller=Controller {
+      ContactController.php
+     }
+     Form=Form {
+      ContactForm.php
+     }
+    }
+   }
+   views=views {
+    contact=contact {
+    }
+   }
+  }
  }
  public=public {
   .htaccess
