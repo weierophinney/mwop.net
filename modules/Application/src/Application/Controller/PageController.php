@@ -1,15 +1,18 @@
 <?php
 namespace Application\Controller;
 
-use Zend\EventManager\EventCollection,
+use Zend\EventManager\EventDescription as Event,
+    Zend\EventManager\EventCollection,
     Zend\EventManager\EventManager,
     Zend\Stdlib\Dispatchable,
     Zend\Stdlib\RequestDescription as Request,
     Zend\Stdlib\ResponseDescription as Response,
+    Zend\Mvc\EventAware,
     Zend\Mvc\MvcEvent;
 
-class PageController implements Dispatchable
+class PageController implements Dispatchable, EventAware
 {
+    protected $event;
     protected $events;
 
     public function events(EventCollection $events = null)
@@ -27,11 +30,28 @@ class PageController implements Dispatchable
         return $this->events;
     }
 
-    public function dispatch(Request $request, Response $response = null, $event = null)
+    public function setEvent(Event $event)
     {
-        if (!$event) {
-            $event = new MvcEvent();
+        if ($event instanceof MvcEvent) {
+            $this->event = $event;
+            return;
         }
+        $params = $event->getParams();
+        $this->event = new MvcEvent();
+        $this->event->setParams($params);
+    }
+
+    public function getEvent()
+    {
+        if (!$this->event) {
+            $this->setEvent(new MvcEvent);
+        }
+        return $this->event;
+    }
+
+    public function dispatch(Request $request, Response $response = null)
+    {
+        $event = $this->getEvent();
         $event->setRequest($request)
               ->setResponse($response)
               ->setTarget($this);

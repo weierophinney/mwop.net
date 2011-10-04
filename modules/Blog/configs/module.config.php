@@ -111,11 +111,13 @@ $config['di'] = array('instance' => array(
         'MongoCollection' => 'CommonResource\MongoCollection',
     ),
 
-    'CommonResource\Mongo' => array( 'parameters' => array(
-        'server'  => 'mongodb://localhost:27017',
-        'options' => array('connect' => true),
+    'CommonResource\Mongo' => array( 'methods' => array(
+        '__construct' => array(
+            'server'  => 'mongodb://localhost:27017',
+            'options' => array('connect' => true),
+        )
     )),
-    'CommonResource\MongoDB' => array( 'parameters' => array(
+    'CommonResource\MongoDB' => array( 'methods' => array(
         'conn' => 'CommonResource\Mongo',
         'name' => 'wopnet',
     )),
