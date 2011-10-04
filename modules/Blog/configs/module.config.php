@@ -117,7 +117,7 @@ $config['di'] = array('instance' => array(
             'options' => array('connect' => true),
         )
     )),
-    'CommonResource\MongoDB' => array( 'methods' => array(
+    'CommonResource\MongoDB' => array( 'parameters' => array(
         'conn' => 'CommonResource\Mongo',
         'name' => 'wopnet',
     )),
