@@ -1,0 +1,24 @@
+<?php $this->headTitle()->prepend('Contact'); ?>
+<div class="grid_12 content">
+<h2>Contact Me</h2>
+
+<p>
+    Feel free to contact me. Please note, however, that I likely will not 
+    respond to recruiters, nor to questions that could be asked in public
+    forums.
+</p>
+
+<?php if ($this->error): ?>
+<p class="error">
+    There were one or more isues with your submission. Please correct them as 
+    indicated below.
+</p>
+<?php endif ?>
+
+<?php 
+$form = $this->form;
+$form->setAction($this->url(array(), array('name' => 'contact-process')));
+$form->setMethod('post');
+echo $form->render($this);
+?>
+</div>

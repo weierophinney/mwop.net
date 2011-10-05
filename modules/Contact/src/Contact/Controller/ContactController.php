@@ -36,6 +36,7 @@ class ContactController extends ActionController
         $post = $this->request->post()->toArray();
         $form = $this->getForm();
         if (!$form->isValid($post)) {
+            $this->getEvent()->getRouteMatch()->setParam('action', 'index');
             return array(
                 'error' => true,
                 'form'  => $form
@@ -54,11 +55,16 @@ class ContactController extends ActionController
                      ->setBodyText($body);
         $this->mailer->send($this->transport);
 
-        return array('success' => true);
+        return $this->redirect()->toRoute('contact-thank-you');
+    }
+
+    public function thankYouAction()
+    {
+        // do nothing...
     }
 
     public function getForm()
     {
-        $form = new ContactForm();
+        return new ContactForm();
     }
 }

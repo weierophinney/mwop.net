@@ -1,11 +1,12 @@
 <?php 
-$url       = $this->plugin('url');
-$homeUrl   = $url(array(), array('name' => 'home'));
-$blogUrl   = $url(array(), array('name' => 'blog'));
-$comicsUrl = $url(array(), array('name' => 'comics'));
-$resumeUrl = $url(array(), array('name' => 'resume'));
-$content   = $this->content;
-$footer    = $this->footer;
+$url        = $this->plugin('url');
+$homeUrl    = $url(array(), array('name' => 'home'));
+$blogUrl    = $url(array(), array('name' => 'blog'));
+$comicsUrl  = $url(array(), array('name' => 'comics'));
+$resumeUrl  = $url(array(), array('name' => 'resume'));
+$contactUrl = $url(array(), array('name' => 'contact-form'));
+$content    = $this->content;
+$footer     = $this->footer;
 
 echo $this->doctype() ?>
 <html>
@@ -32,6 +33,7 @@ echo $this->doctype() ?>
             <li><a href="<?php echo $blogUrl ?>">Blog</a></li>
             <li><a href="<?php echo $comicsUrl ?>">Comics</a></li>
             <li><a href="<?php echo $resumeUrl ?>">R&eacute;sum&eacute;</a></li>
+            <li><a href="<?php echo $contactUrl ?>">Contact</a></li>
         </ul>
     </div>
 

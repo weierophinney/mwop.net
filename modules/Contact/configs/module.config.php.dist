@@ -1,15 +1,21 @@
 <?php
 $config['production'] = array(
     'di' => array('instance' => array(
+        'alias' => array(
+            'contact' => 'Contact\Controller\ContactController',
+        ),
+
         'preferences' => array(
             'Zend\Mail\AbstractTransport' => 'Zend\Mail\Transport\Smtp',
         ),
+
         'Zend\Mail\Mail' => array('methods' => array(
             'addTo' => array(
                 'email' => 'your@emailhe.re',
                 'name'  => "Your Name Here",
             ),
         )),
+
         'Zend\Mail\Transport\Smtp' => array('methods' => array(
             '__construct'  => array(
                 'host'   => 'localhost',
@@ -18,7 +24,58 @@ $config['production'] = array(
                 ),
             ),
         )),
+
+        'Zend\View\PhpRenderer' => array(
+            'methods' => array(
+                'setResolver' => array(
+                    'resolver' => 'Zend\View\TemplatePathStack',
+                    'options' => array(
+                        'script_paths' => array(
+                            'contact' => __DIR__ . '/../views',
+                        ),
+                    ),
+                ),
+            ),
+        ),
+
+        'Contact\Controller\ContactController' => array('parameters' => array(
+            'mailer'    => 'Zend\Mail\Mail',
+            'transport' => 'Zend\Mail\Transport\Smtp',
+        )),
     )),
+
+    'routes' => array(
+        'contact-form' => array(
+            'type' => 'Zend\Mvc\Router\Http\Literal',
+            'options' => array(
+                'route' => '/contact',
+                'defaults' => array(
+                    'controller' => 'contact',
+                    'action'     => 'index',
+                ),
+            ),
+        ),
+        'contact-process' => array(
+            'type' => 'Zend\Mvc\Router\Http\Literal',
+            'options' => array(
+                'route' => '/contact/process',
+                'defaults' => array(
+                    'controller' => 'contact',
+                    'action'     => 'process',
+                ),
+            ),
+        ),
+        'contact-thank-you' => array(
+            'type' => 'Zend\Mvc\Router\Http\Literal',
+            'options' => array(
+                'route' => '/contact/thank-you',
+                'defaults' => array(
+                    'controller' => 'contact',
+                    'action'     => 'thank-you',
+                ),
+            ),
+        ),
+    ),
 );
 $config['staging']     = $config['production'];
 $config['testing']     = $config['production'];

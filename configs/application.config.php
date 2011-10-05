@@ -9,5 +9,6 @@ return new Zend\Config\Config(array(
         'Comic',
         'CommonResource',
         'Blog',
+        'Contact',
     ),
 ));

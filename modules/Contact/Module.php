@@ -1,6 +1,6 @@
 <?php
 
-namespace Blog;
+namespace Contact;
 
 use InvalidArgumentException,
     Zend\Config\Config;
