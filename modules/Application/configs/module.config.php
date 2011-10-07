@@ -18,7 +18,8 @@ $config['production'] = array(
 
     'di' => array( 'instance' => array(
         'alias' => array(
-            'view'  => 'Zend\View\PhpRenderer',
+            'view'          => 'Zend\View\PhpRenderer',
+            'view-resolver' => 'Zend\View\TemplatePathStack',
         ),
 
         'Zend\View\HelperLoader' => array('parameters' => array(
@@ -32,21 +33,16 @@ $config['production'] = array(
             'loader' => 'Zend\View\HelperLoader',
         )),
 
-        'Zend\View\PhpRenderer' => array(
-            'methods' => array(
-                'setResolver' => array(
-                    'resolver' => 'Zend\View\TemplatePathStack',
-                    'options' => array(
-                        'script_paths' => array(
-                            'application' => __DIR__ . '/../views',
-                        ),
-                    ),
-                ),
+        'view' => array( 'parameters' => array(
+            'resolver' => 'view-resolver',
+            'broker' => 'Zend\View\HelperBroker',
+        )),
+
+        'view-resolver' => array('parameters' => array(
+            'paths' => array(
+                'application' => __DIR__ . '/../views',
             ),
-            'parameters' => array(
-                'broker' => 'Zend\View\HelperBroker',
-            ),
-        ),
+        )),
     )),
 
     'routes' => array(

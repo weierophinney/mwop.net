@@ -24,29 +24,34 @@ $config['production'] = array(
     ),
 
     'di' => array('instance' => array(
+        'alias' => array(
+            'view' => 'Zend\View\PhpRenderer',
+            'view-resolver' => 'Zend\View\TemplatePathStack',
+        ),
+
         'Authentication\AuthenticationController' => array('parameters' => array(
             'auth' => 'Authentication\AuthenticationService',
         )),
+
         'Authentication\AuthenticationListener' => array('parameters' => array(
             'auth'     => 'Authentication\AuthenticationService',
-            'renderer' => 'Zend\View\PhpRenderer',
+            'renderer' => 'view',
         )),
+
         'Authentication\AuthenticationService' => array('parameters' => array(
             'filename' => APPLICATION_PATH . '/data/htdigest',
             'realm'    => 'mwop',
         )),
-        'Zend\View\PhpRenderer' => array(
-            'methods' => array(
-                'setResolver' => array(
-                    'resolver' => 'Zend\View\TemplatePathStack',
-                    'options' => array(
-                        'script_paths' => array(
-                            'authentication' => __DIR__ . '/../views',
-                        ),
-                    ),
-                ),
+
+        'view' => array('parameters' => array(
+            'resolver' => 'view-resolver',
+        )),
+
+        'view-resolver' => array('parameters' => array(
+            'paths' => array(
+                'authentication' => __DIR__ . '/../views',
             ),
-        ),
+        )),
     )),
 );
 

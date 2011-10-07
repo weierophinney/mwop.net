@@ -109,22 +109,25 @@ $config['di'] = array('instance' => array(
         'Mongo'           => 'CommonResource\Mongo',
         'MongoDB'         => 'CommonResource\MongoDB',
         'MongoCollection' => 'CommonResource\MongoCollection',
+        'view'            => 'Zend\View\PhpRenderer',
+        'view-resolver'   => 'Zend\View\TemplatePathStack',
     ),
 
-    'CommonResource\Mongo' => array( 'methods' => array(
-        '__construct' => array(
-            'server'  => 'mongodb://localhost:27017',
-            'options' => array('connect' => true),
-        )
+    'CommonResource\Mongo' => array('parameters' => array(
+        'server'  => 'mongodb://localhost:27017',
+        'options' => array('connect' => true),
     )),
+
     'CommonResource\MongoDB' => array( 'parameters' => array(
         'conn' => 'CommonResource\Mongo',
         'name' => 'wopnet',
     )),
+
     'CommonResource\MongoCollection' => array('parameters' => array(
         'db'   => 'CommonResource\MongoDB',
         'name' => 'entries',
     )),
+
     'Blog\EntryResource' => array('parameters' => array(
         'dataSource'      => 'CommonResource\DataSource\Mongo',
         'collectionClass' => 'CommonResource\Resource\MongoCollection',
@@ -133,29 +136,29 @@ $config['di'] = array('instance' => array(
             'class' => 'CommonResource\Resource\MongoCollection',
         ),
     )), 
+
     'Blog\Controller\EntryController' => array('parameters' => array(
-        'view'     => 'Zend\View\PhpRenderer',
+        'view'     => 'view',
         'resource' => 'Blog\EntryResource',
-    ), 'methods' => array(
-        'setApiKeyLocation' => array(
+    // ), 'methods' => array(
+        // 'setApiKeyLocation' => array(
             'key' => APPLICATION_PATH . '/data/api-key.txt',
-        ),
+        // ),
     )),
+
     'CommonResource\DataSource\Mongo' => array('parameters' => array(
         'connection' => 'CommonResource\MongoCollection',
     )),
-    'Zend\View\PhpRenderer' => array(
-        'methods' => array(
-            'setResolver' => array(
-                'resolver' => 'Zend\View\TemplatePathStack',
-                'options' => array(
-                    'script_paths' => array(
-                        'blog' => __DIR__ . '/../views',
-                    ),
-                ),
-            ),
+
+    'view' => array( 'parameters' => array(
+        'resolver' => 'view-resolver',
+    )),
+
+    'view-resolver' => array('parameters' => array(
+        'paths' => array(
+            'blog' => __DIR__ . '/../views',
         ),
-    ),
+    )),
 ));
 
 $config = array(

@@ -40,3 +40,5 @@ $bootstrap = new $config->bootstrap_class($config, $moduleManager);
 $application = new Zend\Mvc\Application;
 $bootstrap->bootstrap($application);
 
+// Zend\Di\Display\Console::export($application->getLocator(), array('Blog\Controller\EntryController'));
+// exit(0);

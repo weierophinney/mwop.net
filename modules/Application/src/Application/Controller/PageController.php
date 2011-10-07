@@ -7,10 +7,10 @@ use Zend\EventManager\EventDescription as Event,
     Zend\Stdlib\Dispatchable,
     Zend\Stdlib\RequestDescription as Request,
     Zend\Stdlib\ResponseDescription as Response,
-    Zend\Mvc\EventAware,
+    Zend\Mvc\InjectApplicationEvent,
     Zend\Mvc\MvcEvent;
 
-class PageController implements Dispatchable, EventAware
+class PageController implements Dispatchable, InjectApplicationEvent
 {
     protected $event;
     protected $events;

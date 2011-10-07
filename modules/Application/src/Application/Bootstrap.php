@@ -4,8 +4,7 @@ namespace Application;
 use Zend\Config\Config,
     Zend\Di\Configuration,
     Zend\Di\Definition,
-    Zend\Di\Definition\Builder,
-    Zend\Di\DependencyInjector,
+    Zend\Di\Di,
     Zend\Dojo\View\HelperLoader as DojoLoader,
     Zend\EventManager\StaticEventManager,
     Zend\Stdlib\ResponseDescription as Response,
@@ -37,11 +36,13 @@ class Bootstrap
          * Instantiate and configure a DependencyInjector instance, or 
          * a ServiceLocator, and return it.
          */
-        $definition = new Definition\AggregateDefinition;
-        $definition->addDefinition(new Definition\RuntimeDefinition);
+        $runtime = new Definition\RuntimeDefinition;
+        $runtime->getIntrospectionStrategy()->setUseAnnotations(false);
 
-        $di = new DependencyInjector;
-        $di->setDefinition($definition);
+        $di         = new Di;
+        $definition = $di->definitions();
+        $definition->addDefinition($runtime);
+        $di->instanceManager()->addTypePreference('Zend\Di\Locator', $di);
 
         $config = new Configuration($this->config->di);
         $config->configure($di);
