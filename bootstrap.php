@@ -39,10 +39,3 @@ $config = $moduleManager->getMergedConfig();
 $bootstrap = new $config->bootstrap_class($config, $moduleManager);
 $application = new Zend\Mvc\Application;
 $bootstrap->bootstrap($application);
-
-/*
-echo "<pre>\n";
-Zend\Di\Display\Console::export($application->getLocator(), array('Blog\Controller\EntryController'));
-echo "</pre>";
-exit(0);
- */

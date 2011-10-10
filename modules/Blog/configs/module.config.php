@@ -134,7 +134,7 @@ $config['di'] = array(
         'setCollectionClass' => array(
             'class' => array(
                 'required' => false,
-                'type'     => null,
+                'type'     => false,
             ),
         ),
     ),
