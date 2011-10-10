@@ -108,7 +108,10 @@ $config['di'] = array(
 'definition' => array('class' => array(
     'Mongo' => array(
         '__construct' => array(
-            'server'  => array('required' => false),
+            'server'  => array(
+                'required' => false, 
+                'type'     => false,
+            ),
             'options' => array('required' => false),
         ),
     ),
