@@ -19,7 +19,7 @@ set_include_path(implode(PATH_SEPARATOR, array(
 
 require_once 'Zend/Loader/AutoloaderFactory.php';
 Zend\Loader\AutoloaderFactory::factory(array(
-    'Zend\Loader\StandardAutoloader' => array(),
+    'Zend\Loader\StandardAutoloader' => array('fallback_autoloader' => false),
 ));
 
 $appConfig = include __DIR__ . '/configs/application.config.php';
@@ -40,5 +40,9 @@ $bootstrap = new $config->bootstrap_class($config, $moduleManager);
 $application = new Zend\Mvc\Application;
 $bootstrap->bootstrap($application);
 
-// Zend\Di\Display\Console::export($application->getLocator(), array('Blog\Controller\EntryController'));
-// exit(0);
+/*
+echo "<pre>\n";
+Zend\Di\Display\Console::export($application->getLocator(), array('Blog\Controller\EntryController'));
+echo "</pre>";
+exit(0);
+ */

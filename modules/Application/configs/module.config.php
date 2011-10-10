@@ -20,22 +20,24 @@ $config['production'] = array(
         'alias' => array(
             'view'          => 'Zend\View\PhpRenderer',
             'view-resolver' => 'Zend\View\TemplatePathStack',
+            'view-broker'   => 'Zend\View\HelperBroker',
+            'view-loader'   => 'Zend\View\HelperLoader',
         ),
 
-        'Zend\View\HelperLoader' => array('parameters' => array(
+        'view-loader' => array('parameters' => array(
             'map' => array(
                 'url'    => 'Application\View\Helper\Url',
                 'disqus' => 'Application\View\Helper\Disqus',
             ),
         )),
 
-        'Zend\View\HelperBroker' => array('parameters' => array(
-            'loader' => 'Zend\View\HelperLoader',
+        'view-broker' => array('parameters' => array(
+            'loader' => 'view-loader',
         )),
 
         'view' => array( 'parameters' => array(
             'resolver' => 'view-resolver',
-            'broker' => 'Zend\View\HelperBroker',
+            'broker'   => 'view-broker',
         )),
 
         'view-resolver' => array('parameters' => array(

@@ -104,50 +104,77 @@ $config['routes'] = array(
     ),
 );
 
-$config['di'] = array('instance' => array(
+$config['di'] = array(
+'definition' => array('class' => array(
+    'Mongo' => array(
+        '__construct' => array(
+            'server'  => array('required' => false),
+            'options' => array('required' => false),
+        ),
+    ),
+    'MongoDB' => array(
+        '__construct' => array(
+            'conn' => array(
+                'required' => true,
+                'type'     => 'Mongo',
+            ),
+            'name' => array('required' => true),
+        ),
+    ),
+    'MongoCollection' => array(
+        '__construct' => array(
+            'db' => array(
+                'required' => true,
+                'type'     => 'MongoDB',
+            ),
+            'name' => array('required' => true),
+        ),
+    ),
+    'Blog\EntryResource' => array(
+        'setCollectionClass' => array(
+            'class' => array(
+                'required' => false,
+                'type'     => null,
+            ),
+        ),
+    ),
+)),
+'instance' => array(
     'alias' => array(
-        'Mongo'           => 'CommonResource\Mongo',
-        'MongoDB'         => 'CommonResource\MongoDB',
-        'MongoCollection' => 'CommonResource\MongoCollection',
         'view'            => 'Zend\View\PhpRenderer',
         'view-resolver'   => 'Zend\View\TemplatePathStack',
     ),
 
-    'CommonResource\Mongo' => array('parameters' => array(
+    'Mongo' => array('parameters' => array(
         'server'  => 'mongodb://localhost:27017',
-        'options' => array('connect' => true),
     )),
 
-    'CommonResource\MongoDB' => array( 'parameters' => array(
-        'conn' => 'CommonResource\Mongo',
+    'MongoDB' => array( 'parameters' => array(
+        'conn' => 'Mongo',
         'name' => 'wopnet',
     )),
 
-    'CommonResource\MongoCollection' => array('parameters' => array(
-        'db'   => 'CommonResource\MongoDB',
+    'MongoCollection' => array('parameters' => array(
+        'db'   => 'MongoDB',
         'name' => 'entries',
     )),
 
     'Blog\EntryResource' => array('parameters' => array(
-        'dataSource'      => 'CommonResource\DataSource\Mongo',
-        'collectionClass' => 'CommonResource\Resource\MongoCollection',
-    ), 'methods' => array(
-        'setCollectionClass' => array(
-            'class' => 'CommonResource\Resource\MongoCollection',
-        ),
+        'dataSource' => 'CommonResource\DataSource\Mongo',
+        'class'      => 'CommonResource\Resource\MongoCollection',
     )), 
 
     'Blog\Controller\EntryController' => array('parameters' => array(
         'view'     => 'view',
         'resource' => 'Blog\EntryResource',
-    // ), 'methods' => array(
-        // 'setApiKeyLocation' => array(
+    ), 'methods' => array(
+        'setApiKeyLocation' => array(
             'key' => APPLICATION_PATH . '/data/api-key.txt',
-        // ),
+        ),
     )),
 
     'CommonResource\DataSource\Mongo' => array('parameters' => array(
-        'connection' => 'CommonResource\MongoCollection',
+        'connection' => 'MongoCollection',
     )),
 
     'view' => array( 'parameters' => array(
@@ -168,7 +195,7 @@ $config = array(
     'development' => $config,
 );
 
-$config['testing']['di']['instance']['CommonResource\MongoDB']['parameters']['name'] = 'importtest';
-$config['development']['di']['instance']['CommonResource\MongoDB']['parameters']['name'] = 'mwoptest';
+$config['testing']['di']['instance']['MongoDB']['parameters']['name'] = 'importtest';
+$config['development']['di']['instance']['MongoDB']['parameters']['name'] = 'mwoptest';
 
 return $config;
