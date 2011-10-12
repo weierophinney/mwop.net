@@ -56,6 +56,7 @@ $config['production'] = array(
                     'controller' => 'Application\Controller\PageController',
                     'action'     => '404',
                 ),
+                'spec' => '404',
             ),
         ),
         'home' => array(
