@@ -5,13 +5,15 @@ namespace Authentication;
 use InvalidArgumentException,
     Zend\Config\Config,
     Zend\Di\Locator,
-    Zend\EventManager\StaticEventCollection;
+    Zend\EventManager\StaticEventmanager;
 
 class Module
 {
     public function init()
     {
         $this->initAutoloader();
+        $events = StaticEventManager::getInstance();
+        $events->attach('bootstrap', 'bootstrap', array($this, 'registerStaticListeners'));
     }
 
     public function initAutoloader()
@@ -37,8 +39,13 @@ class Module
         return $config->{$env};
     }
 
-    public function registerStaticListeners(StaticEventCollection $events, Locator $locator, Config $config)
+    public function registerStaticListeners($e)
     {
+        $app      = $e->getParam('application');
+        $modules  = $e->getParam('modules');
+        $locator  = $app->getLocator();
+        $config   = $modules->getMergedConfig();
+        $events   = StaticEventManager::getInstance();
         $listener = $locator->get('Authentication\AuthenticationListener', array('config' => $config));
         $events->attach('Zend\Stdlib\Dispatchable', 'dispatch', array($listener, 'testAuthenticatedUser'), 100);
         $events->attach('Zend\Stdlib\Dispatchable', 'authenticate', array($listener, 'testAuthenticatedUser'), 100);

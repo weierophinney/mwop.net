@@ -5,18 +5,25 @@ namespace Application;
 use InvalidArgumentException,
     Zend\Config\Config,
     Zend\Di\Locator,
+    Zend\Dojo\View\HelperLoader as DojoLoader,
     Zend\EventManager\EventCollection,
-    Zend\EventManager\StaticEventCollection;
+    Zend\EventManager\StaticEventCollection,
+    Zend\EventManager\StaticEventManager;
 
 class Module
 {
     protected $appListeners    = array();
     protected $staticListeners = array();
+    protected $view;
     protected $viewListener;
 
     public function init()
     {
         $this->initAutoloader();
+        $events = StaticEventManager::getInstance();
+        $events->attach('bootstrap', 'bootstrap', array($this, 'initView'));
+        $events->attach('bootstrap', 'bootstrap', array($this, 'registerApplicationListeners'), -10);
+        $events->attach('bootstrap', 'bootstrap', array($this, 'registerStaticListeners'), -10);
     }
 
     public function initAutoloader()
@@ -42,18 +49,57 @@ class Module
         return $config->{$env};
     }
 
-    public function registerApplicationListeners(EventCollection $events, Locator $locator, Config $config)
+    public function initView($e)
     {
-        $view          = $locator->get('view');
-        $viewListener  = $this->getViewListener($view, $config);
-        $events->attachAggregate($viewListener);
+        $app     = $e->getParam('application');
+        $config  = $e->getParam('modules')->getMergedConfig();
+        $locator = $app->getLocator();
+        $router  = $app->getRouter();
+        $view    = $locator->get('view');
+        $url     = $view->plugin('url');
+        $url->setRouter($router);
+
+        if ($config->disqus) {
+            // Ensure disqus plugin is configured
+            $disqus = $view->plugin('disqus', $config->disqus->toArray());
+        }
+
+        $view->getBroker()->getClassLoader()->registerPlugins(new DojoLoader());
+        $view->headTitle()->setSeparator(' :: ')
+                          ->setAutoEscape(false)
+                          ->append('phly, boy, phly');
+        $view->headLink()->appendStylesheet('/css/Application/reset.css')
+                         ->appendStylesheet('/css/Application/text.css')
+                         ->appendStylesheet('/css/Application/960.css')
+                         ->appendStylesheet('/css/Application/site.css');
+        $view->headLink(array(
+            'rel'  => 'shortcut icon',
+            'type' => 'image/vnd.microsoft.icon',
+            'href' => '/images/Application/favicon.ico',
+        ));
+        $dojo = $view->plugin('dojo');
+        $dojo->setCdnVersion('1.6')
+             ->setDjConfig(array(
+                 'isDebug'     => true,
+                 'parseOnLoad' => true,
+             ));
+        $this->view = $view;
     }
 
-    public function registerStaticListeners(StaticEventCollection $events, Locator $locator, Config $config)
+    public function registerApplicationListeners($e)
     {
-        $view         = $locator->get('view');
-        $viewListener = $this->getViewListener($view, $config);
+        $app          = $e->getParam('application');
+        $config       = $e->getParam('modules')->getMergedConfig();
+        $viewListener = $this->getViewListener($this->view, $config);
+        $app->events()->attachAggregate($viewListener);
+    }
 
+    public function registerStaticListeners($e)
+    {
+        $locator      = $e->getParam('application')->getLocator();
+        $config       = $e->getParam('modules')->getMergedConfig();
+        $events       = StaticEventManager::getInstance();
+        $viewListener = $this->getViewListener($this->view, $config);
         $viewListener->registerStaticListeners($events, $locator);
     }
 
