@@ -1,6 +1,8 @@
 <?php
 namespace CommonResource;
 
+use Zend\Loader\AutoloaderFactory;
+
 class Module
 {
     public function init()
@@ -10,7 +12,11 @@ class Module
 
     public function initAutoloader()
     {
-        include __DIR__ . '/autoload_register.php';
+        AutoloaderFactory::factory(array(
+            'Zend\Loader\ClassMapAutoloader' => array(
+                __DIR__ . '/autoload_classmap.php'
+            ),
+        ));
     }
 
     public function getProvides()

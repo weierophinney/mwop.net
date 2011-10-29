@@ -4,7 +4,6 @@ TODO
 Updates
 ----
 
-* Modify Module classes to register autoloaders via the AutoloaderFactory
 * Modify module configuration to use "module-controller" aliases
   * Work out how this translates to view script location...
 * Remove Renderer as a service and instead move into the default listener

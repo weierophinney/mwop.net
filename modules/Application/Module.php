@@ -6,6 +6,7 @@ use InvalidArgumentException,
     Zend\Config\Config,
     Zend\Di\Locator,
     Zend\Dojo\View\HelperLoader as DojoLoader,
+    Zend\Loader\AutoloaderFactory,
     Zend\EventManager\EventCollection,
     Zend\EventManager\StaticEventCollection,
     Zend\EventManager\StaticEventManager;
@@ -28,7 +29,11 @@ class Module
 
     public function initAutoloader()
     {
-        include __DIR__ . '/autoload_register.php';
+        AutoloaderFactory::factory(array(
+            'Zend\Loader\ClassMapAutoloader' => array(
+                __DIR__ . '/autoload_classmap.php'
+            ),
+        ));
     }
 
     public function getConfig($env = null)
