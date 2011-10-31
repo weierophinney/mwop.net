@@ -14,16 +14,16 @@ use ArrayAccess,
 
 class Listener implements ListenerAggregate
 {
-    protected $layout;
+    protected $config;
     protected $listeners = array();
     protected $staticListeners = array();
     protected $view;
     protected $displayExceptions = false;
 
-    public function __construct(Renderer $renderer, $layout = 'layout.phtml')
+    public function __construct(Renderer $renderer, $config)
     {
         $this->view   = $renderer;
-        $this->layout = $layout;
+        $this->config = $config;
     }
 
     public function setDisplayExceptionsFlag($flag)
@@ -151,7 +151,8 @@ class Listener implements ListenerAggregate
             $vars['content'] = $e->getResult();
         }
 
-        $layout   = $this->view->render($this->layout, $vars);
+        $layoutScript = $this->getLayout();
+        $layout       = $this->view->render($layoutScript, $vars);
         $response->setContent($layout);
         return $response;
     }
@@ -214,5 +215,21 @@ class Listener implements ListenerAggregate
         $e->setResult($content);
 
         return $this->renderLayout($e);
+    }
+
+    protected function getLayout()
+    {
+        $layout  = $this->config->view->layout;
+        $browser = get_browser();
+        if (!$browser) {
+            return $layout;
+        }
+        if (!isset($browser->ismobiledevice)) {
+            return $layout;
+        }
+        if (!$browser->ismobiledevice) {
+            return $layout;
+        }
+        return $this->config->view->mobile->layout;
     }
 }

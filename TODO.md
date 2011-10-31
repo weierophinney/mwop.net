@@ -16,9 +16,6 @@ For deployment on site
   (X) Needs some sort of *authorization*
   (X) Perhaps make it an API *only*?
   ( ) Need a script that can post to it
-* Mobile layout
-  * Barebones -- just a changed stylesheet, potentially with fewer items
-  * Ideally some JS functionality around the footers, sidebars, etc.
 * Add caching for individual entries
   * Ideally also add for listings, and have publishing a post expire them
 

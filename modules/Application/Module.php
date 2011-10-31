@@ -69,14 +69,15 @@ class Module
             $disqus = $view->plugin('disqus', $config->disqus->toArray());
         }
 
+        $persistent = $view->placeholder('layout');
+        foreach ($config->view as $var => $value) {
+            $persistent->{$var} = $value;
+        }
+
         $view->getBroker()->getClassLoader()->registerPlugins(new DojoLoader());
         $view->headTitle()->setSeparator(' :: ')
                           ->setAutoEscape(false)
                           ->append('phly, boy, phly');
-        $view->headLink()->appendStylesheet('/css/Application/reset.css')
-                         ->appendStylesheet('/css/Application/text.css')
-                         ->appendStylesheet('/css/Application/960.css')
-                         ->appendStylesheet('/css/Application/site.css');
         $view->headLink(array(
             'rel'  => 'shortcut icon',
             'type' => 'image/vnd.microsoft.icon',
@@ -114,7 +115,7 @@ class Module
             return $this->viewListener;
         }
 
-        $viewListener       = new View\Listener($view, $config->layout);
+        $viewListener       = new View\Listener($view, $config);
         $viewListener->setDisplayExceptionsFlag($config->display_exceptions);
 
         $this->viewListener = $viewListener;

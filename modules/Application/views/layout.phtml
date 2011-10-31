@@ -8,12 +8,18 @@ $contactUrl = $url(array(), array('name' => 'contact-form'));
 $content    = $this->content;
 $footer     = $this->footer;
 
+$headLink = $this->plugin('headLink');
+$headLink->prependStylesheet('/css/Application/site.css')
+         ->prependStylesheet('/css/Application/960.css')
+         ->prependStylesheet('/css/Application/text.css')
+         ->prependStylesheet('/css/Application/reset.css');
+
 echo $this->doctype() ?>
 <html>
 <head>
     <?php echo $this->headTitle() ?>
     
-    <?php echo $this->headLink() ?>
+    <?php echo $headLink ?>
 
     <?php echo $this->dojo() ?>
 

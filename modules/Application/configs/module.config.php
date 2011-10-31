@@ -10,10 +10,16 @@ $config['production'] = array(
     ),
 
     'display_exceptions' => false,
-    'layout'             => 'layout.phtml',
     'disqus' => array(
         'key'         => 'phlyboyphly',
         'development' => 0,
+    ),
+    'view' => array(
+        'layout' => 'layout.phtml',
+        'mobile' => array(
+            'layout' => 'mobile.phtml',
+            'theme'  => 'iphone',
+        ),
     ),
 
     'di' => array( 'instance' => array(
