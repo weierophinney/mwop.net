@@ -45,6 +45,8 @@ $dojo->addJavascript('
     
     <?php echo $dojo; ?>
 
+    <?php echo $this->render('search.phtml') ?>
+
 </head>
 <body>
 <div dojoType="dojox.mobile.ScrollableView" selected="true">
@@ -54,6 +56,10 @@ $dojo->addJavascript('
 
     <div dojoType="dojox.mobile.RoundRect">
         <?php echo $content ?>
+    </div>
+    
+    <div dojoType="dojox.mobile.RoundRect">
+        <?php echo $this->render('searchbox.phtml') ?>
     </div>
 
     <ul dojoType="dojox.mobile.RoundRectList">

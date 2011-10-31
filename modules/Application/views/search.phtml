@@ -1,0 +1,11 @@
+<?php
+$vars       = $this->placeholder('layout');
+$apikey     = $vars->search->api_key;
+?>
+<script src="https://www.google.com/jsapi?<?php echo $apikey ?>"></script>
+<script type="text/javascript">
+    google.load('search', '1', {style: google.loader.themes.ESPRESSO});
+    google.setOnLoadCallback(function(){
+        new google.search.CustomSearchControl().draw('search');
+    }, true);
+</script>
