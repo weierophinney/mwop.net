@@ -4,7 +4,12 @@ RewriteEngine On
 
 # The line below needs to be added to the vhost definition in order
 # to properly work (otherwise, redirects to a filesystem path)
+# RewriteRule ^(/?)matthew/archives/(\d{4}).html $1blog/year/$2 [R=301,L]
+# RewriteRule ^(/?)matthew/archives/(\d{4})/(\d{2}).html $1blog/month/$2/$3 [R=301,L]
+# RewriteRule ^(/?)matthew/archives/(\d{4})/(\d{2})/(\d{2}).html $1blog/day/$2/$3/$4 [R=301,L]
 # RewriteRule ^(/?)matthew/archives/([^/]+).html $1blog/$2 [R=301,L]
+# RewriteRule ^(/?)matthew/plugin/tag/([^/]+) $1blog/tag/$2 [R=301,L]
+# RewriteRule ^(/?)matthew/categories/\d+-([^/]+) $1blog/tag/$2 [R=301,L]
 
 RewriteCond %{REQUEST_FILENAME} -s [OR]
 RewriteCond %{REQUEST_FILENAME} -l [OR]

@@ -181,7 +181,7 @@ class EntryController extends RestfulController
         }
 
         $rawTag  = $tag;
-        $tag     = urldecode($tag);
+        $tag     = strtolower(urldecode($tag));
         $entries = $this->resource()->getEntriesByTag($tag, false);
         $page    = $this->request->query()->get('page', 1);
 
