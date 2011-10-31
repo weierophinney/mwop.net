@@ -20,6 +20,9 @@ $config['production'] = array(
             'layout' => 'mobile.phtml',
             'theme'  => 'iphone',
         ),
+        'search' => array(
+            'api_key' => 'GOOGLE-CUSTOM-SITE-SEARCH-API-KEY-GOES-HERE',
+        )
     ),
 
     'di' => array( 'instance' => array(
