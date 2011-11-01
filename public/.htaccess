@@ -4,12 +4,19 @@ RewriteEngine On
 
 # The line below needs to be added to the vhost definition in order
 # to properly work (otherwise, redirects to a filesystem path)
-# RewriteRule ^(/?)matthew/archives/(\d{4}).html $1blog/year/$2 [R=301,L]
-# RewriteRule ^(/?)matthew/archives/(\d{4})/(\d{2}).html $1blog/month/$2/$3 [R=301,L]
-# RewriteRule ^(/?)matthew/archives/(\d{4})/(\d{2})/(\d{2}).html $1blog/day/$2/$3/$4 [R=301,L]
-# RewriteRule ^(/?)matthew/archives/([^/]+).html $1blog/$2 [R=301,L]
-# RewriteRule ^(/?)matthew/plugin/tag/([^/]+) $1blog/tag/$2 [R=301,L]
-# RewriteRule ^(/?)matthew/categories/\d+-([^/]+) $1blog/tag/$2 [R=301,L]
+# RewriteRule ^/matthew/feeds/index.rss2 /blog.xml?type=rss [R=301,L]         
+# RewriteRule ^/matthew/feeds/atom.xml /blog.xml [R=301,L]                    
+# RewriteRule ^/matthew/archives/(\d{4}).html /blog/year/$1 [R=301,L]         
+# RewriteRule ^/matthew/archives/(\d{4})/(\d{2}).html /blog/month/$1/$2 [R=301,L]
+# RewriteRule ^/matthew/archives/(\d{4})/(\d{2})/(\d{2}).html /blog/day/$1/$2/$3 [R=301,L]
+# RewriteRule ^/matthew/archives/([^/]+).html /blog/$1 [R=301,L]              
+# RewriteRule ^/matthew/plugin/tag/([^/]+) /blog/tag/$1 [R=301,L]             
+# RewriteRule ^/matthew/categories/\d+-([^/]+).rss /blog/tag/$1.xml?type=rss [R=301,L]
+# RewriteRule ^/matthew/categories/\d+-([^/]+) /blog/tag/$1 [R=301,L]         
+#                                                                             
+# # tag feeds                                                                 
+# RewriteCond %{QUERY_STRING} ^serendipity\[tag\]=([^&=]+)$                   
+# RewriteRule ^/matthew/rss\.php$ /blog/tag/%1.xml?type=rss [R=301,L]
 
 RewriteCond %{REQUEST_FILENAME} -s [OR]
 RewriteCond %{REQUEST_FILENAME} -l [OR]

@@ -54,6 +54,11 @@ class EntryControllerListener implements ListenerAggregate
             return;
         }
 
+        $feedType = $request->query()->get('type', 'atom');
+        if (!in_array($feedType, array('rss', 'atom'))) {
+            $feedType = 'atom';
+        }
+
         $view       = $e->getResult();
         if (!isset($view['entries'])) {
             // No entries, thus no feed
@@ -90,7 +95,12 @@ class EntryControllerListener implements ListenerAggregate
         $feed = new FeedWriter();
         $feed->setTitle($title);
         $feed->setLink($link);
-        $feed->setFeedLink($feedLink, 'atom');
+        $feed->setFeedLink($feedLink, $feedType);
+
+        // Make this configurable?
+        if ('rss' == $feedType) {
+            $feed->setDescription($title);
+        }
 
         $latest = false;
         foreach ($view['entries']->getIterator() as $post) {
@@ -112,6 +122,7 @@ class EntryControllerListener implements ListenerAggregate
             $entry->setDateModified($post->getUpdated());
             $entry->setDateCreated($post->getCreated());
             $entry->setContent($post->getBody());
+
             $feed->addEntry($entry);
         }
 
@@ -119,8 +130,18 @@ class EntryControllerListener implements ListenerAggregate
         $feed->setDateModified($latest->getUpdated());
 
         $response = $e->getResponse();
-        $response->setContent($feed->export('atom'));
-        $response->headers()->addHeaderLine('Content-Type', 'application/atom+xml');
+        $response->setContent($feed->export($feedType));
+
+        $headers = $response->headers();
+        switch ($feedType) {
+            case 'rss':
+                $headers->addHeaderLine('Content-Type', 'application/rss+xml');
+                break;
+            case 'atom':
+            default:
+                $headers->addHeaderLine('Content-Type', 'application/atom+xml');
+                break;
+        }
 
         $e->stopPropagation(true);
         return $response;
