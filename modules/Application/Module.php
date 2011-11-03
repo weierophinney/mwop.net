@@ -71,6 +71,9 @@ class Module
 
         $persistent = $view->placeholder('layout');
         foreach ($config->view as $var => $value) {
+            if ($value instanceof Config) {
+                $value = new Config($value->toArray(), true);
+            }
             $persistent->{$var} = $value;
         }
 

@@ -286,6 +286,7 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md *.php *.xml *.txt" {
   .htaccess
   index.php
   test.html
+  browser.php
   cgi-bin=cgi-bin {
    php-5.3.3
   }
