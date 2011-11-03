@@ -15,11 +15,11 @@ class Tags extends AbstractValidator
 
     public function isValid($value)
     {
-        $this->_setValue($value);
+        $this->setValue($value);
         if (is_array($value)) {
             foreach ($value as $v) {
                 if (!is_string($v)) {
-                    $this->_error(self::INVALID_TAG);
+                    $this->error(self::INVALID_TAG);
                     return false;
                 }
             }
@@ -28,7 +28,7 @@ class Tags extends AbstractValidator
         if (is_string($value)) {
             return true;
         }
-        $this->_error(self::INVALID_TAGS);
+        $this->error(self::INVALID_TAGS);
         return false;
     }
 }

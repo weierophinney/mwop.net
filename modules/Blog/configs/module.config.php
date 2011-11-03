@@ -141,6 +141,14 @@ $config['di'] = array(
             ),
         ),
     ),
+    'Blog\Controller\EntryController' => array(
+        'setApiKeyLocation' => array(
+            'key' => array(
+                'required' => false,
+                'type'     => false,
+            ),
+        ),
+    ),
 )),
 'instance' => array(
     'alias' => array(
@@ -170,10 +178,7 @@ $config['di'] = array(
     'Blog\Controller\EntryController' => array('parameters' => array(
         'view'     => 'view',
         'resource' => 'Blog\EntryResource',
-    ), 'methods' => array(
-        'setApiKeyLocation' => array(
-            'key' => APPLICATION_PATH . '/data/api-key.txt',
-        ),
+        'key'      => APPLICATION_PATH . '/data/htdigest',
     )),
 
     'CommonResource\DataSource\Mongo' => array('parameters' => array(

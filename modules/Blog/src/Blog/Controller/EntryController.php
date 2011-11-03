@@ -52,6 +52,7 @@ class EntryController extends RestfulController
     {
         if (file_exists($key)) {
             $this->apiKey = file_get_contents($key);
+            $this->apiKey = trim($this->apiKey);
         }
     }
 

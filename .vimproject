@@ -17,6 +17,7 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md *.php *.xml *.txt" {
  configs=configs filter="*.php *.ini *.xml *.json *.yml" {
   application.config.dist.php
   application.config.php
+  posts.config.php
  }
  modules=modules {
   Application=Application {
@@ -109,8 +110,14 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md *.php *.xml *.txt" {
    autoload_classmap.php
    autoload_function.php
    autoload_register.php
+   bin=bin {
+    post.php
+   }
    configs=configs filter="*.php *.yml *.json *.xml *.ini" {
     module.config.php
+   }
+   misc=misc {
+    sample-post.php
    }
    public=public {
     css=css {

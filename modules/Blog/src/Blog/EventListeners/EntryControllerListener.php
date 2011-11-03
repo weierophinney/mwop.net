@@ -316,7 +316,7 @@ class EntryControllerListener implements ListenerAggregate
         if ($headers->has('X-MWOP-APIKEY')) {
             $key  = $e->getTarget()->getApiKey();
             $test = $headers->get('X-MWOP-APIKEY')->getFieldValue();
-            if ($key && $key == $test) {
+            if ($key && ($key == $test)) {
                 // We have a matching key
                 return;
             }

@@ -13,9 +13,9 @@ class Timezone extends AbstractValidator
 
     public function isValid($value)
     {
-        $this->_setValue($value);
+        $this->setValue($value);
         if (!timezone_open($value)) {
-            $this->_error(self::INVALID_TIMEZONE);
+            $this->error(self::INVALID_TIMEZONE);
             return false;
         }
         return true;
