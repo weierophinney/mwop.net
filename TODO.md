@@ -2,7 +2,7 @@ TODO
 ====
 
 Updates
-----
+-------
 
 * Modify module configuration to use "module-controller" aliases
   * Work out how this translates to view script location...
@@ -12,8 +12,7 @@ Updates
 For deployment on site
 ----------------------
 
-* Add caching for individual entries
-  * Ideally also add for listings, and have publishing a post expire them
+* Links for forcing mobile/full layout
 
 ### Prior to deployment
 
@@ -26,14 +25,22 @@ For deployment on site
 
 * Notify Planet PHP about change in feed
 
-In general
-----------
+Ongoing
+-------
 
-* Rewrite to use new HTTP functionality from ZF2 http-foundation
-* Rewrite to use rewritten Router from ZF2
-* Create a renderer platform, and potentially rewrite to use PHP driven
-  templating (instead of mustache)
-* Add caching support
+* Configuration
+  * Ensure all modules only include bare minimum, generic configuration
+  * Move app-specific configuration into a new module, loaded last
+    * Do as a .dist file, and track that
+    * Have a non-.dist file, untracked, that has the actual version
+* Create a "console" tool
+  * bootstraps application
+  * invokes the script provided within the bin/ dir of the specified module,
+    appending ".php":
+    console module:script
+  * use for comics, blog posting, potentially caching stuff
+* Add caching for individual entries
+  * Ideally also add for listings, and have publishing a post expire them
 * Consolidate several classes from Comic component
   * RSS class: Basic Instructions, XKCD, G-G, SfaM
   * DomQuery class: GoComics, PennyArcade, NIH, Dilbert, FoxTrot, Ctrl-Alt-Del,
