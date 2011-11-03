@@ -178,7 +178,7 @@ $config['di'] = array(
     'Blog\Controller\EntryController' => array('parameters' => array(
         'view'     => 'view',
         'resource' => 'Blog\EntryResource',
-        'key'      => APPLICATION_PATH . '/data/htdigest',
+        'key'      => APPLICATION_PATH . '/data/api-key.txt',
     )),
 
     'CommonResource\DataSource\Mongo' => array('parameters' => array(
