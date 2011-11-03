@@ -12,7 +12,6 @@ Updates
 For deployment on site
 ----------------------
 
-* Links for forcing mobile/full layout
 * Better home page!
 
 ### Prior to deployment

@@ -151,7 +151,7 @@ class Listener implements ListenerAggregate
             $vars['content'] = $e->getResult();
         }
 
-        $layoutScript = $this->getLayout();
+        $layoutScript = $this->getLayout($e);
         $layout       = $this->view->render($layoutScript, $vars);
         $response->setContent($layout);
         return $response;
@@ -217,9 +217,20 @@ class Listener implements ListenerAggregate
         return $this->renderLayout($e);
     }
 
-    protected function getLayout()
+    protected function getLayout($e)
     {
         $layout  = $this->config->view->layout;
+
+        // If we have a cookie forcing mobile layout, then force it
+        $request = $e->getRequest();
+        $cookie  = $request->cookie();
+        if (isset($cookie['mwop_mobile']) && $cookie['mwop_mobile']) {
+            return $this->config->view->mobile->layout;
+        }
+        if (isset($cookie['mwop_mobile']) && !$cookie['mwop_mobile']) {
+            return $layout;
+        }
+
         $browser = get_browser();
         if (!$browser) {
             return $layout;

@@ -45,6 +45,7 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md *.php *.xml *.txt" {
      Bootstrap.php
      Controller=Controller {
       ErrorController.php
+      MobileController.php
       PageController.php
      }
      View=View {

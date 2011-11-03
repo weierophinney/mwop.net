@@ -133,3 +133,7 @@ dl.resume dd {
 dl.resume dd p.metadata {
     font-style: oblique;
 }
+
+.mobile {
+    text-align: center;
+}
