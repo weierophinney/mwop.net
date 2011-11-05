@@ -220,38 +220,6 @@ class Listener implements ListenerAggregate
     protected function getLayout($e)
     {
         $layout  = $this->config->view->layout;
-
-        $request = $e->getRequest();
-        $cookie  = $request->cookie();
-
-        // Get theme and set it
-        $theme = 'iphone';
-        if (isset($cookie['mwop_theme']) 
-            && in_array($cookie['mwop_theme'], array('iphone', 'android'))
-        ) {
-            $theme = $cookie['mwop_theme'];
-        }
-        $vars = $this->view->placeholder('layout');
-        $vars->mobile->theme = $theme;
-
-        // If we have a cookie forcing mobile layout, then force it
-        if (isset($cookie['mwop_mobile']) && $cookie['mwop_mobile']) {
-            return $this->config->view->mobile->layout;
-        }
-        if (isset($cookie['mwop_mobile']) && !$cookie['mwop_mobile']) {
-            return $layout;
-        }
-
-        $browser = get_browser();
-        if (!$browser) {
-            return $layout;
-        }
-        if (!isset($browser->ismobiledevice)) {
-            return $layout;
-        }
-        if (!$browser->ismobiledevice) {
-            return $layout;
-        }
-        return $this->config->view->mobile->layout;
+        return $layout;
     }
 }

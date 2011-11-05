@@ -10,14 +10,23 @@ $footer     = $this->footer;
 
 $headLink = $this->plugin('headLink');
 $headLink->prependStylesheet('/css/Application/site.css')
-         ->prependStylesheet('/css/Application/960.css')
-         ->prependStylesheet('/css/Application/text.css')
-         ->prependStylesheet('/css/Application/reset.css');
+         ->prependStylesheet('/css/SkeletonCss/layout.css')
+         ->prependStylesheet('/css/SkeletonCss/skeleton.css')
+         ->prependStylesheet('/css/SkeletonCss/base.css');
 
 echo $this->doctype() ?>
-<html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
 <head>
+	<meta charset="utf-8">
     <?php echo $this->headTitle() ?>
+
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <?php echo $headLink ?>
 
@@ -29,13 +38,13 @@ echo $this->doctype() ?>
 
 </head>
 <body>
-<div class="container_12">
-    <div class="grid_12" id="header">
+<div class="container">
+    <div class="sixteen columns" id="header">
     <a href="<?php echo $homeUrl ?>"><img src="/images/Application/logo.gif" height="37" width="37"/></a>
         <span class="main_title">phly, boy, phly: matthew weier o'phinney</span>
     </div>
 
-    <div class="grid_12" id="menu">
+    <div class="sixteen columns" id="menu">
         <ul>
             <li><a href="<?php echo $homeUrl ?>">Home</a></li>
             <li><a href="<?php echo $blogUrl ?>">Blog</a></li>
@@ -45,38 +54,34 @@ echo $this->doctype() ?>
         </ul>
     </div>
 
-    <?php echo $this->raw('content') ?>
-    <div class="clear"></div>
-
-    <div class="grid_12 divider">&nbsp;</div>
-
-    <div class="grid_4 footer about">
-        <h4>About</h4>
-        <?php echo $this->render('about.phtml') ?>
+    <div class="sixteen columns content">
+        <?php echo $this->raw('content') ?>
     </div>
 
-    <div class="grid_4 footer projects">
-        <h4>Projects</h4>
-        <?php echo $this->render('projects.phtml') ?>
-    </div>
+    <div class="row footer">
+        <div class="column one-third alpha about">
+            <h4>About</h4>
+            <?php echo $this->render('about.phtml') ?>
+        </div>
 
-    <div class="grid_4 footer tags">
-<?php 
-    echo $this->render('searchbox.phtml');
-    if (is_string($footer)) {
-        echo $this->vars()->escape($footer);
-    }
-    if (is_callable($footer)) {
-        echo call_user_func($footer);
-    } elseif (is_object($footer) && method_exists($footer, '__toString'))  {
-        echo $footer;
-    }
-?>
-    </div>
-    <div class="grid_12 divider">&nbsp;</div>
-    
-    <div class="grid_12 mobile">
-        <a href="/mobile">iPhone layout</a> | <a href="/mobile?theme=android">Android layout</a>
+        <div class="column one-third projects">
+            <h4>Projects</h4>
+            <?php echo $this->render('projects.phtml') ?>
+        </div>
+
+        <div class="column one-third omega tags">
+        <?php 
+            echo $this->render('searchbox.phtml');
+            if (is_string($footer)) {
+                echo $this->vars()->escape($footer);
+            }
+            if (is_callable($footer)) {
+                echo call_user_func($footer);
+            } elseif (is_object($footer) && method_exists($footer, '__toString'))  {
+                echo $footer;
+            }
+        ?>
+        </div>
     </div>
 </div>
 </body>

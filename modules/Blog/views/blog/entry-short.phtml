@@ -11,11 +11,12 @@ $url      = $this->plugin('url');
 $entryUrl = $url(array('id' => $entry->getId()), array('name' => 'blog-entry'));
 $title    = $this->vars()->escape($entry->getTitle());
 ?>
-<div class="grid_2 entry meta">
+<div class="two columns alpha entry meta">
     <p class="tags"><?php echo $this->render('blog/tags.phtml', array('tags' => $entry->getTags()))?></p>
     <p class="date"><?php echo $ds($entry->getCreated()) ?></p>
 </div>
-<div class="grid_6">
+
+<div class="nine columns omega">
     <h4 class="entry"><a href="<?php echo $entryUrl ?>"><?php echo $title ?></a></h4>
 
     <div class="entry body"><?php echo $entry->getBody() ?></div>

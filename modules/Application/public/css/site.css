@@ -79,7 +79,13 @@ a {
     border-top: 1px dotted #676767;
 }
 
+.footer.row {
+    border-top: 1px dotted #676767;
+    padding-top: 1em;
+}
+
 .footer h4 {
+    border-top
     font-size: 1.5em;
     text-align: left;
 }
@@ -104,6 +110,14 @@ a {
 
 .content {
     overflow: auto;
+}
+
+.content ul {
+    list-style-type: disc;
+    list-style-position: inside;
+    margin-left: 0;
+    padding-left: 1em;
+    text-indent: -1em;
 }
 
 .sidebar ul {

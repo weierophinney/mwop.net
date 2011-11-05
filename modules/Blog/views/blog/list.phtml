@@ -1,20 +1,23 @@
 <?php 
 $paginatorUrl = $this->paginator_url;
 $this->headTitle()->prepend($this->title) ?>
-<div class="grid_9 content blog">
+<div class="row">
+<div class="eleven columns alpha blog">
     <h2><?php echo $this->title ?></h2>
 
 <?php 
 $entries = $this->entries;
 foreach ($entries as $entry) {
+    echo '<div class="row clearfix">', "\n";
     echo $this->render('blog/entry-short.phtml', array('entry' => $entry));
+    echo '</div>', "\n";
 }
 
 echo $this->paginationControl($entries, 'Sliding', 'blog/paginator.phtml', array('url' => $paginatorUrl));
 ?>
 </div>
 
-<div class="grid_3 sidebar blog">
+<div class="four columns offset-by-one omega sidebar blog">
     <?php echo $this->render('blog/blogroll.phtml') ?>
 </div>
-
+</div>

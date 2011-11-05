@@ -30,10 +30,7 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md *.php *.xml *.txt" {
    }
    public=public {
     css=css filter="*.css" {
-     960.css
-     reset.css
      site.css
-     text.css
     }
     images=images filter="*.jpg *.png *.gif *.ico" {
      logo.gif
@@ -45,7 +42,6 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md *.php *.xml *.txt" {
      Bootstrap.php
      Controller=Controller {
       ErrorController.php
-      MobileController.php
       PageController.php
      }
      View=View {
@@ -278,6 +274,23 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md *.php *.xml *.txt" {
     contact=contact {
      index.phtml
      thank-you.phtml
+    }
+   }
+  }
+  SkeletonCss=SkeletonCss filter="*.css *.js *.html *.txt" {
+   public=public {
+    404.html
+    index.html
+    robots.txt
+    css=css {
+     base.css
+     layout.css
+     skeleton.css
+    }
+    images=images {
+    }
+    js=js {
+     tabs.js
     }
    }
   }
