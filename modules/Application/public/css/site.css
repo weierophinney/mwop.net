@@ -53,9 +53,10 @@ a {
     font-family: "Cardo", arial, serif;
     font-weight: bold;
     display: block;
-    text-align: left;
+    text-align: center;
     padding: 0.5em 0 0 0;
     margin: 0;
+    margin-left: 1em;
 }
 
 #menu ul li {
@@ -79,7 +80,8 @@ a {
     border-top: 1px dotted #676767;
 }
 
-.footer.row {
+.columns.footer {
+    margin-top: 1em;
     border-top: 1px dotted #676767;
     padding-top: 1em;
 }
@@ -88,15 +90,6 @@ a {
     border-top
     font-size: 1.5em;
     text-align: left;
-}
-
-.footer.about {
-}
-
-.footer.projects {
-}
-
-.footer.tags {
 }
 
 .content, .sidebar {

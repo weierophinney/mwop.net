@@ -57,7 +57,6 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md *.php *.xml *.txt" {
     about.phtml
     error.phtml
     layout.phtml
-    mobile.phtml
     projects.phtml
     searchbox.phtml
     search.phtml
