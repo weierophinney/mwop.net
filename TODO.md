@@ -13,10 +13,6 @@ For deployment on site
 ----------------------
 
 * Better home page!
-* Better mobile layout
-    * iPhone layout works fine; however, neither android or iphone layouts work
-      well on our nooks. 
-    * Potentially use "Skeleton" (http://getskeleton.com)
 
 ### Prior to deployment
 
