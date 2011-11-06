@@ -66,7 +66,7 @@ class EntryController extends RestfulController
         $entries = $this->resource()->getEntries(0, false);
         $page    = $this->request->query()->get('page', 1);
         return array(
-            'title'         => 'Entries',
+            'title'         => 'Blog Entries',
             'entries'       => $this->getPaginator($entries, $page),
             'paginator_url' => '/blog',
         );
@@ -208,7 +208,7 @@ class EntryController extends RestfulController
         $entries = $this->resource()->getEntriesByYear($year, false);
         $page    = $this->request->query()->get('page', 1);
         return array(
-            'title'         => 'Entries for ' . $year,
+            'title'         => 'Blog Entries for ' . $year,
             'entries'       => $this->getPaginator($entries, $page),
             'paginator_url' => $this->url()->fromRoute('blog-year', array('year' => $year)),
         );
@@ -233,7 +233,7 @@ class EntryController extends RestfulController
         $entries = $this->resource()->getEntriesByMonth($month, $year, false);
         $page    = $this->request->query()->get('page', 1);
         return array(
-            'title'         => 'Entries for ' . date('F', strtotime($year . '-' . $month . '-01')) . ' ' . $year,
+            'title'         => 'Blog Entries for ' . date('F', strtotime($year . '-' . $month . '-01')) . ' ' . $year,
             'entries'       => $this->getPaginator($entries, $page),
             'paginator_url' => $this->url()->fromRoute('blog-month', array('year' => $year, 'month' => $month)),
         );
@@ -263,7 +263,7 @@ class EntryController extends RestfulController
         $entries = $this->resource()->getEntriesByDay($day, $month, $year, false);
         $page    = $this->request->query()->get('page', 1);
         return array(
-            'title'         => 'Entries for ' . $day . ' ' . date('F', strtotime($year . '-' . $month . '-' . $day)) . ' ' . $year,
+            'title'         => 'Blog Entries for ' . $day . ' ' . date('F', strtotime($year . '-' . $month . '-' . $day)) . ' ' . $year,
             'entries'       => $this->getPaginator($entries, $page),
             'paginator_url' => $this->url()->fromRoute('blog-day', array('year' => $year, 'month' => $month, 'day' => $day)),
         );

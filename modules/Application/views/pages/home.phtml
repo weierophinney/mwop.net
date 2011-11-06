@@ -1,7 +1,46 @@
+<div class="row home">
+<div class="six columns alpha">
 <h2>Welcome!</h2>
 
 <p>
-    Not much to see here... You're likely looking for <a href="/blog">Matthew's
-        blog</a>, though.
+    I'm Matthew Weier O'Phinney. I am:
 </p>
+
+<ul>
+    <li>A husband.</li>
+    <li>A father of two wonderful children.</li>
+    <li>A Basset Hound, well, owner's not the right word. The <?php 
+        $birthday = new \DateTime('1998-04-07');
+        $today    = new \DateTime();
+        $interval = $today->diff($birthday);
+        echo $interval->format('%y');
+        ?>-year-old Basset is probably convinced I'm simply the slave who 
+        brings her food, and the <?php
+        $birthday = new \DateTime('2011-03-01');
+        $today    = new \DateTime();
+        $interval = $today->diff($birthday);
+        echo $interval->format('%m');
+        ?>-month-old likely thinks I'm a toy to chew on.</li>
+    <li>A <a href="http://php.net">PHP</a> developer and framework architect.</li>
+    <li>A frequent PHP conference speaker.</li>
+    <li>An open source software developer and advocate.</li>
+    <li>A (sometimes) brewer of beer.</li>
+</ul>
+
+<p>
+    I <a href="blog">blog</a> reasonably regularly, typically on topics related
+    to open source development. If you want to <a href="contact">contact</a> 
+    me, please follow the link.
+</p>
+
+<p>
+    I can often be found on <a href="http://twitter.com/weierophinney">Twitter</a>.
+</p>
+</div>
+
+<div class="ten columns omega">
+    <img src="http://farm4.static.flickr.com/3315/3625794227_6c281a3419_o.jpg"/><br />
+    <em>Photo &copy; All rights reserved by <a href="http://www.flickr.com/photos/akrabat/">Rob Allen</a></em>
+</div>
+</div>
 

@@ -9,11 +9,6 @@ Updates
 * Remove Renderer as a service and instead move into the default listener
 * Figure out how to attach the EntryController listener statically
 
-For deployment on site
-----------------------
-
-* Better home page!
-
 ### Prior to deployment
 
 * Delete comments on test site on disqus

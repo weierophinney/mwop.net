@@ -144,3 +144,7 @@ dl.resume dd p.metadata {
 .mobile {
     text-align: center;
 }
+
+.home .omega {
+    text-align: right;
+}
