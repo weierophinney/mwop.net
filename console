@@ -1,0 +1,168 @@
+#!/usr/bin/env php
+<?php
+/**
+ * Console tool for invoking mwop.net scripts
+ *
+ * Usage:
+ *
+ *      console [--global-options] Module:script [--script-options]
+ *
+ * where "Module" is a module name, and "script" is a script found in that 
+ * module's "bin" directory, minus the ".php" suffix. Example:
+ *
+ *      console Blog:post -c config.file -p post.file
+ * 
+ * This script will set the following environment variables:
+ *
+ * - APPLICATION_PATH
+ * - APPLICATION_ENV
+ *
+ * It then executes the requested script in the given environment, and within
+ * the same execution session.
+ */
+
+ini_set("display_errors", true);
+error_reporting(E_ALL | E_STRICT);
+
+// Define application path
+if (!getenv('APPLICATION_PATH')) {
+    $appPath = realpath(__DIR__);
+    putenv("APPLICATION_PATH=$appPath");
+    unset($appPath);
+}
+define('APPLICATION_PATH', getenv('APPLICATION_PATH'));
+
+// Ensure library/ is on include_path
+set_include_path(implode(PATH_SEPARATOR, array(
+    '.',
+    '/home/matthew/git/zf2/library',
+    get_include_path(),
+)));
+
+require_once 'Zend/Loader/AutoloaderFactory.php';
+Zend\Loader\AutoloaderFactory::factory(array(
+    'Zend\Loader\StandardAutoloader' => array('fallback_autoloader' => false),
+));
+
+// Setup getopt rules
+$rules = array(
+    'help|h'  => 'Console usage message (this message)',
+    'env|e-s' => 'Configuration environment to use; defaults to "production"',
+);
+
+if (2 > $argc) {
+    $message = "Too few arguments.\n";
+    try {
+        $opt = new Zend\Console\Getopt($rules);
+        $message .= $opt->getUsageMessage();
+    } catch (Zend\Console\Exception $e) {
+        $message .= $e->getUsageMessage();
+    }
+    usage($message, 1);
+}
+
+$consoleArgs = array();
+$breakFound  = false;
+$scriptFound = false;
+for ($i = 1; $i <= $argc; $i++) {
+    if (!isset($argv[$i])) {
+        break;
+    }
+    $value = $argv[$i];
+    if ('--' == $value) {
+        $breakFound = true;
+        break;
+    }
+    if (strstr($value, ':')) {
+        $scriptFound = true;
+        break;
+    }
+}
+if (!$breakFound && !$scriptFound) {
+    $message = "No script argument provided.\n";
+    try {
+        $opt = new Zend\Console\Getopt($rules);
+        $message .= $opt->getUsageMessage();
+    } catch (Zend\Console\Exception $e) {
+        $message .= $e->getUsageMessage();
+    }
+    usage($message, 1);
+}
+$consoleArgs = array_slice($argv, 1, $i - 1);
+$scriptArgs  = array_slice($argv, $i);
+
+try {
+    $opt = new Zend\Console\Getopt($rules, $consoleArgs);
+} catch (Zend\Console\Exception $e) {
+    $message  = "Error parsing arguments.\n";
+    $message .= $e->getUsageMessage();
+    usage($message, 1);
+}
+
+if ($opt->getOption('h')) {
+    usage($opt->getUsageMessage(), 1);
+}
+
+$env = 'production';
+if (isset($opt->e)) {
+    $env = $opt->getOption('e');
+}
+define('APPLICATION_ENV', $env);
+putenv("APPLICATION_ENV=$env");
+
+if ($breakFound) {
+    array_shift($scriptArgs);
+    $keys     = array_keys($scriptArgs);
+    $firstKey = array_shift($keys);
+    $first    = $scriptArgs[$firstKey];
+    if (!strstr($first, ':')) {
+        $message  = "Missing command argument\n";
+        $message .= $opt->getUsageMessage();
+        usage($message, 1);
+    }
+    unset($keys, $firstKey, $first);
+}
+$scriptArg = array_shift($scriptArgs);
+list($module, $script) = explode(':', $scriptArg, 2);
+
+$appConfig = include __DIR__ . '/configs/application.config.php';
+
+$moduleLoader = new Zend\Loader\ModuleAutoloader($appConfig['module_paths']);
+$moduleLoader->register();
+
+$moduleManager = new Zend\Module\Manager(
+    $appConfig['modules'],
+    new Zend\Module\ManagerOptions($appConfig['module_config'])
+);
+
+// Create application, bootstrap, and run
+$bootstrap = new Zend\Mvc\Bootstrap($moduleManager);
+$application = new Zend\Mvc\Application;
+$bootstrap->bootstrap($application);
+
+$loadedModules = $moduleManager->getLoadedModules();
+if (!isset($loadedModules[$module])) {
+    usage("Module '$module' not found; cannot execute script\n", 1);
+}
+$moduleClass = $loadedModules[$module];
+$r           = new ReflectionObject($moduleClass);
+$scriptPath  = dirname($r->getFileName()) . '/bin/' . $script . '.php';
+$argv        = $scriptArgs;
+
+// Cleanup before execution: unset variables
+unset(
+    $rules, $opt, $consoleArgs, $breakFound, $scriptFound, $i, $value, 
+    $scriptArgs, $env, $module, $script, $appConfig, $loadedModules, 
+    $moduleClass, $r
+);
+
+include $scriptPath;
+exit(0);
+
+function usage($message, $exit = 1)
+{
+    echo "Console tool:\n";
+    echo "console [options] Module:script [options]\n\n";
+    echo $message;
+    exit($exit);
+}

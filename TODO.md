@@ -9,6 +9,7 @@ Updates
 
 ### Prior to deployment
 
+* Move ZendCon slides into repository, and link from resume area
 * Delete comments on test site on disqus
 * Close commenting on s97
 * Export all entries and comments from s9y
@@ -26,12 +27,6 @@ Ongoing
   * Move app-specific configuration into a new module, loaded last
     * Do as a .dist file, and track that
     * Have a non-.dist file, untracked, that has the actual version
-* Create a "console" tool
-  * bootstraps application
-  * invokes the script provided within the bin/ dir of the specified module,
-    appending ".php":
-    console module:script
-  * use for comics, blog posting, potentially caching stuff
 * Add caching for individual entries
   * Ideally also add for listings, and have publishing a post expire them
 * Consolidate several classes from Comic component

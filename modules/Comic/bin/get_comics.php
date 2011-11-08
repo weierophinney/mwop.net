@@ -1,12 +1,4 @@
 <?php
-ini_set('display_errors', true);
-error_reporting(-1);
-
-include __DIR__ . '/../autoload_register.php';
-require_once 'Zend/Loader/StandardAutoloader.php';
-$loader = new Zend\Loader\StandardAutoloader();
-$loader->register();
-
 use Comic\ComicFactory;
 
 $supported = ComicFactory::getSupported();

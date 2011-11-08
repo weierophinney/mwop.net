@@ -19,20 +19,12 @@ use Blog\EntryEntity,
     Zend\Http\Client as HttpClient,
     Zend\Loader\AutoloaderFactory;
 
-require_once 'Zend/Loader/AutoloaderFactory.php';
-require __DIR__ . '/../../CommonResource/autoload_register.php';
-require __DIR__ . '/../autoload_register.php';
-
-AutoloaderFactory::factory(array(
-    'Zend\Loader\StandardAutoloader' => array()
-));
-
 try {
     $options = new Getopt(array(
         'help|h'     => 'Print this help message',
         'config|c-s' => 'Path to configuration file',
         'post|p=s'   => 'Path to file returning a post',
-    ));
+    ), $argv);
 } Catch (GetoptException $e) {
     echo $e->getUsageMessage();
     exit(1);

@@ -1,7 +1,8 @@
-mwop=/home/matthew/git/mwop CD=. filter="README TODO.md *.php *.xml *.txt" {
+mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.txt" {
  README
  TODO.md
  bootstrap.php
+ console
  test.php
  library=library {
   .classmap.php
