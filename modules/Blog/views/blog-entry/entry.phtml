@@ -41,9 +41,9 @@ echo $this->disqus($entry->getId(), $url, $title);
 
     <div class="metadata">
         <h4>Tags for this entry</h4>
-        <p class="tags"><?php echo $this->render('blog/tags.phtml', array('tags' => $entry->getTags())) ?></p>
+        <p class="tags"><?php echo $this->render('blog-entry/tags.phtml', array('tags' => $entry->getTags())) ?></p>
     </div>
 
-    <?php echo $this->render('blog/blogroll.phtml') ?>
+    <?php echo $this->render('blog-entry/blogroll.phtml') ?>
 </div>
 

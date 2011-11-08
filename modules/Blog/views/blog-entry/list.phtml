@@ -9,15 +9,15 @@ $this->headTitle()->prepend($this->title) ?>
 $entries = $this->entries;
 foreach ($entries as $entry) {
     echo '<div class="row clearfix">', "\n";
-    echo $this->render('blog/entry-short.phtml', array('entry' => $entry));
+    echo $this->render('blog-entry/entry-short.phtml', array('entry' => $entry));
     echo '</div>', "\n";
 }
 
-echo $this->paginationControl($entries, 'Sliding', 'blog/paginator.phtml', array('url' => $paginatorUrl));
+echo $this->paginationControl($entries, 'Sliding', 'blog-entry/paginator.phtml', array('url' => $paginatorUrl));
 ?>
 </div>
 
 <div class="four columns offset-by-one omega sidebar blog">
-    <?php echo $this->render('blog/blogroll.phtml') ?>
+    <?php echo $this->render('blog-entry/blogroll.phtml') ?>
 </div>
 </div>

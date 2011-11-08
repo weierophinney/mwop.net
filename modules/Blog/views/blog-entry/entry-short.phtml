@@ -12,7 +12,7 @@ $entryUrl = $url(array('id' => $entry->getId()), array('name' => 'blog-entry'));
 $title    = $this->vars()->escape($entry->getTitle());
 ?>
 <div class="two columns alpha entry meta">
-    <p class="tags"><?php echo $this->render('blog/tags.phtml', array('tags' => $entry->getTags()))?></p>
+    <p class="tags"><?php echo $this->render('blog-entry/tags.phtml', array('tags' => $entry->getTags()))?></p>
     <p class="date"><?php echo $ds($entry->getCreated()) ?></p>
 </div>
 

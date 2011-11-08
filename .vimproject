@@ -94,7 +94,7 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md *.php *.xml *.txt" {
     }
    }
    views=views {
-    authentication=authentication {
+    authentication=authentication-authentication {
      401.phtml
      login.phtml
      logout.phtml
@@ -157,7 +157,7 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md *.php *.xml *.txt" {
     }
    }
    views=views filter="*.phtml *.php *.mustache" {
-    blog=blog {
+    blog=blog-entry {
      blogroll.phtml
      entry-short.phtml
      entry.phtml
@@ -270,7 +270,7 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md *.php *.xml *.txt" {
     }
    }
    views=views {
-    contact=contact {
+    contact=contact-contact {
      index.phtml
      thank-you.phtml
     }

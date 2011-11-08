@@ -12,7 +12,7 @@ $config['routes'] = array(
         'options' => array(
             'route' => '/blog/admin/create',
             'defaults' => array(
-                'controller' => 'Blog\Controller\EntryController',
+                'controller' => 'blog-entry',
                 'action'     => 'create',
             ),
         ),
@@ -22,7 +22,7 @@ $config['routes'] = array(
         'options' => array(
             'regex' => '/blog/tag/(?P<tag>[^/]+)',
             'defaults' => array(
-                'controller' => 'Blog\Controller\EntryController',
+                'controller' => 'blog-entry',
                 'action'     => 'tag',
             ),
             'spec' => '/blog/tag/%tag%',
@@ -33,7 +33,7 @@ $config['routes'] = array(
         'options' => array(
             'regex' => '/blog/tag/(?P<tag>[^/]+)\\.xml',
             'defaults' => array(
-                'controller' => 'Blog\Controller\EntryController',
+                'controller' => 'blog-entry',
                 'action'     => 'tag',
                 'format'     => 'xml',
             ),
@@ -45,7 +45,7 @@ $config['routes'] = array(
         'options' => array(
             'regex' => '/blog/year/(?P<year>\d{4})',
             'defaults' => array(
-                'controller' => 'Blog\Controller\EntryController',
+                'controller' => 'blog-entry',
                 'action'     => 'year',
             ),
             'spec' => '/blog/year/%year%',
@@ -56,7 +56,7 @@ $config['routes'] = array(
         'options' => array(
             'regex' => '/blog/month/(?P<year>\d{4})/(?P<month>\d{1,2})',
             'defaults' => array(
-                'controller' => 'Blog\Controller\EntryController',
+                'controller' => 'blog-entry',
                 'action'     => 'month',
             ),
             'spec' => '/blog/month/%year%/%month%',
@@ -67,7 +67,7 @@ $config['routes'] = array(
         'options' => array(
             'regex' => '/blog/day/(?P<year>\d{4})/(?P<month>\d{1,2})/(?P<day>\d{1,2})',
             'defaults' => array(
-                'controller' => 'Blog\Controller\EntryController',
+                'controller' => 'blog-entry',
                 'action'     => 'day',
             ),
             'spec' => '/blog/day/%year%/%month%/%day%',
@@ -78,7 +78,7 @@ $config['routes'] = array(
         'options' => array(
             'regex' => '/blog/(?P<id>[^/]+)',
             'defaults' => array(
-                'controller' => 'Blog\Controller\EntryController',
+                'controller' => 'blog-entry',
             ),
             'spec' => '/blog/%id%',
         ),
@@ -88,7 +88,7 @@ $config['routes'] = array(
         'options' => array(
             'route' => '/blog',
             'defaults' => array(
-                'controller' => 'Blog\Controller\EntryController',
+                'controller' => 'blog-entry',
             ),
         ),
     ),
@@ -97,7 +97,7 @@ $config['routes'] = array(
         'options' => array(
             'route' => '/blog.xml',
             'defaults' => array(
-                'controller' => 'Blog\Controller\EntryController',
+                'controller' => 'blog-entry',
                 'format'     => 'xml',
             ),
         ),
@@ -154,6 +154,7 @@ $config['di'] = array(
     'alias' => array(
         'view'            => 'Zend\View\PhpRenderer',
         'view-resolver'   => 'Zend\View\TemplatePathStack',
+        'blog-entry'      => 'Blog\Controller\EntryController',
     ),
 
     'Mongo' => array('parameters' => array(

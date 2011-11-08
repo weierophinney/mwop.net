@@ -6,7 +6,7 @@ $config['production'] = array(
             'options' => array(
                 'route' => '/login',
                 'defaults' => array(
-                    'controller' => 'Authentication\AuthenticationController',
+                    'controller' => 'authentication-authentication',
                     'action'     => 'login',
                 ),
             ),
@@ -16,7 +16,7 @@ $config['production'] = array(
             'options' => array(
                 'route' => '/logout',
                 'defaults' => array(
-                    'controller' => 'Authentication\AuthenticationController',
+                    'controller' => 'authentication-authentication',
                     'action'     => 'logout',
                 ),
             ),
@@ -25,8 +25,9 @@ $config['production'] = array(
 
     'di' => array('instance' => array(
         'alias' => array(
-            'view' => 'Zend\View\PhpRenderer',
-            'view-resolver' => 'Zend\View\TemplatePathStack',
+            'view'                          => 'Zend\View\PhpRenderer',
+            'view-resolver'                 => 'Zend\View\TemplatePathStack',
+            'authentication-authentication' => 'Authentication\AuthenticationController',
         ),
 
         'Authentication\AuthenticationController' => array('parameters' => array(

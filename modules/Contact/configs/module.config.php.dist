@@ -2,7 +2,7 @@
 $config['production'] = array(
     'di' => array('instance' => array(
         'alias' => array(
-            'contact' => 'Contact\Controller\ContactController',
+            'contact-contact' => 'Contact\Controller\ContactController',
         ),
 
         'preferences' => array(
@@ -50,7 +50,7 @@ $config['production'] = array(
             'options' => array(
                 'route' => '/contact',
                 'defaults' => array(
-                    'controller' => 'contact',
+                    'controller' => 'contact-contact',
                     'action'     => 'index',
                 ),
             ),
@@ -60,7 +60,7 @@ $config['production'] = array(
             'options' => array(
                 'route' => '/contact/process',
                 'defaults' => array(
-                    'controller' => 'contact',
+                    'controller' => 'contact-contact',
                     'action'     => 'process',
                 ),
             ),
@@ -70,7 +70,7 @@ $config['production'] = array(
             'options' => array(
                 'route' => '/contact/thank-you',
                 'defaults' => array(
-                    'controller' => 'contact',
+                    'controller' => 'contact-contact',
                     'action'     => 'thank-you',
                 ),
             ),

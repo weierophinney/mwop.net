@@ -10,15 +10,6 @@ class AuthenticationController extends ActionController
 {
     protected $auth;
 
-    public function execute(MvcEvent $e)
-    {
-        $routeMatch = $e->getRouteMatch();
-        if ($routeMatch instanceof RouteMatch) {
-            $routeMatch->setParam('controller', 'authentication');
-        }
-        return parent::execute($e);
-    }
-
     public function setAuthentication(AuthenticationService $auth)
     {
         $this->auth = $auth;

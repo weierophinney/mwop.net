@@ -209,30 +209,30 @@ class EntryControllerListener implements ListenerAggregate
         switch (strtolower($request->getMethod())) {
             case 'get':
                 if (!$matches->getParam('id', false)) {
-                    $script = 'blog/list.phtml';
+                    $script = 'blog-entry/list.phtml';
                     break;
                 }
-                $script = 'blog/entry.phtml';
+                $script = 'blog-entry/entry.phtml';
                 break;
             case 'post':
                 if (isset($vars['errors'])) {
-                    $script = 'blog/form.phtml';
+                    $script = 'blog-entry/form.phtml';
                     break;
                 }
-                $script = 'blog/entry.phtml';
+                $script = 'blog-entry/entry.phtml';
                 break;
             case 'put':
                 if (isset($vars['errors'])) {
-                    $script = 'blog/form.phtml';
+                    $script = 'blog-entry/form.phtml';
                     break;
                 }
-                $script = 'blog/entry.phtml';
+                $script = 'blog-entry/entry.phtml';
                 break;
             case 'delete':
-                $script = 'blog/list.phtml';
+                $script = 'blog-entry/list.phtml';
                 break;
             default:
-                $script = 'blog/list.phtml';
+                $script = 'blog-entry/list.phtml';
                 break;
         }
 
@@ -260,22 +260,22 @@ class EntryControllerListener implements ListenerAggregate
     {
         switch ($action) {
             case 'create':
-                $script = 'blog/form.phtml';
+                $script = 'blog-entry/form.phtml';
                 break;
             case 'tag':
-                $script = 'blog/list.phtml';
+                $script = 'blog-entry/list.phtml';
                 break;
             case 'year':
-                $script = 'blog/list.phtml';
+                $script = 'blog-entry/list.phtml';
                 break;
             case 'month':
-                $script = 'blog/list.phtml';
+                $script = 'blog-entry/list.phtml';
                 break;
             case 'day':
-                $script = 'blog/list.phtml';
+                $script = 'blog-entry/list.phtml';
                 break;
             default:
-                $script = 'blog/' . $action . '.phtml';
+                $script = 'blog-entry/' . $action . '.phtml';
                 break;
         }
         if (is_object($vars)) {

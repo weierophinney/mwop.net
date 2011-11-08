@@ -4,8 +4,6 @@ TODO
 Updates
 -------
 
-* Modify module configuration to use "module-controller" aliases
-  * Work out how this translates to view script location...
 * Remove Renderer as a service and instead move into the default listener
 * Figure out how to attach the EntryController listener statically
 
