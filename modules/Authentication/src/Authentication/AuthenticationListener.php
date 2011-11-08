@@ -90,7 +90,7 @@ class AuthenticationListener implements ListenerAggregate
 
         $response = $e->getResponse();
         $response->setStatusCode(401);
-        $content = $this->view->render('authentication/401.phtml');
+        $content = $this->view->render('authentication-authentication/401.phtml');
         $e->setParam('content', $content);
         return false;
     }
