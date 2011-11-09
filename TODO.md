@@ -10,6 +10,13 @@ Updates
 ### Prior to deployment
 
 * Move ZendCon slides into repository, and link from resume area
+* Update resume area
+    * better personal statement, more generalized
+    * new selection of slides
+        * ZF2 talk from this year
+        * Beautiful software talk from this year
+        * Maybe an additional page with full list of past presentations and
+          links to slides?
 * Delete comments on test site on disqus
 * Close commenting on s97
 * Export all entries and comments from s9y
