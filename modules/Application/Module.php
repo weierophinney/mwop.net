@@ -77,6 +77,7 @@ class Module
             $persistent->{$var} = $value;
         }
 
+        $view->doctype('HTML5');
         $view->getBroker()->getClassLoader()->registerPlugins(new DojoLoader());
         $view->headTitle()->setSeparator(' :: ')
                           ->setAutoEscape(false)

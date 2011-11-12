@@ -20,8 +20,9 @@ Updates
     [X] tar site and send to host
     [X] tar ZF2 and send to host
 [X] Switch to using ReCaptcha for contact form captcha...
-[_] setup vhost for weierophinney.net (with redirects)
-[_] test
+[X] setup vhost for weierophinney.net (with redirects)
+[X] test
+[_] Switch DNS!
 
 ### After deployment
 
