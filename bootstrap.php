@@ -36,3 +36,18 @@ $moduleManager = new Zend\Module\Manager(
 $bootstrap = new Zend\Mvc\Bootstrap($moduleManager);
 $application = new Zend\Mvc\Application;
 $bootstrap->bootstrap($application);
+
+/*
+echo "<pre>";
+Zend\Di\Display\Console::export($application->getLocator(), array(
+    'Contact\Controller\ContactController',
+    'Contact\Form\ContactForm',
+    'Zend\Captcha\ReCaptcha',
+));
+echo "</pre>";
+$obj = $application->getLocator()->get('Contact\Form\ContactForm');
+echo "<pre>";
+echo var_export($obj, 1);
+echo "</pre>";
+exit();
+ */

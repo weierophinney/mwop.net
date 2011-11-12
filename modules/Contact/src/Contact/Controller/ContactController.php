@@ -9,6 +9,7 @@ use Contact\Form\ContactForm,
 
 class ContactController extends ActionController
 {
+    protected $form;
     protected $mailer;
     protected $transport;
 
@@ -24,7 +25,7 @@ class ContactController extends ActionController
 
     public function indexAction()
     {
-        return array('form' => $this->getForm());
+        return array('form' => $this->form);
     }
 
     public function processAction()
@@ -34,7 +35,7 @@ class ContactController extends ActionController
             $this->response->headers()->addHeaderLine('Location', '/contact');
         }
         $post = $this->request->post()->toArray();
-        $form = $this->getForm();
+        $form = $this->form;
         if (!$form->isValid($post)) {
             $this->getEvent()->getRouteMatch()->setParam('action', 'index');
             return array(
@@ -63,8 +64,8 @@ class ContactController extends ActionController
         // do nothing...
     }
 
-    public function getForm()
+    public function setContactForm(ContactForm $form)
     {
-        return new ContactForm();
+        $this->form = $form;
     }
 }

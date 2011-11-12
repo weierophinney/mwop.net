@@ -1,11 +1,25 @@
 <?php
 namespace Contact\Form;
 
-use Zend\Form\Form,
+use Zend\Captcha\ReCaptcha,
+    Zend\Form\Form,
     Zend\Validator\Hostname as HostnameValidator;
 
 class ContactForm extends Form
 {
+    protected $recaptcha;
+
+    public function __construct($options = null)
+    {
+        if ($options instanceof ReCaptcha) {
+            $this->setReCaptchaAdapter($options);
+            parent::__construct(null);
+            return;
+        };
+
+        parent::__construct($options);
+    }
+
     public function init()
     {
         $this->setName('contact');
@@ -44,12 +58,7 @@ class ContactForm extends Form
         $this->addElement('captcha', 'captcha', array(
             'label'          => 'Please verify you are human.',
             'required'       => true,
-            'captcha'        => 'Figlet',
-            'captchaOptions' => array(
-                'captcha' => 'Figlet',
-                'wordLen' => 5,
-                'timeout' => 300,
-            ),
+            'captcha'        => $this->recaptcha,
         ));
 
         $this->addElement('hash', 'csrf', array(
@@ -62,5 +71,10 @@ class ContactForm extends Form
             'required' => false,
             'ignore'   => true,
         ));
+    }
+
+    public function setReCaptchaAdapter(ReCaptcha $recaptcha)
+    {
+        $this->recaptcha = $recaptcha;
     }
 }
