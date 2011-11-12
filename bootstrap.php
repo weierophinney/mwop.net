@@ -13,6 +13,7 @@ defined('APPLICATION_PATH')
 // Ensure library/ is on include_path
 set_include_path(implode(PATH_SEPARATOR, array(
     '.',
+    __DIR__ . '/library',
     '/home/matthew/git/zf2/library',
     get_include_path(),
 )));
@@ -41,11 +42,10 @@ $bootstrap->bootstrap($application);
 echo "<pre>";
 Zend\Di\Display\Console::export($application->getLocator(), array(
     'Contact\Controller\ContactController',
-    'Contact\Form\ContactForm',
-    'Zend\Captcha\ReCaptcha',
+    'Zend\Mail\Mail',
 ));
 echo "</pre>";
-$obj = $application->getLocator()->get('Contact\Form\ContactForm');
+$obj = $application->getLocator()->get('Contact\Controller\ContactController');
 echo "<pre>";
 echo var_export($obj, 1);
 echo "</pre>";
