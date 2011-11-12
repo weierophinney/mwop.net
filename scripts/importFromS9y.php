@@ -25,14 +25,14 @@ $hasDb  = array_reduce($dbs['databases'], function($has, $current) {
         return $has || false;
     }
 
-    if ($current['name'] == 'importtest') {
+    if ($current['name'] == 'wopnet') {
         return true;
     }
 
     return $has || false;
 }, false);
 if ($hasDb) {
-    $mongo->dropDB('importtest');
+    $mongo->dropDB('wopnet');
 }
 
 // Initialize objects used throughout script
@@ -106,7 +106,7 @@ foreach ($rows as $row) {
         'extended'  => $extended,
         'is_draft'  => ($row['isdraft'] == 'true' ? true : false),
         'is_public' => true,
-        'version'   => 1,
+        'version'   => 2,
     );
 
     echo "        Getting entry properties... ";
@@ -156,6 +156,7 @@ foreach ($rows as $row) {
 }
 echo "Saved entries to database\n";
 
+/*
 // Get comments
 $select   = $db->select()
           ->from('serendipity_comments')
@@ -186,8 +187,8 @@ foreach ($rows as $row) {
 foreach ($comments as $permalink => $collection) {
 echo "    Saving comments for entry '$permalink'... ";
     $entry = $resource->get($permalink);
-    if (!$entry instanceof mwop\Entity\Entry) {
-echo "Entry does not exist; skipping\n";
+    if (!$entry instanceof Blog\EntryEntity) {
+echo "Entry does not exist (is a " . (is_object($entry) ? get_class($entry) : var_export($entry, 1)) . "); skipping\n";
         continue;
     }
     $entry->setComments($collection);
@@ -199,6 +200,7 @@ echo "FAILURE: " . $e->getMessage() . "\n" . $e->getTraceAsString() . "\n";
     }
 }
 echo "Saved comments to database\n";
+ */
 
 // Inserting uploaded files
 // Do this later, once entities exist

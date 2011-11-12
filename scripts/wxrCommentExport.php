@@ -7,27 +7,22 @@
  * For more information: http://docs.disqus.com/developers/export/import_format/
  */
 
-$baseUrl = 'http://test.mwop.net/blog/';
+$baseUrl = 'http://mwop.net/blog/';
 
 set_include_path(implode(DIRECTORY_SEPARATOR, array(
-    '/home/matthew/.local/lib/php/ZendFramework/library',
+    '/home/matthew/git/zf2/library',
     get_include_path(),
 )));
-require_once __DIR__ . '/../library/zf2/Zend/Loader/ClassMapAutoloader.php';
-$classmap = new Zend\Loader\ClassMapAutoloader(array(
-    __DIR__ . '/../library/.classmap.php',
-    __DIR__ . '/../application/.classmap.php',
-));
-$classmap->register();
 
+require_once 'Zend/Loader/StandardAutoloader.php';
 $standardAutoloader = new Zend\Loader\StandardAutoloader(array(
-    'prefixes' => array(
-        'Zend_' => '/home/matthew/.local/lib/php/ZendFramework/library/Zend',
-    )
+    'namespaces' => array(
+        'Wxr\Helper' => __DIR__ . '/helpers',
+    ),
 ));
 $standardAutoloader->register();
 
-$db = Zend_Db::factory('mysqli', array(
+$db = Zend\Db\Db::factory('Mysqli', array(
     'host'     => 'localhost',
     'username' => 'root',
     'password' => 'd@rw1n',
@@ -89,9 +84,9 @@ foreach ($rows as $row) {
 echo "[DONE] Retrieving and looping over all entries with comments\n";
 
 echo "Rendering WXR feed...";
-$view = new Zend_View();
-$view->addScriptPath(__DIR__ . '/templates');
-$view->addHelperPath(__DIR__ . '/helpers', 'Wxr_Helper');
+$view = new Zend\View\PhpRenderer();
+$view->resolver()->addPath(__DIR__ . '/templates');
+$view->getBroker()->register('gmtDate', new Wxr\Helper\GmtDate());
 $view->entries = $entries;
 $xml = $view->render('comments_wxr.xml');
 file_put_contents(__DIR__ . '/../data/comments_wxr.xml', $xml);

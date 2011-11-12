@@ -204,7 +204,7 @@ $config = array(
     'development' => $config,
 );
 
-$config['testing']['di']['instance']['MongoDB']['parameters']['name'] = 'importtest';
-$config['development']['di']['instance']['MongoDB']['parameters']['name'] = 'mwoptest';
+$config['testing']['di']['instance']['MongoDB']['parameters']['name'] = 'wopnet';
+$config['development']['di']['instance']['MongoDB']['parameters']['name'] = 'wopnet';
 
 return $config;

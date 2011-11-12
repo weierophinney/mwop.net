@@ -11,10 +11,13 @@ Updates
 
 * Update resume area
     * better personal statement, more generalized
-* Delete comments on test site on disqus
-* Close commenting on s97
-* Export all entries and comments from s9y
-* Export comments to disqus
+[X] Delete comments on test site on disqus
+[X] Close commenting on s97
+[X] Export all entries and comments from s9y
+[X] Export comments to disqus
+[_] export site to host
+[_] setup vhost for weierophinney.net (with redirects)
+[_] test
 
 ### After deployment
 

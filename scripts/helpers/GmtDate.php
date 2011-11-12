@@ -1,7 +1,13 @@
 <?php
-class Wxr_Helper_GmtDate extends Zend_View_Helper_Abstract
+namespace Wxr\Helper;
+
+use DateTime,
+    DateTimeZone,
+    Zend\View\Helper\AbstractHelper;
+
+class GmtDate extends AbstractHelper
 {
-    public function gmtDate($date)
+    public function __invoke($date)
     {
         $dt = new DateTime('@' . $date, new DateTimeZone('America/New_York'));
         $dt->setTimezone(new DateTimeZone('GMT'));

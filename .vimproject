@@ -26,8 +26,9 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
    autoload_classmap.php
    autoload_function.php
    autoload_register.php
-   configs=configs filter="*.ini *.xml *.php" {
+   configs=configs filter="*.ini *.xml *.php *.php.dist" {
     module.config.php
+    module.config.php.dist
    }
    public=public {
     css=css filter="*.css" {
