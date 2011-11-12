@@ -16,6 +16,10 @@ Updates
 [X] Export all entries and comments from s9y
 [X] Export comments to disqus
 [_] export site to host
+    [X] export data to host
+    [X] tar site and send to host
+    [X] tar ZF2 and send to host
+[X] Switch to using ReCaptcha for contact form captcha...
 [_] setup vhost for weierophinney.net (with redirects)
 [_] test
 
