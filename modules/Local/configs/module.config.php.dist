@@ -1,0 +1,116 @@
+<?php
+$config = array();
+$config['production'] = array(
+    'bootstrap_class'    => 'Application\Bootstrap',
+    'display_exceptions' => false,
+    'disqus'             => array(
+        'key'         => 'DISQUS_KEY_GOES_HERE',
+        'development' => 0,
+    ),
+    'view' => array(
+        'layout' => 'layout.phtml',
+        'search' => array(
+            'api_key' => 'GOOGLE_SEARCH_KEY_GOES_HERE',
+        ),
+    ),
+    'di' => array(
+        'definition' => array('class' => array(
+            'Mongo' => array(
+                '__construct' => array(
+                    'server'  => array(
+                        'required' => false, 
+                        'type'     => false,
+                    ),
+                    'options' => array('required' => false),
+                ),
+            ),
+            'MongoDB' => array(
+                '__construct' => array(
+                    'conn' => array(
+                        'required' => true,
+                        'type'     => 'Mongo',
+                    ),
+                    'name' => array('required' => true),
+                ),
+            ),
+            'MongoCollection' => array(
+                '__construct' => array(
+                    'db' => array(
+                        'required' => true,
+                        'type'     => 'MongoDB',
+                    ),
+                    'name' => array('required' => true),
+                ),
+            ),
+        )),
+        'instance' => array(
+            'preferences' => array(
+                'Zend\Mail\AbstractTransport' => 'Zend\Mail\Transport\Smtp',
+            ),
+
+            'Mongo' => array('parameters' => array(
+                'server'  => 'SERVER DSN HERE',
+            )),
+
+            'MongoDB' => array( 'parameters' => array(
+                'conn' => 'Mongo',
+                'name' => 'DB NAME HERE',
+            )),
+
+            'MongoCollection' => array('parameters' => array(
+                'db'   => 'MongoDB',
+                'name' => 'COLLECTION NAME HERE',
+            )),
+
+            'Blog\EntryResource' => array('parameters' => array(
+                'dataSource' => 'CommonResource\DataSource\Mock',
+                'class'      => 'CommonResource\Resource\Collection',
+            )), 
+
+            'Blog\Controller\EntryController' => array('parameters' => array(
+                'key'      => 'PATH TO API KEY GOES HERE',
+            )),
+
+            'CommonResource\DataSource\Mongo' => array('parameters' => array(
+                'connection' => 'MongoCollection',
+            )),
+
+            'Authentication\AuthenticationService' => array('parameters' => array(
+                'filename' => 'PATH TO DIGEST HERE',
+                'realm'    => 'REALM HERE',
+            )),
+
+            'Zend\Mail\Mail' => array('parameters' => array(
+                'Zend\Mail\Mail::addTo:email' => 'EMAIL HERE',
+                'Zend\Mail\Mail::addTo:name'  => 'NAME HERE',
+            )),
+
+            'Zend\Mail\Transport\Smtp' => array('parameters' => array(
+                'host'   => 'HOSTNAME HERE',
+                'config' => array( /* options here */ ),
+            )),
+
+            'Contact\Controller\ContactController' => array('parameters' => array(
+                'transport' => 'Zend\Mail\Transport\Smtp',
+            )),
+
+            'Zend\Captcha\ReCaptcha' => array('parameters' => array(
+                'pubkey'  => 'RECAPTCHA_PUBKEY_HERE',
+                'privkey' => 'RECAPTCHA_PRIVKEY_HERE',
+            )),
+
+        )
+    )
+);
+
+$config['staging'] = $config['production'];
+$config['staging']['disqus']['key'] = "DISQUS_STAGING_KEY_GOES_HERE";
+
+$config['testing'] = $config['production'];
+
+$config['development'] = $config['production'];
+$config['development']['display_exceptions']    = true;
+$config['development']['disqus']['key']         = "DISQUS_DEV_KEY_GOES_HERE";
+$config['development']['disqus']['development'] = 1;
+
+return $config;

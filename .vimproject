@@ -278,6 +278,13 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
     }
    }
   }
+  Local=Local {
+   Module.php
+   configs=configs {
+    module.config.php.dist
+    module.config.php
+   }
+  }
   SkeletonCss=SkeletonCss filter="*.css *.js *.html *.txt" {
    public=public {
     404.html

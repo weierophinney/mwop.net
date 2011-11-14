@@ -10,5 +10,6 @@ return new Zend\Config\Config(array(
         'CommonResource',
         'Blog',
         'Contact',
+        'Local',
     ),
 ));

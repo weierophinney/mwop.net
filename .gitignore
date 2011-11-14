@@ -1,5 +1,4 @@
 cache/static/zend_cache*
 data/*.*
 data/htdigest
-modules/Application/configs/module.config.php
-modules/Contact/configs/module.config.php
+modules/Local/configs/module.config.php

@@ -2,7 +2,7 @@
 $config['production'] = array(
     'routes' => array(
         'authentication-login' => array(
-            'type'    => 'Zend\Mvc\Router\Http\Literal',
+            'type'    => 'Literal',
             'options' => array(
                 'route' => '/login',
                 'defaults' => array(
@@ -12,7 +12,7 @@ $config['production'] = array(
             ),
         ),
         'authentication-logout' => array(
-            'type'    => 'Zend\Mvc\Router\Http\Literal',
+            'type'    => 'Literal',
             'options' => array(
                 'route' => '/logout',
                 'defaults' => array(
@@ -40,8 +40,8 @@ $config['production'] = array(
         )),
 
         'Authentication\AuthenticationService' => array('parameters' => array(
-            'filename' => APPLICATION_PATH . '/data/htdigest',
-            'realm'    => 'mwop',
+            'filename' => 'PATH TO DIGEST',
+            'realm'    => 'REALM',
         )),
 
         'view' => array('parameters' => array(
@@ -57,10 +57,7 @@ $config['production'] = array(
 );
 
 $config['staging']     = $config['production'];
-
 $config['testing']     = $config['production'];
-$config['testing']['di']['instance']['Authentication\AuthenticationService']['parameters']['filename'] = __DIR__ . '/../tests/Authentication/_files/htdigest.txt';
-
 $config['development'] = $config['production'];
 
 return $config;

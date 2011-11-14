@@ -6,9 +6,14 @@ $config['authentication'] = array(
     ),
 );
 
+$config['disqus'] = array(
+    'key'         => 'DISQUS KEY GOES HERE',
+    'development' => 0,
+);
+
 $config['routes'] = array(
     'blog-create-form' => array(
-        'type'    => 'Zend\Mvc\Router\Http\Literal',
+        'type'    => 'Literal',
         'options' => array(
             'route' => '/blog/admin/create',
             'defaults' => array(
@@ -18,9 +23,9 @@ $config['routes'] = array(
         ),
     ),
     'blog-tag' => array(
-        'type'    => 'Zend\Mvc\Router\Http\Regex',
+        'type'    => 'Regex',
         'options' => array(
-            'regex' => '/blog/tag/(?P<tag>[^/]+)',
+            'regex' => '/blog/tag/(?<tag>[^/]+)',
             'defaults' => array(
                 'controller' => 'blog-entry',
                 'action'     => 'tag',
@@ -29,9 +34,9 @@ $config['routes'] = array(
         ),
     ),
     'blog-tag-feed' => array(
-        'type'    => 'Zend\Mvc\Router\Http\Regex',
+        'type'    => 'Regex',
         'options' => array(
-            'regex' => '/blog/tag/(?P<tag>[^/]+)\\.xml',
+            'regex' => '/blog/tag/(?<tag>[^/]+)\\.xml',
             'defaults' => array(
                 'controller' => 'blog-entry',
                 'action'     => 'tag',
@@ -41,9 +46,9 @@ $config['routes'] = array(
         ),
     ),
     'blog-year' => array(
-        'type'    => 'Zend\Mvc\Router\Http\Regex',
+        'type'    => 'Regex',
         'options' => array(
-            'regex' => '/blog/year/(?P<year>\d{4})',
+            'regex' => '/blog/year/(?<year>\d{4})',
             'defaults' => array(
                 'controller' => 'blog-entry',
                 'action'     => 'year',
@@ -52,9 +57,9 @@ $config['routes'] = array(
         ),
     ),
     'blog-month' => array(
-        'type'    => 'Zend\Mvc\Router\Http\Regex',
+        'type'    => 'Regex',
         'options' => array(
-            'regex' => '/blog/month/(?P<year>\d{4})/(?P<month>\d{1,2})',
+            'regex' => '/blog/month/(?<year>\d{4})/(?<month>\d{1,2})',
             'defaults' => array(
                 'controller' => 'blog-entry',
                 'action'     => 'month',
@@ -63,9 +68,9 @@ $config['routes'] = array(
         ),
     ),
     'blog-day' => array(
-        'type'    => 'Zend\Mvc\Router\Http\Regex',
+        'type'    => 'Regex',
         'options' => array(
-            'regex' => '/blog/day/(?P<year>\d{4})/(?P<month>\d{1,2})/(?P<day>\d{1,2})',
+            'regex' => '/blog/day/(?<year>\d{4})/(?<month>\d{1,2})/(?<day>\d{1,2})',
             'defaults' => array(
                 'controller' => 'blog-entry',
                 'action'     => 'day',
@@ -74,9 +79,9 @@ $config['routes'] = array(
         ),
     ),
     'blog-entry' => array(
-        'type'    => 'Zend\Mvc\Router\Http\Regex',
+        'type'    => 'Regex',
         'options' => array(
-            'regex' => '/blog/(?P<id>[^/]+)',
+            'regex' => '/blog/(?<id>[^/]+)',
             'defaults' => array(
                 'controller' => 'blog-entry',
             ),
@@ -84,7 +89,7 @@ $config['routes'] = array(
         ),
     ),
     'blog' => array(
-        'type'    => 'Zend\Mvc\Router\Http\Literal',
+        'type'    => 'Literal',
         'options' => array(
             'route' => '/blog',
             'defaults' => array(
@@ -93,7 +98,7 @@ $config['routes'] = array(
         ),
     ),
     'blog-feed' => array(
-        'type'    => 'Zend\Mvc\Router\Http\Literal',
+        'type'    => 'Literal',
         'options' => array(
             'route' => '/blog.xml',
             'defaults' => array(
@@ -106,33 +111,6 @@ $config['routes'] = array(
 
 $config['di'] = array(
 'definition' => array('class' => array(
-    'Mongo' => array(
-        '__construct' => array(
-            'server'  => array(
-                'required' => false, 
-                'type'     => false,
-            ),
-            'options' => array('required' => false),
-        ),
-    ),
-    'MongoDB' => array(
-        '__construct' => array(
-            'conn' => array(
-                'required' => true,
-                'type'     => 'Mongo',
-            ),
-            'name' => array('required' => true),
-        ),
-    ),
-    'MongoCollection' => array(
-        '__construct' => array(
-            'db' => array(
-                'required' => true,
-                'type'     => 'MongoDB',
-            ),
-            'name' => array('required' => true),
-        ),
-    ),
     'Blog\EntryResource' => array(
         'setCollectionClass' => array(
             'class' => array(
@@ -157,33 +135,15 @@ $config['di'] = array(
         'blog-entry'      => 'Blog\Controller\EntryController',
     ),
 
-    'Mongo' => array('parameters' => array(
-        'server'  => 'mongodb://localhost:27017',
-    )),
-
-    'MongoDB' => array( 'parameters' => array(
-        'conn' => 'Mongo',
-        'name' => 'wopnet',
-    )),
-
-    'MongoCollection' => array('parameters' => array(
-        'db'   => 'MongoDB',
-        'name' => 'entries',
-    )),
-
     'Blog\EntryResource' => array('parameters' => array(
-        'dataSource' => 'CommonResource\DataSource\Mongo',
-        'class'      => 'CommonResource\Resource\MongoCollection',
+        'dataSource' => 'CommonResource\DataSource\Mock',
+        'class'      => 'CommonResource\Resource\Collection',
     )), 
 
     'Blog\Controller\EntryController' => array('parameters' => array(
         'view'     => 'view',
         'resource' => 'Blog\EntryResource',
         'key'      => APPLICATION_PATH . '/data/api-key.txt',
-    )),
-
-    'CommonResource\DataSource\Mongo' => array('parameters' => array(
-        'connection' => 'MongoCollection',
     )),
 
     'view' => array( 'parameters' => array(
@@ -203,8 +163,5 @@ $config = array(
     'testing'     => $config,
     'development' => $config,
 );
-
-$config['testing']['di']['instance']['MongoDB']['parameters']['name'] = 'wopnet';
-$config['development']['di']['instance']['MongoDB']['parameters']['name'] = 'wopnet';
 
 return $config;
