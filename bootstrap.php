@@ -14,7 +14,6 @@ defined('APPLICATION_PATH')
 set_include_path(implode(PATH_SEPARATOR, array(
     '.',
     __DIR__ . '/library',
-    '/home/matthew/git/zf2/library',
     get_include_path(),
 )));
 
