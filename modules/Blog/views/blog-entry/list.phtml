@@ -1,6 +1,19 @@
 <?php 
 $paginatorUrl = $this->paginator_url;
-$this->headTitle()->prepend($this->title) ?>
+$this->headTitle()->prepend($this->title);
+$this->headLink(array(
+    'href'  => $paginatorUrl . '.xml',
+    'type'  => 'application/atom+xml',
+    'rel'   => 'alternate',
+    'title' => $this->title . ' Atom Feed',
+));
+$this->headLink(array(
+    'href'  => $paginatorUrl . '.xml?type=rss',
+    'type'  => 'application/rss+xml',
+    'rel'   => 'alternate',
+    'title' => $this->title . ' RSS Feed',
+));
+?>
 <div class="row">
 <div class="eleven columns alpha blog">
     <h2><?php echo $this->title ?></h2>
