@@ -3,7 +3,6 @@
 namespace Contact;
 
 use InvalidArgumentException,
-    Zend\Config\Config,
     Zend\Loader\AutoloaderFactory;
 
 class Module
@@ -24,12 +23,12 @@ class Module
 
     public function getConfig($env = null)
     {
-        $config = new Config(include __DIR__ . '/configs/module.config.php');
+        $config = include __DIR__ . '/configs/module.config.php';
         if (null === $env) {
             return $config;
         }
 
-        if (!isset($config->{$env})) {
+        if (!isset($config[$env])) {
             throw new InvalidArgumentException(sprintf(
                 'Unrecognized environment "%s" provided to %s',
                 $env,
@@ -37,7 +36,7 @@ class Module
             ));
         }
 
-        return $config->{$env};
+        return $config[$env];
     }
 
     public function getProvides()
