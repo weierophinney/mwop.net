@@ -57,6 +57,7 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
    }
    views=views filter="*.mustache *.phtml" {
     about.phtml
+    analytics.phtml
     error.phtml
     layout.phtml
     projects.phtml
