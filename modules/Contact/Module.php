@@ -3,22 +3,17 @@
 namespace Contact;
 
 use InvalidArgumentException,
-    Zend\Loader\AutoloaderFactory;
+    Zend\Module\Consumer\AutoloaderProvider;
 
-class Module
+class Module implements AutoloaderProvider
 {
-    public function init()
+    public function getAutoloaderConfig()
     {
-        $this->initAutoloader();
-    }
-
-    public function initAutoloader()
-    {
-        AutoloaderFactory::factory(array(
+        return array(
             'Zend\Loader\ClassMapAutoloader' => array(
                 __DIR__ . '/autoload_classmap.php'
             ),
-        ));
+        );
     }
 
     public function getConfig($env = null)

@@ -6,24 +6,23 @@ use InvalidArgumentException,
     Zend\Config\Config,
     Zend\Di\Locator,
     Zend\EventManager\StaticEventmanager,
-    Zend\Loader\AutoloaderFactory;
+    Zend\Module\Consumer\AutoloaderProvider;
 
-class Module
+class Module implements AutoloaderProvider
 {
     public function init()
     {
-        $this->initAutoloader();
         $events = StaticEventManager::getInstance();
         $events->attach('bootstrap', 'bootstrap', array($this, 'registerStaticListeners'));
     }
 
-    public function initAutoloader()
+    public function getAutoloaderConfig()
     {
-        AutoloaderFactory::factory(array(
+        return array(
             'Zend\Loader\ClassMapAutoloader' => array(
                 __DIR__ . '/autoload_classmap.php'
             ),
-        ));
+        );
     }
 
     public function getConfig($env = null)

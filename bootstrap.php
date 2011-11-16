@@ -33,8 +33,7 @@ $moduleManager->setDefaultListenerOptions($listenerOptions);
 $moduleManager->loadModules();
 
 // Create application, bootstrap, and run
-$configs     = $moduleManager->getConfigListener();
-$bootstrap   = new Zend\Mvc\Bootstrap($configs->getMergedConfig());
+$bootstrap   = new Zend\Mvc\Bootstrap($moduleManager->getMergedConfig());
 $application = new Zend\Mvc\Application;
 $bootstrap->bootstrap($application);
 

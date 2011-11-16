@@ -6,12 +6,12 @@ use InvalidArgumentException,
     Zend\Config\Config,
     Zend\Di\Locator,
     Zend\Dojo\View\HelperLoader as DojoLoader,
-    Zend\Loader\AutoloaderFactory,
     Zend\EventManager\EventCollection,
     Zend\EventManager\StaticEventCollection,
-    Zend\EventManager\StaticEventManager;
+    Zend\EventManager\StaticEventManager,
+    Zend\Module\Consumer\AutoloaderProvider;
 
-class Module
+class Module implements AutoloaderProvider
 {
     protected $appListeners    = array();
     protected $staticListeners = array();
@@ -20,20 +20,19 @@ class Module
 
     public function init()
     {
-        $this->initAutoloader();
         $events = StaticEventManager::getInstance();
         $events->attach('bootstrap', 'bootstrap', array($this, 'initView'));
         $events->attach('bootstrap', 'bootstrap', array($this, 'registerApplicationListeners'), -10);
         $events->attach('bootstrap', 'bootstrap', array($this, 'registerStaticListeners'), -10);
     }
 
-    public function initAutoloader()
+    public function getAutoloaderConfig()
     {
-        AutoloaderFactory::factory(array(
+        return array(
             'Zend\Loader\ClassMapAutoloader' => array(
                 __DIR__ . '/autoload_classmap.php'
             ),
-        ));
+        );
     }
 
     public function getConfig($env = null)
