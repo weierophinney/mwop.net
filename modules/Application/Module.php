@@ -57,7 +57,7 @@ class Module
     public function initView($e)
     {
         $app     = $e->getParam('application');
-        $config  = $e->getParam('modules')->getMergedConfig();
+        $config  = $e->getParam('config');
         $locator = $app->getLocator();
         $router  = $app->getRouter();
         $view    = $locator->get('view');
@@ -99,7 +99,7 @@ class Module
     public function registerApplicationListeners($e)
     {
         $app          = $e->getParam('application');
-        $config       = $e->getParam('modules')->getMergedConfig();
+        $config       = $e->getParam('config');
         $viewListener = $this->getViewListener($this->view, $config);
         $app->events()->attachAggregate($viewListener);
     }
@@ -107,7 +107,7 @@ class Module
     public function registerStaticListeners($e)
     {
         $locator      = $e->getParam('application')->getLocator();
-        $config       = $e->getParam('modules')->getMergedConfig();
+        $config       = $e->getParam('config');
         $events       = StaticEventManager::getInstance();
         $viewListener = $this->getViewListener($this->view, $config);
         $viewListener->registerStaticListeners($events, $locator);

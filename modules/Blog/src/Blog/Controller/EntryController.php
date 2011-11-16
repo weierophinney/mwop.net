@@ -127,7 +127,7 @@ class EntryController extends RestfulController
             );
         }
 
-        $response = $this->redirect()->toRoute('blog-entry', array('id' => $entry->getId()));
+        $response = $this->redirect()->toRoute('blog/entry', array('id' => $entry->getId()));
         $response->setStatusCode(201);
         return $response;
     }
@@ -190,7 +190,7 @@ class EntryController extends RestfulController
             'title'         => 'Tag: ' . $tag,
             'tag'           => $tag,
             'entries'       => $this->getPaginator($entries, $page),
-            'paginator_url' => $this->url()->fromRoute('blog-tag', array('tag' => $tag)),
+            'paginator_url' => $this->url()->fromRoute('blog/tag', array('tag' => $tag)),
         );
     }
 
@@ -210,7 +210,7 @@ class EntryController extends RestfulController
         return array(
             'title'         => 'Blog Entries for ' . $year,
             'entries'       => $this->getPaginator($entries, $page),
-            'paginator_url' => $this->url()->fromRoute('blog-year', array('year' => $year)),
+            'paginator_url' => $this->url()->fromRoute('blog/year', array('year' => $year)),
         );
     }
 
@@ -235,7 +235,7 @@ class EntryController extends RestfulController
         return array(
             'title'         => 'Blog Entries for ' . date('F', strtotime($year . '-' . $month . '-01')) . ' ' . $year,
             'entries'       => $this->getPaginator($entries, $page),
-            'paginator_url' => $this->url()->fromRoute('blog-month', array('year' => $year, 'month' => $month)),
+            'paginator_url' => $this->url()->fromRoute('blog/month', array('year' => $year, 'month' => $month)),
         );
     }
 
@@ -265,7 +265,7 @@ class EntryController extends RestfulController
         return array(
             'title'         => 'Blog Entries for ' . $day . ' ' . date('F', strtotime($year . '-' . $month . '-' . $day)) . ' ' . $year,
             'entries'       => $this->getPaginator($entries, $page),
-            'paginator_url' => $this->url()->fromRoute('blog-day', array('year' => $year, 'month' => $month, 'day' => $day)),
+            'paginator_url' => $this->url()->fromRoute('blog/day', array('year' => $year, 'month' => $month, 'day' => $day)),
         );
     }
 

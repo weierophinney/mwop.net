@@ -47,9 +47,8 @@ class Module
     public function registerStaticListeners($e)
     {
         $app      = $e->getParam('application');
-        $modules  = $e->getParam('modules');
+        $config   = $e->getParam('config');
         $locator  = $app->getLocator();
-        $config   = $modules->getMergedConfig();
         $events   = StaticEventManager::getInstance();
         $listener = $locator->get('Authentication\AuthenticationListener', array('config' => $config));
         $events->attach('Zend\Stdlib\Dispatchable', 'dispatch', array($listener, 'testAuthenticatedUser'), 100);

@@ -19,26 +19,30 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
+namespace Zend\Service\Nirvanix;
+
+use Traversable,
+    Zend\Http\Client as HttpClient,
+    Zend\Stdlib\IteratorToArray;
+
 /**
  * This class allows Nirvanix authentication credentials to be specified
  * in one place and provides a factory for returning convenience wrappers
  * around the Nirvanix web service namespaces.
  *
- * @uses       Zend_Http_Client
- * @uses       Zend_Loader
  * @category   Zend
  * @package    Zend_Service
  * @subpackage Nirvanix
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Service_Nirvanix
+class Nirvanix
 {
     /**
      * Options to pass to namespace proxies
      * @param array
      */
-    protected $_options;
+    protected $options;
 
     /**
      * Class constructor.  Authenticates with Nirvanix to receive a
@@ -52,40 +56,54 @@ class Zend_Service_Nirvanix
     public function __construct($authParams, $options = array())
     {
         // merge options with default options
-        $defaultOptions = array('defaults'   => array(),
-                                'httpClient' => new Zend\Http\Client(),
-                                'host'       => 'http://services.nirvanix.com');
-        $this->_options = array_merge($defaultOptions, $options);
+        $defaultOptions = array(
+            'defaults'   => array(),
+            'httpClient' => new HttpClient(),
+            'host'       => 'http://services.nirvanix.com',
+        );
+
+        if ($options instanceof Traversable) {
+            $options = IteratorToArray::convert($options);
+        }
+        if (!is_array($options)) {
+            throw new Exception\InvalidArgumentException(__METHOD__ . ' expects an array or Traversable object of options');
+        }
+
+        $this->options = array_merge($defaultOptions, $options);
 
         // login and save sessionToken to default POST params
         $resp = $this->getService('Authentication')->login($authParams);
-        $this->_options['defaults']['sessionToken'] = (string)$resp->SessionToken;
+        $this->options['defaults']['sessionToken'] = (string) $resp->SessionToken;
     }
 
     /**
      * Nirvanix divides its service into namespaces, with each namespace
      * providing different functionality.  This is a factory method that
-     * returns a preconfigured Zend_Service_Nirvanix_Namespace_Base proxy.
+     * returns a preconfigured Context\Base proxy.
      *
      * @param  string  $namespace  Name of the namespace
-     * @return Zend_Service_Nirvanix_Namespace_Base
+     * @return Context\Base
      */
     public function getService($namespace, $options = array())
     {
         switch ($namespace) {
             case 'IMFS':
-                $class = 'Zend_Service_Nirvanix_Namespace_Imfs';
+                $class = __NAMESPACE__ . '\Context\Imfs';
                 break;
             default:
-                $class = 'Zend_Service_Nirvanix_Namespace_Base';
+                $class = __NAMESPACE__ . '\Context\Base';
+        }
+
+        if ($options instanceof Traversable) {
+            $options = IteratorToArray::convert($options);
+        }
+        if (!is_array($options)) {
+            throw new Exception\InvalidArgumentException(__METHOD__ . ' expects an array or Traversable object of options');
         }
 
         $options['namespace'] = ucfirst($namespace);
-        $options = array_merge($this->_options, $options);
+        $options = array_merge($this->options, $options);
 
-        if (!class_exists($class)) {
-            Zend_Loader::loadClass($class);
-        }
         return new $class($options);
     }
 
@@ -96,7 +114,6 @@ class Zend_Service_Nirvanix
      */
     public function getOptions()
     {
-        return $this->_options;
+        return $this->options;
     }
-
 }

@@ -27,13 +27,14 @@ $appConfig = include __DIR__ . '/configs/application.config.php';
 $moduleLoader = new Zend\Loader\ModuleAutoloader($appConfig['module_paths']);
 $moduleLoader->register();
 
-$moduleManager = new Zend\Module\Manager(
-    $appConfig['modules'],
-    new Zend\Module\ManagerOptions($appConfig['module_config'])
-);
+$moduleManager   = new Zend\Module\Manager($appConfig['modules']);
+$listenerOptions = new Zend\Module\Listener\ListenerOptions($appConfig['module_listener_options']);
+$moduleManager->setDefaultListenerOptions($listenerOptions);
+$moduleManager->loadModules();
 
 // Create application, bootstrap, and run
-$bootstrap = new Zend\Mvc\Bootstrap($moduleManager);
+$configs     = $moduleManager->getConfigListener();
+$bootstrap   = new Zend\Mvc\Bootstrap($configs->getMergedConfig());
 $application = new Zend\Mvc\Application;
 $bootstrap->bootstrap($application);
 

@@ -83,11 +83,11 @@ class EntryControllerListener implements ListenerAggregate
 
         $urlHelper     = $renderer->plugin('url');
         if (false !== strstr($title, 'Tag: ')) {
-            $link      = $urlHelper(array('tag' => $view['tag']), array('name' => 'blog-tag'));
-            $feedLink  = $urlHelper(array('tag' => $view['tag']), array('name' => 'blog-tag-feed'));
+            $link      = $urlHelper(array('tag' => $view['tag']), array('name' => 'blog/tag'));
+            $feedLink  = $urlHelper(array('tag' => $view['tag']), array('name' => 'blog/tag/feed'));
         } else {
             $link      = $urlHelper(array(), array('name' => 'blog'));
-            $feedLink  = $urlHelper(array(), array('name' => 'blog-feed'));
+            $feedLink  = $urlHelper(array(), array('name' => 'blog/feed'));
         }
         $link     = $baseUri . $link;
         $feedLink = $baseUri . $feedLink;
@@ -109,7 +109,7 @@ class EntryControllerListener implements ListenerAggregate
             }
             $entry = $feed->createEntry();
             $entry->setTitle($post->getTitle());
-            $entry->setLink($baseUri . $urlHelper(array('id' => $post->getId()), array('name' => 'blog-entry')));
+            $entry->setLink($baseUri . $urlHelper(array('id' => $post->getId()), array('name' => 'blog/entry')));
 
             /**
              * @todo inject this info!
@@ -157,7 +157,7 @@ class EntryControllerListener implements ListenerAggregate
             $url = $renderer->plugin('url');
             foreach ($tags as $key => $tag) {
                 $tags[$key]['params'] = array(
-                    'url' => $url(array('tag' => $tag['title']), array('name' => 'blog-tag')),
+                    'url' => $url(array('tag' => $tag['title']), array('name' => 'blog/tag')),
                 );
             }
             $cloud = new Cloud(array(

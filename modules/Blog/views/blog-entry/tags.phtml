@@ -6,7 +6,7 @@ $renderedTags = array();
 foreach ($tags as $tag) {
     $renderedTags[] = sprintf(
         '<a href="%s">%s</a>', 
-        $url(array('tag' => $tag), array('name' => 'blog-tag')),
+        $url(array('tag' => $tag), array('name' => 'blog/tag')),
         $tag
     );
 }

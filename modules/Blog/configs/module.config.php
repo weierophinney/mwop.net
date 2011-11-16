@@ -12,98 +12,102 @@ $config['disqus'] = array(
 );
 
 $config['routes'] = array(
-    'blog-create-form' => array(
-        'type'    => 'Literal',
-        'options' => array(
-            'route' => '/blog/admin/create',
-            'defaults' => array(
-                'controller' => 'blog-entry',
-                'action'     => 'create',
-            ),
-        ),
-    ),
-    'blog-tag' => array(
-        'type'    => 'Regex',
-        'options' => array(
-            'regex' => '/blog/tag/(?<tag>[^/]+)',
-            'defaults' => array(
-                'controller' => 'blog-entry',
-                'action'     => 'tag',
-            ),
-            'spec' => '/blog/tag/%tag%',
-        ),
-    ),
-    'blog-tag-feed' => array(
-        'type'    => 'Regex',
-        'options' => array(
-            'regex' => '/blog/tag/(?<tag>[^/]+)\\.xml',
-            'defaults' => array(
-                'controller' => 'blog-entry',
-                'action'     => 'tag',
-                'format'     => 'xml',
-            ),
-            'spec' => '/blog/tag/%tag%.xml',
-        ),
-    ),
-    'blog-year' => array(
-        'type'    => 'Regex',
-        'options' => array(
-            'regex' => '/blog/year/(?<year>\d{4})',
-            'defaults' => array(
-                'controller' => 'blog-entry',
-                'action'     => 'year',
-            ),
-            'spec' => '/blog/year/%year%',
-        ),
-    ),
-    'blog-month' => array(
-        'type'    => 'Regex',
-        'options' => array(
-            'regex' => '/blog/month/(?<year>\d{4})/(?<month>\d{1,2})',
-            'defaults' => array(
-                'controller' => 'blog-entry',
-                'action'     => 'month',
-            ),
-            'spec' => '/blog/month/%year%/%month%',
-        ),
-    ),
-    'blog-day' => array(
-        'type'    => 'Regex',
-        'options' => array(
-            'regex' => '/blog/day/(?<year>\d{4})/(?<month>\d{1,2})/(?<day>\d{1,2})',
-            'defaults' => array(
-                'controller' => 'blog-entry',
-                'action'     => 'day',
-            ),
-            'spec' => '/blog/day/%year%/%month%/%day%',
-        ),
-    ),
-    'blog-entry' => array(
-        'type'    => 'Regex',
-        'options' => array(
-            'regex' => '/blog/(?<id>[^/]+)',
-            'defaults' => array(
-                'controller' => 'blog-entry',
-            ),
-            'spec' => '/blog/%id%',
-        ),
-    ),
     'blog' => array(
-        'type'    => 'Literal',
+        'type' => 'Literal',
         'options' => array(
             'route' => '/blog',
             'defaults' => array(
                 'controller' => 'blog-entry',
             ),
         ),
-    ),
-    'blog-feed' => array(
-        'type'    => 'Literal',
-        'options' => array(
-            'route' => '/blog.xml',
-            'defaults' => array(
-                'controller' => 'blog-entry',
-                'format'     => 'xml',
+        'may_terminate' => true,
+        'child_routes'  => array(
+            'feed' => array(
+                'type' => 'Literal',
+                'options' => array(
+                    'route' => '.xml',
+                    'defaults' => array(
+                        'controller' => 'blog-entry',
+                        'format'     => 'xml',
+                    ),
+                ),
+            ),
+            'entry' => array(
+                'type'    => 'Regex',
+                'options' => array(
+                    'regex' => '/(?<id>[^/]+)',
+                    'defaults' => array(
+                        'controller' => 'blog-entry',
+                    ),
+                    'spec' => '/%id%',
+                ),
+            ),
+            'tag' => array(
+                'type'    => 'Regex',
+                'options' => array(
+                    'regex' => '/tag/(?<tag>[^/.]+)',
+                    'defaults' => array(
+                        'controller' => 'blog-entry',
+                        'action'     => 'tag',
+                    ),
+                    'spec' => '/tag/%tag%',
+                ),
+                'may_terminate' => true,
+                'child_routes' => array(
+                    'feed' => array(
+                        'type'    => 'Literal',
+                        'options' => array(
+                            'route' => '.xml',
+                            'defaults' => array(
+                                'controller' => 'blog-entry',
+                                'action'     => 'tag',
+                                'format'     => 'xml',
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+            'year' => array(
+                'type'    => 'Segment',
+                'options' => array(
+                    'route' => '/year/:year',
+                    'constraints' => array(
+                        'year' => '\d{4}',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'blog-entry',
+                        'action'     => 'year',
+                    ),
+                ),
+            ),
+            'month' => array(
+                'type'    => 'Segment',
+                'options' => array(
+                    'route' => '/month/:year/:month',
+                    'constraints' => array(
+                        'year'  => '\d{4}',
+                        'month' => '\d{2}',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'blog-entry',
+                        'action'     => 'month',
+                    ),
+                ),
+            ),
+            'day' => array(
+                'type'    => 'Segment',
+                'options' => array(
+                    'route' => '/day/:year/:month/:day',
+                    'constraints' => array(
+                        'year'  => '\d{4}',
+                        'month' => '\d{2}',
+                        'day'   => '\d{2}',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'blog-entry',
+                        'action'     => 'day',
+                    ),
+                ),
             ),
         ),
     ),
