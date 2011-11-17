@@ -105,13 +105,18 @@ a {
     overflow: auto;
 }
 
-/* :not() syntax to ensure we don't mess with disqus styles */
-.content ul:not(.dsq-comment, .dsq-comment-header, .dsq-comment-message, .dsq-comment-footer) {
+.content ul {
     list-style-type: disc;
     list-style-position: inside;
     margin-left: 0;
     padding-left: 1em;
     text-indent: -1em;
+}
+
+/* ensure we don't mess with disqus styles */
+.dsq-comment, .dsq-comment-header, .dsq-comment-message {
+    text-indent: 0;
+    padding-left: 0;
 }
 
 .sidebar ul {
