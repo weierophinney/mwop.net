@@ -9,6 +9,8 @@ return array (
   'Comic\\ComicSource\\PennyArcade' => __DIR__ . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'Comic' . DIRECTORY_SEPARATOR . 'ComicSource' . DIRECTORY_SEPARATOR . 'PennyArcade.php',
   'Comic\\ComicSource\\Xkcd' => __DIR__ . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'Comic' . DIRECTORY_SEPARATOR . 'ComicSource' . DIRECTORY_SEPARATOR . 'Xkcd.php',
   'Comic\\ComicSource\\AbstractComicSource' => __DIR__ . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'Comic' . DIRECTORY_SEPARATOR . 'ComicSource' . DIRECTORY_SEPARATOR . 'AbstractComicSource.php',
+  'Comic\\ComicSource\\AbstractDomSource' => __DIR__ . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'Comic' . DIRECTORY_SEPARATOR . 'ComicSource' . DIRECTORY_SEPARATOR . 'AbstractDomSource.php',
+  'Comic\\ComicSource\\AbstractRssSource' => __DIR__ . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'Comic' . DIRECTORY_SEPARATOR . 'ComicSource' . DIRECTORY_SEPARATOR . 'AbstractRssSource.php',
   'Comic\\ComicSource\\NotInventedHere' => __DIR__ . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'Comic' . DIRECTORY_SEPARATOR . 'ComicSource' . DIRECTORY_SEPARATOR . 'NotInventedHere.php',
   'Comic\\ComicSource\\Dilbert' => __DIR__ . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'Comic' . DIRECTORY_SEPARATOR . 'ComicSource' . DIRECTORY_SEPARATOR . 'Dilbert.php',
   'Comic\\ComicSource\\FoxTrot' => __DIR__ . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'Comic' . DIRECTORY_SEPARATOR . 'ComicSource' . DIRECTORY_SEPARATOR . 'FoxTrot.php',

@@ -2,70 +2,20 @@
 
 namespace Comic\ComicSource;
 
-use Comic\Comic,
-    Zend\Dom\Query as DomQuery;
-
-class Dilbert extends AbstractComicSource
+class Dilbert extends AbstractDomSource
 {
     protected static $comics = array(
         'dilbert' => 'Dilbert',
     );
 
-    protected $comicFormat = 'http://dilbert.com';
+    protected $comicBase      = 'http://dilbert.com';
+    protected $comicShortName = 'dilbert';
+    protected $dailyFormat    = 'http://dilbert.com/strips/comic/%s/';
+    protected $dateFormat     = 'Y-m-d';
+    protected $domQuery       = 'div.STR_Image img';
 
-    protected $dailyFormat = 'http://dilbert.com/strips/comic/%s/';
-
-    public function fetch()
+    protected function formatImageSrc($src)
     {
-        $url  = sprintf($this->dailyFormat, date('Y-m-d'));
-        $page = file_get_contents($url);
-        if (!$page) {
-            return $this->registerError(sprintf(
-                'Comic at "%s" is unreachable',
-                $url
-            ));
-        }
-
-        $dom  = new DomQuery($page);
-        $r    = $dom->execute('div.STR_Image img');
-        if (!$r->count()) {
-            return $this->registerError(sprintf(
-                'Comic at "%s" is unreachable',
-                $url
-            ));
-        }
-
-        $imgUrl = false;
-        foreach ($r as $node) {
-            if ($node->hasAttribute('src')) {
-                $imgUrl = $this->comicFormat . $node->getAttribute('src');
-            }
-        }
-
-        if (!$imgUrl) {
-            return $this->registerError(sprintf(
-                'Unable to find image source in "%s"',
-                $url
-            ));
-        }
-
-        $comic = new Comic(
-            /* 'name'  => */ static::$comics['dilbert'],
-            /* 'link'  => */ $this->comicFormat,
-            /* 'daily' => */ $url,
-            /* 'image' => */ $imgUrl
-        );
-
-        return $comic;
-    }
-
-    protected function registerError($message)
-    {
-        $comic = new Comic(
-            /* 'name'  => */ static::$comics['dilbert'],
-            /* 'link'  => */ $this->comicFormat
-        );
-        $comic->setError($message);
-        return $comic;
+        return $this->comicBase . $src;
     }
 }

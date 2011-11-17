@@ -17,7 +17,3 @@ TODO
   * do as SCS? or Pirum?
 * Update resume area
   * better personal statement, more generalized
-* Consolidate several classes from Comic component
-  * RSS class: Basic Instructions, XKCD, G-G, SfaM
-  * DomQuery class: GoComics, PennyArcade, NIH, Dilbert, FoxTrot, Ctrl-Alt-Del,
-    UF

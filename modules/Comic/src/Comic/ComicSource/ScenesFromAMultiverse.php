@@ -31,6 +31,7 @@ class ScenesFromAMultiverse extends AbstractComicSource
         $desc   = (string) $latest->description;
         $dom    = new DOMDocument();
         $dom->loadHTML($desc);
+
         $xpath  = new DOMXPath($dom);
         $result = $xpath->query('//a/img');
         if (!$result || !$result->length) {

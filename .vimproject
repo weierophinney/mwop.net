@@ -187,6 +187,8 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
      ComicSource.php
      ComicSource=ComicSource {
       AbstractComicSource.php
+      AbstractDomSource.php
+      AbstractRssSource.php
       BasicInstructions.php
       CtrlAltDel.php
       Dilbert.php
