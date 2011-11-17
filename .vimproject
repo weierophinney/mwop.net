@@ -3,7 +3,6 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
  TODO.md
  bootstrap.php
  console
- test.php
  library=library {
   .classmap.php
   mwop=mwop {
@@ -308,11 +307,6 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
  public=public {
   .htaccess
   index.php
-  test.html
-  browser.php
-  cgi-bin=cgi-bin {
-   php-5.3.3
-  }
  }
  scripts=scripts {
   createAppContext.php
@@ -326,17 +320,6 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
    comments_wxr.xml
    item.xml
    comment.xml
-  }
- }
- tests=tests CD=. {
-  Bootstrap.php
-  phpunit.xml
-  log=log {
-  }
-  mwop=mwop {
-   Resource=Resource {
-    AclIntegrationTest.php
-   }
   }
  }
 }

@@ -1,20 +1,31 @@
 PURPOSE
 =======
 
-This is a demonstration app, used for two purposes:
+This is the code behind mwop.net. One part of its purpose is to demonstrate
+the capabilities of Zend Framework 2.
 
- * Sandbox for playing with model ideas, using a blog as the example
- * Sandbox for prototyping ZF2 MVC ideas
+In order to run this code, you will need:
 
-The code does not work completely and makes a number of assumptions (e.g.,
-you're using PHP 5.3; ext/mongo is installed, and running on default ports;
-etc.). Some ideas are very much in flux (input validation and forms), others are
-relatively stable (event manager usage).
+ * mongo running on your server or elsewhere
+ * ext/mongo for PHP
+ * A Google search API key
+ * A ReCaptcha API key
+ * A registered Disqus site
+ * Some way to send mail, and the configuration necessary to do so
 
-You will need a current version (tested on 87504edc) of ZF2 from my repository:
+To configure the application, copy modules/Local/configs/module.config.php.dist
+to modules/Local/configs/module.config.php, and edit it to supply the
+configuration values and/or DI substitutions you desire.
 
-    https://github.com/weierophinney/zf2
+To post entries to the blog, you will need to setup an API key. This is simply a
+file containing a string; you indicate its location in the Local configuration
+file. Once configured, you will need to ensure this key is also available from
+any machine that will post to it. To create a post, you will need a
+configuration file that defines two values, "apikey" (the value of the API key
+on the server to which you are posting) and "url" (the URL to the server and
+blog resource). Then, follow the instructions in modules/Blog/bin/post.php, and
+invoke that script using:
 
-pointing at the branch "prototype/mvc-module". The library/ directory should
-either be on your include_path, or its "library/Zend" subdirectory symlinked
-into "library/" of your checkout.
+    ./console Blog:post -c "path/to/config/file" -p "path/to/post/file"
+
+This will take the entry you've created and post it to the server.
