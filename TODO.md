@@ -10,8 +10,6 @@ TODO
 * Remove Renderer as a service and instead move into the default listener
   * Incorporate layout component?
 * Cleanup branches
-  * Make features/zf2-mvc master
-  * Remove all old branches
   * Create a "release" branch
 * Add caching for individual entries
   * Ideally also add for listings, and have publishing a post expire them
