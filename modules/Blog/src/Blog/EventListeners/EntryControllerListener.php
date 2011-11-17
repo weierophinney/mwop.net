@@ -4,32 +4,31 @@ namespace Blog\EventListeners;
 
 use Blog\Exception,
     Traversable,
-    Zend\EventManager\EventCollection,
-    Zend\EventManager\ListenerAggregate,
+    Zend\EventManager\StaticEventCollection as Events,
     Zend\Feed\Writer\Feed as FeedWriter,
     Zend\Tag\Cloud,
     Zend\View\Variables as ViewVariables;
 
-class EntryControllerListener implements ListenerAggregate
+class EntryControllerListener
 {
     protected $listeners = array();
 
-    public function attach(EventCollection $events)
+    public function attach(Events $events)
     {
-        $this->listeners[] = $events->attach('dispatch',  array($this, 'verifyApiKey'), 200);
-        $this->listeners[] = $events->attach('dispatch',  array($this, 'normalizeId'), 100);
-        $this->listeners[] = $events->attach('dispatch', array($this, 'generateFeed'), -10);
-        $this->listeners[] = $events->attach('dispatch', array($this, 'injectTagCloud'), -100);
-        $this->listeners[] = $events->attach('dispatch', array($this, 'renderRestfulActions'), -50);
+        $controller = 'Blog\Controller\EntryController';
+        $this->listeners[] = $events->attach($controller, 'dispatch', array($this, 'verifyApiKey'),         200);
+        $this->listeners[] = $events->attach($controller, 'dispatch', array($this, 'normalizeId'),          100);
+        $this->listeners[] = $events->attach($controller, 'dispatch', array($this, 'generateFeed'),         -10);
+        $this->listeners[] = $events->attach($controller, 'dispatch', array($this, 'renderRestfulActions'), -50);
+        $this->listeners[] = $events->attach($controller, 'dispatch', array($this, 'injectTagCloud'),      -100);
     }
 
-    public function detach(EventCollection $events)
+    public function detach(Events $events)
     {
+        $controller = 'Blog\Controller\EntryController';
         foreach ($this->listeners as $listener) {
-            $events->detach($listener);
+            $events->detach($controller, $listener);
         }
-
-        $this->listeners = array();
     }
 
     public function normalizeId($e)

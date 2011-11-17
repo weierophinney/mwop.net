@@ -3,10 +3,17 @@
 namespace Blog;
 
 use InvalidArgumentException,
+    Zend\EventManager\StaticEventManager,
     Zend\Module\Consumer\AutoloaderProvider;
 
 class Module implements AutoloaderProvider
 {
+    public function init()
+    {
+        $events = StaticEventManager::getInstance();
+        $events->attach('bootstrap', 'bootstrap', array($this, 'bootstrap'));
+    }
+
     public function getAutoloaderConfig()
     {
         return array(
@@ -32,6 +39,31 @@ class Module implements AutoloaderProvider
         }
 
         return $config[$env];
+    }
+
+    public function bootstrap($e)
+    {
+        $app    = $e->getParam('application');
+        $events = $app->events();
+        $events->attach('route', array($this, 'registerBlogListener'), -10);
+    }
+
+    public function registerBlogListener($e)
+    {
+        $routeMatch = $e->getRouteMatch();
+        if (!$routeMatch) {
+            return;
+        }
+
+        $matchedRoute = $routeMatch->getMatchedRouteName();
+        if ('blog' != substr($matchedRoute, 0, 4)) {
+            return;
+        }
+
+        // we have something of interest!
+        $events   = StaticEventManager::getInstance();
+        $listener = new EventListeners\EntryControllerListener();
+        $listener->attach($events);
     }
 
     public function getProvides()

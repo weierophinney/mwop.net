@@ -2,7 +2,6 @@
 namespace Blog\Controller;
 
 use Blog\EntryResource,
-    Blog\EventListeners\EntryControllerListener,
     DateTime,
     DateTimezone,
     Iterator,
@@ -18,13 +17,6 @@ class EntryController extends RestfulController
     protected $apiKey;
     protected $resource;
     protected $view;
-
-    public function __construct()
-    {
-        $events = $this->events();
-        $listeners = new EntryControllerListener;
-        $events->attachAggregate($listeners);
-    }
 
     public function setResource(EntryResource $resource)
     {
