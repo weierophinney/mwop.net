@@ -1,7 +1,0 @@
-Switch to this directory to run unit tests.
-
-Dependencies:
-  - PHPUnit 3.5.0 or greater
-  - ZF2 master from git
-    - library/Zend/ should be symlinked to library/Zend/ in this project
-    - Must have a .classmap.php in the library/Zend/ directory
