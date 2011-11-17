@@ -1,4 +1,8 @@
-cache/static/zend_cache*
+configs/posts.config.php
 data/*.*
 data/htdigest
 modules/Local/configs/module.config.php
+modules/Application/views/analytics.phtml
+modules/Blog/bin/post.log.html
+*/testdox.txt
+*.log
