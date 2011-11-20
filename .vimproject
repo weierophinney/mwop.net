@@ -4,15 +4,6 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
  bootstrap.php
  console
  library=library {
-  .classmap.php
-  mwop=mwop {
-   .classmap.php
-   Acl.php
-   Acl=Acl {
-    AclException.php
-    SignalHandler.php
-   }
-  }
  }
  configs=configs filter="*.php *.ini *.xml *.json *.yml" {
   application.config.dist.php
