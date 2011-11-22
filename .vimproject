@@ -3,8 +3,6 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
  TODO.md
  bootstrap.php
  console
- library=library {
- }
  configs=configs filter="*.php *.ini *.xml *.json *.yml" {
   application.config.dist.php
   application.config.php
