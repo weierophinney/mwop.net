@@ -1,8 +1,8 @@
 config/posts.config.php
 data/*.*
 data/htdigest
-module/Local/configs/module.config.php
-module/Application/views/analytics.phtml
+module/Local/config/module.config.php
+module/Application/view/analytics.phtml
 module/Blog/bin/post.log.html
 */testdox.txt
 *.log
