@@ -30,6 +30,7 @@ $moduleLoader->register();
 $moduleManager   = new Zend\Module\Manager($appConfig['modules']);
 $listenerOptions = new Zend\Module\Listener\ListenerOptions($appConfig['module_listener_options']);
 $moduleManager->setDefaultListenerOptions($listenerOptions);
+$moduleManager->getConfigListener()->addConfigGlobPath(__DIR__ . '/config/autoload/*.config.php');
 $moduleManager->loadModules();
 
 // Create application, bootstrap, and run
@@ -40,10 +41,11 @@ $bootstrap->bootstrap($application);
 /*
 echo "<pre>";
 Zend\Di\Display\Console::export($application->getLocator(), array(
-    'Contact\Controller\ContactController',
+    'Blog\Controller\EntryController',
     'Zend\Mail\Mail',
 ));
 echo "</pre>";
+/*
 $obj = $application->getLocator()->get('Blog\Controller\EntryController');
 echo "<pre>";
 echo var_export($obj, 1);

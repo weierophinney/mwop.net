@@ -3,14 +3,18 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
  TODO.md
  bootstrap.php
  console
- config=config filter="*.php *.ini *.xml *.json *.yml" {
+ config=config filter="*.php *.ini *.xml *.json *.yml *.dist" {
   application.config.php
   posts.config.php
   autoload=autoload {
    module.application.config.php
+   module.application.config.php.dist
    module.authentication.config.php
+   module.authentication.config.php.dist
    module.blog.config.php
+   module.blog.config.php.dist
    module.contact.config.php
+   module.contact.config.php.dist
   }
  }
  module=module {
@@ -260,13 +264,6 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
      index.phtml
      thank-you.phtml
     }
-   }
-  }
-  Local=Local {
-   Module.php
-   config=config {
-    module.config.php.dist
-    module.config.php
    }
   }
   SkeletonCss=SkeletonCss filter="*.css *.js *.html *.txt" {

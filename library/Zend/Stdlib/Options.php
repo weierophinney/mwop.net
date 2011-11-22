@@ -57,7 +57,7 @@ abstract class Options implements ParameterObject
      * @param array $config
      * @return void
      */
-    protected function processArray(array $config)
+    protected function processArray($config)
     {
         foreach ($config as $key => $value) {
             $setter = $this->assembleSetterNameFromConfigKey($key);

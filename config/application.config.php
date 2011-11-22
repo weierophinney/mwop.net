@@ -10,6 +10,10 @@ return new Zend\Config\Config(array(
         'CommonResource',
         'Blog',
         'Contact',
-        'Local',
+    ),
+    'module_listener_options' => array( 
+        'config_cache_enabled'     => false,
+        'cache_dir'                => realpath(dirname(__DIR__) . '/data/cache'),
+        'application_environment'  => getenv('APPLICATION_ENV'),
     ),
 ));

@@ -133,6 +133,7 @@ $moduleLoader->register();
 $moduleManager   = new Zend\Module\Manager($appConfig['modules']);
 $listenerOptions = new Zend\Module\Listener\ListenerOptions($appConfig['module_listener_options']);
 $moduleManager->setDefaultListenerOptions($listenerOptions);
+$moduleManager->getConfigListener()->addConfigGlobPath(__DIR__ . '/config/autoload/*.config.php');
 $moduleManager->loadModules();
 
 // Create application, bootstrap, and run
