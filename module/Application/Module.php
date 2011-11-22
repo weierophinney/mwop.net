@@ -63,11 +63,6 @@ class Module implements AutoloaderProvider
         $url     = $view->plugin('url');
         $url->setRouter($router);
 
-        if ($config->disqus) {
-            // Ensure disqus plugin is configured
-            $disqus = $view->plugin('disqus', $config->disqus->toArray());
-        }
-
         $persistent = $view->placeholder('layout');
         foreach ($config->view as $var => $value) {
             if ($value instanceof Config) {

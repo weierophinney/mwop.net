@@ -44,7 +44,7 @@ Zend\Di\Display\Console::export($application->getLocator(), array(
     'Zend\Mail\Mail',
 ));
 echo "</pre>";
-$obj = $application->getLocator()->get('Contact\Controller\ContactController');
+$obj = $application->getLocator()->get('Blog\Controller\EntryController');
 echo "<pre>";
 echo var_export($obj, 1);
 echo "</pre>";

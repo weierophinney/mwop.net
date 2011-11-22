@@ -14,7 +14,18 @@ $config['production'] = array(
         )
     ),
 
-    'di' => array( 'instance' => array(
+    'di' => array( 
+    'definition' => array('class' => array(
+        'Application\View\Helper\Disqus' => array(
+            'setOptions' => array(
+                'options' => array(
+                    'required' => true,
+                    'type'     => 'array',
+                ),
+            ),
+        ),
+    )),
+    'instance' => array(
         'alias' => array(
             'view'             => 'Zend\View\PhpRenderer',
             'view-resolver'    => 'Zend\View\TemplatePathStack',
@@ -43,6 +54,9 @@ $config['production'] = array(
             'paths' => array(
                 'application' => __DIR__ . '/../view',
             ),
+        )),
+        'Application\View\Helper\Disqus' => array('parameters' => array(
+            'options' => array(),
         )),
     )),
 
@@ -97,7 +111,5 @@ $config['testing']     = $config['production'];
 $config['testing']['display_exceptions']    = true;
 
 $config['development'] = $config['production'];
-$config['development']['disqus']['key']         = "phlyboyphly";
-$config['development']['disqus']['development'] = 1;
 $config['development']['display_exceptions']    = true;
 return $config;

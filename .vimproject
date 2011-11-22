@@ -33,7 +33,6 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
    }
    src=src {
     Application=Application {
-     Bootstrap.php
      Controller=Controller {
       ErrorController.php
       PageController.php

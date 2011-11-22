@@ -1,12 +1,7 @@
 <?php
 $config = array();
 $config['production'] = array(
-    'bootstrap_class'    => 'Application\Bootstrap',
     'display_exceptions' => false,
-    'disqus'             => array(
-        'key'         => 'DISQUS_KEY_GOES_HERE',
-        'development' => 0,
-    ),
     'view' => array(
         'layout' => 'layout.phtml',
         'search' => array(
@@ -62,6 +57,13 @@ $config['production'] = array(
                 'name' => 'COLLECTION NAME HERE',
             )),
 
+            'Application\View\Helper\Disqus' => array('parameters' => array(
+                'options' => array(
+                    'key'         => 'DISQUS_KEY_GOES_HERE',
+                    'development' => 0,
+                ),
+            )),
+
             'Blog\EntryResource' => array('parameters' => array(
                 'dataSource' => 'CommonResource\DataSource\Mock',
                 'class'      => 'CommonResource\Resource\Collection',
@@ -104,13 +106,14 @@ $config['production'] = array(
 );
 
 $config['staging'] = $config['production'];
-$config['staging']['disqus']['key'] = "DISQUS_STAGING_KEY_GOES_HERE";
+$config['staging']['di']['instance']['Application\View\Helper\Disqus']['parameters']['options']['key'] = "DISQUS_STAGING_KEY_GOES_HERE";
+$config['staging']['di']['instance']['Application\View\Helper\Disqus']['parameters']['options']['development'] = 1;
 
 $config['testing'] = $config['production'];
 
 $config['development'] = $config['production'];
 $config['development']['display_exceptions']    = true;
-$config['development']['disqus']['key']         = "DISQUS_DEV_KEY_GOES_HERE";
-$config['development']['disqus']['development'] = 1;
+$config['development']['di']['instance']['Application\View\Helper\Disqus']['parameters']['options']['key'] = "DISQUS_DEV_KEY_GOES_HERE";
+$config['development']['di']['instance']['Application\View\Helper\Disqus']['parameters']['options']['development'] = 1;
 
 return $config;
