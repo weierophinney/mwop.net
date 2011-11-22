@@ -156,7 +156,7 @@ $config['di'] = array(
 
     'view-resolver' => array('parameters' => array(
         'paths' => array(
-            'blog' => __DIR__ . '/../views',
+            'blog' => __DIR__ . '/../view',
         ),
     )),
 ));

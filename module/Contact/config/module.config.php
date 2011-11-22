@@ -63,7 +63,7 @@ $config['production'] = array(
 
         'view-resolver' => array('parameters' => array(
             'paths' => array(
-                'contact' => __DIR__ . '/../views',
+                'contact' => __DIR__ . '/../view',
             ),
         )),
 

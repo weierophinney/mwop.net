@@ -50,7 +50,7 @@ $config['production'] = array(
 
         'view-resolver' => array('parameters' => array(
             'paths' => array(
-                'authentication' => __DIR__ . '/../views',
+                'authentication' => __DIR__ . '/../view',
             ),
         )),
     )),

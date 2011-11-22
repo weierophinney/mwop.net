@@ -17,7 +17,7 @@ set_include_path(implode(DIRECTORY_SEPARATOR, array(
 require_once 'Zend/Loader/StandardAutoloader.php';
 $standardAutoloader = new Zend\Loader\StandardAutoloader(array(
     'namespaces' => array(
-        'Wxr\Helper' => __DIR__ . '/helpers',
+        'Wxr\Helper' => __DIR__ . '/helper',
     ),
 ));
 $standardAutoloader->register();
@@ -85,7 +85,7 @@ echo "[DONE] Retrieving and looping over all entries with comments\n";
 
 echo "Rendering WXR feed...";
 $view = new Zend\View\PhpRenderer();
-$view->resolver()->addPath(__DIR__ . '/templates');
+$view->resolver()->addPath(__DIR__ . '/template');
 $view->getBroker()->register('gmtDate', new Wxr\Helper\GmtDate());
 $view->entries = $entries;
 $xml = $view->render('comments_wxr.xml');

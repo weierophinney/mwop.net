@@ -22,7 +22,7 @@ Zend\Loader\AutoloaderFactory::factory(array(
     'Zend\Loader\StandardAutoloader' => array('fallback_autoloader' => false),
 ));
 
-$appConfig = include __DIR__ . '/configs/application.config.php';
+$appConfig = include __DIR__ . '/config/application.config.php';
 
 $moduleLoader = new Zend\Loader\ModuleAutoloader($appConfig['module_paths']);
 $moduleLoader->register();

@@ -41,7 +41,7 @@ $config['production'] = array(
 
         'view-resolver' => array('parameters' => array(
             'paths' => array(
-                'application' => __DIR__ . '/../views',
+                'application' => __DIR__ . '/../view',
             ),
         )),
     )),

@@ -3,18 +3,23 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
  TODO.md
  bootstrap.php
  console
- configs=configs filter="*.php *.ini *.xml *.json *.yml" {
-  application.config.dist.php
+ config=config filter="*.php *.ini *.xml *.json *.yml" {
   application.config.php
   posts.config.php
+  autoload=autoload {
+   module.application.config.php
+   module.authentication.config.php
+   module.blog.config.php
+   module.contact.config.php
+  }
  }
- modules=modules {
+ module=module {
   Application=Application {
    Module.php
    autoload_classmap.php
    autoload_function.php
    autoload_register.php
-   configs=configs filter="*.ini *.xml *.php *.php.dist" {
+   config=config filter="*.ini *.xml *.php *.php.dist" {
     module.config.php
    }
    public=public {
@@ -42,7 +47,7 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
      }
     }
    }
-   views=views filter="*.mustache *.phtml" {
+   view=view filter="*.mustache *.phtml" {
     about.phtml
     analytics.phtml
     error.phtml
@@ -63,7 +68,7 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
    autoload_classmap.php
    autoload_function.php
    autoload_register.php
-   configs=configs {
+   config=config {
     module.config.php
    }
    src=src {
@@ -74,16 +79,7 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
      AuthenticationService.php
     }
    }
-   tests=tests CD=. filter="*.php *.xml" {
-    bootstrap.php
-    phpunit.xml
-    Authentication=Authentication {
-     _files=_files filter="*.txt" {
-      htdigest.txt
-     }
-    }
-   }
-   views=views {
+   view=view {
     authentication=authentication-authentication {
      401.phtml
      login.phtml
@@ -99,7 +95,7 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
    bin=bin {
     post.php
    }
-   configs=configs filter="*.php *.yml *.json *.xml *.ini" {
+   config=config filter="*.php *.yml *.json *.xml *.ini" {
     module.config.php
    }
    misc=misc {
@@ -134,7 +130,7 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
      }
     }
    }
-   tests=tests filter="*.xml *.php" {
+   test=test filter="*.xml *.php" {
     phpunit.xml
     bootstrap.php
     bootstrap.php.dist
@@ -146,7 +142,7 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
     log=log {
     }
    }
-   views=views filter="*.phtml *.php *.mustache" {
+   view=view filter="*.phtml *.php *.mustache" {
     blog=blog-entry {
      blogroll.phtml
      entry-short.phtml
@@ -227,7 +223,7 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
      }
     }
    }
-   tests=tests {
+   test=test {
     CommonResource=CommonResource {
      DataSource=DataSource {
       MockTest.php
@@ -247,8 +243,7 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
    autoload_classmap.php
    autoload_function.php
    autoload_register.php
-   configs=configs {
-    module.config.php.dist
+   config=config {
     module.config.php
    }
    src=src {
@@ -261,7 +256,7 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
      }
     }
    }
-   views=views {
+   view=view {
     contact=contact-contact {
      index.phtml
      thank-you.phtml
@@ -270,7 +265,7 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
   }
   Local=Local {
    Module.php
-   configs=configs {
+   config=config {
     module.config.php.dist
     module.config.php
    }
@@ -297,15 +292,15 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
   .htaccess
   index.php
  }
- scripts=scripts {
+ script=script {
   createAppContext.php
   fixPublicAccess.php
   importFromS9y.php
   wxrCommentExport.php
-  helpers=helpers {
+  helper=helper {
    GmtDate.php
   }
-  templates=templates {
+  template=template {
    comments_wxr.xml
    item.xml
    comment.xml

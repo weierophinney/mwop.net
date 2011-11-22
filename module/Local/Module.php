@@ -5,7 +5,7 @@ class Module
 {
     public function getConfig($env = null)
     {
-        $configFile = __DIR__ . '/configs/module.config.php';
+        $configFile = __DIR__ . '/config/module.config.php';
         if (!file_exists($configFile)) {
             $configFile .= '.dist';
         }
