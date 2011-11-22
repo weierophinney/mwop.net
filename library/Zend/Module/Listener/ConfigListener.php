@@ -2,7 +2,8 @@
 
 namespace Zend\Module\Listener;
 
-use Traversable,
+use ArrayAccess,
+    Traversable,
     Zend\Config\Config,
     Zend\Config\Xml as XmlConfig,
     Zend\Config\Ini as IniConfig,
@@ -166,9 +167,21 @@ class ConfigListener extends AbstractListener implements ConfigMerger
                 case 'php':
                 case 'inc':
                     $config = include $path;
-                    if (isset($config[$env])) {
-                        $config = $config[$env];
+                    if (!is_array($config) && !$config instanceof ArrayAccess) {
+                        throw new Exception\RuntimeException(sprintf(
+                            'Invalid configuration type returned by file at "%s"; received "%s"',
+                            $path,
+                            (is_object($config) ? get_class($config) : gettype($config))
+                        ));
                     }
+                    if (!isset($config[$env])) {
+                        throw new Exception\RuntimeException(sprintf(
+                            'Configuration returned by file "%s" does not contain an environment matching "%s"',
+                            $path,
+                            $env
+                        ));
+                    }
+                    $config = $config[$env];
                     break;
 
                 case 'xml':
