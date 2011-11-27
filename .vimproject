@@ -267,6 +267,7 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
    }
   }
   SkeletonCss=SkeletonCss filter="*.css *.js *.html *.txt" {
+   README.md
    public=public {
     404.html
     index.html
