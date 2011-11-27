@@ -65,3 +65,14 @@ last two examples above (symlinking and aliasing) are very good techniques.
 However, if you _must_ alter the files, I recommend method 1 above (copying),
 and then altering the _copies_. This allows you to version those files, while
 retaining the module's integrity.
+
+License
+-------
+
+All parts of Skeleton are free to use and abuse under the open-source MIT
+license. The full licensing language can be found here:
+http://www.opensource.org/licenses/mit-license.php.
+
+The official GitHub repository for Skeleton is at
+https://github.com/dhgamache/Skeleton; please submit issues and contributions
+related to Skeleton's CSS and JS to that project.
