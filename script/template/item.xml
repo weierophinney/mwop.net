@@ -3,7 +3,7 @@
         <link><?php echo $this->link ?></link>
         <content:encoded><![CDATA[<?php echo $this->body ?>]]></content:encoded>
         <dsq:thread_identifier><?php echo $this->identifier ?></dsq:thread_identifier>
-        <qp:post_data_gmt><?php echo $this->gmtDate($this->date) ?></wp:post_data_gmt>
+        <wp:post_data_gmt><?php echo $this->gmtDate($this->date) ?></wp:post_data_gmt>
         <wp:comment_status><?php echo ($this->allow_comments == 'true' ? 'open' : 'closed') ?></wp:comment_status>
         <?php 
         foreach ($this->comments as $comment) {
