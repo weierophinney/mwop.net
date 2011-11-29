@@ -30,12 +30,12 @@ a {
     color: #676767;
 }
 
-#header {
+header {
     margin-bottom: 1em;
     background-color: #FFFFFF;
 }
 
-#header .main_title {
+header .main_title {
     font-family: Cardo;
     font-size: 1.8em;
     font-style: oblique;
@@ -48,7 +48,7 @@ a {
     border-bottom: 1px dotted #676767;
 }
 
-#menu ul {
+#menu nav {
     list-style-type: none;
     font-family: "Cardo", arial, serif;
     font-weight: bold;
@@ -59,18 +59,18 @@ a {
     margin-left: 1em;
 }
 
-#menu ul li {
+#menu nav li {
     display: inline;
     list-style: none;
     padding-right: 1em;
 }
 
-#menu ul li a {
+#menu nav li a {
     text-decoration: none;
     color: #000000;
 }
 
-#menu ul li a:hover {
+#menu nav li a:hover {
     background-color: #FFFFFF;
     font-weight: bolder;
     color: #676767;
@@ -80,7 +80,7 @@ a {
     border-top: 1px dotted #676767;
 }
 
-.columns.footer {
+footer.columns {
     margin-top: 1em;
     border-top: 1px dotted #676767;
     padding-top: 1em;
@@ -121,6 +121,10 @@ a {
 
 .sidebar ul {
     list-style-type: none;
+}
+
+article.resume section {
+    clear: both;
 }
 
 dl.resume dt {
