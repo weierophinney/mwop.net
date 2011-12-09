@@ -78,3 +78,13 @@ div.example {
     padding-left: 2em;
 }
 
+/* ensure we don't mess with disqus styles */
+.dsq-comment, .dsq-comment-header, .dsq-comment-message, .dsq-comment-meta {
+    text-indent: 0;
+    padding-left: 0;
+}
+
+.dsq-comment-meta li, .dsq-comment-actions li {
+    text-indent: 0;
+}
+
