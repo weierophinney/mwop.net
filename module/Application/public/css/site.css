@@ -70,6 +70,11 @@ header .main_title {
     color: #000000;
 }
 
+#menu nav li a:hover {
+    font-style: bolder;
+    font-size: 133%;
+}
+
 .divider {
     border-top: 1px dotted #676767;
 }

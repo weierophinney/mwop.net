@@ -16,10 +16,9 @@ $headLink->prependStylesheet('/css/Application/site.css')
 
 $dojo = $this->plugin('dojo');
 $modulePaths = $dojo->getDjConfigOption('modulePaths', array());
-$modulePaths['Application'] = '/js/Application';
+// $modulePaths['Application'] = '/js/Application';
 $dojo->setDjConfigOption('baseUrl', '/js/dojo/')
-     ->setDjConfigOption('modulePaths', $modulePaths)
-     ->requireModule('Application.menu');
+     ->setDjConfigOption('modulePaths', $modulePaths);
 
 echo $this->doctype() ?>
 <!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
