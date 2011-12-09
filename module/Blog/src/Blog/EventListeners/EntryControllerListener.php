@@ -195,7 +195,7 @@ class EntryControllerListener
 
         $renderer->plugin('headLink')->appendStylesheet('/css/Blog/blog.css');
         $renderer->plugin('dojo')->setDjConfigOption('baseUrl', '/js/dojo/')
-                                 ->setDjConfigOption('modulePaths', array('Blog', '/js/Blog'))
+                                 ->setDjConfigOption('modulePaths', array('Blog' => '/js/Blog'))
                                  ->requireModule('Blog.blog');
 
         $action     = $matches->getParam('action', false);
