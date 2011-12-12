@@ -2,10 +2,20 @@
 
 namespace Cache;
 
-use Zend\Module\Consumer\AutoloaderProvider;
+use RuntimeException,
+    Zend\Cache\Cache,
+    Zend\Di\Di,
+    Zend\EventManager\StaticEventManager,
+    Zend\Module\Consumer\AutoloaderProvider;
 
 class Module implements AutoloaderProvider
 {
+    public function init($manager)
+    {
+        $events = StaticEventManager::getInstance();
+        $events->attach('bootstrap', 'bootstrap', array($this, 'bootstrap'), 100);
+    }
+
     public function getAutoloaderConfig()
     {
         return array(
@@ -13,5 +23,40 @@ class Module implements AutoloaderProvider
                 __DIR__ . '/autoload_classmap.php'
             ),
         );
+    }
+
+    public function bootstrap($e)
+    {
+        $app     = $e->getParam('application');
+        $locator = $e->getLocator();
+        if (!$locator instanceof Di) {
+            return;
+        }
+
+        $config  = $e->getParam('config');
+        $di->instanceManager()->setParameters('Cache\Listener', array(
+            'cache' => function() use ($config) {
+                if (!isset($config['cache'])) {
+                    throw new RuntimeException('Unable to instantiate cache; missing cache key in config');
+                }
+                $cacheConfig = $config['cache'];
+                if (!isset($cacheConfig['frontend'])
+                    || !isset($cacheConfig['backend'])
+                    || !isset($cacheConfig['frontend_options'])
+                    || !isset($cacheConfig['backend_options'])
+                ) {
+                    throw new RuntimeException('Cache configuration missing one or more of the following keys: frontend, backend, frontend_options, backend_options');
+                }
+                $cache = Cache::factory(
+                    $cacheConfig['frontend'],
+                    $cacheConfig['backend'],
+                    $cacheConfig['frontend_options'],
+                    $cacheConfig['backend_options']
+                );
+                return $cache;
+            }
+        ));
+        $listener = $di->get('Cache\Listener');
+        $application->events()->attachAggregate($listener);
     }
 }

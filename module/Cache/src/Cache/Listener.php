@@ -40,6 +40,11 @@ class Listener implements ListenerAggregate
         }
     }
 
+    public function getCache()
+    {
+        return $this->cache;
+    }
+
     public function addRule($rule)
     {
         if (!is_callable($rule)) {

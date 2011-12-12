@@ -168,6 +168,9 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
    bin=bin {
     clear_cache.php
    }
+   config=config filter="*.php *.yml *.json *.xml *.ini" {
+    module.config.php
+   }
    src=src {
     Cache=Cache {
      Listener.php
