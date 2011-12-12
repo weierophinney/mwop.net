@@ -160,6 +160,20 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
     }
    }
   }
+  Cache=Cache {
+   autoload_classmap.php
+   autoload_function.php
+   autoload_register.php
+   Module.php
+   bin=bin {
+    clear_cache.php
+   }
+   src=src {
+    Cache=Cache {
+     Listener.php
+    }
+   }
+  }
   Comic=Comic {
    autoload_classmap.php
    autoload_function.php
