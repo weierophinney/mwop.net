@@ -13,6 +13,8 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
    module.authentication.config.php.dist
    module.blog.config.php
    module.blog.config.php.dist
+   module.cache.config.php
+   module.cache.config.php.dist
    module.contact.config.php
    module.contact.config.php.dist
   }

@@ -13,7 +13,7 @@ class Module implements AutoloaderProvider
     public function init()
     {
         $events = StaticEventManager::getInstance();
-        $events->attach('bootstrap', 'bootstrap', array($this, 'registerStaticListeners'));
+        $events->attach('bootstrap', 'bootstrap', array($this, 'bootstrap'));
     }
 
     public function getAutoloaderConfig()
@@ -43,7 +43,7 @@ class Module implements AutoloaderProvider
         return $config[$env];
     }
 
-    public function registerStaticListeners($e)
+    public function bootstrap($e)
     {
         $app      = $e->getParam('application');
         $config   = $e->getParam('config');
@@ -52,5 +52,19 @@ class Module implements AutoloaderProvider
         $listener = $locator->get('Authentication\AuthenticationListener', array('config' => $config));
         $events->attach('Zend\Stdlib\Dispatchable', 'dispatch', array($listener, 'testAuthenticatedUser'), 100);
         $events->attach('Zend\Stdlib\Dispatchable', 'authenticate', array($listener, 'testAuthenticatedUser'), 100);
+
+        $cacheListener = $locator->get('Cache\Listener');
+        $cacheListener->addRule(function($e) {
+            if (!$e instanceof \Zend\Mvc\MvcEvent) {
+                return;
+            }
+
+            $routeMatch = $e->getRouteMatch();
+            if (in_array($routeMatch->getMatchedRouteName(), array('authentication-login', 'authentication-logout'))) {
+                // Do not cache authentication requests
+                return true;
+            }
+            return false;
+        });
     }
 }

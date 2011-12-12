@@ -3,10 +3,12 @@
 namespace Cache;
 
 use RuntimeException,
+    Traversable,
     Zend\Cache\Cache,
     Zend\Di\Di,
     Zend\EventManager\StaticEventManager,
-    Zend\Module\Consumer\AutoloaderProvider;
+    Zend\Module\Consumer\AutoloaderProvider,
+    Zend\Stdlib\IteratorToArray;
 
 class Module implements AutoloaderProvider
 {
@@ -25,11 +27,29 @@ class Module implements AutoloaderProvider
         );
     }
 
+    public function getConfig($env = null)
+    {
+        $config = include __DIR__ . '/config/module.config.php';
+        if (null === $env) {
+            return $config;
+        }
+
+        if (!isset($config[$env])) {
+            throw new InvalidArgumentException(sprintf(
+                'Unrecognized environment "%s" provided to %s',
+                $env,
+                __METHOD__
+            ));
+        }
+
+        return $config[$env];
+    }
+
     public function bootstrap($e)
     {
-        $app     = $e->getParam('application');
-        $locator = $e->getLocator();
-        if (!$locator instanceof Di) {
+        $app = $e->getParam('application');
+        $di  = $app->getLocator();
+        if (!$di instanceof Di) {
             return;
         }
 
@@ -40,6 +60,9 @@ class Module implements AutoloaderProvider
                     throw new RuntimeException('Unable to instantiate cache; missing cache key in config');
                 }
                 $cacheConfig = $config['cache'];
+                if ($cacheConfig instanceof Traversable) {
+                    $cacheConfig = IteratorToArray::convert($cacheConfig);
+                }
                 if (!isset($cacheConfig['frontend'])
                     || !isset($cacheConfig['backend'])
                     || !isset($cacheConfig['frontend_options'])
@@ -57,6 +80,6 @@ class Module implements AutoloaderProvider
             }
         ));
         $listener = $di->get('Cache\Listener');
-        $application->events()->attachAggregate($listener);
+        $app->events()->attachAggregate($listener);
     }
 }

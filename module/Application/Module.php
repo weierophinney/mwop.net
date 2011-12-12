@@ -21,6 +21,7 @@ class Module implements AutoloaderProvider
     public function init()
     {
         $events = StaticEventManager::getInstance();
+        $events->attach('bootstrap', 'bootstrap', array($this, 'cacheRules'));
         $events->attach('bootstrap', 'bootstrap', array($this, 'initView'));
         $events->attach('bootstrap', 'bootstrap', array($this, 'registerApplicationListeners'), -10);
         $events->attach('bootstrap', 'bootstrap', array($this, 'registerStaticListeners'), -10);
@@ -105,6 +106,25 @@ class Module implements AutoloaderProvider
         $events       = StaticEventManager::getInstance();
         $viewListener = $this->getViewListener($this->view, $config);
         $viewListener->registerStaticListeners($events, $locator);
+    }
+
+    public function cacheRules($e)
+    {
+        $app      = $e->getParam('application');
+        $locator  = $app->getLocator();
+        $cacheListener = $locator->get('Cache\Listener');
+        $cacheListener->addRule(function($e) {
+            if (!$e instanceof \Zend\Mvc\MvcEvent) {
+                return;
+            }
+
+            $routeMatch = $e->getRouteMatch();
+            if (in_array($routeMatch->getMatchedRouteName(), array('default', 'comics'))) {
+                // Do not cache 404 requests or the comics page
+                return true;
+            }
+            return false;
+        });
     }
 
     protected function getViewListener($view, $config)

@@ -1,0 +1,22 @@
+<?php
+$config['production'] = array('cache' => array(
+    'frontend' => 'Core',
+    'backend'  => 'BlackHole',
+    'frontend_options' => array(
+        'caching'                 => false,
+        'cache_id_prefix'         => 'cache_listener',
+        'lifetime'                => 60 * 60 * 24 * 7, // 1 week
+        'automatic_serialization' => true,
+    ),
+    'backend_options' => array(
+    ),
+));
+
+$config['staging']     = $config['production'];
+$config['testing']     = $config['production'];
+
+$config['development'] = $config['production'];
+$config['development']['cache']['backend'] = 'BlackHole';
+$config['development']['cache']['frontend_options']['caching'] = false;
+
+return $config;

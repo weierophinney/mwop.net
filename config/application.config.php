@@ -6,6 +6,7 @@ return new Zend\Config\Config(array(
     'modules' => array(
         'Application',
         'Authentication',
+        'Cache',
         'Comic',
         'CommonResource',
         'Blog',

@@ -13,9 +13,10 @@ $config['di'] = array(
         ),
     )),
 );
+
 $config['cache'] = array(
-    'frontend' => 'Zend\Cache\Frontend\Core',
-    'backend'  => 'Zend\Cache\Frontend\BlackHole',
+    'frontend' => 'Core',
+    'backend'  => 'BlackHole',
     'frontend_options' => array(
         'caching'                 => false,
         'cache_id_prefix'         => 'cache_listener',
@@ -24,7 +25,7 @@ $config['cache'] = array(
     ),
     'backend_options' => array(
     ),
-)
+);
 
 $config = array(
     'production'  => $config,
