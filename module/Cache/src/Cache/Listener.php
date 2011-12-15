@@ -12,6 +12,7 @@ use Zend\Cache\Frontend as CacheFrontend,
 class Listener implements ListenerAggregate
 {
     protected $cache;
+    protected $cacheHit = false;
     protected $listeners = array();
     protected $rules = array();
     protected $skipCacheDueTo = false;
@@ -60,7 +61,7 @@ class Listener implements ListenerAggregate
     public function attach(Events $e)
     {
         $this->listeners[] = $e->attach('dispatch', array($this, 'queryCache'), 99);
-        $this->listeners[] = $e->attach('dispatch', array($this, 'saveToCache'), -10000);
+        $this->listeners[] = $e->attach('finish', array($this, 'saveToCache'));
     }
 
     public function detach(Events $e)
@@ -93,27 +94,33 @@ class Listener implements ListenerAggregate
         $status   = isset($found['status'])  ? $found['status']  : 200;
         $headers  = isset($found['headers']) ? $found['headers'] : array();
         $content  = $found['content'];
-        $response = $e->getReponse();
+        $response = $e->getresponse();
+
+        $headers['X-MWOP-CACHE-ID'] = $key;
         $response->headers()->addHeaders($headers);
         $response->setStatusCode($status);
         $response->setContent($content);
+
+        $this->cacheHit = true;
         return $response;
     }
 
     public function saveToCache(Event $e)
     {
-        if ($this->omit($e)) {
+        if ($this->cacheHit || $this->omit($e)) {
             return;
         }
 
-        $key     = $this->createKey($e->getRequest());
-        $reponse = $e->getResponse();
-        $status  = $response->getStatusCode();
-        $headers = $response->headers()->toArray();
-        $content = $response->getContent($content);
-        $data    = compact('status', 'headers', 'content');
+        $key      = $this->createKey($e->getRequest());
+        $response = $e->getResponse();
+        $status   = $response->getStatusCode();
+        $headers  = $response->headers()->toArray();
+        $content  = $response->getContent();
+        $data     = compact('status', 'headers', 'content');
 
         $this->cache->save($data, $key);
+        $response->headers()->addHeaderLine('X-MWOP-CACHE-SAVE', $key);
+        return $response;
     }
 
     public function getReasonSkipped()
