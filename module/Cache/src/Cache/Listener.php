@@ -12,7 +12,6 @@ use Zend\Cache\Frontend as CacheFrontend,
 class Listener implements ListenerAggregate
 {
     protected $cache;
-    protected $cacheHit = false;
     protected $listeners = array();
     protected $rules = array();
     protected $skipCacheDueTo = false;
@@ -60,20 +59,22 @@ class Listener implements ListenerAggregate
 
     public function attach(Events $e)
     {
-        $this->listeners[] = $e->attach('dispatch', array($this, 'queryCache'), 99);
-        $this->listeners[] = $e->attach('finish', array($this, 'saveToCache'));
+        $this->listeners['query'] = $e->attach('dispatch', array($this, 'queryCache'), 99);
+        $this->listeners['save']  = $e->attach('finish', array($this, 'saveToCache'));
     }
 
     public function detach(Events $e)
     {
-        foreach ($this->listeners as $listener) {
+        foreach ($this->listeners as $key => $listener) {
             $e->detach($listener);
+            unset($this->listeners[$key]);
         }
     }
 
     public function queryCache(Event $e)
     {
         if ($this->omit($e)) {
+            $e->getTarget()->events()->detach($this->listeners['save']);
             return;
         }
 
@@ -101,13 +102,13 @@ class Listener implements ListenerAggregate
         $response->setStatusCode($status);
         $response->setContent($content);
 
-        $this->cacheHit = true;
+        $e->getTarget()->events()->detach($this->listeners['save']);
         return $response;
     }
 
     public function saveToCache(Event $e)
     {
-        if ($this->cacheHit || $this->omit($e)) {
+        if ($this->omit($e)) {
             return;
         }
 
