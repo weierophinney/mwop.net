@@ -82,8 +82,16 @@ class Listener implements ListenerAggregate
             return;
         }
 
-        $status   = $found['status'];
-        $headers  = $found['headers'];
+        if (!is_array($found)) {
+            return;
+        }
+
+        if (!isset($found['content'])) {
+            return;
+        }
+
+        $status   = isset($found['status'])  ? $found['status']  : 200;
+        $headers  = isset($found['headers']) ? $found['headers'] : array();
         $content  = $found['content'];
         $response = $e->getReponse();
         $response->headers()->addHeaders($headers);
