@@ -5,12 +5,6 @@ TODO
 
 * Write post about new site
 
-## In Progress
-
-* Add caching
-  * Need to determine what backend will be used, and implement configuration for
-    it
-
 ## Ongoing
 
 * Use HTML5 tags in layout
