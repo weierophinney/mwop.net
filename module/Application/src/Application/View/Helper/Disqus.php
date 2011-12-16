@@ -50,6 +50,15 @@ class Disqus extends AbstractHelper
             $developer = $this->developer;
         }
 
+        if (!preg_match('#^https?://#', $url)) {
+            $scheme = 'http://';
+            if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] && 'off' != $_SERVER['HTTPS']) {
+                $scheme = 'https://';
+            }
+            $host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'mwop.net';
+            $url  = $scheme . $host . '/' . ltrim($url, '/');
+        }
+
         $html =<<<EOH
     <div id="disqus_thread"></div>
     <script type="text/javascript">
