@@ -35,7 +35,7 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
      favicon.ico
     }
     js=js {
-     menu.js
+     scroll.js
     }
    }
    src=src {
