@@ -14,7 +14,7 @@
  *
  * @category   Zend
  * @package    Zend_OAuth
- * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
@@ -26,7 +26,7 @@ namespace Zend\OAuth;
 /**
  * @category   Zend
  * @package    Zend_OAuth
- * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Http
@@ -175,7 +175,7 @@ class Http
         }
         if ($response !== null) {
             $body   = $response->getBody();
-            $status = $response->getStatus();
+            $status = $response->getStatusCode();
         }
         if ($response === null // Request failure/exception
             || $status == 500  // Internal Server Error
@@ -220,10 +220,10 @@ class Http
     {
         switch ($this->_preferredRequestScheme) {
             case OAuth::REQUEST_SCHEME_HEADER:
-                $this->_preferredRequestScheme = OAuth\OAuth::REQUEST_SCHEME_POSTBODY;
+                $this->_preferredRequestScheme = OAuth::REQUEST_SCHEME_POSTBODY;
                 break;
             case OAuth::REQUEST_SCHEME_POSTBODY:
-                $this->_preferredRequestScheme = OAuth\OAuth::REQUEST_SCHEME_QUERYSTRING;
+                $this->_preferredRequestScheme = OAuth::REQUEST_SCHEME_QUERYSTRING;
                 break;
             default:
                 throw new Exception(
