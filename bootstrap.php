@@ -5,6 +5,9 @@ use Zend\Loader\AutoloaderFactory,
     Zend\Mvc\Application,
     Zend\Mvc\Bootstrap;
 
+// Switch to this directory
+chdir(__DIR__);
+
 // Define application environment
 defined('APPLICATION_ENV')
     || define('APPLICATION_ENV', (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'production'));
@@ -50,11 +53,10 @@ $bootstrap->bootstrap($application);
 /*
 echo "<pre>";
 Zend\Di\Display\Console::export($application->getLocator(), array(
-    'Blog\Controller\EntryController',
-    'Zend\Mail\Mail',
+    'Application\Controller\PageController',
+    // 'Zend\Mail\Mail',
 ));
 echo "</pre>";
-/*
 $obj = $application->getLocator()->get('Blog\Controller\EntryController');
 echo "<pre>";
 echo var_export($obj, 1);

@@ -62,14 +62,4 @@ $config['di'] = array(
 
 ));
 
-$config = array(
-    'production'  => $config,
-    'staging'     => $config,
-    'testing'     => $config,
-    'development' => $config,
-);
-
-$config['staging']['di']['instance']['MongoDB']['parameters']['name'] = 'STAGING DB NAME HERE';
-$config['development']['di']['instance']['MongoDB']['parameters']['name'] = 'DEV DB NAME HERE';
-
 return $config;

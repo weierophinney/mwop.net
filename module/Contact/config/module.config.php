@@ -1,5 +1,5 @@
 <?php
-$config['production'] = array(
+$config = array(
 'di' => array(
     'definition' => array('class' => array(
         'Contact\Controller\ContactController' => array(
@@ -118,8 +118,4 @@ $config['production'] = array(
     ),
 ),
 );
-$config['staging']     = $config['production'];
-$config['testing']     = $config['production'];
-$config['development'] = $config['production'];
 return $config;
-

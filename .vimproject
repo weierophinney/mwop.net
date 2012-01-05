@@ -7,14 +7,15 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
   application.config.php
   posts.config.php
   autoload=autoload {
-   module.application.config.php
-   module.application.config.php.dist
-   module.authentication.config.php
-   module.authentication.config.php.dist
-   module.blog.config.php
-   module.blog.config.php.dist
-   module.contact.config.php
-   module.contact.config.php.dist
+   module.application.config.global.php
+   module.application.config.local.php
+   module.authentication.config.global.php
+   module.authentication.config.local.php
+   module.blog.config.global.php
+   module.blog.config.local.php
+   module.cache.config.php
+   module.contact.config.global.php
+   module.contact.config.local.php
   }
  }
  module=module {

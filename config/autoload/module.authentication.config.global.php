@@ -1,5 +1,5 @@
 <?php
-$config['production'] = array(
+$config = array(
     'di' => array('instance' => array(
         'Authentication\AuthenticationService' => array('parameters' => array(
             'filename' => 'PATH TO DIGEST',
@@ -7,9 +7,5 @@ $config['production'] = array(
         )),
     )),
 );
-
-$config['staging']     = $config['production'];
-$config['testing']     = $config['production'];
-$config['development'] = $config['production'];
 
 return $config;

@@ -1,5 +1,5 @@
 <?php
-$config['production'] = array(
+$config = array(
     'routes' => array(
         'authentication-login' => array(
             'type'    => 'Literal',
@@ -55,9 +55,5 @@ $config['production'] = array(
         )),
     )),
 );
-
-$config['staging']     = $config['production'];
-$config['testing']     = $config['production'];
-$config['development'] = $config['production'];
 
 return $config;

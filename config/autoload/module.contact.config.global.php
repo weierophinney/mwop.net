@@ -1,5 +1,5 @@
 <?php
-$config['production'] = array(
+$config = array(
 'di' => array(
     'preferences' => array(
         'Zend\Mail\AbstractTransport' => 'Zend\Mail\Transport\Smtp',
@@ -27,8 +27,4 @@ $config['production'] = array(
     ),
 ),
 );
-$config['staging']     = $config['production'];
-$config['testing']     = $config['production'];
-$config['development'] = $config['production'];
 return $config;
-

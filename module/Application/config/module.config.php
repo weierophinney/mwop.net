@@ -1,6 +1,6 @@
 <?php
 $config = array();
-$config['production'] = array(
+$config = array(
     'authentication' => array(
         'Application\Controller\PageController' => array(
             'comics',
@@ -105,11 +105,4 @@ $config['production'] = array(
     ),
 );
 
-$config['staging']     = $config['production'];
-
-$config['testing']     = $config['production'];
-$config['testing']['display_exceptions']    = true;
-
-$config['development'] = $config['production'];
-$config['development']['display_exceptions']    = true;
 return $config;
