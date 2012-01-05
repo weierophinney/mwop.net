@@ -32,9 +32,9 @@ $config = array(
                 ),
             ),
         ),
-        'Zend\Mail\Mail' => array(
+        'Zend\Mail\Message' => array(
             'addTo' => array(
-                'email' => array(
+                'emailOrAddressList' => array(
                     'type' => false,
                     'required' => true,
                 ),
@@ -52,9 +52,9 @@ $config = array(
             'view-resolver'   => 'Zend\View\TemplatePathStack',
         ),
 
-        'Zend\Mail\Mail' => array('parameters' => array(
-            'Zend\Mail\Mail::addTo:email' => 'EMAIL HERE',
-            'Zend\Mail\Mail::addTo:name'  => "NAME HERE",
+        'Zend\Mail\Message' => array('parameters' => array(
+            'Zend\Mail\Message::addTo:emailOrAddressList' => 'EMAIL HERE',
+            'Zend\Mail\Message::addTo:name'  => "NAME HERE",
         )),
 
         'view' => array('parameters' => array(
@@ -68,7 +68,7 @@ $config = array(
         )),
 
         'Contact\Controller\ContactController' => array('parameters' => array(
-            'mailer'    => 'Zend\Mail\Mail',
+            'message'   => 'Zend\Mail\Message',
             'form'      => 'Contact\Form\ContactForm',
         )),
 

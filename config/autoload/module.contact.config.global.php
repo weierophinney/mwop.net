@@ -2,18 +2,22 @@
 $config = array(
 'di' => array(
     'preferences' => array(
-        'Zend\Mail\AbstractTransport' => 'Zend\Mail\Transport\Smtp',
+        'Zend\Mail\Transport' => 'Zend\Mail\Transport\Smtp',
     ),
 
     'instance' => array(
-        'Zend\Mail\Mail' => array('parameters' => array(
-            'Zend\Mail\Mail::addTo:email' => 'EMAIL HERE',
-            'Zend\Mail\Mail::addTo:name'  => "NAME HERE",
+        'Zend\Mail\Message' => array('parameters' => array(
+            'Zend\Mail\Message::addTo:emailOrAddressList' => 'EMAIL HERE',
+            'Zend\Mail\Message::addTo:name'  => "NAME HERE",
         )),
 
         'Zend\Mail\Transport\Smtp' => array('parameters' => array(
+            'options' => 'Zend\Mail\Transport\SmtpOptions',
+        )),
+
+        'Zend\Mail\Transport\SmtpOptions' => array('parameters' => array(
             'host'   => 'HOSTNAME HERE',
-            'config' => array( /* options here */ ),
+            /* options here */
         )),
 
         'Zend\Captcha\ReCaptcha' => array('parameters' => array(

@@ -3,19 +3,19 @@
 namespace Contact\Controller;
 
 use Contact\Form\ContactForm,
-    Zend\Mail\AbstractTransport as Transport,
-    Zend\Mail\Mail as Mailer,
+    Zend\Mail\Transport,
+    Zend\Mail\Message as Message,
     Zend\Mvc\Controller\ActionController;
 
 class ContactController extends ActionController
 {
     protected $form;
-    protected $mailer;
+    protected $message;
     protected $transport;
 
-    public function setMailer(Mailer $mailer)
+    public function setMessage(Message $message)
     {
-        $this->mailer = $mailer;
+        $this->message = $message;
     }
 
     public function setMailTransport(Transport $transport)
@@ -50,11 +50,11 @@ class ContactController extends ActionController
         $subject = '[Contact Form] ' . $values['subject'];
         $body    = $values['body'];
 
-        $this->mailer->setFrom($from)
-                     ->setReplyTo($from)
-                     ->setSubject($subject)
-                     ->setBodyText($body);
-        $this->mailer->send($this->transport);
+        $this->message->addFrom($from)
+                      ->addReplyTo($from)
+                      ->setSubject($subject)
+                      ->setBody($body);
+        $this->transport->send($this->message);
 
         return $this->redirect()->toRoute('contact-thank-you');
     }
