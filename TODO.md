@@ -7,7 +7,6 @@ TODO
 
 ## Ongoing
 
-* Update to beta2
 * Use HTML5 tags in layout
   * header
   * article
