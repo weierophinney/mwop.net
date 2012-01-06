@@ -64,7 +64,7 @@ class ContactController extends ActionController
     {
         $from    = $data['from'];
         $subject = '[Contact Form] ' . $data['subject'];
-        $body    = sprintf("From: %s\r\n\r\n%s", $from, $data['body']);
+        $body    = $data['body'];
 
         $this->message->addFrom($from)
                       ->addReplyTo($from)

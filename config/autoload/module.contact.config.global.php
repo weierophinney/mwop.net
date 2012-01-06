@@ -8,7 +8,8 @@ $config = array(
     'instance' => array(
         'Zend\Mail\Message' => array('parameters' => array(
             'Zend\Mail\Message::addTo:emailOrAddressList' => 'EMAIL HERE',
-            'Zend\Mail\Message::addTo:name'  => "NAME HERE",
+            // 'Zend\Mail\Message::addTo:name'  => "NAME HERE",
+            'Zend\Mail\Message::setSender:emailOrAddressList' => 'EMAIL HERE',
         )),
 
         'Zend\Mail\Transport\Smtp' => array('parameters' => array(

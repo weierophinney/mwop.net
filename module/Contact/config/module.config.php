@@ -43,6 +43,26 @@ $config = array(
                     'required' => false,
                 ),
             ),
+            'addFrom' => array(
+                'emailOrAddressList' => array(
+                    'type' => false,
+                    'required' => true,
+                ),
+                'name' => array(
+                    'type' => false,
+                    'required' => false,
+                ),
+            ),
+            'setSender' => array(
+                'emailOrAddressList' => array(
+                    'type' => false,
+                    'required' => true,
+                ),
+                'name' => array(
+                    'type' => false,
+                    'required' => false,
+                ),
+            ),
         ),
     )),
     'instance' => array(
