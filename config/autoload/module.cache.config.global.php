@@ -1,5 +1,5 @@
 <?php
-$config['production'] = array('cache' => array(
+$config = array('cache' => array(
     'frontend' => 'Core',
     'backend'  => 'Libmemcached',
     'frontend_options' => array(
@@ -23,13 +23,5 @@ $config['production'] = array('cache' => array(
         ),
     ),
 ));
-
-$config['staging']     = $config['production'];
-$config['testing']     = $config['production'];
-
-$config['development'] = $config['production'];
-$config['development']['cache']['frontend_options']['caching'] = false;
-$config['development']['cache']['backend'] = 'BlackHole';
-$config['development']['cache']['backend_options'] = array();
 
 return $config;
