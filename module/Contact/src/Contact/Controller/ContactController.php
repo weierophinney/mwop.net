@@ -45,16 +45,7 @@ class ContactController extends ActionController
         }
 
         // send email...
-        $values  = $form->getValues();
-        $from    = $values['from'];
-        $subject = '[Contact Form] ' . $values['subject'];
-        $body    = $values['body'];
-
-        $this->message->addFrom($from)
-                      ->addReplyTo($from)
-                      ->setSubject($subject)
-                      ->setBody($body);
-        $this->transport->send($this->message);
+        $this->sendEmail($form->getValues());
 
         return $this->redirect()->toRoute('contact-thank-you');
     }
@@ -67,5 +58,18 @@ class ContactController extends ActionController
     public function setContactForm(ContactForm $form)
     {
         $this->form = $form;
+    }
+
+    protected function sendEmail(array $data)
+    {
+        $from    = $data['from'];
+        $subject = '[Contact Form] ' . $data['subject'];
+        $body    = sprintf("From: %s\r\n\r\n%s", $from, $data['body']);
+
+        $this->message->addFrom($from)
+                      ->addReplyTo($from)
+                      ->setSubject($subject)
+                      ->setBody($body);
+        $this->transport->send($this->message);
     }
 }
