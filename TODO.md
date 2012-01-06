@@ -14,6 +14,12 @@ TODO
   * etc.
 * Update ReCaptcha to pass options to use different theme
 * Add various "share" links on blog entries
+  * twitter
+  * reddit
+  * facebook
+  * g+
+  * digg?
+  * hacker news (news.ycombinator.com)
 * Remove Renderer as a service and instead move into the default listener
   * Incorporate layout component?
 * Add caching for individual entries

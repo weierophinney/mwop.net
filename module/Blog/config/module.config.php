@@ -147,7 +147,7 @@ $config['di'] = array(
     'Blog\Controller\EntryController' => array('parameters' => array(
         'view'     => 'view',
         'resource' => 'Blog\EntryResource',
-        'key'      => APPLICATION_PATH . '/data/api-key.txt',
+        'key'      => 'data/api-key.txt',
     )),
 
     'view' => array( 'parameters' => array(
@@ -160,12 +160,5 @@ $config['di'] = array(
         ),
     )),
 ));
-
-$config = array(
-    'production'  => $config,
-    'staging'     => $config,
-    'testing'     => $config,
-    'development' => $config,
-);
 
 return $config;
