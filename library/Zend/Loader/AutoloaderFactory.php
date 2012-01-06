@@ -14,7 +14,7 @@
  *
  * @category   Zend
  * @package    Zend_Loader
- * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
@@ -23,10 +23,12 @@ namespace Zend\Loader;
 
 require_once __DIR__ . '/SplAutoloader.php';
 
+if (class_exists('Zend\Loader\AutoloaderFactory')) return;
+
 /**
  * @category   Zend
  * @package    Zend_Loader
- * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 abstract class AutoloaderFactory
@@ -178,9 +180,10 @@ abstract class AutoloaderFactory
             return static::$standardAutoloader;
         }
 
-        require_once __DIR__ . '/StandardAutoloader.php';
+        if (!class_exists('Zend\Loader\StandardAutoloader')) {
+            require_once __DIR__ . '/StandardAutoloader.php';
+        }
         $loader = new StandardAutoloader();
-        $loader->setFallbackAutoloader(true);
         static::$standardAutoloader = $loader;
         return static::$standardAutoloader;
     }

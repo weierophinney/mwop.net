@@ -1,5 +1,5 @@
 <?php
-$config['production'] = array(
+$config = array(
 'di' => array(
     'definition' => array('class' => array(
         'Contact\Controller\ContactController' => array(
@@ -32,9 +32,29 @@ $config['production'] = array(
                 ),
             ),
         ),
-        'Zend\Mail\Mail' => array(
+        'Zend\Mail\Message' => array(
             'addTo' => array(
-                'email' => array(
+                'emailOrAddressList' => array(
+                    'type' => false,
+                    'required' => true,
+                ),
+                'name' => array(
+                    'type' => false,
+                    'required' => false,
+                ),
+            ),
+            'addFrom' => array(
+                'emailOrAddressList' => array(
+                    'type' => false,
+                    'required' => true,
+                ),
+                'name' => array(
+                    'type' => false,
+                    'required' => false,
+                ),
+            ),
+            'setSender' => array(
+                'emailOrAddressList' => array(
                     'type' => false,
                     'required' => true,
                 ),
@@ -52,9 +72,9 @@ $config['production'] = array(
             'view-resolver'   => 'Zend\View\TemplatePathStack',
         ),
 
-        'Zend\Mail\Mail' => array('parameters' => array(
-            'Zend\Mail\Mail::addTo:email' => 'EMAIL HERE',
-            'Zend\Mail\Mail::addTo:name'  => "NAME HERE",
+        'Zend\Mail\Message' => array('parameters' => array(
+            'Zend\Mail\Message::addTo:emailOrAddressList' => 'EMAIL HERE',
+            'Zend\Mail\Message::addTo:name'  => "NAME HERE",
         )),
 
         'view' => array('parameters' => array(
@@ -68,7 +88,7 @@ $config['production'] = array(
         )),
 
         'Contact\Controller\ContactController' => array('parameters' => array(
-            'mailer'    => 'Zend\Mail\Mail',
+            'message'   => 'Zend\Mail\Message',
             'form'      => 'Contact\Form\ContactForm',
         )),
 
@@ -118,8 +138,4 @@ $config['production'] = array(
     ),
 ),
 );
-$config['staging']     = $config['production'];
-$config['testing']     = $config['production'];
-$config['development'] = $config['production'];
 return $config;
-

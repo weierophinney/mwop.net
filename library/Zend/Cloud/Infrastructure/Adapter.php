@@ -3,7 +3,7 @@
  * @category   Zend
  * @package    Zend\Cloud
  * @subpackage Infrastructure
- * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
@@ -17,7 +17,7 @@ namespace Zend\Cloud\Infrastructure;
  * 
  * @package    Zend\Cloud
  * @subpackage Infrastructure
- * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 interface Adapter 
@@ -57,7 +57,7 @@ interface Adapter
      * @param  integer $timeout 
      * @return boolean
      */
-    public function waitStatusInstance($id, $status, $timeout = static::TIMEOUT_STATUS_CHANGE);
+    public function waitStatusInstance($id, $status, $timeout = self::TIMEOUT_STATUS_CHANGE);
     
     /**
      * Return the public DNS name of the instance

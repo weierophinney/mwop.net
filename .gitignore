@@ -1,3 +1,4 @@
+config/autoload/*.local.php
 config/posts.config.php
 data/*.*
 data/htdigest
