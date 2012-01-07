@@ -7,31 +7,36 @@ $config['di'] = array(
             '__construct' => array(
                 'cache' => array(
                     'required' => true,
-                    'type'     => 'Zend\Cache\Frontend',
+                    'type'     => 'Zend\Cache\Storage\Adapter',
                 ),
             ),
         ),
     )),
-);
 
-$config['cache'] = array(
-    'frontend' => 'Core',
-    'backend'  => 'BlackHole',
-    'frontend_options' => array(
-        'caching'                 => false,
-        'cache_id_prefix'         => 'cache_listener',
-        'lifetime'                => 60 * 60 * 24 * 7, // 1 week
-        'automatic_serialization' => true,
+    'preferences' => array(
+        'Zend\Cache\Storage\Adapter' => 'Zend\Cache\Storage\Adapter\Memcached',
     ),
-    'backend_options' => array(
-    ),
-);
 
-$config = array(
-    'production'  => $config,
-    'staging'     => $config,
-    'testing'     => $config,
-    'development' => $config,
+    'instance' => array(
+        'Zend\Cache\Storage\Adapter\Memcached' => array('parameters' => array(
+            'options' => 'Zend\Cache\Storage\Adapter\MemcachedOptions',
+        )),
+
+        'Zend\Cache\Storage\Adapter\MemcachedOptions' => array('parameters' => array(
+            'options' => array(
+                // 'caching'                 => true,
+                'namespace' => 'cache_listener',
+                'ttl' => 60 * 60 * 24 * 7, // 1 week
+                'server' => '127.0.0.1',
+                'port' => 11211,
+                'compression' => true,
+                'binary_protocol' => true,
+                'no_block' => true,
+                'connect_timeout' => 100,
+                'serializer' => 3, // JSON
+            ),
+        )),
+    ),
 );
 
 return $config;

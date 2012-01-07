@@ -1,27 +1,4 @@
 <?php
-$config = array('cache' => array(
-    'frontend' => 'Core',
-    'backend'  => 'Libmemcached',
-    'frontend_options' => array(
-        'caching'                 => true,
-        'cache_id_prefix'         => 'cache_listener',
-        'lifetime'                => 60 * 60 * 24 * 7, // 1 week
-        'automatic_serialization' => true,
-    ),
-    'backend_options' => array(
-        'servers' => array(array(
-            'host'   => '127.0.0.1',
-            'port'   => 11211,
-            'weight' => 1,
-        )),
-        'client' => array(
-            'COMPRESSION'     => true,
-            'BINARY_PROTOCOL' => true,
-            'NO_BLOCK'        => true,
-            'CONNECT_TIMEOUT' => 100,
-            'SERIALIZER'      => 3, // JSON
-        ),
-    ),
-));
+$config = array();
 
 return $config;

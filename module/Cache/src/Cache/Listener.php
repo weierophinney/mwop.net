@@ -2,7 +2,7 @@
 
 namespace Cache;
 
-use Zend\Cache\Frontend as CacheFrontend,
+use Zend\Cache\Storage\Adapter as CacheAdapter,
     Zend\EventManager\EventCollection as Events,
     Zend\EventManager\EventDescription as Event,
     Zend\EventManager\ListenerAggregate,
@@ -16,7 +16,7 @@ class Listener implements ListenerAggregate
     protected $rules = array();
     protected $skipCacheDueTo = false;
 
-    public function __construct(CacheFrontend $cache, $rules = array())
+    public function __construct(CacheAdapter $cache, $rules = array())
     {
         $this->cache = $cache;
 
@@ -80,21 +80,24 @@ class Listener implements ListenerAggregate
 
         $request = $e->getRequest();
         $key     = $this->createKey($request);
-        if (false === ($found = $this->cache->load($key))) {
+
+        if (!$this->cache->hasItem($key)) {
             return;
         }
 
-        if (!is_array($found)) {
+        $item = $this->cache->getItem($key);
+
+        if (!is_array($item)) {
             return;
         }
 
-        if (!isset($found['content'])) {
+        if (!isset($item['content'])) {
             return;
         }
 
-        $status   = isset($found['status'])  ? $found['status']  : 200;
-        $headers  = isset($found['headers']) ? $found['headers'] : array();
-        $content  = $found['content'];
+        $status   = isset($item['status'])  ? $item['status']  : 200;
+        $headers  = isset($item['headers']) ? $item['headers'] : array();
+        $content  = $item['content'];
         $response = $e->getresponse();
 
         $headers['X-MWOP-CACHE-ID'] = $key;
@@ -119,7 +122,7 @@ class Listener implements ListenerAggregate
         $content  = $response->getContent();
         $data     = compact('status', 'headers', 'content');
 
-        $this->cache->save($data, $key);
+        $this->cache->setItem($key, $data);
         $response->headers()->addHeaderLine('X-MWOP-CACHE-SAVE', $key);
         return $response;
     }

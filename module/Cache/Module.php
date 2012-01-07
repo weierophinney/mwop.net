@@ -53,32 +53,6 @@ class Module implements AutoloaderProvider
             return;
         }
 
-        $config  = $e->getParam('config');
-        $di->instanceManager()->setParameters('Cache\Listener', array(
-            'cache' => function() use ($config) {
-                if (!isset($config['cache'])) {
-                    throw new RuntimeException('Unable to instantiate cache; missing cache key in config');
-                }
-                $cacheConfig = $config['cache'];
-                if ($cacheConfig instanceof Traversable) {
-                    $cacheConfig = IteratorToArray::convert($cacheConfig);
-                }
-                if (!isset($cacheConfig['frontend'])
-                    || !isset($cacheConfig['backend'])
-                    || !isset($cacheConfig['frontend_options'])
-                    || !isset($cacheConfig['backend_options'])
-                ) {
-                    throw new RuntimeException('Cache configuration missing one or more of the following keys: frontend, backend, frontend_options, backend_options');
-                }
-                $cache = Cache::factory(
-                    $cacheConfig['frontend'],
-                    $cacheConfig['backend'],
-                    $cacheConfig['frontend_options'],
-                    $cacheConfig['backend_options']
-                );
-                return $cache;
-            }
-        ));
         $listener = $di->get('Cache\Listener');
         $app->events()->attachAggregate($listener);
     }
