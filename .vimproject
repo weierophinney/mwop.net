@@ -13,7 +13,8 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
    module.authentication.config.local.php
    module.blog.config.global.php
    module.blog.config.local.php
-   module.cache.config.php
+   module.cache.config.global.php
+   module.cache.config.local.php
    module.contact.config.global.php
    module.contact.config.local.php
   }
@@ -158,6 +159,23 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
      list.phtml
      paginator.phtml
      tags.phtml
+    }
+   }
+  }
+  Cache=Cache {
+   autoload_classmap.php
+   autoload_function.php
+   autoload_register.php
+   Module.php
+   bin=bin {
+    clear_cache.php
+   }
+   config=config filter="*.php *.yml *.json *.xml *.ini" {
+    module.config.php
+   }
+   src=src {
+    Cache=Cache {
+     Listener.php
     }
    }
   }

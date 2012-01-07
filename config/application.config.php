@@ -3,6 +3,7 @@ return array(
     'modules' => array(
         'Application',
         'Authentication',
+        'Cache',
         'Comic',
         'CommonResource',
         'Blog',
