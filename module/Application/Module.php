@@ -97,6 +97,10 @@ class Module implements AutoloaderProvider
 
     public function cacheRules($e)
     {
+        if (!class_exists('Cache\Module', false)) {
+            return;
+        }
+
         $app      = $e->getParam('application');
         $locator  = $app->getLocator();
         $cacheListener = $locator->get('Cache\Listener');

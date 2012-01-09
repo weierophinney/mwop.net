@@ -2,10 +2,10 @@
 /**
  * Script for clearing caches.
  */
-use Zend\Cache\Cache;
+use Zend\Cache\Storage\Adapter as CacheAdapter;
 
 $locator  = $aplication->getLocator();
 $listener = $locator->get('Cache\Listener');
 $cache    = $listener->getCache();
-$cache->clean(Cache::CLEANING_MODE_ALL);
+$cache->clear(CacheAdapter::MATCH_ALL);
 echo "Cache cleaned\n";
