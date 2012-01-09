@@ -39,6 +39,14 @@ class Module implements AutoloaderProvider
         $listener = $locator->get('Authentication\AuthenticationListener', array('config' => $config));
         $events->attach('Zend\Stdlib\Dispatchable', 'dispatch', array($listener, 'testAuthenticatedUser'), 100);
         $events->attach('Zend\Stdlib\Dispatchable', 'authenticate', array($listener, 'testAuthenticatedUser'), 100);
+        $this->registerCacheRules();
+    }
+
+    protected function registerCacheRules()
+    {
+        if (!class_exists('Module\Cache', false)) {
+            return;
+        }
 
         $cacheListener = $locator->get('Cache\Listener');
         $cacheListener->addRule(function($e) {
