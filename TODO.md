@@ -3,12 +3,6 @@ TODO
 
 ## Current
 
-* Use HTML5 tags in layout
-  * header
-  * article
-  * footer
-  * etc.
-
 ## Ongoing
 
 * Remove Renderer as a service and instead move into the default listener
