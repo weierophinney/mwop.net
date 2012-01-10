@@ -24,6 +24,8 @@ $config = array(
         'Zend\Captcha\ReCaptcha' => array('parameters' => array(
             'pubkey'  => 'RECAPTCHA_PUBKEY_HERE',
             'privkey' => 'RECAPTCHA_PRIVKEY_HERE',
+            'Zend\Captcha\ReCaptcha::setOption:key'   => 'theme',
+            'Zend\Captcha\ReCaptcha::setOption:value' => 'clean',
         )),
 
         'Contact\Controller\ContactController' => array('parameters' => array(

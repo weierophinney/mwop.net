@@ -31,6 +31,16 @@ $config = array(
                     'type'     => false,
                 ),
             ),
+            'setOption' => array(
+                'key' => array(
+                    'required' => false,
+                    'type'     => false,
+                ),
+                'value' => array(
+                    'required' => false,
+                    'type'     => false,
+                ),
+            ),
         ),
         'Zend\Mail\Message' => array(
             'addTo' => array(
