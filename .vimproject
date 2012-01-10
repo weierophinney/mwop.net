@@ -158,6 +158,7 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
      form.phtml
      list.phtml
      paginator.phtml
+     social-media.phtml
      tags.phtml
     }
    }

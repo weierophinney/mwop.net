@@ -78,6 +78,10 @@ div.example {
     padding-left: 2em;
 }
 
+.social-media {
+    padding-bottom: 1em;
+}
+
 /* ensure we don't mess with disqus styles */
 .dsq-comment, .dsq-comment-header, .dsq-comment-message, .dsq-comment-meta {
     text-indent: 0;
@@ -88,3 +92,6 @@ div.example {
     text-indent: 0;
 }
 
+.dsq-like-activity {
+    padding-left: 1em !important;
+}

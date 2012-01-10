@@ -1,9 +1,7 @@
 TODO
 ====
 
-## Immediate
-
-* Write post about new site
+## Current
 
 ## Ongoing
 
@@ -13,13 +11,6 @@ TODO
   * footer
   * etc.
 * Update ReCaptcha to pass options to use different theme
-* Add various "share" links on blog entries
-  * twitter
-  * reddit
-  * facebook
-  * g+
-  * digg?
-  * hacker news (news.ycombinator.com)
 * Remove Renderer as a service and instead move into the default listener
   * Incorporate layout component?
 * Move modules into separate repos, and incorporate them as submodules of this
