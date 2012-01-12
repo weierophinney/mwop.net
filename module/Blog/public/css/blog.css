@@ -83,6 +83,17 @@ div.example {
 }
 
 /* ensure we don't mess with disqus styles */
+
+#dsq-content div, #dsq-content p, #dsq-content h3 { clear:none !important; }
+
+#dsq-content #dsq-global-toolbar { clear: both !important; }
+
+.dsq-append-post {zoom: 1;}
+
+div#disqus_thread li, div#disqus_thread span {
+    list-style-type: none !important;
+}
+
 .dsq-comment, .dsq-comment-header, .dsq-comment-message, .dsq-comment-meta {
     text-indent: 0;
     padding-left: 0;
@@ -92,6 +103,19 @@ div.example {
     text-indent: 0;
 }
 
+ul.dsq-comment-actions li {
+    display: inline;
+}
+
 .dsq-like-activity {
     padding-left: 1em !important;
+}
+
+.dsq-toolbar-label {
+    padding-left: 1em !important;
+}
+
+#dsq-subscribe .dsq-font {
+    margin-left: 0.5em !important;
+    padding-left: 0.5em !important;
 }
