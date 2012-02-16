@@ -84,8 +84,6 @@ div.example {
 
 /* ensure we don't mess with disqus styles */
 
-#dsq-content div, #dsq-content p, #dsq-content h3 { clear:none !important; }
-
 #dsq-content #dsq-global-toolbar { clear: both !important; }
 
 .dsq-append-post {zoom: 1;}
