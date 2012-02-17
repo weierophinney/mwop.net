@@ -208,6 +208,7 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
       GoComics.php
       NotInventedHere.php
       PennyArcade.php
+      ReptilisRex.php
       ScenesFromAMultiverse.php
       UserFriendly.php
       Xkcd.php

@@ -2,6 +2,7 @@
 return array (
   'Comic\\Comic' => __DIR__ . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'Comic' . DIRECTORY_SEPARATOR . 'Comic.php',
   'Comic\\ComicDescription' => __DIR__ . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'Comic' . DIRECTORY_SEPARATOR . 'ComicDescription.php',
+  'Comic\\ComicSource\\ReptilisRex' => __DIR__ . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'Comic' . DIRECTORY_SEPARATOR . 'ComicSource' . DIRECTORY_SEPARATOR . 'ReptilisRex.php',
   'Comic\\ComicSource\\GarfieldMinusGarfield' => __DIR__ . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'Comic' . DIRECTORY_SEPARATOR . 'ComicSource' . DIRECTORY_SEPARATOR . 'GarfieldMinusGarfield.php',
   'Comic\\ComicSource\\GoComics' => __DIR__ . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'Comic' . DIRECTORY_SEPARATOR . 'ComicSource' . DIRECTORY_SEPARATOR . 'GoComics.php',
   'Comic\\ComicSource\\ForBetterOrForWorse' => __DIR__ . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'Comic' . DIRECTORY_SEPARATOR . 'ComicSource' . DIRECTORY_SEPARATOR . 'ForBetterOrForWorse.php',

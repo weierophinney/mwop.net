@@ -11,18 +11,19 @@ abstract class ComicFactory
      * @var array List of comic source classes
      */
     protected static $comicClasses = array(
-        'Comic\ComicSource\GoComics',
+        'Comic\ComicSource\BasicInstructions',
+        'Comic\ComicSource\CtrlAltDel',
         'Comic\ComicSource\Dilbert',
         'Comic\ComicSource\ForBetterOrForWorse',
+        'Comic\ComicSource\FoxTrot',
+        'Comic\ComicSource\GarfieldMinusGarfield',
+        'Comic\ComicSource\GoComics',
         'Comic\ComicSource\NotInventedHere',
+        'Comic\ComicSource\PennyArcade',
+        'Comic\ComicSource\ReptilisRex',
+        'Comic\ComicSource\ScenesFromAMultiverse',
         'Comic\ComicSource\UserFriendly',
         'Comic\ComicSource\Xkcd',
-        'Comic\ComicSource\CtrlAltDel',
-        'Comic\ComicSource\BasicInstructions',
-        'Comic\ComicSource\ScenesFromAMultiverse',
-        'Comic\ComicSource\GarfieldMinusGarfield',
-        'Comic\ComicSource\PennyArcade',
-        'Comic\ComicSource\FoxTrot',
     );
 
     /**
