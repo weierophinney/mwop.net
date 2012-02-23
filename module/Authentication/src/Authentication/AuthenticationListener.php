@@ -6,20 +6,23 @@ use Zend\Config\Config,
     Zend\EventManager\EventCollection,
     Zend\EventManager\ListenerAggregate,
     Zend\Mvc\MvcEvent,
-    Zend\View\Renderer;
+    Zend\View\Model\ViewModel,
+    Zend\View\View;
 
 class AuthenticationListener implements ListenerAggregate
 {
     protected $auth;
     protected $config;
+    protected $events;
     protected $listeners;
     protected $view;
 
-    public function __construct(AuthenticationService $auth, Renderer $renderer, Config $config)
+    public function __construct(AuthenticationService $auth, View $view, Config $config, EventCollection $events)
     {
         $this->auth   = $auth->getAuthentication();
-        $this->view   = $renderer;
+        $this->view   = $view;
         $this->config = $config->authentication;
+        $this->events = $events;
     }
 
     public function attach(EventCollection $events)
@@ -51,7 +54,7 @@ class AuthenticationListener implements ListenerAggregate
      * Otherwise, we flag the response as a 401 and stop propagation.
      * 
      * @param  MvcEvent $e 
-     * @return bool
+     * @return true|\Zend\Http\Response
      */
     public function testAuthenticatedUser(MvcEvent $e)
     {
@@ -90,8 +93,12 @@ class AuthenticationListener implements ListenerAggregate
 
         $response = $e->getResponse();
         $response->setStatusCode(401);
-        $content = $this->view->render('authentication-authentication/401.phtml');
-        $e->setParam('content', $content);
-        return false;
+        $layout   = $e->getViewModel();
+        $model    = new ViewModel();
+        $model->setTemplate('authentication/401');
+        $layout->addChild($model, 'content');
+
+        $this->events->trigger('render', $e);
+        return $response;
     }
 }

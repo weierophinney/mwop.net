@@ -2,7 +2,7 @@
 return array(
     'modules' => array(
         'Application',
-        // 'Authentication',
+        'Authentication',
         // // 'Cache', // commenting out as profiling shows increased load times?
         // 'Comic',
         // 'CommonResource',

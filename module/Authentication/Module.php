@@ -36,7 +36,7 @@ class Module implements AutoloaderProvider
         $config   = $e->getParam('config');
         $locator  = $app->getLocator();
         $events   = StaticEventManager::getInstance();
-        $listener = $locator->get('Authentication\AuthenticationListener', array('config' => $config));
+        $listener = $locator->get('Authentication\AuthenticationListener', array('config' => $config, 'events' => $app->events()));
         $events->attach('Zend\Stdlib\Dispatchable', 'dispatch', array($listener, 'testAuthenticatedUser'), 100);
         $events->attach('Zend\Stdlib\Dispatchable', 'authenticate', array($listener, 'testAuthenticatedUser'), 100);
         $this->registerCacheRules();
