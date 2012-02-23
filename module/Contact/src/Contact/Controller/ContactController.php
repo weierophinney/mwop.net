@@ -5,7 +5,8 @@ namespace Contact\Controller;
 use Contact\Form\ContactForm,
     Zend\Mail\Transport,
     Zend\Mail\Message as Message,
-    Zend\Mvc\Controller\ActionController;
+    Zend\Mvc\Controller\ActionController,
+    Zend\View\Model\ViewModel;
 
 class ContactController extends ActionController
 {
@@ -25,7 +26,9 @@ class ContactController extends ActionController
 
     public function indexAction()
     {
-        return array('form' => $this->form);
+        $model = new ViewModel(array('form' => $this->form));
+        $model->setTemplate('contact/index');
+        return $model;
     }
 
     public function processAction()
@@ -37,11 +40,12 @@ class ContactController extends ActionController
         $post = $this->request->post()->toArray();
         $form = $this->form;
         if (!$form->isValid($post)) {
-            $this->getEvent()->getRouteMatch()->setParam('action', 'index');
-            return array(
+            $model = new ViewModel(array(
                 'error' => true,
-                'form'  => $form
-            );
+                'form'  => $form,
+            ));
+            $model->setTemplate('contact/index');
+            return $model;
         }
 
         // send email...
@@ -52,7 +56,9 @@ class ContactController extends ActionController
 
     public function thankYouAction()
     {
-        // do nothing...
+        $model = new ViewModel();
+        $model->setTemplate('contact/thank-you');
+        return $model;
     }
 
     public function setContactForm(ContactForm $form)

@@ -76,22 +76,19 @@ $config = array(
         ),
     )),
     'instance' => array(
-        'alias' => array(
-            'contact-contact' => 'Contact\Controller\ContactController',
-            'view'            => 'Zend\View\PhpRenderer',
-            'view-resolver'   => 'Zend\View\TemplatePathStack',
-        ),
-
         'Zend\Mail\Message' => array('parameters' => array(
             'Zend\Mail\Message::addTo:emailOrAddressList' => 'EMAIL HERE',
             'Zend\Mail\Message::addTo:name'  => "NAME HERE",
         )),
 
-        'view' => array('parameters' => array(
-            'resolver' => 'view-resolver',
+        'Zend\View\Resolver\TemplateMapResolver' => array('parameters' => array(
+            'map' => array(
+                'contact/index'     => __DIR__ . '/../view/contact/index.phtml',
+                'contact/thank-you' => __DIR__ . '/../view/contact/thank-you.phtml',
+            ),
         )),
 
-        'view-resolver' => array('parameters' => array(
+        'Zend\View\Resolver\TemplatePathStack' => array('parameters' => array(
             'paths' => array(
                 'contact' => __DIR__ . '/../view',
             ),
@@ -110,41 +107,43 @@ $config = array(
             'pubkey'  => 'RECAPTCHA_PUBKEY_HERE',
             'privkey' => 'RECAPTCHA_PRIVKEY_HERE',
         )),
-    ),
-),
+        
+        'Zend\Mvc\Router\RouteStack' => array('parameters' => array(                                          
+            'routes' => array(
+                'contact-form' => array(
+                    'type' => 'Literal',
+                    'options' => array(
+                        'route' => '/contact',
+                        'defaults' => array(
+                            'controller' => 'Contact\Controller\ContactController',
+                            'action'     => 'index',
+                        ),
+                    ),
+                ),
 
-'routes' => array(
-    'contact-form' => array(
-        'type' => 'Literal',
-        'options' => array(
-            'route' => '/contact',
-            'defaults' => array(
-                'controller' => 'contact-contact',
-                'action'     => 'index',
-            ),
-        ),
-    ),
+                'contact-process' => array(
+                    'type' => 'Literal',
+                    'options' => array(
+                        'route' => '/contact/process',
+                        'defaults' => array(
+                            'controller' => 'Contact\Controller\ContactController',
+                            'action'     => 'process',
+                        ),
+                    ),
+                ),
 
-    'contact-process' => array(
-        'type' => 'Literal',
-        'options' => array(
-            'route' => '/contact/process',
-            'defaults' => array(
-                'controller' => 'contact-contact',
-                'action'     => 'process',
+                'contact-thank-you' => array(
+                    'type' => 'Literal',
+                    'options' => array(
+                        'route' => '/contact/thank-you',
+                        'defaults' => array(
+                            'controller' => 'Contact\Controller\ContactController',
+                            'action'     => 'thank-you',
+                        ),
+                    ),
+                ),
             ),
-        ),
-    ),
-
-    'contact-thank-you' => array(
-        'type' => 'Literal',
-        'options' => array(
-            'route' => '/contact/thank-you',
-            'defaults' => array(
-                'controller' => 'contact-contact',
-                'action'     => 'thank-you',
-            ),
-        ),
+        )),
     ),
 ),
 );

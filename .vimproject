@@ -284,7 +284,7 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
     }
    }
    view=view {
-    contact=contact-contact {
+    contact=contact {
      index.phtml
      thank-you.phtml
     }

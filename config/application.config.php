@@ -7,7 +7,7 @@ return array(
         // 'Comic',
         // 'CommonResource',
         // 'Blog',
-        // 'Contact',
+        'Contact',
     ),
     'module_listener_options' => array( 
         'config_cache_enabled'     => false,
