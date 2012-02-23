@@ -23,8 +23,6 @@ class Module implements AutoloaderProvider
         $events = StaticEventManager::getInstance();
         $events->attach('bootstrap', 'bootstrap', array($this, 'cacheRules'));
         $events->attach('bootstrap', 'bootstrap', array($this, 'initView'));
-        $events->attach('bootstrap', 'bootstrap', array($this, 'registerApplicationListeners'), -10);
-        $events->attach('bootstrap', 'bootstrap', array($this, 'registerStaticListeners'), -10);
     }
 
     public function getAutoloaderConfig()
@@ -47,7 +45,8 @@ class Module implements AutoloaderProvider
         $config  = $e->getParam('config');
         $locator = $app->getLocator();
         $router  = $app->getRouter();
-        $view    = $locator->get('view');
+
+        $view    = $locator->get('Zend\View\Renderer\PhpRenderer');
         $url     = $view->plugin('url');
         $url->setRouter($router);
 
@@ -76,23 +75,6 @@ class Module implements AutoloaderProvider
                  'parseOnLoad' => true,
              ));
         $this->view = $view;
-    }
-
-    public function registerApplicationListeners($e)
-    {
-        $app          = $e->getParam('application');
-        $config       = $e->getParam('config');
-        $viewListener = $this->getViewListener($this->view, $config);
-        $app->events()->attachAggregate($viewListener);
-    }
-
-    public function registerStaticListeners($e)
-    {
-        $locator      = $e->getParam('application')->getLocator();
-        $config       = $e->getParam('config');
-        $events       = StaticEventManager::getInstance();
-        $viewListener = $this->getViewListener($this->view, $config);
-        $viewListener->registerStaticListeners($events, $locator);
     }
 
     public function cacheRules($e)

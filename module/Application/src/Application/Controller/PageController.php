@@ -8,7 +8,8 @@ use Zend\EventManager\EventDescription as Event,
     Zend\Stdlib\RequestDescription as Request,
     Zend\Stdlib\ResponseDescription as Response,
     Zend\Mvc\InjectApplicationEvent,
-    Zend\Mvc\MvcEvent;
+    Zend\Mvc\MvcEvent,
+    Zend\View\Model\ViewModel;
 
 class PageController implements Dispatchable, InjectApplicationEvent
 {
@@ -75,7 +76,10 @@ class PageController implements Dispatchable, InjectApplicationEvent
             $page = 'index';
         }
 
-        $event->setResult($page);
-        return $page;
+        $model = new ViewModel();
+        $model->setTemplate('pages/' . $page);
+        $model->setCaptureTo('content');
+        $event->setResult($model);
+        return $model;
     }
 }
