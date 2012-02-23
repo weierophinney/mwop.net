@@ -75,9 +75,11 @@ class Memcached extends AbstractAdapter
 
         parent::__construct($options);
 
+        // It's ok to add server as soon as possible because
+        // ext/memcached auto-connects to the server on first use
+        // TODO: Handle multiple servers
         $options = $this->getOptions();
         $this->memcached->addServer($options->getServer(), $options->getPort());
-
     }
 
     /* options */
@@ -91,18 +93,6 @@ class Memcached extends AbstractAdapter
      */
     public function setOptions($options)
     {
-        if (!is_array($options)
-            && !$options instanceof Traversable
-            && !$options instanceof MemcachedOptions
-        ) {
-            throw new Exception\InvalidArgumentException(sprintf(
-                '%s expects an array, a Traversable object, or a MemcachedOptions object; '
-                . 'received "%s"',
-                __METHOD__,
-                (is_object($options) ? get_class($options) : gettype($options))
-            ));
-        }
-
         if (!$options instanceof MemcachedOptions) {
             $options = new MemcachedOptions($options);
         }
@@ -1074,7 +1064,7 @@ class Memcached extends AbstractAdapter
                         ),
                         'supportedMetadata'  => array(),
                         'maxTtl'             => 0,
-                        'staticTtl'          => false,
+                        'staticTtl'          => true,
                         'tagging'            => false,
                         'ttlPrecision'       => 1,
                         'useRequestTime'     => false,

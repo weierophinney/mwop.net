@@ -81,6 +81,7 @@ class Bootstrap implements Bootstrapper
     {
         $this->setupLocator($application);
         $this->setupRouter($application);
+        $this->setupView($application);
         $this->setupEvents($application);
     }
 
@@ -96,6 +97,111 @@ class Bootstrap implements Bootstrapper
         $di = new Di;
         $di->instanceManager()->addTypePreference('Zend\Di\Locator', $di);
 
+        // Default configuration for common MVC classes
+        $routerDiConfig = new DiConfiguration(array('definition' => array('class' => array(
+            'Zend\Mvc\View\DefaultRenderingStrategy' => array(
+                'setBaseTemplate' => array(
+                    'baseTemplate' => array(
+                        'required' => false,
+                        'type'     => false,
+                    ),
+                ),
+            ),
+            'Zend\Mvc\View\ExceptionStrategy' => array(
+                'setDisplayExceptions' => array(
+                    'displayExceptions' => array(
+                        'required' => false,
+                        'type'     => false,
+                    ),
+                ),
+                'setErrorTemplate' => array(
+                    'template' => array(
+                        'required' => false,
+                        'type'     => false,
+                    ),
+                ),
+            ),
+            'Zend\Mvc\View\RouteNotFoundStrategy' => array(
+                'setNotFoundTemplate' => array(
+                    'notFoundTemplate' => array(
+                        'required' => false,
+                        'type'     => false,
+                    ),
+                ),
+            ),
+            'Zend\View\HelperBroker' => array(
+                'setClassLoader' => array(
+                    'required' => true,
+                    'loader'   => array(
+                        'type'     => 'Zend\View\HelperLoader',
+                        'required' => true,
+                    ),
+                ),
+            ),
+            'Zend\View\HelperLoader' => array(
+                'registerPlugins' => array(
+                    'map' => array(
+                        'type'     => false,
+                        'required' => false,
+                    ),
+                ),
+            ),
+            'Zend\View\Renderer\PhpRenderer' => array(
+                'setBroker' => array(
+                    'required' => true,
+                    'broker'   => array(
+                        'type'     => 'Zend\View\HelperBroker',
+                        'required' => true,
+                    ),
+                ),
+                'setCanRenderTrees' => array(
+                    'required' => false,
+                    'renderTrees' => array(
+                        'type'     => false,
+                        'required' => true,
+                    ),
+                ),
+                'setResolver' => array(
+                    'required' => false,
+                    'resolver' => array(
+                        'type'     => 'Zend\View\Resolver',
+                        'required' => true,
+                    ),
+                ),
+            ),
+            'Zend\View\Resolver\AggregateResolver' => array(
+                'attach' => array(
+                    'resolver' => array(
+                        'required' => false,
+                        'type'     => 'Zend\View\Resolver',
+                    ),
+                ),
+            ),
+            'Zend\View\Resolver\TemplatePathStack' => array(
+                'setDefaultSuffix' => array(
+                    'defaultSuffix' => array(
+                        'required' => false,
+                        'type'     => false,
+                    ),
+                ),
+                'setPaths' => array(
+                    'paths' => array(
+                        'required' => false,
+                        'type'     => false,
+                    ),
+                ),
+            ),
+            'Zend\View\Strategy\PhpRendererStrategy' => array(
+                'setContentPlaceholders' => array(
+                    'contentPlaceholders' => array(
+                        'required' => false,
+                        'type'     => false,
+                    ),
+                ),
+            ),
+        ))));
+        $routerDiConfig->configure($di);
+
         $config = new DiConfiguration($this->config->di);
         $config->configure($di);
 
@@ -110,9 +216,56 @@ class Bootstrap implements Bootstrapper
      */
     protected function setupRouter(AppContext $application)
     {
-        $router = new Router();
-        $router->addRoutes($this->config->routes);
+        $router = $application->getLocator()->get('Zend\Mvc\Router\RouteStack');
         $application->setRouter($router);
+    }
+
+    /**
+     * Sets up the view integration
+     *
+     * Pulls the View object and PhpRenderer strategy from the locator, and 
+     * attaches the former to the latter. Then attaches the 
+     * DefaultRenderingStrategy to the application event manager.
+     * 
+     * @param  Application $application 
+     * @return void
+     */
+    protected function setupView($application)
+    {
+        // Basic view strategy
+        $locator             = $application->getLocator();
+        $events              = $application->events();
+        $staticEvents        = StaticEventManager::getInstance();
+        $view                = $locator->get('Zend\View\View');
+        $phpRendererStrategy = $locator->get('Zend\View\Strategy\PhpRendererStrategy');
+        $defaultViewStrategy = $locator->get('Zend\Mvc\View\DefaultRenderingStrategy');
+        $view->events()->attachAggregate($phpRendererStrategy);
+        $events->attachAggregate($defaultViewStrategy);
+
+        // Error strategies
+        $noRouteStrategy   = $locator->get('Zend\Mvc\View\RouteNotFoundStrategy');
+        $exceptionStrategy = $locator->get('Zend\Mvc\View\ExceptionStrategy');
+        $events->attachAggregate($noRouteStrategy);
+        $events->attachAggregate($exceptionStrategy);
+
+        // Template/ViewModel listeners
+        $arrayListener           = $locator->get('Zend\Mvc\View\CreateViewModelFromArrayListener');
+        $injectTemplateListener  = $locator->get('Zend\Mvc\View\InjectTemplateListener');
+        $injectViewModelListener = $locator->get('Zend\Mvc\View\InjectViewModelListener');
+        $staticEvents->attach('Zend\Stdlib\Dispatchable', 'dispatch', array($arrayListener, 'createViewModelFromArray'), -80);
+        $staticEvents->attach('Zend\Stdlib\Dispatchable', 'dispatch', array($injectTemplateListener, 'injectTemplate'), -90);
+        $events->attach('dispatch.error', array($injectViewModelListener, 'injectViewModel'), -100);
+        $staticEvents->attach('Zend\Stdlib\Dispatchable', 'dispatch', array($injectViewModelListener, 'injectViewModel'), -100);
+
+        // Inject MVC Event with view model
+        $mvcEvent  = $application->getMvcEvent();
+        $viewModel = $mvcEvent->getViewModel();
+        $viewModel->setTemplate($defaultViewStrategy->getBaseTemplate());
+
+        // Inject MVC Event view model as root view model
+        $renderer    = $phpRendererStrategy->getRenderer();
+        $modelHelper = $renderer->plugin('view_model');
+        $modelHelper->setRoot($viewModel);
     }
 
     /**

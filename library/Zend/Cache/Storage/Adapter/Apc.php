@@ -118,18 +118,6 @@ class Apc extends AbstractAdapter
      */
     public function setOptions($options)
     {
-        if (!is_array($options)
-            && !$options instanceof Traversable
-            && !$options instanceof ApcOptions
-        ) {
-            throw new Exception\InvalidArgumentException(sprintf(
-                '%s expects an array, a Traversable object, or an ApcOptions instance; '
-                . 'received "%s"',
-                __METHOD__,
-                (is_object($options) ? get_class($options) : gettype($options))
-            ));
-        }
-
         if (!$options instanceof ApcOptions) {
             $options = new ApcOptions($options);
         }
@@ -159,8 +147,6 @@ class Apc extends AbstractAdapter
      * Get an item.
      *
      * Options:
-     *  - ttl <float> optional
-     *    - The time-to-life (Default: ttl of object)
      *  - namespace <string> optional
      *    - The namespace to use (Default: namespace of object)
      *  - ignore_missing_items <boolean> optional
@@ -218,8 +204,6 @@ class Apc extends AbstractAdapter
      * Get multiple items.
      *
      * Options:
-     *  - ttl <float> optional
-     *    - The time-to-life (Default: ttl of object)
      *  - namespace <string> optional
      *    - The namespace to use (Default: namespace of object)
      *
@@ -282,8 +266,6 @@ class Apc extends AbstractAdapter
      * Test if an item exists.
      *
      * Options:
-     *  - ttl <float> optional
-     *    - The time-to-life (Default: ttl of object)
      *  - namespace <string> optional
      *    - The namespace to use (Default: namespace of object)
      *
@@ -326,11 +308,9 @@ class Apc extends AbstractAdapter
     }
 
     /**
-     * Test if an item exists.
+     * Test if multiple items exists.
      *
      * Options:
-     *  - ttl <float> optional
-     *    - The time-to-life (Default: ttl of object)
      *  - namespace <string> optional
      *    - The namespace to use (Default: namespace of object)
      *
@@ -387,8 +367,6 @@ class Apc extends AbstractAdapter
      * Get metadata of an item.
      *
      * Options:
-     *  - ttl <float> optional
-     *    - The time-to-life (Default: ttl of object)
      *  - namespace <string> optional
      *    - The namespace to use (Default: namespace of object)
      *  - ignore_missing_items <boolean> optional
@@ -450,7 +428,11 @@ class Apc extends AbstractAdapter
     }
 
     /**
-     * Get all metadata for an item
+     * Get metadata of multiple items
+     *
+     * Options:
+     *  - namespace <string> optional
+     *    - The namespace to use (Default: namespace of object)
      *
      * @param  array $keys
      * @param  array $options
@@ -522,10 +504,10 @@ class Apc extends AbstractAdapter
      * Store an item.
      *
      * Options:
+     *  - ttl <float> optional
+     *    - The time-to-life (Default: ttl of object)
      *  - namespace <string> optional
      *    - The namespace to use (Default: namespace of object)
-     *  - tags <array> optional
-     *    - An array of tags
      *
      * @param  string $key
      * @param  mixed $value
@@ -577,10 +559,10 @@ class Apc extends AbstractAdapter
      * Store multiple items.
      *
      * Options:
+     *  - ttl <float> optional
+     *    - The time-to-life (Default: ttl of object)
      *  - namespace <string> optional
      *    - The namespace to use (Default: namespace of object)
-     *  - tags <array> optional
-     *    - An array of tags
      *
      * @param  array $keyValuePairs
      * @param  array $options
@@ -636,10 +618,10 @@ class Apc extends AbstractAdapter
      * Add an item.
      *
      * Options:
+     *  - ttl <float> optional
+     *    - The time-to-life (Default: ttl of object)
      *  - namespace <string> optional
      *    - The namespace to use (Default: namespace of object)
-     *  - tags <array> optional
-     *    - An array of tags
      *
      * @param  string $key
      * @param  mixed  $value
@@ -695,10 +677,10 @@ class Apc extends AbstractAdapter
      * Add multiple items.
      *
      * Options:
+     *  - ttl <float> optional
+     *    - The time-to-life (Default: ttl of object)
      *  - namespace <string> optional
      *    - The namespace to use (Default: namespace of object)
-     *  - tags <array> optional
-     *    - An array of tags
      *
      * @param  array $keyValuePairs
      * @param  array $options
@@ -754,10 +736,10 @@ class Apc extends AbstractAdapter
      * Replace an item.
      *
      * Options:
+     *  - ttl <float> optional
+     *    - The time-to-life (Default: ttl of object)
      *  - namespace <string> optional
      *    - The namespace to use (Default: namespace of object)
-     *  - tags <array> optional
-     *    - An array of tags
      *
      * @param  string $key
      * @param  mixed  $value
@@ -840,7 +822,6 @@ class Apc extends AbstractAdapter
         $this->normalizeKey($key);
         $args = new ArrayObject(array(
             'key'     => & $key,
-            'value'   => & $value,
             'options' => & $options,
         ));
 
@@ -925,6 +906,8 @@ class Apc extends AbstractAdapter
      * Increment an item.
      *
      * Options:
+     *  - ttl <float> optional
+     *    - The time-to-life (Default: ttl of object)
      *  - namespace <string> optional
      *    - The namespace to use (Default: namespace of object)
      *  - ignore_missing_items <boolean> optional
@@ -986,6 +969,8 @@ class Apc extends AbstractAdapter
      * Decrement an item.
      *
      * Options:
+     *  - ttl <float> optional
+     *    - The time-to-life (Default: ttl of object)
      *  - namespace <string> optional
      *    - The namespace to use (Default: namespace of object)
      *  - ignore_missing_items <boolean> optional
@@ -1048,6 +1033,10 @@ class Apc extends AbstractAdapter
     /**
      * Get items that were marked to delay storage for purposes of removing blocking
      *
+     * Options:
+     *  - namespace <string> optional
+     *    - The namespace to use (Default: namespace of object)
+     *
      * @param  array $keys
      * @param  array $options
      * @return bool
@@ -1074,7 +1063,7 @@ class Apc extends AbstractAdapter
         }
 
         $args = new ArrayObject(array(
-            'key'     => & $key,
+            'keys'    => & $keys,
             'options' => & $options,
         ));
 
@@ -1122,13 +1111,8 @@ class Apc extends AbstractAdapter
      * Find items.
      *
      * Options:
-     *  - ttl <float> optional
-     *    - The time-to-life (Default: ttl of object)
      *  - namespace <string> optional
      *    - The namespace to use (Default: namespace of object)
-     *  - tags <array> optional
-     *    - Tags to search for used with matching modes of
-     *      Zend\Cache\Storage\Adapter::MATCH_TAGS_*
      *
      * @param  int $mode Matching mode (Value of Zend\Cache\Storage\Adapter::MATCH_*)
      * @param  array $options
@@ -1251,13 +1235,6 @@ class Apc extends AbstractAdapter
     /**
      * Clear items off all namespaces.
      *
-     * Options:
-     *  - ttl <float> optional
-     *    - The time-to-life (Default: ttl of object)
-     *  - tags <array> optional
-     *    - Tags to search for used with matching modes of
-     *      Zend\Cache\Storage\Adapter::MATCH_TAGS_*
-     *
      * @param  int $mode Matching mode (Value of Zend\Cache\Storage\Adapter::MATCH_*)
      * @param  array $options
      * @return boolean
@@ -1298,13 +1275,8 @@ class Apc extends AbstractAdapter
      * Clear items by namespace.
      *
      * Options:
-     *  - ttl <float> optional
-     *    - The time-to-life (Default: ttl of object)
      *  - namespace <string> optional
      *    - The namespace to use (Default: namespace of object)
-     *  - tags <array> optional
-     *    - Tags to search for used with matching modes of
-     *      Zend\Cache\Storage\Adapter::MATCH_TAGS_*
      *
      * @param  int $mode Matching mode (Value of Zend\Cache\Storage\Adapter::MATCH_*)
      * @param  array $options
@@ -1393,7 +1365,7 @@ class Apc extends AbstractAdapter
                             'ttl',
                         ),
                         'maxTtl'             => 0,
-                        'staticTtl'          => false,
+                        'staticTtl'          => true,
                         'tagging'            => false,
                         'ttlPrecision'       => 1,
                         'useRequestTime'     => (bool) ini_get('apc.use_request_time'),
@@ -1453,8 +1425,8 @@ class Apc extends AbstractAdapter
      * Clear cached items based on key regex
      *
      * @param  string $regex
-     * @param  int $mode
-     * @param  array $options
+     * @param  int    $mode
+     * @param  array  $options
      * @return bool
      */
     protected function clearByRegEx($regex, $mode, array &$options)

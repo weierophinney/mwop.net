@@ -94,7 +94,7 @@ class RuntimeDefinition implements Definition
             return (array_key_exists($class, $this->classes));
         }
         
-        return class_exists($class, true);
+        return class_exists($class) || interface_exists($class);
     }
 
     /**
@@ -224,6 +224,19 @@ class RuntimeDefinition implements Definition
                 // @todo Instnatiator support in annotations
             }
         }
+
+        $rTarget = $rClass;
+        $supertypes = array();
+        do {
+            $supertypes = array_merge($supertypes, $rTarget->getInterfaceNames());
+            if (!($rTargetParent = $rTarget->getParentClass())) {
+                break;
+            }
+            $supertypes[] = $rTargetParent->getName();
+            $rTarget = $rTargetParent;
+        } while (true);
+
+        $def['supertypes'] = $supertypes;
 
         if ($def['instantiator'] == null) {
             if ($rClass->isInstantiable()) {
