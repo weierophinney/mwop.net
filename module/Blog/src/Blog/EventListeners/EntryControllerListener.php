@@ -7,6 +7,7 @@ use Blog\Exception,
     Zend\EventManager\StaticEventCollection as Events,
     Zend\Feed\Writer\Feed as FeedWriter,
     Zend\Tag\Cloud,
+    Zend\View\Model\ViewModel,
     Zend\View\Variables as ViewVariables;
 
 class EntryControllerListener
@@ -16,11 +17,11 @@ class EntryControllerListener
     public function attach(Events $events)
     {
         $controller = 'Blog\Controller\EntryController';
-        $this->listeners[] = $events->attach($controller, 'dispatch', array($this, 'verifyApiKey'),         200);
-        $this->listeners[] = $events->attach($controller, 'dispatch', array($this, 'normalizeId'),          100);
-        $this->listeners[] = $events->attach($controller, 'dispatch', array($this, 'generateFeed'),         -10);
-        $this->listeners[] = $events->attach($controller, 'dispatch', array($this, 'renderRestfulActions'), -50);
-        $this->listeners[] = $events->attach($controller, 'dispatch', array($this, 'injectTagCloud'),      -100);
+        $this->listeners[] = $events->attach($controller, 'dispatch', array($this, 'verifyApiKey'),            200);
+        $this->listeners[] = $events->attach($controller, 'dispatch', array($this, 'normalizeId'),             100);
+        $this->listeners[] = $events->attach($controller, 'dispatch', array($this, 'generateFeed'),            -10);
+        $this->listeners[] = $events->attach($controller, 'dispatch', array($this, 'prepareRestfulTemplates'), -85);
+        $this->listeners[] = $events->attach($controller, 'dispatch', array($this, 'injectTagCloud'),         -100);
     }
 
     public function detach(Events $events)
@@ -48,7 +49,7 @@ class EntryControllerListener
     {
         $request    = $e->getRequest();
         $matches    = $e->getRouteMatch();
-        $format     = $matches->getParam('format', false);
+        $format     = $matches->getParam('format', '');
         if (strtolower($format) != 'xml') {
             return;
         }
@@ -65,7 +66,7 @@ class EntryControllerListener
         }
 
         $controller = $e->getTarget();
-        $renderer   = $controller->getView();
+        $renderer   = $controller->getRenderer();
         $uri        = $request->uri();
         $baseUri    = (empty($_SERVER['HTTPS']) ? 'http://' : 'https://')
                     . $_SERVER['HTTP_HOST'];
@@ -80,13 +81,13 @@ class EntryControllerListener
         $title = $headTitle->toString();
         $title = strip_tags($title);
 
-        $urlHelper     = $renderer->plugin('url');
+        $urlHelper     = $controller->plugin('url');
         if (false !== strstr($title, 'Tag: ')) {
-            $link      = $urlHelper(array('tag' => $view['tag']), array('name' => 'blog/tag'));
-            $feedLink  = $urlHelper(array('tag' => $view['tag']), array('name' => 'blog/tag/feed'));
+            $link      = $urlHelper->fromRoute('blog/tag', array('tag' => $view['tag']));
+            $feedLink  = $urlHelper->fromRoute('blog/tag/feed/', array('tag' => $view['tag']));
         } else {
-            $link      = $urlHelper(array(), array('name' => 'blog'));
-            $feedLink  = $urlHelper(array(), array('name' => 'blog/feed'));
+            $link      = $urlHelper->fromRoute('blog');
+            $feedLink  = $urlHelper->fromRoute('blog/feed');
         }
         $link     = $baseUri . $link;
         $feedLink = $baseUri . $feedLink;
@@ -108,7 +109,7 @@ class EntryControllerListener
             }
             $entry = $feed->createEntry();
             $entry->setTitle($post->getTitle());
-            $entry->setLink($baseUri . $urlHelper(array('id' => $post->getId()), array('name' => 'blog/entry')));
+            $entry->setLink($baseUri . $urlHelper->fromRoute('blog/entry', array('id' => $post->getId())));
 
             /**
              * @todo inject this info!
@@ -148,15 +149,15 @@ class EntryControllerListener
 
     public function injectTagCloud($e)
     {
-        $view       = $e->getResult();
         $controller = $e->getTarget();
+        $urlHelper  = $controller->plugin('url');
         $tags       = $controller->resource()->getTagCloud();
-        $renderer   = $controller->getView();
-        $cloud      = function() use ($tags, $renderer) {
-            $url = $renderer->plugin('url');
+        $renderer   = $controller->getRenderer();
+
+        $cloud      = function() use ($tags, $urlHelper, $renderer) {
             foreach ($tags as $key => $tag) {
                 $tags[$key]['params'] = array(
-                    'url' => $url(array('tag' => $tag['title']), array('name' => 'blog/tag')),
+                    'url' => $urlHelper->fromRoute('blog/tag', array('tag' => $tag['title'])),
                 );
             }
             $cloud = new Cloud(array(
@@ -172,10 +173,12 @@ class EntryControllerListener
             ));
             return "<h4>Tag Cloud</h4>\n<div class=\"cloud\">\n" . $cloud->render() . "</div>\n";
         };
-        $e->setParam('footer', $cloud);
+
+        $viewModel = $e->getViewModel();
+        $viewModel->footer = $cloud;
     }
 
-    public function renderRestfulActions($e)
+    public function prepareRestfulTemplates($e)
     {
         $response   = $e->getResponse();
         if (!$response->isSuccess()) {
@@ -183,13 +186,13 @@ class EntryControllerListener
             return;
         }
 
-        $vars       = $e->getResult();
-        if (!$vars) {
-            $vars = array();
+        $viewModel  = $e->getResult();
+        if (!$viewModel) {
+            $viewModel = new ViewModel;
         }
 
         $controller = $e->getTarget();
-        $renderer   = $controller->getView();
+        $renderer   = $controller->getRenderer();
         $request    = $e->getRequest();
         $matches    = $e->getRouteMatch();
 
@@ -200,100 +203,68 @@ class EntryControllerListener
 
         $action     = $matches->getParam('action', false);
         if ($action) {
-            $content = $this->renderAction($action, $vars, $renderer);
-            $e->setParam('content', $content);
+            $this->injectActionTemplate($action, $viewModel);
             return;
         }
 
         switch (strtolower($request->getMethod())) {
             case 'get':
                 if (!$matches->getParam('id', false)) {
-                    $script = 'blog-entry/list.phtml';
+                    $script = 'blog/list';
                     break;
                 }
-                $script = 'blog-entry/entry.phtml';
+                $script = 'blog/entry';
                 break;
             case 'post':
                 if (isset($vars['errors'])) {
-                    $script = 'blog-entry/form.phtml';
+                    $script = 'blog/form';
                     break;
                 }
-                $script = 'blog-entry/entry.phtml';
+                $script = 'blog/entry';
                 break;
             case 'put':
                 if (isset($vars['errors'])) {
-                    $script = 'blog-entry/form.phtml';
+                    $script = 'blog/form';
                     break;
                 }
-                $script = 'blog-entry/entry.phtml';
+                $script = 'blog/entry';
                 break;
             case 'delete':
-                $script = 'blog-entry/list.phtml';
+                $script = 'blog/list';
                 break;
             default:
-                $script = 'blog-entry/list.phtml';
+                $script = 'blog/list';
                 break;
         }
 
-        if (is_object($vars)) {
-            if ($vars instanceof Traversable) {
-                $viewVars = new ViewVariables(array());
-                $vars = iterator_apply($vars, function($it) use ($viewVars) {
-                    $viewVars[$it->key()] = $it->current();
-                }, $it);
-                $vars = $viewVars;
-            } else {
-                $vars = new ViewVariables((array) $vars);
-            }
-        } else {
-            $vars = new ViewVariables($vars);
-        }
-
-        // Action content
-        $content = $renderer->render($script, $vars);
-        $e->setParam('content', $content);
+        $viewModel->setTemplate($script);
         return;
     }
 
-    protected function renderAction($action, $vars, $renderer)
+    protected function injectActionTemplate($action, $viewModel)
     {
         switch ($action) {
             case 'create':
-                $script = 'blog-entry/form.phtml';
+                $script = 'blog/form';
                 break;
             case 'tag':
-                $script = 'blog-entry/list.phtml';
+                $script = 'blog/list';
                 break;
             case 'year':
-                $script = 'blog-entry/list.phtml';
+                $script = 'blog/list';
                 break;
             case 'month':
-                $script = 'blog-entry/list.phtml';
+                $script = 'blog/list';
                 break;
             case 'day':
-                $script = 'blog-entry/list.phtml';
+                $script = 'blog/list';
                 break;
             default:
-                $script = 'blog-entry/' . $action . '.phtml';
+                $script = 'blog/' . $action;
                 break;
         }
-        if (is_object($vars)) {
-            if ($vars instanceof Traversable) {
-                $viewVars = new ViewVariables(array());
-                $vars = iterator_apply($vars, function($it) use ($viewVars) {
-                    $viewVars[$it->key()] = $it->current();
-                }, $it);
-                $vars = $viewVars;
-            } else {
-                $vars = new ViewVariables((array) $vars);
-            }
-        } else {
-            $vars = new ViewVariables($vars);
-        }
 
-        // Action content
-        $content = $renderer->render($script, $vars);
-        return $content;
+        $viewModel->setTemplate($script);
     }
 
     public function verifyApiKey($e)

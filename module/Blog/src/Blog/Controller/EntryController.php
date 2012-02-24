@@ -15,8 +15,8 @@ use Blog\EntryResource,
 class EntryController extends RestfulController
 {
     protected $apiKey;
+    protected $renderer;
     protected $resource;
-    protected $view;
 
     public function setResource(EntryResource $resource)
     {
@@ -29,15 +29,15 @@ class EntryController extends RestfulController
         return $this->resource;
     }
 
-    public function setView(Renderer $view)
+    public function setRenderer(Renderer $renderer)
     {
-        $this->view = $view;
+        $this->renderer = $renderer;
         return $this;
     }
 
-    public function getView()
+    public function getRenderer()
     {
-        return $this->view;
+        return $this->renderer;
     }
 
     public function setApiKeyLocation($key)

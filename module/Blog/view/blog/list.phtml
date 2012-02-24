@@ -22,15 +22,15 @@ $this->headLink(array(
 $entries = $this->entries;
 foreach ($entries as $entry) {
     echo '<div class="row clearfix">', "\n";
-    echo $this->render('blog-entry/entry-short.phtml', array('entry' => $entry));
+    echo $this->render('blog/entry-short', array('entry' => $entry));
     echo '</div>', "\n";
 }
 
-echo $this->paginationControl($entries, 'Sliding', 'blog-entry/paginator.phtml', array('url' => $paginatorUrl));
+echo $this->paginationControl($entries, 'Sliding', 'blog/paginator', array('url' => $paginatorUrl));
 ?>
 </section>
 
 <aside class="four columns offset-by-one omega sidebar blog">
-    <?php echo $this->render('blog-entry/blogroll.phtml') ?>
+    <?php echo $this->render('blog/blogroll') ?>
 </aside>
 </div>

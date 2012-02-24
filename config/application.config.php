@@ -5,8 +5,8 @@ return array(
         'Authentication',
         // // 'Cache', // commenting out as profiling shows increased load times?
         // 'Comic',
-        // 'CommonResource',
-        // 'Blog',
+        'CommonResource',
+        'Blog',
         'Contact',
     ),
     'module_listener_options' => array( 

@@ -11,108 +11,6 @@ $config['disqus'] = array(
     'development' => 0,
 );
 
-$config['routes'] = array(
-    'blog' => array(
-        'type' => 'Literal',
-        'options' => array(
-            'route' => '/blog',
-            'defaults' => array(
-                'controller' => 'blog-entry',
-            ),
-        ),
-        'may_terminate' => true,
-        'child_routes'  => array(
-            'feed' => array(
-                'type' => 'Literal',
-                'options' => array(
-                    'route' => '.xml',
-                    'defaults' => array(
-                        'controller' => 'blog-entry',
-                        'format'     => 'xml',
-                    ),
-                ),
-            ),
-            'entry' => array(
-                'type'    => 'Regex',
-                'options' => array(
-                    'regex' => '/(?<id>[^/]+)',
-                    'defaults' => array(
-                        'controller' => 'blog-entry',
-                    ),
-                    'spec' => '/%id%',
-                ),
-            ),
-            'tag' => array(
-                'type'    => 'Regex',
-                'options' => array(
-                    'regex' => '/tag/(?<tag>[^/.]+)',
-                    'defaults' => array(
-                        'controller' => 'blog-entry',
-                        'action'     => 'tag',
-                    ),
-                    'spec' => '/tag/%tag%',
-                ),
-                'may_terminate' => true,
-                'child_routes' => array(
-                    'feed' => array(
-                        'type'    => 'Literal',
-                        'options' => array(
-                            'route' => '.xml',
-                            'defaults' => array(
-                                'controller' => 'blog-entry',
-                                'action'     => 'tag',
-                                'format'     => 'xml',
-                            ),
-                        ),
-                    ),
-                ),
-            ),
-            'year' => array(
-                'type'    => 'Segment',
-                'options' => array(
-                    'route' => '/year/:year',
-                    'constraints' => array(
-                        'year' => '\d{4}',
-                    ),
-                    'defaults' => array(
-                        'controller' => 'blog-entry',
-                        'action'     => 'year',
-                    ),
-                ),
-            ),
-            'month' => array(
-                'type'    => 'Segment',
-                'options' => array(
-                    'route' => '/month/:year/:month',
-                    'constraints' => array(
-                        'year'  => '\d{4}',
-                        'month' => '\d{2}',
-                    ),
-                    'defaults' => array(
-                        'controller' => 'blog-entry',
-                        'action'     => 'month',
-                    ),
-                ),
-            ),
-            'day' => array(
-                'type'    => 'Segment',
-                'options' => array(
-                    'route' => '/day/:year/:month/:day',
-                    'constraints' => array(
-                        'year'  => '\d{4}',
-                        'month' => '\d{2}',
-                        'day'   => '\d{2}',
-                    ),
-                    'defaults' => array(
-                        'controller' => 'blog-entry',
-                        'action'     => 'day',
-                    ),
-                ),
-            ),
-        ),
-    ),
-);
-
 $config['di'] = array(
 'definition' => array('class' => array(
     'Blog\EntryResource' => array(
@@ -133,30 +31,137 @@ $config['di'] = array(
     ),
 )),
 'instance' => array(
-    'alias' => array(
-        'view'            => 'Zend\View\PhpRenderer',
-        'view-resolver'   => 'Zend\View\TemplatePathStack',
-        'blog-entry'      => 'Blog\Controller\EntryController',
-    ),
-
     'Blog\EntryResource' => array('parameters' => array(
         'dataSource' => 'CommonResource\DataSource\Mock',
         'class'      => 'CommonResource\Resource\Collection',
     )), 
 
     'Blog\Controller\EntryController' => array('parameters' => array(
-        'view'     => 'view',
+        'renderer' => 'Zend\View\Renderer\PhpRenderer',
         'resource' => 'Blog\EntryResource',
         'key'      => 'data/api-key.txt',
     )),
 
-    'view' => array( 'parameters' => array(
-        'resolver' => 'view-resolver',
+    'Zend\View\Resolver\TemplateMapResolver' => array('parameters' => array(
+        'map' => array(
+            'blog/blogroll'     => __DIR__ . '/../view/blog/blogroll.phtml',
+            'blog/entry-short'  => __DIR__ . '/../view/blog/entry-short.phtml',
+            'blog/entry'        => __DIR__ . '/../view/blog/entry.phtml',
+            'blog/form'         => __DIR__ . '/../view/blog/form.phtml',
+            'blog/list'         => __DIR__ . '/../view/blog/list.phtml',
+            'blog/paginator'    => __DIR__ . '/../view/blog/paginator.phtml',
+            'blog/social-media' => __DIR__ . '/../view/blog/social-media.phtml',
+            'blog/tags'         => __DIR__ . '/../view/blog/tags.phtml',
+        ),
     )),
 
-    'view-resolver' => array('parameters' => array(
+    'Zend\View\Resolver\TemplatePathStack' => array('parameters' => array(
         'paths' => array(
             'blog' => __DIR__ . '/../view',
+        ),
+    )),
+    
+    'Zend\Mvc\Router\RouteStack' => array('parameters' => array(
+        'routes' => array(
+            'blog' => array(
+                'type' => 'Literal',
+                'options' => array(
+                    'route' => '/blog',
+                    'defaults' => array(
+                        'controller' => 'Blog\Controller\EntryController',
+                    ),
+                ),
+                'may_terminate' => true,
+                'child_routes'  => array(
+                    'feed' => array(
+                        'type' => 'Literal',
+                        'options' => array(
+                            'route' => '.xml',
+                            'defaults' => array(
+                                'controller' => 'Blog\Controller\EntryController',
+                                'format'     => 'xml',
+                            ),
+                        ),
+                    ),
+                    'entry' => array(
+                        'type'    => 'Regex',
+                        'options' => array(
+                            'regex' => '/(?<id>[^/]+)',
+                            'defaults' => array(
+                                'controller' => 'Blog\Controller\EntryController',
+                            ),
+                            'spec' => '/%id%',
+                        ),
+                    ),
+                    'tag' => array(
+                        'type'    => 'Regex',
+                        'options' => array(
+                            'regex' => '/tag/(?<tag>[^/.]+)',
+                            'defaults' => array(
+                                'controller' => 'Blog\Controller\EntryController',
+                                'action'     => 'tag',
+                            ),
+                            'spec' => '/tag/%tag%',
+                        ),
+                        'may_terminate' => true,
+                        'child_routes' => array(
+                            'feed' => array(
+                                'type'    => 'Literal',
+                                'options' => array(
+                                    'route' => '.xml',
+                                    'defaults' => array(
+                                        'controller' => 'Blog\Controller\EntryController',
+                                        'action'     => 'tag',
+                                        'format'     => 'xml',
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                    'year' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route' => '/year/:year',
+                            'constraints' => array(
+                                'year' => '\d{4}',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'Blog\Controller\EntryController',
+                                'action'     => 'year',
+                            ),
+                        ),
+                    ),
+                    'month' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route' => '/month/:year/:month',
+                            'constraints' => array(
+                                'year'  => '\d{4}',
+                                'month' => '\d{2}',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'Blog\Controller\EntryController',
+                                'action'     => 'month',
+                            ),
+                        ),
+                    ),
+                    'day' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route' => '/day/:year/:month/:day',
+                            'constraints' => array(
+                                'year'  => '\d{4}',
+                                'month' => '\d{2}',
+                                'day'   => '\d{2}',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'Blog\Controller\EntryController',
+                                'action'     => 'day',
+                            ),
+                        ),
+                    ),
+                ),
+            ),
         ),
     )),
 ));

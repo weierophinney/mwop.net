@@ -51,7 +51,7 @@ $config['di'] = array(
     )), 
 
     'Blog\Controller\EntryController' => array('parameters' => array(
-        'view'     => 'view',
+        'renderer' => 'Zend\View\Renderer\PhpRenderer',
         'resource' => 'Blog\EntryResource',
         'key'      => 'PATH TO API KEY GOES HERE',
     )),

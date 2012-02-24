@@ -13,7 +13,7 @@ $title    = $this->vars()->escape($entry->getTitle());
 ?>
 <aside class="two columns alpha entry meta">
     <p class="date"><?php echo $ds($entry->getCreated()) ?></p>
-    <p class="tags"><?php echo $this->render('blog-entry/tags.phtml', array('tags' => $entry->getTags()))?></p>
+    <p class="tags"><?php echo $this->render('blog/tags', array('tags' => $entry->getTags()))?></p>
 </aside>
 
 <section class="nine columns omega">
