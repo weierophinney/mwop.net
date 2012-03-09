@@ -17,7 +17,7 @@
 
 <?php 
 $form = $this->form;
-$form->setAction($this->url(array(), array('name' => 'contact-process')));
+$form->setAction($this->url('contact-process'));
 $form->setMethod('post');
 echo $form->render($this);
 ?>

@@ -8,7 +8,7 @@ $entry = $this->entry;
 $title = $entry->getTitle();
 $this->headTitle()->prepend($title);
 $title = $this->escape($title);
-$url   = $this->url(array('id' => $entry->getId()), array('name' => 'blog/entry'));
+$url   = $this->url('blog/entry', array('id' => $entry->getId()));
 $ds    = function($ts) use ($entry) {
     $tz   = $entry->getTimezone();
     $date = new \DateTime();

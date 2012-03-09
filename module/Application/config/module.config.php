@@ -38,7 +38,6 @@ $config = array(
 
         'Zend\View\HelperLoader' => array('parameters' => array(
             'map' => array(
-                'url'    => 'Application\View\Helper\Url',
                 'disqus' => 'Application\View\Helper\Disqus',
             ),
         )),

@@ -16,7 +16,6 @@ class Module implements AutoloaderProvider
     protected $appListeners    = array();
     protected $staticListeners = array();
     protected $view;
-    protected $viewListener;
 
     public function init()
     {
@@ -98,19 +97,6 @@ class Module implements AutoloaderProvider
             }
             return false;
         });
-    }
-
-    protected function getViewListener($view, $config)
-    {
-        if ($this->viewListener instanceof View\Listener) {
-            return $this->viewListener;
-        }
-
-        $viewListener       = new View\Listener($view, $config);
-        $viewListener->setDisplayExceptionsFlag($config->display_exceptions);
-
-        $this->viewListener = $viewListener;
-        return $viewListener;
     }
 
     public function getProvides()

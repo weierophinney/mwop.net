@@ -43,14 +43,11 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
    src=src {
     Application=Application {
      Controller=Controller {
-      ErrorController.php
       PageController.php
      }
      View=View {
-      Listener.php
       Helper=Helper {
        Disqus.php
-       Url.php
       }
      }
     }
