@@ -81,12 +81,7 @@ echo $this->doctype() ?>
         <div class="column one-third omega tags">
         <?php 
             echo $this->render('searchbox.phtml');
-            if (is_string($footer)) {
-                echo $this->vars()->escape($footer);
-            }
-            if (is_callable($footer)) {
-                echo call_user_func($footer);
-            } elseif (is_object($footer) && method_exists($footer, '__toString'))  {
+            if (!empty($footer)) {
                 echo $footer;
             }
         ?>

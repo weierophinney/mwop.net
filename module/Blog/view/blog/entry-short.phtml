@@ -9,7 +9,7 @@ $ds    = function($ts) use ($entry) {
 };
 $url      = $this->plugin('url');
 $entryUrl = $url(array('id' => $entry->getId()), array('name' => 'blog/entry'));
-$title    = $this->vars()->escape($entry->getTitle());
+$title    = $this->escape($entry->getTitle());
 ?>
 <aside class="two columns alpha entry meta">
     <p class="date"><?php echo $ds($entry->getCreated()) ?></p>

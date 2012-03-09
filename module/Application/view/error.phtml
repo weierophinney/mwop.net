@@ -18,7 +18,7 @@ if (!$exception instanceof \Exception) {
 ?>
 <h3>Exception information:</h3>
 <p>
-    <b>Message:</b> <?php echo $this->vars()->escape($exception->getMessage()) ?>
+    <b>Message:</b> <?php echo $this->escape($exception->getMessage()) ?>
 </p>
 
 <h3>Stack trace:</h3>
