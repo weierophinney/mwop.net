@@ -3,8 +3,8 @@ return array(
     'modules' => array(
         'Application',
         'Authentication',
-        // // 'Cache', // commenting out as profiling shows increased load times?
-        // 'Comic',
+        // 'Cache', // commenting out as profiling shows increased load times?
+        'Comic',
         'CommonResource',
         'Blog',
         'Contact',
