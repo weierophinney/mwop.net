@@ -78,7 +78,6 @@ $config['di'] = array(
                         'options' => array(
                             'route' => '.xml',
                             'defaults' => array(
-                                'controller' => 'Blog\Controller\EntryController',
                                 'format'     => 'xml',
                             ),
                         ),
@@ -87,9 +86,6 @@ $config['di'] = array(
                         'type'    => 'Regex',
                         'options' => array(
                             'regex' => '/(?<id>[^/]+)',
-                            'defaults' => array(
-                                'controller' => 'Blog\Controller\EntryController',
-                            ),
                             'spec' => '/%id%',
                         ),
                     ),
@@ -98,7 +94,6 @@ $config['di'] = array(
                         'options' => array(
                             'regex' => '/tag/(?<tag>[^/.]+)',
                             'defaults' => array(
-                                'controller' => 'Blog\Controller\EntryController',
                                 'action'     => 'tag',
                             ),
                             'spec' => '/tag/%tag%',
@@ -110,7 +105,6 @@ $config['di'] = array(
                                 'options' => array(
                                     'route' => '.xml',
                                     'defaults' => array(
-                                        'controller' => 'Blog\Controller\EntryController',
                                         'action'     => 'tag',
                                         'format'     => 'xml',
                                     ),
@@ -126,7 +120,6 @@ $config['di'] = array(
                                 'year' => '\d{4}',
                             ),
                             'defaults' => array(
-                                'controller' => 'Blog\Controller\EntryController',
                                 'action'     => 'year',
                             ),
                         ),
@@ -140,7 +133,6 @@ $config['di'] = array(
                                 'month' => '\d{2}',
                             ),
                             'defaults' => array(
-                                'controller' => 'Blog\Controller\EntryController',
                                 'action'     => 'month',
                             ),
                         ),
@@ -155,7 +147,6 @@ $config['di'] = array(
                                 'day'   => '\d{2}',
                             ),
                             'defaults' => array(
-                                'controller' => 'Blog\Controller\EntryController',
                                 'action'     => 'day',
                             ),
                         ),
