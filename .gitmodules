@@ -1,3 +1,6 @@
 [submodule "vendor/SkeletonCss"]
 	path = vendor/SkeletonCss
 	url = git://mwop.net/SkeletonCss.git
+[submodule "vendor/PhlyComic"]
+	path = vendor/PhlyComic
+	url = git://mwop.net/PhlyComic.git
