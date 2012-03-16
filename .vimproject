@@ -177,42 +177,6 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
     }
    }
   }
-  Comic=Comic {
-   autoload_classmap.php
-   autoload_function.php
-   autoload_register.php
-   Module.php
-   bin=bin {
-    get_comics.php
-    get_one_comic.php
-   }
-   src=src {
-    Comic=Comic {
-     Comic.php
-     ComicDescription.php
-     ComicFactory.php
-     ComicSource.php
-     ComicSource=ComicSource {
-      AbstractComicSource.php
-      AbstractDomSource.php
-      AbstractRssSource.php
-      BasicInstructions.php
-      CtrlAltDel.php
-      Dilbert.php
-      ForBetterOrForWorse.php
-      FoxTrot.php
-      GarfieldMinusGarfield.php
-      GoComics.php
-      NotInventedHere.php
-      PennyArcade.php
-      ReptilisRex.php
-      ScenesFromAMultiverse.php
-      UserFriendly.php
-      Xkcd.php
-     }
-    }
-   }
-  }
   CommonResource=CommonResource {
    autoload_classmap.php
    autoload_function.php
@@ -307,6 +271,43 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
   }
  }
  vendor=vendor {
+  PhlyComic=PhlyComic filter="*.php *.md" {
+   Module.php
+   autoload_classmap.php
+   autoload_function.php
+   autoload_register.php
+   README.md
+   bin=bin {
+    get_comics.php
+    get_one_comic.php
+   }
+   src=src {
+    PhlyComic=PhlyComic {
+     Comic.php
+     ComicDescription.php
+     ComicFactory.php
+     ComicSource.php
+     ComicSource=ComicSource {
+      AbstractComicSource.php
+      AbstractDomSource.php
+      AbstractRssSource.php
+      BasicInstructions.php
+      CtrlAltDel.php
+      Dilbert.php
+      ForBetterOrForWorse.php
+      FoxTrot.php
+      GarfieldMinusGarfield.php
+      GoComics.php
+      NotInventedHere.php
+      PennyArcade.php
+      ReptilisRex.php
+      ScenesFromAMultiverse.php
+      UserFriendly.php
+      Xkcd.php
+     }
+    }
+   }
+  }
   SkeletonCss=SkeletonCss filter="*.css *.js *.html *.txt" {
    README.md
    public=public {
