@@ -17,14 +17,7 @@ ini_set("display_errors", (('production' == APPLICATION_ENV) ? false : true));
 error_reporting(E_ALL | E_STRICT);
 
 // Setup autoloading
-// Ensure library/ is on include_path
-set_include_path(implode(PATH_SEPARATOR, array(
-    '.',
-    __DIR__ . '/library',
-    get_include_path(),
-)));
-
-require_once 'Zend/Loader/AutoloaderFactory.php';
+require_once __DIR__ . '/vendor/ZendFramework/library/Zend/Loader/AutoloaderFactory.php';
 AutoloaderFactory::factory(array(
     'Zend\Loader\StandardAutoloader' => array(),
 ));
