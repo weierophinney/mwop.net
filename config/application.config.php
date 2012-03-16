@@ -14,6 +14,7 @@ return array(
         'cache_dir'                => realpath(dirname(__DIR__) . '/data/cache'),
         'module_paths'             => array(
             realpath(__DIR__ . '/../module'),
+            realpath(__DIR__ . '/../vendor'),
         ),
     ),
 );

@@ -287,24 +287,6 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
     }
    }
   }
-  SkeletonCss=SkeletonCss filter="*.css *.js *.html *.txt" {
-   README.md
-   public=public {
-    404.html
-    index.html
-    robots.txt
-    css=css {
-     base.css
-     layout.css
-     skeleton.css
-    }
-    images=images {
-    }
-    js=js {
-     tabs.js
-    }
-   }
-  }
  }
  public=public {
   .htaccess
@@ -322,6 +304,26 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
    comments_wxr.xml
    item.xml
    comment.xml
+  }
+ }
+ vendor=vendor {
+  SkeletonCss=SkeletonCss filter="*.css *.js *.html *.txt" {
+   README.md
+   public=public {
+    404.html
+    index.html
+    robots.txt
+    css=css {
+     base.css
+     layout.css
+     skeleton.css
+    }
+    images=images {
+    }
+    js=js {
+     tabs.js
+    }
+   }
   }
  }
 }
