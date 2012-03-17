@@ -6,8 +6,8 @@ return array(
         // 'Cache', // commenting out as profiling shows increased load times?
         'CommonResource',
         'Blog',
-        'Contact',
         'PhlyComic',
+        'PhlyContact',
     ),
     'module_listener_options' => array( 
         'config_cache_enabled'     => false,

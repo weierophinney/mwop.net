@@ -15,8 +15,8 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
    module.blog.config.local.php
    module.cache.config.global.php
    module.cache.config.local.php
-   module.contact.config.global.php
-   module.contact.config.local.php
+   module.phly-contact.config.global.php
+   module.phly-contact.config.local.php
   }
  }
  module=module {
@@ -226,31 +226,6 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
     }
    }
   }
-  Contact=Contact {
-   Module.php
-   autoload_classmap.php
-   autoload_function.php
-   autoload_register.php
-   config=config {
-    module.config.php
-   }
-   src=src {
-    Contact=Contact {
-     Controller=Controller {
-      ContactController.php
-     }
-     Form=Form {
-      ContactForm.php
-     }
-    }
-   }
-   view=view {
-    contact=contact {
-     index.phtml
-     thank-you.phtml
-    }
-   }
-  }
  }
  public=public {
   .htaccess
@@ -304,6 +279,35 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
       ScenesFromAMultiverse.php
       UserFriendly.php
       Xkcd.php
+     }
+    }
+   }
+  }
+  PhlyContact=PhlyContact filter="*.php *.phtml *.md" {
+   Module.php
+   autoload_classmap.php
+   autoload_function.php
+   autoload_register.php
+   README.md
+   config=config {
+    module.config.php
+    module.phly-contact.local.config.php
+   }
+   src=src {
+    PhlyContact=PhlyContact {
+     Controller=Controller {
+      ContactController.php
+     }
+     Form=Form {
+      ContactForm.php
+     }
+    }
+   }
+   view=view {
+    phly-contact=phly-contact {
+     contact=contact {
+      index.phtml
+      thank-you.phtml
      }
     }
    }
