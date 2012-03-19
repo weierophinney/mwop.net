@@ -1,6 +1,11 @@
 <?php
 return array('di' => array(
     'instance' => array(
+        'preferences' => array(
+            'Zend\Captcha\Adapter' => 'Zend\Captcha\ReCaptcha',
+            'Zend\Mail\Transport'  => 'Zend\Mail\Transport\Smtp',
+        ),
+
         'Zend\Mail\Message' => array('parameters' => array(
             'Zend\Mail\Message::addTo:emailOrAddressList'     => 'EMAIL HERE',
             'Zend\Mail\Message::setSender:emailOrAddressList' => 'EMAIL HERE',
@@ -14,14 +19,6 @@ return array('di' => array(
         // This is how to configure using GMail as your SMTP server
         'Zend\Mail\Transport\SmtpOptions' => array('parameters' => array(
             'host' => 'HOSTNAME HERE',
-        )),
-
-        'PhlyContact\Controller\ContactController' => array('parameters' => array(
-            'transport' => 'Zend\Mail\Transport\Smtp',
-        )),
-
-        'PhlyContact\Form\ContactForm' => array('parameters' => array(
-            'captchaAdapter' => 'Zend\Captcha\ReCaptcha',
         )),
 
         'Zend\Captcha\ReCaptcha' => array('parameters' => array(
