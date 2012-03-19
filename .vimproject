@@ -116,9 +116,14 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
    }
    src=src {
     Blog=Blog {
+     Compiler.php
      EntryEntity.php
      EntryResource.php
      Exception.php
+     Compiler=Compiler {
+      PhpFileFilter.php
+      SortedEntries.php
+     }
      Controller=Controller {
       EntryController.php
      }
