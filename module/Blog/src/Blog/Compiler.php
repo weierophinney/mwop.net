@@ -4,9 +4,12 @@ namespace Blog;
 use DateTime,
     DateTimezone,
     Iterator,
+    stdClass,
     Zend\Paginator\Paginator,
     Zend\Paginator\Adapter\Iterator as IteratorPaginator,
-    Zend\Tag\Cloud as TagCloud;
+    Zend\Tag\Cloud as TagCloud,
+    Zend\View\Model\ViewModel,
+    Zend\View\View;
 
 
 class Compiler
@@ -17,112 +20,156 @@ class Compiler
     protected $byTag;
     protected $byYear;
     protected $entries;
+    public    $filename;
     protected $files;
+    protected $responseStrategyPrepared = false;
+    protected $tagCloud;
+    protected $view;
 
-    public function __construct(Compiler\PhpFileFilter $files)
+    public function __construct(Compiler\PhpFileFilter $files, View $view)
     {
         $this->files = $files;
+        $this->view  = $view;
     }
 
-    public function compileEntryViewScripts()
+    public function compileEntryViewScripts($template, $filenameTemplate = '%s.html')
     {
         $entries = $this->prepareEntries();
 
         foreach ($entries as $entry) {
-            // We need:
-            // - Location at which to write view script
-            // - Template for view script
-            //   - Does this mean a "renderer"?
+            $filename = sprintf($filenameTemplate, $entry->getId());
+            $this->prepareResponseStrategy($filename);
+
+            $model = new ViewModel(array(
+                'entry' => $entry,
+            ));
+            $model->setTemplate($template);
+
+            $this->view->render($model);
         }
     }
 
-    public function compilePaginatedEntries()
+    public function compilePaginatedEntries($template, $filenameTemplate = 'blog-p%d.html', $urlTemplate = '/blog-p%d.html')
     {
-        $entries   = $this->prepareEntries();
-        $paginator = $this->getPaginator($entries);
+        $this->prepareEntries();
 
-        // We need:
-        // - How many entries to include per page
-        // - How many pages to show in the paginator
-        // - Location at which to write view scripts
-        // - Template for view script
-        //   - Does this mean a "renderer"?
-        // - Partial for paginator control
-        //   - Does this mean a "renderer"?
-        //
-        // Then: 
-        // - loop from page 1 to last page
-        // - Generate each page
+        // Get a paginator
+        $paginator = $this->getPaginator($this->entries);
 
-        /*
-        $paginator->setCurrentPageNumber($page);
-        $paginator->setItemCountPerPage(10);
-        $paginator->setPageRange(10);
-         */
+        // Loop through pages
+        $pageCount = count($paginator);
+        for ($i = 1; $i <= $pageCount; $i++) {
+            $paginator->setCurrentPageNumber($i);
 
+            $filename = sprintf($filenameTemplate, $i);
+            $url      = sprintf($urlTemplate, $i);
+
+            // Generate this page
+            $model = array(
+                'title'         => 'Blog Entries',
+                'entries'       => $paginator,
+                'paginator_url' => $url,
+            );
+
+            $this->prepareResponseStrategy($filename);
+            $this->view->render($model);
+        }
     }
 
-    public function compilePaginatedEntriesByDate()
+    public function compilePaginatedEntriesByYear($template, $filenameTemplate = 'year/%s-p%d.html', $urlTemplate = '/blog/year/%s-p%d.html')
     {
-        $entries   = $this->prepareEntries();
+        $this->prepareEntries();
+        foreach ($this->byYear as $year => $list) {
+            // Get a paginator for this day
+            $paginator = $this->getPaginator($list);
 
-        // We need:
-        // - How many entries to include per page
-        // - How many pages to show in the paginator
-        // - Location at which to write view scripts
-        // - Template for view script
-        //   - Does this mean a "renderer"?
-        // - Partial for paginator control
-        //   - Does this mean a "renderer"?
-        //
-        // Then: 
-        // - Filter entries by year
-        //   - within years, filter entries by month
-        //     - within month, filter entries by day
-        //   {years: {
-        //      2012: {
-        //          entries: {
-        //          }
-        //          months: {
-        //              03: {
-        //                  entries: {
-        //                  }
-        //                  days: {
-        //                      17: {
-        //                          // entries
-        //                      }
-        //                  }
-        //              }
-        //          }
-        //      }
-        //   }}
-        // - loop from page 1 to last page for each criteria
-        // - Generate each page
+            // Loop through pages
+            $pageCount = count($paginator);
+            for ($i = 1; $i <= $pageCount; $i++) {
+                $paginator->setCurrentPageNumber($i);
+
+                $filename = sprintf($filenameTemplate, $year, $i);
+                $url      = sprintf($urlTemplate, $year, $i);
+
+                // Generate this page
+                $model = array(
+                    'title'         => 'Blog Entries for ' . $year,
+                    'entries'       => $paginator,
+                    'paginator_url' => $url,
+                );
+
+                $this->prepareResponseStrategy($filename);
+                $this->view->render($model);
+            }
+        }
     }
 
-    public function compilePaginatedEntriesByTag()
+    public function compilePaginatedEntriesByMonth($template, $filenameTemplate = 'month/%s-p%d.html', $urlTemplate = '/blog/month/%s-p%d.html')
     {
-        $entries   = $this->prepareEntries();
+        $this->prepareEntries();
+        foreach ($this->byMonth as $month => $list) {
+            // Get a paginator for this day
+            $paginator = $this->getPaginator($list);
 
-        // We need:
-        // - How many entries to include per page
-        // - How many pages to show in the paginator
-        // - Location at which to write view scripts
-        // - Template for view script
-        //   - Does this mean a "renderer"?
-        // - Partial for paginator control
-        //   - Does this mean a "renderer"?
-        //
-        // Then: 
-        // - loop from page 1 to last page for each criteria
-        // - Generate each page
+            // Loop through pages
+            $pageCount = count($paginator);
+            for ($i = 1; $i <= $pageCount; $i++) {
+                $paginator->setCurrentPageNumber($i);
 
-        $tags = array();
+                list($year, $monthDigit) = explode($month, 2);
+
+                $filename = sprintf($filenameTemplate, $month, $i);
+                $url      = sprintf($urlTemplate, $month, $i);
+
+                // Generate this page
+                $model = array(
+                    'title'         => 'Blog Entries for ' . date('F', strtotime($year . '-' . $month . '-01')) . ' ' . $year,
+                    'entries'       => $paginator,
+                    'paginator_url' => $url,
+                );
+
+                $this->prepareResponseStrategy($filename);
+                $this->view->render($model);
+            }
+        }
+    }
+
+    public function compilePaginatedEntriesByDate($template, $filenameTemplate = 'day/%s-p%d.html', $urlTemplate = '/blog/day/%s-p%d.html')
+    {
+        $this->prepareEntries();
+
+        foreach ($this->byDay as $day => $list) {
+            // Get a paginator for this day
+            $paginator = $this->getPaginator($list);
+
+            // Loop through pages
+            $pageCount = count($paginator);
+            for ($i = 1; $i <= $pageCount; $i++) {
+                $paginator->setCurrentPageNumber($i);
+
+                list($year, $month, $date) = explode($day, 3);
+
+                $filename = sprintf($filenameTemplate, $day, $i);
+                $url      = sprintf($urlTemplate, $day, $i);
+
+                // Generate this page
+                $model = array(
+                    'title'         => 'Blog Entries for ' . $date . ' ' . date('F', strtotime($year . '-' . $month . '-' . $date)) . ' ' . $year,
+                    'entries'       => $paginator,
+                    'paginator_url' => $url,
+                );
+
+                $this->prepareResponseStrategy($filename);
+                $this->view->render($model);
+            }
+        }
+    }
+
+    public function compilePaginatedEntriesByTag($template, $filenameTemplate = 'tag/%s-p%d.html', $urlTemplate = '/blog/tag/%s-p%d.html')
+    {
+        $this->prepareEntries();
+
         foreach ($this->byTag as $tag => $list) {
-
-// What's in this loop will be the same for all the compile methods.
-// Only difference will be what template is used, and what file is written to
-            
             // Get a paginator for this tag
             $paginator = $this->getPaginator($list);
 
@@ -131,7 +178,19 @@ class Compiler
             for ($i = 1; $i <= $pageCount; $i++) {
                 $paginator->setCurrentPageNumber($i);
 
+                $filename = sprintf($filenameTemplate, $tag, $i);
+                $url      = sprintf($urlTemplate, $tag, $i);
+
                 // Generate this page
+                $model = array(
+                    'title'         => 'Tag: ' . $tag,
+                    'tag'           => $tag,
+                    'entries'       => $paginator,
+                    'paginator_url' => $url,
+                );
+
+                $this->prepareResponseStrategy($filename);
+                $this->view->render($model);
             }
         }
     }
@@ -147,6 +206,10 @@ class Compiler
      */
     public function compileTagCloud($tagUrlTemplate = '/blog/tag/%s', $cloudOptions = array())
     {
+        if ($this->tagCloud) {
+            return $this->tagCloud;
+        }
+
         $this->prepareEntries();
 
         $tags = array();
@@ -161,7 +224,8 @@ class Compiler
         }
         $options['tags'] = $tags;
 
-        return new TagCloud($options);
+        $this->tagCloud = new TagCloud($options);
+        return $this->tagCloud;
     }
 
     /**
@@ -208,8 +272,8 @@ class Compiler
                  ->setTimezone(new DateTimezone($entry->getTimezone()));
 
             $year  = $date->format('Y');
-            $month = $date->format('Y-m');
-            $day   = $date->format('Y-m-d');
+            $month = $date->format('Y/m');
+            $day   = $date->format('Y/m/d');
 
             if (!isset($this->byYear[$year])) {
                 $this->byYear[$year] = new Compiler\SortedEntries();
@@ -252,12 +316,43 @@ class Compiler
      * - Template for view script
      * - Partial for paginator control
      * 
+     * @todo   get count per page and page range from options
      * @param  Iterator $it 
      * @return Paginator
      */
     protected function getPaginator(Iterator $it)
     {
         $paginator = new Paginator(new IteratorPaginator($it));
+        $paginator->setCurrentPageNumber($page);
+        $paginator->setItemCountPerPage(10);
+        $paginator->setPageRange(10);
         return $paginator;
+    }
+
+    /**
+     * Prepare the response strategy
+     *
+     * Clears out all response listeners, and injects a new callback that 
+     * imports the provided filename, and writes the rendering results to
+     * that file.
+     * 
+     * @param  string $filename 
+     * @return void
+     */
+    protected function prepareResponseStrategy($filename)
+    {
+        if ($this->responseStrategyPrepared) {
+            $this->filename->file = $filename;
+            return;
+        }
+        $this->filename = new stdClass;
+        $this->filename->file = $filename;
+        $filename = $this->filename;
+
+        $this->view->addResponseStrategy(function ($e) use ($filename) {
+            $result = $e->getResult();
+            file_put_contents($filename->file, $result);
+        });
+        $this->responseStrategyPrepared = true;
     }
 }
