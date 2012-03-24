@@ -1,5 +1,5 @@
 <?php
-namespace Blog;
+namespace Blog\Compiler;
 
 use DirectoryIterator,
     FilterIterator,

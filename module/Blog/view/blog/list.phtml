@@ -1,4 +1,5 @@
 <?php 
+use Zend\Stdlib\ArrayUtils;
 $paginatorUrl = $this->paginator_url;
 $this->headTitle()->prepend($this->title);
 $this->headLink(array(
@@ -19,14 +20,13 @@ $this->headLink(array(
     <h2><?php echo $this->title ?></h2>
 
 <?php 
-$entries = $this->entries;
-foreach ($entries as $entry) {
+foreach ($this->entries as $entry) {
     echo '<div class="row clearfix">', "\n";
     echo $this->render('blog/entry-short', array('entry' => $entry));
     echo '</div>', "\n";
 }
 
-echo $this->paginationControl($entries, 'Sliding', 'blog/paginator', array('url' => $paginatorUrl));
+echo $this->paginationControl($this->entries, 'Sliding', 'blog/paginator', array('url' => $paginatorUrl));
 ?>
 </section>
 
