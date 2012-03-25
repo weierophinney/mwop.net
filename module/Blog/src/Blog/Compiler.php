@@ -56,7 +56,7 @@ class Compiler
         $this->prepareEntries();
 
         // Get a paginator
-        $paginator = $this->getPaginator($this->entries);
+        $paginator = $this->getPaginator($this->pagedEntries);
 
         // Loop through pages
         $pageCount = count($paginator);
@@ -64,13 +64,12 @@ class Compiler
             $paginator->setCurrentPageNumber($i);
 
             $filename = sprintf($filenameTemplate, $i);
-            $url      = sprintf($urlTemplate, $i);
 
             // Generate this page
             $model = new ViewModel(array(
                 'title'         => 'Blog Entries',
                 'entries'       => $paginator,
-                'paginator_url' => $url,
+                'paginator_url' => $urlTemplate,
             ));
             $model->setTemplate($template);
 
@@ -97,13 +96,13 @@ class Compiler
                 $paginator->setCurrentPageNumber($i);
 
                 $filename = sprintf($filenameTemplate, $year, $i);
-                $url      = sprintf($urlTemplate, $year, $i);
 
                 // Generate this page
                 $model = new ViewModel(array(
                     'title'         => 'Blog Entries for ' . $year,
                     'entries'       => $paginator,
-                    'paginator_url' => $url,
+                    'paginator_url' => $urlTemplate,
+                    'substitution'  => $year,
                 ));
                 $model->setTemplate($template);
 
@@ -134,13 +133,13 @@ class Compiler
                 $paginator->setCurrentPageNumber($i);
 
                 $filename = sprintf($filenameTemplate, $month, $i);
-                $url      = sprintf($urlTemplate, $month, $i);
 
                 // Generate this page
                 $model = new ViewModel(array(
                     'title'         => 'Blog Entries for ' . date('F', strtotime($year . '-' . $monthDigit . '-01')) . ' ' . $year,
                     'entries'       => $paginator,
-                    'paginator_url' => $url,
+                    'paginator_url' => $urlTemplate,
+                    'substitution'  => $month,
                 ));
                 $model->setTemplate($template);
 
@@ -171,13 +170,13 @@ class Compiler
                 $paginator->setCurrentPageNumber($i);
 
                 $filename = sprintf($filenameTemplate, $day, $i);
-                $url      = sprintf($urlTemplate, $day, $i);
 
                 // Generate this page
                 $model = new ViewModel(array(
                     'title'         => 'Blog Entries for ' . $date . ' ' . date('F', strtotime($year . '-' . $month . '-' . $date)) . ' ' . $year,
                     'entries'       => $paginator,
-                    'paginator_url' => $url,
+                    'paginator_url' => $urlTemplate,
+                    'substitution'  => $day,
                 ));
                 $model->setTemplate($template);
 
@@ -206,14 +205,14 @@ class Compiler
                 $paginator->setCurrentPageNumber($i);
 
                 $filename = sprintf($filenameTemplate, $tag, $i);
-                $url      = sprintf($urlTemplate, $tag, $i);
 
                 // Generate this page
                 $model = new ViewModel(array(
                     'title'         => 'Tag: ' . $tag,
                     'tag'           => $tag,
                     'entries'       => $paginator,
-                    'paginator_url' => $url,
+                    'paginator_url' => $urlTemplate,
+                    'substitution'  => $tag,
                 ));
                 $model->setTemplate($template);
 
@@ -283,21 +282,34 @@ class Compiler
             return;
         }
 
-        $this->entries  = new Compiler\SortedEntries();
-        $this->byYear   = array();
-        $this->byMonth  = array();
-        $this->byDay    = array();
-        $this->byTag    = array();
-        $this->byAuthor = array();
+        $this->entries      = new Compiler\SortedEntries();
+        $this->pagedEntries = new Compiler\SortedEntries();
+        $this->byYear       = array();
+        $this->byMonth      = array();
+        $this->byDay        = array();
+        $this->byTag        = array();
+        $this->byAuthor     = array();
         foreach ($this->files as $file) {
             $entry = include $file->getRealPath();
             if (!$entry instanceof EntryEntity) {
                 continue;
             }
 
+            if ($entry->isDraft()) {
+                continue;
+            }
+
             // First, set in entries
             $timestamp = $entry->getCreated();
             $this->entries->insert($entry, $timestamp);
+
+            // Second, test if it's public; if not, continue to the next
+            if (!$entry->isPublic()) {
+                continue;
+            }
+
+            // Third, add to a special "paginated entries" list
+            $this->pagedEntries->insert($entry, $timestamp);
 
             // Then, set in appropriate year, month, and day slots
             $date      = new DateTime();
@@ -340,8 +352,17 @@ class Compiler
         }
 
         // Cast to array to ensure we can loop through it multiple
-        // times
-        $this->entries = iterator_to_array($this->entries);
+        // times; fixes the issue that a Heap removes entries during iteration
+        $this->entries      = iterator_to_array($this->entries);
+        $this->pagedEntries = iterator_to_array($this->pagedEntries);
+
+        foreach (array('byYear', 'byMonth', 'byDay', 'byTag', 'byAuthor') as $prop) {
+            foreach ($this->$prop as $index => $heap) {
+                // have to do this due to dynamic resolution order in PHP
+                $local =& $this->$prop;
+                $local[$index] = iterator_to_array($heap);
+            }
+        }
     }
 
     /**
@@ -358,21 +379,9 @@ class Compiler
      * @return Paginator
      * @throws DomainException
      */
-    protected function getPaginator($it)
+    protected function getPaginator(array $list)
     {
-        // Cast entries to an array; priority queue implementation is 
-        // sometimes leading to inconsistent results
-        if ($it instanceof Traversable) {
-            $it = iterator_to_array($it);
-        }
-        if (!is_array($it)) {
-            throw new DomainException(sprintf(
-                'Invalid iterator received by %s',
-                __METHOD__
-            ));
-        }
-
-        $paginator = new Paginator(new ArrayPaginator($it));
+        $paginator = new Paginator(new ArrayPaginator($list));
         $paginator->setItemCountPerPage(10);
         $paginator->setPageRange(10);
         return $paginator;

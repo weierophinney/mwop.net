@@ -1,7 +1,7 @@
 <?php
 namespace Blog\Compiler;
 
-use Zend\Stdlib\SplPriorityQueue,
+use SplPriorityQueue,
     Blog\EntryEntity;
 
 class SortedEntries extends SplPriorityQueue

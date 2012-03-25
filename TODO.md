@@ -14,7 +14,8 @@ TODO
 
 ### Issues
 
-* Paginators are not working correctly; they always show current page of 1
+* Need to generate feeds for each paginated view
+* Layout should be done as a response listener.
 
 ## Ongoing
 

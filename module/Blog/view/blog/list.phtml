@@ -1,8 +1,14 @@
 <?php 
 use Zend\Stdlib\ArrayUtils;
-$paginatorUrl = $this->paginator_url;
+$paginatorUrl          = $this->paginator_url;
+$urlSubstitutionString = $this->substitution;
+$basePageUrl           = str_replace('-p%d', '', $paginatorUrl);
+if ($urlSubstitutionString) {
+    $basePageUrl = str_replace('%s', $urlSubstitutionString, $basePageUrl);
+}
 $this->headTitle()->prepend($this->title);
 $this->headLink(array(
+    // this should be something like blog.xml -- broken right now
     'href'  => $paginatorUrl . '.xml',
     'type'  => 'application/atom+xml',
     'rel'   => 'alternate',
@@ -26,7 +32,7 @@ foreach ($this->entries as $entry) {
     echo '</div>', "\n";
 }
 
-echo $this->paginationControl($this->entries, 'Sliding', 'blog/paginator', array('url' => $paginatorUrl));
+echo $this->paginationControl($this->entries, 'Sliding', 'blog/paginator', array('url' => $paginatorUrl, 'substitution' => $urlSubstitutionString));
 ?>
 </section>
 
