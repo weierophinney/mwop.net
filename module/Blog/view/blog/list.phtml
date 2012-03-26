@@ -9,13 +9,13 @@ if ($urlSubstitutionString) {
 $this->headTitle()->prepend($this->title);
 $this->headLink(array(
     // this should be something like blog.xml -- broken right now
-    'href'  => $paginatorUrl . '.xml',
+    'href'  => basename($basePageUrl, '.html') . '-atom.xml',
     'type'  => 'application/atom+xml',
     'rel'   => 'alternate',
     'title' => $this->title . ' Atom Feed',
 ));
 $this->headLink(array(
-    'href'  => $paginatorUrl . '.xml?type=rss',
+    'href'  => basename($basePageUrl, '.html') . '-rss.xml',
     'type'  => 'application/rss+xml',
     'rel'   => 'alternate',
     'title' => $this->title . ' RSS Feed',

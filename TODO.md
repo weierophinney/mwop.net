@@ -14,7 +14,15 @@ TODO
 
 ### Issues
 
-* Layout should be done as a response listener.
+* Needs some serious refactoring and cleanup... but works
+  * Modify routes to append ".html"
+  * Layout and view scripts likely need some slight changes
+    * to get syntax highlighting working
+    * to ensure RSS/Atom links are correct
+* Remove controller and listener
+  * Including configuration
+* Add compiler script to module? or simpler version in module, and more complex
+  version in application? if latter, where?
 
 ## Ongoing
 

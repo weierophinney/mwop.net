@@ -364,7 +364,7 @@ class Compiler
 
         $tags = array();
         foreach ($this->byTag as $tag => $list) {
-            $tags[] = array(
+            $tags[$tag] = array(
                 'title'   => $tag,
                 'weight'  => count($list),
                 'params'  => array(
