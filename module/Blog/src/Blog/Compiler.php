@@ -4,9 +4,11 @@ namespace Blog;
 use DateTime,
     DateTimezone,
     DomainException,
+    InvalidArgumentException,
     Iterator,
     stdClass,
     Traversable,
+    Zend\Feed\Writer\Feed as FeedWriter,
     Zend\Paginator\Paginator,
     Zend\Paginator\Adapter\ArrayAdapter as ArrayPaginator,
     Zend\Tag\Cloud as TagCloud,
@@ -81,6 +83,60 @@ class Compiler
                 $paginator = $this->getPaginator($this->entries);
             }
         }
+    }
+
+    public function compileRecentFeed($type, $filename = 'blog.xml', $blogLink = '/blog', $feedLink = '/blog.xml', $linkTemplate = '/blog/%s.html', $title = '')
+    {
+        $type = strtolower($type);
+        if (!in_array($type, array('atom', 'rss'))) {
+            throw new InvalidArgumentException('Feed type must be "atom" or "rss"');
+        }
+
+        $this->prepareEntries();
+
+        // Get a paginator
+        $paginator = $this->getPaginator($this->pagedEntries);
+        $paginator->setCurrentPageNumber(1);
+
+        $feed = new FeedWriter();
+        $feed->setTitle($title);
+        $feed->setLink($blogLink);
+        $feed->setFeedLink($feedLink, $type);
+
+        // Make this configurable?
+        if ('rss' == $type) {
+            $feed->setDescription($title);
+        }
+
+        $latest = false;
+        foreach ($paginator as $post) {
+            if (!$latest) {
+                $latest = $post;
+            }
+            $entry = $feed->createEntry();
+            $entry->setTitle($post->getTitle());
+            $entry->setLink(sprintf($linkTemplate, $post->getId()));
+
+            /**
+             * @todo inject this info!
+             */
+            $entry->addAuthor(array(
+                'name'  => "Matthew Weier O'Phinney",
+                'email' => 'matthew@weierophinney.net',
+                'uri'   => $blogLink,
+            ));
+            $entry->setDateModified($post->getUpdated());
+            $entry->setDateCreated($post->getCreated());
+            $entry->setContent($post->getBody());
+
+            $feed->addEntry($entry);
+        }
+
+        // Set feed date
+        $feed->setDateModified($latest->getUpdated());
+
+        // Write feed to file
+        file_put_contents($filename, $feed->export($type));
     }
 
     public function compilePaginatedEntriesByYear($template, $filenameTemplate = 'year/%s-p%d.html', $urlTemplate = '/blog/year/%s-p%d.html')
@@ -226,6 +282,68 @@ class Compiler
             }
         }
     }
+
+    public function compileTagFeeds($type, $filenameTemplate = 'blog/tag/%s.xml', $blogLinkTemplate = '/blog/%s', $feedLinkTemplate = '/blog/tag/%s.xml', $linkTemplate = '/blog/%s.html', $titleTemplate = 'Tag: %s')
+    {
+        $type = strtolower($type);
+        if (!in_array($type, array('atom', 'rss'))) {
+            throw new InvalidArgumentException('Feed type must be "atom" or "rss"');
+        }
+
+        $this->prepareEntries();
+
+        foreach ($this->byTag as $tag => $list) {
+            // Get a paginator
+            $paginator = $this->getPaginator($list);
+            $paginator->setCurrentPageNumber(1);
+
+            $title    = sprintf($titleTemplate, $tag);
+            $filename = sprintf($filenameTemplate, $tag);
+            $blogLink = sprintf($blogLinkTemplate, $tag);
+            $feedLink = sprintf($feedLinkTemplate, $tag);
+            
+            $feed = new FeedWriter();
+            $feed->setTitle($title);
+            $feed->setLink($blogLink);
+            $feed->setFeedLink($feedLink, $type);
+
+            // Make this configurable?
+            if ('rss' == $type) {
+                $feed->setDescription($title);
+            }
+
+            $latest = false;
+            foreach ($paginator as $post) {
+                if (!$latest) {
+                    $latest = $post;
+                }
+                $entry = $feed->createEntry();
+                $entry->setTitle($post->getTitle());
+                $entry->setLink(sprintf($linkTemplate, $post->getId()));
+
+                /**
+                * @todo inject this info!
+                */
+                $entry->addAuthor(array(
+                    'name'  => "Matthew Weier O'Phinney",
+                    'email' => 'matthew@weierophinney.net',
+                    'uri'   => str_replace('%s', '', $blogLinkTemplate),
+                ));
+                $entry->setDateModified($post->getUpdated());
+                $entry->setDateCreated($post->getCreated());
+                $entry->setContent($post->getBody());
+
+                $feed->addEntry($entry);
+            }
+
+            // Set feed date
+            $feed->setDateModified($latest->getUpdated());
+
+            // Write feed to file
+            file_put_contents($filename, $feed->export($type));
+        }
+    }
+
 
     /**
      * Compile a tag cloud from the entries
@@ -390,9 +508,8 @@ class Compiler
     /**
      * Prepare the response strategy
      *
-     * Clears out all response listeners, and injects a new callback that 
-     * imports the provided filename, and writes the rendering results to
-     * that file.
+     * Injects a new callback that imports the provided filename, and writes 
+     * the rendering results to that file.
      * 
      * @param  string $filename 
      * @return void

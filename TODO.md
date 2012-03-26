@@ -14,7 +14,6 @@ TODO
 
 ### Issues
 
-* Need to generate feeds for each paginated view
 * Layout should be done as a response listener.
 
 ## Ongoing
