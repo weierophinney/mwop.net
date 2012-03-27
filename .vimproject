@@ -117,21 +117,11 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
    src=src {
     Blog=Blog {
      Compiler.php
+     CompilerOptions.php
      EntryEntity.php
-     EntryResource.php
-     Exception.php
      Compiler=Compiler {
       PhpFileFilter.php
       SortedEntries.php
-     }
-     Controller=Controller {
-      EntryController.php
-     }
-     EventListeners=EventListeners {
-      EntryControllerListener.php
-     }
-     Exception=Exception {
-      UnauthorizedAccessException.php
      }
      Filter=Filter {
       EntryFilter.php
@@ -146,8 +136,6 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
     bootstrap.php.dist
     Blog=Blog {
      EntryEntityTest.php
-     EntryResourceTest.php
-     MongoIntegrationTest.php
     }
     log=log {
     }

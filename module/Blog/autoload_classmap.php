@@ -7,5 +7,6 @@ return array(
     'Blog\Compiler\SortedEntries'                 => __DIR__ . '/src/Blog/Compiler/SortedEntries.php',
     'Blog\Compiler\PhpFileFilter'                 => __DIR__ . '/src/Blog/Compiler/PhpFileFilter.php',
     'Blog\Compiler'                               => __DIR__ . '/src/Blog/Compiler.php',
+    'Blog\CompilerOptions'                        => __DIR__ . '/src/Blog/CompilerOptions.php',
     'Blog\EntryEntity'                            => __DIR__ . '/src/Blog/EntryEntity.php',
 );

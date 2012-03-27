@@ -15,7 +15,6 @@ use DateTime,
     Zend\View\Model\ViewModel,
     Zend\View\View;
 
-
 class Compiler
 {
     protected $byAuthor;
@@ -26,18 +25,31 @@ class Compiler
     protected $entries;
     public    $filename;
     protected $files;
+    protected $options;
     protected $responseStrategyPrepared = false;
     protected $tagCloud;
     protected $view;
 
-    public function __construct(Compiler\PhpFileFilter $files, View $view)
+    public function __construct(Compiler\PhpFileFilter $files, View $view, CompilerOptions $options = null)
     {
         $this->files = $files;
         $this->view  = $view;
+        if (null === $options) {
+            $options = new CompilerOptions;
+        }
+        $this->options = $options;
     }
 
-    public function compileEntryViewScripts($template, $filenameTemplate = '%s.html')
+    public function compileEntryViewScripts($template = null)
     {
+        if (null === $template) {
+            $template = $this->options->getEntryTemplate();
+            if (empty($template)) {
+                throw new \DomainException('No template provided for individual entries');
+            }
+        }
+        $filenameTemplate = $this->options->getEntryFilenameTemplate();
+
         $this->prepareEntries();
 
         foreach ($this->entries as $entry) {
@@ -53,8 +65,16 @@ class Compiler
         }
     }
 
-    public function compilePaginatedEntries($template, $filenameTemplate = 'blog-p%d.html', $urlTemplate = '/blog-p%d.html')
+    public function compilePaginatedEntries($template = null)
     {
+        if (null === $template) {
+            $template = $this->options->getEntriesTemplate();
+            if (empty($template)) {
+                throw new \DomainException('No template provided for listing entries');
+            }
+        }
+        $filenameTemplate = $this->options->getEntriesFilenameTemplate();
+        $urlTemplate      = $this->options->getEntryLinkTemplate();
         $this->prepareEntries();
 
         // Get a paginator
@@ -85,12 +105,18 @@ class Compiler
         }
     }
 
-    public function compileRecentFeed($type, $filename = 'blog.xml', $blogLink = '/blog', $feedLink = '/blog.xml', $linkTemplate = '/blog/%s.html', $title = '')
+    public function compileRecentFeed($type, $title = '')
     {
         $type = strtolower($type);
         if (!in_array($type, array('atom', 'rss'))) {
             throw new InvalidArgumentException('Feed type must be "atom" or "rss"');
         }
+
+        $filename     = $this->options->getFeedFilename();
+        $blogLink     = $this->options->getFeedHostname() . $this->options->getFeedBlogLink();
+        $feedLink     = $this->options->getFeedHostname() . $this->options->getFeedFeedLink();
+        $linkTemplate = $this->options->getFeedHostname() . $this->options->getEntryLinkTemplate();
+        $title        = $this->options->getFeedTitle();
 
         $this->prepareEntries();
 
@@ -101,12 +127,22 @@ class Compiler
         $feed = new FeedWriter();
         $feed->setTitle($title);
         $feed->setLink($blogLink);
-        $feed->setFeedLink($feedLink, $type);
+        $feed->setFeedLink(sprintf($feedLink, $type), $type);
 
         // Make this configurable?
         if ('rss' == $type) {
             $feed->setDescription($title);
         }
+
+        $authorUri   = $this->options->getFeedAuthorUri();
+        if (empty($authorUri)) {
+            $authorUri = $blogLink;
+        }
+        $author      = array(
+            'name'  => $this->options->getFeedAuthorName(),
+            'email' => $this->options->getFeedAuthorEmail(),
+            'uri'   => $authorUri,
+        );
 
         $latest = false;
         foreach ($paginator as $post) {
@@ -117,14 +153,7 @@ class Compiler
             $entry->setTitle($post->getTitle());
             $entry->setLink(sprintf($linkTemplate, $post->getId()));
 
-            /**
-             * @todo inject this info!
-             */
-            $entry->addAuthor(array(
-                'name'  => "Matthew Weier O'Phinney",
-                'email' => 'matthew@weierophinney.net',
-                'uri'   => $blogLink,
-            ));
+            $entry->addAuthor($author);
             $entry->setDateModified($post->getUpdated());
             $entry->setDateCreated($post->getCreated());
             $entry->setContent($post->getBody());
@@ -136,11 +165,21 @@ class Compiler
         $feed->setDateModified($latest->getUpdated());
 
         // Write feed to file
-        file_put_contents($filename, $feed->export($type));
+        file_put_contents(sprintf($filename, $type), $feed->export($type));
     }
 
-    public function compilePaginatedEntriesByYear($template, $filenameTemplate = 'year/%s-p%d.html', $urlTemplate = '/blog/year/%s-p%d.html')
+    public function compilePaginatedEntriesByYear($template = null)
     {
+        if (null === $template) {
+            $template = $this->options->getByYearTemplate();
+            if (empty($template)) {
+                throw new \DomainException('No template provided for listing entries by year');
+            }
+        }
+
+        $filenameTemplate = $this->options->getByYearFilenameTemplate();
+        $urlTemplate      = $this->options->getByYearUrlTemplate();
+
         $this->prepareEntries();
         foreach ($this->byYear as $year => $list) {
             // Get a paginator for this day
@@ -173,8 +212,18 @@ class Compiler
         }
     }
 
-    public function compilePaginatedEntriesByMonth($template, $filenameTemplate = 'month/%s-p%d.html', $urlTemplate = '/blog/month/%s-p%d.html')
+    public function compilePaginatedEntriesByMonth($template = null)
     {
+        if (null === $template) {
+            $template = $this->options->getByMonthTemplate();
+            if (empty($template)) {
+                throw new \DomainException('No template provided for listing entries by month');
+            }
+        }
+
+        $filenameTemplate = $this->options->getByMonthFilenameTemplate();
+        $urlTemplate      = $this->options->getByMonthUrlTemplate();
+
         $this->prepareEntries();
         foreach ($this->byMonth as $month => $list) {
             // Get a paginator for this day
@@ -210,8 +259,18 @@ class Compiler
         }
     }
 
-    public function compilePaginatedEntriesByDate($template, $filenameTemplate = 'day/%s-p%d.html', $urlTemplate = '/blog/day/%s-p%d.html')
+    public function compilePaginatedEntriesByDate($template = null)
     {
+        if (null === $template) {
+            $template = $this->options->getByDayTemplate();
+            if (empty($template)) {
+                throw new \DomainException('No template provided for listing entries by day');
+            }
+        }
+
+        $filenameTemplate = $this->options->getByDayFilenameTemplate();
+        $urlTemplate      = $this->options->getByDayUrlTemplate();
+
         $this->prepareEntries();
 
         foreach ($this->byDay as $day => $list) {
@@ -247,8 +306,18 @@ class Compiler
         }
     }
 
-    public function compilePaginatedEntriesByTag($template, $filenameTemplate = 'tag/%s-p%d.html', $urlTemplate = '/blog/tag/%s-p%d.html')
+    public function compilePaginatedEntriesByTag($template = null)
     {
+        if (null === $template) {
+            $template = $this->options->getByTagTemplate();
+            if (empty($template)) {
+                throw new \DomainException('No template provided for listing entries by tag');
+            }
+        }
+
+        $filenameTemplate = $this->options->getByTagFilenameTemplate();
+        $urlTemplate      = $this->options->getByTagUrlTemplate();
+
         $this->prepareEntries();
 
         foreach ($this->byTag as $tag => $list) {
@@ -283,12 +352,18 @@ class Compiler
         }
     }
 
-    public function compileTagFeeds($type, $filenameTemplate = 'blog/tag/%s.xml', $blogLinkTemplate = '/blog/%s', $feedLinkTemplate = '/blog/tag/%s.xml', $linkTemplate = '/blog/%s.html', $titleTemplate = 'Tag: %s')
+    public function compileTagFeeds($type)
     {
         $type = strtolower($type);
         if (!in_array($type, array('atom', 'rss'))) {
             throw new InvalidArgumentException('Feed type must be "atom" or "rss"');
         }
+
+        $filenameTemplate = $this->options->getTagFeedFilenameTemplate();
+        $blogLinkTemplate = $this->options->getFeedHostname() . $this->options->getTagFeedBlogLinkTemplate();
+        $feedLinkTemplate = $this->options->getFeedHostname() . $this->options->getTagFeedFeedLinkTemplate();
+        $linkTemplate     = $this->options->getFeedHostname() . $this->options->getEntryLinkTemplate();
+        $titleTemplate    = $this->options->getTagFeedTitleTemplate();
 
         $this->prepareEntries();
 
@@ -298,9 +373,19 @@ class Compiler
             $paginator->setCurrentPageNumber(1);
 
             $title    = sprintf($titleTemplate, $tag);
-            $filename = sprintf($filenameTemplate, $tag);
+            $filename = sprintf($filenameTemplate, $tag, $type);
             $blogLink = sprintf($blogLinkTemplate, str_replace(' ', '+', $tag));
-            $feedLink = sprintf($feedLinkTemplate, str_replace(' ', '+', $tag));
+            $feedLink = sprintf($feedLinkTemplate, str_replace(' ', '+', $tag), $type);
+
+            $authorUri   = $this->options->getFeedAuthorUri();
+            if (empty($authorUri)) {
+                $authorUri = $blogLink;
+            }
+            $author      = array(
+                'name'  => $this->options->getFeedAuthorName(),
+                'email' => $this->options->getFeedAuthorEmail(),
+                'uri'   => $authorUri,
+            );
             
             $feed = new FeedWriter();
             $feed->setTitle($title);
@@ -321,14 +406,7 @@ class Compiler
                 $entry->setTitle($post->getTitle());
                 $entry->setLink(sprintf($linkTemplate, $post->getId()));
 
-                /**
-                * @todo inject this info!
-                */
-                $entry->addAuthor(array(
-                    'name'  => "Matthew Weier O'Phinney",
-                    'email' => 'matthew@weierophinney.net',
-                    'uri'   => str_replace('%s', '', $blogLinkTemplate),
-                ));
+                $entry->addAuthor($author);
                 $entry->setDateModified($post->getUpdated());
                 $entry->setDateCreated($post->getCreated());
                 $entry->setContent($post->getBody());
@@ -340,7 +418,7 @@ class Compiler
             $feed->setDateModified($latest->getUpdated());
 
             // Write feed to file
-            file_put_contents($filename, $feed->export($type));
+            file_put_contents(sprintf($filename, $type), $feed->export($type));
         }
     }
 
@@ -350,15 +428,16 @@ class Compiler
      *
      * 
      * @todo   Should this write the tag cloud markup to a file?
-     * @param  string $tagUrlTemplate 
-     * @param  array $cloudOptions 
      * @return TagCloud
      */
-    public function compileTagCloud($tagUrlTemplate = '/blog/tag/%s', $cloudOptions = array())
+    public function compileTagCloud()
     {
         if ($this->tagCloud) {
             return $this->tagCloud;
         }
+
+        $tagUrlTemplate = $this->options->getTagCloudUrlTemplate();
+        $cloudOptions   = $this->options->getTagCloudOptions();
 
         $this->prepareEntries();
 
