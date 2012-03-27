@@ -98,7 +98,7 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
    autoload_function.php
    autoload_register.php
    bin=bin {
-    post.php
+    compile.php
    }
    config=config filter="*.php *.yml *.json *.xml *.ini" {
     module.config.php
@@ -120,8 +120,10 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
      CompilerOptions.php
      EntryEntity.php
      Compiler=Compiler {
+      FileWriter.php
       PhpFileFilter.php
       SortedEntries.php
+      WriterInterface.php
      }
      Filter=Filter {
       EntryFilter.php

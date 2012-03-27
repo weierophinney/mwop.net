@@ -15,6 +15,11 @@ use DateTime,
     Zend\View\Model\ViewModel,
     Zend\View\View;
 
+/**
+ * Compile Entry entities to markup
+ * 
+ * @package Blog
+ */
 class Compiler
 {
     protected $byAuthor;
@@ -29,11 +34,13 @@ class Compiler
     protected $responseStrategyPrepared = false;
     protected $tagCloud;
     protected $view;
+    protected $writer;
 
-    public function __construct(Compiler\PhpFileFilter $files, View $view, CompilerOptions $options = null)
+    public function __construct(Compiler\PhpFileFilter $files, View $view, Compiler\WriterInterface $writer, CompilerOptions $options = null)
     {
-        $this->files = $files;
-        $this->view  = $view;
+        $this->files  = $files;
+        $this->view   = $view;
+        $this->writer = $writer;
         if (null === $options) {
             $options = new CompilerOptions;
         }
@@ -440,8 +447,9 @@ class Compiler
         $this->filename = new stdClass;
         $this->filename->file = $filename;
         $filename = $this->filename;
+        $writer   = $this->writer;
 
-        $this->view->addResponseStrategy(function ($e) use ($filename) {
+        $this->view->addResponseStrategy(function ($e) use ($filename, $writer) {
             $result = $e->getResult();
             $file   = $filename->file;
             $dir    = dirname($file);
@@ -452,7 +460,7 @@ class Compiler
                 $file = preg_replace('/-p1(\.html)$/', '$1', $file);
             }
             $file = str_replace(' ', '+', $file);
-            file_put_contents($file, $result);
+            $writer->write($file, $result);
         });
         $this->responseStrategyPrepared = true;
     }
@@ -553,6 +561,6 @@ class Compiler
         $feed->setDateModified($latest->getUpdated());
 
         // Write feed to file
-        file_put_contents(sprintf($filenameTemplate, $type), $feed->export($type));
+        $this->writer->write(sprintf($filenameTemplate, $type), $feed->export($type));
     }
 }

@@ -1,65 +1,36 @@
 <?php
 $config = array();
-$config['di'] = array(
-'definition' => array('class' => array(
-    'Mongo' => array(
-        '__construct' => array(
-            'server'  => array(
-                'required' => false, 
-                'type'     => false,
+$config['blog'] = array(
+    'options' => array(
+        'by_day_filename_template'   => 'public/blog/day/%s-p%d.html',
+        'by_month_filename_template' => 'public/blog/month/%s-p%d.html',
+        'by_tag_filename_template'   => 'public/blog/tag/%s-p%d.html',
+        'by_year_filename_template'  => 'public/blog/year/%s-p%d.html',
+        'entries_filename_template'  => 'public/blog-p%d.html',
+        'entries_template'           => 'blog/list',
+        'entry_filename_template'    => 'public/blog/%s.html',
+        'entry_link_template'        => '/blog/%s.html',
+        'entry_template'             => 'blog/entry',
+        'feed_author_email'          => 'me@mwop.net',
+        'feed_author_name'           => "Matthew Weier O'Phinney",
+        'feed_author_uri'            => 'http://mwop.net',
+        'feed_filename'              => 'public/blog-%s.xml',
+        'feed_hostname'              => 'http://mwop.net',
+        'feed_title'                 => 'Blog Entries :: phly, boy, phly',
+        'tag_feed_filename_template' => 'public/blog/tag/%s-%s.xml',
+        'tag_feed_title_template'    => 'Tag: %s :: phly, boy, phly',
+        'tag_cloud_options'          => array('tagDecorator' => array(
+            'decorator' => 'html_tag',
+            'options'   => array(
+                'fontSizeUnit' => '%',
+                'minFontSize'  => 80,
+                'maxFontSize'  => 300,
             ),
-            'options' => array('required' => false),
-        ),
+        )),
     ),
-    'MongoDB' => array(
-        '__construct' => array(
-            'conn' => array(
-                'required' => true,
-                'type'     => 'Mongo',
-            ),
-            'name' => array('required' => true),
-        ),
-    ),
-    'MongoCollection' => array(
-        '__construct' => array(
-            'db' => array(
-                'required' => true,
-                'type'     => 'MongoDB',
-            ),
-            'name' => array('required' => true),
-        ),
-    ),
-)),
-'instance' => array(
-    'Mongo' => array('parameters' => array(
-        'server'  => 'SERVER DSN HERE',
-    )),
-
-    'MongoDB' => array( 'parameters' => array(
-        'conn' => 'Mongo',
-        'name' => 'DB NAME HERE',
-    )),
-
-    'MongoCollection' => array('parameters' => array(
-        'db'   => 'MongoDB',
-        'name' => 'COLLECTION NAME HERE',
-    )),
-
-    'Blog\EntryResource' => array('parameters' => array(
-        'dataSource' => 'CommonResource\DataSource\Mongo',
-        'class'      => 'CommonResource\Resource\MongoCollection',
-    )), 
-
-    'Blog\Controller\EntryController' => array('parameters' => array(
-        'renderer' => 'Zend\View\Renderer\PhpRenderer',
-        'resource' => 'Blog\EntryResource',
-        'key'      => 'PATH TO API KEY GOES HERE',
-    )),
-
-    'CommonResource\DataSource\Mongo' => array('parameters' => array(
-        'connection' => 'MongoCollection',
-    )),
-
-));
+    'posts_path' => 'data/posts/',
+    'view_callback' => array('Blog\Module', 'prepareCompilerView'),
+    'cloud_callback' => array('Blog\Module', 'handleTagCloud'),
+);
 
 return $config;
