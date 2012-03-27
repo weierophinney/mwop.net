@@ -1,21 +1,21 @@
 <?php 
 use Zend\Stdlib\ArrayUtils;
+$this->render('blog/assets');
 $paginatorUrl          = $this->paginator_url;
 $urlSubstitutionString = $this->substitution;
 $basePageUrl           = str_replace('-p%d', '', $paginatorUrl);
 if ($urlSubstitutionString) {
-    $basePageUrl = str_replace('%s', $urlSubstitutionString, $basePageUrl);
+    $basePageUrl = str_replace('%s', str_replace(' ', '+', $urlSubstitutionString), $basePageUrl);
 }
 $this->headTitle()->prepend($this->title);
 $this->headLink(array(
-    // this should be something like blog.xml -- broken right now
-    'href'  => basename($basePageUrl, '.html') . '-atom.xml',
+    'href'  => rtrim(dirname($basePageUrl), '/') . '/' . basename($basePageUrl, '.html') . '-atom.xml',
     'type'  => 'application/atom+xml',
     'rel'   => 'alternate',
     'title' => $this->title . ' Atom Feed',
 ));
 $this->headLink(array(
-    'href'  => basename($basePageUrl, '.html') . '-rss.xml',
+    'href'  => rtrim(dirname($basePageUrl), '/') . '/' . basename($basePageUrl, '.html') . '-rss.xml',
     'type'  => 'application/rss+xml',
     'rel'   => 'alternate',
     'title' => $this->title . ' RSS Feed',

@@ -299,8 +299,8 @@ class Compiler
 
             $title    = sprintf($titleTemplate, $tag);
             $filename = sprintf($filenameTemplate, $tag);
-            $blogLink = sprintf($blogLinkTemplate, $tag);
-            $feedLink = sprintf($feedLinkTemplate, $tag);
+            $blogLink = sprintf($blogLinkTemplate, str_replace(' ', '+', $tag));
+            $feedLink = sprintf($feedLinkTemplate, str_replace(' ', '+', $tag));
             
             $feed = new FeedWriter();
             $feed->setTitle($title);
@@ -368,7 +368,7 @@ class Compiler
                 'title'   => $tag,
                 'weight'  => count($list),
                 'params'  => array(
-                    'url' => sprintf($tagUrlTemplate, $tag),
+                    'url' => sprintf($tagUrlTemplate, str_replace(' ', '+', $tag)),
                 ),
             );
         }
@@ -526,11 +526,16 @@ class Compiler
 
         $this->view->addResponseStrategy(function ($e) use ($filename) {
             $result = $e->getResult();
-            $dir    = dirname($filename->file);
+            $file   = $filename->file;
+            $dir    = dirname($file);
             if (!file_exists($dir) || !is_dir($dir)) {
                 mkdir($dir, 0777, true);
             }
-            file_put_contents($filename->file, $result);
+            if (preg_match('/-p1.html$/', $file)) {
+                $file = preg_replace('/-p1(\.html)$/', '$1', $file);
+            }
+            $file = str_replace(' ', '+', $file);
+            file_put_contents($file, $result);
         });
         $this->responseStrategyPrepared = true;
     }

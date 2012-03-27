@@ -4,6 +4,7 @@
     return;
 endif;
 
+$this->render('blog/assets');
 $entry = $this->entry;
 $title = $entry->getTitle();
 $this->headTitle()->prepend($title);
@@ -16,6 +17,19 @@ $ds    = function($ts) use ($entry) {
     $date->setTimestamp($ts);
     return $date->format('Y-m-d H:i:s');
 };
+foreach ($this->headTitle() as $blogTitle) {}
+$this->headLink(array(
+    'href'  => $this->url('blog/feed-atom'),
+    'type'  => 'application/atom+xml',
+    'rel'   => 'alternate',
+    'title' => $blogTitle . ' Atom Feed',
+));
+$this->headLink(array(
+    'href'  => $this->url('blog/feed-rss'),
+    'type'  => 'application/rss+xml',
+    'rel'   => 'alternate',
+    'title' => $blogTitle . ' RSS Feed',
+));
 ?>
 <div class="row">
 <article class="eleven columns alpha blog">

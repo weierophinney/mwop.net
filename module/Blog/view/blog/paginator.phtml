@@ -3,7 +3,7 @@ if ($this->pageCount < 2) return;
 
 $urlPattern = $this->url;
 if ($this->substitution) {
-    $urlPattern = str_replace('%s', $this->substitution, $urlPattern);
+    $urlPattern = str_replace('%s', str_replace(' ', '+', $this->substitution), $urlPattern);
 }
 $firstUrl   = str_replace('-p%d', '', $urlPattern);
 ?>

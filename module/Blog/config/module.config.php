@@ -1,49 +1,15 @@
 <?php
 $config = array();
-$config['authentication'] = array(
-    'Blog\Controller\EntryController' => array(
-        'preview',
-    ),
-);
-
 $config['disqus'] = array(
     'key'         => 'DISQUS KEY GOES HERE',
     'development' => 0,
 );
 
 $config['di'] = array(
-'definition' => array('class' => array(
-    'Blog\EntryResource' => array(
-        'setCollectionClass' => array(
-            'class' => array(
-                'required' => false,
-                'type'     => false,
-            ),
-        ),
-    ),
-    'Blog\Controller\EntryController' => array(
-        'setApiKeyLocation' => array(
-            'key' => array(
-                'required' => false,
-                'type'     => false,
-            ),
-        ),
-    ),
-)),
 'instance' => array(
-    'Blog\EntryResource' => array('parameters' => array(
-        'dataSource' => 'CommonResource\DataSource\Mock',
-        'class'      => 'CommonResource\Resource\Collection',
-    )), 
-
-    'Blog\Controller\EntryController' => array('parameters' => array(
-        'renderer' => 'Zend\View\Renderer\PhpRenderer',
-        'resource' => 'Blog\EntryResource',
-        'key'      => 'data/api-key.txt',
-    )),
-
     'Zend\View\Resolver\TemplateMapResolver' => array('parameters' => array(
         'map' => array(
+            'blog/assets'       => __DIR__ . '/../view/blog/assets.phtml',
             'blog/blogroll'     => __DIR__ . '/../view/blog/blogroll.phtml',
             'blog/entry-short'  => __DIR__ . '/../view/blog/entry-short.phtml',
             'blog/entry'        => __DIR__ . '/../view/blog/entry.phtml',
@@ -71,43 +37,60 @@ $config['di'] = array(
                         'controller' => 'Blog\Controller\EntryController',
                     ),
                 ),
-                'may_terminate' => true,
+                'may_terminate' => false,
                 'child_routes'  => array(
-                    'feed' => array(
+                    'index' => array(
                         'type' => 'Literal',
                         'options' => array(
-                            'route' => '.xml',
-                            'defaults' => array(
-                                'format'     => 'xml',
-                            ),
+                            'route' => '.html',
+                        ),
+                    ),
+                    'feed-atom' => array(
+                        'type' => 'Literal',
+                        'options' => array(
+                            'route' => '-atom.xml',
+                        ),
+                    ),
+                    'feed-rss' => array(
+                        'type' => 'Literal',
+                        'options' => array(
+                            'route' => '-rss.xml',
                         ),
                     ),
                     'entry' => array(
                         'type'    => 'Regex',
                         'options' => array(
-                            'regex' => '/(?<id>[^/]+)',
-                            'spec' => '/%id%',
+                            'regex' => '/(?<id>[^/]+)\.html',
+                            'spec' => '/%id%.html',
                         ),
                     ),
                     'tag' => array(
                         'type'    => 'Regex',
                         'options' => array(
-                            'regex' => '/tag/(?<tag>[^/.]+)',
+                            'regex' => '/tag/(?<tag>[^/.-]+)',
                             'defaults' => array(
                                 'action'     => 'tag',
                             ),
                             'spec' => '/tag/%tag%',
                         ),
-                        'may_terminate' => true,
+                        'may_terminate' => false,
                         'child_routes' => array(
-                            'feed' => array(
+                            'page' => array(
+                                'type' => 'Literal',
+                                'options' => array(
+                                    'route' => '.html',
+                                ),
+                            ),
+                            'feed-atom' => array(
                                 'type'    => 'Literal',
                                 'options' => array(
-                                    'route' => '.xml',
-                                    'defaults' => array(
-                                        'action'     => 'tag',
-                                        'format'     => 'xml',
-                                    ),
+                                    'route' => '-atom.xml',
+                                ),
+                            ),
+                            'feed-ress' => array(
+                                'type'    => 'Literal',
+                                'options' => array(
+                                    'route' => '-ress.xml',
                                 ),
                             ),
                         ),
@@ -115,7 +98,7 @@ $config['di'] = array(
                     'year' => array(
                         'type'    => 'Segment',
                         'options' => array(
-                            'route' => '/year/:year',
+                            'route' => '/year/:year.html',
                             'constraints' => array(
                                 'year' => '\d{4}',
                             ),
@@ -127,7 +110,7 @@ $config['di'] = array(
                     'month' => array(
                         'type'    => 'Segment',
                         'options' => array(
-                            'route' => '/month/:year/:month',
+                            'route' => '/month/:year/:month.html',
                             'constraints' => array(
                                 'year'  => '\d{4}',
                                 'month' => '\d{2}',
@@ -140,7 +123,7 @@ $config['di'] = array(
                     'day' => array(
                         'type'    => 'Segment',
                         'options' => array(
-                            'route' => '/day/:year/:month/:day',
+                            'route' => '/day/:year/:month/:day.html',
                             'constraints' => array(
                                 'year'  => '\d{4}',
                                 'month' => '\d{2}',
