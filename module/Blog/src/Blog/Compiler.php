@@ -98,59 +98,20 @@ class Compiler
         }
 
         $filename     = $this->options->getFeedFilename();
-        $blogLink     = $this->options->getFeedHostname() . $this->options->getFeedBlogLink();
-        $feedLink     = $this->options->getFeedHostname() . $this->options->getFeedFeedLink();
-        $linkTemplate = $this->options->getFeedHostname() . $this->options->getEntryLinkTemplate();
+        $blogLink     = $this->options->getFeedBlogLink();
+        $feedLink     = $this->options->getFeedFeedLink();
         $title        = $this->options->getFeedTitle();
 
         $this->prepareEntries();
 
-        // Get a paginator
-        $paginator = $this->getPaginator($this->pagedEntries);
-        $paginator->setCurrentPageNumber(1);
-
-        $feed = new FeedWriter();
-        $feed->setTitle($title);
-        $feed->setLink($blogLink);
-        $feed->setFeedLink(sprintf($feedLink, $type), $type);
-
-        // Make this configurable?
-        if ('rss' == $type) {
-            $feed->setDescription($title);
-        }
-
-        $authorUri   = $this->options->getFeedAuthorUri();
-        if (empty($authorUri)) {
-            $authorUri = $blogLink;
-        }
-        $author      = array(
-            'name'  => $this->options->getFeedAuthorName(),
-            'email' => $this->options->getFeedAuthorEmail(),
-            'uri'   => $authorUri,
+        $this->iterateAndGenerateFeed(
+            $type,
+            $this->pagedEntries,
+            $title,
+            $blogLink,
+            $feedLink,
+            $filename
         );
-
-        $latest = false;
-        foreach ($paginator as $post) {
-            if (!$latest) {
-                $latest = $post;
-            }
-            $entry = $feed->createEntry();
-            $entry->setTitle($post->getTitle());
-            $entry->setLink(sprintf($linkTemplate, $post->getId()));
-
-            $entry->addAuthor($author);
-            $entry->setDateModified($post->getUpdated());
-            $entry->setDateCreated($post->getCreated());
-            $entry->setContent($post->getBody());
-
-            $feed->addEntry($entry);
-        }
-
-        // Set feed date
-        $feed->setDateModified($latest->getUpdated());
-
-        // Write feed to file
-        file_put_contents(sprintf($filename, $type), $feed->export($type));
     }
 
     public function compilePaginatedEntriesByYear($template = null)
@@ -278,65 +239,26 @@ class Compiler
         }
 
         $filenameTemplate = $this->options->getTagFeedFilenameTemplate();
-        $blogLinkTemplate = $this->options->getFeedHostname() . $this->options->getTagFeedBlogLinkTemplate();
-        $feedLinkTemplate = $this->options->getFeedHostname() . $this->options->getTagFeedFeedLinkTemplate();
-        $linkTemplate     = $this->options->getFeedHostname() . $this->options->getEntryLinkTemplate();
+        $blogLinkTemplate = $this->options->getTagFeedBlogLinkTemplate();
+        $feedLinkTemplate = $this->options->getTagFeedFeedLinkTemplate();
         $titleTemplate    = $this->options->getTagFeedTitleTemplate();
 
         $this->prepareEntries();
 
         foreach ($this->byTag as $tag => $list) {
-            // Get a paginator
-            $paginator = $this->getPaginator($list);
-            $paginator->setCurrentPageNumber(1);
-
             $title    = sprintf($titleTemplate, $tag);
             $filename = sprintf($filenameTemplate, $tag, $type);
             $blogLink = sprintf($blogLinkTemplate, str_replace(' ', '+', $tag));
             $feedLink = sprintf($feedLinkTemplate, str_replace(' ', '+', $tag), $type);
 
-            $authorUri   = $this->options->getFeedAuthorUri();
-            if (empty($authorUri)) {
-                $authorUri = $blogLink;
-            }
-            $author      = array(
-                'name'  => $this->options->getFeedAuthorName(),
-                'email' => $this->options->getFeedAuthorEmail(),
-                'uri'   => $authorUri,
+            $this->iterateAndGenerateFeed(
+                $type,
+                $list,
+                $title,
+                $blogLink,
+                $feedLink,
+                $filename
             );
-            
-            $feed = new FeedWriter();
-            $feed->setTitle($title);
-            $feed->setLink($blogLink);
-            $feed->setFeedLink($feedLink, $type);
-
-            // Make this configurable?
-            if ('rss' == $type) {
-                $feed->setDescription($title);
-            }
-
-            $latest = false;
-            foreach ($paginator as $post) {
-                if (!$latest) {
-                    $latest = $post;
-                }
-                $entry = $feed->createEntry();
-                $entry->setTitle($post->getTitle());
-                $entry->setLink(sprintf($linkTemplate, $post->getId()));
-
-                $entry->addAuthor($author);
-                $entry->setDateModified($post->getUpdated());
-                $entry->setDateCreated($post->getCreated());
-                $entry->setContent($post->getBody());
-
-                $feed->addEntry($entry);
-            }
-
-            // Set feed date
-            $feed->setDateModified($latest->getUpdated());
-
-            // Write feed to file
-            file_put_contents(sprintf($filename, $type), $feed->export($type));
         }
     }
 
@@ -344,7 +266,6 @@ class Compiler
     /**
      * Compile a tag cloud from the entries
      *
-     * 
      * @todo   Should this write the tag cloud markup to a file?
      * @return TagCloud
      */
@@ -489,7 +410,6 @@ class Compiler
      * - Template for view script
      * - Partial for paginator control
      * 
-     * @todo   get count per page and page range from options
      * @param  Iterator|array $it 
      * @return Paginator
      * @throws DomainException
@@ -497,8 +417,8 @@ class Compiler
     protected function getPaginator(array $list)
     {
         $paginator = new Paginator(new ArrayPaginator($list));
-        $paginator->setItemCountPerPage(10);
-        $paginator->setPageRange(10);
+        $paginator->setItemCountPerPage($this->options->getPaginatorItemCountPerPage());
+        $paginator->setPageRange($this->options->getPaginatorPageRange());
         return $paginator;
     }
 
@@ -575,5 +495,64 @@ class Compiler
                 $paginator = $this->getPaginator($list);
             }
         }
+    }
+
+    protected function iterateAndGenerateFeed(
+        $type,
+        $list,
+        $title,
+        $blogLink,
+        $feedLinkTemplate,
+        $filenameTemplate
+    ) {
+        $blogLink         = $this->options->getFeedHostname() . $blogLink;
+        $feedLinkTemplate = $this->options->getFeedHostname() . $feedLinkTemplate;
+        $linkTemplate     = $this->options->getFeedHostname() . $this->options->getEntryLinkTemplate();
+
+        // Get a paginator
+        $paginator = $this->getPaginator($this->pagedEntries);
+        $paginator->setCurrentPageNumber(1);
+
+        $feed = new FeedWriter();
+        $feed->setTitle($title);
+        $feed->setLink($blogLink);
+        $feed->setFeedLink(sprintf($feedLinkTemplate, $type), $type);
+
+        if ('rss' == $type) {
+            $feed->setDescription($title);
+        }
+
+        $authorUri   = $this->options->getFeedAuthorUri();
+        if (empty($authorUri)) {
+            $authorUri = $blogLink;
+        }
+        $author      = array(
+            'name'  => $this->options->getFeedAuthorName(),
+            'email' => $this->options->getFeedAuthorEmail(),
+            'uri'   => $authorUri,
+        );
+
+        $latest = false;
+        foreach ($paginator as $post) {
+            if (!$latest) {
+                $latest = $post;
+            }
+            $entry = $feed->createEntry();
+            $entry->setTitle($post->getTitle());
+            $entry->setLink(sprintf($linkTemplate, $post->getId()));
+
+            $entry->addAuthor($author);
+            $entry->setDateModified($post->getUpdated());
+            $entry->setDateCreated($post->getCreated());
+            $entry->setContent($post->getBody());
+
+            $feed->addEntry($entry);
+        }
+
+        // Set feed date
+        $feed->setDateModified($latest->getUpdated());
+
+        // Write feed to file
+        file_put_contents(sprintf($filenameTemplate, $type), $feed->export($type));
     }
 }
