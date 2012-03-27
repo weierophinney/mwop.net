@@ -6,8 +6,6 @@ TODO
 ### Issues
 
 * Needs some serious refactoring and cleanup... but works
-* Remove controller and listener
-  * Including configuration
 * Add compiler script to module? or simpler version in module, and more complex
   version in application? if latter, where?
 
