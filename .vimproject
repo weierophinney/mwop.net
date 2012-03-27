@@ -60,6 +60,16 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
     projects.phtml
     searchbox.phtml
     search.phtml
+    blog=blog filter="*.phtml" {
+     assets.phtml
+     blogroll.phtml
+     entry-short.phtml
+     entry.phtml
+     list.phtml
+     paginator.phtml
+     social-media.phtml
+     tags.phtml
+    }
     pages=pages {
      404.phtml
      comics.phtml
@@ -144,14 +154,10 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
    }
    view=view filter="*.phtml *.php *.mustache" {
     blog=blog {
-     assets.phtml
-     blogroll.phtml
      entry-short.phtml
      entry.phtml
-     form.phtml
      list.phtml
      paginator.phtml
-     social-media.phtml
      tags.phtml
     }
    }

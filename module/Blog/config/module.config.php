@@ -43,14 +43,10 @@ $config['di'] = array(
 'instance' => array(
     'Zend\View\Resolver\TemplateMapResolver' => array('parameters' => array(
         'map' => array(
-            'blog/assets'       => __DIR__ . '/../view/blog/assets.phtml',
-            'blog/blogroll'     => __DIR__ . '/../view/blog/blogroll.phtml',
             'blog/entry-short'  => __DIR__ . '/../view/blog/entry-short.phtml',
             'blog/entry'        => __DIR__ . '/../view/blog/entry.phtml',
-            'blog/form'         => __DIR__ . '/../view/blog/form.phtml',
             'blog/list'         => __DIR__ . '/../view/blog/list.phtml',
             'blog/paginator'    => __DIR__ . '/../view/blog/paginator.phtml',
-            'blog/social-media' => __DIR__ . '/../view/blog/social-media.phtml',
             'blog/tags'         => __DIR__ . '/../view/blog/tags.phtml',
         ),
     )),

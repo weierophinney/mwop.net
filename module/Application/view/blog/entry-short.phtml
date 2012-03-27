@@ -11,15 +11,15 @@ $url      = $this->plugin('url');
 $entryUrl = $url('blog/entry', array('id' => $entry->getId()));
 $title    = $this->escape($entry->getTitle());
 ?>
-<aside class="entry meta">
+<aside class="two columns alpha entry meta">
     <p class="date"><?php echo $ds($entry->getCreated()) ?></p>
     <p class="tags"><?php echo $this->render('blog/tags', array('tags' => $entry->getTags()))?></p>
 </aside>
 
-<section class="entry">
-    <h4><a href="<?php echo $entryUrl ?>"><?php echo $title ?></a></h4>
+<section class="nine columns omega">
+    <h4 class="entry"><a href="<?php echo $entryUrl ?>"><?php echo $title ?></a></h4>
 
-    <div class="body"><?php echo $entry->getBody() ?></div>
+    <div class="entry body"><?php echo $entry->getBody() ?></div>
 
     <p><a href="<?php echo $entryUrl ?>">Continue reading...</a></p>
 </section>

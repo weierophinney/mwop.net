@@ -32,5 +32,25 @@ $config['blog'] = array(
     'view_callback'  => array('Application\Module', 'prepareCompilerView'),
     'cloud_callback' => array('Application\Module', 'handleTagCloud'),
 );
+$config['di'] = array('instance' => array(
+    'Zend\View\Resolver\TemplateMapResolver' => array('parameters' => array(
+        'map' => array(
+            'blog/assets'       => 'module/Application/view/blog/assets.phtml',
+            'blog/blogroll'     => 'module/Application/view/blog/blogroll.phtml',
+            'blog/entry-short'  => 'module/Application/view/blog/entry-short.phtml',
+            'blog/entry'        => 'module/Application/view/blog/entry.phtml',
+            'blog/list'         => 'module/Application/view/blog/list.phtml',
+            'blog/paginator'    => 'module/Application/view/blog/paginator.phtml',
+            'blog/social-media' => 'module/Application/view/blog/social-media.phtml',
+            'blog/tags'         => 'module/Application/view/blog/tags.phtml',
+        ),
+    )),
+
+    'Zend\View\Resolver\TemplatePathStack' => array('parameters' => array(
+        'paths' => array(
+            'blog' => 'module/Application/view',
+        ),
+    )),
+));
 
 return $config;
