@@ -29,9 +29,9 @@ $config['blog'] = array(
             ),
         )),
     ),
-    'posts_path' => 'data/blog/',
-    'view_callback' => array('Blog\Module', 'prepareCompilerView'),
-    'cloud_callback' => array('Blog\Module', 'handleTagCloud'),
+    'posts_path'     => 'data/blog/',
+    'view_callback'  => array('Blog\Module', 'prepareCompilerView'),
+    'cloud_callback' => false,
 );
 
 $config['disqus'] = array(

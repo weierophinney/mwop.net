@@ -28,9 +28,9 @@ $config['blog'] = array(
             ),
         )),
     ),
-    'posts_path' => 'data/posts/',
-    'view_callback' => array('Blog\Module', 'prepareCompilerView'),
-    'cloud_callback' => array('Blog\Module', 'handleTagCloud'),
+    'posts_path'     => 'data/posts/',
+    'view_callback'  => array('Application\Module', 'prepareCompilerView'),
+    'cloud_callback' => array('Application\Module', 'handleTagCloud'),
 );
 
 return $config;

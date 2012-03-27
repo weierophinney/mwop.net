@@ -15,11 +15,6 @@ use DateTime,
     Zend\View\Model\ViewModel,
     Zend\View\View;
 
-/**
- * Compile Entry entities to markup
- * 
- * @package Blog
- */
 class Compiler
 {
     protected $byAuthor;

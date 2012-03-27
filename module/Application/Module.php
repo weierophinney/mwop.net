@@ -2,17 +2,16 @@
 
 namespace Application;
 
-use InvalidArgumentException,
-    Zend\Config\Config,
-    Zend\Di\Locator,
+use Zend\Config\Config,
     Zend\Dojo\View\HelperLoader as DojoLoader,
-    Zend\EventManager\EventCollection,
-    Zend\EventManager\StaticEventCollection,
     Zend\EventManager\StaticEventManager,
-    Zend\Module\Consumer\AutoloaderProvider;
+    Zend\Module\Consumer\AutoloaderProvider,
+    Zend\View\Model\ViewModel;
 
 class Module implements AutoloaderProvider
 {
+    protected static $layout;
+
     protected $appListeners    = array();
     protected $staticListeners = array();
     protected $view;
@@ -20,7 +19,6 @@ class Module implements AutoloaderProvider
     public function init()
     {
         $events = StaticEventManager::getInstance();
-        $events->attach('bootstrap', 'bootstrap', array($this, 'cacheRules'));
         $events->attach('bootstrap', 'bootstrap', array($this, 'initView'));
     }
 
@@ -76,52 +74,48 @@ class Module implements AutoloaderProvider
         $this->view = $view;
     }
 
-    public function cacheRules($e)
+    public static function prepareCompilerView($view, $config, $locator)
     {
-        if (!class_exists('Cache\Module', false)) {
+        $renderer = $locator->get('Zend\View\Renderer\PhpRenderer');
+        $view->addRenderingStrategy(function($e) use ($renderer) {
+            return $renderer;
+        }, 100);
+
+        self::$layout = $layout   = new ViewModel();
+        $layout->setTemplate('layout');
+        $view->addResponseStrategy(function($e) use ($layout, $renderer) {
+            $result = $e->getResult();
+            $layout->setVariable('content', $result);
+            $page   = $renderer->render($layout);
+            $e->setResult($page);
+
+            // Cleanup
+            $headTitle = $renderer->plugin('headtitle');
+            $headTitle->getContainer()->exchangeArray(array());
+            $headTitle->append('phly, boy, phly');
+
+            $headLink = $renderer->plugin('headLink');
+            $headLink->getContainer()->exchangeArray(array());
+            $headLink->__invoke(array(
+                'rel' => 'shortcut icon',
+                'type' => 'image/vnd.microsoft.icon',
+                'href' => '/images/Application/favicon.ico',
+            ));
+
+            $headScript = $renderer->plugin('headScript');
+            $headScript->getContainer()->exchangeArray(array());
+        }, 100);
+    }
+
+    public static function handleTagCloud($cloud, $view, $config, $locator)
+    {
+        if (!self::$layout) {
             return;
         }
 
-        $app      = $e->getParam('application');
-        $locator  = $app->getLocator();
-        $cacheListener = $locator->get('Cache\Listener');
-        $cacheListener->addRule(function($e) {
-            if (!$e instanceof \Zend\Mvc\MvcEvent) {
-                return;
-            }
-
-            $routeMatch = $e->getRouteMatch();
-            if (in_array($routeMatch->getMatchedRouteName(), array('default', 'comics'))) {
-                // Do not cache 404 requests or the comics page
-                return true;
-            }
-            return false;
-        });
-    }
-
-    public function getProvides()
-    {
-        return array(
-            'name'    => 'Application',
-            'version' => '0.1.0',
-        );
-    }
-
-    public function getDependencies()
-    {
-        return array(
-            'php' => array(
-                'required' => true,
-                'version'  => '>=5.3.1',
-            ),
-            'ext/mongo' => array(
-                'required' => true,
-                'version'  => '>=1.2.0',
-            ),
-            'Blog' => array(
-                'required' => true,
-                'version'  => '>=0.1.0',
-            )
-        );
+        self::$layout->setVariable('footer', sprintf(
+            "<h4>Tag Cloud</h4>\n<div class=\"cloud\">\n%s</div>\n",
+            $cloud->render()
+        ));
     }
 }

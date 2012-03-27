@@ -13,6 +13,7 @@ TODO
   - Create "default", vanilla view scripts
 * *DONE* Add compiler script to module? or simpler version in module, and more
   complex version in application? if latter, where?
+* *DONE* Move the default renderer/response/cloud strategies into the application level
 
 ## Ongoing
 

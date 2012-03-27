@@ -5,13 +5,11 @@ namespace Blog;
 use Traversable,
     Zend\EventManager\StaticEventManager,
     Zend\Module\Consumer\AutoloaderProvider,
-    Zend\Stdlib\ArrayUtils,
-    Zend\View\Model\ViewModel;
+    Zend\Stdlib\ArrayUtils;
 
 class Module implements AutoloaderProvider
 {
     public static $config;
-    protected static $layout;
 
     public function getAutoloaderConfig()
     {
@@ -47,42 +45,5 @@ class Module implements AutoloaderProvider
         $view->addRenderingStrategy(function($e) use ($renderer) {
             return $renderer;
         }, 100);
-
-        self::$layout = $layout   = new ViewModel();
-        $layout->setTemplate('layout');
-        $view->addResponseStrategy(function($e) use ($layout, $renderer) {
-            $result = $e->getResult();
-            $layout->setVariable('content', $result);
-            $page   = $renderer->render($layout);
-            $e->setResult($page);
-
-            // Cleanup
-            $headTitle = $renderer->plugin('headtitle');
-            $headTitle->getContainer()->exchangeArray(array());
-            $headTitle->append('phly, boy, phly');
-
-            $headLink = $renderer->plugin('headLink');
-            $headLink->getContainer()->exchangeArray(array());
-            $headLink->__invoke(array(
-                'rel' => 'shortcut icon',
-                'type' => 'image/vnd.microsoft.icon',
-                'href' => '/images/Application/favicon.ico',
-            ));
-
-            $headScript = $renderer->plugin('headScript');
-            $headScript->getContainer()->exchangeArray(array());
-        }, 100);
-    }
-
-    public static function handleTagCloud($cloud, $view, $config, $locator)
-    {
-        if (!self::$layout) {
-            return;
-        }
-
-        self::$layout->setVariable('footer', sprintf(
-            "<h4>Tag Cloud</h4>\n<div class=\"cloud\">\n%s</div>\n",
-            $cloud->render()
-        ));
     }
 }
