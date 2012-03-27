@@ -101,6 +101,18 @@ class CompilerOptions extends Options
         return $this->entriesUrlTemplate;
     }
 
+    protected $entriesTitle = 'Blog Entries';
+
+    public function setEntriesTitle($entriesTitle)
+    {
+        $this->entriesTitle = (string) $entriesTitle;
+        return $this;
+    }
+
+    public function getEntriesTitle()
+    {
+        return $this->entriesTitle;
+    }
 
     protected $feedFilename = 'blog-%s.xml';
 
@@ -198,6 +210,18 @@ class CompilerOptions extends Options
         return $this->byYearUrlTemplate;
     }
 
+    protected $byYearTitle = 'Blog Entries for %d';
+
+    public function setByYearTitle($byYearTitle)
+    {
+        $this->byYearTitle = (string) $byYearTitle;
+        return $this;
+    }
+
+    public function getByYearTitle()
+    {
+        return $this->byYearTitle;
+    }
 
     protected $byMonthTemplate;
 
@@ -240,6 +264,19 @@ class CompilerOptions extends Options
     public function getByMonthUrlTemplate()
     {
         return $this->byMonthUrlTemplate;
+    }
+
+    protected $byMonthTitle = 'Blog Entries for %s';
+
+    public function setByMonthTitle($byMonthTitle)
+    {
+        $this->byMonthTitle = (string) $byMonthTitle;
+        return $this;
+    }
+
+    public function getByMonthTitle()
+    {
+        return $this->byMonthTitle;
     }
 
 
@@ -286,6 +323,19 @@ class CompilerOptions extends Options
         return $this->byDayUrlTemplate;
     }
 
+    protected $byDayTitle = 'Blog Entries for %s';
+
+    public function setByDayTitle($byDayTitle)
+    {
+        $this->byDayTitle = (string) $byDayTitle;
+        return $this;
+    }
+
+    public function getByDayTitle()
+    {
+        return $this->byDayTitle;
+    }
+
 
     protected $byTagTemplate;
 
@@ -328,6 +378,19 @@ class CompilerOptions extends Options
     public function getByTagUrlTemplate()
     {
         return $this->byTagUrlTemplate;
+    }
+
+    protected $byTagTitle = 'Tag: %s';
+
+    public function setByTagTitle($byTagTitle)
+    {
+        $this->byTagTitle = (string) $byTagTitle;
+        return $this;
+    }
+
+    public function getByTagTitle()
+    {
+        return $this->byTagTitle;
     }
 
 

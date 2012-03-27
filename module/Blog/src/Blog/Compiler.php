@@ -74,35 +74,20 @@ class Compiler
             }
         }
         $filenameTemplate = $this->options->getEntriesFilenameTemplate();
-        $urlTemplate      = $this->options->getEntryLinkTemplate();
+        $urlTemplate      = $this->options->getEntriesUrlTemplate();
+        $title            = $this->options->getEntriesTitle();
+
         $this->prepareEntries();
 
-        // Get a paginator
-        $paginator = $this->getPaginator($this->pagedEntries);
-
-        // Loop through pages
-        $pageCount = count($paginator);
-        for ($i = 1; $i <= $pageCount; $i++) {
-            $paginator->setCurrentPageNumber($i);
-
-            $filename = sprintf($filenameTemplate, $i);
-
-            // Generate this page
-            $model = new ViewModel(array(
-                'title'         => 'Blog Entries',
-                'entries'       => $paginator,
-                'paginator_url' => $urlTemplate,
-            ));
-            $model->setTemplate($template);
-
-            $this->prepareResponseStrategy($filename);
-            $this->view->render($model);
-            
-            // This hack ensures that the paginator is reset for each page
-            if ($i <= $pageCount) {
-                $paginator = $this->getPaginator($this->entries);
-            }
-        }
+        $this->iterateAndRenderList(
+            $this->pagedEntries,
+            $filenameTemplate,
+            array(),
+            $title,
+            $urlTemplate,
+            false,
+            $template
+        );
     }
 
     public function compileRecentFeed($type, $title = '')
@@ -179,36 +164,19 @@ class Compiler
 
         $filenameTemplate = $this->options->getByYearFilenameTemplate();
         $urlTemplate      = $this->options->getByYearUrlTemplate();
+        $titleTemplate    = $this->options->getByYearTitle();
 
         $this->prepareEntries();
         foreach ($this->byYear as $year => $list) {
-            // Get a paginator for this day
-            $paginator = $this->getPaginator($list);
-
-            // Loop through pages
-            $pageCount = count($paginator);
-            for ($i = 1; $i <= $pageCount; $i++) {
-                $paginator->setCurrentPageNumber($i);
-
-                $filename = sprintf($filenameTemplate, $year, $i);
-
-                // Generate this page
-                $model = new ViewModel(array(
-                    'title'         => 'Blog Entries for ' . $year,
-                    'entries'       => $paginator,
-                    'paginator_url' => $urlTemplate,
-                    'substitution'  => $year,
-                ));
-                $model->setTemplate($template);
-
-                $this->prepareResponseStrategy($filename);
-                $this->view->render($model);
-                
-                // This hack ensures that the paginator is reset for each page
-                if ($i <= $pageCount) {
-                    $paginator = $this->getPaginator($list);
-                }
-            }
+            $this->iterateAndRenderList(
+                $list,
+                $filenameTemplate,
+                array($year),
+                sprintf($titleTemplate, $year),
+                $urlTemplate,
+                $year,
+                $template
+            );
         }
     }
 
@@ -223,39 +191,23 @@ class Compiler
 
         $filenameTemplate = $this->options->getByMonthFilenameTemplate();
         $urlTemplate      = $this->options->getByMonthUrlTemplate();
+        $titleTemplate    = $this->options->getByMonthTitle();
 
         $this->prepareEntries();
-        foreach ($this->byMonth as $month => $list) {
-            // Get a paginator for this day
-            $paginator = $this->getPaginator($list);
 
+        foreach ($this->byMonth as $month => $list) {
             // Get the year and month digits
             list($year, $monthDigit) = explode('/', $month, 2);
 
-            // Loop through pages
-            $pageCount = count($paginator);
-            for ($i = 1; $i <= $pageCount; $i++) {
-                $paginator->setCurrentPageNumber($i);
-
-                $filename = sprintf($filenameTemplate, $month, $i);
-
-                // Generate this page
-                $model = new ViewModel(array(
-                    'title'         => 'Blog Entries for ' . date('F', strtotime($year . '-' . $monthDigit . '-01')) . ' ' . $year,
-                    'entries'       => $paginator,
-                    'paginator_url' => $urlTemplate,
-                    'substitution'  => $month,
-                ));
-                $model->setTemplate($template);
-
-                $this->prepareResponseStrategy($filename);
-                $this->view->render($model);
-                
-                // This hack ensures that the paginator is reset for each page
-                if ($i <= $pageCount) {
-                    $paginator = $this->getPaginator($list);
-                }
-            }
+            $this->iterateAndRenderList(
+                $list,
+                $filenameTemplate,
+                array($month),
+                sprintf($titleTemplate, date('F', strtotime($year . '-' . $monthDigit . '-01')) . ' ' . $year),
+                $urlTemplate,
+                $month,
+                $template
+            );
         }
     }
 
@@ -270,39 +222,23 @@ class Compiler
 
         $filenameTemplate = $this->options->getByDayFilenameTemplate();
         $urlTemplate      = $this->options->getByDayUrlTemplate();
+        $titleTemplate    = $this->options->getByDayTitle();
 
         $this->prepareEntries();
 
         foreach ($this->byDay as $day => $list) {
-            // Get a paginator for this day
-            $paginator = $this->getPaginator($list);
-            
+            // Get the year, month, and day digits
             list($year, $month, $date) = explode('/', $day, 3);
 
-            // Loop through pages
-            $pageCount = count($paginator);
-            for ($i = 1; $i <= $pageCount; $i++) {
-                $paginator->setCurrentPageNumber($i);
-
-                $filename = sprintf($filenameTemplate, $day, $i);
-
-                // Generate this page
-                $model = new ViewModel(array(
-                    'title'         => 'Blog Entries for ' . $date . ' ' . date('F', strtotime($year . '-' . $month . '-' . $date)) . ' ' . $year,
-                    'entries'       => $paginator,
-                    'paginator_url' => $urlTemplate,
-                    'substitution'  => $day,
-                ));
-                $model->setTemplate($template);
-
-                $this->prepareResponseStrategy($filename);
-                $this->view->render($model);
-                
-                // This hack ensures that the paginator is reset for each page
-                if ($i <= $pageCount) {
-                    $paginator = $this->getPaginator($list);
-                }
-            }
+            $this->iterateAndRenderList(
+                $list,
+                $filenameTemplate,
+                array($day),
+                sprintf($titleTemplate, $date . ' ' . date('F', strtotime($year . '-' . $month . '-' . $date)) . ' ' . $year),
+                $urlTemplate,
+                $day,
+                $template
+            );
         }
     }
 
@@ -317,38 +253,20 @@ class Compiler
 
         $filenameTemplate = $this->options->getByTagFilenameTemplate();
         $urlTemplate      = $this->options->getByTagUrlTemplate();
+        $titleTemplate    = $this->options->getByTagTitle();
 
         $this->prepareEntries();
 
         foreach ($this->byTag as $tag => $list) {
-            // Get a paginator for this tag
-            $paginator = $this->getPaginator($list);
-
-            // Loop through pages
-            $pageCount = count($paginator);
-            for ($i = 1; $i <= $pageCount; $i++) {
-                $paginator->setCurrentPageNumber($i);
-
-                $filename = sprintf($filenameTemplate, $tag, $i);
-
-                // Generate this page
-                $model = new ViewModel(array(
-                    'title'         => 'Tag: ' . $tag,
-                    'tag'           => $tag,
-                    'entries'       => $paginator,
-                    'paginator_url' => $urlTemplate,
-                    'substitution'  => $tag,
-                ));
-                $model->setTemplate($template);
-
-                $this->prepareResponseStrategy($filename);
-                $this->view->render($model);
-                
-                // This hack ensures that the paginator is reset for each page
-                if ($i <= $pageCount) {
-                    $paginator = $this->getPaginator($list);
-                }
-            }
+            $this->iterateAndRenderList(
+                $list,
+                $filenameTemplate,
+                array($tag),
+                sprintf($titleTemplate, $tag),
+                $urlTemplate,
+                $tag,
+                $template
+            );
         }
     }
 
@@ -617,5 +535,45 @@ class Compiler
             file_put_contents($file, $result);
         });
         $this->responseStrategyPrepared = true;
+    }
+
+    protected function iterateAndRenderList(
+        $list, 
+        $filenameTemplate, 
+        array $filenameSubs, 
+        $title, 
+        $urlTemplate,
+        $substitution, 
+        $template
+    ) {
+        // Get a paginator for this day
+        $paginator = $this->getPaginator($list);
+
+        // Loop through pages
+        $pageCount = count($paginator);
+        for ($i = 1; $i <= $pageCount; $i++) {
+            $paginator->setCurrentPageNumber($i);
+
+            $substitutions   = $filenameSubs;
+            $substitutions[] = $i;
+            $filename = vsprintf($filenameTemplate, $substitutions);
+
+            // Generate this page
+            $model = new ViewModel(array(
+                'title'         => $title,
+                'entries'       => $paginator,
+                'paginator_url' => $urlTemplate,
+                'substitution'  => $substitution,
+            ));
+            $model->setTemplate($template);
+
+            $this->prepareResponseStrategy($filename);
+            $this->view->render($model);
+            
+            // This hack ensures that the paginator is reset for each page
+            if ($i <= $pageCount) {
+                $paginator = $this->getPaginator($list);
+            }
+        }
     }
 }
