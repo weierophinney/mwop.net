@@ -103,6 +103,7 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
    }
   }
   Blog=Blog {
+   README.md
    Module.php
    autoload_classmap.php
    autoload_function.php

@@ -5,9 +5,11 @@ TODO
 
 ### Issues
 
-* Create README
+* *DONE* Create README
 * Separate into standalone module
+  * Namespace "PhlyBlog"
   * Import as a vendor
+  * Will require shipping CommonResource as a separate module as well
 
 ## Ongoing
 
