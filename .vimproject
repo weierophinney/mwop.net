@@ -102,6 +102,43 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
     }
    }
   }
+  Cache=Cache {
+   autoload_classmap.php
+   autoload_function.php
+   autoload_register.php
+   Module.php
+   bin=bin {
+    clear_cache.php
+   }
+   config=config filter="*.php *.yml *.json *.xml *.ini" {
+    module.config.php
+   }
+   src=src {
+    Cache=Cache {
+     Listener.php
+    }
+   }
+  }
+ }
+ public=public {
+  .htaccess
+  index.php
+ }
+ script=script {
+  createAppContext.php
+  fixPublicAccess.php
+  importFromS9y.php
+  wxrCommentExport.php
+  helper=helper {
+   GmtDate.php
+  }
+  template=template {
+   comments_wxr.xml
+   item.xml
+   comment.xml
+  }
+ }
+ vendor=vendor {
   PhlyBlog=PhlyBlog {
    README.md
    Module.php
@@ -163,20 +200,40 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
     }
    }
   }
-  Cache=Cache {
+  PhlyComic=PhlyComic filter="*.php *.md" {
+   Module.php
    autoload_classmap.php
    autoload_function.php
    autoload_register.php
-   Module.php
+   README.md
    bin=bin {
-    clear_cache.php
-   }
-   config=config filter="*.php *.yml *.json *.xml *.ini" {
-    module.config.php
+    get_comics.php
+    get_one_comic.php
    }
    src=src {
-    Cache=Cache {
-     Listener.php
+    PhlyComic=PhlyComic {
+     Comic.php
+     ComicDescription.php
+     ComicFactory.php
+     ComicSource.php
+     ComicSource=ComicSource {
+      AbstractComicSource.php
+      AbstractDomSource.php
+      AbstractRssSource.php
+      BasicInstructions.php
+      CtrlAltDel.php
+      Dilbert.php
+      ForBetterOrForWorse.php
+      FoxTrot.php
+      GarfieldMinusGarfield.php
+      GoComics.php
+      NotInventedHere.php
+      PennyArcade.php
+      ReptilisRex.php
+      ScenesFromAMultiverse.php
+      UserFriendly.php
+      Xkcd.php
+     }
     }
    }
   }
@@ -225,63 +282,6 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
       TestAsset=TestAsset {
        TestEntity.php
       }
-     }
-    }
-   }
-  }
- }
- public=public {
-  .htaccess
-  index.php
- }
- script=script {
-  createAppContext.php
-  fixPublicAccess.php
-  importFromS9y.php
-  wxrCommentExport.php
-  helper=helper {
-   GmtDate.php
-  }
-  template=template {
-   comments_wxr.xml
-   item.xml
-   comment.xml
-  }
- }
- vendor=vendor {
-  PhlyComic=PhlyComic filter="*.php *.md" {
-   Module.php
-   autoload_classmap.php
-   autoload_function.php
-   autoload_register.php
-   README.md
-   bin=bin {
-    get_comics.php
-    get_one_comic.php
-   }
-   src=src {
-    PhlyComic=PhlyComic {
-     Comic.php
-     ComicDescription.php
-     ComicFactory.php
-     ComicSource.php
-     ComicSource=ComicSource {
-      AbstractComicSource.php
-      AbstractDomSource.php
-      AbstractRssSource.php
-      BasicInstructions.php
-      CtrlAltDel.php
-      Dilbert.php
-      ForBetterOrForWorse.php
-      FoxTrot.php
-      GarfieldMinusGarfield.php
-      GoComics.php
-      NotInventedHere.php
-      PennyArcade.php
-      ReptilisRex.php
-      ScenesFromAMultiverse.php
-      UserFriendly.php
-      Xkcd.php
      }
     }
    }
