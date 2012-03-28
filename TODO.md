@@ -8,7 +8,7 @@ TODO
 * *DONE* Create README
 * Separate into standalone module
   * *DONE* Namespace "PhlyBlog"
-  * Rename CommonResource
+  * *DONE* Rename CommonResource
   * Extract PhlyBlog into its own repo
   * Extract CommonResource into its own repo
   * Import both as vendor modules
