@@ -180,13 +180,13 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
     }
    }
   }
-  CommonResource=CommonResource {
+  PhlyCommon=PhlyCommon {
    autoload_classmap.php
    autoload_function.php
    autoload_register.php
    Module.php
    src=src {
-    CommonResource=CommonResource {
+    PhlyCommon=PhlyCommon {
      ArraySerializable.php
      DataSource.php
      Entity.php
@@ -215,7 +215,7 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
     }
    }
    test=test {
-    CommonResource=CommonResource {
+    PhlyCommon=PhlyCommon {
      DataSource=DataSource {
       MockTest.php
       QueryTest.php

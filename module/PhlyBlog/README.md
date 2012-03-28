@@ -20,6 +20,7 @@ Requirements
     a dependency on Zend\Loader, Zend\Di, and Zend\EventManager.
   * Zend\Feed\Writer
   * Zend\Tag\Cloud
+* PhlyCommon (for Entity and Filter interfaces)
 
 Writing Entries
 ====
