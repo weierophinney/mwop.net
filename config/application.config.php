@@ -4,8 +4,8 @@ return array(
         'Application',
         'Authentication',
         // 'Cache', // commenting out as profiling shows increased load times?
-        'CommonResource',
-        'Blog',
+        'PhlyCommon',
+        'PhlyBlog',
         'PhlyComic',
         'PhlyContact',
     ),

@@ -1,0 +1,471 @@
+<!DOCTYPE html><!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8" />
+    <title>View Layers, Database Abstraction, Configuration, Oh, My! :: phly, boy, phly</title>
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <link href="/css/SkeletonCss/base.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/SkeletonCss/skeleton.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/SkeletonCss/layout.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/Application/site.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/images/Application/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" >
+<link href="/css/PhlyBlog/phly-blog.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/blog-atom.xml" rel="alternate" type="application/atom+xml" title="phly, boy, phly Atom Feed" >
+<link href="/blog-rss.xml" rel="alternate" type="application/rss+xml" title="phly, boy, phly RSS Feed" >
+    
+<script type="text/javascript">
+//<!--
+    var djConfig = {"isDebug":true,"parseOnLoad":true,"baseUrl":"\/js\/dojo\/","modulePaths":{"PhlyBlog":"\/js\/PhlyBlog","Application":"\/js\/Application"}};
+//-->
+</script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojo/dojo.xd.js"></script>
+
+<script type="text/javascript">
+//<!--
+dojo.require("PhlyBlog.blog");
+    dojo.require("Application.scroll");
+//-->
+
+</script>
+    
+    <script src="https://www.google.com/jsapi?ABQIAAAAGybdRRvLZwVUcF0dE3oVdBTO-MlgA7VGJpGqyqTOeDXlNzyZQxTGq17s-iAB0m0vwqLQ_A2dHhTg2Q"></script>
+<script type="text/javascript">
+    google.load('search', '1', {style: google.loader.themes.ESPRESSO});
+    google.setOnLoadCallback(function(){
+        new google.search.CustomSearchControl().draw('search');
+    }, true);
+</script>
+
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-27037983-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</head>
+<body>
+<div class="container">
+    <header class="sixteen columns">
+    <a href="/"><img src="/images/Application/logo.gif" height="37" width="37"/></a>
+        <span class="main_title">phly, boy, phly: matthew weier o'phinney</span>
+    </header>
+
+    <div class="sixteen columns" id="menu">
+        <nav>
+            <li><a href="/">Home</a></li>
+            <li><a href="/blog.html">Blog</a></li>
+                        <li><a href="/resume">R&eacute;sum&eacute;</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </nav>
+    </div>
+
+    <div class="sixteen columns content">
+        <div class="row">
+<article class="eleven columns alpha blog">
+<h2>View Layers, Database Abstraction, Configuration, Oh, My!</h2>
+<p>
+    Late last week, the Zend Framework community <a href="http://framework.zend.com/zf2/blog/entry/Zend-Framework-2-0-0beta3-Released">2.0.0beta3</a>, 
+    the latest iteration of the v2 framework. What have we been busy doing the 
+    last couple months? In a nutshell, getting dirty with view layers, database
+    abstraction, and configuration.
+</p><h2>View Layers</h2>
+
+<p>
+    Working with and on Zend Framework as long as I have, one thing that has 
+    always been a bit of a thorn in my side is how difficult it is to specify 
+    differing view strategies based on arbitrary criteria. For instance, if 
+    I want to return JSON, or XML, how can I do so? The "answer" in ZF1 is to
+    use the ContextSwitch action helper, which basically simply overloads the
+    filename suffix used for the view to include the format type -- 
+    ".js.phtml", ".xml.phtml". This works, but it's a bit of a hack. (Full
+    disclosure: I authored the hack.)
+</p>
+
+<p>
+    Another problem I've always had is that rendering has occurred in multiple
+    places of request execution. Action view scripts are rendered immediately
+    following the action's execution, layouts are rendered at another time
+    entirely. Using <code>Zend_View</code> as the renderer, this is fine, but
+    if you want to switch to a solution that is capable of rendering the entire
+    payload, including "child" views, at once, it becomes quite difficult to
+    work around.
+</p>
+
+<p>
+    For Zend Framework 2, I <a href="http://framework.zend.com/wiki/display/ZFDEV2/RFC+-+View+Layer">proposed a new view layer</a>,
+    which helps mitigate some of these factors. As part of the work for this 
+    proposal, I reorganized the component slightly to separate it into 
+    "helpers", "renderers", and "resolvers" -- the latter are used to resolve a 
+    template to a renderer-specific resource. Additionally, I introduced a new 
+    concept into the framework, that of "View Models". This is a concept 
+    borrowed from a number of different places, but most notably Microsoft, who 
+    implemented them as part of a new pattern entitled "Model-View-ViewModel". 
+    In this pattern, you bind data to a "ViewModel" object, which can contain 
+    optional presentation logic, and pass the ViewModel to the View. The View 
+    then grabs data from the ViewModel to present to the client.
+</p>
+
+<p>
+    The biggest change, however, was introducing a "gateway" class, 
+    <code>Zend\View\View</code>, with the responsibility of martialling a 
+    renderer and injecting a response object. The code for this leverages the EventManager component to allow attaching "strategies" 
+    for selecting a renderer. The selected renderer is then used to render the 
+    template present in the ViewModel passed to the View object. Once 
+    complete, we loop through response strategies, where the results of 
+    rendering can be injected into the response. This also provides an ideal 
+    location for adding headers, such as HTTP caching headers.
+</p>
+
+<p>
+    Finally, I introduced a number of MVC listeners for view integration. Some of
+    these are quite basic -- such as ensuring we have a listener that will trigger
+    the view, and a default rendering strategy. Others help streamline the MVC -
+    while we recommend returning ViewModel objects from your controllers, with
+    templates set, default listeners provided will create ViewModels from returned
+    associative arrays, and inject a template name based on the requested controller 
+    and action.
+</p>
+
+<p>
+    What do you really need to know from the outset? Not much!
+</p>
+
+<div class="example"><pre><code lang="php">
+namespace Sample\Controller;
+
+use Zend\Mvc\Controller\ActionController;
+
+class HelloController extends ActionController
+{
+    public function worldAction()
+    {
+        // Implicitly creates a ViewModel with the below variables, and sets
+        // the template to hello/world (:controller/:action)
+        return array(
+            'message' => 'Hello world!',
+        );
+    }
+}
+</code></pre></div>
+
+<p>
+    Basically, the most common use case is the one you'd expect to work. The
+    fun really starts when you want to perform other common tasks: change the
+    layout, disable the layout, specify an alternate template, add additional
+    templates to render and aggregate in the layout, and more. In all cases,
+    you work with ViewModels, and then let the renderer worry about how to
+    represent them.
+</p>
+
+<p>
+    For more details, <a href="http://packages.zendframework.com/docs/latest/manual/en/zend.view.html#zend.view.quick-start">read the Zend\View quickstart</a>.
+</p>
+
+<h2>Database Abstraction</h2>
+
+<p>
+    <code>Zend_Db</code> provides a ton of capabilities in Zend Framework v1. 
+    However, over the years, we've discovered some design issues both in the 
+    code itself as well as the tests which have made a number of features 
+    difficult to support, and others difficult if not impossible to implement. 
+    As <a href="http://ralphschindler.com/">Ralph</a> noted in his 
+    <a href="http://framework.zend.com/wiki/display/ZFDEV2/RFC+-+Zend+Db">DB refactoring RFC</a>,
+</p>
+
+<blockquote>
+    Each new feature request generally comes with it's own concerns that apply 
+    to the project as a whole: "How useful is the feature?", "How does this 
+    feature impact performance?", "How wide spread is the need for this 
+    feature?". Generally, features are added to the core component bloating the 
+    core component and adding a new set of code that has to be maintained.
+</blockquote>
+
+<p>
+    The iteration for beta3 was to get the basic structure up and running for
+    drivers and adapters (drivers are the low-level connections, adapters provide
+    basic abstraction around common operations), resultset abstraction, the basic 
+    infrastructure for SQL abstraction, metadata support, and a table/row data 
+    gateway implementation.  All operations were tested on PDO_Sqlite, mysqli, 
+    and sqlsrv; preliminary reports indicate most PDO drivers work out of the 
+    box at this point.
+</p>
+
+<p>
+    What does it look like?
+</p>
+
+<h4>Inserting data</h4>
+<div class="example"><pre><code lang="php">
+// where $adapter is an adapter object
+$qi = function($name) use ($adapter) { 
+    return $adapter->platform->quoteIdentifier($name); 
+};
+$fp = function($name) use ($adapter) { 
+    return $adapter->driver->formatParameterName($name); 
+};
+
+$sql = 'INSERT INTO '
+    . $qi('artist')
+    . ' (' . $qi('name') . ', ' . $qi('history') . ') VALUES ('
+    . $fp('name') . ', ' . $fp('history') . ')';
+
+$statement = $adapter->query($sql);
+
+$parameters = array(
+    'name'    => 'New Artist',
+    'history' => 'This is the history',
+);
+
+$statement->execute($parameters);
+</code></pre></div>
+
+<h4>Selecting data</h4>
+<div class="example"><pre><code lang="php">
+// where $adapter is an adapter object
+$qi = function($name) use ($adapter) { 
+    return $adapter->platform->quoteIdentifier($name); 
+};
+$fp = function($name) use ($adapter) { 
+    return $adapter->driver->formatParameterName($name); 
+};
+
+$sql = 'SELECT * FROM ' . $qi('artist');
+$statement = $adapter->query($sql);
+$results = $statement->execute(array());
+
+foreach ($results as $row) {
+    var_export($row);
+}
+</code></pre></div>
+
+<h4>TableGateway</h4>
+<div class="example"><pre><code lang="php">
+// where $adapter is an adapter object
+$artistTable = new TableGateway('artist', $adapter);
+$rowset = $artistTable->select(function (Select $select) {
+    $select->where->like('name', 'Bar%');
+});
+$row = $rowset->current();
+echo $row->name;
+</code></pre></div>
+
+<p>
+    During my review of the code, which included assisting Ralph with testing,
+    I was impressed with the heavy level of de-coupling present, and how easily
+    it will allow us to support things like platform-specific SQL, custom 
+    rowsets, and more.
+</p>
+
+<p>
+    For more details, <a href="http://packages.zendframework.com/docs/latest/manual/en/zend.db.html">read the Zend\Db documentation</a>.
+</p>
+
+<h2>Configuration</h2>
+
+<p>
+    Configuration should be very fast. Interestingly, developers often also expect
+    configuration to support a multitude of features -- key translation, 
+    section inheritance, importing of additional configuration files, constant 
+    substitution, compatibility with many configuration formats, and more. These 
+    things tend to work in direct opposition to performance goals.
+</p>
+
+<p>
+    Several ZF2 community members decided to tackle these issues. Their goal was 
+    to create a streamlined core for <code>Zend\Config</code>, but provide a 
+    variety of plugins and filters to provide the rich features many users
+    have come to expect. The result is a very nice, de-coupled component.
+</p>
+
+<p>
+    Basic usage remains the same as it always has. However, without enabling
+    any optional features, you will not get things such as constant or token
+    substitution; to get that, you can use the new Processor API:
+</p>
+
+<div class="example"><pre><code lang="php">
+// Get our config object; second argument tells the factory to return
+// a Config object, vs. an array
+$config = Zend\Config\Factory::fromFile($pathToConfigFile, true);
+
+// Process values, substituting constant values whenever a defined constant name 
+// is encountered
+$constants = new Zend\Config\Processor\Constant();
+$constants->process($config);
+
+// Define some tokens to substitute
+$tokens = new Zend\Config\Processor\Token();
+$tokens->addToken('TOKEN', 'bar');
+$tokens->process($config);
+</code></pre></div>
+
+<p>
+    This API makes performance-intensive features explicitly opt-in, leaving
+    the core functionality intact and fast.
+</p>
+
+<p>
+    For more details, <a href="http://packages.zendframework.com/docs/latest/manual/en/zend.config.html">read the Zend\Config documentation</a>.
+</p>
+
+<h2>Fin!</h2>
+
+<p>
+    I've only gone into depth on those features that had big iterations for the
+    beta release; plenty more work went into it -- as I noted in the release 
+    announcement, we handled around 200 pull requests over a 2 month period -- 
+    this is roughly double what we accomplished for beta2 over a similar 
+    timeframe! I'm quite impressed and humbled by the spirit of the ZF2 
+    community and collaborators.
+</p>
+
+<p>
+    If you haven't tried Zend Framework 2 yet, please give it a spin! While 
+    there's still work to be done, for many -- most, potentially -- use cases,
+    the functionality necessary is present and working very well. Trying it now,
+    and building real functionality on it now, is not only possible, but will
+    allow you to shape what ZF2 looks like when we're ready to go stable.
+</p>
+
+<p>
+    <a href="http://packages.zendframework.com">Download it today!</a>
+</p><div class="social-media">
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="weierophinney">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</div>
+
+<div class="social-media">
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<div class="fb-like" data-send="true" data-width="450" data-show-faces="true"></div>
+</div>
+
+<div class="social-media">
+<div class="g-plusone" data-size="medium" data-annotation="inline"></div>
+</div>
+
+<!-- Place this render call where appropriate -->
+<script type="text/javascript">
+dojo.ready(function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+});
+</script>
+
+<div class="social-media">
+<a href="http://www.reddit.com/submit" onclick="window.location = 'http://www.reddit.com/submit?url=' + encodeURIComponent(window.location); return false"> <img src="http://www.reddit.com/static/spreddit1.gif" alt="submit to reddit" border="0" /> </a>
+</div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_developer = 1;
+        var disqus_shortname = 'phlyboyphly';
+        var disqus_identifier = 'zf2-beta3';
+        var disqus_url = 'http://mwop.net/blog/zf2-beta3.html';
+        var disqus_title = 'View Layers, Database Abstraction, Configuration, Oh, My!';
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a></article>
+
+<aside class="four columns offset-by-one omega sidebar blog">
+    <div class="metadata">
+        <ul>
+            <li>Posted on <b>2012-03-05 17:32:45</b>.</li>
+            <li>Last updated on <b>2012-03-05 17:32:45</b>.</li>
+        </ul>
+    </div>
+
+    <div class="metadata">
+        <h4>Tags for this entry</h4>
+        <p class="tags"><a href="/blog/tag/php.html">php</a><br />
+<a href="/blog/tag/zend+framework.html">zend framework</a><br />
+<a href="/blog/tag/zf2.html">zf2</a></p>
+    </div>
+
+        <div class="metadata">
+        <h4>Blogroll</h4>
+        <ul>
+            <li><a href="http://sebastian-bergmann.de/">Sebastian Bergmann</a></li>
+            <li><a href="http://blog.calevans.com/">Cal Evans</a></li>
+            <li><a href="http://prematureoptimization.org/blog/">Shahar Evron</a></li>
+            <li><a href="http://paul-m-jones.com/blog/">Paul M. Jones</a></li>
+            <li><a href="http://karwin.blogspot.com/">Bill Karwin</a></li>
+            <li><a href="http://mikenaberezny.com/">Mike Naberezny</a></li>
+            <li><a href="http://fabien.potencier.org/">Fabien Potencier</a></li>
+            <li><a href="http://benramsey.com/">Ben Ramsey</a></li>
+            <li><a href="http://derickrethans.nl/">Derick Rethans</a></li>
+            <li><a href="http://ralphschindler.com/">Ralph Schindler</a></li>
+            <li><a href="http://www.zimuel.it/blog/">Enrico Zimuel</a></li>
+        </ul>
+    </div>
+
+</aside>
+
+    </div>
+
+    <footer class="sixteen columns footer">
+        <div class="column one-third alpha about">
+            <h4>About</h4>
+            <p>
+    I'm a husband, father of two, slave to an ancient Basset Hound and 
+    plaything of a Basset puppy, and web architect by day.
+</p>
+
+<ul class="resume">
+    <li><a href="/resume">Resume</a></li>
+    <li><a href="http://twitter.com/weierophinney">Twitter</a></li>
+    <li><a href="http://www.linkedin.com/in/mweierophinney">LinkedIn</a></li>
+    <li><a href="http://www.ohloh.net/accounts/weierophinney">OhLoh</a></li>
+    <li><a href="http://resume.github.com/?weierophinney">GitHub</a></li>
+</ul>
+
+        </div>
+
+        <div class="column one-third projects">
+            <h4>Projects</h4>
+            <ul class="projects">
+    <li><a href="http://framework.zend.com/">Zend Framework (Project Lead)</a></li>
+    <li><a href="http://github.com/weierophinney/phly_mustache">Phly_Mustache</a></li>
+    <li><a href="http://www.the-pastry-box-project.net/baker/matthew-weier-ophinney/">The Pastry Box Project</a> (as a Baker)</li>
+</ul>
+
+        </div>
+
+        <div class="column one-third omega tags">
+        <div id="search" style="width:100%;">Loading...</div>
+<h4>Tag Cloud</h4>
+<div class="cloud">
+<ul class="Zend\Tag\Cloud"><li><a href="/blog/tag/php.html" style="font-size: 20px;">php</a></li> <li><a href="/blog/tag/zend+framework.html" style="font-size: 14px;">zend framework</a></li> <li><a href="/blog/tag/zf2.html" style="font-size: 11px;">zf2</a></li> <li><a href="/blog/tag/vim.html" style="font-size: 11px;">vim</a></li> <li><a href="/blog/tag/family.html" style="font-size: 11px;">family</a></li> <li><a href="/blog/tag/programming.html" style="font-size: 12px;">programming</a></li> <li><a href="/blog/tag/personal.html" style="font-size: 13px;">personal</a></li> <li><a href="/blog/tag/phpconcom.html" style="font-size: 10px;">phpconcom</a></li> <li><a href="/blog/tag/mvc.html" style="font-size: 11px;">mvc</a></li> <li><a href="/blog/tag/oop.html" style="font-size: 11px;">oop</a></li> <li><a href="/blog/tag/testing.html" style="font-size: 10px;">testing</a></li> <li><a href="/blog/tag/rest.html" style="font-size: 11px;">rest</a></li> <li><a href="/blog/tag/linux.html" style="font-size: 12px;">linux</a></li> <li><a href="/blog/tag/zendcon08.html" style="font-size: 11px;">zendcon08</a></li> <li><a href="/blog/tag/file_fortune.html" style="font-size: 10px;">file_fortune</a></li> <li><a href="/blog/tag/pear.html" style="font-size: 11px;">pear</a></li> <li><a href="/blog/tag/zendcon.html" style="font-size: 11px;">zendcon</a></li> <li><a href="/blog/tag/perl.html" style="font-size: 12px;">perl</a></li> <li><a href="/blog/tag/fastcgi.html" style="font-size: 10px;">fastcgi</a></li> <li><a href="/blog/tag/ubuntu.html" style="font-size: 11px;">ubuntu</a></li> <li><a href="/blog/tag/tekx.html" style="font-size: 10px;">tekx</a></li> <li><a href="/blog/tag/zendcon10.html" style="font-size: 10px;">zendcon10</a></li> <li><a href="/blog/tag/dojo.html" style="font-size: 11px;">dojo</a></li> <li><a href="/blog/tag/symfony.html" style="font-size: 11px;">symfony</a></li> <li><a href="/blog/tag/zeta+components.html" style="font-size: 10px;">zeta components</a></li> <li><a href="/blog/tag/tek09.html" style="font-size: 10px;">tek09</a></li> <li><a href="/blog/tag/spl.html" style="font-size: 11px;">spl</a></li> <li><a href="/blog/tag/subversion.html" style="font-size: 11px;">subversion</a></li> <li><a href="/blog/tag/zend+framewor.html" style="font-size: 10px;">zend framewor</a></li> <li><a href="/blog/tag/rails.html" style="font-size: 10px;">rails</a></li> <li><a href="/blog/tag/conferences.html" style="font-size: 11px;">conferences</a></li> <li><a href="/blog/tag/dpc08.html" style="font-size: 11px;">dpc08</a></li> <li><a href="/blog/tag/phpworks08.html" style="font-size: 11px;">phpworks08</a></li> <li><a href="/blog/tag/webinar.html" style="font-size: 11px;">webinar</a></li> <li><a href="/blog/tag/zencon08.html" style="font-size: 10px;">zencon08</a></li> <li><a href="/blog/tag/advocacy.html" style="font-size: 10px;">advocacy</a></li> <li><a href="/blog/tag/politics.html" style="font-size: 10px;">politics</a></li> <li><a href="/blog/tag/internet.html" style="font-size: 10px;">internet</a></li> <li><a href="/blog/tag/cw09.html" style="font-size: 11px;">cw09</a></li> <li><a href="/blog/tag/zend+server.html" style="font-size: 10px;">zend server</a></li> <li><a href="/blog/tag/dpc09.html" style="font-size: 10px;">dpc09</a></li> <li><a href="/blog/tag/sflive2010.html" style="font-size: 10px;">sflive2010</a></li> <li><a href="/blog/tag/security.html" style="font-size: 10px;">security</a></li> <li><a href="/blog/tag/wifi.html" style="font-size: 10px;">wifi</a></li> <li><a href="/blog/tag/aikido.html" style="font-size: 10px;">aikido</a></li> <li><a href="/blog/tag/books.html" style="font-size: 10px;">books</a></li> <li><a href="/blog/tag/dpc10.html" style="font-size: 10px;">dpc10</a></li> <li><a href="/blog/tag/zendcon09.html" style="font-size: 11px;">zendcon09</a></li> <li><a href="/blog/tag/git.html" style="font-size: 10px;">git</a></li> <li><a href="/blog/tag/phpwomen.html" style="font-size: 10px;">phpwomen</a></li> <li><a href="/blog/tag/virtualbox.html" style="font-size: 10px;">virtualbox</a></li></ul></div>
+        </div>
+    </footer>
+</div>
+</body>
+</html>

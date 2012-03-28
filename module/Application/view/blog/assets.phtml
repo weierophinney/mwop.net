@@ -1,0 +1,6 @@
+<?php
+$this->plugin('headLink')->appendStylesheet('/css/PhlyBlog/phly-blog.css');
+$this->plugin('dojo')->setDjConfigOption('baseUrl', '/js/dojo/')
+                     ->setDjConfigOption('modulePaths', array('PhlyBlog' => '/js/PhlyBlog'))
+                     ->requireModule('PhlyBlog.blog');
+?>

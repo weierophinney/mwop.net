@@ -1,0 +1,357 @@
+<!DOCTYPE html><!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8" />
+    <title>Proper Layer files when using Dojo with Zend Framework :: phly, boy, phly</title>
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <link href="/css/SkeletonCss/base.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/SkeletonCss/skeleton.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/SkeletonCss/layout.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/Application/site.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/images/Application/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" >
+<link href="/css/PhlyBlog/phly-blog.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/blog-atom.xml" rel="alternate" type="application/atom+xml" title="phly, boy, phly Atom Feed" >
+<link href="/blog-rss.xml" rel="alternate" type="application/rss+xml" title="phly, boy, phly RSS Feed" >
+    
+<script type="text/javascript">
+//<!--
+    var djConfig = {"isDebug":true,"parseOnLoad":true,"baseUrl":"\/js\/dojo\/","modulePaths":{"PhlyBlog":"\/js\/PhlyBlog","Application":"\/js\/Application"}};
+//-->
+</script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojo/dojo.xd.js"></script>
+
+<script type="text/javascript">
+//<!--
+dojo.require("PhlyBlog.blog");
+    dojo.require("Application.scroll");
+//-->
+
+</script>
+    
+    <script src="https://www.google.com/jsapi?ABQIAAAAGybdRRvLZwVUcF0dE3oVdBTO-MlgA7VGJpGqyqTOeDXlNzyZQxTGq17s-iAB0m0vwqLQ_A2dHhTg2Q"></script>
+<script type="text/javascript">
+    google.load('search', '1', {style: google.loader.themes.ESPRESSO});
+    google.setOnLoadCallback(function(){
+        new google.search.CustomSearchControl().draw('search');
+    }, true);
+</script>
+
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-27037983-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</head>
+<body>
+<div class="container">
+    <header class="sixteen columns">
+    <a href="/"><img src="/images/Application/logo.gif" height="37" width="37"/></a>
+        <span class="main_title">phly, boy, phly: matthew weier o'phinney</span>
+    </header>
+
+    <div class="sixteen columns" id="menu">
+        <nav>
+            <li><a href="/">Home</a></li>
+            <li><a href="/blog.html">Blog</a></li>
+                        <li><a href="/resume">R&eacute;sum&eacute;</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </nav>
+    </div>
+
+    <div class="sixteen columns content">
+        <div class="row">
+<article class="eleven columns alpha blog">
+<h2>Proper Layer files when using Dojo with Zend Framework</h2>
+<p>
+    During my <a href="http://www.zend.com/en/resources/webinars/framework">Dojo
+        and ZF webinar</a> on Wednesday, 
+    <a href="http://higginsforpresident.net/">Pete Higgins</a> of 
+    <a href="http://dojotoolkit.org/">Dojo</a> fame noted that I could do
+    something different and better on one of my slides.
+</p>
+
+<p>
+    This particular item had to do with how I was consuming custom Dojo build
+    layers within my code. I contacted him afterwards to find out what he
+    suggested, and did a little playing of my own, and discovered some more Dojo
+    and javascript beauty in the process.
+</p><p>
+    The code in question looked like this:
+</p>
+
+<div class="example"><pre><code lang="php">
+Zend_Dojo::enableView($view);
+$view-&gt;dojo()-&gt;setDjConfigOption('usePlainJson', true)
+             // -&gt;setDjConfigOption('isDebug', true)
+             -&gt;addStylesheetModule('dijit.themes.tundra')
+             -&gt;addStylesheet('/js/dojox/grid/_grid/tundraGrid.css')
+             -&gt;setLocalPath('/js/dojo/dojo.js')
+             -&gt;addLayer('/js/paste/main.js')
+             // -&gt;addLayer('/js/paste/paste.js')
+             -&gt;registerModulePath('../paste', 'paste')
+             -&gt;addJavascript('paste.main.init();')
+             -&gt;disable();
+</code></pre></div>
+
+<p>
+    The lines he was commenting onwere the <code>addLayer()</code> lines.
+</p>
+
+<p>
+    As noted in my webinar, layers, or custom builds, are a fantastic feature of
+    Dojo. Dojo is incredibly modular, and acts in many ways like a good
+    server-side library should -- only include what is needed, and when its
+    needed. The problem comes at deployment: the user suddenly experiences a
+    situation where the application is making dozens of requests back to the
+    server to get what it needs. The solution is to create a custom build, which
+    pulls in all dependencies into a single file, inters any templates, and then
+    does minification heuristics on the code prior to stripping all whitespace
+    and compressing it. Once done, you now have a single, small file that needs
+    to load on the request -- making the final deployed application snappy.
+</p>
+
+<p>
+    When I displayed this during the webinar, I noted that after doing so, you
+    have to change your code to point at the new build -- and that's what the
+    two lines I pointed out are for. In essence, one is for development, the
+    other for production. Of course, this is just ripe for problems -- you
+    forget to switch comments in production, or accidently re-merge the
+    development version, etc.
+</p>
+
+<p>
+    Pete showed me another solution that was much more elegant, and which also
+    got rid of another line in that solution above, the
+    <code>addJavascript()</code call.
+</p>
+
+<p>
+    The solution is to write your code in the same layer file as you'll compile
+    to. When doing so, you can put all your <code>dojo.require()</code>
+    statements in the file, as well as mixin any code you want in the main
+    module namespace:
+</p>
+
+<div class="example"><pre><code lang="javascript">
+dojo.provide(\&quot;paste.layer\&quot;);
+
+/* Dojo modules to require... */
+dojo.require(\&quot;dijit.layout.ContentPane\&quot;);
+/* ... */
+
+/* onLoad actions to perform... */
+dojo.addOnLoad(function() {
+    paste.upgrade(); 
+});
+
+/* mixin functionality to the \&quot;paste\&quot; namespace: */
+dojo.mixin(paste, {
+    /* paste.newPasteButton() */
+    newPasteButton:  function() {
+        var form = dijit.byId(\&quot;pasteform\&quot;);
+        if (form.isValid()) {
+            form.submit(); 
+        }
+    },
+    
+    /* ... */
+});
+</code></pre></div>
+
+<p>
+    In my original code, I had a "paste.main.init" method that performed all
+    my <code>dojo.require</code> and <code>dojo.addOnLoad</code> statements, but
+    these now can be simply a part of the layer -- eliminating more work for me.
+</p>
+
+<p>
+    Then, when creating the profile, you simply have it create the layer in the
+    same file -- in this case, paste/layer.js -- but also have it create a
+    <em>dependency</em> on the original layer file. The compiler will ensure
+    that the original code gets slurped into the build. As an example:
+</p>
+
+<div class="example"><pre><code lang="javascript">
+dependencies = {
+    layers: [
+        {
+            name: \&quot;../paste/layer.js\&quot;,
+            dependencies: [
+                \&quot;paste.layer\&quot;,
+                /* other dependencies...*/
+            ]
+        },
+    ],
+    prefixes: [
+        [ \&quot;paste\&quot;, \&quot;../paste\&quot; ],
+        /* other prefixes -- dijit, etc. */
+    ]
+}
+</code></pre></div>
+
+<p>
+    This changes the original ZF snippet above to simply:
+</p>
+
+<div class="example"><pre><code lang="php">
+Zend_Dojo::enableView($view);
+$view-&gt;dojo()-&gt;setDjConfigOption('usePlainJson', true)
+             // -&gt;setDjConfigOption('isDebug', true)
+             -&gt;addStylesheetModule('dijit.themes.tundra')
+             -&gt;addStylesheet('/js/dojox/grid/_grid/tundraGrid.css')
+             -&gt;setLocalPath('/js/dojo/dojo.js')
+             -&gt;addLayer('/js/paste/layer.js')
+             -&gt;registerModulePath('../paste', 'paste')
+             -&gt;disable();
+</code></pre></div>
+
+<p>
+    Not much shorter -- but because I no longer need to worry about changing the
+    file name, I can rest easier at night.
+</p>
+
+<p>
+    I'll be blogging more tips such as these in the coming weeks, to help
+    support the new <a href="http://framework.zend.com/announcements/2008-09-03-dojo">Dojo integration</a> 
+    in Zend Framework.
+</p><div class="social-media">
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="weierophinney">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</div>
+
+<div class="social-media">
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<div class="fb-like" data-send="true" data-width="450" data-show-faces="true"></div>
+</div>
+
+<div class="social-media">
+<div class="g-plusone" data-size="medium" data-annotation="inline"></div>
+</div>
+
+<!-- Place this render call where appropriate -->
+<script type="text/javascript">
+dojo.ready(function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+});
+</script>
+
+<div class="social-media">
+<a href="http://www.reddit.com/submit" onclick="window.location = 'http://www.reddit.com/submit?url=' + encodeURIComponent(window.location); return false"> <img src="http://www.reddit.com/static/spreddit1.gif" alt="submit to reddit" border="0" /> </a>
+</div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_developer = 1;
+        var disqus_shortname = 'phlyboyphly';
+        var disqus_identifier = '188-Proper-Layer-files-when-using-Dojo-with-Zend-Framework';
+        var disqus_url = 'http://mwop.net/blog/188-Proper-Layer-files-when-using-Dojo-with-Zend-Framework.html';
+        var disqus_title = 'Proper Layer files when using Dojo with Zend Framework';
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a></article>
+
+<aside class="four columns offset-by-one omega sidebar blog">
+    <div class="metadata">
+        <ul>
+            <li>Posted on <b>2008-09-05 09:30:00</b>.</li>
+            <li>Last updated on <b>2008-09-08 09:17:34</b>.</li>
+        </ul>
+    </div>
+
+    <div class="metadata">
+        <h4>Tags for this entry</h4>
+        <p class="tags"><a href="/blog/tag/dojo.html">dojo</a><br />
+<a href="/blog/tag/php.html">php</a><br />
+<a href="/blog/tag/zend+framework.html">zend framework</a></p>
+    </div>
+
+        <div class="metadata">
+        <h4>Blogroll</h4>
+        <ul>
+            <li><a href="http://sebastian-bergmann.de/">Sebastian Bergmann</a></li>
+            <li><a href="http://blog.calevans.com/">Cal Evans</a></li>
+            <li><a href="http://prematureoptimization.org/blog/">Shahar Evron</a></li>
+            <li><a href="http://paul-m-jones.com/blog/">Paul M. Jones</a></li>
+            <li><a href="http://karwin.blogspot.com/">Bill Karwin</a></li>
+            <li><a href="http://mikenaberezny.com/">Mike Naberezny</a></li>
+            <li><a href="http://fabien.potencier.org/">Fabien Potencier</a></li>
+            <li><a href="http://benramsey.com/">Ben Ramsey</a></li>
+            <li><a href="http://derickrethans.nl/">Derick Rethans</a></li>
+            <li><a href="http://ralphschindler.com/">Ralph Schindler</a></li>
+            <li><a href="http://www.zimuel.it/blog/">Enrico Zimuel</a></li>
+        </ul>
+    </div>
+
+</aside>
+
+    </div>
+
+    <footer class="sixteen columns footer">
+        <div class="column one-third alpha about">
+            <h4>About</h4>
+            <p>
+    I'm a husband, father of two, slave to an ancient Basset Hound and 
+    plaything of a Basset puppy, and web architect by day.
+</p>
+
+<ul class="resume">
+    <li><a href="/resume">Resume</a></li>
+    <li><a href="http://twitter.com/weierophinney">Twitter</a></li>
+    <li><a href="http://www.linkedin.com/in/mweierophinney">LinkedIn</a></li>
+    <li><a href="http://www.ohloh.net/accounts/weierophinney">OhLoh</a></li>
+    <li><a href="http://resume.github.com/?weierophinney">GitHub</a></li>
+</ul>
+
+        </div>
+
+        <div class="column one-third projects">
+            <h4>Projects</h4>
+            <ul class="projects">
+    <li><a href="http://framework.zend.com/">Zend Framework (Project Lead)</a></li>
+    <li><a href="http://github.com/weierophinney/phly_mustache">Phly_Mustache</a></li>
+    <li><a href="http://www.the-pastry-box-project.net/baker/matthew-weier-ophinney/">The Pastry Box Project</a> (as a Baker)</li>
+</ul>
+
+        </div>
+
+        <div class="column one-third omega tags">
+        <div id="search" style="width:100%;">Loading...</div>
+<h4>Tag Cloud</h4>
+<div class="cloud">
+<ul class="Zend\Tag\Cloud"><li><a href="/blog/tag/php.html" style="font-size: 20px;">php</a></li> <li><a href="/blog/tag/zend+framework.html" style="font-size: 14px;">zend framework</a></li> <li><a href="/blog/tag/zf2.html" style="font-size: 11px;">zf2</a></li> <li><a href="/blog/tag/vim.html" style="font-size: 11px;">vim</a></li> <li><a href="/blog/tag/family.html" style="font-size: 11px;">family</a></li> <li><a href="/blog/tag/programming.html" style="font-size: 12px;">programming</a></li> <li><a href="/blog/tag/personal.html" style="font-size: 13px;">personal</a></li> <li><a href="/blog/tag/phpconcom.html" style="font-size: 10px;">phpconcom</a></li> <li><a href="/blog/tag/mvc.html" style="font-size: 11px;">mvc</a></li> <li><a href="/blog/tag/oop.html" style="font-size: 11px;">oop</a></li> <li><a href="/blog/tag/testing.html" style="font-size: 10px;">testing</a></li> <li><a href="/blog/tag/rest.html" style="font-size: 11px;">rest</a></li> <li><a href="/blog/tag/linux.html" style="font-size: 12px;">linux</a></li> <li><a href="/blog/tag/zendcon08.html" style="font-size: 11px;">zendcon08</a></li> <li><a href="/blog/tag/file_fortune.html" style="font-size: 10px;">file_fortune</a></li> <li><a href="/blog/tag/pear.html" style="font-size: 11px;">pear</a></li> <li><a href="/blog/tag/zendcon.html" style="font-size: 11px;">zendcon</a></li> <li><a href="/blog/tag/perl.html" style="font-size: 12px;">perl</a></li> <li><a href="/blog/tag/fastcgi.html" style="font-size: 10px;">fastcgi</a></li> <li><a href="/blog/tag/ubuntu.html" style="font-size: 11px;">ubuntu</a></li> <li><a href="/blog/tag/tekx.html" style="font-size: 10px;">tekx</a></li> <li><a href="/blog/tag/zendcon10.html" style="font-size: 10px;">zendcon10</a></li> <li><a href="/blog/tag/dojo.html" style="font-size: 11px;">dojo</a></li> <li><a href="/blog/tag/symfony.html" style="font-size: 11px;">symfony</a></li> <li><a href="/blog/tag/zeta+components.html" style="font-size: 10px;">zeta components</a></li> <li><a href="/blog/tag/tek09.html" style="font-size: 10px;">tek09</a></li> <li><a href="/blog/tag/spl.html" style="font-size: 11px;">spl</a></li> <li><a href="/blog/tag/subversion.html" style="font-size: 11px;">subversion</a></li> <li><a href="/blog/tag/zend+framewor.html" style="font-size: 10px;">zend framewor</a></li> <li><a href="/blog/tag/rails.html" style="font-size: 10px;">rails</a></li> <li><a href="/blog/tag/conferences.html" style="font-size: 11px;">conferences</a></li> <li><a href="/blog/tag/dpc08.html" style="font-size: 11px;">dpc08</a></li> <li><a href="/blog/tag/phpworks08.html" style="font-size: 11px;">phpworks08</a></li> <li><a href="/blog/tag/webinar.html" style="font-size: 11px;">webinar</a></li> <li><a href="/blog/tag/zencon08.html" style="font-size: 10px;">zencon08</a></li> <li><a href="/blog/tag/advocacy.html" style="font-size: 10px;">advocacy</a></li> <li><a href="/blog/tag/politics.html" style="font-size: 10px;">politics</a></li> <li><a href="/blog/tag/internet.html" style="font-size: 10px;">internet</a></li> <li><a href="/blog/tag/cw09.html" style="font-size: 11px;">cw09</a></li> <li><a href="/blog/tag/zend+server.html" style="font-size: 10px;">zend server</a></li> <li><a href="/blog/tag/dpc09.html" style="font-size: 10px;">dpc09</a></li> <li><a href="/blog/tag/sflive2010.html" style="font-size: 10px;">sflive2010</a></li> <li><a href="/blog/tag/security.html" style="font-size: 10px;">security</a></li> <li><a href="/blog/tag/wifi.html" style="font-size: 10px;">wifi</a></li> <li><a href="/blog/tag/aikido.html" style="font-size: 10px;">aikido</a></li> <li><a href="/blog/tag/books.html" style="font-size: 10px;">books</a></li> <li><a href="/blog/tag/dpc10.html" style="font-size: 10px;">dpc10</a></li> <li><a href="/blog/tag/zendcon09.html" style="font-size: 11px;">zendcon09</a></li> <li><a href="/blog/tag/git.html" style="font-size: 10px;">git</a></li> <li><a href="/blog/tag/phpwomen.html" style="font-size: 10px;">phpwomen</a></li> <li><a href="/blog/tag/virtualbox.html" style="font-size: 10px;">virtualbox</a></li></ul></div>
+        </div>
+    </footer>
+</div>
+</body>
+</html>

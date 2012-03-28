@@ -1,0 +1,569 @@
+<!DOCTYPE html><!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8" />
+    <title>Blog Entries :: phly, boy, phly</title>
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <link href="/css/SkeletonCss/base.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/SkeletonCss/skeleton.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/SkeletonCss/layout.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/Application/site.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/images/Application/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" >
+<link href="/css/PhlyBlog/phly-blog.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/blog-atom.xml" rel="alternate" type="application/atom+xml" title="Blog Entries Atom Feed" >
+<link href="/blog-rss.xml" rel="alternate" type="application/rss+xml" title="Blog Entries RSS Feed" >
+    
+<script type="text/javascript">
+//<!--
+    var djConfig = {"isDebug":true,"parseOnLoad":true,"baseUrl":"\/js\/dojo\/","modulePaths":{"PhlyBlog":"\/js\/PhlyBlog","Application":"\/js\/Application"}};
+//-->
+</script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojo/dojo.xd.js"></script>
+
+<script type="text/javascript">
+//<!--
+dojo.require("PhlyBlog.blog");
+    dojo.require("Application.scroll");
+//-->
+
+</script>
+    
+    <script src="https://www.google.com/jsapi?ABQIAAAAGybdRRvLZwVUcF0dE3oVdBTO-MlgA7VGJpGqyqTOeDXlNzyZQxTGq17s-iAB0m0vwqLQ_A2dHhTg2Q"></script>
+<script type="text/javascript">
+    google.load('search', '1', {style: google.loader.themes.ESPRESSO});
+    google.setOnLoadCallback(function(){
+        new google.search.CustomSearchControl().draw('search');
+    }, true);
+</script>
+
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-27037983-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</head>
+<body>
+<div class="container">
+    <header class="sixteen columns">
+    <a href="/"><img src="/images/Application/logo.gif" height="37" width="37"/></a>
+        <span class="main_title">phly, boy, phly: matthew weier o'phinney</span>
+    </header>
+
+    <div class="sixteen columns" id="menu">
+        <nav>
+            <li><a href="/">Home</a></li>
+            <li><a href="/blog.html">Blog</a></li>
+                        <li><a href="/resume">R&eacute;sum&eacute;</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </nav>
+    </div>
+
+    <div class="sixteen columns content">
+        <div class="row">
+<section class="eleven columns alpha blog">
+    <h2>Blog Entries</h2>
+
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2005-07-14 00:01:05</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/84-File_Fortune-accepted-to-PEAR.html">File_Fortune accepted to PEAR</a></h4>
+
+    <div class="entry body"><p>
+    What a way to start the day -- I had an email from PEPR letting me know that
+    my <a
+        href="http://pear.php.net/pepr/pepr-proposal-show.php?id=263">File_Fortune
+    proposal</a> had been accepted!
+</p>
+<p>
+    File_Fortune is a PHP OOP interface to reading and writing fortune files.
+    It is loosely based on the perl module Fortune.pm, but modified
+    significantly to better work with PHP file access methods, as well as to add
+    writing capability.
+</p>
+<p>
+    I will be uploading my initial release shortly, probably as a beta or RC. 
+</p>
+<p>
+    So, go fetch those Simpsons, Hitchhiker's Guide, and Star Wars fortune
+    cookie databases and prepare to add random quotes to your site!
+</p></div>
+
+    <p><a href="/blog/84-File_Fortune-accepted-to-PEAR.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2005-07-10 22:17:23</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/83-Thoughts-on-form-validation.html">Thoughts on form validation</a></h4>
+
+    <div class="entry body"><p>
+    I've been doing a lot of thinking on form validation recently. Among other
+    things, I want to be using a standard set of tools for validating form input
+    at work; I'm also rewriting the family website in PHP, and want to have
+    consistency there as well. Finally, I truly buy into <a
+        href="http://shiflett.org/">Chris Shiflett's</a> <a
+        href="http://shiflett.org/archive/97">top two security practices</a>:
+    filter input, escape output. Validation should always be done, and should be
+    done rigorously; don't allow anything more than is necessary to get the work
+    done.
+</p>
+<p>
+    I flirted briefly in the past month with <a
+        href="http://pear.php.net/packages/HTML_QuickForm">HTML_QuickForm</a>.
+    Being an observer on the CGI::Application mailing lists, HQF looks like
+    PHP's answer to perl's <a
+        href="http://search.cpan.org/search?query=Data%3A%3AFormValidator&mode=module">Data::FormValidator</a>.
+    HQF has a high frequency of posts on the php-pear-general lists. A lot of
+    people seem happy with it. I decided to try it out as an example plugin for
+    <a href="http://cgiapp.sourceforge.net/">Cgiapp</a> for the latest release.
+</p>
+<p>
+    My problem is that I want to be able to define form validation in a file
+    outside my script. The reason for this is that as I extend and reuse
+    classes, I often find that I can use the same general run-modes for a
+    method... just so long as the form validation logic is separate. This allows
+    me, for instance, to decide that in one application instance I will require
+    fields A-M, but in another, I only need A-E (or vice versa). But it requires
+    no changes to the actual application logic, as the validations are kept
+    separately, and  I have the application instance indicate which validation
+    file to utilize.
+</p></div>
+
+    <p><a href="/blog/83-Thoughts-on-form-validation.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2005-07-07 15:59:16</p>
+    <p class="tags"><a href="/blog/tag/family.html">family</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/82-Every-little-girl-has-to-give-up-the-bink....html">Every little girl has to give up the bink...</a></h4>
+
+    <div class="entry body"><p>
+So, last night, Maeve fell asleep in the early evening, on the couch, clutching
+her sippy cup and sucking on her bink while watching Scooby Doo. She woke up an
+hour later, and after she'd been up for a while and was less groggy, she
+announced to Jen and me that, "I'm not going to use my bink ANY MORE. Every
+little girl has to give up the bink some time, when they're four, so I'm not
+going to use the bink EVER AGAIN." (Imagine dramatic pauses between the all-caps
+words there...)
+</p>
+
+<p>
+This coming from the girl who has a fit every time her bink isn't within
+eyesight and reach. Needless to say, we didn't quite believe her, but we were
+willing to support her. We told her that if she wants to stop using the bink,
+that's okay; it's also okay if she decides to use it again. (Fully expecting
+she'd want it within minutes of going to bed.)
+</p>
+
+<p>
+Well... Maeve slept all night without it, and didn't want it this morning, nor
+in the car. She's adamant, our little warrior queen! (Which is what the Gaelic
+Maeve translates to in English, in case you were wondering.)
+</p>
+
+<p>
+I might be jumping the gun here, but I get the feeling our little girl has taken
+another step in growing up... and I'm bewildered and a little sad. Much as I've
+hated the bink the past year, I also associate it with my little girl... and
+she's getting so she's not so little any more!
+</p>
+<p>
+<b>UPDATE:</b> I jumped the gun. She <em>did</em> go a full 24 hours, but the
+following night decided she wanted the bink again. But there <em>is</em> hope
+for a bink-less future... 
+</p></div>
+
+    <p><a href="/blog/82-Every-little-girl-has-to-give-up-the-bink....html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2005-07-06 22:26:19</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/81-Notes-on-PEAR_Exception.html">Notes on PEAR_Exception</a></h4>
+
+    <div class="entry body"><p>
+    I've been doing some thinking on exceptions, and <a
+        href="http://pear.php.net/package/PEAR/docs/1.3.3.1/PEAR/PEAR_Exception.html">PEAR_Exception</a> in
+    particular. You may want to skip ahead to read about how to use
+    PEAR_Exception, as well as some of my thoughts on the class on first use. If
+    you want the background, read on.
+</p>
+<p>
+    I've created a package proposal on PEAR for a package called <a
+        href="http://pear.php.net/pepr/pepr-proposal-show.php?id=263">File_Fortune</a>,
+    an OOP interface to reading and writing fortune files. I've been using a
+    perl module for this on the family website for years, and now that I'm
+    starting work on the PHP conversion, I thought I'd start with the building
+    blocks.
+</p>
+<p>
+    In creating the proposal, I started with a PHP5-only version, though I found
+    that I wasn't using much in PHP5 beyond the public/private/protected/static
+    keywords. For error handling, I decided to try out <a
+        href="http://pear.php.net/packages/PEAR_ErrorStack">PEAR_ErrorStack</a>,
+    as I'd been hearing buzz about it being the new "preferred" method for error
+    handling in PEAR. (Honestly, after using it, I'm not too happy with it;
+    throwing PEAR_Errors was much easier, and easier to manipulate as well --
+    but that's a subject for another post -- and exceptions were easier still,
+    though more typing.)
+</p>
+<p>
+    The first comment I got on the proposal was <em>the</em> question: "Why
+    PHP5?" (<a href="http://paul-m-jones.com/blog/">Paul</a> wasn't too
+    surprised by that reaction.) I thought about it, and decided it wasn't
+    really all that necessary, beyond the fact that I'd need to take some extra
+    steps to be able to actually test a PHP4 version. So, I did a PHP4 version.
+</p>
+<p>
+    Well, then some chatter happened, and a number of developers said, "Why
+    <em>not</em> PHP5?" So, I went back to PHP5. And then somebody else said,
+    "Use PEAR_Exception." So, I started playing with that, and we finally get to
+    the subject of this post.
+</p></div>
+
+    <p><a href="/blog/81-Notes-on-PEAR_Exception.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2005-06-28 11:33:00</p>
+    <p class="tags"><a href="/blog/tag/personal.html">personal</a><br />
+<a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/80-ZCE-Results-are-in%21.html">ZCE - Results are in!</a></h4>
+
+    <div class="entry body"><p>
+    Got the official notification: I passed the <a
+        href="http://www.zend.com/store/education/certification/zend-php-certification.php">Zend
+        PHP Certification Exam</a>, and can now report I'm a Zend Certified
+    Engineer (ZCE)!
+</p>
+<p style="text-align: center;">
+    <a href="http://zend.com/zce.php?c=ZEND901102&r=0502029"><img
+        src="/matthew/img/zce_logo.gif" alt="Zend Certified Engineer" height="47"
+        width="73" /></a>
+</p>
+<p>
+    Thanks go to my bosses at <a href="http://assoc.garden.org/">NGA</a> for
+    giving me the opportunity to attend <a
+        href="http://www.phparch.com/tropics">php|Tropics</a>, to <a
+        href="http://www.phparch.com/">Marco Tabini</a> for offering the ZCE
+    exam as part of the php|Tropics conference fee, and to my wife, Jen, and
+    daughter, Maeve, for putting up with me while I studied... and being good
+    sports about having to stay home while I went to Cancun. Hopefully next time I can take you along!
+</p></div>
+
+    <p><a href="/blog/80-ZCE-Results-are-in%21.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2005-06-14 23:07:57</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/79-PHP-Application-Documentation.html">PHP Application Documentation</a></h4>
+
+    <div class="entry body"><p> <a href="http://www.paul-m-jones.com/">Paul Jones</a> has written <a href="http://www.paul-m-jones.com/blog/?p=153">an interesting piece about documentation in the PEAR project</a>, in which he argues very convincingly for using wikis for end user documentation.</p>
+<p>
+    I actually think that last point bears repeating: <em>using wikis for end
+        user documentation</em>. I talked to Paul about this issue at
+    php|Tropics, and both of us use phpDocumentor quite religiously. However,
+    API documentation is very different from end user documentation. And the
+    issue with documentation at the PEAR project has to do with the fact that
+    there are many projects with little or no end user documentation -- which
+    often makes it difficult for a developer to determine how a module might be
+    used.
+</p>
+<p>
+    The often-cited barrier for this is that end user documentation on the PEAR
+    website must be done in DocBook format.
+</p></div>
+
+    <p><a href="/blog/79-PHP-Application-Documentation.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2005-06-05 23:01:00</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/78-Search-APIs.html">Search APIs</a></h4>
+
+    <div class="entry body"><p>
+    Twice in the past week I found myself needing to create or alter database
+    search functionality in some APIs for work. In doing this work, I discovered
+    some techniques that make this process much easier. In line with <em>The
+        Pragmatic Programmer</em>, I found myself exploring the DRY principle
+    (Don't Repeat Yourself), and looking into code generation (this time, SQL)
+    -- basically to exploit my inherent laziness and to make my job easier.
+</p>
+<p> 
+    I thought I'd share some of the principles I've discovered for myself as I
+    haven't read much information on the subject. Some of this may be
+    rudimentary for some readers or those who work with more advanced
+    abstraction layers (I suspect <a
+        href="http://pear.php.net/packages/DB_DataObject">DB_DataObject</a> may
+    do much of this), but hopefully the information can be a useful reference
+    for others (myself included).
+</p></div>
+
+    <p><a href="/blog/78-Search-APIs.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2005-06-05 13:00:00</p>
+    <p class="tags"><a href="/blog/tag/personal.html">personal</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/77-Moving-into-City-Living.html">Moving into City Living</a></h4>
+
+    <div class="entry body"><p>
+    We did it... we moved, again.
+</p>
+<p>
+    However, unlike our previous two moves, which were interstate, this time we
+    stayed in the same state. The same county, even. What made (makes; we're
+    still finishing up as I write this) this one so jarring is the fact that
+    we're going from the rural mountainside to the fourth floor of a new
+    apartment/condo building adjoining an interstate spur.
+</p>
+<p>
+    Why would we do this?
+</p></div>
+
+    <p><a href="/blog/77-Moving-into-City-Living.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2005-05-26 12:48:11</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/75-Planet-PHP.html">Planet PHP</a></h4>
+
+    <div class="entry body"><p>
+    I recently had an email exchange with <a href="http://blog.bitflux.ch">chregu</a> of <a href="http://www.planet-php.net">Planet PHP</a> regarding Planet PHP's blog selection. I've been subscribing to its
+    RSS feed for over a year now, but was uncertain how blogs were selected --
+    was it based on popularity of the developer, projects the developer works on
+    (for instance, PEAR), etc. I felt that it was time for this information to
+    be made public; it helps inform the readership why they're reading what
+    they're reading.
+</p>
+<p>
+    And my exchange with him resulted in his <a href="http://blog.bitflux.ch/archive/2005/05/26/planet-php-faq.html">Planet PHP FAQ</a> blog entry, which hopefully someday will become a static page
+    on the site. Additionally, I found out how new blogs get added, and am proud
+    to announce I'm now in the lineup!
+</p>
+<p>
+    (Of course, the timing could not really be worse, come to think of it. I'm
+    moving my family in to town this weekend (from our house in the Green
+    Mountains of Vermont), and I need to make arrangements for hosting
+    weierophinney.net in the interim while we wait for phone and DSL service
+    -- which won't be up for at least another week :-( I'm sure I'll figure out
+    something... stay tuned!)
+</p>
+<p>
+    <b>Update:</b> corrected link to Planet PHP FAQ.
+</p></div>
+
+    <p><a href="/blog/75-Planet-PHP.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2005-05-22 12:31:14</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/74-PEAR-and-DocBook-documentation.html">PEAR and DocBook documentation</a></h4>
+
+    <div class="entry body"><p>
+    Sean Coates has posted a rant and <a
+        href="http://blog.phpdoc.info/comment.php?type=trackback&entry_id=14">a
+        blog entry</a> regarding DocBook and the various proposals on PEAR
+    related to using a wiki for package documentation.
+</p>
+<p>
+    A little background is probably in order. Many PEAR developers feel that
+    DocBook is needlessly difficult and provides a barrier to writing good
+    documentation for PEAR projects; this is actually the most often-cited
+    reason for lack of documentation for a PEAR package. Many actually create
+    wikis that they then link to in a minimal DocBook tutorial as "full
+    documentation".
+</p>
+<p>
+    One proposed remedy is to create a PEAR wiki for each PEAR package. A
+    scheduled process would then transform the wiki markup to DocBook, HTML,
+    PDF, whatever.
+</p>
+<p>
+    What Sean rants about is simply this: wiki markup is meant to be simple,
+    and much code documentation would require specialized wiki markup.
+    Additionally, DocBook is already meant to do the transformations required;
+    it is a structured language that is meant to be processed into a variety of
+    output formats.
+</p>
+<p>
+    While I agree with Sean's ideas in essence, I still feel that DocBook is a
+    real pain to work with. <a href="http://www.phpdoc.org">PhpDocumentor</a>
+    offers some real convenience when documenting code: doc blocks can contain
+    HTML, some simple inline elements like {@link} -- and they make documenting
+    a snap. But I just fail to understand why, when providing tutorials, a
+    switch to DocBook is necessary. Whenever I use it, I find that I have to
+    retool a set of tutorials I have, or somebody else has, already written in
+    order to get formatting correct, and that I have to switch my thinking
+    altogether to accomodate a new set of rules and logic.
+</p>
+<p>
+    Yes, DocBook is simply XML with a documented schema. However, I've never
+    enjoyed XML. I find it too pedantic, I don't like having to escape out CDATA
+    sequences in order to render HTML (and code, and XML, etc.), I don't like
+    having to learn new DTDs for every project, and more. I feel for
+    configuration, unless you have nested elements, there's no reason to use XML
+    whatsoever. And when it comes to documentation, why use anything other than
+    HTML? Since HTML is a subset of SGML (as is XML), there's no reason it can't
+    be transformed to other formats itself -- and for the majority of PHP
+    developers, HTML is a known, while XML/DocBook may or may not be.
+</p>
+<p>
+    Whether or not DocBook is hard can be debated from here to eternity. The
+    fact of the matter is that it is <em>perceived</em> as being hard to learn,
+    and thus many PEAR developers are simply choosing not to bother. Why not
+    give them a tool they can use <em>easily</em>? Maybe then the amount and
+    quality of documentation on PEAR will improve.
+</p></div>
+
+    <p><a href="/blog/74-PEAR-and-DocBook-documentation.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="paginationControl">
+        <a href="/blog.html" class="first">&lt;&lt; First</a> |
+        <a href="/blog-p18.html"> &lt; Previous </a> |
+        <a href="/blog-p15.html">15</a> |
+            <a href="/blog-p16.html">16</a> |
+            <a href="/blog-p17.html">17</a> |
+            <a href="/blog-p18.html">18</a> |
+            <span class="current">19</span> |
+            <a href="/blog-p20.html">20</a> |
+            <a href="/blog-p21.html">21</a> |
+            <a href="/blog-p22.html">22</a> |
+            <a href="/blog-p23.html">23</a> |
+            <a href="/blog-p24.html">24</a> |
+            <a href="/blog-p20.html"> Next &gt;</a> |
+        <a href="/blog-p26.html" class="last"> Last &gt;&gt;</a>
+</div>
+
+</section>
+
+<aside class="four columns offset-by-one omega sidebar blog">
+        <div class="metadata">
+        <h4>Blogroll</h4>
+        <ul>
+            <li><a href="http://sebastian-bergmann.de/">Sebastian Bergmann</a></li>
+            <li><a href="http://blog.calevans.com/">Cal Evans</a></li>
+            <li><a href="http://prematureoptimization.org/blog/">Shahar Evron</a></li>
+            <li><a href="http://paul-m-jones.com/blog/">Paul M. Jones</a></li>
+            <li><a href="http://karwin.blogspot.com/">Bill Karwin</a></li>
+            <li><a href="http://mikenaberezny.com/">Mike Naberezny</a></li>
+            <li><a href="http://fabien.potencier.org/">Fabien Potencier</a></li>
+            <li><a href="http://benramsey.com/">Ben Ramsey</a></li>
+            <li><a href="http://derickrethans.nl/">Derick Rethans</a></li>
+            <li><a href="http://ralphschindler.com/">Ralph Schindler</a></li>
+            <li><a href="http://www.zimuel.it/blog/">Enrico Zimuel</a></li>
+        </ul>
+    </div>
+
+</aside>
+</div>
+    </div>
+
+    <footer class="sixteen columns footer">
+        <div class="column one-third alpha about">
+            <h4>About</h4>
+            <p>
+    I'm a husband, father of two, slave to an ancient Basset Hound and 
+    plaything of a Basset puppy, and web architect by day.
+</p>
+
+<ul class="resume">
+    <li><a href="/resume">Resume</a></li>
+    <li><a href="http://twitter.com/weierophinney">Twitter</a></li>
+    <li><a href="http://www.linkedin.com/in/mweierophinney">LinkedIn</a></li>
+    <li><a href="http://www.ohloh.net/accounts/weierophinney">OhLoh</a></li>
+    <li><a href="http://resume.github.com/?weierophinney">GitHub</a></li>
+</ul>
+
+        </div>
+
+        <div class="column one-third projects">
+            <h4>Projects</h4>
+            <ul class="projects">
+    <li><a href="http://framework.zend.com/">Zend Framework (Project Lead)</a></li>
+    <li><a href="http://github.com/weierophinney/phly_mustache">Phly_Mustache</a></li>
+    <li><a href="http://www.the-pastry-box-project.net/baker/matthew-weier-ophinney/">The Pastry Box Project</a> (as a Baker)</li>
+</ul>
+
+        </div>
+
+        <div class="column one-third omega tags">
+        <div id="search" style="width:100%;">Loading...</div>
+<h4>Tag Cloud</h4>
+<div class="cloud">
+<ul class="Zend\Tag\Cloud"><li><a href="/blog/tag/php.html" style="font-size: 20px;">php</a></li> <li><a href="/blog/tag/zend+framework.html" style="font-size: 14px;">zend framework</a></li> <li><a href="/blog/tag/zf2.html" style="font-size: 11px;">zf2</a></li> <li><a href="/blog/tag/vim.html" style="font-size: 11px;">vim</a></li> <li><a href="/blog/tag/family.html" style="font-size: 11px;">family</a></li> <li><a href="/blog/tag/programming.html" style="font-size: 12px;">programming</a></li> <li><a href="/blog/tag/personal.html" style="font-size: 13px;">personal</a></li> <li><a href="/blog/tag/phpconcom.html" style="font-size: 10px;">phpconcom</a></li> <li><a href="/blog/tag/mvc.html" style="font-size: 11px;">mvc</a></li> <li><a href="/blog/tag/oop.html" style="font-size: 11px;">oop</a></li> <li><a href="/blog/tag/testing.html" style="font-size: 10px;">testing</a></li> <li><a href="/blog/tag/rest.html" style="font-size: 11px;">rest</a></li> <li><a href="/blog/tag/linux.html" style="font-size: 12px;">linux</a></li> <li><a href="/blog/tag/zendcon08.html" style="font-size: 11px;">zendcon08</a></li> <li><a href="/blog/tag/file_fortune.html" style="font-size: 10px;">file_fortune</a></li> <li><a href="/blog/tag/pear.html" style="font-size: 11px;">pear</a></li> <li><a href="/blog/tag/zendcon.html" style="font-size: 11px;">zendcon</a></li> <li><a href="/blog/tag/perl.html" style="font-size: 12px;">perl</a></li> <li><a href="/blog/tag/fastcgi.html" style="font-size: 10px;">fastcgi</a></li> <li><a href="/blog/tag/ubuntu.html" style="font-size: 11px;">ubuntu</a></li> <li><a href="/blog/tag/tekx.html" style="font-size: 10px;">tekx</a></li> <li><a href="/blog/tag/zendcon10.html" style="font-size: 10px;">zendcon10</a></li> <li><a href="/blog/tag/dojo.html" style="font-size: 11px;">dojo</a></li> <li><a href="/blog/tag/symfony.html" style="font-size: 11px;">symfony</a></li> <li><a href="/blog/tag/zeta+components.html" style="font-size: 10px;">zeta components</a></li> <li><a href="/blog/tag/tek09.html" style="font-size: 10px;">tek09</a></li> <li><a href="/blog/tag/spl.html" style="font-size: 11px;">spl</a></li> <li><a href="/blog/tag/subversion.html" style="font-size: 11px;">subversion</a></li> <li><a href="/blog/tag/zend+framewor.html" style="font-size: 10px;">zend framewor</a></li> <li><a href="/blog/tag/rails.html" style="font-size: 10px;">rails</a></li> <li><a href="/blog/tag/conferences.html" style="font-size: 11px;">conferences</a></li> <li><a href="/blog/tag/dpc08.html" style="font-size: 11px;">dpc08</a></li> <li><a href="/blog/tag/phpworks08.html" style="font-size: 11px;">phpworks08</a></li> <li><a href="/blog/tag/webinar.html" style="font-size: 11px;">webinar</a></li> <li><a href="/blog/tag/zencon08.html" style="font-size: 10px;">zencon08</a></li> <li><a href="/blog/tag/advocacy.html" style="font-size: 10px;">advocacy</a></li> <li><a href="/blog/tag/politics.html" style="font-size: 10px;">politics</a></li> <li><a href="/blog/tag/internet.html" style="font-size: 10px;">internet</a></li> <li><a href="/blog/tag/cw09.html" style="font-size: 11px;">cw09</a></li> <li><a href="/blog/tag/zend+server.html" style="font-size: 10px;">zend server</a></li> <li><a href="/blog/tag/dpc09.html" style="font-size: 10px;">dpc09</a></li> <li><a href="/blog/tag/sflive2010.html" style="font-size: 10px;">sflive2010</a></li> <li><a href="/blog/tag/security.html" style="font-size: 10px;">security</a></li> <li><a href="/blog/tag/wifi.html" style="font-size: 10px;">wifi</a></li> <li><a href="/blog/tag/aikido.html" style="font-size: 10px;">aikido</a></li> <li><a href="/blog/tag/books.html" style="font-size: 10px;">books</a></li> <li><a href="/blog/tag/dpc10.html" style="font-size: 10px;">dpc10</a></li> <li><a href="/blog/tag/zendcon09.html" style="font-size: 11px;">zendcon09</a></li> <li><a href="/blog/tag/git.html" style="font-size: 10px;">git</a></li> <li><a href="/blog/tag/phpwomen.html" style="font-size: 10px;">phpwomen</a></li> <li><a href="/blog/tag/virtualbox.html" style="font-size: 10px;">virtualbox</a></li></ul></div>
+        </div>
+    </footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,460 @@
+<!DOCTYPE html><!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8" />
+    <title>phpt Tutorial :: phly, boy, phly</title>
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <link href="/css/SkeletonCss/base.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/SkeletonCss/skeleton.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/SkeletonCss/layout.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/Application/site.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/images/Application/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" >
+<link href="/css/PhlyBlog/phly-blog.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/blog-atom.xml" rel="alternate" type="application/atom+xml" title="phly, boy, phly Atom Feed" >
+<link href="/blog-rss.xml" rel="alternate" type="application/rss+xml" title="phly, boy, phly RSS Feed" >
+    
+<script type="text/javascript">
+//<!--
+    var djConfig = {"isDebug":true,"parseOnLoad":true,"baseUrl":"\/js\/dojo\/","modulePaths":{"PhlyBlog":"\/js\/PhlyBlog","Application":"\/js\/Application"}};
+//-->
+</script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojo/dojo.xd.js"></script>
+
+<script type="text/javascript">
+//<!--
+dojo.require("PhlyBlog.blog");
+    dojo.require("Application.scroll");
+//-->
+
+</script>
+    
+    <script src="https://www.google.com/jsapi?ABQIAAAAGybdRRvLZwVUcF0dE3oVdBTO-MlgA7VGJpGqyqTOeDXlNzyZQxTGq17s-iAB0m0vwqLQ_A2dHhTg2Q"></script>
+<script type="text/javascript">
+    google.load('search', '1', {style: google.loader.themes.ESPRESSO});
+    google.setOnLoadCallback(function(){
+        new google.search.CustomSearchControl().draw('search');
+    }, true);
+</script>
+
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-27037983-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</head>
+<body>
+<div class="container">
+    <header class="sixteen columns">
+    <a href="/"><img src="/images/Application/logo.gif" height="37" width="37"/></a>
+        <span class="main_title">phly, boy, phly: matthew weier o'phinney</span>
+    </header>
+
+    <div class="sixteen columns" id="menu">
+        <nav>
+            <li><a href="/">Home</a></li>
+            <li><a href="/blog.html">Blog</a></li>
+                        <li><a href="/resume">R&eacute;sum&eacute;</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </nav>
+    </div>
+
+    <div class="sixteen columns content">
+        <div class="row">
+<article class="eleven columns alpha blog">
+<h2>phpt Tutorial</h2>
+<p>
+    As promised in my earlier entry from today, here's my quick-and-dirty
+    tutorial on unit testing in PHP using phpt.
+</p>
+<p>
+    First off, phpt test files, from what I can see, were created as part of the
+    <a href="http://qa.php.net/">PHP-QA</a> effort. While I cannot find a link
+    within the PHP-QA site, they <a href="http://qa.php.net/write-test.php">have
+        a page detailing phpt test files</a>, and this page shows all the
+    sections of a phpt test file, though they do not necessarily show examples
+    of each.
+</p>
+<p>
+    Also, you might find <a
+        href="http://www.phpmag.net/itr/kolumnen/psecom,id,26,nodeid,207.html">this
+        International PHP Magazine article</a> informative; in it <a
+        href="http://www.wormus.com/aaron">Aaron Wormus</a> gives a brief
+    tutorial on them, as well as some ways to use phpt tests with PHPUnit.
+</p>
+<p>
+    Finally, before I jump in, I want to note: I am not an expert on unit
+    testing. However, the idea behind unit tests is straightforward: keep your
+    code simple and modular, and test each little bit (or module) for all types
+    of input and output. If the code you're testing is a function or class
+    method, test all permutations of arguments that could be passed to it, and
+    all possible return values.
+</p>
+<p>
+    Okay, let's jump in!
+</p><h3>Overview</h3>
+<p>
+    The basic format of a phpt test file looks like this:
+</p>
+<pre>
+--TEST--
+test name
+--FILE--
+&lt;?php
+// your PHP code goes here
+?&gt;
+--EXPECT--
+Expected output from the PHP code
+</pre>
+<p>
+    As you can see, the file is broken into several sections, each beginning
+    with a --TITLE--. --TEST-- is the name of the test; this could be a function
+    name, a class name, a class method name, or some free text. Try and make it
+    meaningful. --FILE-- is the PHP code that will be executed, and --EXPECT--
+    is the expected output from this PHP code. <b>The test passes if the output
+    from the PHP code matches what's expected.</b>
+</p>
+<p>
+    There are some other sections you can use as well; I've used the --SKIPIF--
+    section type to test for which version of PHP is present (Cgiapp2 is
+    PHP5-only, for instance); if the condition is met, then the test is skipped.
+    You may also specify --EXPECTF-- or --EXPECTREGEX-- instead of --EXPECT--,
+    but I found that in most cases, I could control the output from my code such
+    that neither of those was necessary.
+</p>
+<h3>Tips for Writing Tests</h3>
+<p>
+    First off, my sole experience with phpt tests is testing Cgiapp and Cgiapp2,
+    which are classes; these tips may not make sense in other situations.
+</p>
+<p>
+    Second, <b>tips are highlighted in bold</b>.
+</p>
+<p>
+    What I found is that you should <b>create one test file per method</b>.
+    (Generally speaking, that is; I have encountered a few situations where I
+    needed multiple files, primarily when testing code that uses header().) In
+    that test file, you then want to test:
+</p>
+<ul>
+     <li>Method Arguments</li>
+     <li>Method return value(s)</li>
+</ul>
+<p>
+    This means that you'll need to write code for a number of situations. After
+    writing a few tests, I discovered that it becomes hard to debug if you do
+    not include informational output in your test code. <b>Create informational
+    output about what's being tested:</b>
+</p>
+<pre>
+&lt;?php
+echo "Test 1: single string argument\n";
+?&gt;
+</pre>
+<p>
+    These statements are invaluable when a test fails; you can then see what you
+    were testing at a glance.
+</p>
+<p>
+    If you're using trigger_error() or PEAR_Error in your code (you are, aren't
+    you?), <b>include an error handler in your test code</b> so you can trap
+    these and convert them to messages you can format and control.
+</p>
+<p>
+    Supposedly, the --GET-- and --POST-- sections allow you to specify the
+    variables present in those arrays for the purpose of your tests. However,
+    this only works on CGI versions of PHP... and, if you're like me, you're
+    using the CLI SAPI. The easy workaround is to simply <b>build your $_GET and
+    $_POST arrays in the --FILE-- section</b>.
+</p>
+<p>
+    The same is true for $_SESSION. However, the $_SESSION array <em>will</em>
+    be present if you specify session_start(); it will simply be empty.
+</p>
+<p>
+    If you need to include a file, include it relative to the test directory. To
+    determine what that directory is (don't assume it's '.'), <b>use the
+    construct dirname(__FILE__)</b>:
+</p>
+<pre>
+require_once dirname(__FILE__) . '/setup.php.inc';
+</pre>
+
+<h3>Running Tests</h3>
+<p>
+    Once you have a test file, simply execute <b>pear run-tests
+    testFile.phpt</b> (substituting your test file's name, of course). If you
+    wish to run several tests at once from several files, you may include each
+    file's name as an argument. If you want to run all tests in a directory,
+    simply execute <b>pear run-tests</b> without any arguments.
+</p>
+<p>
+    When tests are run, you will see information on the screen. If a test fails,
+    the name of the test file and the test name are given.
+</p>
+
+<h3>Debugging a Failed Test</h3>
+<p>
+    Eventually, a test will fail. It may be that you wrote it incorrectly, or
+    that you actually have a bug in your code. The question is, how do phpt
+    tests help you figure out which?
+</p>
+<p>
+    When tests are run on a file, the file is split on its sections. The
+    --FILE-- section is actually written to a file named after the test file,
+    but with the .php extension. The --EXPECT-- section is written to a file
+    with the .exp section; output is piped to a file with the .out section; and
+    a log of what transpires is written to a file with the .log extension.
+    Finally, if the test fails, a .diff file is created containing the diff
+    between the .exp and .out files. For example, if we have a test file named
+    <b>testFile.phpt</b>, and it fails tests, we'll now have the following
+    files:
+</p>
+<pre>
+run-tests.log
+testFile.diff
+testFile.exp
+testFile.log
+testFile.out
+testFile.php
+testFile.phpt
+</pre>
+<p>
+    Your first stop should be the .diff file. At a glance, you will be able to
+    see, for instance, if a PHP error occurred. I discovered in several of my
+    tests that I'd missed semicolons or braces in my test code when I saw syntax
+    error warnings pop up in these diffs.
+</p>
+<p>
+    If the .diff doesn't explain the differences enough for you, pop open your
+    .exp and .out files. I use <a href="http://www.vim.org/">VIM</a>, and I
+    typically execute a <b>:vsplit</b> so I can load these files up side by side
+    and compare them. In doing so, I can visually see where the output starts to
+    differ from the expected. (Several times I discovered typos in my expected,
+    which meant the tests ran fine after I fixed the typo.) 
+</p>
+<p>
+    Remember how I said earlier to <b>create informational output about what's
+    being tested</b>?  This is where it comes into play. What I found is that
+    output that reads like:
+</p>
+<pre>
+.
+.
+Bad argument passed
+something
+</pre>
+<p>
+    is simply harder to understand than:
+</p>
+<pre>
+Test 1: current directory as argument
+.
+Test 2: no argument passed
+.
+Test 3: object as argument
+Bad argument passed
+Test 4: 'something' as argument
+something
+</pre>
+<p>
+    In the above example, if what was expected for test 2 was something else, I
+    now know exactly which test in my test file failed -- and that helps me
+    determine where I might need to go to fix it in my code.
+</p>
+
+<h3>Summary</h3>
+<h4>Tips for Writing Tests</h4>
+<ul>
+    <li>Create one test file per method</li>
+    <li>Create informational output about what's being tested</li>
+    <li>Include an error handler in your test code, if errors are being
+        triggered</li>
+    <li>Build your $_GET and $_POST arrays in the --FILE-- section; it's
+        more portable than --GET-- and --POST--</li>
+    <li>use the construct <b>dirname(__FILE__)</b></li>
+</ul>
+<h4>Running Tests</h4>
+<ul>
+    <li>pear run-tests testFile.phpt</li>
+    <li>pear run-tests testFile1.phpt testFile2.phpt</li>
+    <li>pear run-tests</li>
+</ul>
+<h4>Debugging a Failed Test</h4>
+<ul>
+    <li>Examine the .diff file; look for PHP errors in your test code</li>
+    <li>Compare the .exp and .out files side-by-side:
+        <ul>
+            <li>Check for typos in your expected output</li>
+            <li>Check informational output to determine which part of the test
+            failed</li>
+        </ul>
+    </li>
+</ul>
+
+<h2>Where to go from here</h2>
+<p>
+    Obviously, the only way to fully understand testing is to do it. There are
+    plenty of resources on unit testing available; the <a
+    href="http://www.c2.com/cgi/wiki">c2 wiki</a> has some good resources, and
+    many books cover the subject (<em>The Pragmatic Programmer</em> comes to
+    mind).
+</p>
+<p>
+    I've read arguments that you should test first the interface. This means
+    that you don't throw unexpected arguments at a function/method. Later, after
+    the code matures, you either add tests for the unexpected arguments, or you
+    add tests for bugs that have been reported. The PHP-QA site recommends
+    having a test file for the method, but then also having test files that
+    address specific bugs; I have yet to go that far with testing.
+</p>
+<p>
+    Finally, I have read in a number of resources that true Unit Testing should
+    start <em>before</em> you start programming. While I understand this
+    principle to a degree, I also find that as I code, I discover intricacies in
+    the problem that I could not have anticipated earlier... and the solutions
+    to those intricacies are often new methods. To that end, I feel that writing
+    tests should happen after the first draft of code. Doing so provides the
+    first interface with the code, and also helps code cleanup and bug hunting
+    before application testing begins. However, this is my humble opinion only.
+</p>
+<p>
+    Happy testing!
+</p><div class="social-media">
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="weierophinney">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</div>
+
+<div class="social-media">
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<div class="fb-like" data-send="true" data-width="450" data-show-faces="true"></div>
+</div>
+
+<div class="social-media">
+<div class="g-plusone" data-size="medium" data-annotation="inline"></div>
+</div>
+
+<!-- Place this render call where appropriate -->
+<script type="text/javascript">
+dojo.ready(function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+});
+</script>
+
+<div class="social-media">
+<a href="http://www.reddit.com/submit" onclick="window.location = 'http://www.reddit.com/submit?url=' + encodeURIComponent(window.location); return false"> <img src="http://www.reddit.com/static/spreddit1.gif" alt="submit to reddit" border="0" /> </a>
+</div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_developer = 1;
+        var disqus_shortname = 'phlyboyphly';
+        var disqus_identifier = '65-phpt-Tutorial';
+        var disqus_url = 'http://mwop.net/blog/65-phpt-Tutorial.html';
+        var disqus_title = 'phpt Tutorial';
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a></article>
+
+<aside class="four columns offset-by-one omega sidebar blog">
+    <div class="metadata">
+        <ul>
+            <li>Posted on <b>2005-04-20 21:41:12</b>.</li>
+            <li>Last updated on <b>2005-04-20 22:53:58</b>.</li>
+        </ul>
+    </div>
+
+    <div class="metadata">
+        <h4>Tags for this entry</h4>
+        <p class="tags"><a href="/blog/tag/php.html">php</a></p>
+    </div>
+
+        <div class="metadata">
+        <h4>Blogroll</h4>
+        <ul>
+            <li><a href="http://sebastian-bergmann.de/">Sebastian Bergmann</a></li>
+            <li><a href="http://blog.calevans.com/">Cal Evans</a></li>
+            <li><a href="http://prematureoptimization.org/blog/">Shahar Evron</a></li>
+            <li><a href="http://paul-m-jones.com/blog/">Paul M. Jones</a></li>
+            <li><a href="http://karwin.blogspot.com/">Bill Karwin</a></li>
+            <li><a href="http://mikenaberezny.com/">Mike Naberezny</a></li>
+            <li><a href="http://fabien.potencier.org/">Fabien Potencier</a></li>
+            <li><a href="http://benramsey.com/">Ben Ramsey</a></li>
+            <li><a href="http://derickrethans.nl/">Derick Rethans</a></li>
+            <li><a href="http://ralphschindler.com/">Ralph Schindler</a></li>
+            <li><a href="http://www.zimuel.it/blog/">Enrico Zimuel</a></li>
+        </ul>
+    </div>
+
+</aside>
+
+    </div>
+
+    <footer class="sixteen columns footer">
+        <div class="column one-third alpha about">
+            <h4>About</h4>
+            <p>
+    I'm a husband, father of two, slave to an ancient Basset Hound and 
+    plaything of a Basset puppy, and web architect by day.
+</p>
+
+<ul class="resume">
+    <li><a href="/resume">Resume</a></li>
+    <li><a href="http://twitter.com/weierophinney">Twitter</a></li>
+    <li><a href="http://www.linkedin.com/in/mweierophinney">LinkedIn</a></li>
+    <li><a href="http://www.ohloh.net/accounts/weierophinney">OhLoh</a></li>
+    <li><a href="http://resume.github.com/?weierophinney">GitHub</a></li>
+</ul>
+
+        </div>
+
+        <div class="column one-third projects">
+            <h4>Projects</h4>
+            <ul class="projects">
+    <li><a href="http://framework.zend.com/">Zend Framework (Project Lead)</a></li>
+    <li><a href="http://github.com/weierophinney/phly_mustache">Phly_Mustache</a></li>
+    <li><a href="http://www.the-pastry-box-project.net/baker/matthew-weier-ophinney/">The Pastry Box Project</a> (as a Baker)</li>
+</ul>
+
+        </div>
+
+        <div class="column one-third omega tags">
+        <div id="search" style="width:100%;">Loading...</div>
+<h4>Tag Cloud</h4>
+<div class="cloud">
+<ul class="Zend\Tag\Cloud"><li><a href="/blog/tag/php.html" style="font-size: 20px;">php</a></li> <li><a href="/blog/tag/zend+framework.html" style="font-size: 14px;">zend framework</a></li> <li><a href="/blog/tag/zf2.html" style="font-size: 11px;">zf2</a></li> <li><a href="/blog/tag/vim.html" style="font-size: 11px;">vim</a></li> <li><a href="/blog/tag/family.html" style="font-size: 11px;">family</a></li> <li><a href="/blog/tag/programming.html" style="font-size: 12px;">programming</a></li> <li><a href="/blog/tag/personal.html" style="font-size: 13px;">personal</a></li> <li><a href="/blog/tag/phpconcom.html" style="font-size: 10px;">phpconcom</a></li> <li><a href="/blog/tag/mvc.html" style="font-size: 11px;">mvc</a></li> <li><a href="/blog/tag/oop.html" style="font-size: 11px;">oop</a></li> <li><a href="/blog/tag/testing.html" style="font-size: 10px;">testing</a></li> <li><a href="/blog/tag/rest.html" style="font-size: 11px;">rest</a></li> <li><a href="/blog/tag/linux.html" style="font-size: 12px;">linux</a></li> <li><a href="/blog/tag/zendcon08.html" style="font-size: 11px;">zendcon08</a></li> <li><a href="/blog/tag/file_fortune.html" style="font-size: 10px;">file_fortune</a></li> <li><a href="/blog/tag/pear.html" style="font-size: 11px;">pear</a></li> <li><a href="/blog/tag/zendcon.html" style="font-size: 11px;">zendcon</a></li> <li><a href="/blog/tag/perl.html" style="font-size: 12px;">perl</a></li> <li><a href="/blog/tag/fastcgi.html" style="font-size: 10px;">fastcgi</a></li> <li><a href="/blog/tag/ubuntu.html" style="font-size: 11px;">ubuntu</a></li> <li><a href="/blog/tag/tekx.html" style="font-size: 10px;">tekx</a></li> <li><a href="/blog/tag/zendcon10.html" style="font-size: 10px;">zendcon10</a></li> <li><a href="/blog/tag/dojo.html" style="font-size: 11px;">dojo</a></li> <li><a href="/blog/tag/symfony.html" style="font-size: 11px;">symfony</a></li> <li><a href="/blog/tag/zeta+components.html" style="font-size: 10px;">zeta components</a></li> <li><a href="/blog/tag/tek09.html" style="font-size: 10px;">tek09</a></li> <li><a href="/blog/tag/spl.html" style="font-size: 11px;">spl</a></li> <li><a href="/blog/tag/subversion.html" style="font-size: 11px;">subversion</a></li> <li><a href="/blog/tag/zend+framewor.html" style="font-size: 10px;">zend framewor</a></li> <li><a href="/blog/tag/rails.html" style="font-size: 10px;">rails</a></li> <li><a href="/blog/tag/conferences.html" style="font-size: 11px;">conferences</a></li> <li><a href="/blog/tag/dpc08.html" style="font-size: 11px;">dpc08</a></li> <li><a href="/blog/tag/phpworks08.html" style="font-size: 11px;">phpworks08</a></li> <li><a href="/blog/tag/webinar.html" style="font-size: 11px;">webinar</a></li> <li><a href="/blog/tag/zencon08.html" style="font-size: 10px;">zencon08</a></li> <li><a href="/blog/tag/advocacy.html" style="font-size: 10px;">advocacy</a></li> <li><a href="/blog/tag/politics.html" style="font-size: 10px;">politics</a></li> <li><a href="/blog/tag/internet.html" style="font-size: 10px;">internet</a></li> <li><a href="/blog/tag/cw09.html" style="font-size: 11px;">cw09</a></li> <li><a href="/blog/tag/zend+server.html" style="font-size: 10px;">zend server</a></li> <li><a href="/blog/tag/dpc09.html" style="font-size: 10px;">dpc09</a></li> <li><a href="/blog/tag/sflive2010.html" style="font-size: 10px;">sflive2010</a></li> <li><a href="/blog/tag/security.html" style="font-size: 10px;">security</a></li> <li><a href="/blog/tag/wifi.html" style="font-size: 10px;">wifi</a></li> <li><a href="/blog/tag/aikido.html" style="font-size: 10px;">aikido</a></li> <li><a href="/blog/tag/books.html" style="font-size: 10px;">books</a></li> <li><a href="/blog/tag/dpc10.html" style="font-size: 10px;">dpc10</a></li> <li><a href="/blog/tag/zendcon09.html" style="font-size: 11px;">zendcon09</a></li> <li><a href="/blog/tag/git.html" style="font-size: 10px;">git</a></li> <li><a href="/blog/tag/phpwomen.html" style="font-size: 10px;">phpwomen</a></li> <li><a href="/blog/tag/virtualbox.html" style="font-size: 10px;">virtualbox</a></li></ul></div>
+        </div>
+    </footer>
+</div>
+</body>
+</html>

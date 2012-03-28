@@ -1,0 +1,319 @@
+<!DOCTYPE html><!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8" />
+    <title>MVC changes in Zend Framework :: phly, boy, phly</title>
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <link href="/css/SkeletonCss/base.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/SkeletonCss/skeleton.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/SkeletonCss/layout.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/Application/site.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/images/Application/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" >
+<link href="/css/PhlyBlog/phly-blog.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/blog-atom.xml" rel="alternate" type="application/atom+xml" title="phly, boy, phly Atom Feed" >
+<link href="/blog-rss.xml" rel="alternate" type="application/rss+xml" title="phly, boy, phly RSS Feed" >
+    
+<script type="text/javascript">
+//<!--
+    var djConfig = {"isDebug":true,"parseOnLoad":true,"baseUrl":"\/js\/dojo\/","modulePaths":{"PhlyBlog":"\/js\/PhlyBlog","Application":"\/js\/Application"}};
+//-->
+</script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojo/dojo.xd.js"></script>
+
+<script type="text/javascript">
+//<!--
+dojo.require("PhlyBlog.blog");
+    dojo.require("Application.scroll");
+//-->
+
+</script>
+    
+    <script src="https://www.google.com/jsapi?ABQIAAAAGybdRRvLZwVUcF0dE3oVdBTO-MlgA7VGJpGqyqTOeDXlNzyZQxTGq17s-iAB0m0vwqLQ_A2dHhTg2Q"></script>
+<script type="text/javascript">
+    google.load('search', '1', {style: google.loader.themes.ESPRESSO});
+    google.setOnLoadCallback(function(){
+        new google.search.CustomSearchControl().draw('search');
+    }, true);
+</script>
+
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-27037983-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</head>
+<body>
+<div class="container">
+    <header class="sixteen columns">
+    <a href="/"><img src="/images/Application/logo.gif" height="37" width="37"/></a>
+        <span class="main_title">phly, boy, phly: matthew weier o'phinney</span>
+    </header>
+
+    <div class="sixteen columns" id="menu">
+        <nav>
+            <li><a href="/">Home</a></li>
+            <li><a href="/blog.html">Blog</a></li>
+                        <li><a href="/resume">R&eacute;sum&eacute;</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </nav>
+    </div>
+
+    <div class="sixteen columns content">
+        <div class="row">
+<article class="eleven columns alpha blog">
+<h2>MVC changes in Zend Framework</h2>
+<p>
+    Several months ago, <a href="http://andigutmans.blogspot.com/">Andi</a>
+    asked me to take the role of lead developer on a refactoring of the 
+    <a href="http://framework.zend.com/">Zend Framework</a> MVC components. I
+    agreed, though somewhat reluctantly; I already maintain 
+    <a href="http://cgiapp.sourceforge.net/">another MVC library</a>, and wasn't
+    sure how well I could fill the shoes of people like my friends 
+    <a href="http://mikenaberezny.com">Mike</a>, who had done the initial
+    development on the controller classes, and 
+    <a href="http://paul-m-jones.com/blog/">Paul</a>, who provided Zend_View.
+</p>
+<p>
+    The experience has been incredibly rewarding, however, and I've had the
+    chance to pick the brains of and work with some top-notch developers in the
+    process. In the next week or so, we'll be releasing version 0.6.0 of the
+    framework, and it will include much of my work in the MVC components as part
+    of the core distribution. A big thanks to all those who have contributed
+    opinions, design help, code, tests, and documentation; another thank you
+    goes to Andi for trusting and supporting me in this endeavor.
+</p>
+<p>
+    So, what are the changes? Read on to find out...
+</p><p>
+    Most of the changes lie under the hood at this point; the most basic usage
+    of the MVC components remains the same. The changes introduced mainly
+    promote greater flexibility and testing. In fact, the most significant
+    changes, the introduction of request and response objects, are transparent
+    to most users, but are the very changes that make unit testing of the MVC
+    components both possible and easy.
+</p>
+<p>
+    So, as you may have guessed, the controller classes are now unit tested;
+    coverage isn't perfect, but it's reasonable (currently around 68% code
+    coverage), and an improvement over the basically zero coverage from before
+    (only Martel's RewriteRouter had tests before I started). What this means to
+    developers is that from this point forward, any changes to the controller
+    classes will need to pass regression tests... and those tests actually
+    exist. It also means that it is now possible to unit test applications
+    without needing a web server; this is going to be a big step for MVC
+    applications based on the framework.
+</p>
+<p>
+    By introducing the request and response objects, we now no longer need to
+    rely on a web environment in order to make requests; having a response
+    object makes it trivial to capture output from the various action
+    controllers and then test against expected results. This is a huge change.
+</p>
+<p>
+    Additionally, by de-coupling the controllers from the request environment,
+    it becomes possible to use the MVC components in non-web environments. Think
+    CLI and PHP-GTK.
+</p>
+<p>
+    Another change is that a router is no longer needed. This allows developers
+    to use the MVC components in non-web environments, where routing may not
+    actually be necessary, as well as to use the MVC components in web
+    environments where pretty URLs are difficult to configure. IIS, for
+    instance, doesn't have a mod_rewrite equivalent out-of-the-box, so being
+    able to specify a url such as
+    <kbd>http://localhost/index.php?controller=index&amp;action=view</kbd> and
+    have it dispatch properly is a nice feature.
+</p>
+<p>
+    A feature that many were requesting was the ability to push parameters into
+    the front controller, and have those push through to each of the router,
+    dispatcher, and action controllers. Such an ability would obviate the need
+    for a registry, and also allow the entire controller chain to share an
+    environment. I made use of this today when a request came in for the ability
+    to specify an optional module parameter in the request URI; instead of
+    breaking backwards compatability or creating new routers and dispatchers, I
+    was able instead to simply push a 'useModules' setting through the chain,
+    and if discovered, act on it. (This new feature allows urls such as
+    <kbd>http://localhost/module/controller/action</kbd> to dispatch to
+    Module_Controller::actionAction(); think controller classes in
+    subdirectories.)
+</p>
+<p>
+    One feature that I think a lot of people don't understand is the Response
+    object. It is a container for the entire response generated by a request,
+    whether that's from a single or multiple actions. As such, it also
+    aggregates exceptions from the process. It's final purpose is to return that
+    response to the client, and this is done by simply echo()ing it; its
+    __toString() method should take care of any final rendering to perform.
+</p>
+<p>
+    The basic response object provided with the new system does very little. It
+    allows for the setting and aggregation of content through its setBody() and
+    appendBody() methods, as well as setting headers via setHeader(). If
+    exceptions occur, they are registered via setException(). The suggestion
+    made in the documentation is to use appendBody() to aggregate content, and
+    then have __toString() return the aggregated content en masse by echoing the
+    response at the end of the dispatch loop: echo $front->dispatch().
+</p>
+<p>
+    While this is nice, there are some much more interesting things you can do
+    with it. In a recent project I did, I integrated Zend_View and Zend_Json in
+    the response object, and added accessors in my action controllers to push
+    content to the response object. Then, based on the request, I could switch
+    between returning JSON strings or XHTML content. If an exception occurred, I
+    could redirect to an error page, or, in the case of an AJAX request, return
+    an error encapsulated in a JSON string.  This type of context switching is
+    very powerful, and I'll blog more about how it can be achieved later.
+</p>
+<p>
+    If you already use the framework MVC but haven't tried the new code, I
+    encourage you to <a href="http://framework.zend.com/download/snapshot">download a snapshot</a> 
+    or grab it from <a href="http://framework.zend.com/wiki/x/IgE">subversion</a>
+    and give it a spin; there's 
+    <a href="http://framework.zend.com/wiki/display/ZFDOCDEV/Migrating+from+Previous+Versions">a document covering migration</a>,
+    and any feedback or additions on this would be greatly appreciated (this
+    document in the framework wiki is currently out-of-date; check the docbook
+    in the framework distribution you download for more current information).
+</p>
+<p>
+    If you haven't tried the framework MVC, and are interested in MVC libraries,
+    give it a whirl and let me know what you think!
+</p><div class="social-media">
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="weierophinney">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</div>
+
+<div class="social-media">
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<div class="fb-like" data-send="true" data-width="450" data-show-faces="true"></div>
+</div>
+
+<div class="social-media">
+<div class="g-plusone" data-size="medium" data-annotation="inline"></div>
+</div>
+
+<!-- Place this render call where appropriate -->
+<script type="text/javascript">
+dojo.ready(function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+});
+</script>
+
+<div class="social-media">
+<a href="http://www.reddit.com/submit" onclick="window.location = 'http://www.reddit.com/submit?url=' + encodeURIComponent(window.location); return false"> <img src="http://www.reddit.com/static/spreddit1.gif" alt="submit to reddit" border="0" /> </a>
+</div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_developer = 1;
+        var disqus_shortname = 'phlyboyphly';
+        var disqus_identifier = '129-MVC-changes-in-Zend-Framework';
+        var disqus_url = 'http://mwop.net/blog/129-MVC-changes-in-Zend-Framework.html';
+        var disqus_title = 'MVC changes in Zend Framework';
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a></article>
+
+<aside class="four columns offset-by-one omega sidebar blog">
+    <div class="metadata">
+        <ul>
+            <li>Posted on <b>2006-12-07 23:41:00</b>.</li>
+            <li>Last updated on <b>2006-12-08 14:06:22</b>.</li>
+        </ul>
+    </div>
+
+    <div class="metadata">
+        <h4>Tags for this entry</h4>
+        <p class="tags"><a href="/blog/tag/php.html">php</a></p>
+    </div>
+
+        <div class="metadata">
+        <h4>Blogroll</h4>
+        <ul>
+            <li><a href="http://sebastian-bergmann.de/">Sebastian Bergmann</a></li>
+            <li><a href="http://blog.calevans.com/">Cal Evans</a></li>
+            <li><a href="http://prematureoptimization.org/blog/">Shahar Evron</a></li>
+            <li><a href="http://paul-m-jones.com/blog/">Paul M. Jones</a></li>
+            <li><a href="http://karwin.blogspot.com/">Bill Karwin</a></li>
+            <li><a href="http://mikenaberezny.com/">Mike Naberezny</a></li>
+            <li><a href="http://fabien.potencier.org/">Fabien Potencier</a></li>
+            <li><a href="http://benramsey.com/">Ben Ramsey</a></li>
+            <li><a href="http://derickrethans.nl/">Derick Rethans</a></li>
+            <li><a href="http://ralphschindler.com/">Ralph Schindler</a></li>
+            <li><a href="http://www.zimuel.it/blog/">Enrico Zimuel</a></li>
+        </ul>
+    </div>
+
+</aside>
+
+    </div>
+
+    <footer class="sixteen columns footer">
+        <div class="column one-third alpha about">
+            <h4>About</h4>
+            <p>
+    I'm a husband, father of two, slave to an ancient Basset Hound and 
+    plaything of a Basset puppy, and web architect by day.
+</p>
+
+<ul class="resume">
+    <li><a href="/resume">Resume</a></li>
+    <li><a href="http://twitter.com/weierophinney">Twitter</a></li>
+    <li><a href="http://www.linkedin.com/in/mweierophinney">LinkedIn</a></li>
+    <li><a href="http://www.ohloh.net/accounts/weierophinney">OhLoh</a></li>
+    <li><a href="http://resume.github.com/?weierophinney">GitHub</a></li>
+</ul>
+
+        </div>
+
+        <div class="column one-third projects">
+            <h4>Projects</h4>
+            <ul class="projects">
+    <li><a href="http://framework.zend.com/">Zend Framework (Project Lead)</a></li>
+    <li><a href="http://github.com/weierophinney/phly_mustache">Phly_Mustache</a></li>
+    <li><a href="http://www.the-pastry-box-project.net/baker/matthew-weier-ophinney/">The Pastry Box Project</a> (as a Baker)</li>
+</ul>
+
+        </div>
+
+        <div class="column one-third omega tags">
+        <div id="search" style="width:100%;">Loading...</div>
+<h4>Tag Cloud</h4>
+<div class="cloud">
+<ul class="Zend\Tag\Cloud"><li><a href="/blog/tag/php.html" style="font-size: 20px;">php</a></li> <li><a href="/blog/tag/zend+framework.html" style="font-size: 14px;">zend framework</a></li> <li><a href="/blog/tag/zf2.html" style="font-size: 11px;">zf2</a></li> <li><a href="/blog/tag/vim.html" style="font-size: 11px;">vim</a></li> <li><a href="/blog/tag/family.html" style="font-size: 11px;">family</a></li> <li><a href="/blog/tag/programming.html" style="font-size: 12px;">programming</a></li> <li><a href="/blog/tag/personal.html" style="font-size: 13px;">personal</a></li> <li><a href="/blog/tag/phpconcom.html" style="font-size: 10px;">phpconcom</a></li> <li><a href="/blog/tag/mvc.html" style="font-size: 11px;">mvc</a></li> <li><a href="/blog/tag/oop.html" style="font-size: 11px;">oop</a></li> <li><a href="/blog/tag/testing.html" style="font-size: 10px;">testing</a></li> <li><a href="/blog/tag/rest.html" style="font-size: 11px;">rest</a></li> <li><a href="/blog/tag/linux.html" style="font-size: 12px;">linux</a></li> <li><a href="/blog/tag/zendcon08.html" style="font-size: 11px;">zendcon08</a></li> <li><a href="/blog/tag/file_fortune.html" style="font-size: 10px;">file_fortune</a></li> <li><a href="/blog/tag/pear.html" style="font-size: 11px;">pear</a></li> <li><a href="/blog/tag/zendcon.html" style="font-size: 11px;">zendcon</a></li> <li><a href="/blog/tag/perl.html" style="font-size: 12px;">perl</a></li> <li><a href="/blog/tag/fastcgi.html" style="font-size: 10px;">fastcgi</a></li> <li><a href="/blog/tag/ubuntu.html" style="font-size: 11px;">ubuntu</a></li> <li><a href="/blog/tag/tekx.html" style="font-size: 10px;">tekx</a></li> <li><a href="/blog/tag/zendcon10.html" style="font-size: 10px;">zendcon10</a></li> <li><a href="/blog/tag/dojo.html" style="font-size: 11px;">dojo</a></li> <li><a href="/blog/tag/symfony.html" style="font-size: 11px;">symfony</a></li> <li><a href="/blog/tag/zeta+components.html" style="font-size: 10px;">zeta components</a></li> <li><a href="/blog/tag/tek09.html" style="font-size: 10px;">tek09</a></li> <li><a href="/blog/tag/spl.html" style="font-size: 11px;">spl</a></li> <li><a href="/blog/tag/subversion.html" style="font-size: 11px;">subversion</a></li> <li><a href="/blog/tag/zend+framewor.html" style="font-size: 10px;">zend framewor</a></li> <li><a href="/blog/tag/rails.html" style="font-size: 10px;">rails</a></li> <li><a href="/blog/tag/conferences.html" style="font-size: 11px;">conferences</a></li> <li><a href="/blog/tag/dpc08.html" style="font-size: 11px;">dpc08</a></li> <li><a href="/blog/tag/phpworks08.html" style="font-size: 11px;">phpworks08</a></li> <li><a href="/blog/tag/webinar.html" style="font-size: 11px;">webinar</a></li> <li><a href="/blog/tag/zencon08.html" style="font-size: 10px;">zencon08</a></li> <li><a href="/blog/tag/advocacy.html" style="font-size: 10px;">advocacy</a></li> <li><a href="/blog/tag/politics.html" style="font-size: 10px;">politics</a></li> <li><a href="/blog/tag/internet.html" style="font-size: 10px;">internet</a></li> <li><a href="/blog/tag/cw09.html" style="font-size: 11px;">cw09</a></li> <li><a href="/blog/tag/zend+server.html" style="font-size: 10px;">zend server</a></li> <li><a href="/blog/tag/dpc09.html" style="font-size: 10px;">dpc09</a></li> <li><a href="/blog/tag/sflive2010.html" style="font-size: 10px;">sflive2010</a></li> <li><a href="/blog/tag/security.html" style="font-size: 10px;">security</a></li> <li><a href="/blog/tag/wifi.html" style="font-size: 10px;">wifi</a></li> <li><a href="/blog/tag/aikido.html" style="font-size: 10px;">aikido</a></li> <li><a href="/blog/tag/books.html" style="font-size: 10px;">books</a></li> <li><a href="/blog/tag/dpc10.html" style="font-size: 10px;">dpc10</a></li> <li><a href="/blog/tag/zendcon09.html" style="font-size: 11px;">zendcon09</a></li> <li><a href="/blog/tag/git.html" style="font-size: 10px;">git</a></li> <li><a href="/blog/tag/phpwomen.html" style="font-size: 10px;">phpwomen</a></li> <li><a href="/blog/tag/virtualbox.html" style="font-size: 10px;">virtualbox</a></li></ul></div>
+        </div>
+    </footer>
+</div>
+</body>
+</html>

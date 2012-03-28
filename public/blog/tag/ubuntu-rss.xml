@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:slash="http://purl.org/rss/1.0/modules/slash/">
+  <channel>
+    <title>Tag: ubuntu :: phly, boy, phly</title>
+    <description>Tag: ubuntu :: phly, boy, phly</description>
+    <pubDate>Mon, 05 Mar 2012 16:32:45 -0600</pubDate>
+    <generator>Zend_Feed_Writer 2.0.0beta3 (http://framework.zend.com)</generator>
+    <link>http://mwop.net/blog/tag/ubuntu.html</link>
+    <atom:link rel="self" type="application/rss+xml" href="http://mwop.net/blog/tag/ubuntu-rss.xml"/>
+    <item>
+      <title>View Layers, Database Abstraction, Configuration, Oh, My!</title>
+      <pubDate>Mon, 05 Mar 2012 16:32:45 -0600</pubDate>
+      <link>http://mwop.net/blog/zf2-beta3.html</link>
+      <guid>http://mwop.net/blog/zf2-beta3.html</guid>
+      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
+      <dc:creator>Matthew Weier O'Phinney</dc:creator>
+      <content:encoded><![CDATA[<p>
+    Late last week, the Zend Framework community <a href="http://framework.zend.com/zf2/blog/entry/Zend-Framework-2-0-0beta3-Released">2.0.0beta3</a>, 
+    the latest iteration of the v2 framework. What have we been busy doing the 
+    last couple months? In a nutshell, getting dirty with view layers, database
+    abstraction, and configuration.
+</p>]]></content:encoded>
+      <slash:comments>0</slash:comments>
+    </item>
+    <item>
+      <title>ZF2 Modules You Can Use Today</title>
+      <pubDate>Wed, 08 Feb 2012 10:31:47 -0600</pubDate>
+      <link>http://mwop.net/blog/zf2-modules-you-can-use-today.html</link>
+      <guid>http://mwop.net/blog/zf2-modules-you-can-use-today.html</guid>
+      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
+      <dc:creator>Matthew Weier O'Phinney</dc:creator>
+      <content:encoded><![CDATA[<p>
+    One key new architectural feature of Zend Framework 2 is its new module
+    infrastructure. The basic idea behind modules is to allow developers to both
+    create and consume re-usable application functionality -- anything from
+    packaging common assets such as CSS and JavaScript to providing MVC
+    application classes.
+</p>]]></content:encoded>
+      <slash:comments>0</slash:comments>
+    </item>
+    <item>
+      <title>Call A Spade A Spade</title>
+      <pubDate>Wed, 18 Jan 2012 15:48:07 -0600</pubDate>
+      <link>http://mwop.net/blog/call-a-spade-a-spade.html</link>
+      <guid>http://mwop.net/blog/call-a-spade-a-spade.html</guid>
+      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
+      <dc:creator>Matthew Weier O'Phinney</dc:creator>
+      <content:encoded><![CDATA[<p>
+    I don't often get political on my blog, or over social media. But those of 
+    you who <a href="http://twitter.com/weierophinney">follow me on twitter</a> 
+    lately have been treated to a number of tweets and retweets from me about 
+    some bills before the US legislative bodies called "SOPA" and "PIPA". Over
+    the last couple days, I realized exactly why I disagree with them, and 
+    felt 140 characters is not enough.
+</p>]]></content:encoded>
+      <slash:comments>0</slash:comments>
+    </item>
+    <item>
+      <title>Why Conventions Matter</title>
+      <pubDate>Wed, 11 Jan 2012 21:58:28 -0600</pubDate>
+      <link>http://mwop.net/blog/why-conventions-matter.html</link>
+      <guid>http://mwop.net/blog/why-conventions-matter.html</guid>
+      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
+      <dc:creator>Matthew Weier O'Phinney</dc:creator>
+      <content:encoded><![CDATA[<p>
+    When I started teaching myself scripting languages, I started with Perl. One
+    Perl motto is <a href="http://en.wikipedia.org/wiki/TMTOWTDI">"TMTOWTDI"</a>
+    -- "There's More Than One Way To Do It," and pronounced "tim-toady." The
+    idea is that there's likely multiple ways to accomplish the very same thing,
+    and the culture of the language encourages finding novel ways to do things.
+</p>
+
+<p>
+    I've seen this principle used everywhere and in just about every programming
+    situation possible, applied to logical operations, naming conventions,
+    formatting, and even project structure.  Everyone has an opinion on these
+    topics, and given free rein to implement as they see fit, it's rare that two
+    developers will come up with the same conventions.
+</p>
+
+<p>
+    TMTOWTDI is an incredibly freeing and egalitarian principle.
+</p>
+
+<p>
+    Over the years, however, my love for TMTOWTDI has diminished some.  Freeing
+    as it is, is also a driving force behind having coding standards and
+    conventions -- because when everyone does it their own way, projects become
+    quickly hard to maintain. Each person finds themselves reformatting code to
+    their own standards, simply so they can read it and follow its flow.
+</p>
+
+<p>
+    Additionally, TMTOWTDI can actually be a foe of simple, elegant solutions.
+</p>
+
+<p>
+    Why do I claim this?
+</p>]]></content:encoded>
+      <slash:comments>0</slash:comments>
+    </item>
+    <item>
+      <title>On Error Handling and Closures</title>
+      <pubDate>Fri, 16 Dec 2011 10:26:18 -0600</pubDate>
+      <link>http://mwop.net/blog/on-error-handling-and-closures.html</link>
+      <guid>http://mwop.net/blog/on-error-handling-and-closures.html</guid>
+      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
+      <dc:creator>Matthew Weier O'Phinney</dc:creator>
+      <content:encoded><![CDATA[<p>
+    The error suppression operator in PHP ("@") is often seen as a necessary 
+    evil. Many, many low-level function will return a value indicating an error,
+    but also raise an <code>E_NOTICE</code> or <code>E_WARNING</code> -- things
+    you might be able to recover from, or conditions where you may want to raise
+    an exception.
+</p>
+
+<p>
+    So, at times, you find yourself writing code like this:
+</p>
+
+<div class="example"><pre><code lang="php">
+if (false === ($fh = @fopen($filename, 'r'))) {
+    throw new RuntimeException(sprintf(
+        'Could not open file "%s" to read', $filename
+    ));
+}
+</code></pre></div>
+
+<p>
+    Seems straight-forward enough, right? But it's wrong on so many levels.
+</p>]]></content:encoded>
+      <slash:comments>0</slash:comments>
+    </item>
+    <item>
+      <title>Getting started writing ZF2 modules</title>
+      <pubDate>Sat, 12 Nov 2011 12:02:42 -0600</pubDate>
+      <link>http://mwop.net/blog/267-Getting-started-writing-ZF2-modules.html</link>
+      <guid>http://mwop.net/blog/267-Getting-started-writing-ZF2-modules.html</guid>
+      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
+      <dc:creator>Matthew Weier O'Phinney</dc:creator>
+      <content:encoded><![CDATA[<p>
+During <a href="http://zendcon.com/">ZendCon</a> this year, we <a href="http://framework.zend.com/zf2/blog/entry/Zend-Framework-2-0-0beta1-Released">released 2.0.0beta1</a> of <a href="http://framework.zend.com">Zend Framework</a>.
+The key story in the release is the creation of a new MVC layer, and to sweeten
+the story, the addition of a modular application architecture.
+</p>
+
+<p>
+"Modular? What's that mean?" For ZF2, "modular" means that your application is
+built of one or more "modules". In a lexicon agreed upon during our IRC
+meetings, a module is a collection of code and other files that solves a
+specific atomic problem of the application or website. 
+</p>
+
+<p>
+As an example, consider a typical corporate website in a technical arena. You
+might have:
+</p>
+
+<ul>
+<li>
+A home page
+</li>
+<li>
+Product and other marketing pages
+</li>
+<li>
+Some forums
+</li>
+<li>
+A corporate blog
+</li>
+<li>
+A knowledge base/FAQ area
+</li>
+<li>
+Contact forms
+</li>
+</ul>
+
+<p>
+These can be divided into discrete modules:
+</p>
+
+<ul>
+<li>
+A "pages" modules for the home page, product, and marketing pages
+</li>
+<li>
+A "forum" module
+</li>
+<li>
+A "blog" module
+</li>
+<li>
+An "faq" or "kb" module
+</li>
+<li>
+A "contact" module
+</li>
+</ul>
+
+<p>
+Furthermore, if these are developed well and discretely, they can be <em>re-used</em>
+between different applications!
+</p>
+
+<p>
+So, let's dive into ZF2 modules!
+</p>]]></content:encoded>
+      <slash:comments>0</slash:comments>
+    </item>
+    <item>
+      <title>Using the ZF2 EventManager</title>
+      <pubDate>Thu, 06 Oct 2011 14:58:39 -0500</pubDate>
+      <link>http://mwop.net/blog/266-Using-the-ZF2-EventManager.html</link>
+      <guid>http://mwop.net/blog/266-Using-the-ZF2-EventManager.html</guid>
+      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
+      <dc:creator>Matthew Weier O'Phinney</dc:creator>
+      <content:encoded><![CDATA[<p>
+Earlier this year, I <a href="http://weierophinney.net/matthew/archives/251-Aspects,-Filters,-and-Signals,-Oh,-My!.html">wrote about Aspects, Intercepting Filters, Signal Slots, and Events</a>, 
+in order to compare these similar approaches to handling both asychronous
+programming as well as handling cross-cutting application concerns in a cohesive
+way.
+</p>
+
+<p>
+I took the research I did for that article, and applied it to what was then a
+"SignalSlot" implementation within Zend Framework 2, and refactored that work
+into a new "EventManager" component. This article is intended to get you up and
+running with it.
+</p>]]></content:encoded>
+      <slash:comments>0</slash:comments>
+    </item>
+    <item>
+      <title>Using DocBlox</title>
+      <pubDate>Fri, 05 Aug 2011 01:39:58 -0500</pubDate>
+      <link>http://mwop.net/blog/265-Using-DocBlox.html</link>
+      <guid>http://mwop.net/blog/265-Using-DocBlox.html</guid>
+      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
+      <dc:creator>Matthew Weier O'Phinney</dc:creator>
+      <content:encoded><![CDATA[<p>
+Until a few years ago, there were basically two tools you could use to generate
+API documentation in PHP: <a href="http://phpdocumentor.org/">phpDocumentor</a> and
+<a href="http://www.stack.nl/~dimitri/doxygen/">Doxygen</a>. phpDocumentor was long
+considered the standard, with Doxygen getting notice when more advanced features
+such as inheritance diagrams are required. However, phpDocumentor is practically
+unsupported at this time (though a small group of developers is working on a new
+version), and Doxygen has never had PHP as its primary concern.  As such, a
+number of new projects are starting to emerge as replacements.
+</p>
+
+<p>
+One of these is <a href="http://docblox-project.org">DocBlox</a>. I am well aware there are
+several others -- and indeed, I've tried several of them. This post is not here
+to debate the merits or demerits of this or other solutions; the intention is to
+introduce you to DocBlox so that you can evaluate it yourself.
+</p>]]></content:encoded>
+      <slash:comments>0</slash:comments>
+    </item>
+    <item>
+      <title>Converting DocBook4 to DocBook5</title>
+      <pubDate>Thu, 21 Jul 2011 18:28:20 -0500</pubDate>
+      <link>http://mwop.net/blog/264-Converting-DocBook4-to-DocBook5.html</link>
+      <guid>http://mwop.net/blog/264-Converting-DocBook4-to-DocBook5.html</guid>
+      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
+      <dc:creator>Matthew Weier O'Phinney</dc:creator>
+      <content:encoded><![CDATA[<p>
+Within the <a href="https://github.com/zendframework/zf2">Zend Framework 2 repository</a>, I
+recently performed a conversion from <a href="http://docbook.org/">DocBook</a> 4 to 5. The
+latter is a more modern version of the toolchain, and offers a somewhat simpler
+syntax and workflow. For example, you no longer need to track how many levels
+deep you are in your chapter sections -- you simply use a <code>&lt;section&gt;</code> tag. One
+of the nicer changes is that you do not need to specify a doctype any more; you
+simply declare XML namespaces on your root elements and continue merrily on your
+way. This actually allows us to remove some actions in our build process, and
+makes validation much simpler.
+</p>
+
+<p>
+Interestingly, for DocBook5 being available in beta since 2005 and an official
+standard since 2009, there is very little material on migrating from DocBook 4
+to 5. 
+</p>]]></content:encoded>
+      <slash:comments>0</slash:comments>
+    </item>
+    <item>
+      <title>Proxies in PHP</title>
+      <pubDate>Thu, 07 Jul 2011 08:51:35 -0500</pubDate>
+      <link>http://mwop.net/blog/263-Proxies-in-PHP.html</link>
+      <guid>http://mwop.net/blog/263-Proxies-in-PHP.html</guid>
+      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
+      <dc:creator>Matthew Weier O'Phinney</dc:creator>
+      <content:encoded><![CDATA[<p>
+A number of programming design patterns look very similar. One of these is the
+<em>Proxy</em> pattern, which, at first glance, can look like a number of others:
+<em>Decorator</em>, <em>Flyweight</em>, even plain old object extension. However, it has its
+own niche, and it can provide some incredible flexibility for a number of
+programming scenarios.
+</p>]]></content:encoded>
+      <slash:comments>0</slash:comments>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,473 @@
+<!DOCTYPE html><!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8" />
+    <title>Simple Interfaces and Micro MVCs :: phly, boy, phly</title>
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <link href="/css/SkeletonCss/base.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/SkeletonCss/skeleton.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/SkeletonCss/layout.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/Application/site.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/images/Application/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" >
+<link href="/css/PhlyBlog/phly-blog.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/blog-atom.xml" rel="alternate" type="application/atom+xml" title="phly, boy, phly Atom Feed" >
+<link href="/blog-rss.xml" rel="alternate" type="application/rss+xml" title="phly, boy, phly RSS Feed" >
+    
+<script type="text/javascript">
+//<!--
+    var djConfig = {"isDebug":true,"parseOnLoad":true,"baseUrl":"\/js\/dojo\/","modulePaths":{"PhlyBlog":"\/js\/PhlyBlog","Application":"\/js\/Application"}};
+//-->
+</script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojo/dojo.xd.js"></script>
+
+<script type="text/javascript">
+//<!--
+dojo.require("PhlyBlog.blog");
+    dojo.require("Application.scroll");
+//-->
+
+</script>
+    
+    <script src="https://www.google.com/jsapi?ABQIAAAAGybdRRvLZwVUcF0dE3oVdBTO-MlgA7VGJpGqyqTOeDXlNzyZQxTGq17s-iAB0m0vwqLQ_A2dHhTg2Q"></script>
+<script type="text/javascript">
+    google.load('search', '1', {style: google.loader.themes.ESPRESSO});
+    google.setOnLoadCallback(function(){
+        new google.search.CustomSearchControl().draw('search');
+    }, true);
+</script>
+
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-27037983-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</head>
+<body>
+<div class="container">
+    <header class="sixteen columns">
+    <a href="/"><img src="/images/Application/logo.gif" height="37" width="37"/></a>
+        <span class="main_title">phly, boy, phly: matthew weier o'phinney</span>
+    </header>
+
+    <div class="sixteen columns" id="menu">
+        <nav>
+            <li><a href="/">Home</a></li>
+            <li><a href="/blog.html">Blog</a></li>
+                        <li><a href="/resume">R&eacute;sum&eacute;</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </nav>
+    </div>
+
+    <div class="sixteen columns content">
+        <div class="row">
+<article class="eleven columns alpha blog">
+<h2>Simple Interfaces and Micro MVCs</h2>
+<p>
+My job is great: I get to play with technology and code most days. My job is
+also hard: how does one balance both functionality and usability in programming
+interfaces?
+</p>
+
+<p>
+I've been working, with <a href="http://ralphschindler.com">Ralph Schindler</a>, on a
+<a href="http://bit.ly/zf2mvcprops">set of proposals</a> around the 
+<a href="http://framework.zend.com/">Zend Framework</a> 2.0 MVC layer,
+specifically the "C", or "Controller" portion of the triad. There are a ton of
+requirements we're trying to juggle, from making the code approachable to
+newcomers all the way to making the code as extensible as possible for the
+radical performance tuning developers out there. 
+</p><p>
+One interface I've been toying with is inspired by two very different sources.
+The first is PHP's own <a href="http://php.net/SoapServer">SoapServer API</a> (which we use
+already in our various server components); the other was a discussion I had with
+<a href="http://fabien.potencier.org">Fabien Potencier</a> (of Symfony fame) a couple years
+ago, where he said the goal of Symfony 2 would be "to transform a request into a
+response."
+</p>
+
+<p>
+What I've come up with right now is the following:
+</p>
+
+<div class="example"><pre><code lang="php">
+interface Dispatchable
+{
+    /**
+     * @return Response
+     */
+    public function dispatch(Request $request);
+}
+</code></pre></div>
+
+<p>
+I can hear some of you ZF folks saying already, "Really, that's all you've come
+up with so far?" Here's why I think it may be remarkable:
+</p>
+<blockquote>
+<strong><em>It makes it trivially simple to do a ZF1 style MVC, incorporate
+        server endpoints as controllers, or to write your own micro MVC.</em></strong>
+</blockquote>
+
+<p>
+The idea is that this interface (and the Request/Response interfaces) become the
+basic building blocks for both a standard ZF MVC implementation, or your own
+custom MVC implementation.
+</p>
+
+<p>
+Which is where the subject of micro MVCs finally becomes relevant.
+</p>
+
+<h2 id="toc_1.1">Micro MVCs</h2>
+
+<p>
+A little over a year ago, with PHP 5.3 finally releasing, I started seeing a
+number of "micro MVC frameworks" popping up; seriously, for a while there, it
+seemed like every other day, <a href="http://phpdeveloper.org/">phpdeveloper</a> was posting
+a new one every other day.
+</p>
+
+<p>
+Micro MVCs are quite interesting. If you consider the bulk of the websites you
+encounter, they really only consist of a few pages, and a smattering of actual
+functionality that requires things like form handling or models. As such, using
+a full-blown MVC such as ZF, Symfony, even CodeIgniter, seems crazy. A micro
+MVC addresses simultaneously the issues of simplification and expressiveness;
+the point is to get the work done as quickly as possible, preferably with as few
+lines as possible.
+</p>
+
+<p>
+In looking at many of these micro MVC frameworks, I noted a few things:
+</p>
+
+<ul>
+<li>
+Most were either using regex for routing, or a lightweight router such as
+   <a href="http://dev.horde.org/routes/">Horde Routes</a> to route the request.
+</li>
+<li>
+Most were utilizing closures and/or currying to then map the routing results
+   to "actions".
+</li>
+</ul>
+
+<p>
+So I whipped up a little something using the above <code>Dispatchable</code> interface, to
+see what I might be able to do.
+</p>
+
+<div class="example"><pre><code lang="php">
+use Zend\Stdlib\Dispatchable,
+    Zend\Http\Response as HttpResponse,
+    Fig\Request,
+    Fig\Response;
+
+class Dispatcher implements Dispatchable
+{
+    protected $controllers;
+
+    public function attach($spec, $callback = null)
+    {
+        if (is_array($spec) || $spec instanceof \Traversable) {
+            foreach ($spec as $controller =&gt; $callback) {
+                $this-&gt;attach($controller, $callback);
+            }
+            return $this;
+        }
+
+        if (!is_scalar($spec)) {
+            throw new \InvalidArgumentException('Spec must be scalar or traversable');
+        }
+
+        if (!is_callable($callback)) {
+            throw new \InvalidArgumentException('Callback must be callable');
+        }
+
+        $this-&gt;controllers[$spec] = $callback;
+        return $this;
+    }
+
+    /**
+     * Dispatch a request
+     * 
+     * @param  Request $request 
+     * @return Response
+     */
+    public function dispatch(Request $request)
+    {
+        if (!$controller = $request-&gt;getMetadata('controller')) {
+            return new PageNotFoundResponse( '&lt;h1&gt;Page not found&lt;/h1&gt;' );
+        }
+
+        if (!array_key_exists($controller, $this-&gt;controllers)) {
+            return new PageNotFoundResponse('&lt;h1&gt;Page not found&lt;/h1&gt;');
+        }
+
+        $handler  = $this-&gt;controllers[$controller];
+        $response = $handler($request);
+
+        if (is_string($response)) {
+            return new HttpResponse($response);
+        }
+        if (!is_object($response)) {
+            return new ApplicationErrorResponse('&lt;h1&gt;An error occurred&lt;/h1&gt;');
+        }
+        if (!$response instanceof Response) {
+            if (!method_exists($response, '__toString')) {
+                return new ApplicationErrorResponse('&lt;h1&gt;An error occurred&lt;/h1&gt;');
+            }
+            return new HttpResponse($response-&gt;__toString());
+        }
+        return $response;
+    }
+}
+</code></pre></div>
+
+<p>
+Don't worry about the various objects referenced; the main thing to understand
+is that it's using those same building blocks I referred to earlier: <code>Request</code>,
+<code>Response</code>, <code>Dispatchable</code>. In action, it looks like this:
+</p>
+
+<div class="example"><pre><code lang="php">
+use Zend\Controller\Router,
+    Zend\Http\Request;
+
+$request = new Request;
+
+$router = new Router;
+/*
+ * Configure some routes here. We'll assume we've somehow configured routes
+ * mapping the following controllers:
+ * - homepage
+ * - foo
+ * - rest
+ * - foobar
+ */
+$router-&gt;route($request);
+
+$dispatcher = new Dispatcher();
+$dispatcher
+-&gt;attach('homepage', function($request) {
+    // Simply returning a string:
+    return '&lt;h1&gt;Welcome&lt;/h1&gt; &lt;p&gt;Welcometo our site!&lt;/p&gt;';
+})
+-&gt;attach('foo', function($request) {
+    // Simply returning a string:
+    return '&lt;h1&gt;Foo!&lt;/h1&gt;';
+})
+-&gt;attach('rest', function($request) {
+    // Example of a \&quot;REST\&quot; service...
+    switch ($request-&gt;getMethod()) {
+        case 'GET':
+            if (!$id = $request-&gt;query('id', false)) {
+                // We have a \&quot;list operation\&quot;...
+                // Assume we somehow grab the list and create a response
+                return $response;
+            }
+            // We have an ID -- fetch it and return the page
+            break;
+        case 'POST':
+            // Create document and return a response
+            break;
+        case 'PUT':
+            if (!$id = $request-&gt;query('id', false)) {
+                // No ID in the query string means no document!
+                // Return a failure response
+            }
+            // We have an ID -- fetch and update from PUT params, and
+            // return a response
+            break;
+        case 'DELETE':
+            if (!$id = $request-&gt;query('id', false)) {
+                // No ID in the query string means no document!
+                // Return a failure response
+            }
+            // We have an ID -- delete, and // return a response
+            break;
+        default:
+            return new ApplicationErrorResponse('Unknown Method');
+            break;
+    }
+})
+-&gt;attach('foobar', function($request) {
+    // Curry in controllers to allow them to be lazy-loaded, and to ensure we 
+    // get a response object back (Dispatcher will take care of that).
+    $controller = new FooBarController();
+    return $controller-&gt;dispatch($request);
+});
+
+$response = $dispatcher-&gt;dispatch($request);
+$response-&gt;emit();
+</code></pre></div>
+
+<p>
+It's dead simple: we attach named callbacks to the Dispatcher. The Dispatcher
+checks to see if the Router found a controller name in the Request, and, if it
+did and a callback for it exists, executes it. If it gets a string, we use that
+as the content; an exception triggers an <code>ApplicationErrorResponse</code>, and if we
+get a Response object back, we just use it.
+</p>
+
+<p>
+While I did the Dispatcher configuration/setup in the same script, it could have
+been done as an include file to simplify that script endpoint. 
+</p>
+
+<p>
+The point is that the interface definitions made this really, really easy to
+come up with and implement in a matter of minutes.
+</p>
+
+<p>
+<em>I'm not sure if this will end up being in ZF2; even if it isn't, it still meets the goal I set out at the start of this post: balancing usability with flexibility.</em>
+</p>
+
+<p>
+<a href="http://bit.ly/zf2mvcprops">Discuss!</a>
+</p>
+
+<h4>Updates</h4>
+<ul>
+    <li><b>2011-02-24</b>: Fixed first class declaration example to use "implements" instead of "extends"</li>
+</ul><div class="social-media">
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="weierophinney">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</div>
+
+<div class="social-media">
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<div class="fb-like" data-send="true" data-width="450" data-show-faces="true"></div>
+</div>
+
+<div class="social-media">
+<div class="g-plusone" data-size="medium" data-annotation="inline"></div>
+</div>
+
+<!-- Place this render call where appropriate -->
+<script type="text/javascript">
+dojo.ready(function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+});
+</script>
+
+<div class="social-media">
+<a href="http://www.reddit.com/submit" onclick="window.location = 'http://www.reddit.com/submit?url=' + encodeURIComponent(window.location); return false"> <img src="http://www.reddit.com/static/spreddit1.gif" alt="submit to reddit" border="0" /> </a>
+</div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_developer = 1;
+        var disqus_shortname = 'phlyboyphly';
+        var disqus_identifier = '250-Simple-Interfaces-and-Micro-MVCs';
+        var disqus_url = 'http://mwop.net/blog/250-Simple-Interfaces-and-Micro-MVCs.html';
+        var disqus_title = 'Simple Interfaces and Micro MVCs';
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a></article>
+
+<aside class="four columns offset-by-one omega sidebar blog">
+    <div class="metadata">
+        <ul>
+            <li>Posted on <b>2010-12-22 18:07:04</b>.</li>
+            <li>Last updated on <b>2011-02-24 09:54:06</b>.</li>
+        </ul>
+    </div>
+
+    <div class="metadata">
+        <h4>Tags for this entry</h4>
+        <p class="tags"><a href="/blog/tag/php.html">php</a><br />
+<a href="/blog/tag/zend+framework.html">zend framework</a></p>
+    </div>
+
+        <div class="metadata">
+        <h4>Blogroll</h4>
+        <ul>
+            <li><a href="http://sebastian-bergmann.de/">Sebastian Bergmann</a></li>
+            <li><a href="http://blog.calevans.com/">Cal Evans</a></li>
+            <li><a href="http://prematureoptimization.org/blog/">Shahar Evron</a></li>
+            <li><a href="http://paul-m-jones.com/blog/">Paul M. Jones</a></li>
+            <li><a href="http://karwin.blogspot.com/">Bill Karwin</a></li>
+            <li><a href="http://mikenaberezny.com/">Mike Naberezny</a></li>
+            <li><a href="http://fabien.potencier.org/">Fabien Potencier</a></li>
+            <li><a href="http://benramsey.com/">Ben Ramsey</a></li>
+            <li><a href="http://derickrethans.nl/">Derick Rethans</a></li>
+            <li><a href="http://ralphschindler.com/">Ralph Schindler</a></li>
+            <li><a href="http://www.zimuel.it/blog/">Enrico Zimuel</a></li>
+        </ul>
+    </div>
+
+</aside>
+
+    </div>
+
+    <footer class="sixteen columns footer">
+        <div class="column one-third alpha about">
+            <h4>About</h4>
+            <p>
+    I'm a husband, father of two, slave to an ancient Basset Hound and 
+    plaything of a Basset puppy, and web architect by day.
+</p>
+
+<ul class="resume">
+    <li><a href="/resume">Resume</a></li>
+    <li><a href="http://twitter.com/weierophinney">Twitter</a></li>
+    <li><a href="http://www.linkedin.com/in/mweierophinney">LinkedIn</a></li>
+    <li><a href="http://www.ohloh.net/accounts/weierophinney">OhLoh</a></li>
+    <li><a href="http://resume.github.com/?weierophinney">GitHub</a></li>
+</ul>
+
+        </div>
+
+        <div class="column one-third projects">
+            <h4>Projects</h4>
+            <ul class="projects">
+    <li><a href="http://framework.zend.com/">Zend Framework (Project Lead)</a></li>
+    <li><a href="http://github.com/weierophinney/phly_mustache">Phly_Mustache</a></li>
+    <li><a href="http://www.the-pastry-box-project.net/baker/matthew-weier-ophinney/">The Pastry Box Project</a> (as a Baker)</li>
+</ul>
+
+        </div>
+
+        <div class="column one-third omega tags">
+        <div id="search" style="width:100%;">Loading...</div>
+<h4>Tag Cloud</h4>
+<div class="cloud">
+<ul class="Zend\Tag\Cloud"><li><a href="/blog/tag/php.html" style="font-size: 20px;">php</a></li> <li><a href="/blog/tag/zend+framework.html" style="font-size: 14px;">zend framework</a></li> <li><a href="/blog/tag/zf2.html" style="font-size: 11px;">zf2</a></li> <li><a href="/blog/tag/vim.html" style="font-size: 11px;">vim</a></li> <li><a href="/blog/tag/family.html" style="font-size: 11px;">family</a></li> <li><a href="/blog/tag/programming.html" style="font-size: 12px;">programming</a></li> <li><a href="/blog/tag/personal.html" style="font-size: 13px;">personal</a></li> <li><a href="/blog/tag/phpconcom.html" style="font-size: 10px;">phpconcom</a></li> <li><a href="/blog/tag/mvc.html" style="font-size: 11px;">mvc</a></li> <li><a href="/blog/tag/oop.html" style="font-size: 11px;">oop</a></li> <li><a href="/blog/tag/testing.html" style="font-size: 10px;">testing</a></li> <li><a href="/blog/tag/rest.html" style="font-size: 11px;">rest</a></li> <li><a href="/blog/tag/linux.html" style="font-size: 12px;">linux</a></li> <li><a href="/blog/tag/zendcon08.html" style="font-size: 11px;">zendcon08</a></li> <li><a href="/blog/tag/file_fortune.html" style="font-size: 10px;">file_fortune</a></li> <li><a href="/blog/tag/pear.html" style="font-size: 11px;">pear</a></li> <li><a href="/blog/tag/zendcon.html" style="font-size: 11px;">zendcon</a></li> <li><a href="/blog/tag/perl.html" style="font-size: 12px;">perl</a></li> <li><a href="/blog/tag/fastcgi.html" style="font-size: 10px;">fastcgi</a></li> <li><a href="/blog/tag/ubuntu.html" style="font-size: 11px;">ubuntu</a></li> <li><a href="/blog/tag/tekx.html" style="font-size: 10px;">tekx</a></li> <li><a href="/blog/tag/zendcon10.html" style="font-size: 10px;">zendcon10</a></li> <li><a href="/blog/tag/dojo.html" style="font-size: 11px;">dojo</a></li> <li><a href="/blog/tag/symfony.html" style="font-size: 11px;">symfony</a></li> <li><a href="/blog/tag/zeta+components.html" style="font-size: 10px;">zeta components</a></li> <li><a href="/blog/tag/tek09.html" style="font-size: 10px;">tek09</a></li> <li><a href="/blog/tag/spl.html" style="font-size: 11px;">spl</a></li> <li><a href="/blog/tag/subversion.html" style="font-size: 11px;">subversion</a></li> <li><a href="/blog/tag/zend+framewor.html" style="font-size: 10px;">zend framewor</a></li> <li><a href="/blog/tag/rails.html" style="font-size: 10px;">rails</a></li> <li><a href="/blog/tag/conferences.html" style="font-size: 11px;">conferences</a></li> <li><a href="/blog/tag/dpc08.html" style="font-size: 11px;">dpc08</a></li> <li><a href="/blog/tag/phpworks08.html" style="font-size: 11px;">phpworks08</a></li> <li><a href="/blog/tag/webinar.html" style="font-size: 11px;">webinar</a></li> <li><a href="/blog/tag/zencon08.html" style="font-size: 10px;">zencon08</a></li> <li><a href="/blog/tag/advocacy.html" style="font-size: 10px;">advocacy</a></li> <li><a href="/blog/tag/politics.html" style="font-size: 10px;">politics</a></li> <li><a href="/blog/tag/internet.html" style="font-size: 10px;">internet</a></li> <li><a href="/blog/tag/cw09.html" style="font-size: 11px;">cw09</a></li> <li><a href="/blog/tag/zend+server.html" style="font-size: 10px;">zend server</a></li> <li><a href="/blog/tag/dpc09.html" style="font-size: 10px;">dpc09</a></li> <li><a href="/blog/tag/sflive2010.html" style="font-size: 10px;">sflive2010</a></li> <li><a href="/blog/tag/security.html" style="font-size: 10px;">security</a></li> <li><a href="/blog/tag/wifi.html" style="font-size: 10px;">wifi</a></li> <li><a href="/blog/tag/aikido.html" style="font-size: 10px;">aikido</a></li> <li><a href="/blog/tag/books.html" style="font-size: 10px;">books</a></li> <li><a href="/blog/tag/dpc10.html" style="font-size: 10px;">dpc10</a></li> <li><a href="/blog/tag/zendcon09.html" style="font-size: 11px;">zendcon09</a></li> <li><a href="/blog/tag/git.html" style="font-size: 10px;">git</a></li> <li><a href="/blog/tag/phpwomen.html" style="font-size: 10px;">phpwomen</a></li> <li><a href="/blog/tag/virtualbox.html" style="font-size: 10px;">virtualbox</a></li></ul></div>
+        </div>
+    </footer>
+</div>
+</body>
+</html>

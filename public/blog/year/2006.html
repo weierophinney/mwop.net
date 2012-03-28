@@ -1,0 +1,537 @@
+<!DOCTYPE html><!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8" />
+    <title>Blog Entries for 2006 :: phly, boy, phly</title>
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <link href="/css/SkeletonCss/base.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/SkeletonCss/skeleton.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/SkeletonCss/layout.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/Application/site.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/images/Application/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" >
+<link href="/css/PhlyBlog/phly-blog.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/blog/year/2006-atom.xml" rel="alternate" type="application/atom+xml" title="Blog Entries for 2006 Atom Feed" >
+<link href="/blog/year/2006-rss.xml" rel="alternate" type="application/rss+xml" title="Blog Entries for 2006 RSS Feed" >
+    
+<script type="text/javascript">
+//<!--
+    var djConfig = {"isDebug":true,"parseOnLoad":true,"baseUrl":"\/js\/dojo\/","modulePaths":{"PhlyBlog":"\/js\/PhlyBlog","Application":"\/js\/Application"}};
+//-->
+</script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojo/dojo.xd.js"></script>
+
+<script type="text/javascript">
+//<!--
+dojo.require("PhlyBlog.blog");
+    dojo.require("Application.scroll");
+//-->
+
+</script>
+    
+    <script src="https://www.google.com/jsapi?ABQIAAAAGybdRRvLZwVUcF0dE3oVdBTO-MlgA7VGJpGqyqTOeDXlNzyZQxTGq17s-iAB0m0vwqLQ_A2dHhTg2Q"></script>
+<script type="text/javascript">
+    google.load('search', '1', {style: google.loader.themes.ESPRESSO});
+    google.setOnLoadCallback(function(){
+        new google.search.CustomSearchControl().draw('search');
+    }, true);
+</script>
+
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-27037983-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</head>
+<body>
+<div class="container">
+    <header class="sixteen columns">
+    <a href="/"><img src="/images/Application/logo.gif" height="37" width="37"/></a>
+        <span class="main_title">phly, boy, phly: matthew weier o'phinney</span>
+    </header>
+
+    <div class="sixteen columns" id="menu">
+        <nav>
+            <li><a href="/">Home</a></li>
+            <li><a href="/blog.html">Blog</a></li>
+                        <li><a href="/resume">R&eacute;sum&eacute;</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </nav>
+    </div>
+
+    <div class="sixteen columns content">
+        <div class="row">
+<section class="eleven columns alpha blog">
+    <h2>Blog Entries for 2006</h2>
+
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2006-12-28 13:59:00</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/130-Getting-XDebug-working-with-PHPUnit-for-code-coverage-reports.html">Getting XDebug working with PHPUnit for code coverage reports</a></h4>
+
+    <div class="entry body"><p>
+    I've been playing with <a href="http://phpunit.de/">PHPUnit</a> a lot of
+    late, particularly with 
+    <a href="http://framework.zend.com/">framework development</a>.
+    One thing that's always hard to determine is how well your code is exercised
+    -- basically, how much of the code is tested in the unit tests?
+</p>
+<p>
+    In PHPUnit 3, you can now generate code coverage reports using 
+    <a href="http://xdebug.org">XDebug</a>, and the usage is very simple:
+</p>
+<pre>
+matthew@localhost:~/dev/zend/framework-svn/tests$ phpunit --report ~/tmp/report AllTests
+</pre>
+<p>
+    The above command creates a coverage report directory 'report' under my tmp
+    directory. You can then browse through the reports in a web browser and
+    visually see which lines of code were executed during tests, and which were
+    not, as well as a synopsis showing the percentage of coverage for any given
+    file or directory -- useful stuff indeed!
+</p>
+<p>
+    So, what's the problem? Getting XDebug running.
+</p>
+<p>
+    The executive summary:
+</p>
+<ul>
+    <li>Enable the extension using <kbd>zend_extension =
+        /full/path/to/xdebug.so</kbd>, not as <kbd>extension =
+        xdebug.so</kbd>, in your php.ini</li>
+    <li>Use the setting <kbd>xdebug.default_enable = Off</kbd> in your
+    php.ini.</li>
+    <li>If compiling using pecl or pear, make sure it compiles against the
+    correct PHP; if not, hand compile it using:
+    <pre>
+$ /path/to/phpize
+$ ./configure --with-php-config=/path/to/php-config
+$ make
+$ make install
+</pre>
+    </li>
+</ul>
+<p>
+    For the detailed narrative, read on.
+</p></div>
+
+    <p><a href="/blog/130-Getting-XDebug-working-with-PHPUnit-for-code-coverage-reports.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2006-12-07 23:41:00</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/129-MVC-changes-in-Zend-Framework.html">MVC changes in Zend Framework</a></h4>
+
+    <div class="entry body"><p>
+    Several months ago, <a href="http://andigutmans.blogspot.com/">Andi</a>
+    asked me to take the role of lead developer on a refactoring of the 
+    <a href="http://framework.zend.com/">Zend Framework</a> MVC components. I
+    agreed, though somewhat reluctantly; I already maintain 
+    <a href="http://cgiapp.sourceforge.net/">another MVC library</a>, and wasn't
+    sure how well I could fill the shoes of people like my friends 
+    <a href="http://mikenaberezny.com">Mike</a>, who had done the initial
+    development on the controller classes, and 
+    <a href="http://paul-m-jones.com/blog/">Paul</a>, who provided Zend_View.
+</p>
+<p>
+    The experience has been incredibly rewarding, however, and I've had the
+    chance to pick the brains of and work with some top-notch developers in the
+    process. In the next week or so, we'll be releasing version 0.6.0 of the
+    framework, and it will include much of my work in the MVC components as part
+    of the core distribution. A big thanks to all those who have contributed
+    opinions, design help, code, tests, and documentation; another thank you
+    goes to Andi for trusting and supporting me in this endeavor.
+</p>
+<p>
+    So, what are the changes? Read on to find out...
+</p></div>
+
+    <p><a href="/blog/129-MVC-changes-in-Zend-Framework.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2006-11-01 00:01:05</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/128-PHP-Best-Practices.html">PHP Best Practices</a></h4>
+
+    <div class="entry body"><p>
+    Yesterday, <a href="http://mikenaberezny.com/">Mike</a> and I presented our
+    session "Best Practices of PHP Development" at this year's Zend Conference.
+    It was a marathon three hour tutorial first thing in the morning, and we had
+    an incredible turnout, with some fairly enthusiastic people in the audience.
+</p>
+
+<p>
+    <a href="/uploads/php_development_best_practices.pdf" title="php_development_best_practices.pdf" target="_blank">Download the slides slides for PHP Best Practices</a>.
+</p></div>
+
+    <p><a href="/blog/128-PHP-Best-Practices.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2006-10-15 23:40:27</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/127-ZendCon-Best-Practices-Session.html">ZendCon: Best Practices Session</a></h4>
+
+    <div class="entry body"><p>
+    As <a href="http://mikenaberezny.com/archives/53">Mike already noted,</a>
+    he and I are presenting a session on "Best Practices of PHP Development" at
+    <a href="http://www.zendcon.com/speakers_list.php#day1">this year's Zend Conference and Expo</a>.
+    It has been my fortunate experience to work with Mike in the past, and, as
+    he noted, we had so much fun presenting during last year's conference, we
+    thought we'd do it again.
+</p>
+<p>
+    The session is a pre-conference tutorial session, running for 3 hours on
+    Monday morning, 30 October 2006.  Currently, we're shaping up the session
+    into the following subject areas:
+</p>
+<ul>
+    <li><b>Programming Practices</b>
+        <ul>
+            <li>Coding Standards</li>
+            <li>Test Driven Development and Unit Testing</li>
+            <li>Project Documentation</li>
+        </ul>
+    </li>
+    <li><b>Tools and Processes</b>
+        <ul>
+            <li>Software Configuration Management (SCM)</li>
+            <li>Collaboration tips and tools</li>
+            <li>Deployment</li>
+        </ul>
+    </li>
+</ul>
+<p>
+    Emphasis is going to be on working in teams, particularly those operating in
+    geographically diverse areas.  With roughly 30 minute blocks per topic,
+    we've certainly got plenty to cover!
+</p>
+<p>
+    If you're coming to the conference, we look forward to seeing you in our
+    session! 
+</p></div>
+
+    <p><a href="/blog/127-ZendCon-Best-Practices-Session.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2006-10-15 22:23:00</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/126-Zend_XmlRpc_Server.html">Zend_XmlRpc_Server</a></h4>
+
+    <div class="entry body"><p>
+    As <a href="http://weierophinney.net/matthew/archives/125-PHP-5s-Reflection-API.html">noted previously by myself</a> and 
+    <a href="http://pixelated-dreams.com/archives/251-More-Web-Services.html">Davey</a>,
+    I've been working on Zend_XmlRpc_Server for some months now. In the past
+    couple weeks, I've refactored it to push the class/function reflection into
+    Zend_Server_Reflection, and, in doing so, noted that there were further
+    areas for refactoring into additional helper classes. Currently, it now has
+    classes for the Request, Response, and Faults, and all actual XML wrangling
+    is done in those, making the server basically XML-agnostic.
+</p></div>
+
+    <p><a href="/blog/126-Zend_XmlRpc_Server.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2006-10-09 10:58:00</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/125-PHP-5s-Reflection-API.html">PHP 5&#039;s Reflection API</a></h4>
+
+    <div class="entry body"><p>
+    As <a href="http://pixelated-dreams.com/archives/251-More-Web-Services.html">Davey Shafik noted recently</a>,
+    he and I have been working together on some web services for the 
+    <a href="http://framework.zend.com/">Zend Framework</a>. In doing so, I've
+    become very familiar with PHP 5's Reflection API, and am coming to love it.
+</p>
+<p>
+    When I first read about the Reflection API in a pre-PHP 5 changelog, my
+    initial reaction was, "who cares?" I simply failed to see how it was a
+    useful addition to the language. Having done some projects recently that
+    needed to know something about the classes they are using, I now understand
+    when and how it can be used. It shines when you need to work with classes
+    that may not be defined when you write your code -- any code that dispatches
+    to other classes, basically.
+</p></div>
+
+    <p><a href="/blog/125-PHP-5s-Reflection-API.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2006-09-25 17:27:00</p>
+    <p class="tags"><a href="/blog/tag/linux.html">linux</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/124-coLinux-Recovery.html">coLinux Recovery</a></h4>
+
+    <div class="entry body"><p>
+    As <a href="http://weierophinney.net/matthew/archives/103-XP-+-Cygwin-+-coLinux-Productivity.html">I've written previously,</a>
+    I use <a href="http://www.colinux.org">coLinux</a> in order to have a
+    Linux virtual machine running on my Windows XP install. It runs Debian
+    unstable (SID), which gives me all apt-geet love I could want.
+</p>
+<p>
+    Except when an apt-get based install goes bad, that is, like it did Saturday
+    evening. This is the tale of how I got it back up and running.
+</p></div>
+
+    <p><a href="/blog/124-coLinux-Recovery.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2006-09-19 17:45:00</p>
+    <p class="tags"><a href="/blog/tag/programming.html">programming</a><br />
+<a href="/blog/tag/perl.html">perl</a><br />
+<a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/123-Vim-7-code-completion.html">Vim 7 code completion</a></h4>
+
+    <div class="entry body"><p>
+    I may work at <a href="http://www.zend.com/">Zend</a>, but I've never been a
+    fan of IDEs. They simply don't suit my programming style. I can usually keep
+    track of file locations in my head pretty easily, and what I really need is
+    a blank slate on which I can write, and one that doesn't consume resource
+    that can better be used running web servers and other programs. Syntax
+    highlighting, good indentation -- these are important, but you can get these
+    from good, minimal text editors very easily. 
+    <a href="http://www.vim.org">Vim is my editor of choice</a>.
+</p>
+<p>
+    I will admit, though, that one area where I have had IDE-envy is the area of
+    code completion. I often find myself doing quick lookups to php.net or
+    perldoc to determine the order of arguments to a function or method call,
+    or checking for the expected return value. Most of the time, this doesn't
+    take much time, however, so I just live with it.
+</p>
+<p>
+    Today, however, cruising through the blogosphere, I came across 
+    <a href="http://linuxhelp.blogspot.com/2006/09/visual-walk-through-of-couple-of-new.html">an article showcasing some new features of Vim 7.0</a>, 
+    and discovered Vim 7's code completion.
+</p>
+<p>
+    Basically, while in insert mode, you can type &lt;C-x&gt; &lt;C-o&gt; to
+    have vim attempt to autocomplete the current keyword. If more than one
+    possibility exists, it shows a dropdown, and you can use your arrow keys to
+    highlight the keyword that you wish to use.
+</p>
+<p>
+    But it gets better! Not only does it do this kind of autocompletion, but it
+    also opens a small 'scratch preview' pane showing the function/method
+    signature -- i.e., the expected arguments and return value!
+</p>
+<p>
+    I thought I had little need for IDEs before... now I have even less! Bram
+    and the rest of the Vim team, my hat's off to you for more fine work!
+</p></div>
+
+    <p><a href="/blog/123-Vim-7-code-completion.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2006-06-23 11:00:00</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/121-Benchmarking-dynamic-functionmethod-calls.html">Benchmarking dynamic function/method calls</a></h4>
+
+    <div class="entry body"><p>
+    In response to <a href="http://fuzzyblog.com/archives/2006/06/22/php-advice-requested-variable-functions-versus-call_user_func-and-call_user_func_array/">Scott Johnson's request for advice on variable functions</a>,
+    I decided to run some benchmarks.
+</p>
+<p>
+    &lt;rant&gt;Writing benchmarks is easy. Yet I see a lot of blog entries and
+    mailing list postings asking, "Which is faster?" My first thought is always,
+    "Why didn't they test and find out?" If I ever have a question about how
+    something will work, I open up a temporary file, start coding, and run the
+    code. It's the easiest way to learn. Also, it teaches you to break things
+    into manageable, testable chunks, and this code often forms the basis for a
+    unit test later.&lt;/rant&gt;
+</p>
+<p>
+    Back to benchmarking. Scott asks, "Is there a real difference between
+    call_user_func versus call_user_func_array and the variable function syntax
+    i.e. $function_name()?"
+</p>
+<p>
+    The short answer: absolutely. The long answer? Read on.
+</p></div>
+
+    <p><a href="/blog/121-Benchmarking-dynamic-functionmethod-calls.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2006-06-17 23:25:52</p>
+    <p class="tags"><a href="/blog/tag/programming.html">programming</a><br />
+<a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/120-Serendipity-upgrade.html">Serendipity upgrade</a></h4>
+
+    <div class="entry body"><p>
+    I upgraded <a href="http://www.s9y.org/">Serendipity</a> today, due to the
+    recent announcement of the 1.0 release, as well as to combat some rampant
+    issues with trackback spam.
+</p>
+<p>
+    I've been very happy with Serendipity so far; it just runs, and the default
+    install gives just what you need to get a blog up and running, and nothing
+    more; any extra functionality comes via plugins which you, the blogger, get
+    to decide upon.
+</p>
+<p>
+    Additionally, it's incredibly easy to upgrade. Unpack the tarball, rsync
+    it over your existing install (I rsync it, because I don't use 'serendipity'
+    as my directory name), visit the admin, boom, you're done. I've upgraded
+    several times, and never lost data, nor configuration settings. 
+</p>
+<p>
+    My primary reason for the upgrade was, as noted earlier, to combat trackback
+    spam. As of this morning, I had 15,000 pending trackbacks, none of which
+    appeared to be valid (if any of them were, and you're not seeing yours, I'm
+    very sorry; I deleted them <em>en masse</em>). These had accumulated in <em>less than
+    a month</em> -- that's an average of about one every 3 minutes.
+</p>
+<p>
+    Since upgrading, and using the <a href="http://akismet.com/">Akismet</a>
+    service, I've received not a single spam trackback. Needless to say, I'm
+    happy I performed the upgrade!
+</p>
+<p>
+    If you're a Serendipity user, and haven't upgraded to 1.0.0 yet (or one of
+    it's reportedly very stable release candidates), do it today -- you have
+    nothing to lose, and a lot of lost time to gain!
+</p></div>
+
+    <p><a href="/blog/120-Serendipity-upgrade.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="paginationControl">
+        <span class="current">1</span> |
+            <a href="/blog/year/2006-p2.html">2</a> |
+            <a href="/blog/year/2006-p3.html">3</a> |
+            <a href="/blog/year/2006-p2.html"> Next &gt;</a> |
+        <a href="/blog/year/2006-p3.html" class="last"> Last &gt;&gt;</a>
+</div>
+
+</section>
+
+<aside class="four columns offset-by-one omega sidebar blog">
+        <div class="metadata">
+        <h4>Blogroll</h4>
+        <ul>
+            <li><a href="http://sebastian-bergmann.de/">Sebastian Bergmann</a></li>
+            <li><a href="http://blog.calevans.com/">Cal Evans</a></li>
+            <li><a href="http://prematureoptimization.org/blog/">Shahar Evron</a></li>
+            <li><a href="http://paul-m-jones.com/blog/">Paul M. Jones</a></li>
+            <li><a href="http://karwin.blogspot.com/">Bill Karwin</a></li>
+            <li><a href="http://mikenaberezny.com/">Mike Naberezny</a></li>
+            <li><a href="http://fabien.potencier.org/">Fabien Potencier</a></li>
+            <li><a href="http://benramsey.com/">Ben Ramsey</a></li>
+            <li><a href="http://derickrethans.nl/">Derick Rethans</a></li>
+            <li><a href="http://ralphschindler.com/">Ralph Schindler</a></li>
+            <li><a href="http://www.zimuel.it/blog/">Enrico Zimuel</a></li>
+        </ul>
+    </div>
+
+</aside>
+</div>
+    </div>
+
+    <footer class="sixteen columns footer">
+        <div class="column one-third alpha about">
+            <h4>About</h4>
+            <p>
+    I'm a husband, father of two, slave to an ancient Basset Hound and 
+    plaything of a Basset puppy, and web architect by day.
+</p>
+
+<ul class="resume">
+    <li><a href="/resume">Resume</a></li>
+    <li><a href="http://twitter.com/weierophinney">Twitter</a></li>
+    <li><a href="http://www.linkedin.com/in/mweierophinney">LinkedIn</a></li>
+    <li><a href="http://www.ohloh.net/accounts/weierophinney">OhLoh</a></li>
+    <li><a href="http://resume.github.com/?weierophinney">GitHub</a></li>
+</ul>
+
+        </div>
+
+        <div class="column one-third projects">
+            <h4>Projects</h4>
+            <ul class="projects">
+    <li><a href="http://framework.zend.com/">Zend Framework (Project Lead)</a></li>
+    <li><a href="http://github.com/weierophinney/phly_mustache">Phly_Mustache</a></li>
+    <li><a href="http://www.the-pastry-box-project.net/baker/matthew-weier-ophinney/">The Pastry Box Project</a> (as a Baker)</li>
+</ul>
+
+        </div>
+
+        <div class="column one-third omega tags">
+        <div id="search" style="width:100%;">Loading...</div>
+<h4>Tag Cloud</h4>
+<div class="cloud">
+<ul class="Zend\Tag\Cloud"><li><a href="/blog/tag/php.html" style="font-size: 20px;">php</a></li> <li><a href="/blog/tag/zend+framework.html" style="font-size: 14px;">zend framework</a></li> <li><a href="/blog/tag/zf2.html" style="font-size: 11px;">zf2</a></li> <li><a href="/blog/tag/vim.html" style="font-size: 11px;">vim</a></li> <li><a href="/blog/tag/family.html" style="font-size: 11px;">family</a></li> <li><a href="/blog/tag/programming.html" style="font-size: 12px;">programming</a></li> <li><a href="/blog/tag/personal.html" style="font-size: 13px;">personal</a></li> <li><a href="/blog/tag/phpconcom.html" style="font-size: 10px;">phpconcom</a></li> <li><a href="/blog/tag/mvc.html" style="font-size: 11px;">mvc</a></li> <li><a href="/blog/tag/oop.html" style="font-size: 11px;">oop</a></li> <li><a href="/blog/tag/testing.html" style="font-size: 10px;">testing</a></li> <li><a href="/blog/tag/rest.html" style="font-size: 11px;">rest</a></li> <li><a href="/blog/tag/linux.html" style="font-size: 12px;">linux</a></li> <li><a href="/blog/tag/zendcon08.html" style="font-size: 11px;">zendcon08</a></li> <li><a href="/blog/tag/file_fortune.html" style="font-size: 10px;">file_fortune</a></li> <li><a href="/blog/tag/pear.html" style="font-size: 11px;">pear</a></li> <li><a href="/blog/tag/zendcon.html" style="font-size: 11px;">zendcon</a></li> <li><a href="/blog/tag/perl.html" style="font-size: 12px;">perl</a></li> <li><a href="/blog/tag/fastcgi.html" style="font-size: 10px;">fastcgi</a></li> <li><a href="/blog/tag/ubuntu.html" style="font-size: 11px;">ubuntu</a></li> <li><a href="/blog/tag/tekx.html" style="font-size: 10px;">tekx</a></li> <li><a href="/blog/tag/zendcon10.html" style="font-size: 10px;">zendcon10</a></li> <li><a href="/blog/tag/dojo.html" style="font-size: 11px;">dojo</a></li> <li><a href="/blog/tag/symfony.html" style="font-size: 11px;">symfony</a></li> <li><a href="/blog/tag/zeta+components.html" style="font-size: 10px;">zeta components</a></li> <li><a href="/blog/tag/tek09.html" style="font-size: 10px;">tek09</a></li> <li><a href="/blog/tag/spl.html" style="font-size: 11px;">spl</a></li> <li><a href="/blog/tag/subversion.html" style="font-size: 11px;">subversion</a></li> <li><a href="/blog/tag/zend+framewor.html" style="font-size: 10px;">zend framewor</a></li> <li><a href="/blog/tag/rails.html" style="font-size: 10px;">rails</a></li> <li><a href="/blog/tag/conferences.html" style="font-size: 11px;">conferences</a></li> <li><a href="/blog/tag/dpc08.html" style="font-size: 11px;">dpc08</a></li> <li><a href="/blog/tag/phpworks08.html" style="font-size: 11px;">phpworks08</a></li> <li><a href="/blog/tag/webinar.html" style="font-size: 11px;">webinar</a></li> <li><a href="/blog/tag/zencon08.html" style="font-size: 10px;">zencon08</a></li> <li><a href="/blog/tag/advocacy.html" style="font-size: 10px;">advocacy</a></li> <li><a href="/blog/tag/politics.html" style="font-size: 10px;">politics</a></li> <li><a href="/blog/tag/internet.html" style="font-size: 10px;">internet</a></li> <li><a href="/blog/tag/cw09.html" style="font-size: 11px;">cw09</a></li> <li><a href="/blog/tag/zend+server.html" style="font-size: 10px;">zend server</a></li> <li><a href="/blog/tag/dpc09.html" style="font-size: 10px;">dpc09</a></li> <li><a href="/blog/tag/sflive2010.html" style="font-size: 10px;">sflive2010</a></li> <li><a href="/blog/tag/security.html" style="font-size: 10px;">security</a></li> <li><a href="/blog/tag/wifi.html" style="font-size: 10px;">wifi</a></li> <li><a href="/blog/tag/aikido.html" style="font-size: 10px;">aikido</a></li> <li><a href="/blog/tag/books.html" style="font-size: 10px;">books</a></li> <li><a href="/blog/tag/dpc10.html" style="font-size: 10px;">dpc10</a></li> <li><a href="/blog/tag/zendcon09.html" style="font-size: 11px;">zendcon09</a></li> <li><a href="/blog/tag/git.html" style="font-size: 10px;">git</a></li> <li><a href="/blog/tag/phpwomen.html" style="font-size: 10px;">phpwomen</a></li> <li><a href="/blog/tag/virtualbox.html" style="font-size: 10px;">virtualbox</a></li></ul></div>
+        </div>
+    </footer>
+</div>
+</body>
+</html>

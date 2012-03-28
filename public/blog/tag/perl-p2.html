@@ -1,0 +1,620 @@
+<!DOCTYPE html><!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8" />
+    <title>Tag: perl :: phly, boy, phly</title>
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <link href="/css/SkeletonCss/base.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/SkeletonCss/skeleton.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/SkeletonCss/layout.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/Application/site.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/images/Application/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" >
+<link href="/css/PhlyBlog/phly-blog.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/blog/tag/perl-atom.xml" rel="alternate" type="application/atom+xml" title="Tag: perl Atom Feed" >
+<link href="/blog/tag/perl-rss.xml" rel="alternate" type="application/rss+xml" title="Tag: perl RSS Feed" >
+    
+<script type="text/javascript">
+//<!--
+    var djConfig = {"isDebug":true,"parseOnLoad":true,"baseUrl":"\/js\/dojo\/","modulePaths":{"PhlyBlog":"\/js\/PhlyBlog","Application":"\/js\/Application"}};
+//-->
+</script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojo/dojo.xd.js"></script>
+
+<script type="text/javascript">
+//<!--
+dojo.require("PhlyBlog.blog");
+    dojo.require("Application.scroll");
+//-->
+
+</script>
+    
+    <script src="https://www.google.com/jsapi?ABQIAAAAGybdRRvLZwVUcF0dE3oVdBTO-MlgA7VGJpGqyqTOeDXlNzyZQxTGq17s-iAB0m0vwqLQ_A2dHhTg2Q"></script>
+<script type="text/javascript">
+    google.load('search', '1', {style: google.loader.themes.ESPRESSO});
+    google.setOnLoadCallback(function(){
+        new google.search.CustomSearchControl().draw('search');
+    }, true);
+</script>
+
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-27037983-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</head>
+<body>
+<div class="container">
+    <header class="sixteen columns">
+    <a href="/"><img src="/images/Application/logo.gif" height="37" width="37"/></a>
+        <span class="main_title">phly, boy, phly: matthew weier o'phinney</span>
+    </header>
+
+    <div class="sixteen columns" id="menu">
+        <nav>
+            <li><a href="/">Home</a></li>
+            <li><a href="/blog.html">Blog</a></li>
+                        <li><a href="/resume">R&eacute;sum&eacute;</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </nav>
+    </div>
+
+    <div class="sixteen columns content">
+        <div class="row">
+<section class="eleven columns alpha blog">
+    <h2>Tag: perl</h2>
+
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2004-03-30 21:57:31</p>
+    <p class="tags"><a href="/blog/tag/programming.html">programming</a><br />
+<a href="/blog/tag/perl.html">perl</a><br />
+<a href="/blog/tag/personal.html">personal</a><br />
+<a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/32-Cgiapp-A-PHP-Class.html">Cgiapp: A PHP Class</a></h4>
+
+    <div class="entry body"><p>
+    After working on some OO classes yesterday for an application backend I'm
+    developing for work, I decided I needed to create a <tt>BREAD</tt> class to
+    make this simpler. You know,
+    <b>B</b>rowse-<b>R</b>ead-<b>E</b>dit-<b>A</b>dd-<b>D</b>elete.
+</p>
+<p>
+    At first, I figured I'd build off of what I'd done yesterday. But then I got
+    to thinking (ah, thinking, my curse). I ran into the <tt>BREAD</tt> concept
+    originally when investigating <tt>CGI::Application</tt>; a number of
+    individuals had developed <tt>CGI::Apps</tt> that provided this
+    functionality. I'd discarded them usually because they provided more
+    functionality than I needed or because they introduced more complexity than
+    I was willing to tackle right then.
+</p>
+<p>
+    But once my thoughts had gone to <tt>BREAD</tt> and <tt>CGI::App</tt>, I
+    started thinking how nice it would be to have <tt>CGI::Application</tt> for
+    PHP. And then I thought, why not? What prevents me from porting it? I have
+    the source...
+</p>
+<p>
+    So, today I stayed home with Maeve, who, on the tail end of an illness,
+    evidently ran herself down when at daycare yesterday, and stayed home
+    sleeping most of the day. So, while she was resting, I sat down with a
+    printout of the non-POD code of <tt>CGI::App</tt> and hammered out what I
+    needed to do. Then, when she fell asleep for a nap, I typed it all out and
+    started testing. And, I'm proud to say, it works. For an example, visit <a href="http://dev.weierophinney.net/cgiapp/test.php">my development
+        site</a> to see a very simple, templated application in action.
+</p></div>
+
+    <p><a href="/blog/32-Cgiapp-A-PHP-Class.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2004-03-28 19:33:39</p>
+    <p class="tags"><a href="/blog/tag/perl.html">perl</a><br />
+<a href="/blog/tag/personal.html">personal</a><br />
+<a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/34-POD-for-PHP.html">POD for PHP</a></h4>
+
+    <div class="entry body"><p>
+    I was lamenting at work the other day that now that I've discovered OO and
+    templating with PHP, the only major feature missing for me is a way to
+    easily document my programs. I'm a big fan of perl's POD, and use it fairly
+    extensively, even for simple scripts -- it's a way to provide a quick manual
+    without needing to worry too much about how to format it.
+</p>
+<p>
+    So, it hit me on the way home Friday night: what prevents me from using POD
+    in multiline comments of PHP scripts? I thought I'd give it a try when I got
+    home.
+</p>
+<p>
+    First I googled for 'POD for PHP', and found a link to perlmongers where
+    somebody recounted seeing that exact thing done, and how nicely it worked.
+</p>
+<p>
+    Then I tried it.. and it indeed worked. So, basically, I've got all the
+    tools I love from perl in PHP, one of which is borrowed directly from the
+    language!
+</p></div>
+
+    <p><a href="/blog/34-POD-for-PHP.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2004-03-28 19:24:12</p>
+    <p class="tags"><a href="/blog/tag/programming.html">programming</a><br />
+<a href="/blog/tag/perl.html">perl</a><br />
+<a href="/blog/tag/personal.html">personal</a><br />
+<a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/35-Scrap-that.-Were-gonna-use-PHP.html">Scrap that. We&#039;re gonna&#039; use PHP</a></h4>
+
+    <div class="entry body"><p>
+    I've been researching and coding for a couple months now with the decision
+    that I'd rewrite the family website/portal using mod_perl with
+    CGI::Application. I still like the idea, but a couple things recently have
+    made me rethink it.
+</p>
+<p>
+    For starters, the perl DBI is a bit of a pain to program. At work, I've
+    become very accustomed to using PEAR's DB library, and while it's in many
+    ways derived from perl's DBI, it's much simpler to use. 
+</p>
+<p>
+    Then there's the whole HTML::Template debacle. There's several ways in which
+    to write the templates, but they don't all work in all situations, and, it
+    seems they're a bit limited. We've started using PHP's Smarty at work, and
+    it's much more intuitive, a wee bit more consistent, and almost infinitely
+    more extendable. I could go the Template::Toolkit route for perl, but that's
+    almost like learning another whole language.
+</p>
+<p>
+    Then, there's the way objects work in perl versus PHP. I've discovered
+    that PHP objects are very easy and very extendable. I wouldn't have found
+    them half as easy, however, if I hadn't already been doing object oriented
+    programming in perl. One major difference, however, is how easy it is to
+    create new attributes on the fly, and the syntax is much easier and cleaner.
+</p>
+<p>
+    Add to that the fact that if you want to dynamically require modules in
+    perl, you have to go through some significant, often unsurmountable, hoops.
+    So you can't easily have dynamic objects of dynamically defined classes. In
+    PHP, though, you can require_once or include_once at any time without even
+    thinking.
+</p>
+<p>
+    The final straw, however, was when I did my first OO application in PHP this
+    past week. I hammered it out in a matter of an hour or so. Then I rewrote it
+    to incorporate Smarty in around an hour. And it all worked easily. Then I
+    wrote a form-handling libary in just over two hours that worked immediately
+    -- and made it possible for me to write a several screen application in a
+    matter of an hour, complete with form, form validation, and database calls.
+    Doing the same with CGI::Application took me hours, if not days.
+</p>
+<p>
+    So, my idea is this: port CGI::Application to PHP. I <em>love</em> the
+    concept of CGI::App -- it's exactly how I want to program, and I think it's
+    solid. However, by porting it to PHP, I automatically have session and
+    cookie support, and database support is only a few lines of code away when I
+    use PEAR; I'll add Smarty as the template toolkit of choice, but make it
+    easy to override the template methods to utilize . I get a nice MVC-style
+    application template, but one that makes developing quickie applications
+    truly a snap.
+</p>
+<p>
+    This falls under the "right-tool-for-the-job" category; perl, while a
+    wonderful language, and with a large tradition as a CGI language, was not
+    developed <em>for the web</em> as PHP was. PHP just makes more sense in this
+    instance. And I won't be abandoning perl by any stretch; I still use it
+    daily at work and at home for solving any number of tasks from automated
+    backups to checking server availability to keeping my ethernet connection
+    alive. But I have real strengths as a PHP developer, and it would be a shame
+    not to use those strengths with our home website.
+</p></div>
+
+    <p><a href="/blog/35-Scrap-that.-Were-gonna-use-PHP.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2004-02-05 20:23:17</p>
+    <p class="tags"><a href="/blog/tag/programming.html">programming</a><br />
+<a href="/blog/tag/perl.html">perl</a><br />
+<a href="/blog/tag/personal.html">personal</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/28-HTMLFillInForm.html">HTML::FillInForm</a></h4>
+
+    <div class="entry body"><p>
+    The CGI::Application::ValidateRM module utilizes HTML::FillInForm to fill in
+    values in the form if portions did not pass validation. Basically, it
+    utilizes HTML::Parser to go through and find the elements and match them to
+    values. It's used because the assumption is that you've built your form into
+    an HTML::Template, and that way you don't need to put in program logic into
+    the form.
+</p>
+<p>
+    Seems another good candidate for using FillInForm would be to populate a
+    form with values grabbed from a database... I should look into that as well!
+</p></div>
+
+    <p><a href="/blog/28-HTMLFillInForm.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2004-02-05 20:18:20</p>
+    <p class="tags"><a href="/blog/tag/programming.html">programming</a><br />
+<a href="/blog/tag/perl.html">perl</a><br />
+<a href="/blog/tag/personal.html">personal</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/27-HTMLTemplate-notes.html">HTML::Template notes</a></h4>
+
+    <div class="entry body"><p>
+    I've used HTML::Template a little, mainly in the Secret Santa project I did
+    this past Christmas for my wife's family. One thing I disliked was using the
+    normal syntax: &lt;TMPL_VAR NAME=IMAGE_SRC&gt; -- it made looking at it
+    difficult (it wasn't always easy to tell what was an HTML tag, what was
+    plain text, and what was HTML::Template stuff), and it made it impossible to
+    validate my pages before they had data.
+</p>
+<p>
+    Fortunately, there's an alternate syntax: wrap the syntax in HTML comments:
+    &lt;!-- TMPL_VAR NAME=IMAGE_SRC --&gt; does the job. It uses more
+    characters, true, but it gets highlighted different than HTML tags, as well,
+    and that's worth a lot.
+</p>
+<p>
+    And why do I have to say "NAME=" every time? That gets annoying. As it turns
+    out, I can simply say: &lt;!-- TMPL_VAR IMAGE_SRC --&gt;, and that, too will
+    get the job done.
+</p>
+<p>
+    Finally, what about those times when I want to define a template, but have
+    it broken into parts, too? Basically, I want HTML::Template to behave a
+    little like SSI. No worries; there's a TMPL_INCLUDE tag that can do this:
+    &lt;!-- TMPL_INCLUDE NAME="filename.tmpl" --&gt;. 
+</p></div>
+
+    <p><a href="/blog/27-HTMLTemplate-notes.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2004-02-05 20:07:43</p>
+    <p class="tags"><a href="/blog/tag/programming.html">programming</a><br />
+<a href="/blog/tag/perl.html">perl</a><br />
+<a href="/blog/tag/personal.html">personal</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/26-CGIApplicationValidateRM-and-DataFormValidator.html">CGI::Application::ValidateRM and Data::FormValidator</a></h4>
+
+    <div class="entry body"><p>
+    I've been reading a lot of posts lately on the CGI::App mailing list about
+    using CGI::Application::ValidateRM (RM == Run Mode); I finally went and
+    checked it out.
+</p>
+    CGI::App::ValRM uses Data::FormValidator in order to do its magic.
+    Interestingly, D::FV is built much like how I've buit our formHandlers
+    library at work -- you specify a list of required fields, and a list of
+    fields that need to be validated against criteria, then provide the
+    criteria. It goes exactly how I would have done our libraries had we been
+    working in perl -- supplying the constraint as a regexp or anonymous sub in
+    a hashref for the field.
+
+<p>
+    Anyways, it looks like the combination of CGI::App::ValRM with CGI::App
+    could greatly simplify any form validations I need to do on the site, which
+    will in turn make me very happy!
+</p></div>
+
+    <p><a href="/blog/26-CGIApplicationValidateRM-and-DataFormValidator.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2004-02-04 22:43:14</p>
+    <p class="tags"><a href="/blog/tag/programming.html">programming</a><br />
+<a href="/blog/tag/perl.html">perl</a><br />
+<a href="/blog/tag/personal.html">personal</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/25-Design-Ideas.html">Design Ideas</a></h4>
+
+    <div class="entry body"><p>
+    I had some success last night with the My::Portal CGI::Application
+    superclass I'm building -- I actually got it working with CGI::Wiki::Simple
+    (after I debugged the latter to fix some delegation issues!). Now that I
+    know the "proof-of-concept" works, I'm ready to start in on some other
+    issues.
+</p>
+<p>
+    The first issue is: how can I specify different directories for different
+    applications to search for templates, while retaining the default directory
+    so that the superclass can build the final page? I <em>could</em> always
+    simply keep all templates in a single directory and simply prefix them, but
+    that seems inelegant, somehow. I'll need to explore how HTML::Template
+    integration works with CGI::App.
+</p>
+<p>
+    Second, and closely related: how do I want it to look, in the end? I could
+    see keeping the design we have -- it's clean, simple, and yet somehow
+    functionally elegant. Okay, I'm exaggerating -- it's your standard
+    three-column with header and footer. But it goes with the idea of blocks of
+    content. I need to think about that.
+</p>
+<p>
+    I saw a design idea for a WikiWikiWeb today, though, that totally changed my
+    ideas of how a Wiki should look. I hadn't been to <a href="http://en.wikipedia.org">Wikipedia</a> for some time,
+    but a Google link to Gaston Julia showed up on Slashdot as it shut down a
+    site in Australia, and so I visited it. I <em>like</em> the new design -- it
+    separates out the common links needed into a nice left menu, and puts
+    a subset of that at the top and bottom of the main column as well, using
+    nice borders to visually separate things. I much prefer it to PhpWiki's
+    default style, as well as to anything else I've really seen so far relating
+    to Wiki layout.
+</p></div>
+
+    <p><a href="/blog/25-Design-Ideas.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2004-02-01 16:03:37</p>
+    <p class="tags"><a href="/blog/tag/perl.html">perl</a><br />
+<a href="/blog/tag/personal.html">personal</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/23-conditional-use-in-perl.html">conditional use in perl</a></h4>
+
+    <div class="entry body"><p>
+    I've been struggling with how to use modules at runtime instead of compile
+    time (I even wrote about this once before). I finally figured it out:
+</p>
+<pre>my $module = "ROX::Filer";
+eval "use $module";
+die "couldn't load module : $!n" if ($@);
+</pre>
+<p>
+    Now I just need to figure out how to create objects from dynamic module
+    names...!
+</p>
+<p>
+    <b>Update:</b> Creating objects from dynamic names is as easy as dynamically
+    loading the module at run-time:
+</p>
+<pre>my $obj = $module->new();
+</pre></div>
+
+    <p><a href="/blog/23-conditional-use-in-perl.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2004-01-27 23:15:30</p>
+    <p class="tags"><a href="/blog/tag/perl.html">perl</a><br />
+<a href="/blog/tag/personal.html">personal</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/22-Wheres-that-module.html">Where&#039;s that module?</a></h4>
+
+    <div class="entry body"><p>
+    One continual pain for me with perl is when I need to try to find the
+    location of a specific module on my filesystem so that I can examine it
+    myself; I end up first having to find out what my @INC path is, then having
+    to dig through it until I find the module. Fortunately, I'm not the only
+    one; somebody <a href="http://www.perlmonks.org/index.pl?node_id=274701">posted a
+    solution to this problem</a> on <a href="http://www.perlmonks.org">Perl
+    Monks</a>:
+</p>
+<p>
+    <b>Updated: </b> The original listing presented didn't work! The following
+    one, garnered from a comment to the original PM post, <em>does</em>, and is
+    what I'm now using.
+</p>
+<pre>#!/usr/bin/perl -w
+use strict;
+
+use File::Spec::Functions qw/catfile/;
+
+my @loaded = grep {
+    eval "require $_";
+    !$@ ? 1 : ($@ =~ s/(@INC contains: Q@INCE)//, warn ("Failed loading $_: $@"), 0);
+} @ARGV;
+
+my @pm = map catfile(split '::') . (/.pmz/ ? '' : '.pm'), @loaded;
+
+print "@INC{@pm}n";
+__END__
+
+=pod
+
+=head1 NAME
+
+whichpm - lists real paths of specified modules
+
+=head1 SYNOPSIS
+
+  editor `whichpm Bar`
+
+=head1 DESCRIPTION
+
+Analogous to the UN*X command which.
+
+=cut
+
+</pre>
+<p>
+    Just place it in your $PATH and let 'er rip!
+</p></div>
+
+    <p><a href="/blog/22-Wheres-that-module.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2004-01-25 22:51:16</p>
+    <p class="tags"><a href="/blog/tag/perl.html">perl</a><br />
+<a href="/blog/tag/personal.html">personal</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/21-ClassDBI.html">Class::DBI</a></h4>
+
+    <div class="entry body"><p>
+    I was reading a thread on the cgiapp mailing list today from several of the
+    core developers about developing a book on CGI::Application. In it, several
+    mentioned that it might/should center around CGI::App and a handful of
+    oft-used modules. One of those modules is <a href="http://search.cpan.org/%7Etmtm/Class-DBI-0.95/lib/Class/DBI.pm">Class::DBI</a>.
+</p>
+<p>
+    I took a gander at Class::DBI over at CPAN, and it looks absolutely amazing,
+    and at the same time perhaps too abstract. Basically, you create a number of
+    packages and/or packages, one for each table you'll be using in your
+    application, and one to establish your basic connection. Then, each package
+    creates an object instance of the connection, and defines a number of
+    properties: the name of the table, the columns you'll be using, and then the
+    relations it has to other tables (<tt>has_a( col_name =>
+        'Package::Name'); has_many( col_name => 'Package::Name');
+        might_have(col_name => 'Package::Name');</tt>) etc.
+</p>
+<p>
+    Then you use the module/packages you need in your script, and you can then
+    use object-oriented notation to do things like insert rows, update rows,
+    search a table, select rows, etc. And it looks fairly natural.
+</p>
+<p>
+    I like the idea of data abstraction like this. I see a couple issues,
+    however:
+</p>
+<ol>
+    <li>I don't like the idea of one package per table; that gets so abstract as
+    to make development come to a stand-still, especially during initial
+    development. However, once development is sufficiently advanced, I could see
+    doing this, particularly for large projects; it could vastly simplify many
+    regular DBI calls.</li>
+    <li>I <strong>like</strong> using SQL. If I need to debug why something
+    isn't working when I interact with the database, I want to have absolute
+    control over the language. Abstracting the SQL means I don't have that
+    fine-grained control that helps me debug.</li>
+</ol>
+<p>
+    So, for now, I'll stick with straight DBI... but this is an interesting
+    avenue to explore.
+</p></div>
+
+    <p><a href="/blog/21-ClassDBI.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="paginationControl">
+        <a href="/blog/tag/perl.html" class="first">&lt;&lt; First</a> |
+        <a href="/blog/tag/perl.html"> &lt; Previous </a> |
+        <a href="/blog/tag/perl.html">1</a> |
+            <span class="current">2</span> |
+            <a href="/blog/tag/perl-p3.html">3</a> |
+            <a href="/blog/tag/perl-p3.html"> Next &gt;</a> |
+        <a href="/blog/tag/perl-p3.html" class="last"> Last &gt;&gt;</a>
+</div>
+
+</section>
+
+<aside class="four columns offset-by-one omega sidebar blog">
+        <div class="metadata">
+        <h4>Blogroll</h4>
+        <ul>
+            <li><a href="http://sebastian-bergmann.de/">Sebastian Bergmann</a></li>
+            <li><a href="http://blog.calevans.com/">Cal Evans</a></li>
+            <li><a href="http://prematureoptimization.org/blog/">Shahar Evron</a></li>
+            <li><a href="http://paul-m-jones.com/blog/">Paul M. Jones</a></li>
+            <li><a href="http://karwin.blogspot.com/">Bill Karwin</a></li>
+            <li><a href="http://mikenaberezny.com/">Mike Naberezny</a></li>
+            <li><a href="http://fabien.potencier.org/">Fabien Potencier</a></li>
+            <li><a href="http://benramsey.com/">Ben Ramsey</a></li>
+            <li><a href="http://derickrethans.nl/">Derick Rethans</a></li>
+            <li><a href="http://ralphschindler.com/">Ralph Schindler</a></li>
+            <li><a href="http://www.zimuel.it/blog/">Enrico Zimuel</a></li>
+        </ul>
+    </div>
+
+</aside>
+</div>
+    </div>
+
+    <footer class="sixteen columns footer">
+        <div class="column one-third alpha about">
+            <h4>About</h4>
+            <p>
+    I'm a husband, father of two, slave to an ancient Basset Hound and 
+    plaything of a Basset puppy, and web architect by day.
+</p>
+
+<ul class="resume">
+    <li><a href="/resume">Resume</a></li>
+    <li><a href="http://twitter.com/weierophinney">Twitter</a></li>
+    <li><a href="http://www.linkedin.com/in/mweierophinney">LinkedIn</a></li>
+    <li><a href="http://www.ohloh.net/accounts/weierophinney">OhLoh</a></li>
+    <li><a href="http://resume.github.com/?weierophinney">GitHub</a></li>
+</ul>
+
+        </div>
+
+        <div class="column one-third projects">
+            <h4>Projects</h4>
+            <ul class="projects">
+    <li><a href="http://framework.zend.com/">Zend Framework (Project Lead)</a></li>
+    <li><a href="http://github.com/weierophinney/phly_mustache">Phly_Mustache</a></li>
+    <li><a href="http://www.the-pastry-box-project.net/baker/matthew-weier-ophinney/">The Pastry Box Project</a> (as a Baker)</li>
+</ul>
+
+        </div>
+
+        <div class="column one-third omega tags">
+        <div id="search" style="width:100%;">Loading...</div>
+<h4>Tag Cloud</h4>
+<div class="cloud">
+<ul class="Zend\Tag\Cloud"><li><a href="/blog/tag/php.html" style="font-size: 20px;">php</a></li> <li><a href="/blog/tag/zend+framework.html" style="font-size: 14px;">zend framework</a></li> <li><a href="/blog/tag/zf2.html" style="font-size: 11px;">zf2</a></li> <li><a href="/blog/tag/vim.html" style="font-size: 11px;">vim</a></li> <li><a href="/blog/tag/family.html" style="font-size: 11px;">family</a></li> <li><a href="/blog/tag/programming.html" style="font-size: 12px;">programming</a></li> <li><a href="/blog/tag/personal.html" style="font-size: 13px;">personal</a></li> <li><a href="/blog/tag/phpconcom.html" style="font-size: 10px;">phpconcom</a></li> <li><a href="/blog/tag/mvc.html" style="font-size: 11px;">mvc</a></li> <li><a href="/blog/tag/oop.html" style="font-size: 11px;">oop</a></li> <li><a href="/blog/tag/testing.html" style="font-size: 10px;">testing</a></li> <li><a href="/blog/tag/rest.html" style="font-size: 11px;">rest</a></li> <li><a href="/blog/tag/linux.html" style="font-size: 12px;">linux</a></li> <li><a href="/blog/tag/zendcon08.html" style="font-size: 11px;">zendcon08</a></li> <li><a href="/blog/tag/file_fortune.html" style="font-size: 10px;">file_fortune</a></li> <li><a href="/blog/tag/pear.html" style="font-size: 11px;">pear</a></li> <li><a href="/blog/tag/zendcon.html" style="font-size: 11px;">zendcon</a></li> <li><a href="/blog/tag/perl.html" style="font-size: 12px;">perl</a></li> <li><a href="/blog/tag/fastcgi.html" style="font-size: 10px;">fastcgi</a></li> <li><a href="/blog/tag/ubuntu.html" style="font-size: 11px;">ubuntu</a></li> <li><a href="/blog/tag/tekx.html" style="font-size: 10px;">tekx</a></li> <li><a href="/blog/tag/zendcon10.html" style="font-size: 10px;">zendcon10</a></li> <li><a href="/blog/tag/dojo.html" style="font-size: 11px;">dojo</a></li> <li><a href="/blog/tag/symfony.html" style="font-size: 11px;">symfony</a></li> <li><a href="/blog/tag/zeta+components.html" style="font-size: 10px;">zeta components</a></li> <li><a href="/blog/tag/tek09.html" style="font-size: 10px;">tek09</a></li> <li><a href="/blog/tag/spl.html" style="font-size: 11px;">spl</a></li> <li><a href="/blog/tag/subversion.html" style="font-size: 11px;">subversion</a></li> <li><a href="/blog/tag/zend+framewor.html" style="font-size: 10px;">zend framewor</a></li> <li><a href="/blog/tag/rails.html" style="font-size: 10px;">rails</a></li> <li><a href="/blog/tag/conferences.html" style="font-size: 11px;">conferences</a></li> <li><a href="/blog/tag/dpc08.html" style="font-size: 11px;">dpc08</a></li> <li><a href="/blog/tag/phpworks08.html" style="font-size: 11px;">phpworks08</a></li> <li><a href="/blog/tag/webinar.html" style="font-size: 11px;">webinar</a></li> <li><a href="/blog/tag/zencon08.html" style="font-size: 10px;">zencon08</a></li> <li><a href="/blog/tag/advocacy.html" style="font-size: 10px;">advocacy</a></li> <li><a href="/blog/tag/politics.html" style="font-size: 10px;">politics</a></li> <li><a href="/blog/tag/internet.html" style="font-size: 10px;">internet</a></li> <li><a href="/blog/tag/cw09.html" style="font-size: 11px;">cw09</a></li> <li><a href="/blog/tag/zend+server.html" style="font-size: 10px;">zend server</a></li> <li><a href="/blog/tag/dpc09.html" style="font-size: 10px;">dpc09</a></li> <li><a href="/blog/tag/sflive2010.html" style="font-size: 10px;">sflive2010</a></li> <li><a href="/blog/tag/security.html" style="font-size: 10px;">security</a></li> <li><a href="/blog/tag/wifi.html" style="font-size: 10px;">wifi</a></li> <li><a href="/blog/tag/aikido.html" style="font-size: 10px;">aikido</a></li> <li><a href="/blog/tag/books.html" style="font-size: 10px;">books</a></li> <li><a href="/blog/tag/dpc10.html" style="font-size: 10px;">dpc10</a></li> <li><a href="/blog/tag/zendcon09.html" style="font-size: 11px;">zendcon09</a></li> <li><a href="/blog/tag/git.html" style="font-size: 10px;">git</a></li> <li><a href="/blog/tag/phpwomen.html" style="font-size: 10px;">phpwomen</a></li> <li><a href="/blog/tag/virtualbox.html" style="font-size: 10px;">virtualbox</a></li></ul></div>
+        </div>
+    </footer>
+</div>
+</body>
+</html>

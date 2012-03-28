@@ -1,0 +1,394 @@
+<!DOCTYPE html><!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8" />
+    <title>Zend Framework Dojo Integration :: phly, boy, phly</title>
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <link href="/css/SkeletonCss/base.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/SkeletonCss/skeleton.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/SkeletonCss/layout.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/Application/site.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/images/Application/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" >
+<link href="/css/PhlyBlog/phly-blog.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/blog-atom.xml" rel="alternate" type="application/atom+xml" title="phly, boy, phly Atom Feed" >
+<link href="/blog-rss.xml" rel="alternate" type="application/rss+xml" title="phly, boy, phly RSS Feed" >
+    
+<script type="text/javascript">
+//<!--
+    var djConfig = {"isDebug":true,"parseOnLoad":true,"baseUrl":"\/js\/dojo\/","modulePaths":{"PhlyBlog":"\/js\/PhlyBlog","Application":"\/js\/Application"}};
+//-->
+</script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojo/dojo.xd.js"></script>
+
+<script type="text/javascript">
+//<!--
+dojo.require("PhlyBlog.blog");
+    dojo.require("Application.scroll");
+//-->
+
+</script>
+    
+    <script src="https://www.google.com/jsapi?ABQIAAAAGybdRRvLZwVUcF0dE3oVdBTO-MlgA7VGJpGqyqTOeDXlNzyZQxTGq17s-iAB0m0vwqLQ_A2dHhTg2Q"></script>
+<script type="text/javascript">
+    google.load('search', '1', {style: google.loader.themes.ESPRESSO});
+    google.setOnLoadCallback(function(){
+        new google.search.CustomSearchControl().draw('search');
+    }, true);
+</script>
+
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-27037983-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</head>
+<body>
+<div class="container">
+    <header class="sixteen columns">
+    <a href="/"><img src="/images/Application/logo.gif" height="37" width="37"/></a>
+        <span class="main_title">phly, boy, phly: matthew weier o'phinney</span>
+    </header>
+
+    <div class="sixteen columns" id="menu">
+        <nav>
+            <li><a href="/">Home</a></li>
+            <li><a href="/blog.html">Blog</a></li>
+                        <li><a href="/resume">R&eacute;sum&eacute;</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </nav>
+    </div>
+
+    <div class="sixteen columns content">
+        <div class="row">
+<article class="eleven columns alpha blog">
+<h2>Zend Framework Dojo Integration</h2>
+<p>
+    I'm pleased to announce that 
+    <a href="http://framework.zend.com/">Zend Framework</a> will be partnering
+    with <a href="http://dojotoolkit.org/">Dojo Toolkit</a> to deliver
+    out-of-the-box Ajax and rich user interfaces for sites developed in Zend
+    Framework.
+</p>
+
+<p>
+    First off, for those ZF users who are using other Javascript toolkits: Zend
+    Framework will continue to be basically JS toolkit agnostic. You will still
+    be able to use whatever toolkit you want with ZF applications. ZF will
+    simply be shipping Dojo so that users have a toolkit by default. Several
+    points of integration have been defined, and my hope is that these can be
+    used as a blueprint for community contributions relating to other javascript
+    frameworks. In the meantime, developers choosing to use Dojo will have a
+    rich set of components and integration points to work with.
+</p>
+
+<p>
+    The integration points we have defined for our initial release are as
+    follows:
+</p><ul>
+    <li><p>
+        <b>JSON-RPC Server:</b> We are re-working the Zend_Json_Server that has
+        been in our incubator since, oh, what? 0.2.0? and never released to
+        actually follow a specification: 
+        <a href="http://groups.google.com/group/json-rpc">JSON-RPC</a>. This
+        will allow it to work seamlessly with Dojo, as well as other toolkits
+        that have JSON-RPC client implementations. I have actually completed
+        work on this, though the proposal is waiting to be approved; if you want
+        to check it out, you can find it in the 
+        <a href="http://framework.zend.com/svn/framework/branch/user/matthew/zed_json_server">ZF svn</a>.
+        </p><p>
+        The original Zend_Json_Server implementation will be abandoned. It was
+        never fully tested nor fully documented, which has prevented its
+        release. Additionally, since it implemented its own ad-hoc standard, it
+        did not provide the type of interoperability that a true JSON-RPC server
+        implementation will provide. I am excited that we will finally be able
+        to provide a standards-compliant solution for general availability.
+        </p><p>
+        One final note: there are currently two different JSON-RPC
+        specifications, 1.0 and 2.0. Currently, the implementation I've been
+        working on will switch payload formats based on the request, and can
+        deliver different SMD formats appropriately as well.
+    </p></li>
+
+    <li>
+        <b>dojo() View Helper:</b> Enabling Dojo for a page is not typically as
+        trivial as just loading the <code>dojo.js</code> script -- you have a
+        choice of loading it from the AOL CDN or a local path, and also may want
+        or need to load additional dojo, dijit, or dojox modules, specify custom
+        modules and paths, specify code to run at <code>onLoad()</code>, and
+        specify stylesheets for decorating dijits. On top of this, this
+        information may change from page to page, and may only be needed for
+        a subset of pages. The <code>dojo()</code> view helper will act as a 
+        <a href="http://framework.zend.com/manual/en/zend.view.helpers.html#zend.view.helpers.initial.placeholder">placeholder</a>
+        implementation, and facilitate all of the above tasks, as well as take
+        care of rendering the necessary <code>style</code> and
+        <code>script</code> elements in your page.
+    </li>
+
+    <li>
+        <b>Form Element implementations:</b> One area that developers really
+        leverage javascript and ajax toolkits is forms. In particular, many
+        types of form input can benefit from advanced and rich user interfaces
+        that only javascript can provide: calendar choosers, time selectors,
+        etc. Additionally, many like to use client-side validation in order to
+        provide instantaneous validation feedback to users (instead of requiring
+        a round-trip to the server). We will be identifying a small group of
+        form elements that we feel solve the most relevant use cases, and write
+        Dojo-specific versions that can be utilized with <code>Zend_Form</code>.
+        (One thing to note: <code>Zend_Form</code>'s design already works very
+        well with Dojo, allowing many widgets and client-side validations to be
+        created by simply setting the appropriate element attributes.)
+    </li>
+
+    <li>
+        <b>dojo.data Compatibility:</b> <code>dojo.data</code> defines a
+        standard storage interface; services providing data in this format can
+        then be consumed by a variety of Dojo facilities to provide highly
+        flexible and dynamic content for your user interfaces. We will be
+        building a component that will create dojo.data compatible payloads with
+        which to respond to XmlHttpRequests; you will simply need to pass in the
+        data, and provide metadata regarding it.
+    </li>
+</ul>
+
+<p>
+    So, some examples are in order. First off, <code>Zend_Json_Server</code>
+    operates like all of ZF's server components: if follows the 
+    <a href="http://php.net/soap_soapserver_construct">SoapServer API</a>. This
+    allows you to attach arbitrary classes and functions to the server
+    component. Additionally, it can build a Service Mapping Description (SMD)
+    that Dojo can consume in order to discover valid methods and signatures. As
+    an example, on the server side you could have the following:
+</p>
+
+<div class="example"><pre><code lang="php">
+// /json-rpc.php
+// Assumes you have a class 'Foo' with methods 'bar' and 'baz':
+$server = new Zend_Json_Server();
+$server-&gt;setClass('Foo')
+       -&gt;setTarget('/json-rpc.php')
+       -&gt;setEnvelope('JSON-RPC-1.0')
+       -&gt;setDojoCompatible(true);
+
+// For GET requests, simply return the service map
+if ('GET' == $_SERVER['REQUEST_METHOD']) {
+    $smd = $server-&gt;getServiceMap();
+    header('Content-Type: application/json');
+    echo $smd;
+    exit;
+}
+
+$server-&gt;handle();
+</code></pre></div>
+
+<p>
+    On your view script side, you might then do the following:
+</p>
+
+<div class="example"><pre><code lang="php">
+&lt;h2&gt;Dojo JSON-RPC Demo&lt;/h2&gt;
+&lt;input name=\&quot;foo\&quot; type=\&quot;button\&quot; value=\&quot;Demo\&quot; onClick=\&quot;demoRpc()\&quot;/&gt;
+&lt;? 
+$this-&gt;dojo()-&gt;setLocalPath('/js/dojo/dojo.js')
+             -&gt;addStyleSheetModule('dijit.themes.tundra')
+             -&gt;requireModule('dojo.rpc.JsonService');
+$this-&gt;headScript()-&gt;captureStart(); ?&gt;
+function demoRpc()
+{
+    var myObject = new dojo.rpc.JsonService('/json-rpc.php');
+    console.log(myObject.bar());
+}
+&lt;? $this-&gt;headScript()-&gt;captureEnd() ?&gt;
+</code></pre></div>
+
+<p>
+    And, finally, in your layout script, you might have the following:
+</p>
+
+<div class="example"><pre><code lang="php">
+&lt;?= $this-&gt;doctype() ?&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;title&gt;...&lt;/title&gt;
+        &lt;?= $this-&gt;dojo() ?&gt;
+        &lt;?= $this-&gt;headScript() ?&gt;
+    &lt;/head&gt;
+    &lt;body class=\&quot;tundra\&quot;&gt;
+        &lt;?= $this-&gt;layout()-&gt;content ?&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre></div>
+
+<p>
+    The example doesn't do much -- it simply logs the results of the JSON-RPC
+    call to the console -- but it demonstrates a number of things:
+</p>
+
+<ul>
+    <li>
+        <b>dojo() View Helper:</b> The example shows using dojo from a local
+        path relative to the server's document root; using the 'Tundra'
+        stylesheet shipped with Dojo and attaching it to the layout; capturing a
+        required module ('dojo.rpc.JsonService'); and rendering the necessary
+        Dojo stylsheet and script includes in the layout.
+    </li>
+    <li>
+        <b>JSON-RPC client:</b> Dojo requires that you point the JsonService to
+        an endpoint that delivers a Service Mapping Description; in this
+        example, I use any GET request to return the SMD. Once the SMD is
+        retrieved, any methods exposed are available to the Javascript object as
+        if they were internal methods -- hence <code>myObject.bar()</code>.
+        Dojo's current implementation performs all other requests as POST
+        requests, passing the data via the raw POST body.
+    </li>
+</ul>
+
+<p>
+    There will be more to come in the future, and I will be blogging about
+    developments as I get more proposals up and code into the repository. All in
+    all, this is a very exciting collaboration, and should help provide ZF
+    developers the ability to rapidly create web applications with rich, dynamic
+    user interfaces.
+</p>
+
+<p>
+    <b>Update:</b> <a href="http://andigutmans.blogspot.com/2008/05/dojo-and-zend-framework-partnership.html">Andi has posted an FAQ on our integration</a>.<div class="social-media">
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="weierophinney">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</div>
+
+<div class="social-media">
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<div class="fb-like" data-send="true" data-width="450" data-show-faces="true"></div>
+</div>
+
+<div class="social-media">
+<div class="g-plusone" data-size="medium" data-annotation="inline"></div>
+</div>
+
+<!-- Place this render call where appropriate -->
+<script type="text/javascript">
+dojo.ready(function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+});
+</script>
+
+<div class="social-media">
+<a href="http://www.reddit.com/submit" onclick="window.location = 'http://www.reddit.com/submit?url=' + encodeURIComponent(window.location); return false"> <img src="http://www.reddit.com/static/spreddit1.gif" alt="submit to reddit" border="0" /> </a>
+</div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_developer = 1;
+        var disqus_shortname = 'phlyboyphly';
+        var disqus_identifier = '176-Zend-Framework-Dojo-Integration';
+        var disqus_url = 'http://mwop.net/blog/176-Zend-Framework-Dojo-Integration.html';
+        var disqus_title = 'Zend Framework Dojo Integration';
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a></article>
+
+<aside class="four columns offset-by-one omega sidebar blog">
+    <div class="metadata">
+        <ul>
+            <li>Posted on <b>2008-05-21 10:57:00</b>.</li>
+            <li>Last updated on <b>2008-05-25 12:40:37</b>.</li>
+        </ul>
+    </div>
+
+    <div class="metadata">
+        <h4>Tags for this entry</h4>
+        <p class="tags"><a href="/blog/tag/php.html">php</a><br />
+<a href="/blog/tag/mvc.html">mvc</a><br />
+<a href="/blog/tag/zend+framework.html">zend framework</a></p>
+    </div>
+
+        <div class="metadata">
+        <h4>Blogroll</h4>
+        <ul>
+            <li><a href="http://sebastian-bergmann.de/">Sebastian Bergmann</a></li>
+            <li><a href="http://blog.calevans.com/">Cal Evans</a></li>
+            <li><a href="http://prematureoptimization.org/blog/">Shahar Evron</a></li>
+            <li><a href="http://paul-m-jones.com/blog/">Paul M. Jones</a></li>
+            <li><a href="http://karwin.blogspot.com/">Bill Karwin</a></li>
+            <li><a href="http://mikenaberezny.com/">Mike Naberezny</a></li>
+            <li><a href="http://fabien.potencier.org/">Fabien Potencier</a></li>
+            <li><a href="http://benramsey.com/">Ben Ramsey</a></li>
+            <li><a href="http://derickrethans.nl/">Derick Rethans</a></li>
+            <li><a href="http://ralphschindler.com/">Ralph Schindler</a></li>
+            <li><a href="http://www.zimuel.it/blog/">Enrico Zimuel</a></li>
+        </ul>
+    </div>
+
+</aside>
+
+    </div>
+
+    <footer class="sixteen columns footer">
+        <div class="column one-third alpha about">
+            <h4>About</h4>
+            <p>
+    I'm a husband, father of two, slave to an ancient Basset Hound and 
+    plaything of a Basset puppy, and web architect by day.
+</p>
+
+<ul class="resume">
+    <li><a href="/resume">Resume</a></li>
+    <li><a href="http://twitter.com/weierophinney">Twitter</a></li>
+    <li><a href="http://www.linkedin.com/in/mweierophinney">LinkedIn</a></li>
+    <li><a href="http://www.ohloh.net/accounts/weierophinney">OhLoh</a></li>
+    <li><a href="http://resume.github.com/?weierophinney">GitHub</a></li>
+</ul>
+
+        </div>
+
+        <div class="column one-third projects">
+            <h4>Projects</h4>
+            <ul class="projects">
+    <li><a href="http://framework.zend.com/">Zend Framework (Project Lead)</a></li>
+    <li><a href="http://github.com/weierophinney/phly_mustache">Phly_Mustache</a></li>
+    <li><a href="http://www.the-pastry-box-project.net/baker/matthew-weier-ophinney/">The Pastry Box Project</a> (as a Baker)</li>
+</ul>
+
+        </div>
+
+        <div class="column one-third omega tags">
+        <div id="search" style="width:100%;">Loading...</div>
+<h4>Tag Cloud</h4>
+<div class="cloud">
+<ul class="Zend\Tag\Cloud"><li><a href="/blog/tag/php.html" style="font-size: 20px;">php</a></li> <li><a href="/blog/tag/zend+framework.html" style="font-size: 14px;">zend framework</a></li> <li><a href="/blog/tag/zf2.html" style="font-size: 11px;">zf2</a></li> <li><a href="/blog/tag/vim.html" style="font-size: 11px;">vim</a></li> <li><a href="/blog/tag/family.html" style="font-size: 11px;">family</a></li> <li><a href="/blog/tag/programming.html" style="font-size: 12px;">programming</a></li> <li><a href="/blog/tag/personal.html" style="font-size: 13px;">personal</a></li> <li><a href="/blog/tag/phpconcom.html" style="font-size: 10px;">phpconcom</a></li> <li><a href="/blog/tag/mvc.html" style="font-size: 11px;">mvc</a></li> <li><a href="/blog/tag/oop.html" style="font-size: 11px;">oop</a></li> <li><a href="/blog/tag/testing.html" style="font-size: 10px;">testing</a></li> <li><a href="/blog/tag/rest.html" style="font-size: 11px;">rest</a></li> <li><a href="/blog/tag/linux.html" style="font-size: 12px;">linux</a></li> <li><a href="/blog/tag/zendcon08.html" style="font-size: 11px;">zendcon08</a></li> <li><a href="/blog/tag/file_fortune.html" style="font-size: 10px;">file_fortune</a></li> <li><a href="/blog/tag/pear.html" style="font-size: 11px;">pear</a></li> <li><a href="/blog/tag/zendcon.html" style="font-size: 11px;">zendcon</a></li> <li><a href="/blog/tag/perl.html" style="font-size: 12px;">perl</a></li> <li><a href="/blog/tag/fastcgi.html" style="font-size: 10px;">fastcgi</a></li> <li><a href="/blog/tag/ubuntu.html" style="font-size: 11px;">ubuntu</a></li> <li><a href="/blog/tag/tekx.html" style="font-size: 10px;">tekx</a></li> <li><a href="/blog/tag/zendcon10.html" style="font-size: 10px;">zendcon10</a></li> <li><a href="/blog/tag/dojo.html" style="font-size: 11px;">dojo</a></li> <li><a href="/blog/tag/symfony.html" style="font-size: 11px;">symfony</a></li> <li><a href="/blog/tag/zeta+components.html" style="font-size: 10px;">zeta components</a></li> <li><a href="/blog/tag/tek09.html" style="font-size: 10px;">tek09</a></li> <li><a href="/blog/tag/spl.html" style="font-size: 11px;">spl</a></li> <li><a href="/blog/tag/subversion.html" style="font-size: 11px;">subversion</a></li> <li><a href="/blog/tag/zend+framewor.html" style="font-size: 10px;">zend framewor</a></li> <li><a href="/blog/tag/rails.html" style="font-size: 10px;">rails</a></li> <li><a href="/blog/tag/conferences.html" style="font-size: 11px;">conferences</a></li> <li><a href="/blog/tag/dpc08.html" style="font-size: 11px;">dpc08</a></li> <li><a href="/blog/tag/phpworks08.html" style="font-size: 11px;">phpworks08</a></li> <li><a href="/blog/tag/webinar.html" style="font-size: 11px;">webinar</a></li> <li><a href="/blog/tag/zencon08.html" style="font-size: 10px;">zencon08</a></li> <li><a href="/blog/tag/advocacy.html" style="font-size: 10px;">advocacy</a></li> <li><a href="/blog/tag/politics.html" style="font-size: 10px;">politics</a></li> <li><a href="/blog/tag/internet.html" style="font-size: 10px;">internet</a></li> <li><a href="/blog/tag/cw09.html" style="font-size: 11px;">cw09</a></li> <li><a href="/blog/tag/zend+server.html" style="font-size: 10px;">zend server</a></li> <li><a href="/blog/tag/dpc09.html" style="font-size: 10px;">dpc09</a></li> <li><a href="/blog/tag/sflive2010.html" style="font-size: 10px;">sflive2010</a></li> <li><a href="/blog/tag/security.html" style="font-size: 10px;">security</a></li> <li><a href="/blog/tag/wifi.html" style="font-size: 10px;">wifi</a></li> <li><a href="/blog/tag/aikido.html" style="font-size: 10px;">aikido</a></li> <li><a href="/blog/tag/books.html" style="font-size: 10px;">books</a></li> <li><a href="/blog/tag/dpc10.html" style="font-size: 10px;">dpc10</a></li> <li><a href="/blog/tag/zendcon09.html" style="font-size: 11px;">zendcon09</a></li> <li><a href="/blog/tag/git.html" style="font-size: 10px;">git</a></li> <li><a href="/blog/tag/phpwomen.html" style="font-size: 10px;">phpwomen</a></li> <li><a href="/blog/tag/virtualbox.html" style="font-size: 10px;">virtualbox</a></li></ul></div>
+        </div>
+    </footer>
+</div>
+</body>
+</html>
