@@ -48,7 +48,7 @@ header .main_title {
     border-bottom: 1px dotted #676767;
 }
 
-#menu nav {
+#menu nav ul {
     list-style-type: none;
     font-family: "Cardo", arial, serif;
     font-weight: bold;
