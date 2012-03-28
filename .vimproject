@@ -102,7 +102,7 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
     }
    }
   }
-  Blog=Blog {
+  PhlyBlog=PhlyBlog {
    README.md
    Module.php
    autoload_classmap.php
@@ -119,14 +119,14 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
    }
    public=public {
     css=css {
-     blog.css
+     phly-blog.css
     }
     js=js {
      blog.js
     }
    }
    src=src {
-    Blog=Blog {
+    PhlyBlog=PhlyBlog {
      Compiler.php
      CompilerOptions.php
      EntryEntity.php
@@ -147,14 +147,14 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
     phpunit.xml
     bootstrap.php
     bootstrap.php.dist
-    Blog=Blog {
+    PhlyBlog=PhlyBlog {
      EntryEntityTest.php
     }
     log=log {
     }
    }
    view=view filter="*.phtml *.php *.mustache" {
-    blog=blog {
+    phly-blog=phly-blog {
      entry-short.phtml
      entry.phtml
      list.phtml

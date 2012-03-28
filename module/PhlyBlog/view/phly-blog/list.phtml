@@ -1,0 +1,33 @@
+<?php 
+$paginatorUrl          = $this->paginator_url;
+$urlSubstitutionString = $this->substitution;
+$basePageUrl           = str_replace('-p%d', '', $paginatorUrl);
+if ($urlSubstitutionString) {
+    $basePageUrl = str_replace('%s', str_replace(' ', '+', $urlSubstitutionString), $basePageUrl);
+}
+$this->headTitle()->prepend($this->title);
+$this->headLink(array(
+    'href'  => rtrim(dirname($basePageUrl), '/') . '/' . basename($basePageUrl, '.html') . '-atom.xml',
+    'type'  => 'application/atom+xml',
+    'rel'   => 'alternate',
+    'title' => $this->title . ' Atom Feed',
+));
+$this->headLink(array(
+    'href'  => rtrim(dirname($basePageUrl), '/') . '/' . basename($basePageUrl, '.html') . '-rss.xml',
+    'type'  => 'application/rss+xml',
+    'rel'   => 'alternate',
+    'title' => $this->title . ' RSS Feed',
+));
+?>
+<section class="blog">
+    <h2><?php echo $this->title ?></h2>
+
+<?php 
+foreach ($this->entries as $entry) {
+    echo $this->render('phly-blog/entry-short', array('entry' => $entry));
+}
+
+echo $this->paginationControl($this->entries, 'Sliding', 'phly-blog/paginator', array('url' => $paginatorUrl, 'substitution' => $urlSubstitutionString));
+?>
+</section>
+

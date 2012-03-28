@@ -1,5 +1,4 @@
-<?php
-$this->render('blog/assets');
+<?php 
 $entry = $this->entry;
 $title = $entry->getTitle();
 $this->headTitle()->prepend($title);
@@ -26,18 +25,15 @@ $this->headLink(array(
     'title' => $blogTitle . ' RSS Feed',
 ));
 ?>
-<div class="row">
-<article class="eleven columns alpha blog">
+<article class="blog">
 <h2><?php echo $title ?></h2>
 <?php
 echo $entry->getBody();
 echo $entry->getExtended();
-echo $this->render('blog/social-media');
-echo $this->disqus($entry->getId(), $url, $title);
 ?>
 </article>
 
-<aside class="four columns offset-by-one omega sidebar blog">
+<aside class="sidebar blog">
     <div class="metadata">
         <ul>
             <li>Posted on <b><?php echo $ds($entry->getCreated()) ?></b>.</li>
@@ -49,7 +45,5 @@ echo $this->disqus($entry->getId(), $url, $title);
         <h4>Tags for this entry</h4>
         <p class="tags"><?php echo $this->render('blog/tags', array('tags' => $entry->getTags())) ?></p>
     </div>
-
-    <?php echo $this->render('blog/blogroll') ?>
 </aside>
 
