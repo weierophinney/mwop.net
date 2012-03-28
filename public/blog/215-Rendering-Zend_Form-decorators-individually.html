@@ -1,0 +1,474 @@
+<!DOCTYPE html><!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8" />
+    <title>Rendering Zend_Form decorators individually :: phly, boy, phly</title>
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <link href="/css/SkeletonCss/base.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/SkeletonCss/skeleton.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/SkeletonCss/layout.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/Application/site.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/images/Application/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" >
+<link href="/css/PhlyBlog/phly-blog.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/blog-atom.xml" rel="alternate" type="application/atom+xml" title="phly, boy, phly Atom Feed" >
+<link href="/blog-rss.xml" rel="alternate" type="application/rss+xml" title="phly, boy, phly RSS Feed" >
+    
+<script type="text/javascript">
+//<!--
+    var djConfig = {"isDebug":true,"parseOnLoad":true,"baseUrl":"\/js\/dojo\/","modulePaths":{"PhlyBlog":"\/js\/PhlyBlog","Application":"\/js\/Application"}};
+//-->
+</script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojo/dojo.xd.js"></script>
+
+<script type="text/javascript">
+//<!--
+dojo.require("PhlyBlog.blog");
+    dojo.require("Application.scroll");
+//-->
+
+</script>
+    
+    <script src="https://www.google.com/jsapi?ABQIAAAAGybdRRvLZwVUcF0dE3oVdBTO-MlgA7VGJpGqyqTOeDXlNzyZQxTGq17s-iAB0m0vwqLQ_A2dHhTg2Q"></script>
+<script type="text/javascript">
+    google.load('search', '1', {style: google.loader.themes.ESPRESSO});
+    google.setOnLoadCallback(function(){
+        new google.search.CustomSearchControl().draw('search');
+    }, true);
+</script>
+
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-27037983-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</head>
+<body>
+<div class="container">
+    <header class="sixteen columns">
+    <a href="/"><img src="/images/Application/logo.gif" height="37" width="37"/></a>
+        <span class="main_title">phly, boy, phly: matthew weier o'phinney</span>
+    </header>
+
+    <div class="sixteen columns" id="menu">
+        <nav>
+            <li><a href="/">Home</a></li>
+            <li><a href="/blog.html">Blog</a></li>
+                        <li><a href="/resume">R&eacute;sum&eacute;</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </nav>
+    </div>
+
+    <div class="sixteen columns content">
+        <div class="row">
+<article class="eleven columns alpha blog">
+<h2>Rendering Zend_Form decorators individually</h2>
+<p>
+    In the <a href="/matthew/archives/213-From-the-inside-out-How-to-layer-decorators.html">previous installment</a> of this series on
+    <code>Zend_Form</code> decorators, I looked at how you can combine
+    decorators to create complex output. In that write-up, I noted that while
+    you have a ton of flexibility with this approach, it also adds some
+    complexity and overhead. In this article, I will show you how to render
+    decorators individually in order to create custom markup for your form
+    and/or individual elements. 
+</p><p>
+    Once you have registered your decorators, you can later retrieve them by
+    name from the element. Let's review our previous example:
+</p>
+
+<div class="example"><pre><code lang="php">
+$element = new Zend_Form_Element('foo', array(
+    'label'      =&gt; 'Foo',
+    'belongsTo'  =&gt; 'bar',
+    'value'      =&gt; 'test',
+    'prefixPath' =&gt; array('decorator' =&gt; array(
+        'My_Decorator' =&gt; 'path/to/decorators/',
+    )),
+    'decorators' =&gt; array(
+        'SimpleInput'
+        array('SimpleLabel', array('placement' =&gt; 'append')),
+    ),
+));
+</code></pre></div>
+
+<p>
+    If we wanted to pull and render just the "SimpleInput" decorator, we can do
+    so using the <code>getDecorator()</code> method:
+</p>
+
+<div class="example"><pre><code lang="php">
+$decorator = $element-&gt;getDecorator('SimpleInput');
+echo $decorator-&gt;render('');
+</code></pre></div>
+
+<p>
+    This is pretty easy, but it can be made even easier; let's do it in a single
+    line:
+</p>
+
+<div class="example"><pre><code lang="php">
+echo $element-&gt;getDecorator('SimpleInput')-&gt;render('');
+</code></pre></div>
+
+<p>
+    Not too bad, but still a little complex. To make this easier, we introduced
+    a shorthand notation into <code>Zend_Form</code> in 1.7: you can now render
+    any registered decorator by calling a method
+    <code>renderDecoratorName()</code>. This will effectively perform what you
+    see above, but makes the <code>$content</code> argument optional and
+    simplifies the usage:
+</p>
+
+<div class="example"><pre><code lang="php">
+echo $element-&gt;renderSimpleInput();
+</code></pre></div>
+
+<p>
+    This is a neat trick, but how and why would you use it?
+</p>
+
+<p>
+    Many developers and designers have very precise markup needs for their
+    forms. They would rather have full control over the output than rely on a
+    more automated solution which may or may not conform to their design. In
+    other cases, the form layout may require a lot of specialized markup --
+    grouping arbitrary elements, making some invisible unless a particular link
+    is selected, etc.
+</p>
+
+<p>
+    Let's utilize the ability to render individual decorators to create some
+    specialized markup.
+</p>
+
+<p>
+    First, let's define a form. Our form will capture a user's demographic
+    details. The markup will be highly customized, and in some cases use view
+    helpers directly instead of form elements in order to achieve its goals.
+    Here is the basic form definition:
+</p>
+
+<div class="example"><pre><code lang="php">
+class My_Form_UserDemographics extends Zend_Form
+{
+    public function init()
+    {
+        // Add a path for my own decorators
+        $this-&gt;addElementPrefixPaths(array(
+            'decorator' =&gt; array('My_Decorator' =&gt; 'My/Decorator'),
+        ));
+
+        $this-&gt;addElement('text', 'firstName', array(
+            'label' =&gt; 'First name: ',
+        ));
+        $this-&gt;addElement('text', 'lastName', array(
+            'label' =&gt; 'Last name: ',
+        ));
+        $this-&gt;addElement('text', 'title', array(
+            'label' =&gt; 'Title: ',
+        ));
+        $this-&gt;addElement('text', 'dateOfBirth', array(
+            'label' =&gt; 'Date of Birth (DD/MM/YYYY): ',
+        ));
+        $this-&gt;addElement('text', 'email', array(
+            'label' =&gt; 'Your email address: ',
+        ));
+        $this-&gt;addElement('password', 'password', array(
+            'label' =&gt; 'Password: ',
+        ));
+        $this-&gt;addElement('password', 'passwordConfirmation', array(
+            'label' =&gt; 'Confirm Password: ',
+        ));
+    }
+}
+</code></pre></div>
+
+<p>
+    Note: I'm not defining any validators or filters at this time, as they are
+    not relevant to the discussion of decoration. In a real-world scenario, you
+    should define them.
+</p>
+
+<p>
+    With that out of the way, let's consider how we might want to display this
+    form. One common idiom with first/last names is to display them on a single
+    line; when a title is provided, that is often on the same line as well.
+    Dates, when not using a JavaScript date chooser, will often be separated
+    into three fields displayed side by side.
+</p>
+
+<p>
+    Let's use the ability to render an element's decorators one by one to
+    accomplish this. First, I'll note that I did not set any explicit decorators
+    for the given elements. As a refresher, the default decorators for (most)
+    elements are:
+</p>
+
+<ul>
+    <li>ViewHelper: utilize a view helper to render a form input</li>
+    <li>Errors: utilize the FormErrors view helper to render validation errors</li>
+    <li>Description: utilize the FormNote view helper to render the element
+    description (if any)</li>
+    <li>HtmlTag: wrap the above three items in a &lt;dd&gt; tag</li>
+    <li>Label: render the element label using the FormLabel view helper (and
+    wrap it in a &lt;dt&gt; tag)</li>
+</ul>
+
+<p>
+    Also, as a refresher, you can access any element of a form as if it were a
+    class property; simply reference the element by the name you assigned it.
+</p>
+
+<p>
+    Our view script might then look like this:
+</p>
+
+<div class="example"><pre><code lang="php">
+&lt;?php 
+$form = $this-&gt;form; 
+// Remove &lt;dt&gt; from label generation
+foreach ($form-&gt;getElements() as $element) {
+    $element-&gt;getDecorator('label')-&gt;setTag(null);
+}
+?&gt;
+&lt;form method=\&quot;&lt;?php echo $form-&gt;getMethod() ?&gt;\&quot; action=\&quot;&lt;?php echo
+    $form-&gt;getAction()?&gt;\&quot;&gt;
+    &lt;div class=\&quot;element\&quot;&gt;
+        &lt;?php echo $form-&gt;title-&gt;renderLabel() . $form-&gt;title-&gt;renderViewHelper() ?&gt;
+        &lt;?php echo $form-&gt;firstName-&gt;renderLabel() . $form-&gt;firstName-&gt;renderViewHelper() ?&gt;
+        &lt;?php echo $form-&gt;lastName-&gt;renderLabel() . $form-&gt;lastName-&gt;renderViewHelper() ?&gt;
+    &lt;/div&gt;
+    &lt;div class=\&quot;element\&quot;&gt;
+        &lt;?php echo $form-&gt;dateOfBirth-&gt;renderLabel() ?&gt;
+        &lt;?php echo $this-&gt;formText('dateOfBirth['day']', '', array(
+            'size' =&gt; 2, 'maxlength' =&gt; 2)) ?&gt;
+        /
+        &lt;?php echo $this-&gt;formText('dateOfBirth['month']', '', array(
+            'size' =&gt; 2, 'maxlength' =&gt; 2)) ?&gt;
+        /
+        &lt;?php echo $this-&gt;formText('dateOfBirth['year']', '', array(
+            'size' =&gt; 4, 'maxlength' =&gt; 4)) ?&gt;
+    &lt;/div&gt;
+    &lt;div class=\&quot;element\&quot;&gt;
+        &lt;?php echo $form-&gt;password-&gt;renderLabel() . $form-&gt;password-&gt;renderViewHelper() ?&gt;
+    &lt;/div&gt;
+    &lt;div class=\&quot;element\&quot;&gt;
+        &lt;?php echo $form-&gt;passwordConfirmation-&gt;renderLabel() . $form-&gt;passwordConfirmation-&gt;renderViewHelper() ?&gt;
+    &lt;/div&gt;
+    &lt;?php echo $this-&gt;formSubmit('submit', 'Save') ?&gt;
+&lt;/form&gt;
+</code></pre></div>
+
+<p>
+    If you use the above view script, you'll get approximately the following
+    HTML (approximate, as the HTML below is formatted):
+</p>
+
+<div class="example"><pre><code lang="html">
+&lt;form method=\&quot;post\&quot; action=\&quot;\&quot;&gt;
+    &lt;div class=\&quot;element\&quot;&gt;
+        &lt;label for=\&quot;title\&quot; tag=\&quot;\&quot; class=\&quot;optional\&quot;&gt;Title:&lt;/label&gt;
+        &lt;input type=\&quot;text\&quot; name=\&quot;title\&quot; id=\&quot;title\&quot; value=\&quot;\&quot;/&gt;
+
+        &lt;label for=\&quot;firstName\&quot; tag=\&quot;\&quot; class=\&quot;optional\&quot;&gt;First name:&lt;/label&gt;
+        &lt;input type=\&quot;text\&quot; name=\&quot;firstName\&quot; id=\&quot;firstName\&quot; value=\&quot;\&quot;/&gt;
+        
+        &lt;label for=\&quot;lastName\&quot; tag=\&quot;\&quot; class=\&quot;optional\&quot;&gt;Last name:&lt;/label&gt;
+        &lt;input type=\&quot;text\&quot; name=\&quot;lastName\&quot; id=\&quot;lastName\&quot; value=\&quot;\&quot;/&gt;
+    &lt;/div&gt;
+
+    &lt;div class=\&quot;element\&quot;&gt;
+        &lt;label for=\&quot;dateOfBirth\&quot; tag=\&quot;\&quot; class=\&quot;optional\&quot;&gt;Date of Birth
+            (DD/MM/YYYY):&lt;/label&gt;
+        &lt;input type=\&quot;text\&quot; name=\&quot;dateOfBirth[day]\&quot; id=\&quot;dateOfBirth-day\&quot; value=\&quot;\&quot;
+            size=\&quot;2\&quot; maxlength=\&quot;2\&quot;/&gt;
+        /
+        &lt;input type=\&quot;text\&quot; name=\&quot;dateOfBirth[month]\&quot; id=\&quot;dateOfBirth-month\&quot;
+            value=\&quot;\&quot; size=\&quot;2\&quot; maxlength=\&quot;2\&quot;/&gt;
+        /
+        &lt;input type=\&quot;text\&quot; name=\&quot;dateOfBirth[year]\&quot; id=\&quot;dateOfBirth-year\&quot;
+            value=\&quot;\&quot; size=\&quot;4\&quot; maxlength=\&quot;4\&quot;/&gt;
+    &lt;/div&gt;
+
+    &lt;div class=\&quot;element\&quot;&gt;
+        &lt;label for=\&quot;password\&quot; tag=\&quot;\&quot; class=\&quot;optional\&quot;&gt;Password:&lt;/label&gt;
+        &lt;input type=\&quot;password\&quot; name=\&quot;password\&quot; id=\&quot;password\&quot; value=\&quot;\&quot;/&gt;
+    &lt;/div&gt;
+
+    &lt;div class=\&quot;element\&quot;&gt;
+        &lt;label for=\&quot;passwordConfirmation\&quot; tag=\&quot;\&quot; class=\&quot;optional\&quot;&gt;Confirm
+            Password:&lt;/label&gt;
+        &lt;input type=\&quot;password\&quot; name=\&quot;passwordConfirmation\&quot;
+            id=\&quot;passwordConfirmation\&quot; value=\&quot;\&quot;/&gt;
+    &lt;/div&gt;
+
+    &lt;input type=\&quot;submit\&quot; name=\&quot;submit\&quot; id=\&quot;submit\&quot; value=\&quot;Save\&quot;/&gt;
+&lt;/form&gt;
+</code></pre></div>
+
+<p>
+    Which looks like the following screenshot:
+</p>
+
+<p style="text-align: center;">
+    <img src="/uploads/Form-Markup.png" alt="Demographics form" />
+</p>
+
+<p>
+    Maybe not truly pretty, but with some CSS, it could be made to look exactly
+    how you might want to see it. The main point, however, is that this form was
+    generated using almost entirely custom markup, while still leveraging
+    decorators for the most common markup (and to ensure things like escaping
+    with htmlentities and value injection occur).
+</p>
+
+<p>
+    By this point in the series, you should be getting fairly comfortable with
+    the markup possibilities using <code>Zend_Form<code>'s decorators. In the
+    next installment, I'll revisit the date element from above, and demonstrate
+    how to create a custom element and decorator for composite elements.
+</p>
+
+<h4>Also in this series:</h4>
+<ul>
+    <li><a href="/matthew/archives/212-The-simplest-Zend_Form-decorator.html">The simplest Zend_Form decorator</a></li>
+    <li><a href="/matthew/archives/213-From-the-inside-out-How-to-layer-decorators.html">From the inside out: How to layer decorators</a></li>
+</ul><div class="social-media">
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="weierophinney">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</div>
+
+<div class="social-media">
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<div class="fb-like" data-send="true" data-width="450" data-show-faces="true"></div>
+</div>
+
+<div class="social-media">
+<div class="g-plusone" data-size="medium" data-annotation="inline"></div>
+</div>
+
+<!-- Place this render call where appropriate -->
+<script type="text/javascript">
+dojo.ready(function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+});
+</script>
+
+<div class="social-media">
+<a href="http://www.reddit.com/submit" onclick="window.location = 'http://www.reddit.com/submit?url=' + encodeURIComponent(window.location); return false"> <img src="http://www.reddit.com/static/spreddit1.gif" alt="submit to reddit" border="0" /> </a>
+</div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_developer = 1;
+        var disqus_shortname = 'phlyboyphly';
+        var disqus_identifier = '215-Rendering-Zend_Form-decorators-individually';
+        var disqus_url = 'http://mwop.net/blog/215-Rendering-Zend_Form-decorators-individually.html';
+        var disqus_title = 'Rendering Zend_Form decorators individually';
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a></article>
+
+<aside class="four columns offset-by-one omega sidebar blog">
+    <div class="metadata">
+        <ul>
+            <li>Posted on <b>2009-04-09 09:28:00</b>.</li>
+            <li>Last updated on <b>2010-10-05 08:03:40</b>.</li>
+        </ul>
+    </div>
+
+    <div class="metadata">
+        <h4>Tags for this entry</h4>
+        <p class="tags"><a href="/blog/tag/php.html">php</a><br />
+<a href="/blog/tag/zend+framework.html">zend framework</a></p>
+    </div>
+
+        <div class="metadata">
+        <h4>Blogroll</h4>
+        <ul>
+            <li><a href="http://sebastian-bergmann.de/">Sebastian Bergmann</a></li>
+            <li><a href="http://blog.calevans.com/">Cal Evans</a></li>
+            <li><a href="http://prematureoptimization.org/blog/">Shahar Evron</a></li>
+            <li><a href="http://paul-m-jones.com/blog/">Paul M. Jones</a></li>
+            <li><a href="http://karwin.blogspot.com/">Bill Karwin</a></li>
+            <li><a href="http://mikenaberezny.com/">Mike Naberezny</a></li>
+            <li><a href="http://fabien.potencier.org/">Fabien Potencier</a></li>
+            <li><a href="http://benramsey.com/">Ben Ramsey</a></li>
+            <li><a href="http://derickrethans.nl/">Derick Rethans</a></li>
+            <li><a href="http://ralphschindler.com/">Ralph Schindler</a></li>
+            <li><a href="http://www.zimuel.it/blog/">Enrico Zimuel</a></li>
+        </ul>
+    </div>
+
+</aside>
+
+    </div>
+
+    <footer class="sixteen columns footer">
+        <div class="column one-third alpha about">
+            <h4>About</h4>
+            <p>
+    I'm a husband, father of two, slave to an ancient Basset Hound and 
+    plaything of a Basset puppy, and web architect by day.
+</p>
+
+<ul class="resume">
+    <li><a href="/resume">Resume</a></li>
+    <li><a href="http://twitter.com/weierophinney">Twitter</a></li>
+    <li><a href="http://www.linkedin.com/in/mweierophinney">LinkedIn</a></li>
+    <li><a href="http://www.ohloh.net/accounts/weierophinney">OhLoh</a></li>
+    <li><a href="http://resume.github.com/?weierophinney">GitHub</a></li>
+</ul>
+
+        </div>
+
+        <div class="column one-third projects">
+            <h4>Projects</h4>
+            <ul class="projects">
+    <li><a href="http://framework.zend.com/">Zend Framework (Project Lead)</a></li>
+    <li><a href="http://github.com/weierophinney/phly_mustache">Phly_Mustache</a></li>
+    <li><a href="http://www.the-pastry-box-project.net/baker/matthew-weier-ophinney/">The Pastry Box Project</a> (as a Baker)</li>
+</ul>
+
+        </div>
+
+        <div class="column one-third omega tags">
+        <div id="search" style="width:100%;">Loading...</div>
+<h4>Tag Cloud</h4>
+<div class="cloud">
+<ul class="Zend\Tag\Cloud"><li><a href="/blog/tag/php.html" style="font-size: 20px;">php</a></li> <li><a href="/blog/tag/zend+framework.html" style="font-size: 14px;">zend framework</a></li> <li><a href="/blog/tag/zf2.html" style="font-size: 11px;">zf2</a></li> <li><a href="/blog/tag/vim.html" style="font-size: 11px;">vim</a></li> <li><a href="/blog/tag/family.html" style="font-size: 11px;">family</a></li> <li><a href="/blog/tag/programming.html" style="font-size: 12px;">programming</a></li> <li><a href="/blog/tag/personal.html" style="font-size: 13px;">personal</a></li> <li><a href="/blog/tag/phpconcom.html" style="font-size: 10px;">phpconcom</a></li> <li><a href="/blog/tag/mvc.html" style="font-size: 11px;">mvc</a></li> <li><a href="/blog/tag/oop.html" style="font-size: 11px;">oop</a></li> <li><a href="/blog/tag/testing.html" style="font-size: 10px;">testing</a></li> <li><a href="/blog/tag/rest.html" style="font-size: 11px;">rest</a></li> <li><a href="/blog/tag/linux.html" style="font-size: 12px;">linux</a></li> <li><a href="/blog/tag/zendcon08.html" style="font-size: 11px;">zendcon08</a></li> <li><a href="/blog/tag/file_fortune.html" style="font-size: 10px;">file_fortune</a></li> <li><a href="/blog/tag/pear.html" style="font-size: 11px;">pear</a></li> <li><a href="/blog/tag/zendcon.html" style="font-size: 11px;">zendcon</a></li> <li><a href="/blog/tag/perl.html" style="font-size: 12px;">perl</a></li> <li><a href="/blog/tag/fastcgi.html" style="font-size: 10px;">fastcgi</a></li> <li><a href="/blog/tag/ubuntu.html" style="font-size: 11px;">ubuntu</a></li> <li><a href="/blog/tag/tekx.html" style="font-size: 10px;">tekx</a></li> <li><a href="/blog/tag/zendcon10.html" style="font-size: 10px;">zendcon10</a></li> <li><a href="/blog/tag/dojo.html" style="font-size: 11px;">dojo</a></li> <li><a href="/blog/tag/symfony.html" style="font-size: 11px;">symfony</a></li> <li><a href="/blog/tag/zeta+components.html" style="font-size: 10px;">zeta components</a></li> <li><a href="/blog/tag/tek09.html" style="font-size: 10px;">tek09</a></li> <li><a href="/blog/tag/spl.html" style="font-size: 11px;">spl</a></li> <li><a href="/blog/tag/subversion.html" style="font-size: 11px;">subversion</a></li> <li><a href="/blog/tag/zend+framewor.html" style="font-size: 10px;">zend framewor</a></li> <li><a href="/blog/tag/rails.html" style="font-size: 10px;">rails</a></li> <li><a href="/blog/tag/conferences.html" style="font-size: 11px;">conferences</a></li> <li><a href="/blog/tag/dpc08.html" style="font-size: 11px;">dpc08</a></li> <li><a href="/blog/tag/phpworks08.html" style="font-size: 11px;">phpworks08</a></li> <li><a href="/blog/tag/webinar.html" style="font-size: 11px;">webinar</a></li> <li><a href="/blog/tag/zencon08.html" style="font-size: 10px;">zencon08</a></li> <li><a href="/blog/tag/advocacy.html" style="font-size: 10px;">advocacy</a></li> <li><a href="/blog/tag/politics.html" style="font-size: 10px;">politics</a></li> <li><a href="/blog/tag/internet.html" style="font-size: 10px;">internet</a></li> <li><a href="/blog/tag/cw09.html" style="font-size: 11px;">cw09</a></li> <li><a href="/blog/tag/zend+server.html" style="font-size: 10px;">zend server</a></li> <li><a href="/blog/tag/dpc09.html" style="font-size: 10px;">dpc09</a></li> <li><a href="/blog/tag/sflive2010.html" style="font-size: 10px;">sflive2010</a></li> <li><a href="/blog/tag/security.html" style="font-size: 10px;">security</a></li> <li><a href="/blog/tag/wifi.html" style="font-size: 10px;">wifi</a></li> <li><a href="/blog/tag/aikido.html" style="font-size: 10px;">aikido</a></li> <li><a href="/blog/tag/books.html" style="font-size: 10px;">books</a></li> <li><a href="/blog/tag/dpc10.html" style="font-size: 10px;">dpc10</a></li> <li><a href="/blog/tag/zendcon09.html" style="font-size: 11px;">zendcon09</a></li> <li><a href="/blog/tag/git.html" style="font-size: 10px;">git</a></li> <li><a href="/blog/tag/phpwomen.html" style="font-size: 10px;">phpwomen</a></li> <li><a href="/blog/tag/virtualbox.html" style="font-size: 10px;">virtualbox</a></li></ul></div>
+        </div>
+    </footer>
+</div>
+</body>
+</html>

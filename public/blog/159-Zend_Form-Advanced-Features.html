@@ -1,0 +1,418 @@
+<!DOCTYPE html><!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8" />
+    <title>Zend_Form Advanced Features :: phly, boy, phly</title>
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <link href="/css/SkeletonCss/base.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/SkeletonCss/skeleton.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/SkeletonCss/layout.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/Application/site.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/images/Application/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" >
+<link href="/css/PhlyBlog/phly-blog.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/blog-atom.xml" rel="alternate" type="application/atom+xml" title="phly, boy, phly Atom Feed" >
+<link href="/blog-rss.xml" rel="alternate" type="application/rss+xml" title="phly, boy, phly RSS Feed" >
+    
+<script type="text/javascript">
+//<!--
+    var djConfig = {"isDebug":true,"parseOnLoad":true,"baseUrl":"\/js\/dojo\/","modulePaths":{"PhlyBlog":"\/js\/PhlyBlog","Application":"\/js\/Application"}};
+//-->
+</script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojo/dojo.xd.js"></script>
+
+<script type="text/javascript">
+//<!--
+dojo.require("PhlyBlog.blog");
+    dojo.require("Application.scroll");
+//-->
+
+</script>
+    
+    <script src="https://www.google.com/jsapi?ABQIAAAAGybdRRvLZwVUcF0dE3oVdBTO-MlgA7VGJpGqyqTOeDXlNzyZQxTGq17s-iAB0m0vwqLQ_A2dHhTg2Q"></script>
+<script type="text/javascript">
+    google.load('search', '1', {style: google.loader.themes.ESPRESSO});
+    google.setOnLoadCallback(function(){
+        new google.search.CustomSearchControl().draw('search');
+    }, true);
+</script>
+
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-27037983-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</head>
+<body>
+<div class="container">
+    <header class="sixteen columns">
+    <a href="/"><img src="/images/Application/logo.gif" height="37" width="37"/></a>
+        <span class="main_title">phly, boy, phly: matthew weier o'phinney</span>
+    </header>
+
+    <div class="sixteen columns" id="menu">
+        <nav>
+            <li><a href="/">Home</a></li>
+            <li><a href="/blog.html">Blog</a></li>
+                        <li><a href="/resume">R&eacute;sum&eacute;</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </nav>
+    </div>
+
+    <div class="sixteen columns content">
+        <div class="row">
+<article class="eleven columns alpha blog">
+<h2>Zend_Form Advanced Features</h2>
+<p>
+    I've been working on <a href="http://framework.zend.com/wiki/display/ZFPROP/Zend_Form"></a>
+    for the past few weeks, and it's nearing release readiness. There are a
+    number of features that Cal didn't cover in his 
+    <a href="http://devzone.zend.com/article/3030-Lifting-the-Skirt-on-Zend-Framework-1.5---Zend_Form">DevZone coverage</a> 
+    (in part because some of them weren't yet complete) that I'd like to
+    showcase, including:
+</p>
+
+<ul>
+    <li>Internationalization</li>
+    <li>Element grouping for display and logistical purposes</li>
+    <li>Array support</li>
+</ul>
+
+<p>
+    This post will serve primarily as a high-level overview of some of these
+    features; if you're looking for more in-depth coverage, please review the
+    unit tests. :-)
+</p><h3>Internationalization</h3>
+<p>
+    When using form components in many libraries, internationalization (i18n) is
+    often tricky to accomplish. There are many potential translation targets:
+    labels, submit and reset buttons, and error messages all potentially
+    need to be treated.
+</p>
+
+<p>
+    Zend_Form allows setting a translation object at both the element and form
+    level, and also allows setting a default translation object for all forms
+    and elements. I personally feel this latter is the most flexible; in most
+    projects, you'll have a single set of translation files, so why not simply
+    re-use the same object throughout?
+</p>
+
+<div class="example"><pre><code lang="php">
+// Create your translation object
+$translate = new Zend_Translate(...);
+
+// Set it as the default object for all forms and elements:
+Zend_Form::setDefaultTranslator($translate);
+</code></pre></div>
+
+<p>
+    What do you get for this?
+</p>
+
+<ul>
+    <li>Legends. If a fieldset legend has a translation available, it will be
+    translated.</li>
+
+    <li>Labels. If the label you provide has a translation available,
+    it will be used.</li>
+
+    <li>Buttons. Submit, reset, and regular form button values will
+    be translated.</li>
+
+    <li>Error messages. Validation error messages will be translated,
+    <em>with</em> any value substitutions as provided by Zend_Validate.</li>
+</ul>
+
+<p>
+    In other words, translation in Zend_Form is pretty well integrated.
+</p>
+
+<h3>Element Grouping</h3>
+
+<p>
+    In Zend_Form, we distinguish between two types of element grouping: grouping
+    for display purposes (DisplayGroups) and grouping for logistical purposes
+    (Sub Forms)
+</p>
+
+<p>
+    With DisplayGroups, you're basically saying you want to visually or
+    semantically group elements together on the page. Usually (and by default)
+    this is done with fieldsets. DisplayGroups provide a simple mechanism for
+    doing this. The elements remain children of the parent form object, but are
+    rendered within the display group.
+</p>
+
+<p>
+    Other times, you want to group the elements logically. For instance, you
+    might want to group a billing address separately from a shipping address.
+    This grouping may be simple namespacing under array keys (I'll cover this
+    more later), shared filters or decorators, or, in advanced use cases,
+    separate pages of a multi-page form.
+</p>
+
+<p>
+    Zend_Form's answer to these situations are "Sub Forms". They are actually a
+    subclass of Zend_Form, and the only real difference is the class and the
+    default decorators used (by default, they render in a fieldset). Since they
+    share the same functionality as a regular form, this means they can validate
+    their elements, render themselves, etc. However, Zend_Form itself
+    <em>cannot</em> iterate over or render a sub forms elements; only the sub
+    form can do that.
+</p>
+
+<p>
+    One potentially powerful use case for sub forms is for multi-page forms. You
+    could easily create a form consisting of several sub forms, and display a
+    single sub form per page, persisting data in the session between form
+    submissions; only when all pages have received their data would the parent
+    form be valid, allowing you to finally pass the data to the model.
+</p>
+
+<p>
+    Form grouping at the display and logical level both are powerful tools, and
+    this functionality is trivial with Zend_Form.
+</p>
+
+<h4>Array Support</h4>
+
+<p>
+    Many developers like to namespace their form elements under nested arrays.
+    This allows for groupings of related data, as well as having several groups
+    with similar data on the same page. As an example, imagine a form showing
+    both a shipping and a billing address:
+</p>
+
+<div class="example"><pre><code lang="html">
+&lt;form action=\&quot;/foo/bar\&quot; method=\&quot;post\&quot;&gt;
+    &lt;fieldset&gt;
+        &lt;legend&gt;Shipping Address&lt;/legend&gt;
+        &lt;dl&gt;
+            &lt;dt&gt;Address:&lt;/dt&gt;
+            &lt;dd&gt;&lt;input name=\&quot;shipping[address]\&quot; type=\&quot;text\&quot; value=\&quot;\&quot; /&gt;&lt;/dd&gt;
+         
+            &lt;dt&gt;City:&lt;/dt&gt;
+            &lt;dd&gt;&lt;input name=\&quot;shipping[city]\&quot; type=\&quot;text\&quot; value=\&quot;\&quot; /&gt;&lt;/dd&gt;
+         
+            &lt;dt&gt;Postal:&lt;/dt&gt;
+            &lt;dd&gt;&lt;input name=\&quot;shipping[postal]\&quot; type=\&quot;text\&quot; value=\&quot;\&quot; /&gt;&lt;/dd&gt;
+        &lt;/dl&gt;
+    &lt;/fieldset&gt;
+
+    &lt;fieldset&gt;
+        &lt;legend&gt;Billing Address&lt;/legend&gt;
+        &lt;dl&gt;
+            &lt;dt&gt;Address:&lt;/dt&gt;
+            &lt;dd&gt;&lt;input name=\&quot;billing[address]\&quot; type=\&quot;text\&quot; value=\&quot;\&quot; /&gt;&lt;/dd&gt;
+         
+            &lt;dt&gt;City:&lt;/dt&gt;
+            &lt;dd&gt;&lt;input name=\&quot;billing[city]\&quot; type=\&quot;text\&quot; value=\&quot;\&quot; /&gt;&lt;/dd&gt;
+         
+            &lt;dt&gt;Postal:&lt;/dt&gt;
+            &lt;dd&gt;&lt;input name=\&quot;billing[postal]\&quot; type=\&quot;text\&quot; value=\&quot;\&quot; /&gt;&lt;/dd&gt;
+        &lt;/dl&gt;
+    &lt;/fieldset&gt;
+&lt;/form&gt;
+</code></pre></div>
+
+<p>
+    PHP will receive two arrays from the submitted form, 'shipping' and
+    'billing'. 
+</p>
+
+<p>
+    Zend_Form now allows this (as of today). To keep all existing features, and
+    to allow elements and sub forms to stay de-coupled from their parent forms,
+    you need to do a little configuration:
+</p>
+
+<div class="example"><pre><code lang="php">
+$shipping = new Zend_Form_SubForm('shipping');
+
+// This next line tells the elements, validators, and decorators that they are
+// part of an array; by default, the sub form name is used:
+$shipping-&gt;setIsArray(true);
+
+// This can also be accomplished by explicitly setting the array name:
+$shipping-&gt;setElementsBelongTo('shipping');
+</code></pre></div>
+
+<p>
+    The fun part is that this can be arbitrarily deep, by specifying the array
+    key as it would appear in the form. So, as an example, if we wanted the
+    entire form returned in the 'demographics' array, and 'shipping' and
+    'billing' were keys in that array, we could do the following:
+</p>
+
+<div class="example"><pre><code lang="php">
+// Set base key for entire form:
+$form-&gt;setElementsBelongTo('demographics');
+
+// Set subkey for shipping sub form:
+$shipping-&gt;setElementsBelongTo('demographics[shipping]');
+
+// Set subkey for billing sub form:
+$billing-&gt;setElementsBelongTo('demographics[billing]');
+</code></pre></div>
+
+<p>
+    When you set or retrieve values, or validate, these array keys are honored.
+    What's more, since they are configurable, you can leave them out of your
+    generic forms, and only set them in your concrete instances -- allowing
+    re-use and re-purposing.
+</p>
+
+<h3>Conclusion</h3>
+
+<p>
+    This post is mainly to serve as high-level overview of some of the more
+    advanced features of Zend_Form. In the coming weeks, more thorough
+    documentation will be present in the Zend Framework repository, allowing
+    developers to understand the functionality in more depth. Hopefully I've
+    whetted some people's appetites out there, and we'll get more of you
+    experimenting with the current code base.
+</p>
+
+<p>
+    <b>Update:</b> fixed array notation HTML example to show separate billing
+    and shipping addresses.
+</p><div class="social-media">
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="weierophinney">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</div>
+
+<div class="social-media">
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<div class="fb-like" data-send="true" data-width="450" data-show-faces="true"></div>
+</div>
+
+<div class="social-media">
+<div class="g-plusone" data-size="medium" data-annotation="inline"></div>
+</div>
+
+<!-- Place this render call where appropriate -->
+<script type="text/javascript">
+dojo.ready(function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+});
+</script>
+
+<div class="social-media">
+<a href="http://www.reddit.com/submit" onclick="window.location = 'http://www.reddit.com/submit?url=' + encodeURIComponent(window.location); return false"> <img src="http://www.reddit.com/static/spreddit1.gif" alt="submit to reddit" border="0" /> </a>
+</div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_developer = 1;
+        var disqus_shortname = 'phlyboyphly';
+        var disqus_identifier = '159-Zend_Form-Advanced-Features';
+        var disqus_url = 'http://mwop.net/blog/159-Zend_Form-Advanced-Features.html';
+        var disqus_title = 'Zend_Form Advanced Features';
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a></article>
+
+<aside class="four columns offset-by-one omega sidebar blog">
+    <div class="metadata">
+        <ul>
+            <li>Posted on <b>2008-02-08 22:56:00</b>.</li>
+            <li>Last updated on <b>2008-04-07 14:39:15</b>.</li>
+        </ul>
+    </div>
+
+    <div class="metadata">
+        <h4>Tags for this entry</h4>
+        <p class="tags"><a href="/blog/tag/php.html">php</a><br />
+<a href="/blog/tag/zend+framework.html">zend framework</a></p>
+    </div>
+
+        <div class="metadata">
+        <h4>Blogroll</h4>
+        <ul>
+            <li><a href="http://sebastian-bergmann.de/">Sebastian Bergmann</a></li>
+            <li><a href="http://blog.calevans.com/">Cal Evans</a></li>
+            <li><a href="http://prematureoptimization.org/blog/">Shahar Evron</a></li>
+            <li><a href="http://paul-m-jones.com/blog/">Paul M. Jones</a></li>
+            <li><a href="http://karwin.blogspot.com/">Bill Karwin</a></li>
+            <li><a href="http://mikenaberezny.com/">Mike Naberezny</a></li>
+            <li><a href="http://fabien.potencier.org/">Fabien Potencier</a></li>
+            <li><a href="http://benramsey.com/">Ben Ramsey</a></li>
+            <li><a href="http://derickrethans.nl/">Derick Rethans</a></li>
+            <li><a href="http://ralphschindler.com/">Ralph Schindler</a></li>
+            <li><a href="http://www.zimuel.it/blog/">Enrico Zimuel</a></li>
+        </ul>
+    </div>
+
+</aside>
+
+    </div>
+
+    <footer class="sixteen columns footer">
+        <div class="column one-third alpha about">
+            <h4>About</h4>
+            <p>
+    I'm a husband, father of two, slave to an ancient Basset Hound and 
+    plaything of a Basset puppy, and web architect by day.
+</p>
+
+<ul class="resume">
+    <li><a href="/resume">Resume</a></li>
+    <li><a href="http://twitter.com/weierophinney">Twitter</a></li>
+    <li><a href="http://www.linkedin.com/in/mweierophinney">LinkedIn</a></li>
+    <li><a href="http://www.ohloh.net/accounts/weierophinney">OhLoh</a></li>
+    <li><a href="http://resume.github.com/?weierophinney">GitHub</a></li>
+</ul>
+
+        </div>
+
+        <div class="column one-third projects">
+            <h4>Projects</h4>
+            <ul class="projects">
+    <li><a href="http://framework.zend.com/">Zend Framework (Project Lead)</a></li>
+    <li><a href="http://github.com/weierophinney/phly_mustache">Phly_Mustache</a></li>
+    <li><a href="http://www.the-pastry-box-project.net/baker/matthew-weier-ophinney/">The Pastry Box Project</a> (as a Baker)</li>
+</ul>
+
+        </div>
+
+        <div class="column one-third omega tags">
+        <div id="search" style="width:100%;">Loading...</div>
+<h4>Tag Cloud</h4>
+<div class="cloud">
+<ul class="Zend\Tag\Cloud"><li><a href="/blog/tag/php.html" style="font-size: 20px;">php</a></li> <li><a href="/blog/tag/zend+framework.html" style="font-size: 14px;">zend framework</a></li> <li><a href="/blog/tag/zf2.html" style="font-size: 11px;">zf2</a></li> <li><a href="/blog/tag/vim.html" style="font-size: 11px;">vim</a></li> <li><a href="/blog/tag/family.html" style="font-size: 11px;">family</a></li> <li><a href="/blog/tag/programming.html" style="font-size: 12px;">programming</a></li> <li><a href="/blog/tag/personal.html" style="font-size: 13px;">personal</a></li> <li><a href="/blog/tag/phpconcom.html" style="font-size: 10px;">phpconcom</a></li> <li><a href="/blog/tag/mvc.html" style="font-size: 11px;">mvc</a></li> <li><a href="/blog/tag/oop.html" style="font-size: 11px;">oop</a></li> <li><a href="/blog/tag/testing.html" style="font-size: 10px;">testing</a></li> <li><a href="/blog/tag/rest.html" style="font-size: 11px;">rest</a></li> <li><a href="/blog/tag/linux.html" style="font-size: 12px;">linux</a></li> <li><a href="/blog/tag/zendcon08.html" style="font-size: 11px;">zendcon08</a></li> <li><a href="/blog/tag/file_fortune.html" style="font-size: 10px;">file_fortune</a></li> <li><a href="/blog/tag/pear.html" style="font-size: 11px;">pear</a></li> <li><a href="/blog/tag/zendcon.html" style="font-size: 11px;">zendcon</a></li> <li><a href="/blog/tag/perl.html" style="font-size: 12px;">perl</a></li> <li><a href="/blog/tag/fastcgi.html" style="font-size: 10px;">fastcgi</a></li> <li><a href="/blog/tag/ubuntu.html" style="font-size: 11px;">ubuntu</a></li> <li><a href="/blog/tag/tekx.html" style="font-size: 10px;">tekx</a></li> <li><a href="/blog/tag/zendcon10.html" style="font-size: 10px;">zendcon10</a></li> <li><a href="/blog/tag/dojo.html" style="font-size: 11px;">dojo</a></li> <li><a href="/blog/tag/symfony.html" style="font-size: 11px;">symfony</a></li> <li><a href="/blog/tag/zeta+components.html" style="font-size: 10px;">zeta components</a></li> <li><a href="/blog/tag/tek09.html" style="font-size: 10px;">tek09</a></li> <li><a href="/blog/tag/spl.html" style="font-size: 11px;">spl</a></li> <li><a href="/blog/tag/subversion.html" style="font-size: 11px;">subversion</a></li> <li><a href="/blog/tag/zend+framewor.html" style="font-size: 10px;">zend framewor</a></li> <li><a href="/blog/tag/rails.html" style="font-size: 10px;">rails</a></li> <li><a href="/blog/tag/conferences.html" style="font-size: 11px;">conferences</a></li> <li><a href="/blog/tag/dpc08.html" style="font-size: 11px;">dpc08</a></li> <li><a href="/blog/tag/phpworks08.html" style="font-size: 11px;">phpworks08</a></li> <li><a href="/blog/tag/webinar.html" style="font-size: 11px;">webinar</a></li> <li><a href="/blog/tag/zencon08.html" style="font-size: 10px;">zencon08</a></li> <li><a href="/blog/tag/advocacy.html" style="font-size: 10px;">advocacy</a></li> <li><a href="/blog/tag/politics.html" style="font-size: 10px;">politics</a></li> <li><a href="/blog/tag/internet.html" style="font-size: 10px;">internet</a></li> <li><a href="/blog/tag/cw09.html" style="font-size: 11px;">cw09</a></li> <li><a href="/blog/tag/zend+server.html" style="font-size: 10px;">zend server</a></li> <li><a href="/blog/tag/dpc09.html" style="font-size: 10px;">dpc09</a></li> <li><a href="/blog/tag/sflive2010.html" style="font-size: 10px;">sflive2010</a></li> <li><a href="/blog/tag/security.html" style="font-size: 10px;">security</a></li> <li><a href="/blog/tag/wifi.html" style="font-size: 10px;">wifi</a></li> <li><a href="/blog/tag/aikido.html" style="font-size: 10px;">aikido</a></li> <li><a href="/blog/tag/books.html" style="font-size: 10px;">books</a></li> <li><a href="/blog/tag/dpc10.html" style="font-size: 10px;">dpc10</a></li> <li><a href="/blog/tag/zendcon09.html" style="font-size: 11px;">zendcon09</a></li> <li><a href="/blog/tag/git.html" style="font-size: 10px;">git</a></li> <li><a href="/blog/tag/phpwomen.html" style="font-size: 10px;">phpwomen</a></li> <li><a href="/blog/tag/virtualbox.html" style="font-size: 10px;">virtualbox</a></li></ul></div>
+        </div>
+    </footer>
+</div>
+</body>
+</html>

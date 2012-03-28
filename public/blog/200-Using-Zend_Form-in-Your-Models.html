@@ -1,0 +1,402 @@
+<!DOCTYPE html><!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8" />
+    <title>Using Zend_Form in Your Models :: phly, boy, phly</title>
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <link href="/css/SkeletonCss/base.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/SkeletonCss/skeleton.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/SkeletonCss/layout.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/Application/site.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/images/Application/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" >
+<link href="/css/PhlyBlog/phly-blog.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/blog-atom.xml" rel="alternate" type="application/atom+xml" title="phly, boy, phly Atom Feed" >
+<link href="/blog-rss.xml" rel="alternate" type="application/rss+xml" title="phly, boy, phly RSS Feed" >
+    
+<script type="text/javascript">
+//<!--
+    var djConfig = {"isDebug":true,"parseOnLoad":true,"baseUrl":"\/js\/dojo\/","modulePaths":{"PhlyBlog":"\/js\/PhlyBlog","Application":"\/js\/Application"}};
+//-->
+</script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojo/dojo.xd.js"></script>
+
+<script type="text/javascript">
+//<!--
+dojo.require("PhlyBlog.blog");
+    dojo.require("Application.scroll");
+//-->
+
+</script>
+    
+    <script src="https://www.google.com/jsapi?ABQIAAAAGybdRRvLZwVUcF0dE3oVdBTO-MlgA7VGJpGqyqTOeDXlNzyZQxTGq17s-iAB0m0vwqLQ_A2dHhTg2Q"></script>
+<script type="text/javascript">
+    google.load('search', '1', {style: google.loader.themes.ESPRESSO});
+    google.setOnLoadCallback(function(){
+        new google.search.CustomSearchControl().draw('search');
+    }, true);
+</script>
+
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-27037983-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</head>
+<body>
+<div class="container">
+    <header class="sixteen columns">
+    <a href="/"><img src="/images/Application/logo.gif" height="37" width="37"/></a>
+        <span class="main_title">phly, boy, phly: matthew weier o'phinney</span>
+    </header>
+
+    <div class="sixteen columns" id="menu">
+        <nav>
+            <li><a href="/">Home</a></li>
+            <li><a href="/blog.html">Blog</a></li>
+                        <li><a href="/resume">R&eacute;sum&eacute;</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </nav>
+    </div>
+
+    <div class="sixteen columns content">
+        <div class="row">
+<article class="eleven columns alpha blog">
+<h2>Using Zend_Form in Your Models</h2>
+<p>
+    A <a href="http://blog.astrumfutura.com/index.php?url=archives/373-The-M-in-MVC-Why-Models-are-Misunderstood-and-Unappreciated.html">number</a> 
+    of <a href="http://akrabat.com/2008/12/13/on-models-in-a-zend-framework-application/">blog</a>
+    <a href="http://codeutopia.net/blog/2008/12/17/the-problems-faced-by-a-common-model-interface-in-frameworks/">posts</a> 
+    have sprung up lately in the Zend Framework community discussing the Model
+    in the <a href="http://en.wikipedia.org/wiki/Model-view-controller">Model-View-Controller pattern</a>. 
+    <a href="http://framework.zend.com/">Zend Framework</a> has never had a
+    concrete Model class or interface; our stand has been that models are
+    specific to the application, and only the developer can really know what
+    would best suit it. 
+</p>
+    
+<p>
+    Many other frameworks tie the Model to data access -- typically via the
+    <a href="http://en.wikipedia.org/wiki/Active_record_pattern">ActiveRecord</a> 
+    pattern or a <a href="http://martinfowler.com/eaaCatalog/tableDataGateway.html">Table Data Gateway</a> 
+    -- which completely ignores the fact that this is tying the Model to the
+    method by which it is persisted.  What happens later if you start using
+    memcached? or migrate to an SOA architecture? What if, from the very
+    beginning, your data is coming from a web service? What if you <em>do</em>
+    use a database, but your business logic relies on associations
+    <em>between</em> tables?
+</p>
+
+<p>
+    While the aforementioned posts do an admirable job of discussing the various
+    issues, they don't necessarily give any concrete approaches a developer
+    <em>can</em> use when creating their models. As such, this will be the first
+    in a series of posts aiming to provide some concrete patterns and techniques
+    you can use when creating your models. The examples will primarily be
+    drawing from Zend Framework components, but should apply equally well to a
+    variety of other frameworks.
+</p><h2>Input Filtering and Forms</h2>
+
+<p>
+    In most cases, you want your model to perform its own input filtering. The
+    reason is because input filtering is domain logic: it's the set of rules
+    that define what input is valid, and how to normalize that input.
+</p>
+
+<p>
+    However, how does that fit in with forms? Zend Framework has a
+    <code>Zend_Form</code> component, which allows you to specify your
+    validation and filter chains, as well as rules for how to render the form
+    via decorators. The typical pattern is to define a form, and in your
+    controller, pass input to it; if it validates, you then pass the values to
+    the model.
+</p>
+
+<p>
+    What if you were to instead attach the <em>form</em> to the <em>model</em>?
+</p>
+
+<p>
+    Some argue that this violates the concept of "separation of concerns", due
+    to the fact that it mixes rendering logic into the model. I feel this is a
+    pedantic argument. When attached to a form, <code>Zend_Form</code> can be
+    used strictly as an input filter; you would pull the form <em>from</em> the
+    model when you wish to render it, and perform any view-specific actions --
+    configuring decorators, setting the action and method, etc -- within your
+    <em>view</em> script. Additionally, the various plugins -- validators,
+    filters, decorators -- are not loaded until they are <em>used</em> --
+    meaning there is little to no overhead from the decorators when you merely
+    use <code>Zend_Form</code> as an input filter.
+</p>
+    
+<p>
+    Basically, this approach helps you adhere to the DRY principle (one
+    validation/filter chain), while simultaneously helping you keep a solid
+    separation of business and view logic. Finally, you gain one or more
+    form representations of your model, which helps with rapid application
+    development, as well as providing a solid, semantic tie between the model
+    and the view.
+</p>
+
+<p>
+    So, on to the technique.
+</p>
+
+<h2>Attaching Forms to Models</h2>
+
+<p>
+    What I've been doing is adding a <code>getForm()</code> accessor to my
+    models that takes an optional argument, the type of form to retrieve. This
+    is then used within the model any time validation is necessary. (Some models
+    require multiple forms, so best to plan for it early. A good example is a
+    model that represents a user -- you will need a login <em>and</em>
+    registration form.) Let's look at it in action:
+</p>
+
+<div class="example"><pre><code lang="php">
+class Spindle_Model_Bug
+{
+    protected $_forms = array();
+
+    public function getForm($type = 'bug')
+    {
+        $type  = ucfirst($type);
+        if (!isset($this-&gt;_forms[$type])) {
+            $class = 'Spindle_Model_Form_' . $type;
+            $this-&gt;_forms[$type] = new $class;
+        }
+        return $this-&gt;_forms[$type];
+    }
+
+    public function save(array $data)
+    {
+        $form = $this-&gt;getForm();
+        if (!$form-&gt;isValid($data)) {
+            return false;
+        }
+
+        $storage = $this-&gt;getStorage();
+        if ($form-&gt;getValue('id')) {
+            $id = $form-&gt;getValue('id');
+            $storage-&gt;update($form-&gt;getValues(), $id));
+        } else {
+            $id = $storage-&gt;insert($form-&gt;getValues());
+        }
+
+        return $id;
+    }
+}
+</code></pre></div>
+
+<p>
+    As the above code snippet demonstrates, the form acts as an input filter:
+    you use it first to ensure the data provided is valid, and then to ensure
+    the data you pass to your persistence layer is normalized according to your
+    rules. You can also use it to verify the existence of certain optional
+    values, as done here, in order to ascertain the actual action necessary to
+    persist the data.
+</p>
+
+<h2>What Happens in the Controller and View?</h2>
+
+<p>
+    Within your controller actions, you then have a slight paradigm shift.
+    Instead of validating a form and then passing filtered data to the model,
+    you simply attempt to save data to the model:
+</p>
+
+<div class="example"><pre><code lang="php">
+class BugController
+{
+    public function processAction()
+    {
+        $request = $this-&gt;getRequest();
+        if (!$request-&gt;isPost()) {
+            return $this-&gt;_helper-&gt;redirector('new');
+        }
+
+        if (!$id = $this-&gt;model-&gt;save($request-&gt;getPost())) {
+            // Failed validation; re-render form page
+            $this-&gt;view-&gt;model = $model;
+            return $this-&gt;render('new');
+        }
+
+        // redirect to view newly saved bug
+        $this-&gt;_helper-&gt;redirector('view', null, null, array('id' =&gt; $id));
+    }
+}
+</code></pre></div>
+
+<p>
+    There's very little logic there, and no mention of forms whatsoever. So, how
+    do we actually render the form? Note that the model is passed to the view --
+    which ultimately gives us access to the form.
+</p>
+
+<div class="example"><pre><code lang="php">
+$form = $this-&gt;model-&gt;getForm();
+$form-&gt;setMethod('post')
+     -&gt;setAction($this-&gt;url(array('action' =&gt; 'process')));
+echo $form;
+</code></pre></div>
+
+<p>
+    This makes semantic sense; you're rendering a form that will be used to
+    filter data for a given model. Note that some view logic is given -- the
+    form method and action are set here in the view layer. This is appropriate,
+    as we're now performing display-related logic.
+</p>
+
+<h2>Summary</h2>
+
+<p>
+    There are of course other ways to solve the problem, but this is a
+    convenient and expedient solution that maximizes use of the various existing
+    components. Attaching forms to your models keeps all logic related to input
+    validation -- including error reporting -- in one place, and ensures that
+    your forms do not go out of date when you change your model -- as you will
+    be updating your validation rules and list of allowed input in the form
+    itself.
+</p>
+
+<p>
+    In the next post, we'll look at <a href="http://weierophinney.net/matthew/archives/201-Applying-ACLs-to-Models.html">using and applying Access Control Lists (ACLs) in your models</a>.
+</p><div class="social-media">
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="weierophinney">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</div>
+
+<div class="social-media">
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<div class="fb-like" data-send="true" data-width="450" data-show-faces="true"></div>
+</div>
+
+<div class="social-media">
+<div class="g-plusone" data-size="medium" data-annotation="inline"></div>
+</div>
+
+<!-- Place this render call where appropriate -->
+<script type="text/javascript">
+dojo.ready(function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+});
+</script>
+
+<div class="social-media">
+<a href="http://www.reddit.com/submit" onclick="window.location = 'http://www.reddit.com/submit?url=' + encodeURIComponent(window.location); return false"> <img src="http://www.reddit.com/static/spreddit1.gif" alt="submit to reddit" border="0" /> </a>
+</div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_developer = 1;
+        var disqus_shortname = 'phlyboyphly';
+        var disqus_identifier = '200-Using-Zend_Form-in-Your-Models';
+        var disqus_url = 'http://mwop.net/blog/200-Using-Zend_Form-in-Your-Models.html';
+        var disqus_title = 'Using Zend_Form in Your Models';
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a></article>
+
+<aside class="four columns offset-by-one omega sidebar blog">
+    <div class="metadata">
+        <ul>
+            <li>Posted on <b>2008-12-22 08:30:00</b>.</li>
+            <li>Last updated on <b>2008-12-27 20:53:45</b>.</li>
+        </ul>
+    </div>
+
+    <div class="metadata">
+        <h4>Tags for this entry</h4>
+        <p class="tags"><a href="/blog/tag/php.html">php</a><br />
+<a href="/blog/tag/zend+framework.html">zend framework</a></p>
+    </div>
+
+        <div class="metadata">
+        <h4>Blogroll</h4>
+        <ul>
+            <li><a href="http://sebastian-bergmann.de/">Sebastian Bergmann</a></li>
+            <li><a href="http://blog.calevans.com/">Cal Evans</a></li>
+            <li><a href="http://prematureoptimization.org/blog/">Shahar Evron</a></li>
+            <li><a href="http://paul-m-jones.com/blog/">Paul M. Jones</a></li>
+            <li><a href="http://karwin.blogspot.com/">Bill Karwin</a></li>
+            <li><a href="http://mikenaberezny.com/">Mike Naberezny</a></li>
+            <li><a href="http://fabien.potencier.org/">Fabien Potencier</a></li>
+            <li><a href="http://benramsey.com/">Ben Ramsey</a></li>
+            <li><a href="http://derickrethans.nl/">Derick Rethans</a></li>
+            <li><a href="http://ralphschindler.com/">Ralph Schindler</a></li>
+            <li><a href="http://www.zimuel.it/blog/">Enrico Zimuel</a></li>
+        </ul>
+    </div>
+
+</aside>
+
+    </div>
+
+    <footer class="sixteen columns footer">
+        <div class="column one-third alpha about">
+            <h4>About</h4>
+            <p>
+    I'm a husband, father of two, slave to an ancient Basset Hound and 
+    plaything of a Basset puppy, and web architect by day.
+</p>
+
+<ul class="resume">
+    <li><a href="/resume">Resume</a></li>
+    <li><a href="http://twitter.com/weierophinney">Twitter</a></li>
+    <li><a href="http://www.linkedin.com/in/mweierophinney">LinkedIn</a></li>
+    <li><a href="http://www.ohloh.net/accounts/weierophinney">OhLoh</a></li>
+    <li><a href="http://resume.github.com/?weierophinney">GitHub</a></li>
+</ul>
+
+        </div>
+
+        <div class="column one-third projects">
+            <h4>Projects</h4>
+            <ul class="projects">
+    <li><a href="http://framework.zend.com/">Zend Framework (Project Lead)</a></li>
+    <li><a href="http://github.com/weierophinney/phly_mustache">Phly_Mustache</a></li>
+    <li><a href="http://www.the-pastry-box-project.net/baker/matthew-weier-ophinney/">The Pastry Box Project</a> (as a Baker)</li>
+</ul>
+
+        </div>
+
+        <div class="column one-third omega tags">
+        <div id="search" style="width:100%;">Loading...</div>
+<h4>Tag Cloud</h4>
+<div class="cloud">
+<ul class="Zend\Tag\Cloud"><li><a href="/blog/tag/php.html" style="font-size: 20px;">php</a></li> <li><a href="/blog/tag/zend+framework.html" style="font-size: 14px;">zend framework</a></li> <li><a href="/blog/tag/zf2.html" style="font-size: 11px;">zf2</a></li> <li><a href="/blog/tag/vim.html" style="font-size: 11px;">vim</a></li> <li><a href="/blog/tag/family.html" style="font-size: 11px;">family</a></li> <li><a href="/blog/tag/programming.html" style="font-size: 12px;">programming</a></li> <li><a href="/blog/tag/personal.html" style="font-size: 13px;">personal</a></li> <li><a href="/blog/tag/phpconcom.html" style="font-size: 10px;">phpconcom</a></li> <li><a href="/blog/tag/mvc.html" style="font-size: 11px;">mvc</a></li> <li><a href="/blog/tag/oop.html" style="font-size: 11px;">oop</a></li> <li><a href="/blog/tag/testing.html" style="font-size: 10px;">testing</a></li> <li><a href="/blog/tag/rest.html" style="font-size: 11px;">rest</a></li> <li><a href="/blog/tag/linux.html" style="font-size: 12px;">linux</a></li> <li><a href="/blog/tag/zendcon08.html" style="font-size: 11px;">zendcon08</a></li> <li><a href="/blog/tag/file_fortune.html" style="font-size: 10px;">file_fortune</a></li> <li><a href="/blog/tag/pear.html" style="font-size: 11px;">pear</a></li> <li><a href="/blog/tag/zendcon.html" style="font-size: 11px;">zendcon</a></li> <li><a href="/blog/tag/perl.html" style="font-size: 12px;">perl</a></li> <li><a href="/blog/tag/fastcgi.html" style="font-size: 10px;">fastcgi</a></li> <li><a href="/blog/tag/ubuntu.html" style="font-size: 11px;">ubuntu</a></li> <li><a href="/blog/tag/tekx.html" style="font-size: 10px;">tekx</a></li> <li><a href="/blog/tag/zendcon10.html" style="font-size: 10px;">zendcon10</a></li> <li><a href="/blog/tag/dojo.html" style="font-size: 11px;">dojo</a></li> <li><a href="/blog/tag/symfony.html" style="font-size: 11px;">symfony</a></li> <li><a href="/blog/tag/zeta+components.html" style="font-size: 10px;">zeta components</a></li> <li><a href="/blog/tag/tek09.html" style="font-size: 10px;">tek09</a></li> <li><a href="/blog/tag/spl.html" style="font-size: 11px;">spl</a></li> <li><a href="/blog/tag/subversion.html" style="font-size: 11px;">subversion</a></li> <li><a href="/blog/tag/zend+framewor.html" style="font-size: 10px;">zend framewor</a></li> <li><a href="/blog/tag/rails.html" style="font-size: 10px;">rails</a></li> <li><a href="/blog/tag/conferences.html" style="font-size: 11px;">conferences</a></li> <li><a href="/blog/tag/dpc08.html" style="font-size: 11px;">dpc08</a></li> <li><a href="/blog/tag/phpworks08.html" style="font-size: 11px;">phpworks08</a></li> <li><a href="/blog/tag/webinar.html" style="font-size: 11px;">webinar</a></li> <li><a href="/blog/tag/zencon08.html" style="font-size: 10px;">zencon08</a></li> <li><a href="/blog/tag/advocacy.html" style="font-size: 10px;">advocacy</a></li> <li><a href="/blog/tag/politics.html" style="font-size: 10px;">politics</a></li> <li><a href="/blog/tag/internet.html" style="font-size: 10px;">internet</a></li> <li><a href="/blog/tag/cw09.html" style="font-size: 11px;">cw09</a></li> <li><a href="/blog/tag/zend+server.html" style="font-size: 10px;">zend server</a></li> <li><a href="/blog/tag/dpc09.html" style="font-size: 10px;">dpc09</a></li> <li><a href="/blog/tag/sflive2010.html" style="font-size: 10px;">sflive2010</a></li> <li><a href="/blog/tag/security.html" style="font-size: 10px;">security</a></li> <li><a href="/blog/tag/wifi.html" style="font-size: 10px;">wifi</a></li> <li><a href="/blog/tag/aikido.html" style="font-size: 10px;">aikido</a></li> <li><a href="/blog/tag/books.html" style="font-size: 10px;">books</a></li> <li><a href="/blog/tag/dpc10.html" style="font-size: 10px;">dpc10</a></li> <li><a href="/blog/tag/zendcon09.html" style="font-size: 11px;">zendcon09</a></li> <li><a href="/blog/tag/git.html" style="font-size: 10px;">git</a></li> <li><a href="/blog/tag/phpwomen.html" style="font-size: 10px;">phpwomen</a></li> <li><a href="/blog/tag/virtualbox.html" style="font-size: 10px;">virtualbox</a></li></ul></div>
+        </div>
+    </footer>
+</div>
+</body>
+</html>

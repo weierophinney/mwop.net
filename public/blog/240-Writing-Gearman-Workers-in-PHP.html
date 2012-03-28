@@ -1,0 +1,623 @@
+<!DOCTYPE html><!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8" />
+    <title>Writing Gearman Workers in PHP :: phly, boy, phly</title>
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <link href="/css/SkeletonCss/base.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/SkeletonCss/skeleton.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/SkeletonCss/layout.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/Application/site.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/images/Application/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" >
+<link href="/css/PhlyBlog/phly-blog.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/blog-atom.xml" rel="alternate" type="application/atom+xml" title="phly, boy, phly Atom Feed" >
+<link href="/blog-rss.xml" rel="alternate" type="application/rss+xml" title="phly, boy, phly RSS Feed" >
+    
+<script type="text/javascript">
+//<!--
+    var djConfig = {"isDebug":true,"parseOnLoad":true,"baseUrl":"\/js\/dojo\/","modulePaths":{"PhlyBlog":"\/js\/PhlyBlog","Application":"\/js\/Application"}};
+//-->
+</script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojo/dojo.xd.js"></script>
+
+<script type="text/javascript">
+//<!--
+dojo.require("PhlyBlog.blog");
+    dojo.require("Application.scroll");
+//-->
+
+</script>
+    
+    <script src="https://www.google.com/jsapi?ABQIAAAAGybdRRvLZwVUcF0dE3oVdBTO-MlgA7VGJpGqyqTOeDXlNzyZQxTGq17s-iAB0m0vwqLQ_A2dHhTg2Q"></script>
+<script type="text/javascript">
+    google.load('search', '1', {style: google.loader.themes.ESPRESSO});
+    google.setOnLoadCallback(function(){
+        new google.search.CustomSearchControl().draw('search');
+    }, true);
+</script>
+
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-27037983-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</head>
+<body>
+<div class="container">
+    <header class="sixteen columns">
+    <a href="/"><img src="/images/Application/logo.gif" height="37" width="37"/></a>
+        <span class="main_title">phly, boy, phly: matthew weier o'phinney</span>
+    </header>
+
+    <div class="sixteen columns" id="menu">
+        <nav>
+            <li><a href="/">Home</a></li>
+            <li><a href="/blog.html">Blog</a></li>
+                        <li><a href="/resume">R&eacute;sum&eacute;</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </nav>
+    </div>
+
+    <div class="sixteen columns content">
+        <div class="row">
+<article class="eleven columns alpha blog">
+<h2>Writing Gearman Workers in PHP</h2>
+<p>
+    I've been hearing about and reading about <a
+        href="http://gearman.org/">Gearman</a> for a couple years now, but, due
+    to the nature of <a href="http://framework.zend.com/">my work</a>, it's
+    never really been something I needed to investigate; when you're writing
+    backend code, scalability is something you leave to the end-users, right?
+</p>
+
+<p>
+    Wrong! But perhaps an explanation is in order.
+</p><h2>Background</h2>
+
+<p>
+    We're looking at migrating to <a href="http://git-scm.com/">Git</a> for our
+    primary development on the framework. There are a lot of use cases we need
+    to accommodate:
+</p>
+
+<ul>
+	<li>We want to support atomic changesets (i.e., changesets that include all
+        changes related to a single issue: usually, unit tests, code, and often
+        documentation).</li>
+	<li>At the same time, developers want the ability to pull in just the
+        library code as a git <a href="http://limestone.uoregon.edu/ftp/pub/software/scm/git-core/docs/git-submodule.html">submodule</a>,
+        or a single language of the manual, etc.</li>
+    <li>Users want a read-only <a href="http://subversion.org/">Subversion</a>
+        respository so that they can continue using <a
+            href="http://svnbook.red-bean.com/en/1.0/ch07s03.html">svn:externals</a>.
+        Just because we're migrating doesn't mean our users should need to.</li>
+    <li>Of course, lots of folks like to keep on top of commits via <a
+        href="http://en.wikipedia.org/wiki/RSS">RSS feeds</a></li>
+    <li>And then there's masochists like myself who like having commit
+        emails. (Is it a wonder I never hit inbox zero?)</li>
+</ul>
+
+<p>
+    The first two items are hard to accomplish at the same time, as it turns
+    out. If you make every distinct sub-tree you want discretely cloneable, and
+    then build a repository consisting of a bunch of git submodules, you lose
+    atomicity. (You end up having a commit for each submodule you touch, plus
+    one for the master repository. Eww.)
+</p>
+
+<p>
+    I found a way to do it, however, using <a
+        href="http://progit.org/book/ch6-7.html">subtree merges</a>. However,
+    since this post is about writing Gearman workers, I'll leave that for
+    another day. The important thing, however, is that I discovered something
+    else that was interesting.
+</p>
+
+<p>
+    Git allows you to define "hooks", scripts that are run at various points of
+    the git commit lifecycle. One hook that can run on the server is called
+    "post-receive". What I discovered is that even though
+    <code>post-receive</code> runs after a commit is accepted to the repository,
+    if you perform operations on a git repository while the hook is still
+    running, you can get some strange behavior. In my example, I was having the
+    script trigger a "git pull" in a working tree. While the working tree
+    received the changesets, it couldn't apply them cleanly, since the server
+    actually hadn't finalized its state. The only way I could get a clean pull
+    was if I pulled <em>after</em> the hook was complete. Which foiled my
+    attempts at automation.
+</p>
+
+<p>
+    And now we get to Gearman. I realized I could have my
+    <code>post-receive</code> script queue a background task to Gearman. Since
+    this is almost an instantaneous operation, it meant that my hook was
+    completed before Gearman started a worker; if it wasn't, I could always do a
+    <code>sleep()</code> within my worker to ensure it was.
+</p>
+
+<h2>Writing Gearman Tasks</h2>
+
+<p>
+    So, now I was able to do my task, I started thinking about what other things
+    I could do, and suddenly Gearman looked like an excellent solution for the
+    architecture. Basically, it prevents the end-user who is committing changes
+    from having any lag based on the hook scripts, while simultaneously allowing
+    me do perform the task automation we need.
+</p>
+
+<p>
+    So I wrote two tasks as a proof-of-concept, using a mixture of straight PHP
+    and Zend Framework; these are for the subtree merge I mentioned earlier (the
+    actual work is done in a bash script, actually), and also one for RSS feeds.
+</p>
+
+<h3>The Gearman client: a post-receive hook</h3>
+
+<p>
+    First, let's look at my hook script, which uses a Gearman client. I'm using
+    <a href="http://pecl.php.net//package/gearman">ext/gearman</a>, from <a
+        href="http://pecl.php.net/">PECL</a>.  My <code>post-receive</code> hook
+    script looks like this:
+</p>
+
+<div class="example"><pre><code lang="php">
+#!/usr/bin/env php
+&lt;?php
+$workload = implode(':', $argv);
+$client = new GearmanClient();
+$client-&gt;addServer();
+$client-&gt;doBackground('post-receive', $workload);
+$client-&gt;doBackground('rss', $workload);
+</code></pre></div>
+
+<p>
+    The above should be pretty straight-forward: I create a
+    <code>GearmanClient</code>, tell it to use the default server (localhost),
+    and trigger two Gearman functions, "post-receive" and "rss," using the
+    arguments my script received as a payload. I use the
+    <code>doBackground()</code> method so that the tasks can execute
+    asynchronously; the hook script doesn't need to be blocked on the execution
+    of any given task, and can continue merrily on its way.
+</p>
+
+<h3>The tasks</h3>
+
+<p>
+    I wrote two classes, one for each Gearman job I wanted to create. I could
+    have done these as <a href="http://php.net/functions.anonymous">lambdas</a>,
+    plain old functions, etc. I chose objects so that I could test them, as well
+    as consume them from other scripts if I want. These classes implement a
+    <code>Command</code> interface, which simply defines an
+    <code>execute()</code> method that accepts a <code>GearmanJob</code>
+    instance.
+</p>
+
+<p>
+    The first is the job that triggers my subtree merge:
+</p>
+
+<div class="example"><pre><code lang="php">
+&lt;?php
+
+namespace ZF\Git;
+
+class MergeSubtree implements Command
+{
+    protected $_logger;
+    protected $_wd = '/var/spool/gearman';
+
+    public function setWorkingDir($path)
+    {
+        if (!is_dir($path)) {
+            throw new \Exception('Invalid path provided for working directory');
+        }
+        $this-&gt;_wd = $path;
+    }
+
+    public function getLogger()
+    {
+        if (null === $this-&gt;_logger) {
+            $this-&gt;setLogger(new \Zend_Log(new \Zend_Log_Writer_Stream($this-&gt;_wd . '/merge_subtree_error.log')));
+        }
+        return $this-&gt;_logger;
+    }
+
+    public function setLogger(\Zend_Log $logger)
+    {
+        $this-&gt;_logger = $logger;
+    }
+
+    public function executeMerge()
+    {
+        chdir($_ENV['HOME'] . '/working/zf-master');
+        $return = shell_exec($this-&gt;_wd . '/update-master.sh');
+        return $return;
+    }
+
+    public function execute(\GearmanJob $job)
+    {
+        $this-&gt;getLogger()-&gt;info('Received merge request');
+        $return = $this-&gt;executeMerge();
+        if (strstr($return, 'Failed')) {
+            $this-&gt;getLogger()-&gt;err('Failed pull: ' . $return);
+            $job-&gt;sendFail();
+            return;
+        }
+        $this-&gt;getLogger()-&gt;info('Merge complete');
+    }
+}
+</code></pre></div>
+
+<p>
+    <em>(Note the backslashes in front of the ZF class names; since I'm using
+        namespaces, I need to fully-qualify my classes.)</em>
+</p>
+
+<p>
+    The above class is probably overkill. But it has some nice features,
+    particularly for a Gearman environment: it logs anytime it sees failures in
+    my merge script. This way I can go look through my logs anytime I start
+    seeing discrepancies between my repositories.
+</p>
+
+<p>
+    My next class is a bit more complex, and yet for many, probably more
+    useful. It takes the most recent 15 <code>git log</code> entries, and
+    creates an RSS feed:
+</p>
+
+<div class="example"><pre><code lang="php">
+&lt;?php
+namespace ZF\Git;
+
+class Log2RSS implements Command
+{
+    protected $_repo;
+    protected $_feedDir  = '/var/spool/gearman/feeds';
+    protected $_feedName = 'rss';
+    protected $_baseLink = 'http://some.viewgit.repo/?a=commit&amp;p=zf&amp;h=';
+
+    public function setRepo($repo)
+    {
+        if (!is_dir($repo) || !is_dir($repo . '/.git')) {
+            throw new \Exception('Invalid repository specified; not a Git repository');
+        }
+        $this-&gt;_repo = $repo;
+        return $this;
+    }
+
+    public function getRepo()
+    {
+        if (null === $this-&gt;_repo) {
+            throw new \Exception('No repository directory specified');
+        }
+        return $this-&gt;_repo;
+    }
+
+    public function setBaseLink($url)
+    {
+        $this-&gt;_baseLink = $url;
+        return $this;
+    }
+
+    public function getBaseLink()
+    {
+        return $this-&gt;_baseLink;
+    }
+
+    public function setFeedDir($path)
+    {
+        if (!is_dir($path) || !is_writable($path)) {
+            throw new \Exception('Invalid feed directory specified, or not writeable');
+        }
+        $this-&gt;_feedDir = $path;
+        return $this;
+    }
+
+    public function getFeedDir()
+    {
+        return $this-&gt;_feedDir;
+    }
+
+    public function setFeedName($feedName)
+    {
+        $this-&gt;_feedName = (string) $feedName;
+        return $this;
+    }
+
+    public function getFeedName()
+    {
+        return $this-&gt;_feedName;
+    }
+
+    public function generateFeed()
+    {
+        $feed = new \Zend_Feed_Writer_Feed;
+        $feed-&gt;setTitle('git commits');
+        $feed-&gt;setLink('http://some.viewgit.repo/');
+        $feed-&gt;setFeedLink('http://some.viewgit.repo/feeds/' . $this-&gt;getFeedName() . '.xml', 'rss');
+        $feed-&gt;addAuthor(array(
+            'name'  =&gt; 'Name of this feed',
+            'email' =&gt; 'git@somedomain',
+            'uri'   =&gt; 'http://some.viewgit.repo/',
+        ));
+        $feed-&gt;setDateModified(time());
+        $feed-&gt;setDescription('git commits');
+
+        $logs = $this-&gt;_parseLogs();
+
+        foreach ($logs as $log) {
+            $date  = strtotime($log['date']);
+            $entry = $feed-&gt;createEntry();
+            $entry-&gt;setTitle($log['commit']);
+            $entry-&gt;setLink($this-&gt;getBaseLink() . $log['commit']);
+            $entry-&gt;setDateModified($date);
+            $entry-&gt;setDateCreated($date);
+            $entry-&gt;setDescription($log['subject']);
+            $entry-&gt;setContent($log['subject'] . \&quot;\n\n\&quot; . $log['notes']);
+            $feed-&gt;addEntry($entry);
+        }
+
+        $output = $feed-&gt;export('rss');
+        file_put_contents($this-&gt;getFeedDir() . '/' . $this-&gt;getFeedName() . '.xml', $output);
+    }
+
+    public function execute(\GearmanJob $job)
+    {
+        $this-&gt;generateFeed();
+    }
+
+    protected function _parseLogs()
+    {
+        $repoPath = $this-&gt;getRepo();
+
+        $command = 'git --git-dir=' . $repoPath . '/.git --work-tree=' . $repoPath . ' log --max-count=15 --format=\'Commit: %H%nAuthor: %an%nDate: %cD%nSubject: %s%nNotes: %N%n\' -p';
+        $log     = shell_exec($command);
+        $lines   = preg_split('/[\r\n?|\n]/', $log);
+        $logs    = array();
+        $index   = 0;
+        $current = false;
+        foreach ($lines as $line) {
+            if (preg_match('/^(Commit|Author|Date|Subject|Notes): (.*)$/', $line, $matches)) {
+                $current = strtolower($matches[1]);
+                $value   = $matches[2];
+                if ('commit' == $current) {
+                    $index++;
+                    $logs[$index] = array();
+                }
+                $logs[$index][$current] = $value;
+            } elseif (false !== $current) {
+                $logs[$index][$current] .= \&quot;\n\&quot; . $line;
+            }
+        }
+        return $logs;
+    }
+}
+</code></pre></div>
+
+<p>
+    The above object could use a few more customization vectors -- ways to
+    inject the RSS feed name, URL, etc., and some threshold for the description
+    limit so it can truncate past a certain number of lines. However, it gets
+    the job done -- it creates an RSS feed with entries based on each commit.
+</p>
+
+<h3>The Gearman Worker</h3>
+
+<p>
+    Now, for the worker. Since I'm using some Zend Framework classes, and
+    relying on autoloading, I need to setup some autoloading. I also need to
+    instantiate these classes, configure the instances, and attach them to the
+    Gearman worker.
+</p>
+
+<div class="example"><pre><code lang="php">
+#!/usr/bin/env php
+&lt;?php
+ini_set('memory_limit', -1);
+
+$autoloader = function($class) {
+    $file = str_replace(array('\\', '_'), DIRECTORY_SEPARATOR, $class) . '.php';
+    return include_once $file;
+};
+spl_autoload_register($autoloader);
+
+$mergeSubtree = new ZF\Git\MergeSubtree();
+$mergeSubtree-&gt;setWorkingDir(__DIR__);
+
+$log2rss      = new ZF\Git\Log2RSS();
+$log2rss-&gt;setRepo('/home/gitolite/working/zf-master')
+        -&gt;setFeedName('zf');
+
+$worker = new GearmanWorker();
+$worker-&gt;addServer();
+$worker-&gt;addFunction('post-receive', array($mergeSubtree, 'execute'));
+$worker-&gt;addFunction('rss', array($log2rss, 'execute'));
+while ($worker-&gt;work()) {
+    if (GEARMAN_SUCCESS != $worker-&gt;returnCode()) {
+        echo \&quot;Worker failed: \&quot; . $worker-&gt;error() . \&quot;\n\&quot;;
+    }
+}
+</code></pre></div>
+
+<p>
+    To tie it all together, I'm using <a
+        href="http://supervisord.org/">supervisord</a> to manage this script, so
+    that I don't have to worry about it dying on me; it will always be available
+    when Gearman needs it. I won't go into the setup here; it's incredibly
+    straight-forward. <em>(Many thanks to Sean Coates for <a
+        href="http://phpadvent.org/2009/daemonize-your-php-by-sean-coates">his
+        2009 PHP Advent article</a> on using supervisord with PHP, and to <a
+        href="http://mikenaberezny.com/">Mike Naberezny</a> for introducing
+    me to supervisord many years ago.)</em>
+</p>
+
+<h2>Conclusions</h2>
+
+<p>
+    Gearman is a great tool for parallelizing tasks, as well as creating
+    asynchronous processes. Coupled with supervisord and the scripting language
+    of your choice, you can achieve some incredible results with very little
+    effort. 
+</p>
+
+<p>
+    This is also a nice example of cherry-picking ZF components for use in
+    simple tasks -- I'm using <code>Zend_Log</code> to do reporting on the
+    status of jobs, and <code>Zend_Feed_Writer</code> to generate the RSS feed.
+    These are two components that work very well standalone, and which are also
+    ideally suited for long-running environments, where you don't need to worry
+    about how long the task takes.
+</p>
+
+<p>
+    I highly encourage you to investigate using tools for asynchronous
+    processing -- there are a variety of messaging systems, queues, and more
+    that you can leverage, and which can help you offload resource intensive
+    tasks from your main application.
+</p>
+
+<p>
+    <em>For those of you curious about the subtree merge workflow I'm
+        developing, I'll be writing additional posts this month on that
+        subject.</em>
+</p><div class="social-media">
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="weierophinney">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</div>
+
+<div class="social-media">
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<div class="fb-like" data-send="true" data-width="450" data-show-faces="true"></div>
+</div>
+
+<div class="social-media">
+<div class="g-plusone" data-size="medium" data-annotation="inline"></div>
+</div>
+
+<!-- Place this render call where appropriate -->
+<script type="text/javascript">
+dojo.ready(function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+});
+</script>
+
+<div class="social-media">
+<a href="http://www.reddit.com/submit" onclick="window.location = 'http://www.reddit.com/submit?url=' + encodeURIComponent(window.location); return false"> <img src="http://www.reddit.com/static/spreddit1.gif" alt="submit to reddit" border="0" /> </a>
+</div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_developer = 1;
+        var disqus_shortname = 'phlyboyphly';
+        var disqus_identifier = '240-Writing-Gearman-Workers-in-PHP';
+        var disqus_url = 'http://mwop.net/blog/240-Writing-Gearman-Workers-in-PHP.html';
+        var disqus_title = 'Writing Gearman Workers in PHP';
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a></article>
+
+<aside class="four columns offset-by-one omega sidebar blog">
+    <div class="metadata">
+        <ul>
+            <li>Posted on <b>2010-05-06 09:00:00</b>.</li>
+            <li>Last updated on <b>2010-05-13 02:30:39</b>.</li>
+        </ul>
+    </div>
+
+    <div class="metadata">
+        <h4>Tags for this entry</h4>
+        <p class="tags"><a href="/blog/tag/php.html">php</a><br />
+<a href="/blog/tag/zend+framework.html">zend framework</a></p>
+    </div>
+
+        <div class="metadata">
+        <h4>Blogroll</h4>
+        <ul>
+            <li><a href="http://sebastian-bergmann.de/">Sebastian Bergmann</a></li>
+            <li><a href="http://blog.calevans.com/">Cal Evans</a></li>
+            <li><a href="http://prematureoptimization.org/blog/">Shahar Evron</a></li>
+            <li><a href="http://paul-m-jones.com/blog/">Paul M. Jones</a></li>
+            <li><a href="http://karwin.blogspot.com/">Bill Karwin</a></li>
+            <li><a href="http://mikenaberezny.com/">Mike Naberezny</a></li>
+            <li><a href="http://fabien.potencier.org/">Fabien Potencier</a></li>
+            <li><a href="http://benramsey.com/">Ben Ramsey</a></li>
+            <li><a href="http://derickrethans.nl/">Derick Rethans</a></li>
+            <li><a href="http://ralphschindler.com/">Ralph Schindler</a></li>
+            <li><a href="http://www.zimuel.it/blog/">Enrico Zimuel</a></li>
+        </ul>
+    </div>
+
+</aside>
+
+    </div>
+
+    <footer class="sixteen columns footer">
+        <div class="column one-third alpha about">
+            <h4>About</h4>
+            <p>
+    I'm a husband, father of two, slave to an ancient Basset Hound and 
+    plaything of a Basset puppy, and web architect by day.
+</p>
+
+<ul class="resume">
+    <li><a href="/resume">Resume</a></li>
+    <li><a href="http://twitter.com/weierophinney">Twitter</a></li>
+    <li><a href="http://www.linkedin.com/in/mweierophinney">LinkedIn</a></li>
+    <li><a href="http://www.ohloh.net/accounts/weierophinney">OhLoh</a></li>
+    <li><a href="http://resume.github.com/?weierophinney">GitHub</a></li>
+</ul>
+
+        </div>
+
+        <div class="column one-third projects">
+            <h4>Projects</h4>
+            <ul class="projects">
+    <li><a href="http://framework.zend.com/">Zend Framework (Project Lead)</a></li>
+    <li><a href="http://github.com/weierophinney/phly_mustache">Phly_Mustache</a></li>
+    <li><a href="http://www.the-pastry-box-project.net/baker/matthew-weier-ophinney/">The Pastry Box Project</a> (as a Baker)</li>
+</ul>
+
+        </div>
+
+        <div class="column one-third omega tags">
+        <div id="search" style="width:100%;">Loading...</div>
+<h4>Tag Cloud</h4>
+<div class="cloud">
+<ul class="Zend\Tag\Cloud"><li><a href="/blog/tag/php.html" style="font-size: 20px;">php</a></li> <li><a href="/blog/tag/zend+framework.html" style="font-size: 14px;">zend framework</a></li> <li><a href="/blog/tag/zf2.html" style="font-size: 11px;">zf2</a></li> <li><a href="/blog/tag/vim.html" style="font-size: 11px;">vim</a></li> <li><a href="/blog/tag/family.html" style="font-size: 11px;">family</a></li> <li><a href="/blog/tag/programming.html" style="font-size: 12px;">programming</a></li> <li><a href="/blog/tag/personal.html" style="font-size: 13px;">personal</a></li> <li><a href="/blog/tag/phpconcom.html" style="font-size: 10px;">phpconcom</a></li> <li><a href="/blog/tag/mvc.html" style="font-size: 11px;">mvc</a></li> <li><a href="/blog/tag/oop.html" style="font-size: 11px;">oop</a></li> <li><a href="/blog/tag/testing.html" style="font-size: 10px;">testing</a></li> <li><a href="/blog/tag/rest.html" style="font-size: 11px;">rest</a></li> <li><a href="/blog/tag/linux.html" style="font-size: 12px;">linux</a></li> <li><a href="/blog/tag/zendcon08.html" style="font-size: 11px;">zendcon08</a></li> <li><a href="/blog/tag/file_fortune.html" style="font-size: 10px;">file_fortune</a></li> <li><a href="/blog/tag/pear.html" style="font-size: 11px;">pear</a></li> <li><a href="/blog/tag/zendcon.html" style="font-size: 11px;">zendcon</a></li> <li><a href="/blog/tag/perl.html" style="font-size: 12px;">perl</a></li> <li><a href="/blog/tag/fastcgi.html" style="font-size: 10px;">fastcgi</a></li> <li><a href="/blog/tag/ubuntu.html" style="font-size: 11px;">ubuntu</a></li> <li><a href="/blog/tag/tekx.html" style="font-size: 10px;">tekx</a></li> <li><a href="/blog/tag/zendcon10.html" style="font-size: 10px;">zendcon10</a></li> <li><a href="/blog/tag/dojo.html" style="font-size: 11px;">dojo</a></li> <li><a href="/blog/tag/symfony.html" style="font-size: 11px;">symfony</a></li> <li><a href="/blog/tag/zeta+components.html" style="font-size: 10px;">zeta components</a></li> <li><a href="/blog/tag/tek09.html" style="font-size: 10px;">tek09</a></li> <li><a href="/blog/tag/spl.html" style="font-size: 11px;">spl</a></li> <li><a href="/blog/tag/subversion.html" style="font-size: 11px;">subversion</a></li> <li><a href="/blog/tag/zend+framewor.html" style="font-size: 10px;">zend framewor</a></li> <li><a href="/blog/tag/rails.html" style="font-size: 10px;">rails</a></li> <li><a href="/blog/tag/conferences.html" style="font-size: 11px;">conferences</a></li> <li><a href="/blog/tag/dpc08.html" style="font-size: 11px;">dpc08</a></li> <li><a href="/blog/tag/phpworks08.html" style="font-size: 11px;">phpworks08</a></li> <li><a href="/blog/tag/webinar.html" style="font-size: 11px;">webinar</a></li> <li><a href="/blog/tag/zencon08.html" style="font-size: 10px;">zencon08</a></li> <li><a href="/blog/tag/advocacy.html" style="font-size: 10px;">advocacy</a></li> <li><a href="/blog/tag/politics.html" style="font-size: 10px;">politics</a></li> <li><a href="/blog/tag/internet.html" style="font-size: 10px;">internet</a></li> <li><a href="/blog/tag/cw09.html" style="font-size: 11px;">cw09</a></li> <li><a href="/blog/tag/zend+server.html" style="font-size: 10px;">zend server</a></li> <li><a href="/blog/tag/dpc09.html" style="font-size: 10px;">dpc09</a></li> <li><a href="/blog/tag/sflive2010.html" style="font-size: 10px;">sflive2010</a></li> <li><a href="/blog/tag/security.html" style="font-size: 10px;">security</a></li> <li><a href="/blog/tag/wifi.html" style="font-size: 10px;">wifi</a></li> <li><a href="/blog/tag/aikido.html" style="font-size: 10px;">aikido</a></li> <li><a href="/blog/tag/books.html" style="font-size: 10px;">books</a></li> <li><a href="/blog/tag/dpc10.html" style="font-size: 10px;">dpc10</a></li> <li><a href="/blog/tag/zendcon09.html" style="font-size: 11px;">zendcon09</a></li> <li><a href="/blog/tag/git.html" style="font-size: 10px;">git</a></li> <li><a href="/blog/tag/phpwomen.html" style="font-size: 10px;">phpwomen</a></li> <li><a href="/blog/tag/virtualbox.html" style="font-size: 10px;">virtualbox</a></li></ul></div>
+        </div>
+    </footer>
+</div>
+</body>
+</html>

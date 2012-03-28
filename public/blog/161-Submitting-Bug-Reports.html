@@ -1,0 +1,425 @@
+<!DOCTYPE html><!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8" />
+    <title>Submitting Bug Reports :: phly, boy, phly</title>
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <link href="/css/SkeletonCss/base.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/SkeletonCss/skeleton.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/SkeletonCss/layout.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/Application/site.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/images/Application/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" >
+<link href="/css/PhlyBlog/phly-blog.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/blog-atom.xml" rel="alternate" type="application/atom+xml" title="phly, boy, phly Atom Feed" >
+<link href="/blog-rss.xml" rel="alternate" type="application/rss+xml" title="phly, boy, phly RSS Feed" >
+    
+<script type="text/javascript">
+//<!--
+    var djConfig = {"isDebug":true,"parseOnLoad":true,"baseUrl":"\/js\/dojo\/","modulePaths":{"PhlyBlog":"\/js\/PhlyBlog","Application":"\/js\/Application"}};
+//-->
+</script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojo/dojo.xd.js"></script>
+
+<script type="text/javascript">
+//<!--
+dojo.require("PhlyBlog.blog");
+    dojo.require("Application.scroll");
+//-->
+
+</script>
+    
+    <script src="https://www.google.com/jsapi?ABQIAAAAGybdRRvLZwVUcF0dE3oVdBTO-MlgA7VGJpGqyqTOeDXlNzyZQxTGq17s-iAB0m0vwqLQ_A2dHhTg2Q"></script>
+<script type="text/javascript">
+    google.load('search', '1', {style: google.loader.themes.ESPRESSO});
+    google.setOnLoadCallback(function(){
+        new google.search.CustomSearchControl().draw('search');
+    }, true);
+</script>
+
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-27037983-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</head>
+<body>
+<div class="container">
+    <header class="sixteen columns">
+    <a href="/"><img src="/images/Application/logo.gif" height="37" width="37"/></a>
+        <span class="main_title">phly, boy, phly: matthew weier o'phinney</span>
+    </header>
+
+    <div class="sixteen columns" id="menu">
+        <nav>
+            <li><a href="/">Home</a></li>
+            <li><a href="/blog.html">Blog</a></li>
+                        <li><a href="/resume">R&eacute;sum&eacute;</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </nav>
+    </div>
+
+    <div class="sixteen columns content">
+        <div class="row">
+<article class="eleven columns alpha blog">
+<h2>Submitting Bug Reports</h2>
+<p>
+    Full disclosure: I am employed by <a href="http://www.zend.com/">Zend</a> to
+    program <a href="http://framework.zend.com/">Zend Framework</a>. That said,
+    the following is all my opinion, and is based on my experiences with Zend
+    Framework, as well as answering questions on a variety of mailing lists and
+    with other OSS projects (PEAR, Solar, and Cgiapp in particular).
+</p>
+
+<p>
+    One of my biggest pet peeves in the OSS world is vague bug/issue reports and feature requests. I
+    cannot count the number of times I've seen a report similar to the following:
+</p>
+
+<blockquote>
+    &lt;Feature X&gt; doesn't work; you need to fix it <b>now!</b>
+</blockquote>
+
+<p>
+    If such a report comes in on an issue tracker, it's invariably marked
+    critical and high priority.
+</p>
+
+<p>
+    What bothers me about it? Simply this: it gives those responsible for
+    maintaining Feature X absolutely no information to work on: what result they
+    received, what was expected, or how exactly they were using the feature. The
+    reviewer now has to go into one or more cycles with the reporter fishing for
+    that information -- wasting everyone's time and energy.
+</p>
+
+<p>
+    Only slightly better are these reports:
+</p>
+
+<blockquote>
+    &lt;Feature X&gt; doesn't work -- I keep getting &lt;Result X&gt; from it,
+    which is incorrect.
+</blockquote>
+
+<p>
+    At least this tells the reviewers what they reporter is receiving... but it
+    doesn't tell them how they got there, or what they're expecting.
+</p>
+
+<p>
+    So, the following should be your mantra when reporting issues or making feature requests:
+</p>
+
+<ul>
+    <li>What is the minimum code necessary to reproduce the issue or show the desired API?</li>
+    <li>What is the expected result?</li>
+    <li>What is the actual result?</li>
+</ul><h2>What makes up a good issue report?</h2>
+
+<p>
+    A good issue report has to contain the above three points, plain and simple.
+    Without this information, a reviewer simply does not have the tools with
+    which to properly deal with the issue.
+</p>
+
+<h3>Reproduce code</h3>
+
+<p>
+    Quite often, you'll find that an application breaks. It is up to you to find
+    the root cause of that breakage: what minimal amount of code do I need to
+    write in order to cause the breakage to occur? Sometimes this will require a
+    little digging -- you may have a result that is unexpected, but it may be a
+    symptom of something breaking earlier.
+</p>
+
+<p>
+    For example, in working on Zend_Form in the past couple weeks, I had a
+    number of issues reported against how the new MultiCheckbox element was
+    working. One issue noted that populate() was not properly populating the
+    checkboxes.
+</p>
+
+<p>
+    When pressed for reproduce code, the reporter provided the $_POST array with
+    which they were trying to populate the form:
+</p>
+
+<div class="example"><pre><code lang="php">
+$_POST = array(
+    'foo' =&gt; array(
+        0 =&gt; array(0 =&gt; 'bar'),
+        1 =&gt; array(0 =&gt; 'baz'),
+        2 =&gt; array(0 =&gt; 'bat')
+    )
+);
+</code></pre></div>
+    
+<p>
+    In looking at it, I knew immediately that it was related to another issue
+    that had been reported. In that issue, the reporter noted that the input
+    elements rendered by Zend_Form for MultiCheckbox elements had redundant
+    array notation:
+</p>
+
+<div class="example"><pre><code lang="html">
+    &lt;input type=\&quot;checkbox\&quot; value=\&quot;foo\&quot; name=\&quot;foo[][]\&quot; value=\&quot;bar\&quot; /&gt;
+</code></pre></div>
+<br />
+
+<p>
+    In the former case, we're seeing a symptom of the latter case: the redundant
+    array notation was causing a form submission that simply could not populate
+    the element. If the reporter of the former case had looked at the form used
+    to send the $_POST data they posted in the tracker, either they likely would
+    have noticed the similar issue already reported in the tracker -- or I, as
+    the reviewer, would have been able to quickly mark the bug as a duplicate.
+</p>
+
+<p>
+    Regardless, the main point is this: using the value of a POST request to
+    reproduce an issue is not doing your homework. You need to look for the
+    <em>minimal</em> code necessary to reproduce the issue, and the value
+    provided in $_POST is typically a <em>symptom</em> of an issue that has
+    already occurred.
+</p>
+
+<p>
+    Another rule of thumb with creating reproduce code is to keep the
+    environment minimal. Try writing up <em>fresh</em> code in a scratchpad that
+    you can run over and over again until you get the result that you're trying
+    to report. This does a few things: it helps simplify the use case causing
+    the issue, and it often will help you track down exactly where things begin
+    to break. Sometimes, and I can attest to this, it helps you find places
+    where you're doing things wrong in your <em>own</em> code in the first
+    place, alleviating the need entirely to submit a report.
+</p>
+
+<p>
+    What does the reviewer do with this code? Well, a <em>good</em> developer
+    will use it as a test case in the unit test suite -- which is another reason
+    to keep the code down to the minimum required to reproduce the issue. This
+    code will often end up in the test suite in order to document the issue
+    report -- as well as to prove, once a solution is in place, that the issue
+    has been resolved.
+</p>
+
+<p>
+    The above advice is useful even when reporting a feature request, this
+    information is useful. The reviewer then gets an idea of the desired API,
+    and they can write a test case against it.
+</p>
+
+<h3>Expected Results</h3>
+
+<p>
+    In addition to the reproduce case, you should provide the expected results.
+    These show clearly your expectations of the code. The reviewer can use this
+    information in several ways:
+</p>
+
+<ul>
+    <li>In the test suite, the reviewer can use the expected results in
+    assertions to verify the issue (or prove that it is now corrected)</li>
+
+    <li>To show where the reporter has flawed assumptions. In some cases, the
+    expectations of the code are different than the documented assertions, and
+    the reviewer can then point out where the differences lie -- which helps to
+    educate the reporter in proper usage of the code.</li>
+
+    <li>In the case of a feature request, this will indicate how the reporter
+    expects the new feature to behave. The reviewer can then use that
+    expectation as an assertion in the test suite.</li>
+</ul>
+
+<h3>Actual Results</h3>
+
+<p>
+    The actual results are important as they contrast against the expected
+    results, showing where the breakage is. If the reviewer cannot recreate
+    these results, then it likely means that the reproduce code provided is not
+    the actual code needed to reproduce the issue, or it may mean that
+    environmental differences -- differences in OS or PHP version, for instance
+    -- may be a factor in recreating the issue.
+</p>
+
+<p>
+    In the case of a feature request, you could omit the actual results, as
+    there won't be any.
+</p>
+
+<h3>Always search for your issue or feature request</h3>
+
+<p>
+    Finally, one additional mantra to add to your repertoire: search the issue
+    tracker and/or mailing lists <em>before</em> reporting an issue or
+    requesting a feature. I cannot tell you how many bugs I've closed as
+    duplicates, or how many times I've had to respond to an email with the
+    phrase, "this is a known issue." It pays to do your homework: search and see
+    if others have made the same request. In many cases, you may actually find a
+    <em>solution</em> to your issue posted by others -- either a way to extend a
+    class to get the behaviour you're expecting, a patch to the software, or
+    even a note regarding what public release or snapshot contains a fix.
+    There's no reason to waste people's time by reporting a known issue.
+</p>
+
+<p>
+    The best time to search for your issue, believe it or not, is <em>after</em>
+    you've done the other steps. Until you know exactly what code reproduces the
+    issue, and have clearly defined your expectations and the real results, it
+    can be difficult to identify when your issue matches another. 
+</p>
+
+<h2>In Conclusion</h2>
+
+<ul>
+    <li>What is the minimum code necessary to reproduce the issue?</li>
+    <li>What is the expected result?</li>
+    <li>What is the actual result?</li>
+    <li>Have you searched for similar requests in public forums?</li>
+</ul>
+
+<p>
+    If you can start answering the above questions <em>before</em> posting your
+    issues, you'll start receiving more detailed and useful responses from those
+    reviewing your issues or feature requests, and reduce the number of "I don't
+    understand" or "I need more information" responses. Guaranteed.
+</p><div class="social-media">
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="weierophinney">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</div>
+
+<div class="social-media">
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<div class="fb-like" data-send="true" data-width="450" data-show-faces="true"></div>
+</div>
+
+<div class="social-media">
+<div class="g-plusone" data-size="medium" data-annotation="inline"></div>
+</div>
+
+<!-- Place this render call where appropriate -->
+<script type="text/javascript">
+dojo.ready(function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+});
+</script>
+
+<div class="social-media">
+<a href="http://www.reddit.com/submit" onclick="window.location = 'http://www.reddit.com/submit?url=' + encodeURIComponent(window.location); return false"> <img src="http://www.reddit.com/static/spreddit1.gif" alt="submit to reddit" border="0" /> </a>
+</div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_developer = 1;
+        var disqus_shortname = 'phlyboyphly';
+        var disqus_identifier = '161-Submitting-Bug-Reports';
+        var disqus_url = 'http://mwop.net/blog/161-Submitting-Bug-Reports.html';
+        var disqus_title = 'Submitting Bug Reports';
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a></article>
+
+<aside class="four columns offset-by-one omega sidebar blog">
+    <div class="metadata">
+        <ul>
+            <li>Posted on <b>2008-03-08 12:06:13</b>.</li>
+            <li>Last updated on <b>2008-03-09 10:18:36</b>.</li>
+        </ul>
+    </div>
+
+    <div class="metadata">
+        <h4>Tags for this entry</h4>
+        <p class="tags"><a href="/blog/tag/programming.html">programming</a><br />
+<a href="/blog/tag/php.html">php</a></p>
+    </div>
+
+        <div class="metadata">
+        <h4>Blogroll</h4>
+        <ul>
+            <li><a href="http://sebastian-bergmann.de/">Sebastian Bergmann</a></li>
+            <li><a href="http://blog.calevans.com/">Cal Evans</a></li>
+            <li><a href="http://prematureoptimization.org/blog/">Shahar Evron</a></li>
+            <li><a href="http://paul-m-jones.com/blog/">Paul M. Jones</a></li>
+            <li><a href="http://karwin.blogspot.com/">Bill Karwin</a></li>
+            <li><a href="http://mikenaberezny.com/">Mike Naberezny</a></li>
+            <li><a href="http://fabien.potencier.org/">Fabien Potencier</a></li>
+            <li><a href="http://benramsey.com/">Ben Ramsey</a></li>
+            <li><a href="http://derickrethans.nl/">Derick Rethans</a></li>
+            <li><a href="http://ralphschindler.com/">Ralph Schindler</a></li>
+            <li><a href="http://www.zimuel.it/blog/">Enrico Zimuel</a></li>
+        </ul>
+    </div>
+
+</aside>
+
+    </div>
+
+    <footer class="sixteen columns footer">
+        <div class="column one-third alpha about">
+            <h4>About</h4>
+            <p>
+    I'm a husband, father of two, slave to an ancient Basset Hound and 
+    plaything of a Basset puppy, and web architect by day.
+</p>
+
+<ul class="resume">
+    <li><a href="/resume">Resume</a></li>
+    <li><a href="http://twitter.com/weierophinney">Twitter</a></li>
+    <li><a href="http://www.linkedin.com/in/mweierophinney">LinkedIn</a></li>
+    <li><a href="http://www.ohloh.net/accounts/weierophinney">OhLoh</a></li>
+    <li><a href="http://resume.github.com/?weierophinney">GitHub</a></li>
+</ul>
+
+        </div>
+
+        <div class="column one-third projects">
+            <h4>Projects</h4>
+            <ul class="projects">
+    <li><a href="http://framework.zend.com/">Zend Framework (Project Lead)</a></li>
+    <li><a href="http://github.com/weierophinney/phly_mustache">Phly_Mustache</a></li>
+    <li><a href="http://www.the-pastry-box-project.net/baker/matthew-weier-ophinney/">The Pastry Box Project</a> (as a Baker)</li>
+</ul>
+
+        </div>
+
+        <div class="column one-third omega tags">
+        <div id="search" style="width:100%;">Loading...</div>
+<h4>Tag Cloud</h4>
+<div class="cloud">
+<ul class="Zend\Tag\Cloud"><li><a href="/blog/tag/php.html" style="font-size: 20px;">php</a></li> <li><a href="/blog/tag/zend+framework.html" style="font-size: 14px;">zend framework</a></li> <li><a href="/blog/tag/zf2.html" style="font-size: 11px;">zf2</a></li> <li><a href="/blog/tag/vim.html" style="font-size: 11px;">vim</a></li> <li><a href="/blog/tag/family.html" style="font-size: 11px;">family</a></li> <li><a href="/blog/tag/programming.html" style="font-size: 12px;">programming</a></li> <li><a href="/blog/tag/personal.html" style="font-size: 13px;">personal</a></li> <li><a href="/blog/tag/phpconcom.html" style="font-size: 10px;">phpconcom</a></li> <li><a href="/blog/tag/mvc.html" style="font-size: 11px;">mvc</a></li> <li><a href="/blog/tag/oop.html" style="font-size: 11px;">oop</a></li> <li><a href="/blog/tag/testing.html" style="font-size: 10px;">testing</a></li> <li><a href="/blog/tag/rest.html" style="font-size: 11px;">rest</a></li> <li><a href="/blog/tag/linux.html" style="font-size: 12px;">linux</a></li> <li><a href="/blog/tag/zendcon08.html" style="font-size: 11px;">zendcon08</a></li> <li><a href="/blog/tag/file_fortune.html" style="font-size: 10px;">file_fortune</a></li> <li><a href="/blog/tag/pear.html" style="font-size: 11px;">pear</a></li> <li><a href="/blog/tag/zendcon.html" style="font-size: 11px;">zendcon</a></li> <li><a href="/blog/tag/perl.html" style="font-size: 12px;">perl</a></li> <li><a href="/blog/tag/fastcgi.html" style="font-size: 10px;">fastcgi</a></li> <li><a href="/blog/tag/ubuntu.html" style="font-size: 11px;">ubuntu</a></li> <li><a href="/blog/tag/tekx.html" style="font-size: 10px;">tekx</a></li> <li><a href="/blog/tag/zendcon10.html" style="font-size: 10px;">zendcon10</a></li> <li><a href="/blog/tag/dojo.html" style="font-size: 11px;">dojo</a></li> <li><a href="/blog/tag/symfony.html" style="font-size: 11px;">symfony</a></li> <li><a href="/blog/tag/zeta+components.html" style="font-size: 10px;">zeta components</a></li> <li><a href="/blog/tag/tek09.html" style="font-size: 10px;">tek09</a></li> <li><a href="/blog/tag/spl.html" style="font-size: 11px;">spl</a></li> <li><a href="/blog/tag/subversion.html" style="font-size: 11px;">subversion</a></li> <li><a href="/blog/tag/zend+framewor.html" style="font-size: 10px;">zend framewor</a></li> <li><a href="/blog/tag/rails.html" style="font-size: 10px;">rails</a></li> <li><a href="/blog/tag/conferences.html" style="font-size: 11px;">conferences</a></li> <li><a href="/blog/tag/dpc08.html" style="font-size: 11px;">dpc08</a></li> <li><a href="/blog/tag/phpworks08.html" style="font-size: 11px;">phpworks08</a></li> <li><a href="/blog/tag/webinar.html" style="font-size: 11px;">webinar</a></li> <li><a href="/blog/tag/zencon08.html" style="font-size: 10px;">zencon08</a></li> <li><a href="/blog/tag/advocacy.html" style="font-size: 10px;">advocacy</a></li> <li><a href="/blog/tag/politics.html" style="font-size: 10px;">politics</a></li> <li><a href="/blog/tag/internet.html" style="font-size: 10px;">internet</a></li> <li><a href="/blog/tag/cw09.html" style="font-size: 11px;">cw09</a></li> <li><a href="/blog/tag/zend+server.html" style="font-size: 10px;">zend server</a></li> <li><a href="/blog/tag/dpc09.html" style="font-size: 10px;">dpc09</a></li> <li><a href="/blog/tag/sflive2010.html" style="font-size: 10px;">sflive2010</a></li> <li><a href="/blog/tag/security.html" style="font-size: 10px;">security</a></li> <li><a href="/blog/tag/wifi.html" style="font-size: 10px;">wifi</a></li> <li><a href="/blog/tag/aikido.html" style="font-size: 10px;">aikido</a></li> <li><a href="/blog/tag/books.html" style="font-size: 10px;">books</a></li> <li><a href="/blog/tag/dpc10.html" style="font-size: 10px;">dpc10</a></li> <li><a href="/blog/tag/zendcon09.html" style="font-size: 11px;">zendcon09</a></li> <li><a href="/blog/tag/git.html" style="font-size: 10px;">git</a></li> <li><a href="/blog/tag/phpwomen.html" style="font-size: 10px;">phpwomen</a></li> <li><a href="/blog/tag/virtualbox.html" style="font-size: 10px;">virtualbox</a></li></ul></div>
+        </div>
+    </footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,422 @@
+<!DOCTYPE html><!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8" />
+    <title>Zend Framework 1.6.0 Preview, or, PHP 4 is Dead :: phly, boy, phly</title>
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <link href="/css/SkeletonCss/base.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/SkeletonCss/skeleton.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/SkeletonCss/layout.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/Application/site.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/images/Application/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" >
+<link href="/css/PhlyBlog/phly-blog.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/blog-atom.xml" rel="alternate" type="application/atom+xml" title="phly, boy, phly Atom Feed" >
+<link href="/blog-rss.xml" rel="alternate" type="application/rss+xml" title="phly, boy, phly RSS Feed" >
+    
+<script type="text/javascript">
+//<!--
+    var djConfig = {"isDebug":true,"parseOnLoad":true,"baseUrl":"\/js\/dojo\/","modulePaths":{"PhlyBlog":"\/js\/PhlyBlog","Application":"\/js\/Application"}};
+//-->
+</script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojo/dojo.xd.js"></script>
+
+<script type="text/javascript">
+//<!--
+dojo.require("PhlyBlog.blog");
+    dojo.require("Application.scroll");
+//-->
+
+</script>
+    
+    <script src="https://www.google.com/jsapi?ABQIAAAAGybdRRvLZwVUcF0dE3oVdBTO-MlgA7VGJpGqyqTOeDXlNzyZQxTGq17s-iAB0m0vwqLQ_A2dHhTg2Q"></script>
+<script type="text/javascript">
+    google.load('search', '1', {style: google.loader.themes.ESPRESSO});
+    google.setOnLoadCallback(function(){
+        new google.search.CustomSearchControl().draw('search');
+    }, true);
+</script>
+
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-27037983-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</head>
+<body>
+<div class="container">
+    <header class="sixteen columns">
+    <a href="/"><img src="/images/Application/logo.gif" height="37" width="37"/></a>
+        <span class="main_title">phly, boy, phly: matthew weier o'phinney</span>
+    </header>
+
+    <div class="sixteen columns" id="menu">
+        <nav>
+            <li><a href="/">Home</a></li>
+            <li><a href="/blog.html">Blog</a></li>
+                        <li><a href="/resume">R&eacute;sum&eacute;</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </nav>
+    </div>
+
+    <div class="sixteen columns content">
+        <div class="row">
+<article class="eleven columns alpha blog">
+<h2>Zend Framework 1.6.0 Preview, or, PHP 4 is Dead</h2>
+<p>
+    PHP 4 officially died Friday. I started programming PHP with release
+    candidates of 4.0.0 -- which simultaneously introduced me to the GNU C
+    compiler and toolset. My first official job using PHP was at a shop that was
+    using PHP 3, and considering the costs of upgrading to PHP 4 -- which
+    clearly offerred many benefits over its predecessor. I switched to PHP 5 as
+    soon as the first official release was made four years ago -- the pains of
+    reference handling with objects, the introduction of a unified constructor,
+    first-class support for overloading, and SimpleXML won me over immediately,
+    and I've never looked back. Goodbye, PHP 4; long live PHP!
+</p>
+
+<p>
+    I'm celebrating with the second release candidate of Zend Framework 1.6.0,
+    which should drop today.  There are a ton of new features available that
+    I'm really excited about. I'm not going to go into implementation details
+    here, but instead catalogue some of the larger and more interesting changes
+    that are part of the release.
+</p><h3>Dojo Integration</h3>
+
+<p>
+    I've <a href="http://weierophinney.net/matthew/archives/176-Zend-Framework-Dojo-Integration.html">blogged</a> <a href="http://weierophinney.net/matthew/archives/178-Zend-FrameworkDojo-Integration-QA-Slides.html">a number of times</a> 
+    about this, but a picture is worth a thousand words... or lines of code, in
+    this matter. I'm going to show these as images, as I still need to determine
+    how and where to get a public demo up, so bear with me. First:
+</p>
+
+<a href="/uploads/dojoDemo-2008-08-11.png"><img src="http://weierophinney.net/uploads/dojoDemo-2008-08-11.png" width="650" border="0" alt="Dojo and ZF integration at work" /></a>
+
+<p>
+    What you're looking at is a form generated using Zend_Form (or, in this
+    case, Zend_Dojo_Form). It contains four subforms, each represented by a tab.
+    (I also created an additional decorator that creates the fifth tab.) The
+    form elements are all Dijits, presenting a common look-and-feel, and have a
+    variety of validators and features themselves.
+</p>
+
+<p>
+    The fifth tab shows off some fun features of Dojo: the ContentPane actually
+    has no content, but was defined with an 'href' attribute pointing to a
+    resource on the server. On this particular page, I define a dojo Grid that
+    consumes an ItemFileReadStore -- a fancy word for a remotable dojo.data
+    resource. I used Zend_Dojo_Data to provide that, and the result is that,
+    when you click on the tab, the following loads dynamically:
+</p>
+
+<a href="/uploads/gridDemo-2008-08-11.png"><img src="http://weierophinney.net/uploads/gridDemo-2008-08-11.png" width="650" alt="Dojo and ZF playing nice and creating grids" border="0" /></a>
+
+<p>
+    This stuff is ridiculously easy to pull off and create now -- which means I
+    no longer have any excuse for crappy looking forms or not adding ajax
+    features to apps. 
+</p>
+
+<p>
+    In experimenting with Dojo, I also discovered its build tools. Once your
+    code is developed, it's a trivial task to tally up all your dojo.require
+    statements, throw them in a build profile, and create a layer for use with
+    your application. Doing so has tremendous performance and bandwidth
+    benefits, and can mean the difference between a good application and a great
+    one, in terms of user experience. I'll blog more on this later, but I'm
+    excited that, because we're shipping a full source build of Dojo, this
+    support will be delivered to ZF users out of the box.
+</p>
+
+<h3>Unit testing infrastructure</h3>
+
+<p>
+    I've also <a href="http://weierophinney.net/matthew/archives/182-Testing-Zend-Framework-MVC-Applications.html">blogged about this before</a>. 
+    I've been using the <code>Zend_Test_PHPUNit_ControllerTestCase</code> on
+    some personal projects as well as projects related to application examples
+    I'm working on for some upcoming presentations.
+</p>
+
+<p>
+    There's nothing quite like having the assurance that your entire application
+    -- not just your models -- works according to the expectations you've worked
+    up, and that the document structure adheres to the design. This is going to
+    become a must-have component for serious ZF developers.
+</p>
+
+<h3>Captcha Support</h3>
+
+<p>
+    <a href="http://en.wikipedia.org/wiki/Captcha">Captchas</a> have become an 
+    essential tool in the anti-spam arsenal of most sites. While tools such as
+    <a href="http://akismet.com/">Akismet</a> are fantastic, it's even better
+    not to even need to send data to Akismet to process in the first place.
+</p>
+
+<p>
+    <a href="http://php100.wordpress.com/">Stas</a> worked up a nice design for
+    captchas as we were finishing 1.5.0, but we didn't have time to complete it
+    before shipping the release. This turned out to be fortuitous, as we have
+    received community contributions of <a href="http://framework.zend.com/manual/en/zend.text.html#zend.text.figlet">Figlet</a>
+    and <a href="http://framework.zend.com/manual/en/zend.service.recaptcha">ReCaptcha</a> 
+    support since then.  <a href="http://framework.zend.com/manual/en/zend.captcha">Zend_Captcha</a> 
+    provides adapters for each of these, as well as for a GD-based image
+    captcha. You can now pick and choose which works best for your site or
+    altruistic leanings; using them in your forms is as simple as creating a
+    Zend_Form element.
+</p>
+
+<h3>SOAP Support</h3>
+
+<p>
+    <a href="http://framework.zend.com/manual/en/zend.soap.html">Zend_Soap</a> 
+    has been languishing in the incubator since before the 1.0 release. The WSDL
+    autogeneration was mostly untested, and for several use cases, completely
+    broken. Additionally, I had created but never completed testing and
+    documenting Zend_Soap_Server, a thin wrapper on top of PHP's own SoapServer
+    class.
+</p>
+
+<p>
+    Alex took Zend_Soap on as a project for 1.6.0, and has done tremendous
+    things with it. He has even created a <a href="http://framework.zend.com/wiki/display/ZFDEV/Zend_Soap_Client+compatibility+matrix">compatibility matrix</a> 
+    that users can update to show how WSDL autodiscovery works with various SOAP
+    clients -- which will help us improve it in the future.
+</p>
+
+<h3>Form Improvements</h3>
+
+<p>
+    There have been many feature requests and bugs filed against Zend_Form since
+    its debut in 1.5.0, and I tried to address the most requested and critical
+    of these for the release. There are several improvements that should make
+    using Zend_Form easier and more flexible:
+</p>
+
+<ul>
+    <li>
+        Ability to set custom element or form errors. You can now specify the
+        specific error message(s) to use if an element or form does not
+        validate, as well as mark it as invalid. This is useful in particular
+        when validating authentication; when authentication fails, you can mark
+        the form invalid and specify a custom error message.
+    </li>
+
+    <li>
+        Lazy-loading of filters, validators, and decorators. Previously, these
+        were instantiated as soon as they were added to the element or form. Now
+        the item metadata is simply stored; only when the item is retrieved is
+        it instantiated. This offers some performance improvements in a number
+        of areas: if you're not validating the form, the validators are not
+        loaded; if you're not rendering the form, the decorators are not loaded.
+        (One note: filters are almost invariably loaded, as they are used each
+        time <code>getValue()</code> is called.)
+        <br /><br />
+        Another benefit of this change is that you can register plugin prefix
+        paths any time before the plugin is actually retrieved. This should lead
+        to less confusion and issues about event sequence, and provides
+        additional flexibility to the component.
+    </li>
+
+    <li>
+        Better array notation support. Several patches were provided by
+        contributors, and I also re-worked the objects to do better name and id
+        generation; the net result is seamless array notation for sub forms.
+    </li>
+</ul>
+
+<h3>FireBug Support</h3>
+
+<p>
+    The author of <a href="http://www.firephp.org/">FirePHP</a>, Christoph Dorn, has committed a new component to ZF,
+    <a
+        href="http://framework.zend.com/manual/en/zend.wildfire.html">Zend_Wildfire</a>.
+    <a href="http://www.wildfirehq.org/">Wildfire</a> is a project for standardizing communication
+    channels between components; FirePHP is one implementation that communicates
+    with the <a href="http://getfirebug.com/">FireBug</a> console for Firefox.
+    The Zend_Wildfire component consists of a log writer,
+    Zend_Log_Writer_Firebug, and a profiler, Zend_Db_Profiler_Firebug, which
+    logs DB profiling information for use in FireBug. Together, these allow you
+    to do more informed debugging in your browser, and can complement PHP
+    debuggers such as XDebug and the Zend Debugger.
+</p>
+
+<h3>Pagination Support</h3>
+
+<p>
+    Raise your hand if you've ever needed to provide paginated result sets for
+    your data -- good, I see a ton of virtual hands waving out there.
+    Pagination is something that needs to be done frequently, usually needs to
+    be tailored to your data and site, and is almost invariably a pain every
+    single time. <a href="http://framework.zend.com/manual/en/zend.paginator.html">Zend_Paginator</a>
+    aims to make it simple.
+</p>
+
+<p>
+    Any iterable data set can be consumed by Zend_Paginator. You then need only
+    specify what the current page number is and how many results per page to
+    display -- it works out the calculations, and, when used in conjunction with
+    the <code>paginationControl()</code> helper, will even provide your pager
+    for you. No more writing the algorithms by hand.
+</p>
+
+<h3>And then there was...</h3>
+
+<p>
+    There are too many improvements and features really to count at this stage.
+    We had originally intended this release to be smaller and offer fewer
+    features, but as the time for release came closer, we discovered we had
+    another monster on our hands. There is much to be excited about with this
+    release -- and still much, much more in the wings for future releases.
+</p>
+
+<p>
+    We are planning on tightening our release cycle so that we can offer more
+    frequent and less intimidating releases in the future. Combine this with
+    improvements we've been making to the proposal process, and you should be
+    seeing more great things coming from the community -- more frequently!
+</p>
+
+<p>
+    A huge thank you to all contributors, the Dojo team for answering my many
+    questions, and my family for putting up with my long hours the last couple
+    months. Happy developing!
+</p><div class="social-media">
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="weierophinney">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</div>
+
+<div class="social-media">
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<div class="fb-like" data-send="true" data-width="450" data-show-faces="true"></div>
+</div>
+
+<div class="social-media">
+<div class="g-plusone" data-size="medium" data-annotation="inline"></div>
+</div>
+
+<!-- Place this render call where appropriate -->
+<script type="text/javascript">
+dojo.ready(function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+});
+</script>
+
+<div class="social-media">
+<a href="http://www.reddit.com/submit" onclick="window.location = 'http://www.reddit.com/submit?url=' + encodeURIComponent(window.location); return false"> <img src="http://www.reddit.com/static/spreddit1.gif" alt="submit to reddit" border="0" /> </a>
+</div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_developer = 1;
+        var disqus_shortname = 'phlyboyphly';
+        var disqus_identifier = '183-Zend-Framework-1.6.0-Preview,-or,-PHP-4-is-Dead';
+        var disqus_url = 'http://mwop.net/blog/183-Zend-Framework-1.6.0-Preview%2C-or%2C-PHP-4-is-Dead.html';
+        var disqus_title = 'Zend Framework 1.6.0 Preview, or, PHP 4 is Dead';
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a></article>
+
+<aside class="four columns offset-by-one omega sidebar blog">
+    <div class="metadata">
+        <ul>
+            <li>Posted on <b>2008-08-11 13:15:00</b>.</li>
+            <li>Last updated on <b>2008-08-18 04:10:54</b>.</li>
+        </ul>
+    </div>
+
+    <div class="metadata">
+        <h4>Tags for this entry</h4>
+        <p class="tags"><a href="/blog/tag/php.html">php</a><br />
+<a href="/blog/tag/zend+framework.html">zend framework</a></p>
+    </div>
+
+        <div class="metadata">
+        <h4>Blogroll</h4>
+        <ul>
+            <li><a href="http://sebastian-bergmann.de/">Sebastian Bergmann</a></li>
+            <li><a href="http://blog.calevans.com/">Cal Evans</a></li>
+            <li><a href="http://prematureoptimization.org/blog/">Shahar Evron</a></li>
+            <li><a href="http://paul-m-jones.com/blog/">Paul M. Jones</a></li>
+            <li><a href="http://karwin.blogspot.com/">Bill Karwin</a></li>
+            <li><a href="http://mikenaberezny.com/">Mike Naberezny</a></li>
+            <li><a href="http://fabien.potencier.org/">Fabien Potencier</a></li>
+            <li><a href="http://benramsey.com/">Ben Ramsey</a></li>
+            <li><a href="http://derickrethans.nl/">Derick Rethans</a></li>
+            <li><a href="http://ralphschindler.com/">Ralph Schindler</a></li>
+            <li><a href="http://www.zimuel.it/blog/">Enrico Zimuel</a></li>
+        </ul>
+    </div>
+
+</aside>
+
+    </div>
+
+    <footer class="sixteen columns footer">
+        <div class="column one-third alpha about">
+            <h4>About</h4>
+            <p>
+    I'm a husband, father of two, slave to an ancient Basset Hound and 
+    plaything of a Basset puppy, and web architect by day.
+</p>
+
+<ul class="resume">
+    <li><a href="/resume">Resume</a></li>
+    <li><a href="http://twitter.com/weierophinney">Twitter</a></li>
+    <li><a href="http://www.linkedin.com/in/mweierophinney">LinkedIn</a></li>
+    <li><a href="http://www.ohloh.net/accounts/weierophinney">OhLoh</a></li>
+    <li><a href="http://resume.github.com/?weierophinney">GitHub</a></li>
+</ul>
+
+        </div>
+
+        <div class="column one-third projects">
+            <h4>Projects</h4>
+            <ul class="projects">
+    <li><a href="http://framework.zend.com/">Zend Framework (Project Lead)</a></li>
+    <li><a href="http://github.com/weierophinney/phly_mustache">Phly_Mustache</a></li>
+    <li><a href="http://www.the-pastry-box-project.net/baker/matthew-weier-ophinney/">The Pastry Box Project</a> (as a Baker)</li>
+</ul>
+
+        </div>
+
+        <div class="column one-third omega tags">
+        <div id="search" style="width:100%;">Loading...</div>
+<h4>Tag Cloud</h4>
+<div class="cloud">
+<ul class="Zend\Tag\Cloud"><li><a href="/blog/tag/php.html" style="font-size: 20px;">php</a></li> <li><a href="/blog/tag/zend+framework.html" style="font-size: 14px;">zend framework</a></li> <li><a href="/blog/tag/zf2.html" style="font-size: 11px;">zf2</a></li> <li><a href="/blog/tag/vim.html" style="font-size: 11px;">vim</a></li> <li><a href="/blog/tag/family.html" style="font-size: 11px;">family</a></li> <li><a href="/blog/tag/programming.html" style="font-size: 12px;">programming</a></li> <li><a href="/blog/tag/personal.html" style="font-size: 13px;">personal</a></li> <li><a href="/blog/tag/phpconcom.html" style="font-size: 10px;">phpconcom</a></li> <li><a href="/blog/tag/mvc.html" style="font-size: 11px;">mvc</a></li> <li><a href="/blog/tag/oop.html" style="font-size: 11px;">oop</a></li> <li><a href="/blog/tag/testing.html" style="font-size: 10px;">testing</a></li> <li><a href="/blog/tag/rest.html" style="font-size: 11px;">rest</a></li> <li><a href="/blog/tag/linux.html" style="font-size: 12px;">linux</a></li> <li><a href="/blog/tag/zendcon08.html" style="font-size: 11px;">zendcon08</a></li> <li><a href="/blog/tag/file_fortune.html" style="font-size: 10px;">file_fortune</a></li> <li><a href="/blog/tag/pear.html" style="font-size: 11px;">pear</a></li> <li><a href="/blog/tag/zendcon.html" style="font-size: 11px;">zendcon</a></li> <li><a href="/blog/tag/perl.html" style="font-size: 12px;">perl</a></li> <li><a href="/blog/tag/fastcgi.html" style="font-size: 10px;">fastcgi</a></li> <li><a href="/blog/tag/ubuntu.html" style="font-size: 11px;">ubuntu</a></li> <li><a href="/blog/tag/tekx.html" style="font-size: 10px;">tekx</a></li> <li><a href="/blog/tag/zendcon10.html" style="font-size: 10px;">zendcon10</a></li> <li><a href="/blog/tag/dojo.html" style="font-size: 11px;">dojo</a></li> <li><a href="/blog/tag/symfony.html" style="font-size: 11px;">symfony</a></li> <li><a href="/blog/tag/zeta+components.html" style="font-size: 10px;">zeta components</a></li> <li><a href="/blog/tag/tek09.html" style="font-size: 10px;">tek09</a></li> <li><a href="/blog/tag/spl.html" style="font-size: 11px;">spl</a></li> <li><a href="/blog/tag/subversion.html" style="font-size: 11px;">subversion</a></li> <li><a href="/blog/tag/zend+framewor.html" style="font-size: 10px;">zend framewor</a></li> <li><a href="/blog/tag/rails.html" style="font-size: 10px;">rails</a></li> <li><a href="/blog/tag/conferences.html" style="font-size: 11px;">conferences</a></li> <li><a href="/blog/tag/dpc08.html" style="font-size: 11px;">dpc08</a></li> <li><a href="/blog/tag/phpworks08.html" style="font-size: 11px;">phpworks08</a></li> <li><a href="/blog/tag/webinar.html" style="font-size: 11px;">webinar</a></li> <li><a href="/blog/tag/zencon08.html" style="font-size: 10px;">zencon08</a></li> <li><a href="/blog/tag/advocacy.html" style="font-size: 10px;">advocacy</a></li> <li><a href="/blog/tag/politics.html" style="font-size: 10px;">politics</a></li> <li><a href="/blog/tag/internet.html" style="font-size: 10px;">internet</a></li> <li><a href="/blog/tag/cw09.html" style="font-size: 11px;">cw09</a></li> <li><a href="/blog/tag/zend+server.html" style="font-size: 10px;">zend server</a></li> <li><a href="/blog/tag/dpc09.html" style="font-size: 10px;">dpc09</a></li> <li><a href="/blog/tag/sflive2010.html" style="font-size: 10px;">sflive2010</a></li> <li><a href="/blog/tag/security.html" style="font-size: 10px;">security</a></li> <li><a href="/blog/tag/wifi.html" style="font-size: 10px;">wifi</a></li> <li><a href="/blog/tag/aikido.html" style="font-size: 10px;">aikido</a></li> <li><a href="/blog/tag/books.html" style="font-size: 10px;">books</a></li> <li><a href="/blog/tag/dpc10.html" style="font-size: 10px;">dpc10</a></li> <li><a href="/blog/tag/zendcon09.html" style="font-size: 11px;">zendcon09</a></li> <li><a href="/blog/tag/git.html" style="font-size: 10px;">git</a></li> <li><a href="/blog/tag/phpwomen.html" style="font-size: 10px;">phpwomen</a></li> <li><a href="/blog/tag/virtualbox.html" style="font-size: 10px;">virtualbox</a></li></ul></div>
+        </div>
+    </footer>
+</div>
+</body>
+</html>

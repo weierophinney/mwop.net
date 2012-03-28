@@ -1,0 +1,323 @@
+<!DOCTYPE html><!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8" />
+    <title>HTML_QuickForm with Smarty Quickstart :: phly, boy, phly</title>
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <link href="/css/SkeletonCss/base.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/SkeletonCss/skeleton.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/SkeletonCss/layout.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/Application/site.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/images/Application/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" >
+<link href="/css/PhlyBlog/phly-blog.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/blog-atom.xml" rel="alternate" type="application/atom+xml" title="phly, boy, phly Atom Feed" >
+<link href="/blog-rss.xml" rel="alternate" type="application/rss+xml" title="phly, boy, phly RSS Feed" >
+    
+<script type="text/javascript">
+//<!--
+    var djConfig = {"isDebug":true,"parseOnLoad":true,"baseUrl":"\/js\/dojo\/","modulePaths":{"PhlyBlog":"\/js\/PhlyBlog","Application":"\/js\/Application"}};
+//-->
+</script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojo/dojo.xd.js"></script>
+
+<script type="text/javascript">
+//<!--
+dojo.require("PhlyBlog.blog");
+    dojo.require("Application.scroll");
+//-->
+
+</script>
+    
+    <script src="https://www.google.com/jsapi?ABQIAAAAGybdRRvLZwVUcF0dE3oVdBTO-MlgA7VGJpGqyqTOeDXlNzyZQxTGq17s-iAB0m0vwqLQ_A2dHhTg2Q"></script>
+<script type="text/javascript">
+    google.load('search', '1', {style: google.loader.themes.ESPRESSO});
+    google.setOnLoadCallback(function(){
+        new google.search.CustomSearchControl().draw('search');
+    }, true);
+</script>
+
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-27037983-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</head>
+<body>
+<div class="container">
+    <header class="sixteen columns">
+    <a href="/"><img src="/images/Application/logo.gif" height="37" width="37"/></a>
+        <span class="main_title">phly, boy, phly: matthew weier o'phinney</span>
+    </header>
+
+    <div class="sixteen columns" id="menu">
+        <nav>
+            <li><a href="/">Home</a></li>
+            <li><a href="/blog.html">Blog</a></li>
+                        <li><a href="/resume">R&eacute;sum&eacute;</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </nav>
+    </div>
+
+    <div class="sixteen columns content">
+        <div class="row">
+<article class="eleven columns alpha blog">
+<h2>HTML_QuickForm with Smarty Quickstart</h2>
+<p>
+    I've been wanting to play with <a
+        href="http://pear.php.net/package/HTML_QuickForm">HTML_QuickForm</a> for
+    quite some time, but the documentation has looked rather sparse and scary
+    regarding the use of HTML_QuickForm with <a
+        href="http://smarty.php.net/">Smarty</a>. Since I've been busy at work,
+    and I haven't wanted to take the time to learn a new library, I've simply
+    been putting it off.
+</p>
+<p>
+    Last night, I browsed through the package documentation, and noticed a link
+    to an <a
+    href="http://www.thelinuxconsultancy.co.uk/quickform.php">HTML_QuickForm
+    Getting Started Guide</a> by Keith Edmunds. I was pleased to discover that
+    he also has a <a
+    href="http://www.thelinuxconsultancy.co.uk/smarty-guide.php">guide to
+    using Smarty with HTML_QuickForm</a>. I got started with these tutorials,
+    and found them excellent. I found myself wanting a little more meat
+    afterwards, and found that I could now turn to the PEAR docs and actually
+    make sense of it all.
+</p>
+<p>
+    While I think Mr. Edmunds tutorials are great for starters, I found that
+    there were a few pointers I could have used right off the bat. I present
+    them here for you.
+</p><p>
+    I'm not going to do any code samples; at this point, you should have read
+    the aformentioned tutorials. The following notes are to give a little more
+    information to help get you running <em>faster</em> with HTML_Quickform +
+    Smarty -- by giving some practical tools and steps for utilizing the combo.
+</p>
+<p>
+   The way I see it, creating and using forms with HTML_QuickForm + Smarty uses
+   the following steps: 
+</p>
+<ol>
+    <li><b>Create the form elements</b>. This is done via the 'addElement()'
+    method of HQF, and involves setting a form element type, name, and
+    label.</li>
+    <li><b>Create form input filters (Optional)</b>. This is done via the
+    'applyFilter()' method of HQF; commonly, you may want to trim() input, and,
+    if magic_quotes are on, stripslashes().</li>
+    <li><b>Create validation rules</b>. This is done via the 'addRule()' method,
+    which takes the element name, the text to display on error, and the rule
+    type as arguments (and a fourth argument if required by the rule type).
+    There's some really slick stuff you can do here:
+        <ul>
+            <li><b>You can add more than one rule to any given element.</b> For
+            instance, a particular element may need to be both 'required' and
+            match a given regex; you can add rules for both of these</li>
+            <li>The <b>regex</b> rule lets you pass a fourth argument to
+            addRule() with the regex the value should match.</li>
+            <li>The <b>email</b> rule makes it so you don't have to remember a
+            regex for emails every time you write a form.</li>
+        </ul>
+    </li>
+    <li><b>Test for validation</b>. What I discovered is that it's actually nice
+    to <b>do this as an if-then-else block</b>. This allows you to do different
+    things based on whether or not the $form-&gt;validate() succeeds; for
+    instance, you may not wish to display the same template on success as on
+    failure. For certain, you will not need to do anything with the renderer if
+    the form validates (assuming you don't display the form or its values
+    again).</li>
+    <li><b>Set renderer options</b>. Basically, if the form fails validation,
+    you'll need to display it again. Most likely, you want to display something
+    new back to the user: what elements had errors, and the error message for
+    them. Additionally, you may want to show which elements are required. Each
+    renderer supplies several methods to allow such customization. These methods
+    each can display elements:
+        <ul>
+            <li>{$label} -- the form element's label</li>
+            <li>{$html} -- the HTML for the form element</li>
+            <li>{$error} -- the error text for the form element</li>
+            <li>{$required} -- a flag indicating whether or not an element is
+            required</li>
+        </ul>
+    If either the {$label} or {$html} element is referenced in the template
+    passed to one of these methods, the appropriate field (label or html) for
+    that form element will be affected before being passed to the master form
+    template.<br /><br />
+    The following methods are supplied by a renderer class:
+        <ul>
+            <li><b>setRequiredTemplate()</b>. Pass it a template as a string;
+            this template will be called for each <em>required</em> element. So,
+            you'll typically want to modify the {$label} element in the
+            template, usually with some sort of flag, like an asterix.</li>
+            <li><b>setErrorTemplate()</b>. Pass it a template as a string; this
+            template will be displayed if an error occurs for a given element.
+            Again, like setRequiredTemplate(), you'll typically want to modify
+            the label, this time by appending the error string.</li>
+            <li><b>setRequiredNote()</b>. Pass it a template as a string; this
+            template can be displayed by calling the $form_data.requirednote
+            field in the template (assuming you assign your form data to
+            $form_data). This should be simply some text to the effect of '*
+            These fields are required.' (and really, in a Smarty template, this
+            probably isn't necessary).</li>
+        </ul>
+    </li>
+    <li><b>Freeze and Process</b>. If the form validates, you should then freeze
+    it, and, if necessary, process the submission. HQF has a method,
+    'process()', that allows you to pass the values to a callback. However, you
+    might find it easiest to simply take the values and process them yourself.
+    You can do this easily and safely with the <b>exportValues()</b> method,
+    which returns an associative array with form key =&gt; value pairs as they
+    exist <em>post filtering</em>; additionally, it will only pass an array
+    containing those elements handled by the form (i.e., no other values, even
+    if passed, will be returned).</li>
+</ol>
+<h4>Parting Notes</h4>
+<p>
+    To my thinking, a config script/class/file could be written that would
+    perform the first three steps, defining the form elements, their filters,
+    and their validations; this could even be extended to handle the renderer
+    options. Then, it would be a simple matter of calling that, testing for
+    validation, and then either re-displaying the form or processing it with the
+    values returned.
+</p>
+<p>
+    (I'll probably use the above to create a Cgiapp plugin for just this very
+    purpose, similar in nature to CGI::Applications Data::FormValidator plugin.)
+</p><div class="social-media">
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="weierophinney">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</div>
+
+<div class="social-media">
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<div class="fb-like" data-send="true" data-width="450" data-show-faces="true"></div>
+</div>
+
+<div class="social-media">
+<div class="g-plusone" data-size="medium" data-annotation="inline"></div>
+</div>
+
+<!-- Place this render call where appropriate -->
+<script type="text/javascript">
+dojo.ready(function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+});
+</script>
+
+<div class="social-media">
+<a href="http://www.reddit.com/submit" onclick="window.location = 'http://www.reddit.com/submit?url=' + encodeURIComponent(window.location); return false"> <img src="http://www.reddit.com/static/spreddit1.gif" alt="submit to reddit" border="0" /> </a>
+</div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_developer = 1;
+        var disqus_shortname = 'phlyboyphly';
+        var disqus_identifier = '71-HTML_QuickForm-with-Smarty-Quickstart';
+        var disqus_url = 'http://mwop.net/blog/71-HTML_QuickForm-with-Smarty-Quickstart.html';
+        var disqus_title = 'HTML_QuickForm with Smarty Quickstart';
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a></article>
+
+<aside class="four columns offset-by-one omega sidebar blog">
+    <div class="metadata">
+        <ul>
+            <li>Posted on <b>2005-05-07 23:11:38</b>.</li>
+            <li>Last updated on <b>2005-05-07 23:57:40</b>.</li>
+        </ul>
+    </div>
+
+    <div class="metadata">
+        <h4>Tags for this entry</h4>
+        <p class="tags"><a href="/blog/tag/php.html">php</a></p>
+    </div>
+
+        <div class="metadata">
+        <h4>Blogroll</h4>
+        <ul>
+            <li><a href="http://sebastian-bergmann.de/">Sebastian Bergmann</a></li>
+            <li><a href="http://blog.calevans.com/">Cal Evans</a></li>
+            <li><a href="http://prematureoptimization.org/blog/">Shahar Evron</a></li>
+            <li><a href="http://paul-m-jones.com/blog/">Paul M. Jones</a></li>
+            <li><a href="http://karwin.blogspot.com/">Bill Karwin</a></li>
+            <li><a href="http://mikenaberezny.com/">Mike Naberezny</a></li>
+            <li><a href="http://fabien.potencier.org/">Fabien Potencier</a></li>
+            <li><a href="http://benramsey.com/">Ben Ramsey</a></li>
+            <li><a href="http://derickrethans.nl/">Derick Rethans</a></li>
+            <li><a href="http://ralphschindler.com/">Ralph Schindler</a></li>
+            <li><a href="http://www.zimuel.it/blog/">Enrico Zimuel</a></li>
+        </ul>
+    </div>
+
+</aside>
+
+    </div>
+
+    <footer class="sixteen columns footer">
+        <div class="column one-third alpha about">
+            <h4>About</h4>
+            <p>
+    I'm a husband, father of two, slave to an ancient Basset Hound and 
+    plaything of a Basset puppy, and web architect by day.
+</p>
+
+<ul class="resume">
+    <li><a href="/resume">Resume</a></li>
+    <li><a href="http://twitter.com/weierophinney">Twitter</a></li>
+    <li><a href="http://www.linkedin.com/in/mweierophinney">LinkedIn</a></li>
+    <li><a href="http://www.ohloh.net/accounts/weierophinney">OhLoh</a></li>
+    <li><a href="http://resume.github.com/?weierophinney">GitHub</a></li>
+</ul>
+
+        </div>
+
+        <div class="column one-third projects">
+            <h4>Projects</h4>
+            <ul class="projects">
+    <li><a href="http://framework.zend.com/">Zend Framework (Project Lead)</a></li>
+    <li><a href="http://github.com/weierophinney/phly_mustache">Phly_Mustache</a></li>
+    <li><a href="http://www.the-pastry-box-project.net/baker/matthew-weier-ophinney/">The Pastry Box Project</a> (as a Baker)</li>
+</ul>
+
+        </div>
+
+        <div class="column one-third omega tags">
+        <div id="search" style="width:100%;">Loading...</div>
+<h4>Tag Cloud</h4>
+<div class="cloud">
+<ul class="Zend\Tag\Cloud"><li><a href="/blog/tag/php.html" style="font-size: 20px;">php</a></li> <li><a href="/blog/tag/zend+framework.html" style="font-size: 14px;">zend framework</a></li> <li><a href="/blog/tag/zf2.html" style="font-size: 11px;">zf2</a></li> <li><a href="/blog/tag/vim.html" style="font-size: 11px;">vim</a></li> <li><a href="/blog/tag/family.html" style="font-size: 11px;">family</a></li> <li><a href="/blog/tag/programming.html" style="font-size: 12px;">programming</a></li> <li><a href="/blog/tag/personal.html" style="font-size: 13px;">personal</a></li> <li><a href="/blog/tag/phpconcom.html" style="font-size: 10px;">phpconcom</a></li> <li><a href="/blog/tag/mvc.html" style="font-size: 11px;">mvc</a></li> <li><a href="/blog/tag/oop.html" style="font-size: 11px;">oop</a></li> <li><a href="/blog/tag/testing.html" style="font-size: 10px;">testing</a></li> <li><a href="/blog/tag/rest.html" style="font-size: 11px;">rest</a></li> <li><a href="/blog/tag/linux.html" style="font-size: 12px;">linux</a></li> <li><a href="/blog/tag/zendcon08.html" style="font-size: 11px;">zendcon08</a></li> <li><a href="/blog/tag/file_fortune.html" style="font-size: 10px;">file_fortune</a></li> <li><a href="/blog/tag/pear.html" style="font-size: 11px;">pear</a></li> <li><a href="/blog/tag/zendcon.html" style="font-size: 11px;">zendcon</a></li> <li><a href="/blog/tag/perl.html" style="font-size: 12px;">perl</a></li> <li><a href="/blog/tag/fastcgi.html" style="font-size: 10px;">fastcgi</a></li> <li><a href="/blog/tag/ubuntu.html" style="font-size: 11px;">ubuntu</a></li> <li><a href="/blog/tag/tekx.html" style="font-size: 10px;">tekx</a></li> <li><a href="/blog/tag/zendcon10.html" style="font-size: 10px;">zendcon10</a></li> <li><a href="/blog/tag/dojo.html" style="font-size: 11px;">dojo</a></li> <li><a href="/blog/tag/symfony.html" style="font-size: 11px;">symfony</a></li> <li><a href="/blog/tag/zeta+components.html" style="font-size: 10px;">zeta components</a></li> <li><a href="/blog/tag/tek09.html" style="font-size: 10px;">tek09</a></li> <li><a href="/blog/tag/spl.html" style="font-size: 11px;">spl</a></li> <li><a href="/blog/tag/subversion.html" style="font-size: 11px;">subversion</a></li> <li><a href="/blog/tag/zend+framewor.html" style="font-size: 10px;">zend framewor</a></li> <li><a href="/blog/tag/rails.html" style="font-size: 10px;">rails</a></li> <li><a href="/blog/tag/conferences.html" style="font-size: 11px;">conferences</a></li> <li><a href="/blog/tag/dpc08.html" style="font-size: 11px;">dpc08</a></li> <li><a href="/blog/tag/phpworks08.html" style="font-size: 11px;">phpworks08</a></li> <li><a href="/blog/tag/webinar.html" style="font-size: 11px;">webinar</a></li> <li><a href="/blog/tag/zencon08.html" style="font-size: 10px;">zencon08</a></li> <li><a href="/blog/tag/advocacy.html" style="font-size: 10px;">advocacy</a></li> <li><a href="/blog/tag/politics.html" style="font-size: 10px;">politics</a></li> <li><a href="/blog/tag/internet.html" style="font-size: 10px;">internet</a></li> <li><a href="/blog/tag/cw09.html" style="font-size: 11px;">cw09</a></li> <li><a href="/blog/tag/zend+server.html" style="font-size: 10px;">zend server</a></li> <li><a href="/blog/tag/dpc09.html" style="font-size: 10px;">dpc09</a></li> <li><a href="/blog/tag/sflive2010.html" style="font-size: 10px;">sflive2010</a></li> <li><a href="/blog/tag/security.html" style="font-size: 10px;">security</a></li> <li><a href="/blog/tag/wifi.html" style="font-size: 10px;">wifi</a></li> <li><a href="/blog/tag/aikido.html" style="font-size: 10px;">aikido</a></li> <li><a href="/blog/tag/books.html" style="font-size: 10px;">books</a></li> <li><a href="/blog/tag/dpc10.html" style="font-size: 10px;">dpc10</a></li> <li><a href="/blog/tag/zendcon09.html" style="font-size: 11px;">zendcon09</a></li> <li><a href="/blog/tag/git.html" style="font-size: 10px;">git</a></li> <li><a href="/blog/tag/phpwomen.html" style="font-size: 10px;">phpwomen</a></li> <li><a href="/blog/tag/virtualbox.html" style="font-size: 10px;">virtualbox</a></li></ul></div>
+        </div>
+    </footer>
+</div>
+</body>
+</html>
