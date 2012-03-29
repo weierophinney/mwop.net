@@ -1,5 +1,7 @@
-<div class="row home">
-<article class="six columns alpha">
+<?php
+$this->headScript()->appendScript('require(["Application/tweets"]);')
+?>
+<article class="one-third column alpha home">
 <h2>Welcome!</h2>
 
 <p>
@@ -32,15 +34,15 @@
     to open source development. If you want to <a href="contact">contact</a> 
     me, please follow the link.
 </p>
-
-<p>
-    I can often be found on <a href="http://twitter.com/weierophinney">Twitter</a>.
-</p>
 </article>
 
-<aside class="ten columns omega">
-    <img src="http://farm4.static.flickr.com/3315/3625794227_6c281a3419_o.jpg" alt="Portrait by Rob Allen" /><br />
-    <em>Photo &copy; All rights reserved by <a href="http://www.flickr.com/photos/akrabat/">Rob Allen</a></em>
+<aside class="one-third column home">
+    <h3>Recent Tweets</h3>
+    <ul id="tweets"></ul>
 </aside>
-</div>
+
+<aside class="one-third column omega home">
+    <img src="http://farm4.staticflickr.com/3315/3625794227_8d038eac5e_n.jpg" alt="Portrait by Rob Allen" /><br />
+    <em>Photo &copy; All rights reserved by <a href="http://www.flickr.com/photos/akrabat/">Rob Allen</a></em>
+</aside>;
 

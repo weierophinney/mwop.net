@@ -326,6 +326,7 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
     js=js filter="*.js" {
      blog.js
      scroll.js
+     tweets.js
     }
    }
    src=src {

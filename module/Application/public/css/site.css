@@ -148,6 +148,19 @@ dl.resume dd p.metadata {
     text-align: center;
 }
 
-.home .omega {
-    text-align: right;
+.home.alpha {
+    margin-right: -1px;
+    border-right: 1px dotted #676767;
+}
+
+.home.omega {
+    text-align: center;
+    margin-left: -1px;
+    border-left: 1px dotted #676767;
+}
+
+aside.home .block {
+    height: 100%;
+    padding-left: 1em;
+    border-left: 1px dotted #676767;
 }
