@@ -14,12 +14,9 @@ $headLink->prependStylesheet('/css/Application/site.css')
          ->prependStylesheet('/css/SkeletonCss/skeleton.css')
          ->prependStylesheet('/css/SkeletonCss/base.css');
 
-$dojo = $this->plugin('dojo');
-$modulePaths = $dojo->getDjConfigOption('modulePaths', array());
-$modulePaths['Application'] = '/js/Application';
-$dojo->setDjConfigOption('baseUrl', '/js/dojo/')
-     ->setDjConfigOption('modulePaths', $modulePaths)
-     ->requireModule('Application.scroll');
+$this->headScript()->prependFile('/js/dojo/dojo.js');
+$this->headScript()->prependScript($this->render('dojo-config'));
+$this->headScript()->appendScript('require(["Application/scroll"], function(scroll) {});');
 
 echo $this->doctype() ?>
 <!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
@@ -36,8 +33,6 @@ echo $this->doctype() ?>
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <?php echo $headLink ?>
-
-    <?php echo $this->dojo() ?>
 
     <?php echo $this->headScript() ?>
 

@@ -8,8 +8,9 @@ $config = array(
     ),
 
     'view' => array(
-        'layout' => 'layout.phtml',
-        'search' => array(
+        'dojo-config' => 'dojo-config.phtml',
+        'layout'      => 'layout.phtml',
+        'search'      => array(
             'api_key' => 'GOOGLE_SEARCH_KEY_GOES_HERE',
         )
     ),

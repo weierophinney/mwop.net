@@ -341,6 +341,7 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
    view=view filter="*.mustache *.phtml" {
     about.phtml
     analytics.phtml
+    dojo-config.phtml
     error.phtml
     layout.phtml
     projects.phtml

@@ -3,7 +3,6 @@
 namespace Application;
 
 use Zend\Config\Config,
-    Zend\Dojo\View\HelperLoader as DojoLoader,
     Zend\EventManager\StaticEventManager,
     Zend\Module\Consumer\AutoloaderProvider,
     Zend\View\Model\ViewModel;
@@ -56,7 +55,6 @@ class Module implements AutoloaderProvider
         }
 
         $view->doctype('HTML5');
-        $view->getBroker()->getClassLoader()->registerPlugins(new DojoLoader());
         $view->headTitle()->setSeparator(' :: ')
                           ->setAutoEscape(false)
                           ->append('phly, boy, phly');
@@ -65,13 +63,6 @@ class Module implements AutoloaderProvider
             'type' => 'image/vnd.microsoft.icon',
             'href' => '/images/Application/favicon.ico',
         ));
-        $dojo = $view->plugin('dojo');
-        $dojo->setCdnVersion('1.6')
-             ->setDjConfig(array(
-                 'isDebug'     => true,
-                 'parseOnLoad' => true,
-             ));
-        $this->view = $view;
     }
 
     public static function prepareCompilerView($view, $config, $locator)

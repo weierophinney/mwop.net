@@ -18,22 +18,34 @@
 <link href="/css/PhlyBlog/phly-blog.css" media="screen" rel="stylesheet" type="text/css" >
 <link href="/blog/month/2005/11-atom.xml" rel="alternate" type="application/atom+xml" title="Blog Entries for November 2005 Atom Feed" >
 <link href="/blog/month/2005/11-rss.xml" rel="alternate" type="application/rss+xml" title="Blog Entries for November 2005 RSS Feed" >
-    
-<script type="text/javascript">
-//<!--
-    var djConfig = {"isDebug":true,"parseOnLoad":true,"baseUrl":"\/js\/dojo\/","modulePaths":{"PhlyBlog":"\/js\/PhlyBlog","Application":"\/js\/Application"}};
-//-->
+    <script type="text/javascript">
+    //<!--
+dojoConfig={
+    has: {
+        "dojo-firebug": true
+    },
+    baseurl: "/js/",
+    parseOnLoad: true,
+    async: true,
+    tlmSiblingOfDojo: false,
+    packages: [
+        { name: "dijit", location: "../dijit" },
+        { name: "dojox", location: "../dojox" },
+        { name: "Application", location: "../Application" },
+        { name: "PhlyBlog", location: "../PhlyBlog" }
+    ]
+};
+    //-->
 </script>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojo/dojo.xd.js"></script>
-
+<script type="text/javascript" src="/js/dojo/dojo.js"></script>
 <script type="text/javascript">
-//<!--
-dojo.require("PhlyBlog.blog");
-    dojo.require("Application.scroll");
-//-->
-
+    //<!--
+require(["PhlyBlog/blog"], function(blog) {});    //-->
 </script>
-    
+<script type="text/javascript">
+    //<!--
+require(["Application/scroll"], function(scroll) {});    //-->
+</script>
     <script src="https://www.google.com/jsapi?ABQIAAAAGybdRRvLZwVUcF0dE3oVdBTO-MlgA7VGJpGqyqTOeDXlNzyZQxTGq17s-iAB0m0vwqLQ_A2dHhTg2Q"></script>
 <script type="text/javascript">
     google.load('search', '1', {style: google.loader.themes.ESPRESSO});
