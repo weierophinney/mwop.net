@@ -15,24 +15,23 @@
 <link href="/css/SkeletonCss/layout.css" media="screen" rel="stylesheet" type="text/css" >
 <link href="/css/Application/site.css" media="screen" rel="stylesheet" type="text/css" >
 <link href="/images/Application/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" >
-<link href="/css/PhlyBlog/phly-blog.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/Application/blog.css" media="screen" rel="stylesheet" type="text/css" >
 <link href="/blog/tag/zend+framework-atom.xml" rel="alternate" type="application/atom+xml" title="Tag: zend framework Atom Feed" >
 <link href="/blog/tag/zend+framework-rss.xml" rel="alternate" type="application/rss+xml" title="Tag: zend framework RSS Feed" >
     <script type="text/javascript">
     //<!--
 dojoConfig={
     has: {
-        "dojo-firebug": true
+        "dojo-firebug": false
     },
     baseurl: "/js/",
-    parseOnLoad: true,
+    parseOnLoad: false,
     async: true,
     tlmSiblingOfDojo: false,
     packages: [
         { name: "dijit", location: "../dijit" },
         { name: "dojox", location: "../dojox" },
-        { name: "Application", location: "../Application" },
-        { name: "PhlyBlog", location: "../PhlyBlog" }
+        { name: "Application", location: "../Application" }
     ]
 };
     //-->
@@ -40,7 +39,7 @@ dojoConfig={
 <script type="text/javascript" src="/js/dojo/dojo.js"></script>
 <script type="text/javascript">
     //<!--
-require(["PhlyBlog/blog"], function(blog) {});    //-->
+require(["Application/blog"], function(blog) {});    //-->
 </script>
 <script type="text/javascript">
     //<!--
