@@ -316,13 +316,15 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
    }
    public=public {
     css=css filter="*.css" {
+     blog.css
      site.css
     }
     images=images filter="*.jpg *.png *.gif *.ico" {
      logo.gif
      favicon.ico
     }
-    js=js {
+    js=js filter="*.js" {
+     blog.js
      scroll.js
     }
    }
