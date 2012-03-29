@@ -1,11 +1,11 @@
 // This defines Application.scroll
-define(["dojo/dom", "dojo/domReady!"], function(dom){
+define("dojo/domReady!"], function(){
     /*
     * Normalized hide address bar for iOS & Android
     * (c) Scott Jehl, scottjehl.com
     * MIT License
     */
-    var doc = dom.document;
+    var doc = window.document;
     
     // If there's a hash, or addEventListener is undefined, stop here
     if (!location.hash && dom.addEventListener) {
