@@ -5,7 +5,8 @@ define(["dojo/domReady!"], function(){
     * (c) Scott Jehl, scottjehl.com
     * MIT License
     */
-    var doc = window.document;
+    var dom = window;
+    var doc = dom.document;
     
     // If there's a hash, or addEventListener is undefined, stop here
     if (!location.hash && dom.addEventListener) {
