@@ -1,5 +1,5 @@
 // This defines Application.scroll
-define("dojo/domReady!"], function(){
+define(["dojo/domReady!"], function(){
     /*
     * Normalized hide address bar for iOS & Android
     * (c) Scott Jehl, scottjehl.com
