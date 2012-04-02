@@ -3,6 +3,9 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
  TODO.md
  bootstrap.php
  console
+ bin=bin filter="*.sh deploy" {
+  deploy
+ }
  config=config filter="*.php *.ini *.xml *.json *.yml *.dist" {
   application.config.php
   posts.config.php

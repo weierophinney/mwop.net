@@ -1,0 +1,23 @@
+#!/usr/bin/zsh
+mkdir /tmp/mwop.net
+(
+    # clone local config files
+    cd /tmp/mwop.net ;
+    git clone -b production /home/git/repositories/mwop.net.config.git 
+)
+(
+    # checkout site, and ensure submodules are correct
+    cd $HOME/sites/mwop.net/ ; 
+    git fetch origin ; 
+    git rebase origin/master ; 
+    git submodule init ;
+    git submodule sync ; 
+    git submodule update 
+)
+(
+    # sync in local config files
+    cd $HOME/sites/mwop.net/config/autoload
+    rsync -a /tmp/mwop.net/mwop.net.config.git/*.* .
+)
+# cleanup; remove tmp directory
+rm -Rf /tmp/mwop.net
