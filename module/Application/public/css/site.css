@@ -33,6 +33,13 @@ a {
 header {
     margin-bottom: 1em;
     background-color: #FFFFFF;
+    border-bottom: 2px solid #BCB2AB;
+
+}
+
+header .logo {
+    vertical-align: center;
+    margin-top: 16px;
 }
 
 header .main_title {
@@ -42,38 +49,42 @@ header .main_title {
     text-align: top;
 }
 
-#menu {
-    background-color: #F3F3F3;
-    border-top: 1px dotted #676767;
-    border-bottom: 1px dotted #676767;
-}
-
-#menu nav ul {
-    list-style-type: none;
+nav#menu {
+    margin-top: 36px;
     font-family: "Cardo", arial, serif;
     font-weight: bold;
-    display: block;
-    text-align: center;
-    padding: 0.5em 0 0 0;
-    margin: 0;
-    margin-left: 1em;
+    text-align: right;
 }
 
-#menu nav li {
+nav#menu li {
     display: inline;
+    margin-left: 2em;
     list-style: none;
-    padding-right: 1em;
 }
 
-#menu nav li a {
+nav#menu li a {
+    padding-top: 7px;
+    color: #7b7b7b;
+    font-size: 11px;
     text-decoration: none;
-    color: #000000;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: 0;
 }
 
-#menu nav li a:hover {
-    font-style: bolder;
-    font-size: 133%;
+nav#menu li a:hover {
+    border-top: 3px solid #BCB2AB;
+    color: #a7a19d;
 }
+
+/*
+
+nav#main li.current-menu-item a, nav#main li.current-menu-parent a {
+    border-top:3px solid #f87f53;
+    color:#a7a19d;
+}
+
+ */
 
 .divider {
     border-top: 1px dotted #676767;
