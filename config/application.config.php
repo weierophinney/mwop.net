@@ -2,7 +2,6 @@
 return array(
     'modules' => array(
         'Application',
-        // 'Cache', // commenting out as profiling shows increased load times?
         'PhlyCommon',
         'PhlyBlog',
         'PhlyComic',
