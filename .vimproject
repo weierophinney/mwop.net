@@ -373,30 +373,6 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
     }
    }
   }
-  Authentication=Authentication {
-   Module.php
-   autoload_classmap.php
-   autoload_function.php
-   autoload_register.php
-   config=config {
-    module.config.php
-   }
-   src=src {
-    Authentication=Authentication {
-     AuthenticationController.php
-     AuthenticationForm.php
-     AuthenticationListener.php
-     AuthenticationService.php
-    }
-   }
-   view=view {
-    authentication=authentication {
-     401.phtml
-     login.phtml
-     logout.phtml
-    }
-   }
-  }
   Cache=Cache {
    autoload_classmap.php
    autoload_function.php
