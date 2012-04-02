@@ -8,6 +8,7 @@ data/*.tgz
 data/*.zip
 data/cache/*
 data/*.php
+data/users.db
 module/Local/config/module.config.php
 module/Application/view/analytics.phtml
 module/Blog/bin/post.log.html
