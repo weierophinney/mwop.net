@@ -23,7 +23,7 @@ $settings = array(
      *
      * Accepted values: boolean true or false
      */
-    'enable_registration' => true,
+    'enable_registration' => false,
 
     /**
      * UserMeta Model Entity Class
