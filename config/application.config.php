@@ -9,6 +9,7 @@ return array(
         'PhlyComic',
         'PhlyContact',
         'ZfcBase',
+        'ZfcUser',
     ),
     'module_listener_options' => array( 
         'config_cache_enabled'     => false,
