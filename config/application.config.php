@@ -8,6 +8,7 @@ return array(
         'PhlyBlog',
         'PhlyComic',
         'PhlyContact',
+        'ZfcBase',
     ),
     'module_listener_options' => array( 
         'config_cache_enabled'     => false,

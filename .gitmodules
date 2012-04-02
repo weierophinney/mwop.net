@@ -16,3 +16,6 @@
 [submodule "vendor/PhlyBlog"]
 	path = vendor/PhlyBlog
 	url = git://mwop.net/PhlyBlog.git
+[submodule "vendor/ZfcBase"]
+	path = vendor/ZfcBase
+	url = git://github.com/ZF-Commons/ZfcBase.git
