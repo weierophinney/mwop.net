@@ -2,23 +2,26 @@
 
 namespace Application;
 
-use Zend\Config\Config,
+use Traversable,
+    Zend\Config\Config,
     Zend\EventManager\StaticEventManager,
     Zend\Module\Consumer\AutoloaderProvider,
-    Zend\View\Model\ViewModel;
+    Zend\Stdlib\ArrayUtils,
+    Zend\View\Model;
 
 class Module implements AutoloaderProvider
 {
     protected static $layout;
 
     protected $appListeners    = array();
+    protected $config;
     protected $staticListeners = array();
     protected $view;
 
     public function init()
     {
         $events = StaticEventManager::getInstance();
-        $events->attach('bootstrap', 'bootstrap', array($this, 'initView'));
+        $events->attach('bootstrap', 'bootstrap', array($this, 'onBootstrap'));
     }
 
     public function getAutoloaderConfig()
@@ -33,6 +36,22 @@ class Module implements AutoloaderProvider
     public function getConfig()
     {
         return include __DIR__ . '/config/module.config.php';
+    }
+
+    public function onBootstrap($e)
+    {
+        $this->config = $e->getParam('config');
+        if ($this->config instanceof Traversable) {
+            $this->config = ArrayUtils::iteratorToArray($this->config);
+        }
+        $this->initAcls($e);
+        $this->initView($e);
+    }
+
+    public function initAcls($e)
+    {
+        $app     = $e->getParam('application');
+        $app->events()->attach('route', array($this, 'checkAcls'), -100);
     }
 
     public function initView($e)
@@ -72,7 +91,7 @@ class Module implements AutoloaderProvider
             return $renderer;
         }, 100);
 
-        self::$layout = $layout   = new ViewModel();
+        self::$layout = $layout   = new Model\ViewModel();
         $layout->setTemplate('layout');
         $view->addResponseStrategy(function($e) use ($layout, $renderer) {
             $result = $e->getResult();
@@ -108,5 +127,56 @@ class Module implements AutoloaderProvider
             "<h4>Tag Cloud</h4>\n<div class=\"cloud\">\n%s</div>\n",
             $cloud->render()
         ));
+    }
+
+    public function checkAcls($e)
+    {
+        $routeMatch = $e->getRouteMatch();
+        if (!$routeMatch) {
+            return;
+        }
+
+        $controller = $routeMatch->getParam('controller', false);
+        if ($controller != 'Application\Controller\PageController') {
+            return;
+        }
+
+        $protectedActions = $this->config['authentication']['Application\Controller\PageController'];
+        $action           = $routeMatch->getParam('action');
+        if (!in_array($action, $protectedActions)) {
+            // does not require authorization
+            return;
+        }
+
+        $app     = $e->getTarget();
+        $locator = $app->getLocator();
+        $auth    = $locator->get('Zend\Authentication\AuthenticationService');
+        if ($auth->hasIdentity()) {
+            // authorized
+            return;
+        }
+        $baseModel = $e->getViewModel();
+        return $this->createUnauthorizedResponse($app, $baseModel);
+    }
+
+    public function createUnauthorizedResponse($app, $baseModel)
+    {
+        $request  = $app->getRequest();
+        $response = $app->getResponse();
+        $locator  = $app->getLocator();
+        $view     = $locator->get('Zend\View\View');
+        $view->setRequest($request);
+        $view->setResponse($response);
+
+        $model = new Model\ViewModel();
+        $model->setTemplate('pages/401');
+
+        if ($baseModel instanceof Model) {
+            $baseModel->addChild($model);
+            $model = $baseModel;
+        }
+
+        $view->render($model);
+        return $response;
     }
 }
