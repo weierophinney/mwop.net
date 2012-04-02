@@ -12,7 +12,9 @@ mkdir /tmp/mwop.net
     git rebase origin/master ; 
     git submodule init ;
     git submodule sync ; 
-    git submodule update 
+    git submodule update ;
+    # ensure users DB has proper permissions
+    chmod a+rw data/users.db
 )
 (
     # sync in local config files
