@@ -102,6 +102,12 @@ footer.columns {
     text-align: left;
 }
 
+.footer .copyright {
+    margin-top: 0.5em;
+    text-align: center;
+    font-size: 80%;
+}
+
 .content, .sidebar {
     background-color: #FFFFFF;
     padding: 1em 0;
