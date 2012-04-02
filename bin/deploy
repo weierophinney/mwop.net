@@ -17,7 +17,7 @@ mkdir /tmp/mwop.net
 (
     # sync in local config files
     cd $HOME/sites/mwop.net/config/autoload
-    rsync -a /tmp/mwop.net/mwop.net.config.git/*.* .
+    rsync -a /tmp/mwop.net/mwop.net.config/*.* .
 )
 # cleanup; remove tmp directory
 rm -Rf /tmp/mwop.net
