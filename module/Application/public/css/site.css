@@ -53,12 +53,12 @@ nav#menu {
     margin-top: 36px;
     font-family: "Cardo", arial, serif;
     font-weight: bold;
-    text-align: right;
+    text-align: center;
 }
 
 nav#menu li {
     display: inline;
-    margin-left: 2em;
+    padding-left: 2em;
     list-style: none;
 }
 
