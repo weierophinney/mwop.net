@@ -10,6 +10,7 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
   application.config.php
   posts.config.php
   autoload=autoload {
+   database.config.global.php
    module.application.config.global.php
    module.application.config.local.php
    module.authentication.config.global.php
@@ -20,6 +21,7 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
    module.cache.config.local.php
    module.phly-contact.config.global.php
    module.phly-contact.config.local.php
+   module.zfcuser.config.global.php
   }
  }
  content=content {
@@ -623,6 +625,116 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
     }
     js=js {
      tabs.js
+    }
+   }
+  }
+  ZfcBase=ZfcBase {
+   Module.php
+   autoload_classmap.php
+   autoload_function.php
+   autoload_register.php
+   src=src {
+    ZfcBase=ZfcBase {
+     EventManager=EventManager {
+      EventProvider.php
+     }
+     Form=Form {
+      Form.php
+      ProvidesEventsForm.php
+     }
+     Mapper=Mapper {
+      DbAdapterMapper.php
+      DbMapperAbstract.php
+      ModelMapper.php
+      Transactional.php
+     }
+     Model=Model {
+      ModelAbstract.php
+     }
+     Module=Module {
+      ModuleAbstract.php
+     }
+     Service=Service {
+      ModelServiceAbstract.php
+      ServiceAbstract.php
+     }
+     Util=Util {
+      String.php
+     }
+    }
+   }
+  }
+  ZfcUser=ZfcUser {
+   Module.php
+   autoload_classmap.php
+   autoload_function.php
+   autoload_register.php
+   config=config {
+    module.config.php
+   }
+   data=data filter="*.sql" {
+    schema.sql
+    schema.sqlite.sql
+   }
+   src=src {
+    ZfcUser=ZfcUser {
+     Authentication=Authentication {
+      Adapter=Adapter {
+       AbstractAdapter.php
+       AdapterChain.php
+       AdapterChainEvent.php
+       ChainableAdapter.php
+       Db.php
+      }
+      Storage=Storage {
+       Db.php
+      }
+     }
+     Controller=Controller {
+      UserController.php
+      Plugin=Plugin {
+       ZfcUserAuthentication.php
+      }
+     }
+     Form=Form {
+      Base.php
+      Login.php
+      Register.php
+     }
+     Model=Model {
+      User.php
+      UserInterface.php
+      UserMapper.php
+      UserMapperInterface.php
+      UserMeta.php
+      UserMetaInterface.php
+      UserMetaMapper.php
+      UserMetaMapperInterface.php
+     }
+     Service=Service {
+      User.php
+     }
+     Util=Util {
+      Password.php
+     }
+     Validator=Validator {
+      AbstractRecord.php
+      NoRecordExists.php
+      RecordExists.php
+     }
+     View=View {
+      Helper=Helper {
+       ZfcUserIdentity.php
+       ZfcUserLoginWidget.php
+      }
+     }
+    }
+   }
+   view=view {
+    zfcuser=zfcuser filter="*.phtml" {
+     index.phtml
+     login.phtml
+     register.phtml
     }
    }
   }

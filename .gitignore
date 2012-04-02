@@ -1,7 +1,13 @@
 config/autoload/*.local.php
 config/posts.config.php
-data/*.*
-data/htdigest
+data/comics.html
+data/*.bson
+data/*.bz2
+data/*.gz
+data/*.tgz
+data/*.zip
+data/cache/*
+data/*.php
 module/Local/config/module.config.php
 module/Application/view/analytics.phtml
 module/Blog/bin/post.log.html
