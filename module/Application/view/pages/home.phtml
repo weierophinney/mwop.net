@@ -11,18 +11,13 @@ $this->headScript()->appendScript('require(["Application/tweets"]);')
 <ul>
     <li>A husband.</li>
     <li>A father of two wonderful children.</li>
-    <li>A Basset Hound, well, owner's not the right word. The <?php 
-        $birthday = new \DateTime('1998-04-07');
-        $today    = new \DateTime();
-        $interval = $today->diff($birthday);
-        echo $interval->format('%y');
-        ?>-year-old Basset is probably convinced I'm simply the slave who 
-        brings her food, and the <?php
+    <li>A Basset Hound, well, owner's not the right word. Our
+        <?php
         $birthday = new \DateTime('2011-03-01');
         $today    = new \DateTime();
         $interval = $today->diff($birthday);
         echo $interval->format('%m');
-        ?>-month-old likely thinks I'm a toy to chew on.</li>
+        ?>-month-old Basset likely thinks I'm a toy to chew on.</li>
     <li>A <a href="http://php.net">PHP</a> developer and framework architect.</li>
     <li>A frequent PHP conference speaker.</li>
     <li>An open source software developer and advocate.</li>
@@ -39,6 +34,7 @@ $this->headScript()->appendScript('require(["Application/tweets"]);')
 <aside class="one-third column home">
     <h3>Recent Tweets</h3>
     <ul id="tweets"></ul>
+    <p><i><a href="http://twitter.com/weierophinney">View more tweets</a></i></p>
 </aside>
 
 <aside class="one-third column omega home">
