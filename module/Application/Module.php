@@ -106,7 +106,7 @@ class Module implements AutoloaderProvider
 
             $headLink = $renderer->plugin('headLink');
             $headLink->getContainer()->exchangeArray(array());
-            $headLink->__invoke(array(
+            $headLink(array(
                 'rel' => 'shortcut icon',
                 'type' => 'image/vnd.microsoft.icon',
                 'href' => '/images/Application/favicon.ico',
