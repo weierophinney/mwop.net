@@ -92,6 +92,50 @@ require(["Application/scroll"], function(scroll) {});    //-->
 
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
+    <p class="date">2008-06-30 09:00:00</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
+<a href="/blog/tag/oop.html">oop</a><br />
+<a href="/blog/tag/zend+framework.html">zend framework</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/181-Migrating-OOP-Libraries-and-Frameworks-to-PHP-5.3.html">Migrating OOP Libraries and Frameworks to PHP 5.3</a></h4>
+
+    <div class="entry body"><p>
+    With PHP 5.3 coming up on the horizon, I'm of course looking forward to
+    using namespaces. Let's be honest, who wants to write the following line?
+</p>
+
+<div class="example"><pre><code lang="php">
+$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
+</code></pre></div>
+
+<p>
+    when the more succinct:
+</p>
+
+<div class="example"><pre><code lang="php">
+$viewRenderer = HelperBroker::getStaticHelper('viewRenderer');
+</code></pre></div>
+
+<p>
+    could be used? (Assuming you've executed <code>'use
+    Zend::Controller::Action;'</code> somewhere earlier...)
+</p>
+
+<p>
+    However, while namespaces will hopefully lead to more readable code,
+    particularly code in libraries and frameworks, PHP developers will finally
+    need to start thinking about sane standards for abstract classes and
+    interfaces. 
+</p></div>
+
+    <p><a href="/blog/181-Migrating-OOP-Libraries-and-Frameworks-to-PHP-5.3.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
     <p class="date">2008-06-20 13:30:01</p>
     <p class="tags"><a href="/blog/tag/php.html">php</a><br />
 <a href="/blog/tag/dpc08.html">dpc08</a><br />
@@ -402,28 +446,6 @@ require(["Application/scroll"], function(scroll) {});    //-->
 </p></div>
 
     <p><a href="/blog/173-Zend-Framework-QA-Session.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2008-04-28 09:51:00</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
-<a href="/blog/tag/zend+framework.html">zend framework</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/172-View-Helpers-Tutorial-on-DevZone.html">View Helpers Tutorial on DevZone</a></h4>
-
-    <div class="entry body"><p>
-    I have another tutorial in my <a href="http://framework.zend.com/">Zend Framework</a> MVC series up on <a href="http://devzone.zend.com/">DevZone</a> 
-    today, this time on <a href="http://devzone.zend.com/article/3412-View-Helpers-in-Zend-Framework">View
-    Helpers</a>. If you're curious on how to create view helpers, override the
-    standard view helpers, or how some of the standard view helpers such as
-    partials and placeholders work, give it a read!
-</p></div>
-
-    <p><a href="/blog/172-View-Helpers-Tutorial-on-DevZone.html">Continue reading...</a></p>
 </section>
 
 </div>

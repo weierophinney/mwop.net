@@ -4,7 +4,7 @@
 <!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
 <head>
 	<meta charset="utf-8" />
-    <title>Tag: zend framework :: phly, boy, phly</title>
+    <title>Blog Entries for 03 April 2012 :: phly, boy, phly</title>
 	<!--[if lt IE 9]>
 		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
@@ -16,8 +16,8 @@
 <link href="/css/Application/site.css" media="screen" rel="stylesheet" type="text/css" >
 <link href="/images/Application/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" >
 <link href="/css/Application/blog.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/blog/tag/zend+framework-atom.xml" rel="alternate" type="application/atom+xml" title="Tag: zend framework Atom Feed" >
-<link href="/blog/tag/zend+framework-rss.xml" rel="alternate" type="application/rss+xml" title="Tag: zend framework RSS Feed" >
+<link href="/blog/day/2012/04/03-atom.xml" rel="alternate" type="application/atom+xml" title="Blog Entries for 03 April 2012 Atom Feed" >
+<link href="/blog/day/2012/04/03-rss.xml" rel="alternate" type="application/rss+xml" title="Blog Entries for 03 April 2012 RSS Feed" >
     <script type="text/javascript">
     //<!--
 dojoConfig={
@@ -88,91 +88,100 @@ require(["Application/scroll"], function(scroll) {});    //-->
     <div class="sixteen columns content">
         <div class="row">
 <section class="eleven columns alpha blog">
-    <h2>Tag: zend framework</h2>
+    <h2>Blog Entries for 03 April 2012</h2>
 
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
-    <p class="date">2007-09-26 09:25:09</p>
+    <p class="date">2012-04-03 08:45:00</p>
     <p class="tags"><a href="/blog/tag/php.html">php</a><br />
-<a href="/blog/tag/zend+framework.html">zend framework</a></p>
+<a href="/blog/tag/zend+framework.html">zend framework</a><br />
+<a href="/blog/tag/zf2.html">zf2</a></p>
 </aside>
 
 <section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/144-Zend-Framework-MVC-Webinar-posted.html">Zend Framework MVC Webinar posted</a></h4>
+    <h4 class="entry"><a href="/blog/2012-05-developing-a-zf2-blog.html">Developing A ZF2 Blog</a></h4>
 
     <div class="entry body"><p>
-    Last Wednesday, I presented a webinar for Zend entitled "MVC applications
-    with Zend Framework". We had more than 50 attendees, most of whom stayed on
-    the whole time. For those of you who attended, thanks for the great
-    questions and comments. 
+    This post tells a story.
 </p>
+
 <p>
-    If you would like to view the webinar, download the slides, or download the
-    example code (a hello world app), visit the <a
-        href="http://www.zend.com/webinar">Zend.com Webinar page</a> and look
-    for the presentation; as of today, it's the first one on the list, but that
-    will change as more webinars are presented.
+    A long time ago, I set out to write my own blog platform. Yes, <a 
+    href="http://wordpress.org">WordPress</a> is a fine blogging platform, as is 
+    <a href="http://www.s9y.org/">Serendipity</a> (aka "s9y", and my previous 
+    platform). And yes, I know about <a 
+    href="http://habariproject.org">Habari</a>. And, for those of you skimming 
+    ahead, yes, I'm quite aware of <a href="http://github.com/mojombo/jekyll">Jekyll</a>, 
+    thank you anyways.
+</p>
+
+<p>
+    Why write something of my own? Well, of course, there's the fact that I'm
+    a developer, and have control issues. Then there's also the fact that a 
+    blog is both a simple enough domain to allow easily experimenting with new
+    technology and paradigms, while simultaneously providing a complex enough
+    domain to expose non-trivial issues. 
+</p>
+    
+<p>
+    When I started this project, it was a technology-centered endeavor; I 
+    wanted to play with document databases such as <a 
+    href="http://couchdb.apache.org/">CouchDB</a> and <a 
+    href="http://www.mongodb.org/">MongoDB</a>, and with caching technologies 
+    like <a href="http://memcached.org">memcached</a> and <a 
+    href="http://redis.io">redis</a>.
+</p>
+
+<p>
+    Not long after I started, I also realized it was a great playground for me
+    to prototype ideas for <a href="http://framework.zend.com/zf2">ZF2</a>;
+    in fact, the original DI and MVC prototypes lived as branches of my blog.
+    (My repository is still named "zf2sandbox" to this day, though it 
+    technically houses just my blog.)
+</p>
+
+<p>
+    Over time, I had a few realizations. First, my <em>actual</em> blog was
+    suffering. I wasn't taking the time to perform security updates, nor even
+    normal upgrades, and was so far behind as to make the process non-trivial,
+    particularly as I had a custom theme, and because I was proxying to my 
+    blog via a ZF app in order to facilitate a cohesive site look-and-feel. I
+    needed to either sink time into upgrading, or finish my blog.
+</p>
+    
+<p>
+    My second realization, however, was the more important one: I wanted a 
+    platform where I could write how <em>I</em> want to write. I am
+    a keyboard-centric developer and computer user, and while I love the web,
+    I hate typing in its forms. Additionally, my posts often take longer than
+    a typical browser session -- which leaves me either losing my work in a
+    GUI admin, or having to write first in my editor of choice, and then 
+    cut-and-paste it to the web forms. Finally, I want versions I can easily
+    browse with standard diffing tools.
+</p>
+
+<p>
+    When it came down to it, my blog content is basically static. Occasionally,
+    I'll update a post, but it's rare. Comments are really the only dynamic
+    aspect of the blog... and what I had with s9y was not cutting it, as I was
+    getting more spam than I could keep up with. New commenting platforms such 
+    as <a href="http://livefyre.com">Livefyre</a> and <a href="http://disqus.com">Disqus</a>
+    provide more features than most blogging platforms I know, and provide 
+    another side benefit: because they are javascript-based, you can simply
+    dropy in a small amount of markup into your post <em>once</em> -- meaning
+    your pages can be fully static!
+</p>
+
+<p>
+    Add these thoughts to the rise of static blogging platforms such as the 
+    aforementioned Jekyll, and I had a kernel of an idea: take the work I'd
+    done already, and create a static blog generator. 
 </p></div>
 
-    <p><a href="/blog/144-Zend-Framework-MVC-Webinar-posted.html">Continue reading...</a></p>
+    <p><a href="/blog/2012-05-developing-a-zf2-blog.html">Continue reading...</a></p>
 </section>
 
 </div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2007-09-14 10:27:56</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
-<a href="/blog/tag/zend+framework.html">zend framework</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/143-NYPHP-Zend-Framework-Presentation.html">NYPHP Zend Framework Presentation</a></h4>
-
-    <div class="entry body"><p>
-    This past Wednesday, <a href="http://www.zend.com/">Zend's</a> Chief
-    Marketing Officer, <a href="http://blogs.zend.com/author/mark/">Mark de
-        Visser</a>, and myself joined the <a href="http://nyphp.org/">NYPHP</a>
-    group for a <a
-        href="http://nyphp.org/content/calendar/view_entry.php?id=112&date=20070912">special
-        event meeting</a>. Mark presented information on Zend's development
-    stack and toolset (which I entirely missed, as I was still in transit), and
-    I came in to give an overview of <a href="http://framework.zend.com/">Zend
-        Framework</a>.
-</p>
-
-<p>
-    There were some great questions, and nice discussions following the event.
-    If you live in New York and do PHP for a living, and haven't attended, you
-    should; if you're ever visiting the area, see if you can attend a meeting!
-</p>
-
-<p>
-    <a href="/uploads/FrameworkPresentation.zip"
-        title="FrameworkPresentation.zip" target="_blank">Here are the
-        slides.</a> They're done using <a
-        href="http://meyerweb.com/eric/tools/s5/">S5</a>, a browser-based
-    slideshow system. Simply unzip and double-click on index.html to start
-    viewing.
-</p></div>
-
-    <p><a href="/blog/143-NYPHP-Zend-Framework-Presentation.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="paginationControl">
-        <a href="/blog/tag/zend+framework.html" class="first">&lt;&lt; First</a> |
-        <a href="/blog/tag/zend+framework-p8.html"> &lt; Previous </a> |
-        <a href="/blog/tag/zend+framework.html">1</a> |
-            <a href="/blog/tag/zend+framework-p2.html">2</a> |
-            <a href="/blog/tag/zend+framework-p3.html">3</a> |
-            <a href="/blog/tag/zend+framework-p4.html">4</a> |
-            <a href="/blog/tag/zend+framework-p5.html">5</a> |
-            <a href="/blog/tag/zend+framework-p6.html">6</a> |
-            <a href="/blog/tag/zend+framework-p7.html">7</a> |
-            <a href="/blog/tag/zend+framework-p8.html">8</a> |
-            <span class="current">9</span> |
-    </div>
-
 </section>
 
 <aside class="four columns offset-by-one omega sidebar blog">

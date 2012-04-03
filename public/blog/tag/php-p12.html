@@ -92,6 +92,41 @@ require(["Application/scroll"], function(scroll) {});    //-->
 
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
+    <p class="date">2007-12-20 12:00:00</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/153-Sqlite-Version-Mismatch.html">Sqlite Version Mismatch</a></h4>
+
+    <div class="entry body"><p>
+    I ran into an issue recently in testing a site where PDO_SQLITE was claiming
+    that it could not read my PDO database files. The only recent change I'd had
+    was that I'd installed a new version of PHP, and hence a new version of
+    PDO_SQLITE. Searching the web (we're not supposed to say <em>googling</em>
+    or <em>googled</em> anymore, remember ;-)), I found that the issue was that
+    the version of sqlite compiled into my PHP install was not compatible with
+    the version I used to create the databases in the first place. Never mind
+    that they're only a micro version or two different.
+</p>
+
+<p>
+    So, I was left with a conundrum: I needed to create files compatible with my
+    PDO_SQLITE install, but my CLI sqlite tool was incompatible. And if I used
+    PDO_SQLITE to create the db file, I'd lose my data, right?
+</p>
+
+<p>
+    Wrong. And here's what you can do should you find yourself in the same
+    situation sometime.
+</p></div>
+
+    <p><a href="/blog/153-Sqlite-Version-Mismatch.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
     <p class="date">2007-12-19 08:44:11</p>
     <p class="tags"><a href="/blog/tag/php.html">php</a><br />
 <a href="/blog/tag/zend+framewor.html">zend framewor</a></p>
@@ -513,133 +548,6 @@ echo $fortunes[$index];
 </p></div>
 
     <p><a href="/blog/140-Globals%2C-continued.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2007-05-19 09:42:48</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/139-PHP-globals-for-the-OOP-developer.html">PHP globals for the OOP developer</a></h4>
-
-    <div class="entry body"><p>
-    <b>Update:</b> I evidently simplified the issue too much, and have had several
-    people rightly comment on the bogosity of the issue. However, there are still situations
-    where <kbd>$GLOBALS</kbd> does not act as expected, and I outline these in
-    <a href="http://weierophinney.net/matthew/archives/140-Globals,-continued.html">my next entry</a>.
-</p>
-<hr />
-<p>
-    In my <a
-        href="/matthew/archives/138-Start-Writing-Embeddable-Applications.html">previous
-        entry</a>, I ranted about the use of globals in popular PHP
-    applications, and how they make embedding said applications difficult. I
-    develop using object-oriented practices, and can honestly say I can't recall
-    ever having slung a global variable around in my own code. Globals seem
-    hackish to me, and as a result, trying to get applications that use them
-    to behave correctly has been a challenge.
-</p>
-
-<p>
-    One of the applications I had in mind was <a
-        href="http://www.s9y.org">Serendipity</a>, the software that powers this
-    blog. I was attempting to create a Zend Framework action controller that
-    wraps my s9y instance so that I can do things such as apply ACLs from my
-    website to selected entries, as well as pull the sitewide skeleton out from
-    s9y so that I only have to maintain one version of it (I had one version for
-    s9y, and another for my own content featured on the site (resume, contact
-    form, etc.).
-</p>
-
-<p>
-    I tried importing the various config files into my action method prior to
-    invoking the actual s9y bootstrap, but no dice. I also tried modifying the
-    s9y config files to use the notation <kbd>$GLOBALS['serendipity']</kbd>
-    around the serendipity configuration variables (s9y uses a single
-    multi-dimensional array for all configuration options). This didn't work,
-    either; s9y functions that called <kbd>global $serendipity</kbd> were still
-    getting a null value.
-</p>
-
-<p>
-    So, I did a little closer reading in the manual <a
-        href="http://php.net/language.variables.predefined">section on
-        predefined variables</a>, I discovered something interesting in the
-    description of <kbd>$GLOBALS</kbd> (emphasis mine):
-</p>
-
-<blockquote>
-    Contains a reference to every variable which is <em>currently</em> available
-    within the global scope of the script.
-</blockquote>
-
-<p>
-    Interestingly, the section on variable scope didn't make this distinction at
-    all. Basically, if the variable you reference via <kbd>$GLOBALS</kbd> does
-    not already exist, assigning it <em>does nothing</em>. It doesn't even raise
-    a notice. It just silently goes ahead, leaving you thinking you set a new
-    global variable, but in fact, you cannot assign new globals via
-    <kbd>$GLOBALS</kbd>; you can only modify <em>existing</em> variables in the
-    global scope.
-</p>
-
-<p>
-    So, I got around the issue by putting this in my front controller bootstrap:
-</p>
-
-<div class="example"><pre><code lang="php">
-$serendipity = null;
-</code></pre></div>
-
-<p>
-    After that, I was able to create a wrapper action controller for s9y very
-    easily:
-</p>
-
-<div class="example"><pre><code lang="php">
-/** Zend_Controller_Action */
-require_once 'Zend/Controller/Action.php';
-
-/**
- * Serendipity integration
- * 
- * @uses       Zend_Controller_Action
-  */
-class S9y_IndexController extends Zend_Controller_Action
-{
-    public function init()
-    {
-        // New ViewRenderer helper in ZF incubator; telling it not
-        // to autorender a view script when done
-        $this-&gt;_helper-&gt;viewRenderer-&gt;initView(null, null, array('noRender' =&gt; true));
-    }
-
-    public function indexAction()
-    {
-        global $serendipity;
-        chdir($_SERVER['DOCUMENT_ROOT'] . '/path/to/s9y');
-        include './index.php';
-        chdir($_SERVER['DOCUMENT_ROOT']);
-    }
-}
-</code></pre></div>
-
-<p>
-    Note that I don't do any output buffering; this is because the ZF dispatcher
-    takes care of that for me. All I need to do is execute the s9y bootstrap.
-</p>
-
-<p>
-    So, the lesson to learn from all this: if you need to wrap an application
-    that uses globals, find out what all of them are, and declare them in the
-    global namespace -- just setting them to null is enough -- in your
-    application bootstrap.
-</p></div>
-
-    <p><a href="/blog/139-PHP-globals-for-the-OOP-developer.html">Continue reading...</a></p>
 </section>
 
 </div>

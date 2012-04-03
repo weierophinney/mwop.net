@@ -92,6 +92,45 @@ require(["Application/scroll"], function(scroll) {});    //-->
 
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
+    <p class="date">2004-01-23 17:24:05</p>
+    <p class="tags"><a href="/blog/tag/programming.html">programming</a><br />
+<a href="/blog/tag/personal.html">personal</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/16-robots.txt.html">robots.txt</a></h4>
+
+    <div class="entry body"><p>
+    One thing I've wondered about is the syntax of the robots.txt file, where
+    it's placed, and how it's used. I've known that it is used to block spiders
+    from accessing your site, but that's about it. I've had to look into it
+    recently because we're offering free memberships at work, and we don't want
+    them indexed by search engines. I've also wondered how we can exclude
+    certain areas, such as where we collate our site statistics, from these
+    engines.
+</p>
+<p>
+    As it turns out, it's really dead simple. Simply create a
+    <tt>robots.txt</tt> file in your htmlroot, and the syntax is as follows:
+</p>
+<pre>User-agent: *
+Disallow: /path/
+Disallow: /path/to/file
+</pre>
+<p>
+    The <tt>User-agent</tt> can specify specific agents or the wildcard; there
+    are so many spiders out there, it's probably safest to simply disallow all
+    of them. The <tt>Disallow</tt> line should have only one path or name, but
+    you can have multiple <tt>Disallow</tt> lines, so you can exclude any number
+    of paths or files.
+</p></div>
+
+    <p><a href="/blog/16-robots.txt.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
     <p class="date">2004-01-23 17:19:14</p>
     <p class="tags"><a href="/blog/tag/linux.html">linux</a><br />
 <a href="/blog/tag/personal.html">personal</a></p>

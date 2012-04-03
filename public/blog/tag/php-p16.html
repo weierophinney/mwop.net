@@ -92,6 +92,29 @@ require(["Application/scroll"], function(scroll) {});    //-->
 
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
+    <p class="date">2006-04-08 00:57:00</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/106-Automating-PHPUnit2-with-SPL.html">Automating PHPUnit2 with SPL</a></h4>
+
+    <div class="entry body"><p>
+    I don't blog much any more. Much of what I work on any more is for my
+    employer, Zend, and I don't feel at liberty to talk about it (and some of it
+    is indeed confidential). However, I <em>can</em> say that I've been
+    programming heavily on PHP5 the past few months, and had a chance to do some
+    pretty fun stuff. Among the new things I've been able to play with are 
+    <a href="http://php.net/spl">SPL</a> and 
+    <a href="http://phpunit.de/">PHPUnit</a> -- and, recently, together.
+</p></div>
+
+    <p><a href="/blog/106-Automating-PHPUnit2-with-SPL.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
     <p class="date">2006-03-27 23:10:00</p>
     <p class="tags"><a href="/blog/tag/perl.html">perl</a><br />
 <a href="/blog/tag/php.html">php</a></p>
@@ -427,61 +450,6 @@ require(["Application/scroll"], function(scroll) {});    //-->
 </p></div>
 
     <p><a href="/blog/94-Transitions.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2005-09-07 16:20:00</p>
-    <p class="tags"><a href="/blog/tag/linux.html">linux</a><br />
-<a href="/blog/tag/php.html">php</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/93-File_SMBPasswd-woes.html">File_SMBPasswd woes</a></h4>
-
-    <div class="entry body"><p>
-    I've been cobbling together a system at work for the last couple months to
-    allow a single place for changing all network passwords. This includes a
-    variety of database sources, as well as <i>passwd</i> files and
-    <i>smbpasswd</i> files.
-    I've been making use of PEAR's <a href="http://pear.php.net/package/File_Passwd">File_Passwd</a> and <a href="http://pear.php.net/package/File_SMBPasswd">File_SMBPasswd</a>, and they've
-    greatly simplified the task of updating passwords for those types of
-    systems. However, I've encountered some issues that I never would have
-    expected.
-</p>
-<p>
-    I have the web user in a group called 'samba', and I have the
-    <i>smbpasswd</i> file owned by root:samba. I then set the <i>smbpasswd</i>
-    file to be group +rw. Simple, right? The web user should then be able to
-    update the <i>smbpasswd</i> file without a problem, right? Wrong.
-</p>
-<p>
-    I kept getting errors, and on investigation continually found that the
-    <i>smbpasswd</i> file permissions had reverted to 0600 -- i.e., only the
-    root user could access it. I tried using 'chattr -i' on the off-chance that
-    the file had been made immutable (which didn't make sense, as I was able to
-    see the permissions change). No luck.
-</p>
-<p>
-    Based on observations of when the permissions reverted, it appears that the
-    various SMB processes will reset the permissions! An example is when
-    someone attempts to mount a resource from the server; this accesses the
-    smbpasswd file to perform authentication -- and at this point the file
-    permissions change.  I can find no documentation to support this; these are
-    simply my observations.
-</p>
-<p>
-    So, to get around the behaviour, I created a script that will set the file
-    permissions to what I want them, and then gave <i>sudo</i> privileges to the
-    samba group for that script. This script is then called via <i>system()</i>
-    in the update script just before processing.
-</p>
-<p>
-    It's a hack, and could be made more secure, but it works.
-</p></div>
-
-    <p><a href="/blog/93-File_SMBPasswd-woes.html">Continue reading...</a></p>
 </section>
 
 </div>

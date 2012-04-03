@@ -1,289 +1,347 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title type="text">Tag: personal :: phly, boy, phly</title>
-  <updated>2012-03-05T16:32:45-06:00</updated>
+  <updated>2009-01-04T15:31:52-06:00</updated>
   <generator uri="http://framework.zend.com" version="2.0.0beta3">Zend_Feed_Writer</generator>
   <link rel="alternate" type="text/html" href="http://mwop.net/blog/tag/personal.html"/>
   <link rel="self" type="application/atom+xml" href="http://mwop.net/blog/tag/personal-atom.xml"/>
   <id>http://mwop.net/blog/tag/personal.html</id>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
-    <title type="html"><![CDATA[View Layers, Database Abstraction, Configuration, Oh, My!]]></title>
-    <published>2012-03-05T16:32:45-06:00</published>
-    <updated>2012-03-05T16:32:45-06:00</updated>
-    <link rel="alternate" type="text/html" href="http://mwop.net/blog/zf2-beta3.html"/>
-    <id>http://mwop.net/blog/zf2-beta3.html</id>
+    <title type="html"><![CDATA[Seven Things - Tagged by Keith Casey]]></title>
+    <published>2009-01-02T09:44:54-06:00</published>
+    <updated>2009-01-04T15:31:52-06:00</updated>
+    <link rel="alternate" type="text/html" href="http://mwop.net/blog/204-Seven-Things-Tagged-by-Keith-Casey.html"/>
+    <id>http://mwop.net/blog/204-Seven-Things-Tagged-by-Keith-Casey.html</id>
     <author>
       <name>Matthew Weier O'Phinney</name>
       <email>me@mwop.net</email>
       <uri>http://mwop.net</uri>
     </author>
     <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
-      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>Late last week, the Zend Framework community <xhtml:a href="http://framework.zend.com/zf2/blog/entry/Zend-Framework-2-0-0beta3-Released">
-2.0.0beta3</xhtml:a>, the latest iteration of the v2 framework. What have
-we been busy doing the last couple months? In a nutshell, getting
-dirty with view layers, database abstraction, and
-configuration.</xhtml:p>
+      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>I'm really not sure I understand these "seven things" or
+"tagged" memes, but I'm going to give it a shot, after <xhtml:a href="http://caseysoftware.com/blog/seven-things-tagged-by-tony-bibbs">Keith
+Casey</xhtml:a> did a drive-by tagging of me on New Year's Eve.</xhtml:p>
+<xhtml:p>So, without further ado, seven things you may not know about
+me...</xhtml:p>
 </xhtml:div>
     </content>
   </entry>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
-    <title type="html"><![CDATA[ZF2 Modules You Can Use Today]]></title>
-    <published>2012-02-08T10:31:47-06:00</published>
-    <updated>2012-02-08T10:31:47-06:00</updated>
-    <link rel="alternate" type="text/html" href="http://mwop.net/blog/zf2-modules-you-can-use-today.html"/>
-    <id>http://mwop.net/blog/zf2-modules-you-can-use-today.html</id>
+    <title type="html"><![CDATA[2007 Retrospective]]></title>
+    <published>2008-01-01T15:49:26-06:00</published>
+    <updated>2008-01-03T05:22:35-06:00</updated>
+    <link rel="alternate" type="text/html" href="http://mwop.net/blog/154-2007-Retrospective.html"/>
+    <id>http://mwop.net/blog/154-2007-Retrospective.html</id>
     <author>
       <name>Matthew Weier O'Phinney</name>
       <email>me@mwop.net</email>
       <uri>http://mwop.net</uri>
     </author>
     <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
-      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>One key new architectural feature of Zend Framework 2 is its new
-module infrastructure. The basic idea behind modules is to allow
-developers to both create and consume re-usable application
-functionality -- anything from packaging common assets such as CSS
-and JavaScript to providing MVC application classes.</xhtml:p>
-</xhtml:div>
-    </content>
-  </entry>
-  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
-    <title type="html"><![CDATA[Call A Spade A Spade]]></title>
-    <published>2012-01-18T15:48:07-06:00</published>
-    <updated>2012-01-18T15:48:07-06:00</updated>
-    <link rel="alternate" type="text/html" href="http://mwop.net/blog/call-a-spade-a-spade.html"/>
-    <id>http://mwop.net/blog/call-a-spade-a-spade.html</id>
-    <author>
-      <name>Matthew Weier O'Phinney</name>
-      <email>me@mwop.net</email>
-      <uri>http://mwop.net</uri>
-    </author>
-    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
-      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>I don't often get political on my blog, or over social media.
-But those of you who <xhtml:a href="http://twitter.com/weierophinney">follow me on twitter</xhtml:a> lately
-have been treated to a number of tweets and retweets from me about
-some bills before the US legislative bodies called "SOPA" and
-"PIPA". Over the last couple days, I realized exactly why I
-disagree with them, and felt 140 characters is not enough.</xhtml:p>
-</xhtml:div>
-    </content>
-  </entry>
-  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
-    <title type="html"><![CDATA[Why Conventions Matter]]></title>
-    <published>2012-01-11T21:58:28-06:00</published>
-    <updated>2012-01-11T21:58:28-06:00</updated>
-    <link rel="alternate" type="text/html" href="http://mwop.net/blog/why-conventions-matter.html"/>
-    <id>http://mwop.net/blog/why-conventions-matter.html</id>
-    <author>
-      <name>Matthew Weier O'Phinney</name>
-      <email>me@mwop.net</email>
-      <uri>http://mwop.net</uri>
-    </author>
-    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
-      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>When I started teaching myself scripting languages, I started
-with Perl. One Perl motto is <xhtml:a href="http://en.wikipedia.org/wiki/TMTOWTDI">"TMTOWTDI"</xhtml:a> -- "There's
-More Than One Way To Do It," and pronounced "tim-toady." The idea
-is that there's likely multiple ways to accomplish the very same
-thing, and the culture of the language encourages finding novel
-ways to do things.</xhtml:p>
-<xhtml:p>I've seen this principle used everywhere and in just about every
-programming situation possible, applied to logical operations,
-naming conventions, formatting, and even project structure.
-Everyone has an opinion on these topics, and given free rein to
-implement as they see fit, it's rare that two developers will come
-up with the same conventions.</xhtml:p>
-<xhtml:p>TMTOWTDI is an incredibly freeing and egalitarian principle.</xhtml:p>
-<xhtml:p>Over the years, however, my love for TMTOWTDI has diminished
-some. Freeing as it is, is also a driving force behind having
-coding standards and conventions -- because when everyone does it
-their own way, projects become quickly hard to maintain. Each
-person finds themselves reformatting code to their own standards,
-simply so they can read it and follow its flow.</xhtml:p>
-<xhtml:p>Additionally, TMTOWTDI can actually be a foe of simple, elegant
-solutions.</xhtml:p>
-<xhtml:p>Why do I claim this?</xhtml:p>
-</xhtml:div>
-    </content>
-  </entry>
-  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
-    <title type="html"><![CDATA[On Error Handling and Closures]]></title>
-    <published>2011-12-16T10:26:18-06:00</published>
-    <updated>2011-12-16T10:26:18-06:00</updated>
-    <link rel="alternate" type="text/html" href="http://mwop.net/blog/on-error-handling-and-closures.html"/>
-    <id>http://mwop.net/blog/on-error-handling-and-closures.html</id>
-    <author>
-      <name>Matthew Weier O'Phinney</name>
-      <email>me@mwop.net</email>
-      <uri>http://mwop.net</uri>
-    </author>
-    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
-      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>The error suppression operator in PHP ("@") is often seen as a
-necessary evil. Many, many low-level function will return a value
-indicating an error, but also raise an <xhtml:code>E_NOTICE</xhtml:code> or
-<xhtml:code>E_WARNING</xhtml:code> -- things you might be able to recover from,
-or conditions where you may want to raise an exception.</xhtml:p>
-<xhtml:p>So, at times, you find yourself writing code like this:</xhtml:p>
-<xhtml:div class="example">
-<xhtml:pre>
-<xhtml:code lang="php" xml:lang="php">
-if (false === ($fh = @fopen($filename, 'r'))) {
-    throw new RuntimeException(sprintf(
-        'Could not open file "%s" to read', $filename
-    ));
-}
-</xhtml:code>
-</xhtml:pre></xhtml:div>
-<xhtml:p>Seems straight-forward enough, right? But it's wrong on so many
-levels.</xhtml:p>
-</xhtml:div>
-    </content>
-  </entry>
-  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
-    <title type="html"><![CDATA[Getting started writing ZF2 modules]]></title>
-    <published>2011-11-07T12:19:00-06:00</published>
-    <updated>2011-11-12T12:02:42-06:00</updated>
-    <link rel="alternate" type="text/html" href="http://mwop.net/blog/267-Getting-started-writing-ZF2-modules.html"/>
-    <id>http://mwop.net/blog/267-Getting-started-writing-ZF2-modules.html</id>
-    <author>
-      <name>Matthew Weier O'Phinney</name>
-      <email>me@mwop.net</email>
-      <uri>http://mwop.net</uri>
-    </author>
-    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
-      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>During <xhtml:a href="http://zendcon.com/">ZendCon</xhtml:a> this year, we
-<xhtml:a href="http://framework.zend.com/zf2/blog/entry/Zend-Framework-2-0-0beta1-Released">
-released 2.0.0beta1</xhtml:a> of <xhtml:a href="http://framework.zend.com">Zend
-Framework</xhtml:a>. The key story in the release is the creation of a
-new MVC layer, and to sweeten the story, the addition of a modular
-application architecture.</xhtml:p>
-<xhtml:p>"Modular? What's that mean?" For ZF2, "modular" means that your
-application is built of one or more "modules". In a lexicon agreed
-upon during our IRC meetings, a module is a collection of code and
-other files that solves a specific atomic problem of the
-application or website.</xhtml:p>
-<xhtml:p>As an example, consider a typical corporate website in a
-technical arena. You might have:</xhtml:p>
+      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>2007 was a busy year, both personally and professionally. I
+won't go into the personal too much, because, well, it's personal,
+and some of the details are simply inappropriate for blogging
+material.</xhtml:p>
+<xhtml:p>Here's the short version:</xhtml:p>
 <xhtml:ul>
-<xhtml:li>A home page</xhtml:li>
-<xhtml:li>Product and other marketing pages</xhtml:li>
-<xhtml:li>Some forums</xhtml:li>
-<xhtml:li>A corporate blog</xhtml:li>
-<xhtml:li>A knowledge base/FAQ area</xhtml:li>
-<xhtml:li>Contact forms</xhtml:li>
+<xhtml:li>One trip to Belgium and The Netherlands.</xhtml:li>
+<xhtml:li>Two trips to Israel.</xhtml:li>
+<xhtml:li>Two trips to Atlanta, GA (not counting the return trip from
+Europe, when I was stranded for a day due to storms in the
+Northeast).</xhtml:li>
+<xhtml:li>Three different user groups attended, with three
+presentations.</xhtml:li>
+<xhtml:li>One major Zend Framework release</xhtml:li>
+<xhtml:li>One PEAR release.</xhtml:li>
+<xhtml:li>One podcast.</xhtml:li>
+<xhtml:li>One webinar.</xhtml:li>
+<xhtml:li>One book published.</xhtml:li>
+<xhtml:li>One conference attended.</xhtml:li>
 </xhtml:ul>
-<xhtml:p>These can be divided into discrete modules:</xhtml:p>
-<xhtml:ul>
-<xhtml:li>A "pages" modules for the home page, product, and marketing
-pages</xhtml:li>
-<xhtml:li>A "forum" module</xhtml:li>
-<xhtml:li>A "blog" module</xhtml:li>
-<xhtml:li>An "faq" or "kb" module</xhtml:li>
-<xhtml:li>A "contact" module</xhtml:li>
-</xhtml:ul>
-<xhtml:p>Furthermore, if these are developed well and discretely, they
-can be <xhtml:em>re-used</xhtml:em> between different applications!</xhtml:p>
-<xhtml:p>So, let's dive into ZF2 modules!</xhtml:p>
+<xhtml:p>What follows is my month-by-month breakdown:</xhtml:p>
 </xhtml:div>
     </content>
   </entry>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
-    <title type="html"><![CDATA[Using the ZF2 EventManager]]></title>
-    <published>2011-09-12T15:45:13-05:00</published>
-    <updated>2011-10-06T14:58:39-05:00</updated>
-    <link rel="alternate" type="text/html" href="http://mwop.net/blog/266-Using-the-ZF2-EventManager.html"/>
-    <id>http://mwop.net/blog/266-Using-the-ZF2-EventManager.html</id>
+    <title type="html"><![CDATA[I is a published author!]]></title>
+    <published>2007-11-06T11:37:33-06:00</published>
+    <updated>2007-11-06T11:41:02-06:00</updated>
+    <link rel="alternate" type="text/html" href="http://mwop.net/blog/149-I-is-a-published-author!.html"/>
+    <id>http://mwop.net/blog/149-I-is-a-published-author!.html</id>
     <author>
       <name>Matthew Weier O'Phinney</name>
       <email>me@mwop.net</email>
       <uri>http://mwop.net</uri>
     </author>
     <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
-      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>Earlier this year, I <xhtml:a href="http://weierophinney.net/matthew/archives/251-Aspects,-Filters,-and-Signals,-Oh,-My!.html">
-wrote about Aspects, Intercepting Filters, Signal Slots, and
-Events</xhtml:a>, in order to compare these similar approaches to
-handling both asychronous programming as well as handling
-cross-cutting application concerns in a cohesive way.</xhtml:p>
-<xhtml:p>I took the research I did for that article, and applied it to
-what was then a "SignalSlot" implementation within Zend Framework
-2, and refactored that work into a new "EventManager" component.
-This article is intended to get you up and running with it.</xhtml:p>
+      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>So, in addition to it being my daughter's birthday, which is
+exciting enough in itself, I received a package from my publisher,
+<xhtml:a href="http://www.sitepoint.com">SitePoint</xhtml:a>, with my author
+copies of <xhtml:a href="http://www.sitepoint.com/books/phpant2/">The PHP
+Anthology</xhtml:a>. Very exciting to see stuff I've written
+published!</xhtml:p>
 </xhtml:div>
     </content>
   </entry>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
-    <title type="html"><![CDATA[Using DocBlox]]></title>
-    <published>2011-08-03T13:00:00-05:00</published>
-    <updated>2011-08-05T01:39:58-05:00</updated>
-    <link rel="alternate" type="text/html" href="http://mwop.net/blog/265-Using-DocBlox.html"/>
-    <id>http://mwop.net/blog/265-Using-DocBlox.html</id>
+    <title type="html"><![CDATA[Transitions]]></title>
+    <published>2005-09-20T23:58:32-05:00</published>
+    <updated>2005-09-21T14:08:39-05:00</updated>
+    <link rel="alternate" type="text/html" href="http://mwop.net/blog/94-Transitions.html"/>
+    <id>http://mwop.net/blog/94-Transitions.html</id>
     <author>
       <name>Matthew Weier O'Phinney</name>
       <email>me@mwop.net</email>
       <uri>http://mwop.net</uri>
     </author>
     <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
-      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>Until a few years ago, there were basically two tools you could
-use to generate API documentation in PHP: <xhtml:a href="http://phpdocumentor.org/">phpDocumentor</xhtml:a> and <xhtml:a href="http://www.stack.nl/~dimitri/doxygen/">Doxygen</xhtml:a>. phpDocumentor
-was long considered the standard, with Doxygen getting notice when
-more advanced features such as inheritance diagrams are required.
-However, phpDocumentor is practically unsupported at this time
-(though a small group of developers is working on a new version),
-and Doxygen has never had PHP as its primary concern. As such, a
-number of new projects are starting to emerge as replacements.</xhtml:p>
-<xhtml:p>One of these is <xhtml:a href="http://docblox-project.org">DocBlox</xhtml:a>. I am well aware there are
-several others -- and indeed, I've tried several of them. This post
-is not here to debate the merits or demerits of this or other
-solutions; the intention is to introduce you to DocBlox so that you
-can evaluate it yourself.</xhtml:p>
+      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>Life is in transition for me now. Two weeks ago, we got to bring
+our handsome baby boy home, and I haven't been sleeping much since
+(though more than Jen). On top of the sleep deprivation, however,
+comes more exciting news: I've been hired as a PHP Developer by
+<xhtml:a href="http://www.zend.com/">Zend Technologies</xhtml:a>!</xhtml:p>
+<xhtml:p>I was approached by Daniel Kushner in late July regarding
+another position at Zend, and was flown out at the beginning of
+August. While I felt the interview went well, I harbored some
+doubts; work got fairly busy shortly thereafter, and then, of
+course, Liam was born, and the interview went completely out of my
+head. Until about three days after Liam's birthday, when Daniel
+contacted me again about the PHP Developer position.</xhtml:p>
+<xhtml:p>Work started yesterday, and I was flown to Zend's offices in
+Cupertino, CA, for orientation and to sit down with both Daniel and
+others to prepare for the projects on which I will be working.
+Thankfully, the job will not require that I move, and I will be
+working out of the 'home office' in Vermont when I return later
+this week.</xhtml:p>
+<xhtml:p>The decision to leave <xhtml:a href="http://assoc.garden.org/about">NGA</xhtml:a> was difficult, but the
+opportunity to work with Zend is just too good to miss. I am
+honored to be selected by them, and hope this is the beginning of
+many good things to come.</xhtml:p>
 </xhtml:div>
     </content>
   </entry>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
-    <title type="html"><![CDATA[Converting DocBook4 to DocBook5]]></title>
-    <published>2011-07-19T16:49:00-05:00</published>
-    <updated>2011-07-21T18:28:20-05:00</updated>
-    <link rel="alternate" type="text/html" href="http://mwop.net/blog/264-Converting-DocBook4-to-DocBook5.html"/>
-    <id>http://mwop.net/blog/264-Converting-DocBook4-to-DocBook5.html</id>
+    <title type="html"><![CDATA[ZCE - Results are in!]]></title>
+    <published>2005-06-28T10:33:00-05:00</published>
+    <updated>2005-06-29T04:48:06-05:00</updated>
+    <link rel="alternate" type="text/html" href="http://mwop.net/blog/80-ZCE-Results-are-in!.html"/>
+    <id>http://mwop.net/blog/80-ZCE-Results-are-in!.html</id>
     <author>
       <name>Matthew Weier O'Phinney</name>
       <email>me@mwop.net</email>
       <uri>http://mwop.net</uri>
     </author>
     <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
-      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>Within the <xhtml:a href="https://github.com/zendframework/zf2">Zend
-Framework 2 repository</xhtml:a>, I recently performed a conversion from
-<xhtml:a href="http://docbook.org/">DocBook</xhtml:a> 4 to 5. The latter is a
-more modern version of the toolchain, and offers a somewhat simpler
-syntax and workflow. For example, you no longer need to track how
-many levels deep you are in your chapter sections -- you simply use
-a <xhtml:code>&lt;section&gt;</xhtml:code> tag. One of the nicer changes is
-that you do not need to specify a doctype any more; you simply
-declare XML namespaces on your root elements and continue merrily
-on your way. This actually allows us to remove some actions in our
-build process, and makes validation much simpler.</xhtml:p>
-<xhtml:p>Interestingly, for DocBook5 being available in beta since 2005
-and an official standard since 2009, there is very little material
-on migrating from DocBook 4 to 5.</xhtml:p>
+      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>Got the official notification: I passed the <xhtml:a href="http://www.zend.com/store/education/certification/zend-php-certification.php">
+Zend PHP Certification Exam</xhtml:a>, and can now report I'm a Zend
+Certified Engineer (ZCE)!</xhtml:p>
+<xhtml:p style="text-align: center;"><xhtml:a href="http://zend.com/zce.php?c=ZEND901102&amp;r=0502029"><xhtml:img src="/matthew/img/zce_logo.gif" alt="Zend Certified Engineer" height="47" width="73"/></xhtml:a></xhtml:p>
+<xhtml:p>Thanks go to my bosses at <xhtml:a href="http://assoc.garden.org/">NGA</xhtml:a> for giving me the opportunity to
+attend <xhtml:a href="http://www.phparch.com/tropics">php|Tropics</xhtml:a>, to
+<xhtml:a href="http://www.phparch.com/">Marco Tabini</xhtml:a> for offering the
+ZCE exam as part of the php|Tropics conference fee, and to my wife,
+Jen, and daughter, Maeve, for putting up with me while I studied...
+and being good sports about having to stay home while I went to
+Cancun. Hopefully next time I can take you along!</xhtml:p>
 </xhtml:div>
     </content>
   </entry>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
-    <title type="html"><![CDATA[Proxies in PHP]]></title>
-    <published>2011-07-05T13:05:00-05:00</published>
-    <updated>2011-07-07T08:51:35-05:00</updated>
-    <link rel="alternate" type="text/html" href="http://mwop.net/blog/263-Proxies-in-PHP.html"/>
-    <id>http://mwop.net/blog/263-Proxies-in-PHP.html</id>
+    <title type="html"><![CDATA[Moving into City Living]]></title>
+    <published>2005-06-05T12:00:00-05:00</published>
+    <updated>2005-06-05T12:01:03-05:00</updated>
+    <link rel="alternate" type="text/html" href="http://mwop.net/blog/77-Moving-into-City-Living.html"/>
+    <id>http://mwop.net/blog/77-Moving-into-City-Living.html</id>
     <author>
       <name>Matthew Weier O'Phinney</name>
       <email>me@mwop.net</email>
       <uri>http://mwop.net</uri>
     </author>
     <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
-      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>A number of programming design patterns look very similar. One
-of these is the <xhtml:em>Proxy</xhtml:em> pattern, which, at first glance, can
-look like a number of others: <xhtml:em>Decorator</xhtml:em>,
-<xhtml:em>Flyweight</xhtml:em>, even plain old object extension. However, it
-has its own niche, and it can provide some incredible flexibility
-for a number of programming scenarios.</xhtml:p>
+      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>We did it... we moved, again.</xhtml:p>
+<xhtml:p>However, unlike our previous two moves, which were interstate,
+this time we stayed in the same state. The same county, even. What
+made (makes; we're still finishing up as I write this) this one so
+jarring is the fact that we're going from the rural mountainside to
+the fourth floor of a new apartment/condo building adjoining an
+interstate spur.</xhtml:p>
+<xhtml:p>Why would we do this?</xhtml:p>
+</xhtml:div>
+    </content>
+  </entry>
+  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <title type="html"><![CDATA[We're having a baby!]]></title>
+    <published>2005-04-23T17:01:52-05:00</published>
+    <updated>2005-04-23T17:12:20-05:00</updated>
+    <link rel="alternate" type="text/html" href="http://mwop.net/blog/67-Were-having-a-baby!.html"/>
+    <id>http://mwop.net/blog/67-Were-having-a-baby!.html</id>
+    <author>
+      <name>Matthew Weier O'Phinney</name>
+      <email>me@mwop.net</email>
+      <uri>http://mwop.net</uri>
+    </author>
+    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
+      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>I can't believe I haven't announced this to the world yet, but
+Jen and I are expecting another baby! The due date is
+mid-September. And.... we decided at the ultrasound this past week
+we would go ahead and find out the gender... and....</xhtml:p>
+</xhtml:div>
+    </content>
+  </entry>
+  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <title type="html"><![CDATA[Enter the Matrix]]></title>
+    <published>2005-03-20T22:33:41-06:00</published>
+    <updated>2005-03-20T22:36:19-06:00</updated>
+    <link rel="alternate" type="text/html" href="http://mwop.net/blog/59-Enter-the-Matrix.html"/>
+    <id>http://mwop.net/blog/59-Enter-the-Matrix.html</id>
+    <author>
+      <name>Matthew Weier O'Phinney</name>
+      <email>me@mwop.net</email>
+      <uri>http://mwop.net</uri>
+    </author>
+    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
+      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>I couldn't resist... the car model demands it...</xhtml:p>
+<xhtml:p>For those not familiar with where I live, my family and I live
+in West Bolton, VT -- about 20 miles from Burlington, and at the
+base of Bolton Mountain. Our daily commute is 4 miles on a dirt
+road, another 3 to 4 miles on some twisty two-laners at 35mph to
+the interstate, and around 10 miles on the interstate into
+Burlington. Then there's all the miles in town getting Maeve to
+day-care, Jen or myself dropped off, and whomever has the car to
+work. And we only have one car.</xhtml:p>
+<xhtml:p>So, you can imagine the crisis when, almost a month ago, our
+Toyota Rav4 died on the way in to work.</xhtml:p>
+<xhtml:p>We started it up that day, and it had this funny knocking sound.
+I remembered a similar sound in my old pickup back in Montana...
+the one that died. I determined to get it into a shop that day to
+get it diagnosed. The noise came and went while we were on the
+backroads, and because it wasn't constant, I figured it couldn't be
+too serious.</xhtml:p>
+<xhtml:p>And then we tried to get to highway speeds.... a few miles on
+the interstate, and it was evident we were in trouble. The Rav was
+having trouble maintaining 60mph on the way up French Hill -- when
+it normally was able to accelerate past 70mph. And the knocking
+sound was getting worse and louder.</xhtml:p>
+<xhtml:p>We resolved to pull off at the first exit, at Tafts Corners in
+Williston. I pulled into the first gas station there, and as we
+tried to find a place to park the vehicle, a mechanic was flagging
+at us to stop the car. He came over to where we parked and said,
+"Sounds like you've blown your engine."</xhtml:p>
+<xhtml:p>These, of course, were the absolute last words I wanted to
+hear.</xhtml:p>
+<xhtml:p>To make a long story short, apparently a bearing was thrown when
+we started the engine that day, and because we decided to drive it,
+we basically destroyed the engine. The cost to replace it: around
+$6,000.</xhtml:p>
+<xhtml:p>Now, we're not exactly what you'd call "financially secure".
+We've had a lot of transitions in the past five years, and except
+for the past year and a few months, haven't typically both been
+working at the same time. We've been in a perpetual cycle of having
+enough to pay the bills... but having to pay consistently late. And
+we haven't been able to do much, if anything, about our educational
+debt. In short, our credit sucks. Which means that $6,000 is a big
+deal.</xhtml:p>
+<xhtml:p>Did I mention that, at the time of the incident, we still had 17
+months left on our car payments?</xhtml:p>
+<xhtml:p>And, on top of it, I've been in the middle of a <xhtml:em>huge</xhtml:em>
+project for work that's required a fair bit of overtime -- and very
+little wiggle room for personal time?</xhtml:p>
+<xhtml:p>The timing could not have been worse, either professionally or
+financially.</xhtml:p>
+<xhtml:p>We've been very fortunate, however. Jen's parents very
+graciously offerred to pay off our existing car loan -- which
+helped tremendously. It bought us both the time to figure things
+out, as well as eliminated one factor that may have barred our
+ability to borrow towards repairs or a new car. Additionally, a
+friend of Jen's turns out to be absolutely ruthless when it comes
+to dealing with car salespeople, and went to bat for us in working
+out a deal. If it hadn't been for her efforts -- and those of the
+salesperson, who also went to bat for us -- we would not have
+gotten more than a thousand or so for the vehicle; we ended up
+getting over $3,000 for it, as is. Finally, the finance guy at the
+dealership advocated for us tremendously so we could get a loan on
+a new vehicle, with the Rav as our trade in.</xhtml:p>
+<xhtml:p>So, to conclude: We're now proud owners of a 2005 Toyota Matrix!
+(And now the mystery of the title is revealed... to all you Matrix
+fans out there...)</xhtml:p>
+<xhtml:p>I'll try to get a photo of the car up soon... about the time we
+update the year-old photos on our site... :-)</xhtml:p>
+</xhtml:div>
+    </content>
+  </entry>
+  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <title type="html"><![CDATA[php|Tropics]]></title>
+    <published>2005-03-20T22:13:46-06:00</published>
+    <updated>2005-03-20T22:13:59-06:00</updated>
+    <link rel="alternate" type="text/html" href="http://mwop.net/blog/58-phpTropics.html"/>
+    <id>http://mwop.net/blog/58-phpTropics.html</id>
+    <author>
+      <name>Matthew Weier O'Phinney</name>
+      <email>me@mwop.net</email>
+      <uri>http://mwop.net</uri>
+    </author>
+    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
+      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>Well, it's official: My IT Manager convinced those in the upper
+echelons (well, considering it's a non-profit with only around 20
+employees, that meant the president and the CFO) that (1) he and I
+need to attend a PHP conference, (2) due to the amount of work
+we've been putting in to bring money into the organization, cost
+shouldn't be <xhtml:em>too</xhtml:em> much of a deciding factor, and (3)
+<xhtml:a href="http://www.phparch.com/tropics" target="_blank">php|Tropics</xhtml:a> isn't <xhtml:em>too</xhtml:em> expensive, especially
+considering the sessions involved cover some of the very issues
+we've been struggling with the past few months (PHP/MySQL/Apache
+and clusters, PHP5 OOP, PHP Security, test-driven development,
+Smarty, and more).</xhtml:p>
+<xhtml:p>So, we're going to Cancun in May!</xhtml:p>
+<xhtml:p>This is incredibly exciting! I've never been to Mexico, nor even
+a resort, so I'll finally get to find out what my wife and friends
+have been talking about all these years. Plus, the conference is
+top-notch -- many of the presenters are well-known in the PHP
+community, and have blogs I've been following for the past year. (I
+only wish that Chris Shiflett's PHP Security series wasn't running
+head-to-head with the PHP5 OOP Extensions and PHP 5 Patterns
+sessions; I suspect Rob and I will have to do a divide-and-conquer
+that day.)</xhtml:p>
+<xhtml:p>Drop me a line if you'll be attending -- I'm looking forward to
+meeting other PHP junkies!</xhtml:p>
+</xhtml:div>
+    </content>
+  </entry>
+  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <title type="html"><![CDATA[New Cgiapp Site]]></title>
+    <published>2005-02-19T13:38:08-06:00</published>
+    <updated>2005-03-25T21:51:18-06:00</updated>
+    <link rel="alternate" type="text/html" href="http://mwop.net/blog/57-New-Cgiapp-Site.html"/>
+    <id>http://mwop.net/blog/57-New-Cgiapp-Site.html</id>
+    <author>
+      <name>Matthew Weier O'Phinney</name>
+      <email>me@mwop.net</email>
+      <uri>http://mwop.net</uri>
+    </author>
+    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
+      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>I've been extremely busy at work, and will continue to be
+through the end of March. I realized this past week that I'd set a
+goal of having a <xhtml:a href="http://sourceforge.net" target="_blank">SourceForge</xhtml:a> website up and running for Cgiapp by the
+end of January -- and it's now mid-February. Originally, I was
+going to backport some of my libraries from PHP5 to PHP4 so I could
+do so... and I think that was beginning to daunt me a little.</xhtml:p>
+<xhtml:p>Fortunately, I ran across a quick-and-dirty content management
+solution yesterday called <xhtml:a href="http://gunther.sourceforge.net/" target="_blank">Gunther</xhtml:a>. It does templating in Smarty, and uses
+a wiki-esque syntax for markup -- though page editing is limited to
+admin users only (something I was looking for). I decided to try it
+out, and within an hour or so had a working site ready to
+upload.</xhtml:p>
+<xhtml:p>Cgiapp's new site can be found at <xhtml:a href="http://cgiapp.sourceforge.net/">cgiapp.sourceforge.net</xhtml:a>.</xhtml:p>
+<xhtml:h4>UPDATE</xhtml:h4>
+<xhtml:p>Shortly after I wrote this original post, I figured out what the
+strength of Gunther was -- and why I no longer needed it. Gunther
+was basically taking content entered from a form and then inserting
+that content (after some processing for wiki-like syntax) into a
+Smarty template. Which meant that I could do the same thing with
+Cgiapp and <xhtml:a href="http://pear.php.net/text_wiki">Text_Wiki</xhtml:a>.
+Within an hour, I wrote an application module in Cgiapp that did
+just that, and am proud to say that the Cgiapp website is 100%
+Cgiapp.</xhtml:p>
 </xhtml:div>
     </content>
   </entry>

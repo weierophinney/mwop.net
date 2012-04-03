@@ -1,11 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title type="text">Tag: php :: phly, boy, phly</title>
-  <updated>2012-03-05T16:32:45-06:00</updated>
+  <updated>2012-04-03T08:45:00-05:00</updated>
   <generator uri="http://framework.zend.com" version="2.0.0beta3">Zend_Feed_Writer</generator>
   <link rel="alternate" type="text/html" href="http://mwop.net/blog/tag/php.html"/>
   <link rel="self" type="application/atom+xml" href="http://mwop.net/blog/tag/php-atom.xml"/>
   <id>http://mwop.net/blog/tag/php.html</id>
+  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <title type="html"><![CDATA[Developing A ZF2 Blog]]></title>
+    <published>2012-04-03T08:45:00-05:00</published>
+    <updated>2012-04-03T08:45:00-05:00</updated>
+    <link rel="alternate" type="text/html" href="http://mwop.net/blog/2012-05-developing-a-zf2-blog.html"/>
+    <id>http://mwop.net/blog/2012-05-developing-a-zf2-blog.html</id>
+    <author>
+      <name>Matthew Weier O'Phinney</name>
+      <email>me@mwop.net</email>
+      <uri>http://mwop.net</uri>
+    </author>
+    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
+      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>This post tells a story.</xhtml:p>
+<xhtml:p>A long time ago, I set out to write my own blog platform. Yes,
+<xhtml:a href="http://wordpress.org">WordPress</xhtml:a> is a fine blogging
+platform, as is <xhtml:a href="http://www.s9y.org/">Serendipity</xhtml:a> (aka
+"s9y", and my previous platform). And yes, I know about <xhtml:a href="http://habariproject.org">Habari</xhtml:a>. And, for those of you
+skimming ahead, yes, I'm quite aware of <xhtml:a href="http://github.com/mojombo/jekyll">Jekyll</xhtml:a>, thank you
+anyways.</xhtml:p>
+<xhtml:p>Why write something of my own? Well, of course, there's the fact
+that I'm a developer, and have control issues. Then there's also
+the fact that a blog is both a simple enough domain to allow easily
+experimenting with new technology and paradigms, while
+simultaneously providing a complex enough domain to expose
+non-trivial issues.</xhtml:p>
+<xhtml:p>When I started this project, it was a technology-centered
+endeavor; I wanted to play with document databases such as <xhtml:a href="http://couchdb.apache.org/">CouchDB</xhtml:a> and <xhtml:a href="http://www.mongodb.org/">MongoDB</xhtml:a>, and with caching
+technologies like <xhtml:a href="http://memcached.org">memcached</xhtml:a> and
+<xhtml:a href="http://redis.io">redis</xhtml:a>.</xhtml:p>
+<xhtml:p>Not long after I started, I also realized it was a great
+playground for me to prototype ideas for <xhtml:a href="http://framework.zend.com/zf2">ZF2</xhtml:a>; in fact, the original DI
+and MVC prototypes lived as branches of my blog. (My repository is
+still named "zf2sandbox" to this day, though it technically houses
+just my blog.)</xhtml:p>
+<xhtml:p>Over time, I had a few realizations. First, my <xhtml:em>actual</xhtml:em>
+blog was suffering. I wasn't taking the time to perform security
+updates, nor even normal upgrades, and was so far behind as to make
+the process non-trivial, particularly as I had a custom theme, and
+because I was proxying to my blog via a ZF app in order to
+facilitate a cohesive site look-and-feel. I needed to either sink
+time into upgrading, or finish my blog.</xhtml:p>
+<xhtml:p>My second realization, however, was the more important one: I
+wanted a platform where I could write how <xhtml:em>I</xhtml:em> want to write.
+I am a keyboard-centric developer and computer user, and while I
+love the web, I hate typing in its forms. Additionally, my posts
+often take longer than a typical browser session -- which leaves me
+either losing my work in a GUI admin, or having to write first in
+my editor of choice, and then cut-and-paste it to the web forms.
+Finally, I want versions I can easily browse with standard diffing
+tools.</xhtml:p>
+<xhtml:p>When it came down to it, my blog content is basically static.
+Occasionally, I'll update a post, but it's rare. Comments are
+really the only dynamic aspect of the blog... and what I had with
+s9y was not cutting it, as I was getting more spam than I could
+keep up with. New commenting platforms such as <xhtml:a href="http://livefyre.com">Livefyre</xhtml:a> and <xhtml:a href="http://disqus.com">Disqus</xhtml:a> provide more features than most
+blogging platforms I know, and provide another side benefit:
+because they are javascript-based, you can simply dropy in a small
+amount of markup into your post <xhtml:em>once</xhtml:em> -- meaning your pages
+can be fully static!</xhtml:p>
+<xhtml:p>Add these thoughts to the rise of static blogging platforms such
+as the aforementioned Jekyll, and I had a kernel of an idea: take
+the work I'd done already, and create a static blog generator.</xhtml:p>
+</xhtml:div>
+    </content>
+  </entry>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <title type="html"><![CDATA[View Layers, Database Abstraction, Configuration, Oh, My!]]></title>
     <published>2012-03-05T16:32:45-06:00</published>
@@ -263,27 +328,6 @@ build process, and makes validation much simpler.</xhtml:p>
 <xhtml:p>Interestingly, for DocBook5 being available in beta since 2005
 and an official standard since 2009, there is very little material
 on migrating from DocBook 4 to 5.</xhtml:p>
-</xhtml:div>
-    </content>
-  </entry>
-  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
-    <title type="html"><![CDATA[Proxies in PHP]]></title>
-    <published>2011-07-05T13:05:00-05:00</published>
-    <updated>2011-07-07T08:51:35-05:00</updated>
-    <link rel="alternate" type="text/html" href="http://mwop.net/blog/263-Proxies-in-PHP.html"/>
-    <id>http://mwop.net/blog/263-Proxies-in-PHP.html</id>
-    <author>
-      <name>Matthew Weier O'Phinney</name>
-      <email>me@mwop.net</email>
-      <uri>http://mwop.net</uri>
-    </author>
-    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
-      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>A number of programming design patterns look very similar. One
-of these is the <xhtml:em>Proxy</xhtml:em> pattern, which, at first glance, can
-look like a number of others: <xhtml:em>Decorator</xhtml:em>,
-<xhtml:em>Flyweight</xhtml:em>, even plain old object extension. However, it
-has its own niche, and it can provide some incredible flexibility
-for a number of programming scenarios.</xhtml:p>
 </xhtml:div>
     </content>
   </entry>

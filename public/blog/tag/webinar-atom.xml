@@ -1,289 +1,162 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title type="text">Tag: webinar :: phly, boy, phly</title>
-  <updated>2012-03-05T16:32:45-06:00</updated>
+  <updated>2008-09-16T00:15:30-05:00</updated>
   <generator uri="http://framework.zend.com" version="2.0.0beta3">Zend_Feed_Writer</generator>
   <link rel="alternate" type="text/html" href="http://mwop.net/blog/tag/webinar.html"/>
   <link rel="self" type="application/atom+xml" href="http://mwop.net/blog/tag/webinar-atom.xml"/>
   <id>http://mwop.net/blog/tag/webinar.html</id>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
-    <title type="html"><![CDATA[View Layers, Database Abstraction, Configuration, Oh, My!]]></title>
-    <published>2012-03-05T16:32:45-06:00</published>
-    <updated>2012-03-05T16:32:45-06:00</updated>
-    <link rel="alternate" type="text/html" href="http://mwop.net/blog/zf2-beta3.html"/>
-    <id>http://mwop.net/blog/zf2-beta3.html</id>
+    <title type="html"><![CDATA[Pastebin app and conference updates]]></title>
+    <published>2008-09-09T09:19:23-05:00</published>
+    <updated>2008-09-16T00:15:30-05:00</updated>
+    <link rel="alternate" type="text/html" href="http://mwop.net/blog/189-Pastebin-app-and-conference-updates.html"/>
+    <id>http://mwop.net/blog/189-Pastebin-app-and-conference-updates.html</id>
     <author>
       <name>Matthew Weier O'Phinney</name>
       <email>me@mwop.net</email>
       <uri>http://mwop.net</uri>
     </author>
     <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
-      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>Late last week, the Zend Framework community <xhtml:a href="http://framework.zend.com/zf2/blog/entry/Zend-Framework-2-0-0beta3-Released">
-2.0.0beta3</xhtml:a>, the latest iteration of the v2 framework. What have
-we been busy doing the last couple months? In a nutshell, getting
-dirty with view layers, database abstraction, and
-configuration.</xhtml:p>
-</xhtml:div>
-    </content>
-  </entry>
-  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
-    <title type="html"><![CDATA[ZF2 Modules You Can Use Today]]></title>
-    <published>2012-02-08T10:31:47-06:00</published>
-    <updated>2012-02-08T10:31:47-06:00</updated>
-    <link rel="alternate" type="text/html" href="http://mwop.net/blog/zf2-modules-you-can-use-today.html"/>
-    <id>http://mwop.net/blog/zf2-modules-you-can-use-today.html</id>
-    <author>
-      <name>Matthew Weier O'Phinney</name>
-      <email>me@mwop.net</email>
-      <uri>http://mwop.net</uri>
-    </author>
-    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
-      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>One key new architectural feature of Zend Framework 2 is its new
-module infrastructure. The basic idea behind modules is to allow
-developers to both create and consume re-usable application
-functionality -- anything from packaging common assets such as CSS
-and JavaScript to providing MVC application classes.</xhtml:p>
-</xhtml:div>
-    </content>
-  </entry>
-  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
-    <title type="html"><![CDATA[Call A Spade A Spade]]></title>
-    <published>2012-01-18T15:48:07-06:00</published>
-    <updated>2012-01-18T15:48:07-06:00</updated>
-    <link rel="alternate" type="text/html" href="http://mwop.net/blog/call-a-spade-a-spade.html"/>
-    <id>http://mwop.net/blog/call-a-spade-a-spade.html</id>
-    <author>
-      <name>Matthew Weier O'Phinney</name>
-      <email>me@mwop.net</email>
-      <uri>http://mwop.net</uri>
-    </author>
-    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
-      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>I don't often get political on my blog, or over social media.
-But those of you who <xhtml:a href="http://twitter.com/weierophinney">follow me on twitter</xhtml:a> lately
-have been treated to a number of tweets and retweets from me about
-some bills before the US legislative bodies called "SOPA" and
-"PIPA". Over the last couple days, I realized exactly why I
-disagree with them, and felt 140 characters is not enough.</xhtml:p>
-</xhtml:div>
-    </content>
-  </entry>
-  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
-    <title type="html"><![CDATA[Why Conventions Matter]]></title>
-    <published>2012-01-11T21:58:28-06:00</published>
-    <updated>2012-01-11T21:58:28-06:00</updated>
-    <link rel="alternate" type="text/html" href="http://mwop.net/blog/why-conventions-matter.html"/>
-    <id>http://mwop.net/blog/why-conventions-matter.html</id>
-    <author>
-      <name>Matthew Weier O'Phinney</name>
-      <email>me@mwop.net</email>
-      <uri>http://mwop.net</uri>
-    </author>
-    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
-      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>When I started teaching myself scripting languages, I started
-with Perl. One Perl motto is <xhtml:a href="http://en.wikipedia.org/wiki/TMTOWTDI">"TMTOWTDI"</xhtml:a> -- "There's
-More Than One Way To Do It," and pronounced "tim-toady." The idea
-is that there's likely multiple ways to accomplish the very same
-thing, and the culture of the language encourages finding novel
-ways to do things.</xhtml:p>
-<xhtml:p>I've seen this principle used everywhere and in just about every
-programming situation possible, applied to logical operations,
-naming conventions, formatting, and even project structure.
-Everyone has an opinion on these topics, and given free rein to
-implement as they see fit, it's rare that two developers will come
-up with the same conventions.</xhtml:p>
-<xhtml:p>TMTOWTDI is an incredibly freeing and egalitarian principle.</xhtml:p>
-<xhtml:p>Over the years, however, my love for TMTOWTDI has diminished
-some. Freeing as it is, is also a driving force behind having
-coding standards and conventions -- because when everyone does it
-their own way, projects become quickly hard to maintain. Each
-person finds themselves reformatting code to their own standards,
-simply so they can read it and follow its flow.</xhtml:p>
-<xhtml:p>Additionally, TMTOWTDI can actually be a foe of simple, elegant
-solutions.</xhtml:p>
-<xhtml:p>Why do I claim this?</xhtml:p>
-</xhtml:div>
-    </content>
-  </entry>
-  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
-    <title type="html"><![CDATA[On Error Handling and Closures]]></title>
-    <published>2011-12-16T10:26:18-06:00</published>
-    <updated>2011-12-16T10:26:18-06:00</updated>
-    <link rel="alternate" type="text/html" href="http://mwop.net/blog/on-error-handling-and-closures.html"/>
-    <id>http://mwop.net/blog/on-error-handling-and-closures.html</id>
-    <author>
-      <name>Matthew Weier O'Phinney</name>
-      <email>me@mwop.net</email>
-      <uri>http://mwop.net</uri>
-    </author>
-    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
-      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>The error suppression operator in PHP ("@") is often seen as a
-necessary evil. Many, many low-level function will return a value
-indicating an error, but also raise an <xhtml:code>E_NOTICE</xhtml:code> or
-<xhtml:code>E_WARNING</xhtml:code> -- things you might be able to recover from,
-or conditions where you may want to raise an exception.</xhtml:p>
-<xhtml:p>So, at times, you find yourself writing code like this:</xhtml:p>
-<xhtml:div class="example">
-<xhtml:pre>
-<xhtml:code lang="php" xml:lang="php">
-if (false === ($fh = @fopen($filename, 'r'))) {
-    throw new RuntimeException(sprintf(
-        'Could not open file "%s" to read', $filename
-    ));
-}
-</xhtml:code>
-</xhtml:pre></xhtml:div>
-<xhtml:p>Seems straight-forward enough, right? But it's wrong on so many
-levels.</xhtml:p>
-</xhtml:div>
-    </content>
-  </entry>
-  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
-    <title type="html"><![CDATA[Getting started writing ZF2 modules]]></title>
-    <published>2011-11-07T12:19:00-06:00</published>
-    <updated>2011-11-12T12:02:42-06:00</updated>
-    <link rel="alternate" type="text/html" href="http://mwop.net/blog/267-Getting-started-writing-ZF2-modules.html"/>
-    <id>http://mwop.net/blog/267-Getting-started-writing-ZF2-modules.html</id>
-    <author>
-      <name>Matthew Weier O'Phinney</name>
-      <email>me@mwop.net</email>
-      <uri>http://mwop.net</uri>
-    </author>
-    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
-      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>During <xhtml:a href="http://zendcon.com/">ZendCon</xhtml:a> this year, we
-<xhtml:a href="http://framework.zend.com/zf2/blog/entry/Zend-Framework-2-0-0beta1-Released">
-released 2.0.0beta1</xhtml:a> of <xhtml:a href="http://framework.zend.com">Zend
-Framework</xhtml:a>. The key story in the release is the creation of a
-new MVC layer, and to sweeten the story, the addition of a modular
-application architecture.</xhtml:p>
-<xhtml:p>"Modular? What's that mean?" For ZF2, "modular" means that your
-application is built of one or more "modules". In a lexicon agreed
-upon during our IRC meetings, a module is a collection of code and
-other files that solves a specific atomic problem of the
-application or website.</xhtml:p>
-<xhtml:p>As an example, consider a typical corporate website in a
-technical arena. You might have:</xhtml:p>
+      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>I have a number of updates and followups, and decided to post
+them in a single entry.</xhtml:p>
+<xhtml:p>First off, you may now <xhtml:a href="http://www.zend.com/en/webinar/Framework-Dojo/Webinar-Rec-Framework-Dev-EN-ZFDojo-20080903.flv">
+view my Dojo Webinar online</xhtml:a> (requires login and registration at
+zend.com). Attendance was phenomenal, and I've had some really good
+feedback. If you want to see it live, I'm giving the talk (with
+revisions!) at the <xhtml:a href="http://www.zendcon.com/">ZendCon</xhtml:a>
+UnConference, at <xhtml:a href="http://dojotoolkit.org/2008/07/10/dojo-developer-day-boston">Dojo
+Developer Day Boston</xhtml:a> later this month, and at <xhtml:a href="http://phpworks.mtacon.com/c/schedule/talk/d1s5/1">php|works</xhtml:a>
+in November. I hope to be able to show new functionality at each
+presentation.</xhtml:p>
+<xhtml:p>Second, I've completed what I'm calling version 1.0.0 of the
+pastebin application I demo'd in the webinar. The PHP code is fully
+unit tested (though I haven't yet delved into using DOH! to test
+the JS), and incorporates a number of best practices and tips that
+Pete Higgins from Dojo was kind enough to provide to me. When using
+a custom build (and I provide a profile for building one), it
+simply flies.</xhtml:p>
 <xhtml:ul>
-<xhtml:li>A home page</xhtml:li>
-<xhtml:li>Product and other marketing pages</xhtml:li>
-<xhtml:li>Some forums</xhtml:li>
-<xhtml:li>A corporate blog</xhtml:li>
-<xhtml:li>A knowledge base/FAQ area</xhtml:li>
-<xhtml:li>Contact forms</xhtml:li>
+<xhtml:li><xhtml:a href="/uploads/pastebin-1.0.0.tar.gz">Download the pastebin
+application</xhtml:a></xhtml:li>
 </xhtml:ul>
-<xhtml:p>These can be divided into discrete modules:</xhtml:p>
-<xhtml:ul>
-<xhtml:li>A "pages" modules for the home page, product, and marketing
-pages</xhtml:li>
-<xhtml:li>A "forum" module</xhtml:li>
-<xhtml:li>A "blog" module</xhtml:li>
-<xhtml:li>An "faq" or "kb" module</xhtml:li>
-<xhtml:li>A "contact" module</xhtml:li>
-</xhtml:ul>
-<xhtml:p>Furthermore, if these are developed well and discretely, they
-can be <xhtml:em>re-used</xhtml:em> between different applications!</xhtml:p>
-<xhtml:p>So, let's dive into ZF2 modules!</xhtml:p>
+<xhtml:p>The pastebin application showcases a number of features besides
+Dojo: <xhtml:code>Zend_Test_PHPUnit</xhtml:code> was used to test the
+application, and <xhtml:code>Zend_Wildfire</xhtml:code>'s FireBug logger and DB
+profiler are used to provide profiling and debug information.</xhtml:p>
+<xhtml:p>Finally, <xhtml:a href="http://www.zendcon.com/">ZendCon</xhtml:a> is next
+week! I'll be around, but already have a packed schedule (1
+tutorial, 2 regular sessions, an UnCon session, a
+meet-the-developers session... and that's just what I know about!).
+I look forward to meeting ZF users and developers, though, so feel
+free to grab me and introduce yourself.</xhtml:p>
 </xhtml:div>
     </content>
   </entry>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
-    <title type="html"><![CDATA[Using the ZF2 EventManager]]></title>
-    <published>2011-09-12T15:45:13-05:00</published>
-    <updated>2011-10-06T14:58:39-05:00</updated>
-    <link rel="alternate" type="text/html" href="http://mwop.net/blog/266-Using-the-ZF2-EventManager.html"/>
-    <id>http://mwop.net/blog/266-Using-the-ZF2-EventManager.html</id>
+    <title type="html"><![CDATA[ZF+Dojo Webinar]]></title>
+    <published>2008-08-29T15:13:06-05:00</published>
+    <updated>2008-09-04T08:04:24-05:00</updated>
+    <link rel="alternate" type="text/html" href="http://mwop.net/blog/187-ZF+Dojo-Webinar.html"/>
+    <id>http://mwop.net/blog/187-ZF+Dojo-Webinar.html</id>
     <author>
       <name>Matthew Weier O'Phinney</name>
       <email>me@mwop.net</email>
       <uri>http://mwop.net</uri>
     </author>
     <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
-      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>Earlier this year, I <xhtml:a href="http://weierophinney.net/matthew/archives/251-Aspects,-Filters,-and-Signals,-Oh,-My!.html">
-wrote about Aspects, Intercepting Filters, Signal Slots, and
-Events</xhtml:a>, in order to compare these similar approaches to
-handling both asychronous programming as well as handling
-cross-cutting application concerns in a cohesive way.</xhtml:p>
-<xhtml:p>I took the research I did for that article, and applied it to
-what was then a "SignalSlot" implementation within Zend Framework
-2, and refactored that work into a new "EventManager" component.
-This article is intended to get you up and running with it.</xhtml:p>
+      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>I'm giving a <xhtml:a href="http://www.zend.com/en/company/news/event/webinar-zend-framework-and-dojo-integration">
+webinar on Zend Framework and Dojo Integration</xhtml:a> this coming
+Wednesday, 3 Sept 2008.</xhtml:p>
+<xhtml:p>I'm particularly excited about this webinar, as I've been
+developing a sample pastebin application to show off a number of
+features; the webinar will feature some screencasts showing the new
+code in action, and promises to be much more dynamic than my
+typical "bullet point and code" presentations.</xhtml:p>
+<xhtml:p>I'm also going to show some techniques to use when developing
+with ZF+Dojo, including how to create custom builds once you're
+ready to deploy your application (and why you want to do so).</xhtml:p>
+<xhtml:p><xhtml:a href="https://zend.webex.com/zend/onstage/g.php?t=a&amp;d=572843054">Register
+today</xhtml:a>!</xhtml:p>
 </xhtml:div>
     </content>
   </entry>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
-    <title type="html"><![CDATA[Using DocBlox]]></title>
-    <published>2011-08-03T13:00:00-05:00</published>
-    <updated>2011-08-05T01:39:58-05:00</updated>
-    <link rel="alternate" type="text/html" href="http://mwop.net/blog/265-Using-DocBlox.html"/>
-    <id>http://mwop.net/blog/265-Using-DocBlox.html</id>
+    <title type="html"><![CDATA[Zend Framework/Dojo Integration QA Slides]]></title>
+    <published>2008-05-27T11:36:03-05:00</published>
+    <updated>2008-05-29T16:26:09-05:00</updated>
+    <link rel="alternate" type="text/html" href="http://mwop.net/blog/178-Zend-FrameworkDojo-Integration-QA-Slides.html"/>
+    <id>http://mwop.net/blog/178-Zend-FrameworkDojo-Integration-QA-Slides.html</id>
     <author>
       <name>Matthew Weier O'Phinney</name>
       <email>me@mwop.net</email>
       <uri>http://mwop.net</uri>
     </author>
     <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
-      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>Until a few years ago, there were basically two tools you could
-use to generate API documentation in PHP: <xhtml:a href="http://phpdocumentor.org/">phpDocumentor</xhtml:a> and <xhtml:a href="http://www.stack.nl/~dimitri/doxygen/">Doxygen</xhtml:a>. phpDocumentor
-was long considered the standard, with Doxygen getting notice when
-more advanced features such as inheritance diagrams are required.
-However, phpDocumentor is practically unsupported at this time
-(though a small group of developers is working on a new version),
-and Doxygen has never had PHP as its primary concern. As such, a
-number of new projects are starting to emerge as replacements.</xhtml:p>
-<xhtml:p>One of these is <xhtml:a href="http://docblox-project.org">DocBlox</xhtml:a>. I am well aware there are
-several others -- and indeed, I've tried several of them. This post
-is not here to debate the merits or demerits of this or other
-solutions; the intention is to introduce you to DocBlox so that you
-can evaluate it yourself.</xhtml:p>
+      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>We had our Zend Framework/Dojo integration QA today. Aside from
+some connectivity issues at the beginning of the presentation,
+things went smoothly, and there were some good questions.</xhtml:p>
+<xhtml:p>A number of people reported missing the slides or that the
+slides were not advancing. I'm posting them here; they will also be
+available on <xhtml:a href="http://www.zend.com/webinars">the Zend.com
+webinars page</xhtml:a> later this week.</xhtml:p>
+<xhtml:p><xhtml:a href="http://weierophinney.net/uploads/2008-05-27-ZendFramework_Dojo.ppt">
+ZendFramework_Dojo.ppt</xhtml:a></xhtml:p>
+<xhtml:p><xhtml:b>Update:</xhtml:b> For those who want to view online, you can now do
+so at <xhtml:a href="http://www.slideshare.net/weierophinney/zend-framework-and-dojo-integration-faq/">
+SlideShare</xhtml:a>.</xhtml:p>
 </xhtml:div>
     </content>
   </entry>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
-    <title type="html"><![CDATA[Converting DocBook4 to DocBook5]]></title>
-    <published>2011-07-19T16:49:00-05:00</published>
-    <updated>2011-07-21T18:28:20-05:00</updated>
-    <link rel="alternate" type="text/html" href="http://mwop.net/blog/264-Converting-DocBook4-to-DocBook5.html"/>
-    <id>http://mwop.net/blog/264-Converting-DocBook4-to-DocBook5.html</id>
+    <title type="html"><![CDATA[Zend Framework Q&amp;A Session]]></title>
+    <published>2008-04-28T13:50:00-05:00</published>
+    <updated>2008-04-28T13:50:00-05:00</updated>
+    <link rel="alternate" type="text/html" href="http://mwop.net/blog/173-Zend-Framework-QA-Session.html"/>
+    <id>http://mwop.net/blog/173-Zend-Framework-QA-Session.html</id>
     <author>
       <name>Matthew Weier O'Phinney</name>
       <email>me@mwop.net</email>
       <uri>http://mwop.net</uri>
     </author>
     <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
-      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>Within the <xhtml:a href="https://github.com/zendframework/zf2">Zend
-Framework 2 repository</xhtml:a>, I recently performed a conversion from
-<xhtml:a href="http://docbook.org/">DocBook</xhtml:a> 4 to 5. The latter is a
-more modern version of the toolchain, and offers a somewhat simpler
-syntax and workflow. For example, you no longer need to track how
-many levels deep you are in your chapter sections -- you simply use
-a <xhtml:code>&lt;section&gt;</xhtml:code> tag. One of the nicer changes is
-that you do not need to specify a doctype any more; you simply
-declare XML namespaces on your root elements and continue merrily
-on your way. This actually allows us to remove some actions in our
-build process, and makes validation much simpler.</xhtml:p>
-<xhtml:p>Interestingly, for DocBook5 being available in beta since 2005
-and an official standard since 2009, there is very little material
-on migrating from DocBook 4 to 5.</xhtml:p>
+      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>With 1.0 and 1.5 of <xhtml:a href="http://framework.zend.com/">Zend
+Framework</xhtml:a> now released, there are a lot of questions flying
+around -- what will we do next, what components to expect, what are
+some of the best practices, etc. So, we're going to have an open
+<xhtml:a href="http://devzone.zend.com/article/3448-Zend-Framework">Question and
+Answer Session</xhtml:a> webinar, with all of us on the internal
+team.</xhtml:p>
+<xhtml:p>If you have a question you want answered, please be kind enough
+to <xhtml:a href="http://framework.zend.com/wiki/pages/viewpage.action?pageId=43922">
+submit your question in advance</xhtml:a>, so we have time to actually
+think about it (though you can always broadside us during the
+webinar).</xhtml:p>
+<xhtml:p><xhtml:a href="http://www.zend.com/en/company/news/event/webinar-zend-framework-the-big-q-a">
+Sign up</xhtml:a> in advance so you don't miss out!</xhtml:p>
 </xhtml:div>
     </content>
   </entry>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
-    <title type="html"><![CDATA[Proxies in PHP]]></title>
-    <published>2011-07-05T13:05:00-05:00</published>
-    <updated>2011-07-07T08:51:35-05:00</updated>
-    <link rel="alternate" type="text/html" href="http://mwop.net/blog/263-Proxies-in-PHP.html"/>
-    <id>http://mwop.net/blog/263-Proxies-in-PHP.html</id>
+    <title type="html"><![CDATA[Zend_Form Webinar Wednesday]]></title>
+    <published>2008-03-03T16:00:26-06:00</published>
+    <updated>2008-03-06T05:29:49-06:00</updated>
+    <link rel="alternate" type="text/html" href="http://mwop.net/blog/160-Zend_Form-Webinar-Wednesday.html"/>
+    <id>http://mwop.net/blog/160-Zend_Form-Webinar-Wednesday.html</id>
     <author>
       <name>Matthew Weier O'Phinney</name>
       <email>me@mwop.net</email>
       <uri>http://mwop.net</uri>
     </author>
     <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
-      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>A number of programming design patterns look very similar. One
-of these is the <xhtml:em>Proxy</xhtml:em> pattern, which, at first glance, can
-look like a number of others: <xhtml:em>Decorator</xhtml:em>,
-<xhtml:em>Flyweight</xhtml:em>, even plain old object extension. However, it
-has its own niche, and it can provide some incredible flexibility
-for a number of programming scenarios.</xhtml:p>
+      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>Just an FYI for anyone interested: I'll be performing a webinar
+for this week's Zend Wednesday Webinar series on <xhtml:a href="http://framework.zend.com/manual/en/zend.form.html">Zend_Form</xhtml:a>.
+You can get details on the webinar and how to register for it at
+<xhtml:a href="http://www.zend.com/en/company/news/event/webinar-zend-framework-forms">
+the Zend_Form webinar information page</xhtml:a>.</xhtml:p>
+<xhtml:p>I'll be covering the design of Zend_Form, the basic usage and
+various classes and plugins available, and internationalization of
+your forms. Please join me Wednesday at noon EST!</xhtml:p>
 </xhtml:div>
     </content>
   </entry>

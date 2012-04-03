@@ -92,6 +92,27 @@ require(["Application/scroll"], function(scroll) {});    //-->
 
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
+    <p class="date">2008-03-22 10:41:26</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
+<a href="/blog/tag/vim.html">vim</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/164-Vim-Productivity-Tips-for-PHP-Developers.html">Vim Productivity Tips for PHP Developers</a></h4>
+
+    <div class="entry body"><p>
+    I use <a href="http://www.vim.org/">Vim</a> for all my editing needs -- TODO
+    lists, email, presentation outlines, coding in any language... everything.
+    So, I thought I'd start sharing some of my vim habits and tools with others,
+    particularly those that pertain to using Vim with PHP.
+</p></div>
+
+    <p><a href="/blog/164-Vim-Productivity-Tips-for-PHP-Developers.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
     <p class="date">2008-03-18 17:13:26</p>
     <p class="tags"><a href="/blog/tag/php.html">php</a><br />
 <a href="/blog/tag/zend+framework.html">zend framework</a></p>
@@ -446,41 +467,6 @@ require(["Application/scroll"], function(scroll) {});    //-->
 </p></div>
 
     <p><a href="/blog/154-2007-Retrospective.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2007-12-20 12:00:00</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/153-Sqlite-Version-Mismatch.html">Sqlite Version Mismatch</a></h4>
-
-    <div class="entry body"><p>
-    I ran into an issue recently in testing a site where PDO_SQLITE was claiming
-    that it could not read my PDO database files. The only recent change I'd had
-    was that I'd installed a new version of PHP, and hence a new version of
-    PDO_SQLITE. Searching the web (we're not supposed to say <em>googling</em>
-    or <em>googled</em> anymore, remember ;-)), I found that the issue was that
-    the version of sqlite compiled into my PHP install was not compatible with
-    the version I used to create the databases in the first place. Never mind
-    that they're only a micro version or two different.
-</p>
-
-<p>
-    So, I was left with a conundrum: I needed to create files compatible with my
-    PDO_SQLITE install, but my CLI sqlite tool was incompatible. And if I used
-    PDO_SQLITE to create the db file, I'd lose my data, right?
-</p>
-
-<p>
-    Wrong. And here's what you can do should you find yourself in the same
-    situation sometime.
-</p></div>
-
-    <p><a href="/blog/153-Sqlite-Version-Mismatch.html">Continue reading...</a></p>
 </section>
 
 </div>

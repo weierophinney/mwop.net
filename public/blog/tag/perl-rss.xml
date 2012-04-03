@@ -3,58 +3,10 @@
   <channel>
     <title>Tag: perl :: phly, boy, phly</title>
     <description>Tag: perl :: phly, boy, phly</description>
-    <pubDate>Mon, 05 Mar 2012 16:32:45 -0600</pubDate>
+    <pubDate>Wed, 11 Jan 2012 21:58:28 -0600</pubDate>
     <generator>Zend_Feed_Writer 2.0.0beta3 (http://framework.zend.com)</generator>
     <link>http://mwop.net/blog/tag/perl.html</link>
     <atom:link rel="self" type="application/rss+xml" href="http://mwop.net/blog/tag/perl-rss.xml"/>
-    <item>
-      <title>View Layers, Database Abstraction, Configuration, Oh, My!</title>
-      <pubDate>Mon, 05 Mar 2012 16:32:45 -0600</pubDate>
-      <link>http://mwop.net/blog/zf2-beta3.html</link>
-      <guid>http://mwop.net/blog/zf2-beta3.html</guid>
-      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
-      <dc:creator>Matthew Weier O'Phinney</dc:creator>
-      <content:encoded><![CDATA[<p>
-    Late last week, the Zend Framework community <a href="http://framework.zend.com/zf2/blog/entry/Zend-Framework-2-0-0beta3-Released">2.0.0beta3</a>, 
-    the latest iteration of the v2 framework. What have we been busy doing the 
-    last couple months? In a nutshell, getting dirty with view layers, database
-    abstraction, and configuration.
-</p>]]></content:encoded>
-      <slash:comments>0</slash:comments>
-    </item>
-    <item>
-      <title>ZF2 Modules You Can Use Today</title>
-      <pubDate>Wed, 08 Feb 2012 10:31:47 -0600</pubDate>
-      <link>http://mwop.net/blog/zf2-modules-you-can-use-today.html</link>
-      <guid>http://mwop.net/blog/zf2-modules-you-can-use-today.html</guid>
-      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
-      <dc:creator>Matthew Weier O'Phinney</dc:creator>
-      <content:encoded><![CDATA[<p>
-    One key new architectural feature of Zend Framework 2 is its new module
-    infrastructure. The basic idea behind modules is to allow developers to both
-    create and consume re-usable application functionality -- anything from
-    packaging common assets such as CSS and JavaScript to providing MVC
-    application classes.
-</p>]]></content:encoded>
-      <slash:comments>0</slash:comments>
-    </item>
-    <item>
-      <title>Call A Spade A Spade</title>
-      <pubDate>Wed, 18 Jan 2012 15:48:07 -0600</pubDate>
-      <link>http://mwop.net/blog/call-a-spade-a-spade.html</link>
-      <guid>http://mwop.net/blog/call-a-spade-a-spade.html</guid>
-      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
-      <dc:creator>Matthew Weier O'Phinney</dc:creator>
-      <content:encoded><![CDATA[<p>
-    I don't often get political on my blog, or over social media. But those of 
-    you who <a href="http://twitter.com/weierophinney">follow me on twitter</a> 
-    lately have been treated to a number of tweets and retweets from me about 
-    some bills before the US legislative bodies called "SOPA" and "PIPA". Over
-    the last couple days, I realized exactly why I disagree with them, and 
-    felt 140 characters is not enough.
-</p>]]></content:encoded>
-      <slash:comments>0</slash:comments>
-    </item>
     <item>
       <title>Why Conventions Matter</title>
       <pubDate>Wed, 11 Jan 2012 21:58:28 -0600</pubDate>
@@ -100,202 +52,487 @@
       <slash:comments>0</slash:comments>
     </item>
     <item>
-      <title>On Error Handling and Closures</title>
-      <pubDate>Fri, 16 Dec 2011 10:26:18 -0600</pubDate>
-      <link>http://mwop.net/blog/on-error-handling-and-closures.html</link>
-      <guid>http://mwop.net/blog/on-error-handling-and-closures.html</guid>
+      <title>Seven Things - Tagged by Keith Casey</title>
+      <pubDate>Sun, 04 Jan 2009 15:31:52 -0600</pubDate>
+      <link>http://mwop.net/blog/204-Seven-Things-Tagged-by-Keith-Casey.html</link>
+      <guid>http://mwop.net/blog/204-Seven-Things-Tagged-by-Keith-Casey.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
       <dc:creator>Matthew Weier O'Phinney</dc:creator>
       <content:encoded><![CDATA[<p>
-    The error suppression operator in PHP ("@") is often seen as a necessary 
-    evil. Many, many low-level function will return a value indicating an error,
-    but also raise an <code>E_NOTICE</code> or <code>E_WARNING</code> -- things
-    you might be able to recover from, or conditions where you may want to raise
-    an exception.
+    I'm really not sure I understand these "seven things" or "tagged" memes, but
+    I'm going to give it a shot, after 
+    <a href="http://caseysoftware.com/blog/seven-things-tagged-by-tony-bibbs">Keith Casey</a> did a drive-by
+    tagging of me on New Year's Eve.
 </p>
 
 <p>
-    So, at times, you find yourself writing code like this:
-</p>
-
-<div class="example"><pre><code lang="php">
-if (false === ($fh = @fopen($filename, 'r'))) {
-    throw new RuntimeException(sprintf(
-        'Could not open file "%s" to read', $filename
-    ));
-}
-</code></pre></div>
-
-<p>
-    Seems straight-forward enough, right? But it's wrong on so many levels.
+    So, without further ado, seven things you may not know about me...
 </p>]]></content:encoded>
       <slash:comments>0</slash:comments>
     </item>
     <item>
-      <title>Getting started writing ZF2 modules</title>
-      <pubDate>Sat, 12 Nov 2011 12:02:42 -0600</pubDate>
-      <link>http://mwop.net/blog/267-Getting-started-writing-ZF2-modules.html</link>
-      <guid>http://mwop.net/blog/267-Getting-started-writing-ZF2-modules.html</guid>
+      <title>Mumbles irssi integration</title>
+      <pubDate>Fri, 12 Dec 2008 14:19:50 -0600</pubDate>
+      <link>http://mwop.net/blog/197-Mumbles-irssi-integration.html</link>
+      <guid>http://mwop.net/blog/197-Mumbles-irssi-integration.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
       <dc:creator>Matthew Weier O'Phinney</dc:creator>
       <content:encoded><![CDATA[<p>
-During <a href="http://zendcon.com/">ZendCon</a> this year, we <a href="http://framework.zend.com/zf2/blog/entry/Zend-Framework-2-0-0beta1-Released">released 2.0.0beta1</a> of <a href="http://framework.zend.com">Zend Framework</a>.
-The key story in the release is the creation of a new MVC layer, and to sweeten
-the story, the addition of a modular application architecture.
+    I've been using IRC regularly for the past six to nine months, in large part
+    due to the growing ZF community on the 
+    <a href="http://freenode.net/">Freenode</a> #zftalk channel (unfortunately,
+    I simply don't have time to be in that particular channel any more, but you
+    can generally find me in #zftalk.dev), but also to keep in contact with
+    other peers, friends, and colleagues. 
 </p>
 
 <p>
-"Modular? What's that mean?" For ZF2, "modular" means that your application is
-built of one or more "modules". In a lexicon agreed upon during our IRC
-meetings, a module is a collection of code and other files that solves a
-specific atomic problem of the application or website. 
+    One difficulty, however, is keeping productivity high while staying on IRC.
+    To me, the ultimate client would provide me notifications when somebody
+    mentions my name or a watch word - allowing me to read the channel at my
+    leisure, yet still respond to people in a timely fashion.
+</p>]]></content:encoded>
+      <slash:comments>0</slash:comments>
+    </item>
+    <item>
+      <title>Vimgrep and Vim Project</title>
+      <pubDate>Wed, 22 Oct 2008 20:55:03 -0500</pubDate>
+      <link>http://mwop.net/blog/194-Vimgrep-and-Vim-Project.html</link>
+      <guid>http://mwop.net/blog/194-Vimgrep-and-Vim-Project.html</guid>
+      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
+      <dc:creator>Matthew Weier O'Phinney</dc:creator>
+      <content:encoded><![CDATA[<p>
+    Chris Hartjes today was <a href="http://www.littlehart.net/atthekeyboard/2008/10/20/vim-programming-bounty-fuzzyfind-inside-files/">on a quest for a "find in project" feature for Vim</a>.
+    "Find in Project" was a feature of Textmate that he'd grown accustomed to
+    and was having trouble finding an equivalent for.
 </p>
 
 <p>
-As an example, consider a typical corporate website in a technical arena. You
-might have:
+    The funny thing is that Textmate is a newcomer, and, of course, vim has had
+    such a feature for years. The thing to remember with vim, of course, is its
+    unix roots; typically if you know the unix command for doing something, you
+    can find what you need in vim. In this case, the key is the vimgrep plugin,
+    which ships in the standard vim distribution.
+</p>]]></content:encoded>
+      <slash:comments>0</slash:comments>
+    </item>
+    <item>
+      <title>Vim 7 code completion</title>
+      <pubDate>Fri, 22 Sep 2006 08:21:27 -0500</pubDate>
+      <link>http://mwop.net/blog/123-Vim-7-code-completion.html</link>
+      <guid>http://mwop.net/blog/123-Vim-7-code-completion.html</guid>
+      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
+      <dc:creator>Matthew Weier O'Phinney</dc:creator>
+      <content:encoded><![CDATA[<p>
+    I may work at <a href="http://www.zend.com/">Zend</a>, but I've never been a
+    fan of IDEs. They simply don't suit my programming style. I can usually keep
+    track of file locations in my head pretty easily, and what I really need is
+    a blank slate on which I can write, and one that doesn't consume resource
+    that can better be used running web servers and other programs. Syntax
+    highlighting, good indentation -- these are important, but you can get these
+    from good, minimal text editors very easily. 
+    <a href="http://www.vim.org">Vim is my editor of choice</a>.
 </p>
-
+<p>
+    I will admit, though, that one area where I have had IDE-envy is the area of
+    code completion. I often find myself doing quick lookups to php.net or
+    perldoc to determine the order of arguments to a function or method call,
+    or checking for the expected return value. Most of the time, this doesn't
+    take much time, however, so I just live with it.
+</p>
+<p>
+    Today, however, cruising through the blogosphere, I came across 
+    <a href="http://linuxhelp.blogspot.com/2006/09/visual-walk-through-of-couple-of-new.html">an article showcasing some new features of Vim 7.0</a>, 
+    and discovered Vim 7's code completion.
+</p>
+<p>
+    Basically, while in insert mode, you can type &lt;C-x&gt; &lt;C-o&gt; to
+    have vim attempt to autocomplete the current keyword. If more than one
+    possibility exists, it shows a dropdown, and you can use your arrow keys to
+    highlight the keyword that you wish to use.
+</p>
+<p>
+    But it gets better! Not only does it do this kind of autocompletion, but it
+    also opens a small 'scratch preview' pane showing the function/method
+    signature -- i.e., the expected arguments and return value!
+</p>
+<p>
+    I thought I had little need for IDEs before... now I have even less! Bram
+    and the rest of the Vim team, my hat's off to you for more fine work!
+</p>]]></content:encoded>
+      <slash:comments>0</slash:comments>
+    </item>
+    <item>
+      <title>Telcos are Attacking the Internet</title>
+      <pubDate>Fri, 28 Apr 2006 12:47:28 -0500</pubDate>
+      <link>http://mwop.net/blog/107-Telcos-are-Attacking-the-Internet.html</link>
+      <guid>http://mwop.net/blog/107-Telcos-are-Attacking-the-Internet.html</guid>
+      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
+      <dc:creator>Matthew Weier O'Phinney</dc:creator>
+      <content:encoded><![CDATA[<p>
+    I generally try to stay out of politics on this blog, but this time
+    something has to be said, as it affects anyone who uses the internet, at
+    least in the US.
+</p>
+<p>
+    Basically, a number of telcos and cable providers are talking about charging
+    internet content providers -- the places you browse to on the internet,
+    places like Google, Yahoo!, Amazon, etc. -- fees to ensure bandwidth to
+    their sites. Their argument is that these content providers are getting a
+    'free ride' on their lines, and generating a lot of traffic themselves, and
+    should thus be paying for the cost of bandwidth.
+</p>
+<p>
+    This is patently ridiculous. Content providers already have to pay for their
+    bandwidth -- they, too, have ISPs or agreements with telcos in place, either
+    explicitly or via their hosting providers. Sure, some of them, particularly
+    search engines, send out robots in order to index or find content, but,
+    again, they're paying for the bandwidth those robots generate.
+    Additionally, people using the internet are typically paying for bandwidth
+    as well, through their relationship with their ISP. What this amounts to is
+    the telcos getting paid not just by each person to whom they provide
+    internet access, but every end point on the internet, at least those within
+    the US.
+</p>
+<p>
+    What this is really about is telcos wanting more money, and wanting to push
+    their own content. As an example, let's say your ISP is AOL. AOL is part of
+    Time Warner, and thus has ties to those media sources. Now, those media
+    sources may put pressure on AOL to reduce bandwidth to sites operated by
+    ABC, CBS, NBC, FOX, Disney, PBS, etc. This might mean that your kid can no
+    longer visit the Sesame Street website reliably, because AOL has reduced the
+    amount of bandwidth allowed to that service -- but any media site in the TWC
+    would get optimal access, so they could get to Cartoon Network. Not to slam
+    Cartoon Network (I love it), but would you rather have your kid visiting
+    cartoonnetwork.com or pbskids.org?  Basically, content providers would not
+    need to compete based on the value of their content, but on who they can get
+    to subscribe to their service.
+</p>
+<p>
+    Here's another idea: your ISP is MSN. You want to use Google... but MSN has
+    limited the bandwidth to Google because it's a competitor, and won't accept
+    any amount of money to increase that bandwidth. They do the same with Yahoo!
+    So, now you're limited to MSN search, because that's the only one that
+    responds reliably -- regardless of whether or not you like their search
+    results. By doing so, they've just artificially inflated the value of their
+    search engine -- without needing to compete based on merit. 
+</p>
+<p>
+    Additionally, let's say Barnes and Noble has paid MSN to ensure good
+    bandwidth, but part of that agreement is a non-compete clause.  Now you find
+    your connections to Amazon timing out, meaning that you can't even see which
+    book provider has the better price on the book you want; you're stuck
+    looking and buying from B&amp;N.
+</p>
+<p>
+    Now, let's look at something a little more close to home for those of us
+    developing web applications. There have been a number of success stories the
+    last few years: MySpace, Digg, and Flickr all come to mind. Would these
+    endeavors have been as successful had they needed to pay multiple times for
+    bandwidth, once to their ISP and once each to each telco charging for
+    content providers? Indeed, some of these are still free services -- how
+    would they ever have been able to pay the extra amounts to the telcos in the
+    first place?
+</p>
+<p>
+    So, basically, the only winners here are the telcos.
+</p>
+<p>
+    Considering how ludicrous this scheme is, one must be thinking, isn't the US
+    Government going to step in and regulate against such behaviour? <a href="http://www.businessweek.com/technology/content/apr2006/tc20060426_553893.htm?chan=technology_technology+index+page_more+of+today">The answer, sadly, is no.</a>
+    The GOP doesn't like regulation, and so they want market forces to decide.
+    Sadly, what this will likely do is force a number of content providers to
+    offshore their internet operations -- which is likely to have some pretty
+    negative effects on the economy.
+</p>
+<p>
+    The decision isn't final -- efforts can still be made to prevent it (the
+    above link references a Senate committee meeting; there's been no vote on
+    it). Call your representatives today and give them an earful. Tell them it's
+    not just about regulation of the industry, but about fair competition in the
+    market. Allowing the telcos to extort money from content providers will only
+    reduce the US' economic chances in the world, and stifle innovation and
+    choice.
+</p>]]></content:encoded>
+      <slash:comments>0</slash:comments>
+    </item>
+    <item>
+      <title>PHP error reporting for Perl users</title>
+      <pubDate>Tue, 28 Mar 2006 08:19:35 -0600</pubDate>
+      <link>http://mwop.net/blog/105-PHP-error-reporting-for-Perl-users.html</link>
+      <guid>http://mwop.net/blog/105-PHP-error-reporting-for-Perl-users.html</guid>
+      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
+      <dc:creator>Matthew Weier O'Phinney</dc:creator>
+      <content:encoded><![CDATA[<p>
+    On <a href="http://www.perlmonks.org">perlmonks</a> today, a user was
+    needing to maintain a PHP app, and wanted to know what the PHP equivalent of
+    "perl -wc script.pl" was -- specifically, they wanted to know how to run a
+    PHP script from the commandline and have it display any warnings (ala perl's
+    strict and warnings pragmas).
+</p>
+<p>
+    Unfortunately, there's not as simple a way to do this in PHP as in perl.
+    Basically, you need to do the following:
+</p>
 <ul>
-<li>
-A home page
-</li>
-<li>
-Product and other marketing pages
-</li>
-<li>
-Some forums
-</li>
-<li>
-A corporate blog
-</li>
-<li>
-A knowledge base/FAQ area
-</li>
-<li>
-Contact forms
-</li>
+    <li><strong>To display errors:</strong><ul>
+        <li>In you php.ini file, set "display_errors = On", <b>or</b></li>
+        <li>In your script, add the line "ini_set('display_errors', true);"</li>
+    </ul></li>
+    <li><strong>To show notices, warnings, errors, deprecation
+        notices:</strong><ul>
+        <li>In you php.ini file, set "error_reporting = E_ALL | E_STRICT", <b>or</b></li>
+        <li>In your script, add the line "error_reporting(E_ALL | E_STRICT);"</li>
+    </ul></li>
 </ul>
-
 <p>
-These can be divided into discrete modules:
+    Alternatively, you can create a file with the lines:
 </p>
-
+<pre>
+&lt;?php
+    error_reporting(E_ALL | E_STRICT);
+    ini_set('display_errors', true);
+</pre>
+<p>
+    and then set the php.ini setting 'auto_prepend_file' to the path to that
+    file.
+</p>
+<p>
+    <strong>NOTE: do not do any of the above on a production system!</strong>
+    PHP's error messages often reveal a lot about your applications, including
+    file layout and potential vectors of attack. Turn display_errors off on
+    production machines, set your error_reporting somewhat lower, and log_errors
+    to a file so you can keep track of what's going on on your production
+    system.
+</p>
+<p>
+    The second part of the question was how to run a PHP script on the command
+    line. This is incredibly simple: php myscript.php. No different than any
+    other scripting language.
+</p>
+<p>
+    You can get some good information by using some of the switches, though.
+    <strong>'-l'</strong> turns the PHP interpreter into a linter, and can let
+    you know if your code is well-formed (which doesn't necessarily preclude
+    runtime or parse errors). <strong>'-f'</strong> will run the script through
+    the parser, which can give you even more information. I typically bind these
+    actions to keys in vim so I can check my work as I go.
+</p>
+<p>
+    If you plan on running your code <em>solely</em> on the commandline, add a
+    shebang to the first line of your script: #!/path/to/php. Then make the
+    script executable, and you're good to go. This is handy for cronjobs, or
+    batch processing scripts.
+</p>
+<p>
+    All of this information is readily available in <a
+        href="http://www.php.net/manual">the PHP manual</a>, and the commandline
+    options are always available by passing the --help switch to the PHP
+    executable. So, start testing your scripts already!
+</p>]]></content:encoded>
+      <slash:comments>0</slash:comments>
+    </item>
+    <item>
+      <title>Sign of a Geek</title>
+      <pubDate>Wed, 17 Nov 2004 15:05:42 -0600</pubDate>
+      <link>http://mwop.net/blog/51-Sign-of-a-Geek.html</link>
+      <guid>http://mwop.net/blog/51-Sign-of-a-Geek.html</guid>
+      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
+      <dc:creator>Matthew Weier O'Phinney</dc:creator>
+      <content:encoded><![CDATA[<p>
+    It's now been confirmed: I'm a geek. 
+</p>
+<p>
+    Okay, so that probably comes as no shocker to those of you who know me, but
+    it's the little things that make me realize it myself.
+</p>
+<p>
+    I've been frequenting <a href="http://www.perlmonks.org">Perl Monks</a> for
+    a couple of years now, mainly to garner ideas and code to help me with my
+    personal or work projects. I rarely post comments, and I've only once
+    submitted a question to the site. However, I <strong>do</strong> frequent
+    the site regularly, and the few comments I've put in -- generally regarding
+    usage of <a href="http::/search.cpan.org/search?query=CGI%3A%3AApplication">CGI::Application</a>
+    -- have been typically well-moderated.
+</p>
+<p>
+    Well, yesterday I <a href="http://www.perlmonks.org/?node_id=408255">made a comment</a> to a user <a href="http://www.perlmonks.org/?node_id=408231">asking about editors to
+        use with perl</a>. I was incensed by a remark he made about <a href="http://www.vim.org">VIM</a> not having the features he needed.
+    Now, as I said in my comment, I've used VIM on a daily basis for over two
+    years, and I'm <em>still</em> discovering new features -- and I've used all
+    of the features he was looking for.
+</p>
+<p>
+    This is where I discovered I'm a geek: my comment made it into the <a href="http://www.perlmonks.org/?node=Best%20Nodes">Daily
+    Best</a> for today, peaking around number 5. The fact that that made my day
+    indicates to me that I <em>must</em> be a geek.
+</p>
+<p>
+    Oh -- and VIM rules!
+</p>]]></content:encoded>
+      <slash:comments>0</slash:comments>
+    </item>
+    <item>
+      <title>PHP_SELF versus SCRIPT_NAME</title>
+      <pubDate>Tue, 12 Oct 2004 20:35:03 -0500</pubDate>
+      <link>http://mwop.net/blog/45-PHP_SELF-versus-SCRIPT_NAME.html</link>
+      <guid>http://mwop.net/blog/45-PHP_SELF-versus-SCRIPT_NAME.html</guid>
+      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
+      <dc:creator>Matthew Weier O'Phinney</dc:creator>
+      <content:encoded><![CDATA[<p>
+    I've standardized my PHP programming to use the environment variable
+    <b>SCRIPT_NAME</b> when I want my script to refer to itself in links and
+    form actions. I've known that <b>PHP_SELF</b> has the same information, but
+    I was more familiar with the name 'SCRIPT_NAME' from using it in perl, and
+    liked the feel of it more as it seems to describe the resource better
+    ('PHP_SELF' could stand for the path to the PHP executable if I were to go
+    by the name only).
+</p>
+<p>
+    However, I just noticed a post on the php.general newsgroup where somebody
+    asked what the difference was between them. Semantically, there isn't any;
+    they should contain the same information. However, historically and
+    technically speaking, there is. <b>SCRIPT_NAME</b> is defined in the CGI 1.1
+    specification, and is thus a standard. <em>However</em>, not all web servers
+    actually implement it, and thus it isn't necessarily <em>portable</em>.
+    <b>PHP_SELF</b>, on the other hand, is implemented directly by PHP, and as
+    long as you're programming in PHP, will always be present.
+</p>
+<p>
+    Guess I have some grep and sed in my future as I change a bunch of
+    scripts...
+</p>]]></content:encoded>
+      <slash:comments>0</slash:comments>
+    </item>
+    <item>
+      <title>Cgiapp Roadmap</title>
+      <pubDate>Tue, 21 Sep 2004 09:41:08 -0500</pubDate>
+      <link>http://mwop.net/blog/41-Cgiapp-Roadmap.html</link>
+      <guid>http://mwop.net/blog/41-Cgiapp-Roadmap.html</guid>
+      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
+      <dc:creator>Matthew Weier O'Phinney</dc:creator>
+      <content:encoded><![CDATA[<p>
+    I've had a few people contact me indicating interest in Cgiapp, and I've
+    noticed a number of subscribers to the freshmeat project I've setup. In
+    addition, we're using the library extensively at the <a href="http://www.garden.org">National Gardening Association</a> in
+    developing our new site (the current site is using a mixture of ASP and
+    Tango, with several newer applications using PHP). I've also been monitoring
+    the CGI::Application mailing list. As a result of all this activity, I've
+    decided I need to develop a roadmap for Cgiapp.
+</p>
+<p>Currently, planned changes include:</p>
 <ul>
-<li>
-A "pages" modules for the home page, product, and marketing pages
-</li>
-<li>
-A "forum" module
-</li>
-<li>
-A "blog" module
-</li>
-<li>
-An "faq" or "kb" module
-</li>
-<li>
-A "contact" module
-</li>
+    <li><b>Version 1.x series:</b>
+        <ul>
+            <li>Adding a Smarty registration for stripslashes (the Smarty
+            "function" call will be sslashes).</li>
+            <li>param() bugfix: currently, calling param() with no arguments
+            simply gives you a list of parameters registered with the method,
+            but not their values; this will be fixed.</li>
+            <li>error_mode() method. The CGI::Application ML brought up and
+            implemented the idea of an error_mode() method to register
+            an error_mode with the object (similar to run_modes()). While
+            non-essential, it would offer a standard, built-in hook for error
+            handling.</li>
+            <li>$PATH_INFO traversing. Again, on the CGI::App ML, a request was
+            brought up for built-in support for using $PATH_INFO to determine
+            the run mode. Basically, you would pass a parameter indicating which
+            location in the $PATH_INFO string holds the run mode.</li>
+            <li>DocBook tutorials. I feel that too much information is given in
+            the class-level documentation, and that usage tutorials need to be
+            written. Since I'm documenting with PhpDoc and targetting PEAR,
+            moving tutorials into DocBook is a logical step.</li>
+        </ul>
+    </li>
+    <li><b>Version 2.x series:</b><br>
+        Yes, a Cgiapp2 is in the future. There are a few changes that are either
+        necessitating (a) PHP5, or (b) API changes. In keeping with PEAR
+        guidelines, I'll rename the module Cgiapp2 so as not to break
+        applications designed for Cgiapp.<br><br>
+        Changes expected include:
+        <ul>
+            <li>Inherit from PEAR. This will allow for some built in error
+            handling, among other things. I suspect that this will tie in with
+            the error_mode(), and may also deprecate croak() and carp().</li>
+            <li>Changes to tmpl_path() and load_tmpl(). In the perl version, you
+            would instantiate a template using load_tmpl(), assign your
+            variables to it, and then do your fetch() on it. So, this:
+                <pre>
+$this->tmpl_assign('var1', 'val1');
+$body = $this->load_tmpl('template.html');
+                </pre>
+            Becomes this:
+                <pre>
+$tmpl = $this->load_tmpl();
+$tmpl->assign('var1', 'val1');
+$body = $tmpl->fetch('template.html');
+                </pre>
+            OR
+                <pre>
+$tmpl = $this->load_tmpl('template.html');
+$tmpl->assign('var1', 'val1');
+$body = $tmpl->fetch();
+                </pre>
+            (Both examples assume use of Smarty.) I want to revert to
+            this behaviour for several reasons:
+                <ul>
+                    <li>Portability with perl. This is one area in which the PHP
+                    and perl versions differ greatly; going to the perl way
+                    makes porting classes between the two languages
+                    simpler.</li>
+                    <li>Decoupling. The current set of template methods create
+                    an object as a parameter of the application object - which
+                    is fine, unless the template object instantiator returns an
+                    object of a different kind.</li>
+                </ul>
+            Cons:
+                <ul>
+                     <li>Smarty can use the same object to fill multiple
+                     templates, and the current methods make use of this. By
+                     assigning the template object locally to each method, this
+                     could be lost.<br><br>
+                     HOWEVER... an easy work-around would be for load_tmpl() to
+                     create the object and store it an a parameter; subsequent
+                     calls would return the same object reference. The
+                     difficulty then would be if load_tmpl() assumed a template
+                     name would be passed.  However, even in CGI::App, you
+                     decide on a template engine and design for that engine;
+                     there is never an assumption that template engines should
+                     be swappable.</li>
+                     <li>Existing Cgiapp1 applications would need to be
+                     rewritten.</li>
+                </ul>
+            </li>
+            <li><b>Plugin Architecture:</b>
+                The CGI::App ML has produced a ::Plugin namespace that utilizes
+                a common plugin architecture. The way it is done in perl is
+                through some magic of namespaces and export routines... both of
+                which are, notably, missing from PHP.<br><br>
+                However, I think I may know a workaround for this, if I use
+                PHP5: the magic __call() overloader method.<br><br>
+                My idea is to have plugin classes register methods that should
+                be accessible by a Cgiapp-based class a special key in the
+                $_GLOBALS array.  Then, the __call() method would check the
+                key for registered methods; if one is found matching a method
+                requested, that method is called (using call_user_func()), with
+                the Cgiapp-based object reference as the first reference. Voila!
+                instant plugins!<br><br>
+                Why do this? A library of 'standard' plugins could then be
+                created, such as:
+                <ul>
+                    <li>A form validation plugin</li>
+                    <li>Alternate template engines as plugins (instead of
+                    overriding the tmpl_* methods)</li>
+                    <li>An authorization plugin</li>
+                </ul>
+                Since the 'exported' methods would have access to the Cgiapp
+                object, they could even register objects or parameters with it.
+            </li>
+        </ul>
+    </li>
 </ul>
-
 <p>
-Furthermore, if these are developed well and discretely, they can be <em>re-used</em>
-between different applications!
-</p>
-
-<p>
-So, let's dive into ZF2 modules!
-</p>]]></content:encoded>
-      <slash:comments>0</slash:comments>
-    </item>
-    <item>
-      <title>Using the ZF2 EventManager</title>
-      <pubDate>Thu, 06 Oct 2011 14:58:39 -0500</pubDate>
-      <link>http://mwop.net/blog/266-Using-the-ZF2-EventManager.html</link>
-      <guid>http://mwop.net/blog/266-Using-the-ZF2-EventManager.html</guid>
-      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
-      <dc:creator>Matthew Weier O'Phinney</dc:creator>
-      <content:encoded><![CDATA[<p>
-Earlier this year, I <a href="http://weierophinney.net/matthew/archives/251-Aspects,-Filters,-and-Signals,-Oh,-My!.html">wrote about Aspects, Intercepting Filters, Signal Slots, and Events</a>, 
-in order to compare these similar approaches to handling both asychronous
-programming as well as handling cross-cutting application concerns in a cohesive
-way.
-</p>
-
-<p>
-I took the research I did for that article, and applied it to what was then a
-"SignalSlot" implementation within Zend Framework 2, and refactored that work
-into a new "EventManager" component. This article is intended to get you up and
-running with it.
-</p>]]></content:encoded>
-      <slash:comments>0</slash:comments>
-    </item>
-    <item>
-      <title>Using DocBlox</title>
-      <pubDate>Fri, 05 Aug 2011 01:39:58 -0500</pubDate>
-      <link>http://mwop.net/blog/265-Using-DocBlox.html</link>
-      <guid>http://mwop.net/blog/265-Using-DocBlox.html</guid>
-      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
-      <dc:creator>Matthew Weier O'Phinney</dc:creator>
-      <content:encoded><![CDATA[<p>
-Until a few years ago, there were basically two tools you could use to generate
-API documentation in PHP: <a href="http://phpdocumentor.org/">phpDocumentor</a> and
-<a href="http://www.stack.nl/~dimitri/doxygen/">Doxygen</a>. phpDocumentor was long
-considered the standard, with Doxygen getting notice when more advanced features
-such as inheritance diagrams are required. However, phpDocumentor is practically
-unsupported at this time (though a small group of developers is working on a new
-version), and Doxygen has never had PHP as its primary concern.  As such, a
-number of new projects are starting to emerge as replacements.
-</p>
-
-<p>
-One of these is <a href="http://docblox-project.org">DocBlox</a>. I am well aware there are
-several others -- and indeed, I've tried several of them. This post is not here
-to debate the merits or demerits of this or other solutions; the intention is to
-introduce you to DocBlox so that you can evaluate it yourself.
-</p>]]></content:encoded>
-      <slash:comments>0</slash:comments>
-    </item>
-    <item>
-      <title>Converting DocBook4 to DocBook5</title>
-      <pubDate>Thu, 21 Jul 2011 18:28:20 -0500</pubDate>
-      <link>http://mwop.net/blog/264-Converting-DocBook4-to-DocBook5.html</link>
-      <guid>http://mwop.net/blog/264-Converting-DocBook4-to-DocBook5.html</guid>
-      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
-      <dc:creator>Matthew Weier O'Phinney</dc:creator>
-      <content:encoded><![CDATA[<p>
-Within the <a href="https://github.com/zendframework/zf2">Zend Framework 2 repository</a>, I
-recently performed a conversion from <a href="http://docbook.org/">DocBook</a> 4 to 5. The
-latter is a more modern version of the toolchain, and offers a somewhat simpler
-syntax and workflow. For example, you no longer need to track how many levels
-deep you are in your chapter sections -- you simply use a <code>&lt;section&gt;</code> tag. One
-of the nicer changes is that you do not need to specify a doctype any more; you
-simply declare XML namespaces on your root elements and continue merrily on your
-way. This actually allows us to remove some actions in our build process, and
-makes validation much simpler.
-</p>
-
-<p>
-Interestingly, for DocBook5 being available in beta since 2005 and an official
-standard since 2009, there is very little material on migrating from DocBook 4
-to 5. 
-</p>]]></content:encoded>
-      <slash:comments>0</slash:comments>
-    </item>
-    <item>
-      <title>Proxies in PHP</title>
-      <pubDate>Thu, 07 Jul 2011 08:51:35 -0500</pubDate>
-      <link>http://mwop.net/blog/263-Proxies-in-PHP.html</link>
-      <guid>http://mwop.net/blog/263-Proxies-in-PHP.html</guid>
-      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
-      <dc:creator>Matthew Weier O'Phinney</dc:creator>
-      <content:encoded><![CDATA[<p>
-A number of programming design patterns look very similar. One of these is the
-<em>Proxy</em> pattern, which, at first glance, can look like a number of others:
-<em>Decorator</em>, <em>Flyweight</em>, even plain old object extension. However, it has its
-own niche, and it can provide some incredible flexibility for a number of
-programming scenarios.
+    If you have any requests or comments on the roadmap, please feel free to <a href="/matthew/contact">contact me</a>.
 </p>]]></content:encoded>
       <slash:comments>0</slash:comments>
     </item>

@@ -1,289 +1,420 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title type="text">Tag: programming :: phly, boy, phly</title>
-  <updated>2012-03-05T16:32:45-06:00</updated>
+  <updated>2009-01-05T01:00:49-06:00</updated>
   <generator uri="http://framework.zend.com" version="2.0.0beta3">Zend_Feed_Writer</generator>
   <link rel="alternate" type="text/html" href="http://mwop.net/blog/tag/programming.html"/>
   <link rel="self" type="application/atom+xml" href="http://mwop.net/blog/tag/programming-atom.xml"/>
   <id>http://mwop.net/blog/tag/programming.html</id>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
-    <title type="html"><![CDATA[View Layers, Database Abstraction, Configuration, Oh, My!]]></title>
-    <published>2012-03-05T16:32:45-06:00</published>
-    <updated>2012-03-05T16:32:45-06:00</updated>
-    <link rel="alternate" type="text/html" href="http://mwop.net/blog/zf2-beta3.html"/>
-    <id>http://mwop.net/blog/zf2-beta3.html</id>
+    <title type="html"><![CDATA[2008: The year in review]]></title>
+    <published>2008-12-31T13:17:03-06:00</published>
+    <updated>2009-01-05T01:00:49-06:00</updated>
+    <link rel="alternate" type="text/html" href="http://mwop.net/blog/203-2008-The-year-in-review.html"/>
+    <id>http://mwop.net/blog/203-2008-The-year-in-review.html</id>
     <author>
       <name>Matthew Weier O'Phinney</name>
       <email>me@mwop.net</email>
       <uri>http://mwop.net</uri>
     </author>
     <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
-      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>Late last week, the Zend Framework community <xhtml:a href="http://framework.zend.com/zf2/blog/entry/Zend-Framework-2-0-0beta3-Released">
-2.0.0beta3</xhtml:a>, the latest iteration of the v2 framework. What have
-we been busy doing the last couple months? In a nutshell, getting
-dirty with view layers, database abstraction, and
-configuration.</xhtml:p>
+      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>That time of year again -- wrap-up time. Each year, it seems
+like it's the busiest ever, and I often wonder if it will ever slow
+down. As usual, I'm restricting myself to primarily professional
+activities out of respect for the privacy of my family.</xhtml:p>
+<xhtml:p>The short, executive summary:</xhtml:p>
+<xhtml:ul>
+<xhtml:li>One trip to Israel</xhtml:li>
+<xhtml:li>One trip to The Netherlands</xhtml:li>
+<xhtml:li>One trip to California's Bay Area</xhtml:li>
+<xhtml:li>One trip to Atlanta, GA</xhtml:li>
+<xhtml:li>Three minor releases of Zend Framework</xhtml:li>
+<xhtml:li>Seven webinars, six for zend.com and one for Adobe</xhtml:li>
+<xhtml:li>Three conferences attended as a speaker, including:
+<xhtml:ul>
+<xhtml:li>One six-hour workshop</xhtml:li>
+<xhtml:li>One three-hour tutorial (as a co-presenter)</xhtml:li>
+<xhtml:li>Four regular sessions</xhtml:li>
+<xhtml:li>Two panel sessions (one scheduled, one for an uncon)</xhtml:li>
+<xhtml:li>Two uncon sessions (one as a co-presenter)</xhtml:li>
+<xhtml:li>One foul-mouthed Pecha Kucha talk</xhtml:li>
+</xhtml:ul>
+</xhtml:li>
+<xhtml:li>Ten Burlington, VT PHP User's Group meetings attended; I spoke
+at many</xhtml:li>
+<xhtml:li>One Bug Hunt week organized</xhtml:li>
+<xhtml:li>Two books reviewed as a technical editor</xhtml:li>
+<xhtml:li>Six articles for <xhtml:a href="http://devzone.zend.com/">DevZone</xhtml:a></xhtml:li>
+<xhtml:li>50 blog entries (including this one)</xhtml:li>
+</xhtml:ul>
+<xhtml:p>Read on for the gruesome, month-by-month breakdown.</xhtml:p>
 </xhtml:div>
     </content>
   </entry>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
-    <title type="html"><![CDATA[ZF2 Modules You Can Use Today]]></title>
-    <published>2012-02-08T10:31:47-06:00</published>
-    <updated>2012-02-08T10:31:47-06:00</updated>
-    <link rel="alternate" type="text/html" href="http://mwop.net/blog/zf2-modules-you-can-use-today.html"/>
-    <id>http://mwop.net/blog/zf2-modules-you-can-use-today.html</id>
+    <title type="html"><![CDATA[Mumbles irssi integration]]></title>
+    <published>2008-12-10T14:01:50-06:00</published>
+    <updated>2008-12-12T14:19:50-06:00</updated>
+    <link rel="alternate" type="text/html" href="http://mwop.net/blog/197-Mumbles-irssi-integration.html"/>
+    <id>http://mwop.net/blog/197-Mumbles-irssi-integration.html</id>
     <author>
       <name>Matthew Weier O'Phinney</name>
       <email>me@mwop.net</email>
       <uri>http://mwop.net</uri>
     </author>
     <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
-      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>One key new architectural feature of Zend Framework 2 is its new
-module infrastructure. The basic idea behind modules is to allow
-developers to both create and consume re-usable application
-functionality -- anything from packaging common assets such as CSS
-and JavaScript to providing MVC application classes.</xhtml:p>
+      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>I've been using IRC regularly for the past six to nine months,
+in large part due to the growing ZF community on the <xhtml:a href="http://freenode.net/">Freenode</xhtml:a> #zftalk channel (unfortunately,
+I simply don't have time to be in that particular channel any more,
+but you can generally find me in #zftalk.dev), but also to keep in
+contact with other peers, friends, and colleagues.</xhtml:p>
+<xhtml:p>One difficulty, however, is keeping productivity high while
+staying on IRC. To me, the ultimate client would provide me
+notifications when somebody mentions my name or a watch word -
+allowing me to read the channel at my leisure, yet still respond to
+people in a timely fashion.</xhtml:p>
 </xhtml:div>
     </content>
   </entry>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
-    <title type="html"><![CDATA[Call A Spade A Spade]]></title>
-    <published>2012-01-18T15:48:07-06:00</published>
-    <updated>2012-01-18T15:48:07-06:00</updated>
-    <link rel="alternate" type="text/html" href="http://mwop.net/blog/call-a-spade-a-spade.html"/>
-    <id>http://mwop.net/blog/call-a-spade-a-spade.html</id>
+    <title type="html"><![CDATA[Vimgrep and Vim Project]]></title>
+    <published>2008-10-21T06:36:49-05:00</published>
+    <updated>2008-10-22T20:55:03-05:00</updated>
+    <link rel="alternate" type="text/html" href="http://mwop.net/blog/194-Vimgrep-and-Vim-Project.html"/>
+    <id>http://mwop.net/blog/194-Vimgrep-and-Vim-Project.html</id>
     <author>
       <name>Matthew Weier O'Phinney</name>
       <email>me@mwop.net</email>
       <uri>http://mwop.net</uri>
     </author>
     <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
-      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>I don't often get political on my blog, or over social media.
-But those of you who <xhtml:a href="http://twitter.com/weierophinney">follow me on twitter</xhtml:a> lately
-have been treated to a number of tweets and retweets from me about
-some bills before the US legislative bodies called "SOPA" and
-"PIPA". Over the last couple days, I realized exactly why I
-disagree with them, and felt 140 characters is not enough.</xhtml:p>
+      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>Chris Hartjes today was <xhtml:a href="http://www.littlehart.net/atthekeyboard/2008/10/20/vim-programming-bounty-fuzzyfind-inside-files/">
+on a quest for a "find in project" feature for Vim</xhtml:a>. "Find in
+Project" was a feature of Textmate that he'd grown accustomed to
+and was having trouble finding an equivalent for.</xhtml:p>
+<xhtml:p>The funny thing is that Textmate is a newcomer, and, of course,
+vim has had such a feature for years. The thing to remember with
+vim, of course, is its unix roots; typically if you know the unix
+command for doing something, you can find what you need in vim. In
+this case, the key is the vimgrep plugin, which ships in the
+standard vim distribution.</xhtml:p>
 </xhtml:div>
     </content>
   </entry>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
-    <title type="html"><![CDATA[Why Conventions Matter]]></title>
-    <published>2012-01-11T21:58:28-06:00</published>
-    <updated>2012-01-11T21:58:28-06:00</updated>
-    <link rel="alternate" type="text/html" href="http://mwop.net/blog/why-conventions-matter.html"/>
-    <id>http://mwop.net/blog/why-conventions-matter.html</id>
+    <title type="html"><![CDATA[git-svn Tip: don't use core.autocrlf]]></title>
+    <published>2008-09-24T11:16:27-05:00</published>
+    <updated>2008-09-24T11:16:27-05:00</updated>
+    <link rel="alternate" type="text/html" href="http://mwop.net/blog/191-git-svn-Tip-dont-use-core.autocrlf.html"/>
+    <id>http://mwop.net/blog/191-git-svn-Tip-dont-use-core.autocrlf.html</id>
     <author>
       <name>Matthew Weier O'Phinney</name>
       <email>me@mwop.net</email>
       <uri>http://mwop.net</uri>
     </author>
     <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
-      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>When I started teaching myself scripting languages, I started
-with Perl. One Perl motto is <xhtml:a href="http://en.wikipedia.org/wiki/TMTOWTDI">"TMTOWTDI"</xhtml:a> -- "There's
-More Than One Way To Do It," and pronounced "tim-toady." The idea
-is that there's likely multiple ways to accomplish the very same
-thing, and the culture of the language encourages finding novel
-ways to do things.</xhtml:p>
-<xhtml:p>I've seen this principle used everywhere and in just about every
-programming situation possible, applied to logical operations,
-naming conventions, formatting, and even project structure.
-Everyone has an opinion on these topics, and given free rein to
-implement as they see fit, it's rare that two developers will come
-up with the same conventions.</xhtml:p>
-<xhtml:p>TMTOWTDI is an incredibly freeing and egalitarian principle.</xhtml:p>
-<xhtml:p>Over the years, however, my love for TMTOWTDI has diminished
-some. Freeing as it is, is also a driving force behind having
-coding standards and conventions -- because when everyone does it
-their own way, projects become quickly hard to maintain. Each
-person finds themselves reformatting code to their own standards,
-simply so they can read it and follow its flow.</xhtml:p>
-<xhtml:p>Additionally, TMTOWTDI can actually be a foe of simple, elegant
-solutions.</xhtml:p>
-<xhtml:p>Why do I claim this?</xhtml:p>
+      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>I've been playing around with <xhtml:a href="http://git.or.cz/">Git</xhtml:a> in the past couple months, and have
+been really enjoying it. Paired with subversion, I get the best of
+all worlds -- distributed source control when I want it (working on
+new features or trying out performance tuning), and non-distributed
+source control for my public commits.</xhtml:p>
+<xhtml:p><xhtml:a href="http://github.com/guides/dealing-with-newlines-in-git">Github</xhtml:a>
+suggests that when working with remote repositories, you turn on
+the autocrlf option, which ensures that changes in line endings do
+not get accounted for when pushing to and pulling from the remote
+repo. However, when working with git-svn, this actually causes
+issues. After turning this option on, I started getting the error
+"Delta source ended unexpectedly" from git-svn. After a bunch of
+aimless tinkering, I finally asked myself the questions, "When did
+this start happening?" and, "Have I changed anything with Git
+lately?" Once I'd backed out the config change, all started working
+again.</xhtml:p>
+<xhtml:p>In summary: don't use "git config --global core.autocrlf true"
+when using git-svn.</xhtml:p>
 </xhtml:div>
     </content>
   </entry>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
-    <title type="html"><![CDATA[On Error Handling and Closures]]></title>
-    <published>2011-12-16T10:26:18-06:00</published>
-    <updated>2011-12-16T10:26:18-06:00</updated>
-    <link rel="alternate" type="text/html" href="http://mwop.net/blog/on-error-handling-and-closures.html"/>
-    <id>http://mwop.net/blog/on-error-handling-and-closures.html</id>
+    <title type="html"><![CDATA[Server Upgrades... lost entries...]]></title>
+    <published>2008-05-16T08:05:13-05:00</published>
+    <updated>2008-05-21T13:35:27-05:00</updated>
+    <link rel="alternate" type="text/html" href="http://mwop.net/blog/171-Server-Upgrades...-lost-entries....html"/>
+    <id>http://mwop.net/blog/171-Server-Upgrades...-lost-entries....html</id>
     <author>
       <name>Matthew Weier O'Phinney</name>
       <email>me@mwop.net</email>
       <uri>http://mwop.net</uri>
     </author>
     <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
-      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>The error suppression operator in PHP ("@") is often seen as a
-necessary evil. Many, many low-level function will return a value
-indicating an error, but also raise an <xhtml:code>E_NOTICE</xhtml:code> or
-<xhtml:code>E_WARNING</xhtml:code> -- things you might be able to recover from,
-or conditions where you may want to raise an exception.</xhtml:p>
-<xhtml:p>So, at times, you find yourself writing code like this:</xhtml:p>
-<xhtml:div class="example">
+      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>My good friend, Rob, hosts my site for me, in return for helping
+with server maintenance. After being on Gentoo for the past three
+years, though, we decided it was time to switch to something a
+little easier to maintain, so last night we wiped the system
+partitions and installed Ubuntu server.</xhtml:p>
+<xhtml:p>I'll say this: the setup is much faster! However, we had a few
+gotchas that surprised us -- it didn't setup our RAID array
+out-of-the-box, which led to a good hour of frustration as we tried
+to verify that the install wouldn't wipe it, and then to verify
+that we could re-assemble it. (We succeeded.) Additionally, we
+second-guessed a few things we shouldn't have, which led to needing
+to back out and reconfigure. But what was over a 12 hour install
+with Gentoo we accomplished in a matter of a few hours with Ubuntu
+server -- so it was a huge success that way.</xhtml:p>
+<xhtml:p>Unfortunately, our mysqldump of all databases... wasn't, a fact
+we discovered only after importing it into the new system. I ended
+up losing my blog database and PEAR channel database. Fortunately,
+the PEAR channel has not changed at all in the past year, so we had
+an old backup that worked, and I had a snapshot of my blog database
+from three weeks ago I was able to use. As a result, there are a
+few missing entries, but for the most part, all works. If you
+commented on one of those missing entries, my apologies.</xhtml:p>
+<xhtml:p>Now that the install is done, I'm also finalizing some design
+changes to my blog -- it's time to leave the black and white for
+more colorful grounds. Look for a revamp in the coming weeks!</xhtml:p>
+</xhtml:div>
+    </content>
+  </entry>
+  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <title type="html"><![CDATA[Submitting Bug Reports]]></title>
+    <published>2008-03-08T11:06:13-06:00</published>
+    <updated>2008-03-09T09:18:36-05:00</updated>
+    <link rel="alternate" type="text/html" href="http://mwop.net/blog/161-Submitting-Bug-Reports.html"/>
+    <id>http://mwop.net/blog/161-Submitting-Bug-Reports.html</id>
+    <author>
+      <name>Matthew Weier O'Phinney</name>
+      <email>me@mwop.net</email>
+      <uri>http://mwop.net</uri>
+    </author>
+    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
+      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>Full disclosure: I am employed by <xhtml:a href="http://www.zend.com/">Zend</xhtml:a> to program <xhtml:a href="http://framework.zend.com/">Zend Framework</xhtml:a>. That said, the
+following is all my opinion, and is based on my experiences with
+Zend Framework, as well as answering questions on a variety of
+mailing lists and with other OSS projects (PEAR, Solar, and Cgiapp
+in particular).</xhtml:p>
+<xhtml:p>One of my biggest pet peeves in the OSS world is vague bug/issue
+reports and feature requests. I cannot count the number of times
+I've seen a report similar to the following:</xhtml:p>
+<xhtml:blockquote>&lt;Feature X&gt; doesn't work; you need to fix it
+<xhtml:b>now!</xhtml:b></xhtml:blockquote>
+<xhtml:p>If such a report comes in on an issue tracker, it's invariably
+marked critical and high priority.</xhtml:p>
+<xhtml:p>What bothers me about it? Simply this: it gives those
+responsible for maintaining Feature X absolutely no information to
+work on: what result they received, what was expected, or how
+exactly they were using the feature. The reviewer now has to go
+into one or more cycles with the reporter fishing for that
+information -- wasting everyone's time and energy.</xhtml:p>
+<xhtml:p>Only slightly better are these reports:</xhtml:p>
+<xhtml:blockquote>&lt;Feature X&gt; doesn't work -- I keep getting
+&lt;Result X&gt; from it, which is incorrect.</xhtml:blockquote>
+<xhtml:p>At least this tells the reviewers what they reporter is
+receiving... but it doesn't tell them how they got there, or what
+they're expecting.</xhtml:p>
+<xhtml:p>So, the following should be your mantra when reporting issues or
+making feature requests:</xhtml:p>
+<xhtml:ul>
+<xhtml:li>What is the minimum code necessary to reproduce the issue or
+show the desired API?</xhtml:li>
+<xhtml:li>What is the expected result?</xhtml:li>
+<xhtml:li>What is the actual result?</xhtml:li>
+</xhtml:ul>
+</xhtml:div>
+    </content>
+  </entry>
+  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <title type="html"><![CDATA[Backwards Compatibility]]></title>
+    <published>2008-02-07T08:56:11-06:00</published>
+    <updated>2008-02-07T08:56:11-06:00</updated>
+    <link rel="alternate" type="text/html" href="http://mwop.net/blog/158-Backwards-Compatibility.html"/>
+    <id>http://mwop.net/blog/158-Backwards-Compatibility.html</id>
+    <author>
+      <name>Matthew Weier O'Phinney</name>
+      <email>me@mwop.net</email>
+      <uri>http://mwop.net</uri>
+    </author>
+    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
+      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p><xhtml:a href="http://jansch.nl/">Ivo</xhtml:a> already pointed this out,
+but I want to point it out again: Boy Baukema writes <xhtml:a href="http://www.ibuildings.nl/blog/archives/541-Backward-compatibility,-bane-of-the-developer.html">
+a very nice entry regarding backwards compatibility</xhtml:a> on the
+ibuildings.nl corporate blog.</xhtml:p>
+<xhtml:p>Backwards compatibility (BC) is a tricky thing to support, even
+when you strive hard to, as Boy puts it, "think hard about your
+API" prior to release. Somebody will always come along and point
+out ways it could have been done better or ways it could be
+improved. I've had to wrestle with these issues a ton since joining
+the Zend Framework team, and while it often feels like the wrong
+thing to do to tell somebody, "too little, too late" when they have
+genuinely good feedback for you, its often in the best interest of
+the many users already using a component.</xhtml:p>
+<xhtml:p>I had the pleasure of meeting Boy last year when visiting the
+ibuildings.nl offices, and he's got a good head on his shoulders.
+He does a nice job outlining the issues and a number of approaches
+to BC; if you develop a project for public consumption, you should
+definitely head over and read what he has to say.</xhtml:p>
+</xhtml:div>
+    </content>
+  </entry>
+  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <title type="html"><![CDATA[Apache HOSTNAME on Clusters]]></title>
+    <published>2008-01-25T16:38:16-06:00</published>
+    <updated>2008-01-26T07:22:44-06:00</updated>
+    <link rel="alternate" type="text/html" href="http://mwop.net/blog/156-Apache-HOSTNAME-on-Clusters.html"/>
+    <id>http://mwop.net/blog/156-Apache-HOSTNAME-on-Clusters.html</id>
+    <author>
+      <name>Matthew Weier O'Phinney</name>
+      <email>me@mwop.net</email>
+      <uri>http://mwop.net</uri>
+    </author>
+    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
+      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>In an effort to debug issues on a cluster, I was trying to
+determine which machine on the cluster was causing the issue. My
+idea was that I could insert a header token identifying the
+server.</xhtml:p>
+<xhtml:p>My first idea was to add the directive 'Header add X-Server-Ip
+"%{SERVER_ADDR}e" in my httpd.conf. However, due to the nature of
+our load balancer, Apache was somehow resolving this to the load
+balancer IP address on all machines of the cluster -- which was
+really, really not useful.</xhtml:p>
+<xhtml:p>I finally stumbled on a good solution, however: you can set
+environment variables in apachectl, and then pass them into the
+Apache environment using the PassEnv directive from mod_env; once
+that's done, you can use the environment variable anywhere.</xhtml:p>
+<xhtml:p>In my apachectl, I added the line "export HOSTNAME=`hostname`".
+Then, in my httpd.conf, I added first the line "PassEnv HOSTNAME",
+followed by the directive 'Header add X-Server-Name
+"%{HOSTNAME}e"'. Voila! I now had the hostname in the header, which
+gave me the information I needed for debugging.</xhtml:p>
+</xhtml:div>
+    </content>
+  </entry>
+  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <title type="html"><![CDATA[2007 Retrospective]]></title>
+    <published>2008-01-01T15:49:26-06:00</published>
+    <updated>2008-01-03T05:22:35-06:00</updated>
+    <link rel="alternate" type="text/html" href="http://mwop.net/blog/154-2007-Retrospective.html"/>
+    <id>http://mwop.net/blog/154-2007-Retrospective.html</id>
+    <author>
+      <name>Matthew Weier O'Phinney</name>
+      <email>me@mwop.net</email>
+      <uri>http://mwop.net</uri>
+    </author>
+    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
+      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>2007 was a busy year, both personally and professionally. I
+won't go into the personal too much, because, well, it's personal,
+and some of the details are simply inappropriate for blogging
+material.</xhtml:p>
+<xhtml:p>Here's the short version:</xhtml:p>
+<xhtml:ul>
+<xhtml:li>One trip to Belgium and The Netherlands.</xhtml:li>
+<xhtml:li>Two trips to Israel.</xhtml:li>
+<xhtml:li>Two trips to Atlanta, GA (not counting the return trip from
+Europe, when I was stranded for a day due to storms in the
+Northeast).</xhtml:li>
+<xhtml:li>Three different user groups attended, with three
+presentations.</xhtml:li>
+<xhtml:li>One major Zend Framework release</xhtml:li>
+<xhtml:li>One PEAR release.</xhtml:li>
+<xhtml:li>One podcast.</xhtml:li>
+<xhtml:li>One webinar.</xhtml:li>
+<xhtml:li>One book published.</xhtml:li>
+<xhtml:li>One conference attended.</xhtml:li>
+</xhtml:ul>
+<xhtml:p>What follows is my month-by-month breakdown:</xhtml:p>
+</xhtml:div>
+    </content>
+  </entry>
+  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <title type="html"><![CDATA[svn:externals]]></title>
+    <published>2007-01-05T08:58:00-06:00</published>
+    <updated>2007-01-10T13:08:35-06:00</updated>
+    <link rel="alternate" type="text/html" href="http://mwop.net/blog/132-svnexternals.html"/>
+    <id>http://mwop.net/blog/132-svnexternals.html</id>
+    <author>
+      <name>Matthew Weier O'Phinney</name>
+      <email>me@mwop.net</email>
+      <uri>http://mwop.net</uri>
+    </author>
+    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
+      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>I was recently working with someone who was using Zend Framework
+in their project. To keep things stable and releasable, he was
+doing an export of framework into his repository and checking it
+in. Since files change so much in the ZF project currently, instead
+of doing an rsync from a checkout into his own repository, he
+decided instead to delete the directory from the repository and
+re-add it everytime he was updating framework.</xhtml:p>
+<xhtml:p>This seemed really inefficient to me, especially considering
+that it made it incredibly difficult to merge changes from his
+development branch into his production branch (deleting and
+re-adding directories breaks the merge process considerably). I
+knew there had to be a better way.</xhtml:p>
+<xhtml:p>I'd heard of the svn:externals property before, but never really
+played with it. As it turns out, it exists for just this very type
+of situation. The problem is that the <xhtml:a href="http://svnbook.red-bean.com/nightly/en/svn-book.html#svn.advanced.externals">
+documentation of svn:externals</xhtml:a> in the SVN book doesn't indicate
+at all how the property should be set, and most howto's I've read
+omit one or more very important details. I finally figured things
+out through some trial and error of my own, so I'm going to share
+the process so others hopefully can learn from the experience as
+well.</xhtml:p>
+<xhtml:p>It's actually pretty easy. This assumes that your project layout
+looks something like this:</xhtml:p>
 <xhtml:pre>
-<xhtml:code lang="php" xml:lang="php">
-if (false === ($fh = @fopen($filename, 'r'))) {
-    throw new RuntimeException(sprintf(
-        'Could not open file "%s" to read', $filename
-    ));
-}
-</xhtml:code>
-</xhtml:pre></xhtml:div>
-<xhtml:p>Seems straight-forward enough, right? But it's wrong on so many
-levels.</xhtml:p>
-</xhtml:div>
-    </content>
-  </entry>
-  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
-    <title type="html"><![CDATA[Getting started writing ZF2 modules]]></title>
-    <published>2011-11-07T12:19:00-06:00</published>
-    <updated>2011-11-12T12:02:42-06:00</updated>
-    <link rel="alternate" type="text/html" href="http://mwop.net/blog/267-Getting-started-writing-ZF2-modules.html"/>
-    <id>http://mwop.net/blog/267-Getting-started-writing-ZF2-modules.html</id>
-    <author>
-      <name>Matthew Weier O'Phinney</name>
-      <email>me@mwop.net</email>
-      <uri>http://mwop.net</uri>
-    </author>
-    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
-      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>During <xhtml:a href="http://zendcon.com/">ZendCon</xhtml:a> this year, we
-<xhtml:a href="http://framework.zend.com/zf2/blog/entry/Zend-Framework-2-0-0beta1-Released">
-released 2.0.0beta1</xhtml:a> of <xhtml:a href="http://framework.zend.com">Zend
-Framework</xhtml:a>. The key story in the release is the creation of a
-new MVC layer, and to sweeten the story, the addition of a modular
-application architecture.</xhtml:p>
-<xhtml:p>"Modular? What's that mean?" For ZF2, "modular" means that your
-application is built of one or more "modules". In a lexicon agreed
-upon during our IRC meetings, a module is a collection of code and
-other files that solves a specific atomic problem of the
-application or website.</xhtml:p>
-<xhtml:p>As an example, consider a typical corporate website in a
-technical arena. You might have:</xhtml:p>
+project/
+    branch/
+        production/
+    tag/
+    trunk/
+</xhtml:pre>
 <xhtml:ul>
-<xhtml:li>A home page</xhtml:li>
-<xhtml:li>Product and other marketing pages</xhtml:li>
-<xhtml:li>Some forums</xhtml:li>
-<xhtml:li>A corporate blog</xhtml:li>
-<xhtml:li>A knowledge base/FAQ area</xhtml:li>
-<xhtml:li>Contact forms</xhtml:li>
-</xhtml:ul>
-<xhtml:p>These can be divided into discrete modules:</xhtml:p>
+<xhtml:li>In the top of your project trunk, execute the following:
+<xhtml:pre>
+svn propedit svn:externals .
+</xhtml:pre></xhtml:li>
+<xhtml:li>This will open an editor session. In the file opened by your
+editor, each line indicates a different external svn repo to pull.
+The first segment of the line is the directory where you want the
+pull to exist. The last segment is the svn repo URL to pull. You
+can have an optional middle argument indicating the revision to
+use. Some examples:
 <xhtml:ul>
-<xhtml:li>A "pages" modules for the home page, product, and marketing
-pages</xhtml:li>
-<xhtml:li>A "forum" module</xhtml:li>
-<xhtml:li>A "blog" module</xhtml:li>
-<xhtml:li>An "faq" or "kb" module</xhtml:li>
-<xhtml:li>A "contact" module</xhtml:li>
+<xhtml:li>Pull framework repo from head:
+<xhtml:pre>
+framework http://framework.zend.com/svn/framework/trunk
+</xhtml:pre></xhtml:li>
+<xhtml:li>Pull framework repo from revision 2616:
+<xhtml:pre>
+framework -r2616 http://framework.zend.com/svn/framework/trunk
+</xhtml:pre></xhtml:li>
 </xhtml:ul>
-<xhtml:p>Furthermore, if these are developed well and discretely, they
-can be <xhtml:em>re-used</xhtml:em> between different applications!</xhtml:p>
-<xhtml:p>So, let's dive into ZF2 modules!</xhtml:p>
-</xhtml:div>
-    </content>
-  </entry>
-  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
-    <title type="html"><![CDATA[Using the ZF2 EventManager]]></title>
-    <published>2011-09-12T15:45:13-05:00</published>
-    <updated>2011-10-06T14:58:39-05:00</updated>
-    <link rel="alternate" type="text/html" href="http://mwop.net/blog/266-Using-the-ZF2-EventManager.html"/>
-    <id>http://mwop.net/blog/266-Using-the-ZF2-EventManager.html</id>
-    <author>
-      <name>Matthew Weier O'Phinney</name>
-      <email>me@mwop.net</email>
-      <uri>http://mwop.net</uri>
-    </author>
-    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
-      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>Earlier this year, I <xhtml:a href="http://weierophinney.net/matthew/archives/251-Aspects,-Filters,-and-Signals,-Oh,-My!.html">
-wrote about Aspects, Intercepting Filters, Signal Slots, and
-Events</xhtml:a>, in order to compare these similar approaches to
-handling both asychronous programming as well as handling
-cross-cutting application concerns in a cohesive way.</xhtml:p>
-<xhtml:p>I took the research I did for that article, and applied it to
-what was then a "SignalSlot" implementation within Zend Framework
-2, and refactored that work into a new "EventManager" component.
-This article is intended to get you up and running with it.</xhtml:p>
-</xhtml:div>
-    </content>
-  </entry>
-  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
-    <title type="html"><![CDATA[Using DocBlox]]></title>
-    <published>2011-08-03T13:00:00-05:00</published>
-    <updated>2011-08-05T01:39:58-05:00</updated>
-    <link rel="alternate" type="text/html" href="http://mwop.net/blog/265-Using-DocBlox.html"/>
-    <id>http://mwop.net/blog/265-Using-DocBlox.html</id>
-    <author>
-      <name>Matthew Weier O'Phinney</name>
-      <email>me@mwop.net</email>
-      <uri>http://mwop.net</uri>
-    </author>
-    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
-      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>Until a few years ago, there were basically two tools you could
-use to generate API documentation in PHP: <xhtml:a href="http://phpdocumentor.org/">phpDocumentor</xhtml:a> and <xhtml:a href="http://www.stack.nl/~dimitri/doxygen/">Doxygen</xhtml:a>. phpDocumentor
-was long considered the standard, with Doxygen getting notice when
-more advanced features such as inheritance diagrams are required.
-However, phpDocumentor is practically unsupported at this time
-(though a small group of developers is working on a new version),
-and Doxygen has never had PHP as its primary concern. As such, a
-number of new projects are starting to emerge as replacements.</xhtml:p>
-<xhtml:p>One of these is <xhtml:a href="http://docblox-project.org">DocBlox</xhtml:a>. I am well aware there are
-several others -- and indeed, I've tried several of them. This post
-is not here to debate the merits or demerits of this or other
-solutions; the intention is to introduce you to DocBlox so that you
-can evaluate it yourself.</xhtml:p>
-</xhtml:div>
-    </content>
-  </entry>
-  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
-    <title type="html"><![CDATA[Converting DocBook4 to DocBook5]]></title>
-    <published>2011-07-19T16:49:00-05:00</published>
-    <updated>2011-07-21T18:28:20-05:00</updated>
-    <link rel="alternate" type="text/html" href="http://mwop.net/blog/264-Converting-DocBook4-to-DocBook5.html"/>
-    <id>http://mwop.net/blog/264-Converting-DocBook4-to-DocBook5.html</id>
-    <author>
-      <name>Matthew Weier O'Phinney</name>
-      <email>me@mwop.net</email>
-      <uri>http://mwop.net</uri>
-    </author>
-    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
-      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>Within the <xhtml:a href="https://github.com/zendframework/zf2">Zend
-Framework 2 repository</xhtml:a>, I recently performed a conversion from
-<xhtml:a href="http://docbook.org/">DocBook</xhtml:a> 4 to 5. The latter is a
-more modern version of the toolchain, and offers a somewhat simpler
-syntax and workflow. For example, you no longer need to track how
-many levels deep you are in your chapter sections -- you simply use
-a <xhtml:code>&lt;section&gt;</xhtml:code> tag. One of the nicer changes is
-that you do not need to specify a doctype any more; you simply
-declare XML namespaces on your root elements and continue merrily
-on your way. This actually allows us to remove some actions in our
-build process, and makes validation much simpler.</xhtml:p>
-<xhtml:p>Interestingly, for DocBook5 being available in beta since 2005
-and an official standard since 2009, there is very little material
-on migrating from DocBook 4 to 5.</xhtml:p>
-</xhtml:div>
-    </content>
-  </entry>
-  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
-    <title type="html"><![CDATA[Proxies in PHP]]></title>
-    <published>2011-07-05T13:05:00-05:00</published>
-    <updated>2011-07-07T08:51:35-05:00</updated>
-    <link rel="alternate" type="text/html" href="http://mwop.net/blog/263-Proxies-in-PHP.html"/>
-    <id>http://mwop.net/blog/263-Proxies-in-PHP.html</id>
-    <author>
-      <name>Matthew Weier O'Phinney</name>
-      <email>me@mwop.net</email>
-      <uri>http://mwop.net</uri>
-    </author>
-    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
-      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>A number of programming design patterns look very similar. One
-of these is the <xhtml:em>Proxy</xhtml:em> pattern, which, at first glance, can
-look like a number of others: <xhtml:em>Decorator</xhtml:em>,
-<xhtml:em>Flyweight</xhtml:em>, even plain old object extension. However, it
-has its own niche, and it can provide some incredible flexibility
-for a number of programming scenarios.</xhtml:p>
+</xhtml:li>
+<xhtml:li>After saving and exiting, update the repo:
+<xhtml:pre>
+svn up
+</xhtml:pre></xhtml:li>
+<xhtml:li>Commit changes:
+<xhtml:pre>
+svn commit
+</xhtml:pre></xhtml:li>
+</xhtml:ul>
+<xhtml:p>One thing to note: any directory you specify for an
+svn:externals checkout should <xhtml:b>not</xhtml:b> already exist in your
+repository. If it does, you will get an error like the
+following:</xhtml:p>
+<xhtml:pre>
+svn: Working copy 'sharedproject' locked
+svn: run 'svn cleanup' to remove locks
+</xhtml:pre>
+<xhtml:p>I show using revisions above; you could also pin to tags by
+simply checkout the external repository from a given tag. Either
+way works well.</xhtml:p>
+<xhtml:p>Then, when moving from one branch to another, or from the trunk
+to a branch, you simply set a different svn:externals for each
+branch. For instance, your current production might check from one
+particular revision, but your trunk might simply track head; you
+then simply determine what the current revision being used is on
+your trunk, and update svn:externals in your production branch when
+you're ready to push changes in.</xhtml:p>
+<xhtml:p>Hope this helps some of you out there!</xhtml:p>
 </xhtml:div>
     </content>
   </entry>
