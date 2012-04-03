@@ -373,41 +373,10 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
     }
    }
   }
-  Cache=Cache {
-   autoload_classmap.php
-   autoload_function.php
-   autoload_register.php
-   Module.php
-   bin=bin {
-    clear_cache.php
-   }
-   config=config filter="*.php *.yml *.json *.xml *.ini" {
-    module.config.php
-   }
-   src=src {
-    Cache=Cache {
-     Listener.php
-    }
-   }
-  }
  }
  public=public {
   .htaccess
   index.php
- }
- script=script {
-  createAppContext.php
-  fixPublicAccess.php
-  importFromS9y.php
-  wxrCommentExport.php
-  helper=helper {
-   GmtDate.php
-  }
-  template=template {
-   comments_wxr.xml
-   item.xml
-   comment.xml
-  }
  }
  vendor=vendor {
   PhlyBlog=PhlyBlog {
