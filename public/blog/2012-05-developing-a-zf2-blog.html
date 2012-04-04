@@ -125,7 +125,7 @@ require(["Application/scroll"], function(scroll) {});    //-->
     to prototype ideas for <a href="http://framework.zend.com/zf2">ZF2</a>;
     in fact, the original DI and MVC prototypes lived as branches of my blog.
     (My repository is still named "zf2sandbox" to this day, though it 
-    technically houses just my blog.)
+    technically houses just my site.)
 </p>
 
 <p>
@@ -156,7 +156,7 @@ require(["Application/scroll"], function(scroll) {});    //-->
     as <a href="http://livefyre.com">Livefyre</a> and <a href="http://disqus.com">Disqus</a>
     provide more features than most blogging platforms I know, and provide 
     another side benefit: because they are javascript-based, you can simply
-    dropy in a small amount of markup into your post <em>once</em> -- meaning
+    drop in a small amount of markup into your post <em>once</em> -- meaning
     your pages can be fully static!
 </p>
 
@@ -176,7 +176,7 @@ require(["Application/scroll"], function(scroll) {});    //-->
     is the same as when I began a couple years ago, and is simply a domain
     entity class in plain old PHP that composes some values and behaviors.
     It composes an InputFilter, which allows it to validate itself. I 
-    have <code>fromArray()</code> and <code>toArray()</code> methods to allow
+    have <code class="hl">fromArray()</code> and <code class="hl">toArray()</code> methods to allow
     easy de/serialization for both PHP and JSON. In a nutshell, though, the
     following properties define my entries:
 </p>
@@ -225,9 +225,9 @@ class EntryEntity implements EntityDefinition
 </p>
 
 <p>
-    I eventually added an "Author" entity. I realized I would like to re-use
-    mainly to re-use this code in places where we could potentially have
-    multiple authors (such as the <a href="http://framework.zend.com/zf2/blog">ZF2 blog</a>).
+    I eventually added an "Author" entity. I realized I would like primarily to 
+    re-use this code in places where multiple authors might occur (such as the 
+    <a href="http://framework.zend.com/zf2/blog">ZF2 blog</a>).
     Additionally, feeds need authorship information, and while I could provide
     defaults, it's even better to incorporate it directly into the posts.
     It is a simple value-object, composing only an identifier, name, email, and 
@@ -382,7 +382,7 @@ class Module
 
         // Add the rendered tag cloud to the footer
         self::$layout->setVariable('footer', sprintf(
-            "<h4>Tag Cloud</h4>\n<div class=\"cloud\">\n%s</div>\n",
+            "&lt;h4>Tag Cloud&lt;/h4>\n&lt;div class=\"cloud\">\n%s&lt;/div>\n",
             $cloud->render()
         ));
     }
@@ -426,13 +426,13 @@ class Module
 
 <ul>
     <li>I go to my local working directory for my site.</li>
-    <li>I create a new branch off my development branch: <code>git checkout -b post/blahblah develop</code></li>
-    <li>I start editing a "post" file: <code>vim content/some-new-post.php</code></li>
+    <li>I create a new branch off my development branch: <code class="hl">git checkout -b post/blahblah develop</code></li>
+    <li>I start editing a "post" file: <code class="hl">vim content/some-new-post.php</code></li>
     <li>It's a PHP file that creates an EntryEntity. I fill in some details, and start writing
         the content in plain old HTML. If I want, I can use Markdown or some other format,
         and use a PHP library to convert it to HTML.</li>
     <li>I commit the code, edit, commit again, lather, rinse, repeat until I like it.</li>
-    <li>I merge it back to my development branch, and generate my blog. (I have a CLI tool for this: <code>./console 
+    <li>I merge it back to my development branch, and generate my blog. (I have a CLI tool for this: <code class="hl">./console 
         PhlyBlog:compile</code>)</li>
     <li>I preview it locally, as a sanity check.</li>
     <li>I merge it to my master branch, and deploy.</li>
@@ -511,7 +511,7 @@ dojo.ready(function() {
     <div class="metadata">
         <ul>
             <li>Posted on <b>2012-04-03 08:45:00</b>.</li>
-            <li>Last updated on <b>2012-04-03 08:45:00</b>.</li>
+            <li>Last updated on <b>2012-04-03 21:50:00</b>.</li>
         </ul>
     </div>
 

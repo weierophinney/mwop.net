@@ -3,13 +3,13 @@
   <channel>
     <title>Blog Entries :: phly, boy, phly</title>
     <description>Blog Entries :: phly, boy, phly</description>
-    <pubDate>Tue, 03 Apr 2012 08:45:00 -0500</pubDate>
+    <pubDate>Tue, 03 Apr 2012 21:50:00 -0500</pubDate>
     <generator>Zend_Feed_Writer 2.0.0beta3 (http://framework.zend.com)</generator>
     <link>http://mwop.net/blog.html</link>
     <atom:link rel="self" type="application/rss+xml" href="http://mwop.net/blog-rss.xml"/>
     <item>
       <title>Developing A ZF2 Blog</title>
-      <pubDate>Tue, 03 Apr 2012 08:45:00 -0500</pubDate>
+      <pubDate>Tue, 03 Apr 2012 21:50:00 -0500</pubDate>
       <link>http://mwop.net/blog/2012-05-developing-a-zf2-blog.html</link>
       <guid>http://mwop.net/blog/2012-05-developing-a-zf2-blog.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -50,7 +50,7 @@
     to prototype ideas for <a href="http://framework.zend.com/zf2">ZF2</a>;
     in fact, the original DI and MVC prototypes lived as branches of my blog.
     (My repository is still named "zf2sandbox" to this day, though it 
-    technically houses just my blog.)
+    technically houses just my site.)
 </p>
 
 <p>
@@ -81,7 +81,7 @@
     as <a href="http://livefyre.com">Livefyre</a> and <a href="http://disqus.com">Disqus</a>
     provide more features than most blogging platforms I know, and provide 
     another side benefit: because they are javascript-based, you can simply
-    dropy in a small amount of markup into your post <em>once</em> -- meaning
+    drop in a small amount of markup into your post <em>once</em> -- meaning
     your pages can be fully static!
 </p>
 

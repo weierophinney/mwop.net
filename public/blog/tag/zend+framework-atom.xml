@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title type="text">Tag: zend framework :: phly, boy, phly</title>
-  <updated>2012-04-03T08:45:00-05:00</updated>
+  <updated>2012-04-03T21:50:00-05:00</updated>
   <generator uri="http://framework.zend.com" version="2.0.0beta3">Zend_Feed_Writer</generator>
   <link rel="alternate" type="text/html" href="http://mwop.net/blog/tag/zend+framework.html"/>
   <link rel="self" type="application/atom+xml" href="http://mwop.net/blog/tag/zend+framework-atom.xml"/>
@@ -9,7 +9,7 @@
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <title type="html"><![CDATA[Developing A ZF2 Blog]]></title>
     <published>2012-04-03T08:45:00-05:00</published>
-    <updated>2012-04-03T08:45:00-05:00</updated>
+    <updated>2012-04-03T21:50:00-05:00</updated>
     <link rel="alternate" type="text/html" href="http://mwop.net/blog/2012-05-developing-a-zf2-blog.html"/>
     <id>http://mwop.net/blog/2012-05-developing-a-zf2-blog.html</id>
     <author>
@@ -39,7 +39,7 @@ technologies like <xhtml:a href="http://memcached.org">memcached</xhtml:a> and
 playground for me to prototype ideas for <xhtml:a href="http://framework.zend.com/zf2">ZF2</xhtml:a>; in fact, the original DI
 and MVC prototypes lived as branches of my blog. (My repository is
 still named "zf2sandbox" to this day, though it technically houses
-just my blog.)</xhtml:p>
+just my site.)</xhtml:p>
 <xhtml:p>Over time, I had a few realizations. First, my <xhtml:em>actual</xhtml:em>
 blog was suffering. I wasn't taking the time to perform security
 updates, nor even normal upgrades, and was so far behind as to make
@@ -62,7 +62,7 @@ really the only dynamic aspect of the blog... and what I had with
 s9y was not cutting it, as I was getting more spam than I could
 keep up with. New commenting platforms such as <xhtml:a href="http://livefyre.com">Livefyre</xhtml:a> and <xhtml:a href="http://disqus.com">Disqus</xhtml:a> provide more features than most
 blogging platforms I know, and provide another side benefit:
-because they are javascript-based, you can simply dropy in a small
+because they are javascript-based, you can simply drop in a small
 amount of markup into your post <xhtml:em>once</xhtml:em> -- meaning your pages
 can be fully static!</xhtml:p>
 <xhtml:p>Add these thoughts to the rise of static blogging platforms such
