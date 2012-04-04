@@ -1,0 +1,531 @@
+<!DOCTYPE html><!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8" />
+    <title>Blog Entries by Matthew Weier O'Phinney :: phly, boy, phly</title>
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <link href="/css/SkeletonCss/base.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/SkeletonCss/skeleton.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/SkeletonCss/layout.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/Application/site.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/images/Application/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" >
+<link href="/css/Application/blog.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/blog/author/matthew-atom.xml" rel="alternate" type="application/atom+xml" title="Blog Entries by Matthew Weier O'Phinney Atom Feed" >
+<link href="/blog/author/matthew-rss.xml" rel="alternate" type="application/rss+xml" title="Blog Entries by Matthew Weier O'Phinney RSS Feed" >
+    <script type="text/javascript">
+    //<!--
+dojoConfig={
+    has: {
+        "dojo-firebug": false
+    },
+    baseurl: "/js/",
+    parseOnLoad: false,
+    async: true,
+    tlmSiblingOfDojo: false,
+    packages: [
+        { name: "dijit", location: "../dijit" },
+        { name: "dojox", location: "../dojox" },
+        { name: "Application", location: "../Application" }
+    ]
+};
+    //-->
+</script>
+<script type="text/javascript" src="/js/dojo/dojo.js"></script>
+<script type="text/javascript">
+    //<!--
+require(["Application/blog"]);    //-->
+</script>
+<script type="text/javascript">
+    //<!--
+require(["Application/scroll"], function(scroll) {});    //-->
+</script>
+    <script src="https://www.google.com/jsapi?ABQIAAAAGybdRRvLZwVUcF0dE3oVdBTO-MlgA7VGJpGqyqTOeDXlNzyZQxTGq17s-iAB0m0vwqLQ_A2dHhTg2Q"></script>
+<script type="text/javascript">
+    google.load('search', '1', {style: google.loader.themes.ESPRESSO});
+    google.setOnLoadCallback(function(){
+        new google.search.CustomSearchControl().draw('search');
+    }, true);
+</script>
+
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-27037983-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</head>
+<body>
+<div class="container">
+    <header class="sixteen columns">
+        <div class="one-half column logo">
+            <a href="/"><img src="/images/Application/logo.gif" height="37" width="37" alt="Celtic Knot" /></a>
+            <span class="main_title">phly, boy, phly: matthew weier o'phinney</span>
+        </div>
+
+        <nav class="one-half column" id="menu"><ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/blog.html">Blog</a></li>
+            <li><a href="/resume">R&eacute;sum&eacute;</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </ul></nav>
+    </header>
+
+
+    <div class="sixteen columns content">
+        <div class="row">
+<section class="eleven columns alpha blog">
+    <h2>Blog Entries by Matthew Weier O'Phinney</h2>
+
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2009-03-12 08:30:00</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/211-Why-Vim-Plugins-for-IDEs-Fail.html">Why Vim Plugins for IDEs Fail</a></h4>
+
+    <div class="entry body"><p>
+    I'm an unabashed <a href="http://www.vim.org/">Vim</a> user. It has been my
+    primary editor for over seven years now, when I switched to it to make it
+    easier to edit files over SSH. At the time, I made myself use it exclusively
+    for a month so that the habits would be ingrained, and took the time to go
+    through <a href="http://vimdoc.sourceforge.net/htmldoc/usr_01.html">vimtutor</a>
+    as well as to order and read Steve Oualline's 
+    <a href="http://www.amazon.com/iMproved-VIM-Landmark-Steve-Oualline/dp/0735710015">Vim book</a>.
+    And when I say "exclusively," I mean it -- I switched to using 
+    <a href="http://www.mutt.org/">Mutt</a> for email at that time, and also
+    started doing all code development, outlining, and more in vim. And after a
+    month, I realized I didn't want to use anything else.
+</p>
+
+<p>
+    Ironically, I find myself <a href="http://www.zend.com/">working for a company</a> 
+    that sells an Integrated Development Environment (IDE). As a result, I've
+    done some test runs with Eclipse, Zend Studio for Eclipse, and even
+    NetBeans, to see what features they offer and to see if there would be
+    anything compelling that might make me change my mind.
+</p></div>
+
+    <p><a href="/blog/211-Why-Vim-Plugins-for-IDEs-Fail.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2009-03-10 21:02:50</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/210-Syntax-Highlighting-for-Technical-Presentations.html">Syntax Highlighting for Technical Presentations</a></h4>
+
+    <div class="entry body"><p>
+    Being a technical presenter, I've often run up against the issue of how to
+    present code snippets. 
+</p>
+    
+<p>
+    The easiest route is to simply cut-and-paste into your presentation
+    software. However, such code is basically unreadable: it's hard to get
+    indentation correct, and the lack of syntax highlighting makes them
+    difficult to read (syntax highlighting helps users understand the purpose of
+    the various language constructs).
+</p></div>
+
+    <p><a href="/blog/210-Syntax-Highlighting-for-Technical-Presentations.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2009-03-03 06:59:42</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/209-Speaking-at-PHP-Quebec.html">Speaking at PHP Quebec</a></h4>
+
+    <div class="entry body"><p>
+    I'm speaking at <a href="http://conf.phpquebec.org/">PHP Quebec</a> this
+    week. While I live a scant 1.5 hours away from the venue, this is the first
+    I've been to the conference. The snow gods have declared their wrath
+    already, but I plan to thwart them and drive up to Montreal this evening
+    regardless.
+</p>
+
+<p>
+    I'm giving two talks and participating in a panel discussion this week. The
+    first talk is entitled "Practical Zend Framework Jutsu with Dojo," and,
+    while it may look like a familiar topic of mine by this point, I've spent
+    the last several days reworking the talk entirely, and am very much looking
+    forward to presenting it tomorrow. (My copy of "Presentation Zen" could not
+    have come soon enough! and that's all I'll say about that.)
+</p>
+
+<p>
+    On Friday, PHP Quebec has introduced a "Framework Bootcamp" track, including
+    sessions by myself, 
+    <a href="http://fabien.potencier.org/">Fabien Potencier</a> of 
+    <a href="http://symfony-project.org/">symfony</a>, and 
+    <a href="http://derickrethans.nl/">Derick Rethans</a>
+    representing <a href="http://ezcomponents.org/">eZ Components</a>. My talk
+    that day is entitled "Zend Framework Little Known Gems." While hardly a
+    completely original talk (Aaron Wormus did a "Hidden Gems" series of posts
+    for <a href="http://devzone.zend.com/">DevZone</a> a couple years back, and
+    Zend's own <a href="http://prematureoptimization.org/blog/">Shahar Evron</a>
+    did a similar talk at last fall's IPC), this will be my first time doing a
+    Zend Framework talk on something other than the MVC stack (or how to use
+    components with the MVC stack). Leaving my comfort zone, so to speak.
+</p>
+
+<p>
+    Towards the end of the day, Fabien, Derick, and myself will be corralled
+    onstage together for a "Framework Comparison".
+</p>
+
+<p>
+    If you're headed up to PHP Quebec this week, I look forward to meeting you
+    or seeing you again!
+</p></div>
+
+    <p><a href="/blog/209-Speaking-at-PHP-Quebec.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2009-02-23 08:17:00</p>
+    <p class="tags"><a href="/blog/tag/dojo.html">dojo</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/208-Recursively-Destroying-Dojo-ContentPanes.html">Recursively Destroying Dojo ContentPanes</a></h4>
+
+    <div class="entry body"><p>
+    I ran into an issue recently with Dojo's ContentPanes. I was using them with
+    a TabContainer, and had made them closable; however, user actions might
+    re-open tabs that pull from the same source. This led to conflicts with
+    dijit IDs that I had to resolve.
+</p>
+
+<p>
+    Most Dijits have a <code>destroyRecursive()</code> method which should,
+    theoretically, destroy any dijits contained within them. However, for many
+    Dijits, this functionality simply does not work due to how they are
+    implemented; many do not actually have any knowledge of the dijits beneath
+    them.
+</p>
+
+<p>
+    ContentPanes fall into this latter category. fortunately, it's relatively
+    easy to accomplish, due to Dojo's heavily object oriented nature.
+</p></div>
+
+    <p><a href="/blog/208-Recursively-Destroying-Dojo-ContentPanes.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2009-02-20 08:11:41</p>
+    <p class="tags"><a href="/blog/tag/dojo.html">dojo</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/207-Using-JSLint.html">Using JSLint</a></h4>
+
+    <div class="entry body"><p>
+    I've been doing a fair bit of programming in 
+    <a href="http://dojotoolkit.org/">Dojo</a> lately, and have on occasion run
+    into either inconsistent interfaces, or interfaces that simply fail to load
+    in Internet Explorer. Several people have pointed out to me some
+    optimizations to make, but, being a lazy programmer, I often forget to do
+    so.
+</p>
+
+<p>
+    Fortunately, there's a tool for lazy developers like myself: 
+    <a href="http://jslint.com">JSLint</a>. Linters are commonly used in static
+    development languages so that developers can verify that their programs are
+    syntactically correct prior to compilation; they basically ensure that
+    you're not accidentally attempting to compile something that will never
+    compile in the first place. Many dynamic languages also have them; I've had
+    a key bound in vim to run the current file through PHP's linter for many
+    years now. JSLint provides linting capabilities for JavaScript, as well as
+    some code analysis to point you towards some best practices -- mainly geared
+    for cross-browser compatability.
+</p></div>
+
+    <p><a href="/blog/207-Using-JSLint.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2009-02-17 11:33:18</p>
+    <p class="tags"></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/206-Zend-Framework-1.7.5-Released-Important-Note-Regarding-Zend_View.html">Zend Framework 1.7.5 Released - Important Note Regarding Zend_View</a></h4>
+
+    <div class="entry body"><p>
+    Yesterday, we released 
+    <a href="http://framework.zend.com/download/latest">Zend Framework 1.7.5</a>. 
+    It contains a somewhat controversial security fix to Zend_View that could
+    potentially affect some use cases of the component; I'm providing details on
+    that security fix as well as how to work around it here.
+</p></div>
+
+    <p><a href="/blog/206-Zend-Framework-1.7.5-Released-Important-Note-Regarding-Zend_View.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2009-01-17 10:43:40</p>
+    <p class="tags"><a href="/blog/tag/linux.html">linux</a><br />
+<a href="/blog/tag/virtualbox.html">virtualbox</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/205-VirtualBox-Networking.html">VirtualBox Networking</a></h4>
+
+    <div class="entry body"><p>
+    I use Linux on the desktop (currently <a href="http://www.ubuntu.com/">Ubuntu</a>), 
+    but occasionally need to use Windows for things like webinars, OS-specific
+    testing, etc. I started using <a href="http://virtualbox.org/">VirtualBox</a> 
+    for virtualization around six months ago, and have been reasonably
+    satisfied; Windows boots quickly, and everything "just works." That is,
+    until yesterday.
+</p>
+
+<p>
+    I was given a linux VM image running a web server and some applications I
+    needed to review. On top of that, I needed to do so over WebEx, so that I
+    could share my screen with somebody else. This meant I needed the following
+    to work:
+</p>
+
+<ol>
+    <li>Internet access for my Windows VM</li>
+    <li>Access to my linux VM from my Windows VM</li>
+    <li>Ideally, access to both guest VMs from my linux host</li>
+    <li>Ideally, internet access for my linux host</li>
+</ol></div>
+
+    <p><a href="/blog/205-VirtualBox-Networking.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2009-01-02 10:44:54</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
+<a href="/blog/tag/perl.html">perl</a><br />
+<a href="/blog/tag/personal.html">personal</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/204-Seven-Things-Tagged-by-Keith-Casey.html">Seven Things - Tagged by Keith Casey</a></h4>
+
+    <div class="entry body"><p>
+    I'm really not sure I understand these "seven things" or "tagged" memes, but
+    I'm going to give it a shot, after 
+    <a href="http://caseysoftware.com/blog/seven-things-tagged-by-tony-bibbs">Keith Casey</a> did a drive-by
+    tagging of me on New Year's Eve.
+</p>
+
+<p>
+    So, without further ado, seven things you may not know about me...
+</p></div>
+
+    <p><a href="/blog/204-Seven-Things-Tagged-by-Keith-Casey.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2008-12-31 14:17:03</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
+<a href="/blog/tag/dojo.html">dojo</a><br />
+<a href="/blog/tag/programming.html">programming</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/203-2008-The-year-in-review.html">2008: The year in review</a></h4>
+
+    <div class="entry body"><p>
+    That time of year again -- wrap-up time. Each year, it seems like it's the
+    busiest ever, and I often wonder if it will ever slow down. As usual, I'm
+    restricting myself to primarily professional activities out of respect for
+    the privacy of my family.
+</p>
+
+<p>
+    The short, executive summary:
+</p>
+
+<ul>
+    <li>One trip to Israel</li>
+    <li>One trip to The Netherlands</li>
+    <li>One trip to California's Bay Area</li>
+    <li>One trip to Atlanta, GA</li>
+    <li>Three minor releases of Zend Framework</li>
+    <li>Seven webinars, six for zend.com and one for Adobe</li>
+    <li>Three conferences attended as a speaker, including:<ul>
+         <li>One six-hour workshop</li>
+         <li>One three-hour tutorial (as a co-presenter)</li>
+         <li>Four regular sessions</li>
+         <li>Two panel sessions (one scheduled, one for an uncon)</li>
+         <li>Two uncon sessions (one as a co-presenter)</li>
+         <li>One foul-mouthed Pecha Kucha talk</li>
+    </ul></li>
+    <li>Ten Burlington, VT PHP User's Group meetings attended; I spoke at
+        many</li>
+    <li>One Bug Hunt week organized</li>
+    <li>Two books reviewed as a technical editor</li>
+    <li>Six articles for <a href="http://devzone.zend.com/">DevZone</a></li>
+    <li>50 blog entries (including this one)</li>
+</ul>
+
+<p>
+    Read on for the gruesome, month-by-month breakdown.
+</p></div>
+
+    <p><a href="/blog/203-2008-The-year-in-review.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2008-12-30 07:35:01</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
+<a href="/blog/tag/mvc.html">mvc</a><br />
+<a href="/blog/tag/zend+framework.html">zend framework</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/202-Model-Infrastructure.html">Model Infrastructure</a></h4>
+
+    <div class="entry body"><p>
+    In the last two entries in this series on models, I covered 
+    <a href="http://weierophinney.net/matthew/archives/200-Using-Zend_Form-in-Your-Models.html">using forms as input filters</a> 
+    and <a href="http://weierophinney.net/matthew/archives/201-Applying-ACLs-to-Models.html">integrating ACLs into models</a>. 
+    In this entry, I tackle some potential infrastructure for your models.
+</p>
+
+<p>
+    The Model is a complex subject. However, it is often boiled down to either a
+    single model class or a full object relational mapping (ORM). I personally
+    have never been much of a fan of ORMs as they tie models to the underlying
+    database structure; I don't always use a database, nor do I want
+    to rely on an ORM solution too heavily on the off-chance that I later need
+    to refactor to use services or another type of persistence store. On the
+    other hand, the model as a single class is typically too simplistic.
+</p></div>
+
+    <p><a href="/blog/202-Model-Infrastructure.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="paginationControl">
+        <a href="/blog/author/matthew.html" class="first">&lt;&lt; First</a> |
+        <a href="/blog/author/matthew-p6.html"> &lt; Previous </a> |
+        <a href="/blog/author/matthew-p3.html">3</a> |
+            <a href="/blog/author/matthew-p4.html">4</a> |
+            <a href="/blog/author/matthew-p5.html">5</a> |
+            <a href="/blog/author/matthew-p6.html">6</a> |
+            <span class="current">7</span> |
+            <a href="/blog/author/matthew-p8.html">8</a> |
+            <a href="/blog/author/matthew-p9.html">9</a> |
+            <a href="/blog/author/matthew-p10.html">10</a> |
+            <a href="/blog/author/matthew-p11.html">11</a> |
+            <a href="/blog/author/matthew-p12.html">12</a> |
+            <a href="/blog/author/matthew-p8.html"> Next &gt;</a> |
+        <a href="/blog/author/matthew-p26.html" class="last"> Last &gt;&gt;</a>
+</div>
+
+</section>
+
+<aside class="four columns offset-by-one omega sidebar blog">
+        <div class="metadata">
+        <h4>Blogroll</h4>
+        <ul>
+            <li><a href="http://sebastian-bergmann.de/">Sebastian Bergmann</a></li>
+            <li><a href="http://blog.calevans.com/">Cal Evans</a></li>
+            <li><a href="http://prematureoptimization.org/blog/">Shahar Evron</a></li>
+            <li><a href="http://paul-m-jones.com/blog/">Paul M. Jones</a></li>
+            <li><a href="http://karwin.blogspot.com/">Bill Karwin</a></li>
+            <li><a href="http://mikenaberezny.com/">Mike Naberezny</a></li>
+            <li><a href="http://fabien.potencier.org/">Fabien Potencier</a></li>
+            <li><a href="http://benramsey.com/">Ben Ramsey</a></li>
+            <li><a href="http://derickrethans.nl/">Derick Rethans</a></li>
+            <li><a href="http://ralphschindler.com/">Ralph Schindler</a></li>
+            <li><a href="http://www.zimuel.it/blog/">Enrico Zimuel</a></li>
+        </ul>
+    </div>
+
+</aside>
+</div>
+    </div>
+
+    <footer class="sixteen columns footer">
+        <div class="column one-third alpha about">
+            <h4>About</h4>
+            <p>
+    I'm a husband, father of two, plaything of a Basset puppy, and web 
+    architect by day.
+</p>
+
+<ul class="resume">
+    <li><a href="/resume">Resume</a></li>
+    <li><a href="http://twitter.com/weierophinney">Twitter</a></li>
+    <li><a href="http://www.linkedin.com/in/mweierophinney">LinkedIn</a></li>
+    <li><a href="http://www.ohloh.net/accounts/weierophinney">OhLoh</a></li>
+    <li><a href="http://resume.github.com/?weierophinney">GitHub</a></li>
+</ul>
+
+        </div>
+
+        <div class="column one-third projects">
+            <h4>Projects</h4>
+            <ul class="projects">
+    <li><a href="http://framework.zend.com/">Zend Framework (Project Lead)</a></li>
+    <li><a href="http://github.com/weierophinney/phly_mustache">Phly_Mustache</a></li>
+    <li><a href="http://www.the-pastry-box-project.net/baker/matthew-weier-ophinney/">The Pastry Box Project</a> (as a Baker)</li>
+</ul>
+
+        </div>
+
+        <div class="column one-third omega tags">
+        <div id="search" style="width:100%;">Loading...</div>
+<h4>Tag Cloud</h4>
+<div class="cloud">
+<ul class="Zend\Tag\Cloud"><li><a href="/blog/tag/php.html" style="font-size: 20px;">php</a></li> <li><a href="/blog/tag/zend+framework.html" style="font-size: 14px;">zend framework</a></li> <li><a href="/blog/tag/zf2.html" style="font-size: 11px;">zf2</a></li> <li><a href="/blog/tag/vim.html" style="font-size: 11px;">vim</a></li> <li><a href="/blog/tag/family.html" style="font-size: 11px;">family</a></li> <li><a href="/blog/tag/programming.html" style="font-size: 12px;">programming</a></li> <li><a href="/blog/tag/personal.html" style="font-size: 13px;">personal</a></li> <li><a href="/blog/tag/phpconcom.html" style="font-size: 10px;">phpconcom</a></li> <li><a href="/blog/tag/mvc.html" style="font-size: 11px;">mvc</a></li> <li><a href="/blog/tag/oop.html" style="font-size: 11px;">oop</a></li> <li><a href="/blog/tag/testing.html" style="font-size: 10px;">testing</a></li> <li><a href="/blog/tag/rest.html" style="font-size: 11px;">rest</a></li> <li><a href="/blog/tag/linux.html" style="font-size: 12px;">linux</a></li> <li><a href="/blog/tag/zendcon08.html" style="font-size: 11px;">zendcon08</a></li> <li><a href="/blog/tag/file_fortune.html" style="font-size: 10px;">file_fortune</a></li> <li><a href="/blog/tag/pear.html" style="font-size: 11px;">pear</a></li> <li><a href="/blog/tag/zendcon.html" style="font-size: 11px;">zendcon</a></li> <li><a href="/blog/tag/perl.html" style="font-size: 12px;">perl</a></li> <li><a href="/blog/tag/fastcgi.html" style="font-size: 10px;">fastcgi</a></li> <li><a href="/blog/tag/ubuntu.html" style="font-size: 11px;">ubuntu</a></li> <li><a href="/blog/tag/tekx.html" style="font-size: 10px;">tekx</a></li> <li><a href="/blog/tag/zendcon10.html" style="font-size: 10px;">zendcon10</a></li> <li><a href="/blog/tag/dojo.html" style="font-size: 11px;">dojo</a></li> <li><a href="/blog/tag/symfony.html" style="font-size: 11px;">symfony</a></li> <li><a href="/blog/tag/zeta+components.html" style="font-size: 10px;">zeta components</a></li> <li><a href="/blog/tag/tek09.html" style="font-size: 10px;">tek09</a></li> <li><a href="/blog/tag/spl.html" style="font-size: 11px;">spl</a></li> <li><a href="/blog/tag/subversion.html" style="font-size: 11px;">subversion</a></li> <li><a href="/blog/tag/zend+framewor.html" style="font-size: 10px;">zend framewor</a></li> <li><a href="/blog/tag/rails.html" style="font-size: 10px;">rails</a></li> <li><a href="/blog/tag/conferences.html" style="font-size: 11px;">conferences</a></li> <li><a href="/blog/tag/dpc08.html" style="font-size: 11px;">dpc08</a></li> <li><a href="/blog/tag/phpworks08.html" style="font-size: 11px;">phpworks08</a></li> <li><a href="/blog/tag/webinar.html" style="font-size: 11px;">webinar</a></li> <li><a href="/blog/tag/zencon08.html" style="font-size: 10px;">zencon08</a></li> <li><a href="/blog/tag/cw09.html" style="font-size: 11px;">cw09</a></li> <li><a href="/blog/tag/zend+server.html" style="font-size: 10px;">zend server</a></li> <li><a href="/blog/tag/dpc09.html" style="font-size: 10px;">dpc09</a></li> <li><a href="/blog/tag/sflive2010.html" style="font-size: 10px;">sflive2010</a></li> <li><a href="/blog/tag/security.html" style="font-size: 10px;">security</a></li> <li><a href="/blog/tag/wifi.html" style="font-size: 10px;">wifi</a></li> <li><a href="/blog/tag/aikido.html" style="font-size: 10px;">aikido</a></li> <li><a href="/blog/tag/books.html" style="font-size: 10px;">books</a></li> <li><a href="/blog/tag/dpc10.html" style="font-size: 10px;">dpc10</a></li> <li><a href="/blog/tag/zendcon09.html" style="font-size: 11px;">zendcon09</a></li> <li><a href="/blog/tag/git.html" style="font-size: 10px;">git</a></li> <li><a href="/blog/tag/phpwomen.html" style="font-size: 10px;">phpwomen</a></li> <li><a href="/blog/tag/virtualbox.html" style="font-size: 10px;">virtualbox</a></li> <li><a href="/blog/tag/advocacy.html" style="font-size: 10px;">advocacy</a></li> <li><a href="/blog/tag/politics.html" style="font-size: 10px;">politics</a></li> <li><a href="/blog/tag/internet.html" style="font-size: 10px;">internet</a></li></ul></div>
+        </div>
+
+        <br class="clear"/>
+
+        <div class="copyright">
+            Unless otherwise noted, &#169; 2004 - 2012, Matthew Weier O'Phinney
+        </div>
+    </footer>
+</div>
+</body>
+</html>

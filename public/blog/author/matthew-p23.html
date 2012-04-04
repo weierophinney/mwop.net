@@ -1,0 +1,782 @@
+<!DOCTYPE html><!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8" />
+    <title>Blog Entries by Matthew Weier O'Phinney :: phly, boy, phly</title>
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <link href="/css/SkeletonCss/base.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/SkeletonCss/skeleton.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/SkeletonCss/layout.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/Application/site.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/images/Application/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" >
+<link href="/css/Application/blog.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/blog/author/matthew-atom.xml" rel="alternate" type="application/atom+xml" title="Blog Entries by Matthew Weier O'Phinney Atom Feed" >
+<link href="/blog/author/matthew-rss.xml" rel="alternate" type="application/rss+xml" title="Blog Entries by Matthew Weier O'Phinney RSS Feed" >
+    <script type="text/javascript">
+    //<!--
+dojoConfig={
+    has: {
+        "dojo-firebug": false
+    },
+    baseurl: "/js/",
+    parseOnLoad: false,
+    async: true,
+    tlmSiblingOfDojo: false,
+    packages: [
+        { name: "dijit", location: "../dijit" },
+        { name: "dojox", location: "../dojox" },
+        { name: "Application", location: "../Application" }
+    ]
+};
+    //-->
+</script>
+<script type="text/javascript" src="/js/dojo/dojo.js"></script>
+<script type="text/javascript">
+    //<!--
+require(["Application/blog"]);    //-->
+</script>
+<script type="text/javascript">
+    //<!--
+require(["Application/scroll"], function(scroll) {});    //-->
+</script>
+    <script src="https://www.google.com/jsapi?ABQIAAAAGybdRRvLZwVUcF0dE3oVdBTO-MlgA7VGJpGqyqTOeDXlNzyZQxTGq17s-iAB0m0vwqLQ_A2dHhTg2Q"></script>
+<script type="text/javascript">
+    google.load('search', '1', {style: google.loader.themes.ESPRESSO});
+    google.setOnLoadCallback(function(){
+        new google.search.CustomSearchControl().draw('search');
+    }, true);
+</script>
+
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-27037983-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</head>
+<body>
+<div class="container">
+    <header class="sixteen columns">
+        <div class="one-half column logo">
+            <a href="/"><img src="/images/Application/logo.gif" height="37" width="37" alt="Celtic Knot" /></a>
+            <span class="main_title">phly, boy, phly: matthew weier o'phinney</span>
+        </div>
+
+        <nav class="one-half column" id="menu"><ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/blog.html">Blog</a></li>
+            <li><a href="/resume">R&eacute;sum&eacute;</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </ul></nav>
+    </header>
+
+
+    <div class="sixteen columns content">
+        <div class="row">
+<section class="eleven columns alpha blog">
+    <h2>Blog Entries by Matthew Weier O'Phinney</h2>
+
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2004-10-12 21:34:57</p>
+    <p class="tags"><a href="/blog/tag/perl.html">perl</a><br />
+<a href="/blog/tag/personal.html">personal</a><br />
+<a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/45-PHP_SELF-versus-SCRIPT_NAME.html">PHP_SELF versus SCRIPT_NAME</a></h4>
+
+    <div class="entry body"><p>
+    I've standardized my PHP programming to use the environment variable
+    <b>SCRIPT_NAME</b> when I want my script to refer to itself in links and
+    form actions. I've known that <b>PHP_SELF</b> has the same information, but
+    I was more familiar with the name 'SCRIPT_NAME' from using it in perl, and
+    liked the feel of it more as it seems to describe the resource better
+    ('PHP_SELF' could stand for the path to the PHP executable if I were to go
+    by the name only).
+</p>
+<p>
+    However, I just noticed a post on the php.general newsgroup where somebody
+    asked what the difference was between them. Semantically, there isn't any;
+    they should contain the same information. However, historically and
+    technically speaking, there is. <b>SCRIPT_NAME</b> is defined in the CGI 1.1
+    specification, and is thus a standard. <em>However</em>, not all web servers
+    actually implement it, and thus it isn't necessarily <em>portable</em>.
+    <b>PHP_SELF</b>, on the other hand, is implemented directly by PHP, and as
+    long as you're programming in PHP, will always be present.
+</p>
+<p>
+    Guess I have some grep and sed in my future as I change a bunch of
+    scripts...
+</p></div>
+
+    <p><a href="/blog/45-PHP_SELF-versus-SCRIPT_NAME.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2004-10-08 08:50:23</p>
+    <p class="tags"><a href="/blog/tag/personal.html">personal</a><br />
+<a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/44-PHP-Continue-processing-after-script-aborts.html">PHP: Continue processing after script aborts</a></h4>
+
+    <div class="entry body"><p>
+    Occasionally, I've needed to process a lot of information from a script, but
+    I don't want to worry about PHP timing out or the user aborting the script
+    (by clicking on another link or closing the window). Initially, I
+    investigated <a href="http://php.net/register_shutdown_function">register_shutdown_function()</a>
+    for this; it will fire off a process once the page finishes loading.
+    Unfortunately, the process is still a part of the current connection, so it
+    can be aborted in the same way as any other script (i.e., by hitting stop,
+    closing the browser, going to a new link, etc.).
+</p>
+<p>
+    However, there's another setting initialized via a function that can
+    override this behaviour -- i.e., let the script continue running after the
+    abort. This is <a href="http://php.net/ignore_user_abort">ignore_user_abort()</a>. By
+    setting this to true, your script will continue running after the fact.
+</p>
+<p>
+    This sort of thing would be especially good for bulk uploads where the
+    upload needs to be processed -- say, for instance, a group of images or
+    email addresses.
+</p></div>
+
+    <p><a href="/blog/44-PHP-Continue-processing-after-script-aborts.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2004-10-07 23:29:31</p>
+    <p class="tags"><a href="/blog/tag/personal.html">personal</a><br />
+<a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/43-Practical-PHP-Programming.html">Practical PHP Programming</a></h4>
+
+    <div class="entry body"><p>
+    In the past two days, I've seen two references to <a href="http://www.hudzilla.org/php/">Practical PHP Programming</a>, an
+    online book that serves both as an introduction to programming with PHP5 and
+    MySQL as well as a good advanced reference with many good tips.
+</p>
+<p>
+    This evening, I was browsing through the Performance chapter (chapter 18),
+    and found a number of cool things, both for PHP and MySQL. Many were common
+    sense things that I've been doing for awhile, but which I've also seen and
+    shaken my head at in code I've seen from others (calculating loop
+    invariables at every iteration, not using variables passed to a function,
+    not returning a value from a function, not using a return value from a
+    function). Others were new and gave me pause for thought (string
+    concatenation with the '.' operator is expensive, especially when done more
+    than once in an operation; echo can take a comma separated list).
+</p>
+<p>
+    Some PHP myths were also dispelled, some of which I've been wondering about
+    for awhile. For instance, the amount of comments and whitespace in PHP are
+    not a factor in performance (and PHP caching systems will often strip them
+    out anyways); double quotes are not more expensive than single quotes unless
+    variable interpolation occurs.
+</p>
+<p>
+    It also has some good advice for SQL optimization, and, more importantly,
+    MySQL <em>server</em> optimization. For instance, the author suggests
+    running 'OPTIMIZE TABLE table;' on any table that has been
+    added/updated/deleted from to any large extent since creation; this will
+    defrag the table and give it better performance. Use CHAR() versus
+    VARCHAR(); VARCHAR() saves on space, but MySQL has to calculate how much
+    space was used each time it queries in order to determine where the next
+    field or record starts. However, if you have any variable length fields, you
+    may as well use as many as you need -- or split off variable length fields
+    (such as a TEXT() field) into a different table in order to speed up
+    searching. When performing JOINs, compare on numeric fields instead of
+    character fields, and always JOIN on rows that are indexed.
+</p>
+<p>
+    I haven't read the entire book, but glancing through the TOC, there are some
+    potential downfalls to its content:
+</p>
+<ul>
+    <li>It doesn't cover PhpDoc</li>
+    <li>It doesn't appear to cover unit testing</li>
+    <li>Limited coverage of templating solutions (though they are mentioned)</li>
+    <li>Limited usage of PEAR. The author does mention PEAR a number of times,
+    and often indicates that use of certain PEAR modules is preferable to using
+    the corresponding low-level PHP calls (e.g., Mail and Mail_MIME, DB), but in
+    the examples rarely uses them.</li>
+    <li>PHP-HTML-PHP... The examples I browsed all created self-contained
+    scripts that did all HTML output. While I can appreciate this to a degree,
+    I'd still like to see a book that shows OOP development in PHP <em>and which
+    creates re-usable web components</em> in doing so. For instance, instead of
+    creating a message board <em>script</em>, create a message board
+    <em>class</em> that can be called from anywhere with metadata specifying the
+    database and templates to use.</li>
+</ul>
+<p>
+    All told, there's plenty of meat in this book -- I wish it were in dead tree
+    format already so I could browse through it at my leisure, instead of in
+    front of the computer.
+</p></div>
+
+    <p><a href="/blog/43-Practical-PHP-Programming.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2004-09-24 10:33:30</p>
+    <p class="tags"><a href="/blog/tag/linux.html">linux</a><br />
+<a href="/blog/tag/personal.html">personal</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/42-Get-Firefox%21.html">Get Firefox!</a></h4>
+
+    <div class="entry body"><p>
+    Those who know me know that I love linux and open source. One particular
+    program that firmly committed me to open source software is the Mozilla
+    project -- a project that took the Netscape browser's codebase and ran with
+    it to places I know I never anticipated when I first heard of the project.
+</p>
+<p>
+    What do I like about Mozilla? Well, for starters, and most importantly,
+    tabbed browsing changed the way I work. What is tabbed browsing? It's the
+    ability to have multiple tabs in a browser window, allowing you to switch
+    between web pages without needing to switch windows.
+</p>
+<p>
+    Mozilla came out with a standalone browser a number of months back called,
+    first Phoenix, then Firebird, and now Firefox. This standalone browser has a
+    conservative number of basic features, which allow for a lean download --
+    and yet, these basic features, which include tabbed browsing and disabling
+    popups, far surpass Internet Explorer's features. And there are many
+    extensions that you can download and integrate into the browser.
+</p>
+<p>
+    One such extension is a tabbed browsing extension that makes tabbed browsing
+    even more useful. With it, I can choose to have any links leaving a site go
+    to a new tab; or have bookmarks automatically load in a new tab; or group
+    tabs and save them as bookmark folders; or drag a tab to a different
+    location in the tabs (allowing easy grouping).
+</p>
+<p>
+    Frankly, there's few things I can find that Firefox can't do.
+</p>
+<p>
+    And, on top of that, it's not integrated into the operating system. So, if
+    you're on Windows, that means if you use Firefox, you're less likely to end
+    up with spyware and adware -- which often is downloaded and installed by
+    special IE components just by visiting sites -- ruining your internet
+    experience.
+</p>
+<p>
+    So, spread the word: Firefox is a speedy, featureful, SECURE alternative to
+    Internet Explorer!
+</p>
+<ul>
+    <li><a href="http://www.spreadfirefox.com/?q=affiliates&id=0&t=85">Get
+        Firefox</a></li>
+</ul></div>
+
+    <p><a href="/blog/42-Get-Firefox%21.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2004-09-21 10:40:45</p>
+    <p class="tags"><a href="/blog/tag/programming.html">programming</a><br />
+<a href="/blog/tag/perl.html">perl</a><br />
+<a href="/blog/tag/personal.html">personal</a><br />
+<a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/41-Cgiapp-Roadmap.html">Cgiapp Roadmap</a></h4>
+
+    <div class="entry body"><p>
+    I've had a few people contact me indicating interest in Cgiapp, and I've
+    noticed a number of subscribers to the freshmeat project I've setup. In
+    addition, we're using the library extensively at the <a href="http://www.garden.org">National Gardening Association</a> in
+    developing our new site (the current site is using a mixture of ASP and
+    Tango, with several newer applications using PHP). I've also been monitoring
+    the CGI::Application mailing list. As a result of all this activity, I've
+    decided I need to develop a roadmap for Cgiapp.
+</p>
+<p>Currently, planned changes include:</p>
+<ul>
+    <li><b>Version 1.x series:</b>
+        <ul>
+            <li>Adding a Smarty registration for stripslashes (the Smarty
+            "function" call will be sslashes).</li>
+            <li>param() bugfix: currently, calling param() with no arguments
+            simply gives you a list of parameters registered with the method,
+            but not their values; this will be fixed.</li>
+            <li>error_mode() method. The CGI::Application ML brought up and
+            implemented the idea of an error_mode() method to register
+            an error_mode with the object (similar to run_modes()). While
+            non-essential, it would offer a standard, built-in hook for error
+            handling.</li>
+            <li>$PATH_INFO traversing. Again, on the CGI::App ML, a request was
+            brought up for built-in support for using $PATH_INFO to determine
+            the run mode. Basically, you would pass a parameter indicating which
+            location in the $PATH_INFO string holds the run mode.</li>
+            <li>DocBook tutorials. I feel that too much information is given in
+            the class-level documentation, and that usage tutorials need to be
+            written. Since I'm documenting with PhpDoc and targetting PEAR,
+            moving tutorials into DocBook is a logical step.</li>
+        </ul>
+    </li>
+    <li><b>Version 2.x series:</b><br>
+        Yes, a Cgiapp2 is in the future. There are a few changes that are either
+        necessitating (a) PHP5, or (b) API changes. In keeping with PEAR
+        guidelines, I'll rename the module Cgiapp2 so as not to break
+        applications designed for Cgiapp.<br><br>
+        Changes expected include:
+        <ul>
+            <li>Inherit from PEAR. This will allow for some built in error
+            handling, among other things. I suspect that this will tie in with
+            the error_mode(), and may also deprecate croak() and carp().</li>
+            <li>Changes to tmpl_path() and load_tmpl(). In the perl version, you
+            would instantiate a template using load_tmpl(), assign your
+            variables to it, and then do your fetch() on it. So, this:
+                <pre>
+$this->tmpl_assign('var1', 'val1');
+$body = $this->load_tmpl('template.html');
+                </pre>
+            Becomes this:
+                <pre>
+$tmpl = $this->load_tmpl();
+$tmpl->assign('var1', 'val1');
+$body = $tmpl->fetch('template.html');
+                </pre>
+            OR
+                <pre>
+$tmpl = $this->load_tmpl('template.html');
+$tmpl->assign('var1', 'val1');
+$body = $tmpl->fetch();
+                </pre>
+            (Both examples assume use of Smarty.) I want to revert to
+            this behaviour for several reasons:
+                <ul>
+                    <li>Portability with perl. This is one area in which the PHP
+                    and perl versions differ greatly; going to the perl way
+                    makes porting classes between the two languages
+                    simpler.</li>
+                    <li>Decoupling. The current set of template methods create
+                    an object as a parameter of the application object - which
+                    is fine, unless the template object instantiator returns an
+                    object of a different kind.</li>
+                </ul>
+            Cons:
+                <ul>
+                     <li>Smarty can use the same object to fill multiple
+                     templates, and the current methods make use of this. By
+                     assigning the template object locally to each method, this
+                     could be lost.<br><br>
+                     HOWEVER... an easy work-around would be for load_tmpl() to
+                     create the object and store it an a parameter; subsequent
+                     calls would return the same object reference. The
+                     difficulty then would be if load_tmpl() assumed a template
+                     name would be passed.  However, even in CGI::App, you
+                     decide on a template engine and design for that engine;
+                     there is never an assumption that template engines should
+                     be swappable.</li>
+                     <li>Existing Cgiapp1 applications would need to be
+                     rewritten.</li>
+                </ul>
+            </li>
+            <li><b>Plugin Architecture:</b>
+                The CGI::App ML has produced a ::Plugin namespace that utilizes
+                a common plugin architecture. The way it is done in perl is
+                through some magic of namespaces and export routines... both of
+                which are, notably, missing from PHP.<br><br>
+                However, I think I may know a workaround for this, if I use
+                PHP5: the magic __call() overloader method.<br><br>
+                My idea is to have plugin classes register methods that should
+                be accessible by a Cgiapp-based class a special key in the
+                $_GLOBALS array.  Then, the __call() method would check the
+                key for registered methods; if one is found matching a method
+                requested, that method is called (using call_user_func()), with
+                the Cgiapp-based object reference as the first reference. Voila!
+                instant plugins!<br><br>
+                Why do this? A library of 'standard' plugins could then be
+                created, such as:
+                <ul>
+                    <li>A form validation plugin</li>
+                    <li>Alternate template engines as plugins (instead of
+                    overriding the tmpl_* methods)</li>
+                    <li>An authorization plugin</li>
+                </ul>
+                Since the 'exported' methods would have access to the Cgiapp
+                object, they could even register objects or parameters with it.
+            </li>
+        </ul>
+    </li>
+</ul>
+<p>
+    If you have any requests or comments on the roadmap, please feel free to <a href="/matthew/contact">contact me</a>.
+</p></div>
+
+    <p><a href="/blog/41-Cgiapp-Roadmap.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2004-09-20 21:09:32</p>
+    <p class="tags"><a href="/blog/tag/programming.html">programming</a><br />
+<a href="/blog/tag/personal.html">personal</a><br />
+<a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/40-New-site-is-up%21.html">New site is up!</a></h4>
+
+    <div class="entry body"><p>The new weierophinney.net/matthew/ site is now up and running!</p>
+<p>
+    The site has been many months in planning, and about a month or so in actual
+    coding. I have written the site in, instead of flatfiles, PHP, so as to:
+</p>
+<ul>
+    <li>Allow easier updating (it includes its own content management system</li>
+    <li>Include a blog for my web development and IT interests</li>
+    <li>Allow site searching (everything is an article or download)</li>
+</ul>
+<p>
+    I've written it using a strict MVC model, which means that I have libraries
+    for accessing and manipulating the database; all displays are template
+    driven (meaning I can create them with plain-old HTML); and I can create
+    customizable applications out of various controller libraries. I've called
+    this concoction <strong>Dragonfly</strong>.
+</p>
+<p>
+    There will be more developments coming -- sitewide search comes to mind, as
+    well as RSS feeds for the blog and downloads.
+</p>
+<p>Stay Tuned!</p></div>
+
+    <p><a href="/blog/40-New-site-is-up%21.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2004-09-11 21:27:11</p>
+    <p class="tags"><a href="/blog/tag/linux.html">linux</a><br />
+<a href="/blog/tag/personal.html">personal</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/38-Whats-keeping-that-device-in-use.html">What&#039;s keeping that device in use?</a></h4>
+
+    <div class="entry body"><p>
+    Ever wonder what's keeping that device in use so you can't unmount it? It's
+    happened to me a few times. The tool to discover this information?
+    <kbd>lsof</kbd>.
+</p>
+<p>
+    Basically, you type something like: <kbd>lsof /mnt/cdrom</kbd> and it gives
+    you a <kbd>ps</kbd>-style output detailing the PID and process of the
+    processes that are using the cdrom. You can then go and manually stop those
+    programs, or kill them yourself.
+</p></div>
+
+    <p><a href="/blog/38-Whats-keeping-that-device-in-use.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2004-09-04 19:12:21</p>
+    <p class="tags"><a href="/blog/tag/personal.html">personal</a><br />
+<a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/2-PHP-and-Template-Engines.html">PHP and Template Engines</a></h4>
+
+    <div class="entry body"><p>
+    On <a href="http://www.phppatterns.com">PhpPatterns</a>, I recently read <a
+        href="http://www.phppatterns.com/index.php/article/articleview/4/1/1/">an
+        article on Template Engines in PHP</a>. It got my ire up, as it said (my
+    interpretation):
+</p>
+<ul>
+     <li>"template engines are a bad idea"</li>
+     <li>"templating using PHP natively can be a good idea"</li>
+     <li>"template engines... are not worth the text
+         their written in"</li>
+</ul>
+<p>
+    Okay, so that's actually direct quotes from the article. I took issue with
+    it, immediately -- I use <a href="http://smarty.php.net">Smarty</a> for
+    everything I do, and the decision to do so was not done lightly. I have in
+    fact been advocating the use of template engines in one language or another
+    for several years with the various positions in which I've been employed; I
+    think they are an essential tool for projects larger than a few pages. Why?
+</p>
+<ul>
+    <li>Mixing of languages causes inefficiency. When I'm programming, it's
+    incredibly inefficient to be writing in up to four different languages: PHP
+    or Perl, X/HTML, CSS, and Javascript. Switching between them while in the
+    same file is cumbersome and confusing, and trying to find HTML entities
+    buried within quoting can be a nightmare, even when done in heredocs.
+    Separating the languages into different files seems not only natural, but
+    essential.</li>
+    <li>Views contain their own logic. In an MVC pattern, the final web page
+    View may be dependent on data passed to it via the Controller; however,
+    this doesn't mean that I want the full functionality of a language like PHP
+    or Perl to do that. I should only be doing simple logic or looping
+    constructs -- and a full scripting language is overkill. (I do recognize,
+    however, that template engines such as Smarty are written using PHP, so the
+    language is being invoked regardless. What I speak of here is the language
+    used to <em>compose the template</em>.)</li>
+    <li>Abstraction and Security. The fewer internals that are divulged on the
+    template page, the better. For security purposes, I may not want clients
+    able to know <em>how</em> data got to the page, only what data is available
+    to them. In addition, if this data is abstracted enough, any number of
+    backends could be connected to the page to produce output.</li>
+</ul>
+<p>
+    So, reading the aforementioned article really got my hackles up. However, it
+    got me thinking, as well. One issue raised is that PHP can be used as your
+    templating language. While I can understand why this might be desirable --
+    everything from load issues to flexibility -- I also feel that this doesn't
+    give enough abstraction. 
+</p>
+<p>
+    Using PHP seems to me to be inefficient on two fundamental levels, based on
+    my understanding of <em>The Pragmatic Programmer</em>:
+</p>
+<ul>
+    <li><b>Domain Langauge.</b> <em>The Pragmatic Programmer</em> suggests that
+    <em>subsets</em> of a language should be used, or wholly new mini-languages
+    developed, that speak to the domain at hand. As an example, you might want
+    to use a sharp tool to open a can; an axe would be overkill, but a knife
+    might work nicely. Using PHP to describe a template is like using an axe to
+    open a can; it'll do the job, but it may also make a mess of it all, simply
+    because it's too much sharp edge for the job.</li>
+    <li><b>Metadata.</b> Metadata is data about data; to my thinking, templates
+    describe the data they are communicating; the compiled template actually
+    contains the data. In this regard, again, putting PHP into the script is
+    overkill as doing so gives more than just some hints as to what the data
+    is.</li>
+</ul>
+<p>
+    The author of the article also makes a case for teaching web designers PHP
+    -- that the language is sufficiently easy to pick up that they typically
+    will be able to learn it as easily, if not more easily, than a template
+    language. I agree to a degree... But my experience has shown that web
+    designers typically struggle with HTML, let alone PHP. (Note: my experience
+    in this regard is not huge, and I'm sure that this is an exaggeration.) I
+    find that it's typically easiest for me to give an example template, explain
+    what the funny, non-HTML stuff can do, and let them go from there. Using
+    this approach, they do not need to learn anything new -- they simply work
+    with placeholders.
+</p>
+<p>
+    Still, I think the author raises some fine points. I wish he'd bothered to
+    do more research into <em>why</em> people choose template engines and the
+    benefits that arise from using them <em>before</em> simply outright slamming
+    them. Of course, the article is also a bit dated; it was written over two
+    years ago, and much has changed in the world of PHP and many of its template
+    engines. I'm curious as to whether they would feel the same way today.
+</p>
+<p>
+    Me? My mind is made up -- the benefits, in my circumstances, far outweigh
+    any costs associated. I'll be using template engines, and <a
+        href="http://smarty.php.net">Smarty</a> in particular, for years to
+    come.
+</p></div>
+
+    <p><a href="/blog/2-PHP-and-Template-Engines.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2004-04-27 22:48:53</p>
+    <p class="tags"><a href="/blog/tag/linux.html">linux</a><br />
+<a href="/blog/tag/personal.html">personal</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/30-Binary-packages-for-Gentoo.html">Binary packages for Gentoo</a></h4>
+
+    <div class="entry body"><p>
+    I'd read that you could get binary packages for gentoo, thus alleviating the
+    need to compile everything. (Of course, then  you lose some of the benefits
+    of compiling everything, but you gain in speed...) Unfortunately, I mistook
+    this with ebuilds, and never quite figured it out.
+</p>
+<p>
+    The key is to throw the -g flag:
+</p>
+<pre>    % emerge -g gnumeric # which is like 'emerge --getbinpkg gnumeric'
+</pre>
+<p>
+    I also learned how to update packages tonight:
+</p>
+<pre>    % emerge sync             # to sync your mirror with the gentoo mirrors
+    % emerge --update portage # if necessary
+    % emerge --update system  # updates core system files
+    % emerge --update world   # updates all packages 
+</pre></div>
+
+    <p><a href="/blog/30-Binary-packages-for-Gentoo.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2004-04-22 22:10:10</p>
+    <p class="tags"><a href="/blog/tag/linux.html">linux</a><br />
+<a href="/blog/tag/personal.html">personal</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/31-Gentoo-for-several-weeks.html">Gentoo for several weeks</a></h4>
+
+    <div class="entry body"><p>
+    I've had a bunch of problems with my new computer -- it uses ACPI, but if I
+    load the ACPI modules, it won't boot; if I don't load them, I have to go
+    through contortions to get the ethernet working, and it won't power down;
+    and a bunch of other little stuff.
+</p>
+<p>
+    So, a few weeks ago, I thought, what the heck? Why not try <a href="http://www.gentoo.org">Gentoo</a>? I've been reading about it
+    since it first came out, and I remember talking with Duane about it once,
+    and it has a reputation for both being cutting edge and stable. Heck, even
+    Wil Wheaton's endorsing it... it can't be <b>all</b> bad, right?
+</p>
+<p>
+    I had a few misstarts -- bad CDs, not quite getting how the chroot thing
+    worked, problems with DNS (which I <em>still</em> don't understand; and Rob
+    has them as well, so it's not just me). But once I got it installed... well,
+    I'm impressed.
+</p>
+<p>
+    The thing about Gentoo is, it <em>compiles</em> everything from source. It's
+    like <a href="http://www.debian.org">Debian</a>, in that it fetches all
+    dependencies and installs those... but it's all source. So it's not exactly
+    fast. But because everything is compiled, and because you setup C flags
+    specific to your machine, what you get is incredibly optimized for your own
+    machine. This 1.6GHz machine simply flies. And the memory usage <em>just
+        stays low</em>.
+</p>
+<p>
+    I'd like to use it for my server... but I can't really take the server down
+    at this point when it's making both my mom and myself money. But what a
+    great system... I only wish I'd used it for the mail server at work.
+</p></div>
+
+    <p><a href="/blog/31-Gentoo-for-several-weeks.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="paginationControl">
+        <a href="/blog/author/matthew.html" class="first">&lt;&lt; First</a> |
+        <a href="/blog/author/matthew-p22.html"> &lt; Previous </a> |
+        <a href="/blog/author/matthew-p17.html">17</a> |
+            <a href="/blog/author/matthew-p18.html">18</a> |
+            <a href="/blog/author/matthew-p19.html">19</a> |
+            <a href="/blog/author/matthew-p20.html">20</a> |
+            <a href="/blog/author/matthew-p21.html">21</a> |
+            <a href="/blog/author/matthew-p22.html">22</a> |
+            <span class="current">23</span> |
+            <a href="/blog/author/matthew-p24.html">24</a> |
+            <a href="/blog/author/matthew-p25.html">25</a> |
+            <a href="/blog/author/matthew-p26.html">26</a> |
+            <a href="/blog/author/matthew-p24.html"> Next &gt;</a> |
+        <a href="/blog/author/matthew-p26.html" class="last"> Last &gt;&gt;</a>
+</div>
+
+</section>
+
+<aside class="four columns offset-by-one omega sidebar blog">
+        <div class="metadata">
+        <h4>Blogroll</h4>
+        <ul>
+            <li><a href="http://sebastian-bergmann.de/">Sebastian Bergmann</a></li>
+            <li><a href="http://blog.calevans.com/">Cal Evans</a></li>
+            <li><a href="http://prematureoptimization.org/blog/">Shahar Evron</a></li>
+            <li><a href="http://paul-m-jones.com/blog/">Paul M. Jones</a></li>
+            <li><a href="http://karwin.blogspot.com/">Bill Karwin</a></li>
+            <li><a href="http://mikenaberezny.com/">Mike Naberezny</a></li>
+            <li><a href="http://fabien.potencier.org/">Fabien Potencier</a></li>
+            <li><a href="http://benramsey.com/">Ben Ramsey</a></li>
+            <li><a href="http://derickrethans.nl/">Derick Rethans</a></li>
+            <li><a href="http://ralphschindler.com/">Ralph Schindler</a></li>
+            <li><a href="http://www.zimuel.it/blog/">Enrico Zimuel</a></li>
+        </ul>
+    </div>
+
+</aside>
+</div>
+    </div>
+
+    <footer class="sixteen columns footer">
+        <div class="column one-third alpha about">
+            <h4>About</h4>
+            <p>
+    I'm a husband, father of two, plaything of a Basset puppy, and web 
+    architect by day.
+</p>
+
+<ul class="resume">
+    <li><a href="/resume">Resume</a></li>
+    <li><a href="http://twitter.com/weierophinney">Twitter</a></li>
+    <li><a href="http://www.linkedin.com/in/mweierophinney">LinkedIn</a></li>
+    <li><a href="http://www.ohloh.net/accounts/weierophinney">OhLoh</a></li>
+    <li><a href="http://resume.github.com/?weierophinney">GitHub</a></li>
+</ul>
+
+        </div>
+
+        <div class="column one-third projects">
+            <h4>Projects</h4>
+            <ul class="projects">
+    <li><a href="http://framework.zend.com/">Zend Framework (Project Lead)</a></li>
+    <li><a href="http://github.com/weierophinney/phly_mustache">Phly_Mustache</a></li>
+    <li><a href="http://www.the-pastry-box-project.net/baker/matthew-weier-ophinney/">The Pastry Box Project</a> (as a Baker)</li>
+</ul>
+
+        </div>
+
+        <div class="column one-third omega tags">
+        <div id="search" style="width:100%;">Loading...</div>
+<h4>Tag Cloud</h4>
+<div class="cloud">
+<ul class="Zend\Tag\Cloud"><li><a href="/blog/tag/php.html" style="font-size: 20px;">php</a></li> <li><a href="/blog/tag/zend+framework.html" style="font-size: 14px;">zend framework</a></li> <li><a href="/blog/tag/zf2.html" style="font-size: 11px;">zf2</a></li> <li><a href="/blog/tag/vim.html" style="font-size: 11px;">vim</a></li> <li><a href="/blog/tag/family.html" style="font-size: 11px;">family</a></li> <li><a href="/blog/tag/programming.html" style="font-size: 12px;">programming</a></li> <li><a href="/blog/tag/personal.html" style="font-size: 13px;">personal</a></li> <li><a href="/blog/tag/phpconcom.html" style="font-size: 10px;">phpconcom</a></li> <li><a href="/blog/tag/mvc.html" style="font-size: 11px;">mvc</a></li> <li><a href="/blog/tag/oop.html" style="font-size: 11px;">oop</a></li> <li><a href="/blog/tag/testing.html" style="font-size: 10px;">testing</a></li> <li><a href="/blog/tag/rest.html" style="font-size: 11px;">rest</a></li> <li><a href="/blog/tag/linux.html" style="font-size: 12px;">linux</a></li> <li><a href="/blog/tag/zendcon08.html" style="font-size: 11px;">zendcon08</a></li> <li><a href="/blog/tag/file_fortune.html" style="font-size: 10px;">file_fortune</a></li> <li><a href="/blog/tag/pear.html" style="font-size: 11px;">pear</a></li> <li><a href="/blog/tag/zendcon.html" style="font-size: 11px;">zendcon</a></li> <li><a href="/blog/tag/perl.html" style="font-size: 12px;">perl</a></li> <li><a href="/blog/tag/fastcgi.html" style="font-size: 10px;">fastcgi</a></li> <li><a href="/blog/tag/ubuntu.html" style="font-size: 11px;">ubuntu</a></li> <li><a href="/blog/tag/tekx.html" style="font-size: 10px;">tekx</a></li> <li><a href="/blog/tag/zendcon10.html" style="font-size: 10px;">zendcon10</a></li> <li><a href="/blog/tag/dojo.html" style="font-size: 11px;">dojo</a></li> <li><a href="/blog/tag/symfony.html" style="font-size: 11px;">symfony</a></li> <li><a href="/blog/tag/zeta+components.html" style="font-size: 10px;">zeta components</a></li> <li><a href="/blog/tag/tek09.html" style="font-size: 10px;">tek09</a></li> <li><a href="/blog/tag/spl.html" style="font-size: 11px;">spl</a></li> <li><a href="/blog/tag/subversion.html" style="font-size: 11px;">subversion</a></li> <li><a href="/blog/tag/zend+framewor.html" style="font-size: 10px;">zend framewor</a></li> <li><a href="/blog/tag/rails.html" style="font-size: 10px;">rails</a></li> <li><a href="/blog/tag/conferences.html" style="font-size: 11px;">conferences</a></li> <li><a href="/blog/tag/dpc08.html" style="font-size: 11px;">dpc08</a></li> <li><a href="/blog/tag/phpworks08.html" style="font-size: 11px;">phpworks08</a></li> <li><a href="/blog/tag/webinar.html" style="font-size: 11px;">webinar</a></li> <li><a href="/blog/tag/zencon08.html" style="font-size: 10px;">zencon08</a></li> <li><a href="/blog/tag/cw09.html" style="font-size: 11px;">cw09</a></li> <li><a href="/blog/tag/zend+server.html" style="font-size: 10px;">zend server</a></li> <li><a href="/blog/tag/dpc09.html" style="font-size: 10px;">dpc09</a></li> <li><a href="/blog/tag/sflive2010.html" style="font-size: 10px;">sflive2010</a></li> <li><a href="/blog/tag/security.html" style="font-size: 10px;">security</a></li> <li><a href="/blog/tag/wifi.html" style="font-size: 10px;">wifi</a></li> <li><a href="/blog/tag/aikido.html" style="font-size: 10px;">aikido</a></li> <li><a href="/blog/tag/books.html" style="font-size: 10px;">books</a></li> <li><a href="/blog/tag/dpc10.html" style="font-size: 10px;">dpc10</a></li> <li><a href="/blog/tag/zendcon09.html" style="font-size: 11px;">zendcon09</a></li> <li><a href="/blog/tag/git.html" style="font-size: 10px;">git</a></li> <li><a href="/blog/tag/phpwomen.html" style="font-size: 10px;">phpwomen</a></li> <li><a href="/blog/tag/virtualbox.html" style="font-size: 10px;">virtualbox</a></li> <li><a href="/blog/tag/advocacy.html" style="font-size: 10px;">advocacy</a></li> <li><a href="/blog/tag/politics.html" style="font-size: 10px;">politics</a></li> <li><a href="/blog/tag/internet.html" style="font-size: 10px;">internet</a></li></ul></div>
+        </div>
+
+        <br class="clear"/>
+
+        <div class="copyright">
+            Unless otherwise noted, &#169; 2004 - 2012, Matthew Weier O'Phinney
+        </div>
+    </footer>
+</div>
+</body>
+</html>

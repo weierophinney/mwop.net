@@ -1,0 +1,642 @@
+<!DOCTYPE html><!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8" />
+    <title>Blog Entries by Matthew Weier O'Phinney :: phly, boy, phly</title>
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <link href="/css/SkeletonCss/base.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/SkeletonCss/skeleton.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/SkeletonCss/layout.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/Application/site.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/images/Application/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" >
+<link href="/css/Application/blog.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/blog/author/matthew-atom.xml" rel="alternate" type="application/atom+xml" title="Blog Entries by Matthew Weier O'Phinney Atom Feed" >
+<link href="/blog/author/matthew-rss.xml" rel="alternate" type="application/rss+xml" title="Blog Entries by Matthew Weier O'Phinney RSS Feed" >
+    <script type="text/javascript">
+    //<!--
+dojoConfig={
+    has: {
+        "dojo-firebug": false
+    },
+    baseurl: "/js/",
+    parseOnLoad: false,
+    async: true,
+    tlmSiblingOfDojo: false,
+    packages: [
+        { name: "dijit", location: "../dijit" },
+        { name: "dojox", location: "../dojox" },
+        { name: "Application", location: "../Application" }
+    ]
+};
+    //-->
+</script>
+<script type="text/javascript" src="/js/dojo/dojo.js"></script>
+<script type="text/javascript">
+    //<!--
+require(["Application/blog"]);    //-->
+</script>
+<script type="text/javascript">
+    //<!--
+require(["Application/scroll"], function(scroll) {});    //-->
+</script>
+    <script src="https://www.google.com/jsapi?ABQIAAAAGybdRRvLZwVUcF0dE3oVdBTO-MlgA7VGJpGqyqTOeDXlNzyZQxTGq17s-iAB0m0vwqLQ_A2dHhTg2Q"></script>
+<script type="text/javascript">
+    google.load('search', '1', {style: google.loader.themes.ESPRESSO});
+    google.setOnLoadCallback(function(){
+        new google.search.CustomSearchControl().draw('search');
+    }, true);
+</script>
+
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-27037983-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</head>
+<body>
+<div class="container">
+    <header class="sixteen columns">
+        <div class="one-half column logo">
+            <a href="/"><img src="/images/Application/logo.gif" height="37" width="37" alt="Celtic Knot" /></a>
+            <span class="main_title">phly, boy, phly: matthew weier o'phinney</span>
+        </div>
+
+        <nav class="one-half column" id="menu"><ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/blog.html">Blog</a></li>
+            <li><a href="/resume">R&eacute;sum&eacute;</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </ul></nav>
+    </header>
+
+
+    <div class="sixteen columns content">
+        <div class="row">
+<section class="eleven columns alpha blog">
+    <h2>Blog Entries by Matthew Weier O'Phinney</h2>
+
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2004-03-30 21:57:31</p>
+    <p class="tags"><a href="/blog/tag/programming.html">programming</a><br />
+<a href="/blog/tag/perl.html">perl</a><br />
+<a href="/blog/tag/personal.html">personal</a><br />
+<a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/32-Cgiapp-A-PHP-Class.html">Cgiapp: A PHP Class</a></h4>
+
+    <div class="entry body"><p>
+    After working on some OO classes yesterday for an application backend I'm
+    developing for work, I decided I needed to create a <tt>BREAD</tt> class to
+    make this simpler. You know,
+    <b>B</b>rowse-<b>R</b>ead-<b>E</b>dit-<b>A</b>dd-<b>D</b>elete.
+</p>
+<p>
+    At first, I figured I'd build off of what I'd done yesterday. But then I got
+    to thinking (ah, thinking, my curse). I ran into the <tt>BREAD</tt> concept
+    originally when investigating <tt>CGI::Application</tt>; a number of
+    individuals had developed <tt>CGI::Apps</tt> that provided this
+    functionality. I'd discarded them usually because they provided more
+    functionality than I needed or because they introduced more complexity than
+    I was willing to tackle right then.
+</p>
+<p>
+    But once my thoughts had gone to <tt>BREAD</tt> and <tt>CGI::App</tt>, I
+    started thinking how nice it would be to have <tt>CGI::Application</tt> for
+    PHP. And then I thought, why not? What prevents me from porting it? I have
+    the source...
+</p>
+<p>
+    So, today I stayed home with Maeve, who, on the tail end of an illness,
+    evidently ran herself down when at daycare yesterday, and stayed home
+    sleeping most of the day. So, while she was resting, I sat down with a
+    printout of the non-POD code of <tt>CGI::App</tt> and hammered out what I
+    needed to do. Then, when she fell asleep for a nap, I typed it all out and
+    started testing. And, I'm proud to say, it works. For an example, visit <a href="http://dev.weierophinney.net/cgiapp/test.php">my development
+        site</a> to see a very simple, templated application in action.
+</p></div>
+
+    <p><a href="/blog/32-Cgiapp-A-PHP-Class.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2004-03-29 13:02:16</p>
+    <p class="tags"><a href="/blog/tag/programming.html">programming</a><br />
+<a href="/blog/tag/linux.html">linux</a><br />
+<a href="/blog/tag/personal.html">personal</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/33-B.-Gates-Open-Source-Programmer.html">B. Gates: Open Source Programmer?</a></h4>
+
+    <div class="entry body"><p>
+    I just read <a href="http://www.salon.com/tech/col/rose/2004/03/19/programmers_at_work/">coverage 
+        of a panel of programming luminaries on Salon;</a> the topic of
+    discussion was about the state of programming. In the course of the
+    discussion, the subject of Open Source came up. Several of the luminaries --
+    which included architects of the Mac OS and Windows, as well as others --
+    derided the community for basically reinventing the wheel, and wheels that
+    need to be re-thought entirely anyways. One questioned, "Why is hte idealism
+    just about how the code is shared -- what about idealism about the code
+    itself?"
+</p>
+<p>
+    Andy Hertzfeld (who helped develop the original Mac OS)  was sitting on the
+    panel, and jumped in. He has been working with Eazel and Chandler in recent
+    years, and thus has an inside view of open source. His initial comment:
+    "It's because they want people to use the stuff!" Basically, they program
+    Windows- or Mac-like interfaces because then people will be willing to try
+    it out. They program office suites because people "need" an office suite to
+    be productive. Such offerings hook them into the OSS movement.
+</p>
+<p>
+    Another participant, Dan Bricklin (of VisiCalc, a pioneering spreadsheet
+    program) shared an anecdote from Bill Gates. Evidently, Gates gave an
+    interview (with Lammers -- look up this person) in which he explained that
+    his work on MS's BASIC compiler was done by looking at how other programmers
+    had accomplished the task. In his own words, "The best way to prepare is to
+    write programs, and to study great programs that other people have written.
+    In my case, I went to the garbage cans at the Computer Science Center and I
+    fished out listings of their operating systems." 
+</p>
+<p>
+    So basically, Gates was an early adopter of OSS methodologies... Interesting
+    to see that today he's so protective of MS code. Guess money might do that
+    to you.
+</p></div>
+
+    <p><a href="/blog/33-B.-Gates-Open-Source-Programmer.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2004-03-28 19:33:39</p>
+    <p class="tags"><a href="/blog/tag/perl.html">perl</a><br />
+<a href="/blog/tag/personal.html">personal</a><br />
+<a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/34-POD-for-PHP.html">POD for PHP</a></h4>
+
+    <div class="entry body"><p>
+    I was lamenting at work the other day that now that I've discovered OO and
+    templating with PHP, the only major feature missing for me is a way to
+    easily document my programs. I'm a big fan of perl's POD, and use it fairly
+    extensively, even for simple scripts -- it's a way to provide a quick manual
+    without needing to worry too much about how to format it.
+</p>
+<p>
+    So, it hit me on the way home Friday night: what prevents me from using POD
+    in multiline comments of PHP scripts? I thought I'd give it a try when I got
+    home.
+</p>
+<p>
+    First I googled for 'POD for PHP', and found a link to perlmongers where
+    somebody recounted seeing that exact thing done, and how nicely it worked.
+</p>
+<p>
+    Then I tried it.. and it indeed worked. So, basically, I've got all the
+    tools I love from perl in PHP, one of which is borrowed directly from the
+    language!
+</p></div>
+
+    <p><a href="/blog/34-POD-for-PHP.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2004-03-28 19:24:12</p>
+    <p class="tags"><a href="/blog/tag/programming.html">programming</a><br />
+<a href="/blog/tag/perl.html">perl</a><br />
+<a href="/blog/tag/personal.html">personal</a><br />
+<a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/35-Scrap-that.-Were-gonna-use-PHP.html">Scrap that. We&#039;re gonna&#039; use PHP</a></h4>
+
+    <div class="entry body"><p>
+    I've been researching and coding for a couple months now with the decision
+    that I'd rewrite the family website/portal using mod_perl with
+    CGI::Application. I still like the idea, but a couple things recently have
+    made me rethink it.
+</p>
+<p>
+    For starters, the perl DBI is a bit of a pain to program. At work, I've
+    become very accustomed to using PEAR's DB library, and while it's in many
+    ways derived from perl's DBI, it's much simpler to use. 
+</p>
+<p>
+    Then there's the whole HTML::Template debacle. There's several ways in which
+    to write the templates, but they don't all work in all situations, and, it
+    seems they're a bit limited. We've started using PHP's Smarty at work, and
+    it's much more intuitive, a wee bit more consistent, and almost infinitely
+    more extendable. I could go the Template::Toolkit route for perl, but that's
+    almost like learning another whole language.
+</p>
+<p>
+    Then, there's the way objects work in perl versus PHP. I've discovered
+    that PHP objects are very easy and very extendable. I wouldn't have found
+    them half as easy, however, if I hadn't already been doing object oriented
+    programming in perl. One major difference, however, is how easy it is to
+    create new attributes on the fly, and the syntax is much easier and cleaner.
+</p>
+<p>
+    Add to that the fact that if you want to dynamically require modules in
+    perl, you have to go through some significant, often unsurmountable, hoops.
+    So you can't easily have dynamic objects of dynamically defined classes. In
+    PHP, though, you can require_once or include_once at any time without even
+    thinking.
+</p>
+<p>
+    The final straw, however, was when I did my first OO application in PHP this
+    past week. I hammered it out in a matter of an hour or so. Then I rewrote it
+    to incorporate Smarty in around an hour. And it all worked easily. Then I
+    wrote a form-handling libary in just over two hours that worked immediately
+    -- and made it possible for me to write a several screen application in a
+    matter of an hour, complete with form, form validation, and database calls.
+    Doing the same with CGI::Application took me hours, if not days.
+</p>
+<p>
+    So, my idea is this: port CGI::Application to PHP. I <em>love</em> the
+    concept of CGI::App -- it's exactly how I want to program, and I think it's
+    solid. However, by porting it to PHP, I automatically have session and
+    cookie support, and database support is only a few lines of code away when I
+    use PEAR; I'll add Smarty as the template toolkit of choice, but make it
+    easy to override the template methods to utilize . I get a nice MVC-style
+    application template, but one that makes developing quickie applications
+    truly a snap.
+</p>
+<p>
+    This falls under the "right-tool-for-the-job" category; perl, while a
+    wonderful language, and with a large tradition as a CGI language, was not
+    developed <em>for the web</em> as PHP was. PHP just makes more sense in this
+    instance. And I won't be abandoning perl by any stretch; I still use it
+    daily at work and at home for solving any number of tasks from automated
+    backups to checking server availability to keeping my ethernet connection
+    alive. But I have real strengths as a PHP developer, and it would be a shame
+    not to use those strengths with our home website.
+</p></div>
+
+    <p><a href="/blog/35-Scrap-that.-Were-gonna-use-PHP.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2004-03-19 09:49:57</p>
+    <p class="tags"><a href="/blog/tag/programming.html">programming</a><br />
+<a href="/blog/tag/personal.html">personal</a><br />
+<a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/36-PHP-Class-Tips.html">PHP Class Tips</a></h4>
+
+    <div class="entry body"><p>
+    We're starting to use OO in our PHP at work. I discovered when I started
+    using it why I'd been having problems wrapping my head around some of the
+    applications I've been programming lately: I've become accustomed in Perl to
+    using an OO framework. Suddenly, programming in PHP was much easier.
+</p>
+<p>
+    There's a few things that are different, however. It appears that you cannot
+    pass objects in object attributes, and then reference them like thus:
+</p>
+<pre>    $object->db>query($sql)
+</pre>
+<p>
+    PHP doesn't like that kind of syntax (at least not in versions 4.x).
+    Instead, you have to pass a reference to the object in the attribute, then
+    set a temporary variable to that reference whenever you wish to use it:
+</p>
+<pre>    $object->db =& $db;
+    ...
+    $db = $object->db;
+    $res = $db->query($sql);
+</pre>
+<p>
+    What if you want to inherit from another class and extend one of the
+    methods? In other words, you want to use the method from the parent class,
+    but you want to do some additional items with it? Simple: use
+    <kbd>parent</kbd>:
+</p>
+<pre>    function method1()
+    {
+        /* do some pre-processing */
+
+        parent::method1(); // Do the parent's version of the method
+
+        /* do some more stuff here */
+    }
+</pre>
+<h4>Update:</h4>
+<p>
+    Actually, you *can* reference objects when they are attributes of another
+    object; you just have to define the references in the correct order:
+</p>
+<pre>    $db =& DB::connect('dsn');
+    $this->db =& $db;
+    ...
+    $res = $this->db->query($sql);
+</pre>
+<p>
+    I've tested the above syntax with both PEAR's DB and with Smarty, and it
+    works without issue.
+</p></div>
+
+    <p><a href="/blog/36-PHP-Class-Tips.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2004-03-11 21:34:18</p>
+    <p class="tags"><a href="/blog/tag/linux.html">linux</a><br />
+<a href="/blog/tag/personal.html">personal</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/37-Making-a-RAID-array-from-the-command-line.html">Making a RAID array from the command line</a></h4>
+
+    <div class="entry body"><p>
+    Last night, I created my first RAID array from the commandline. It was quite
+    simple, I discovered.
+</p>
+<ol>
+    <li>Create your partitions using fstab. Remember, primary partitions must be
+    created <em>before</em> extended partitions.</li>
+    <li>Look in <kbd>/proc/partions</kbd> and note the new partition IDs.</li>
+    <li>Edit <kbd>/etc/raidtab</kbd> and create a new RAID array. If unsure of
+    the syntax, look up the <a href="http://www.tldp.org/HOWTO/Software-RAID-HOWTO.html">Linux Software
+        RAID HOWTO</a> for more details.</li>
+    <li>Type <kbd>mkraid /dev/md?</kbd>, where <kbd>?</kbd> is the id of the
+    RAID device you just entered in <kbd>/etc/raidtab</kbd>.</li>
+    <li>Format the new RAID device with your favorite filesystem, assign it a
+    mount point, and start using it!</li>
+</ol>
+<p>
+    I was impressed with how easy it was; the choices that the Anaconda
+    installer present for creating a RAID array made it seem like the underlying
+    process must be difficult, when in fact it may have been almost the same
+    complexity if not easier.
+</p></div>
+
+    <p><a href="/blog/37-Making-a-RAID-array-from-the-command-line.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2004-02-16 07:33:39</p>
+    <p class="tags"><a href="/blog/tag/linux.html">linux</a><br />
+<a href="/blog/tag/personal.html">personal</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/39-Learn-something-new-everyday.html">Learn something new everyday</a></h4>
+
+    <div class="entry body"><p>
+    <a href="http://www.linux.com">Linux.com</a> has had a running series on CLI
+    commands for Newbies. Most of it has been very basic, but there are still a
+    few gems within. For instance, today I was introduced to <kbd>apropos</kbd>
+    and <kbd>whatis</kbd>. Give a search term to the former, and it will list
+    all programs in which the search term is found in the manpages; give a
+    program name to the latter, and it will tell you which man page addresses
+    it.
+</p></div>
+
+    <p><a href="/blog/39-Learn-something-new-everyday.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2004-02-09 22:25:56</p>
+    <p class="tags"><a href="/blog/tag/personal.html">personal</a><br />
+<a href="/blog/tag/aikido.html">aikido</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/29-Random-thoughts-of-violence.html">Random thoughts of violence</a></h4>
+
+    <div class="entry body"><p>
+    I began the day with sudden images and body remembrances of an escrima or
+    arnis drill Morgan used to teach during weapons class years ago -- it
+    utilizes a short stick or wakazashi in one hand, the other hand free, and
+    consists of five steps on each side; when you finish one side, you do the
+    other, because the drill is done with a partner.
+</p>
+<p>
+    I haven't done the drill for years, but I remembered all the nuances, all
+    the little tips and secrets Morgan showed me over the year or two he
+    continued teaching it. And I wanted desperately to do it with someone right
+    that moment as I was getting out of bed so that I wouldn't lose it. But, of
+    course, I had no such opportunity. The movement is still tracing its way
+    through my body.
+</p>
+<p>
+    And this evening, we watched Fight Club. I still remember watching it in the
+    theater, and how it affected me then -- and it affects me in many of the
+    same ways now. There's some cultural references I 'get' more now --
+    references to Ikea, and now I understand groups and guided meditation and
+    therapy better. And there's new references, too -- the image of the
+    buildings falling is much different now that the WTC buildings have been
+    viewed collapsing.
+</p>
+<p>
+    But the message, the message is still the same, still present. Do things own
+    us, or do we own them? What do I most want to do before I die, and am I
+    doing it? These are big questions for a film to raise, and I'm still
+    surprised that Fight Club remains such a huge hit and success because of
+    them. And they're not necessarily buried in the film -- though I can see how
+    many people might simply glorify the violence in the film, and pass over the
+    message. I find the violence is a part of the message -- can you teach
+    yourself to live with pain, that pain is transient and ceases? can you learn
+    to stop living in fear?
+</p>
+<p>
+    So my day was marked by violence, beginning and end. The middle was all
+    consumer fluff. And hedonism. But hey, that's okay, too.
+</p></div>
+
+    <p><a href="/blog/29-Random-thoughts-of-violence.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2004-02-05 20:23:17</p>
+    <p class="tags"><a href="/blog/tag/programming.html">programming</a><br />
+<a href="/blog/tag/perl.html">perl</a><br />
+<a href="/blog/tag/personal.html">personal</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/28-HTMLFillInForm.html">HTML::FillInForm</a></h4>
+
+    <div class="entry body"><p>
+    The CGI::Application::ValidateRM module utilizes HTML::FillInForm to fill in
+    values in the form if portions did not pass validation. Basically, it
+    utilizes HTML::Parser to go through and find the elements and match them to
+    values. It's used because the assumption is that you've built your form into
+    an HTML::Template, and that way you don't need to put in program logic into
+    the form.
+</p>
+<p>
+    Seems another good candidate for using FillInForm would be to populate a
+    form with values grabbed from a database... I should look into that as well!
+</p></div>
+
+    <p><a href="/blog/28-HTMLFillInForm.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2004-02-05 20:18:20</p>
+    <p class="tags"><a href="/blog/tag/programming.html">programming</a><br />
+<a href="/blog/tag/perl.html">perl</a><br />
+<a href="/blog/tag/personal.html">personal</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/27-HTMLTemplate-notes.html">HTML::Template notes</a></h4>
+
+    <div class="entry body"><p>
+    I've used HTML::Template a little, mainly in the Secret Santa project I did
+    this past Christmas for my wife's family. One thing I disliked was using the
+    normal syntax: &lt;TMPL_VAR NAME=IMAGE_SRC&gt; -- it made looking at it
+    difficult (it wasn't always easy to tell what was an HTML tag, what was
+    plain text, and what was HTML::Template stuff), and it made it impossible to
+    validate my pages before they had data.
+</p>
+<p>
+    Fortunately, there's an alternate syntax: wrap the syntax in HTML comments:
+    &lt;!-- TMPL_VAR NAME=IMAGE_SRC --&gt; does the job. It uses more
+    characters, true, but it gets highlighted different than HTML tags, as well,
+    and that's worth a lot.
+</p>
+<p>
+    And why do I have to say "NAME=" every time? That gets annoying. As it turns
+    out, I can simply say: &lt;!-- TMPL_VAR IMAGE_SRC --&gt;, and that, too will
+    get the job done.
+</p>
+<p>
+    Finally, what about those times when I want to define a template, but have
+    it broken into parts, too? Basically, I want HTML::Template to behave a
+    little like SSI. No worries; there's a TMPL_INCLUDE tag that can do this:
+    &lt;!-- TMPL_INCLUDE NAME="filename.tmpl" --&gt;. 
+</p></div>
+
+    <p><a href="/blog/27-HTMLTemplate-notes.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="paginationControl">
+        <a href="/blog/author/matthew.html" class="first">&lt;&lt; First</a> |
+        <a href="/blog/author/matthew-p23.html"> &lt; Previous </a> |
+        <a href="/blog/author/matthew-p17.html">17</a> |
+            <a href="/blog/author/matthew-p18.html">18</a> |
+            <a href="/blog/author/matthew-p19.html">19</a> |
+            <a href="/blog/author/matthew-p20.html">20</a> |
+            <a href="/blog/author/matthew-p21.html">21</a> |
+            <a href="/blog/author/matthew-p22.html">22</a> |
+            <a href="/blog/author/matthew-p23.html">23</a> |
+            <span class="current">24</span> |
+            <a href="/blog/author/matthew-p25.html">25</a> |
+            <a href="/blog/author/matthew-p26.html">26</a> |
+            <a href="/blog/author/matthew-p25.html"> Next &gt;</a> |
+        <a href="/blog/author/matthew-p26.html" class="last"> Last &gt;&gt;</a>
+</div>
+
+</section>
+
+<aside class="four columns offset-by-one omega sidebar blog">
+        <div class="metadata">
+        <h4>Blogroll</h4>
+        <ul>
+            <li><a href="http://sebastian-bergmann.de/">Sebastian Bergmann</a></li>
+            <li><a href="http://blog.calevans.com/">Cal Evans</a></li>
+            <li><a href="http://prematureoptimization.org/blog/">Shahar Evron</a></li>
+            <li><a href="http://paul-m-jones.com/blog/">Paul M. Jones</a></li>
+            <li><a href="http://karwin.blogspot.com/">Bill Karwin</a></li>
+            <li><a href="http://mikenaberezny.com/">Mike Naberezny</a></li>
+            <li><a href="http://fabien.potencier.org/">Fabien Potencier</a></li>
+            <li><a href="http://benramsey.com/">Ben Ramsey</a></li>
+            <li><a href="http://derickrethans.nl/">Derick Rethans</a></li>
+            <li><a href="http://ralphschindler.com/">Ralph Schindler</a></li>
+            <li><a href="http://www.zimuel.it/blog/">Enrico Zimuel</a></li>
+        </ul>
+    </div>
+
+</aside>
+</div>
+    </div>
+
+    <footer class="sixteen columns footer">
+        <div class="column one-third alpha about">
+            <h4>About</h4>
+            <p>
+    I'm a husband, father of two, plaything of a Basset puppy, and web 
+    architect by day.
+</p>
+
+<ul class="resume">
+    <li><a href="/resume">Resume</a></li>
+    <li><a href="http://twitter.com/weierophinney">Twitter</a></li>
+    <li><a href="http://www.linkedin.com/in/mweierophinney">LinkedIn</a></li>
+    <li><a href="http://www.ohloh.net/accounts/weierophinney">OhLoh</a></li>
+    <li><a href="http://resume.github.com/?weierophinney">GitHub</a></li>
+</ul>
+
+        </div>
+
+        <div class="column one-third projects">
+            <h4>Projects</h4>
+            <ul class="projects">
+    <li><a href="http://framework.zend.com/">Zend Framework (Project Lead)</a></li>
+    <li><a href="http://github.com/weierophinney/phly_mustache">Phly_Mustache</a></li>
+    <li><a href="http://www.the-pastry-box-project.net/baker/matthew-weier-ophinney/">The Pastry Box Project</a> (as a Baker)</li>
+</ul>
+
+        </div>
+
+        <div class="column one-third omega tags">
+        <div id="search" style="width:100%;">Loading...</div>
+<h4>Tag Cloud</h4>
+<div class="cloud">
+<ul class="Zend\Tag\Cloud"><li><a href="/blog/tag/php.html" style="font-size: 20px;">php</a></li> <li><a href="/blog/tag/zend+framework.html" style="font-size: 14px;">zend framework</a></li> <li><a href="/blog/tag/zf2.html" style="font-size: 11px;">zf2</a></li> <li><a href="/blog/tag/vim.html" style="font-size: 11px;">vim</a></li> <li><a href="/blog/tag/family.html" style="font-size: 11px;">family</a></li> <li><a href="/blog/tag/programming.html" style="font-size: 12px;">programming</a></li> <li><a href="/blog/tag/personal.html" style="font-size: 13px;">personal</a></li> <li><a href="/blog/tag/phpconcom.html" style="font-size: 10px;">phpconcom</a></li> <li><a href="/blog/tag/mvc.html" style="font-size: 11px;">mvc</a></li> <li><a href="/blog/tag/oop.html" style="font-size: 11px;">oop</a></li> <li><a href="/blog/tag/testing.html" style="font-size: 10px;">testing</a></li> <li><a href="/blog/tag/rest.html" style="font-size: 11px;">rest</a></li> <li><a href="/blog/tag/linux.html" style="font-size: 12px;">linux</a></li> <li><a href="/blog/tag/zendcon08.html" style="font-size: 11px;">zendcon08</a></li> <li><a href="/blog/tag/file_fortune.html" style="font-size: 10px;">file_fortune</a></li> <li><a href="/blog/tag/pear.html" style="font-size: 11px;">pear</a></li> <li><a href="/blog/tag/zendcon.html" style="font-size: 11px;">zendcon</a></li> <li><a href="/blog/tag/perl.html" style="font-size: 12px;">perl</a></li> <li><a href="/blog/tag/fastcgi.html" style="font-size: 10px;">fastcgi</a></li> <li><a href="/blog/tag/ubuntu.html" style="font-size: 11px;">ubuntu</a></li> <li><a href="/blog/tag/tekx.html" style="font-size: 10px;">tekx</a></li> <li><a href="/blog/tag/zendcon10.html" style="font-size: 10px;">zendcon10</a></li> <li><a href="/blog/tag/dojo.html" style="font-size: 11px;">dojo</a></li> <li><a href="/blog/tag/symfony.html" style="font-size: 11px;">symfony</a></li> <li><a href="/blog/tag/zeta+components.html" style="font-size: 10px;">zeta components</a></li> <li><a href="/blog/tag/tek09.html" style="font-size: 10px;">tek09</a></li> <li><a href="/blog/tag/spl.html" style="font-size: 11px;">spl</a></li> <li><a href="/blog/tag/subversion.html" style="font-size: 11px;">subversion</a></li> <li><a href="/blog/tag/zend+framewor.html" style="font-size: 10px;">zend framewor</a></li> <li><a href="/blog/tag/rails.html" style="font-size: 10px;">rails</a></li> <li><a href="/blog/tag/conferences.html" style="font-size: 11px;">conferences</a></li> <li><a href="/blog/tag/dpc08.html" style="font-size: 11px;">dpc08</a></li> <li><a href="/blog/tag/phpworks08.html" style="font-size: 11px;">phpworks08</a></li> <li><a href="/blog/tag/webinar.html" style="font-size: 11px;">webinar</a></li> <li><a href="/blog/tag/zencon08.html" style="font-size: 10px;">zencon08</a></li> <li><a href="/blog/tag/cw09.html" style="font-size: 11px;">cw09</a></li> <li><a href="/blog/tag/zend+server.html" style="font-size: 10px;">zend server</a></li> <li><a href="/blog/tag/dpc09.html" style="font-size: 10px;">dpc09</a></li> <li><a href="/blog/tag/sflive2010.html" style="font-size: 10px;">sflive2010</a></li> <li><a href="/blog/tag/security.html" style="font-size: 10px;">security</a></li> <li><a href="/blog/tag/wifi.html" style="font-size: 10px;">wifi</a></li> <li><a href="/blog/tag/aikido.html" style="font-size: 10px;">aikido</a></li> <li><a href="/blog/tag/books.html" style="font-size: 10px;">books</a></li> <li><a href="/blog/tag/dpc10.html" style="font-size: 10px;">dpc10</a></li> <li><a href="/blog/tag/zendcon09.html" style="font-size: 11px;">zendcon09</a></li> <li><a href="/blog/tag/git.html" style="font-size: 10px;">git</a></li> <li><a href="/blog/tag/phpwomen.html" style="font-size: 10px;">phpwomen</a></li> <li><a href="/blog/tag/virtualbox.html" style="font-size: 10px;">virtualbox</a></li> <li><a href="/blog/tag/advocacy.html" style="font-size: 10px;">advocacy</a></li> <li><a href="/blog/tag/politics.html" style="font-size: 10px;">politics</a></li> <li><a href="/blog/tag/internet.html" style="font-size: 10px;">internet</a></li></ul></div>
+        </div>
+
+        <br class="clear"/>
+
+        <div class="copyright">
+            Unless otherwise noted, &#169; 2004 - 2012, Matthew Weier O'Phinney
+        </div>
+    </footer>
+</div>
+</body>
+</html>

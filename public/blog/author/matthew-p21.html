@@ -1,0 +1,665 @@
+<!DOCTYPE html><!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8" />
+    <title>Blog Entries by Matthew Weier O'Phinney :: phly, boy, phly</title>
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <link href="/css/SkeletonCss/base.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/SkeletonCss/skeleton.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/SkeletonCss/layout.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/Application/site.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/images/Application/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" >
+<link href="/css/Application/blog.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/blog/author/matthew-atom.xml" rel="alternate" type="application/atom+xml" title="Blog Entries by Matthew Weier O'Phinney Atom Feed" >
+<link href="/blog/author/matthew-rss.xml" rel="alternate" type="application/rss+xml" title="Blog Entries by Matthew Weier O'Phinney RSS Feed" >
+    <script type="text/javascript">
+    //<!--
+dojoConfig={
+    has: {
+        "dojo-firebug": false
+    },
+    baseurl: "/js/",
+    parseOnLoad: false,
+    async: true,
+    tlmSiblingOfDojo: false,
+    packages: [
+        { name: "dijit", location: "../dijit" },
+        { name: "dojox", location: "../dojox" },
+        { name: "Application", location: "../Application" }
+    ]
+};
+    //-->
+</script>
+<script type="text/javascript" src="/js/dojo/dojo.js"></script>
+<script type="text/javascript">
+    //<!--
+require(["Application/blog"]);    //-->
+</script>
+<script type="text/javascript">
+    //<!--
+require(["Application/scroll"], function(scroll) {});    //-->
+</script>
+    <script src="https://www.google.com/jsapi?ABQIAAAAGybdRRvLZwVUcF0dE3oVdBTO-MlgA7VGJpGqyqTOeDXlNzyZQxTGq17s-iAB0m0vwqLQ_A2dHhTg2Q"></script>
+<script type="text/javascript">
+    google.load('search', '1', {style: google.loader.themes.ESPRESSO});
+    google.setOnLoadCallback(function(){
+        new google.search.CustomSearchControl().draw('search');
+    }, true);
+</script>
+
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-27037983-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</head>
+<body>
+<div class="container">
+    <header class="sixteen columns">
+        <div class="one-half column logo">
+            <a href="/"><img src="/images/Application/logo.gif" height="37" width="37" alt="Celtic Knot" /></a>
+            <span class="main_title">phly, boy, phly: matthew weier o'phinney</span>
+        </div>
+
+        <nav class="one-half column" id="menu"><ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/blog.html">Blog</a></li>
+            <li><a href="/resume">R&eacute;sum&eacute;</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </ul></nav>
+    </header>
+
+
+    <div class="sixteen columns content">
+        <div class="row">
+<section class="eleven columns alpha blog">
+    <h2>Blog Entries by Matthew Weier O'Phinney</h2>
+
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2005-04-20 15:49:11</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/64-PHP-Unit-Tests-and-the-winner-is-phpt.html">PHP Unit Tests: and the winner is: phpt</a></h4>
+
+    <div class="entry body"><p>
+    I've been tinkering with <a
+    href="http://www.wikipedia.org/wiki/Unit_testing" target="_blank">Unit
+    Testing</a> for around a year now, and have tried using <a
+    href="http://pear.php.net/package/PHPUnit">PHP Unit</a> as well as <a
+    href="http://www.lastcraft.com/simple_test.php">Simple Test</a>. It was
+    while following the Simple Test tutorial that I finally grokked the idea of
+    unit testing, and so that has been my favored class for testing.
+</p>
+<p>
+    However, I find writing the tests tedious. In Simple Test, as in PHP Unit,
+    you need to create a class that sets up the testing harness, and then you
+    create a method for each test you wish to run, and so on... I found it
+    incredibly time consuming. Additionally, I found the test harness often felt
+    like a foreign way of testing my code; I was setting up a structure I would
+    never use my code in, typically. All in all, I only test when I have extra
+    time (which is rare) or when I'm really having trouble nailing down bugs
+    (and the unit tests often don't help me find them).
+</p>
+<p>
+    Recently, I've been hearing some buzz over on the <a
+        href="http://pear.php.net">PEAR</a> lists and the blogs of some of its
+    developers about 'phpt' tests. From what I hear, phpt tests sound very
+    similar to how one tests in perl (though I've never written perl tests, I've
+    at least glanced through them). However, until recently, I haven't seen any
+    documentation on them, and installing PEAR packages via pear doesn't install
+    tests.
+</p>
+<p>
+    We got a copy of <a href="http://php5powerprogramming.com/">PHP5 Power
+        Programming</a> a few weeks ago, and in the section on preparing a PEAR
+    package was a brief section on phpt tests. The section was small, and when I
+    looked at it, my immediate thought was, "it can't be <em>that</em> simple,
+    can it?"
+</p>
+<p>
+    So, I decided to try it out with <a
+        href="http://cgiapp.sourceforge.net/">Cgiapp</a>. A few minutes later, I
+    had some working tests for my static methods. "Hmmm," I thought, "That was
+    easy. Let's try some more." 
+</p>
+<p>
+    Turns out they're kind of addictive to geeks like me. In a matter of a few
+    hours, I'd knocked out tests for over half the functionality, and
+    disccovered, to my chagrine and joy, a number of bugs and bad coding
+    practices... which I promptly corrected so I could get that magical 'PASS'
+    from the test harness.
+</p>
+<p>
+    In the process of writing the tests, my understanding of the tool evolved
+    quite a bit, and by the end, I had the knack for it down. I'll blog later
+    about some of the ways I made them easier to use for myself -- and how I
+    made them more useful for debugging purposes.
+</p></div>
+
+    <p><a href="/blog/64-PHP-Unit-Tests-and-the-winner-is-phpt.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2005-04-17 02:24:15</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/63-Abstract-Classes.html">Abstract Classes</a></h4>
+
+    <div class="entry body"><p>
+    I just had to add a note over on PHP.net regarding abstract classes and
+    methods: 
+    <a href="http://php.net/language.oop5.abstract">Object Abstraction</a>.
+</p>
+<p>
+    I'm working on Cgiapp2, which is a PHP5-only implementation of Cgiapp that
+    is built to utilize PHP5's new object model as well as exceptions. One thing
+    I decided to do, initially, was to make it an abstract class, and to mark
+    the overridable methods as abstract as well.
+</p>
+<p>
+    In testing, I started getting some strange errors. Basically, it was saying
+    in my class extension that an abstract method existed, and thus the class
+    should be marked as abstract, and, finally, that this means it wouldn't run.
+</p>
+<p>
+    What was so odd is that the method didn't exist in the extension at all.
+</p>
+<p>
+    So, I overrode the method in the extension... and voila! Everything worked
+    fine.
+</p>
+<p>
+    The lesson to take away from this is quite simple: if the method does not
+    need to be present in the overriding class, don't mark it as abstract. Only
+    mark a method as abstract if:
+</p>
+<ol>
+    <li>The method is required in the class implementation, and</li>
+    <li>The extending class should be responsible for implementing said
+    method</li>
+</ol>
+<p>
+    Now I need to update my source tree.... :-(
+</p></div>
+
+    <p><a href="/blog/63-Abstract-Classes.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2005-04-11 21:32:20</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/62-PEAR%2C-Channels%2C-and-Frameworks.html">PEAR, Channels, and Frameworks</a></h4>
+
+    <div class="entry body"><p>
+    <a
+        href="http://greg.chiaraquartet.net/comment.php?type=trackback&entry_id=38">Greg
+        Beaver writes in his blog</a> about PEAR, the new PEAR channels, and
+    some issues he sees with PEAR and its developers. Greg is responsible for
+    the latest version of PEAR and the PEAR installer -- and for the development
+    of PEAR channels. The particular link referenced above makes reference to a
+    thread on the PEAR-dev mailing list... that I originated, when asking
+    whether or not Cgiapp might be a good fit for PEAR.
+</p></div>
+
+    <p><a href="/blog/62-PEAR%2C-Channels%2C-and-Frameworks.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2005-04-02 21:41:10</p>
+    <p class="tags"><a href="/blog/tag/linux.html">linux</a><br />
+<a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/61-PHP%2C-Cgiapp%2C-and-extensibility.html">PHP, Cgiapp, and extensibility</a></h4>
+
+    <div class="entry body"><p>
+    At work this week, Rob was doing some monitoring of our bandwidth usage. We
+    have SNMP on each of our servers now, and he uses MRTG to create bandwidth
+    usage graphs that are updated every five minutes or so. He's been monitoring
+    since late last year.
+</p>
+<p>
+    Before January, we had two systems going. The first, legacy, system hosted
+    the majority of the content from garden.org, and was done using Tango 2000,
+    a web application server that ran on top of IIS and Windows NT 4. I say
+    'ran', because Tango 2000 was the last version to ship; the company that
+    made it stopped supporting it a year later. This meant we could not upgrade
+    our server's OS to Windows 2000 or 2003, nor could we switch to a more
+    secure web server, etc. It was a time bomb waiting to happen.
+</p>
+<p>
+    The second system is a basic LAMP system -- Linux + Apache + MySQL + PHP.
+    Rob began migrating applications to it shortly after he started at NGA 3
+    years ago, one application at a time. Mostly, new applications were placed
+    on it, though in May 2003, he and the other programmer who was there at the
+    time started migrating old applications to the techology. Part of the reason
+    I was hired was to continue this migration.
+</p>
+<p>
+    The migration was time consuming, and plenty of other projects often got in
+    the way. However, starting last July, we made a big push to get it all
+    ported over -- before the old WinNT server fails on us. In January, we were
+    able to rollout the new garden.org, which runs on this new technology.
+</p>
+<p>
+    A big reason we were able to finish is because of Cgiapp. I originally
+    ported it to PHP last year around this time, and knew that while I wanted to
+    develop new applications using it, I wasn't so sure I could sell Rob on it.
+</p>
+<p>
+    Amazingly, it didn't take much to convince him. We had already started using
+    Smarty for templates just before this, and were also using OOP in new
+    development. Cgiapp just helped unify these technologies and to provide a
+    nice, standard framework with which to program.
+</p>
+<p>
+    This last can not be emphasized enough. We started developing all
+    applications in three places: an API for data access, a Cgiapp-based
+    application, and our templates. Either one of us could pick up development
+    of an application from the other without having to spend a day or two
+    familiarizing ourselves with the idiosyncracies of what the other had
+    decided was the programming paradigm of the day. Sure, we still have our own
+    programming styles, but the framework makes it easy to debug or extend each
+    others programs painlessly.
+</p>
+<p>
+    Now, back to the bandwidth reports: Rob has noticed that our bandwidth usage
+    has been growing steadily on the new server since we switched garden.org
+    over -- a 45 degree line. At one point this week, our outgoing bandwidth was
+    almost 3 T1s -- and we were having no performance issues whatsoever. This
+    simply would not have been possible on the old system -- nor without Cgiapp.
+    We've managed to produce both a hardware architecture and a programming
+    framework that has proved immensely scalable -- which will in turn save the
+    organization money.
+</p>
+<p>
+    I love open source! How else can you create such high-performing software
+    without paying through the nose for it?
+</p></div>
+
+    <p><a href="/blog/61-PHP%2C-Cgiapp%2C-and-extensibility.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2005-03-25 22:42:40</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/60-s9y-%2B-s4y-phly.html">s9y + s4y = phly</a></h4>
+
+    <div class="entry body"><p>
+    So, I did a little experimentation, and I was able to seamlessly integrate
+    Serendipity into my existing website via Smarty, some CSS, and changing just
+    a couple of links!
+</p>
+<p>
+    The result is the website you're currently reading!
+</p>
+<p>
+    This means I can now offer trackbacks, comments, RSS feeds, and all the
+    other stuff a modern blog should offer... and with minimum fuss and with a
+    lot of standards and security. I wish everything I did was this easy.
+</p></div>
+
+    <p><a href="/blog/60-s9y-%2B-s4y-phly.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2005-03-24 21:28:06</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/1-Zippity-Zoo-Zah....html">Zippity Zoo Zah...</a></h4>
+
+    <div class="entry body">I've been wanting to improve -- no, rewrite -- my blogging software for a month or more now. The more work I've done at work, the more efficiently I've felt I could handle it. I've learned a lot of ins and outs with Cgiapp and Cgiapp superclasses, and figured out how to tie things together much better.
+
+However, I've also noticed, in reading and analyzing blogs, that there are a lot of standards that I just don't know enough about or simply don't have the time to implement ("the more work I've done..." has been something like 70 hour weeks recently). Things like trackbacks, and RSS/Atom feeds, and comment moderation/blacklisting, etc. I certainly have the skills, but do I have the time? Not really.
+
+I still have a goal of writing some lightweight blogging software using Cgiapp. However, for now, that's on hold so I can focus on family, myself, and the next round of Cgiapp improvements. 
+
+In the meantime, i've been seeing a lot of stuff about <a href="http://www.s9y.org/">Serendipity</a>, and I thought I'd give it a try. Here are the results!
+
+It was super fast to setup, and I hope to import all my old entries from my own system to it, once I can see how entries are stored in the DB.
+
+So, you can now keep track of me via RSS... Read away!
+
+<b>Update:</b> I'm liking S9y even more: it uses <a href="http://smarty.php.net/">Smarty</a> for templating, which means I'm able to modify it to look like it was always seemlessly in my site!</div>
+
+    <p><a href="/blog/1-Zippity-Zoo-Zah....html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2005-03-20 23:33:41</p>
+    <p class="tags"><a href="/blog/tag/personal.html">personal</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/59-Enter-the-Matrix.html">Enter the Matrix</a></h4>
+
+    <div class="entry body"><p>
+    I couldn't resist... the car model demands it...
+</p>
+<p>
+     For those not familiar with where I live, my family and I live in West
+     Bolton, VT -- about 20 miles from Burlington, and at the base of Bolton
+     Mountain. Our daily commute is 4 miles on a dirt road, another 3 to 4 miles
+     on some twisty two-laners at 35mph to the interstate, and around 10 miles
+     on the interstate into Burlington. Then there's all the miles in town
+     getting Maeve to day-care, Jen or myself dropped off, and whomever has the
+     car to work. And we only have one car.
+</p>
+<p>
+    So, you can imagine the crisis when, almost a month ago, our Toyota Rav4
+    died on the way in to work.
+</p>
+<p>
+    We started it up that day, and it had this funny knocking sound. I
+    remembered a similar sound in my old pickup back in Montana... the one that
+    died. I determined to get it into a shop that day to get it diagnosed. The
+    noise came and went while we were on the backroads, and because it wasn't
+    constant, I figured it couldn't be too serious.
+</p>
+<p>
+    And then we tried to get to highway speeds.... a few miles on the
+    interstate, and it was evident we were in trouble. The Rav was having
+    trouble maintaining 60mph on the way up French Hill -- when it normally was
+    able to accelerate past 70mph. And the knocking sound was getting worse and
+    louder.
+</p>
+<p>
+    We resolved to pull off at the first exit, at Tafts Corners in Williston. I
+    pulled into the first gas station there, and as we tried to find a place to
+    park the vehicle, a mechanic was flagging at us to stop the car. He came
+    over to where we parked and said, "Sounds like you've blown your engine."
+</p>
+<p>
+    These, of course, were the absolute last words I wanted to hear.
+</p>
+<p>
+    To make a long story short, apparently a bearing was thrown when we started
+    the engine that day, and because we decided to drive it, we basically
+    destroyed the engine. The cost to replace it: around $6,000.
+</p>
+<p>
+    Now, we're not exactly what you'd call "financially secure". We've had a lot
+    of transitions in the past five years, and except for the past year and a
+    few months, haven't typically both been working at the same time. We've been
+    in a perpetual cycle of having enough to pay the bills... but having to pay
+    consistently late. And we haven't been able to do much, if anything, about our
+    educational debt. In short, our credit sucks. Which means that $6,000 is a
+    big deal.
+</p>
+<p>
+    Did I mention that, at the time of the incident, we still had 17 months left
+    on our car payments?
+</p>
+<p>
+    And, on top of it, I've been in the middle of a <em>huge</em> project for
+    work that's required a fair bit of overtime -- and very little wiggle room
+    for personal time?
+</p>
+<p>
+    The timing could not have been worse, either professionally or financially.
+</p>
+<p>
+    We've been very fortunate, however. Jen's parents very graciously offerred
+    to pay off our existing car loan -- which helped tremendously. It bought us
+    both the time to figure things out, as well as eliminated one factor that
+    may have barred our ability to borrow towards repairs or a new car.
+    Additionally, a friend of Jen's turns out to be absolutely ruthless when it
+    comes to dealing with car salespeople, and went to bat for us in working out
+    a deal. If it hadn't been for her efforts -- and those of the salesperson,
+    who also went to bat for us -- we would not have gotten more than a thousand
+    or so for the vehicle; we ended up getting over $3,000 for it, as is.
+    Finally, the finance guy at the dealership advocated for us tremendously so
+    we could get a loan on a new vehicle, with the Rav as our trade in.
+</p>
+<p>
+    So, to conclude: We're now proud owners of a 2005 Toyota Matrix! (And now
+    the mystery of the title is revealed... to all you Matrix fans out there...)
+</p>
+<p>
+    I'll try to get a photo of the car up soon... about the time we update the
+    year-old photos on our site... :-)
+</p></div>
+
+    <p><a href="/blog/59-Enter-the-Matrix.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2005-03-20 23:13:46</p>
+    <p class="tags"><a href="/blog/tag/personal.html">personal</a><br />
+<a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/58-phpTropics.html">php|Tropics</a></h4>
+
+    <div class="entry body"><p>
+    Well, it's official: My IT Manager convinced those in the upper echelons
+    (well, considering it's a non-profit with only around 20 employees, that
+    meant the president and the CFO) that (1) he and I need to attend a PHP
+    conference, (2) due to the amount of work we've been putting in to bring
+    money into the organization, cost shouldn't be <em>too</em> much of a
+    deciding factor, and (3) <a href="http://www.phparch.com/tropics"
+        target="_blank">php|Tropics</a> isn't <em>too</em> expensive, especially
+    considering the sessions involved cover some of the very issues we've been
+    struggling with the past few months (PHP/MySQL/Apache and clusters, PHP5
+    OOP, PHP Security, test-driven development, Smarty, and more). 
+</p>
+<p>
+    So, we're going to Cancun in May!
+</p>
+<p>
+    This is incredibly exciting! I've never been to Mexico, nor even a resort,
+    so I'll finally get to find out what my wife and friends have been talking
+    about all these years. Plus, the conference is top-notch -- many of the
+    presenters are well-known in the PHP community, and have blogs I've been
+    following for the past year. (I only wish that Chris Shiflett's PHP Security
+    series wasn't running head-to-head with the PHP5 OOP Extensions and PHP 5
+    Patterns sessions; I suspect Rob and I will have to do a divide-and-conquer
+    that day.)
+</p>
+<p>
+    Drop me a line if you'll be attending -- I'm looking forward to meeting
+    other PHP junkies!
+</p></div>
+
+    <p><a href="/blog/58-phpTropics.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2005-02-19 14:38:08</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
+<a href="/blog/tag/programming.html">programming</a><br />
+<a href="/blog/tag/personal.html">personal</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/57-New-Cgiapp-Site.html">New Cgiapp Site</a></h4>
+
+    <div class="entry body"><p>
+    I've been extremely busy at work, and will continue to be through the end of
+    March. I realized this past week that I'd set a goal of having a <a
+        href="http://sourceforge.net" target="_blank">SourceForge</a> website up
+    and running for Cgiapp by the end of January -- and it's now mid-February.
+    Originally, I was going to backport some of my libraries from PHP5 to PHP4
+    so I could do so... and I think that was beginning to daunt me a little. 
+</p>
+<p>
+    Fortunately, I ran across a quick-and-dirty content management solution
+    yesterday called <a href="http://gunther.sourceforge.net/"
+        target="_blank">Gunther</a>. It does templating in Smarty, and uses a
+    wiki-esque syntax for markup -- though page editing is limited to admin
+    users only (something I was looking for). I decided to try it out, and
+    within an hour or so had a working site ready to upload.
+</p>
+<p>
+    Cgiapp's new site can be found at <a
+        href="http://cgiapp.sourceforge.net/">cgiapp.sourceforge.net</a>.
+</p>
+
+<h4>UPDATE</h4>
+<p>
+    Shortly after I wrote this original post, I figured out what the strength of
+    Gunther was -- and why I no longer needed it. Gunther was basically taking
+    content entered from a form and then inserting that content (after some
+    processing for wiki-like syntax) into a Smarty template. Which meant that I
+    could do the same thing with Cgiapp and <a
+        href="http://pear.php.net/text_wiki">Text_Wiki</a>. Within an hour, I
+    wrote an application module in Cgiapp that did just that, and am proud to
+    say that the Cgiapp website is 100% Cgiapp.
+</p></div>
+
+    <p><a href="/blog/57-New-Cgiapp-Site.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2005-01-14 12:43:17</p>
+    <p class="tags"><a href="/blog/tag/personal.html">personal</a><br />
+<a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/56-Cgiapp-1.5.3-released.html">Cgiapp 1.5.3 released</a></h4>
+
+    <div class="entry body"><p>
+    1.5.3 fixes an issue introduced by 1.5.2 that creates a performance hit
+    whenever the run mode is being determined by function name or CGI
+    parameter. More details <a href="/matthew/download?mode=view_download&id=11">on the
+    Cgiapp download page</a>.
+</p></div>
+
+    <p><a href="/blog/56-Cgiapp-1.5.3-released.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="paginationControl">
+        <a href="/blog/author/matthew.html" class="first">&lt;&lt; First</a> |
+        <a href="/blog/author/matthew-p20.html"> &lt; Previous </a> |
+        <a href="/blog/author/matthew-p17.html">17</a> |
+            <a href="/blog/author/matthew-p18.html">18</a> |
+            <a href="/blog/author/matthew-p19.html">19</a> |
+            <a href="/blog/author/matthew-p20.html">20</a> |
+            <span class="current">21</span> |
+            <a href="/blog/author/matthew-p22.html">22</a> |
+            <a href="/blog/author/matthew-p23.html">23</a> |
+            <a href="/blog/author/matthew-p24.html">24</a> |
+            <a href="/blog/author/matthew-p25.html">25</a> |
+            <a href="/blog/author/matthew-p26.html">26</a> |
+            <a href="/blog/author/matthew-p22.html"> Next &gt;</a> |
+        <a href="/blog/author/matthew-p26.html" class="last"> Last &gt;&gt;</a>
+</div>
+
+</section>
+
+<aside class="four columns offset-by-one omega sidebar blog">
+        <div class="metadata">
+        <h4>Blogroll</h4>
+        <ul>
+            <li><a href="http://sebastian-bergmann.de/">Sebastian Bergmann</a></li>
+            <li><a href="http://blog.calevans.com/">Cal Evans</a></li>
+            <li><a href="http://prematureoptimization.org/blog/">Shahar Evron</a></li>
+            <li><a href="http://paul-m-jones.com/blog/">Paul M. Jones</a></li>
+            <li><a href="http://karwin.blogspot.com/">Bill Karwin</a></li>
+            <li><a href="http://mikenaberezny.com/">Mike Naberezny</a></li>
+            <li><a href="http://fabien.potencier.org/">Fabien Potencier</a></li>
+            <li><a href="http://benramsey.com/">Ben Ramsey</a></li>
+            <li><a href="http://derickrethans.nl/">Derick Rethans</a></li>
+            <li><a href="http://ralphschindler.com/">Ralph Schindler</a></li>
+            <li><a href="http://www.zimuel.it/blog/">Enrico Zimuel</a></li>
+        </ul>
+    </div>
+
+</aside>
+</div>
+    </div>
+
+    <footer class="sixteen columns footer">
+        <div class="column one-third alpha about">
+            <h4>About</h4>
+            <p>
+    I'm a husband, father of two, plaything of a Basset puppy, and web 
+    architect by day.
+</p>
+
+<ul class="resume">
+    <li><a href="/resume">Resume</a></li>
+    <li><a href="http://twitter.com/weierophinney">Twitter</a></li>
+    <li><a href="http://www.linkedin.com/in/mweierophinney">LinkedIn</a></li>
+    <li><a href="http://www.ohloh.net/accounts/weierophinney">OhLoh</a></li>
+    <li><a href="http://resume.github.com/?weierophinney">GitHub</a></li>
+</ul>
+
+        </div>
+
+        <div class="column one-third projects">
+            <h4>Projects</h4>
+            <ul class="projects">
+    <li><a href="http://framework.zend.com/">Zend Framework (Project Lead)</a></li>
+    <li><a href="http://github.com/weierophinney/phly_mustache">Phly_Mustache</a></li>
+    <li><a href="http://www.the-pastry-box-project.net/baker/matthew-weier-ophinney/">The Pastry Box Project</a> (as a Baker)</li>
+</ul>
+
+        </div>
+
+        <div class="column one-third omega tags">
+        <div id="search" style="width:100%;">Loading...</div>
+<h4>Tag Cloud</h4>
+<div class="cloud">
+<ul class="Zend\Tag\Cloud"><li><a href="/blog/tag/php.html" style="font-size: 20px;">php</a></li> <li><a href="/blog/tag/zend+framework.html" style="font-size: 14px;">zend framework</a></li> <li><a href="/blog/tag/zf2.html" style="font-size: 11px;">zf2</a></li> <li><a href="/blog/tag/vim.html" style="font-size: 11px;">vim</a></li> <li><a href="/blog/tag/family.html" style="font-size: 11px;">family</a></li> <li><a href="/blog/tag/programming.html" style="font-size: 12px;">programming</a></li> <li><a href="/blog/tag/personal.html" style="font-size: 13px;">personal</a></li> <li><a href="/blog/tag/phpconcom.html" style="font-size: 10px;">phpconcom</a></li> <li><a href="/blog/tag/mvc.html" style="font-size: 11px;">mvc</a></li> <li><a href="/blog/tag/oop.html" style="font-size: 11px;">oop</a></li> <li><a href="/blog/tag/testing.html" style="font-size: 10px;">testing</a></li> <li><a href="/blog/tag/rest.html" style="font-size: 11px;">rest</a></li> <li><a href="/blog/tag/linux.html" style="font-size: 12px;">linux</a></li> <li><a href="/blog/tag/zendcon08.html" style="font-size: 11px;">zendcon08</a></li> <li><a href="/blog/tag/file_fortune.html" style="font-size: 10px;">file_fortune</a></li> <li><a href="/blog/tag/pear.html" style="font-size: 11px;">pear</a></li> <li><a href="/blog/tag/zendcon.html" style="font-size: 11px;">zendcon</a></li> <li><a href="/blog/tag/perl.html" style="font-size: 12px;">perl</a></li> <li><a href="/blog/tag/fastcgi.html" style="font-size: 10px;">fastcgi</a></li> <li><a href="/blog/tag/ubuntu.html" style="font-size: 11px;">ubuntu</a></li> <li><a href="/blog/tag/tekx.html" style="font-size: 10px;">tekx</a></li> <li><a href="/blog/tag/zendcon10.html" style="font-size: 10px;">zendcon10</a></li> <li><a href="/blog/tag/dojo.html" style="font-size: 11px;">dojo</a></li> <li><a href="/blog/tag/symfony.html" style="font-size: 11px;">symfony</a></li> <li><a href="/blog/tag/zeta+components.html" style="font-size: 10px;">zeta components</a></li> <li><a href="/blog/tag/tek09.html" style="font-size: 10px;">tek09</a></li> <li><a href="/blog/tag/spl.html" style="font-size: 11px;">spl</a></li> <li><a href="/blog/tag/subversion.html" style="font-size: 11px;">subversion</a></li> <li><a href="/blog/tag/zend+framewor.html" style="font-size: 10px;">zend framewor</a></li> <li><a href="/blog/tag/rails.html" style="font-size: 10px;">rails</a></li> <li><a href="/blog/tag/conferences.html" style="font-size: 11px;">conferences</a></li> <li><a href="/blog/tag/dpc08.html" style="font-size: 11px;">dpc08</a></li> <li><a href="/blog/tag/phpworks08.html" style="font-size: 11px;">phpworks08</a></li> <li><a href="/blog/tag/webinar.html" style="font-size: 11px;">webinar</a></li> <li><a href="/blog/tag/zencon08.html" style="font-size: 10px;">zencon08</a></li> <li><a href="/blog/tag/cw09.html" style="font-size: 11px;">cw09</a></li> <li><a href="/blog/tag/zend+server.html" style="font-size: 10px;">zend server</a></li> <li><a href="/blog/tag/dpc09.html" style="font-size: 10px;">dpc09</a></li> <li><a href="/blog/tag/sflive2010.html" style="font-size: 10px;">sflive2010</a></li> <li><a href="/blog/tag/security.html" style="font-size: 10px;">security</a></li> <li><a href="/blog/tag/wifi.html" style="font-size: 10px;">wifi</a></li> <li><a href="/blog/tag/aikido.html" style="font-size: 10px;">aikido</a></li> <li><a href="/blog/tag/books.html" style="font-size: 10px;">books</a></li> <li><a href="/blog/tag/dpc10.html" style="font-size: 10px;">dpc10</a></li> <li><a href="/blog/tag/zendcon09.html" style="font-size: 11px;">zendcon09</a></li> <li><a href="/blog/tag/git.html" style="font-size: 10px;">git</a></li> <li><a href="/blog/tag/phpwomen.html" style="font-size: 10px;">phpwomen</a></li> <li><a href="/blog/tag/virtualbox.html" style="font-size: 10px;">virtualbox</a></li> <li><a href="/blog/tag/advocacy.html" style="font-size: 10px;">advocacy</a></li> <li><a href="/blog/tag/politics.html" style="font-size: 10px;">politics</a></li> <li><a href="/blog/tag/internet.html" style="font-size: 10px;">internet</a></li></ul></div>
+        </div>
+
+        <br class="clear"/>
+
+        <div class="copyright">
+            Unless otherwise noted, &#169; 2004 - 2012, Matthew Weier O'Phinney
+        </div>
+    </footer>
+</div>
+</body>
+</html>

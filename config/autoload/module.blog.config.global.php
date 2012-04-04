@@ -2,6 +2,9 @@
 $config = array();
 $config['blog'] = array(
     'options' => array(
+        'author_feed_filename_template' => 'public/blog/author/%s-%s.xml',
+        'author_feed_title_template'    => 'Author: %s :: phly, boy, phly',
+        'by_author_filename_template'   => 'public/blog/author/%s-p%d.html',
         'by_day_filename_template'   => 'public/blog/day/%s-p%d.html',
         'by_month_filename_template' => 'public/blog/month/%s-p%d.html',
         'by_tag_filename_template'   => 'public/blog/tag/%s-p%d.html',
