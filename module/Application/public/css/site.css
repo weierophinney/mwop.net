@@ -30,6 +30,14 @@ a {
     color: #676767;
 }
 
+code {
+    font-family: 'Droid Sans Mono', mono;
+}
+
+code.hl {
+    background-color: #E6E6E6;
+}
+
 header {
     margin-bottom: 1em;
     background-color: #FFFFFF;
