@@ -43,16 +43,14 @@ $bootstrap   = new Bootstrap($configListener->getMergedConfig());
 $application = new Application;
 $bootstrap->bootstrap($application);
 
-/*
-echo "<pre>";
-Zend\Di\Display\Console::export($application->getLocator(), array(
-    'Application\Controller\PageController',
-    // 'Zend\Mail\Mail',
-));
-echo "</pre>";
-$obj = $application->getLocator()->get('Blog\Controller\EntryController');
-echo "<pre>";
-echo var_export($obj, 1);
-echo "</pre>";
-exit();
- */
+//echo "<pre>";
+//Zend\Di\Display\Console::export($application->getLocator(), array(
+    //'Application\Controller\PageController',
+    //// 'Zend\Mail\Mail',
+//));
+//echo "</pre>";
+//$obj = $application->getLocator()->get('Blog\Controller\EntryController');
+//echo "<pre>";
+//echo var_export($obj, 1);
+//echo "</pre>";
+//exit();
