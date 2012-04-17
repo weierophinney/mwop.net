@@ -1,15 +1,24 @@
 <?php
+use PhlyBlog\AuthorEntity;
 use PhlyBlog\EntryEntity;
+
+$author = new AuthorEntity();
+$author->fromArray(array(
+    'id'    => 'matthew',
+    'name'  => "Matthew Weier O'Phinney",
+    'email' => 'me@mwop.net',
+    'url'   => 'http://mwop.net/',
+));
 
 $entry = new EntryEntity();
 
 $entry->setId('255-How-to-Contribute-to-ZF2');
 $entry->setTitle('How to Contribute to ZF2');
-$entry->setAuthor('matthew');
+$entry->setAuthor($author);
 $entry->setDraft(false);
 $entry->setPublic(true);
 $entry->setCreated(1299249000);
-$entry->setUpdated(1299654892);
+$entry->setUpdated(new DateTime('2012-04-17 10:45:00', new DateTimezone('America/Chicago')));
 $entry->setTimezone('America/New_York');
 $entry->setMetadata(array (
   'ep_access' => 'public',
@@ -42,22 +51,28 @@ $entry->setBody($body);
 $extended=<<<'EOT'
 <h2 id="toc_1.1">Getting Setup</h2>
 
-<p>
+<p><del>
 Just like ZF1, ZF2 requires the same
 <a href="http://framework.zend.com/cla">Contributors License Agreement (CLA)</a>. This
 agreement helps protect end users from litigation; basically, you're ensuring
 that you are the author of the code you contribute, or that you have secured the
 rights to any code you contribute. If anybody contests the origin, they can
 legally only approach you, not the end users.
-</p>
+</del></p>
 
-<p>
+<p><del>
 You can either FAX your signed CLA, or you can scan and email it to us; we
 prefer the latter (email).
-</p>
+</del></p>
 
 <p>
-As part of the CLA submission process, don't forget to sign up for an account on
+<del>As part of the CLA submission process, d</del>
+</p>
+
+<p><em>Note: a CLA is no longer necessary for ZF2 contribution!</em></p>
+
+<p>
+Don't forget to sign up for an account on
 our <a href="http://framework.zend.com/issues">issue tracker</a> if you haven't already;
 if you have, make sure your email address is current and correct (you can do so
 via our <a href="http://framework.zend.com/crowd">Crowd instance</a>).
@@ -245,6 +260,7 @@ compelling for developers!
 <h2>Update</h2>
 <ul>
     <li>Fixed all links - thanks for the reports!</li>
+    <li><b>2012-04-17</b>: struck out CLA info; no longer required</li>
 </ul>
 EOT;
 $entry->setExtended($extended);
