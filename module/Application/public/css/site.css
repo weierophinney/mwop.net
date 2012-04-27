@@ -178,9 +178,13 @@ dl.resume dd p.metadata {
     border-right: 1px dotted #676767;
 }
 
-.home.omega {
+.home.middle {
     text-align: center;
+}
+
+.home.omega {
     margin-left: -1px;
+    padding-left: 1em;
     border-left: 1px dotted #676767;
 }
 

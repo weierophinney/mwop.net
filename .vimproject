@@ -77,6 +77,7 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
     analytics.phtml
     dojo-config.phtml
     error.phtml
+    github-links.phtml
     layout.phtml
     projects.phtml
     searchbox.phtml

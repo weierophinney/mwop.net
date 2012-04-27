@@ -1,0 +1,14 @@
+<h3>Recent Github Activity</h3>
+<ul id="github">
+<?php 
+$escape = $this->plugin('escape');
+foreach ($this->github['links'] as $link) {
+    echo sprintf('<li><a href="%s">%s</a></li>',
+        $link['link'],
+        $escape($link['title'])
+    ), "\n";
+}
+?>
+</ul>
+<p><em><a href="<?php echo $this->github['link'] ?>">Read more</a></em></p>
+
