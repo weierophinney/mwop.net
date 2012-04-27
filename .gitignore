@@ -1,6 +1,7 @@
 config/autoload/*.local.php
 config/posts.config.php
 data/comics.html
+data/github-feed-links.phtml
 data/*.bson
 data/*.bz2
 data/*.gz
