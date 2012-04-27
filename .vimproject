@@ -98,6 +98,23 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
     }
    }
   }
+  GithubFeed=GithubFeed {
+   autoload_classmap.php
+   autoload_function.php
+   autoload_register.php
+   Module.php
+   config=config filter="*.ini *.xml *.php *.php.dist" {
+    module.config.php
+   }
+   src=src {
+    GithubFeed=GithubFeed {
+    }
+   }
+   view=view filter="*.mustache *.phtml" {
+    github-feed=github-feed filter="*.phtml" {
+    }
+   }
+  }
  }
  public=public {
   .htaccess
