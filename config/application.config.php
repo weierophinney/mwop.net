@@ -2,6 +2,7 @@
 return array(
     'modules' => array(
         'Application',
+        'GithubFeed',
         'PhlyCommon',
         'PhlyBlog',
         'PhlyComic',

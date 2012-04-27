@@ -1,11 +1,11 @@
 <?php
 namespace GithubFeed;
 
-use Zend\Feed\Reader as FeedReader;
+use Zend\Feed\Reader\Reader as FeedReader;
 
 class AtomReader
 {
-    const ATOM_FORMAT = 'https://github.com/%.private.actor.atom?token=%';
+    const ATOM_FORMAT = 'https://github.com/%s.private.actor.atom?token=%s';
 
     protected $limit = 5;
     protected $token;
@@ -26,9 +26,10 @@ class AtomReader
     public function read()
     {
         $url  = sprintf(self::ATOM_FORMAT, $this->user, $this->token);
-        $feed = FeedReader::import('$url');
+        $feed = FeedReader::import($url);
 
         $lastModified = $feed->getDateModified();
+        $altLink      = $feed->getLink();
         $entries      = array();
         $i            = 0;
 
@@ -46,6 +47,7 @@ class AtomReader
 
         return array(
             'last_modified' => $lastModified,
+            'link'          => $altLink,
             'links'         => $entries,
         );
     }

@@ -19,6 +19,7 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
    module.blog.config.local.php
    module.cache.config.global.php
    module.cache.config.local.php
+   module.github-feed.config.local.php
    module.phly-contact.config.global.php
    module.phly-contact.config.local.php
    module.zfcuser.config.global.php
@@ -103,15 +104,20 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
    autoload_function.php
    autoload_register.php
    Module.php
+   bin=bin{
+    fetch.php
+   }
    config=config filter="*.ini *.xml *.php *.php.dist" {
     module.config.php
    }
    src=src {
     GithubFeed=GithubFeed {
+     AtomReader.php
     }
    }
    view=view filter="*.mustache *.phtml" {
     github-feed=github-feed filter="*.phtml" {
+     links.phtml
     }
    }
   }
