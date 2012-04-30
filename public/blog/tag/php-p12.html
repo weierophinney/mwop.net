@@ -92,6 +92,54 @@ require(["Application/scroll"], function(scroll) {});    //-->
 
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
+    <p class="date">2008-01-01 16:49:26</p>
+    <p class="tags"><a href="/blog/tag/personal.html">personal</a><br />
+<a href="/blog/tag/programming.html">programming</a><br />
+<a href="/blog/tag/php.html">php</a><br />
+<a href="/blog/tag/file_fortune.html">file_fortune</a><br />
+<a href="/blog/tag/mvc.html">mvc</a><br />
+<a href="/blog/tag/pear.html">pear</a><br />
+<a href="/blog/tag/zend+framework.html">zend framework</a><br />
+<a href="/blog/tag/zendcon.html">zendcon</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/154-2007-Retrospective.html">2007 Retrospective</a></h4>
+
+    <div class="entry body"><p>
+    2007 was a busy year, both personally and professionally. I won't go into
+    the personal too much, because, well, it's personal, and some of the details
+    are simply inappropriate for blogging material.
+</p>
+
+<p>
+    Here's the short version:
+</p>
+
+<ul>
+    <li>One trip to Belgium and The Netherlands.</li>
+    <li>Two trips to Israel.</li>
+    <li>Two trips to Atlanta, GA (not counting the return trip from Europe, when
+    I was stranded for a day due to storms in the Northeast).</li>
+    <li>Three different user groups attended, with three presentations.</li>
+    <li>One major Zend Framework release</li>
+    <li>One PEAR release.</li>
+    <li>One podcast.</li>
+    <li>One webinar.</li>
+    <li>One book published.</li>
+    <li>One conference attended.</li>
+</ul>
+
+<p>
+    What follows is my month-by-month breakdown:
+</p></div>
+
+    <p><a href="/blog/154-2007-Retrospective.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
     <p class="date">2007-12-20 12:00:00</p>
     <p class="tags"><a href="/blog/tag/php.html">php</a></p>
 </aside>
@@ -506,48 +554,6 @@ echo $fortunes[$index];
 <p><b>Update (2007-07-10): fixed parse error in examples</b></p></div>
 
     <p><a href="/blog/142-File_Fortune-refactored.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2007-05-20 12:23:50</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/140-Globals%2C-continued.html">Globals, continued</a></h4>
-
-    <div class="entry body"><p>
-    <b>Update:</b> Sara has pointed out a flaw in my last case. The file 'loadFileWithGlobals.php' was incorrectly loading the wrong file -- it should be loading 'withGlobals2.php' (updated now). When it does, access to 'baz2' works as it should.
-</p>
-<p>
-    As I note to in my comment, however, I stand by my original rant: relying on globals for your applications is a bad practice, as it makes them difficult to integrate with other applications later. Developers using your application should not need to hunt down exactly when a global is first declared and explicitly push it into the global scope in order to get that application to integrate with others. Use other means, such as singletons or registries, to persist configuration within your applications.
-</p>
-<hr />
-<p>
-    In <a href="/matthew/index.php?url=archives/139-PHP-globals-for-the-OOP-developer.html">my last entry</a>, 
-    I evidently greatly simplified the issue to the point that my example
-    actually didn't display the behaviour I had observed. I'm going to show a
-    more detailed example that shows exactly the behaviour that was causing
-    issues for me.
-</p>
-
-<p>
-    First off, this has specifically to do with including files from within
-    functions or class methods that then call on other files that define values
-    in the global scope. In the original example, I show an action controller
-    method that includes the serendipity bootstrap file, which in turn loads a
-    configuration file that sets a multi-dimensional array variable in the
-    global scope. Without first defining the variable in the global scope, this
-    method of running serendipity fails.
-</p>
-
-<p>
-    Now, for the examples.
-</p></div>
-
-    <p><a href="/blog/140-Globals%2C-continued.html">Continue reading...</a></p>
 </section>
 
 </div>

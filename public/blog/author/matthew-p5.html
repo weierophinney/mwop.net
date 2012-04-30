@@ -92,6 +92,45 @@ require(["Application/scroll"], function(scroll) {});    //-->
 
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
+    <p class="date">2010-03-04 15:28:07</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
+<a href="/blog/tag/rest.html">rest</a><br />
+<a href="/blog/tag/zend+framework.html">zend framework</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/233-Responding-to-Different-Content-Types-in-RESTful-ZF-Apps.html">Responding to Different Content Types in RESTful ZF Apps</a></h4>
+
+    <div class="entry body"><p>
+    In <a
+        href="/matthew/archives/227-Exposing-Service-APIs-via-Zend-Framework.html">previous</a>
+    <a
+        href="/matthew/archives/228-Building-RESTful-Services-with-Zend-Framework.html">articles</a>,
+    I've explored building service endpoints and RESTful services with Zend
+    Framework. With RPC-style services, you get to cheat: the protocol dictates
+    the content type (XML-RPC uses XML, JSON-RPC uses JSON, SOAP uses XML,
+    etc.). With REST, however, you have to make choices: what serialization
+    format will you support? 
+</p>
+
+<p> 
+    Why not support multiple formats?
+</p>
+
+<p>
+    There's no reason you can't re-use your RESTful web service to support
+    multiple formats. Zend Framework and PHP have plenty of tools to assist you
+    in responding to different format requests, so don't limit yourself. With a
+    small amount of work, you can make your controllers format agnostic, and
+    ensure that you respond appropriately to different requests.
+</p></div>
+
+    <p><a href="/blog/233-Responding-to-Different-Content-Types-in-RESTful-ZF-Apps.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
     <p class="date">2010-02-17 11:39:43</p>
     <p class="tags"><a href="/blog/tag/php.html">php</a><br />
 <a href="/blog/tag/sflive2010.html">sflive2010</a><br />
@@ -363,56 +402,6 @@ require(["Application/scroll"], function(scroll) {});    //-->
     alt="CodeWorks'09" height="200" width="150" /></p></div>
 
     <p><a href="/blog/224-CodeWorks-2009-Begins.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2009-08-31 15:34:37</p>
-    <p class="tags"><a href="/blog/tag/linux.html">linux</a><br />
-<a href="/blog/tag/security.html">security</a><br />
-<a href="/blog/tag/wifi.html">wifi</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/223-Enabling-VPN-split-tunnel-with-NetworkManager.html">Enabling VPN split tunnel with NetworkManager</a></h4>
-
-    <div class="entry body"><p>
-    I've been using <a
-        href="http://projects.gnome.org/NetworkManager/">NetworkManager</a> for
-    some time now, and appreciate how easy it makes both connecting to wifi as
-    well as VPNs. That said, I've had an issue with it that I only resolved
-    today.
-</p>
-
-<p>
-    When working from home, I prefer to use a VPN split tunnel setup -- I'm
-    behind a firewall all the time, and it's useful to be able to run virtual
-    machines while still connected to my VPN (e.g., when doing training or
-    webinar sessions). However, I noticed some months ago that this wasn't
-    working. I assumed at first it was a change in our network setup, but others
-    reported that the split tunnel was working fine. It's been particularly
-    problematic when on IRC -- if the VPN drops, I lose my IRC connection,
-    meaning I have to re-connect and re-claim my nick.
-</p>
-
-<p>
-    So, I did some searching, and found an interesting setting. In
-    NetworkManager, "Configure..." then "Edit" your VPN connection,
-    and navigate to the "IPv4 Settings" tab. Once there, click the button that
-    says "Routes..." and select the checkbox next to "Use this connection only
-    for resources on its network". Press Ok to close the dialog, then "Apply" to
-    exit out of the VPN configuration. Re-connect to the VPN, and you should be
-    all set.
-</p>
-
-<p>
-    <em>Note: this will only work if your VPN server is configured to allow
-    split tunnels. Additionally, only do so if you are behind a firewall.
-    Practice safe networking.</em>
-</p></div>
-
-    <p><a href="/blog/223-Enabling-VPN-split-tunnel-with-NetworkManager.html">Continue reading...</a></p>
 </section>
 
 </div>

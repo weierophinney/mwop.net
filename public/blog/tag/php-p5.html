@@ -92,6 +92,45 @@ require(["Application/scroll"], function(scroll) {});    //-->
 
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
+    <p class="date">2010-03-04 15:28:07</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
+<a href="/blog/tag/rest.html">rest</a><br />
+<a href="/blog/tag/zend+framework.html">zend framework</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/233-Responding-to-Different-Content-Types-in-RESTful-ZF-Apps.html">Responding to Different Content Types in RESTful ZF Apps</a></h4>
+
+    <div class="entry body"><p>
+    In <a
+        href="/matthew/archives/227-Exposing-Service-APIs-via-Zend-Framework.html">previous</a>
+    <a
+        href="/matthew/archives/228-Building-RESTful-Services-with-Zend-Framework.html">articles</a>,
+    I've explored building service endpoints and RESTful services with Zend
+    Framework. With RPC-style services, you get to cheat: the protocol dictates
+    the content type (XML-RPC uses XML, JSON-RPC uses JSON, SOAP uses XML,
+    etc.). With REST, however, you have to make choices: what serialization
+    format will you support? 
+</p>
+
+<p> 
+    Why not support multiple formats?
+</p>
+
+<p>
+    There's no reason you can't re-use your RESTful web service to support
+    multiple formats. Zend Framework and PHP have plenty of tools to assist you
+    in responding to different format requests, so don't limit yourself. With a
+    small amount of work, you can make your controllers format agnostic, and
+    ensure that you respond appropriately to different requests.
+</p></div>
+
+    <p><a href="/blog/233-Responding-to-Different-Content-Types-in-RESTful-ZF-Apps.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
     <p class="date">2010-02-17 11:39:43</p>
     <p class="tags"><a href="/blog/tag/php.html">php</a><br />
 <a href="/blog/tag/sflive2010.html">sflive2010</a><br />
@@ -363,28 +402,6 @@ require(["Application/scroll"], function(scroll) {});    //-->
     alt="CodeWorks'09" height="200" width="150" /></p></div>
 
     <p><a href="/blog/224-CodeWorks-2009-Begins.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2009-08-31 12:54:37</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
-<a href="/blog/tag/zend+framework.html">zend framework</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/222-Cloning-the-ZF-SVN-repository-in-Git.html">Cloning the ZF SVN repository in Git</a></h4>
-
-    <div class="entry body"><p>
-    I've been using <a href="http://git-scm.com/">Git</a> for around a year now.
-    My interest in it originally was to act as a replacement for 
-    <a href="http://svk.bestpractical.com/">SVK</a>, with which I'd had some
-    bad experiences (when things go wrong with svk, they go very wrong). Why was
-    I using a distributed version control system, though?
-</p></div>
-
-    <p><a href="/blog/222-Cloning-the-ZF-SVN-repository-in-Git.html">Continue reading...</a></p>
 </section>
 
 </div>

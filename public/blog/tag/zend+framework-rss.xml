@@ -3,10 +3,26 @@
   <channel>
     <title>Tag: zend framework :: phly, boy, phly</title>
     <description>Tag: zend framework :: phly, boy, phly</description>
-    <pubDate>Tue, 03 Apr 2012 21:50:00 -0500</pubDate>
+    <pubDate>Mon, 30 Apr 2012 16:00:00 -0500</pubDate>
     <generator>Zend_Feed_Writer 2.0.0beta3 (http://framework.zend.com)</generator>
     <link>http://mwop.net/blog/tag/zend+framework.html</link>
     <atom:link rel="self" type="application/rss+xml" href="http://mwop.net/blog/tag/zend+framework-rss.xml"/>
+    <item>
+      <title>Why Modules?</title>
+      <pubDate>Mon, 30 Apr 2012 16:00:00 -0500</pubDate>
+      <link>http://mwop.net/blog/2012-04-30-why-modules.html</link>
+      <guid>http://mwop.net/blog/2012-04-30-why-modules.html</guid>
+      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
+      <dc:creator>Matthew Weier O'Phinney</dc:creator>
+      <content:encoded><![CDATA[<p>
+    I've blogged <a href="/blog/267-Getting-started-writing-ZF2-modules.html">about 
+    getting started with ZF2 modules</a>, as well as <a href="/blog/zf2-modules-you-can-use-today.html">about 
+    ZF2 modules you can already use</a>. But after fielding some questions recently, 
+    I realized I should talk about <em>why</em> modules are important for the 
+    ZF2 ecosystem.
+</p>]]></content:encoded>
+      <slash:comments>0</slash:comments>
+    </item>
     <item>
       <title>Developing A ZF2 Blog</title>
       <pubDate>Tue, 03 Apr 2012 21:50:00 -0500</pubDate>
@@ -350,29 +366,6 @@ A question I receive often is: "How can I contribute to ZF2?"
 
 <p>
 Consider this your guide.
-</p>]]></content:encoded>
-      <slash:comments>0</slash:comments>
-    </item>
-    <item>
-      <title>Aspects, Filters, and Signals, Oh, My!</title>
-      <pubDate>Fri, 14 Jan 2011 07:53:52 -0600</pubDate>
-      <link>http://mwop.net/blog/251-Aspects,-Filters,-and-Signals,-Oh,-My!.html</link>
-      <guid>http://mwop.net/blog/251-Aspects,-Filters,-and-Signals,-Oh,-My!.html</guid>
-      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
-      <dc:creator>Matthew Weier O'Phinney</dc:creator>
-      <content:encoded><![CDATA[<p>
-Last month, during <a href="http://phpadvent.org">PHP Advent</a>,
-<a href="http://ohloh.net/accounts/gwoo">gwoo</a> wrote an interesting post on
-<a href="http://phpadvent.org/2010/aspect-oriented-design-by-garrett-woodworth">
-Aspect-Oriented Design</a>, or Aspect Oriented Programming (AOP) as it is more
-commonly known. The article got me to thinking, and revisiting what I know about
-AOP, Intercepting Filters, and Signal Slots -- in particular, what use cases I
-see for them, what the state of current PHP offerings are, and where the future
-may lie.
-</p>
-
-<p>
-But first, some background is probably in order, as this is a jargon-heavy post.
 </p>]]></content:encoded>
       <slash:comments>0</slash:comments>
     </item>

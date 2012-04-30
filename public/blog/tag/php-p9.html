@@ -92,6 +92,40 @@ require(["Application/scroll"], function(scroll) {});    //-->
 
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
+    <p class="date">2008-08-28 11:50:52</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
+<a href="/blog/tag/zend+framework.html">zend framework</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/186-Using-dijit.Editor-with-Zend-Framework.html">Using dijit.Editor with Zend Framework</a></h4>
+
+    <div class="entry body"><p>
+    We're getting ready to release Zend Framework 1.6.0. However, one important
+    Dijit had to be omitted from the release as I was not able to get it working
+    in time: dijit.Editor.
+</p>
+
+<p>
+    This dijit is important as it provides an out-of-the-box WYSIWYG editor that
+    you can use with your forms. Unfortunately, actually using it with forms is
+    pretty tricky -- Dojo actually ends up storing content <em>outside</em> the
+    form, which means you need to create a handler that pulls the content into a
+    hidden element when saving.
+</p>
+
+<p>
+    I <em>have</em> created an implementation, however, that you can start using
+    now, and I'm posting it below. It includes both a view helper for displaying
+    it, as well as a form element for use with Zend_Form. 
+</p></div>
+
+    <p><a href="/blog/186-Using-dijit.Editor-with-Zend-Framework.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
     <p class="date">2008-08-27 08:49:45</p>
     <p class="tags"><a href="/blog/tag/php.html">php</a><br />
 <a href="/blog/tag/zend+framework.html">zend framework</a><br />
@@ -440,46 +474,6 @@ $viewRenderer = HelperBroker::getStaticHelper('viewRenderer');
 </p></div>
 
     <p><a href="/blog/176-Zend-Framework-Dojo-Integration.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2008-05-18 15:08:33</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
-<a href="/blog/tag/conferences.html">conferences</a><br />
-<a href="/blog/tag/zend+framework.html">zend framework</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/175-Speaking-at-the-Dutch-PHP-Conference.html">Speaking at the Dutch PHP Conference</a></h4>
-
-    <div class="entry body"><p>
-    I've known for some time, but was reluctant to blog about it until the plane
-    tickets were purchased and in hand: I've been invited to speak at the 
-    <a href="http://phpconference.nl/">Dutch PHP Conference</a> this coming
-    June:
-</p>
-
-<p style="text-align: center"><img src="http://phpconference.nl/img/dpc08/logoDPC08_small.png" alt="DPC" height="149" width="217" />
-</p>
-
-<p>
-    I'll be presenting two separate sessions: 
-    <a href="http://phpconference.nl/workshops/">an all day tutorial</a> 
-    on 13 June 2008 covering Zend Framework, and a regular session on 14 June
-    2008 covering 
-    <a href="http://phpconference.nl/schedule/bestpractices">Best Practices for PHP development</a>, 
-    which will focus on how to utilize Zend Framework coding standards and
-    methodologies to help deliver efficient, high quality code for your
-    organization.
-</p>
-
-<p>
-    I'm looking forward to meeting old and new friends alike at the conference!
-</p></div>
-
-    <p><a href="/blog/175-Speaking-at-the-Dutch-PHP-Conference.html">Continue reading...</a></p>
 </section>
 
 </div>

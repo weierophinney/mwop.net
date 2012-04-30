@@ -92,6 +92,46 @@ require(["Application/scroll"], function(scroll) {});    //-->
 
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
+    <p class="date">2008-09-25 23:11:30</p>
+    <p class="tags"><a href="/blog/tag/dojo.html">dojo</a><br />
+<a href="/blog/tag/php.html">php</a><br />
+<a href="/blog/tag/zencon08.html">zencon08</a><br />
+<a href="/blog/tag/zend+framework.html">zend framework</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/192-ZendCon08-Wrapup.html">ZendCon08 Wrapup</a></h4>
+
+    <div class="entry body"><p>
+    I'm a bit late on my <a href="http://www.zendcon.com/">ZendCon'08</a>
+    wrapup; the conference left me both exhausted and with a backlog of email
+    and work that has consumed me since it ended. However, this, too, is good,
+    as it has given me time to reflect... and to finally get my slides up on
+    SlideShare.
+</p>
+
+<p>
+    ZendCon was alternately exhausting, rewarding, educational, fruitful,
+    infurating, and ultimately wonderful. I've been to every single ZendCon so
+    far -- I started at Zend a scant month before the inaugural event -- and
+    have spoken at each. My first time speaking was a fluke; 
+    <a href="http://www.sklar.com/">David Sklar</a> had just started at 
+    <a href="http://www.ning.com/">Ning</a> and had to back out of his
+    "Configuring PHP" tutorial session. 
+    <a href="http://mikenaberezny.com/">Mike Naberezny</a> and I were drafted to
+    take it over, and we had N+1 attendees, where N was the number of speakers.
+    Since that inauspicious beginning, I've gradually taken on more sessions and
+    stuck around to participate in the conference more. I can honestly say that
+    this was the biggest, busiest, and most community focussed ZendCon I can
+    remember.
+</p></div>
+
+    <p><a href="/blog/192-ZendCon08-Wrapup.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
     <p class="date">2008-09-24 12:16:27</p>
     <p class="tags"><a href="/blog/tag/programming.html">programming</a><br />
 <a href="/blog/tag/git.html">git</a><br />
@@ -458,58 +498,6 @@ require(["Application/scroll"], function(scroll) {});    //-->
 </p></div>
 
     <p><a href="/blog/183-Zend-Framework-1.6.0-Preview%2C-or%2C-PHP-4-is-Dead.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2008-06-30 12:00:00</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
-<a href="/blog/tag/mvc.html">mvc</a><br />
-<a href="/blog/tag/zend+framework.html">zend framework</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/182-Testing-Zend-Framework-MVC-Applications.html">Testing Zend Framework MVC Applications</a></h4>
-
-    <div class="entry body"><p>
-    Since I originally started hacking on the <a
-    href="http://framework.zend.com/">Zend Framework</a> MVC in the fall of
-    2006, I've been touting the fact that you can test ZF MVC projects by
-    utilizing the Request and Response objects; indeed, this is what I actually
-    did to test the Front Controller and Dispatcher. However, until recently,
-    there was never an easy way to do so in your userland projects; the default
-    request and response objects make it difficult to easily and quickly setup
-    tests, and the methods introduced into the front controller to make it
-    testable are largely undocumented. 
-</p>
-
-<p>
-    So, one of my ongoing projects the past few months has been to create an
-    infrastructure for functional testing of ZF projects using <a
-        href="http://phpunit.de/">PHPUnit</a>. This past weekend, I made the
-    final commits that make this functionality feature complete.
-</p>
-
-<p>
-    The new functionality provides several facets:
-</p>
-
-<ul>
-    <li>Stub test case classes for the HTTP versions of our Request and Response
-        objects, containing methods for setting up the request environment
-        (including setting GET, POST, and COOKIE parameters, HTTP request
-        headers, etc).</li>
-    <li><code>Zend_Dom_Query</code>, a class for using CSS selectors (and XPath)
-        to query (X)HTML and XML documents.</li>
-    <li>PHPUnit constraints that consume <code>Zend_Dom_Query</code> and the
-        Response object to make their comparisons.</li>
-    <li>A specialized PHPUnit test case that contains functionality for
-        bootstrapping an MVC application, dispatching requests, and a variety of
-        assertions that utilize the above constraints and objects.</li>
-</ul></div>
-
-    <p><a href="/blog/182-Testing-Zend-Framework-MVC-Applications.html">Continue reading...</a></p>
 </section>
 
 </div>

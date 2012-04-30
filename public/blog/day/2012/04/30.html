@@ -4,7 +4,7 @@
 <!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
 <head>
 	<meta charset="utf-8" />
-    <title>Blog Entries for 2012 :: phly, boy, phly</title>
+    <title>Blog Entries for 30 April 2012 :: phly, boy, phly</title>
 	<!--[if lt IE 9]>
 		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
@@ -16,8 +16,8 @@
 <link href="/css/Application/site.css" media="screen" rel="stylesheet" type="text/css" >
 <link href="/images/Application/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" >
 <link href="/css/Application/blog.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/blog/year/2012-atom.xml" rel="alternate" type="application/atom+xml" title="Blog Entries for 2012 Atom Feed" >
-<link href="/blog/year/2012-rss.xml" rel="alternate" type="application/rss+xml" title="Blog Entries for 2012 RSS Feed" >
+<link href="/blog/day/2012/04/30-atom.xml" rel="alternate" type="application/atom+xml" title="Blog Entries for 30 April 2012 Atom Feed" >
+<link href="/blog/day/2012/04/30-rss.xml" rel="alternate" type="application/rss+xml" title="Blog Entries for 30 April 2012 RSS Feed" >
     <script type="text/javascript">
     //<!--
 dojoConfig={
@@ -88,7 +88,7 @@ require(["Application/scroll"], function(scroll) {});    //-->
     <div class="sixteen columns content">
         <div class="row">
 <section class="eleven columns alpha blog">
-    <h2>Blog Entries for 2012</h2>
+    <h2>Blog Entries for 30 April 2012</h2>
 
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
@@ -110,220 +110,6 @@ require(["Application/scroll"], function(scroll) {});    //-->
 </p></div>
 
     <p><a href="/blog/2012-04-30-why-modules.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2012-04-03 08:45:00</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
-<a href="/blog/tag/zend+framework.html">zend framework</a><br />
-<a href="/blog/tag/zf2.html">zf2</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/2012-05-developing-a-zf2-blog.html">Developing A ZF2 Blog</a></h4>
-
-    <div class="entry body"><p>
-    This post tells a story.
-</p>
-
-<p>
-    A long time ago, I set out to write my own blog platform. Yes, <a 
-    href="http://wordpress.org">WordPress</a> is a fine blogging platform, as is 
-    <a href="http://www.s9y.org/">Serendipity</a> (aka "s9y", and my previous 
-    platform). And yes, I know about <a 
-    href="http://habariproject.org">Habari</a>. And, for those of you skimming 
-    ahead, yes, I'm quite aware of <a href="http://github.com/mojombo/jekyll">Jekyll</a>, 
-    thank you anyways.
-</p>
-
-<p>
-    Why write something of my own? Well, of course, there's the fact that I'm
-    a developer, and have control issues. Then there's also the fact that a 
-    blog is both a simple enough domain to allow easily experimenting with new
-    technology and paradigms, while simultaneously providing a complex enough
-    domain to expose non-trivial issues. 
-</p>
-    
-<p>
-    When I started this project, it was a technology-centered endeavor; I 
-    wanted to play with document databases such as <a 
-    href="http://couchdb.apache.org/">CouchDB</a> and <a 
-    href="http://www.mongodb.org/">MongoDB</a>, and with caching technologies 
-    like <a href="http://memcached.org">memcached</a> and <a 
-    href="http://redis.io">redis</a>.
-</p>
-
-<p>
-    Not long after I started, I also realized it was a great playground for me
-    to prototype ideas for <a href="http://framework.zend.com/zf2">ZF2</a>;
-    in fact, the original DI and MVC prototypes lived as branches of my blog.
-    (My repository is still named "zf2sandbox" to this day, though it 
-    technically houses just my site.)
-</p>
-
-<p>
-    Over time, I had a few realizations. First, my <em>actual</em> blog was
-    suffering. I wasn't taking the time to perform security updates, nor even
-    normal upgrades, and was so far behind as to make the process non-trivial,
-    particularly as I had a custom theme, and because I was proxying to my 
-    blog via a ZF app in order to facilitate a cohesive site look-and-feel. I
-    needed to either sink time into upgrading, or finish my blog.
-</p>
-    
-<p>
-    My second realization, however, was the more important one: I wanted a 
-    platform where I could write how <em>I</em> want to write. I am
-    a keyboard-centric developer and computer user, and while I love the web,
-    I hate typing in its forms. Additionally, my posts often take longer than
-    a typical browser session -- which leaves me either losing my work in a
-    GUI admin, or having to write first in my editor of choice, and then 
-    cut-and-paste it to the web forms. Finally, I want versions I can easily
-    browse with standard diffing tools.
-</p>
-
-<p>
-    When it came down to it, my blog content is basically static. Occasionally,
-    I'll update a post, but it's rare. Comments are really the only dynamic
-    aspect of the blog... and what I had with s9y was not cutting it, as I was
-    getting more spam than I could keep up with. New commenting platforms such 
-    as <a href="http://livefyre.com">Livefyre</a> and <a href="http://disqus.com">Disqus</a>
-    provide more features than most blogging platforms I know, and provide 
-    another side benefit: because they are javascript-based, you can simply
-    drop in a small amount of markup into your post <em>once</em> -- meaning
-    your pages can be fully static!
-</p>
-
-<p>
-    Add these thoughts to the rise of static blogging platforms such as the 
-    aforementioned Jekyll, and I had a kernel of an idea: take the work I'd
-    done already, and create a static blog generator. 
-</p></div>
-
-    <p><a href="/blog/2012-05-developing-a-zf2-blog.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2012-03-05 17:32:45</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
-<a href="/blog/tag/zend+framework.html">zend framework</a><br />
-<a href="/blog/tag/zf2.html">zf2</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/zf2-beta3.html">View Layers, Database Abstraction, Configuration, Oh, My!</a></h4>
-
-    <div class="entry body"><p>
-    Late last week, the Zend Framework community <a href="http://framework.zend.com/zf2/blog/entry/Zend-Framework-2-0-0beta3-Released">2.0.0beta3</a>, 
-    the latest iteration of the v2 framework. What have we been busy doing the 
-    last couple months? In a nutshell, getting dirty with view layers, database
-    abstraction, and configuration.
-</p></div>
-
-    <p><a href="/blog/zf2-beta3.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2012-02-08 11:31:47</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
-<a href="/blog/tag/zend+framework.html">zend framework</a><br />
-<a href="/blog/tag/zf2.html">zf2</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/zf2-modules-you-can-use-today.html">ZF2 Modules You Can Use Today</a></h4>
-
-    <div class="entry body"><p>
-    One key new architectural feature of Zend Framework 2 is its new module
-    infrastructure. The basic idea behind modules is to allow developers to both
-    create and consume re-usable application functionality -- anything from
-    packaging common assets such as CSS and JavaScript to providing MVC
-    application classes.
-</p></div>
-
-    <p><a href="/blog/zf2-modules-you-can-use-today.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2012-01-18 16:48:07</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
-<a href="/blog/tag/advocacy.html">advocacy</a><br />
-<a href="/blog/tag/politics.html">politics</a><br />
-<a href="/blog/tag/internet.html">internet</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/call-a-spade-a-spade.html">Call A Spade A Spade</a></h4>
-
-    <div class="entry body"><p>
-    I don't often get political on my blog, or over social media. But those of 
-    you who <a href="http://twitter.com/weierophinney">follow me on twitter</a> 
-    lately have been treated to a number of tweets and retweets from me about 
-    some bills before the US legislative bodies called "SOPA" and "PIPA". Over
-    the last couple days, I realized exactly why I disagree with them, and 
-    felt 140 characters is not enough.
-</p></div>
-
-    <p><a href="/blog/call-a-spade-a-spade.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2012-01-11 22:58:28</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
-<a href="/blog/tag/perl.html">perl</a><br />
-<a href="/blog/tag/zend+framework.html">zend framework</a><br />
-<a href="/blog/tag/zf2.html">zf2</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/why-conventions-matter.html">Why Conventions Matter</a></h4>
-
-    <div class="entry body"><p>
-    When I started teaching myself scripting languages, I started with Perl. One
-    Perl motto is <a href="http://en.wikipedia.org/wiki/TMTOWTDI">"TMTOWTDI"</a>
-    -- "There's More Than One Way To Do It," and pronounced "tim-toady." The
-    idea is that there's likely multiple ways to accomplish the very same thing,
-    and the culture of the language encourages finding novel ways to do things.
-</p>
-
-<p>
-    I've seen this principle used everywhere and in just about every programming
-    situation possible, applied to logical operations, naming conventions,
-    formatting, and even project structure.  Everyone has an opinion on these
-    topics, and given free rein to implement as they see fit, it's rare that two
-    developers will come up with the same conventions.
-</p>
-
-<p>
-    TMTOWTDI is an incredibly freeing and egalitarian principle.
-</p>
-
-<p>
-    Over the years, however, my love for TMTOWTDI has diminished some.  Freeing
-    as it is, is also a driving force behind having coding standards and
-    conventions -- because when everyone does it their own way, projects become
-    quickly hard to maintain. Each person finds themselves reformatting code to
-    their own standards, simply so they can read it and follow its flow.
-</p>
-
-<p>
-    Additionally, TMTOWTDI can actually be a foe of simple, elegant solutions.
-</p>
-
-<p>
-    Why do I claim this?
-</p></div>
-
-    <p><a href="/blog/why-conventions-matter.html">Continue reading...</a></p>
 </section>
 
 </div>

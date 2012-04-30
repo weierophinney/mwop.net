@@ -14,7 +14,7 @@ $entry->setId('2012-04-30-why-modules');
 $entry->setTitle('Why Modules?');
 $entry->setAuthor($author);
 $entry->setDraft(false);
-$entry->setPublic(false);
+$entry->setPublic(true);
 $entry->setCreated(new \DateTime('2012-04-30 16:00', new \DateTimezone('America/Chicago')));
 $entry->setUpdated(new \DateTime('2012-04-30 16:00', new \DateTimezone('America/Chicago')));
 $entry->setTimezone('America/Chicago');

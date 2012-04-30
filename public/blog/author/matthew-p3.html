@@ -92,6 +92,27 @@ require(["Application/scroll"], function(scroll) {});    //-->
 
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
+    <p class="date">2011-01-17 10:02:00</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
+<a href="/blog/tag/spl.html">spl</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/253-Taming-SplPriorityQueue.html">Taming SplPriorityQueue</a></h4>
+
+    <div class="entry body"><p>
+<a href="http://php.net/SplPriorityQueue">SplPriorityQueue</a> is a fantastic new feature of
+PHP 5.3. However, in trying to utilize it in a few projects recently, I've run
+into some behavior that's (a) non-intuitive, and (b) in some cases at least,
+undesired. In this post, I'll present my solutions.
+</p></div>
+
+    <p><a href="/blog/253-Taming-SplPriorityQueue.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
     <p class="date">2011-01-10 09:30:00</p>
     <p class="tags"><a href="/blog/tag/php.html">php</a><br />
 <a href="/blog/tag/oop.html">oop</a><br />
@@ -382,48 +403,6 @@ In this post, I'll outline the approaches I've tried, the benchmarking stategy I
 </p></div>
 
     <p><a href="/blog/244-Applying-FilterIterator-to-Directory-Iteration.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2010-08-09 10:45:00</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
-<a href="/blog/tag/fastcgi.html">fastcgi</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/243-Running-mod_php-and-FastCGI-side-by-side.html">Running mod_php and FastCGI side-by-side</a></h4>
-
-    <div class="entry body"><p>
-    Because we're in full throes of <a href="http://framework.zend.com">Zend
-        Framework</a> 2.0 development, I find myself with a variety of PHP
-    binaries floating around my system from both the PHP 5.2 and 5.3 release
-    series. We're at a point now where I'm wanting to test migrating
-    applications from ZF 1.X to 2.0 to se see what works and what doesn't. But
-    that means I need more than one PHP binary enabled on my server...
-</p>
-
-<p>
-    I use <a href="http://www.zend.com/products/server/">Zend Server</a> on my
-    development box; it's easy to install, and uses my native Ubuntu update
-    manager to get updates. On Ubuntu, it installs the Debian Apache2 packages,
-    so I get the added bonus of familiarity with the configuration structure.
-</p>
-
-<p>
-    I installed Zend Server some time ago, so I'm still on a PHP 5.2 mod_php
-    binary. I have several PHP 5.3 binaries compiled and installed locally for
-    running unit tests and sample scripts already -- so the question was how to
-    keep my 5.2 mod_php running while simultaneously allowing the ability to run
-    selected vhosts in 5.3?
-</p>
-
-<p>
-    The answer can be summed up in one acronym: FastCGI.
-</p></div>
-
-    <p><a href="/blog/243-Running-mod_php-and-FastCGI-side-by-side.html">Continue reading...</a></p>
 </section>
 
 </div>

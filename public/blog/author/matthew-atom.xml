@@ -1,11 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title type="text">Author: Matthew Weier O'Phinney :: phly, boy, phly</title>
-  <updated>2012-04-03T21:50:00-05:00</updated>
+  <updated>2012-04-30T16:00:00-05:00</updated>
   <generator uri="http://framework.zend.com" version="2.0.0beta3">Zend_Feed_Writer</generator>
   <link rel="alternate" type="text/html" href="http://mwop.net/blog/author/matthew.html"/>
   <link rel="self" type="application/atom+xml" href="http://mwop.net/blog/author/matthew-atom.xml"/>
   <id>http://mwop.net/blog/author/matthew.html</id>
+  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <title type="html"><![CDATA[Why Modules?]]></title>
+    <published>2012-04-30T16:00:00-05:00</published>
+    <updated>2012-04-30T16:00:00-05:00</updated>
+    <link rel="alternate" type="text/html" href="http://mwop.net/blog/2012-04-30-why-modules.html"/>
+    <id>http://mwop.net/blog/2012-04-30-why-modules.html</id>
+    <author>
+      <name>Matthew Weier O'Phinney</name>
+      <email>me@mwop.net</email>
+      <uri>http://mwop.net</uri>
+    </author>
+    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
+      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>I've blogged <xhtml:a href="/blog/267-Getting-started-writing-ZF2-modules.html">about getting
+started with ZF2 modules</xhtml:a>, as well as <xhtml:a href="/blog/zf2-modules-you-can-use-today.html">about ZF2 modules you
+can already use</xhtml:a>. But after fielding some questions recently, I
+realized I should talk about <xhtml:em>why</xhtml:em> modules are important for
+the ZF2 ecosystem.</xhtml:p>
+</xhtml:div>
+    </content>
+  </entry>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <title type="html"><![CDATA[Developing A ZF2 Blog]]></title>
     <published>2012-04-03T08:45:00-05:00</published>
@@ -299,35 +319,6 @@ several others -- and indeed, I've tried several of them. This post
 is not here to debate the merits or demerits of this or other
 solutions; the intention is to introduce you to DocBlox so that you
 can evaluate it yourself.</xhtml:p>
-</xhtml:div>
-    </content>
-  </entry>
-  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
-    <title type="html"><![CDATA[Converting DocBook4 to DocBook5]]></title>
-    <published>2011-07-19T16:49:00-05:00</published>
-    <updated>2011-07-21T18:28:20-05:00</updated>
-    <link rel="alternate" type="text/html" href="http://mwop.net/blog/264-Converting-DocBook4-to-DocBook5.html"/>
-    <id>http://mwop.net/blog/264-Converting-DocBook4-to-DocBook5.html</id>
-    <author>
-      <name>Matthew Weier O'Phinney</name>
-      <email>me@mwop.net</email>
-      <uri>http://mwop.net</uri>
-    </author>
-    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
-      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>Within the <xhtml:a href="https://github.com/zendframework/zf2">Zend
-Framework 2 repository</xhtml:a>, I recently performed a conversion from
-<xhtml:a href="http://docbook.org/">DocBook</xhtml:a> 4 to 5. The latter is a
-more modern version of the toolchain, and offers a somewhat simpler
-syntax and workflow. For example, you no longer need to track how
-many levels deep you are in your chapter sections -- you simply use
-a <xhtml:code>&lt;section&gt;</xhtml:code> tag. One of the nicer changes is
-that you do not need to specify a doctype any more; you simply
-declare XML namespaces on your root elements and continue merrily
-on your way. This actually allows us to remove some actions in our
-build process, and makes validation much simpler.</xhtml:p>
-<xhtml:p>Interestingly, for DocBook5 being available in beta since 2005
-and an official standard since 2009, there is very little material
-on migrating from DocBook 4 to 5.</xhtml:p>
 </xhtml:div>
     </content>
   </entry>
