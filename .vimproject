@@ -33,6 +33,7 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
     zf2-beta3.php
     zf2-modules-you-can-use-today.php
     2012-04-02-PhlyBlog.php
+    2012-04-30-WhyModules.php
    }
   }
  }
