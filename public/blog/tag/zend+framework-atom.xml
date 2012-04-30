@@ -283,13 +283,13 @@ to share some of what I've learned.</xhtml:p>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <title type="html"><![CDATA[How to Contribute to ZF2]]></title>
     <published>2011-03-04T08:30:00-06:00</published>
-    <updated>2011-03-09T01:14:52-06:00</updated>
+    <updated>2012-04-17T10:45:00-05:00</updated>
     <link rel="alternate" type="text/html" href="http://mwop.net/blog/255-How-to-Contribute-to-ZF2.html"/>
     <id>http://mwop.net/blog/255-How-to-Contribute-to-ZF2.html</id>
     <author>
       <name>Matthew Weier O'Phinney</name>
       <email>me@mwop.net</email>
-      <uri>http://mwop.net</uri>
+      <uri>http://mwop.net/</uri>
     </author>
     <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
       <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>ZF2 development is ramping up. We've been at it for some time

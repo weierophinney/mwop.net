@@ -4,7 +4,7 @@
 <!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
 <head>
 	<meta charset="utf-8" />
-    <title>Blog Entries for March 2011 :: phly, boy, phly</title>
+    <title>Why Modules? :: phly, boy, phly</title>
 	<!--[if lt IE 9]>
 		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
@@ -16,8 +16,8 @@
 <link href="/css/Application/site.css" media="screen" rel="stylesheet" type="text/css" >
 <link href="/images/Application/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" >
 <link href="/css/Application/blog.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/blog/month/2011/03-atom.xml" rel="alternate" type="application/atom+xml" title="Blog Entries for March 2011 Atom Feed" >
-<link href="/blog/month/2011/03-rss.xml" rel="alternate" type="application/rss+xml" title="Blog Entries for March 2011 RSS Feed" >
+<link href="/blog-atom.xml" rel="alternate" type="application/atom+xml" title="phly, boy, phly Atom Feed" >
+<link href="/blog-rss.xml" rel="alternate" type="application/rss+xml" title="phly, boy, phly RSS Feed" >
     <script type="text/javascript">
     //<!--
 dojoConfig={
@@ -87,242 +87,204 @@ require(["Application/scroll"], function(scroll) {});    //-->
 
     <div class="sixteen columns content">
         <div class="row">
-<section class="eleven columns alpha blog">
-    <h2>Blog Entries for March 2011</h2>
+<article class="eleven columns alpha blog">
+<h2>Why Modules?</h2>
+<p>
+    I've blogged <a href="/blog/267-Getting-started-writing-ZF2-modules.html">about 
+    getting started with ZF2 modules</a>, as well as <a href="/blog/zf2-modules-you-can-use-today.html">about 
+    ZF2 modules you can already use</a>. But after fielding some questions recently, 
+    I realized I should talk about <em>why</em> modules are important for the 
+    ZF2 ecosystem.
+</p><h2>History</h2>
 
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2011-03-25 11:08:09</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
-<a href="/blog/tag/zend+framework.html">zend framework</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/261-Code-Generation-with-ZendCodeGenerator.html">Code Generation with Zend\CodeGenerator</a></h4>
-
-    <div class="entry body"><p>
-Zend Framework has offerred a code generation component since version 1.8, when
-we started shipping <code>Zend_Tool</code>. <code>Zend_CodeGenerator</code> largely mimics PHP's
-<code>ReflectionAPI</code>, but does the opposite: it instead generates code.
+<p>
+    In the autumn of 2006, <a href="http://andigutmans.blogspot.com/">Andi</a> 
+    asked me to spearhead a refactor of the Zend Framework MVC, prior to a 
+    stable release. The idea was to address the growing number of issues and
+    feature requests, get it well-tested, and document it thoroughly before
+    we were ready for a 1.0.0 stable release.
 </p>
 
 <p>
-Why might you want to generate code?
+    Late in that refactoring, a few folks approached me saying they wanted
+    support for "modules". The idea would be to have self-contained directories
+    containing discrete MVC functionality -- controllers, views, related models,
+    etc. Additionally, they wanted routing to take into account the module, so 
+    that we could have controllers with the same "name", but resolving to separate,
+    discrete classes.
+</p>
+
+<p>
+    The "solution" I came up with basically worked, but was quite limited. You 
+    could drop modules into a directory, which the front controller would scan
+    in order to be able to resolve URLs of the form "/:module/:controller/:action/*". 
+    (You could also explicitly define a module in the route configuration if desired).
+</p>
+
+<p>
+    This mostly worked, until we introduced <code>Zend_Application</code>, at which
+    point it fell apart. Why? Because we couldn't quite get bootstrapping to work.
+    Bootstrapping the application was easy, but adding modules and their bootstraps,
+    and sharing dependencies between all of them, proved to be quite difficult, and 
+    we never truly solved it.
+</p>
+
+<p>
+    Add to this the fact that the only way to get dependencies into controllers was
+    via <code>Zend_Registry</code> or the front controller singleton, and the end 
+    result were modules that could never truly be shared or simply dropped into an
+    application.
+</p>
+
+<h2>Modules in ZF2</h2>
+
+<p>
+    One of the very first requirements for ZF2, therefor, was to solve the module 
+    problem. The goals were fairly simple:
+</p>
+
+<blockquote>
+    Modules should be re-usable. Developers should be able to drop in 
+    third-party modules easily, and immediately utilize them with zero or small 
+    amounts of configuration.  Developers should never have to directly alter 
+    module code, ever, to get them to work in their applications; customization 
+    should be easily achieved via configuration or substitution.
+</blockquote>
+
+<p>
+    Why?
+</p>
+
+<p>
+    The goal of any good application framework or content system should be to make
+    development of websites as easy as possible. Good systems make it possible to 
+    use as little or as much of the framework as needed, and to make extension of 
+    the framework trivial. This latter point is perhaps the most important aspect: 
+    the quality of any good application ecosystem can typically be judged by the 
+    amount and quality of third-party plugins developed for it. 
+</p>
+
+<p>
+    If your framework is making you write boilerplate code to handle authentication
+    for every site you write, or making you write code for common application 
+    features such as blogs, comment systems, contact forms, etc., then something 
+    is wrong. These sorts of tasks should be done at most a handful of times, and
+    <em>shared</em> with the community.
+</p>
+
+<p>
+    The end-goal is to be able to pull in a handful or more of plugins that do these
+    tasks for you, configure them to suit your needs, and then focus on
+    building out the functionality that is truly unique to your website.
+</p>
+
+<h2>Building Blocks</h2>
+
+<p>
+    I'll give a concrete example. In parallel with ZF2 development, I've been 
+    rebuilding this very site. I've needed the following pieces:
 </p>
 
 <ul>
-<li>
-You can use it as an assistive form of "copy and paste" for common tasks (as
-   an example, it's used in <code>zf.sh</code> to generate controller classes and action
-   methods).
-</li>
-<li>
-You might want to generate code from configuration, to remove the "compile"
-   phase of generating objects from configuration values. This is often done to
-   improve performance in situations that rely heavily on configurable values.
-</li>
+    <li>A handful of static pages (home page, r&eacute;sum&eacute;, etc.)</li>
+    <li>A contact form</li>
+    <li>A blog</li>
+    <li>Authentication in order to "password protect" a few pages</li>
+    <li>A few view helpers (github status, disqus display, etc)</li>
 </ul>
 
 <p>
-<code>Zend\CodeGenerator</code> in the ZF2 repository is largely ported from Zend Framework
-1, but also includes some functionality surrounding namespace usage and imports.
-I used it this week when working on some prototypes, and found it useful enough
-that I want to share some of what I've learned.
-</p></div>
+    How much of this functionality is unique to my site, other than the content? Pretty
+    much none of it. Ideally, I should be able to find some modules, drop them in, and 
+    create some custom view scripts.
+</p>
 
-    <p><a href="/blog/261-Code-Generation-with-ZendCodeGenerator.html">Continue reading...</a></p>
-</section>
+<p>
+    Which is what I did. That said, I developed several of the modules, but in some cases,
+    such as authentication, I was able to grab modules from elsewhere. The beauty, though,
+    is that in the future, I or others can re-use what I've created, and quite easily.
+</p>
 
+<p>
+    This kind of building-block development makes <em>your</em> job easier as a developer -- 
+    and allows you to focus on the bits and pieces that make your site unique. As such, I 
+    truly feel that <em><strong>modules are the most important new feature of ZF2</strong></em>.
+</p>
+
+<h2>Fin</h2>
+
+<p>
+    If you're developing on top of ZF2 today, I have one piece of advice: 
+    create and consume modules. Share your modules.  Help make ZF2 a productive, 
+    fun, collaborative ecosystem that allows developers to get
+    things done and create fantastic new applications.
+</p><div class="social-media">
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="weierophinney">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 </div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2011-03-21 17:52:15</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
-<a href="/blog/tag/oop.html">oop</a></p>
-</aside>
 
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/260-Dependency-Injection-An-analogy.html">Dependency Injection: An analogy</a></h4>
-
-    <div class="entry body"><p>
-I've been working on a proposal for including service locators and dependency
-injection containers in Zend Framework 2.0, and one issue I've had is trying to
-explain the basic concept to developers unfamiliar with the concepts -- or with
-pre-conceptions that diverge from the use cases I'm proposing.
-</p>
-
-<p>
-In talking with my wife about it a week or two ago, I realized that I needed an
-analogy she could understand; I was basically using her as my
-<a href="http://en.wikipedia.org/wiki/Rubber_duck_debugging">rubber duck</a>. And it turned
-out to be a great idea, as it gave me some good analogies.
-</p></div>
-
-    <p><a href="/blog/260-Dependency-Injection-An-analogy.html">Continue reading...</a></p>
-</section>
-
+<div class="social-media">
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<div class="fb-like" data-send="true" data-width="450" data-show-faces="true"></div>
 </div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2011-03-15 14:41:28</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a></p>
-</aside>
 
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/259-The-Ideas-of-March.html">The Ideas of March</a></h4>
-
-    <div class="entry body"><p>
-<a href="http://shiflett.org/blog/2011/mar/ideas-of-march">Chris Shiflett has asked the question</a>, 
-why don't people blog anymore? In this age of real-time streams and
-dead-simple status updates, blogs often feel like the uncared-for step-child or
-a website; indeed, many folks are trading their blogs for pages that simply
-track their various lifestreams (tweets, facebook status, flickr images, and
-more). 
-</p>
-
-<p>
-While this sort of thing is trendy and interesting, it also sucks:
-</p></div>
-
-    <p><a href="/blog/259-The-Ideas-of-March.html">Continue reading...</a></p>
-</section>
-
+<div class="social-media">
+<div class="g-plusone" data-size="medium" data-annotation="inline"></div>
 </div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2011-03-10 09:30:00</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
-<a href="/blog/tag/subversion.html">subversion</a></p>
-</aside>
 
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/258-Git-Subtree-Merging-Guide.html">Git Subtree Merging Guide</a></h4>
+<!-- Place this render call where appropriate -->
+<script type="text/javascript">
+dojo.ready(function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+});
+</script>
 
-    <div class="entry body"><p>
-I've been investigating ways to incorporate third-party repositories and
-libraries into my <a href="http://git-scm.org/">Git</a> projects. Subversion's
-<code>svn:externals</code> capabilities are one compelling feature for that particular VCS,
-and few, if any, other VCS systems, particularly the DVCS systems, have a truly
-viable equivalent. Git <code>submodules</code> aren't terrible, but they assume you want the
-entire repository -- whereas SVN allows you to cherry-pick subdirectories if
-desired.
-</p>
-
-<p>
-Why might I want to link only a subdirectory? Consider a project with this
-structure:
-</p>
-
-<pre>
-docs/
-    api/
-    manual/
-        html/
-        module_specs/
-library/
-    Foo/
-        ComponentA/
-        ComponentB/
-tests/
-    Foo/
-        ComponentA/
-        ComponentB/
-</pre>
-
-<p>
-On another project, I want to use ComponentB. With <code>svn:externals</code>, this is
-easy:
-</p>
-
-<pre>
-library/Foo/ComponentB http://repohost/svn/trunk/library/Foo/ComponentB
-</pre>
-
-<p>
-and now the directory is added and tracked.
-</p>
-
-<p>
-With Git, it's a different story. One solution I've found is using
-<a href="https://github.com/apenwarr/git-subtree">git-subtree</a>, an extension to Git. It
-takes a bit more effort to setup than <code>svn:externals</code>, but offers the benefits
-of easily freezing on a specific commit, and squashing all changes into a single
-commit.
-</p>
-
-<p>
-<a href="http://h2ik.co">Jon Whitcraft</a> recently had some questions about how to use it,
-and I answered him via email. Evidently what I gave him worked for him, as he
-then requested if he could post my guide -- which
-<a href="http://h2ik.co/2011/03/having-fun-with-git-subtree/">you can find here</a>.
-</p></div>
-
-    <p><a href="/blog/258-Git-Subtree-Merging-Guide.html">Continue reading...</a></p>
-</section>
-
+<div class="social-media">
+<a href="http://www.reddit.com/submit" onclick="window.location = 'http://www.reddit.com/submit?url=' + encodeURIComponent(window.location); return false"> <img src="http://www.reddit.com/static/spreddit1.gif" alt="submit to reddit" border="0" /> </a>
 </div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2011-03-09 12:06:09</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
-<a href="/blog/tag/phpconcom.html">phpconcom</a></p>
-</aside>
 
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/257-PHP-Community-Conference.html">PHP Community Conference</a></h4>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_developer = 1;
+        var disqus_shortname = 'phlyboyphly';
+        var disqus_identifier = '2012-04-30-why-modules';
+        var disqus_url = 'http://mwop.net/blog/2012-04-30-why-modules.html';
+        var disqus_title = 'Why Modules?';
 
-    <div class="entry body"><p>
-Last year, a new conference launched, <a href="http://brooklynbeta.org/">Brooklyn Beta</a>.
-The buzz I heard about it from attendees was amazing; words like "inspiring,"
-"intimate," and "energizing" were all used to describe the experience. I found
-myself wishing I'd made time in my schedule to attend.
-</p>
-
-<p>
-Fast forward a few months, and a new conference has been announced,
-<a href="http://phpcon.org/">the PHP Community Conference</a>. It has similar goals to
-Brooklyn Beta: create a conference where we can talk about the language we love
-so passionately.
-</p></div>
-
-    <p><a href="/blog/257-PHP-Community-Conference.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2011-03-04 09:30:00</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
-<a href="/blog/tag/zend+framework.html">zend framework</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/255-How-to-Contribute-to-ZF2.html">How to Contribute to ZF2</a></h4>
-
-    <div class="entry body"><p>
-ZF2 development is ramping up. We've been at it for some time now, but mostly
-taking care of infrastructure: converting to namespaces, re-working our
-exception strategy, improving our test suites, and improving our autoloading and
-plugin loading strategies to be more performant and flexible. Today, we're
-actively working on the MVC milestone, which we expect to be one of the last
-major pieces necessary for developers to start developing on top of ZF2.
-</p>
-
-<p>
-A question I receive often is: "How can I contribute to ZF2?"
-</p>
-
-<p>
-Consider this your guide.
-</p></div>
-
-    <p><a href="/blog/255-How-to-Contribute-to-ZF2.html">Continue reading...</a></p>
-</section>
-
-</div>
-</section>
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a></article>
 
 <aside class="four columns offset-by-one omega sidebar blog">
+    <div class="metadata">
+        <ul>
+            <li>Posted on <b>2012-04-30 16:00:00</b>.</li>
+            <li>Last updated on <b>2012-04-30 16:00:00</b>.</li>
+        </ul>
+    </div>
+
+    <div class="metadata">
+        <h4>Tags for this entry</h4>
+        <p class="tags"><a href="/blog/tag/php.html">php</a><br />
+<a href="/blog/tag/zend+framework.html">zend framework</a><br />
+<a href="/blog/tag/zf2.html">zf2</a></p>
+    </div>
+
         <div class="metadata">
         <h4>Blogroll</h4>
         <ul>
@@ -341,7 +303,7 @@ Consider this your guide.
     </div>
 
 </aside>
-</div>
+
     </div>
 
     <footer class="sixteen columns footer">
