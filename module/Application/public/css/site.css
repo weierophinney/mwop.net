@@ -193,3 +193,9 @@ aside.home .block {
     padding-left: 1em;
     border-left: 1px dotted #676767;
 }
+
+#tweets {
+    min-height: 250px;
+    height:auto !important;
+    height: 250px;
+}
