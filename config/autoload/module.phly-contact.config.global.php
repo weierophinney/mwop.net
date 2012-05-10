@@ -2,7 +2,7 @@
 return array('di' => array(
     'instance' => array(
         'preferences' => array(
-            'Zend\Captcha\Adapter' => 'Zend\Captcha\ReCaptcha',
+            'Zend\Captcha\AdapterInterface' => 'Zend\Captcha\ReCaptcha',
             'Zend\Mail\Transport'  => 'Zend\Mail\Transport\Smtp',
         ),
 

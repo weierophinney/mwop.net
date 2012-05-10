@@ -25,7 +25,7 @@ $config = array(
                 ),
             ),
         ),
-        'Zend\Mvc\Router\RouteStack' => array(
+        'Zend\Mvc\Router\RouteStackInterface' => array(
             'instantiator' => array(
                 'Zend\Mvc\Router\Http\TreeRouteStack',
                 'factory'
@@ -99,7 +99,7 @@ $config = array(
             'options' => array(),
         )),
 
-        'Zend\Mvc\Router\RouteStack' => array('parameters' => array(                                          
+        'Zend\Mvc\Router\RouteStackInterface' => array('parameters' => array(                                          
             'routes' => array(
                 'default' => array(
                     'type' => 'Regex',
