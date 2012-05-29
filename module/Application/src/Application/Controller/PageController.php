@@ -1,33 +1,40 @@
 <?php
 namespace Application\Controller;
 
-use Zend\EventManager\EventDescription as Event,
-    Zend\EventManager\EventCollection,
+use Zend\EventManager\EventInterface as Event,
+    Zend\EventManager\EventManagerAwareInterface,
+    Zend\EventManager\EventManagerInterface,
     Zend\EventManager\EventManager,
-    Zend\Stdlib\Dispatchable,
-    Zend\Stdlib\RequestDescription as Request,
-    Zend\Stdlib\ResponseDescription as Response,
-    Zend\Mvc\InjectApplicationEvent,
+    Zend\EventManager\EventsCapableInterface,
+    Zend\Stdlib\DispatchableInterface,
+    Zend\Stdlib\RequestInterface as Request,
+    Zend\Stdlib\ResponseInterface as Response,
+    Zend\Mvc\InjectApplicationEventInterface,
     Zend\Mvc\MvcEvent,
     Zend\View\Model\ViewModel;
 
-class PageController implements Dispatchable, InjectApplicationEvent
+class PageController implements 
+    DispatchableInterface, 
+    EventManagerAwareInterface, 
+    EventsCapableInterface,
+    InjectApplicationEventInterface
 {
     protected $event;
     protected $events;
 
-    public function events(EventCollection $events = null)
+    public function setEventManager(EventManagerInterface $events)
     {
-        if (null !== $events) {
-            $this->events = $events;
-        } elseif (null === $this->events) {
-            $this->events = new EventManager(array(
-                'Zend\Stdlib\Dispatchable', 
+        $events->setIdentifiers(array(
+                'Zend\Stdlib\DispatchableInterface', 
                 __CLASS__, 
-                get_called_class(),
-            ));
-            $this->events->attach('dispatch', array($this, 'execute'));
-        }
+                get_class($this),
+        ));
+        $events->attach('dispatch', array($this, 'execute'));
+        $this->events = $events;
+    }
+
+    public function events()
+    {
         return $this->events;
     }
 

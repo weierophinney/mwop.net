@@ -1,9 +1,7 @@
 <?php
-use Zend\Loader\AutoloaderFactory,
-    Zend\Module\Listener,
-    Zend\Module\Manager as ModuleManager,
-    Zend\Mvc\Application,
-    Zend\Mvc\Bootstrap;
+use Zend\Loader\AutoloaderFactory;
+use Zend\Mvc\Service\ServiceManagerConfiguration;
+use Zend\ServiceManager\ServiceManager;
 
 // Switch to this directory
 chdir(__DIR__);
@@ -22,26 +20,22 @@ AutoloaderFactory::factory(array(
     'Zend\Loader\StandardAutoloader' => array(),
 ));
 
-// Get application configuration
+// If composer autoloader exists, set it up
+if (file_exists('vendor/autoload.php')) {
+    include_once 'vendor/autoload.php';
+}
+
+// Get application stack configuration
 $appConfig = include __DIR__ . '/config/application.config.php';
 
-// Setup and configure module listeners
-$listenerOptions = new Listener\ListenerOptions($appConfig['module_listener_options']);
-$listeners       = new Listener\DefaultListenerAggregate($listenerOptions);
-$configListener  = $listeners->getConfigListener();
-$configListener->addConfigGlobPath(
-    __DIR__ . '/config/autoload/*.config.{global,local}.php'
-);
+// Setup service manager
+$services = new ServiceManager(new ServiceManagerConfiguration($appConfig['service_manager']));
+$services->setService('ApplicationConfiguration', $appConfig);
+$services->get('ModuleManager')->loadModules();
 
-// Setup and configure module manager, and load modules
-$moduleManager   = new ModuleManager($appConfig['modules']);
-$moduleManager->events()->attachAggregate($listeners);
-$moduleManager->loadModules();
-
-// Create application, bootstrap, and run
-$bootstrap   = new Bootstrap($configListener->getMergedConfig());
-$application = new Application;
-$bootstrap->bootstrap($application);
+// Bootstrap application
+$application = $services->get('Application');
+$application->bootstrap();
 
 //echo "<pre>";
 //Zend\Di\Display\Console::export($application->getLocator(), array(
