@@ -20,6 +20,8 @@ use Zend\Loader\AutoloaderFactory;
 use Zend\ModuleManager\Listener;
 use Zend\ModuleManager\ModuleManager;
 use Zend\Mvc\Application;
+use Zend\Mvc\Service\ServiceManagerConfiguration;
+use Zend\ServiceManager\ServiceManager;
 
 chdir(__DIR__);
 
