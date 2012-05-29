@@ -32,7 +32,7 @@ return array(
             )),
         ),
         'posts_path'     => 'content/posts/',
-        'view_callback'  => array('Application\Module', 'prepareCompilerView'),
+        'view_callback'  => 'Application\Module::prepareCompilerView',
         'cloud_callback' => array('Application\Module', 'handleTagCloud'),
     ),
     'view_manager' => array(

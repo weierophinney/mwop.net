@@ -35,7 +35,7 @@ return array(
         'template_path_stack' => array(
             'application' => __DIR__ . '/../view',
         ),
-        'map' => array(
+        'helper_map' => array(
             'disqus' => 'Application\View\Helper\Disqus',
         ),
         'display_exceptions' => true,
@@ -46,7 +46,11 @@ return array(
     'service_manager' => array(
         'factories' => array(
             'Application\View\Helper\Disqus' => function ($services) {
-                $config = $services->get('config')->disqus->toArray();
+                $config = $services->get('config');
+                if ($config instanceof Zend\Config\Config) {
+                    $config = $config->toArray();
+                }
+                $config = $config['disqus'];
                 return new Application\View\Helper\Disqus($config);
             },
         ),
