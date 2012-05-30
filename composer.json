@@ -1,0 +1,7 @@
+{
+    "require": {
+        "phly/phly-blog": "dev-master",
+        "phly/phly-contact": "dev-master",
+        "zf-commons/zfc-user": "dev-master"
+    }
+}

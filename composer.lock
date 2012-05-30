@@ -1,0 +1,51 @@
+{
+    "hash": "83ad8be9addcba16774bc15bfcc13778",
+    "packages": [
+        {
+            "package": "phly/phly-blog",
+            "version": "dev-master",
+            "source-reference": "c2a3dc21b2f332dea5c17040156c1134336b9279"
+        },
+        {
+            "package": "phly/phly-common",
+            "version": "dev-master",
+            "source-reference": "743045cdfa69e051da97bf8c97277f047fc91aac"
+        },
+        {
+            "package": "phly/phly-contact",
+            "version": "dev-master",
+            "source-reference": "c253916b96d7616a473cdaf556860393071dc0c2"
+        },
+        {
+            "package": "zendframework/zendframework",
+            "version": "dev-master",
+            "alias-pretty-version": "2.0.x-dev",
+            "alias-version": "2.0.9999999.9999999-dev"
+        },
+        {
+            "package": "zendframework/zendframework",
+            "version": "dev-master",
+            "source-reference": "53c6ef5cce6e07ff777565f19e0f066b71706994"
+        },
+        {
+            "package": "zf-commons/zfc-base",
+            "version": "dev-master",
+            "source-reference": "89ffa4edf11499a46c0c00073c1e8433a92504d8"
+        },
+        {
+            "package": "zf-commons/zfc-user",
+            "version": "dev-master",
+            "source-reference": "8f8783927cec96c6bd1e2c0c4590b17c9efb29fa"
+        }
+    ],
+    "packages-dev": null,
+    "aliases": [
+
+    ],
+    "minimum-stability": "dev",
+    "stability-flags": {
+        "phly/phly-blog": 20,
+        "phly/phly-contact": 20,
+        "zf-commons/zfc-user": 20
+    }
+}

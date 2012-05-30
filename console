@@ -28,16 +28,8 @@ chdir(__DIR__);
 ini_set("display_errors", true);
 error_reporting(E_ALL | E_STRICT);
 
-// Setup ZF2 autoloaders
-require_once __DIR__ . '/vendor/ZendFramework/library/Zend/Loader/AutoloaderFactory.php';
-AutoloaderFactory::factory(array(
-    'Zend\Loader\StandardAutoloader' => array(),
-));
-
-// If composer autoloader exists, set it up
-if (file_exists('vendor/autoload.php')) {
-    include_once 'vendor/autoload.php';
-}
+// Setup autoloading
+include_once 'vendor/autoload.php';
 
 // Setup getopt rules
 $rules = array(

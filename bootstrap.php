@@ -15,15 +15,7 @@ ini_set("display_errors", (('production' == APPLICATION_ENV) ? false : true));
 error_reporting(E_ALL | E_STRICT);
 
 // Setup autoloading
-require_once __DIR__ . '/vendor/ZendFramework/library/Zend/Loader/AutoloaderFactory.php';
-AutoloaderFactory::factory(array(
-    'Zend\Loader\StandardAutoloader' => array(),
-));
-
-// If composer autoloader exists, set it up
-if (file_exists('vendor/autoload.php')) {
-    include_once 'vendor/autoload.php';
-}
+include_once 'vendor/autoload.php';
 
 // Get application stack configuration
 $appConfig = include __DIR__ . '/config/application.config.php';
