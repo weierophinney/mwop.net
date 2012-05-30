@@ -12,8 +12,10 @@ return array(
 
         'message' => array(
             // These can be either a string, or an array of email => name pairs
+            /*
             'to'     => 'contact@your.tld',
             'sender' => 'contact@your.tld',
+             */
         ),
 
         'mail_transport' => array(
