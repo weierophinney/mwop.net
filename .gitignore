@@ -15,3 +15,9 @@ module/Application/view/analytics.phtml
 module/Blog/bin/post.log.html
 */testdox.txt
 *.log
+vendor/.composer
+vendor/autoload.php
+vendor/composer
+vendor/phly
+vendor/zendframework
+vendor/zf-commons

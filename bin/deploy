@@ -13,6 +13,8 @@ mkdir /tmp/mwop.net
     git submodule init ;
     git submodule sync ; 
     git submodule update ;
+    # install composer dependencies
+    php composer.phar install ;
     # ensure users DB has proper permissions
     chmod a+rw data/users.db
 )
