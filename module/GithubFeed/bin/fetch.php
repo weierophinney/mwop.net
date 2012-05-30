@@ -3,7 +3,7 @@ use Zend\View\Model\ViewModel;
 
 echo "Retrieving Github activity links\n";
 
-$locator = $application->getLocator();
+$locator = $application->getServiceManager();
 $reader  = $locator->get('GithubFeed\AtomReader');
 
 try {
