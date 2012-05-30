@@ -8,10 +8,11 @@ return array(
     'service_manager' => array(
         'factories' => array(
             'GithubFeed\AtomReader' => function ($services) {
-                $config = $services->get('config')->github_feed;
-                $reader = new GithubFeed\AtomReader($config->user, $config->token);
-                if (isset($config->limit)) {
-                    $reader->setLimit($config->limit);
+                $config = $services->get('config');
+                $config = $config['github_feed'];
+                $reader = new GithubFeed\AtomReader($config['user'], $config['token']);
+                if (isset($config['limit'])) {
+                    $reader->setLimit($config['limit']);
                 }
                 return $reader;
             },
