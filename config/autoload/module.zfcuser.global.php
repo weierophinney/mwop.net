@@ -158,28 +158,10 @@ $settings = array(
 return array(
     'zfcuser' => $settings,
     'di' => array(
-        'definition' => array('class' => array(
-            'Zend\Mvc\Controller\ActionController' => array(
-                'setBroker' => array(
-                    'broker' => array(
-                        'type'     => 'Zend\Mvc\Controller\PluginBroker',
-                        'required' => true,
-                    ),
-                ),
-            ),
-        )),
         'instance' => array(
-            'zfcuser' => array('parameters' => array(
-                'broker' => 'Zend\Mvc\Controller\PluginBroker',
-            )),
-            'Zend\Mvc\Controller\PluginLoader' => array('parameters' => array(
-                'map' => array(
-                    'zfcuserauthentication' => 'ZfcUser\Controller\Plugin\ZfcUserAuthentication',
-                ),
-            )),
-            'Zend\Mvc\Controller\PluginBroker' => array('parameters' => array(
-                'loader' => 'Zend\Mvc\Controller\PluginLoader',
-            )),
+            'alias' => array(
+                'zfcuser_zend_db_adapter' => (isset($settings['zend_db_adapter'])) ? $settings['zend_db_adapter']: '',
+            ),
         ),
     ),
 );

@@ -2,27 +2,15 @@
 
 namespace Application;
 
-use Traversable,
-    Zend\Config\Config,
-    Zend\EventManager\StaticEventManager,
-    Zend\Module\Consumer\AutoloaderProvider,
-    Zend\Stdlib\ArrayUtils,
-    Zend\View\Model;
+use Traversable;
+use Zend\Config\Config;
+use Zend\Stdlib\ArrayUtils;
+use Zend\View\Model;
 
-class Module implements AutoloaderProvider
+class Module
 {
     protected static $layout;
-
-    protected $appListeners    = array();
     protected $config;
-    protected $staticListeners = array();
-    protected $view;
-
-    public function init()
-    {
-        $events = StaticEventManager::getInstance();
-        $events->attach('bootstrap', 'bootstrap', array($this, 'onBootstrap'));
-    }
 
     public function getAutoloaderConfig()
     {
@@ -40,40 +28,34 @@ class Module implements AutoloaderProvider
 
     public function onBootstrap($e)
     {
-        $this->config = $e->getParam('config');
-        if ($this->config instanceof Traversable) {
-            $this->config = ArrayUtils::iteratorToArray($this->config);
-        }
+        $app          = $e->getApplication();
+        $services     = $app->getServiceManager();
+        $this->config = $services->get('config');
         $this->initAcls($e);
         $this->initView($e);
     }
 
     public function initAcls($e)
     {
-        $app     = $e->getParam('application');
+        $app = $e->getParam('application');
         $app->events()->attach('route', array($this, 'checkAcls'), -100);
     }
 
     public function initView($e)
     {
-        $app     = $e->getParam('application');
-        $config  = $e->getParam('config');
-        $locator = $app->getLocator();
-        $router  = $app->getRouter();
-
-        $view    = $locator->get('Zend\View\Renderer\PhpRenderer');
-        $url     = $view->plugin('url');
-        $url->setRouter($router);
+        $app      = $e->getApplication();
+        $services = $app->getServiceManager();
+        $config   = $this->config;
+        $view     = $services->get('ViewRenderer');
 
         $persistent = $view->placeholder('layout');
-        foreach ($config->view as $var => $value) {
-            if ($value instanceof Config) {
-                $value = new Config($value->toArray(), true);
+        foreach ($config['view'] as $var => $value) {
+            if (is_array($value)) {
+                $value = new Config($value, true);
             }
             $persistent->{$var} = $value;
         }
 
-        $view->doctype('HTML5');
         $view->headTitle()->setSeparator(' :: ')
                           ->setAutoEscape(false)
                           ->append('phly, boy, phly');
@@ -84,9 +66,9 @@ class Module implements AutoloaderProvider
         ));
     }
 
-    public static function prepareCompilerView($view, $config, $locator)
+    public static function prepareCompilerView($view, $config, $services)
     {
-        $renderer = $locator->get('Zend\View\Renderer\PhpRenderer');
+        $renderer = $services->get('ViewRenderer');
         $view->addRenderingStrategy(function($e) use ($renderer) {
             return $renderer;
         }, 100);
@@ -148,9 +130,9 @@ class Module implements AutoloaderProvider
             return;
         }
 
-        $app     = $e->getTarget();
-        $locator = $app->getLocator();
-        $auth    = $locator->get('Zend\Authentication\AuthenticationService');
+        $app     = $e->getApplication();
+        $locator = $app->getServiceManager();
+        $auth    = $locator->get('zfcuser_auth_service');
         if ($auth->hasIdentity()) {
             // authorized
             return;
@@ -163,15 +145,15 @@ class Module implements AutoloaderProvider
     {
         $request  = $app->getRequest();
         $response = $app->getResponse();
-        $locator  = $app->getLocator();
-        $view     = $locator->get('Zend\View\View');
+        $locator  = $app->getServiceManager();
+        $view     = $locator->get('View');
         $view->setRequest($request);
         $view->setResponse($response);
 
         $model = new Model\ViewModel();
         $model->setTemplate('pages/401');
 
-        if ($baseModel instanceof Model) {
+        if ($baseModel instanceof Model\ModelInterface) {
             $baseModel->addChild($model);
             $model = $baseModel;
         }
