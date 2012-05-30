@@ -6,7 +6,7 @@
 	url = git://mwop.net/PhlyComic.git
 [submodule "vendor/ZendFramework"]
 	path = vendor/ZendFramework
-	url = git://github.com/weierophinney/zf2.git
+	url = git://github.com/zendframework/zf2.git
 [submodule "vendor/PhlyContact"]
 	path = vendor/PhlyContact
 	url = git://mwop.net/PhlyContact.git
