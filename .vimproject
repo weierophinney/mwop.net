@@ -77,8 +77,8 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
     github-links.phtml
     layout.phtml
     projects.phtml
-    searchbox.phtml
     search.phtml
+    searchbox.phtml
     blog=blog filter="*.phtml" {
      assets.phtml
      blogroll.phtml
@@ -90,6 +90,7 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
      tags.phtml
     }
     pages=pages {
+     401.phtml
      404.phtml
      comics.phtml
      home.phtml
