@@ -34,7 +34,7 @@ while ($continue) {
     }
 
     # Remove update file
-    unless (unlink($updateFile) == 0) {
+    if (!unlink($updateFile)) {
         # If unable to unlink, we need to quit
         system('echo "' . time() . ': Failed to REMOVE ' . $updateFile . '" >> ' . $logFile);
         $continue = 0;

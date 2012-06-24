@@ -13,6 +13,7 @@
 # rename the file to "post-receive".
 
 branch=$(git rev-parse --symbolic --abbrev-ref $1)
-if [ "$branch"="master" ];then
+if [ "$branch" == "master" ];then
+    echo "Preparing to deploy"
     echo "1" > /var/local/mwop.net.update
 fi
