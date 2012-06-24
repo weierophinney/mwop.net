@@ -12,13 +12,20 @@ require(["dojo/io/script", "dojo/dom", "dojo/_base/array", "dojo/domReady!"],
 function(ioScript, dom, arrayUtil) {
     ioScript.get({
         url: "http://search.twitter.com/search.json",
-        content: {q: "from:weierophinney", rpp: 5},
+        content: {q: "from:weierophinney", rpp: 30},
         callbackParamName: "callback"
     }).then(function(data) {
         return data.results;
     }).then(function(results) {
         var tweets = [];
-        arrayUtil.forEach(results, function(item, index) {
+        var count  = 0;
+        arrayUtil.some(results, function(item, index) {
+            var replyRe = /^@/;
+            var matched = replyRe.exec(item.text);
+            if (matched) {
+                return true;
+            }
+
             var date_tweet = new Date(item.created_at);
             var date_now   = new Date();
             var date_diff  = date_now - date_tweet;
@@ -29,6 +36,11 @@ function(ioScript, dom, arrayUtil) {
             tweet += item.text;
             tweet += "</a> (" + hours + " hours ago)</li>";
             tweets.push(tweet);
+
+            count += 1;
+            if (5 >= count) {
+                return false;
+            }
         });
         dom.byId("tweets").innerHTML = tweets.join("");
     });
