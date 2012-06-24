@@ -5,6 +5,7 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
  console
  bin=bin filter="*.sh deploy" {
   deploy
+  deploy-listener.pl
  }
  config=config filter="*.php *.ini *.xml *.json *.yml *.dist" {
   application.config.php
@@ -32,6 +33,9 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
     2012-04-30-WhyModules.php
    }
   }
+ }
+ hooks=hooks {
+  post-receive
  }
  module=module {
   Application=Application {
