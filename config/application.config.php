@@ -14,6 +14,7 @@ return array(
         'config_cache_enabled'     => false,
         'config_glob_paths'        => array(
             'config/autoload/{,*.}{global,local}.php',
+            '/var/local/mwop.net/{,*.}{local}.php',
         ),
         'cache_dir'                => realpath(dirname(__DIR__) . '/data/cache'),
         'module_paths'             => array(

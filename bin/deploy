@@ -1,9 +1,10 @@
 #!/usr/bin/zsh
 mkdir /tmp/mwop.net
 (
-    # clone local config files
-    cd /tmp/mwop.net ;
-    git clone -b production /home/git/repositories/mwop.net.config.git 
+    # update local config files
+    cd /var/local/mwop.net ;
+    git fetch origin ;
+    git rebase origin/production
 )
 (
     # checkout site, and ensure submodules are correct
@@ -18,10 +19,3 @@ mkdir /tmp/mwop.net
     # ensure users DB has proper permissions
     chmod a+rw data/users.db
 )
-(
-    # sync in local config files
-    cd $HOME/sites/mwop.net/config/autoload
-    rsync -a /tmp/mwop.net/mwop.net.config/*.* .
-)
-# cleanup; remove tmp directory
-rm -Rf /tmp/mwop.net
