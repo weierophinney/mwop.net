@@ -35,7 +35,7 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
   }
  }
  hooks=hooks {
-  post-receive
+  post-update
  }
  module=module {
   Application=Application {
