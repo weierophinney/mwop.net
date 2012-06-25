@@ -92,6 +92,68 @@ require(["Application/scroll"], function(scroll) {});    //-->
 
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
+    <p class="date">2004-01-23 23:02:30</p>
+    <p class="tags"><a href="/blog/tag/programming.html">programming</a><br />
+<a href="/blog/tag/perl.html">perl</a><br />
+<a href="/blog/tag/personal.html">personal</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/18-More-CGIApp-research...-Try-the-manual%21.html">More CGI::App research... Try the manual!</a></h4>
+
+    <div class="entry body"><p>
+    So, I'm a bit of an idiot... it's been so long since I looked at CGI::App,
+    and yet I felt I had such a grasp on it, that I overlooked the obvious step:
+    look at the <a href="http://search.cpan.org/%7Ejerlbaum/CGI-Application-3.1/Application.pm">manual!</a>
+</p>
+<p>
+    In particular, there's a whole series of methods that are used to tailor
+    CGI:App to your particular needs, and these include <em>cgiapp_init(),
+        cgiapp_prerun(), and cgiapp_postrun()</em>.
+</p>
+<ul>
+    <li><b>cgiapp_init()</b> is used to perform application specific
+        initialization behaviour, and is called immediately before the setup()
+        method. It can be used to load settings from elsewhere; if it were
+        called only from a superclass from which other modules inherited, it
+        would then provide common settings for all modules.
+    </li>
+    <li><b>cgiapp_prerun()</b> is called immediately before the selected
+        run-mode. If it were called only by your superclass, you could perform
+        items such as authorization or even form validation; this would then be
+        standard for all your applications. (You can use the
+        $self->prerun_mode('mode') call to to override the selected run-mode,
+        for instance, thus allowing you to redirect to a different mode if a
+        user isn't permitted there.)
+    </li>
+    <li><b>cgiapp_postrun()</b> is called after the run-mode has returned its
+        output, but before http headers have been generated or anything sent to
+        the web browser. Again, if defined in a superclass, it means that you
+        could then place the run-mode output <em>in a specific place within a
+            larger template</em>, and even call other routines to fill in other
+        parts of the main template. You could even check to see if certain
+        parameters were passed to the page, and change the type of output you
+        send back (XML, PDF, image, etc.), allowing you to have a common query
+        element that changes the output type (e.g., a 'print' parameter that
+        returns a PDF or a stripped down template).
+    </li>
+</ul>
+<p>
+    In addition, you could specify in the superclass that you're using
+    CGI::Simple for the query object (using the <em>cgiapp_get_query</em>
+    method), or you could rewrite the <em>load_tmpl()</em> method to use
+    Template::Toolkit or some other templating system, etc.
+</p>
+<p>
+    Doesn't look so crazy anymore...
+</p></div>
+
+    <p><a href="/blog/18-More-CGIApp-research...-Try-the-manual%21.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
     <p class="date">2004-01-23 21:59:02</p>
     <p class="tags"><a href="/blog/tag/programming.html">programming</a><br />
 <a href="/blog/tag/perl.html">perl</a><br />
@@ -599,107 +661,10 @@ put in the version placeholder in comments somewhere at the top or bottom:</p>
 </section>
 
 </div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2004-01-20 22:34:42</p>
-    <p class="tags"><a href="/blog/tag/personal.html">personal</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/7-Perl-Cookbook%2C-2nd-Edition.html">Perl Cookbook, 2nd Edition</a></h4>
-
-    <div class="entry body"><p>
-    Tonight was Papa night, which meant that I got to look after Maeve while Jen
-    worked late doing a group at work. Last week, Maeve and I established that
-    Papa Night would always include going to the bookstore, which means Barnes
-    & Noble in South Burlington.
-</p>
-<p>
-    Last week, Maeve was perfectly content to look at books by herself, and
-    didn't want me interfering, so I decided this week to grab a book for myself
-    to peruse while she was busy. It didn't work as I intended -- Maeve saw that
-    I wasn't paying full attention to her, and then demanded my attention -- but
-    I was able to look through some of the new items in the second edition of
-    <em>The Perl Cookbook</em>.
-</p>
-<p>
-    Among them were:
-</p>
-<ul>
-    <li>Setting up both an XML-RPC server and client, using SOAP::Lite</li>
-    <li>Setting up both a SOAP-RPC server and client, using SOAP::Lite and other
-        modules; I could have used this in ROX::Filer to communicate with ROX
-        instead of using the filer's RPC call.
-    </li>
-    <li>Better coverage of DBI (it actually covered it!):
-        <ul>
-            <li>When you expect only a single row, this is a nice way to grab
-                it:
-                <pre>$row = $dbi->selectrow_(array|hash)ref($statement)
-                </pre>
-            </li>
-            <li>This is a great way to grab a bunch of columns from a large
-                resultset:
-                <pre>                    $results = $dbi->selectall_hashref($sql);
-                    foreach $record (keys(%{$results})) {
-                        print $results->{$record}{fieldname};
-                    }
-                </pre>
-            </li>
-            <li>This one is nice for a large resultset from which you only want
-                one column:
-                <pre>                    $results = $dbi->selectcol_arrayref($sql);
-                    foreach $result (@{$results}) {
-                        print $result;
-                    }
-                </pre>
-            </li>
-            <li>If you need to quote values before inserting them, try:
-                <pre>                    $quoted = $dbi->quote($unquoted);
-                    $sql = "UPDATE table SET textfield = $quoted";
-                </pre>
-            </li>
-            <li>If you need to check for errors, don't check with each DBI call;
-                instead, wrap all of them in an eval statement:
-                <pre>                    eval {
-                        $sth = $dbi->prepare($sql);
-                        $sth->do;
-                        while ($row = $sth->fetchrow_hashref) {
-                            ...
-                        }
-                    }
-                    if ($@) {
-                        print $DBI::errstr; 
-                    }
-                </pre>
-            </li>
-        </ul>
-    </li>
-    <li>Coverage of templating, including Text::Template (<em>very</em>
-        interesting!)
-    </li>
-    <li>Whole new chapters on mod_perl and XML (including DOM!) which I didn't
-        really even get to peruse.
-    </li>
-    <li><strong>autouse pragma</strong>: if you use:
-        <pre>use autouse Module::Name;</pre>
-        perl will <em>use</em> the module at runtime instead of compiletime;
-        basically, it only uses it if it actually needs it (i.e., if it
-        encounters code that utilizes functionality from that module). It's a
-        good way to keep down on the bloat -- I should use this with
-        librox-perl, and possibly with CGI::App.
-    </li>
-</ul></div>
-
-    <p><a href="/blog/7-Perl-Cookbook%2C-2nd-Edition.html">Continue reading...</a></p>
-</section>
-
-</div>
 <div class="paginationControl">
         <a href="/blog.html" class="first">&lt;&lt; First</a> |
         <a href="/blog-p25.html"> &lt; Previous </a> |
-        <a href="/blog-p17.html">17</a> |
-            <a href="/blog-p18.html">18</a> |
+        <a href="/blog-p18.html">18</a> |
             <a href="/blog-p19.html">19</a> |
             <a href="/blog-p20.html">20</a> |
             <a href="/blog-p21.html">21</a> |
@@ -708,7 +673,10 @@ put in the version placeholder in comments somewhere at the top or bottom:</p>
             <a href="/blog-p24.html">24</a> |
             <a href="/blog-p25.html">25</a> |
             <span class="current">26</span> |
-    </div>
+            <a href="/blog-p27.html">27</a> |
+            <a href="/blog-p27.html"> Next &gt;</a> |
+        <a href="/blog-p27.html" class="last"> Last &gt;&gt;</a>
+</div>
 
 </section>
 
@@ -756,8 +724,15 @@ put in the version placeholder in comments somewhere at the top or bottom:</p>
             <h4>Projects</h4>
             <ul class="projects">
     <li><a href="http://framework.zend.com/">Zend Framework (Project Lead)</a></li>
-    <li><a href="http://github.com/weierophinney/phly_mustache">Phly_Mustache</a></li>
     <li><a href="http://www.the-pastry-box-project.net/baker/matthew-weier-ophinney/">The Pastry Box Project</a> (as a Baker)</li>
+    <li><a href="http://github.com/weierophinney/phly_mustache">Phly_Mustache</a></li>
+    <li>ZF2 Modules
+    <ul>
+        <li><a href="https://github.com/weierophinney/PhlyContact">PhlyContact</a></li>
+        <li><a href="https://github.com/weierophinney/PhlyBlog">PhlyBlog</a></li>
+        <li><a href="https://github.com/weierophinney/PhlyPeep">PhlyPeep</a> (demo purposes only)</li>
+    </ul>
+    </li>
 </ul>
 
         </div>
@@ -766,7 +741,7 @@ put in the version placeholder in comments somewhere at the top or bottom:</p>
         <div id="search" style="width:100%;">Loading...</div>
 <h4>Tag Cloud</h4>
 <div class="cloud">
-<ul class="Zend\Tag\Cloud"><li><a href="/blog/tag/php.html" style="font-size: 20px;">php</a></li> <li><a href="/blog/tag/zend+framework.html" style="font-size: 14px;">zend framework</a></li> <li><a href="/blog/tag/zf2.html" style="font-size: 11px;">zf2</a></li> <li><a href="/blog/tag/vim.html" style="font-size: 11px;">vim</a></li> <li><a href="/blog/tag/family.html" style="font-size: 11px;">family</a></li> <li><a href="/blog/tag/programming.html" style="font-size: 12px;">programming</a></li> <li><a href="/blog/tag/personal.html" style="font-size: 13px;">personal</a></li> <li><a href="/blog/tag/phpconcom.html" style="font-size: 10px;">phpconcom</a></li> <li><a href="/blog/tag/mvc.html" style="font-size: 11px;">mvc</a></li> <li><a href="/blog/tag/oop.html" style="font-size: 11px;">oop</a></li> <li><a href="/blog/tag/testing.html" style="font-size: 10px;">testing</a></li> <li><a href="/blog/tag/rest.html" style="font-size: 11px;">rest</a></li> <li><a href="/blog/tag/linux.html" style="font-size: 12px;">linux</a></li> <li><a href="/blog/tag/zendcon08.html" style="font-size: 11px;">zendcon08</a></li> <li><a href="/blog/tag/file_fortune.html" style="font-size: 10px;">file_fortune</a></li> <li><a href="/blog/tag/pear.html" style="font-size: 11px;">pear</a></li> <li><a href="/blog/tag/zendcon.html" style="font-size: 11px;">zendcon</a></li> <li><a href="/blog/tag/perl.html" style="font-size: 12px;">perl</a></li> <li><a href="/blog/tag/fastcgi.html" style="font-size: 10px;">fastcgi</a></li> <li><a href="/blog/tag/ubuntu.html" style="font-size: 11px;">ubuntu</a></li> <li><a href="/blog/tag/tekx.html" style="font-size: 10px;">tekx</a></li> <li><a href="/blog/tag/zendcon10.html" style="font-size: 10px;">zendcon10</a></li> <li><a href="/blog/tag/dojo.html" style="font-size: 11px;">dojo</a></li> <li><a href="/blog/tag/symfony.html" style="font-size: 11px;">symfony</a></li> <li><a href="/blog/tag/zeta+components.html" style="font-size: 10px;">zeta components</a></li> <li><a href="/blog/tag/tek09.html" style="font-size: 10px;">tek09</a></li> <li><a href="/blog/tag/spl.html" style="font-size: 11px;">spl</a></li> <li><a href="/blog/tag/subversion.html" style="font-size: 11px;">subversion</a></li> <li><a href="/blog/tag/zend+framewor.html" style="font-size: 10px;">zend framewor</a></li> <li><a href="/blog/tag/rails.html" style="font-size: 10px;">rails</a></li> <li><a href="/blog/tag/conferences.html" style="font-size: 11px;">conferences</a></li> <li><a href="/blog/tag/dpc08.html" style="font-size: 11px;">dpc08</a></li> <li><a href="/blog/tag/phpworks08.html" style="font-size: 11px;">phpworks08</a></li> <li><a href="/blog/tag/webinar.html" style="font-size: 11px;">webinar</a></li> <li><a href="/blog/tag/zencon08.html" style="font-size: 10px;">zencon08</a></li> <li><a href="/blog/tag/cw09.html" style="font-size: 11px;">cw09</a></li> <li><a href="/blog/tag/zend+server.html" style="font-size: 10px;">zend server</a></li> <li><a href="/blog/tag/dpc09.html" style="font-size: 10px;">dpc09</a></li> <li><a href="/blog/tag/sflive2010.html" style="font-size: 10px;">sflive2010</a></li> <li><a href="/blog/tag/security.html" style="font-size: 10px;">security</a></li> <li><a href="/blog/tag/wifi.html" style="font-size: 10px;">wifi</a></li> <li><a href="/blog/tag/aikido.html" style="font-size: 10px;">aikido</a></li> <li><a href="/blog/tag/books.html" style="font-size: 10px;">books</a></li> <li><a href="/blog/tag/dpc10.html" style="font-size: 10px;">dpc10</a></li> <li><a href="/blog/tag/zendcon09.html" style="font-size: 11px;">zendcon09</a></li> <li><a href="/blog/tag/git.html" style="font-size: 10px;">git</a></li> <li><a href="/blog/tag/phpwomen.html" style="font-size: 10px;">phpwomen</a></li> <li><a href="/blog/tag/virtualbox.html" style="font-size: 10px;">virtualbox</a></li> <li><a href="/blog/tag/advocacy.html" style="font-size: 10px;">advocacy</a></li> <li><a href="/blog/tag/politics.html" style="font-size: 10px;">politics</a></li> <li><a href="/blog/tag/internet.html" style="font-size: 10px;">internet</a></li></ul></div>
+<ul class="Zend\Tag\Cloud"><li><a href="/blog/tag/php.html" style="font-size: 20px;">php</a></li> <li><a href="/blog/tag/zend+framework.html" style="font-size: 14px;">zend framework</a></li> <li><a href="/blog/tag/zf2.html" style="font-size: 11px;">zf2</a></li> <li><a href="/blog/tag/vim.html" style="font-size: 11px;">vim</a></li> <li><a href="/blog/tag/family.html" style="font-size: 11px;">family</a></li> <li><a href="/blog/tag/programming.html" style="font-size: 12px;">programming</a></li> <li><a href="/blog/tag/personal.html" style="font-size: 13px;">personal</a></li> <li><a href="/blog/tag/phpconcom.html" style="font-size: 10px;">phpconcom</a></li> <li><a href="/blog/tag/mvc.html" style="font-size: 11px;">mvc</a></li> <li><a href="/blog/tag/oop.html" style="font-size: 11px;">oop</a></li> <li><a href="/blog/tag/testing.html" style="font-size: 10px;">testing</a></li> <li><a href="/blog/tag/rest.html" style="font-size: 11px;">rest</a></li> <li><a href="/blog/tag/linux.html" style="font-size: 12px;">linux</a></li> <li><a href="/blog/tag/zendcon08.html" style="font-size: 11px;">zendcon08</a></li> <li><a href="/blog/tag/file_fortune.html" style="font-size: 10px;">file_fortune</a></li> <li><a href="/blog/tag/pear.html" style="font-size: 11px;">pear</a></li> <li><a href="/blog/tag/zendcon.html" style="font-size: 11px;">zendcon</a></li> <li><a href="/blog/tag/perl.html" style="font-size: 12px;">perl</a></li> <li><a href="/blog/tag/fastcgi.html" style="font-size: 10px;">fastcgi</a></li> <li><a href="/blog/tag/ubuntu.html" style="font-size: 11px;">ubuntu</a></li> <li><a href="/blog/tag/tekx.html" style="font-size: 10px;">tekx</a></li> <li><a href="/blog/tag/zendcon10.html" style="font-size: 10px;">zendcon10</a></li> <li><a href="/blog/tag/dojo.html" style="font-size: 11px;">dojo</a></li> <li><a href="/blog/tag/symfony.html" style="font-size: 11px;">symfony</a></li> <li><a href="/blog/tag/zeta+components.html" style="font-size: 10px;">zeta components</a></li> <li><a href="/blog/tag/tek09.html" style="font-size: 10px;">tek09</a></li> <li><a href="/blog/tag/spl.html" style="font-size: 11px;">spl</a></li> <li><a href="/blog/tag/subversion.html" style="font-size: 11px;">subversion</a></li> <li><a href="/blog/tag/zend+framewor.html" style="font-size: 10px;">zend framewor</a></li> <li><a href="/blog/tag/rails.html" style="font-size: 10px;">rails</a></li> <li><a href="/blog/tag/conferences.html" style="font-size: 11px;">conferences</a></li> <li><a href="/blog/tag/dpc08.html" style="font-size: 11px;">dpc08</a></li> <li><a href="/blog/tag/phpworks08.html" style="font-size: 11px;">phpworks08</a></li> <li><a href="/blog/tag/webinar.html" style="font-size: 11px;">webinar</a></li> <li><a href="/blog/tag/zencon08.html" style="font-size: 10px;">zencon08</a></li> <li><a href="/blog/tag/cw09.html" style="font-size: 11px;">cw09</a></li> <li><a href="/blog/tag/zend+server.html" style="font-size: 10px;">zend server</a></li> <li><a href="/blog/tag/dpc09.html" style="font-size: 10px;">dpc09</a></li> <li><a href="/blog/tag/sflive2010.html" style="font-size: 10px;">sflive2010</a></li> <li><a href="/blog/tag/security.html" style="font-size: 10px;">security</a></li> <li><a href="/blog/tag/wifi.html" style="font-size: 10px;">wifi</a></li> <li><a href="/blog/tag/aikido.html" style="font-size: 10px;">aikido</a></li> <li><a href="/blog/tag/books.html" style="font-size: 10px;">books</a></li> <li><a href="/blog/tag/dpc10.html" style="font-size: 10px;">dpc10</a></li> <li><a href="/blog/tag/zendcon09.html" style="font-size: 11px;">zendcon09</a></li> <li><a href="/blog/tag/git.html" style="font-size: 11px;">git</a></li> <li><a href="/blog/tag/phpwomen.html" style="font-size: 10px;">phpwomen</a></li> <li><a href="/blog/tag/virtualbox.html" style="font-size: 10px;">virtualbox</a></li> <li><a href="/blog/tag/advocacy.html" style="font-size: 10px;">advocacy</a></li> <li><a href="/blog/tag/politics.html" style="font-size: 10px;">politics</a></li> <li><a href="/blog/tag/internet.html" style="font-size: 10px;">internet</a></li></ul></div>
         </div>
 
         <br class="clear"/>

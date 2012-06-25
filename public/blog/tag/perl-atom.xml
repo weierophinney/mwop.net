@@ -1,11 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title type="text">Tag: perl :: phly, boy, phly</title>
-  <updated>2012-01-11T21:58:28-06:00</updated>
-  <generator uri="http://framework.zend.com" version="2.0.0beta3">Zend_Feed_Writer</generator>
+  <updated>2012-06-24T21:50:00-05:00</updated>
+  <generator uri="http://framework.zend.com" version="2.0.0beta4">Zend_Feed_Writer</generator>
   <link rel="alternate" type="text/html" href="http://mwop.net/blog/tag/perl.html"/>
   <link rel="self" type="application/atom+xml" href="http://mwop.net/blog/tag/perl-atom.xml"/>
   <id>http://mwop.net/blog/tag/perl.html</id>
+  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <title type="html"><![CDATA[Automatic deployment with git and gitolite]]></title>
+    <published>2012-06-24T21:50:00-05:00</published>
+    <updated>2012-06-24T21:50:00-05:00</updated>
+    <link rel="alternate" type="text/html" href="http://mwop.net/blog/2012-06-24-git-deploy.html"/>
+    <id>http://mwop.net/blog/2012-06-24-git-deploy.html</id>
+    <author>
+      <name>Matthew Weier O'Phinney</name>
+      <email>me@mwop.net</email>
+      <uri>http://mwop.net</uri>
+    </author>
+    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
+      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>I read a <xhtml:a href="http://seancoates.com/blogs/deploy-on-push-from-github" target="_blank">post recently by Sean Coates about deploy on push</xhtml:a>. The
+concept is nothing new: you set up a hook that listens for commits
+on specific branches or tags, and it then deploys your site from
+that revision.</xhtml:p>
+<xhtml:p>Except I'd not done it myself. This is how I got there.</xhtml:p>
+</xhtml:div>
+    </content>
+  </entry>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <title type="html"><![CDATA[Why Conventions Matter]]></title>
     <published>2012-01-11T21:58:28-06:00</published>
@@ -390,146 +410,6 @@ and as long as you're programming in PHP, will always be
 present.</xhtml:p>
 <xhtml:p>Guess I have some grep and sed in my future as I change a bunch
 of scripts...</xhtml:p>
-</xhtml:div>
-    </content>
-  </entry>
-  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
-    <title type="html"><![CDATA[Cgiapp Roadmap]]></title>
-    <published>2004-09-21T09:40:45-05:00</published>
-    <updated>2004-09-21T09:41:08-05:00</updated>
-    <link rel="alternate" type="text/html" href="http://mwop.net/blog/41-Cgiapp-Roadmap.html"/>
-    <id>http://mwop.net/blog/41-Cgiapp-Roadmap.html</id>
-    <author>
-      <name>Matthew Weier O'Phinney</name>
-      <email>me@mwop.net</email>
-      <uri>http://mwop.net</uri>
-    </author>
-    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
-      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>I've had a few people contact me indicating interest in Cgiapp,
-and I've noticed a number of subscribers to the freshmeat project
-I've setup. In addition, we're using the library extensively at the
-<xhtml:a href="http://www.garden.org">National Gardening Association</xhtml:a>
-in developing our new site (the current site is using a mixture of
-ASP and Tango, with several newer applications using PHP). I've
-also been monitoring the CGI::Application mailing list. As a result
-of all this activity, I've decided I need to develop a roadmap for
-Cgiapp.</xhtml:p>
-<xhtml:p>Currently, planned changes include:</xhtml:p>
-<xhtml:ul>
-<xhtml:li><xhtml:b>Version 1.x series:</xhtml:b>
-<xhtml:ul>
-<xhtml:li>Adding a Smarty registration for stripslashes (the Smarty
-"function" call will be sslashes).</xhtml:li>
-<xhtml:li>param() bugfix: currently, calling param() with no arguments
-simply gives you a list of parameters registered with the method,
-but not their values; this will be fixed.</xhtml:li>
-<xhtml:li>error_mode() method. The CGI::Application ML brought up and
-implemented the idea of an error_mode() method to register an
-error_mode with the object (similar to run_modes()). While
-non-essential, it would offer a standard, built-in hook for error
-handling.</xhtml:li>
-<xhtml:li>$PATH_INFO traversing. Again, on the CGI::App ML, a request was
-brought up for built-in support for using $PATH_INFO to determine
-the run mode. Basically, you would pass a parameter indicating
-which location in the $PATH_INFO string holds the run mode.</xhtml:li>
-<xhtml:li>DocBook tutorials. I feel that too much information is given in
-the class-level documentation, and that usage tutorials need to be
-written. Since I'm documenting with PhpDoc and targetting PEAR,
-moving tutorials into DocBook is a logical step.</xhtml:li>
-</xhtml:ul>
-</xhtml:li>
-<xhtml:li><xhtml:b>Version 2.x series:</xhtml:b><xhtml:br/>
-Yes, a Cgiapp2 is in the future. There are a few changes that are
-either necessitating (a) PHP5, or (b) API changes. In keeping with
-PEAR guidelines, I'll rename the module Cgiapp2 so as not to break
-applications designed for Cgiapp.<xhtml:br/>
-<xhtml:br/>
-Changes expected include:
-<xhtml:ul>
-<xhtml:li>Inherit from PEAR. This will allow for some built in error
-handling, among other things. I suspect that this will tie in with
-the error_mode(), and may also deprecate croak() and carp().</xhtml:li>
-<xhtml:li>Changes to tmpl_path() and load_tmpl(). In the perl version,
-you would instantiate a template using load_tmpl(), assign your
-variables to it, and then do your fetch() on it. So, this:
-<xhtml:pre>
-$this-&gt;tmpl_assign('var1', 'val1');
-$body = $this-&gt;load_tmpl('template.html');
-                
-</xhtml:pre>
-Becomes this:
-<xhtml:pre>
-$tmpl = $this-&gt;load_tmpl();
-$tmpl-&gt;assign('var1', 'val1');
-$body = $tmpl-&gt;fetch('template.html');
-                
-</xhtml:pre>
-OR
-<xhtml:pre>
-$tmpl = $this-&gt;load_tmpl('template.html');
-$tmpl-&gt;assign('var1', 'val1');
-$body = $tmpl-&gt;fetch();
-                
-</xhtml:pre>
-(Both examples assume use of Smarty.) I want to revert to this
-behaviour for several reasons:
-<xhtml:ul>
-<xhtml:li>Portability with perl. This is one area in which the PHP and
-perl versions differ greatly; going to the perl way makes porting
-classes between the two languages simpler.</xhtml:li>
-<xhtml:li>Decoupling. The current set of template methods create an
-object as a parameter of the application object - which is fine,
-unless the template object instantiator returns an object of a
-different kind.</xhtml:li>
-</xhtml:ul>
-Cons:
-<xhtml:ul>
-<xhtml:li>Smarty can use the same object to fill multiple templates, and
-the current methods make use of this. By assigning the template
-object locally to each method, this could be lost.<xhtml:br/>
-<xhtml:br/>
-HOWEVER... an easy work-around would be for load_tmpl() to create
-the object and store it an a parameter; subsequent calls would
-return the same object reference. The difficulty then would be if
-load_tmpl() assumed a template name would be passed. However, even
-in CGI::App, you decide on a template engine and design for that
-engine; there is never an assumption that template engines should
-be swappable.</xhtml:li>
-<xhtml:li>Existing Cgiapp1 applications would need to be rewritten.</xhtml:li>
-</xhtml:ul>
-</xhtml:li>
-<xhtml:li><xhtml:b>Plugin Architecture:</xhtml:b> The CGI::App ML has produced a
-::Plugin namespace that utilizes a common plugin architecture. The
-way it is done in perl is through some magic of namespaces and
-export routines... both of which are, notably, missing from
-PHP.<xhtml:br/>
-<xhtml:br/>
-However, I think I may know a workaround for this, if I use PHP5:
-the magic __call() overloader method.<xhtml:br/>
-<xhtml:br/>
-My idea is to have plugin classes register methods that should be
-accessible by a Cgiapp-based class a special key in the $_GLOBALS
-array. Then, the __call() method would check the key for registered
-methods; if one is found matching a method requested, that method
-is called (using call_user_func()), with the Cgiapp-based object
-reference as the first reference. Voila! instant plugins!<xhtml:br/>
-<xhtml:br/>
-Why do this? A library of 'standard' plugins could then be created,
-such as:
-<xhtml:ul>
-<xhtml:li>A form validation plugin</xhtml:li>
-<xhtml:li>Alternate template engines as plugins (instead of overriding
-the tmpl_* methods)</xhtml:li>
-<xhtml:li>An authorization plugin</xhtml:li>
-</xhtml:ul>
-Since the 'exported' methods would have access to the Cgiapp
-object, they could even register objects or parameters with
-it.</xhtml:li>
-</xhtml:ul>
-</xhtml:li>
-</xhtml:ul>
-<xhtml:p>If you have any requests or comments on the roadmap, please feel
-free to <xhtml:a href="/matthew/contact">contact me</xhtml:a>.</xhtml:p>
 </xhtml:div>
     </content>
   </entry>

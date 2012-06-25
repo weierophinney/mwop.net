@@ -3,10 +3,31 @@
   <channel>
     <title>Blog Entries :: phly, boy, phly</title>
     <description>Blog Entries :: phly, boy, phly</description>
-    <pubDate>Mon, 30 Apr 2012 16:00:00 -0500</pubDate>
-    <generator>Zend_Feed_Writer 2.0.0beta3 (http://framework.zend.com)</generator>
+    <pubDate>Sun, 24 Jun 2012 21:50:00 -0500</pubDate>
+    <generator>Zend_Feed_Writer 2.0.0beta4 (http://framework.zend.com)</generator>
     <link>http://mwop.net/blog.html</link>
     <atom:link rel="self" type="application/rss+xml" href="http://mwop.net/blog-rss.xml"/>
+    <item>
+      <title>Automatic deployment with git and gitolite</title>
+      <pubDate>Sun, 24 Jun 2012 21:50:00 -0500</pubDate>
+      <link>http://mwop.net/blog/2012-06-24-git-deploy.html</link>
+      <guid>http://mwop.net/blog/2012-06-24-git-deploy.html</guid>
+      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
+      <dc:creator>Matthew Weier O'Phinney</dc:creator>
+      <content:encoded><![CDATA[<p>
+    I read a <a 
+    href="http://seancoates.com/blogs/deploy-on-push-from-github" 
+    target="_blank">post recently by Sean Coates about deploy on 
+    push</a>. The concept is nothing new: you set up a hook that 
+    listens for commits on specific branches or tags, and it then
+    deploys your site from that revision.
+</p>
+
+<p>
+    Except I'd not done it myself. This is how I got there.
+</p>]]></content:encoded>
+      <slash:comments>0</slash:comments>
+    </item>
     <item>
       <title>Why Modules?</title>
       <pubDate>Mon, 30 Apr 2012 16:00:00 -0500</pubDate>
@@ -329,32 +350,6 @@ I took the research I did for that article, and applied it to what was then a
 "SignalSlot" implementation within Zend Framework 2, and refactored that work
 into a new "EventManager" component. This article is intended to get you up and
 running with it.
-</p>]]></content:encoded>
-      <slash:comments>0</slash:comments>
-    </item>
-    <item>
-      <title>Using DocBlox</title>
-      <pubDate>Fri, 05 Aug 2011 01:39:58 -0500</pubDate>
-      <link>http://mwop.net/blog/265-Using-DocBlox.html</link>
-      <guid>http://mwop.net/blog/265-Using-DocBlox.html</guid>
-      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
-      <dc:creator>Matthew Weier O'Phinney</dc:creator>
-      <content:encoded><![CDATA[<p>
-Until a few years ago, there were basically two tools you could use to generate
-API documentation in PHP: <a href="http://phpdocumentor.org/">phpDocumentor</a> and
-<a href="http://www.stack.nl/~dimitri/doxygen/">Doxygen</a>. phpDocumentor was long
-considered the standard, with Doxygen getting notice when more advanced features
-such as inheritance diagrams are required. However, phpDocumentor is practically
-unsupported at this time (though a small group of developers is working on a new
-version), and Doxygen has never had PHP as its primary concern.  As such, a
-number of new projects are starting to emerge as replacements.
-</p>
-
-<p>
-One of these is <a href="http://docblox-project.org">DocBlox</a>. I am well aware there are
-several others -- and indeed, I've tried several of them. This post is not here
-to debate the merits or demerits of this or other solutions; the intention is to
-introduce you to DocBlox so that you can evaluate it yourself.
 </p>]]></content:encoded>
       <slash:comments>0</slash:comments>
     </item>

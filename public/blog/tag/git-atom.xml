@@ -1,11 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title type="text">Tag: git :: phly, boy, phly</title>
-  <updated>2008-09-24T11:16:27-05:00</updated>
-  <generator uri="http://framework.zend.com" version="2.0.0beta3">Zend_Feed_Writer</generator>
+  <updated>2012-06-24T21:50:00-05:00</updated>
+  <generator uri="http://framework.zend.com" version="2.0.0beta4">Zend_Feed_Writer</generator>
   <link rel="alternate" type="text/html" href="http://mwop.net/blog/tag/git.html"/>
   <link rel="self" type="application/atom+xml" href="http://mwop.net/blog/tag/git-atom.xml"/>
   <id>http://mwop.net/blog/tag/git.html</id>
+  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <title type="html"><![CDATA[Automatic deployment with git and gitolite]]></title>
+    <published>2012-06-24T21:50:00-05:00</published>
+    <updated>2012-06-24T21:50:00-05:00</updated>
+    <link rel="alternate" type="text/html" href="http://mwop.net/blog/2012-06-24-git-deploy.html"/>
+    <id>http://mwop.net/blog/2012-06-24-git-deploy.html</id>
+    <author>
+      <name>Matthew Weier O'Phinney</name>
+      <email>me@mwop.net</email>
+      <uri>http://mwop.net</uri>
+    </author>
+    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
+      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>I read a <xhtml:a href="http://seancoates.com/blogs/deploy-on-push-from-github" target="_blank">post recently by Sean Coates about deploy on push</xhtml:a>. The
+concept is nothing new: you set up a hook that listens for commits
+on specific branches or tags, and it then deploys your site from
+that revision.</xhtml:p>
+<xhtml:p>Except I'd not done it myself. This is how I got there.</xhtml:p>
+</xhtml:div>
+    </content>
+  </entry>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <title type="html"><![CDATA[git-svn Tip: don't use core.autocrlf]]></title>
     <published>2008-09-24T11:16:27-05:00</published>

@@ -3,10 +3,31 @@
   <channel>
     <title>Tag: git :: phly, boy, phly</title>
     <description>Tag: git :: phly, boy, phly</description>
-    <pubDate>Wed, 24 Sep 2008 11:16:27 -0500</pubDate>
-    <generator>Zend_Feed_Writer 2.0.0beta3 (http://framework.zend.com)</generator>
+    <pubDate>Sun, 24 Jun 2012 21:50:00 -0500</pubDate>
+    <generator>Zend_Feed_Writer 2.0.0beta4 (http://framework.zend.com)</generator>
     <link>http://mwop.net/blog/tag/git.html</link>
     <atom:link rel="self" type="application/rss+xml" href="http://mwop.net/blog/tag/git-rss.xml"/>
+    <item>
+      <title>Automatic deployment with git and gitolite</title>
+      <pubDate>Sun, 24 Jun 2012 21:50:00 -0500</pubDate>
+      <link>http://mwop.net/blog/2012-06-24-git-deploy.html</link>
+      <guid>http://mwop.net/blog/2012-06-24-git-deploy.html</guid>
+      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
+      <dc:creator>Matthew Weier O'Phinney</dc:creator>
+      <content:encoded><![CDATA[<p>
+    I read a <a 
+    href="http://seancoates.com/blogs/deploy-on-push-from-github" 
+    target="_blank">post recently by Sean Coates about deploy on 
+    push</a>. The concept is nothing new: you set up a hook that 
+    listens for commits on specific branches or tags, and it then
+    deploys your site from that revision.
+</p>
+
+<p>
+    Except I'd not done it myself. This is how I got there.
+</p>]]></content:encoded>
+      <slash:comments>0</slash:comments>
+    </item>
     <item>
       <title>git-svn Tip: don't use core.autocrlf</title>
       <pubDate>Wed, 24 Sep 2008 11:16:27 -0500</pubDate>
