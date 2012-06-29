@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:slash="http://purl.org/rss/1.0/modules/slash/">
+  <channel>
+    <title>Tag: doctrine :: phly, boy, phly</title>
+    <description>Tag: doctrine :: phly, boy, phly</description>
+    <pubDate>Thu, 28 Jun 2012 21:20:00 -0500</pubDate>
+    <generator>Zend_Feed_Writer 2.0.0beta4 (http://framework.zend.com)</generator>
+    <link>http://mwop.net/blog/tag/doctrine.html</link>
+    <atom:link rel="self" type="application/rss+xml" href="http://mwop.net/blog/tag/doctrine-rss.xml"/>
+    <item>
+      <title>On Visibility in OOP</title>
+      <pubDate>Thu, 28 Jun 2012 21:20:00 -0500</pubDate>
+      <link>http://mwop.net/blog/2012-06-28-oop-visibility.html</link>
+      <guid>http://mwop.net/blog/2012-06-28-oop-visibility.html</guid>
+      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
+      <dc:creator>Matthew Weier O'Phinney</dc:creator>
+      <content:encoded><![CDATA[<p>
+    I'm a big proponent of object oriented programming. OOP done right helps 
+    ease code maintenance and enables code re-use.
+</p>
+
+<p>
+    Starting in PHP, OOP enthusiasts got a whole bunch of new tools, and new
+    tools keep coming into the language for us with each minor release. One
+    feature that has had a huge impact on frameworks and libraries has been
+    available since the earliest PHP 5 versions: visibility.
+</p>]]></content:encoded>
+      <slash:comments>0</slash:comments>
+    </item>
+  </channel>
+</rss>

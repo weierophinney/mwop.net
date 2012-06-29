@@ -1,11 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title type="text">Blog Entries :: phly, boy, phly</title>
-  <updated>2012-06-24T21:50:00-05:00</updated>
+  <updated>2012-06-28T21:20:00-05:00</updated>
   <generator uri="http://framework.zend.com" version="2.0.0beta4">Zend_Feed_Writer</generator>
   <link rel="alternate" type="text/html" href="http://mwop.net/blog.html"/>
   <link rel="self" type="application/atom+xml" href="http://mwop.net/blog-atom.xml"/>
   <id>http://mwop.net/blog.html</id>
+  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <title type="html"><![CDATA[On Visibility in OOP]]></title>
+    <published>2012-06-28T21:20:00-05:00</published>
+    <updated>2012-06-28T21:20:00-05:00</updated>
+    <link rel="alternate" type="text/html" href="http://mwop.net/blog/2012-06-28-oop-visibility.html"/>
+    <id>http://mwop.net/blog/2012-06-28-oop-visibility.html</id>
+    <author>
+      <name>Matthew Weier O'Phinney</name>
+      <email>me@mwop.net</email>
+      <uri>http://mwop.net</uri>
+    </author>
+    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
+      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>I'm a big proponent of object oriented programming. OOP done
+right helps ease code maintenance and enables code re-use.</xhtml:p>
+<xhtml:p>Starting in PHP, OOP enthusiasts got a whole bunch of new tools,
+and new tools keep coming into the language for us with each minor
+release. One feature that has had a huge impact on frameworks and
+libraries has been available since the earliest PHP 5 versions:
+visibility.</xhtml:p>
+</xhtml:div>
+    </content>
+  </entry>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <title type="html"><![CDATA[Automatic deployment with git and gitolite]]></title>
     <published>2012-06-24T21:50:00-05:00</published>
@@ -287,30 +309,6 @@ pages</xhtml:li>
 <xhtml:p>Furthermore, if these are developed well and discretely, they
 can be <xhtml:em>re-used</xhtml:em> between different applications!</xhtml:p>
 <xhtml:p>So, let's dive into ZF2 modules!</xhtml:p>
-</xhtml:div>
-    </content>
-  </entry>
-  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
-    <title type="html"><![CDATA[Using the ZF2 EventManager]]></title>
-    <published>2011-09-12T15:45:13-05:00</published>
-    <updated>2011-10-06T14:58:39-05:00</updated>
-    <link rel="alternate" type="text/html" href="http://mwop.net/blog/266-Using-the-ZF2-EventManager.html"/>
-    <id>http://mwop.net/blog/266-Using-the-ZF2-EventManager.html</id>
-    <author>
-      <name>Matthew Weier O'Phinney</name>
-      <email>me@mwop.net</email>
-      <uri>http://mwop.net</uri>
-    </author>
-    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
-      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>Earlier this year, I <xhtml:a href="http://weierophinney.net/matthew/archives/251-Aspects,-Filters,-and-Signals,-Oh,-My!.html">
-wrote about Aspects, Intercepting Filters, Signal Slots, and
-Events</xhtml:a>, in order to compare these similar approaches to
-handling both asychronous programming as well as handling
-cross-cutting application concerns in a cohesive way.</xhtml:p>
-<xhtml:p>I took the research I did for that article, and applied it to
-what was then a "SignalSlot" implementation within Zend Framework
-2, and refactored that work into a new "EventManager" component.
-This article is intended to get you up and running with it.</xhtml:p>
 </xhtml:div>
     </content>
   </entry>

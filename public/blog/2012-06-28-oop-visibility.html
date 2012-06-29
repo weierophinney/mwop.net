@@ -1,0 +1,665 @@
+<!DOCTYPE html><!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8" />
+    <title>On Visibility in OOP :: phly, boy, phly</title>
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <link href="/css/SkeletonCss/base.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/SkeletonCss/skeleton.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/SkeletonCss/layout.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/Application/site.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/images/Application/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" >
+<link href="/css/Application/blog.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/blog-atom.xml" rel="alternate" type="application/atom+xml" title="phly, boy, phly Atom Feed" >
+<link href="/blog-rss.xml" rel="alternate" type="application/rss+xml" title="phly, boy, phly RSS Feed" >
+    <script type="text/javascript">
+    //<!--
+dojoConfig={
+    has: {
+        "dojo-firebug": false
+    },
+    baseurl: "/js/",
+    parseOnLoad: false,
+    async: true,
+    tlmSiblingOfDojo: false,
+    packages: [
+        { name: "dijit", location: "../dijit" },
+        { name: "dojox", location: "../dojox" },
+        { name: "Application", location: "../Application" }
+    ]
+};
+    //-->
+</script>
+<script type="text/javascript" src="/js/dojo/dojo.js"></script>
+<script type="text/javascript">
+    //<!--
+require(["Application/blog"]);    //-->
+</script>
+<script type="text/javascript">
+    //<!--
+require(["Application/scroll"], function(scroll) {});    //-->
+</script>
+    <script src="https://www.google.com/jsapi?ABQIAAAAGybdRRvLZwVUcF0dE3oVdBTO-MlgA7VGJpGqyqTOeDXlNzyZQxTGq17s-iAB0m0vwqLQ_A2dHhTg2Q"></script>
+<script type="text/javascript">
+    google.load('search', '1', {style: google.loader.themes.ESPRESSO});
+    google.setOnLoadCallback(function(){
+        new google.search.CustomSearchControl().draw('search');
+    }, true);
+</script>
+
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-27037983-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</head>
+<body>
+<div class="container">
+    <header class="sixteen columns">
+        <div class="one-half column logo">
+            <a href="/"><img src="/images/Application/logo.gif" height="37" width="37" alt="Celtic Knot" /></a>
+            <span class="main_title">phly, boy, phly: matthew weier o'phinney</span>
+        </div>
+
+        <nav class="one-half column" id="menu"><ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/blog.html">Blog</a></li>
+            <li><a href="/resume">R&eacute;sum&eacute;</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </ul></nav>
+    </header>
+
+
+    <div class="sixteen columns content">
+        <div class="row">
+<article class="eleven columns alpha blog">
+<h2>On Visibility in OOP</h2>
+<p>
+    I'm a big proponent of object oriented programming. OOP done right helps 
+    ease code maintenance and enables code re-use.
+</p>
+
+<p>
+    Starting in PHP, OOP enthusiasts got a whole bunch of new tools, and new
+    tools keep coming into the language for us with each minor release. One
+    feature that has had a huge impact on frameworks and libraries has been
+    available since the earliest PHP 5 versions: visibility.
+</p><h2>Theory</h2>
+
+<p>
+    The visibility keywords include <em>private</em>, <em>protected</em>, and 
+    <em>public</em>, often referred to as <strong>PPP</strong>. There's an 
+    additional keyword I often lump in with them, <em>final</em>.
+</p>
+
+<p>
+    Public visibility is the default, and equivalent to the only visibility
+    available to PHP prior to version 5: any member declared public is 
+    accessible from any scope. This means the following:
+</p>
+
+<div class="example"><pre>
+class Foo
+{
+    public $bar = 'bar';
+
+    public function baz() 
+    {
+        // I can access within my own scope
+        return $this->bar;
+    }
+}
+
+class FooBar extends Foo
+{
+    public function doThat()
+    {
+        // I have access to members in my parent
+        return $this->bar . $this->baz();
+    }
+}
+
+$foo = new Foo();
+
+// I can access public members from an instance
+echo $foo->bar . $foo->baz();
+</pre></div>
+
+<p>
+    Basically, public visibility means that I can access the member from 
+    within the object, within an extending class, or from simply an instance.
+</p>
+
+<p>
+    Protected visibility starts to tighten things down a little. With protected 
+    visibility, only the class itself, or an extending class, can access the 
+    member:
+</p>
+
+<div class="example"><pre>
+class Foo
+{
+    protected $bar = 'bar';
+
+    protected function baz() 
+    {
+        // I can access within my own scope
+        return $this->bar;
+    }
+}
+
+class FooBar extends Foo
+{
+    public function doThat()
+    {
+        // I can access protected members in my parent
+        return $this->bar . $this->baz();
+    }
+}
+
+$foo = new FooBar();
+
+// This works, as I'm calling a public member of an extending class:
+$foo->doThat();
+
+// But these are both illegal:
+echo $foo->bar . $foo->baz();
+</pre></div>
+
+<p>
+    Protected visibility is nice for hiding things from those consuming your
+    class. It can be used to hide implementation details, and to prevent direct
+    modification of public properties -- something important to consider, if
+    a property may be the product of calculation, or if a particular type is
+    required.
+</p>
+
+<p>
+    Private visibility locks things down further. With private visibility, the
+    object member is only directly modifiable or callable within the declaring
+    class.
+</p>
+
+<div class="example"><pre>
+class Foo
+{
+    private $bar = 'bar';
+
+    private function baz() 
+    {
+        // I can access within my own scope
+        return $this->bar;
+    }
+}
+
+class FooBar extends Foo
+{
+    public function doThat()
+    {
+        // These are both illegal
+        return $this->bar . $this->baz();
+    }
+}
+
+$foo = new FooBar();
+
+// These are also both illegal:
+echo $foo->bar . $foo->baz();
+</pre></div>
+
+<p>
+    Private visibility is generally of interest for locking down algorithms. 
+    For instance, if you know that a particular value or operation must not
+    change, even in extending classes, declaring the member private ensures
+    that extending classes cannot directly call it. 
+</p>
+
+<p>
+    At any point, you can redeclare a property in an extending class using 
+    equal or more public visibility. The effect of doing so depends on what
+    the visibility of the member was in the parent class.
+</p>
+
+<ul>
+    <li><p>In the case of a <em>public</em> property, if an extending class re-declares with 
+        public visibility, any access to the member within the extending class or
+        an instance of the extending class will see only the new declaration. </p>
+
+        <div class="example"><pre>
+class Foo
+{
+    public $bar = 'bar';
+
+    public function baz() 
+    {
+        return $this->bar;
+    }
+}
+
+class FooBar extends Foo
+{
+    public $bar = 'foobar';
+}
+
+$foo = new FooBar();
+echo $foo->bar;   // "foobar"
+echo $foo->baz(); // "foobar"
+        </pre></div>
+    </li>
+
+    <li>
+        <p>
+            In the instance of a <em>protected</em> property, if the extending class 
+            re-declares with either public or protected visibility, you get the
+            same behavior as public -&gt; public.
+        </p>
+
+        <div class="example"><pre>
+class Foo
+{
+    protected $bar = 'bar';
+
+    public function baz() 
+    {
+        return $this->bar;
+    }
+}
+
+class FooBar extends Foo
+{
+    public $bar = 'foobar';
+}
+
+$foo = new FooBar();
+echo $foo->bar;   // "foobar"
+echo $foo->baz(); // "foobar"
+        </pre></div>
+    </li>
+
+    <li>
+        <p>
+            In the instance of a <em>private</em> property, things get interesting. The
+            private value or method will be used for any access made within code
+            declared in the parent class, but not overridden in the child. However,
+            if the child class overrides any code, the value of the re-declared 
+            instance will be used. This is far easier to understand via an example.
+        </p>
+
+        <div class="example"><pre>
+class Foo
+{
+    private $bar = 'bar';
+    private $baz = 'baz';
+
+    public function baz() 
+    {
+        return $this->bar;
+    }
+}
+
+class FooBar extends Foo
+{
+    protected $bar = 'foobar';
+    private $baz = 'foobaz';
+
+    public function myBaz() 
+    {
+        return $this->bar;
+    }
+
+    public function myBaz2()
+    {
+        return $this->baz;
+    }
+}
+
+$foo = new FooBar();
+echo $foo->baz();    // "bar"
+echo $foo->myBaz();  // "foobar"
+echo $foo->myBaz2(); // "foobaz"
+        </pre></div>
+    </li>
+</ul>
+
+<p>
+    My personal takeaway from this is:
+</p>
+
+<ul>
+    <li>Use <em>public</em> for members that are safe for anything to call.</li>
+    <li>Use <em>protected</em> for anything you don't want called from instance methods, 
+        not important to the public API (implementation details), and anything you 
+        feel is safe for extending classes to muck about with.</li>
+    <li>Use <em>private</em> for any important implementation details that could 
+        adversely affect execution if overridden by an extending class.</li>
+</ul>
+
+<p>
+    Those paying attention will note that I skipped <em>final</em>. Actually, I 
+    saved that for last. Marking a class or method <em>final</em> tells PHP that
+    the class or method may not be extended or re-declared/overridden. At all. I
+    lump this with visibility, because it's another way of locking down access to
+    an API; marking something <em>final</em> is saying, "you cannot extend this", 
+    similar to using <em>private</em>, but without even the possibility of 
+    redeclaring.
+</p>
+
+<h2>Applied</h2>
+
+<p>
+    What got me to thinking about all this was a turn of events with Zend 
+    Framework 2. We've had an annotation parser since last summer. <a href="http://ralphschindler.com/">Ralph
+    Schindler</a> developed it in order to facilitate automatic discovery of
+    injection points for our Dependency Injection container. Classes could
+    mark a method with the "Inject" annotation, and the various DI compilers
+    would know that that method needed to be injected.
+</p>
+
+<div class="example"><pre>
+use Zend\Di\Definition\Annotation\Inject;
+
+class Foo
+{
+    protected $bar;
+
+    /**
+     * @Inject()
+     * @param  Bar $bar
+     * @return void
+     */
+    public function setBar(Bar $bar)
+    {
+        $this->bar = $bar;
+    }
+}
+
+class Bar {}
+</pre></div>
+
+<p>
+    Recently, part of our Forms RFC included a feature to allow creating
+    forms and their related input filters by using annotations. Basically,
+    this allows developers to hint on their domain entities how specific
+    properties should be filtered, validated, and potentially represented
+    at the form level.
+</p>
+
+<div class="example"><pre>
+use Zend\Form\Annotation;
+
+class Foo
+{
+    /**
+     * @Annotation\Filter({"name":"StringTrim"})
+     * @Annotation\Validator({"name":"Between","options":{"min":5,"max":20}})
+     * @Annotation\Attributes({"type":"range"})
+     */
+    protected $bar;
+}
+</pre></div>
+
+<p>
+    One developer testing the support wanted to use a combination of <a 
+    href="http://doctrine-project.org">Doctrine</a> annotations and ZF2 form
+    annotations -- that way his entities could also describe validation and
+    representation.
+</p>
+
+<p>
+    I did some work to make this happen, and everybody was happy. Except then
+    that same developer went to use that entity with Doctrine, and Doctrine's
+    annotation parser started raising exceptions on all the ZF2 annotations.
+</p>
+
+<p>
+    After some debate, I realized: (a) we were basically just making up syntax
+    for our annotations; it'd be better to use an established syntax; but (b)
+    we should still retain the ability to use arbitrary syntax, as we can't 
+    really know what sorts of annotations developers may already be using.
+</p>
+
+<p>
+    So, we decided to make our annotation component depend on the annotations
+    support in Doctrine\\Common, and to use the annotation syntax they utilize.
+    ZF2 would provide some code to make it possible to plug in arbitrary 
+    parsers, and use the Doctrine\\Common annotation parser to parse annotations
+    officially supported by ZF2.
+</p>
+
+<p>
+    However, when I went to start making this happen, I ran into immediate issues.
+</p>
+
+<p>
+    Remember how this post is about visibility? Well, the class I was directly
+    interested in, <code>Doctrine\Common\Annotations\DocParser</code>, not only
+    contains private members, but is marked <em>final</em>. 
+</p>
+
+<p>
+    My immediate response was to start dissecting the class, cutting and pasting 
+    the bits interesting to my solution into a new class in ZF2. I went down this
+    route for several hours, gradually pulling in more and more methods as I
+    discovered how far down the rabbit hole I needed to go to accomplish my task.
+</p>
+
+<p>
+    But at the back of my head, I kept thinking this was a bad idea. If any
+    patches ever came in for the original class, I'd need to port them into
+    our ZF2 solution. And I couldn't help but think that I'd miss a crucial
+    piece.
+</p>
+
+<p>
+    So I started playing with its public API, to see if there were any shortcuts
+    I might be able to take. And there were.
+</p>
+
+<p>
+    The class has a public <code>parse()</code> method. Based on how Doctrine uses
+    the code, I assumed I needed to pass a full PHP docblock in -- which ran
+    counter to how I wanted to use the code. I wanted to pass in an annotation
+    at a time. But when I looked closer, I realized that the parser didn't
+    require a full docblock; any fragment would do.
+</p>
+
+<p>
+    To make a long story short: I was able to feed the parser a single annotation
+    at a time from ZF2's <code>AnnotationScanner</code>. This allowed me to build
+    a very simple class that allows registering a set of annotations it can handle,
+    and feeding it a single annotation string at a time to decide (a) if it supports
+    it, and (b) to parse it and return the associated annotation object.
+</p>
+
+<p>
+    In sum: because the class in question was marked final and had private 
+    members, I found myself forced to think critically about what I wanted
+    to accomplish, and then thoroughly understand the public API to see how
+    I might accomplish that task without the ability to extend.
+</p>
+
+<h2>Conclusions</h2>
+
+<p>
+    Doctrine has a policy that encourages <a 
+    href="http://en.wikipedia.org/wiki/Poka-yoke"><em>poka-yoke</em></a> solutions:
+    code should be executable in a specific way. The policy was developed to
+    both aid users (having multiple ways of doing something is often confusing),
+    as well as to ease maintenance (fewer extension points means less liklihood
+    of developers doing hard-to-debug things in extending code and reporting it
+    back to the project). These have led them to heavily use <em>private</em>
+    and <em>final</em> visibility.
+</p>
+
+<p>
+    I've said it before, and I'll say it again: I feel that frameworks and libraries
+    should use <em>private</em> and <em>final</em> sparingly. Over the years, I've
+    seen code repurposed in simply wondrous ways -- largely due to keeping the
+    code as open as possible to extension. I like to enable my users as much as 
+    possible.
+</p>
+
+<p>
+    That said, I can also see Doctrine's argument -- and can see where, while it
+    can often be frustrating, it can also lead to potentially more sound and
+    elegant solutions.
+</p>
+
+<p>
+    I'll probably continue shying away from <em>private</em> and <em>final</em> 
+    visibility, but I do plan to experiment with it more in the future. What 
+    about you?
+</p><div class="social-media">
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="weierophinney">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</div>
+
+<div class="social-media">
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<div class="fb-like" data-send="true" data-width="450" data-show-faces="true"></div>
+</div>
+
+<div class="social-media">
+<div class="g-plusone" data-size="medium" data-annotation="inline"></div>
+</div>
+
+<!-- Place this render call where appropriate -->
+<script type="text/javascript">
+dojo.ready(function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+});
+</script>
+
+<div class="social-media">
+<a href="http://www.reddit.com/submit" onclick="window.location = 'http://www.reddit.com/submit?url=' + encodeURIComponent(window.location); return false"> <img src="http://www.reddit.com/static/spreddit1.gif" alt="submit to reddit" border="0" /> </a>
+</div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_developer = 1;
+        var disqus_shortname = 'phlyboyphly';
+        var disqus_identifier = '2012-06-28-oop-visibility';
+        var disqus_url = 'http://mwop.net/blog/2012-06-28-oop-visibility.html';
+        var disqus_title = 'On Visibility in OOP';
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a></article>
+
+<aside class="four columns offset-by-one omega sidebar blog">
+    <div class="metadata">
+        <ul>
+            <li>Posted on <b>2012-06-28 21:20:00</b>.</li>
+            <li>Last updated on <b>2012-06-28 21:20:00</b>.</li>
+        </ul>
+    </div>
+
+    <div class="metadata">
+        <h4>Tags for this entry</h4>
+        <p class="tags"><a href="/blog/tag/php.html">php</a><br />
+<a href="/blog/tag/doctrine.html">doctrine</a><br />
+<a href="/blog/tag/oop.html">oop</a></p>
+    </div>
+
+        <div class="metadata">
+        <h4>Blogroll</h4>
+        <ul>
+            <li><a href="http://sebastian-bergmann.de/">Sebastian Bergmann</a></li>
+            <li><a href="http://blog.calevans.com/">Cal Evans</a></li>
+            <li><a href="http://prematureoptimization.org/blog/">Shahar Evron</a></li>
+            <li><a href="http://paul-m-jones.com/blog/">Paul M. Jones</a></li>
+            <li><a href="http://karwin.blogspot.com/">Bill Karwin</a></li>
+            <li><a href="http://mikenaberezny.com/">Mike Naberezny</a></li>
+            <li><a href="http://fabien.potencier.org/">Fabien Potencier</a></li>
+            <li><a href="http://benramsey.com/">Ben Ramsey</a></li>
+            <li><a href="http://derickrethans.nl/">Derick Rethans</a></li>
+            <li><a href="http://ralphschindler.com/">Ralph Schindler</a></li>
+            <li><a href="http://www.zimuel.it/blog/">Enrico Zimuel</a></li>
+        </ul>
+    </div>
+
+</aside>
+
+    </div>
+
+    <footer class="sixteen columns footer">
+        <div class="column one-third alpha about">
+            <h4>About</h4>
+            <p>
+    I'm a husband, father of two, plaything of a Basset puppy, and web 
+    architect by day.
+</p>
+
+<ul class="resume">
+    <li><a href="/resume">Resume</a></li>
+    <li><a href="http://twitter.com/weierophinney">Twitter</a></li>
+    <li><a href="http://www.linkedin.com/in/mweierophinney">LinkedIn</a></li>
+    <li><a href="http://www.ohloh.net/accounts/weierophinney">OhLoh</a></li>
+    <li><a href="http://resume.github.com/?weierophinney">GitHub</a></li>
+</ul>
+
+        </div>
+
+        <div class="column one-third projects">
+            <h4>Projects</h4>
+            <ul class="projects">
+    <li><a href="http://framework.zend.com/">Zend Framework (Project Lead)</a></li>
+    <li><a href="http://www.the-pastry-box-project.net/baker/matthew-weier-ophinney/">The Pastry Box Project</a> (as a Baker)</li>
+    <li><a href="http://github.com/weierophinney/phly_mustache">Phly_Mustache</a></li>
+    <li>ZF2 Modules
+    <ul>
+        <li><a href="https://github.com/weierophinney/PhlyContact">PhlyContact</a></li>
+        <li><a href="https://github.com/weierophinney/PhlyBlog">PhlyBlog</a></li>
+        <li><a href="https://github.com/weierophinney/PhlyPeep">PhlyPeep</a> (demo purposes only)</li>
+    </ul>
+    </li>
+</ul>
+
+        </div>
+
+        <div class="column one-third omega tags">
+        <div id="search" style="width:100%;">Loading...</div>
+<h4>Tag Cloud</h4>
+<div class="cloud">
+<ul class="Zend\Tag\Cloud"><li><a href="/blog/tag/php.html" style="font-size: 20px;">php</a></li> <li><a href="/blog/tag/zend+framework.html" style="font-size: 14px;">zend framework</a></li> <li><a href="/blog/tag/zf2.html" style="font-size: 11px;">zf2</a></li> <li><a href="/blog/tag/vim.html" style="font-size: 11px;">vim</a></li> <li><a href="/blog/tag/family.html" style="font-size: 11px;">family</a></li> <li><a href="/blog/tag/programming.html" style="font-size: 12px;">programming</a></li> <li><a href="/blog/tag/personal.html" style="font-size: 13px;">personal</a></li> <li><a href="/blog/tag/phpconcom.html" style="font-size: 10px;">phpconcom</a></li> <li><a href="/blog/tag/mvc.html" style="font-size: 11px;">mvc</a></li> <li><a href="/blog/tag/oop.html" style="font-size: 11px;">oop</a></li> <li><a href="/blog/tag/testing.html" style="font-size: 10px;">testing</a></li> <li><a href="/blog/tag/rest.html" style="font-size: 11px;">rest</a></li> <li><a href="/blog/tag/linux.html" style="font-size: 12px;">linux</a></li> <li><a href="/blog/tag/zendcon08.html" style="font-size: 11px;">zendcon08</a></li> <li><a href="/blog/tag/file_fortune.html" style="font-size: 10px;">file_fortune</a></li> <li><a href="/blog/tag/pear.html" style="font-size: 11px;">pear</a></li> <li><a href="/blog/tag/zendcon.html" style="font-size: 11px;">zendcon</a></li> <li><a href="/blog/tag/perl.html" style="font-size: 12px;">perl</a></li> <li><a href="/blog/tag/fastcgi.html" style="font-size: 10px;">fastcgi</a></li> <li><a href="/blog/tag/ubuntu.html" style="font-size: 11px;">ubuntu</a></li> <li><a href="/blog/tag/tekx.html" style="font-size: 10px;">tekx</a></li> <li><a href="/blog/tag/zendcon10.html" style="font-size: 10px;">zendcon10</a></li> <li><a href="/blog/tag/dojo.html" style="font-size: 11px;">dojo</a></li> <li><a href="/blog/tag/symfony.html" style="font-size: 11px;">symfony</a></li> <li><a href="/blog/tag/zeta+components.html" style="font-size: 10px;">zeta components</a></li> <li><a href="/blog/tag/tek09.html" style="font-size: 10px;">tek09</a></li> <li><a href="/blog/tag/spl.html" style="font-size: 11px;">spl</a></li> <li><a href="/blog/tag/subversion.html" style="font-size: 11px;">subversion</a></li> <li><a href="/blog/tag/zend+framewor.html" style="font-size: 10px;">zend framewor</a></li> <li><a href="/blog/tag/rails.html" style="font-size: 10px;">rails</a></li> <li><a href="/blog/tag/conferences.html" style="font-size: 11px;">conferences</a></li> <li><a href="/blog/tag/dpc08.html" style="font-size: 11px;">dpc08</a></li> <li><a href="/blog/tag/phpworks08.html" style="font-size: 11px;">phpworks08</a></li> <li><a href="/blog/tag/webinar.html" style="font-size: 11px;">webinar</a></li> <li><a href="/blog/tag/zencon08.html" style="font-size: 10px;">zencon08</a></li> <li><a href="/blog/tag/cw09.html" style="font-size: 11px;">cw09</a></li> <li><a href="/blog/tag/zend+server.html" style="font-size: 10px;">zend server</a></li> <li><a href="/blog/tag/dpc09.html" style="font-size: 10px;">dpc09</a></li> <li><a href="/blog/tag/sflive2010.html" style="font-size: 10px;">sflive2010</a></li> <li><a href="/blog/tag/security.html" style="font-size: 10px;">security</a></li> <li><a href="/blog/tag/wifi.html" style="font-size: 10px;">wifi</a></li> <li><a href="/blog/tag/aikido.html" style="font-size: 10px;">aikido</a></li> <li><a href="/blog/tag/books.html" style="font-size: 10px;">books</a></li> <li><a href="/blog/tag/dpc10.html" style="font-size: 10px;">dpc10</a></li> <li><a href="/blog/tag/zendcon09.html" style="font-size: 11px;">zendcon09</a></li> <li><a href="/blog/tag/git.html" style="font-size: 11px;">git</a></li> <li><a href="/blog/tag/phpwomen.html" style="font-size: 10px;">phpwomen</a></li> <li><a href="/blog/tag/virtualbox.html" style="font-size: 10px;">virtualbox</a></li> <li><a href="/blog/tag/advocacy.html" style="font-size: 10px;">advocacy</a></li> <li><a href="/blog/tag/politics.html" style="font-size: 10px;">politics</a></li> <li><a href="/blog/tag/internet.html" style="font-size: 10px;">internet</a></li> <li><a href="/blog/tag/doctrine.html" style="font-size: 10px;">doctrine</a></li></ul></div>
+        </div>
+
+        <br class="clear"/>
+
+        <div class="copyright">
+            Unless otherwise noted, &#169; 2004 - 2012, Matthew Weier O'Phinney
+        </div>
+    </footer>
+</div>
+</body>
+</html>

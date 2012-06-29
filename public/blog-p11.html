@@ -92,6 +92,57 @@ require(["Application/scroll"], function(scroll) {});    //-->
 
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
+    <p class="date">2008-05-16 09:05:13</p>
+    <p class="tags"><a href="/blog/tag/linux.html">linux</a><br />
+<a href="/blog/tag/programming.html">programming</a><br />
+<a href="/blog/tag/php.html">php</a><br />
+<a href="/blog/tag/ubuntu.html">ubuntu</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/171-Server-Upgrades...-lost-entries....html">Server Upgrades... lost entries...</a></h4>
+
+    <div class="entry body"><p>
+    My good friend, Rob, hosts my site for me, in return for helping with server
+    maintenance. After being on Gentoo for the past three years, though, we
+    decided it was time to switch to something a little easier to maintain, so
+    last night we wiped the system partitions and installed Ubuntu server.
+</p>
+
+<p>
+    I'll say this: the setup is much faster! However, we had a few gotchas that
+    surprised us -- it didn't setup our RAID array out-of-the-box, which led to
+    a good hour of frustration as we tried to verify that the install wouldn't
+    wipe it, and then to verify that we could re-assemble it.  (We succeeded.)
+    Additionally, we second-guessed a few things we shouldn't have, which led to
+    needing to back out and reconfigure. But what was over a 12 hour install
+    with Gentoo we accomplished in a matter of a few hours with Ubuntu server --
+    so it was a huge success that way.
+</p>
+
+<p>
+    Unfortunately, our mysqldump of all databases... wasn't, a fact we
+    discovered only after importing it into the new system. I ended up losing my
+    blog database and PEAR channel database. Fortunately, the PEAR channel
+    has not changed at all in the past year, so we had an old backup that
+    worked, and I had a snapshot of my blog database from three weeks ago I was
+    able to use. As a result, there are a few missing entries, but for the most
+    part, all works. If you commented on one of those missing entries, my
+    apologies.
+</p>
+
+<p>
+    Now that the install is done, I'm also finalizing some design changes to my
+    blog -- it's time to leave the black and white for more colorful grounds.
+    Look for a revamp in the coming weeks!
+</p></div>
+
+    <p><a href="/blog/171-Server-Upgrades...-lost-entries....html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
     <p class="date">2008-05-05 10:25:00</p>
     <p class="tags"><a href="/blog/tag/php.html">php</a><br />
 <a href="/blog/tag/zend+framework.html">zend framework</a></p>
@@ -367,27 +418,6 @@ require(["Application/scroll"], function(scroll) {});    //-->
 </section>
 
 </div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2008-03-22 10:41:26</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
-<a href="/blog/tag/vim.html">vim</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/164-Vim-Productivity-Tips-for-PHP-Developers.html">Vim Productivity Tips for PHP Developers</a></h4>
-
-    <div class="entry body"><p>
-    I use <a href="http://www.vim.org/">Vim</a> for all my editing needs -- TODO
-    lists, email, presentation outlines, coding in any language... everything.
-    So, I thought I'd start sharing some of my vim habits and tools with others,
-    particularly those that pertain to using Vim with PHP.
-</p></div>
-
-    <p><a href="/blog/164-Vim-Productivity-Tips-for-PHP-Developers.html">Continue reading...</a></p>
-</section>
-
-</div>
 <div class="paginationControl">
         <a href="/blog.html" class="first">&lt;&lt; First</a> |
         <a href="/blog-p10.html"> &lt; Previous </a> |
@@ -468,7 +498,7 @@ require(["Application/scroll"], function(scroll) {});    //-->
         <div id="search" style="width:100%;">Loading...</div>
 <h4>Tag Cloud</h4>
 <div class="cloud">
-<ul class="Zend\Tag\Cloud"><li><a href="/blog/tag/php.html" style="font-size: 20px;">php</a></li> <li><a href="/blog/tag/zend+framework.html" style="font-size: 14px;">zend framework</a></li> <li><a href="/blog/tag/zf2.html" style="font-size: 11px;">zf2</a></li> <li><a href="/blog/tag/vim.html" style="font-size: 11px;">vim</a></li> <li><a href="/blog/tag/family.html" style="font-size: 11px;">family</a></li> <li><a href="/blog/tag/programming.html" style="font-size: 12px;">programming</a></li> <li><a href="/blog/tag/personal.html" style="font-size: 13px;">personal</a></li> <li><a href="/blog/tag/phpconcom.html" style="font-size: 10px;">phpconcom</a></li> <li><a href="/blog/tag/mvc.html" style="font-size: 11px;">mvc</a></li> <li><a href="/blog/tag/oop.html" style="font-size: 11px;">oop</a></li> <li><a href="/blog/tag/testing.html" style="font-size: 10px;">testing</a></li> <li><a href="/blog/tag/rest.html" style="font-size: 11px;">rest</a></li> <li><a href="/blog/tag/linux.html" style="font-size: 12px;">linux</a></li> <li><a href="/blog/tag/zendcon08.html" style="font-size: 11px;">zendcon08</a></li> <li><a href="/blog/tag/file_fortune.html" style="font-size: 10px;">file_fortune</a></li> <li><a href="/blog/tag/pear.html" style="font-size: 11px;">pear</a></li> <li><a href="/blog/tag/zendcon.html" style="font-size: 11px;">zendcon</a></li> <li><a href="/blog/tag/perl.html" style="font-size: 12px;">perl</a></li> <li><a href="/blog/tag/fastcgi.html" style="font-size: 10px;">fastcgi</a></li> <li><a href="/blog/tag/ubuntu.html" style="font-size: 11px;">ubuntu</a></li> <li><a href="/blog/tag/tekx.html" style="font-size: 10px;">tekx</a></li> <li><a href="/blog/tag/zendcon10.html" style="font-size: 10px;">zendcon10</a></li> <li><a href="/blog/tag/dojo.html" style="font-size: 11px;">dojo</a></li> <li><a href="/blog/tag/symfony.html" style="font-size: 11px;">symfony</a></li> <li><a href="/blog/tag/zeta+components.html" style="font-size: 10px;">zeta components</a></li> <li><a href="/blog/tag/tek09.html" style="font-size: 10px;">tek09</a></li> <li><a href="/blog/tag/spl.html" style="font-size: 11px;">spl</a></li> <li><a href="/blog/tag/subversion.html" style="font-size: 11px;">subversion</a></li> <li><a href="/blog/tag/zend+framewor.html" style="font-size: 10px;">zend framewor</a></li> <li><a href="/blog/tag/rails.html" style="font-size: 10px;">rails</a></li> <li><a href="/blog/tag/conferences.html" style="font-size: 11px;">conferences</a></li> <li><a href="/blog/tag/dpc08.html" style="font-size: 11px;">dpc08</a></li> <li><a href="/blog/tag/phpworks08.html" style="font-size: 11px;">phpworks08</a></li> <li><a href="/blog/tag/webinar.html" style="font-size: 11px;">webinar</a></li> <li><a href="/blog/tag/zencon08.html" style="font-size: 10px;">zencon08</a></li> <li><a href="/blog/tag/cw09.html" style="font-size: 11px;">cw09</a></li> <li><a href="/blog/tag/zend+server.html" style="font-size: 10px;">zend server</a></li> <li><a href="/blog/tag/dpc09.html" style="font-size: 10px;">dpc09</a></li> <li><a href="/blog/tag/sflive2010.html" style="font-size: 10px;">sflive2010</a></li> <li><a href="/blog/tag/security.html" style="font-size: 10px;">security</a></li> <li><a href="/blog/tag/wifi.html" style="font-size: 10px;">wifi</a></li> <li><a href="/blog/tag/aikido.html" style="font-size: 10px;">aikido</a></li> <li><a href="/blog/tag/books.html" style="font-size: 10px;">books</a></li> <li><a href="/blog/tag/dpc10.html" style="font-size: 10px;">dpc10</a></li> <li><a href="/blog/tag/zendcon09.html" style="font-size: 11px;">zendcon09</a></li> <li><a href="/blog/tag/git.html" style="font-size: 11px;">git</a></li> <li><a href="/blog/tag/phpwomen.html" style="font-size: 10px;">phpwomen</a></li> <li><a href="/blog/tag/virtualbox.html" style="font-size: 10px;">virtualbox</a></li> <li><a href="/blog/tag/advocacy.html" style="font-size: 10px;">advocacy</a></li> <li><a href="/blog/tag/politics.html" style="font-size: 10px;">politics</a></li> <li><a href="/blog/tag/internet.html" style="font-size: 10px;">internet</a></li></ul></div>
+<ul class="Zend\Tag\Cloud"><li><a href="/blog/tag/php.html" style="font-size: 20px;">php</a></li> <li><a href="/blog/tag/zend+framework.html" style="font-size: 14px;">zend framework</a></li> <li><a href="/blog/tag/zf2.html" style="font-size: 11px;">zf2</a></li> <li><a href="/blog/tag/vim.html" style="font-size: 11px;">vim</a></li> <li><a href="/blog/tag/family.html" style="font-size: 11px;">family</a></li> <li><a href="/blog/tag/programming.html" style="font-size: 12px;">programming</a></li> <li><a href="/blog/tag/personal.html" style="font-size: 13px;">personal</a></li> <li><a href="/blog/tag/phpconcom.html" style="font-size: 10px;">phpconcom</a></li> <li><a href="/blog/tag/mvc.html" style="font-size: 11px;">mvc</a></li> <li><a href="/blog/tag/oop.html" style="font-size: 11px;">oop</a></li> <li><a href="/blog/tag/testing.html" style="font-size: 10px;">testing</a></li> <li><a href="/blog/tag/rest.html" style="font-size: 11px;">rest</a></li> <li><a href="/blog/tag/linux.html" style="font-size: 12px;">linux</a></li> <li><a href="/blog/tag/zendcon08.html" style="font-size: 11px;">zendcon08</a></li> <li><a href="/blog/tag/file_fortune.html" style="font-size: 10px;">file_fortune</a></li> <li><a href="/blog/tag/pear.html" style="font-size: 11px;">pear</a></li> <li><a href="/blog/tag/zendcon.html" style="font-size: 11px;">zendcon</a></li> <li><a href="/blog/tag/perl.html" style="font-size: 12px;">perl</a></li> <li><a href="/blog/tag/fastcgi.html" style="font-size: 10px;">fastcgi</a></li> <li><a href="/blog/tag/ubuntu.html" style="font-size: 11px;">ubuntu</a></li> <li><a href="/blog/tag/tekx.html" style="font-size: 10px;">tekx</a></li> <li><a href="/blog/tag/zendcon10.html" style="font-size: 10px;">zendcon10</a></li> <li><a href="/blog/tag/dojo.html" style="font-size: 11px;">dojo</a></li> <li><a href="/blog/tag/symfony.html" style="font-size: 11px;">symfony</a></li> <li><a href="/blog/tag/zeta+components.html" style="font-size: 10px;">zeta components</a></li> <li><a href="/blog/tag/tek09.html" style="font-size: 10px;">tek09</a></li> <li><a href="/blog/tag/spl.html" style="font-size: 11px;">spl</a></li> <li><a href="/blog/tag/subversion.html" style="font-size: 11px;">subversion</a></li> <li><a href="/blog/tag/zend+framewor.html" style="font-size: 10px;">zend framewor</a></li> <li><a href="/blog/tag/rails.html" style="font-size: 10px;">rails</a></li> <li><a href="/blog/tag/conferences.html" style="font-size: 11px;">conferences</a></li> <li><a href="/blog/tag/dpc08.html" style="font-size: 11px;">dpc08</a></li> <li><a href="/blog/tag/phpworks08.html" style="font-size: 11px;">phpworks08</a></li> <li><a href="/blog/tag/webinar.html" style="font-size: 11px;">webinar</a></li> <li><a href="/blog/tag/zencon08.html" style="font-size: 10px;">zencon08</a></li> <li><a href="/blog/tag/cw09.html" style="font-size: 11px;">cw09</a></li> <li><a href="/blog/tag/zend+server.html" style="font-size: 10px;">zend server</a></li> <li><a href="/blog/tag/dpc09.html" style="font-size: 10px;">dpc09</a></li> <li><a href="/blog/tag/sflive2010.html" style="font-size: 10px;">sflive2010</a></li> <li><a href="/blog/tag/security.html" style="font-size: 10px;">security</a></li> <li><a href="/blog/tag/wifi.html" style="font-size: 10px;">wifi</a></li> <li><a href="/blog/tag/aikido.html" style="font-size: 10px;">aikido</a></li> <li><a href="/blog/tag/books.html" style="font-size: 10px;">books</a></li> <li><a href="/blog/tag/dpc10.html" style="font-size: 10px;">dpc10</a></li> <li><a href="/blog/tag/zendcon09.html" style="font-size: 11px;">zendcon09</a></li> <li><a href="/blog/tag/git.html" style="font-size: 11px;">git</a></li> <li><a href="/blog/tag/phpwomen.html" style="font-size: 10px;">phpwomen</a></li> <li><a href="/blog/tag/virtualbox.html" style="font-size: 10px;">virtualbox</a></li> <li><a href="/blog/tag/advocacy.html" style="font-size: 10px;">advocacy</a></li> <li><a href="/blog/tag/politics.html" style="font-size: 10px;">politics</a></li> <li><a href="/blog/tag/internet.html" style="font-size: 10px;">internet</a></li> <li><a href="/blog/tag/doctrine.html" style="font-size: 10px;">doctrine</a></li></ul></div>
         </div>
 
         <br class="clear"/>

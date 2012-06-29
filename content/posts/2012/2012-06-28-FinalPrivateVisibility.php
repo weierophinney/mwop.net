@@ -55,7 +55,6 @@ $extended=<<<'EOT'
 </p>
 
 <div class="example"><pre>
-<?php
 class Foo
 {
     public $bar = 'bar';
@@ -94,7 +93,6 @@ echo $foo->bar . $foo->baz();
 </p>
 
 <div class="example"><pre>
-<?php
 class Foo
 {
     protected $bar = 'bar';
@@ -139,7 +137,6 @@ echo $foo->bar . $foo->baz();
 </p>
 
 <div class="example"><pre>
-<?php
 class Foo
 {
     private $bar = 'bar';
@@ -185,7 +182,6 @@ echo $foo->bar . $foo->baz();
         an instance of the extending class will see only the new declaration. </p>
 
         <div class="example"><pre>
-<?php
 class Foo
 {
     public $bar = 'bar';
@@ -215,7 +211,6 @@ echo $foo->baz(); // "foobar"
         </p>
 
         <div class="example"><pre>
-<?php
 class Foo
 {
     protected $bar = 'bar';
@@ -247,7 +242,6 @@ echo $foo->baz(); // "foobar"
         </p>
 
         <div class="example"><pre>
-<?php
 class Foo
 {
     private $bar = 'bar';
@@ -318,7 +312,6 @@ echo $foo->myBaz2(); // "foobaz"
 </p>
 
 <div class="example"><pre>
-<?php
 use Zend\Di\Definition\Annotation\Inject;
 
 class Foo
@@ -348,7 +341,6 @@ class Bar {}
 </p>
 
 <div class="example"><pre>
-<?php
 use Zend\Form\Annotation;
 
 class Foo
