@@ -16,7 +16,7 @@ $entry->setAuthor($author);
 $entry->setDraft(false);
 $entry->setPublic(true);
 $entry->setCreated(new \DateTime('2012-06-28 21:20', new \DateTimezone('America/Chicago')));
-$entry->setUpdated(new \DateTime('2012-06-28 21:20', new \DateTimezone('America/Chicago')));
+$entry->setUpdated(new \DateTime('2012-06-30 10:00', new \DateTimezone('America/Chicago')));
 $entry->setTimezone('America/Chicago');
 $entry->setTags(array (
   'php',
@@ -54,7 +54,7 @@ $extended=<<<'EOT'
     accessible from any scope. This means the following:
 </p>
 
-<div class="example"><pre>
+<div class="example"><pre><code lang="php">
 class Foo
 {
     public $bar = 'bar';
@@ -79,7 +79,7 @@ $foo = new Foo();
 
 // I can access public members from an instance
 echo $foo->bar . $foo->baz();
-</pre></div>
+</code></pre></div>
 
 <p>
     Basically, public visibility means that I can access the member from 
@@ -92,7 +92,7 @@ echo $foo->bar . $foo->baz();
     member:
 </p>
 
-<div class="example"><pre>
+<div class="example"><pre><code lang="php">
 class Foo
 {
     protected $bar = 'bar';
@@ -120,7 +120,7 @@ $foo->doThat();
 
 // But these are both illegal:
 echo $foo->bar . $foo->baz();
-</pre></div>
+</code></pre></div>
 
 <p>
     Protected visibility is nice for hiding things from those consuming your
@@ -136,7 +136,7 @@ echo $foo->bar . $foo->baz();
     class.
 </p>
 
-<div class="example"><pre>
+<div class="example"><pre><code lang="php">
 class Foo
 {
     private $bar = 'bar';
@@ -161,7 +161,7 @@ $foo = new FooBar();
 
 // These are also both illegal:
 echo $foo->bar . $foo->baz();
-</pre></div>
+</code></pre></div>
 
 <p>
     Private visibility is generally of interest for locking down algorithms. 
@@ -181,7 +181,7 @@ echo $foo->bar . $foo->baz();
         public visibility, any access to the member within the extending class or
         an instance of the extending class will see only the new declaration. </p>
 
-        <div class="example"><pre>
+        <div class="example"><pre><code lang="php">
 class Foo
 {
     public $bar = 'bar';
@@ -200,7 +200,7 @@ class FooBar extends Foo
 $foo = new FooBar();
 echo $foo->bar;   // "foobar"
 echo $foo->baz(); // "foobar"
-        </pre></div>
+        </code></pre></div>
     </li>
 
     <li>
@@ -210,7 +210,7 @@ echo $foo->baz(); // "foobar"
             same behavior as public -&gt; public.
         </p>
 
-        <div class="example"><pre>
+        <div class="example"><pre><code lang="php">
 class Foo
 {
     protected $bar = 'bar';
@@ -229,7 +229,7 @@ class FooBar extends Foo
 $foo = new FooBar();
 echo $foo->bar;   // "foobar"
 echo $foo->baz(); // "foobar"
-        </pre></div>
+        </code></pre></div>
     </li>
 
     <li>
@@ -241,7 +241,7 @@ echo $foo->baz(); // "foobar"
             instance will be used. This is far easier to understand via an example.
         </p>
 
-        <div class="example"><pre>
+        <div class="example"><pre><code lang="php">
 class Foo
 {
     private $bar = 'bar';
@@ -273,7 +273,7 @@ $foo = new FooBar();
 echo $foo->baz();    // "bar"
 echo $foo->myBaz();  // "foobar"
 echo $foo->myBaz2(); // "foobaz"
-        </pre></div>
+        </code></pre></div>
     </li>
 </ul>
 
@@ -311,7 +311,7 @@ echo $foo->myBaz2(); // "foobaz"
     would know that that method needed to be injected.
 </p>
 
-<div class="example"><pre>
+<div class="example"><pre><code lang="php">
 use Zend\Di\Definition\Annotation\Inject;
 
 class Foo
@@ -330,7 +330,7 @@ class Foo
 }
 
 class Bar {}
-</pre></div>
+</code></pre></div>
 
 <p>
     Recently, part of our Forms RFC included a feature to allow creating
@@ -340,7 +340,7 @@ class Bar {}
     at the form level.
 </p>
 
-<div class="example"><pre>
+<div class="example"><pre><code lang="php">
 use Zend\Form\Annotation;
 
 class Foo
@@ -352,7 +352,7 @@ class Foo
      */
     protected $bar;
 }
-</pre></div>
+</code></pre></div>
 
 <p>
     One developer testing the support wanted to use a combination of <a 
@@ -470,4 +470,3 @@ EOT;
 $entry->setExtended($extended);
 
 return $entry;
-
