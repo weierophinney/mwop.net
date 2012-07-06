@@ -15,8 +15,8 @@ $entry->setTitle('ZF2 Forms in Beta5');
 $entry->setAuthor($author);
 $entry->setDraft(false);
 $entry->setPublic(true);
-$entry->setCreated(new \DateTime('2012-07-02 10:00', new \DateTimezone('America/Chicago')));
-$entry->setUpdated(new \DateTime('2012-07-02 10:00', new \DateTimezone('America/Chicago')));
+$entry->setCreated(new \DateTime('2012-07-05 15:40', new \DateTimezone('America/Chicago')));
+$entry->setUpdated(new \DateTime('2012-07-05 15:40', new \DateTimezone('America/Chicago')));
 $entry->setTimezone('America/Chicago');
 $entry->setTags(array (
   'php',
