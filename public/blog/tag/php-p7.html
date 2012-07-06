@@ -92,6 +92,40 @@ require(["Application/scroll"], function(scroll) {});    //-->
 
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
+    <p class="date">2009-04-06 08:30:00</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
+<a href="/blog/tag/zend+framework.html">zend framework</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/213-From-the-inside-out-How-to-layer-decorators.html">From the inside-out: How to layer decorators</a></h4>
+
+    <div class="entry body"><p>
+    This marks the second in an on-going series on <code>Zend_Form</code>
+    decorators.
+</p>
+
+<p>
+    You may have noticed in the <a href="/matthew/archives/212-The-simplest-Zend_Form-decorator.html">previous installment</a> 
+    that the decorator's <code>render()</code> method takes a single argument,
+    <code>$content</code>. This is expected to be a string.
+    <code>render()</code> will then take this string and decide to either
+    replace it, append to it, or prepend it. This allows you to have a chain of
+    decorators -- which allows you to create decorators that render only a
+    subset of the element's metadata, and then layer these decorators to build
+    the full markup for the element. 
+</p>
+
+<p>
+    Let's look at how this works in practice.
+</p></div>
+
+    <p><a href="/blog/213-From-the-inside-out-How-to-layer-decorators.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
     <p class="date">2009-04-03 08:30:00</p>
     <p class="tags"><a href="/blog/tag/php.html">php</a><br />
 <a href="/blog/tag/zend+framework.html">zend framework</a></p>
@@ -417,40 +451,6 @@ require(["Application/scroll"], function(scroll) {});    //-->
 </p></div>
 
     <p><a href="/blog/200-Using-Zend_Form-in-Your-Models.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2008-12-15 10:26:00</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
-<a href="/blog/tag/dojo.html">dojo</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/199-A-Simple-PHP-Publish-Subscribe-System.html">A Simple PHP Publish-Subscribe System</a></h4>
-
-    <div class="entry body"><p>
-    I've been playing a lot with <a href="http://dojotoolkit.org/">Dojo</a>
-    lately, and have been very impressed by its elegant publish-subscribe
-    system. Basically, any object can publish an event, and any other object can
-    subscribe to it. This creates an incredibly flexible notification
-    architecture that's completely opt-in.
-</p>
-
-<p>
-    The system has elements of Aspect Oriented Programming (AOP), as well as the
-    Observer pattern. Its power, however, is in the fact that an individual
-    object does not need to implement any specific interface in order to act as
-    either a Subject or an Observer; the system is globally available.
-</p>
-
-<p>
-    Being a developer who recognizes good ideas when he sees them, of course I
-    decided to port the idea to PHP. You can see the results <a href="http://github.com/weierophinney/phly/tree/master/Phly_PubSub">on github</a>.
-</p></div>
-
-    <p><a href="/blog/199-A-Simple-PHP-Publish-Subscribe-System.html">Continue reading...</a></p>
 </section>
 
 </div>

@@ -4,7 +4,7 @@
 <!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
 <head>
 	<meta charset="utf-8" />
-    <title>Blog Entries by Matthew Weier O'Phinney :: phly, boy, phly</title>
+    <title>Blog Entries for July 2012 :: phly, boy, phly</title>
 	<!--[if lt IE 9]>
 		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
@@ -16,8 +16,8 @@
 <link href="/css/Application/site.css" media="screen" rel="stylesheet" type="text/css" >
 <link href="/images/Application/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" >
 <link href="/css/Application/blog.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/blog/author/matthew-atom.xml" rel="alternate" type="application/atom+xml" title="Blog Entries by Matthew Weier O'Phinney Atom Feed" >
-<link href="/blog/author/matthew-rss.xml" rel="alternate" type="application/rss+xml" title="Blog Entries by Matthew Weier O'Phinney RSS Feed" >
+<link href="/blog/month/2012/07-atom.xml" rel="alternate" type="application/atom+xml" title="Blog Entries for July 2012 Atom Feed" >
+<link href="/blog/month/2012/07-rss.xml" rel="alternate" type="application/rss+xml" title="Blog Entries for July 2012 RSS Feed" >
     <script type="text/javascript">
     //<!--
 dojoConfig={
@@ -88,228 +88,52 @@ require(["Application/scroll"], function(scroll) {});    //-->
     <div class="sixteen columns content">
         <div class="row">
 <section class="eleven columns alpha blog">
-    <h2>Blog Entries by Matthew Weier O'Phinney</h2>
+    <h2>Blog Entries for July 2012</h2>
 
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
-    <p class="date">2004-01-21 16:45:22</p>
-    <p class="tags"><a href="/blog/tag/personal.html">personal</a></p>
+    <p class="date">2012-07-05 15:40:00</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
+<a href="/blog/tag/zf2.html">zf2</a><br />
+<a href="/blog/tag/zend+framework.html">zend framework</a></p>
 </aside>
 
 <section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/9-RCS-quickstart.html">RCS quickstart</a></h4>
-
-    <div class="entry body"><p>Gleaned from <em>Linux Server Hacks</em></p>
-<ul>
-    <li>Create an RCS directory</li>
-    <li>Execute a 'ci -i filename'</li>
-    <li>Execute a 'co -l filename' and edit as you wish.</li>
-    <li>Execute a 'ci -u filename' to check in changes.</li>
-</em></em></ul>
-<p>The initial time you checkout the copy, it will be locked, and this can cause
-problems if someone else wishes to edit it; you should probably edit it once and
-put in the version placeholder in comments somewhere at the top or bottom:</p>
-<pre>$VERSION$</pre>
-<p>and then check it back in with the -u flag to unlock it.</p></div>
-
-    <p><a href="/blog/9-RCS-quickstart.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2004-01-20 23:50:04</p>
-    <p class="tags"><a href="/blog/tag/personal.html">personal</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/8-Linux-Server-Hacks.html">Linux Server Hacks</a></h4>
+    <h4 class="entry"><a href="/blog/2012-07-02-zf2-beta5-forms.html">ZF2 Forms in Beta5</a></h4>
 
     <div class="entry body"><p>
-    I stopped at Borders in downtown Burlington on New Year's Eve day, and found
-    a book called <em>Linux Server Hacks</em>. I loved it immediately, but I
-    wasn't quite willing to shell out $25 for such a slim volume, even if it did
-    have many tidbits I could immediately use.
+    Forms are a nightmare for web development. They break the concept of 
+    separation of concerns:
 </p>
-<p>
-    When I told my co-worker, Rob, about it, it turned out he already had the
-    book, and brought it in to work for me to borrow the next day.
-</p>
-<p>
-    My nose has barely been out of it since. I've done such things as:
-</p>
+
 <ul>
-    <li>
-        Create personal firewalls for my home and office machines. I've always
-        used scripts for this, but the hacks for iptables showed the basics of
-        how they work, and I've now got nice robust firewalls that are very
-        simple scripts. To make them even more user-friendly, I borrowed some
-        syntax from the various /etc/init.d scripts so that I can start, stop,
-        and reload the firewall at will.
-    </li>
-    <li>
-        I don't use perl at the command line much, even though I've long known
-        the '-e' switch; it just seems to cumbersome. However, combine it with
-        the '-p' and/or '-i' switch, and you can use perl as a filter on globbed
-        files!
-    </li>
-    <li>
-        I know <strong>much</strong> more about SSH now, and am using ssh-agent
-        effectively at work now to bounce around servers and transfer groups of
-        files between servers (often by piping tar commands with ssh).
-    </li>
-    <li>
-        A script called 'movein.sh' turned my life around when it came to
-        working on the servers. I now have a .skel directory on my work machine
-        that contains links to oft-used configuration files and directories, as
-        well as to my ~/bin directory; this allows me to then type 'movein.sh
-        server' and have all these files uploaded to the server. I can now use
-        vim, screen, and other programs on any system we have in exactly the
-        manner I expect to.
-    </li>
-    <li>
-        I've started thinking about versioning more, and have plans to put into
-        place a subversion repository to store server configs, database schema,
-        and development projects so we won't make as many mistakes in the future
-        -- at least not ones we can't rollback from.
-    </li>
-    <li>
-        I rewrote a shell script in perl that was originally intended for IP
-        takeover, and have been utilizing it to determine if and/or when a
-        server we've reinstalled goes down.
-    </li>
-    <li>
-        A bunch of Apache and MySQL tips are included, including mod_rewrite
-        hacks, how to make your directory indexes show full file names, and
-        more; as well as how to monitor your mysql processes and, if necessary,
-        kill them. I'm also very interested in how to use MySQL as an
-        authentication backend for an FTP daemon -- it could give us very
-        fine-grained control of our webserver for editors.
-    </li>
+    <li>They have a <em>display</em> aspect (the actual HTML form)</li>
+    <li>They have a <em>validation</em> aspect</li>
+    <li>And the two mix, as you need to display validation error messages.</li>
 </ul>
+
 <p>
-    And that's just the tip of the iceberg. All in all, I highly recommend the
-    book -- though most likely as a book to check out from the library for a few
-    weeks, digest, put into practice, and return. The hacks are so damn useful,
-    I've found that after using one, I don't need to refer to that one ever
-    again. But that's the point.
+    On top of that, the submitted data is often directly related to your domain
+    models, causing more issues:
+</p>
+
+<ul>
+    <li>Not all elements will have a 1:1 mapping to the domain model -- 
+    buttons, CSRF protection, CAPTCHAs, etc. usually are application-level 
+    concerns, but not domain issues.</li>
+    <li>Names valid for your domain model may not be valid names for HTML 
+    entities.</li>
+</ul>
+
+<p>
+    Add to this that the validation logic may be re-usable outside of a forms 
+    context, and you've got a rather complex problem.
 </p></div>
 
-    <p><a href="/blog/8-Linux-Server-Hacks.html">Continue reading...</a></p>
+    <p><a href="/blog/2012-07-02-zf2-beta5-forms.html">Continue reading...</a></p>
 </section>
 
 </div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2004-01-20 22:34:42</p>
-    <p class="tags"><a href="/blog/tag/personal.html">personal</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/7-Perl-Cookbook%2C-2nd-Edition.html">Perl Cookbook, 2nd Edition</a></h4>
-
-    <div class="entry body"><p>
-    Tonight was Papa night, which meant that I got to look after Maeve while Jen
-    worked late doing a group at work. Last week, Maeve and I established that
-    Papa Night would always include going to the bookstore, which means Barnes
-    & Noble in South Burlington.
-</p>
-<p>
-    Last week, Maeve was perfectly content to look at books by herself, and
-    didn't want me interfering, so I decided this week to grab a book for myself
-    to peruse while she was busy. It didn't work as I intended -- Maeve saw that
-    I wasn't paying full attention to her, and then demanded my attention -- but
-    I was able to look through some of the new items in the second edition of
-    <em>The Perl Cookbook</em>.
-</p>
-<p>
-    Among them were:
-</p>
-<ul>
-    <li>Setting up both an XML-RPC server and client, using SOAP::Lite</li>
-    <li>Setting up both a SOAP-RPC server and client, using SOAP::Lite and other
-        modules; I could have used this in ROX::Filer to communicate with ROX
-        instead of using the filer's RPC call.
-    </li>
-    <li>Better coverage of DBI (it actually covered it!):
-        <ul>
-            <li>When you expect only a single row, this is a nice way to grab
-                it:
-                <pre>$row = $dbi->selectrow_(array|hash)ref($statement)
-                </pre>
-            </li>
-            <li>This is a great way to grab a bunch of columns from a large
-                resultset:
-                <pre>                    $results = $dbi->selectall_hashref($sql);
-                    foreach $record (keys(%{$results})) {
-                        print $results->{$record}{fieldname};
-                    }
-                </pre>
-            </li>
-            <li>This one is nice for a large resultset from which you only want
-                one column:
-                <pre>                    $results = $dbi->selectcol_arrayref($sql);
-                    foreach $result (@{$results}) {
-                        print $result;
-                    }
-                </pre>
-            </li>
-            <li>If you need to quote values before inserting them, try:
-                <pre>                    $quoted = $dbi->quote($unquoted);
-                    $sql = "UPDATE table SET textfield = $quoted";
-                </pre>
-            </li>
-            <li>If you need to check for errors, don't check with each DBI call;
-                instead, wrap all of them in an eval statement:
-                <pre>                    eval {
-                        $sth = $dbi->prepare($sql);
-                        $sth->do;
-                        while ($row = $sth->fetchrow_hashref) {
-                            ...
-                        }
-                    }
-                    if ($@) {
-                        print $DBI::errstr; 
-                    }
-                </pre>
-            </li>
-        </ul>
-    </li>
-    <li>Coverage of templating, including Text::Template (<em>very</em>
-        interesting!)
-    </li>
-    <li>Whole new chapters on mod_perl and XML (including DOM!) which I didn't
-        really even get to peruse.
-    </li>
-    <li><strong>autouse pragma</strong>: if you use:
-        <pre>use autouse Module::Name;</pre>
-        perl will <em>use</em> the module at runtime instead of compiletime;
-        basically, it only uses it if it actually needs it (i.e., if it
-        encounters code that utilizes functionality from that module). It's a
-        good way to keep down on the bloat -- I should use this with
-        librox-perl, and possibly with CGI::App.
-    </li>
-</ul></div>
-
-    <p><a href="/blog/7-Perl-Cookbook%2C-2nd-Edition.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="paginationControl">
-        <a href="/blog/author/matthew.html" class="first">&lt;&lt; First</a> |
-        <a href="/blog/author/matthew-p26.html"> &lt; Previous </a> |
-        <a href="/blog/author/matthew-p18.html">18</a> |
-            <a href="/blog/author/matthew-p19.html">19</a> |
-            <a href="/blog/author/matthew-p20.html">20</a> |
-            <a href="/blog/author/matthew-p21.html">21</a> |
-            <a href="/blog/author/matthew-p22.html">22</a> |
-            <a href="/blog/author/matthew-p23.html">23</a> |
-            <a href="/blog/author/matthew-p24.html">24</a> |
-            <a href="/blog/author/matthew-p25.html">25</a> |
-            <a href="/blog/author/matthew-p26.html">26</a> |
-            <span class="current">27</span> |
-    </div>
-
 </section>
 
 <aside class="four columns offset-by-one omega sidebar blog">

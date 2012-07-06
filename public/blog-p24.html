@@ -92,6 +92,32 @@ require(["Application/scroll"], function(scroll) {});    //-->
 
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
+    <p class="date">2004-09-11 21:27:11</p>
+    <p class="tags"><a href="/blog/tag/linux.html">linux</a><br />
+<a href="/blog/tag/personal.html">personal</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/38-Whats-keeping-that-device-in-use.html">What&#039;s keeping that device in use?</a></h4>
+
+    <div class="entry body"><p>
+    Ever wonder what's keeping that device in use so you can't unmount it? It's
+    happened to me a few times. The tool to discover this information?
+    <kbd>lsof</kbd>.
+</p>
+<p>
+    Basically, you type something like: <kbd>lsof /mnt/cdrom</kbd> and it gives
+    you a <kbd>ps</kbd>-style output detailing the PID and process of the
+    processes that are using the cdrom. You can then go and manually stop those
+    programs, or kill them yourself.
+</p></div>
+
+    <p><a href="/blog/38-Whats-keeping-that-device-in-use.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
     <p class="date">2004-09-04 19:12:21</p>
     <p class="tags"><a href="/blog/tag/personal.html">personal</a><br />
 <a href="/blog/tag/php.html">php</a></p>
@@ -594,30 +620,6 @@ require(["Application/scroll"], function(scroll) {});    //-->
 </p></div>
 
     <p><a href="/blog/37-Making-a-RAID-array-from-the-command-line.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2004-02-16 07:33:39</p>
-    <p class="tags"><a href="/blog/tag/linux.html">linux</a><br />
-<a href="/blog/tag/personal.html">personal</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/39-Learn-something-new-everyday.html">Learn something new everyday</a></h4>
-
-    <div class="entry body"><p>
-    <a href="http://www.linux.com">Linux.com</a> has had a running series on CLI
-    commands for Newbies. Most of it has been very basic, but there are still a
-    few gems within. For instance, today I was introduced to <kbd>apropos</kbd>
-    and <kbd>whatis</kbd>. Give a search term to the former, and it will list
-    all programs in which the search term is found in the manpages; give a
-    program name to the latter, and it will tell you which man page addresses
-    it.
-</p></div>
-
-    <p><a href="/blog/39-Learn-something-new-everyday.html">Continue reading...</a></p>
 </section>
 
 </div>

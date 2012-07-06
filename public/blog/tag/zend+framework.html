@@ -92,6 +92,50 @@ require(["Application/scroll"], function(scroll) {});    //-->
 
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
+    <p class="date">2012-07-05 15:40:00</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
+<a href="/blog/tag/zf2.html">zf2</a><br />
+<a href="/blog/tag/zend+framework.html">zend framework</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/2012-07-02-zf2-beta5-forms.html">ZF2 Forms in Beta5</a></h4>
+
+    <div class="entry body"><p>
+    Forms are a nightmare for web development. They break the concept of 
+    separation of concerns:
+</p>
+
+<ul>
+    <li>They have a <em>display</em> aspect (the actual HTML form)</li>
+    <li>They have a <em>validation</em> aspect</li>
+    <li>And the two mix, as you need to display validation error messages.</li>
+</ul>
+
+<p>
+    On top of that, the submitted data is often directly related to your domain
+    models, causing more issues:
+</p>
+
+<ul>
+    <li>Not all elements will have a 1:1 mapping to the domain model -- 
+    buttons, CSRF protection, CAPTCHAs, etc. usually are application-level 
+    concerns, but not domain issues.</li>
+    <li>Names valid for your domain model may not be valid names for HTML 
+    entities.</li>
+</ul>
+
+<p>
+    Add to this that the validation logic may be re-usable outside of a forms 
+    context, and you've got a rather complex problem.
+</p></div>
+
+    <p><a href="/blog/2012-07-02-zf2-beta5-forms.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
     <p class="date">2012-04-30 16:00:00</p>
     <p class="tags"><a href="/blog/tag/php.html">php</a><br />
 <a href="/blog/tag/zend+framework.html">zend framework</a><br />
@@ -487,37 +531,6 @@ that I want to share some of what I've learned.
 </p></div>
 
     <p><a href="/blog/261-Code-Generation-with-ZendCodeGenerator.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2011-03-04 09:30:00</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
-<a href="/blog/tag/zend+framework.html">zend framework</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/255-How-to-Contribute-to-ZF2.html">How to Contribute to ZF2</a></h4>
-
-    <div class="entry body"><p>
-ZF2 development is ramping up. We've been at it for some time now, but mostly
-taking care of infrastructure: converting to namespaces, re-working our
-exception strategy, improving our test suites, and improving our autoloading and
-plugin loading strategies to be more performant and flexible. Today, we're
-actively working on the MVC milestone, which we expect to be one of the last
-major pieces necessary for developers to start developing on top of ZF2.
-</p>
-
-<p>
-A question I receive often is: "How can I contribute to ZF2?"
-</p>
-
-<p>
-Consider this your guide.
-</p></div>
-
-    <p><a href="/blog/255-How-to-Contribute-to-ZF2.html">Continue reading...</a></p>
 </section>
 
 </div>

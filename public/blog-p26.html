@@ -92,6 +92,28 @@ require(["Application/scroll"], function(scroll) {});    //-->
 
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
+    <p class="date">2004-01-25 14:08:42</p>
+    <p class="tags"><a href="/blog/tag/linux.html">linux</a><br />
+<a href="/blog/tag/personal.html">personal</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/20-Ctrl-S-and-Ctrl-Q-in-nix-systems.html">Ctrl-S and Ctrl-Q in *nix systems</a></h4>
+
+    <div class="entry body"><p>
+    I just ran into this not long ago, and wish I'd discovered it years ago.
+    Basically, <tt>Ctrl-S</tt> <em>suspends</em> a process, while
+    <tt>Ctrl-Q</tt> <em>resumes</em> it. This is useful when in <tt>g/vim</tt>
+    or <tt>screen</tt> and you manage to lock up your application because you
+    accidently hit <tt>Ctrl-S</tt> when reaching for another key combo.
+</p></div>
+
+    <p><a href="/blog/20-Ctrl-S-and-Ctrl-Q-in-nix-systems.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
     <p class="date">2004-01-24 20:36:17</p>
     <p class="tags"><a href="/blog/tag/perl.html">perl</a><br />
 <a href="/blog/tag/personal.html">personal</a></p>
@@ -601,32 +623,6 @@ Disallow: /path/to/file
 </a></p></div>
 
     <p><a href="/blog/10-SSH-tips-and-tricks.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2004-01-21 16:45:22</p>
-    <p class="tags"><a href="/blog/tag/personal.html">personal</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/9-RCS-quickstart.html">RCS quickstart</a></h4>
-
-    <div class="entry body"><p>Gleaned from <em>Linux Server Hacks</em></p>
-<ul>
-    <li>Create an RCS directory</li>
-    <li>Execute a 'ci -i filename'</li>
-    <li>Execute a 'co -l filename' and edit as you wish.</li>
-    <li>Execute a 'ci -u filename' to check in changes.</li>
-</em></em></ul>
-<p>The initial time you checkout the copy, it will be locked, and this can cause
-problems if someone else wishes to edit it; you should probably edit it once and
-put in the version placeholder in comments somewhere at the top or bottom:</p>
-<pre>$VERSION$</pre>
-<p>and then check it back in with the -u flag to unlock it.</p></div>
-
-    <p><a href="/blog/9-RCS-quickstart.html">Continue reading...</a></p>
 </section>
 
 </div>

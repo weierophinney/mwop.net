@@ -92,6 +92,54 @@ require(["Application/scroll"], function(scroll) {});    //-->
 
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
+    <p class="date">2007-10-02 07:27:29</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
+<a href="/blog/tag/conferences.html">conferences</a><br />
+<a href="/blog/tag/zend+framework.html">zend framework</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/145-oh%2C-yeah%2C-zendcon....html">oh, yeah, zendcon...</a></h4>
+
+    <div class="entry body"><p>
+    I don't know why I haven't blogged this sooner, but, yes, I'll be speaking
+    once again at <a href="http://www.zendcon.com/">ZendCon:</a>
+</p>
+<p style="text-align:center;"><a href="http://www.zend.com.com" ><img src="http://s3.amazonaws.com/zendcon/ZendCon07_SpeakerBadge.gif" border="0"></a></p>
+
+<p>
+    I'll be presenting a number of times:
+</p>
+
+<ul>
+    <li>On Monday, I join <a href="http://sebastian-bergmann.de/">Sebastian Bergmann</a> 
+        and <a href="http://naberezny.com/">Mike Naberezny</a> in a full-day
+        tutorial session on PHP Development Best Practices and Unit Testing.
+        This expands on what Mike and I did last year, and will more heavily
+        emphasize the role of testing in the development process -- arguably the
+        most important best practice you can adopt.</li>
+    <li>On Tuesday monrning, I'll present a Zend Framework MVC Quick Start. This
+        talk is based on a <a href="http://weierophinney.net/matthew/archives/144-Zend-Framework-MVC-Webinar-posted.html">webinar</a> 
+        I recently gave for Zend, and covers the various pieces of the MVC layer
+        in Zend Framework.
+    </li>
+    <li>Tuesday evening, I'll present an <a href="http://zendcon.com/wiki/index.php?title=Uncon">Unconference</a>
+        session on Ajax-enabling your Zend Framework controllers. I don't know
+        yet if I'll need the whole hour, but I can probably fill it up with some
+        examples of decorating your apps with AJAX.
+    </li>
+</ul>
+
+<p>
+    Looking forward to seeing you all there!
+</p></div>
+
+    <p><a href="/blog/145-oh%2C-yeah%2C-zendcon....html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
     <p class="date">2007-09-26 09:25:09</p>
     <p class="tags"><a href="/blog/tag/php.html">php</a><br />
 <a href="/blog/tag/zend+framework.html">zend framework</a></p>
@@ -627,95 +675,6 @@ $front = My_Controller_Front::getInstance();
 </p></div>
 
     <p><a href="/blog/135-Extending-Singletons.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2007-01-31 14:20:00</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
-<a href="/blog/tag/vim.html">vim</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/134-exuberant-ctags-with-PHP-in-Vim.html">exuberant ctags with PHP in Vim</a></h4>
-
-    <div class="entry body"><p>
-    One reason I've heard PHP developers use for adopting an IDE when developing
-    is the ability to click on a class or function name and jump to the
-    declaration. Sounds like magic, and it's definitely something I've desired.
-</p>
-<p>
-    One way I get around it is by adopting PEAR coding standards for naming my
-    classes. Since they define a one-to-one mapping of class name to the file
-    system (substitute the underscore character ('_') with the directory
-    separator), I can usually very quickly and easily open a class file,
-    particularly if I start in the base directory of the project install.
-</p>
-<p>
-    Today, however, I found <a href="http://ctags.sourceforge.net">exuberant ctags</a>,
-    a library which can be used to generate an index file mapping language
-    objects to source files and the line in the source file where they are
-    declared. Contrary to its name, it's not just for the C language; it
-    currently supports 33 different programming languages, including PHP.
-</p>
-<p>
-    I decided to try it out on the Zend Framework core library today. At first
-    run, it was pretty useful. However, it was only mapping classes, and, in
-    addition, only those defined with the single word 'class' -- abstract classes
-    and interfaces were entirely left out. So, I looked into the documentation
-    to see if I could change the behaviour.
-</p>
-<p>
-    And, being a Unix program, of course I could. First off, you can add
-    functions to the items it indexes with a simple flag. Additionally, you can
-    use POSIX regular expressions to refine what it searches.
-</p>
-<p>
-    I whipped up the following script to create my tags index:
-</p>
-<div class="example"><pre><code lang="bash">
-#!/bin/bash
-cd /path/to/framework/library
-exec ctags-exuberant -f ~/.vim/mytags/framework \
--h \&quot;.php\&quot; -R \
---exclude=\&quot;\.svn\&quot; \
---totals=yes \
---tag-relative=yes \
---PHP-kinds=+cf \
---regex-PHP='/abstract class ([^ ]*)/\1/c/' \
---regex-PHP='/interface ([^ ]*)/\1/c/' \
---regex-PHP='/(public |static |abstract |protected |private )+function ([^ (]*)/\2/f/'
-</code></pre></div>
-<p>
-    This script creates the tag index in the file
-    <kbd>$HOME/.vim/mytags/framework</kbd>. It scans for PHP files recursively
-    through the tree, excluding any files found in a <kbd>.svn</kbd> directory
-    (I'm using a checkout from the subversion repository). The file paths in the
-    index are created relative to the tags file; this was important, because if
-    this wasn't provided, vim was unable to jump to the file, as it couldn't
-    find it. <kbd>--PHP-kinds=+cf</kbd> tells it to index classes and functions.
-    Next, I've got three regular expressions.  The first tells it to match
-    classes beginning with 'abstract class' as classes. The second tells it to
-    match interfaces as classes. The last is so that PHP 5 methods, which begin
-    with a visibility operator, to be matched as functions.
-</p>
-<p>
-    Once the index file is generated (it takes less than a second), all you need
-    to do in vim is tell it to load it: <kbd>:set
-        tags=~/.vim/mytags/framework</kbd>. At this point, you can do all sorts
-    of fun stuff. Place the cursor on a class name or method name, anywhere in
-    it, and hit <kbd>Ctrl-]</kbd>, and you'll jump to the file and line of its
-    declaration; <kbd>Ctrl-T</kbd> then takes you back. If you change the
-    invocation to <kbd>Ctrl-W ]</kbd>, it will split the current window and open
-    the declaration in the new pane. (If you're familiar with how help works
-    with Vim, this should seem pretty familiar.)
-</p>
-<p>
-    One more reason to stick with Vim for your PHP editing needs. :-)
-</p></div>
-
-    <p><a href="/blog/134-exuberant-ctags-with-PHP-in-Vim.html">Continue reading...</a></p>
 </section>
 
 </div>

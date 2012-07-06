@@ -92,6 +92,34 @@ require(["Application/scroll"], function(scroll) {});    //-->
 
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
+    <p class="date">2004-11-04 13:09:59</p>
+    <p class="tags"><a href="/blog/tag/personal.html">personal</a><br />
+<a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/49-Cgiapp-1.5.1-released.html">Cgiapp 1.5.1 released</a></h4>
+
+    <div class="entry body"><p>
+    At work this week, I discovered a bug with how I was calling
+    set_error_handler() in Cgiapp's run() method. Evidently passing a reference
+    in a PHP callback causes issues! So, I corrected that.
+</p>
+<p>
+    I also made a minor, one-character change to query() to make it explicitly
+    return a reference to the $_CGIAPP_REQUEST property array.
+</p>
+<p>
+    You can see full details at the <a href="download?mode=view&id=11">Cgiapp
+        download page</a>.
+</p></div>
+
+    <p><a href="/blog/49-Cgiapp-1.5.1-released.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
     <p class="date">2004-10-28 14:27:41</p>
     <p class="tags"><a href="/blog/tag/personal.html">personal</a><br />
 <a href="/blog/tag/php.html">php</a></p>
@@ -610,32 +638,6 @@ $body = $tmpl->fetch();
 <p>Stay Tuned!</p></div>
 
     <p><a href="/blog/40-New-site-is-up%21.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2004-09-11 21:27:11</p>
-    <p class="tags"><a href="/blog/tag/linux.html">linux</a><br />
-<a href="/blog/tag/personal.html">personal</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/38-Whats-keeping-that-device-in-use.html">What&#039;s keeping that device in use?</a></h4>
-
-    <div class="entry body"><p>
-    Ever wonder what's keeping that device in use so you can't unmount it? It's
-    happened to me a few times. The tool to discover this information?
-    <kbd>lsof</kbd>.
-</p>
-<p>
-    Basically, you type something like: <kbd>lsof /mnt/cdrom</kbd> and it gives
-    you a <kbd>ps</kbd>-style output detailing the PID and process of the
-    processes that are using the cdrom. You can then go and manually stop those
-    programs, or kill them yourself.
-</p></div>
-
-    <p><a href="/blog/38-Whats-keeping-that-device-in-use.html">Continue reading...</a></p>
 </section>
 
 </div>

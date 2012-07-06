@@ -92,6 +92,46 @@ require(["Application/scroll"], function(scroll) {});    //-->
 
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
+    <p class="date">2005-08-19 11:52:41</p>
+    <p class="tags"><a href="/blog/tag/linux.html">linux</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/89-Server-upgrades%2C-samba%2C-and-permissions%2C-oh-my%21.html">Server upgrades, samba, and permissions, oh my!</a></h4>
+
+    <div class="entry body"><p>
+    Last week, we performed a long needed upgrade to the company
+    file/print/intranet server. Basically, we'd been on a Redhat 8 system, and
+    there were upgrades we were wanting to perform, and couldn't due to lack of
+    libraries. We could have possibly compiled from source in some occasions...
+    but that would likely have shuttled us into a similar dependency hell as
+    using Redhat in the first place.
+</p>
+<p>
+    So, we decided to re-install the OS, and switch to Gentoo in the process.
+    We've found that Gentoo is a great distro for servers -- it allows us to
+    tailor the install to the server purpose, and simultaneously provides a
+    clean upgrade path via portage. 
+</p>
+<p>
+    Things went primarily without a hitch. We lost a few databases due to a bad
+    DB backup (argh! there went the wiki!), but that was the primary extent of
+    the damage.
+</p>
+<p>
+    When investigating the sytem post-install, I discovered some connectivity
+    issues with Samba. Basically, when connecting via a *nix-based machine, we
+    were getting symlinks reported as being local to the connecting machine, not
+    the server. This meant that symlinks on the server weren't being followed --
+    which caused major issues for those connecting via FTP, Mac, or Linux.
+</p></div>
+
+    <p><a href="/blog/89-Server-upgrades%2C-samba%2C-and-permissions%2C-oh-my%21.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
     <p class="date">2005-07-28 00:08:00</p>
     <p class="tags"><a href="/blog/tag/php.html">php</a></p>
 </aside>
@@ -444,35 +484,6 @@ for a bink-less future...
 </p></div>
 
     <p><a href="/blog/80-ZCE-Results-are-in%21.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2005-06-14 23:07:57</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/79-PHP-Application-Documentation.html">PHP Application Documentation</a></h4>
-
-    <div class="entry body"><p> <a href="http://www.paul-m-jones.com/">Paul Jones</a> has written <a href="http://www.paul-m-jones.com/blog/?p=153">an interesting piece about documentation in the PEAR project</a>, in which he argues very convincingly for using wikis for end user documentation.</p>
-<p>
-    I actually think that last point bears repeating: <em>using wikis for end
-        user documentation</em>. I talked to Paul about this issue at
-    php|Tropics, and both of us use phpDocumentor quite religiously. However,
-    API documentation is very different from end user documentation. And the
-    issue with documentation at the PEAR project has to do with the fact that
-    there are many projects with little or no end user documentation -- which
-    often makes it difficult for a developer to determine how a module might be
-    used.
-</p>
-<p>
-    The often-cited barrier for this is that end user documentation on the PEAR
-    website must be done in DocBook format.
-</p></div>
-
-    <p><a href="/blog/79-PHP-Application-Documentation.html">Continue reading...</a></p>
 </section>
 
 </div>

@@ -92,6 +92,52 @@ require(["Application/scroll"], function(scroll) {});    //-->
 
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
+    <p class="date">2006-05-22 17:08:00</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/113-Phly_Struct-no%2C-Phly_Hash....html">Phly_Struct? no, Phly_Hash...</a></h4>
+
+    <div class="entry body"><p>
+    After some discussion with <a href="http://paul-m-jones.com/blog/">Paul</a>
+    and <a href="http://mikenaberezny.com/">Mike</a>, I was convinced that
+    'Struct' was a bad name for Phly_Struct; structs are rarely if ever
+    iterable, and one key feature of Phly_Struct is its iterable nature.
+</p>
+<p>
+    The question is: what to name it? Associative arrays go by a variety of
+    names in different languages. In Perl, they're 'hashes'; Ruby and
+    Javascript, 'collections'; Python, 'dictionaries'. I ruled out
+    'Phly_Dictionary' immediately, as (a) I don't want it to be confused with
+    online dictionaries, and (b), it's too long. The term 'Collection' also
+    feels too long (although I write things like
+    'Cgiapp2_ErrorException_Observer_Interface', so I don't know why length
+    should be such an issue), as well as unfamiliar to many PHP developers. Hash
+    can imply cryptographic algorithms, but, overall, is short and used often
+    enough in PHP circles that it makes sense to me.
+</p>
+<p>
+    So, I've renamed Phly_Struct to <a href="http://weierophinney.net/phly/index.php?package=Phly_Hash">Phly_Hash</a>,
+    and updated Phly_Config to use the new package as its dependency. In
+    addition, I've had it implement Countable, so you can do things like:
+</p>
+<div class="example"><pre><code lang="php">
+$idxCount = count($struct);
+</code></pre></div>
+<p>
+    Go to the <a href="http://weierophinney.net/phly/">channel page</a> for
+    instructions on adding Phly to your PEAR channels list, and grab the new
+    package with <tt>pear install -a phly/Phly_Hash</tt>, or <tt>pear upgrade -a
+    phly/Phly_Config</tt>.
+</p></div>
+
+    <p><a href="/blog/113-Phly_Struct-no%2C-Phly_Hash....html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
     <p class="date">2006-05-19 17:00:00</p>
     <p class="tags"><a href="/blog/tag/php.html">php</a></p>
 </aside>
@@ -573,28 +619,6 @@ $xml = mb_convert_encoding($xml, 'UTF-8', $enc);
 </p></div>
 
     <p><a href="/blog/104-Cgiapp-dual-releases.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2006-01-05 16:57:00</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
-<a href="/blog/tag/programming.html">programming</a><br />
-<a href="/blog/tag/linux.html">linux</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/103-XP-%2B-Cygwin-%2B-coLinux-Productivity.html">XP + Cygwin + coLinux == Productivity</a></h4>
-
-    <div class="entry body"><p>
-    I wrote earlier of my experiences <a href="http://weierophinney.net/matthew/archives/101-Using-Windows-XP.html">using Windows XP</a>,
-    a move I've considered somewhat unfortunate but necessary. I've added a
-    couple more tools to my toolbox since that have made the environment even
-    better.
-</p></div>
-
-    <p><a href="/blog/103-XP-%2B-Cygwin-%2B-coLinux-Productivity.html">Continue reading...</a></p>
 </section>
 
 </div>
