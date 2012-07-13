@@ -1,10 +1,10 @@
 <?php
 namespace Application\View\Helper;
 
-use DomainException,
-    InvalidArgumentException,
-    Traversable,
-    Zend\View\Helper\AbstractHelper;
+use DomainException;
+use InvalidArgumentException;
+use Traversable;
+use Zend\View\Helper\AbstractHelper;
 
 class Disqus extends AbstractHelper
 {
@@ -81,4 +81,3 @@ EOH;
         return $html;
     }
 }
-

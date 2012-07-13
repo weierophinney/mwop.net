@@ -1,16 +1,16 @@
 <?php
 namespace Application\Controller;
 
-use Zend\EventManager\EventInterface as Event,
-    Zend\EventManager\EventManagerAwareInterface,
-    Zend\EventManager\EventManagerInterface,
-    Zend\EventManager\EventManager,
-    Zend\Stdlib\DispatchableInterface,
-    Zend\Stdlib\RequestInterface as Request,
-    Zend\Stdlib\ResponseInterface as Response,
-    Zend\Mvc\InjectApplicationEventInterface,
-    Zend\Mvc\MvcEvent,
-    Zend\View\Model\ViewModel;
+use Zend\EventManager\EventInterface as Event;
+use Zend\EventManager\EventManagerAwareInterface;
+use Zend\EventManager\EventManagerInterface;
+use Zend\EventManager\EventManager;
+use Zend\Stdlib\DispatchableInterface;
+use Zend\Stdlib\RequestInterface as Request;
+use Zend\Stdlib\ResponseInterface as Response;
+use Zend\Mvc\InjectApplicationEventInterface;
+use Zend\Mvc\MvcEvent;
+use Zend\View\Model\ViewModel;
 
 class PageController implements 
     DispatchableInterface, 
