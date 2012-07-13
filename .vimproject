@@ -133,68 +133,6 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
   index.php
  }
  vendor=vendor {
-  PhlyBlog=PhlyBlog {
-   README.md
-   Module.php
-   autoload_classmap.php
-   autoload_function.php
-   autoload_register.php
-   bin=bin {
-    compile.php
-   }
-   config=config filter="*.php *.yml *.json *.xml *.ini" {
-    module.config.php
-   }
-   misc=misc {
-    sample-post.php
-   }
-   public=public {
-    css=css {
-     phly-blog.css
-    }
-    js=js {
-     blog.js
-    }
-   }
-   src=src {
-    PhlyBlog=PhlyBlog {
-     AuthorEntity.php
-     Compiler.php
-     CompilerOptions.php
-     EntryEntity.php
-     Compiler=Compiler {
-      FileWriter.php
-      PhpFileFilter.php
-      SortedEntries.php
-      WriterInterface.php
-     }
-     Filter=Filter {
-      EntryFilter.php
-      Permalink.php
-      Tags.php
-     }
-    }
-   }
-   test=test filter="*.xml *.php" {
-    phpunit.xml
-    bootstrap.php
-    bootstrap.php.dist
-    PhlyBlog=PhlyBlog {
-     EntryEntityTest.php
-    }
-    log=log {
-    }
-   }
-   view=view filter="*.phtml *.php *.mustache" {
-    phly-blog=phly-blog {
-     entry-short.phtml
-     entry.phtml
-     list.phtml
-     paginator.phtml
-     tags.phtml
-    }
-   }
-  }
   PhlyComic=PhlyComic filter="*.php *.md" {
    Module.php
    autoload_classmap.php
@@ -232,85 +170,6 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
     }
    }
   }
-  PhlyCommon=PhlyCommon {
-   autoload_classmap.php
-   autoload_function.php
-   autoload_register.php
-   Module.php
-   src=src {
-    PhlyCommon=PhlyCommon {
-     ArraySerializable.php
-     DataSource.php
-     Entity.php
-     Query.php
-     Resource.php
-     ResourceCollection.php
-     Validatible.php
-     DataSource=DataSource {
-      Mock.php
-      Mongo.php
-      Query.php
-      Where.php
-      Mongo=Mongo {
-       QueryParser.php
-      }
-     }
-     Filter=Filter {
-      Timestamp.php
-      Timezone.php
-     }
-     Resource=Resource {
-      AbstractResource.php
-      Collection.php
-      MongoCollection.php
-     }
-    }
-   }
-   test=test {
-    PhlyCommon=PhlyCommon {
-     DataSource=DataSource {
-      MockTest.php
-      QueryTest.php
-     }
-     Resource=Resource {
-      CollectionTest.php
-      TestAsset=TestAsset {
-       TestEntity.php
-      }
-     }
-    }
-   }
-  }
-  PhlyContact=PhlyContact filter="*.php *.phtml *.md" {
-   Module.php
-   autoload_classmap.php
-   autoload_function.php
-   autoload_register.php
-   README.md
-   config=config {
-    module.config.php
-    module.phly-contact.local.config.php
-   }
-   src=src {
-    PhlyContact=PhlyContact {
-     Controller=Controller {
-      ContactController.php
-     }
-     Form=Form {
-      ContactFilter.php
-      ContactForm.php
-     }
-    }
-   }
-   view=view {
-    phly-contact=phly-contact {
-     contact=contact {
-      index.phtml
-      thank-you.phtml
-     }
-    }
-   }
-  }
   SkeletonCss=SkeletonCss filter="*.css *.js *.html *.txt" {
    README.md
    public=public {
@@ -329,113 +188,551 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
     }
    }
   }
-  ZfcBase=ZfcBase {
-   Module.php
-   autoload_classmap.php
-   autoload_function.php
-   autoload_register.php
-   src=src {
-    ZfcBase=ZfcBase {
-     EventManager=EventManager {
-      EventProvider.php
+  phly=phly filter="*.php *.phtml *.md *.txt *.sql *.js *.css *.html" {
+   phly-blog=phly-blog {
+    Module.php
+    autoload_classmap.php
+    autoload_function.php
+    autoload_register.php
+    README.md
+    TODO.md
+    bin=bin {
+     compile.php
+    }
+    config=config {
+     module.config.php
+    }
+    misc=misc {
+     sample-post.php
+    }
+    src=src {
+     PhlyBlog=PhlyBlog {
+      AuthorEntity.php
+      Compiler.php
+      CompilerOptions.php
+      EntryEntity.php
+      Compiler=Compiler {
+       Event.php
+       FileWriter.php
+       PhpFileFilter.php
+       ResponseFile.php
+       ResponseStrategy.php
+       SortedEntries.php
+       WriterInterface.php
+       Listener=Listener {
+        AbstractList.php
+        Archives.php
+        Authors.php
+        ByDate.php
+        ByMonth.php
+        ByYear.php
+        Entries.php
+        ListenerInterface.php
+        Tags.php
+       }
+      }
+      Filter=Filter {
+       AuthorFilter.php
+       AuthorIsValid.php
+       EntryFilter.php
+       Permalink.php
+       Tags.php
+       Url.php
+      }
      }
-     Form=Form {
-      Form.php
-      ProvidesEventsForm.php
+    }
+    test=test {
+     bootstrap.php
+     PhlyBlog=PhlyBlog {
+      CompilerTest.php
+      EntryEntityTest.php
+      Compiler=Compiler {
+       FileWriterTest.php
+       ResponseFileTest.php
+       ResponseStrategyTest.php
+       Listener=Listener {
+        ArchivesTest.php
+        AuthorsTest.php
+        ByDateTest.php
+        ByMonthTest.php
+        ByYearTest.php
+        EntriesTest.php
+        TagsTest.php
+        TestHelper.php
+       }
+       TestAsset=TestAsset {
+        MockWriter.php
+       }
+      }
+      _posts=_posts {
+       invalid-post.php
+       metadata.php
+       2004=2004 {
+        01=01 {
+         06-4f8706cf6406c-post-name.php
+         14-4f8706cf63c78-post-name.php
+        }
+        03=03 {
+         04-4f8706cf61b0e-post-name.php
+         17-4f8706cf63d13-post-name.php
+        }
+        05=05 {
+         02-4f8706cf63759-post-name.php
+         22-4f8706cf6307b-post-name.php
+        }
+        07=07 {
+         18-4f8706cf63998-post-name.php
+         29-4f8706cf638fe-post-name.php
+        }
+        08=08 {
+         09-4f8706cf64157-post-name.php
+         30-4f8706cf6526f-post-name.php
+         30-4f8706cf65548-post-name.php
+        }
+        10=10 {
+         09-4f8706cf65a64-post-name.php
+        }
+        11=11 {
+         17-4f8706cf659d7-post-name.php
+         23-4f8706cf64f50-post-name.php
+        }
+        12=12 {
+         20-4f8706cf62d66-post-name.php
+        }
+       }
+       2005=2005 {
+        01=01 {
+         19-4f8706cf61cce-post-name.php
+        }
+        02=02 {
+         25-4f8706cf65054-post-name.php
+        }
+        03=03 {
+         09-4f8706cf6566b-post-name.php
+        }
+        04=04 {
+         01-4f8706cf65b81-post-name.php
+        }
+        05=05 {
+         20-4f8706cf635b3-post-name.php
+        }
+        06=06 {
+         05-4f8706cf6329e-post-name.php
+         08-4f8706cf63bf1-post-name.php
+        }
+        09=09 {
+         03-4f8706cf6600b-post-name.php
+        }
+        10=10 {
+         15-4f8706cf63ebc-post-name.php
+         23-4f8706cf63f8f-post-name.php
+        }
+        12=12 {
+         10-4f8706cf64679-post-name.php
+        }
+       }
+       2006=2006 {
+        01=01 {
+         24-4f8706cf62949-post-name.php
+        }
+        02=02 {
+         21-4f8706cf62119-post-name.php
+        }
+        03=03 {
+         01-4f8706cf654c5-post-name.php
+         23-4f8706cf619e3-post-name.php
+        }
+        04=04 {
+         11-4f8706cf65caf-post-name.php
+        }
+        06=06 {
+         01-4f8706cf66133-post-name.php
+        }
+        07=07 {
+         03-4f8706cf6233e-post-name.php
+         23-4f8706cf62229-post-name.php
+        }
+        09=09 {
+         10-4f8706cf65efa-post-name.php
+         28-4f8706cf64273-post-name.php
+        }
+       }
+       2007=2007 {
+        01=01 {
+         15-4f8706cf61bcb-post-name.php
+        }
+        03=03 {
+         12-4f8706cf62551-post-name.php
+         12-4f8706cf64875-post-name.php
+        }
+        04=04 {
+         24-4f8706cf63d98-post-name.php
+        }
+        06=06 {
+         05-4f8706cf64387-post-name.php
+         11-4f8706cf61341-post-name.php
+        }
+        08=08 {
+         10-4f8706cf6318f-post-name.php
+        }
+        09=09 {
+         15-4f8706cf618a3-post-name.php
+        }
+        12=12 {
+         13-4f8706cf633ba-post-name.php
+         19-4f8706cf61740-post-name.php
+         31-4f8706cf65afe-post-name.php
+        }
+       }
+       2008=2008 {
+        01=01 {
+         17-4f8706cf6495b-post-name.php
+         25-4f8706cf65de4-post-name.php
+        }
+        02=02 {
+         14-4f8706cf634a3-post-name.php
+         bogus.php
+        }
+        03=03 {
+         25-4f8706cf6456f-post-name.php
+        }
+        04=04 {
+         05-4f8706cf62f8f-post-name.php
+         30-4f8706cf61dff-post-name.php
+         30-4f8706cf6543a-post-name.php
+        }
+        05=05 {
+         14-4f8706cf661ca-post-name.php
+        }
+        06=06 {
+         09-4f8706cf657a4-post-name.php
+        }
+        08=08 {
+         18-4f8706cf61f0c-post-name.php
+         20-4f8706cf65f81-post-name.php
+        }
+        10=10 {
+         19-4f8706cf64e47-post-name.php
+        }
+        12=12 {
+         07-4f8706cf6154e-post-name.php
+         07-4f8706cf6265b-post-name.php
+         20-4f8706cf637e0-post-name.php
+         31-4f8706cf61a8e-post-name.php
+        }
+       }
+       2009=2009 {
+        02=02 {
+         25-4f8706cf63abc-post-name.php
+        }
+        04=04 {
+         16-4f8706cf658c2-post-name.php
+         18-4f8706cf6478a-post-name.php
+         24-4f8706cf6241b-post-name.php
+        }
+        05=05 {
+         21-4f8706cf63a1c-post-name.php
+        }
+        09=09 {
+         07-4f8706cf636c0-post-name.php
+        }
+        10=10 {
+         12-4f8706cf63865-post-name.php
+        }
+       }
+       2010=2010 {
+        02=02 {
+         18-4f8706cf61672-post-name.php
+         19-4f8706cf62c7b-post-name.php
+         22-4f8706cf6594d-post-name.php
+        }
+        03=03 {
+         11-4f8706cf6282d-post-name.php
+         11-4f8706cf64a75-post-name.php
+         26-4f8706cf66262-post-name.php
+        }
+        06=06 {
+         04-4f8706cf64462-post-name.php
+        }
+        07=07 {
+         01-4f8706cf65c18-post-name.php
+        }
+        09=09 {
+         14-4f8706cf63b58-post-name.php
+         22-4f8706cf660a9-post-name.php
+        }
+        10=10 {
+         06-4f8706cf61946-post-name.php
+         24-4f8706cf65e71-post-name.php
+        }
+        11=11 {
+         15-4f8706cf65160-post-name.php
+         16-4f8706cf66383-post-name.php
+        }
+        12=12 {
+         04-4f8706cf65838-post-name.php
+         11-4f8706cf64d59-post-name.php
+         27-4f8706cf64b5b-post-name.php
+        }
+       }
+       2011=2011 {
+        01=01 {
+         05-4f8706cf6201d-post-name.php
+        }
+        02=02 {
+         12-4f8706cf62a5a-post-name.php
+         18-4f8706cf6535d-post-name.php
+         24-4f8706cf62b84-post-name.php
+        }
+        03=03 {
+         26-4f8706cf655d1-post-name.php
+        }
+        04=04 {
+         09-4f8706cf64c67-post-name.php
+         15-4f8706cf617ec-post-name.php
+         21-4f8706cf62745-post-name.php
+        }
+        05=05 {
+         20-4f8706cf62e7c-post-name.php
+         22-4f8706cf63e31-post-name.php
+        }
+        09=09 {
+         17-4f8706cf65705-post-name.php
+        }
+        10=10 {
+         07-4f8706cf662ec-post-name.php
+        }
+        12=12 {
+         09-4f8706cf65d49-post-name.php
+        }
+       }
+      }
      }
-     Mapper=Mapper {
-      DbAdapterMapper.php
-      DbMapperAbstract.php
-      ModelMapper.php
-      Transactional.php
+     log=log {
      }
-     Model=Model {
-      ModelAbstract.php
+    }
+    view=view {
+     phly-blog=phly-blog {
+      entry-short.phtml
+      entry.phtml
+      list.phtml
+      paginator.phtml
+      tags.phtml
      }
-     Module=Module {
-      ModuleAbstract.php
+    }
+   }
+   phly-common=phly-common {
+    Module.php
+    autoload_classmap.php
+    autoload_function.php
+    autoload_register.php
+    README.md
+    src=src {
+     PhlyCommon=PhlyCommon {
+      ArraySerializable.php
+      DataSource.php
+      Entity.php
+      Query.php
+      Resource.php
+      ResourceCollection.php
+      Validatible.php
+      DataSource=DataSource {
+       Mock.php
+       Mongo.php
+       Query.php
+       Where.php
+       Mongo=Mongo {
+        QueryParser.php
+       }
+      }
+      Filter=Filter {
+       Timestamp.php
+       Timezone.php
+      }
+      Resource=Resource {
+       AbstractResource.php
+       Collection.php
+       MongoCollection.php
+      }
      }
-     Service=Service {
-      ModelServiceAbstract.php
-      ServiceAbstract.php
+    }
+    test=test {
+     bootstrap.php
+     PhlyCommon=PhlyCommon {
+      DataSource=DataSource {
+       MockTest.php
+       QueryTest.php
+      }
+      Resource=Resource {
+       CollectionTest.php
+       TestAsset=TestAsset {
+        TestEntity.php
+       }
+      }
      }
-     Util=Util {
-      String.php
+     log=log {
+     }
+    }
+   }
+   phly-contact=phly-contact {
+    Module.php
+    autoload_classmap.php
+    autoload_function.php
+    autoload_register.php
+    README.md
+    TODO.md
+    config=config {
+     module.config.php
+     module.phly-contact.local.php
+    }
+    src=src {
+     PhlyContact=PhlyContact {
+      Controller=Controller {
+       ContactController.php
+      }
+      Form=Form {
+       ContactFilter.php
+       ContactForm.php
+      }
+      Service=Service {
+       ContactCaptchaFactory.php
+       ContactControllerFactory.php
+       ContactFormFactory.php
+       ContactMailMessageFactory.php
+       ContactMailTransportFactory.php
+      }
+     }
+    }
+    view=view {
+     phly-contact=phly-contact {
+      contact=contact {
+       index.phtml
+       thank-you.phtml
+      }
      }
     }
    }
   }
-  ZfcUser=ZfcUser {
-   Module.php
-   autoload_classmap.php
-   autoload_function.php
-   autoload_register.php
-   config=config {
-    module.config.php
-   }
-   data=data filter="*.sql" {
-    schema.sql
-    schema.sqlite.sql
-   }
-   src=src {
-    ZfcUser=ZfcUser {
-     Authentication=Authentication {
-      Adapter=Adapter {
-       AbstractAdapter.php
-       AdapterChain.php
-       AdapterChainEvent.php
-       ChainableAdapter.php
-       Db.php
+  zf-commons=zf-commons filter="*.php *.phtml *.md *.txt *.sql *.js *.css *.html" {
+   zfc-base=zfc-base {
+    Module.php
+    autoload_classmap.php
+    autoload_function.php
+    autoload_register.php
+    README.md
+    src=src {
+     ZfcBase=ZfcBase {
+      EventManager=EventManager {
+       EventProvider.php
       }
-      Storage=Storage {
-       Db.php
+      Form=Form {
+       Form.php
+       ProvidesEventsForm.php
       }
-     }
-     Controller=Controller {
-      UserController.php
-      Plugin=Plugin {
-       ZfcUserAuthentication.php
+      Mapper=Mapper {
+       DbAdapterMapper.php
+       DbMapperAbstract.php
+       ModelMapperInterface.php
+       TransactionalInterface.php
       }
-     }
-     Form=Form {
-      Base.php
-      Login.php
-      Register.php
-     }
-     Model=Model {
-      User.php
-      UserInterface.php
-      UserMapper.php
-      UserMapperInterface.php
-      UserMeta.php
-      UserMetaInterface.php
-      UserMetaMapper.php
-      UserMetaMapperInterface.php
-     }
-     Service=Service {
-      User.php
-     }
-     Util=Util {
-      Password.php
-     }
-     Validator=Validator {
-      AbstractRecord.php
-      NoRecordExists.php
-      RecordExists.php
-     }
-     View=View {
-      Helper=Helper {
-       ZfcUserIdentity.php
-       ZfcUserLoginWidget.php
+      Model=Model {
+       ModelAbstract.php
+      }
+      Module=Module {
+       ModuleAbstract.php
+      }
+      Service=Service {
+       ModelServiceAbstract.php
+       ServiceAbstract.php
+       Exception=Exception {
+        ModelNotFoundException.php
+       }
+      }
+      Util=Util {
+       String.php
       }
      }
     }
    }
-   view=view {
-    zfcuser=zfcuser filter="*.phtml" {
-     index.phtml
-     login.phtml
-     register.phtml
+   zfc-user=zfc-user {
+    Module.php
+    autoload_classmap.php
+    autoload_function.php
+    autoload_register.php
+    README.md
+    config=config {
+     module.config.php
+     README.md
+    }
+    data=data {
+     schema.sql
+     schema.sqlite.sql
+    }
+    src=src {
+     ZfcUser=ZfcUser {
+      Authentication=Authentication {
+       Adapter=Adapter {
+        AbstractAdapter.php
+        AdapterChain.php
+        AdapterChainEvent.php
+        ChainableAdapter.php
+        Db.php
+       }
+       Storage=Storage {
+        Db.php
+       }
+      }
+      Controller=Controller {
+       UserController.php
+       Plugin=Plugin {
+        ZfcUserAuthentication.php
+       }
+      }
+      Form=Form {
+       Base.php
+       Login.php
+       LoginFilter.php
+       Register.php
+       RegisterFilter.php
+      }
+      Model=Model {
+       User.php
+       UserInterface.php
+       UserMapper.php
+       UserMapperInterface.php
+       UserMeta.php
+       UserMetaInterface.php
+       UserMetaMapper.php
+       UserMetaMapperInterface.php
+      }
+      Service=Service {
+       ControllerFactory.php
+       User.php
+      }
+      Util=Util {
+       Password.php
+      }
+      Validator=Validator {
+       AbstractRecord.php
+       NoRecordExists.php
+       RecordExists.php
+      }
+      View=View {
+       Helper=Helper {
+        ZfcUserIdentity.php
+        ZfcUserLoginWidget.php
+       }
+      }
+     }
+    }
+    view=view {
+     zfc-user=zfc-user {
+      user=user {
+       index.phtml
+       login.phtml
+       register.phtml
+      }
+     }
     }
    }
   }

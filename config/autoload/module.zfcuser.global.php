@@ -164,4 +164,22 @@ return array(
             ),
         ),
     ),
+
+    /* Temporary, until refactored */
+    'router' => array(
+        'routes' => array(
+            'zfcuser' => array(
+                'type' => 'Literal',
+                'priority' => 1000,
+                'options' => array(
+                    'route' => '/user',
+                    'defaults' => array(
+                        'controller' => 'zfcuser',
+                        'action'     => 'index',
+                    ),
+                ),
+                'may_terminate' => true,
+            ),
+        ),
+    )
 );

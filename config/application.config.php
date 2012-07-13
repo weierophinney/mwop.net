@@ -3,12 +3,12 @@ return array(
     'modules' => array(
         'Application',
         'GithubFeed',
-        'PhlyCommon',
-        'PhlyBlog',
-        'PhlyComic',
-        'PhlyContact',
-        'ZfcBase',
-        'ZfcUser',
+        // 'PhlyCommon',
+        // 'PhlyBlog',
+        // 'PhlyComic',
+        // 'PhlyContact',
+        // 'ZfcBase',
+        // 'ZfcUser',
     ),
     'module_listener_options' => array( 
         'config_cache_enabled'     => false,
