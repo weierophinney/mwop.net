@@ -16,14 +16,8 @@
         {
             "package": "phly/phly-contact",
             "version": "dev-master",
-            "source-reference": "c253916b96d7616a473cdaf556860393071dc0c2",
-            "commit-date": "1338399737"
-        },
-        {
-            "package": "zendframework/zendframework",
-            "version": "dev-master",
-            "alias-pretty-version": "2.0.x-dev",
-            "alias-version": "2.0.9999999.9999999-dev"
+            "source-reference": "2.0.0beta5",
+            "commit-date": "1342209489"
         },
         {
             "package": "zendframework/zendframework",

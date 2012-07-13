@@ -6,7 +6,7 @@ return array(
         // 'PhlyCommon',
         // 'PhlyBlog',
         'PhlyComic',
-        // 'PhlyContact',
+        'PhlyContact',
         // 'ZfcBase',
         // 'ZfcUser',
     ),
