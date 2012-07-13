@@ -2,11 +2,11 @@
 <h4>Recent Github Activity</h4>
 <ul class="github">
 <?php 
-$escape = $this->plugin('escape');
+$escapeHtml = $this->plugin('escapeHtml');
 foreach ($this->github['links'] as $link) {
     echo sprintf('<li><a href="%s">%s</a></li>',
         $link['link'],
-        $escape($link['title'])
+        $escapeHtml($link['title'])
     ), "\n";
 }
 ?>

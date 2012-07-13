@@ -17,4 +17,19 @@ class Module
     {
         return include __DIR__ . '/config/module.config.php';
     }
+
+    public function getServiceConfiguration()
+    {
+        return array('factories' => array(
+            'GithubFeed\AtomReader' => function ($services) {
+                $config = $services->get('config');
+                $config = $config['github_feed'];
+                $reader = new AtomReader($config['user'], $config['token']);
+                if (isset($config['limit'])) {
+                    $reader->setLimit($config['limit']);
+                }
+                return $reader;
+            },
+        ));
+    }
 }
