@@ -3,7 +3,7 @@ $this->render('blog/assets');
 $entry = $this->entry;
 $title = $entry->getTitle();
 $this->headTitle()->prepend($title);
-$title = $this->escape($title);
+$title = $this->escapeHtml($title);
 $url   = $this->url('phly-blog/entry', array('id' => $entry->getId()));
 $ds    = function($ts) use ($entry) {
     $tz   = $entry->getTimezone();
