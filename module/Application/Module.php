@@ -38,7 +38,7 @@ class Module
     public function initAcls($e)
     {
         $app = $e->getParam('application');
-        $app->events()->attach('route', array($this, 'checkAcls'), -100);
+        $app->getEventManager()->attach('route', array($this, 'checkAcls'), -100);
     }
 
     public function initView($e)

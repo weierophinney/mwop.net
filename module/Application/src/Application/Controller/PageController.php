@@ -5,7 +5,6 @@ use Zend\EventManager\EventInterface as Event,
     Zend\EventManager\EventManagerAwareInterface,
     Zend\EventManager\EventManagerInterface,
     Zend\EventManager\EventManager,
-    Zend\EventManager\EventsCapableInterface,
     Zend\Stdlib\DispatchableInterface,
     Zend\Stdlib\RequestInterface as Request,
     Zend\Stdlib\ResponseInterface as Response,
@@ -16,7 +15,6 @@ use Zend\EventManager\EventInterface as Event,
 class PageController implements 
     DispatchableInterface, 
     EventManagerAwareInterface, 
-    EventsCapableInterface,
     InjectApplicationEventInterface
 {
     protected $event;
@@ -33,7 +31,7 @@ class PageController implements
         $this->events = $events;
     }
 
-    public function events()
+    public function getEventManager()
     {
         return $this->events;
     }
@@ -64,7 +62,7 @@ class PageController implements
               ->setResponse($response)
               ->setTarget($this);
 
-        $result = $this->events()->trigger('dispatch', $event, function($test) {
+        $result = $this->getEventManager()->trigger('dispatch', $event, function($test) {
             return ($test instanceof Response);
         });
         if ($result->stopped()) {
