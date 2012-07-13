@@ -4,17 +4,20 @@
         {
             "package": "phly/phly-blog",
             "version": "dev-master",
-            "source-reference": "c2a3dc21b2f332dea5c17040156c1134336b9279"
+            "source-reference": "c2a3dc21b2f332dea5c17040156c1134336b9279",
+            "commit-date": "1338400228"
         },
         {
             "package": "phly/phly-common",
             "version": "dev-master",
-            "source-reference": "743045cdfa69e051da97bf8c97277f047fc91aac"
+            "source-reference": "743045cdfa69e051da97bf8c97277f047fc91aac",
+            "commit-date": "1338399803"
         },
         {
             "package": "phly/phly-contact",
             "version": "dev-master",
-            "source-reference": "c253916b96d7616a473cdaf556860393071dc0c2"
+            "source-reference": "c253916b96d7616a473cdaf556860393071dc0c2",
+            "commit-date": "1338399737"
         },
         {
             "package": "zendframework/zendframework",
@@ -25,24 +28,27 @@
         {
             "package": "zendframework/zendframework",
             "version": "dev-master",
-            "source-reference": "53c6ef5cce6e07ff777565f19e0f066b71706994"
+            "source-reference": "6220c1f5298cb735551c2b1023996368c4615c4a",
+            "commit-date": "1342202904"
         },
         {
             "package": "zf-commons/zfc-base",
             "version": "dev-master",
-            "source-reference": "89ffa4edf11499a46c0c00073c1e8433a92504d8"
+            "source-reference": "1676e2abadde922741b53e58f4969dd81a41a366",
+            "commit-date": "1342033549"
         },
         {
             "package": "zf-commons/zfc-user",
             "version": "dev-master",
-            "source-reference": "8f8783927cec96c6bd1e2c0c4590b17c9efb29fa"
+            "source-reference": "de6bfcaf7fe3a79706b44e1fe7c16e59356bef58",
+            "commit-date": "1342033629"
         }
     ],
     "packages-dev": null,
     "aliases": [
 
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "stability-flags": {
         "phly/phly-blog": 20,
         "phly/phly-contact": 20,
