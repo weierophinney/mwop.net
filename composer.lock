@@ -1,5 +1,5 @@
 {
-    "hash": "83ad8be9addcba16774bc15bfcc13778",
+    "hash": "191e15acffc6fc1461ee0263612c8b57",
     "packages": [
         {
             "package": "phly/phly-blog",
@@ -10,14 +10,20 @@
         {
             "package": "phly/phly-common",
             "version": "dev-master",
-            "source-reference": "743045cdfa69e051da97bf8c97277f047fc91aac",
-            "commit-date": "1338399803"
+            "source-reference": "2.0.0beta5",
+            "commit-date": "1342210205"
         },
         {
             "package": "phly/phly-contact",
             "version": "dev-master",
             "source-reference": "2.0.0beta5",
             "commit-date": "1342209489"
+        },
+        {
+            "package": "zendframework/zendframework",
+            "version": "dev-master",
+            "alias-pretty-version": "2.0.x-dev",
+            "alias-version": "2.0.9999999.9999999-dev"
         },
         {
             "package": "zendframework/zendframework",
@@ -42,7 +48,7 @@
     "aliases": [
 
     ],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "stability-flags": {
         "phly/phly-blog": 20,
         "phly/phly-contact": 20,

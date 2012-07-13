@@ -3,7 +3,7 @@ return array(
     'modules' => array(
         'Application',
         'GithubFeed',
-        // 'PhlyCommon',
+        'PhlyCommon',
         // 'PhlyBlog',
         'PhlyComic',
         'PhlyContact',

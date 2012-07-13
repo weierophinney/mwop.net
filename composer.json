@@ -1,4 +1,5 @@
 {
+    "minimum-stability": "dev",
     "require": {
         "phly/phly-blog": "dev-master",
         "phly/phly-contact": "dev-master",
