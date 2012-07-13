@@ -7,8 +7,8 @@ return array(
         'PhlyBlog',
         'PhlyComic',
         'PhlyContact',
-        // 'ZfcBase',
-        // 'ZfcUser',
+        'ZfcBase',
+        'ZfcUser',
     ),
     'module_listener_options' => array( 
         'config_cache_enabled'     => false,

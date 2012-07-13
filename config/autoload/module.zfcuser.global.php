@@ -6,15 +6,15 @@ $settings = array(
      * Please specify the DI alias for the configured Zend\Db\Adapter\Adapter
      * instance that ZfcUser should use.
      */
-    'zend_db_adapter' => 'Zend\Db\Adapter\Adapter',
+    // 'zend_db_adapter' => 'Zend\Db\Adapter\Adapter',
 
     /**
      * User Model Entity Class
      *
      * Name of Entity class to use. Useful for using your own entity class 
-     * instead of the default one provided. Default is ZfcUser\Model\UserBase. 
+     * instead of the default one provided. Default is ZfcUser\Entity\User. 
      */
-    // 'user_model_class' => 'ZfcUser\Model\UserBase',
+    //'user_entity_class' => 'ZfcUser\Entity\User',
 
     /**
      * Enable registration 
@@ -24,14 +24,6 @@ $settings = array(
      * Accepted values: boolean true or false
      */
     'enable_registration' => false,
-
-    /**
-     * UserMeta Model Entity Class
-     *
-     * Name of Entity class to use. Useful for using your own entity class 
-     * instead of the default one provided. Default is ZfcUser\Model\UserMetaBase.
-     */
-    // 'usermeta_model_class' => 'ZfcUser\Model\UserMetaBase',
 
     /**
      * Enable Username 
@@ -54,15 +46,35 @@ $settings = array(
     'enable_display_name' => true,
 
     /**
-     * Require Activation
+     * Modes for authentication identity match
      *
-     * Require that the user verify their email address to activate their 
-     * account. Default value is false. (Note, this doesn't actually work yet, 
-     * but defaults an 'active' field in the DB to 0.)
+     * Specify the allowable identity modes, in the order they should be
+     * checked by the Authentication plugin.
      *
-     * Accepted values: boolean true or false
+     * Default value: array containing 'email'
+     * Accepted values: array containing one or more of: email, username
      */
-    'require_activation' => false,
+    'auth_identity_fields' => array( 'email' , 'username'),
+
+    /**
+     * Login form timeout
+     *
+     * Specify the timeout for the CSRF security field of the login form
+     * in seconds. Default value is 300 seconds.
+     *
+     * Accepted values: positive int value
+     */
+    //'login_form_timeout' => 300,
+
+    /**
+     * Registration form timeout
+     *
+     * Specify the timeout for the CSRF security field of the registration form
+     * in seconds. Default value is 300 seconds.
+     *
+     * Accepted values: positive int value
+     */
+    //'user_form_timeout' => 300,
 
     /**
      * Login After Registration
@@ -78,11 +90,25 @@ $settings = array(
      * Registration Form Captcha 
      *
      * Determines if a captcha should be utilized on the user registration form. 
-     * Default value is true. (Note, right now this only utilizes a weak 
-     * Zend\Text\Figlet CAPTCHA, but I have plans to make all Zend\Captcha 
-     * adapters work.)
+     * Default value is false.
      */
-    'registration_form_captcha' => false,
+    'use_registration_form_captcha' => false,
+
+    /**
+     * Form Captcha Options
+     *
+     * Currently used for the registration form, but re-usable anywhere. Use
+     * this to configure which Zend\Captcha adapter to use, and the options to
+     * pass to it. The default uses the Figlet captcha.
+     */
+    /*'form_captcha_options' => array(
+        'class'   => 'figlet',
+        'options' => array(
+            'wordLen'    => 5,
+            'expiration' => 300,
+            'timeout'    => 300,
+        ),
+    ),*/
 
     /**
      * Use Redirect Parameter If Present
@@ -96,56 +122,25 @@ $settings = array(
     /**
      * Password Security
      *
-     * DO NOT CHANGE THE PASSWORD HASH SETTINGS FROM THEIR DEFAULTS 
-     * Unless A) you have done sufficient research and fully understand exactly 
-     * what you are changing, AND B) you have a very specific reason to deviate 
+     * DO NOT CHANGE THE PASSWORD HASH SETTINGS FROM THEIR DEFAULTS
+     * Unless A) you have done sufficient research and fully understand exactly
+     * what you are changing, AND B) you have a very specific reason to deviate
      * from the default settings and know what you're doing.
      *
-     * The password hash settings may be changed at any time without 
-     * invalidating existing user accounts. Existing user passwords will be 
+     * The password hash settings may be changed at any time without
+     * invalidating existing user accounts. Existing user passwords will be
      * re-hashed automatically on their next successful login.
      */
 
     /**
-     * Password Hash Algorithm
+     * Password Cost
      *
-     * Name of the hashing algorithm to use for hashing. Supported 
-     * algorithms are blowfish, sha512, and sha256. Default is blowfish. 
-     *
-     * Accepted values: 'blowfish', 'sha512', and 'sha256'
-     */
-    'password_hash_algorithm' => 'blowfish',
-
-    /**
-     * Blowfish Cost
-     *
-     * Only used if `password_hash_algorithm` is set to blowfish. The number
-     * represents the base-2 logarithm of the iteration count used for hashing.
-     * Default is 10 (about 10 hashes per second on an i5). 
+     * The number represents the base-2 logarithm of the iteration count used for
+     * hashing. Default is 14 (about 10 hashes per second on an i5).
      *
      * Accepted values: integer between 4 and 31
      */
-    'blowfish_cost' => 10,
-
-    /**
-     * SHA-512 Rounds
-     *
-     * Only used if `password_hash_algorithm` is set to sha512. The number 
-     * represents the iteration count used for hashing. Default is 5000. 
-     *
-     * Accepted values: integer between 1000 and 999999999
-     */
-    'sha512_rounds' => 5000,
-
-    /**
-     * SHA-256 Rounds
-     *
-     * Only used if `password_hash_algorithm` is set to sha256. The number 
-     * represents the iteration count used for hashing. Default is 5000. 
-     *
-     * Accepted values: integer between 1000 and 999999999
-     */
-    'sha256_rounds' => 5000,
+    //'password_cost' => 14,
 
     /**
      * End of ZfcUser configuration
@@ -157,29 +152,9 @@ $settings = array(
  */
 return array(
     'zfcuser' => $settings,
-    'di' => array(
-        'instance' => array(
-            'alias' => array(
-                'zfcuser_zend_db_adapter' => (isset($settings['zend_db_adapter'])) ? $settings['zend_db_adapter']: '',
-            ),
+    'service_manager' => array(
+        'aliases' => array(
+            'zfcuser_zend_db_adapter' => (isset($settings['zend_db_adapter'])) ? $settings['zend_db_adapter']: 'Zend\Db\Adapter\Adapter',
         ),
     ),
-
-    /* Temporary, until refactored */
-    'router' => array(
-        'routes' => array(
-            'zfcuser' => array(
-                'type' => 'Literal',
-                'priority' => 1000,
-                'options' => array(
-                    'route' => '/user',
-                    'defaults' => array(
-                        'controller' => 'zfcuser',
-                        'action'     => 'index',
-                    ),
-                ),
-                'may_terminate' => true,
-            ),
-        ),
-    )
 );

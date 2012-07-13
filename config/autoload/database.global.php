@@ -1,24 +1,22 @@
 <?php
+$dbParams = array(
+    'dsn'      => 'sqlite:' . getcwd() . '/data/users.db',
+    'database' => '',
+    'username' => '',
+    'password' => '',
+    'hostname' => '',
+);
 return array(
-    'db_params' => array(
-        'dsn'      => 'sqlite:' . getcwd() . '/data/users.db',
-        'database' => '',
-        'username' => '',
-        'password' => '',
-        'hostname' => '',
-    ),
     'service_manager' => array(
         'factories' => array(
-            'Zend\Db\Adapter\Adapter' => function ($sm) {
-                $config = $sm->get('config');
-                $config = $config['db_params'];
+            'Zend\Db\Adapter\Adapter' => function ($sm) use ($dbParams) {
                 return new Zend\Db\Adapter\Adapter(array(
                     'driver'   => 'pdo',
-                    'dsn'      => $config['dsn'],
-                    'database' => $config['database'],
-                    'username' => $config['username'],
-                    'password' => $config['password'],
-                    'hostname' => $config['hostname'],
+                    'dsn'      => $dbParams['dsn'],
+                    'database' => $dbParams['database'],
+                    'username' => $dbParams['username'],
+                    'password' => $dbParams['password'],
+                    'hostname' => $dbParams['hostname'],
                 ));
             },
         ),

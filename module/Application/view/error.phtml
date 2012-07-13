@@ -23,8 +23,19 @@ if (!$exception instanceof \Exception) {
 
 <h3>Stack trace:</h3>
 <pre>
-<?php echo $exception->getTraceAsString() ?> 
+<?php 
+echo $exception->getTraceAsString();
+?> 
 </pre>
+
+<?php
+while ($exception = $exception->getPrevious()) {
+    echo "<h4>Previous exception:</h4>";
+    echo "<pre>\n";
+    echo $exception->getTraceAsString(), "\n";
+    echo "</pre>\n";
+}
+?>
 
 </div>
 
