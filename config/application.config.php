@@ -4,7 +4,7 @@ return array(
         'Application',
         'GithubFeed',
         'PhlyCommon',
-        // 'PhlyBlog',
+        'PhlyBlog',
         'PhlyComic',
         'PhlyContact',
         // 'ZfcBase',

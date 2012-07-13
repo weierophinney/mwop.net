@@ -4,8 +4,8 @@
         {
             "package": "phly/phly-blog",
             "version": "dev-master",
-            "source-reference": "c2a3dc21b2f332dea5c17040156c1134336b9279",
-            "commit-date": "1338400228"
+            "source-reference": "02ac0b39dfbe7cc501e3f9c25207b2e362fdd5cf",
+            "commit-date": "1342212634"
         },
         {
             "package": "phly/phly-common",
@@ -18,12 +18,6 @@
             "version": "dev-master",
             "source-reference": "2.0.0beta5",
             "commit-date": "1342209489"
-        },
-        {
-            "package": "zendframework/zendframework",
-            "version": "dev-master",
-            "alias-pretty-version": "2.0.x-dev",
-            "alias-version": "2.0.9999999.9999999-dev"
         },
         {
             "package": "zendframework/zendframework",
