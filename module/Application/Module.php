@@ -4,6 +4,7 @@ namespace Application;
 
 use Traversable;
 use Zend\Config\Config;
+use Zend\Mvc\ModuleRouteListener;
 use Zend\Stdlib\ArrayUtils;
 use Zend\View\Model;
 
@@ -26,13 +27,32 @@ class Module
         return include __DIR__ . '/config/module.config.php';
     }
 
+    public function getViewHelperConfiguration()
+    {
+        return array('factories' => array(
+            'disqus' => function ($services) {
+                $sm     = $services->getServiceLocator();
+                $config = $sm->get('config');
+                if ($config instanceof \Zend\Config\Config) {
+                    $config = $config->toArray();
+                }
+                $config = $config['disqus'];
+                return new View\Helper\Disqus($config);
+            },
+        ));
+    }
+
     public function onBootstrap($e)
     {
         $app          = $e->getApplication();
         $services     = $app->getServiceManager();
+        $events       = $app->getEventManager();
         $this->config = $services->get('config');
         $this->initAcls($e);
         $this->initView($e);
+
+        $moduleRouteListener = new ModuleRouteListener();
+        $events->attach($moduleRouteListener);
     }
 
     public function initAcls($e)

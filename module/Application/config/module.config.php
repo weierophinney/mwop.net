@@ -35,31 +35,14 @@ return array(
         'template_path_stack' => array(
             'application' => __DIR__ . '/../view',
         ),
-        'helper_map' => array(
-            'disqus' => 'Application\View\Helper\Disqus',
-        ),
         'display_exceptions' => true,
         'exception_template' => 'error',
         'not_found_template' => 'pages/404',
     ),
 
-    'service_manager' => array(
-        'factories' => array(
-            'Application\View\Helper\Disqus' => function ($services) {
-                $config = $services->get('config');
-                if ($config instanceof Zend\Config\Config) {
-                    $config = $config->toArray();
-                }
-                $config = $config['disqus'];
-                return new Application\View\Helper\Disqus($config);
-            },
-        ),
-    ),
-
-    'controller' => array(
-        'class' => array(
-            'application-page'                      => 'Application\Controller\PageController',
-            'Application\Controller\PageController' => 'Application\Controller\PageController',
+    'controllers' => array(
+        'invokables' => array(
+            'Application\Controller\Page' => 'Application\Controller\PageController',
         ),
     ),
 
@@ -70,7 +53,7 @@ return array(
                 'options' => array(
                     'regex' => '/.*',
                     'defaults' => array(
-                        'controller' => 'Application\Controller\PageController',
+                        'controller' => 'Application\Controller\Page',
                         'action'     => '404',
                     ),
                     'spec' => '404',
@@ -81,7 +64,7 @@ return array(
                 'options' => array(
                     'route' => '/',
                     'defaults' => array(
-                        'controller' => 'Application\Controller\PageController',
+                        'controller' => 'Application\Controller\Page',
                         'action'     => 'home',
                     ),
                 ),
@@ -91,7 +74,7 @@ return array(
                 'options' => array(
                     'route' => '/comics',
                     'defaults' => array(
-                        'controller' => 'Application\Controller\PageController',
+                        'controller' => 'Application\Controller\Page',
                         'action'     => 'comics',
                     ),
                 ),
@@ -101,7 +84,7 @@ return array(
                 'options' => array(
                     'route' => '/resume',
                     'defaults' => array(
-                        'controller' => 'Application\Controller\PageController',
+                        'controller' => 'Application\Controller\Page',
                         'action'     => 'resume',
                     ),
                 ),
