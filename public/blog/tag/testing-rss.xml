@@ -3,13 +3,13 @@
   <channel>
     <title>Tag: testing :: phly, boy, phly</title>
     <description>Tag: testing :: phly, boy, phly</description>
-    <pubDate>Sat, 13 Sep 2008 08:37:40 -0500</pubDate>
-    <generator>Zend_Feed_Writer 2.0.0beta4 (http://framework.zend.com)</generator>
+    <pubDate>Sat, 13 Sep 2008 13:37:40 +0000</pubDate>
+    <generator>Zend_Feed_Writer 2.0.0beta5 (http://framework.zend.com)</generator>
     <link>http://mwop.net/blog/tag/testing.html</link>
     <atom:link rel="self" type="application/rss+xml" href="http://mwop.net/blog/tag/testing-rss.xml"/>
     <item>
       <title>Setting up your Zend_Test test suites</title>
-      <pubDate>Sat, 13 Sep 2008 08:37:40 -0500</pubDate>
+      <pubDate>Sat, 13 Sep 2008 13:37:40 +0000</pubDate>
       <link>http://mwop.net/blog/190-Setting-up-your-Zend_Test-test-suites.html</link>
       <guid>http://mwop.net/blog/190-Setting-up-your-Zend_Test-test-suites.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>

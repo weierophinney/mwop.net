@@ -3,13 +3,13 @@
   <channel>
     <title>Tag: ubuntu :: phly, boy, phly</title>
     <description>Tag: ubuntu :: phly, boy, phly</description>
-    <pubDate>Wed, 21 May 2008 13:35:27 -0500</pubDate>
-    <generator>Zend_Feed_Writer 2.0.0beta4 (http://framework.zend.com)</generator>
+    <pubDate>Wed, 21 May 2008 18:35:27 +0000</pubDate>
+    <generator>Zend_Feed_Writer 2.0.0beta5 (http://framework.zend.com)</generator>
     <link>http://mwop.net/blog/tag/ubuntu.html</link>
     <atom:link rel="self" type="application/rss+xml" href="http://mwop.net/blog/tag/ubuntu-rss.xml"/>
     <item>
       <title>Server Upgrades... lost entries...</title>
-      <pubDate>Wed, 21 May 2008 13:35:27 -0500</pubDate>
+      <pubDate>Wed, 21 May 2008 18:35:27 +0000</pubDate>
       <link>http://mwop.net/blog/171-Server-Upgrades...-lost-entries....html</link>
       <guid>http://mwop.net/blog/171-Server-Upgrades...-lost-entries....html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -52,7 +52,7 @@
     </item>
     <item>
       <title>Gutsy Gibbon review</title>
-      <pubDate>Wed, 24 Oct 2007 15:38:00 -0500</pubDate>
+      <pubDate>Wed, 24 Oct 2007 20:38:00 +0000</pubDate>
       <link>http://mwop.net/blog/147-Gutsy-Gibbon-review.html</link>
       <guid>http://mwop.net/blog/147-Gutsy-Gibbon-review.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>

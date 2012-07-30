@@ -3,13 +3,13 @@
   <channel>
     <title>Tag: oop :: phly, boy, phly</title>
     <description>Tag: oop :: phly, boy, phly</description>
-    <pubDate>Sat, 30 Jun 2012 10:00:00 -0500</pubDate>
-    <generator>Zend_Feed_Writer 2.0.0beta4 (http://framework.zend.com)</generator>
+    <pubDate>Sat, 30 Jun 2012 15:00:00 +0000</pubDate>
+    <generator>Zend_Feed_Writer 2.0.0beta5 (http://framework.zend.com)</generator>
     <link>http://mwop.net/blog/tag/oop.html</link>
     <atom:link rel="self" type="application/rss+xml" href="http://mwop.net/blog/tag/oop-rss.xml"/>
     <item>
       <title>On Visibility in OOP</title>
-      <pubDate>Sat, 30 Jun 2012 10:00:00 -0500</pubDate>
+      <pubDate>Sat, 30 Jun 2012 15:00:00 +0000</pubDate>
       <link>http://mwop.net/blog/2012-06-28-oop-visibility.html</link>
       <guid>http://mwop.net/blog/2012-06-28-oop-visibility.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -29,7 +29,7 @@
     </item>
     <item>
       <title>On Error Handling and Closures</title>
-      <pubDate>Fri, 16 Dec 2011 10:26:18 -0600</pubDate>
+      <pubDate>Fri, 16 Dec 2011 16:26:18 +0000</pubDate>
       <link>http://mwop.net/blog/on-error-handling-and-closures.html</link>
       <guid>http://mwop.net/blog/on-error-handling-and-closures.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -61,7 +61,7 @@ if (false === ($fh = @fopen($filename, 'r'))) {
     </item>
     <item>
       <title>Dependency Injection: An analogy</title>
-      <pubDate>Fri, 25 Mar 2011 01:25:13 -0500</pubDate>
+      <pubDate>Fri, 25 Mar 2011 06:25:13 +0000</pubDate>
       <link>http://mwop.net/blog/260-Dependency-Injection-An-analogy.html</link>
       <guid>http://mwop.net/blog/260-Dependency-Injection-An-analogy.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -83,7 +83,7 @@ out to be a great idea, as it gave me some good analogies.
     </item>
     <item>
       <title>Aspects, Filters, and Signals, Oh, My!</title>
-      <pubDate>Fri, 14 Jan 2011 07:53:52 -0600</pubDate>
+      <pubDate>Fri, 14 Jan 2011 13:53:52 +0000</pubDate>
       <link>http://mwop.net/blog/251-Aspects,-Filters,-and-Signals,-Oh,-My!.html</link>
       <guid>http://mwop.net/blog/251-Aspects,-Filters,-and-Signals,-Oh,-My!.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -106,7 +106,7 @@ But first, some background is probably in order, as this is a jargon-heavy post.
     </item>
     <item>
       <title>Setting up your Zend_Test test suites</title>
-      <pubDate>Sat, 13 Sep 2008 08:37:40 -0500</pubDate>
+      <pubDate>Sat, 13 Sep 2008 13:37:40 +0000</pubDate>
       <link>http://mwop.net/blog/190-Setting-up-your-Zend_Test-test-suites.html</link>
       <guid>http://mwop.net/blog/190-Setting-up-your-Zend_Test-test-suites.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -121,7 +121,7 @@ But first, some background is probably in order, as this is a jargon-heavy post.
     </item>
     <item>
       <title>Migrating OOP Libraries and Frameworks to PHP 5.3</title>
-      <pubDate>Sun, 06 Jul 2008 22:49:14 -0500</pubDate>
+      <pubDate>Mon, 07 Jul 2008 03:49:14 +0000</pubDate>
       <link>http://mwop.net/blog/181-Migrating-OOP-Libraries-and-Frameworks-to-PHP-5.3.html</link>
       <guid>http://mwop.net/blog/181-Migrating-OOP-Libraries-and-Frameworks-to-PHP-5.3.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>

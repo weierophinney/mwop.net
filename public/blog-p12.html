@@ -20,7 +20,7 @@
 <link href="/blog-rss.xml" rel="alternate" type="application/rss+xml" title="Blog Entries RSS Feed" >
     <script type="text/javascript">
     //<!--
-dojoConfig={
+    dojoConfig={
     has: {
         "dojo-firebug": false
     },
@@ -39,11 +39,11 @@ dojoConfig={
 <script type="text/javascript" src="/js/dojo/dojo.js"></script>
 <script type="text/javascript">
     //<!--
-require(["Application/blog"]);    //-->
+    require(["Application/blog"]);    //-->
 </script>
 <script type="text/javascript">
     //<!--
-require(["Application/scroll"], function(scroll) {});    //-->
+    require(["Application/scroll"], function(scroll) {});    //-->
 </script>
     <script src="https://www.google.com/jsapi?ABQIAAAAGybdRRvLZwVUcF0dE3oVdBTO-MlgA7VGJpGqyqTOeDXlNzyZQxTGq17s-iAB0m0vwqLQ_A2dHhTg2Q"></script>
 <script type="text/javascript">
@@ -90,6 +90,43 @@ require(["Application/scroll"], function(scroll) {});    //-->
 <section class="eleven columns alpha blog">
     <h2>Blog Entries</h2>
 
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2008-03-28 15:59:17</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
+<a href="/blog/tag/zend+framework.html">zend framework</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/166-Dojo-1.1.0-Released.html">Dojo 1.1.0 Released</a></h4>
+
+    <div class="entry body"><p>
+    <a href="http://dojotoolkit.org/">Dojo</a> announced today the availability
+    of 1.1.0. 
+</p>
+
+<p>
+    I've been toying with Dojo off-and-on for almost a year now. It's the most
+    framework-y of the various JS toolkits I've tried, and I particularly
+    appreciate its modularity. (That said, it can lead to a lot of HTTP requests
+    to your site if you don't create a targetted bundle with the modules you
+    need.)
+</p>
+
+<p>
+    The 1.1.0 release has me pretty excited, as it finally is doing something
+    most other JS frameworks have been doing for some time: its XHR requests now
+    send the "X-Requested-With: XMLHttpRequest" header, which allows it to
+    conform to the <code>isXmlHttpRequest()</code> method in Zend Framework's
+    request object. This makes it much easier to provide a standard mechanism in
+    your server-side code for detecting AJAX requests, allowing context
+    switching to be automated.
+</p></div>
+
+    <p><a href="/blog/166-Dojo-1.1.0-Released.html">Continue reading...</a></p>
+</section>
+
+</div>
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
     <p class="date">2008-03-28 11:14:11</p>
@@ -412,49 +449,6 @@ require(["Application/scroll"], function(scroll) {});    //-->
 </p></div>
 
     <p><a href="/blog/157-Burlington-PHP-Tonight.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2008-01-25 17:38:16</p>
-    <p class="tags"><a href="/blog/tag/linux.html">linux</a><br />
-<a href="/blog/tag/programming.html">programming</a><br />
-<a href="/blog/tag/php.html">php</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/156-Apache-HOSTNAME-on-Clusters.html">Apache HOSTNAME on Clusters</a></h4>
-
-    <div class="entry body"><p>
-    In an effort to debug issues on a cluster, I was trying to determine which
-    machine on the cluster was causing the issue. My idea was that I could
-    insert a header token identifying the server.
-</p>
-
-<p>
-    My first idea was to add the directive 'Header add X-Server-Ip
-    "%{SERVER_ADDR}e" in my httpd.conf. However, due to the nature of our load
-    balancer, Apache was somehow resolving this to the load balancer IP address
-    on all machines of the cluster -- which was really, really not useful.
-</p>
-
-<p>
-    I finally stumbled on a good solution, however: you can set environment
-    variables in apachectl, and then pass them into the Apache environment using
-    the PassEnv directive from mod_env; once that's done, you can use the
-    environment variable anywhere.
-</p>
-
-<p>
-    In my apachectl, I added the line "export HOSTNAME=`hostname`". Then, in my
-    httpd.conf, I added first the line "PassEnv HOSTNAME", followed by the
-    directive 'Header add X-Server-Name "%{HOSTNAME}e"'. Voila! I now had the
-    hostname in the header, which gave me the information I needed for
-    debugging.
-</p></div>
-
-    <p><a href="/blog/156-Apache-HOSTNAME-on-Clusters.html">Continue reading...</a></p>
 </section>
 
 </div>

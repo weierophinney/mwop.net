@@ -3,13 +3,13 @@
   <channel>
     <title>Tag: zendcon08 :: phly, boy, phly</title>
     <description>Tag: zendcon08 :: phly, boy, phly</description>
-    <pubDate>Tue, 16 Sep 2008 00:15:30 -0500</pubDate>
-    <generator>Zend_Feed_Writer 2.0.0beta4 (http://framework.zend.com)</generator>
+    <pubDate>Tue, 16 Sep 2008 05:15:30 +0000</pubDate>
+    <generator>Zend_Feed_Writer 2.0.0beta5 (http://framework.zend.com)</generator>
     <link>http://mwop.net/blog/tag/zendcon08.html</link>
     <atom:link rel="self" type="application/rss+xml" href="http://mwop.net/blog/tag/zendcon08-rss.xml"/>
     <item>
       <title>Pastebin app and conference updates</title>
-      <pubDate>Tue, 16 Sep 2008 00:15:30 -0500</pubDate>
+      <pubDate>Tue, 16 Sep 2008 05:15:30 +0000</pubDate>
       <link>http://mwop.net/blog/189-Pastebin-app-and-conference-updates.html</link>
       <guid>http://mwop.net/blog/189-Pastebin-app-and-conference-updates.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -65,7 +65,7 @@
     </item>
     <item>
       <title>Speaking at ZendCon 2008</title>
-      <pubDate>Wed, 27 Aug 2008 13:06:54 -0500</pubDate>
+      <pubDate>Wed, 27 Aug 2008 18:06:54 +0000</pubDate>
       <link>http://mwop.net/blog/184-Speaking-at-ZendCon-2008.html</link>
       <guid>http://mwop.net/blog/184-Speaking-at-ZendCon-2008.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>

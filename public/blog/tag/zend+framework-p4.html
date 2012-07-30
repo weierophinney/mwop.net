@@ -20,7 +20,7 @@
 <link href="/blog/tag/zend+framework-rss.xml" rel="alternate" type="application/rss+xml" title="Tag: zend framework RSS Feed" >
     <script type="text/javascript">
     //<!--
-dojoConfig={
+    dojoConfig={
     has: {
         "dojo-firebug": false
     },
@@ -39,11 +39,11 @@ dojoConfig={
 <script type="text/javascript" src="/js/dojo/dojo.js"></script>
 <script type="text/javascript">
     //<!--
-require(["Application/blog"]);    //-->
+    require(["Application/blog"]);    //-->
 </script>
 <script type="text/javascript">
     //<!--
-require(["Application/scroll"], function(scroll) {});    //-->
+    require(["Application/scroll"], function(scroll) {});    //-->
 </script>
     <script src="https://www.google.com/jsapi?ABQIAAAAGybdRRvLZwVUcF0dE3oVdBTO-MlgA7VGJpGqyqTOeDXlNzyZQxTGq17s-iAB0m0vwqLQ_A2dHhTg2Q"></script>
 <script type="text/javascript">
@@ -90,6 +90,30 @@ require(["Application/scroll"], function(scroll) {});    //-->
 <section class="eleven columns alpha blog">
     <h2>Tag: zend framework</h2>
 
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2009-11-09 09:00:00</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
+<a href="/blog/tag/rest.html">rest</a><br />
+<a href="/blog/tag/zend+framework.html">zend framework</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/228-Building-RESTful-Services-with-Zend-Framework.html">Building RESTful Services with Zend Framework</a></h4>
+
+    <div class="entry body"><p>
+    As a followup to my <a href="/matthew/archives/227-Exposing-Service-APIs-via-Zend-Framework.html">previous post</a>, I now turn to RESTful web
+    services. I originally encountered the term when attending 
+    php|tropics in 2005, where <a href="http://twitter.com/g_schlossnagle">George
+        Schlossnaggle</a> likened it to simple GET and POST requests. Since
+    then, the architectural style -- and developer understanding of the architectural style
+    -- has improved a bit, and a more solid definition can be made.
+</p></div>
+
+    <p><a href="/blog/228-Building-RESTful-Services-with-Zend-Framework.html">Continue reading...</a></p>
+</section>
+
+</div>
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
     <p class="date">2009-10-23 19:42:00</p>
@@ -348,40 +372,6 @@ require(["Application/scroll"], function(scroll) {});    //-->
 </ul></div>
 
     <p><a href="/blog/214-Zend-Framework-1.8-PREVIEW-Release.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2009-04-06 08:30:00</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
-<a href="/blog/tag/zend+framework.html">zend framework</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/213-From-the-inside-out-How-to-layer-decorators.html">From the inside-out: How to layer decorators</a></h4>
-
-    <div class="entry body"><p>
-    This marks the second in an on-going series on <code>Zend_Form</code>
-    decorators.
-</p>
-
-<p>
-    You may have noticed in the <a href="/matthew/archives/212-The-simplest-Zend_Form-decorator.html">previous installment</a> 
-    that the decorator's <code>render()</code> method takes a single argument,
-    <code>$content</code>. This is expected to be a string.
-    <code>render()</code> will then take this string and decide to either
-    replace it, append to it, or prepend it. This allows you to have a chain of
-    decorators -- which allows you to create decorators that render only a
-    subset of the element's metadata, and then layer these decorators to build
-    the full markup for the element. 
-</p>
-
-<p>
-    Let's look at how this works in practice.
-</p></div>
-
-    <p><a href="/blog/213-From-the-inside-out-How-to-layer-decorators.html">Continue reading...</a></p>
 </section>
 
 </div>

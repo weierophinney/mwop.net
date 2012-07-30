@@ -20,7 +20,7 @@
 <link href="/blog/tag/php-rss.xml" rel="alternate" type="application/rss+xml" title="Tag: php RSS Feed" >
     <script type="text/javascript">
     //<!--
-dojoConfig={
+    dojoConfig={
     has: {
         "dojo-firebug": false
     },
@@ -39,11 +39,11 @@ dojoConfig={
 <script type="text/javascript" src="/js/dojo/dojo.js"></script>
 <script type="text/javascript">
     //<!--
-require(["Application/blog"]);    //-->
+    require(["Application/blog"]);    //-->
 </script>
 <script type="text/javascript">
     //<!--
-require(["Application/scroll"], function(scroll) {});    //-->
+    require(["Application/scroll"], function(scroll) {});    //-->
 </script>
     <script src="https://www.google.com/jsapi?ABQIAAAAGybdRRvLZwVUcF0dE3oVdBTO-MlgA7VGJpGqyqTOeDXlNzyZQxTGq17s-iAB0m0vwqLQ_A2dHhTg2Q"></script>
 <script type="text/javascript">
@@ -90,6 +90,55 @@ require(["Application/scroll"], function(scroll) {});    //-->
 <section class="eleven columns alpha blog">
     <h2>Tag: php</h2>
 
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2006-06-17 23:25:52</p>
+    <p class="tags"><a href="/blog/tag/programming.html">programming</a><br />
+<a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/120-Serendipity-upgrade.html">Serendipity upgrade</a></h4>
+
+    <div class="entry body"><p>
+    I upgraded <a href="http://www.s9y.org/">Serendipity</a> today, due to the
+    recent announcement of the 1.0 release, as well as to combat some rampant
+    issues with trackback spam.
+</p>
+<p>
+    I've been very happy with Serendipity so far; it just runs, and the default
+    install gives just what you need to get a blog up and running, and nothing
+    more; any extra functionality comes via plugins which you, the blogger, get
+    to decide upon.
+</p>
+<p>
+    Additionally, it's incredibly easy to upgrade. Unpack the tarball, rsync
+    it over your existing install (I rsync it, because I don't use 'serendipity'
+    as my directory name), visit the admin, boom, you're done. I've upgraded
+    several times, and never lost data, nor configuration settings. 
+</p>
+<p>
+    My primary reason for the upgrade was, as noted earlier, to combat trackback
+    spam. As of this morning, I had 15,000 pending trackbacks, none of which
+    appeared to be valid (if any of them were, and you're not seeing yours, I'm
+    very sorry; I deleted them <em>en masse</em>). These had accumulated in <em>less than
+    a month</em> -- that's an average of about one every 3 minutes.
+</p>
+<p>
+    Since upgrading, and using the <a href="http://akismet.com/">Akismet</a>
+    service, I've received not a single spam trackback. Needless to say, I'm
+    happy I performed the upgrade!
+</p>
+<p>
+    If you're a Serendipity user, and haven't upgraded to 1.0.0 yet (or one of
+    it's reportedly very stable release candidates), do it today -- you have
+    nothing to lose, and a lot of lost time to gain!
+</p></div>
+
+    <p><a href="/blog/120-Serendipity-upgrade.html">Continue reading...</a></p>
+</section>
+
+</div>
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
     <p class="date">2006-06-06 20:14:00</p>
@@ -431,72 +480,6 @@ $xml = mb_convert_encoding($xml, 'UTF-8', $enc);
 </p></div>
 
     <p><a href="/blog/111-mbstring-comes-to-the-rescue.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2006-05-16 00:01:00</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/110-PHP-Library-Channel.html">PHP Library Channel</a></h4>
-
-    <div class="entry body"><p>
-    I've been working on <a href="http://cgiapp.sourceforge.net/">Cgiapp</a> in
-    the past few months, in particular to introduce one possibility for a Front
-    Controller class. To test out ideas, I've decided to port areas of my
-    personal site to Cgiapp2 using the Front Controller. Being the 
-    programmer I am, I quickly ran into some areas where I needed some reusable
-    code -- principally for authentication and input handling.
-</p>
-<p>
-    I've been exposed to a ton of good code via <a href="http://pear.php.net/">PEAR</a>, 
-    <a href="http://www.solarphp.com/">Solar</a>, 
-    <a href="http://ez.no/products/ez_components">eZ components</a>, and 
-    <a href="http://framework.zend.com/">Zend Framework</a>. However, I have
-    several criteria I need met:
-</p>
-<ul>
-    <li>I want PHP5 code. I'm coding in PHP5, I should be able to use PHP5
-    libraries, not PHP4 libraries that work in PHP5 but don't take advantage of
-    any of its features.</li>
-    <li>I prefer few dependencies, particularly lock-in with existing
-    frameworks. If I want to swap out a storage container from one library and
-    use one from another, I should be free to do so without having to write
-    wrappers so they'll fit with the framework I've chosen. Flexibility is
-    key.</li>
-    <li>Stable API. I don't want to have to change my code every few weeks or
-    months until the code is stable.</li>
-    <li>I should be able to understand the internals quickly.</li>
-</ul>
-<p>
-    So what did I choose? To reinvent the wheel, of course!
-</p>
-<p>
-    To that end, I've opened a new PEAR channel that I'm calling 
-    <a href="http://weierophinney.net/phly/">PHLY, the PHp LibrarY</a>, named
-    after my blog. The name implies soaring, freedom, and perhaps a little
-    silliness.
-</p>
-<p>
-    It is designed with the following intentions:
-</p>
-<ul>
-    <li>Loosely coupled; dependencies should be few, and no base class should be necessary.</li>
-    <li>Extendible; all classes should be easily extendible. This may be via observers, interfaces, adapters, etc.. The base class should solve 80% of usage, and allow extensions to the class to fill in the remainder.</li>
-    <li>Designed for PHP5 and up; all classes should make use of PHP5's features.</li>
-    <li>Documented; all classes should minimally have excellent API-level documentation, with use cases in the class docblock.</li>
-    <li>Tested; all classes should have unit tests accompanying them.</li>
-    <li>Open source and commercial friendly; all classes should use a commercial-friendly open source license. The BSD license is one such example.</li>
-</ul>
-<p>
-    Please feel free to use this code however you will. Comments, feedback, and
-    submissions are always welcome.
-</p></div>
-
-    <p><a href="/blog/110-PHP-Library-Channel.html">Continue reading...</a></p>
 </section>
 
 </div>

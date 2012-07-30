@@ -3,13 +3,13 @@
   <channel>
     <title>Tag: perl :: phly, boy, phly</title>
     <description>Tag: perl :: phly, boy, phly</description>
-    <pubDate>Sun, 24 Jun 2012 21:50:00 -0500</pubDate>
-    <generator>Zend_Feed_Writer 2.0.0beta4 (http://framework.zend.com)</generator>
+    <pubDate>Mon, 25 Jun 2012 02:50:00 +0000</pubDate>
+    <generator>Zend_Feed_Writer 2.0.0beta5 (http://framework.zend.com)</generator>
     <link>http://mwop.net/blog/tag/perl.html</link>
     <atom:link rel="self" type="application/rss+xml" href="http://mwop.net/blog/tag/perl-rss.xml"/>
     <item>
       <title>Automatic deployment with git and gitolite</title>
-      <pubDate>Sun, 24 Jun 2012 21:50:00 -0500</pubDate>
+      <pubDate>Mon, 25 Jun 2012 02:50:00 +0000</pubDate>
       <link>http://mwop.net/blog/2012-06-24-git-deploy.html</link>
       <guid>http://mwop.net/blog/2012-06-24-git-deploy.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -30,7 +30,7 @@
     </item>
     <item>
       <title>Why Conventions Matter</title>
-      <pubDate>Wed, 11 Jan 2012 21:58:28 -0600</pubDate>
+      <pubDate>Thu, 12 Jan 2012 03:58:28 +0000</pubDate>
       <link>http://mwop.net/blog/why-conventions-matter.html</link>
       <guid>http://mwop.net/blog/why-conventions-matter.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -74,7 +74,7 @@
     </item>
     <item>
       <title>Seven Things - Tagged by Keith Casey</title>
-      <pubDate>Sun, 04 Jan 2009 15:31:52 -0600</pubDate>
+      <pubDate>Sun, 04 Jan 2009 21:31:52 +0000</pubDate>
       <link>http://mwop.net/blog/204-Seven-Things-Tagged-by-Keith-Casey.html</link>
       <guid>http://mwop.net/blog/204-Seven-Things-Tagged-by-Keith-Casey.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -93,7 +93,7 @@
     </item>
     <item>
       <title>Mumbles irssi integration</title>
-      <pubDate>Fri, 12 Dec 2008 14:19:50 -0600</pubDate>
+      <pubDate>Fri, 12 Dec 2008 20:19:50 +0000</pubDate>
       <link>http://mwop.net/blog/197-Mumbles-irssi-integration.html</link>
       <guid>http://mwop.net/blog/197-Mumbles-irssi-integration.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -117,7 +117,7 @@
     </item>
     <item>
       <title>Vimgrep and Vim Project</title>
-      <pubDate>Wed, 22 Oct 2008 20:55:03 -0500</pubDate>
+      <pubDate>Thu, 23 Oct 2008 01:55:03 +0000</pubDate>
       <link>http://mwop.net/blog/194-Vimgrep-and-Vim-Project.html</link>
       <guid>http://mwop.net/blog/194-Vimgrep-and-Vim-Project.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -139,7 +139,7 @@
     </item>
     <item>
       <title>Vim 7 code completion</title>
-      <pubDate>Fri, 22 Sep 2006 08:21:27 -0500</pubDate>
+      <pubDate>Fri, 22 Sep 2006 13:21:27 +0000</pubDate>
       <link>http://mwop.net/blog/123-Vim-7-code-completion.html</link>
       <guid>http://mwop.net/blog/123-Vim-7-code-completion.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -185,7 +185,7 @@
     </item>
     <item>
       <title>Telcos are Attacking the Internet</title>
-      <pubDate>Fri, 28 Apr 2006 12:47:28 -0500</pubDate>
+      <pubDate>Fri, 28 Apr 2006 17:47:28 +0000</pubDate>
       <link>http://mwop.net/blog/107-Telcos-are-Attacking-the-Internet.html</link>
       <guid>http://mwop.net/blog/107-Telcos-are-Attacking-the-Internet.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -279,7 +279,7 @@
     </item>
     <item>
       <title>PHP error reporting for Perl users</title>
-      <pubDate>Tue, 28 Mar 2006 08:19:35 -0600</pubDate>
+      <pubDate>Tue, 28 Mar 2006 14:19:35 +0000</pubDate>
       <link>http://mwop.net/blog/105-PHP-error-reporting-for-Perl-users.html</link>
       <guid>http://mwop.net/blog/105-PHP-error-reporting-for-Perl-users.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -355,7 +355,7 @@
     </item>
     <item>
       <title>Sign of a Geek</title>
-      <pubDate>Wed, 17 Nov 2004 15:05:42 -0600</pubDate>
+      <pubDate>Wed, 17 Nov 2004 21:05:42 +0000</pubDate>
       <link>http://mwop.net/blog/51-Sign-of-a-Geek.html</link>
       <guid>http://mwop.net/blog/51-Sign-of-a-Geek.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -395,7 +395,7 @@
     </item>
     <item>
       <title>PHP_SELF versus SCRIPT_NAME</title>
-      <pubDate>Tue, 12 Oct 2004 20:35:03 -0500</pubDate>
+      <pubDate>Wed, 13 Oct 2004 01:35:03 +0000</pubDate>
       <link>http://mwop.net/blog/45-PHP_SELF-versus-SCRIPT_NAME.html</link>
       <guid>http://mwop.net/blog/45-PHP_SELF-versus-SCRIPT_NAME.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>

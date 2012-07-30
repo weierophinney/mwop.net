@@ -16,11 +16,11 @@
 <link href="/css/Application/site.css" media="screen" rel="stylesheet" type="text/css" >
 <link href="/images/Application/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" >
 <link href="/css/Application/blog.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/blog/author/matthew-atom.xml" rel="alternate" type="application/atom+xml" title="Blog Entries by Matthew Weier O'Phinney Atom Feed" >
-<link href="/blog/author/matthew-rss.xml" rel="alternate" type="application/rss+xml" title="Blog Entries by Matthew Weier O'Phinney RSS Feed" >
+<link href="/blog/author/matthew-atom.xml" rel="alternate" type="application/atom+xml" title="Blog Entries by Matthew Weier O&#039;Phinney Atom Feed" >
+<link href="/blog/author/matthew-rss.xml" rel="alternate" type="application/rss+xml" title="Blog Entries by Matthew Weier O&#039;Phinney RSS Feed" >
     <script type="text/javascript">
     //<!--
-dojoConfig={
+    dojoConfig={
     has: {
         "dojo-firebug": false
     },
@@ -39,11 +39,11 @@ dojoConfig={
 <script type="text/javascript" src="/js/dojo/dojo.js"></script>
 <script type="text/javascript">
     //<!--
-require(["Application/blog"]);    //-->
+    require(["Application/blog"]);    //-->
 </script>
 <script type="text/javascript">
     //<!--
-require(["Application/scroll"], function(scroll) {});    //-->
+    require(["Application/scroll"], function(scroll) {});    //-->
 </script>
     <script src="https://www.google.com/jsapi?ABQIAAAAGybdRRvLZwVUcF0dE3oVdBTO-MlgA7VGJpGqyqTOeDXlNzyZQxTGq17s-iAB0m0vwqLQ_A2dHhTg2Q"></script>
 <script type="text/javascript">
@@ -90,6 +90,43 @@ require(["Application/scroll"], function(scroll) {});    //-->
 <section class="eleven columns alpha blog">
     <h2>Blog Entries by Matthew Weier O'Phinney</h2>
 
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2004-03-11 21:34:18</p>
+    <p class="tags"><a href="/blog/tag/linux.html">linux</a><br />
+<a href="/blog/tag/personal.html">personal</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/37-Making-a-RAID-array-from-the-command-line.html">Making a RAID array from the command line</a></h4>
+
+    <div class="entry body"><p>
+    Last night, I created my first RAID array from the commandline. It was quite
+    simple, I discovered.
+</p>
+<ol>
+    <li>Create your partitions using fstab. Remember, primary partitions must be
+    created <em>before</em> extended partitions.</li>
+    <li>Look in <kbd>/proc/partions</kbd> and note the new partition IDs.</li>
+    <li>Edit <kbd>/etc/raidtab</kbd> and create a new RAID array. If unsure of
+    the syntax, look up the <a href="http://www.tldp.org/HOWTO/Software-RAID-HOWTO.html">Linux Software
+        RAID HOWTO</a> for more details.</li>
+    <li>Type <kbd>mkraid /dev/md?</kbd>, where <kbd>?</kbd> is the id of the
+    RAID device you just entered in <kbd>/etc/raidtab</kbd>.</li>
+    <li>Format the new RAID device with your favorite filesystem, assign it a
+    mount point, and start using it!</li>
+</ol>
+<p>
+    I was impressed with how easy it was; the choices that the Anaconda
+    installer present for creating a RAID array made it seem like the underlying
+    process must be difficult, when in fact it may have been almost the same
+    complexity if not easier.
+</p></div>
+
+    <p><a href="/blog/37-Making-a-RAID-array-from-the-command-line.html">Continue reading...</a></p>
+</section>
+
+</div>
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
     <p class="date">2004-02-16 07:33:39</p>
@@ -463,62 +500,6 @@ Analogous to the UN*X command which.
 </p></div>
 
     <p><a href="/blog/22-Wheres-that-module.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2004-01-25 22:51:16</p>
-    <p class="tags"><a href="/blog/tag/perl.html">perl</a><br />
-<a href="/blog/tag/personal.html">personal</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/21-ClassDBI.html">Class::DBI</a></h4>
-
-    <div class="entry body"><p>
-    I was reading a thread on the cgiapp mailing list today from several of the
-    core developers about developing a book on CGI::Application. In it, several
-    mentioned that it might/should center around CGI::App and a handful of
-    oft-used modules. One of those modules is <a href="http://search.cpan.org/%7Etmtm/Class-DBI-0.95/lib/Class/DBI.pm">Class::DBI</a>.
-</p>
-<p>
-    I took a gander at Class::DBI over at CPAN, and it looks absolutely amazing,
-    and at the same time perhaps too abstract. Basically, you create a number of
-    packages and/or packages, one for each table you'll be using in your
-    application, and one to establish your basic connection. Then, each package
-    creates an object instance of the connection, and defines a number of
-    properties: the name of the table, the columns you'll be using, and then the
-    relations it has to other tables (<tt>has_a( col_name =>
-        'Package::Name'); has_many( col_name => 'Package::Name');
-        might_have(col_name => 'Package::Name');</tt>) etc.
-</p>
-<p>
-    Then you use the module/packages you need in your script, and you can then
-    use object-oriented notation to do things like insert rows, update rows,
-    search a table, select rows, etc. And it looks fairly natural.
-</p>
-<p>
-    I like the idea of data abstraction like this. I see a couple issues,
-    however:
-</p>
-<ol>
-    <li>I don't like the idea of one package per table; that gets so abstract as
-    to make development come to a stand-still, especially during initial
-    development. However, once development is sufficiently advanced, I could see
-    doing this, particularly for large projects; it could vastly simplify many
-    regular DBI calls.</li>
-    <li>I <strong>like</strong> using SQL. If I need to debug why something
-    isn't working when I interact with the database, I want to have absolute
-    control over the language. Abstracting the SQL means I don't have that
-    fine-grained control that helps me debug.</li>
-</ol>
-<p>
-    So, for now, I'll stick with straight DBI... but this is an interesting
-    avenue to explore.
-</p></div>
-
-    <p><a href="/blog/21-ClassDBI.html">Continue reading...</a></p>
 </section>
 
 </div>

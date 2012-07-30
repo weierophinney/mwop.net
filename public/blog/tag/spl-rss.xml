@@ -3,13 +3,13 @@
   <channel>
     <title>Tag: spl :: phly, boy, phly</title>
     <description>Tag: spl :: phly, boy, phly</description>
-    <pubDate>Fri, 21 Jan 2011 16:07:25 -0600</pubDate>
-    <generator>Zend_Feed_Writer 2.0.0beta4 (http://framework.zend.com)</generator>
+    <pubDate>Fri, 21 Jan 2011 22:07:25 +0000</pubDate>
+    <generator>Zend_Feed_Writer 2.0.0beta5 (http://framework.zend.com)</generator>
     <link>http://mwop.net/blog/tag/spl.html</link>
     <atom:link rel="self" type="application/rss+xml" href="http://mwop.net/blog/tag/spl-rss.xml"/>
     <item>
       <title>Taming SplPriorityQueue</title>
-      <pubDate>Fri, 21 Jan 2011 16:07:25 -0600</pubDate>
+      <pubDate>Fri, 21 Jan 2011 22:07:25 +0000</pubDate>
       <link>http://mwop.net/blog/253-Taming-SplPriorityQueue.html</link>
       <guid>http://mwop.net/blog/253-Taming-SplPriorityQueue.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -24,7 +24,7 @@ undesired. In this post, I'll present my solutions.
     </item>
     <item>
       <title>Applying FilterIterator to Directory Iteration</title>
-      <pubDate>Fri, 20 Aug 2010 14:45:21 -0500</pubDate>
+      <pubDate>Fri, 20 Aug 2010 19:45:21 +0000</pubDate>
       <link>http://mwop.net/blog/244-Applying-FilterIterator-to-Directory-Iteration.html</link>
       <guid>http://mwop.net/blog/244-Applying-FilterIterator-to-Directory-Iteration.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>

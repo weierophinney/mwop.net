@@ -3,13 +3,13 @@
   <channel>
     <title>Tag: webinar :: phly, boy, phly</title>
     <description>Tag: webinar :: phly, boy, phly</description>
-    <pubDate>Tue, 16 Sep 2008 00:15:30 -0500</pubDate>
-    <generator>Zend_Feed_Writer 2.0.0beta4 (http://framework.zend.com)</generator>
+    <pubDate>Tue, 16 Sep 2008 05:15:30 +0000</pubDate>
+    <generator>Zend_Feed_Writer 2.0.0beta5 (http://framework.zend.com)</generator>
     <link>http://mwop.net/blog/tag/webinar.html</link>
     <atom:link rel="self" type="application/rss+xml" href="http://mwop.net/blog/tag/webinar-rss.xml"/>
     <item>
       <title>Pastebin app and conference updates</title>
-      <pubDate>Tue, 16 Sep 2008 00:15:30 -0500</pubDate>
+      <pubDate>Tue, 16 Sep 2008 05:15:30 +0000</pubDate>
       <link>http://mwop.net/blog/189-Pastebin-app-and-conference-updates.html</link>
       <guid>http://mwop.net/blog/189-Pastebin-app-and-conference-updates.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -65,7 +65,7 @@
     </item>
     <item>
       <title>ZF+Dojo Webinar</title>
-      <pubDate>Thu, 04 Sep 2008 08:04:24 -0500</pubDate>
+      <pubDate>Thu, 04 Sep 2008 13:04:24 +0000</pubDate>
       <link>http://mwop.net/blog/187-ZF+Dojo-Webinar.html</link>
       <guid>http://mwop.net/blog/187-ZF+Dojo-Webinar.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -97,7 +97,7 @@
     </item>
     <item>
       <title>Zend Framework/Dojo Integration QA Slides</title>
-      <pubDate>Thu, 29 May 2008 16:26:09 -0500</pubDate>
+      <pubDate>Thu, 29 May 2008 21:26:09 +0000</pubDate>
       <link>http://mwop.net/blog/178-Zend-FrameworkDojo-Integration-QA-Slides.html</link>
       <guid>http://mwop.net/blog/178-Zend-FrameworkDojo-Integration-QA-Slides.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -126,7 +126,7 @@
     </item>
     <item>
       <title>Zend Framework Q&amp;amp;A Session</title>
-      <pubDate>Mon, 28 Apr 2008 13:50:00 -0500</pubDate>
+      <pubDate>Mon, 28 Apr 2008 18:50:00 +0000</pubDate>
       <link>http://mwop.net/blog/173-Zend-Framework-QA-Session.html</link>
       <guid>http://mwop.net/blog/173-Zend-Framework-QA-Session.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -154,7 +154,7 @@
     </item>
     <item>
       <title>Zend_Form Webinar Wednesday</title>
-      <pubDate>Thu, 06 Mar 2008 05:29:49 -0600</pubDate>
+      <pubDate>Thu, 06 Mar 2008 11:29:49 +0000</pubDate>
       <link>http://mwop.net/blog/160-Zend_Form-Webinar-Wednesday.html</link>
       <guid>http://mwop.net/blog/160-Zend_Form-Webinar-Wednesday.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>

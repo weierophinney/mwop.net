@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title type="text">Tag: zendcon :: phly, boy, phly</title>
-  <updated>2009-10-07T09:53:07-05:00</updated>
-  <generator uri="http://framework.zend.com" version="2.0.0beta4">Zend_Feed_Writer</generator>
+  <updated>2009-10-07T14:53:07+0000</updated>
+  <generator uri="http://framework.zend.com" version="2.0.0beta5">Zend_Feed_Writer</generator>
   <link rel="alternate" type="text/html" href="http://mwop.net/blog/tag/zendcon.html"/>
   <link rel="self" type="application/atom+xml" href="http://mwop.net/blog/tag/zendcon-atom.xml"/>
   <id>http://mwop.net/blog/tag/zendcon.html</id>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <title type="html"><![CDATA[Why UnCons are Important]]></title>
-    <published>2009-10-07T07:55:05-05:00</published>
-    <updated>2009-10-07T09:53:07-05:00</updated>
+    <published>2009-10-07T12:55:05+0000</published>
+    <updated>2009-10-07T14:53:07+0000</updated>
     <link rel="alternate" type="text/html" href="http://mwop.net/blog/225-Why-UnCons-are-Important.html"/>
     <id>http://mwop.net/blog/225-Why-UnCons-are-Important.html</id>
     <author>
@@ -33,8 +33,8 @@ uncon?</xhtml:p>
   </entry>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <title type="html"><![CDATA[2007 Retrospective]]></title>
-    <published>2008-01-01T15:49:26-06:00</published>
-    <updated>2008-01-03T05:22:35-06:00</updated>
+    <published>2008-01-01T21:49:26+0000</published>
+    <updated>2008-01-03T11:22:35+0000</updated>
     <link rel="alternate" type="text/html" href="http://mwop.net/blog/154-2007-Retrospective.html"/>
     <id>http://mwop.net/blog/154-2007-Retrospective.html</id>
     <author>
@@ -69,8 +69,8 @@ presentations.</xhtml:li>
   </entry>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <title type="html"><![CDATA[ZendCon is over at last]]></title>
-    <published>2007-10-11T19:50:47-05:00</published>
-    <updated>2007-10-18T02:19:41-05:00</updated>
+    <published>2007-10-12T00:50:47+0000</published>
+    <updated>2007-10-18T07:19:41+0000</updated>
     <link rel="alternate" type="text/html" href="http://mwop.net/blog/146-ZendCon-is-over-at-last.html"/>
     <id>http://mwop.net/blog/146-ZendCon-is-over-at-last.html</id>
     <author>

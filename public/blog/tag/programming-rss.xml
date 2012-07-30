@@ -3,13 +3,13 @@
   <channel>
     <title>Tag: programming :: phly, boy, phly</title>
     <description>Tag: programming :: phly, boy, phly</description>
-    <pubDate>Mon, 05 Jan 2009 01:00:49 -0600</pubDate>
-    <generator>Zend_Feed_Writer 2.0.0beta4 (http://framework.zend.com)</generator>
+    <pubDate>Mon, 05 Jan 2009 07:00:49 +0000</pubDate>
+    <generator>Zend_Feed_Writer 2.0.0beta5 (http://framework.zend.com)</generator>
     <link>http://mwop.net/blog/tag/programming.html</link>
     <atom:link rel="self" type="application/rss+xml" href="http://mwop.net/blog/tag/programming-rss.xml"/>
     <item>
       <title>2008: The year in review</title>
-      <pubDate>Mon, 05 Jan 2009 01:00:49 -0600</pubDate>
+      <pubDate>Mon, 05 Jan 2009 07:00:49 +0000</pubDate>
       <link>http://mwop.net/blog/203-2008-The-year-in-review.html</link>
       <guid>http://mwop.net/blog/203-2008-The-year-in-review.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -55,7 +55,7 @@
     </item>
     <item>
       <title>Mumbles irssi integration</title>
-      <pubDate>Fri, 12 Dec 2008 14:19:50 -0600</pubDate>
+      <pubDate>Fri, 12 Dec 2008 20:19:50 +0000</pubDate>
       <link>http://mwop.net/blog/197-Mumbles-irssi-integration.html</link>
       <guid>http://mwop.net/blog/197-Mumbles-irssi-integration.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -79,7 +79,7 @@
     </item>
     <item>
       <title>Vimgrep and Vim Project</title>
-      <pubDate>Wed, 22 Oct 2008 20:55:03 -0500</pubDate>
+      <pubDate>Thu, 23 Oct 2008 01:55:03 +0000</pubDate>
       <link>http://mwop.net/blog/194-Vimgrep-and-Vim-Project.html</link>
       <guid>http://mwop.net/blog/194-Vimgrep-and-Vim-Project.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -101,7 +101,7 @@
     </item>
     <item>
       <title>git-svn Tip: don't use core.autocrlf</title>
-      <pubDate>Wed, 24 Sep 2008 11:16:27 -0500</pubDate>
+      <pubDate>Wed, 24 Sep 2008 16:16:27 +0000</pubDate>
       <link>http://mwop.net/blog/191-git-svn-Tip-dont-use-core.autocrlf.html</link>
       <guid>http://mwop.net/blog/191-git-svn-Tip-dont-use-core.autocrlf.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -135,7 +135,7 @@
     </item>
     <item>
       <title>Server Upgrades... lost entries...</title>
-      <pubDate>Wed, 21 May 2008 13:35:27 -0500</pubDate>
+      <pubDate>Wed, 21 May 2008 18:35:27 +0000</pubDate>
       <link>http://mwop.net/blog/171-Server-Upgrades...-lost-entries....html</link>
       <guid>http://mwop.net/blog/171-Server-Upgrades...-lost-entries....html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -178,7 +178,7 @@
     </item>
     <item>
       <title>Submitting Bug Reports</title>
-      <pubDate>Sun, 09 Mar 2008 09:18:36 -0500</pubDate>
+      <pubDate>Sun, 09 Mar 2008 14:18:36 +0000</pubDate>
       <link>http://mwop.net/blog/161-Submitting-Bug-Reports.html</link>
       <guid>http://mwop.net/blog/161-Submitting-Bug-Reports.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -240,7 +240,7 @@
     </item>
     <item>
       <title>Backwards Compatibility</title>
-      <pubDate>Thu, 07 Feb 2008 08:56:11 -0600</pubDate>
+      <pubDate>Thu, 07 Feb 2008 14:56:11 +0000</pubDate>
       <link>http://mwop.net/blog/158-Backwards-Compatibility.html</link>
       <guid>http://mwop.net/blog/158-Backwards-Compatibility.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -274,7 +274,7 @@
     </item>
     <item>
       <title>Apache HOSTNAME on Clusters</title>
-      <pubDate>Sat, 26 Jan 2008 07:22:44 -0600</pubDate>
+      <pubDate>Sat, 26 Jan 2008 13:22:44 +0000</pubDate>
       <link>http://mwop.net/blog/156-Apache-HOSTNAME-on-Clusters.html</link>
       <guid>http://mwop.net/blog/156-Apache-HOSTNAME-on-Clusters.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -310,7 +310,7 @@
     </item>
     <item>
       <title>2007 Retrospective</title>
-      <pubDate>Thu, 03 Jan 2008 05:22:35 -0600</pubDate>
+      <pubDate>Thu, 03 Jan 2008 11:22:35 +0000</pubDate>
       <link>http://mwop.net/blog/154-2007-Retrospective.html</link>
       <guid>http://mwop.net/blog/154-2007-Retrospective.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -346,7 +346,7 @@
     </item>
     <item>
       <title>svn:externals</title>
-      <pubDate>Wed, 10 Jan 2007 13:08:35 -0600</pubDate>
+      <pubDate>Wed, 10 Jan 2007 19:08:35 +0000</pubDate>
       <link>http://mwop.net/blog/132-svnexternals.html</link>
       <guid>http://mwop.net/blog/132-svnexternals.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>

@@ -3,13 +3,13 @@
   <channel>
     <title>Tag: doctrine :: phly, boy, phly</title>
     <description>Tag: doctrine :: phly, boy, phly</description>
-    <pubDate>Sat, 30 Jun 2012 10:00:00 -0500</pubDate>
-    <generator>Zend_Feed_Writer 2.0.0beta4 (http://framework.zend.com)</generator>
+    <pubDate>Sat, 30 Jun 2012 15:00:00 +0000</pubDate>
+    <generator>Zend_Feed_Writer 2.0.0beta5 (http://framework.zend.com)</generator>
     <link>http://mwop.net/blog/tag/doctrine.html</link>
     <atom:link rel="self" type="application/rss+xml" href="http://mwop.net/blog/tag/doctrine-rss.xml"/>
     <item>
       <title>On Visibility in OOP</title>
-      <pubDate>Sat, 30 Jun 2012 10:00:00 -0500</pubDate>
+      <pubDate>Sat, 30 Jun 2012 15:00:00 +0000</pubDate>
       <link>http://mwop.net/blog/2012-06-28-oop-visibility.html</link>
       <guid>http://mwop.net/blog/2012-06-28-oop-visibility.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>

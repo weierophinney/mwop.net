@@ -3,13 +3,13 @@
   <channel>
     <title>Tag: mvc :: phly, boy, phly</title>
     <description>Tag: mvc :: phly, boy, phly</description>
-    <pubDate>Mon, 05 Jan 2009 10:51:07 -0600</pubDate>
-    <generator>Zend_Feed_Writer 2.0.0beta4 (http://framework.zend.com)</generator>
+    <pubDate>Mon, 05 Jan 2009 16:51:07 +0000</pubDate>
+    <generator>Zend_Feed_Writer 2.0.0beta5 (http://framework.zend.com)</generator>
     <link>http://mwop.net/blog/tag/mvc.html</link>
     <atom:link rel="self" type="application/rss+xml" href="http://mwop.net/blog/tag/mvc-rss.xml"/>
     <item>
       <title>Model Infrastructure</title>
-      <pubDate>Mon, 05 Jan 2009 10:51:07 -0600</pubDate>
+      <pubDate>Mon, 05 Jan 2009 16:51:07 +0000</pubDate>
       <link>http://mwop.net/blog/202-Model-Infrastructure.html</link>
       <guid>http://mwop.net/blog/202-Model-Infrastructure.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -34,7 +34,7 @@
     </item>
     <item>
       <title>Setting up your Zend_Test test suites</title>
-      <pubDate>Sat, 13 Sep 2008 08:37:40 -0500</pubDate>
+      <pubDate>Sat, 13 Sep 2008 13:37:40 +0000</pubDate>
       <link>http://mwop.net/blog/190-Setting-up-your-Zend_Test-test-suites.html</link>
       <guid>http://mwop.net/blog/190-Setting-up-your-Zend_Test-test-suites.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -49,7 +49,7 @@
     </item>
     <item>
       <title>Testing Zend Framework MVC Applications</title>
-      <pubDate>Thu, 03 Jul 2008 03:47:17 -0500</pubDate>
+      <pubDate>Thu, 03 Jul 2008 08:47:17 +0000</pubDate>
       <link>http://mwop.net/blog/182-Testing-Zend-Framework-MVC-Applications.html</link>
       <guid>http://mwop.net/blog/182-Testing-Zend-Framework-MVC-Applications.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -94,7 +94,7 @@
     </item>
     <item>
       <title>Zend Framework Dojo Integration</title>
-      <pubDate>Sun, 25 May 2008 11:40:37 -0500</pubDate>
+      <pubDate>Sun, 25 May 2008 16:40:37 +0000</pubDate>
       <link>http://mwop.net/blog/176-Zend-Framework-Dojo-Integration.html</link>
       <guid>http://mwop.net/blog/176-Zend-Framework-Dojo-Integration.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -126,7 +126,7 @@
     </item>
     <item>
       <title>2007 Retrospective</title>
-      <pubDate>Thu, 03 Jan 2008 05:22:35 -0600</pubDate>
+      <pubDate>Thu, 03 Jan 2008 11:22:35 +0000</pubDate>
       <link>http://mwop.net/blog/154-2007-Retrospective.html</link>
       <guid>http://mwop.net/blog/154-2007-Retrospective.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>

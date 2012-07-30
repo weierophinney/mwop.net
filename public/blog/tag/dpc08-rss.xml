@@ -3,13 +3,13 @@
   <channel>
     <title>Tag: dpc08 :: phly, boy, phly</title>
     <description>Tag: dpc08 :: phly, boy, phly</description>
-    <pubDate>Sat, 21 Jun 2008 03:34:31 -0500</pubDate>
-    <generator>Zend_Feed_Writer 2.0.0beta4 (http://framework.zend.com)</generator>
+    <pubDate>Sat, 21 Jun 2008 08:34:31 +0000</pubDate>
+    <generator>Zend_Feed_Writer 2.0.0beta5 (http://framework.zend.com)</generator>
     <link>http://mwop.net/blog/tag/dpc08.html</link>
     <atom:link rel="self" type="application/rss+xml" href="http://mwop.net/blog/tag/dpc08-rss.xml"/>
     <item>
       <title>phpwomen at DPC08</title>
-      <pubDate>Sat, 21 Jun 2008 03:34:31 -0500</pubDate>
+      <pubDate>Sat, 21 Jun 2008 08:34:31 +0000</pubDate>
       <link>http://mwop.net/blog/180-phpwomen-at-DPC08.html</link>
       <guid>http://mwop.net/blog/180-phpwomen-at-DPC08.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -29,7 +29,7 @@
     </item>
     <item>
       <title>DPC08 Wrapup</title>
-      <pubDate>Fri, 20 Jun 2008 10:56:28 -0500</pubDate>
+      <pubDate>Fri, 20 Jun 2008 15:56:28 +0000</pubDate>
       <link>http://mwop.net/blog/179-DPC08-Wrapup.html</link>
       <guid>http://mwop.net/blog/179-DPC08-Wrapup.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title type="text">Tag: zendcon09 :: phly, boy, phly</title>
-  <updated>2009-10-12T13:40:51-05:00</updated>
-  <generator uri="http://framework.zend.com" version="2.0.0beta4">Zend_Feed_Writer</generator>
+  <updated>2009-10-12T18:40:51+0000</updated>
+  <generator uri="http://framework.zend.com" version="2.0.0beta5">Zend_Feed_Writer</generator>
   <link rel="alternate" type="text/html" href="http://mwop.net/blog/tag/zendcon09.html"/>
   <link rel="self" type="application/atom+xml" href="http://mwop.net/blog/tag/zendcon09-atom.xml"/>
   <id>http://mwop.net/blog/tag/zendcon09.html</id>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <title type="html"><![CDATA[Speaking at ZendCon 2009]]></title>
-    <published>2009-10-12T07:30:00-05:00</published>
-    <updated>2009-10-12T13:40:51-05:00</updated>
+    <published>2009-10-12T12:30:00+0000</published>
+    <updated>2009-10-12T18:40:51+0000</updated>
     <link rel="alternate" type="text/html" href="http://mwop.net/blog/226-Speaking-at-ZendCon-2009.html"/>
     <id>http://mwop.net/blog/226-Speaking-at-ZendCon-2009.html</id>
     <author>
@@ -27,8 +27,8 @@ once again at <xhtml:a href="http://zendcon.com/">ZendCon</xhtml:a> this year
   </entry>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <title type="html"><![CDATA[Why UnCons are Important]]></title>
-    <published>2009-10-07T07:55:05-05:00</published>
-    <updated>2009-10-07T09:53:07-05:00</updated>
+    <published>2009-10-07T12:55:05+0000</published>
+    <updated>2009-10-07T14:53:07+0000</updated>
     <link rel="alternate" type="text/html" href="http://mwop.net/blog/225-Why-UnCons-are-Important.html"/>
     <id>http://mwop.net/blog/225-Why-UnCons-are-Important.html</id>
     <author>

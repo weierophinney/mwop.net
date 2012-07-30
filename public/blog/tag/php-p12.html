@@ -20,7 +20,7 @@
 <link href="/blog/tag/php-rss.xml" rel="alternate" type="application/rss+xml" title="Tag: php RSS Feed" >
     <script type="text/javascript">
     //<!--
-dojoConfig={
+    dojoConfig={
     has: {
         "dojo-firebug": false
     },
@@ -39,11 +39,11 @@ dojoConfig={
 <script type="text/javascript" src="/js/dojo/dojo.js"></script>
 <script type="text/javascript">
     //<!--
-require(["Application/blog"]);    //-->
+    require(["Application/blog"]);    //-->
 </script>
 <script type="text/javascript">
     //<!--
-require(["Application/scroll"], function(scroll) {});    //-->
+    require(["Application/scroll"], function(scroll) {});    //-->
 </script>
     <script src="https://www.google.com/jsapi?ABQIAAAAGybdRRvLZwVUcF0dE3oVdBTO-MlgA7VGJpGqyqTOeDXlNzyZQxTGq17s-iAB0m0vwqLQ_A2dHhTg2Q"></script>
 <script type="text/javascript">
@@ -90,6 +90,47 @@ require(["Application/scroll"], function(scroll) {});    //-->
 <section class="eleven columns alpha blog">
     <h2>Tag: php</h2>
 
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2008-02-07 09:56:11</p>
+    <p class="tags"><a href="/blog/tag/programming.html">programming</a><br />
+<a href="/blog/tag/php.html">php</a><br />
+<a href="/blog/tag/zend+framework.html">zend framework</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/158-Backwards-Compatibility.html">Backwards Compatibility</a></h4>
+
+    <div class="entry body"><p>
+    <a href="http://jansch.nl/">Ivo</a> already pointed this out, but I want to
+    point it out again: Boy Baukema writes 
+    <a href="http://www.ibuildings.nl/blog/archives/541-Backward-compatibility,-bane-of-the-developer.html">a very nice entry regarding backwards compatibility</a>
+    on the ibuildings.nl corporate blog.
+</p>
+
+<p>
+    Backwards compatibility (BC) is a tricky thing to support, even when you
+    strive hard to, as Boy puts it, "think hard about your API" prior to
+    release. Somebody will always come along and point out ways it could have
+    been done better or ways it could be improved. I've had to wrestle with
+    these issues a ton since joining the Zend Framework team, and while it often
+    feels like the wrong thing to do to tell somebody, "too little, too late"
+    when they have genuinely good feedback for you, its often in the best
+    interest of the many users already using a component.
+</p>
+
+<p>
+    I had the pleasure of meeting Boy last year when visiting the ibuildings.nl
+    offices, and he's got a good head on his shoulders. He does a nice job
+    outlining the issues and a number of approaches to BC; if you develop a
+    project for public consumption, you should definitely head over and read
+    what he has to say.
+</p></div>
+
+    <p><a href="/blog/158-Backwards-Compatibility.html">Continue reading...</a></p>
+</section>
+
+</div>
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
     <p class="date">2008-01-30 08:09:44</p>
@@ -486,34 +527,6 @@ require(["Application/scroll"], function(scroll) {});    //-->
 </p></div>
 
     <p><a href="/blog/145-oh%2C-yeah%2C-zendcon....html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2007-09-26 09:25:09</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
-<a href="/blog/tag/zend+framework.html">zend framework</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/144-Zend-Framework-MVC-Webinar-posted.html">Zend Framework MVC Webinar posted</a></h4>
-
-    <div class="entry body"><p>
-    Last Wednesday, I presented a webinar for Zend entitled "MVC applications
-    with Zend Framework". We had more than 50 attendees, most of whom stayed on
-    the whole time. For those of you who attended, thanks for the great
-    questions and comments. 
-</p>
-<p>
-    If you would like to view the webinar, download the slides, or download the
-    example code (a hello world app), visit the <a
-        href="http://www.zend.com/webinar">Zend.com Webinar page</a> and look
-    for the presentation; as of today, it's the first one on the list, but that
-    will change as more webinars are presented.
-</p></div>
-
-    <p><a href="/blog/144-Zend-Framework-MVC-Webinar-posted.html">Continue reading...</a></p>
 </section>
 
 </div>

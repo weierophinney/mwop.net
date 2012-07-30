@@ -20,7 +20,7 @@
 <link href="/blog/tag/php-rss.xml" rel="alternate" type="application/rss+xml" title="Tag: php RSS Feed" >
     <script type="text/javascript">
     //<!--
-dojoConfig={
+    dojoConfig={
     has: {
         "dojo-firebug": false
     },
@@ -39,11 +39,11 @@ dojoConfig={
 <script type="text/javascript" src="/js/dojo/dojo.js"></script>
 <script type="text/javascript">
     //<!--
-require(["Application/blog"]);    //-->
+    require(["Application/blog"]);    //-->
 </script>
 <script type="text/javascript">
     //<!--
-require(["Application/scroll"], function(scroll) {});    //-->
+    require(["Application/scroll"], function(scroll) {});    //-->
 </script>
     <script src="https://www.google.com/jsapi?ABQIAAAAGybdRRvLZwVUcF0dE3oVdBTO-MlgA7VGJpGqyqTOeDXlNzyZQxTGq17s-iAB0m0vwqLQ_A2dHhTg2Q"></script>
 <script type="text/javascript">
@@ -90,6 +90,40 @@ require(["Application/scroll"], function(scroll) {});    //-->
 <section class="eleven columns alpha blog">
     <h2>Tag: php</h2>
 
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2009-04-07 22:27:53</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
+<a href="/blog/tag/zend+framework.html">zend framework</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/214-Zend-Framework-1.8-PREVIEW-Release.html">Zend Framework 1.8 PREVIEW Release</a></h4>
+
+    <div class="entry body"><p>
+    By the time you read this, the <a href="http://framework.zend.com/">Zend Framework</a> 
+    team will have released a <strong>preview</strong> release of 1.8.0. While
+    the final release is scheduled for later this month, this release represents
+    the hard work of many contributors and shows off a variety of powerful new
+    components.
+</p>
+
+<p>
+    If you're a Zend Framework user, you should give the preview release a spin,
+    to see what it can do:
+</p>
+
+<ul>
+    <li><a href="http://framework.zend.com/releases/ZendFramework-1.8.0a1/ZendFramework-1.8.0a1.zip">1.8 Preview Release
+        (zip)</a></li>
+    <li><a href="http://framework.zend.com/releases/ZendFramework-1.8.0a1/ZendFramework-1.8.0a1.tar.gz">1.8 Preview Release
+        (tarball)</a></li>
+</ul></div>
+
+    <p><a href="/blog/214-Zend-Framework-1.8-PREVIEW-Release.html">Continue reading...</a></p>
+</section>
+
+</div>
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
     <p class="date">2009-04-06 08:30:00</p>
@@ -403,54 +437,6 @@ require(["Application/scroll"], function(scroll) {});    //-->
 </p></div>
 
     <p><a href="/blog/201-Applying-ACLs-to-Models.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2008-12-22 08:30:00</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
-<a href="/blog/tag/zend+framework.html">zend framework</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/200-Using-Zend_Form-in-Your-Models.html">Using Zend_Form in Your Models</a></h4>
-
-    <div class="entry body"><p>
-    A <a href="http://blog.astrumfutura.com/index.php?url=archives/373-The-M-in-MVC-Why-Models-are-Misunderstood-and-Unappreciated.html">number</a> 
-    of <a href="http://akrabat.com/2008/12/13/on-models-in-a-zend-framework-application/">blog</a>
-    <a href="http://codeutopia.net/blog/2008/12/17/the-problems-faced-by-a-common-model-interface-in-frameworks/">posts</a> 
-    have sprung up lately in the Zend Framework community discussing the Model
-    in the <a href="http://en.wikipedia.org/wiki/Model-view-controller">Model-View-Controller pattern</a>. 
-    <a href="http://framework.zend.com/">Zend Framework</a> has never had a
-    concrete Model class or interface; our stand has been that models are
-    specific to the application, and only the developer can really know what
-    would best suit it. 
-</p>
-    
-<p>
-    Many other frameworks tie the Model to data access -- typically via the
-    <a href="http://en.wikipedia.org/wiki/Active_record_pattern">ActiveRecord</a> 
-    pattern or a <a href="http://martinfowler.com/eaaCatalog/tableDataGateway.html">Table Data Gateway</a> 
-    -- which completely ignores the fact that this is tying the Model to the
-    method by which it is persisted.  What happens later if you start using
-    memcached? or migrate to an SOA architecture? What if, from the very
-    beginning, your data is coming from a web service? What if you <em>do</em>
-    use a database, but your business logic relies on associations
-    <em>between</em> tables?
-</p>
-
-<p>
-    While the aforementioned posts do an admirable job of discussing the various
-    issues, they don't necessarily give any concrete approaches a developer
-    <em>can</em> use when creating their models. As such, this will be the first
-    in a series of posts aiming to provide some concrete patterns and techniques
-    you can use when creating your models. The examples will primarily be
-    drawing from Zend Framework components, but should apply equally well to a
-    variety of other frameworks.
-</p></div>
-
-    <p><a href="/blog/200-Using-Zend_Form-in-Your-Models.html">Continue reading...</a></p>
 </section>
 
 </div>

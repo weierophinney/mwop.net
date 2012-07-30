@@ -3,13 +3,13 @@
   <channel>
     <title>Tag: conferences :: phly, boy, phly</title>
     <description>Tag: conferences :: phly, boy, phly</description>
-    <pubDate>Fri, 20 Jun 2008 10:56:28 -0500</pubDate>
-    <generator>Zend_Feed_Writer 2.0.0beta4 (http://framework.zend.com)</generator>
+    <pubDate>Fri, 20 Jun 2008 15:56:28 +0000</pubDate>
+    <generator>Zend_Feed_Writer 2.0.0beta5 (http://framework.zend.com)</generator>
     <link>http://mwop.net/blog/tag/conferences.html</link>
     <atom:link rel="self" type="application/rss+xml" href="http://mwop.net/blog/tag/conferences-rss.xml"/>
     <item>
       <title>DPC08 Wrapup</title>
-      <pubDate>Fri, 20 Jun 2008 10:56:28 -0500</pubDate>
+      <pubDate>Fri, 20 Jun 2008 15:56:28 +0000</pubDate>
       <link>http://mwop.net/blog/179-DPC08-Wrapup.html</link>
       <guid>http://mwop.net/blog/179-DPC08-Wrapup.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -29,7 +29,7 @@
     </item>
     <item>
       <title>Speaking at the Dutch PHP Conference</title>
-      <pubDate>Tue, 20 May 2008 05:10:37 -0500</pubDate>
+      <pubDate>Tue, 20 May 2008 10:10:37 +0000</pubDate>
       <link>http://mwop.net/blog/175-Speaking-at-the-Dutch-PHP-Conference.html</link>
       <guid>http://mwop.net/blog/175-Speaking-at-the-Dutch-PHP-Conference.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -62,7 +62,7 @@
     </item>
     <item>
       <title>ZendCon is over at last</title>
-      <pubDate>Thu, 18 Oct 2007 02:19:41 -0500</pubDate>
+      <pubDate>Thu, 18 Oct 2007 07:19:41 +0000</pubDate>
       <link>http://mwop.net/blog/146-ZendCon-is-over-at-last.html</link>
       <guid>http://mwop.net/blog/146-ZendCon-is-over-at-last.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -143,7 +143,7 @@
     </item>
     <item>
       <title>oh, yeah, zendcon...</title>
-      <pubDate>Wed, 03 Oct 2007 23:46:07 -0500</pubDate>
+      <pubDate>Thu, 04 Oct 2007 04:46:07 +0000</pubDate>
       <link>http://mwop.net/blog/145-oh,-yeah,-zendcon....html</link>
       <guid>http://mwop.net/blog/145-oh,-yeah,-zendcon....html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>

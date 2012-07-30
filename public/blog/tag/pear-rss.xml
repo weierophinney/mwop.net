@@ -3,13 +3,13 @@
   <channel>
     <title>Tag: pear :: phly, boy, phly</title>
     <description>Tag: pear :: phly, boy, phly</description>
-    <pubDate>Sat, 21 Aug 2010 17:37:14 -0500</pubDate>
-    <generator>Zend_Feed_Writer 2.0.0beta4 (http://framework.zend.com)</generator>
+    <pubDate>Sat, 21 Aug 2010 22:37:14 +0000</pubDate>
+    <generator>Zend_Feed_Writer 2.0.0beta5 (http://framework.zend.com)</generator>
     <link>http://mwop.net/blog/tag/pear.html</link>
     <atom:link rel="self" type="application/rss+xml" href="http://mwop.net/blog/tag/pear-rss.xml"/>
     <item>
       <title>Autoloading Benchmarks</title>
-      <pubDate>Sat, 21 Aug 2010 17:37:14 -0500</pubDate>
+      <pubDate>Sat, 21 Aug 2010 22:37:14 +0000</pubDate>
       <link>http://mwop.net/blog/245-Autoloading-Benchmarks.html</link>
       <guid>http://mwop.net/blog/245-Autoloading-Benchmarks.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -25,7 +25,7 @@ In this post, I'll outline the approaches I've tried, the benchmarking stategy I
     </item>
     <item>
       <title>2007 Retrospective</title>
-      <pubDate>Thu, 03 Jan 2008 05:22:35 -0600</pubDate>
+      <pubDate>Thu, 03 Jan 2008 11:22:35 +0000</pubDate>
       <link>http://mwop.net/blog/154-2007-Retrospective.html</link>
       <guid>http://mwop.net/blog/154-2007-Retrospective.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -61,7 +61,7 @@ In this post, I'll outline the approaches I've tried, the benchmarking stategy I
     </item>
     <item>
       <title>File_Fortune refactored</title>
-      <pubDate>Tue, 10 Jul 2007 07:34:52 -0500</pubDate>
+      <pubDate>Tue, 10 Jul 2007 12:34:52 +0000</pubDate>
       <link>http://mwop.net/blog/142-File_Fortune-refactored.html</link>
       <guid>http://mwop.net/blog/142-File_Fortune-refactored.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>

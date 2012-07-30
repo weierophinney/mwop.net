@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title type="text">Tag: zencon08 :: phly, boy, phly</title>
-  <updated>2008-09-27T11:06:11-05:00</updated>
-  <generator uri="http://framework.zend.com" version="2.0.0beta4">Zend_Feed_Writer</generator>
+  <updated>2008-09-27T16:06:11+0000</updated>
+  <generator uri="http://framework.zend.com" version="2.0.0beta5">Zend_Feed_Writer</generator>
   <link rel="alternate" type="text/html" href="http://mwop.net/blog/tag/zencon08.html"/>
   <link rel="self" type="application/atom+xml" href="http://mwop.net/blog/tag/zencon08-atom.xml"/>
   <id>http://mwop.net/blog/tag/zencon08.html</id>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <title type="html"><![CDATA[ZendCon08 Wrapup]]></title>
-    <published>2008-09-25T22:11:30-05:00</published>
-    <updated>2008-09-27T11:06:11-05:00</updated>
+    <published>2008-09-26T03:11:30+0000</published>
+    <updated>2008-09-27T16:06:11+0000</updated>
     <link rel="alternate" type="text/html" href="http://mwop.net/blog/192-ZendCon08-Wrapup.html"/>
     <id>http://mwop.net/blog/192-ZendCon08-Wrapup.html</id>
     <author>

@@ -3,13 +3,13 @@
   <channel>
     <title>Tag: linux :: phly, boy, phly</title>
     <description>Tag: linux :: phly, boy, phly</description>
-    <pubDate>Thu, 25 Mar 2010 05:57:03 -0500</pubDate>
-    <generator>Zend_Feed_Writer 2.0.0beta4 (http://framework.zend.com)</generator>
+    <pubDate>Thu, 25 Mar 2010 10:57:03 +0000</pubDate>
+    <generator>Zend_Feed_Writer 2.0.0beta5 (http://framework.zend.com)</generator>
     <link>http://mwop.net/blog/tag/linux.html</link>
     <atom:link rel="self" type="application/rss+xml" href="http://mwop.net/blog/tag/linux-rss.xml"/>
     <item>
       <title>GPG-signing Git Commits</title>
-      <pubDate>Thu, 25 Mar 2010 05:57:03 -0500</pubDate>
+      <pubDate>Thu, 25 Mar 2010 10:57:03 +0000</pubDate>
       <link>http://mwop.net/blog/236-GPG-signing-Git-Commits.html</link>
       <guid>http://mwop.net/blog/236-GPG-signing-Git-Commits.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -38,7 +38,7 @@
     </item>
     <item>
       <title>Enabling VPN split tunnel with NetworkManager</title>
-      <pubDate>Mon, 31 Aug 2009 14:34:37 -0500</pubDate>
+      <pubDate>Mon, 31 Aug 2009 19:34:37 +0000</pubDate>
       <link>http://mwop.net/blog/223-Enabling-VPN-split-tunnel-with-NetworkManager.html</link>
       <guid>http://mwop.net/blog/223-Enabling-VPN-split-tunnel-with-NetworkManager.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -81,7 +81,7 @@
     </item>
     <item>
       <title>VirtualBox Networking</title>
-      <pubDate>Sat, 17 Jan 2009 09:43:40 -0600</pubDate>
+      <pubDate>Sat, 17 Jan 2009 15:43:40 +0000</pubDate>
       <link>http://mwop.net/blog/205-VirtualBox-Networking.html</link>
       <guid>http://mwop.net/blog/205-VirtualBox-Networking.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -112,7 +112,7 @@
     </item>
     <item>
       <title>Server Upgrades... lost entries...</title>
-      <pubDate>Wed, 21 May 2008 13:35:27 -0500</pubDate>
+      <pubDate>Wed, 21 May 2008 18:35:27 +0000</pubDate>
       <link>http://mwop.net/blog/171-Server-Upgrades...-lost-entries....html</link>
       <guid>http://mwop.net/blog/171-Server-Upgrades...-lost-entries....html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -155,7 +155,7 @@
     </item>
     <item>
       <title>Apache HOSTNAME on Clusters</title>
-      <pubDate>Sat, 26 Jan 2008 07:22:44 -0600</pubDate>
+      <pubDate>Sat, 26 Jan 2008 13:22:44 +0000</pubDate>
       <link>http://mwop.net/blog/156-Apache-HOSTNAME-on-Clusters.html</link>
       <guid>http://mwop.net/blog/156-Apache-HOSTNAME-on-Clusters.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -191,7 +191,7 @@
     </item>
     <item>
       <title>Gutsy Gibbon review</title>
-      <pubDate>Wed, 24 Oct 2007 15:38:00 -0500</pubDate>
+      <pubDate>Wed, 24 Oct 2007 20:38:00 +0000</pubDate>
       <link>http://mwop.net/blog/147-Gutsy-Gibbon-review.html</link>
       <guid>http://mwop.net/blog/147-Gutsy-Gibbon-review.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -206,7 +206,7 @@
     </item>
     <item>
       <title>Back on Linux Again</title>
-      <pubDate>Thu, 17 May 2007 10:03:06 -0500</pubDate>
+      <pubDate>Thu, 17 May 2007 15:03:06 +0000</pubDate>
       <link>http://mwop.net/blog/136-Back-on-Linux-Again.html</link>
       <guid>http://mwop.net/blog/136-Back-on-Linux-Again.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -233,7 +233,7 @@
     </item>
     <item>
       <title>coLinux Recovery</title>
-      <pubDate>Mon, 25 Sep 2006 16:27:00 -0500</pubDate>
+      <pubDate>Mon, 25 Sep 2006 21:27:00 +0000</pubDate>
       <link>http://mwop.net/blog/124-coLinux-Recovery.html</link>
       <guid>http://mwop.net/blog/124-coLinux-Recovery.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -252,7 +252,7 @@
     </item>
     <item>
       <title>XP + Cygwin + coLinux == Productivity</title>
-      <pubDate>Wed, 11 Jan 2006 13:58:23 -0600</pubDate>
+      <pubDate>Wed, 11 Jan 2006 19:58:23 +0000</pubDate>
       <link>http://mwop.net/blog/103-XP-+-Cygwin-+-coLinux-Productivity.html</link>
       <guid>http://mwop.net/blog/103-XP-+-Cygwin-+-coLinux-Productivity.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -267,7 +267,7 @@
     </item>
     <item>
       <title>File_SMBPasswd woes</title>
-      <pubDate>Thu, 08 Sep 2005 08:50:23 -0500</pubDate>
+      <pubDate>Thu, 08 Sep 2005 13:50:23 +0000</pubDate>
       <link>http://mwop.net/blog/93-File_SMBPasswd-woes.html</link>
       <guid>http://mwop.net/blog/93-File_SMBPasswd-woes.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>

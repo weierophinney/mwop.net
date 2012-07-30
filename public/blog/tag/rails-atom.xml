@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title type="text">Tag: rails :: phly, boy, phly</title>
-  <updated>2008-04-10T14:45:53-05:00</updated>
-  <generator uri="http://framework.zend.com" version="2.0.0beta4">Zend_Feed_Writer</generator>
+  <updated>2008-04-10T19:45:53+0000</updated>
+  <generator uri="http://framework.zend.com" version="2.0.0beta5">Zend_Feed_Writer</generator>
   <link rel="alternate" type="text/html" href="http://mwop.net/blog/tag/rails.html"/>
   <link rel="self" type="application/atom+xml" href="http://mwop.net/blog/tag/rails-atom.xml"/>
   <id>http://mwop.net/blog/tag/rails.html</id>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <title type="html"><![CDATA[DHH on PHP]]></title>
-    <published>2008-04-04T08:06:14-05:00</published>
-    <updated>2008-04-10T14:45:53-05:00</updated>
+    <published>2008-04-04T13:06:14+0000</published>
+    <updated>2008-04-10T19:45:53+0000</updated>
     <link rel="alternate" type="text/html" href="http://mwop.net/blog/168-DHH-on-PHP.html"/>
     <id>http://mwop.net/blog/168-DHH-on-PHP.html</id>
     <author>

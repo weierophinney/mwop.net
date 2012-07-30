@@ -16,11 +16,11 @@
 <link href="/css/Application/site.css" media="screen" rel="stylesheet" type="text/css" >
 <link href="/images/Application/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" >
 <link href="/css/Application/blog.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/blog/author/matthew-atom.xml" rel="alternate" type="application/atom+xml" title="Blog Entries by Matthew Weier O'Phinney Atom Feed" >
-<link href="/blog/author/matthew-rss.xml" rel="alternate" type="application/rss+xml" title="Blog Entries by Matthew Weier O'Phinney RSS Feed" >
+<link href="/blog/author/matthew-atom.xml" rel="alternate" type="application/atom+xml" title="Blog Entries by Matthew Weier O&#039;Phinney Atom Feed" >
+<link href="/blog/author/matthew-rss.xml" rel="alternate" type="application/rss+xml" title="Blog Entries by Matthew Weier O&#039;Phinney RSS Feed" >
     <script type="text/javascript">
     //<!--
-dojoConfig={
+    dojoConfig={
     has: {
         "dojo-firebug": false
     },
@@ -39,11 +39,11 @@ dojoConfig={
 <script type="text/javascript" src="/js/dojo/dojo.js"></script>
 <script type="text/javascript">
     //<!--
-require(["Application/blog"]);    //-->
+    require(["Application/blog"]);    //-->
 </script>
 <script type="text/javascript">
     //<!--
-require(["Application/scroll"], function(scroll) {});    //-->
+    require(["Application/scroll"], function(scroll) {});    //-->
 </script>
     <script src="https://www.google.com/jsapi?ABQIAAAAGybdRRvLZwVUcF0dE3oVdBTO-MlgA7VGJpGqyqTOeDXlNzyZQxTGq17s-iAB0m0vwqLQ_A2dHhTg2Q"></script>
 <script type="text/javascript">
@@ -90,6 +90,33 @@ require(["Application/scroll"], function(scroll) {});    //-->
 <section class="eleven columns alpha blog">
     <h2>Blog Entries by Matthew Weier O'Phinney</h2>
 
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2005-03-24 21:28:06</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/1-Zippity-Zoo-Zah....html">Zippity Zoo Zah...</a></h4>
+
+    <div class="entry body">I've been wanting to improve -- no, rewrite -- my blogging software for a month or more now. The more work I've done at work, the more efficiently I've felt I could handle it. I've learned a lot of ins and outs with Cgiapp and Cgiapp superclasses, and figured out how to tie things together much better.
+
+However, I've also noticed, in reading and analyzing blogs, that there are a lot of standards that I just don't know enough about or simply don't have the time to implement ("the more work I've done..." has been something like 70 hour weeks recently). Things like trackbacks, and RSS/Atom feeds, and comment moderation/blacklisting, etc. I certainly have the skills, but do I have the time? Not really.
+
+I still have a goal of writing some lightweight blogging software using Cgiapp. However, for now, that's on hold so I can focus on family, myself, and the next round of Cgiapp improvements. 
+
+In the meantime, i've been seeing a lot of stuff about <a href="http://www.s9y.org/">Serendipity</a>, and I thought I'd give it a try. Here are the results!
+
+It was super fast to setup, and I hope to import all my old entries from my own system to it, once I can see how entries are stored in the DB.
+
+So, you can now keep track of me via RSS... Read away!
+
+<b>Update:</b> I'm liking S9y even more: it uses <a href="http://smarty.php.net/">Smarty</a> for templating, which means I'm able to modify it to look like it was always seemlessly in my site!</div>
+
+    <p><a href="/blog/1-Zippity-Zoo-Zah....html">Continue reading...</a></p>
+</section>
+
+</div>
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
     <p class="date">2005-03-20 23:33:41</p>
@@ -521,29 +548,6 @@ your template might need.
 </p></div>
 
     <p><a href="/blog/51-Sign-of-a-Geek.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2004-11-04 13:14:17</p>
-    <p class="tags"><a href="/blog/tag/personal.html">personal</a><br />
-<a href="/blog/tag/php.html">php</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/50-Cgiapp-mentioned-in-phparchitect%21.html">Cgiapp mentioned in php|architect!</a></h4>
-
-    <div class="entry body"><p>
-    A new <a href="download?mode=view&id=11">Cgiapp</a> user reported they had
-    stumbled across the project in <a href="http://www.phparch.com">php|architect</a>! It's in the current,
-    October 2004 issue, in the News section, prominently displayed in the upper
-    right corner of the page. The announcement blurb is straight
-    from my <a href="http://freshmeat.net/projects/cgiapp/">freshmeat project
-        page</a> for version 1.4. Cgiapp is carving a name for itself!
-</p></div>
-
-    <p><a href="/blog/50-Cgiapp-mentioned-in-phparchitect%21.html">Continue reading...</a></p>
 </section>
 
 </div>

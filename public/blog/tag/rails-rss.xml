@@ -3,13 +3,13 @@
   <channel>
     <title>Tag: rails :: phly, boy, phly</title>
     <description>Tag: rails :: phly, boy, phly</description>
-    <pubDate>Thu, 10 Apr 2008 14:45:53 -0500</pubDate>
-    <generator>Zend_Feed_Writer 2.0.0beta4 (http://framework.zend.com)</generator>
+    <pubDate>Thu, 10 Apr 2008 19:45:53 +0000</pubDate>
+    <generator>Zend_Feed_Writer 2.0.0beta5 (http://framework.zend.com)</generator>
     <link>http://mwop.net/blog/tag/rails.html</link>
     <atom:link rel="self" type="application/rss+xml" href="http://mwop.net/blog/tag/rails-rss.xml"/>
     <item>
       <title>DHH on PHP</title>
-      <pubDate>Thu, 10 Apr 2008 14:45:53 -0500</pubDate>
+      <pubDate>Thu, 10 Apr 2008 19:45:53 +0000</pubDate>
       <link>http://mwop.net/blog/168-DHH-on-PHP.html</link>
       <guid>http://mwop.net/blog/168-DHH-on-PHP.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>

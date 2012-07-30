@@ -3,13 +3,13 @@
   <channel>
     <title>Tag: security :: phly, boy, phly</title>
     <description>Tag: security :: phly, boy, phly</description>
-    <pubDate>Mon, 31 Aug 2009 14:34:37 -0500</pubDate>
-    <generator>Zend_Feed_Writer 2.0.0beta4 (http://framework.zend.com)</generator>
+    <pubDate>Mon, 31 Aug 2009 19:34:37 +0000</pubDate>
+    <generator>Zend_Feed_Writer 2.0.0beta5 (http://framework.zend.com)</generator>
     <link>http://mwop.net/blog/tag/security.html</link>
     <atom:link rel="self" type="application/rss+xml" href="http://mwop.net/blog/tag/security-rss.xml"/>
     <item>
       <title>Enabling VPN split tunnel with NetworkManager</title>
-      <pubDate>Mon, 31 Aug 2009 14:34:37 -0500</pubDate>
+      <pubDate>Mon, 31 Aug 2009 19:34:37 +0000</pubDate>
       <link>http://mwop.net/blog/223-Enabling-VPN-split-tunnel-with-NetworkManager.html</link>
       <guid>http://mwop.net/blog/223-Enabling-VPN-split-tunnel-with-NetworkManager.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>

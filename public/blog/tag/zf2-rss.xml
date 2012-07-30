@@ -3,13 +3,45 @@
   <channel>
     <title>Tag: zf2 :: phly, boy, phly</title>
     <description>Tag: zf2 :: phly, boy, phly</description>
-    <pubDate>Thu, 05 Jul 2012 15:40:00 -0500</pubDate>
-    <generator>Zend_Feed_Writer 2.0.0beta4 (http://framework.zend.com)</generator>
+    <pubDate>Mon, 30 Jul 2012 20:40:00 +0000</pubDate>
+    <generator>Zend_Feed_Writer 2.0.0beta5 (http://framework.zend.com)</generator>
     <link>http://mwop.net/blog/tag/zf2.html</link>
     <atom:link rel="self" type="application/rss+xml" href="http://mwop.net/blog/tag/zf2-rss.xml"/>
     <item>
+      <title>ZF2's New Controller::init()</title>
+      <pubDate>Mon, 30 Jul 2012 20:40:00 +0000</pubDate>
+      <link>http://mwop.net/blog/2012-07-30-the-new-init.html</link>
+      <guid>http://mwop.net/blog/2012-07-30-the-new-init.html</guid>
+      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
+      <dc:creator>Matthew Weier O'Phinney</dc:creator>
+      <content:encoded><![CDATA[<p>
+    In Zend Framework 1, controller's had an <code>init()</code> method, which
+    was called after the controller was instantiated. The reason for it was to
+    encourage developers not to override the constructor, and thus potentially
+    break some of the functionality (as a number of objects were injected via
+    the constructor). <code>init()</code> was useful for doing additional object
+    initialization.
+</p>
+
+<div class="example"><pre><code language="php">
+class MyController extends Zend_Controller_Action
+{
+    public function init()
+    {
+        // do some stuff!
+    }
+}
+</code></pre></div>
+
+<p>
+    But this feature is missing from ZF2; how can we accomplish this sort of
+    pattern?
+</p>]]></content:encoded>
+      <slash:comments>0</slash:comments>
+    </item>
+    <item>
       <title>ZF2 Forms in Beta5</title>
-      <pubDate>Thu, 05 Jul 2012 15:40:00 -0500</pubDate>
+      <pubDate>Thu, 05 Jul 2012 20:40:00 +0000</pubDate>
       <link>http://mwop.net/blog/2012-07-02-zf2-beta5-forms.html</link>
       <guid>http://mwop.net/blog/2012-07-02-zf2-beta5-forms.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -46,7 +78,7 @@
     </item>
     <item>
       <title>Why Modules?</title>
-      <pubDate>Mon, 30 Apr 2012 16:00:00 -0500</pubDate>
+      <pubDate>Mon, 30 Apr 2012 21:00:00 +0000</pubDate>
       <link>http://mwop.net/blog/2012-04-30-why-modules.html</link>
       <guid>http://mwop.net/blog/2012-04-30-why-modules.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -62,7 +94,7 @@
     </item>
     <item>
       <title>Developing A ZF2 Blog</title>
-      <pubDate>Tue, 03 Apr 2012 21:50:00 -0500</pubDate>
+      <pubDate>Wed, 04 Apr 2012 02:50:00 +0000</pubDate>
       <link>http://mwop.net/blog/2012-05-developing-a-zf2-blog.html</link>
       <guid>http://mwop.net/blog/2012-05-developing-a-zf2-blog.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -147,7 +179,7 @@
     </item>
     <item>
       <title>View Layers, Database Abstraction, Configuration, Oh, My!</title>
-      <pubDate>Mon, 05 Mar 2012 16:32:45 -0600</pubDate>
+      <pubDate>Mon, 05 Mar 2012 22:32:45 +0000</pubDate>
       <link>http://mwop.net/blog/zf2-beta3.html</link>
       <guid>http://mwop.net/blog/zf2-beta3.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -162,7 +194,7 @@
     </item>
     <item>
       <title>ZF2 Modules You Can Use Today</title>
-      <pubDate>Wed, 08 Feb 2012 10:31:47 -0600</pubDate>
+      <pubDate>Wed, 08 Feb 2012 16:31:47 +0000</pubDate>
       <link>http://mwop.net/blog/zf2-modules-you-can-use-today.html</link>
       <guid>http://mwop.net/blog/zf2-modules-you-can-use-today.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -178,7 +210,7 @@
     </item>
     <item>
       <title>Why Conventions Matter</title>
-      <pubDate>Wed, 11 Jan 2012 21:58:28 -0600</pubDate>
+      <pubDate>Thu, 12 Jan 2012 03:58:28 +0000</pubDate>
       <link>http://mwop.net/blog/why-conventions-matter.html</link>
       <guid>http://mwop.net/blog/why-conventions-matter.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -222,7 +254,7 @@
     </item>
     <item>
       <title>Getting started writing ZF2 modules</title>
-      <pubDate>Sat, 12 Nov 2011 12:02:42 -0600</pubDate>
+      <pubDate>Sat, 12 Nov 2011 18:02:42 +0000</pubDate>
       <link>http://mwop.net/blog/267-Getting-started-writing-ZF2-modules.html</link>
       <guid>http://mwop.net/blog/267-Getting-started-writing-ZF2-modules.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -300,7 +332,7 @@ So, let's dive into ZF2 modules!
     </item>
     <item>
       <title>Using the ZF2 EventManager</title>
-      <pubDate>Thu, 06 Oct 2011 14:58:39 -0500</pubDate>
+      <pubDate>Thu, 06 Oct 2011 19:58:39 +0000</pubDate>
       <link>http://mwop.net/blog/266-Using-the-ZF2-EventManager.html</link>
       <guid>http://mwop.net/blog/266-Using-the-ZF2-EventManager.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -322,7 +354,7 @@ running with it.
     </item>
     <item>
       <title>Backported ZF2 Autoloaders</title>
-      <pubDate>Mon, 23 May 2011 10:28:35 -0500</pubDate>
+      <pubDate>Mon, 23 May 2011 15:28:35 +0000</pubDate>
       <link>http://mwop.net/blog/262-Backported-ZF2-Autoloaders.html</link>
       <guid>http://mwop.net/blog/262-Backported-ZF2-Autoloaders.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -340,38 +372,6 @@ Interestingly, I've had quite some number of folks ask if they can use the new
 autoloaders in their Zend Framework 1 development. The short answer is "yes,"
 assuming you're running PHP 5.3 already. If not, however, until today, the
 answer has been "no."
-</p>]]></content:encoded>
-      <slash:comments>0</slash:comments>
-    </item>
-    <item>
-      <title>Introducing the ZF2 Plugin Broker</title>
-      <pubDate>Thu, 11 Nov 2010 14:46:00 -0600</pubDate>
-      <link>http://mwop.net/blog/248-Introducing-the-ZF2-Plugin-Broker.html</link>
-      <guid>http://mwop.net/blog/248-Introducing-the-ZF2-Plugin-Broker.html</guid>
-      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
-      <dc:creator>Matthew Weier O'Phinney</dc:creator>
-      <content:encoded><![CDATA[<p>
-In Zend Framework 2.0, we're refactoring in a number of areas in order to
-increase the consistency of the framework. One area we identified early is how
-plugins are loaded.
-</p>
-
-<p>
-The word "plugins" in Zend Framework applies to a number of items:
-</p>
-
-<ul>
-    <li> Helpers (view helpers, action helpers)</li>
-    <li> Application resources</li>
-    <li> Filters and validators (particularly when applied to Zend_Filter_Input and Zend_Form)</li>
-    <li> Adapters</li>
-</ul>
-
-<p>
-In practically every case, we use a "short name" to name the plugin, in order
-to allow loading it dynamically. This allows more concise code, as well as the
-ability to configure the code in order to allow specifying alternate
-implementations. 
 </p>]]></content:encoded>
       <slash:comments>0</slash:comments>
     </item>

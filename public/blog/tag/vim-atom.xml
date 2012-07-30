@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title type="text">Tag: vim :: phly, boy, phly</title>
-  <updated>2010-12-17T02:50:53-06:00</updated>
-  <generator uri="http://framework.zend.com" version="2.0.0beta4">Zend_Feed_Writer</generator>
+  <updated>2010-12-17T08:50:53+0000</updated>
+  <generator uri="http://framework.zend.com" version="2.0.0beta5">Zend_Feed_Writer</generator>
   <link rel="alternate" type="text/html" href="http://mwop.net/blog/tag/vim.html"/>
   <link rel="self" type="application/atom+xml" href="http://mwop.net/blog/tag/vim-atom.xml"/>
   <id>http://mwop.net/blog/tag/vim.html</id>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <title type="html"><![CDATA[Vim Toolbox, 2010 Edition]]></title>
-    <published>2010-12-15T06:49:00-06:00</published>
-    <updated>2010-12-17T02:50:53-06:00</updated>
+    <published>2010-12-15T12:49:00+0000</published>
+    <updated>2010-12-17T08:50:53+0000</updated>
     <link rel="alternate" type="text/html" href="http://mwop.net/blog/249-Vim-Toolbox,-2010-Edition.html"/>
     <id>http://mwop.net/blog/249-Vim-Toolbox,-2010-Edition.html</id>
     <author>
@@ -52,8 +52,8 @@ introduced to a number of new tools via Twitter.</xhtml:li>
   </entry>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <title type="html"><![CDATA[Vimgrep and Vim Project]]></title>
-    <published>2008-10-21T06:36:49-05:00</published>
-    <updated>2008-10-22T20:55:03-05:00</updated>
+    <published>2008-10-21T11:36:49+0000</published>
+    <updated>2008-10-23T01:55:03+0000</updated>
     <link rel="alternate" type="text/html" href="http://mwop.net/blog/194-Vimgrep-and-Vim-Project.html"/>
     <id>http://mwop.net/blog/194-Vimgrep-and-Vim-Project.html</id>
     <author>
@@ -77,8 +77,8 @@ standard vim distribution.</xhtml:p>
   </entry>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <title type="html"><![CDATA[Vim Productivity Tips for PHP Developers]]></title>
-    <published>2008-03-22T09:41:26-05:00</published>
-    <updated>2008-03-25T10:39:35-05:00</updated>
+    <published>2008-03-22T14:41:26+0000</published>
+    <updated>2008-03-25T15:39:35+0000</updated>
     <link rel="alternate" type="text/html" href="http://mwop.net/blog/164-Vim-Productivity-Tips-for-PHP-Developers.html"/>
     <id>http://mwop.net/blog/164-Vim-Productivity-Tips-for-PHP-Developers.html</id>
     <author>
@@ -97,8 +97,8 @@ to using Vim with PHP.</xhtml:p>
   </entry>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <title type="html"><![CDATA[exuberant ctags with PHP in Vim]]></title>
-    <published>2007-01-31T13:20:00-06:00</published>
-    <updated>2010-03-25T15:18:59-05:00</updated>
+    <published>2007-01-31T19:20:00+0000</published>
+    <updated>2010-03-25T20:18:59+0000</updated>
     <link rel="alternate" type="text/html" href="http://mwop.net/blog/134-exuberant-ctags-with-PHP-in-Vim.html"/>
     <id>http://mwop.net/blog/134-exuberant-ctags-with-PHP-in-Vim.html</id>
     <author>

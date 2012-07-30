@@ -20,7 +20,7 @@
 <link href="/blog/tag/php-rss.xml" rel="alternate" type="application/rss+xml" title="Tag: php RSS Feed" >
     <script type="text/javascript">
     //<!--
-dojoConfig={
+    dojoConfig={
     has: {
         "dojo-firebug": false
     },
@@ -39,11 +39,11 @@ dojoConfig={
 <script type="text/javascript" src="/js/dojo/dojo.js"></script>
 <script type="text/javascript">
     //<!--
-require(["Application/blog"]);    //-->
+    require(["Application/blog"]);    //-->
 </script>
 <script type="text/javascript">
     //<!--
-require(["Application/scroll"], function(scroll) {});    //-->
+    require(["Application/scroll"], function(scroll) {});    //-->
 </script>
     <script src="https://www.google.com/jsapi?ABQIAAAAGybdRRvLZwVUcF0dE3oVdBTO-MlgA7VGJpGqyqTOeDXlNzyZQxTGq17s-iAB0m0vwqLQ_A2dHhTg2Q"></script>
 <script type="text/javascript">
@@ -90,6 +90,34 @@ require(["Application/scroll"], function(scroll) {});    //-->
 <section class="eleven columns alpha blog">
     <h2>Tag: php</h2>
 
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2007-09-26 09:25:09</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
+<a href="/blog/tag/zend+framework.html">zend framework</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/144-Zend-Framework-MVC-Webinar-posted.html">Zend Framework MVC Webinar posted</a></h4>
+
+    <div class="entry body"><p>
+    Last Wednesday, I presented a webinar for Zend entitled "MVC applications
+    with Zend Framework". We had more than 50 attendees, most of whom stayed on
+    the whole time. For those of you who attended, thanks for the great
+    questions and comments. 
+</p>
+<p>
+    If you would like to view the webinar, download the slides, or download the
+    example code (a hello world app), visit the <a
+        href="http://www.zend.com/webinar">Zend.com Webinar page</a> and look
+    for the presentation; as of today, it's the first one on the list, but that
+    will change as more webinars are presented.
+</p></div>
+
+    <p><a href="/blog/144-Zend-Framework-MVC-Webinar-posted.html">Continue reading...</a></p>
+</section>
+
+</div>
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
     <p class="date">2007-09-14 10:27:56</p>
@@ -724,47 +752,6 @@ function utf8Urldecode($value)
 </p></div>
 
     <p><a href="/blog/133-PHP-decoding-of-Javascript-encodeURIComponent-values.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2007-01-18 15:39:00</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/131-Overloading-arrays-in-PHP-5.2.0.html">Overloading arrays in PHP 5.2.0</a></h4>
-
-    <div class="entry body"><p>
-    <b>Update:</b> I ran into issues with the ArrayObject solution, as there was
-    a bug in PHP 5.2.0 (now fixed) with its interaction with empty() and isset()
-    when used with the ARRAY_AS_PROPS flag. I tried a number of fixes, but
-    eventually my friend <a href="http://mikenaberezny.com/">Mike</a> pointed
-    out something I'd missed: as of PHP 5.1, setting undefined public properties
-    no longer raises an E_STRICT notice. Knowing this, you can now do the
-    following without raising any errors:
-</p>
-<div class="example"><pre><code lang="php">
-class Foo
-{
-    public function __set($key, $value)
-    {
-        $this-&gt;$key = $value;
-    }
-}
-
-$foo        = new Foo();
-$foo-&gt;bar   = array();
-$foo-&gt;bar[] = 42;
-</code></pre></div>
-<p>
-    This is a much simpler solution, performs better, and solves all the issues
-    I was presented. Thanks, Mike!
-</p>
-<hr /></div>
-
-    <p><a href="/blog/131-Overloading-arrays-in-PHP-5.2.0.html">Continue reading...</a></p>
 </section>
 
 </div>

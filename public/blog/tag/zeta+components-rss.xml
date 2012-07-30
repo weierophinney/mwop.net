@@ -3,13 +3,13 @@
   <channel>
     <title>Tag: zeta components :: phly, boy, phly</title>
     <description>Tag: zeta components :: phly, boy, phly</description>
-    <pubDate>Fri, 14 Jan 2011 07:53:52 -0600</pubDate>
-    <generator>Zend_Feed_Writer 2.0.0beta4 (http://framework.zend.com)</generator>
+    <pubDate>Fri, 14 Jan 2011 13:53:52 +0000</pubDate>
+    <generator>Zend_Feed_Writer 2.0.0beta5 (http://framework.zend.com)</generator>
     <link>http://mwop.net/blog/tag/zeta+components.html</link>
     <atom:link rel="self" type="application/rss+xml" href="http://mwop.net/blog/tag/zeta+components-rss.xml"/>
     <item>
       <title>Aspects, Filters, and Signals, Oh, My!</title>
-      <pubDate>Fri, 14 Jan 2011 07:53:52 -0600</pubDate>
+      <pubDate>Fri, 14 Jan 2011 13:53:52 +0000</pubDate>
       <link>http://mwop.net/blog/251-Aspects,-Filters,-and-Signals,-Oh,-My!.html</link>
       <guid>http://mwop.net/blog/251-Aspects,-Filters,-and-Signals,-Oh,-My!.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>

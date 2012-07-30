@@ -3,13 +3,13 @@
   <channel>
     <title>Tag: personal :: phly, boy, phly</title>
     <description>Tag: personal :: phly, boy, phly</description>
-    <pubDate>Sun, 04 Jan 2009 15:31:52 -0600</pubDate>
-    <generator>Zend_Feed_Writer 2.0.0beta4 (http://framework.zend.com)</generator>
+    <pubDate>Sun, 04 Jan 2009 21:31:52 +0000</pubDate>
+    <generator>Zend_Feed_Writer 2.0.0beta5 (http://framework.zend.com)</generator>
     <link>http://mwop.net/blog/tag/personal.html</link>
     <atom:link rel="self" type="application/rss+xml" href="http://mwop.net/blog/tag/personal-rss.xml"/>
     <item>
       <title>Seven Things - Tagged by Keith Casey</title>
-      <pubDate>Sun, 04 Jan 2009 15:31:52 -0600</pubDate>
+      <pubDate>Sun, 04 Jan 2009 21:31:52 +0000</pubDate>
       <link>http://mwop.net/blog/204-Seven-Things-Tagged-by-Keith-Casey.html</link>
       <guid>http://mwop.net/blog/204-Seven-Things-Tagged-by-Keith-Casey.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -28,7 +28,7 @@
     </item>
     <item>
       <title>2007 Retrospective</title>
-      <pubDate>Thu, 03 Jan 2008 05:22:35 -0600</pubDate>
+      <pubDate>Thu, 03 Jan 2008 11:22:35 +0000</pubDate>
       <link>http://mwop.net/blog/154-2007-Retrospective.html</link>
       <guid>http://mwop.net/blog/154-2007-Retrospective.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -64,7 +64,7 @@
     </item>
     <item>
       <title>I is a published author!</title>
-      <pubDate>Tue, 06 Nov 2007 11:41:02 -0600</pubDate>
+      <pubDate>Tue, 06 Nov 2007 17:41:02 +0000</pubDate>
       <link>http://mwop.net/blog/149-I-is-a-published-author!.html</link>
       <guid>http://mwop.net/blog/149-I-is-a-published-author!.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -80,7 +80,7 @@
     </item>
     <item>
       <title>Transitions</title>
-      <pubDate>Wed, 21 Sep 2005 14:08:39 -0500</pubDate>
+      <pubDate>Wed, 21 Sep 2005 19:08:39 +0000</pubDate>
       <link>http://mwop.net/blog/94-Transitions.html</link>
       <guid>http://mwop.net/blog/94-Transitions.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -117,7 +117,7 @@
     </item>
     <item>
       <title>ZCE - Results are in!</title>
-      <pubDate>Wed, 29 Jun 2005 04:48:06 -0500</pubDate>
+      <pubDate>Wed, 29 Jun 2005 09:48:06 +0000</pubDate>
       <link>http://mwop.net/blog/80-ZCE-Results-are-in!.html</link>
       <guid>http://mwop.net/blog/80-ZCE-Results-are-in!.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -146,7 +146,7 @@
     </item>
     <item>
       <title>Moving into City Living</title>
-      <pubDate>Sun, 05 Jun 2005 12:01:03 -0500</pubDate>
+      <pubDate>Sun, 05 Jun 2005 17:01:03 +0000</pubDate>
       <link>http://mwop.net/blog/77-Moving-into-City-Living.html</link>
       <guid>http://mwop.net/blog/77-Moving-into-City-Living.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -168,7 +168,7 @@
     </item>
     <item>
       <title>We're having a baby!</title>
-      <pubDate>Sat, 23 Apr 2005 17:12:20 -0500</pubDate>
+      <pubDate>Sat, 23 Apr 2005 22:12:20 +0000</pubDate>
       <link>http://mwop.net/blog/67-Were-having-a-baby!.html</link>
       <guid>http://mwop.net/blog/67-Were-having-a-baby!.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -183,7 +183,7 @@
     </item>
     <item>
       <title>Enter the Matrix</title>
-      <pubDate>Sun, 20 Mar 2005 22:36:19 -0600</pubDate>
+      <pubDate>Mon, 21 Mar 2005 04:36:19 +0000</pubDate>
       <link>http://mwop.net/blog/59-Enter-the-Matrix.html</link>
       <guid>http://mwop.net/blog/59-Enter-the-Matrix.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -278,7 +278,7 @@
     </item>
     <item>
       <title>php|Tropics</title>
-      <pubDate>Sun, 20 Mar 2005 22:13:59 -0600</pubDate>
+      <pubDate>Mon, 21 Mar 2005 04:13:59 +0000</pubDate>
       <link>http://mwop.net/blog/58-phpTropics.html</link>
       <guid>http://mwop.net/blog/58-phpTropics.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -316,7 +316,7 @@
     </item>
     <item>
       <title>New Cgiapp Site</title>
-      <pubDate>Fri, 25 Mar 2005 21:51:18 -0600</pubDate>
+      <pubDate>Sat, 26 Mar 2005 03:51:18 +0000</pubDate>
       <link>http://mwop.net/blog/57-New-Cgiapp-Site.html</link>
       <guid>http://mwop.net/blog/57-New-Cgiapp-Site.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>

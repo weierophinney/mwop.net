@@ -20,7 +20,7 @@
 <link href="/blog-rss.xml" rel="alternate" type="application/rss+xml" title="Blog Entries RSS Feed" >
     <script type="text/javascript">
     //<!--
-dojoConfig={
+    dojoConfig={
     has: {
         "dojo-firebug": false
     },
@@ -39,11 +39,11 @@ dojoConfig={
 <script type="text/javascript" src="/js/dojo/dojo.js"></script>
 <script type="text/javascript">
     //<!--
-require(["Application/blog"]);    //-->
+    require(["Application/blog"]);    //-->
 </script>
 <script type="text/javascript">
     //<!--
-require(["Application/scroll"], function(scroll) {});    //-->
+    require(["Application/scroll"], function(scroll) {});    //-->
 </script>
     <script src="https://www.google.com/jsapi?ABQIAAAAGybdRRvLZwVUcF0dE3oVdBTO-MlgA7VGJpGqyqTOeDXlNzyZQxTGq17s-iAB0m0vwqLQ_A2dHhTg2Q"></script>
 <script type="text/javascript">
@@ -90,6 +90,28 @@ require(["Application/scroll"], function(scroll) {});    //-->
 <section class="eleven columns alpha blog">
     <h2>Blog Entries</h2>
 
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2009-10-23 19:42:00</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
+<a href="/blog/tag/zend+framework.html">zend framework</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/227-Exposing-Service-APIs-via-Zend-Framework.html">Exposing Service APIs via Zend Framework</a></h4>
+
+    <div class="entry body"><p>
+    The hubbub surrounding "Web 2.0" is around sharing data. In the early
+    iterations, the focus was on "mashups" -- consuming existing public APIs in
+    order to mix and match data in unique ways. Now, more often than not, I'm
+    hearing more about <em>exposing</em> services for others to consume. Zend
+    Framework makes this latter trivially easy via its various server classes.
+</p></div>
+
+    <p><a href="/blog/227-Exposing-Service-APIs-via-Zend-Framework.html">Continue reading...</a></p>
+</section>
+
+</div>
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
     <p class="date">2009-10-12 08:30:00</p>
@@ -376,37 +398,6 @@ require(["Application/scroll"], function(scroll) {});    //-->
 </p></div>
 
     <p><a href="/blog/217-Creating-composite-elements.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2009-04-10 00:25:19</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
-<a href="/blog/tag/dpc09.html">dpc09</a><br />
-<a href="/blog/tag/zend+framework.html">zend framework</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/216-Speaking-at-DPC-again%21.html">Speaking at DPC (again!)</a></h4>
-
-    <div class="entry body"><p>
-    I'm thrilled to once again be speaking at the 
-    <a href="http://phpconference.nl">Dutch PHP Conference</a>.
-</p>
-
-<p style="text-align: center">
-    <a href="http://phpconference.nl"><img src="http://dpc.09.s3.amazonaws.com/dpc09_speaker.jpg" /></a>
-</p>
-
-<p>
-    Like last year, I'm giving two sessions; unlike last year, these are going
-    to be more advanced. I noticed last year both in terms of audience
-    participation as well as in speaking with attendees that I'd be able to step
-    it up a notch were I to return.
-</p></div>
-
-    <p><a href="/blog/216-Speaking-at-DPC-again%21.html">Continue reading...</a></p>
 </section>
 
 </div>

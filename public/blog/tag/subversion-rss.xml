@@ -3,13 +3,13 @@
   <channel>
     <title>Tag: subversion :: phly, boy, phly</title>
     <description>Tag: subversion :: phly, boy, phly</description>
-    <pubDate>Tue, 15 Mar 2011 14:34:34 -0500</pubDate>
-    <generator>Zend_Feed_Writer 2.0.0beta4 (http://framework.zend.com)</generator>
+    <pubDate>Tue, 15 Mar 2011 19:34:34 +0000</pubDate>
+    <generator>Zend_Feed_Writer 2.0.0beta5 (http://framework.zend.com)</generator>
     <link>http://mwop.net/blog/tag/subversion.html</link>
     <atom:link rel="self" type="application/rss+xml" href="http://mwop.net/blog/tag/subversion-rss.xml"/>
     <item>
       <title>Git Subtree Merging Guide</title>
-      <pubDate>Tue, 15 Mar 2011 14:34:34 -0500</pubDate>
+      <pubDate>Tue, 15 Mar 2011 19:34:34 +0000</pubDate>
       <link>http://mwop.net/blog/258-Git-Subtree-Merging-Guide.html</link>
       <guid>http://mwop.net/blog/258-Git-Subtree-Merging-Guide.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -76,7 +76,7 @@ then requested if he could post my guide -- which
     </item>
     <item>
       <title>git-svn Tip: don't use core.autocrlf</title>
-      <pubDate>Wed, 24 Sep 2008 11:16:27 -0500</pubDate>
+      <pubDate>Wed, 24 Sep 2008 16:16:27 +0000</pubDate>
       <link>http://mwop.net/blog/191-git-svn-Tip-dont-use-core.autocrlf.html</link>
       <guid>http://mwop.net/blog/191-git-svn-Tip-dont-use-core.autocrlf.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>

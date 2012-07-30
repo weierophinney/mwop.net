@@ -20,7 +20,7 @@
 <link href="/blog-rss.xml" rel="alternate" type="application/rss+xml" title="Blog Entries RSS Feed" >
     <script type="text/javascript">
     //<!--
-dojoConfig={
+    dojoConfig={
     has: {
         "dojo-firebug": false
     },
@@ -39,11 +39,11 @@ dojoConfig={
 <script type="text/javascript" src="/js/dojo/dojo.js"></script>
 <script type="text/javascript">
     //<!--
-require(["Application/blog"]);    //-->
+    require(["Application/blog"]);    //-->
 </script>
 <script type="text/javascript">
     //<!--
-require(["Application/scroll"], function(scroll) {});    //-->
+    require(["Application/scroll"], function(scroll) {});    //-->
 </script>
     <script src="https://www.google.com/jsapi?ABQIAAAAGybdRRvLZwVUcF0dE3oVdBTO-MlgA7VGJpGqyqTOeDXlNzyZQxTGq17s-iAB0m0vwqLQ_A2dHhTg2Q"></script>
 <script type="text/javascript">
@@ -90,6 +90,45 @@ require(["Application/scroll"], function(scroll) {});    //-->
 <section class="eleven columns alpha blog">
     <h2>Blog Entries</h2>
 
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2008-08-29 16:13:06</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
+<a href="/blog/tag/webinar.html">webinar</a><br />
+<a href="/blog/tag/zend+framework.html">zend framework</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/187-ZF%2BDojo-Webinar.html">ZF+Dojo Webinar</a></h4>
+
+    <div class="entry body"><p>
+    I'm giving a <a href="http://www.zend.com/en/company/news/event/webinar-zend-framework-and-dojo-integration">webinar on Zend Framework and Dojo Integration</a> 
+    this coming Wednesday, 3 Sept 2008. 
+</p>
+
+<p>
+    I'm particularly excited about this webinar, as I've been developing a
+    sample pastebin application to show off a number of features; the webinar
+    will feature some screencasts showing the new code in action, and promises
+    to be much more dynamic than my typical "bullet point and code"
+    presentations.
+</p>
+
+<p>
+    I'm also going to show some techniques to use when developing with ZF+Dojo,
+    including how to create custom builds once you're ready to deploy your
+    application (and why you want to do so).
+</p>
+
+<p>
+    <a href="https://zend.webex.com/zend/onstage/g.php?t=a&d=572843054">Register
+    today</a>!
+</p></div>
+
+    <p><a href="/blog/187-ZF%2BDojo-Webinar.html">Continue reading...</a></p>
+</section>
+
+</div>
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
     <p class="date">2008-08-28 11:50:52</p>
@@ -435,45 +474,6 @@ $viewRenderer = HelperBroker::getStaticHelper('viewRenderer');
 </p></div>
 
     <p><a href="/blog/177-ZF-Subversion-Reorganization.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2008-05-21 10:57:00</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
-<a href="/blog/tag/mvc.html">mvc</a><br />
-<a href="/blog/tag/zend+framework.html">zend framework</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/176-Zend-Framework-Dojo-Integration.html">Zend Framework Dojo Integration</a></h4>
-
-    <div class="entry body"><p>
-    I'm pleased to announce that 
-    <a href="http://framework.zend.com/">Zend Framework</a> will be partnering
-    with <a href="http://dojotoolkit.org/">Dojo Toolkit</a> to deliver
-    out-of-the-box Ajax and rich user interfaces for sites developed in Zend
-    Framework.
-</p>
-
-<p>
-    First off, for those ZF users who are using other Javascript toolkits: Zend
-    Framework will continue to be basically JS toolkit agnostic. You will still
-    be able to use whatever toolkit you want with ZF applications. ZF will
-    simply be shipping Dojo so that users have a toolkit by default. Several
-    points of integration have been defined, and my hope is that these can be
-    used as a blueprint for community contributions relating to other javascript
-    frameworks. In the meantime, developers choosing to use Dojo will have a
-    rich set of components and integration points to work with.
-</p>
-
-<p>
-    The integration points we have defined for our initial release are as
-    follows:
-</p></div>
-
-    <p><a href="/blog/176-Zend-Framework-Dojo-Integration.html">Continue reading...</a></p>
 </section>
 
 </div>

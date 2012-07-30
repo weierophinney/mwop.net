@@ -3,13 +3,13 @@
   <channel>
     <title>Tag: rest :: phly, boy, phly</title>
     <description>Tag: rest :: phly, boy, phly</description>
-    <pubDate>Wed, 10 Mar 2010 08:28:22 -0600</pubDate>
-    <generator>Zend_Feed_Writer 2.0.0beta4 (http://framework.zend.com)</generator>
+    <pubDate>Wed, 10 Mar 2010 14:28:22 +0000</pubDate>
+    <generator>Zend_Feed_Writer 2.0.0beta5 (http://framework.zend.com)</generator>
     <link>http://mwop.net/blog/tag/rest.html</link>
     <atom:link rel="self" type="application/rss+xml" href="http://mwop.net/blog/tag/rest-rss.xml"/>
     <item>
       <title>Responding to Different Content Types in RESTful ZF Apps</title>
-      <pubDate>Wed, 10 Mar 2010 08:28:22 -0600</pubDate>
+      <pubDate>Wed, 10 Mar 2010 14:28:22 +0000</pubDate>
       <link>http://mwop.net/blog/233-Responding-to-Different-Content-Types-in-RESTful-ZF-Apps.html</link>
       <guid>http://mwop.net/blog/233-Responding-to-Different-Content-Types-in-RESTful-ZF-Apps.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -41,7 +41,7 @@
     </item>
     <item>
       <title>Building RESTful Services with Zend Framework</title>
-      <pubDate>Wed, 11 Nov 2009 09:38:41 -0600</pubDate>
+      <pubDate>Wed, 11 Nov 2009 15:38:41 +0000</pubDate>
       <link>http://mwop.net/blog/228-Building-RESTful-Services-with-Zend-Framework.html</link>
       <guid>http://mwop.net/blog/228-Building-RESTful-Services-with-Zend-Framework.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>

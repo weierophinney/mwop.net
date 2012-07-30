@@ -3,13 +3,13 @@
   <channel>
     <title>Tag: family :: phly, boy, phly</title>
     <description>Tag: family :: phly, boy, phly</description>
-    <pubDate>Sat, 10 Dec 2005 16:00:15 -0600</pubDate>
-    <generator>Zend_Feed_Writer 2.0.0beta4 (http://framework.zend.com)</generator>
+    <pubDate>Sat, 10 Dec 2005 22:00:15 +0000</pubDate>
+    <generator>Zend_Feed_Writer 2.0.0beta5 (http://framework.zend.com)</generator>
     <link>http://mwop.net/blog/tag/family.html</link>
     <atom:link rel="self" type="application/rss+xml" href="http://mwop.net/blog/tag/family-rss.xml"/>
     <item>
       <title>Name recognition</title>
-      <pubDate>Sat, 10 Dec 2005 16:00:15 -0600</pubDate>
+      <pubDate>Sat, 10 Dec 2005 22:00:15 +0000</pubDate>
       <link>http://mwop.net/blog/102-Name-recognition.html</link>
       <guid>http://mwop.net/blog/102-Name-recognition.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -35,7 +35,7 @@
     </item>
     <item>
       <title>On Safari</title>
-      <pubDate>Sat, 23 Jul 2005 22:16:59 -0500</pubDate>
+      <pubDate>Sun, 24 Jul 2005 03:16:59 +0000</pubDate>
       <link>http://mwop.net/blog/87-On-Safari.html</link>
       <guid>http://mwop.net/blog/87-On-Safari.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -68,7 +68,7 @@
     </item>
     <item>
       <title>&amp;quot;I'm so right&amp;quot;</title>
-      <pubDate>Thu, 14 Jul 2005 15:23:56 -0500</pubDate>
+      <pubDate>Thu, 14 Jul 2005 20:23:56 +0000</pubDate>
       <link>http://mwop.net/blog/86-Im-so-right.html</link>
       <guid>http://mwop.net/blog/86-Im-so-right.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -90,7 +90,7 @@
     </item>
     <item>
       <title>Every little girl has to give up the bink...</title>
-      <pubDate>Sun, 10 Jul 2005 22:31:54 -0500</pubDate>
+      <pubDate>Mon, 11 Jul 2005 03:31:54 +0000</pubDate>
       <link>http://mwop.net/blog/82-Every-little-girl-has-to-give-up-the-bink....html</link>
       <guid>http://mwop.net/blog/82-Every-little-girl-has-to-give-up-the-bink....html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>

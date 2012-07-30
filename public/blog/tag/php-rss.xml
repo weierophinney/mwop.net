@@ -3,13 +3,45 @@
   <channel>
     <title>Tag: php :: phly, boy, phly</title>
     <description>Tag: php :: phly, boy, phly</description>
-    <pubDate>Thu, 05 Jul 2012 15:40:00 -0500</pubDate>
-    <generator>Zend_Feed_Writer 2.0.0beta4 (http://framework.zend.com)</generator>
+    <pubDate>Mon, 30 Jul 2012 20:40:00 +0000</pubDate>
+    <generator>Zend_Feed_Writer 2.0.0beta5 (http://framework.zend.com)</generator>
     <link>http://mwop.net/blog/tag/php.html</link>
     <atom:link rel="self" type="application/rss+xml" href="http://mwop.net/blog/tag/php-rss.xml"/>
     <item>
+      <title>ZF2's New Controller::init()</title>
+      <pubDate>Mon, 30 Jul 2012 20:40:00 +0000</pubDate>
+      <link>http://mwop.net/blog/2012-07-30-the-new-init.html</link>
+      <guid>http://mwop.net/blog/2012-07-30-the-new-init.html</guid>
+      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
+      <dc:creator>Matthew Weier O'Phinney</dc:creator>
+      <content:encoded><![CDATA[<p>
+    In Zend Framework 1, controller's had an <code>init()</code> method, which
+    was called after the controller was instantiated. The reason for it was to
+    encourage developers not to override the constructor, and thus potentially
+    break some of the functionality (as a number of objects were injected via
+    the constructor). <code>init()</code> was useful for doing additional object
+    initialization.
+</p>
+
+<div class="example"><pre><code language="php">
+class MyController extends Zend_Controller_Action
+{
+    public function init()
+    {
+        // do some stuff!
+    }
+}
+</code></pre></div>
+
+<p>
+    But this feature is missing from ZF2; how can we accomplish this sort of
+    pattern?
+</p>]]></content:encoded>
+      <slash:comments>0</slash:comments>
+    </item>
+    <item>
       <title>ZF2 Forms in Beta5</title>
-      <pubDate>Thu, 05 Jul 2012 15:40:00 -0500</pubDate>
+      <pubDate>Thu, 05 Jul 2012 20:40:00 +0000</pubDate>
       <link>http://mwop.net/blog/2012-07-02-zf2-beta5-forms.html</link>
       <guid>http://mwop.net/blog/2012-07-02-zf2-beta5-forms.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -46,7 +78,7 @@
     </item>
     <item>
       <title>On Visibility in OOP</title>
-      <pubDate>Sat, 30 Jun 2012 10:00:00 -0500</pubDate>
+      <pubDate>Sat, 30 Jun 2012 15:00:00 +0000</pubDate>
       <link>http://mwop.net/blog/2012-06-28-oop-visibility.html</link>
       <guid>http://mwop.net/blog/2012-06-28-oop-visibility.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -66,7 +98,7 @@
     </item>
     <item>
       <title>Why Modules?</title>
-      <pubDate>Mon, 30 Apr 2012 16:00:00 -0500</pubDate>
+      <pubDate>Mon, 30 Apr 2012 21:00:00 +0000</pubDate>
       <link>http://mwop.net/blog/2012-04-30-why-modules.html</link>
       <guid>http://mwop.net/blog/2012-04-30-why-modules.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -82,7 +114,7 @@
     </item>
     <item>
       <title>Developing A ZF2 Blog</title>
-      <pubDate>Tue, 03 Apr 2012 21:50:00 -0500</pubDate>
+      <pubDate>Wed, 04 Apr 2012 02:50:00 +0000</pubDate>
       <link>http://mwop.net/blog/2012-05-developing-a-zf2-blog.html</link>
       <guid>http://mwop.net/blog/2012-05-developing-a-zf2-blog.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -167,7 +199,7 @@
     </item>
     <item>
       <title>View Layers, Database Abstraction, Configuration, Oh, My!</title>
-      <pubDate>Mon, 05 Mar 2012 16:32:45 -0600</pubDate>
+      <pubDate>Mon, 05 Mar 2012 22:32:45 +0000</pubDate>
       <link>http://mwop.net/blog/zf2-beta3.html</link>
       <guid>http://mwop.net/blog/zf2-beta3.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -182,7 +214,7 @@
     </item>
     <item>
       <title>ZF2 Modules You Can Use Today</title>
-      <pubDate>Wed, 08 Feb 2012 10:31:47 -0600</pubDate>
+      <pubDate>Wed, 08 Feb 2012 16:31:47 +0000</pubDate>
       <link>http://mwop.net/blog/zf2-modules-you-can-use-today.html</link>
       <guid>http://mwop.net/blog/zf2-modules-you-can-use-today.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -198,7 +230,7 @@
     </item>
     <item>
       <title>Call A Spade A Spade</title>
-      <pubDate>Wed, 18 Jan 2012 15:48:07 -0600</pubDate>
+      <pubDate>Wed, 18 Jan 2012 21:48:07 +0000</pubDate>
       <link>http://mwop.net/blog/call-a-spade-a-spade.html</link>
       <guid>http://mwop.net/blog/call-a-spade-a-spade.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -215,7 +247,7 @@
     </item>
     <item>
       <title>Why Conventions Matter</title>
-      <pubDate>Wed, 11 Jan 2012 21:58:28 -0600</pubDate>
+      <pubDate>Thu, 12 Jan 2012 03:58:28 +0000</pubDate>
       <link>http://mwop.net/blog/why-conventions-matter.html</link>
       <guid>http://mwop.net/blog/why-conventions-matter.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -259,7 +291,7 @@
     </item>
     <item>
       <title>On Error Handling and Closures</title>
-      <pubDate>Fri, 16 Dec 2011 10:26:18 -0600</pubDate>
+      <pubDate>Fri, 16 Dec 2011 16:26:18 +0000</pubDate>
       <link>http://mwop.net/blog/on-error-handling-and-closures.html</link>
       <guid>http://mwop.net/blog/on-error-handling-and-closures.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -286,84 +318,6 @@ if (false === ($fh = @fopen($filename, 'r'))) {
 
 <p>
     Seems straight-forward enough, right? But it's wrong on so many levels.
-</p>]]></content:encoded>
-      <slash:comments>0</slash:comments>
-    </item>
-    <item>
-      <title>Getting started writing ZF2 modules</title>
-      <pubDate>Sat, 12 Nov 2011 12:02:42 -0600</pubDate>
-      <link>http://mwop.net/blog/267-Getting-started-writing-ZF2-modules.html</link>
-      <guid>http://mwop.net/blog/267-Getting-started-writing-ZF2-modules.html</guid>
-      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
-      <dc:creator>Matthew Weier O'Phinney</dc:creator>
-      <content:encoded><![CDATA[<p>
-During <a href="http://zendcon.com/">ZendCon</a> this year, we <a href="http://framework.zend.com/zf2/blog/entry/Zend-Framework-2-0-0beta1-Released">released 2.0.0beta1</a> of <a href="http://framework.zend.com">Zend Framework</a>.
-The key story in the release is the creation of a new MVC layer, and to sweeten
-the story, the addition of a modular application architecture.
-</p>
-
-<p>
-"Modular? What's that mean?" For ZF2, "modular" means that your application is
-built of one or more "modules". In a lexicon agreed upon during our IRC
-meetings, a module is a collection of code and other files that solves a
-specific atomic problem of the application or website. 
-</p>
-
-<p>
-As an example, consider a typical corporate website in a technical arena. You
-might have:
-</p>
-
-<ul>
-<li>
-A home page
-</li>
-<li>
-Product and other marketing pages
-</li>
-<li>
-Some forums
-</li>
-<li>
-A corporate blog
-</li>
-<li>
-A knowledge base/FAQ area
-</li>
-<li>
-Contact forms
-</li>
-</ul>
-
-<p>
-These can be divided into discrete modules:
-</p>
-
-<ul>
-<li>
-A "pages" modules for the home page, product, and marketing pages
-</li>
-<li>
-A "forum" module
-</li>
-<li>
-A "blog" module
-</li>
-<li>
-An "faq" or "kb" module
-</li>
-<li>
-A "contact" module
-</li>
-</ul>
-
-<p>
-Furthermore, if these are developed well and discretely, they can be <em>re-used</em>
-between different applications!
-</p>
-
-<p>
-So, let's dive into ZF2 modules!
 </p>]]></content:encoded>
       <slash:comments>0</slash:comments>
     </item>

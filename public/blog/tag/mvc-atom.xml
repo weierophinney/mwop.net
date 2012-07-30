@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title type="text">Tag: mvc :: phly, boy, phly</title>
-  <updated>2009-01-05T10:51:07-06:00</updated>
-  <generator uri="http://framework.zend.com" version="2.0.0beta4">Zend_Feed_Writer</generator>
+  <updated>2009-01-05T16:51:07+0000</updated>
+  <generator uri="http://framework.zend.com" version="2.0.0beta5">Zend_Feed_Writer</generator>
   <link rel="alternate" type="text/html" href="http://mwop.net/blog/tag/mvc.html"/>
   <link rel="self" type="application/atom+xml" href="http://mwop.net/blog/tag/mvc-atom.xml"/>
   <id>http://mwop.net/blog/tag/mvc.html</id>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <title type="html"><![CDATA[Model Infrastructure]]></title>
-    <published>2008-12-30T06:35:01-06:00</published>
-    <updated>2009-01-05T10:51:07-06:00</updated>
+    <published>2008-12-30T12:35:01+0000</published>
+    <updated>2009-01-05T16:51:07+0000</updated>
     <link rel="alternate" type="text/html" href="http://mwop.net/blog/202-Model-Infrastructure.html"/>
     <id>http://mwop.net/blog/202-Model-Infrastructure.html</id>
     <author>
@@ -36,8 +36,8 @@ a single class is typically too simplistic.</xhtml:p>
   </entry>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <title type="html"><![CDATA[Setting up your Zend_Test test suites]]></title>
-    <published>2008-09-11T14:00:00-05:00</published>
-    <updated>2008-09-13T08:37:40-05:00</updated>
+    <published>2008-09-11T19:00:00+0000</published>
+    <updated>2008-09-13T13:37:40+0000</updated>
     <link rel="alternate" type="text/html" href="http://mwop.net/blog/190-Setting-up-your-Zend_Test-test-suites.html"/>
     <id>http://mwop.net/blog/190-Setting-up-your-Zend_Test-test-suites.html</id>
     <author>
@@ -55,8 +55,8 @@ and a little experimenting on my one, I can answer that now.</xhtml:p>
   </entry>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <title type="html"><![CDATA[Testing Zend Framework MVC Applications]]></title>
-    <published>2008-06-30T11:00:00-05:00</published>
-    <updated>2008-07-03T03:47:17-05:00</updated>
+    <published>2008-06-30T16:00:00+0000</published>
+    <updated>2008-07-03T08:47:17+0000</updated>
     <link rel="alternate" type="text/html" href="http://mwop.net/blog/182-Testing-Zend-Framework-MVC-Applications.html"/>
     <id>http://mwop.net/blog/182-Testing-Zend-Framework-MVC-Applications.html</id>
     <author>
@@ -99,8 +99,8 @@ objects.</xhtml:li>
   </entry>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <title type="html"><![CDATA[Zend Framework Dojo Integration]]></title>
-    <published>2008-05-21T09:57:00-05:00</published>
-    <updated>2008-05-25T11:40:37-05:00</updated>
+    <published>2008-05-21T14:57:00+0000</published>
+    <updated>2008-05-25T16:40:37+0000</updated>
     <link rel="alternate" type="text/html" href="http://mwop.net/blog/176-Zend-Framework-Dojo-Integration.html"/>
     <id>http://mwop.net/blog/176-Zend-Framework-Dojo-Integration.html</id>
     <author>
@@ -129,8 +129,8 @@ are as follows:</xhtml:p>
   </entry>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <title type="html"><![CDATA[2007 Retrospective]]></title>
-    <published>2008-01-01T15:49:26-06:00</published>
-    <updated>2008-01-03T05:22:35-06:00</updated>
+    <published>2008-01-01T21:49:26+0000</published>
+    <updated>2008-01-03T11:22:35+0000</updated>
     <link rel="alternate" type="text/html" href="http://mwop.net/blog/154-2007-Retrospective.html"/>
     <id>http://mwop.net/blog/154-2007-Retrospective.html</id>
     <author>

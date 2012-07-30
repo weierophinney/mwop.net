@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title type="text">Tag: personal :: phly, boy, phly</title>
-  <updated>2009-01-04T15:31:52-06:00</updated>
-  <generator uri="http://framework.zend.com" version="2.0.0beta4">Zend_Feed_Writer</generator>
+  <updated>2009-01-04T21:31:52+0000</updated>
+  <generator uri="http://framework.zend.com" version="2.0.0beta5">Zend_Feed_Writer</generator>
   <link rel="alternate" type="text/html" href="http://mwop.net/blog/tag/personal.html"/>
   <link rel="self" type="application/atom+xml" href="http://mwop.net/blog/tag/personal-atom.xml"/>
   <id>http://mwop.net/blog/tag/personal.html</id>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <title type="html"><![CDATA[Seven Things - Tagged by Keith Casey]]></title>
-    <published>2009-01-02T09:44:54-06:00</published>
-    <updated>2009-01-04T15:31:52-06:00</updated>
+    <published>2009-01-02T15:44:54+0000</published>
+    <updated>2009-01-04T21:31:52+0000</updated>
     <link rel="alternate" type="text/html" href="http://mwop.net/blog/204-Seven-Things-Tagged-by-Keith-Casey.html"/>
     <id>http://mwop.net/blog/204-Seven-Things-Tagged-by-Keith-Casey.html</id>
     <author>
@@ -28,8 +28,8 @@ me...</xhtml:p>
   </entry>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <title type="html"><![CDATA[2007 Retrospective]]></title>
-    <published>2008-01-01T15:49:26-06:00</published>
-    <updated>2008-01-03T05:22:35-06:00</updated>
+    <published>2008-01-01T21:49:26+0000</published>
+    <updated>2008-01-03T11:22:35+0000</updated>
     <link rel="alternate" type="text/html" href="http://mwop.net/blog/154-2007-Retrospective.html"/>
     <id>http://mwop.net/blog/154-2007-Retrospective.html</id>
     <author>
@@ -64,8 +64,8 @@ presentations.</xhtml:li>
   </entry>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <title type="html"><![CDATA[I is a published author!]]></title>
-    <published>2007-11-06T11:37:33-06:00</published>
-    <updated>2007-11-06T11:41:02-06:00</updated>
+    <published>2007-11-06T17:37:33+0000</published>
+    <updated>2007-11-06T17:41:02+0000</updated>
     <link rel="alternate" type="text/html" href="http://mwop.net/blog/149-I-is-a-published-author!.html"/>
     <id>http://mwop.net/blog/149-I-is-a-published-author!.html</id>
     <author>
@@ -85,8 +85,8 @@ published!</xhtml:p>
   </entry>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <title type="html"><![CDATA[Transitions]]></title>
-    <published>2005-09-20T23:58:32-05:00</published>
-    <updated>2005-09-21T14:08:39-05:00</updated>
+    <published>2005-09-21T04:58:32+0000</published>
+    <updated>2005-09-21T19:08:39+0000</updated>
     <link rel="alternate" type="text/html" href="http://mwop.net/blog/94-Transitions.html"/>
     <id>http://mwop.net/blog/94-Transitions.html</id>
     <author>
@@ -122,8 +122,8 @@ many good things to come.</xhtml:p>
   </entry>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <title type="html"><![CDATA[ZCE - Results are in!]]></title>
-    <published>2005-06-28T10:33:00-05:00</published>
-    <updated>2005-06-29T04:48:06-05:00</updated>
+    <published>2005-06-28T15:33:00+0000</published>
+    <updated>2005-06-29T09:48:06+0000</updated>
     <link rel="alternate" type="text/html" href="http://mwop.net/blog/80-ZCE-Results-are-in!.html"/>
     <id>http://mwop.net/blog/80-ZCE-Results-are-in!.html</id>
     <author>
@@ -148,8 +148,8 @@ Cancun. Hopefully next time I can take you along!</xhtml:p>
   </entry>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <title type="html"><![CDATA[Moving into City Living]]></title>
-    <published>2005-06-05T12:00:00-05:00</published>
-    <updated>2005-06-05T12:01:03-05:00</updated>
+    <published>2005-06-05T17:00:00+0000</published>
+    <updated>2005-06-05T17:01:03+0000</updated>
     <link rel="alternate" type="text/html" href="http://mwop.net/blog/77-Moving-into-City-Living.html"/>
     <id>http://mwop.net/blog/77-Moving-into-City-Living.html</id>
     <author>
@@ -171,8 +171,8 @@ interstate spur.</xhtml:p>
   </entry>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <title type="html"><![CDATA[We're having a baby!]]></title>
-    <published>2005-04-23T17:01:52-05:00</published>
-    <updated>2005-04-23T17:12:20-05:00</updated>
+    <published>2005-04-23T22:01:52+0000</published>
+    <updated>2005-04-23T22:12:20+0000</updated>
     <link rel="alternate" type="text/html" href="http://mwop.net/blog/67-Were-having-a-baby!.html"/>
     <id>http://mwop.net/blog/67-Were-having-a-baby!.html</id>
     <author>
@@ -190,8 +190,8 @@ we would go ahead and find out the gender... and....</xhtml:p>
   </entry>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <title type="html"><![CDATA[Enter the Matrix]]></title>
-    <published>2005-03-20T22:33:41-06:00</published>
-    <updated>2005-03-20T22:36:19-06:00</updated>
+    <published>2005-03-21T04:33:41+0000</published>
+    <updated>2005-03-21T04:36:19+0000</updated>
     <link rel="alternate" type="text/html" href="http://mwop.net/blog/59-Enter-the-Matrix.html"/>
     <id>http://mwop.net/blog/59-Enter-the-Matrix.html</id>
     <author>
@@ -271,8 +271,8 @@ update the year-old photos on our site... :-)</xhtml:p>
   </entry>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <title type="html"><![CDATA[php|Tropics]]></title>
-    <published>2005-03-20T22:13:46-06:00</published>
-    <updated>2005-03-20T22:13:59-06:00</updated>
+    <published>2005-03-21T04:13:46+0000</published>
+    <updated>2005-03-21T04:13:59+0000</updated>
     <link rel="alternate" type="text/html" href="http://mwop.net/blog/58-phpTropics.html"/>
     <id>http://mwop.net/blog/58-phpTropics.html</id>
     <author>
@@ -309,8 +309,8 @@ meeting other PHP junkies!</xhtml:p>
   </entry>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <title type="html"><![CDATA[New Cgiapp Site]]></title>
-    <published>2005-02-19T13:38:08-06:00</published>
-    <updated>2005-03-25T21:51:18-06:00</updated>
+    <published>2005-02-19T19:38:08+0000</published>
+    <updated>2005-03-26T03:51:18+0000</updated>
     <link rel="alternate" type="text/html" href="http://mwop.net/blog/57-New-Cgiapp-Site.html"/>
     <id>http://mwop.net/blog/57-New-Cgiapp-Site.html</id>
     <author>

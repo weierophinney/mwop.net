@@ -3,13 +3,13 @@
   <channel>
     <title>Tag: zend server :: phly, boy, phly</title>
     <description>Tag: zend server :: phly, boy, phly</description>
-    <pubDate>Thu, 17 Dec 2009 09:49:20 -0600</pubDate>
-    <generator>Zend_Feed_Writer 2.0.0beta4 (http://framework.zend.com)</generator>
+    <pubDate>Thu, 17 Dec 2009 15:49:20 +0000</pubDate>
+    <generator>Zend_Feed_Writer 2.0.0beta5 (http://framework.zend.com)</generator>
     <link>http://mwop.net/blog/tag/zend+server.html</link>
     <atom:link rel="self" type="application/rss+xml" href="http://mwop.net/blog/tag/zend+server-rss.xml"/>
     <item>
       <title>Real-time ZF Monitoring via Zend Server</title>
-      <pubDate>Thu, 17 Dec 2009 09:49:20 -0600</pubDate>
+      <pubDate>Thu, 17 Dec 2009 15:49:20 +0000</pubDate>
       <link>http://mwop.net/blog/229-Real-time-ZF-Monitoring-via-Zend-Server.html</link>
       <guid>http://mwop.net/blog/229-Real-time-ZF-Monitoring-via-Zend-Server.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>

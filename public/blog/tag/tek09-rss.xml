@@ -3,13 +3,13 @@
   <channel>
     <title>Tag: tek09 :: phly, boy, phly</title>
     <description>Tag: tek09 :: phly, boy, phly</description>
-    <pubDate>Wed, 13 May 2009 10:33:45 -0500</pubDate>
-    <generator>Zend_Feed_Writer 2.0.0beta4 (http://framework.zend.com)</generator>
+    <pubDate>Wed, 13 May 2009 15:33:45 +0000</pubDate>
+    <generator>Zend_Feed_Writer 2.0.0beta5 (http://framework.zend.com)</generator>
     <link>http://mwop.net/blog/tag/tek09.html</link>
     <atom:link rel="self" type="application/rss+xml" href="http://mwop.net/blog/tag/tek09-rss.xml"/>
     <item>
       <title>Speaking at php|tek</title>
-      <pubDate>Wed, 13 May 2009 10:33:45 -0500</pubDate>
+      <pubDate>Wed, 13 May 2009 15:33:45 +0000</pubDate>
       <link>http://mwop.net/blog/219-Speaking-at-phptek.html</link>
       <guid>http://mwop.net/blog/219-Speaking-at-phptek.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>

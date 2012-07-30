@@ -3,13 +3,13 @@
   <channel>
     <title>Tag: fastcgi :: phly, boy, phly</title>
     <description>Tag: fastcgi :: phly, boy, phly</description>
-    <pubDate>Sun, 15 Aug 2010 08:40:29 -0500</pubDate>
-    <generator>Zend_Feed_Writer 2.0.0beta4 (http://framework.zend.com)</generator>
+    <pubDate>Sun, 15 Aug 2010 13:40:29 +0000</pubDate>
+    <generator>Zend_Feed_Writer 2.0.0beta5 (http://framework.zend.com)</generator>
     <link>http://mwop.net/blog/tag/fastcgi.html</link>
     <atom:link rel="self" type="application/rss+xml" href="http://mwop.net/blog/tag/fastcgi-rss.xml"/>
     <item>
       <title>Running mod_php and FastCGI side-by-side</title>
-      <pubDate>Sun, 15 Aug 2010 08:40:29 -0500</pubDate>
+      <pubDate>Sun, 15 Aug 2010 13:40:29 +0000</pubDate>
       <link>http://mwop.net/blog/243-Running-mod_php-and-FastCGI-side-by-side.html</link>
       <guid>http://mwop.net/blog/243-Running-mod_php-and-FastCGI-side-by-side.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>

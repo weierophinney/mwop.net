@@ -3,13 +3,13 @@
   <channel>
     <title>Tag: zendcon09 :: phly, boy, phly</title>
     <description>Tag: zendcon09 :: phly, boy, phly</description>
-    <pubDate>Mon, 12 Oct 2009 13:40:51 -0500</pubDate>
-    <generator>Zend_Feed_Writer 2.0.0beta4 (http://framework.zend.com)</generator>
+    <pubDate>Mon, 12 Oct 2009 18:40:51 +0000</pubDate>
+    <generator>Zend_Feed_Writer 2.0.0beta5 (http://framework.zend.com)</generator>
     <link>http://mwop.net/blog/tag/zendcon09.html</link>
     <atom:link rel="self" type="application/rss+xml" href="http://mwop.net/blog/tag/zendcon09-rss.xml"/>
     <item>
       <title>Speaking at ZendCon 2009</title>
-      <pubDate>Mon, 12 Oct 2009 13:40:51 -0500</pubDate>
+      <pubDate>Mon, 12 Oct 2009 18:40:51 +0000</pubDate>
       <link>http://mwop.net/blog/226-Speaking-at-ZendCon-2009.html</link>
       <guid>http://mwop.net/blog/226-Speaking-at-ZendCon-2009.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -24,7 +24,7 @@
     </item>
     <item>
       <title>Why UnCons are Important</title>
-      <pubDate>Wed, 07 Oct 2009 09:53:07 -0500</pubDate>
+      <pubDate>Wed, 07 Oct 2009 14:53:07 +0000</pubDate>
       <link>http://mwop.net/blog/225-Why-UnCons-are-Important.html</link>
       <guid>http://mwop.net/blog/225-Why-UnCons-are-Important.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>

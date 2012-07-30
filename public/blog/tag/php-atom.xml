@@ -1,15 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title type="text">Tag: php :: phly, boy, phly</title>
-  <updated>2012-07-05T15:40:00-05:00</updated>
-  <generator uri="http://framework.zend.com" version="2.0.0beta4">Zend_Feed_Writer</generator>
+  <updated>2012-07-30T20:40:00+0000</updated>
+  <generator uri="http://framework.zend.com" version="2.0.0beta5">Zend_Feed_Writer</generator>
   <link rel="alternate" type="text/html" href="http://mwop.net/blog/tag/php.html"/>
   <link rel="self" type="application/atom+xml" href="http://mwop.net/blog/tag/php-atom.xml"/>
   <id>http://mwop.net/blog/tag/php.html</id>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <title type="html"><![CDATA[ZF2's New Controller::init()]]></title>
+    <published>2012-07-30T20:40:00+0000</published>
+    <updated>2012-07-30T20:40:00+0000</updated>
+    <link rel="alternate" type="text/html" href="http://mwop.net/blog/2012-07-30-the-new-init.html"/>
+    <id>http://mwop.net/blog/2012-07-30-the-new-init.html</id>
+    <author>
+      <name>Matthew Weier O'Phinney</name>
+      <email>me@mwop.net</email>
+      <uri>http://mwop.net</uri>
+    </author>
+    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
+      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>In Zend Framework 1, controller's had an <xhtml:code>init()</xhtml:code>
+method, which was called after the controller was instantiated. The
+reason for it was to encourage developers not to override the
+constructor, and thus potentially break some of the functionality
+(as a number of objects were injected via the constructor).
+<xhtml:code>init()</xhtml:code> was useful for doing additional object
+initialization.</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="php">
+class MyController extends Zend_Controller_Action
+{
+    public function init()
+    {
+        // do some stuff!
+    }
+}
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>But this feature is missing from ZF2; how can we accomplish this
+sort of pattern?</xhtml:p>
+</xhtml:div>
+    </content>
+  </entry>
+  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <title type="html"><![CDATA[ZF2 Forms in Beta5]]></title>
-    <published>2012-07-05T15:40:00-05:00</published>
-    <updated>2012-07-05T15:40:00-05:00</updated>
+    <published>2012-07-05T20:40:00+0000</published>
+    <updated>2012-07-05T20:40:00+0000</updated>
     <link rel="alternate" type="text/html" href="http://mwop.net/blog/2012-07-02-zf2-beta5-forms.html"/>
     <id>http://mwop.net/blog/2012-07-02-zf2-beta5-forms.html</id>
     <author>
@@ -42,8 +78,8 @@ of a forms context, and you've got a rather complex problem.</xhtml:p>
   </entry>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <title type="html"><![CDATA[On Visibility in OOP]]></title>
-    <published>2012-06-28T21:20:00-05:00</published>
-    <updated>2012-06-30T10:00:00-05:00</updated>
+    <published>2012-06-29T02:20:00+0000</published>
+    <updated>2012-06-30T15:00:00+0000</updated>
     <link rel="alternate" type="text/html" href="http://mwop.net/blog/2012-06-28-oop-visibility.html"/>
     <id>http://mwop.net/blog/2012-06-28-oop-visibility.html</id>
     <author>
@@ -64,8 +100,8 @@ visibility.</xhtml:p>
   </entry>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <title type="html"><![CDATA[Why Modules?]]></title>
-    <published>2012-04-30T16:00:00-05:00</published>
-    <updated>2012-04-30T16:00:00-05:00</updated>
+    <published>2012-04-30T21:00:00+0000</published>
+    <updated>2012-04-30T21:00:00+0000</updated>
     <link rel="alternate" type="text/html" href="http://mwop.net/blog/2012-04-30-why-modules.html"/>
     <id>http://mwop.net/blog/2012-04-30-why-modules.html</id>
     <author>
@@ -84,8 +120,8 @@ the ZF2 ecosystem.</xhtml:p>
   </entry>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <title type="html"><![CDATA[Developing A ZF2 Blog]]></title>
-    <published>2012-04-03T08:45:00-05:00</published>
-    <updated>2012-04-03T21:50:00-05:00</updated>
+    <published>2012-04-03T13:45:00+0000</published>
+    <updated>2012-04-04T02:50:00+0000</updated>
     <link rel="alternate" type="text/html" href="http://mwop.net/blog/2012-05-developing-a-zf2-blog.html"/>
     <id>http://mwop.net/blog/2012-05-developing-a-zf2-blog.html</id>
     <author>
@@ -149,8 +185,8 @@ the work I'd done already, and create a static blog generator.</xhtml:p>
   </entry>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <title type="html"><![CDATA[View Layers, Database Abstraction, Configuration, Oh, My!]]></title>
-    <published>2012-03-05T16:32:45-06:00</published>
-    <updated>2012-03-05T16:32:45-06:00</updated>
+    <published>2012-03-05T22:32:45+0000</published>
+    <updated>2012-03-05T22:32:45+0000</updated>
     <link rel="alternate" type="text/html" href="http://mwop.net/blog/zf2-beta3.html"/>
     <id>http://mwop.net/blog/zf2-beta3.html</id>
     <author>
@@ -169,8 +205,8 @@ configuration.</xhtml:p>
   </entry>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <title type="html"><![CDATA[ZF2 Modules You Can Use Today]]></title>
-    <published>2012-02-08T10:31:47-06:00</published>
-    <updated>2012-02-08T10:31:47-06:00</updated>
+    <published>2012-02-08T16:31:47+0000</published>
+    <updated>2012-02-08T16:31:47+0000</updated>
     <link rel="alternate" type="text/html" href="http://mwop.net/blog/zf2-modules-you-can-use-today.html"/>
     <id>http://mwop.net/blog/zf2-modules-you-can-use-today.html</id>
     <author>
@@ -189,8 +225,8 @@ and JavaScript to providing MVC application classes.</xhtml:p>
   </entry>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <title type="html"><![CDATA[Call A Spade A Spade]]></title>
-    <published>2012-01-18T15:48:07-06:00</published>
-    <updated>2012-01-18T15:48:07-06:00</updated>
+    <published>2012-01-18T21:48:07+0000</published>
+    <updated>2012-01-18T21:48:07+0000</updated>
     <link rel="alternate" type="text/html" href="http://mwop.net/blog/call-a-spade-a-spade.html"/>
     <id>http://mwop.net/blog/call-a-spade-a-spade.html</id>
     <author>
@@ -210,8 +246,8 @@ disagree with them, and felt 140 characters is not enough.</xhtml:p>
   </entry>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <title type="html"><![CDATA[Why Conventions Matter]]></title>
-    <published>2012-01-11T21:58:28-06:00</published>
-    <updated>2012-01-11T21:58:28-06:00</updated>
+    <published>2012-01-12T03:58:28+0000</published>
+    <updated>2012-01-12T03:58:28+0000</updated>
     <link rel="alternate" type="text/html" href="http://mwop.net/blog/why-conventions-matter.html"/>
     <id>http://mwop.net/blog/why-conventions-matter.html</id>
     <author>
@@ -247,8 +283,8 @@ solutions.</xhtml:p>
   </entry>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <title type="html"><![CDATA[On Error Handling and Closures]]></title>
-    <published>2011-12-16T10:26:18-06:00</published>
-    <updated>2011-12-16T10:26:18-06:00</updated>
+    <published>2011-12-16T16:26:18+0000</published>
+    <updated>2011-12-16T16:26:18+0000</updated>
     <link rel="alternate" type="text/html" href="http://mwop.net/blog/on-error-handling-and-closures.html"/>
     <id>http://mwop.net/blog/on-error-handling-and-closures.html</id>
     <author>
@@ -275,54 +311,6 @@ if (false === ($fh = @fopen($filename, 'r'))) {
 </xhtml:pre></xhtml:div>
 <xhtml:p>Seems straight-forward enough, right? But it's wrong on so many
 levels.</xhtml:p>
-</xhtml:div>
-    </content>
-  </entry>
-  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
-    <title type="html"><![CDATA[Getting started writing ZF2 modules]]></title>
-    <published>2011-11-07T12:19:00-06:00</published>
-    <updated>2011-11-12T12:02:42-06:00</updated>
-    <link rel="alternate" type="text/html" href="http://mwop.net/blog/267-Getting-started-writing-ZF2-modules.html"/>
-    <id>http://mwop.net/blog/267-Getting-started-writing-ZF2-modules.html</id>
-    <author>
-      <name>Matthew Weier O'Phinney</name>
-      <email>me@mwop.net</email>
-      <uri>http://mwop.net</uri>
-    </author>
-    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
-      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>During <xhtml:a href="http://zendcon.com/">ZendCon</xhtml:a> this year, we
-<xhtml:a href="http://framework.zend.com/zf2/blog/entry/Zend-Framework-2-0-0beta1-Released">
-released 2.0.0beta1</xhtml:a> of <xhtml:a href="http://framework.zend.com">Zend
-Framework</xhtml:a>. The key story in the release is the creation of a
-new MVC layer, and to sweeten the story, the addition of a modular
-application architecture.</xhtml:p>
-<xhtml:p>"Modular? What's that mean?" For ZF2, "modular" means that your
-application is built of one or more "modules". In a lexicon agreed
-upon during our IRC meetings, a module is a collection of code and
-other files that solves a specific atomic problem of the
-application or website.</xhtml:p>
-<xhtml:p>As an example, consider a typical corporate website in a
-technical arena. You might have:</xhtml:p>
-<xhtml:ul>
-<xhtml:li>A home page</xhtml:li>
-<xhtml:li>Product and other marketing pages</xhtml:li>
-<xhtml:li>Some forums</xhtml:li>
-<xhtml:li>A corporate blog</xhtml:li>
-<xhtml:li>A knowledge base/FAQ area</xhtml:li>
-<xhtml:li>Contact forms</xhtml:li>
-</xhtml:ul>
-<xhtml:p>These can be divided into discrete modules:</xhtml:p>
-<xhtml:ul>
-<xhtml:li>A "pages" modules for the home page, product, and marketing
-pages</xhtml:li>
-<xhtml:li>A "forum" module</xhtml:li>
-<xhtml:li>A "blog" module</xhtml:li>
-<xhtml:li>An "faq" or "kb" module</xhtml:li>
-<xhtml:li>A "contact" module</xhtml:li>
-</xhtml:ul>
-<xhtml:p>Furthermore, if these are developed well and discretely, they
-can be <xhtml:em>re-used</xhtml:em> between different applications!</xhtml:p>
-<xhtml:p>So, let's dive into ZF2 modules!</xhtml:p>
 </xhtml:div>
     </content>
   </entry>
