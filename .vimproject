@@ -34,6 +34,7 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
     2012-06-25-GitDeploy.php
     2012-06-28-FinalPrivateVisibility.php
     2012-07-02-Zf2Forms.php
+    2012-07-30-TheNewInit.php
    }
   }
  }
