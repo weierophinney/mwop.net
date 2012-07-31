@@ -16,7 +16,7 @@ $entry->setAuthor($author);
 $entry->setDraft(false);
 $entry->setPublic(true);
 $entry->setCreated(new \DateTime('2012-07-30 15:40', new \DateTimezone('America/Chicago')));
-$entry->setUpdated(new \DateTime('2012-07-30 15:40', new \DateTimezone('America/Chicago')));
+$entry->setUpdated(new \DateTime('2012-07-30 21:00', new \DateTimezone('America/Chicago')));
 $entry->setTimezone('America/Chicago');
 $entry->setTags(array (
   'php',
@@ -95,7 +95,6 @@ class MyController extends AbstractActionController
     criteria is not met.
 </p>
 
-
 <div class="example"><pre><code language="php">
 use Zend\EventManager\EventManagerInterface;
 use Zend\Mvc\Controller\AbstractActionController;
@@ -146,6 +145,86 @@ class MyController extends AbstractActionController
 
 <p>
     <em>Got any ZF2 tips of your own to share? Blog them!</em>
+</p>
+
+<h2>Update: ServiceManager</h2>
+
+<p>
+    A few folks in the comments were remarking that the felt that omitting the
+    <code>init()</code> method makes it harder for developers to identify when
+    and where to do initialization logic, particularly when you may be working
+    with multiple dependencies.
+</p>
+
+<p>
+    Which made me realize there's another place I missed, one that's potentially
+    even better suited to initialization: the <code>ServiceManager</code>.
+</p>
+
+<p>
+    Basically, if you find yourself having complex initialization needs, or
+    many dependencies, you should be building a factory for your controller, and
+    wiring it to the <code>ServiceManager</code>. This can happen in one of
+    several places, but my preference is in my module's <code>Module</code>
+    class, in the <code>getControllerConfig()</code> method. This method returns
+    configuration for the controller manager that instantiates, validate, and
+    injects controllers; it's basically a type of <code>ServiceManager</code>,
+    and, in fact, has access to the main application's instance. I'll take the
+    previous example, and wire it in the context of a factory:
+</p>
+
+<div class="example"><pre><code language="php">
+namespace My
+
+use Zend\EventManager\EventManagerInterface;
+
+class Module
+{
+    /*
+     * Assume some other methods, such as getConfig(), etc.
+     * Also assume that a route will return a controller named
+     * "My\Controller\My" which we assume will reference a controller
+     * within our current namespace.
+     */
+
+    public function getControllerConfig()
+    {
+        return array('factories' => array(
+            'My\Controller\My' => function ($controllers) {
+                $services   = $controllers->getServiceLocator();
+                $controller = new Controller\MyController();
+                $events     = $services->get('EventManager')
+
+                $events->attach('dispatch', function ($e) use ($controller) {
+                    $request = $e->getRequest();
+                    $method  = $request->getMethod();
+                    if (!in_array($method, array('PUT', 'DELETE', 'PATCH'))) {
+                        // nothing to do
+                        return;
+                    }
+
+                    if ($controller->params()->fromRoute('id', false)) {
+                        // nothing to do
+                        return;
+                    }
+
+                    // Missing identifier! Redirect.
+                    return $controller->redirect()->toRoute(/* ... */);
+                }, 100); // execute before executing action logic
+
+                $controller->setEventManager($events);
+                return $controller;
+            };
+        ));
+    }
+}
+</code></pre></div>
+
+<p>
+    The above will create the controller, grab an event manager instance,
+    attach the listener, and then inject the event manager into the controller.
+    If you wanted to do more complex work, you definitely could -- and this
+    would be the place to do it.
 </p>
 EOT;
 $entry->setExtended($extended);
