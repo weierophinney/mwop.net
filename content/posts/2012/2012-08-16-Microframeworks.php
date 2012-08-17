@@ -10,13 +10,13 @@ $author->setUrl("http://mwop.net");
 
 $entry = new EntryEntity();
 
-$entry->setId('2012-08-16-on-microframeworks');
+$entry->setId('2012-08-17-on-microframeworks');
 $entry->setTitle('On Microframeworks');
 $entry->setAuthor($author);
 $entry->setDraft(false);
 $entry->setPublic(true);
-$entry->setCreated(new \DateTime('2012-08-16 15:00', new \DateTimezone('America/Chicago')));
-$entry->setUpdated(new \DateTime('2012-08-16 15:00', new \DateTimezone('America/Chicago')));
+$entry->setCreated(new \DateTime('2012-08-17 11:00', new \DateTimezone('America/Chicago')));
+$entry->setUpdated(new \DateTime('2012-08-17 11:00', new \DateTimezone('America/Chicago')));
 $entry->setTimezone('America/Chicago');
 $entry->setTags(array (
   'php',
@@ -426,21 +426,32 @@ echo $app->urlTo('feed', ['format' => 'atom']);
 </p>
 
 <p>
-    That said, use the right tool for the job. If you foresee expanding 
+    Also, writing a microframework is an excellent coding exercise. It helps a 
+    developer appreciate the complexities of abstraction while limiting the number
+    of moving parts. I highly recommend it as an exercise -- but do it using 
+    available components, and be prepared to throw it away and instead collaborate
+    with others, or adopt something which better solves both the problems you have
+    and the problems you anticipate.
+</p>
+
+<p>
+    In sum: <em>Use the right tool for the job</em>. If you foresee expanding 
     requirements in your project's future, you may want to evaluate a full-stack
     framework,<sup><a href="#f9">9</a></sup> or consider building something 
-    more robust that suits your specific needs.
+    robust that suits your specific project's needs. Use microframeworks where
+    and when they make sense.
 </p>
 
 <h4>Afterword</h4>
 
 <p>
-    While I have not read it, I'm well aware that Fabien Potencier has written
+    I'm well aware that Fabien Potencier has written
     <a href="http://fabien.potencier.org/article/50/create-your-own-framework-on-top-of-the-symfony2-components-part-1">a comprehensive series of posts on creating a microframework using Symfony 2
     components</a>. I deliberately chose not to read them until (a) ZF2 was 
     almost ready to release, and (b) I'd had a chance to formulate my own
-    opinions on microframeworks. They're an excellent read; click the link
-    and see for yourself.
+    opinions on microframeworks. They're an excellent read, however, and show a 
+    nice progression of development from flat PHP to a fully functional 
+    microframework; click the link and see for yourself.
 </p>
 
 <h4>Footnotes</h4>
