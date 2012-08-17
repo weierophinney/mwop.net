@@ -106,7 +106,7 @@ end
 <p>
     I'd argue that the above two points are the defining characteristics of 
     modern microframeworks. Typically, the entry points are given the term
-    &#8220;routing &#8221;, and the second corresponds to &#8220;controllers&8221;.
+    &#8220;routing &#8221;, and the second corresponds to &#8220;controllers&#8221;.
 </p>
 
 <h2>PHP implementations</h2>
@@ -276,7 +276,7 @@ echo $app->urlTo('feed', ['format' => 'atom']);
 
 <p>
     Additionally, though many frameworks offer ways to alter the workflow
-    of the application either via hooks, events, or &#8021;middleware&#8022;<sup><a name="t5" href="#f5">5</a></sup>,
+    of the application either via hooks, events, or &#8220;middleware&#8221;<sup><a name="t5" href="#f5">5</a></sup>,
     most of these are limited in scope, often non-reusable, and often
     non-stackable. As such, comprehensive manipulation of the application
     workflow is out of reach.
@@ -408,7 +408,7 @@ echo $app->urlTo('feed', ['format' => 'atom']);
     This post is not meant as a way to announce a new microframework, however.<sup><a name="t8" href="#f8">8</a></sup>
     The point of the experiment was to prove something: microframeworks are
     trivially easy to write, <em>particularly if you follow the principals of 
-    MicroPHP, and re-use existing code</em>. Just because code comes a framework
+    MicroPHP, and re-use existing code</em>. Just because code comes from a framework
     or a third-party library does not make it suspect or inferior; in fact,
     whenever possible, you should leverage such code so you can focus on 
     <em>writing awesome applications</em>.

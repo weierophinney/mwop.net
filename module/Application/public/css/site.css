@@ -199,3 +199,8 @@ aside.home .block {
     height:auto !important;
     height: 250px;
 }
+
+sup {
+    font-size: 75%;
+    vertical-align: super;
+}
