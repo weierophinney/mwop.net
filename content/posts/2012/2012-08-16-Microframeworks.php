@@ -40,7 +40,7 @@ $body =<<<'EOT'
 
 <p>
     I think there are some really good ideas that have come out of this, and 
-    also a number of questionable practices<sup><a href="#f1">1</a>.
+    also a number of questionable practices<sup><a name="t1" href="#f1">1</a></sup>.
 </p>
 
 <p>
@@ -55,7 +55,7 @@ $extended=<<<'EOT'
 <h2>What is a microframework?</h2>
 
 <p>
-    PHP has had microframeworks for quite some time<sup><a href="#f2">2</a></sup>, 
+    PHP has had microframeworks for quite some time<sup><a name="t2" href="#f2">2</a></sup>, 
     though I only really first saw the term being used around 3 years ago. The 
     &#8220;grand-daddy&#8221; of modern-day microframeworks can actually be 
     traced to Ruby, however, and specifically 
@@ -114,7 +114,7 @@ end
 <p>
     I'd argue one of the earliest microframework implementations, though it 
     wasn't termed as such, was <a href="http://dev.horde.org/routes/">Horde 
-    Routes</a><sup><a href="#f3">3</a></sup> (which was itself inspired by <a 
+    Routes</a><sup><a name="t3" href="#f3">3</a></sup> (which was itself inspired by <a 
     href="http://routes.readthedocs.org/en/latest/index.html">Python Routes</a>, 
     in turn inspired by the Rails routing system, like Sinatra). It follows
     the two principles I outlined above: it allows defining routes (entry points),
@@ -124,7 +124,7 @@ end
 </p>
 
 <p>
-    Since around 2009, I've seen an increasing number of new PHP microframeworks<sup><a href="#f4">4</a></sup>
+    Since around 2009, I've seen an increasing number of new PHP microframeworks<sup><a name="t4" href="#f4">4</a></sup>
     that follow in the steps of Sinatra and Horde. In the various 
     implementations I've looked at, instead of using a DSL, the authors have all
     opted for either a procedural or OOP interface. Starting with PHP 5.3, most
@@ -276,7 +276,7 @@ echo $app->urlTo('feed', ['format' => 'atom']);
 
 <p>
     Additionally, though many frameworks offer ways to alter the workflow
-    of the application either via hooks, events, or &#8021;middleware&#8022;<sup><a href="#f5">5</a></sup>,
+    of the application either via hooks, events, or &#8021;middleware&#8022;<sup><a name="t5" href="#f5">5</a></sup>,
     most of these are limited in scope, often non-reusable, and often
     non-stackable. As such, comprehensive manipulation of the application
     workflow is out of reach.
@@ -330,7 +330,7 @@ echo $app->urlTo('feed', ['format' => 'atom']);
 </p>
 
 <p>
-    In a matter of a few hours, I had written up a complete test suite<sup><a href="#f7">7</a></sup> 
+    In a matter of a few hours, I had written up a complete test suite<sup><a name="t7" href="#f7">7</a></sup> 
     and all code for a microframework, featuring the following (this is 
     basically the testdox output from the unit test suite):
 </p>
@@ -405,7 +405,7 @@ echo $app->urlTo('feed', ['format' => 'atom']);
 </p>
 
 <p>
-    This post is not meant as a way to announce a new microframework, however.<sup><a href="#f8">8</a></sup>
+    This post is not meant as a way to announce a new microframework, however.<sup><a name="t8" href="#f8">8</a></sup>
     The point of the experiment was to prove something: microframeworks are
     trivially easy to write, <em>particularly if you follow the principals of 
     MicroPHP, and re-use existing code</em>. Just because code comes a framework
@@ -437,7 +437,7 @@ echo $app->urlTo('feed', ['format' => 'atom']);
 <p>
     In sum: <em>Use the right tool for the job</em>. If you foresee expanding 
     requirements in your project's future, you may want to evaluate a full-stack
-    framework,<sup><a href="#f9">9</a></sup> or consider building something 
+    framework,<sup><a name="t9" href="#f9">9</a></sup> or consider building something 
     robust that suits your specific project's needs. Use microframeworks where
     and when they make sense.
 </p>
@@ -458,7 +458,7 @@ echo $app->urlTo('feed', ['format' => 'atom']);
 
 <ul>
     <li>
-        <sup><a name="f1">1</a></sup> In particular, I feel that the movement 
+        <sup><a name="f1" href="#t1">1</a></sup> In particular, I feel that the movement 
         (a) disparages components from larger libraries simply because they
         originate from a larger library, and (b) distrust any code that has 
         additional dependencies. This latter I find truly puzzling, as I'd 
@@ -469,25 +469,25 @@ echo $app->urlTo('feed', ['format' => 'atom']);
     </li>
 
     <li>
-        <sup><a name="f2">2</a></sup> In fact, my first foray into MVC in PHP 
+        <sup><a name="f2" href="#t2">2</a></sup> In fact, my first foray into MVC in PHP 
         was writing a clone of Perl's <a href="http://cgi-app.org/">CGI::Application</a>,
         which in many ways is also a microframework.
     </li>
 
     <li>
-        <sup><a name="f3">3</a></sup> Trivia: Both authors of Horde Routes 
+        <sup><a name="f3" href="#t3">3</a></sup> Trivia: Both authors of Horde Routes 
         worked at Zend when I first started at the company, and Mike Naberezny
         wrote the very first lines of code for Zend Framework.
     </li>
 
     <li>
-        <sup><a name="f4">4</a></sup> I swear, you see new ones on Github daily,
+        <sup><a name="f4" href="#t4">4</a></sup> I swear, you see new ones on Github daily,
         and on <a href="http://phpdeveloper.org/">PHP Developer</a> at least
         once a week.
     </li>
 
     <li>
-        <sup><a name="f5">5</a></sup> <a href="http://www.slimframework.com">Slim</a>
+        <sup><a name="f5" href="#t5">5</a></sup> <a href="http://www.slimframework.com">Slim</a>
         has this concept. Basically, any callables placed between the route 
         string and the last callable when defining a route -- i.e., the &#8021;middle&#8022;
         arguments, and thus middleware -- will be executed in order prior to 
@@ -495,24 +495,24 @@ echo $app->urlTo('feed', ['format' => 'atom']);
     </li>
 
     <li>
-        <sup><a name="f6">6</a></sup> <a href="http://www.slimframework.com">Slim</a>
+        <sup><a name="f6" href="#t6">6</a></sup> <a href="http://www.slimframework.com">Slim</a>
         is an outlier here, as it utilizes <a href="http://twig.sensiolabs.org/">Twig</a>
         by default.
     </li>
 
     <li>
-        <sup><a name="f7">7</a></sup> I'm sure that my TDD experiment will warm the
+        <sup><a name="f7" href="#t7">7</a></sup> I'm sure that my TDD experiment will warm the
         soul of <a href="http://www.littlehart.net/atthekeyboard/" alt="Chris 
         Hartjes">the Grumpy Programmer</a>.
     </li>
 
     <li>
-        <sup><a name="f8">8</a></sup> That said, if you want to look at the results, 
+        <sup><a name="f8" href="#t8">8</a></sup> That said, if you want to look at the results, 
         you can <a href="http://github.com/weierophinney/phlyty">find Phlyty on Github</a>.
     </li>
 
     <li>
-        <sup><a name="f9">9</a></sup> As you may guess, I'm biased towards <a 
+        <sup><a name="f9" href="#t9">9</a></sup> As you may guess, I'm biased towards <a 
         href="http://framework.zend.com/">Zend Framework</a>. However, you should always
         carefully evaluate a framework against your project's needs.
     </li>
