@@ -3,10 +3,40 @@
   <channel>
     <title>Tag: php :: phly, boy, phly</title>
     <description>Tag: php :: phly, boy, phly</description>
-    <pubDate>Tue, 31 Jul 2012 02:00:00 +0000</pubDate>
+    <pubDate>Fri, 17 Aug 2012 16:00:00 +0000</pubDate>
     <generator>Zend_Feed_Writer 2.0.0beta5 (http://framework.zend.com)</generator>
     <link>http://mwop.net/blog/tag/php.html</link>
     <atom:link rel="self" type="application/rss+xml" href="http://mwop.net/blog/tag/php-rss.xml"/>
+    <item>
+      <title>On Microframeworks</title>
+      <pubDate>Fri, 17 Aug 2012 16:00:00 +0000</pubDate>
+      <link>http://mwop.net/blog/2012-08-17-on-microframeworks.html</link>
+      <guid>http://mwop.net/blog/2012-08-17-on-microframeworks.html</guid>
+      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
+      <dc:creator>Matthew Weier O'Phinney</dc:creator>
+      <content:encoded><![CDATA[<p>
+    A number of months ago, <a href="http://funkatron.com/">Ed Finkler</a> 
+    started a discussion in the PHP community about &#8220;<a 
+    href="http://microphp.org/">MicroPHP</a>&#8221;; to summarize, the movement
+    is about:
+</p>
+
+<ul>
+    <li>Building small, single-purpose libraries.</li>
+    <li>Using small things that work together to solve larger problems.</li>
+</ul>
+
+<p>
+    I think there are some really good ideas that have come out of this, and 
+    also a number of questionable practices<sup><a name="t1" href="#f1">1</a></sup>.
+</p>
+
+<p>
+    One piece in particular I've focussed on is the concept of so-called 
+    &#8220;microframeworks&#8221;.
+</p>]]></content:encoded>
+      <slash:comments>0</slash:comments>
+    </item>
     <item>
       <title>ZF2's New Controller::init()</title>
       <pubDate>Tue, 31 Jul 2012 02:00:00 +0000</pubDate>
@@ -286,38 +316,6 @@ class MyController extends Zend_Controller_Action
 
 <p>
     Why do I claim this?
-</p>]]></content:encoded>
-      <slash:comments>0</slash:comments>
-    </item>
-    <item>
-      <title>On Error Handling and Closures</title>
-      <pubDate>Fri, 16 Dec 2011 16:26:18 +0000</pubDate>
-      <link>http://mwop.net/blog/on-error-handling-and-closures.html</link>
-      <guid>http://mwop.net/blog/on-error-handling-and-closures.html</guid>
-      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
-      <dc:creator>Matthew Weier O'Phinney</dc:creator>
-      <content:encoded><![CDATA[<p>
-    The error suppression operator in PHP ("@") is often seen as a necessary 
-    evil. Many, many low-level function will return a value indicating an error,
-    but also raise an <code>E_NOTICE</code> or <code>E_WARNING</code> -- things
-    you might be able to recover from, or conditions where you may want to raise
-    an exception.
-</p>
-
-<p>
-    So, at times, you find yourself writing code like this:
-</p>
-
-<div class="example"><pre><code lang="php">
-if (false === ($fh = @fopen($filename, 'r'))) {
-    throw new RuntimeException(sprintf(
-        'Could not open file "%s" to read', $filename
-    ));
-}
-</code></pre></div>
-
-<p>
-    Seems straight-forward enough, right? But it's wrong on so many levels.
 </p>]]></content:encoded>
       <slash:comments>0</slash:comments>
     </item>

@@ -3,10 +3,40 @@
   <channel>
     <title>Tag: zf2 :: phly, boy, phly</title>
     <description>Tag: zf2 :: phly, boy, phly</description>
-    <pubDate>Tue, 31 Jul 2012 02:00:00 +0000</pubDate>
+    <pubDate>Fri, 17 Aug 2012 16:00:00 +0000</pubDate>
     <generator>Zend_Feed_Writer 2.0.0beta5 (http://framework.zend.com)</generator>
     <link>http://mwop.net/blog/tag/zf2.html</link>
     <atom:link rel="self" type="application/rss+xml" href="http://mwop.net/blog/tag/zf2-rss.xml"/>
+    <item>
+      <title>On Microframeworks</title>
+      <pubDate>Fri, 17 Aug 2012 16:00:00 +0000</pubDate>
+      <link>http://mwop.net/blog/2012-08-17-on-microframeworks.html</link>
+      <guid>http://mwop.net/blog/2012-08-17-on-microframeworks.html</guid>
+      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
+      <dc:creator>Matthew Weier O'Phinney</dc:creator>
+      <content:encoded><![CDATA[<p>
+    A number of months ago, <a href="http://funkatron.com/">Ed Finkler</a> 
+    started a discussion in the PHP community about &#8220;<a 
+    href="http://microphp.org/">MicroPHP</a>&#8221;; to summarize, the movement
+    is about:
+</p>
+
+<ul>
+    <li>Building small, single-purpose libraries.</li>
+    <li>Using small things that work together to solve larger problems.</li>
+</ul>
+
+<p>
+    I think there are some really good ideas that have come out of this, and 
+    also a number of questionable practices<sup><a name="t1" href="#f1">1</a></sup>.
+</p>
+
+<p>
+    One piece in particular I've focussed on is the concept of so-called 
+    &#8220;microframeworks&#8221;.
+</p>]]></content:encoded>
+      <slash:comments>0</slash:comments>
+    </item>
     <item>
       <title>ZF2's New Controller::init()</title>
       <pubDate>Tue, 31 Jul 2012 02:00:00 +0000</pubDate>
@@ -349,29 +379,6 @@ I took the research I did for that article, and applied it to what was then a
 "SignalSlot" implementation within Zend Framework 2, and refactored that work
 into a new "EventManager" component. This article is intended to get you up and
 running with it.
-</p>]]></content:encoded>
-      <slash:comments>0</slash:comments>
-    </item>
-    <item>
-      <title>Backported ZF2 Autoloaders</title>
-      <pubDate>Mon, 23 May 2011 15:28:35 +0000</pubDate>
-      <link>http://mwop.net/blog/262-Backported-ZF2-Autoloaders.html</link>
-      <guid>http://mwop.net/blog/262-Backported-ZF2-Autoloaders.html</guid>
-      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
-      <dc:creator>Matthew Weier O'Phinney</dc:creator>
-      <content:encoded><![CDATA[<p>
-In the past six weeks, I've delivered both a webinar and a tutorial on Zend
-Framework 2 development patterns. The first pattern I've explored is our new
-suite of autoloaders, which are aimed at both performance and rapid application
-development -- the latter has always been true, as we've followed PEAR
-standards, but the former has been elusive within the 1.X series.
-</p>
-
-<p>
-Interestingly, I've had quite some number of folks ask if they can use the new
-autoloaders in their Zend Framework 1 development. The short answer is "yes,"
-assuming you're running PHP 5.3 already. If not, however, until today, the
-answer has been "no."
 </p>]]></content:encoded>
       <slash:comments>0</slash:comments>
     </item>

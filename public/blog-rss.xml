@@ -3,10 +3,40 @@
   <channel>
     <title>Blog Entries :: phly, boy, phly</title>
     <description>Blog Entries :: phly, boy, phly</description>
-    <pubDate>Tue, 31 Jul 2012 02:00:00 +0000</pubDate>
+    <pubDate>Fri, 17 Aug 2012 16:00:00 +0000</pubDate>
     <generator>Zend_Feed_Writer 2.0.0beta5 (http://framework.zend.com)</generator>
     <link>http://mwop.net/blog.html</link>
     <atom:link rel="self" type="application/rss+xml" href="http://mwop.net/blog-rss.xml"/>
+    <item>
+      <title>On Microframeworks</title>
+      <pubDate>Fri, 17 Aug 2012 16:00:00 +0000</pubDate>
+      <link>http://mwop.net/blog/2012-08-17-on-microframeworks.html</link>
+      <guid>http://mwop.net/blog/2012-08-17-on-microframeworks.html</guid>
+      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
+      <dc:creator>Matthew Weier O'Phinney</dc:creator>
+      <content:encoded><![CDATA[<p>
+    A number of months ago, <a href="http://funkatron.com/">Ed Finkler</a> 
+    started a discussion in the PHP community about &#8220;<a 
+    href="http://microphp.org/">MicroPHP</a>&#8221;; to summarize, the movement
+    is about:
+</p>
+
+<ul>
+    <li>Building small, single-purpose libraries.</li>
+    <li>Using small things that work together to solve larger problems.</li>
+</ul>
+
+<p>
+    I think there are some really good ideas that have come out of this, and 
+    also a number of questionable practices<sup><a name="t1" href="#f1">1</a></sup>.
+</p>
+
+<p>
+    One piece in particular I've focussed on is the concept of so-called 
+    &#8220;microframeworks&#8221;.
+</p>]]></content:encoded>
+      <slash:comments>0</slash:comments>
+    </item>
     <item>
       <title>ZF2's New Controller::init()</title>
       <pubDate>Tue, 31 Jul 2012 02:00:00 +0000</pubDate>
@@ -263,50 +293,6 @@ class MyController extends Zend_Controller_Action
     some bills before the US legislative bodies called "SOPA" and "PIPA". Over
     the last couple days, I realized exactly why I disagree with them, and 
     felt 140 characters is not enough.
-</p>]]></content:encoded>
-      <slash:comments>0</slash:comments>
-    </item>
-    <item>
-      <title>Why Conventions Matter</title>
-      <pubDate>Thu, 12 Jan 2012 03:58:28 +0000</pubDate>
-      <link>http://mwop.net/blog/why-conventions-matter.html</link>
-      <guid>http://mwop.net/blog/why-conventions-matter.html</guid>
-      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
-      <dc:creator>Matthew Weier O'Phinney</dc:creator>
-      <content:encoded><![CDATA[<p>
-    When I started teaching myself scripting languages, I started with Perl. One
-    Perl motto is <a href="http://en.wikipedia.org/wiki/TMTOWTDI">"TMTOWTDI"</a>
-    -- "There's More Than One Way To Do It," and pronounced "tim-toady." The
-    idea is that there's likely multiple ways to accomplish the very same thing,
-    and the culture of the language encourages finding novel ways to do things.
-</p>
-
-<p>
-    I've seen this principle used everywhere and in just about every programming
-    situation possible, applied to logical operations, naming conventions,
-    formatting, and even project structure.  Everyone has an opinion on these
-    topics, and given free rein to implement as they see fit, it's rare that two
-    developers will come up with the same conventions.
-</p>
-
-<p>
-    TMTOWTDI is an incredibly freeing and egalitarian principle.
-</p>
-
-<p>
-    Over the years, however, my love for TMTOWTDI has diminished some.  Freeing
-    as it is, is also a driving force behind having coding standards and
-    conventions -- because when everyone does it their own way, projects become
-    quickly hard to maintain. Each person finds themselves reformatting code to
-    their own standards, simply so they can read it and follow its flow.
-</p>
-
-<p>
-    Additionally, TMTOWTDI can actually be a foe of simple, elegant solutions.
-</p>
-
-<p>
-    Why do I claim this?
 </p>]]></content:encoded>
       <slash:comments>0</slash:comments>
     </item>

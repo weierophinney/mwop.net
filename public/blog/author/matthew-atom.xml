@@ -1,11 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title type="text">Author: Matthew Weier O'Phinney :: phly, boy, phly</title>
-  <updated>2012-07-31T02:00:00+0000</updated>
+  <updated>2012-08-17T16:00:00+0000</updated>
   <generator uri="http://framework.zend.com" version="2.0.0beta5">Zend_Feed_Writer</generator>
   <link rel="alternate" type="text/html" href="http://mwop.net/blog/author/matthew.html"/>
   <link rel="self" type="application/atom+xml" href="http://mwop.net/blog/author/matthew-atom.xml"/>
   <id>http://mwop.net/blog/author/matthew.html</id>
+  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <title type="html"><![CDATA[On Microframeworks]]></title>
+    <published>2012-08-17T16:00:00+0000</published>
+    <updated>2012-08-17T16:00:00+0000</updated>
+    <link rel="alternate" type="text/html" href="http://mwop.net/blog/2012-08-17-on-microframeworks.html"/>
+    <id>http://mwop.net/blog/2012-08-17-on-microframeworks.html</id>
+    <author>
+      <name>Matthew Weier O'Phinney</name>
+      <email>me@mwop.net</email>
+      <uri>http://mwop.net</uri>
+    </author>
+    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
+      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>A number of months ago, <xhtml:a href="http://funkatron.com/">Ed
+Finkler</xhtml:a> started a discussion in the PHP community about
+“<xhtml:a href="http://microphp.org/">MicroPHP</xhtml:a>”; to summarize, the
+movement is about:</xhtml:p>
+<xhtml:ul>
+<xhtml:li>Building small, single-purpose libraries.</xhtml:li>
+<xhtml:li>Using small things that work together to solve larger
+problems.</xhtml:li>
+</xhtml:ul>
+<xhtml:p>I think there are some really good ideas that have come out of
+this, and also a number of questionable practices<xhtml:sup><xhtml:a name="t1" href="#f1" id="t1">1</xhtml:a></xhtml:sup>.</xhtml:p>
+<xhtml:p>One piece in particular I've focussed on is the concept of
+so-called “microframeworks”.</xhtml:p>
+</xhtml:div>
+    </content>
+  </entry>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <title type="html"><![CDATA[ZF2's New Controller::init()]]></title>
     <published>2012-07-30T20:40:00+0000</published>
@@ -261,43 +289,6 @@ have been treated to a number of tweets and retweets from me about
 some bills before the US legislative bodies called "SOPA" and
 "PIPA". Over the last couple days, I realized exactly why I
 disagree with them, and felt 140 characters is not enough.</xhtml:p>
-</xhtml:div>
-    </content>
-  </entry>
-  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
-    <title type="html"><![CDATA[Why Conventions Matter]]></title>
-    <published>2012-01-12T03:58:28+0000</published>
-    <updated>2012-01-12T03:58:28+0000</updated>
-    <link rel="alternate" type="text/html" href="http://mwop.net/blog/why-conventions-matter.html"/>
-    <id>http://mwop.net/blog/why-conventions-matter.html</id>
-    <author>
-      <name>Matthew Weier O'Phinney</name>
-      <email>me@mwop.net</email>
-      <uri>http://mwop.net</uri>
-    </author>
-    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
-      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>When I started teaching myself scripting languages, I started
-with Perl. One Perl motto is <xhtml:a href="http://en.wikipedia.org/wiki/TMTOWTDI">"TMTOWTDI"</xhtml:a> -- "There's
-More Than One Way To Do It," and pronounced "tim-toady." The idea
-is that there's likely multiple ways to accomplish the very same
-thing, and the culture of the language encourages finding novel
-ways to do things.</xhtml:p>
-<xhtml:p>I've seen this principle used everywhere and in just about every
-programming situation possible, applied to logical operations,
-naming conventions, formatting, and even project structure.
-Everyone has an opinion on these topics, and given free rein to
-implement as they see fit, it's rare that two developers will come
-up with the same conventions.</xhtml:p>
-<xhtml:p>TMTOWTDI is an incredibly freeing and egalitarian principle.</xhtml:p>
-<xhtml:p>Over the years, however, my love for TMTOWTDI has diminished
-some. Freeing as it is, is also a driving force behind having
-coding standards and conventions -- because when everyone does it
-their own way, projects become quickly hard to maintain. Each
-person finds themselves reformatting code to their own standards,
-simply so they can read it and follow its flow.</xhtml:p>
-<xhtml:p>Additionally, TMTOWTDI can actually be a foe of simple, elegant
-solutions.</xhtml:p>
-<xhtml:p>Why do I claim this?</xhtml:p>
 </xhtml:div>
     </content>
   </entry>

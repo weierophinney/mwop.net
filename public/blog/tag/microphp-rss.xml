@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:slash="http://purl.org/rss/1.0/modules/slash/">
+  <channel>
+    <title>Tag: microphp :: phly, boy, phly</title>
+    <description>Tag: microphp :: phly, boy, phly</description>
+    <pubDate>Fri, 17 Aug 2012 16:00:00 +0000</pubDate>
+    <generator>Zend_Feed_Writer 2.0.0beta5 (http://framework.zend.com)</generator>
+    <link>http://mwop.net/blog/tag/microphp.html</link>
+    <atom:link rel="self" type="application/rss+xml" href="http://mwop.net/blog/tag/microphp-rss.xml"/>
+    <item>
+      <title>On Microframeworks</title>
+      <pubDate>Fri, 17 Aug 2012 16:00:00 +0000</pubDate>
+      <link>http://mwop.net/blog/2012-08-17-on-microframeworks.html</link>
+      <guid>http://mwop.net/blog/2012-08-17-on-microframeworks.html</guid>
+      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
+      <dc:creator>Matthew Weier O'Phinney</dc:creator>
+      <content:encoded><![CDATA[<p>
+    A number of months ago, <a href="http://funkatron.com/">Ed Finkler</a> 
+    started a discussion in the PHP community about &#8220;<a 
+    href="http://microphp.org/">MicroPHP</a>&#8221;; to summarize, the movement
+    is about:
+</p>
+
+<ul>
+    <li>Building small, single-purpose libraries.</li>
+    <li>Using small things that work together to solve larger problems.</li>
+</ul>
+
+<p>
+    I think there are some really good ideas that have come out of this, and 
+    also a number of questionable practices<sup><a name="t1" href="#f1">1</a></sup>.
+</p>
+
+<p>
+    One piece in particular I've focussed on is the concept of so-called 
+    &#8220;microframeworks&#8221;.
+</p>]]></content:encoded>
+      <slash:comments>0</slash:comments>
+    </item>
+  </channel>
+</rss>
