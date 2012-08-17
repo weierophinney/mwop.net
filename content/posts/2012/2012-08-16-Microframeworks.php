@@ -489,7 +489,7 @@ echo $app->urlTo('feed', ['format' => 'atom']);
     <li>
         <sup><a name="f5" href="#t5">5</a></sup> <a href="http://www.slimframework.com">Slim</a>
         has this concept. Basically, any callables placed between the route 
-        string and the last callable when defining a route -- i.e., the &#8021;middle&#8022;
+        string and the last callable when defining a route -- i.e., the &#8220;middle&#8221;
         arguments, and thus middleware -- will be executed in order prior to 
         attempting to execute the controller.
     </li>
