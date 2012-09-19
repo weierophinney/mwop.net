@@ -170,7 +170,7 @@ class Module
         }
 
         $controller = $routeMatch->getParam('controller', false);
-        if ($controller != 'Application\Controller\PageController') {
+        if ($controller != 'Application\Controller\Page') {
             return;
         }
 
