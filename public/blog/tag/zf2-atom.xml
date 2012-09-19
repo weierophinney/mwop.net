@@ -1,11 +1,361 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title type="text">Tag: zf2 :: phly, boy, phly</title>
-  <updated>2012-08-17T16:00:00+0000</updated>
-  <generator uri="http://framework.zend.com" version="2.0.0beta5">Zend_Feed_Writer</generator>
+  <updated>2012-09-19T18:10:00+0000</updated>
+  <generator uri="http://framework.zend.com" version="2.0.0">Zend_Feed_Writer</generator>
   <link rel="alternate" type="text/html" href="http://mwop.net/blog/tag/zf2.html"/>
   <link rel="self" type="application/atom+xml" href="http://mwop.net/blog/tag/zf2-atom.xml"/>
   <id>http://mwop.net/blog/tag/zf2.html</id>
+  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <title type="html"><![CDATA[ZF2 Modules Quickstart (Screencast)]]></title>
+    <published>2012-09-19T18:10:00+0000</published>
+    <updated>2012-09-19T18:10:00+0000</updated>
+    <link rel="alternate" type="text/html" href="http://mwop.net/blog/2012-09-19-zf2-module-screencast.html"/>
+    <id>http://mwop.net/blog/2012-09-19-zf2-module-screencast.html</id>
+    <author>
+      <name>Matthew Weier O'Phinney</name>
+      <email>me@mwop.net</email>
+      <uri>http://mwop.net</uri>
+    </author>
+    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
+      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>One of the exciting features of the newly released Zend
+Framework 2 is the new module system.</xhtml:p>
+<xhtml:p>While ZF1 had modules, they were difficult to manage. All
+resources for all modules were initialized on each request, and
+bootstrapping modules was an onerous task. Due to the difficulties,
+modules were never truly "plug-and-play", and thus no ecosystem
+ever evolved for sharing modules.</xhtml:p>
+<xhtml:p>In Zend Framework 2, we've architected the MVC from the ground
+up to make modular applications as easy as possible. Within ZF2,
+the MVC simply cares about events and services — and controllers
+are simply one kind of service. As such, modules are primarily
+about telling the MVC about services and wiring event
+listeners.</xhtml:p>
+<xhtml:p>To give you an example, in this tutorial, I'll show you how to
+install the Zend Framework 2 skeleton application, and we'll then
+install a module and see how easy it is to add it to the
+application and then configure it.</xhtml:p>
+<xhtml:p>To keep things simple, I'm using a unix-like environment. As
+such, if you are on Windows, you may not have the same command-line
+tools available. If you are in such a situation, perhaps try this
+inside a Linux virtual machine.</xhtml:p>
+<xhtml:iframe src="http://player.vimeo.com/video/49775540" width="500" height="281" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""/>
+<xhtml:p><xhtml:a href="http://vimeo.com/49775540">Zend Framework 2 Module
+Quickstart</xhtml:a></xhtml:p>
+<xhtml:p>Let's start by creating a new project. We'll execute a few
+commands to download a skeleton application archive and extract
+it.</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="bash">
+% mkdir newproject
+% cd newproject
+% wget https://github.com/zendframework/ZendSkeletonApplication/tarball/master \
+    -O ZendSkeletonApplication.tgz
+% tar xzf ZendSkeletonApplication.tgz --strip-components=1
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>The Zend Framework skeleton application can be downloaded
+directly off of <xhtml:a href="https://github.com">GitHub</xhtml:a>. I'm
+showing using the download from master, but you can also download a
+tarball or zipball for individual tags as well. Because the
+download URL does not include an extension, I use the
+<xhtml:code>-O</xhtml:code> switch to tell <xhtml:code>wget</xhtml:code> what filename to
+save to.</xhtml:p>
+<xhtml:p><xhtml:code>tar</xhtml:code> has a nice option,
+`<xhtml:code>--strip-components</xhtml:code>`, which allows you to tell it to
+descend a certain number of levels deep into the archive when
+deflating. Since I know the tarball has a top-level directory named
+after the repository and a sha1, I'm simply telling
+<xhtml:code>tar</xhtml:code> to skip that and give me the contents of its child
+directory.</xhtml:p>
+<xhtml:p>At this point you have the skeleton application, but it has no
+dependencies — not even Zend Framework itself! Let's rectify that
+situation. We'll use the dependency management tool <xhtml:a href="https://getcomposer.org/">Composer</xhtml:a> to do this. We include the
+Composer phar file within the skeleton application to make this
+fairly easy. Simply execute the following:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="bash">
+% php composer.phar install
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>You may get a notice indicating that the composer version is
+older, and to run "self-update"; you can ignore that for now.</xhtml:p>
+<xhtml:p>If all goes well, you should now have Zend Framework installed.
+Let's test it out. I'm going to use the built-in web server in PHP
+5.4 to demonstrate.</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="bash">
+% cd public
+% php -S localhost:8080
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>If I browse to <xhtml:code>http://localhost:8080</xhtml:code> I should now
+see the landing page for the skeleton application.</xhtml:p>
+<xhtml:img src="/images/screencasts/2012-09-19-zf2-module-screencast-01-zsa.png" style="width: 100%; height: 100%;"/>
+<xhtml:p>Let's add a module to the application. Many sites require a
+contact form. I've written one as a module some time ago, and
+called it <xhtml:a href="https://github.com/weierophinney/PhlyContact">PhlyContact</xhtml:a>. To
+install it, I'll edit my project's <xhtml:code>composer.json</xhtml:code> and
+tell it about that dependency:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="json">
+{
+    "require": {
+        "php": "&gt;=5.3.3",
+        "zendframework/zendframework": "dev-master",
+        "phly/phly-contact": "dev-master"
+    }
+}
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>I know the name of the component from <xhtml:a href="http://packagist.org/">http://packagist.org/</xhtml:a>, and I'm telling
+Composer that I want to use whatever the latest version is on its
+master branch on GitHub. I happen to also know that PhlyContact
+requires a dev-master version of Zend Framework, so I'll alter that
+dependency for now.</xhtml:p>
+<xhtml:p>Now, we need to tell composer to update our dependencies.</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="bash">
+% php composer.phar update
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>After executing the command, we should now see that it has
+installed; this may take a little while.</xhtml:p>
+<xhtml:p>You need to inform the application about the module. This is so
+that we don't have to perform expensive file-system scanning
+operations, but also to make it explicit in your code what modules
+you're actually using. Enabling a module is usually as easy as
+adding an entry to <xhtml:code>config\application.config.php</xhtml:code>:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="php">
+'modules' =&gt; array(
+    'Application',
+    'PhlyContact',
+),
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>This particular module provides some reasonable defaults. In
+particular, it uses a CAPTCHA adapter that doesn't require
+additional configuration, and assumes that you will want to use the
+default <xhtml:code>Sendmail</xhtml:code> mail transport. As such, we can
+simply browse to it now. I happen to know that the module defines a
+<xhtml:code>/contact</xhtml:code> end point. Let's fire up our PHP web server
+again, and browse to that URL.</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="bash">
+% cd public
+% php -S localhost:8080
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:img src="/images/screencasts/2012-09-19-zf2-module-screencast-02-contact.png" style="width: 100%; height: 100%;"/>
+<xhtml:p>It just works!</xhtml:p>
+<xhtml:p>One philosophy we have for distributable modules in Zend
+Framework 2 is that you should not need to touch the code in
+modules you install in your application. Instead, you should be
+able to configure and override behavior within the application
+configuration or in your application's site-specific modules. Let's
+alter the contact module to:</xhtml:p>
+<xhtml:ul>
+<xhtml:li>first, change the URL it responds to, and</xhtml:li>
+<xhtml:li>second, use the "file" mail transport.</xhtml:li>
+</xhtml:ul>
+<xhtml:p>Let's look at the default configuration. I'll browse to
+<xhtml:code>vendor/phly/phly-contact/config/</xhtml:code> and look at the
+<xhtml:code>module.config.php</xhtml:code> file.</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="php">
+return array(
+    'phly_contact' =&gt; array(
+        'captcha' =&gt; array(
+            'class' =&gt; 'dumb',
+        ),
+        'form' =&gt; array(
+            'name' =&gt; 'contact',
+        ),
+        'mail_transport' =&gt; array(
+            'class' =&gt; 'Zend\Mail\Transport\Sendmail',
+            'options' =&gt; array(
+            )
+        ),
+        'message' =&gt; array(
+            /*
+            'to' =&gt; array(
+                'EMAIL HERE' =&gt; 'NAME HERE',
+            ),
+            'sender' =&gt; array(
+                'address' =&gt; 'EMAIL HERE',
+                'name'    =&gt; 'NAME HERE',
+            ),
+            'from' =&gt; array(
+                'EMAIL HERE' =&gt; 'NAME HERE',
+            ),
+             */
+        ),
+    ),
+
+    /* ... */
+
+    'router' =&gt; array(
+        'routes' =&gt; array(
+            'contact' =&gt; array(
+                'type' =&gt; 'Literal',
+                'options' =&gt; array(
+                    'route' =&gt; '/contact',
+                    'defaults' =&gt; array(
+                        '__NAMESPACE__' =&gt; 'PhlyContact\Controller',
+                        'controller'    =&gt; 'Contact',
+                        'action'        =&gt; 'index',
+                    ),
+                ),
+                'may_terminate' =&gt; true,
+                'child_routes' =&gt; array(
+                    'process' =&gt; array(
+                        'type' =&gt; 'Literal',
+                        'options' =&gt; array(
+                            'route' =&gt; '/process',
+                            'defaults' =&gt; array(
+                                'action' =&gt; 'process',
+                            ),
+                        ),
+                    ),
+                    'thank-you' =&gt; array(
+                        'type' =&gt; 'Literal',
+                        'options' =&gt; array(
+                            'route' =&gt; '/thank-you',
+                            'defaults' =&gt; array(
+                                'action' =&gt; 'thank-you',
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+        ),
+    ),
+    /* ... */
+);
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>Okay, that's interesting. I can define the captcha and options
+to use, the name of the contact form, the mail transport I want to
+use, and even who the email is sent from and who it goes to. In
+addition, it defines some routes.</xhtml:p>
+<xhtml:p>I'll create a new file,
+<xhtml:code>config/autoload/phly-contact.local.php</xhtml:code>. This is a
+local configuration file that will not be checked into my version
+control system. Now, let's add some configuration. First, I'll
+configure my mail transport.</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="php">
+return array(
+    'phly_contact' =&gt; array(
+        'mail_transport' =&gt; array(
+            'class'   =&gt; 'Zend\Mail\Transport\File',
+            'options' =&gt; array(
+                'path' =&gt; 'data/mail/',
+            ),
+        ),
+    ),
+);
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>I'm telling the module to use the <xhtml:code>File</xhtml:code> mail
+transport, and telling the transport where I want messages written.
+By default, Zend Framework calls <xhtml:code>chdir()</xhtml:code> to change
+directory to the project root, so I can reference a directory
+relative to that. I'm simply going to write to a
+<xhtml:code>data/mail/</xhtml:code> directory. Let's create that, and make it
+world-writable for now to ensure the web server can write to it.
+(In production, you'd only want it writable by the web server
+user.)</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="bash">
+% mkdir -p data/mail
+% chmod a+rwX data/mail
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>Now, let's change the base URL the contact form responds to; I
+want it to respond to <xhtml:code>/contact-us</xhtml:code>. Another principle
+of re-usable modules in ZF2 is that we recommend creating tree
+routes for each module, with the root of the tree being a literal
+route. This makes it easy to alter the base for routing, without
+needing to redefine all the routes in the module.</xhtml:p>
+<xhtml:p>I'll add the following to my local configuration, then. I'll
+simply override the parent route for my module, named "contact",
+and point it at a different URL.</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="php">
+'router' =&gt; array(
+    'routes' =&gt; array(
+        'contact' =&gt; array(
+            'options' =&gt; array(
+                'route' =&gt; '/contact-us',
+            ),
+        ),
+    ),
+),
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>Let's see if all this worked! Once again, I'll fire up PHP's
+built-in web server.</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="bash">
+% cd public
+% php -S localhost:8080
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>Now, let's browse to
+<xhtml:code>http://localhost:8080/contact-us</xhtml:code> -- looks good! Just
+as an experiment, let's try the previously configured URL,
+<xhtml:code>http://localhost:8080/contact</xhtml:code>. We get a 404 now!</xhtml:p>
+<xhtml:img src="/images/screencasts/2012-09-19-zf2-module-screencast-03-config.png" style="width: 100%; height: 100%;"/> <xhtml:img src="/images/screencasts/2012-09-19-zf2-module-screencast-04-404.png" style="width: 100%; height: 100%;"/>
+<xhtml:p>Now, let's submit the form. I'll fill in some information; it's
+asking for my email address, a subject line, and a message, as well
+as for me to solve a simple CAPTCHA. Once I've done all that, I can
+send it.</xhtml:p>
+<xhtml:p>If all is well, we should now have a mail file in our data
+directory. Let's check.</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="bash">
+% ls -l data/mail/
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>And now let's look at it.</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="bash">
+% cat data/mail/ZendMail_1347989389_1009740165.tmp
+Date: Tue, 18 Sep 2012 12:29:49 -0500
+From: me@mwop.net
+Reply-To: me@mwop.net
+Subject: [Contact Form] Suspense!
+
+Suspenseful, isn't it?
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>Looks good!</xhtml:p>
+<xhtml:p>Zend Framework 2 provides a wonderful modular architecture that
+will enable an ecosystem of 3rd party modules that should save you
+time and energy when developing your applications. I've
+demonstrated a simple one, a contact form, but many, many more
+already exist, and with a stable release now available, you should
+see that number grow. This is truly a wonderful step forward for
+developers, and I hope you find it as exciting as I do.</xhtml:p>
+</xhtml:div>
+    </content>
+  </entry>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <title type="html"><![CDATA[On Microframeworks]]></title>
     <published>2012-08-17T16:00:00+0000</published>
@@ -28,9 +378,379 @@ movement is about:</xhtml:p>
 problems.</xhtml:li>
 </xhtml:ul>
 <xhtml:p>I think there are some really good ideas that have come out of
-this, and also a number of questionable practices<xhtml:sup><xhtml:a name="t1" href="#f1" id="t1">1</xhtml:a></xhtml:sup>.</xhtml:p>
+this, and also a number of questionable practices<xhtml:sup><xhtml:a name="t1" href="#f1">1</xhtml:a></xhtml:sup>.</xhtml:p>
 <xhtml:p>One piece in particular I've focussed on is the concept of
 so-called “microframeworks”.</xhtml:p>
+<xhtml:h2>What is a microframework?</xhtml:h2>
+<xhtml:p>PHP has had microframeworks for quite some time<xhtml:sup><xhtml:a name="t2" href="#f2">2</xhtml:a></xhtml:sup>, though I only really first saw the term
+being used around 3 years ago. The “grand-daddy” of modern-day
+microframeworks can actually be traced to Ruby, however, and
+specifically <xhtml:a href="http://www.sinatrarb.com">Sinatra</xhtml:a>.</xhtml:p>
+<xhtml:p>Sinatra is not so much a framework as it is a domain-specific
+language (DSL). The language and structure it created, however,
+have been re-created in the vast majority of microframeworks you
+see currently in the PHP arena. Specifically, it describes how to
+map HTTP request methods and paths to the code that will handle
+them. It borrowed route matching ideas from <xhtml:a href="http://rubyonrails.org/">Ruby on Rails</xhtml:a>, and relied on the fact
+that Ruby uses the last value of a block as the return value.</xhtml:p>
+<xhtml:p>As some simple examples:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="ruby">
+get '/hello/:name' do |n|
+    "Hello #{n}!"
+end
+
+post '/address'
+    # create address
+end
+
+put '/address/:id' |i|
+    # update address
+end
+
+get '/feed.?:format?', :provides =&gt; ['rss', 'atom', 'xml'] do
+    builder :feed
+end
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>The language is expressive, and allows the developer to focus on
+two things:</xhtml:p>
+<xhtml:ul>
+<xhtml:li>What are the specific entry points (URIs) for the
+application?</xhtml:li>
+<xhtml:li>What needs to be done for each specific entry point?</xhtml:li>
+</xhtml:ul>
+<xhtml:p>I'd argue that the above two points are the defining
+characteristics of modern microframeworks. Typically, the entry
+points are given the term “routing ”, and the second corresponds to
+“controllers”.</xhtml:p>
+<xhtml:h2>PHP implementations</xhtml:h2>
+<xhtml:p>I'd argue one of the earliest microframework implementations,
+though it wasn't termed as such, was <xhtml:a href="http://dev.horde.org/routes/">Horde Routes</xhtml:a><xhtml:sup><xhtml:a name="t3" href="#f3">3</xhtml:a></xhtml:sup> (which was itself inspired by <xhtml:a href="http://routes.readthedocs.org/en/latest/index.html">Python
+Routes</xhtml:a>, in turn inspired by the Rails routing system, like
+Sinatra). It follows the two principles I outlined above: it allows
+defining routes (entry points), and mapping them to controllers.
+Controllers for Routes are simply classes, and a route must provide
+both a controller and an action in the match, with the latter
+corresponding to a method on the controller class.</xhtml:p>
+<xhtml:p>Since around 2009, I've seen an increasing number of new PHP
+microframeworks<xhtml:sup><xhtml:a name="t4" href="#f4">4</xhtml:a></xhtml:sup> that follow
+in the steps of Sinatra and Horde. In the various implementations
+I've looked at, instead of using a DSL, the authors have all opted
+for either a procedural or OOP interface. Starting with PHP 5.3,
+most authors have also primarily targetted any PHP callable as a
+controller, favoring callbacks specifically. The fundamental ideas
+remain the same as Sinatra, however:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="php">
+/* Procedural */
+get('/hello/:name', function ($n) {
+    return "Hello {$n}!";
+});
+
+post('/address', function () {
+    // create address
+});
+
+put('/address/:id' function ($i) {
+    // update address
+});
+
+get('/feed.?:format?', function($feed, $format) {
+    return builder($feed, $format);
+});
+
+/* OOP */
+$app-&gt;get('/hello/:name', function ($n) {
+    return "Hello {$n}!";
+});
+
+$app-&gt;post('/address', function () {
+    // create address
+});
+end
+
+$app-&gt;put('/address/:id', function ($i) {
+    // update address
+});
+
+$app-&gt;get('/feed.?:format?', function ($feed, $format) use ($app) {
+    return $app-&gt;builder($feed, $format);
+})-&gt;constraints(['format' =&gt; '/^(rss|atom|xml)$/']);
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>One key difference I've witnessed in the implementations is
+surrounding how route matches are passed to the callback. In the
+examples above, they are passed as individual arguments to the
+handler. Some, however, opt for an approach more like Sinatra,
+which passes a single "params" argument into the scope of the
+handler. This approach tends to be more expedient both from an
+implementation standpoint as well as a performance standpoint, as
+it does not require reflection to determine name and position of
+arguments, and makes handling wildcard arguments simpler. I've seen
+this latter approach handled several ways:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="php">
+// Pass in route match parameters as an argument.
+$app-&gt;get('/feed.:format', function ($params) {
+    $format = $params['format'];
+});
+
+// Pass in the $app instance, and retrieve route 
+// match parameters from it.
+$app-&gt;get('/feed.:format', function ($app) {
+    $format = $app-&gt;params('format');
+});
+
+// Curry in the $app instance when desired, and 
+// retrieve route match parameters from it.
+$app-&gt;get('/feed.:format', function () use ($app) {
+    $format = $app-&gt;params('format');
+});
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>Another difference I've seen is in how route constraints,
+defaults, and names are handled. The most elegant solutions usually
+allow chaining method calls in order to alter this data:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="php">
+$app-&gt;get('/feed.:format', function ($app) {
+  })-&gt;constraints(['format' =&gt; '/^(atom|xml|json)$/'])
+    -&gt;name('feed');
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>One common feature I've seen is the ability to generate URLs
+based on the defined routes. Most commonly, this is a function or
+method <xhtml:code>urlTo()</xhtml:code>, which takes a route name, and an
+associative array of replacements.</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="php">
+echo $app-&gt;urlTo('feed', ['format' =&gt; 'atom']);
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>That's it in a nutshell: the ability to match HTTP request
+methods and path information, and map it to controllers/handlers,
+and to generate URLs based on those present in the application.</xhtml:p>
+<xhtml:h2>What are they good for?</xhtml:h2>
+<xhtml:p>In my research and experience, microframeworks have three
+typical use cases:</xhtml:p>
+<xhtml:ol>
+<xhtml:li><xhtml:b>Prototyping.</xhtml:b> Because of their simplicity,
+microframeworks are fantastic for prototyping a basic website. Very
+often, in the early stages of a site, you have a limited number of
+pages, and most often simply need to render a template with limited
+variable substitutions. Microframeworks are a perfect fit for
+this.</xhtml:li>
+<xhtml:li><xhtml:b>APIs</xhtml:b>. API needs are usually quite well-defined, and
+often involve a small, finite number of URLs. The logic required is
+usually already encapsulated in business objects, so the
+application layer is simply for filtering and returning a
+representation. Microframeworks again offer a nice fit.</xhtml:li>
+<xhtml:li><xhtml:b>Small, mostly static sites</xhtml:b>. Similar to the first point,
+if you know the site will be relatively small and mostly static,
+then the minimal overhead of a microframework is often a good
+fit.</xhtml:li>
+</xhtml:ol>
+<xhtml:h2>Where do microframeworks fail?</xhtml:h2>
+<xhtml:p>Because of the rather declarative nature of microframeworks, and
+the typically 1:1 mapping of a route to a controller,
+microframeworks do not tend to promote code re-use. Additionally,
+this extends to how microframework applications are organized:
+usually, there are no clear guidelines on how to organize routes
+and controllers, much less separate them into multiple files. This
+can lead to maintenance issues as the application grows, as well as
+logistical issues whenever you need to add new routes and
+controllers (do they go at the top, or bottom? are there other
+routes that could potentially match as well? etc.).</xhtml:p>
+<xhtml:p>Additionally, though many frameworks offer ways to alter the
+workflow of the application either via hooks, events, or
+“middleware”<xhtml:sup><xhtml:a name="t5" href="#f5">5</xhtml:a></xhtml:sup>, most of these
+are limited in scope, often non-reusable, and often non-stackable.
+As such, comprehensive manipulation of the application workflow is
+out of reach.</xhtml:p>
+<xhtml:p>One other area that is overlooked, however, is one I find
+curious, particularly in light of the MicroPHP movement: so much of
+the underlying plumbing is basically the same, yet every
+microframework re-implements it. Specifically:</xhtml:p>
+<xhtml:ul>
+<xhtml:li>Routing is basically the same across most implementations,
+following the same basic specifications outlined in Rails. There
+are very few differences in the public APIs.</xhtml:li>
+<xhtml:li>Request and Response object abstraction is largely the same as
+well, providing access to query/post/cookie/session/etc. parameters
+through roughly equivalent APIs.</xhtml:li>
+<xhtml:li>Many implement their own view layers.<xhtml:sup><xhtml:a name="t6" href="f6">6</xhtml:a></xhtml:sup></xhtml:li>
+</xhtml:ul>
+<xhtml:p>Most of this code should be considered commodity code at this
+point. There are several outstanding view layers and templating
+engines available (Smarty, Twig, Savant, Zend\View). Standalone
+routing libraries exist such as Horde Routes, and even those
+bundled with frameworks are often available separately via Composer
+or Pyrus; the same is true with Request and Response object
+abstraction. It seems to me that a few microframework authors
+should be working on abstracting these concerns, and then focussing
+their efforts on differentiators in their own microframeworks.</xhtml:p>
+<xhtml:h2>An experiment</xhtml:h2>
+<xhtml:p>Building on my last point, I looked at the APIs of <xhtml:a href="http://limonade-php.github.com/">Limonade</xhtml:a> and <xhtml:a href="http://www.slimframework.com/">Slim Framework</xhtml:a>, and built up a
+specification for a microframework. I then matched as many pieces
+of it as possible to existing components in <xhtml:a href="http://packages.zendframework.com/">ZF2</xhtml:a>, and started
+building.</xhtml:p>
+<xhtml:p>In a matter of a few hours, I had written up a complete test
+suite<xhtml:sup><xhtml:a name="t7" href="#f7">7</xhtml:a></xhtml:sup> and all code for a
+microframework, featuring the following (this is basically the
+testdox output from the unit test suite):</xhtml:p>
+<xhtml:ul>
+<xhtml:li>Lazy loads request</xhtml:li>
+<xhtml:li>Lazy loads response</xhtml:li>
+<xhtml:li>Request is injectible</xhtml:li>
+<xhtml:li>Response is injectible</xhtml:li>
+<xhtml:li>Halt should raise halt exception</xhtml:li>
+<xhtml:li>Response should contain status provided to halt</xhtml:li>
+<xhtml:li>Response should contain message provided to halt</xhtml:li>
+<xhtml:li>Stop should raise halt exception</xhtml:li>
+<xhtml:li>Response should remain unaltered after stop</xhtml:li>
+<xhtml:li>Redirect should raise halt exception</xhtml:li>
+<xhtml:li>Redirect should set 302 response status by default</xhtml:li>
+<xhtml:li>Redirect should set response status based on provided status
+code</xhtml:li>
+<xhtml:li>Redirect should set location header</xhtml:li>
+<xhtml:li>Map creates a segment route when provided with a string
+route</xhtml:li>
+<xhtml:li>Map can receive a route object</xhtml:li>
+<xhtml:li>Passing invalid route raises exception</xhtml:li>
+<xhtml:li>Map can receive a callable</xhtml:li>
+<xhtml:li>Passing invalid controller to route does not immediately raise
+exception</xhtml:li>
+<xhtml:li>Accessing invalid controller raises exception</xhtml:li>
+<xhtml:li>Passing invalid method to route via method raises
+exception</xhtml:li>
+<xhtml:li>Can set methods route responds to singly</xhtml:li>
+<xhtml:li>Can set methods route responds to as array</xhtml:li>
+<xhtml:li>Can set methods route responds to as multiple arguments</xhtml:li>
+<xhtml:li>Can specify additional method types to respond to</xhtml:li>
+<xhtml:li>Can specify route name</xhtml:li>
+<xhtml:li>Adding route using method type creates route that responds to
+that method type</xhtml:li>
+<xhtml:li>Running with no matching routes raises page not found
+exception</xhtml:li>
+<xhtml:li>Routing sets list of named routes</xhtml:li>
+<xhtml:li>Routing sets lists of routes by method</xhtml:li>
+<xhtml:li>Successful routing dispatches controller</xhtml:li>
+<xhtml:li>Unsuccessful routing triggers 404 event</xhtml:li>
+<xhtml:li>Calling halt triggers halt event</xhtml:li>
+<xhtml:li>Invalid controller triggers 501 event</xhtml:li>
+<xhtml:li>Exception raised in controller triggers 500 event</xhtml:li>
+<xhtml:li>Can pass to next matching route</xhtml:li>
+<xhtml:li>Url for helper assembles url based on name provided</xhtml:li>
+<xhtml:li>Url for helper assembles url based on name and params
+provided</xhtml:li>
+<xhtml:li>Url for helper assembles url based on current route match when
+no name provided</xhtml:li>
+<xhtml:li>Composes logger instance by default</xhtml:li>
+<xhtml:li>Can inject specific logger instance</xhtml:li>
+<xhtml:li>Mustache view is used by default</xhtml:li>
+<xhtml:li>Can inject alternate view instance</xhtml:li>
+<xhtml:li>Render renders a template to the response</xhtml:li>
+<xhtml:li>View model returns mustache view model by default</xhtml:li>
+<xhtml:li>Subsequent calls to view model return separate instances</xhtml:li>
+<xhtml:li>Can provide view model prototype</xhtml:li>
+</xhtml:ul>
+<xhtml:p>I utilized ZF2's routing library from its MVC component, the
+request and response objects from its HTTP component, its Log
+component, and the Session component. These had a few other
+dependencies, but nothing terribly onerous.</xhtml:p>
+<xhtml:p>For the view, I used my own <xhtml:a href="http://weierophinney.github.com/phly_mustache">phly_mustache</xhtml:a>,
+and provided a basic "view model" implementation that receives the
+application instance, thus allowing the ability to call application
+helpers (such as url generation).</xhtml:p>
+<xhtml:p>To make installation simple, I used <xhtml:a href="http://getcomposer.org">Composer</xhtml:a> to manage my dependencies on
+specific ZF2 components and for phly_mustache. The microframework
+contains only the code it needs to get its work done, leveraging
+the work of others whenever possible.</xhtml:p>
+<xhtml:p>This post is not meant as a way to announce a new
+microframework, however.<xhtml:sup><xhtml:a name="t8" href="#f8">8</xhtml:a></xhtml:sup>
+The point of the experiment was to prove something: microframeworks
+are trivially easy to write, <xhtml:em>particularly if you follow the
+principals of MicroPHP, and re-use existing code</xhtml:em>. Just because
+code comes from a framework or a third-party library does not make
+it suspect or inferior; in fact, whenever possible, you should
+leverage such code so you can focus on <xhtml:em>writing awesome
+applications</xhtml:em>.</xhtml:p>
+<xhtml:h2>Lessons learned</xhtml:h2>
+<xhtml:p>I really like microframeworks for specific problems:
+prototyping, APIs, and small, simple sites. I think they are
+ideally suited for these tasks. That said, I'd love to see some
+solid libraries targetting the fundamental, shared aspects of these
+efforts: routing, request and response abstraction, etc. With
+dependency management tools such as Composer and Pyrus, having
+required dependencies is not a big deal anymore, and re-use should
+be encouraged.</xhtml:p>
+<xhtml:p>Also, writing a microframework is an excellent coding exercise.
+It helps a developer appreciate the complexities of abstraction
+while limiting the number of moving parts. I highly recommend it as
+an exercise -- but do it using available components, and be
+prepared to throw it away and instead collaborate with others, or
+adopt something which better solves both the problems you have and
+the problems you anticipate.</xhtml:p>
+<xhtml:p>In sum: <xhtml:em>Use the right tool for the job</xhtml:em>. If you foresee
+expanding requirements in your project's future, you may want to
+evaluate a full-stack framework,<xhtml:sup><xhtml:a name="t9" href="#f9">9</xhtml:a></xhtml:sup> or consider building something robust that suits
+your specific project's needs. Use microframeworks where and when
+they make sense.</xhtml:p>
+<xhtml:h4>Afterword</xhtml:h4>
+<xhtml:p>I'm well aware that Fabien Potencier has written <xhtml:a href="http://fabien.potencier.org/article/50/create-your-own-framework-on-top-of-the-symfony2-components-part-1">
+a comprehensive series of posts on creating a microframework using
+Symfony 2 components</xhtml:a>. I deliberately chose not to read them
+until (a) ZF2 was almost ready to release, and (b) I'd had a chance
+to formulate my own opinions on microframeworks. They're an
+excellent read, however, and show a nice progression of development
+from flat PHP to a fully functional microframework; click the link
+and see for yourself.</xhtml:p>
+<xhtml:h4>Footnotes</xhtml:h4>
+<xhtml:ul>
+<xhtml:li><xhtml:sup><xhtml:a name="f1" href="#t1">1</xhtml:a></xhtml:sup> In particular, I feel
+that the movement (a) disparages components from larger libraries
+simply because they originate from a larger library, and (b)
+distrust any code that has additional dependencies. This latter I
+find truly puzzling, as I'd think it fits the idea of “use small
+things that work together to solve larger problems.” If the code
+solves a particular problem and allows you to focus on a larger
+problem, where it originates and the number of dependencies should
+not be an issue.</xhtml:li>
+<xhtml:li><xhtml:sup><xhtml:a name="f2" href="#t2">2</xhtml:a></xhtml:sup> In fact, my first
+foray into MVC in PHP was writing a clone of Perl's <xhtml:a href="http://cgi-app.org/">CGI::Application</xhtml:a>, which in many ways is
+also a microframework.</xhtml:li>
+<xhtml:li><xhtml:sup><xhtml:a name="f3" href="#t3">3</xhtml:a></xhtml:sup> Trivia: Both authors
+of Horde Routes worked at Zend when I first started at the company,
+and Mike Naberezny wrote the very first lines of code for Zend
+Framework.</xhtml:li>
+<xhtml:li><xhtml:sup><xhtml:a name="f4" href="#t4">4</xhtml:a></xhtml:sup> I swear, you see new
+ones on Github daily, and on <xhtml:a href="http://phpdeveloper.org/">PHP
+Developer</xhtml:a> at least once a week.</xhtml:li>
+<xhtml:li><xhtml:sup><xhtml:a name="f5" href="#t5">5</xhtml:a></xhtml:sup> <xhtml:a href="http://www.slimframework.com">Slim</xhtml:a> has this concept.
+Basically, any callables placed between the route string and the
+last callable when defining a route -- i.e., the “middle”
+arguments, and thus middleware -- will be executed in order prior
+to attempting to execute the controller.</xhtml:li>
+<xhtml:li><xhtml:sup><xhtml:a name="f6" href="#t6">6</xhtml:a></xhtml:sup> <xhtml:a href="http://www.slimframework.com">Slim</xhtml:a> is an outlier here, as it
+utilizes <xhtml:a href="http://twig.sensiolabs.org/">Twig</xhtml:a> by
+default.</xhtml:li>
+<xhtml:li><xhtml:sup><xhtml:a name="f7" href="#t7">7</xhtml:a></xhtml:sup> I'm sure that my TDD
+experiment will warm the soul of <xhtml:a href="http://www.littlehart.net/atthekeyboard/" alt="Chris Hartjes">the
+Grumpy Programmer</xhtml:a>.</xhtml:li>
+<xhtml:li><xhtml:sup><xhtml:a name="f8" href="#t8">8</xhtml:a></xhtml:sup> That said, if you want
+to look at the results, you can <xhtml:a href="http://github.com/weierophinney/phlyty">find Phlyty on
+Github</xhtml:a>.</xhtml:li>
+<xhtml:li><xhtml:sup><xhtml:a name="f9" href="#t9">9</xhtml:a></xhtml:sup> As you may guess, I'm
+biased towards <xhtml:a href="http://framework.zend.com/">Zend
+Framework</xhtml:a>. However, you should always carefully evaluate a
+framework against your project's needs.</xhtml:li>
+</xhtml:ul>
 </xhtml:div>
     </content>
   </entry>
@@ -67,6 +787,157 @@ class MyController extends Zend_Controller_Action
 </xhtml:pre></xhtml:div>
 <xhtml:p>But this feature is missing from ZF2; how can we accomplish this
 sort of pattern?</xhtml:p>
+<xhtml:h2>Constructor Overriding</xhtml:h2>
+<xhtml:p>Why didn't we add the <xhtml:code>init()</xhtml:code> method in Zend
+Framework 2? Because we don't have a constructor by default, and
+also to reduce overall method calls; if a controller won't be
+overriding the method, there's no reason to make the call in the
+first place. So, that means, in ZF2, unlike ZF1, to do the same
+thing, you can simply define a constructor in your controller:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="php">
+use Zend\Mvc\Controller\AbstractActionController;
+
+class MyController extends AbstractActionController
+{
+    public function __construct()
+    {
+        // do some stuff!
+    }
+}
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>Except there's one specific and often-needed use case where this
+fails: if you want to wire listeners to the controller's event
+manager.</xhtml:p>
+<xhtml:h2>Events</xhtml:h2>
+<xhtml:p>Why does this fail with the event manager? Because when we're in
+the constructor, we don't yet have an <xhtml:code>EventManager</xhtml:code>
+instance! The event manager instance is injected after
+instantiation. As such, we need to attach to it once we know we
+have an event manager. Which is... when it's set. This can be done
+very simply by overriding the <xhtml:code>setEventManager()</xhtml:code>
+method. In the next example, we'll define a listener for the
+"dispatch" event that redirects if certain criteria is not met.</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="php">
+use Zend\EventManager\EventManagerInterface;
+use Zend\Mvc\Controller\AbstractActionController;
+
+class MyController extends AbstractActionController
+{
+    public function setEventManager(EventManagerInterface $events)
+    {
+        parent::setEventManager($events);
+
+        $controller = $this;
+        $events-&gt;attach('dispatch', function ($e) use ($controller) {
+            $request = $e-&gt;getRequest();
+            $method  = $request-&gt;getMethod();
+            if (!in_array($method, array('PUT', 'DELETE', 'PATCH'))) {
+                // nothing to do
+                return;
+            }
+
+            if ($controller-&gt;params()-&gt;fromRoute('id', false)) {
+                // nothing to do
+                return;
+            }
+
+            // Missing identifier! Redirect.
+            return $controller-&gt;redirect()-&gt;toRoute(/* ... */);
+        }, 100); // execute before executing action logic
+    }
+}
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>The beauty of this is that we only override when we need to, and
+we override in the specific context we're trying to influence.
+Additionally, we're only registering the event listener if this
+particular controller is instantiated -- which helps reduce our
+overall number of listeners, and thus shapes our call graph based
+on the controller invoked.</xhtml:p>
+<xhtml:h2>Other dependencies</xhtml:h2>
+<xhtml:p>As you'll likely note, the event manager is not the only case
+where you may need to follow a similar pattern. Any time your
+initialization logic may be based on a dependency, you'll want to
+override the setter in which that dependency is injected.</xhtml:p>
+<xhtml:p><xhtml:em>Got any ZF2 tips of your own to share? Blog them!</xhtml:em></xhtml:p>
+<xhtml:h2>Update: ServiceManager</xhtml:h2>
+<xhtml:p>A few folks in the comments were remarking that the felt that
+omitting the <xhtml:code>init()</xhtml:code> method makes it harder for
+developers to identify when and where to do initialization logic,
+particularly when you may be working with multiple
+dependencies.</xhtml:p>
+<xhtml:p>Which made me realize there's another place I missed, one that's
+potentially even better suited to initialization: the
+<xhtml:code>ServiceManager</xhtml:code>.</xhtml:p>
+<xhtml:p>Basically, if you find yourself having complex initialization
+needs, or many dependencies, you should be building a factory for
+your controller, and wiring it to the <xhtml:code>ServiceManager</xhtml:code>.
+This can happen in one of several places, but my preference is in
+my module's <xhtml:code>Module</xhtml:code> class, in the
+<xhtml:code>getControllerConfig()</xhtml:code> method. This method returns
+configuration for the controller manager that instantiates,
+validate, and injects controllers; it's basically a type of
+<xhtml:code>ServiceManager</xhtml:code>, and, in fact, has access to the main
+application's instance. I'll take the previous example, and wire it
+in the context of a factory:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="php">
+namespace My
+
+use Zend\EventManager\EventManagerInterface;
+
+class Module
+{
+    /*
+     * Assume some other methods, such as getConfig(), etc.
+     * Also assume that a route will return a controller named
+     * "My\Controller\My" which we assume will reference a controller
+     * within our current namespace.
+     */
+
+    public function getControllerConfig()
+    {
+        return array('factories' =&gt; array(
+            'My\Controller\My' =&gt; function ($controllers) {
+                $services   = $controllers-&gt;getServiceLocator();
+                $controller = new Controller\MyController();
+                $events     = $services-&gt;get('EventManager')
+
+                $events-&gt;attach('dispatch', function ($e) use ($controller) {
+                    $request = $e-&gt;getRequest();
+                    $method  = $request-&gt;getMethod();
+                    if (!in_array($method, array('PUT', 'DELETE', 'PATCH'))) {
+                        // nothing to do
+                        return;
+                    }
+
+                    if ($controller-&gt;params()-&gt;fromRoute('id', false)) {
+                        // nothing to do
+                        return;
+                    }
+
+                    // Missing identifier! Redirect.
+                    return $controller-&gt;redirect()-&gt;toRoute(/* ... */);
+                }, 100); // execute before executing action logic
+
+                $controller-&gt;setEventManager($events);
+                return $controller;
+            };
+        ));
+    }
+}
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>The above will create the controller, grab an event manager
+instance, attach the listener, and then inject the event manager
+into the controller. If you wanted to do more complex work, you
+definitely could -- and this would be the place to do it.</xhtml:p>
 </xhtml:div>
     </content>
   </entry>
@@ -101,6 +972,164 @@ HTML entities.</xhtml:li>
 </xhtml:ul>
 <xhtml:p>Add to this that the validation logic may be re-usable outside
 of a forms context, and you've got a rather complex problem.</xhtml:p>
+<xhtml:h2>Forms in ZF2</xhtml:h2>
+<xhtml:p>Starting in 2.0.0beta4, we offerred a completely rewritten Form
+component. In fact, it's not just a Form component -- a new
+component, InputFilter, was also added. InputFilter is a component
+that provides re-usable validation and normalization logic, and can
+be used with forms or your domain model. The Form component is
+basically a bridge between domain models/validation and the view
+layer.</xhtml:p>
+<xhtml:p>However, this means a bit more complexity for the end-user. You
+now must:</xhtml:p>
+<xhtml:ul>
+<xhtml:li>Create your form, which consists of elements and
+fieldsets.</xhtml:li>
+<xhtml:li>Create an input filter, consisting of inputs.</xhtml:li>
+<xhtml:li>Inform the form of the input filter.</xhtml:li>
+</xhtml:ul>
+<xhtml:p>It's a bit of work. And there's more: we wanted to simplify the
+process of getting your validated values into your domain objects.
+For this, we added a concept of <xhtml:em>hydrators</xhtml:em>, which map the
+validated form values to an object you <xhtml:em>bind</xhtml:em> to the form.
+Now you have <xhtml:em>three</xhtml:em> pieces to keep track of -- form (and
+its elements), input filter (and its inputs), and a hydrator.</xhtml:p>
+<xhtml:p>So, a few developers had an idea: use annotations on the domain
+model objects to define these items, letting you keep it all in one
+place.</xhtml:p>
+<xhtml:p>While I'm not normally a fan of annotations, I immediately saw
+the appeal in this particular situation.</xhtml:p>
+<xhtml:h2>An Example</xhtml:h2>
+<xhtml:p>Let's consider a very simple example. The following domain
+object represents data for a user, and includes a variety of
+elements we'd represent in a form.</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="php">
+namespace MyVendor\Model;
+
+use Zend\Form\Annotation;
+
+/**
+ * @Annotation\Hydrator("Zend\Stdlib\Hydrator\ObjectProperty")
+ * @Annotation\Name("user")
+ */
+class User
+{
+    /**
+     * @Annotation\Attributes({"type":"text" })
+     * @Annotation\Validator({"type":"Regex","options":{"regex":"/^[a-zA-Z][a-zA-Z0-9_-]{1,19}/"}})
+     * @Annotation\Options({"label":"Username:"})
+     */
+    public $username;
+
+    /**
+     * @Annotation\Required(false)
+     * @Annotation\Attributes({"type":"text" })
+     * @Annotation\Options({"label":"Your full name:"})
+     */
+    public $fullname;
+
+    /**
+     * @Annotation\Type("Zend\Form\Element\Email")
+     * @Annotation\Options({"label":"Your email address:"})
+     */
+    public $email;
+
+    /**
+     * @Annotation\Type("Zend\Form\Element\Url")
+     * @Annotation\Options({"label":"Your home page:"})
+     */
+    public $uri;
+}
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>So, what does the above do?</xhtml:p>
+<xhtml:ul>
+<xhtml:li>The "name" annotation gives a form or element a specific
+name.</xhtml:li>
+<xhtml:li>The "attributes" annotation indicates what attributes to
+compose into the form or element.</xhtml:li>
+<xhtml:li>Similarly, the "options" annotation specifies options to
+compose into an element. These typically include the label, but may
+include other configuration that doesn't have an exact analog in
+the HTML attributes.</xhtml:li>
+<xhtml:li>The "validator" annotation indicates a validator to compose for
+the input for a given element. We also ship a "filter"
+annotation.</xhtml:li>
+<xhtml:li>The "type" annotation indicates a class to use for that
+particular form or element. In the specific cases used above, the
+elements actually provide default filters and validators,
+simplifying setup further!</xhtml:li>
+<xhtml:li>Last, but not least, the "hydrator" annotation indicates a
+<xhtml:code>Zend\Stdlib\Hydrator</xhtml:code> implementation to use to relay
+data between the form and the object. I'll cover this more
+shortly.</xhtml:li>
+</xhtml:ul>
+<xhtml:p>So, let's now turn to creating a form and consuming it.</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="php">
+use MyVendor\Model\User;
+use Zend\Form\Annotation\AnnotationBuilder;
+
+$user    = new User();
+$builder = new AnnotationBuilder();
+$form    = $builder-&gt;createForm($user);
+
+$form-&gt;bind($user);
+$form-&gt;setData($dataFromSomewhere);
+if ($form-&gt;isValid()) {
+    // $user is now populated!
+    echo $form-&gt;username;
+    return;
+} else {
+    // probably need to render the form now.
+}
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>You're not quite done, really -- most likely, you'll need to
+include a submit button of some sort, and it's always good practice
+to include a token to prevent CSRF injections. But with the above,
+you've accomplished the major headaches of setting up a form -- and
+using the data -- with minimal fuss.</xhtml:p>
+<xhtml:h2>Much more!</xhtml:h2>
+<xhtml:p>The form support in ZF2 offers a ton of other features, some of
+which are not specific to forms even.</xhtml:p>
+<xhtml:ul>
+<xhtml:li>
+<xhtml:p>ZF2 supports a variety of hydration strategies, which allow you
+to pass data to and from objects. The example above uses one that
+suggests a 1:1 mapping between the inputs and the object
+properties; other strategies include using
+<xhtml:code>ArrayObject</xhtml:code>, using class mutator methods, and
+more.</xhtml:p>
+<xhtml:p>At this point, you can hydrate an entire form, as well as
+individual fieldsets!</xhtml:p>
+</xhtml:li>
+<xhtml:li>
+<xhtml:p>You can provide custom annotations. While this feature is not
+documented yet, you can tell the <xhtml:code>AnnotationBuilder</xhtml:code>
+about additional annotation classes, as well as provide listeners
+for those annotations so that they can interact with the form
+construction process. As an example, one contributor has already
+used these features to utilize <xhtml:a href="http://doctrine-project.org">Doctrine</xhtml:a> annotations to inform
+the builder about the name of a property, as well as indicate
+validators. (Side note: ZF2 now uses Doctrine's annotation syntax
+and parser by default.)</xhtml:p>
+</xhtml:li>
+<xhtml:li>
+<xhtml:p>There are a number of features targetting collections, so that
+your client-side code can return arbitrary numbers of a specific
+fieldset type (e.g., collecting addresses for an applicant), and
+the form will be able to validate each. You can <xhtml:a href="http://www.michaelgallego.fr/blog/?p=190">read more about those
+features from the author himself</xhtml:a>.</xhtml:p>
+</xhtml:li>
+</xhtml:ul>
+<xhtml:p>These features are all now available starting with the newly
+released 2.0.0beta5 version, which you can grab from the <xhtml:a href="http://packages.zendframework.com/">ZF2 packages site</xhtml:a>.</xhtml:p>
+<xhtml:p>I'm really excited with the solutions we've created in ZF2, and
+even more excited to see people put them to use!</xhtml:p>
 </xhtml:div>
     </content>
   </entry>
@@ -121,6 +1150,93 @@ started with ZF2 modules</xhtml:a>, as well as <xhtml:a href="/blog/zf2-modules-
 can already use</xhtml:a>. But after fielding some questions recently, I
 realized I should talk about <xhtml:em>why</xhtml:em> modules are important for
 the ZF2 ecosystem.</xhtml:p>
+<xhtml:h2>History</xhtml:h2>
+<xhtml:p>In the autumn of 2006, <xhtml:a href="http://andigutmans.blogspot.com/">Andi</xhtml:a> asked me to spearhead a
+refactor of the Zend Framework MVC, prior to a stable release. The
+idea was to address the growing number of issues and feature
+requests, get it well-tested, and document it thoroughly before we
+were ready for a 1.0.0 stable release.</xhtml:p>
+<xhtml:p>Late in that refactoring, a few folks approached me saying they
+wanted support for "modules". The idea would be to have
+self-contained directories containing discrete MVC functionality --
+controllers, views, related models, etc. Additionally, they wanted
+routing to take into account the module, so that we could have
+controllers with the same "name", but resolving to separate,
+discrete classes.</xhtml:p>
+<xhtml:p>The "solution" I came up with basically worked, but was quite
+limited. You could drop modules into a directory, which the front
+controller would scan in order to be able to resolve URLs of the
+form "/:module/:controller/:action/*". (You could also explicitly
+define a module in the route configuration if desired).</xhtml:p>
+<xhtml:p>This mostly worked, until we introduced
+<xhtml:code>Zend_Application</xhtml:code>, at which point it fell apart. Why?
+Because we couldn't quite get bootstrapping to work. Bootstrapping
+the application was easy, but adding modules and their bootstraps,
+and sharing dependencies between all of them, proved to be quite
+difficult, and we never truly solved it.</xhtml:p>
+<xhtml:p>Add to this the fact that the only way to get dependencies into
+controllers was via <xhtml:code>Zend_Registry</xhtml:code> or the front
+controller singleton, and the end result were modules that could
+never truly be shared or simply dropped into an application.</xhtml:p>
+<xhtml:h2>Modules in ZF2</xhtml:h2>
+<xhtml:p>One of the very first requirements for ZF2, therefor, was to
+solve the module problem. The goals were fairly simple:</xhtml:p>
+<xhtml:blockquote>Modules should be re-usable. Developers should be able
+to drop in third-party modules easily, and immediately utilize them
+with zero or small amounts of configuration. Developers should
+never have to directly alter module code, ever, to get them to work
+in their applications; customization should be easily achieved via
+configuration or substitution.</xhtml:blockquote>
+<xhtml:p>Why?</xhtml:p>
+<xhtml:p>The goal of any good application framework or content system
+should be to make development of websites as easy as possible. Good
+systems make it possible to use as little or as much of the
+framework as needed, and to make extension of the framework
+trivial. This latter point is perhaps the most important aspect:
+the quality of any good application ecosystem can typically be
+judged by the amount and quality of third-party plugins developed
+for it.</xhtml:p>
+<xhtml:p>If your framework is making you write boilerplate code to handle
+authentication for every site you write, or making you write code
+for common application features such as blogs, comment systems,
+contact forms, etc., then something is wrong. These sorts of tasks
+should be done at most a handful of times, and <xhtml:em>shared</xhtml:em> with
+the community.</xhtml:p>
+<xhtml:p>The end-goal is to be able to pull in a handful or more of
+plugins that do these tasks for you, configure them to suit your
+needs, and then focus on building out the functionality that is
+truly unique to your website.</xhtml:p>
+<xhtml:h2>Building Blocks</xhtml:h2>
+<xhtml:p>I'll give a concrete example. In parallel with ZF2 development,
+I've been rebuilding this very site. I've needed the following
+pieces:</xhtml:p>
+<xhtml:ul>
+<xhtml:li>A handful of static pages (home page, résumé, etc.)</xhtml:li>
+<xhtml:li>A contact form</xhtml:li>
+<xhtml:li>A blog</xhtml:li>
+<xhtml:li>Authentication in order to "password protect" a few pages</xhtml:li>
+<xhtml:li>A few view helpers (github status, disqus display, etc)</xhtml:li>
+</xhtml:ul>
+<xhtml:p>How much of this functionality is unique to my site, other than
+the content? Pretty much none of it. Ideally, I should be able to
+find some modules, drop them in, and create some custom view
+scripts.</xhtml:p>
+<xhtml:p>Which is what I did. That said, I developed several of the
+modules, but in some cases, such as authentication, I was able to
+grab modules from elsewhere. The beauty, though, is that in the
+future, I or others can re-use what I've created, and quite
+easily.</xhtml:p>
+<xhtml:p>This kind of building-block development makes <xhtml:em>your</xhtml:em> job
+easier as a developer -- and allows you to focus on the bits and
+pieces that make your site unique. As such, I truly feel that
+<xhtml:em><xhtml:strong>modules are the most important new feature of
+ZF2</xhtml:strong></xhtml:em>.</xhtml:p>
+<xhtml:h2>Fin</xhtml:h2>
+<xhtml:p>If you're developing on top of ZF2 today, I have one piece of
+advice: create and consume modules. Share your modules. Help make
+ZF2 a productive, fun, collaborative ecosystem that allows
+developers to get things done and create fantastic new
+applications.</xhtml:p>
 </xhtml:div>
     </content>
   </entry>
@@ -186,6 +1302,248 @@ can be fully static!</xhtml:p>
 <xhtml:p>Add these thoughts to the rise of static blogging platforms such
 as the aforementioned Jekyll, and I had a kernel of an idea: take
 the work I'd done already, and create a static blog generator.</xhtml:p>
+<xhtml:h2>Getting There</xhtml:h2>
+<xhtml:p>This was not an overnight decision, nor an all-nighter
+project.</xhtml:p>
+<xhtml:p>The ground-work for my blog goes back a couple years, and
+originates with some of my presentations on domain models. The
+"kernel" of my blog today is the same as when I began a couple
+years ago, and is simply a domain entity class in plain old PHP
+that composes some values and behaviors. It composes an
+InputFilter, which allows it to validate itself. I have
+<xhtml:code class="hl">fromArray()</xhtml:code> and <xhtml:code class="hl">toArray()</xhtml:code> methods to allow easy de/serialization for
+both PHP and JSON. In a nutshell, though, the following properties
+define my entries:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code lang="php" xml:lang="php">
+class EntryEntity implements EntityDefinition
+{
+    protected $filter;
+
+    protected $id;
+    protected $title;
+    protected $body = '';
+    protected $extended = '';
+    protected $author;
+    protected $isDraft = true;
+    protected $isPublic = true;
+    protected $created;
+    protected $updated;
+    protected $timezone = 'America/New_York';
+    protected $tags = array();
+    protected $metadata = array();
+    protected $comments = array();
+    protected $version = 2;
+}
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>The "id" is the "stub", the unique identifier for a given post,
+and is used in URLs. "isDraft" and "isPublic" are used to determine
+whether or not a post is published on the site, and exposed in the
+various paginated views. The "created" and "updated" fields are
+timestamps, resolved in relation to the "timezone". Tags are
+incorporated directly as a PHP array.</xhtml:p>
+<xhtml:p>Some fields are legacy fields. The "version" was originally for
+me to transition entries -- those in a version "1" would fold in
+"comments" directly in the entry (as an array of Comment entities),
+while those in version "2" would use Disqus. Once I discovered that
+I could import old comments into Disqus, I no longer needed to
+incorporate comments at all, nor have separate versions. "metadata"
+was information that s9y stored about the post -- usually hints for
+rendering, or information on categories (which became simply tags
+in my system). In future versions, I'll likely remove these
+fields.</xhtml:p>
+<xhtml:p>I eventually added an "Author" entity. I realized I would like
+primarily to re-use this code in places where multiple authors
+might occur (such as the <xhtml:a href="http://framework.zend.com/zf2/blog">ZF2 blog</xhtml:a>). Additionally,
+feeds need authorship information, and while I could provide
+defaults, it's even better to incorporate it directly into the
+posts. It is a simple value-object, composing only an identifier,
+name, email, and URL for the author.</xhtml:p>
+<xhtml:p>With these building blocks, I was able to do any number of
+things. I wrote a script to grab my s9y entries from the database,
+create entry entities, and then push them into first CouchDB, and
+later MongoDB. I exported comments to WXR, and imported them to
+Disqus. The architecture proved more than flexible enough for me to
+do all this. I wrote a service layer on top of my code to provide
+easy ways to get paginated lists of recent entries, entries by
+year, entries by tag, and more. I wrote a small, custom mapper to
+persist the data, as well as retrieve it. I wrote my MVC layer to
+be restful, which would allow me to write entities locally, and
+then serialize them to JSON and PUT them to the server. A simple
+API-key authentication layer ensured I'd not get inundated with
+bogus, third-party posts.</xhtml:p>
+<xhtml:p>Life was good, and I re-launched my blog in December 2011, using
+MongoDB.</xhtml:p>
+<xhtml:h2>Refactoring</xhtml:h2>
+<xhtml:p>I had a RESTful API, and it worked. But it still didn't feel
+right. I have a small VPS, and running both Apache and MongoDB was
+starting to tax it. I tried an experiment with caching, but quickly
+discovered that for the amounts of data I wanted to cache, I'd use
+almost the same I/O as if I just served the content from my
+framework.</xhtml:p>
+<xhtml:p>And that RESTful API? Well, it worked, but it never felt like a
+natural way to post entries, never mind updates.</xhtml:p>
+<xhtml:p>I revisited the idea of a static blog, almost by accident. I
+started wondering if I could pre-compile my blog views to prime my
+cache. And once I started, I realized I could actually just
+generate the entire blog as static files. And it was fast! (I can
+generate several hundred posts in a matter of seconds.)</xhtml:p>
+<xhtml:p>I exported all my entries from MongoDB to plain old PHP files
+(for those keeping track: fourth persistence format: MySQL,
+CouchDB, MongoDB, filesystem) that defined and returned entry
+entity objects. I then started writing a compiler and code
+generator in three parts. The first part iterates recursively over
+a directory, looking for PHP files (in fact, I had <xhtml:a href="http://mwop.net/blog/244-Applying-FilterIterator-to-Directory-Iteration.html">
+to use my blog to remember how to do this</xhtml:a>). The second part
+iterates over those files, grabbing the entries, and putting them
+into PriorityQueue objects, based on their timestamp; newer entries
+sort to the top. The third part is a collection of methods that
+iterate over the various queues, rendering paginated views, tag
+clouds, feeds, and entries, and writing the artifacts to disk.
+(This last part actually leverages and bastardizes the new ZF2 View
+layer introduced in beta3.)</xhtml:p>
+<xhtml:p>The result is a ZF2 module I called <xhtml:a href="http://git.mwop.net/?a=summary&amp;p=PhlyBlog">PhlyBlog</xhtml:a>. It
+needs some refinement still, but it works; you can generate all the
+above artifacts, and more.</xhtml:p>
+<xhtml:p>The interesting part about code generation is that you can
+generate just about anything you want. I started out thinking I'd
+generate some view scripts that my controller would consume and
+inject into the layout. But I realized quickly that I could just as
+easily inject them into the layout during the generation
+process.</xhtml:p>
+<xhtml:p>And this is where I realized how happy I was with where ZF2 has
+gone. I removed my "blog" module from my repository, exported it
+into a standalone repository, and re-imported it to my site as a
+"third-party" vendor module. Now, the mantra with ZF2 developers is
+that you should not alter vendor code. However, if you do things
+right, you should be able to <xhtml:em>override</xhtml:em> configuration and
+dependencies via <xhtml:em>local configuration</xhtml:em>. So I did just that,
+to see if it would work.</xhtml:p>
+<xhtml:p>I first created callbacks to pass to my configuration -- one to
+handle the tag cloud, and store it in a variable so I could inject
+it into templates later; the other was to set my rendering
+strategy, as well as create a "response" strategy that would inject
+the blog contents into a layout.</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code lang="php" xml:lang="php">
+namespace Application;
+
+use Traversable;
+use Zend\View\Model;
+
+class Module
+{
+    // there's more; this is just the blog-specific stuff
+
+    protected static $layout;
+    public static function prepareCompilerView($view, $config, $locator)
+    {
+        // Setup the rendering strategy for the blog; use the PhpRenderer
+        $renderer = $locator-&gt;get('Zend\View\Renderer\PhpRenderer');
+        $view-&gt;addRenderingStrategy(function($e) use ($renderer) {
+            return $renderer;
+        }, 100);
+
+        // Setup a layout view model
+        self::$layout = $layout   = new Model\ViewModel();
+        $layout-&gt;setTemplate('layout');
+
+        // Add a "response" strategy; inject the rendered blog contents
+        // into the layout. When done, reset artifacts such as the title,
+        // shortcut icon, and javascript.
+        $view-&gt;addResponseStrategy(function($e) use ($layout, $renderer) {
+            $result = $e-&gt;getResult();
+            $layout-&gt;setVariable('content', $result);
+            $page   = $renderer-&gt;render($layout);
+            $e-&gt;setResult($page);
+
+            // Cleanup
+            $headTitle = $renderer-&gt;plugin('headtitle');
+            $headTitle-&gt;getContainer()-&gt;exchangeArray(array());
+            $headTitle-&gt;append('phly, boy, phly');
+
+            $headLink = $renderer-&gt;plugin('headLink');
+            $headLink-&gt;getContainer()-&gt;exchangeArray(array());
+            $headLink(array(
+                'rel' =&gt; 'shortcut icon',
+                'type' =&gt; 'image/vnd.microsoft.icon',
+                'href' =&gt; '/images/Application/favicon.ico',
+            ));
+
+            $headScript = $renderer-&gt;plugin('headScript');
+            $headScript-&gt;getContainer()-&gt;exchangeArray(array());
+        }, 100);
+    }
+
+    public static function handleTagCloud($cloud, $view, $config, $locator)
+    {
+        // If we don't have a layout, don't do anything
+        if (!self::$layout) {
+            return;
+        }
+
+        // Add the rendered tag cloud to the footer
+        self::$layout-&gt;setVariable('footer', sprintf(
+            "&lt;h4&gt;Tag Cloud&lt;/h4&gt;\n&lt;div class=\"cloud\"&gt;\n%s&lt;/div&gt;\n",
+            $cloud-&gt;render()
+        ));
+    }
+}
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>I then overrode the configuration locally -- again, not in the
+module, but at the application level configuration. Specifically, I
+setup custom paths for where to write my files, custom link
+specifications, defaults for titles and author, and configuration
+for the tag cloud. I did something else, too: I told it to use
+specific templates, not the ones in the official module I'd
+created. Finally, I told it to use the callbacks above.</xhtml:p>
+<xhtml:p>And it just worked.</xhtml:p>
+<xhtml:p>I've moved all of my modules into separate projects at this
+time, and built my site from these building blocks. The site itself
+is very lean, and just consists of some basic wiring to setup
+template names and paths, configuration for services I use,
+specifications for assets. Deployment is basically pushing files to
+my repository, and running a simple script to update my site
+version and configuration; it's completely hands-off now, a goal
+I've wanted for literally years.</xhtml:p>
+<xhtml:p>And you know what? I'm enjoying tweaking my site and making it
+my own again for the first time in years.</xhtml:p>
+<xhtml:h2>My Blog Process</xhtml:h2>
+<xhtml:p>Blogging for me now is done in the following steps:</xhtml:p>
+<xhtml:ul>
+<xhtml:li>I go to my local working directory for my site.</xhtml:li>
+<xhtml:li>I create a new branch off my development branch: <xhtml:code class="hl">git checkout -b post/blahblah develop</xhtml:code></xhtml:li>
+<xhtml:li>I start editing a "post" file: <xhtml:code class="hl">vim
+content/some-new-post.php</xhtml:code></xhtml:li>
+<xhtml:li>It's a PHP file that creates an EntryEntity. I fill in some
+details, and start writing the content in plain old HTML. If I
+want, I can use Markdown or some other format, and use a PHP
+library to convert it to HTML.</xhtml:li>
+<xhtml:li>I commit the code, edit, commit again, lather, rinse, repeat
+until I like it.</xhtml:li>
+<xhtml:li>I merge it back to my development branch, and generate my blog.
+(I have a CLI tool for this: <xhtml:code class="hl">./console
+PhlyBlog:compile</xhtml:code>)</xhtml:li>
+<xhtml:li>I preview it locally, as a sanity check.</xhtml:li>
+<xhtml:li>I merge it to my master branch, and deploy.</xhtml:li>
+</xhtml:ul>
+<xhtml:p>Yes, it's less "simple" than going to an admin page in the
+browser and typing. But it allows me to craft my entries exactly
+how I want. I can have many entries being drafted at any given
+time, without needing to worry about session timeouts or accidently
+hitting a "publish" button. I can write my posts in the editor I
+want, and eliminate copy-and-paste entirely from my workflow. I
+don't have to worry about traffic bringing down my database and/or
+server. In short, it's a good fit <xhtml:em>for me</xhtml:em>.</xhtml:p>
+<xhtml:h2>An invitation</xhtml:h2>
+<xhtml:p>If you're interested in this story, I'll be talking about it,
+and showing how to develop both modules and sites built on top of
+modules this June, via a full-day tutorial at the <xhtml:a href="http://phpconference.nl">Dutch PHP Conference</xhtml:a>. Please join me,
+and a host of incredible speakers, in Amsterdam this summer!</xhtml:p>
 </xhtml:div>
     </content>
   </entry>
@@ -206,6 +1564,226 @@ the work I'd done already, and create a static blog generator.</xhtml:p>
 we been busy doing the last couple months? In a nutshell, getting
 dirty with view layers, database abstraction, and
 configuration.</xhtml:p>
+<xhtml:h2>View Layers</xhtml:h2>
+<xhtml:p>Working with and on Zend Framework as long as I have, one thing
+that has always been a bit of a thorn in my side is how difficult
+it is to specify differing view strategies based on arbitrary
+criteria. For instance, if I want to return JSON, or XML, how can I
+do so? The "answer" in ZF1 is to use the ContextSwitch action
+helper, which basically simply overloads the filename suffix used
+for the view to include the format type -- ".js.phtml",
+".xml.phtml". This works, but it's a bit of a hack. (Full
+disclosure: I authored the hack.)</xhtml:p>
+<xhtml:p>Another problem I've always had is that rendering has occurred
+in multiple places of request execution. Action view scripts are
+rendered immediately following the action's execution, layouts are
+rendered at another time entirely. Using <xhtml:code>Zend_View</xhtml:code> as
+the renderer, this is fine, but if you want to switch to a solution
+that is capable of rendering the entire payload, including "child"
+views, at once, it becomes quite difficult to work around.</xhtml:p>
+<xhtml:p>For Zend Framework 2, I <xhtml:a href="http://framework.zend.com/wiki/display/ZFDEV2/RFC+-+View+Layer">proposed
+a new view layer</xhtml:a>, which helps mitigate some of these factors.
+As part of the work for this proposal, I reorganized the component
+slightly to separate it into "helpers", "renderers", and
+"resolvers" -- the latter are used to resolve a template to a
+renderer-specific resource. Additionally, I introduced a new
+concept into the framework, that of "View Models". This is a
+concept borrowed from a number of different places, but most
+notably Microsoft, who implemented them as part of a new pattern
+entitled "Model-View-ViewModel". In this pattern, you bind data to
+a "ViewModel" object, which can contain optional presentation
+logic, and pass the ViewModel to the View. The View then grabs data
+from the ViewModel to present to the client.</xhtml:p>
+<xhtml:p>The biggest change, however, was introducing a "gateway" class,
+<xhtml:code>Zend\View\View</xhtml:code>, with the responsibility of martialling
+a renderer and injecting a response object. The code for this
+leverages the EventManager component to allow attaching
+"strategies" for selecting a renderer. The selected renderer is
+then used to render the template present in the ViewModel passed to
+the View object. Once complete, we loop through response
+strategies, where the results of rendering can be injected into the
+response. This also provides an ideal location for adding headers,
+such as HTTP caching headers.</xhtml:p>
+<xhtml:p>Finally, I introduced a number of MVC listeners for view
+integration. Some of these are quite basic -- such as ensuring we
+have a listener that will trigger the view, and a default rendering
+strategy. Others help streamline the MVC - while we recommend
+returning ViewModel objects from your controllers, with templates
+set, default listeners provided will create ViewModels from
+returned associative arrays, and inject a template name based on
+the requested controller and action.</xhtml:p>
+<xhtml:p>What do you really need to know from the outset? Not much!</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code lang="php" xml:lang="php">
+namespace Sample\Controller;
+
+use Zend\Mvc\Controller\ActionController;
+
+class HelloController extends ActionController
+{
+    public function worldAction()
+    {
+        // Implicitly creates a ViewModel with the below variables, and sets
+        // the template to hello/world (:controller/:action)
+        return array(
+            'message' =&gt; 'Hello world!',
+        );
+    }
+}
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>Basically, the most common use case is the one you'd expect to
+work. The fun really starts when you want to perform other common
+tasks: change the layout, disable the layout, specify an alternate
+template, add additional templates to render and aggregate in the
+layout, and more. In all cases, you work with ViewModels, and then
+let the renderer worry about how to represent them.</xhtml:p>
+<xhtml:p>For more details, <xhtml:a href="http://packages.zendframework.com/docs/latest/manual/en/zend.view.html#zend.view.quick-start">
+read the Zend\View quickstart</xhtml:a>.</xhtml:p>
+<xhtml:h2>Database Abstraction</xhtml:h2>
+<xhtml:p><xhtml:code>Zend_Db</xhtml:code> provides a ton of capabilities in Zend
+Framework v1. However, over the years, we've discovered some design
+issues both in the code itself as well as the tests which have made
+a number of features difficult to support, and others difficult if
+not impossible to implement. As <xhtml:a href="http://ralphschindler.com/">Ralph</xhtml:a> noted in his <xhtml:a href="http://framework.zend.com/wiki/display/ZFDEV2/RFC+-+Zend+Db">DB
+refactoring RFC</xhtml:a>,</xhtml:p>
+<xhtml:blockquote>Each new feature request generally comes with it's own
+concerns that apply to the project as a whole: "How useful is the
+feature?", "How does this feature impact performance?", "How wide
+spread is the need for this feature?". Generally, features are
+added to the core component bloating the core component and adding
+a new set of code that has to be maintained.</xhtml:blockquote>
+<xhtml:p>The iteration for beta3 was to get the basic structure up and
+running for drivers and adapters (drivers are the low-level
+connections, adapters provide basic abstraction around common
+operations), resultset abstraction, the basic infrastructure for
+SQL abstraction, metadata support, and a table/row data gateway
+implementation. All operations were tested on PDO_Sqlite, mysqli,
+and sqlsrv; preliminary reports indicate most PDO drivers work out
+of the box at this point.</xhtml:p>
+<xhtml:p>What does it look like?</xhtml:p>
+<xhtml:h4>Inserting data</xhtml:h4>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code lang="php" xml:lang="php">
+// where $adapter is an adapter object
+$qi = function($name) use ($adapter) { 
+    return $adapter-&gt;platform-&gt;quoteIdentifier($name); 
+};
+$fp = function($name) use ($adapter) { 
+    return $adapter-&gt;driver-&gt;formatParameterName($name); 
+};
+
+$sql = 'INSERT INTO '
+    . $qi('artist')
+    . ' (' . $qi('name') . ', ' . $qi('history') . ') VALUES ('
+    . $fp('name') . ', ' . $fp('history') . ')';
+
+$statement = $adapter-&gt;query($sql);
+
+$parameters = array(
+    'name'    =&gt; 'New Artist',
+    'history' =&gt; 'This is the history',
+);
+
+$statement-&gt;execute($parameters);
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:h4>Selecting data</xhtml:h4>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code lang="php" xml:lang="php">
+// where $adapter is an adapter object
+$qi = function($name) use ($adapter) { 
+    return $adapter-&gt;platform-&gt;quoteIdentifier($name); 
+};
+$fp = function($name) use ($adapter) { 
+    return $adapter-&gt;driver-&gt;formatParameterName($name); 
+};
+
+$sql = 'SELECT * FROM ' . $qi('artist');
+$statement = $adapter-&gt;query($sql);
+$results = $statement-&gt;execute(array());
+
+foreach ($results as $row) {
+    var_export($row);
+}
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:h4>TableGateway</xhtml:h4>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code lang="php" xml:lang="php">
+// where $adapter is an adapter object
+$artistTable = new TableGateway('artist', $adapter);
+$rowset = $artistTable-&gt;select(function (Select $select) {
+    $select-&gt;where-&gt;like('name', 'Bar%');
+});
+$row = $rowset-&gt;current();
+echo $row-&gt;name;
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>During my review of the code, which included assisting Ralph
+with testing, I was impressed with the heavy level of de-coupling
+present, and how easily it will allow us to support things like
+platform-specific SQL, custom rowsets, and more.</xhtml:p>
+<xhtml:p>For more details, <xhtml:a href="http://packages.zendframework.com/docs/latest/manual/en/zend.db.html">
+read the Zend\Db documentation</xhtml:a>.</xhtml:p>
+<xhtml:h2>Configuration</xhtml:h2>
+<xhtml:p>Configuration should be very fast. Interestingly, developers
+often also expect configuration to support a multitude of features
+-- key translation, section inheritance, importing of additional
+configuration files, constant substitution, compatibility with many
+configuration formats, and more. These things tend to work in
+direct opposition to performance goals.</xhtml:p>
+<xhtml:p>Several ZF2 community members decided to tackle these issues.
+Their goal was to create a streamlined core for
+<xhtml:code>Zend\Config</xhtml:code>, but provide a variety of plugins and
+filters to provide the rich features many users have come to
+expect. The result is a very nice, de-coupled component.</xhtml:p>
+<xhtml:p>Basic usage remains the same as it always has. However, without
+enabling any optional features, you will not get things such as
+constant or token substitution; to get that, you can use the new
+Processor API:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code lang="php" xml:lang="php">
+// Get our config object; second argument tells the factory to return
+// a Config object, vs. an array
+$config = Zend\Config\Factory::fromFile($pathToConfigFile, true);
+
+// Process values, substituting constant values whenever a defined constant name 
+// is encountered
+$constants = new Zend\Config\Processor\Constant();
+$constants-&gt;process($config);
+
+// Define some tokens to substitute
+$tokens = new Zend\Config\Processor\Token();
+$tokens-&gt;addToken('TOKEN', 'bar');
+$tokens-&gt;process($config);
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>This API makes performance-intensive features explicitly opt-in,
+leaving the core functionality intact and fast.</xhtml:p>
+<xhtml:p>For more details, <xhtml:a href="http://packages.zendframework.com/docs/latest/manual/en/zend.config.html">
+read the Zend\Config documentation</xhtml:a>.</xhtml:p>
+<xhtml:h2>Fin!</xhtml:h2>
+<xhtml:p>I've only gone into depth on those features that had big
+iterations for the beta release; plenty more work went into it --
+as I noted in the release announcement, we handled around 200 pull
+requests over a 2 month period -- this is roughly double what we
+accomplished for beta2 over a similar timeframe! I'm quite
+impressed and humbled by the spirit of the ZF2 community and
+collaborators.</xhtml:p>
+<xhtml:p>If you haven't tried Zend Framework 2 yet, please give it a
+spin! While there's still work to be done, for many -- most,
+potentially -- use cases, the functionality necessary is present
+and working very well. Trying it now, and building real
+functionality on it now, is not only possible, but will allow you
+to shape what ZF2 looks like when we're ready to go stable.</xhtml:p>
+<xhtml:p><xhtml:a href="http://packages.zendframework.com">Download it
+today!</xhtml:a></xhtml:p>
 </xhtml:div>
     </content>
   </entry>
@@ -226,6 +1804,70 @@ module infrastructure. The basic idea behind modules is to allow
 developers to both create and consume re-usable application
 functionality -- anything from packaging common assets such as CSS
 and JavaScript to providing MVC application classes.</xhtml:p>
+<xhtml:p>As an example, for my own site, I've created: a "Contact" module
+for rendering and processing contact forms; a "SkeletonCSS" module
+for dropping in <xhtml:a href="http://getskeleton.com">Skeleton</xhtml:a> into
+my sites; a "CommonResource" module with a very, very basic data
+mapper implementation, and a "Blog" module that consumes it to
+deliver the very blog you're reading now.</xhtml:p>
+<xhtml:p>But the <xhtml:em>real</xhtml:em> goal of the module infrastructure is for
+developers to <xhtml:em>share</xhtml:em> their modules, so that other
+developers don't need to develop that very same functionality for
+their own site. And to my delight, that's already happening!</xhtml:p>
+<xhtml:p>So, here's a list of some of the ZF2 modules I've found in the
+wild.</xhtml:p>
+<xhtml:ul>
+<xhtml:li><xhtml:a href="http://bit.ly/yVBXkw">SkeletonCss</xhtml:a>. I mentioned
+this one already, but it's a version of SkeletonCss, an adaptive
+response CSS/JS framework, packaged for easy consumption as a ZF2
+module. The git URI is "git://mwop.net/SkeletonCss.git".</xhtml:li>
+<xhtml:li><xhtml:a href="https://github.com/doctrine/DoctrineModule">DoctrineModule</xhtml:a>.
+One of the most frequently asked questions I get is, "Will ZF2 use
+Doctrine?" My answer has been that we'll provide a bridge -- but
+the cool thing is that the Doctrine project has already decided to
+do it. Spear-headed by an enthusiastic ZF2
+contributor/collaborator, <xhtml:a href="http://twitter.com/SpiffyJr">Kyle Spraggs</xhtml:a>, this module
+provides the base functionality for integrating Doctrine 2 into
+your ZF2 site (primarily access to the base/common functionality).
+Two other modules provide additional functionality: <xhtml:a href="https://github.com/doctrine/DoctrineORMModule">DoctrineORMModule</xhtml:a>
+provides the ability to interact with the Doctrine 2 ORM, and
+<xhtml:a href="https://github.com/doctrine/DoctrineMongoODMModule">DoctrineMongoODMModule</xhtml:a>
+provides the ability to interact with and consume the Doctrine 2
+Object Document Mapper for MongoDB.</xhtml:li>
+<xhtml:li><xhtml:a href="https://github.com/EvanDotPro/EdpSuperluminal">EdpSuperluminal</xhtml:a>.
+This module can be used to cache all classes you use in your
+application to a single include file -- giving you a performance
+boost.</xhtml:li>
+<xhtml:li><xhtml:a href="https://github.com/ZF-Commons/ZfcUser">ZfcUser</xhtml:a>.
+This module was begun by <xhtml:a href="http://evan.pro">Evan Coury</xhtml:a>,
+the lead developer behind ZF2's module system; its purpose is to
+provide a drop-in solution for registering and authenticating
+users. The module itself provides functionality consuming Zend\Db;
+however, several other modules are also offered to provide other
+persistence layers, including a <xhtml:a href="https://github.com/ZF-Commons/ZfcUserDoctrineORM">ZfcUserDoctrineORM</xhtml:a>
+module and a <xhtml:a href="https://github.com/ZF-Commons/ZfcUserDoctrineORM">ZfcUserDoctrineMongoODM</xhtml:a>
+module; more are planned. The "Zfc" namespace is used because Evan
+realized he and several others were working on similar solutions,
+and felt that collaboration would lead to a better solution than
+each would develop individually; this in turn led to the creation
+of a "Zend Framework Commons" organization on GitHub, with the goal
+of providing high-quality modules solving common application
+problems.</xhtml:li>
+<xhtml:li><xhtml:a href="https://github.com/widmogrod/zf2-assetic-module">AsseticBundle</xhtml:a>.
+This is a module providing integration with the excellent <xhtml:a href="https://github.com/kriswallsmith/assetic">Assetic</xhtml:a> asset
+management framework.</xhtml:li>
+<xhtml:li><xhtml:a href="https://github.com/widmogrod/zf2-twitter-bootstrap-module">TwitterBootstrap</xhtml:a>.
+Many developers are gravitating to the <xhtml:a href="https://github.com/twitter/bootstrap">Twitter Bootstrap</xhtml:a>
+project for CSS layouts. This module depends on the AsseticBundle
+already listed above, and provides both Twitter Bootstrap as well
+as integration with the current (ZF1) incarnation of
+Zend\Form.</xhtml:li>
+</xhtml:ul>
+<xhtml:p>I've seen a number of others as well, and know of more on their
+way (as an example, a ZfcAcl module to complement the ZfcUser
+module). Writing modules is incredibly easy, and a great way to
+both learn ZF2 and collaborate and share with other developers.</xhtml:p>
+<xhtml:p>Where are <xhtml:em>your</xhtml:em> modules?</xhtml:p>
 </xhtml:div>
     </content>
   </entry>
@@ -263,6 +1905,109 @@ simply so they can read it and follow its flow.</xhtml:p>
 <xhtml:p>Additionally, TMTOWTDI can actually be a foe of simple, elegant
 solutions.</xhtml:p>
 <xhtml:p>Why do I claim this?</xhtml:p>
+<xhtml:p>Recently, discussing module structure in Zend Framework 2, some
+folks were arguing that our recommended directory structure invokes
+the <xhtml:a href="http://en.wikipedia.org/wiki/YAGNI">YAGNI</xhtml:a>
+principle: You Ain't Gonna Need It. Our recommendation is this:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+ModuleName/
+    autoload_classmap.php
+    Module.php
+    config/
+        module.config.php
+        (other config files)
+    public/
+        css/
+        images/
+        js/
+    src/
+        ModuleName/
+            (source files)
+    test/
+    view/
+</xhtml:pre></xhtml:div>
+<xhtml:p>The argument is that since most modules implement a single
+namespace, and because we recommend following <xhtml:a href="https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md">
+PSR-0</xhtml:a> for autoloaders, it makes sense to simply have the source
+files directly under the module directory.</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+ModuleName/
+    autoload_classmap.php
+    Module.php
+    (other source files)
+    config/
+        module.config.php
+        (other config files)
+    public/
+    test/
+    view/
+</xhtml:pre></xhtml:div>
+<xhtml:p>The argument myself and others made was that it makes sense to
+group the files by responsibility. However, the module system
+ultimately <xhtml:em>doesn't care</xhtml:em> how you organize the module --
+we've embraced TMTOWTDI, and our only requirement is that for your
+module to be consumed, you must define a
+<xhtml:code>ModuleName\Module</xhtml:code> class, and notify the module manager
+how to find it. Anything goes.</xhtml:p>
+<xhtml:p>How does that bolster my argument about the importance of
+conventions? It doesn't. What does is what following the
+recommended structure enabled me to do.</xhtml:p>
+<xhtml:p>One common concern identified with having a re-usable module
+system is that you should be able to expose public assets easily:
+things like module-specific CSS or JavaScript, or even images. The
+first question that arises when you consider this is: where do I
+put them in my module? That's why the recommendation includes a
+<xhtml:code>public</xhtml:code> directory. In fact, the recommendation goes a
+step further, and suggests <xhtml:code>css</xhtml:code>, <xhtml:code>images</xhtml:code>,
+and <xhtml:code>js</xhtml:code> directories as well.</xhtml:p>
+<xhtml:p>Now, your modules are typically <xhtml:em>outside</xhtml:em> the document
+root. This is a rudimentary and fundamental security measure, and
+also simplifies deployment to a degree -- you don't need to worry
+about telling the web server about what it <xhtml:em>shouldn't</xhtml:em>
+serve. But if the modules are outside the document root, how can I
+expose their public assets?</xhtml:p>
+<xhtml:p>There are a two possibilities that immediately jump to mind:</xhtml:p>
+<xhtml:ul>
+<xhtml:li>Install scripts for modules, which copy the files into the
+document root.</xhtml:li>
+<xhtml:li>Symlink the files into the document root.</xhtml:li>
+</xhtml:ul>
+<xhtml:p>Both are valid, and easy to accomplish. Both raise the same
+question: where, exactly? What if multiple modules have public
+assets named the same? how do I refer to my assets withing things
+like view scripts?</xhtml:p>
+<xhtml:p>This is where having a convention starts to make sense: having a
+convention should answer these questions unambiguously.</xhtml:p>
+<xhtml:p>My answer: public access should be at
+<xhtml:code>/css/ModuleName/stylesheetname</xhtml:code>, or
+<xhtml:code>/js/ModuleName/scriptname</xhtml:code> or
+<xhtml:code>/images/Modulename/imagename</xhtml:code>. It's a dirt-simple rule
+that fulfills the use cases.</xhtml:p>
+<xhtml:p>However, I'm now stuck with having to develop either install
+scripts or remembering to create symlinks -- ugh. And that's where
+having conventions led me to a simple, elegant solution.</xhtml:p>
+<xhtml:p>I added one line to my Apache vhost definition:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+AliasMatch /(css|js|images)/([^/]+)/(.*) /path/to/module/$2/public/$1/$3
+</xhtml:pre></xhtml:div>
+<xhtml:p>The translation:</xhtml:p>
+<xhtml:blockquote>When I come across a path to CSS, JS, or image files
+that are in a subdirectory, alias it to the corresponding public
+asset of the matched module directory.</xhtml:blockquote>
+<xhtml:p>I dropped this into my vhost, restarted Apache, and now not only
+were the assets I'd created already served, but any new ones I
+create are immediately available as well. Having a convention
+actually simplified my choices and my solutions.</xhtml:p>
+<xhtml:p>Rapid application development at its finest.</xhtml:p>
+<xhtml:p>My point is this: there will always be more than one way to do
+things when you're programming, and you may not always agree with
+the decisions your team has made, or the component library or
+framework you're using has made. However, if you poke around a
+little and play within those confines, you may find that those
+decisions make other decisions easier, or disappear altogether.</xhtml:p>
 </xhtml:div>
     </content>
   </entry>
@@ -311,30 +2056,457 @@ pages</xhtml:li>
 <xhtml:p>Furthermore, if these are developed well and discretely, they
 can be <xhtml:em>re-used</xhtml:em> between different applications!</xhtml:p>
 <xhtml:p>So, let's dive into ZF2 modules!</xhtml:p>
-</xhtml:div>
-    </content>
-  </entry>
-  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
-    <title type="html"><![CDATA[Using the ZF2 EventManager]]></title>
-    <published>2011-09-12T20:45:13+0000</published>
-    <updated>2011-10-06T19:58:39+0000</updated>
-    <link rel="alternate" type="text/html" href="http://mwop.net/blog/266-Using-the-ZF2-EventManager.html"/>
-    <id>http://mwop.net/blog/266-Using-the-ZF2-EventManager.html</id>
-    <author>
-      <name>Matthew Weier O'Phinney</name>
-      <email>me@mwop.net</email>
-      <uri>http://mwop.net</uri>
-    </author>
-    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
-      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>Earlier this year, I <xhtml:a href="http://weierophinney.net/matthew/archives/251-Aspects,-Filters,-and-Signals,-Oh,-My!.html">
-wrote about Aspects, Intercepting Filters, Signal Slots, and
-Events</xhtml:a>, in order to compare these similar approaches to
-handling both asychronous programming as well as handling
-cross-cutting application concerns in a cohesive way.</xhtml:p>
-<xhtml:p>I took the research I did for that article, and applied it to
-what was then a "SignalSlot" implementation within Zend Framework
-2, and refactored that work into a new "EventManager" component.
-This article is intended to get you up and running with it.</xhtml:p>
+<xhtml:h2 id="toc_1.2">What is a module?</xhtml:h2>
+<xhtml:p>In ZF2, a module is simply a namespaced directory, with a single
+"Module" class under it; no more, and no less, is required.</xhtml:p>
+<xhtml:p>So, as an example:</xhtml:p>
+<xhtml:pre>
+modules/
+    FooBlog/
+        Module.php
+    FooPages/
+        Module.php
+</xhtml:pre>
+<xhtml:p>The above shows two modules, "FooBlog" and "FooPages". The
+"Module.php" file under each contains a single "Module" class,
+namespaced per the module: <xhtml:code>FooBlog\Module</xhtml:code> and
+<xhtml:code>FooPages\Module</xhtml:code>, respectively.</xhtml:p>
+<xhtml:p>This is the one and only requirement of modules; you can
+structure them however you want from here. However, we <xhtml:em>do</xhtml:em>
+have a <xhtml:em>recommended</xhtml:em> directory structure:</xhtml:p>
+<xhtml:pre>
+modules/
+    SpinDoctor/
+        Module.php
+        configs/
+            module.config.php
+        public/
+            images/
+            css/
+                spin-doctor.css
+            js/
+                spin-doctor.js
+        src/
+            SpinDoctor/
+                Controller/
+                    SpinDoctorController.php
+                    DiscJockeyController.php
+                Form/
+                    Request.php
+        tests/
+            bootstrap.php
+            phpunit.xml
+            SpinDoctor/
+                Controller/
+                    SpinDoctorControllerTest.php
+                    DiscJockeyControllerTest.php
+</xhtml:pre>
+<xhtml:p>The important bits from above:</xhtml:p>
+<xhtml:ul>
+<xhtml:li>Configuration goes in a "configs" directory.</xhtml:li>
+<xhtml:li>Public assets, such as javascript, CSS, and images, go in a
+"public" directory.</xhtml:li>
+<xhtml:li>PHP source code goes in a "src" directory; code under that
+directory should follow <xhtml:a href="https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md">
+PSR-0 standard structure</xhtml:a>.</xhtml:li>
+<xhtml:li>Unit tests should go in a "tests" directory, which should also
+contain your PHPUnit configuration and bootstrapping.</xhtml:li>
+</xhtml:ul>
+<xhtml:p>Again, the above is simply a <xhtml:em>recommendation</xhtml:em>. Modules in
+that structure clearly dileneate the purpose of each subtree,
+allowing developers to easily introspect them.</xhtml:p>
+<xhtml:h2 id="toc_1.3">The Module class</xhtml:h2>
+<xhtml:p>Now that we've discussed the minimum requirements for creating a
+module and its structure, let's discuss the minimum requirement:
+the Module class.</xhtml:p>
+<xhtml:p>The module class, as noted previously, should exist in the
+module's namespace. Usually this will be equivalent to the module's
+directory name. Beyond that, however, there are no real
+requirements, other than the constructor should not require any
+arguments.</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code lang="php" xml:lang="php">
+namespace FooBlog;
+
+class Module
+{
+}
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>So, what do module classes do, then?</xhtml:p>
+<xhtml:p>The module manager (class <xhtml:code>Zend\Module\Manager</xhtml:code>)
+fulfills three key purposes:</xhtml:p>
+<xhtml:ul>
+<xhtml:li>It aggregates the enabled modules (allowing you to loop over
+the classes manually).</xhtml:li>
+<xhtml:li>It aggregates configuration from each module.</xhtml:li>
+<xhtml:li>It triggers module initialization, if any.</xhtml:li>
+</xhtml:ul>
+<xhtml:p>I'm going to skip the first item and move directly to the
+configuration aspect.</xhtml:p>
+<xhtml:p>Most applications require some sort of configuration. In an MVC
+application, this may include routing information, and likely some
+dependency injection configuration. In both cases, you likely don't
+want to configure anything until you have the full configuration
+available -- which means all modules must be loaded.</xhtml:p>
+<xhtml:p>The module manager does this for you. It loops over all modules
+it knows about, and then merges their configuration into a single
+configuration object. To do this, it checks each Module class for a
+<xhtml:code>getConfig()</xhtml:code> method.</xhtml:p>
+<xhtml:p>The <xhtml:code>getConfig()</xhtml:code> method simply needs to return an
+<xhtml:code>array</xhtml:code> or <xhtml:code>Traversable</xhtml:code> object. This data
+structure should have "environments" at the top level -- the
+"production", "staging", "testing", and "development" keys that
+you're used to with ZF1 and <xhtml:code>Zend_Config</xhtml:code>. Once
+returned, the module manager merges it with its master
+configuration so you can grab it again later.</xhtml:p>
+<xhtml:p>Typically, you should provide the following in your
+configuration:</xhtml:p>
+<xhtml:ul>
+<xhtml:li>Dependency Injection configuration</xhtml:li>
+<xhtml:li>Routing configuration</xhtml:li>
+<xhtml:li>If you have module-specific configuration that falls outside
+those, the module-specific configuration. We recommend namespacing
+these keys after the module name: <xhtml:code>foo_blog.apikey =
+"..."</xhtml:code></xhtml:li>
+</xhtml:ul>
+<xhtml:p>The easiest way to provide configuration? Define it as an array,
+and return it from a PHP file -- usually your
+<xhtml:code>configs/module.config.php</xhtml:code> file. Then your
+<xhtml:code>getConfig()</xhtml:code> method can be quite simple:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code lang="php" xml:lang="php">
+public function getConfig()
+{
+    return include __DIR__ . '/configs/module.config.php';
+}
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>In the original bullet points covering the purpose of the module
+manager, the third bullet point was about module initialization.
+Quite often you may need to provide additional initialization once
+the full configuration is known and the application is bootstrapped
+-- meaning the router and locator are primed and ready. Some
+examples of things you might do:</xhtml:p>
+<xhtml:ul>
+<xhtml:li>Setup event listeners. Often, these require configured objects,
+and thus need access to the locator.</xhtml:li>
+<xhtml:li>Configure plugins. Often, you may need to inject plugins with
+objects managed by the locator. As an example, the
+<xhtml:code>url()</xhtml:code> view helper needs a configured router in order
+to work.</xhtml:li>
+</xhtml:ul>
+<xhtml:p>The way to do these tasks is to subscribe to the bootstrap
+object's "bootstrap" event:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code lang="php" xml:lang="php">
+$events = StaticEventManager::getInstance();
+$events-&gt;attach('bootstrap', 'bootstrap', array($this, 'doMoarInit'));
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>That event gets the application and module manager objects as
+parameters, which gives you access to everything you might possibly
+need.</xhtml:p>
+<xhtml:p>The question is: where do I do this? The answer: the module
+manager will call a Module class's <xhtml:code>init()</xhtml:code> method if
+found. So, with that in hand, you'll have the following:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code lang="php" xml:lang="php">
+namespace FooBlog;
+
+use Zend\EventManager\StaticEventManager,
+    Zend\Module\Manager as ModuleManager
+
+class Module
+{
+    public function init(ModuleManager $manager)
+    {
+        $events = StaticEventManager::getInstance();
+        $events-&gt;attach('bootstrap', 'bootstrap', array($this, 'doMoarInit'));
+    }
+    
+    public function doMoarInit($e)
+    {
+        $application = $e-&gt;getParam('application');
+        $modules     = $e-&gt;getParam('modules');
+        
+        $locator = $application-&gt;getLocator();
+        $router  = $application-&gt;getRouter();
+        $config  = $modules-&gt;getMergedConfig();
+        
+        // do something with the above!
+    }
+}
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>As you can see, when the bootstrap event is triggered, you have
+access to the <xhtml:code>Zend\Mvc\Application</xhtml:code> instance as well as
+the <xhtml:code>Zend\Module\Manager</xhtml:code> instance, giving you access to
+your configured locator and router, as well as merged configuration
+from all modules! Basically, you have everything you could possibly
+want to access right at your fingertips.</xhtml:p>
+<xhtml:p>What else might you want to do during <xhtml:code>init()</xhtml:code>? One
+very, very important thing: setup autoloading for the PHP classes
+in your module!</xhtml:p>
+<xhtml:p>ZF2 offers several different autoloaders to provide different
+strategies geared towards ease of development to production speed.
+For beta1, they were refactored slightly to make them even more
+useful. The primary change was to the
+<xhtml:code>AutoloaderFactory</xhtml:code>, to allow it to keep single
+instances of each autoloader it handles, and thus allow specifying
+additional configuration for each. As such, this means that if you
+use the <xhtml:code>AutoloaderFactory</xhtml:code>, you'll only ever have one
+instance of a <xhtml:code>ClassMapAutoloader</xhtml:code> or
+<xhtml:code>StandardAutoloader</xhtml:code> -- and this means each module can
+simply add to their configuration.</xhtml:p>
+<xhtml:p>As such, here's a typical autoloading boilerplate:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code lang="php" xml:lang="php">
+namespace FooBlog;
+
+use Zend\EventManager\StaticEventManager,
+    Zend\Loader\AutoloaderFactory,
+    Zend\Module\Manager as ModuleManager
+
+class Module
+{
+    public function init(ModuleManager $manager)
+    {
+        $this-&gt;initializeAutoloader();
+        // ...
+    }
+    
+    public function initializeAutoloader()
+    {
+        AutoloaderFactory::factory(array(
+            'Zend\Loader\ClassMapAutoloader' =&gt; array(
+                include __DIR__ .  '/autoload_classmap.php',
+            ),
+            'Zend\Loader\StandardAutoloader' =&gt; array(
+                'namespaces' =&gt; array(
+                    __NAMESPACE__ =&gt; __DIR__ . '/src/' .  __NAMESPACE__,
+                ),
+            ),
+        ));
+    }
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>During development, you can have
+<xhtml:code>autoload_classmap.php</xhtml:code> return an empty array, but then
+during production, you can generate it based on the classes in your
+module. By having the <xhtml:code>StandardAutoloader</xhtml:code> in place, you
+have a backup solution until the classmap is updated.</xhtml:p>
+<xhtml:p>Now that you know how your module can provide configuration, and
+how it can tie into bootstrapping, I can finally cover the original
+point: the module manager aggregates enabled modules. This allows
+modules to "opt-in" to additional features of an application. As an
+example, you could make modules "ACL aware", and have a "security"
+module grab module-specific ACLs:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code lang="php" xml:lang="php">
+    public function initializeAcls($e)
+    {
+        $this-&gt;acl = new Acl;
+        $modules   = $e-&gt;getParam('modules');
+        foreach ($modules-&gt;getLoadedModules() as $module) {
+            if (!method_exists($module, 'getAcl')) {
+                continue;
+            }
+            $this-&gt;processModuleAcl($module-&gt;getAcl());
+        }
+    }
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>This is an immensely powerful technique, and I'm sure we'll see
+a lot of creative uses for it in the future!</xhtml:p>
+<xhtml:h2 id="toc_1.4">Composing modules into your application</xhtml:h2>
+<xhtml:p>So, writing modules should be easy, right? Right?!?!?</xhtml:p>
+<xhtml:p>The other trick, then, is telling the module manager about your
+modules. There's a reason I've used phrases like, "enabled modules"
+"modules it [the module manager] knows about," and such: the module
+manager is opt-in. You have to <xhtml:em>tell</xhtml:em> it what modules it
+will load.</xhtml:p>
+<xhtml:p>Some may say, "Why? Isn't that against rapid application
+development?" Well, yes and no. Consider this: what if you discover
+a security issue in a module? You could remove it entirely from the
+repository, sure. Or you could simply update the module manager
+configuration so it doesn't load it, and then start testing and
+patching it in place; when done, all you need to do is re-enable
+it.</xhtml:p>
+<xhtml:p>Loading modules is a two-stage process. First, the system needs
+to know where and how to locate module classes. Second, it needs to
+actually load them. We have two components surrounding this:</xhtml:p>
+<xhtml:ul>
+<xhtml:li><xhtml:code>Zend\Loader\ModuleAutoloader</xhtml:code></xhtml:li>
+<xhtml:li><xhtml:code>Zend\Module\Manager</xhtml:code></xhtml:li>
+</xhtml:ul>
+<xhtml:p>The <xhtml:code>ModuleAutoloader</xhtml:code> takes a list of paths, or
+associations of module names to paths, and uses that information to
+resolve <xhtml:code>Module</xhtml:code> classes. Often, modules will live under
+a single directory, and configuration is as simple as this:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code lang="php" xml:lang="php">
+$loader = new Zend\Loader\ModuleAutoloader(array(
+    __DIR__ . '/../modules',
+));
+$loader-&gt;register();
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>You can specify multiple paths, or explicit module:directory
+pairs:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code lang="php" xml:lang="php">
+$loader = new Zend\Loader\ModuleAutoloader(array(
+    __DIR__ . '/../vendors',
+    __DIR__ . '/../modules',
+    'User' =&gt; __DIR__ . '/../vendors/EdpUser-0.1.0',
+));
+$loader-&gt;register();
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>In the above, the last will look for a <xhtml:code>User\Module</xhtml:code>
+class in the file <xhtml:code>vendors/EdpUser-0.1.0/Module.php</xhtml:code>,
+but expect that modules found in the other two directories
+specified will always have a 1:1 correlation between the directory
+name and module namespace.</xhtml:p>
+<xhtml:p>Once you have your <xhtml:code>ModuleAutoloader</xhtml:code> in place, you
+can invoke the module manager, and inform it of what modules it
+should load. Let's say that we have the following modules:</xhtml:p>
+<xhtml:pre>
+modules/
+    Application/
+        Module.php
+    Security/
+        Module.php
+vendors/
+    FooBlog/
+        Module.php
+    SpinDoctor/
+        Module.php
+</xhtml:pre>
+<xhtml:p>and we wanted to load the "Application", "Security", and
+"FooBlog" modules. Let's also assume we've configured the
+<xhtml:code>ModuleAutoloader</xhtml:code> correctly already. We can then do
+this:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code lang="php" xml:lang="php">
+$manager = new Zend\Module\Manager(array(
+    'Application',
+    'Security',
+    'FooBlog',
+));
+$manager-&gt;loadModules();
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>We're done! If you were to do some profiling and introspection
+at this point, you'd see that the "SpinDoctor" module will not be
+represented -- only those modules we've configured.</xhtml:p>
+<xhtml:p>To make the story easy and reduce boilerplate, the <xhtml:a href="https://github.com/zendframework/ZendSkeletonApplication">ZendSkeletonApplication</xhtml:a>
+repository provides a basic bootstrap for you in
+<xhtml:code>public/index.php</xhtml:code>. This file consumes
+<xhtml:code>configs/application.config.php</xhtml:code>, in which you specify
+two keys, "module_paths" and "modules":</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code lang="php" xml:lang="php">
+return array(
+    'module_paths' =&gt; array(
+        realpath(__DIR__ . '/../modules'),
+        realpath(__DIR__ . '/../vendors'),
+    ),
+    'modules' =&gt; array(
+        'Application',
+        'Security',
+        'FooBlog',
+    ),
+);
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>It doesn't get much simpler at this point.</xhtml:p>
+<xhtml:h2 id="toc_1.5">Tips and Tricks</xhtml:h2>
+<xhtml:p>One trick I've learned deals with how and when modules are
+loaded. In the previous section, I introduced the module manager
+and how it's notified of what modules we're composing in this
+application. One interesting thing is that modules are processed in
+the order in which they are provided in your configuration. This
+means that the configuration is merged in that order as well.</xhtml:p>
+<xhtml:p>The trick then, is this: if you want to override configuration
+settings, don't do it in the modules; create a special module that
+loads last to do it!</xhtml:p>
+<xhtml:p>So, consider this module class:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code lang="php" xml:lang="php">
+namespace Local;
+
+class Module
+{
+    public function getConfig()
+    {
+        return include __DIR__ . '/configs/module.config.php';
+    }
+}
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>We then create a configuration file in
+<xhtml:code>configs/module.config.php</xhtml:code>, and specify any
+configuration overrides we want there!</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code lang="php" xml:lang="php">
+return array(
+    'production' =&gt; array(
+        'di' =&gt; 'alias' =&gt; array(
+            'view' =&gt; 'My\Custom\Renderer',
+        ),
+    ),
+);
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>Then, in our <xhtml:code>configs/application.config.php</xhtml:code>, we
+simply enable this module as the last in our list:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code lang="php" xml:lang="php">
+return array(
+    // ...
+    'modules' =&gt; array(
+        'Application',
+        'Security',
+        'FooBlog',
+        'Local',
+    ),
+);
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>Done!</xhtml:p>
+<xhtml:h2 id="toc_1.6">Fin</xhtml:h2>
+<xhtml:p>Modules in ZF2 are incredibly flexible and powerful. I didn't
+even cover some of the features -- such as the ability to use phar
+files (or any format phar supports) as modules, or the ability to
+cache module configuration, etc. Hopefully, however, I've outlined
+their simplicity for you, so you can start harnessing their power
+for yourself!</xhtml:p>
+<xhtml:h3 id="toc_1.6.1">Disclaimer</xhtml:h3>
+<xhtml:p>ZF2 is in beta stage at this time, and Zend Framework is not
+guaranteeing BC between beta releases. If you choose to test or
+build on ZF2, be aware that you may need to make changes between
+releases. That said, please <xhtml:em>do</xhtml:em> test, and provide your
+feedback!</xhtml:p>
+<xhtml:h3 id="toc_1.6.2">Updates</xhtml:h3>
+<xhtml:ul>
+<xhtml:li><xhtml:b>2011-11-07 14:30 CST</xhtml:b>: Updated config FooBlog.apikey to
+read foo_blog.apikey, per ZF2 config naming standards</xhtml:li>
+</xhtml:ul>
 </xhtml:div>
     </content>
   </entry>

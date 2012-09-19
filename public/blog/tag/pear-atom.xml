@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title type="text">Tag: pear :: phly, boy, phly</title>
   <updated>2010-08-21T22:37:14+0000</updated>
-  <generator uri="http://framework.zend.com" version="2.0.0beta5">Zend_Feed_Writer</generator>
+  <generator uri="http://framework.zend.com" version="2.0.0">Zend_Feed_Writer</generator>
   <link rel="alternate" type="text/html" href="http://mwop.net/blog/tag/pear.html"/>
   <link rel="self" type="application/atom+xml" href="http://mwop.net/blog/tag/pear-atom.xml"/>
   <id>http://mwop.net/blog/tag/pear.html</id>
@@ -26,6 +26,406 @@ approaches, and compare performance.</xhtml:p>
 <xhtml:p>In this post, I'll outline the approaches I've tried, the
 benchmarking stategy I applied, and the results of benchmarking
 each approach.</xhtml:p>
+<xhtml:h2>Autoloading Strategies</xhtml:h2>
+<xhtml:p>I'm grouping strategies into two categories, PEAR/PSR-0
+strategies, and classmap strategies.</xhtml:p>
+<xhtml:p>I also started testing a third category. This included solutions
+that required PECL extensions, specifically the <xhtml:a href="http://github.com/metagoto/splclassloader">SplClassLoader</xhtml:a> and
+<xhtml:a href="http://pecl.php.net/package/automap">Automap</xhtml:a>
+extensions. However, I ultimately abandoned these solutions. In the
+case of <xhtml:code>SplClassLoader</xhtml:code>, I actually started testing it,
+but immediately ran into segfaults. This unfortunate event made me
+remember that I was looking for userland autoloaders that we could
+use within Zend Framework; both <xhtml:code>SplClassLoader</xhtml:code> and
+<xhtml:code>Automap</xhtml:code> can be dropped in by users at any point, but
+due to the requirement of compiling and installing for your
+platform, could never be an explicit requirement for using Zend
+Framework.</xhtml:p>
+<xhtml:h3>PEAR/PSR-0</xhtml:h3>
+<xhtml:p>Those of you familiar with Zend Framework are aware that we
+follow <xhtml:a href="http://pear.php.net/manual/en/coding-standards.php">PEAR Coding
+Standards</xhtml:a>, and, specific to this exercise, their 1-class-1-file
+naming convention. The PEAR naming conventions dictate a 1:1
+relation between the filesystem and the class. As an example, the
+class <xhtml:code>Foo_Bar_Baz</xhtml:code> would be found in the file
+"Foo/Bar/Baz.php" on your <xhtml:code>include_path</xhtml:code>.</xhtml:p>
+<xhtml:p>This is a trivially easy convention to remember, and has been
+widely adopted in the PHP world. The one and only vote the PHP
+Framework Interoperability Group has held so far, <xhtml:a href="PSR-0.html">http://groups.google.com/group/php-standards/web/psr-0-final-proposal</xhtml:a>,
+has simply ratified this standard going forward (with some
+additional verbiage regarding namespaces). Zend Framework's
+autoloader has been PSR-0 compliant since 1.10.0 (and was
+PEAR-compliant prior to that).</xhtml:p>
+<xhtml:p>So, the very first approach has been simply to use the
+<xhtml:em>status quo</xhtml:em>.</xhtml:p>
+<xhtml:p>That said, I also looked at other PSR-0-compliant approaches for
+some inspiration. The <xhtml:code>SplClassLoader</xhtml:code> proposed by Jon
+Wage, of the Doctrine project, as a <xhtml:a href="http://gist.github.com/221634">GitHub gist</xhtml:a> takes a couple of
+departures from the ZF implementation:</xhtml:p>
+<xhtml:ul>
+<xhtml:li>It allows specifying a specific directory under which to look
+for a specific namespace</xhtml:li>
+<xhtml:li>Instead of acting as a singleton, you create a single instance
+per namespace you want to load, and then call its
+<xhtml:code>register()</xhtml:code> method to register with the
+<xhtml:code>spl_autoload</xhtml:code> registry.</xhtml:li>
+</xhtml:ul>
+<xhtml:p>Additionally, I looked at the Symfony2
+<xhtml:code>UniversalClassLoader</xhtml:code>. While it has its basis in the
+<xhtml:code>SplClassLoader</xhtml:code> implementation, it offers a feature
+we'd already added to the ZF2 autoloader: the ability to register
+both namespaces and vendor prefixes to autoload. I <xhtml:a href="http://github.com/weierophinney/zf2/blob/autoloading/library/Zend/Loader/Psr0Autoloader.php">
+combined these ideas into a custom PSR-0 implementation</xhtml:a>.</xhtml:p>
+<xhtml:p>(Note: the <xhtml:code>SplClassLoader</xhtml:code> extension is a literal
+port of the class from the <xhtml:code>GitHub</xhtml:code> gist to a C
+extension.)</xhtml:p>
+<xhtml:h3>Classmaps</xhtml:h3>
+<xhtml:p>The next category of autoloader solutions I looked at are best
+characterized by the term "classmaps." In this strategy, you create
+a map of classname/filename pairs, and feed it to your
+autoloader.</xhtml:p>
+<xhtml:p>To my thinking, the key benefits of this strategy include:</xhtml:p>
+<xhtml:ul>
+<xhtml:li>Ability to deviate from the PSR-0 standard if desired (as an
+example, application resources).</xhtml:li>
+<xhtml:li>Ability to drop in a classmap per component. For a library such
+as ZF, this opens up possibilities for distributing individual
+components with fewer dependencies, as you do not need to also ship
+artifacts such as your autoloader.</xhtml:li>
+<xhtml:li>Fail early. If the class does not exist in the map, the
+autoloader can exit early, allowing you to drop to another
+autoloader in the chain -- or simply have PHP raise its
+<xhtml:code>E_FATAL</xhtml:code> report of class-not-found.</xhtml:li>
+<xhtml:li>Drop in at will. You can use dynamic autoloaders during
+development, but then run a script during deployment or build time
+to generate a classmap autoloader. This allows you to have the
+benefits of a RAD cycle, while also reaping the benefits of a
+performance-optimized autoloader.</xhtml:li>
+</xhtml:ul>
+<xhtml:p>I will elaborate on the last point later, when I examine the
+benchmarks.</xhtml:p>
+<xhtml:p>Despite the prevalence of PSR-0 style autoloaders, there are a
+number of classmap autoloaders in the wild. <xhtml:a href="http://incubator.apache.org/zetacomponents/">ez/zeta
+components</xhtml:a> has used one for years, in part due to using a
+non-PSR-0-compliant naming convention, but also in part due to
+performance considerations. <xhtml:a href="http://www.google.com/search?q=arne+blankerts">Arne Blankerts</xhtml:a>
+also introduced me to one such solution in the form of his <xhtml:a href="http://github.com/theseer/Autoload">Autoload library on
+GitHub</xhtml:a>.</xhtml:p>
+<xhtml:p>When building classmaps, you can either build them manually as
+you develop, or utilize a script. I like the script-based approach,
+as it ensures I don't forget to add items to the map, and because
+it's something I can run over existing libraries and then drop
+in.</xhtml:p>
+<xhtml:p>When building such a script, the algorithm is quite simple:</xhtml:p>
+<xhtml:ul>
+<xhtml:li>Recursively scan a filesystem tree</xhtml:li>
+<xhtml:li>For each PHP file found, scan for interfaces, classes, and
+abstract classes</xhtml:li>
+<xhtml:li>For each match, store the fully qualified class name and the
+file path</xhtml:li>
+</xhtml:ul>
+<xhtml:p>I <xhtml:a href="http://weierophinney.net/matthew/archives/244-Applying-FilterIterator-to-Directory-Iteration">
+blogged about my solution</xhtml:a> to scanning the filesystem tree
+earlier; an example of the script that consumes the
+<xhtml:code>ClassFileLocater</xhtml:code> class referenced in that blog and
+generates the actual classmap <xhtml:a href="http://github.com/weierophinney/zf2/blob/autoloading/bin/zfal.php">
+can be found in my GitHub account</xhtml:a>.</xhtml:p>
+<xhtml:p>I took three different approaches to generating classmaps:</xhtml:p>
+<xhtml:ul>
+<xhtml:li>Store file paths as relative to the
+<xhtml:code>include_path</xhtml:code></xhtml:li>
+<xhtml:li>Store file paths using <xhtml:code>__DIR__</xhtml:code> to prefix the
+path</xhtml:li>
+<xhtml:li>Store file paths using <xhtml:code>__DIR__</xhtml:code> to prefix the path,
+and pass the map directly to a closure registered with
+<xhtml:code>spl_autoload</xhtml:code>.</xhtml:li>
+</xhtml:ul>
+<xhtml:p>In the first two cases, the map is stored in an array that is
+returned by the script. I then pass the map file's location to an
+autoloader that performs an <xhtml:code>include</xhtml:code> on that file,
+stores the map (optionally merging with one it already contains),
+and then uses that map for class lookups. You <xhtml:a href="http://github.com/weierophinney/zf2/blob/autoloading/library/Zend/Loader/ClassMapAutoloader.php">
+can find this autoloader on GitHub</xhtml:a>.</xhtml:p>
+<xhtml:p>The third case was a trick borrowed from Arne Blankert's
+Autoload library. I deviated from his design in a couple of ways.
+First, Arne was defining the map as a static member of his closure.
+Theoretically, this should ensure the map is defined only once per
+request. However, in my tests, I discovered that the map was
+actually being constructed in memory each and every time the
+closure was invoked, and led to a serious degredation in
+performance. As a result, my version creates a variable in the
+local scope which is then passed in to the closure via a
+<xhtml:code>use</xhtml:code> statement:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code lang="php" xml:lang="php">
+namespace test;
+$_map = array( /* ... */ );
+spl_autoload_register(function($class) use ($_map) {
+    if (array_key_exists($class, $_map)) {
+        require_once __DIR__ . DIRECTORY_SEPARATOR . $_map[$class];
+    }
+});
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>Note the <xhtml:code>namespace</xhtml:code> declaration; this allows you to
+create multiple autoload class map files without trampling on
+previously loaded maps.</xhtml:p>
+<xhtml:h2>Benchmarking Strategy</xhtml:h2>
+<xhtml:p>Benchmarking autoloading is somewhat difficult; once you've
+autoloaded a class, you can't autoload it again. Additionally,
+libraries tend to have a finite number of classes in them, giving a
+limited set of data to benchmark against. Finally, no good
+autoloading benchmark should be done without also testing against
+an opcode cache -- and if you have too many class files, you can
+easily defeat the cache.</xhtml:p>
+<xhtml:p>My solution was twofold:</xhtml:p>
+<xhtml:ul>
+<xhtml:li>Create a script to generate finite, large numbers of class
+files</xhtml:li>
+<xhtml:li>Determine how many class files provide a reasonable set such
+that an opcode cache is not defeated, but also such that measurable
+differences may be observed.</xhtml:li>
+</xhtml:ul>
+<xhtml:p>The script for generating class files was easy to create. All I
+needed was a recursive function that would iterate through the
+letters of the alphabet and generate classes until a specific depth
+was reached; <xhtml:a href="http://github.com/weierophinney/zf2/blob/autoloading/bin/createAutoloadTestClasses.php">
+you can examine the script on GitHub</xhtml:a>.</xhtml:p>
+<xhtml:p>I started off by looking at <xhtml:code>26^3</xhtml:code> class files, and
+this was excellent for getting some initial statistics. However,
+once I started benchmarking against an opcode cache, I discovered
+that I was defeating both the realpath cache as well as memory
+limits for my opcode cache. I then reduced my sampling size to
+<xhtml:code>16^3</xhtml:code> files. This sampling size proved to be
+sufficiently large to both produce reliable results on multiple
+runs while allowing caching to work normally.</xhtml:p>
+<xhtml:p>When benchmarking, I ran the following strategies:</xhtml:p>
+<xhtml:ul>
+<xhtml:li>Baseline: no autoloader (all class_exists() calls fail)</xhtml:li>
+<xhtml:li>ZF1 autoloader (PSR-0 compliant, uses
+<xhtml:code>include_path</xhtml:code>)</xhtml:li>
+<xhtml:li>PSR-0 autoloader (uses explicit namespace/path pairs, no
+<xhtml:code>include_path</xhtml:code></xhtml:li>
+<xhtml:li><xhtml:code>ClassMapAutoloader</xhtml:code> (using
+<xhtml:code>include_path</xhtml:code>)</xhtml:li>
+<xhtml:li><xhtml:code>ClassMapAutoloader</xhtml:code> (using
+<xhtml:code>__DIR__</xhtml:code>-prefixed paths)</xhtml:li>
+<xhtml:li>Class map using <xhtml:code>__DIR__</xhtml:code>-prefixed paths, with
+closure registered directly to <xhtml:code>spl_autoload</xhtml:code></xhtml:li>
+</xhtml:ul>
+<xhtml:p>My test algorithm was as follows:</xhtml:p>
+<xhtml:ul>
+<xhtml:li>Load a list of all classes in the tree</xhtml:li>
+<xhtml:li>Perform any setup necessary to prepare the given
+autoloader</xhtml:li>
+<xhtml:li>Iterate over all classes in the list, and utilize
+<xhtml:code>class_exists</xhtml:code> to autoload</xhtml:li>
+</xhtml:ul>
+<xhtml:p>Timing was performed only over the loop. Benchmarks were run 10
+times for each strategy, in order to determine an average, as well
+as to correct for outliers. Additionally, the benchmarks were
+performed both with and without bytecode caching, to see what
+differences might occur in both environments. A sample of such a
+script is as follows:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code lang="php" xml:lang="php">
+include 'benchenv.php';
+require_once '/path/to/zf/library/Zend/Loader/ClassMapAutoloader.php';
+
+$loader = new Zend\Loader\ClassMapAutoloader();
+$loader-&amp;gt;registerAutoloadMap(__DIR__ . '/test/map_abs_autoload.php');
+$loader-&amp;gt;register();
+
+echo \"Starting benchmark of ClassFile map autoloader using absolute paths...\n\";
+$start = microtime(true);
+foreach ($classes as $class) {
+    if (!class_exists($class)) {
+        echo \"Aborting test; could not find class $class\n\";
+        exit(2);
+    }
+}
+$end = microtime(true);
+echo \"total time: \" . ($end - $start) . \"s\n\";
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>I had one such script for each test case. To automate running
+all such scripts, and doing 10 iterations of each, I wrote the
+following scripts:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code lang="bash" xml:lang="bash">
+#!/usr/bin/zsh
+# benchmark_noaccel.sh
+# No opcode caching
+for TYPE in baseline.php classmap_abs.php classmap_inc.php spl_autoload.php psr0_autoload.php zf1_autoload.php;do
+    echo \"Starting $TYPE\"
+    for i in {1..10};do
+        curl http://autoloadbench/$TYPE
+    done
+done
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code lang="bash" xml:lang="bash">
+#!/usr/bin/zsh
+# benchmark_accel.sh
+# With opcode caching
+for TYPE in baseline.php classmap_abs.php classmap_inc.php spl_autoload.php psr0_autoload.php zf1_autoload.php;do
+    echo \"Starting $TYPE\"
+    # Clear Optimizer+ cache
+    curl http://autoloadbench/optimizer_clear.php
+    for i in {1..10};do
+        curl http://autoloadbench/$TYPE
+    done
+done
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>I reran the tests a few times to ensure I wasn't seeing
+anomalies. While the actual numbers I received differed between
+iterations, statistically, they only varied within a few percentage
+points between runs.</xhtml:p>
+<xhtml:h2>The Results</xhtml:h2>
+<xhtml:h3>No Opcode Cache</xhtml:h3>
+<xhtml:table>
+<xhtml:tr>
+<xhtml:td><xhtml:strong>Strategy</xhtml:strong></xhtml:td>
+<xhtml:td><xhtml:strong>Average Time (s)</xhtml:strong></xhtml:td>
+</xhtml:tr>
+<xhtml:tr>
+<xhtml:td>Baseline</xhtml:td>
+<xhtml:td>0.0067</xhtml:td>
+</xhtml:tr>
+<xhtml:tr>
+<xhtml:td>ZF1 autoloader (inc path)</xhtml:td>
+<xhtml:td>1.2153</xhtml:td>
+</xhtml:tr>
+<xhtml:tr>
+<xhtml:td>PSR-0 (no include_path)</xhtml:td>
+<xhtml:td>1.0758</xhtml:td>
+</xhtml:tr>
+<xhtml:tr>
+<xhtml:td>Class Map (include_path)</xhtml:td>
+<xhtml:td>0.9796</xhtml:td>
+</xhtml:tr>
+<xhtml:tr>
+<xhtml:td>Class Map (<xhtml:code>__DIR__</xhtml:code>)</xhtml:td>
+<xhtml:td>0.9800</xhtml:td>
+</xhtml:tr>
+<xhtml:tr>
+<xhtml:td>SPL closure</xhtml:td>
+<xhtml:td>0.9520</xhtml:td>
+</xhtml:tr>
+</xhtml:table>
+<xhtml:h3>With Opcode Cache</xhtml:h3>
+<xhtml:table>
+<xhtml:tr>
+<xhtml:td><xhtml:strong>Strategy</xhtml:strong></xhtml:td>
+<xhtml:td><xhtml:strong>Average over all (s)</xhtml:strong></xhtml:td>
+<xhtml:td><xhtml:strong>Unaccel</xhtml:strong></xhtml:td>
+<xhtml:td><xhtml:strong>Shortest</xhtml:strong></xhtml:td>
+<xhtml:td><xhtml:strong>Ave. Accelerated</xhtml:strong></xhtml:td>
+</xhtml:tr>
+<xhtml:tr>
+<xhtml:td>Baseline</xhtml:td>
+<xhtml:td>0.0061</xhtml:td>
+<xhtml:td>0.0053</xhtml:td>
+<xhtml:td>0.0052</xhtml:td>
+<xhtml:td>0.0062</xhtml:td>
+</xhtml:tr>
+<xhtml:tr>
+<xhtml:td>ZF1 autoloader (inc_path)</xhtml:td>
+<xhtml:td>0.4855</xhtml:td>
+<xhtml:td>1.4444</xhtml:td>
+<xhtml:td>0.3653</xhtml:td>
+<xhtml:td>0.3789</xhtml:td>
+</xhtml:tr>
+<xhtml:tr>
+<xhtml:td>PSR-0 (no include_path)</xhtml:td>
+<xhtml:td>0.4021</xhtml:td>
+<xhtml:td>1.5477</xhtml:td>
+<xhtml:td>0.2437</xhtml:td>
+<xhtml:td>0.2748</xhtml:td>
+</xhtml:tr>
+<xhtml:tr>
+<xhtml:td>Class Map (include_path)</xhtml:td>
+<xhtml:td>0.3022</xhtml:td>
+<xhtml:td>1.2755</xhtml:td>
+<xhtml:td>0.1724</xhtml:td>
+<xhtml:td>0.1941</xhtml:td>
+</xhtml:tr>
+<xhtml:tr>
+<xhtml:td>Class Map (<xhtml:code>__DIR__</xhtml:code>)</xhtml:td>
+<xhtml:td>0.2568</xhtml:td>
+<xhtml:td>1.2253</xhtml:td>
+<xhtml:td>0.1362</xhtml:td>
+<xhtml:td>0.1492</xhtml:td>
+</xhtml:tr>
+<xhtml:tr>
+<xhtml:td>SPL closure</xhtml:td>
+<xhtml:td>0.2630</xhtml:td>
+<xhtml:td>1.2971</xhtml:td>
+<xhtml:td>0.1341</xhtml:td>
+<xhtml:td>0.1481</xhtml:td>
+</xhtml:tr>
+</xhtml:table>
+<xhtml:h3>Analysis</xhtml:h3>
+<xhtml:p>The three class map variants are the clear winners here, showing
+around a 25% improvement on the ZF1 autoloader when no acceleration
+is present, and 60-85% improvements when an opcode cache is in
+place. The three classmap approaches are roughly equivalent when no
+opcode caching is in place, but the variants that do not use the
+<xhtml:code>include_path</xhtml:code> are statistically faster when the opcode
+cache is present.</xhtml:p>
+<xhtml:p>Perhaps the most interesting finding for myself was seeing how
+much the <xhtml:code>include_path</xhtml:code> affects performance,
+particularly when using an opcode cache. In each case, I had the
+directory with my test classes listed as the first item in the
+<xhtml:code>include_path</xhtml:code> -- which is the optimal location
+(previous benchmarking and profiling I've done shows that
+performance degrades quickly the deeper the matching entry is
+within the <xhtml:code>include_path</xhtml:code>). Even in the non-accelerated
+tests, the PSR-0 implementation, which does not use the
+<xhtml:code>include_path</xhtml:code>, is &gt;10% faster, a difference that
+jumps to almost 40% with acceleration. The same differences are
+true also with the class map implementations.</xhtml:p>
+<xhtml:p>While these changes are very much micro-optimizations (remember,
+the numbers above indicate <xhtml:code>16^3</xhtml:code> classes loaded -- a
+single class loads in matters of 1/10,000th of a second), if you
+are loading hundreds or thousands of unique classes over your
+application lifecycle, the evidence clearly shows some significant
+performance benefits from the usage of class maps and
+fully-qualified paths.</xhtml:p>
+<xhtml:h2>Conclusions</xhtml:h2>
+<xhtml:p>Each approach has its merits. During development, you don't want
+to necessarily run a script to generate the class map or manually
+update the class map every time you add a new class. That said, if
+you expect a lot of traffic to your site, it's trivially easy to
+run a script during deployment to build the class map for you, and
+thus let you eke out a little extra performance from your
+application.</xhtml:p>
+<xhtml:p>One clear realization from this experiment is that the
+<xhtml:code>include_path</xhtml:code> is a poor way to resolve files in current
+incarnations of PHP. While the degradation is not huge when your
+initial path matches, it still introduces a performance hit.
+Additionally, it makes setup of the applications harder, as you
+then must document the proper usage of the
+<xhtml:code>include_path</xhtml:code>; using <xhtml:code>__DIR__</xhtml:code> with either a
+PSR-0-style or class map autoloader is more easily portable and
+requires less education of end-users.</xhtml:p>
+<xhtml:p>One interesting use case for a classmap based autoloader is to
+assist in optimizing existing ZF1 applications. The script could be
+run over your "application" directory to build a classmap of your
+application resource classes. This would allow you to bypass the
+various resource autoloaders and custom logic of the dispatcher for
+finding controller classes. It could also potentially serve as one
+part of a migration suite between ZF1 and ZF2.</xhtml:p>
+<xhtml:p>I will be recommending that Zend Framework 2.0 use both PSR-0
+and class map strategies, without reliance on the
+<xhtml:code>include_path</xhtml:code>, and provide tools and scripts to aid
+deployment.</xhtml:p>
 </xhtml:div>
     </content>
   </entry>
@@ -62,6 +462,186 @@ presentations.</xhtml:li>
 <xhtml:li>One conference attended.</xhtml:li>
 </xhtml:ul>
 <xhtml:p>What follows is my month-by-month breakdown:</xhtml:p>
+<xhtml:h3>January</xhtml:h3>
+<xhtml:p>I finished up the last of my three chapters for <xhtml:a href="http://sitepoint.com/books/phpant2/">The PHP Anthology, 2nd
+Edition</xhtml:a>, and promptly used my advance to buy the family a
+Wii.</xhtml:p>
+<xhtml:p>I was also introduced to <xhtml:a href="http://jansch.nl/">Ivo
+Jansch</xhtml:a> through work, and had him wow me with one of the
+<xhtml:a href="http://ibuildings.nl">ibuildings</xhtml:a> products.</xhtml:p>
+<xhtml:h3>February</xhtml:h3>
+<xhtml:p>Mid-month, my boss at <xhtml:a href="http://www.zend.com/">Zend</xhtml:a>,
+Boaz, got the go-ahead to use the ibuildings WDE platform to build
+our new website CMS; part of the plan would include training at the
+ibuildings home office in Vlissingen, NL... which meant I had to
+get my passport pronto.</xhtml:p>
+<xhtml:p>Towards the end of the month, I was invited to <xhtml:a href="http://bostonphp.org">BostonPHP</xhtml:a> to present building a simple
+<xhtml:a href="http://framework.zend.com/">Zend Framework</xhtml:a> CRUD
+application, along with <xhtml:a href="http://hagunbu.ch/">Chuck
+Hagenbuch</xhtml:a> of the <xhtml:a href="http://horde.org/">HORDE project</xhtml:a>.
+While there, <xhtml:a href="http://cake.insertdesignhere.com/">Nate
+Abele</xhtml:a> heckled me, and then joined Chuck and myself for an
+impromptu framework panel; a good time was had by all.</xhtml:p>
+<xhtml:h3>March</xhtml:h3>
+<xhtml:p>I flew to Brussels, Belgium, where I met my supervisor, Boaz, so
+we could go to Vlissingen. We spent the day in Brussels, walking
+around and visiting such sites as the Cathedral of St. Michael, La
+Grand Place, and the Mannekin Pis.</xhtml:p>
+<xhtml:p>Our visit to ibuildings was very productive, and I was very
+impressed by the team there; everybody was very knowledgeable and
+skilled. I presented a Zend Framework overview, as well as an
+abbreviated version of the Best Practices talk I'd given with Mike
+Naberezny at the 2006 ZendCon; the latter ignited a ton of
+questions and enthusiasm.</xhtml:p>
+<xhtml:p>On returning home, I had a ton of work to do on the zend.com
+CMS, and this continued in spurts through November. The job was
+made much easier by the ibuildings WDE product.</xhtml:p>
+<xhtml:p>I closed out a ton of MVC issues in the Zend Framework, and we
+released the first beta version late in the month.</xhtml:p>
+<xhtml:h3>April</xhtml:h3>
+<xhtml:p>At the beginning of the month, our landlord threw us for a loop
+and announced he was going to sell our apartment... meaning that we
+either had to step up our plans to purchase a home, or start
+looking for a new rental. Ultimately, we ended up looking for a
+rental, due to time constraints. The next two months would be
+highlighted with the look for a new place as well as countless
+showings of our apartment to potential buyers.</xhtml:p>
+<xhtml:p>Mid-month, we packed up the family and flew down to Atlanta, GA,
+to visit my wife's family. While there, we were able to go to the
+Atlanta Zoo and see Mei Lan, their baby panda -- way cute!</xhtml:p>
+<xhtml:h3>May</xhtml:h3>
+<xhtml:p>Mid-month, we found a new place in Richmond, VT -- a small
+village about 10 minutes from Burlington, near where we originally
+lived when we first moved to Vermont.</xhtml:p>
+<xhtml:p>During the first RC for Zend Framework, released at the end of
+the month, I introduced the ViewRenderer, a feature for
+auto-rendering views based on the current controller and action
+name -- a feature common to many frameworks. However, it ostensibly
+broke a ton of existing applications by being enabled by default --
+not one of my more popular decisions. Since the 1.0.0 release, I've
+heard little grumbling about it, and it's now often cited as an
+ease-of-use feature -- go figure.</xhtml:p>
+<xhtml:h3>June</xhtml:h3>
+<xhtml:p>The first week of June, I flew to Tel Aviv, Israel, to start
+training people on the new CMS, as well as to work with our entire
+ebiz team to finalize the work plan for completing the CMS. It was,
+needless to say, my first time to Israel or the Middle East, and I
+was constantly confronted with culture shock. Europe was an easy
+transition to make, but Israel was completely foreign to me --
+everything from the way people drove, to the architecture, to the
+food was different. Unfortunately, I arrived a day late due to a
+flight cancellation, and missed the tour of Jerusalem my supervisor
+had planned for all of us. However, he took me to the city of Yafa,
+an Arabic city where the Israeli's originally tried to settle
+before building Tel Aviv to the north. The architecture was
+amazing, as were the winding, narrow streets of the old city.</xhtml:p>
+<xhtml:p>I was also told during this trip that Andi had requested
+transferring me full-time to the Zend Framework team. I would spend
+the next week or two weighing my options, and ultimately decided to
+do so.</xhtml:p>
+<xhtml:p>A week after I returned, we moved into our new rental in
+Richmond. The kids love the new place, which has a bedroom for each
+of them, a yard, and porches on each entrance.</xhtml:p>
+<xhtml:p>Somehow, I also found time to record my first (and so far only)
+<xhtml:a href="http://devzone.zend.com/article/2140-PHP-Abstract-Podcast-Episode-2---Backup-or-Die">
+PHP Abstract podcast</xhtml:a>.</xhtml:p>
+<xhtml:h3>July</xhtml:h3>
+<xhtml:p>We released <xhtml:a href="http://framework.zend.com/">Zend
+Framework</xhtml:a> 1.0.0 at the beginning of the month, marking our
+first stable release. While many still view it as incomplete, the
+overwhelming feedback has been positive, and we've had over 2
+million downloads to date.</xhtml:p>
+<xhtml:p>I accepted the transfer to the Zend Framework team, but the
+condition was made that I would stay part-time on the ebiz team
+until the new site was launched. This meant that the next 5 months
+were spent splitting my time between the two projects, often
+working late and on weekends to get work done.</xhtml:p>
+<xhtml:p>Towards the end of the month, we took a long weekend camping in
+Vermont's Northeast Kingdom. The weather was unseasonably wet, but
+we persevered and had a great time. 5 days of offline time was
+definitely needed!</xhtml:p>
+<xhtml:p>I also finally released the first stable version of <xhtml:a href="http://pear.php.net/packages/File_Fortune">File_Fortune</xhtml:a> on
+<xhtml:a href="http://pear.php.net/">PEAR</xhtml:a>, over a year since I'd
+first proposed it. The package interfaces with mod_fortune files,
+allowing both the ability to read and write such files, with full
+binary compatability.</xhtml:p>
+<xhtml:h3>August</xhtml:h3>
+<xhtml:p>Not much to report in August, except work, work, and more
+work.</xhtml:p>
+<xhtml:h3>September</xhtml:h3>
+<xhtml:p>My ebiz supervisor, Boaz, flew me to Tel Aviv for a second time,
+this time to perform a "brain dump" for the rest of the team before
+I transitioned fully out of the team, and also to help setup our
+new data center and release procedures. This time, Boaz took me to
+Jerusalem himself during my last full day in the country. If you've
+never been to the city, you should definitely put it on your list
+of things to do before you die. With my degree in religion, the
+place was full of meaning for me, but it would be putting it
+lightly to say that religion is palpable in the air there. We
+visited the Wailing Wall, the Via Dolorosa, the Church of the Holy
+Sepulchre, and listened to the muezzins sing the call to prayer for
+the muslims. The tour was simply amazing.</xhtml:p>
+<xhtml:p>A few days after I returned, I flew down to New York City for a
+special meeting of <xhtml:a href="http://nyphp.org/">NYPHP</xhtml:a>, where
+<xhtml:a href="http://blogs.zend.com/author/mark/">Mark de Visser</xhtml:a>
+presented on various Zend products and initiatives, and I gave a
+Zend Framework overview.</xhtml:p>
+<xhtml:p>A week after the NYPHP presentation, I did a <xhtml:a href="http://www.zend.com/webinars">zend.com webinar</xhtml:a> on the Zend
+Framework MVC layer.</xhtml:p>
+<xhtml:h3>October</xhtml:h3>
+<xhtml:p>October was the month of <xhtml:a href="http://www.zendcon.con/">ZendCon</xhtml:a>. I presented a full-day
+tutorial on best practices and unit testing with <xhtml:a href="http://sebastian-bergmann.de/">Sebastian Bergmann</xhtml:a> and <xhtml:a href="http://naberezny.com/">Mike Naberezny</xhtml:a>; despite the length and
+subject matter, we were SRO for most of the day.</xhtml:p>
+<xhtml:p>I also did a main-stage presentation on Zend Framework's MVC
+components, directly following <xhtml:a href="http://terrychay.com/blog/">Terry Chay</xhtml:a> -- an intimidating
+situation at best. From the feedback I've seen, the presentation
+was well-received, and I had somewhere between 120 and 150
+attendees -- phenomenal! (Even more amazing was how many people
+were familiar with MVC in general!)</xhtml:p>
+<xhtml:p>One great thing about the conference was the fact that I got to
+network with a number of framework developers, both Zend Framework
+and otherwise, including Nate Abele of CakePHP as well as <xhtml:a href="http://paul-m-jones.com">Paul M. Jones</xhtml:a> of <xhtml:a href="http://solarphp.com">the Solar framework</xhtml:a>. Many good
+conversations were had.</xhtml:p>
+<xhtml:p>Late in the month, <xhtml:a href="http://sitepoint.com/books/phpant2/">The PHP Anthology, 2nd
+Edition</xhtml:a>, my first published book as an author, was finally
+released!</xhtml:p>
+<xhtml:h3>November</xhtml:h3>
+<xhtml:p>I spent much of the month working on <xhtml:a href="http://framework.zend.com/wiki/display/ZFPROP/Zend_Layout">Zend_Layout</xhtml:a>,
+a much requested component that simplifies and automates Two Step
+Views in Zend Framework. I also started work implementing <xhtml:a href="http://framework.zend.com/wiki/pages/viewpage.action?pageId=33071">
+Zend_View Enhanced</xhtml:a>, a set of view helpers for making complex
+views with Zend_View possible.</xhtml:p>
+<xhtml:p>I also started playing with <xhtml:a href="http://twitter.com/">Twitter</xhtml:a> a bit, and came up with a
+<xhtml:a href="http://framework.zend.com/wiki/display/ZFPROP/Zend_Service_Twitter">
+Zend_Service_Twitter</xhtml:a> proposal for interacting with the Twitter
+API via PHP.</xhtml:p>
+<xhtml:p>And finally, the Sunday before Thanksgiving, we finally launched
+the new <xhtml:a href="http://www.zend.com/">Zend.com</xhtml:a> site, which was
+well-received in the blogosphere.</xhtml:p>
+<xhtml:h3>December</xhtml:h3>
+<xhtml:p>A goal I've had for some time has been to form a PHP user group
+in the Burlington area. A friend of mine pointed out to me sometime
+this fall that there's actually already <xhtml:a href="http://groups.google.com/group/Burlington-VT-PHP">a Google
+Group</xhtml:a> formed; he and the original founder started planning a
+meeting for early December. I spoke at this inaugural meeting,
+presenting Zend Framework's MVC layer yet again; a good time was
+had by all, and a lot of enthusiasm for future meetings was
+generated.</xhtml:p>
+<xhtml:p>I finished up Zend_Layout and Zend_View Enhanced with the help
+of Ralph Schindler, and got a new proposal up for <xhtml:a href="http://framework.zend.com/wiki/display/ZFPROP/Zend_Form">Zend_Form</xhtml:a>,
+just in time for my holidays to begin -- 11 days with family and
+with little to no internet connectivity during a trip to Atlanta,
+GA for one of only a handful of Christmases I've spent without
+snow.</xhtml:p>
+<xhtml:h2>Summary</xhtml:h2>
+<xhtml:p>This year was <xhtml:em>incredibly</xhtml:em> busy -- three cross-seas
+trips, one cross-continent trip, a move, and several trips along
+the Eastern Seaboard; three user group presentations, and eight
+presentations over the course of the year; one conference; one
+move; one PEAR release; one podcast; one webinar; one book; and
+countless hours of programming.</xhtml:p>
+<xhtml:p>My goals for the coming year? I'm too tired to even think about
+it ;-).</xhtml:p>
 </xhtml:div>
     </content>
   </entry>

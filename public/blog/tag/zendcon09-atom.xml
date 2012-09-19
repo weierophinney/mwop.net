@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title type="text">Tag: zendcon09 :: phly, boy, phly</title>
   <updated>2009-10-12T18:40:51+0000</updated>
-  <generator uri="http://framework.zend.com" version="2.0.0beta5">Zend_Feed_Writer</generator>
+  <generator uri="http://framework.zend.com" version="2.0.0">Zend_Feed_Writer</generator>
   <link rel="alternate" type="text/html" href="http://mwop.net/blog/tag/zendcon09.html"/>
   <link rel="self" type="application/atom+xml" href="http://mwop.net/blog/tag/zendcon09-atom.xml"/>
   <id>http://mwop.net/blog/tag/zendcon09.html</id>
@@ -22,6 +22,53 @@
 once again at <xhtml:a href="http://zendcon.com/">ZendCon</xhtml:a> this year
 -- one week from today!</xhtml:p>
 <xhtml:p style="text-align: center;"><xhtml:a href="http://zendcon.com/"><xhtml:img src="/uploads/zendcon09_speakerbutton.jpg"/></xhtml:a></xhtml:p>
+<xhtml:p>I'm delivering three different talks this year:</xhtml:p>
+<xhtml:ul>
+<xhtml:li><xhtml:a href="http://zendcon.com/tutorials#session-12095">Introduction to Zend
+Framework</xhtml:a>. In this tutorial, I'll look at what ZF is, how to
+get and install it, some common utilities and patterns used
+throughout the project, and spend the bulk of the time on building,
+hands-on, a simple application.</xhtml:li>
+<xhtml:li><xhtml:a href="http://zendcon.com/tutorials#session-11790">Architecting Ajax
+Applications with Zend Framework</xhtml:a>. Another tutorial session,
+this one will focus not so much on the client-side of an Ajax
+application, but how to architect the server-side to respond
+appropriately to Ajax (and other service) requests. We'll look at
+RPC services, REST, HTTP codes and headers, and how to weave them
+into a robust and simple backend for use with your dynamic, "Web
+2.0" applications.</xhtml:li>
+<xhtml:li><xhtml:a href="http://zendcon.com/tracks?tid=1357#session-11787">Architecting
+Your Models</xhtml:a>. This regular track session is all about the M in
+MVC: models. Many MVC frameworks and approaches have you tie the
+data access directly to your models; in this session, I'll show you
+approaches and strategies for de-coupling data access from your
+models, why you might want to do so, and some cool things you can
+do once you have.</xhtml:li>
+</xhtml:ul>
+<xhtml:p>I'll also be involved in two panel sessions:</xhtml:p>
+<xhtml:ul>
+<xhtml:li><xhtml:strong>Meet the Zend Team</xhtml:strong> (Wednesday evening). This
+has been a popular session in past years; project leads from each
+of the product teams at Zend will be available in a panel to answer
+your questions. Some years have been rather... entertaining.
+:)</xhtml:li>
+<xhtml:li><xhtml:strong>Framework Shootout</xhtml:strong> (Thursday, closing
+keynote). I'm especially excited about this session, in which we
+get myself, representing Zend Framework; Fabien Potencier,
+representing Symfony; David Zuilke, representing Agavi; Nate Abele,
+representing CakePHP; and Edward Finkler, representing CodeIgniter.
+Eli White will be moderating a Q&amp;A style session in which you,
+the audience, get to ask us about our respective frameworks and
+where we compare (or don't!) in various functional areas. I did a
+similar panel to this at PHP Quebec this year, and it was a great
+time.</xhtml:li>
+</xhtml:ul>
+<xhtml:p>There will be a ton of sessions, with people presenting on a
+huge variety of subjects, from version control to RDMS systems,
+from JavaScript to Flash, from development to production. In
+addition, there will be a parallel <xhtml:a href="http://zendcon.com/uncon">UnCon</xhtml:a>, being run by <xhtml:a href="http://caseysoftware.com/blog/">Keith Casey</xhtml:a>, featuring even
+more topics and interesting ideas.</xhtml:p>
+<xhtml:p>I look forward to seeing you at ZendCon this year!</xhtml:p>
 </xhtml:div>
     </content>
   </entry>
@@ -47,6 +94,79 @@ others who are knowledgeable in the field.</xhtml:p>
 for the conference featuring some well-known speakers from the PHP
 world; why would you want to either attend or present at the
 uncon?</xhtml:p>
+<xhtml:h2>Continue the Discussion</xhtml:h2>
+<xhtml:p>Last year, I did a tutorial session with <xhtml:a href="http://mikenaberezny.com">Mike Naberezny</xhtml:a> covering PHP
+development best practices. Following the session, several
+attendees approached Keith and said they could really use a session
+just on <xhtml:a href="http://subversion.tigris.org/">Subversion</xhtml:a>; the
+material covered in the tutorial, while good, did not go into
+enough depth for them.</xhtml:p>
+<xhtml:p>Keith then approached me about doing an uncon session, and I in
+turn tagged <xhtml:a href="http://www.lornajane.net">Lorna Jane
+Mitchell</xhtml:a> about doing the session. We ended up doing it
+together, after sitting down for about 10 minutes of planning. We
+had the flexibility to both go over what we thought were core
+basics everyone should know, as well as to answer very specific
+questions. The session was very well attended, and those people who
+gave us feedback indicated that it was exactly the amount of detail
+they were looking for.</xhtml:p>
+<xhtml:p>So, in summary, the uncon allowed attendees to get more
+information on a topic that was covered only briefly in another,
+regular session.</xhtml:p>
+<xhtml:h2>Springboard to Speaking</xhtml:h2>
+<xhtml:p>Was your talk rejected for the conference? Are you having
+trouble getting accepted to any conferences at all?</xhtml:p>
+<xhtml:p>Conference organizers have a catch-22 they face every time they
+put together a schedule. On the one hand, there may be some really
+interesting talks submitted by unknown speakers; on the other,
+scheduling known speakers helps put money on the table (attendees
+want to hear from established experts). As a result, you see a lot
+of the same speakers at each and every conference.</xhtml:p>
+<xhtml:p>So, how do <xhtml:em>you</xhtml:em> break in? You speak.</xhtml:p>
+<xhtml:p>Speaking at area user groups is one way to break into the
+system; good sessions often generate buzz that extends beyond your
+user group. But an even better way is to speak at an uncon session
+at an established conference. Oftentimes you'll have conference
+organizers attending these, or friends of conference organizers,
+and this can have a huge impact on your chances at speaking.
+Additionally, I've seen a ton of buzz generated on twitter and
+blogs by uncon sessions -- and this buzz gets noticed.</xhtml:p>
+<xhtml:p>Don't believe me? Let's revisit that talk Lorna Jane and I gave.
+We pitched it as a tutorial session for <xhtml:a href="http://tek.mtacon.com/">php|tek</xhtml:a> this spring... and it was
+accepted, largely on the basis of our uncon session. It was the
+only talk I pitched for that conference that was accepted. (Believe
+it or not, I have to submit talks just like everyone else, and get
+a fair share of rejections just like everyone else.)</xhtml:p>
+<xhtml:p>At php|tek, I also pitched two uncon tracks, one on using Git
+with SVN, and another on how to write domain models for your MVC
+layers. This latter session, on models, generated a lot of buzz,
+and was later picked up by MTA for a <xhtml:a href="http://codeworks.mtacon.com/">CodeWorks 2009</xhtml:a> webinar, which
+was very well received. I also pitched it for ZendCon this year...
+and will be presenting it there in two weeks.</xhtml:p>
+<xhtml:p>In short, if you want to speak at conferences, start by pitching
+ideas to the uncon tracks at conferences you attend. Prepare well
+for it, make a good impression, and you may be delivering it as a
+regular session at another conference.</xhtml:p>
+<xhtml:h2>Explore new ideas</xhtml:h2>
+<xhtml:p>Conference organizers, besides having to choose well-known
+speakers, often also need to stick to known topics. Part of the
+reason you see topics on the buzz words du jour is because people
+want to see sessions on them. But what about things like PHP-GTK?
+or using PHP to write CLI tools? or using PHP to connect to a
+specific web service? These may all be interesting, but may not
+attract crowds. But what if <xhtml:em>you</xhtml:em>, as an attendee, want to
+hear about these topics?</xhtml:p>
+<xhtml:p>One aspect of the uncon is that you can vote on topics and/or
+suggest topics you want to hear about. This gives you a chance to
+help shape the direction of the conference to cater to your own
+interests. It also allows you to explore some areas of the language
+you may not have known about, but, when you see the presentation
+abstract, could benefit the work you do.</xhtml:p>
+<xhtml:p>So, use the uncon to explore the language!</xhtml:p>
+<xhtml:h2>Vote now!</xhtml:h2>
+<xhtml:p>If you're going to ZendCon, plan on speaking at or attending the
+uncon! And help shape it, by heading over to Joind.in and <xhtml:a href="http://joind.in/event/zendcon09-uncon">voting for sessions</xhtml:a>
+now! See you there!</xhtml:p>
 </xhtml:div>
     </content>
   </entry>

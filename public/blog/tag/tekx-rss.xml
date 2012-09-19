@@ -4,7 +4,7 @@
     <title>Tag: tekx :: phly, boy, phly</title>
     <description>Tag: tekx :: phly, boy, phly</description>
     <pubDate>Sun, 11 Apr 2010 20:59:29 +0000</pubDate>
-    <generator>Zend_Feed_Writer 2.0.0beta5 (http://framework.zend.com)</generator>
+    <generator>Zend_Feed_Writer 2.0.0 (http://framework.zend.com)</generator>
     <link>http://mwop.net/blog/tag/tekx.html</link>
     <atom:link rel="self" type="application/rss+xml" href="http://mwop.net/blog/tag/tekx-rss.xml"/>
     <item>
@@ -21,7 +21,28 @@
 
 <p style="text-align:center;"><a href="http://tek.phparch.com/"
     target="_blank"><img src="/uploads/TEKX_SpeakerBadge_135x135.png"
-    width="135" height="135" title="TEK-X PHP Conference, Chicago, IL, May 18-21"/></a></p>]]></content:encoded>
+    width="135" height="135" title="TEK-X PHP Conference, Chicago, IL, May 18-21"/></a></p><p>
+    I have the distinct privilege of doing another tutorial this year with <a
+        href="http://lornajane.net/">Lorna Jane Mitchell</a>. Unlike last year,
+    we're not sticking to just Subversion, but instead <a
+        href="http://tek.phparch.com/talks/#TEKXT02">covering a whole spectrum
+        of PHP development practices</a>, including coding standards and quality
+    assurance. We're both very excited about the talk; please join us on
+    tutorial day!
+</p>
+
+<p>
+    I'm also doing an "upgrade" or "reboot" of my Domain Models talk, which I
+    debuted last year during the UnCon. This time around, I'm going to focus on
+    <a href="http://tek.phparch.com/talks/#TEKXS15">how usage of NoSQL for the
+        datastore</a> affects and informs your domain models -- and how it might
+    very well radically change how you develop your applications.
+</p>
+
+<p>
+    If you'll be attending TEK-X this year, look me up while there; I'd love to
+    meet you!
+</p>]]></content:encoded>
       <slash:comments>0</slash:comments>
     </item>
   </channel>

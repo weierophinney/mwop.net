@@ -4,7 +4,7 @@
     <title>Tag: linux :: phly, boy, phly</title>
     <description>Tag: linux :: phly, boy, phly</description>
     <pubDate>Thu, 25 Mar 2010 10:57:03 +0000</pubDate>
-    <generator>Zend_Feed_Writer 2.0.0beta5 (http://framework.zend.com)</generator>
+    <generator>Zend_Feed_Writer 2.0.0 (http://framework.zend.com)</generator>
     <link>http://mwop.net/blog/tag/linux.html</link>
     <atom:link rel="self" type="application/rss+xml" href="http://mwop.net/blog/tag/linux-rss.xml"/>
     <item>
@@ -33,6 +33,224 @@
         href="http://www.kernel.org/pub/software/scm/git/docs/githooks.html">git
         hooks</a>, specifically the <code>commit-msg</code> hook client-side,
     and the <code>pre-receive</code> hook server-side.
+</p><h2>Client-side commit-msg hook</h2>
+
+<p>
+    The <code>commit-msg</code> hook receives a single argument, the path to the
+    temporary file containing the commit message. This allows you to inspect it
+    or modify it prior to completing the commit. Like all git hooks, a non-zero
+    exit status will abort the commit.
+</p>
+
+<p>
+    My <code>commit-msg</code> hook looks like the following:
+</p>
+
+<div class="example"><pre><code lang="bash">
+#!/bin/sh
+echo -n \&quot;GPG Signing message... \&quot;;
+PASSPHRASE=$(git config --get hooks.gpg.passphrase)
+if [ \&quot;\&quot; = \&quot;$PASSPHRASE\&quot; ];then
+    echo \&quot;no passphrase found! Set it with git config --add hooks.gpg.passphrase &lt;passphrase&gt;\&quot;
+    exit 1
+fi
+gpg --clearsign --yes --passphrase $PASSPHRASE -o $1.asc $1
+mv $1.asc $1
+echo \&quot;[DONE]\&quot;
+</code></pre></div>
+
+<p>
+    This hook requires that you first add your GPG key's passphrase to your
+    local git configuration, which can be done as follows:
+</p>
+
+<div class="example"><pre><code lang="bash">
+% git config --add hooks.gpg.passphrase \&quot;mySecret\&quot;
+</code></pre></div>
+
+<p>
+    Once this hook is in place, all commit messages are then clear-signed,
+    leading to commit logs that look like the following:
+</p>
+
+<div class="example"><pre><code lang="bash">
+commit f921f0defb18f8a5218d5c3346693dbb4179920e
+Author: Matthew Weier O'Phinney &lt;somebody@example.com&gt;
+Date:   Tue Mar 23 17:18:35 2010 -0400
+
+    -----BEGIN PGP SIGNED MESSAGE-----
+    Hash: SHA1
+    
+    how now, brown cow
+    -----BEGIN PGP SIGNATURE-----
+    Version: GnuPG v1.4.9 (GNU/Linux)
+    
+    iEYEARECAAYFAkupMCsACgkQtUV5aSPtKdqERQCeN5taRATpB4/XJZiP9Vs5FVNY
+    PcoAn0OZbIIcn7nC01yxp9tY7HbxVVFu
+    =C/Ju
+    -----END PGP SIGNATURE-----
+</code></pre></div>
+
+<h2>Server-side pre-receive hook</h2>
+
+<p>
+    The <code>pre-receive</code> hook is a lot less straight-forward. This hook
+    receives input via <code>STDIN</code>. Each line consists of three items,
+    separated by a single space:
+</p>
+
+<pre>
+[previous commit's sha1] [new commit's sha1] [refspec]
+</pre>
+
+<p>
+    Typically, only the new sha1 is of much use to us. Internally, git is
+    actually keeping track of the new commit, even though it has not technically
+    been accepted into the repository. This allows us to use tools such as
+    <code>git show</code> to get information on the commit and act on that
+    information.
+</p>
+
+<p>
+    What I needed to do was inspect the commit message for a GPG-signed message;
+    if none was found, reject the commit outright, but if one was present,
+    validate it against my keyring, and abort if the signed message is invalid.
+</p>
+
+<p>
+    I originally started by using <code>git show --pretty="format:%b"
+        [sha1]</code> However, I discovered that git does something... odd... to
+    commit messages. The first 50 characters or so are considered the commit's
+    "subject" -- and any newlines found in the subject are silently stripped.
+    This meant that I was getting, for my purposes, a truncated message that
+    would never validate (as the GPG signature header was getting stripped);
+    even including the subject in the format did not work, since the newlines
+    within it were missing. The only way I found to get the full commit message
+    was to use <code>git show --pretty=raw [sha1]</code>. This, however, gives
+    me also the commit headers as well as the diff -- which means I have to
+    parse the response.
+</p>
+
+<p>
+    What follows is a PHP implementation I did that does exactly that: grabs the
+    full message and redirects it to a temporary file, parses that file for the
+    commit message, and then acts on it. 
+</p>
+
+<div class="example"><pre><code lang="php">
+#!/usr/bin/php
+&lt;?php
+echo \&quot;Checking for GPG signature... \&quot;;
+$fh     = fopen('php://stdin', 'r');
+$tmpdir = sys_get_temp_dir();
+while (!feof($fh)) {
+    $line = fgets($fh);
+    list($old, $new, $ref) = explode(' ', $line);
+
+    // Create a tmp file with the commit log
+    $logTmp   = tempnam($tmpdir, 'LOG_');
+    $body     = shell_exec('git show --pretty=raw ' . $new . ' &gt; ' . $logTmp);
+
+    $msgTmp   = tempnam($tmpdir, 'MESSAGE_');
+
+    // Scan the commit log for a commit message
+    $log = fopen($logTmp, 'r');
+    $msg = fopen($msgTmp, 'a');
+    $signatureDetected = false;
+    while (!feof($log)) {
+        $line = fgets($log);
+        if (preg_match('/^(commit(ter)?|tree|parent|author)\s/', $line)) {
+            // Skip the commit log headers
+            continue;
+        }
+        if (preg_match('/^diff\s/', $line)) {
+            // Stop scanning when we reach the diff
+            break;
+        }
+        if (preg_match('/^\s+-+BEGIN [A-Z]+ SIGNED MESSAGE/', $line)) {
+            // We have a signed message, so start appending it 
+            // to a separate tmp file
+            $signatureDetected = true;
+            $line = preg_replace('/^\s+/', '', $line);
+            fwrite($msg, $line);
+            continue;
+        }
+        if ($signatureDetected) {
+            // If we have detected a signed message, continue appending lines to
+            // it. Commit message lines are indented, so strip indentation.
+            $line = preg_replace('/^\s+/', '', $line);
+            if ('' === $line) {
+                $line = \&quot;\n\&quot;;
+            }
+            fwrite($msg, $line);
+        }
+    }
+    fclose($log);
+    fclose($msg);
+
+    if (!signatureDetected) {
+        // No signed message detected; report and abort
+        unlink($logTmp);
+        unlink($msgTmp);
+        echo \&quot;no GPG signature detected; commit aborted\n\&quot;;
+        exit(1);
+    }
+
+    $verification = shell_exec('gpg --verify ' . $msgTmp . ' 2&gt;&amp;1');
+    if (!preg_match('/Good signature/s', $verification)) {
+        // Failed to verify signed message; report and abort
+        unlink($logTmp);
+        unlink($msgTmp);
+        echo \&quot;invalid GPG signature; commit aborted\n\&quot;;
+        exit(1);
+    }
+
+    unlink($logTmp);
+    unlink($msgTmp);
+}
+echo \&quot;verified!\n\&quot;;
+exit(0);
+</code></pre></div>
+
+<p>
+    There are likely more elegant ways to accomplish this, including solutions
+    in other languages. However, it works quite well.
+</p>
+
+<h2>Conclusions</h2>
+
+<p>
+    Git hooks are quite powerful, and delving into them has given me confidence
+    that I can create some nice automation for the ZF git repository when we are
+    ready to open it to the public.
+</p>
+
+<p>
+    That said, I don't know if we'll actually use commit signing such as this,
+    as it has a few drawbacks:
+</p>
+
+<ul>
+    <li>The commit signing is not really cross-platform. This can likely be
+    remedied, but it would require that people on different operating systems
+    and using different tools (such as EGit, TortoiseGit, etc) develop and
+    provide signing mechanisms for the client-side.</li>
+
+    <li>It introduces complexity for those developing patches. If developers
+    begin without having the <code>commit-msg</code> hook in place, they then
+    have to create a new branch and a squashed commit afterwards in order to
+    ensure the final patches can go into the canonical repository.</li>
+
+    <li>The two reasons above kind of defeat the purpose of moving to a
+    Distributed VCS in the first place -- which is to simplify development and
+    make it more democratic.</li>
+</ul>
+
+<p>
+    Regardless of whether or not we decide to use this technique, when
+    researching the issue, I saw plenty of posts from people wanting to
+    implement commit signing, but not sure how to accomplish it. Perhaps this
+    post will serve as a starting point for many.
 </p>]]></content:encoded>
       <slash:comments>0</slash:comments>
     </item>
@@ -107,7 +325,143 @@
     <li>Access to my linux VM from my Windows VM</li>
     <li>Ideally, access to both guest VMs from my linux host</li>
     <li>Ideally, internet access for my linux host</li>
-</ol>]]></content:encoded>
+</ol><p>
+    Since I'd only ever used one VM image at a time before this, I'd never had
+    any issues; I could use NAT networking in VirtualBox, and have communication
+    between my host and guest, as well as internet access for both. But NAT
+    access does not allow the VMs to communicate with each other -- in fact,
+    both received the same exact same IP address from my host, which meant that
+    I had internet access from both, both could ping the host, but the host
+    could not access either machine, and neither could access each other.
+</p>
+
+<p>
+    I did some research, and started reading on using network bridges, something
+    I'd tried once before without success. Fortunately, the very first
+    literature I started reading this time pointed out the reason why I'd failed
+    before: network bridges over wireless adapters do not work, and I was using
+    my wifi. I briefly considered using a wired connection, but realized that
+    this was not an option: there are times I may need this sort of setup when I
+    am unable to use a wired connection.
+</p>
+
+<p>
+    I then found an article that detailed how to setup Host Interface networking
+    with VirtualBox. Host Interface networking was added in the 2.1.x series of
+    VirtualBox, and basically allows you to use your host machine as a network
+    gateway for your guest machines. The VirtualBox binaries available in Ubuntu
+    are 2.0.x... so I had to uninstall them and download the official binaries
+    from the VirtualBox site.
+</p>
+
+<p>
+    Setting up Host Interface networking worked for case 2 only; somehow, when
+    it was active, my routing got completely borked. So, I did more research.
+    The next thing I found suggested I needed to setup one or more
+    <a href="http://vtun.sourceforge.net/tun/faq.html">virtual network devices</a> 
+    (TAP), which would allow each virtual machine to have its own IP address,
+    and communicate over the same network, while using the wifi adapter in my
+    host machine as a gateway to the internet.
+</p>
+
+<p>
+    All the instructions I found setup a separate TAP interface for each virtual
+    machine. I quickly discovered two things: first, I had to setup IP
+    masquerading in my host's iptables rules so that the VMs would have access
+    to the internet, and second, that while this would solve cases 2-4, the VMs
+    still couldn't talk to each other. In the end, I found that I needed to
+    setup a single TAP interface, and have all the VMs use this as their Host
+    Interface -- and everything then worked. Almost. The other trick I
+    discovered was that the TAP address should be on a private network that
+    you're not a member of already -- including the private network space your
+    router might use. The instructions I followed setup the network in the
+    10.0.1.X network, but this conflicted with my DSL modem, which was assigned
+    a 10.0.0.X address, and meant that the guest machines had no access to the
+    outside world; switching to 192.168.168.X fixed all issues.
+</p>
+
+<p>
+    Here are the step-by-step instructions (linux host):
+</p>
+
+<ul>
+    <li><b>On the host:</b><ul>
+        <li>Make sure you have uml-utilities installed<ul>
+            <li>On Debian-based systems, "sudo aptitude install uml-utilities"</li>
+        </ul></li>
+
+        <li>Create a virtual network interface<ul>
+             <li>"sudo tunctl -t tap0 -u $USER" (where $USER is the user
+             initiating the VirtualBox sessions<ul>
+                 <li>Make sure the user is in the vboxusers group:<ul>
+                      <li>Edit /etc/group, look for the "vboxusers" entry, and
+                      ensure $USER is listed as a member of the group.</li>
+                 </ul></li>
+                <li>Make sure the vboxusers group has rights to tun devices:<ul>
+                     <li>"sudo chgrp vboxusers /dev/net/tun"</li>
+                     <li>"sudo chmod 660 /dev/net/tun"</li>
+                </ul></li>
+             </ul></li>
+        </ul></li>
+
+        <li>Enable the network interface and assign it an IP address<ul>
+            <li>Make sure the IP is not on a netmask in use elsewhere in your
+            networking; I used 192.168.168.1, which did not conflict with
+            anything.</li>
+            <li>"sudo ifconfig tap0 192.168.168.1"</li>
+        </ul></li>
+
+        <li>Set up NAT forwarding:<ul>
+            <li>"sudo iptables -t nat -A POSTROUTING -o wlan0 -j MASQUERADE"<ul>
+                <li>Substitute the appropriate network interface based on what
+                you're using on your machine.</li>
+            </ul></li>
+            <li>"sudo sysctl -w net.ipv4.ip_forward=1"</li>
+        </ul></li>
+    </ul></li>
+
+    <li><b>On your guest machines:</b><ul>
+        <li>Setup TCP/IP networking to use static IP addresses in the network
+        you've defined for the virtual adapter on the host. For example, if you
+        used 192.168.168.1 on your host:<dl>
+            <dt>Address:</dt>
+            <dd>192.168.168.[UNIQUE]</dd>
+
+            <dt>Netmask:</dt>
+            <dd>255.255.255.0</dd>
+
+            <dt>Gateway:</dt>
+            <dd>192.168.168.1</dd>
+        </ul></li>
+        <li>Assign DNS servers based on what you're using on your linux host.
+        Check /etc/resolv.conf if you're unsure.</li>
+    </ul></li>
+</ul>
+
+<p>
+    Now, one caveat: your TAP device will disappear when you restart your host
+    box. To solve this, I added the following lines to my /etc/rc.local:
+</p>
+
+<pre>
+echo -n "Setting up tap0 interface..."
+tunctl -t tap0 -u matthew
+ifconfig tap0 192.168.168.1
+iptables -t nat -A POSTROUTING -o wlan0 -j MASQUERADE
+sysctl -w net.ipv4.ip_forward=1
+echo "DONE!"
+</pre>
+
+<p>
+    This ensures that the TAP device is setup, and also that IP masquerading is
+    enabled at boot time.
+</p>
+
+<p>
+    I'm writing this mainly for myself, but also hoping that it will save others
+    the many hours of experimentation I had to go through to find the write
+    combination of settings.
+</p>]]></content:encoded>
       <slash:comments>0</slash:comments>
     </item>
     <item>
@@ -201,6 +555,59 @@
     update my laptop to <a href="http://www.ubuntu.com">Ubuntu's</a> Gutsy 
     Gibbon release. Overall, it's quite good, with one caveat I'll elaborate on
     later. 
+</p><p>
+    I'd been having some issues with fonts following a session at ZendCon where
+    I hooked my laptop up to a widescreen display, and the updates fixed all
+    those issues. Most things that worked before continued to work, and often in
+    an improved way. The various new themes available -- from GDM to GTK to
+    window manager themes -- make for some pretty displays, and I've found a new
+    look for my desktop that I really like.
+</p>
+
+<p>
+    Among the improvements, it installed 
+    <a href="http://www.gnome.org/projects/tracker/">trackerd</a>, a desktop
+    search tool. I'd tried installing this on my own before, but ran into a ton
+    of dependency issues I couldn't fix. Prior to this, I'd used beagle, which
+    worked okay, but tended to overlook a lot of files. Trackerd, on the other
+    hand, indexed my entire box overnight, and stays on top of new files easily.
+    Couple this with the 'deskbar', and I now have the type of desktop search
+    I've only seen in Macs.
+</p>
+
+<p>
+    Last night, I stumbled upon <a href="https://help.ubuntu.com/community/CompositeManager/Xgl#head-3138701daf76c1fd11c0b68bf5745c1d1ccacca5">a forum thread</a>
+    detailing how to get X compositing working with ATI cards. This was
+    something I've been continually disappointed with; my card supposedly
+    supports it, but every time I've tried using it, I find it unusable -- lots
+    of wierd screen artifacts, and a huge slowdown in responsiveness. After
+    following the directions in the linked article, however, I now have
+    compositing going -- window drop shadows, translucency for inactive windows,
+    etc. It looks really nice, and doesn't seem to be slowing down the machine
+    at all.
+</p>
+
+<p>
+    No review would be complete without a gripe though, right? And I've got a
+    big one. In the past, one of the strengths of ubuntu for me has been that
+    suspend and hibernate have just worked. With this upgrade, however, they no
+    longer work for me. Evidently, a new kernel option was enabled that is
+    supposed to speed up these operations... However, the available ATI drivers
+    do not support this option, which leads, in my case, to a complete inability
+    to suspend or hibernate, and for others, lockup on resume. Supposedly ATI
+    will be releasing new drivers that will fix the issue, but there's no
+    published time frame for when that will happen. Additionally, ubuntu made no
+    announcements about the issue, and provides no workarounds. To me, this is a
+    huge BC break, and should have been addressed prior to the release,
+    particularly as there were many, many complaints about it in the weeks prior
+    to the release.
+</p>
+
+<p>
+    Gripes aside, I find the new functionality fantastic, and look forward to
+    ATI's release of new drivers for its Radeon series cards.  Perhaps this
+    release will keep me happy enough that I won't keep lusting for a shiny new
+    Macbook too much.
 </p>]]></content:encoded>
       <slash:comments>0</slash:comments>
     </item>
@@ -228,6 +635,273 @@
     that my Windows + coLinux setup was going to get in the way of productivity
     -- and that, at this point, there were now Windows applications tying me to
     that OS. So, I decided it was time to go back to Linux.
+</p><p>
+    I'd used Linux as my primary OS for five years prior to starting at Zend,
+    and have used a number of distros: SuSE, Mandrake (back when it was still
+    Mandrake), RedHat, Slackware, Debian, Gentoo, and Ubuntu have all been on
+    my machines at one point or another. I like Gentoo quite a lot, but it's a
+    pain on desktops, where you may be needing to upgrade more often than once
+    every few months or years. Debian-based distros are my favorite for desktop
+    machines, as the packaging mechanism is first-rate, and they tend to have
+    plenty of developer packages available. So, I decided to use Ubuntu again,
+    as I've heard great things about their installer since I last used it. I
+    chose the latest stable release, Edgy Eft; since Feisty Fawn is still
+    incubating, I didn't want to risk instability in my day-to-day work
+    environment as people finalize packages. On the other hand, I also wanted a
+    reasonably up-to-date system. Due to Ubuntu's dedication to a regular
+    release cycle, I figured that with Edgy Eft, I'd get the best of both
+    worlds.
+</p>
+<p>
+    I was not disappointed. I had a working desktop installed in someting like
+    30 minutes, with a single reboot -- and that was simply to go from the live
+    CD into the actual installed OS. Even better: the initial install recognized
+    <em>all</em> of my hardware immediately, including the built-in wireless
+    hardware, something I've never experienced before with any Linux OS.
+</p>
+<p>
+    That said, there were three minor issues I needed to correct:
+</p>
+<ul>
+    <li>I was having issues compiling anything; every configure script I ran
+    ended up reporting shell escaping issues or other related errors.</li>
+    <li>I have an IBM T43 Thinkpad laptop with a 'Trackpoint' mouse -- basically
+    a little joystick between the 'G' and 'H' keys that has mouse buttons just
+    below the space bar. On Windows, you can use the middle mouse button as a
+    wheel lock, allowing you to scroll with the mouse. This functionality was
+    not enabled in linux, and I wasn't sure how to enable it.</li>
+    <li>Suspend and hibernate were acting, well, funky. Basically, recovery
+    never occurred completely, and I'd usually have no wireless access after
+    resuming.</li>
+    <li>Unable to mute the microphone</li>
+</ul>
+<p>
+    I was able to find solutions for all three relatively easily, fortunately,
+    and I'm sharing the solutions below:
+</p>
+
+<h3>Compilation issues: shell escaping</h3>
+<p>
+    I always compile apache and PHP by hand, as I can then control what I get
+    precisely. This is important as it allows me to have multiple versions of
+    PHP if I need them, each tuned to a different server. But as I tried to run
+    the configure script for either, I was getting an error indicating that sed
+    was not behaving properly due to the shell not escaping characters properly.
+</p>
+<p>
+    I did some research, and discovered some posts claiming that the version of
+    bash shipped with Ubuntu had a bug, and that the only recourse was upgrading
+    bash. Of course, there was not a new version in the repository, and I
+    couldn't compile a newer version due to the shell issues.
+</p>
+<p>
+    So, I decided to see if there were another shell I could symlink /bin/sh to
+    so I could recompile bash. And that's where the problem lay: /bin/sh was
+    symlinking to /bin/dash -- a stripped down shell used by debian and ubuntu.
+    When I symlinked it to /bin/bash instead, all the errors went away.
+</p>
+<p>
+    Summary: relink /bin/sh to /bin/bash if you need to compile programs on
+    Ubuntu.
+</p>
+
+<h3>Trackpoint usage</h3>
+<p>
+    I found several sites dedicated to laptops on linux, and one dedicated to
+    thinkpads running linux. They were each suggesting that I'd need to (a)
+    recompile X.org, and/or (b) add a kernel level driver. Once those were done,
+    I'd be able to add some directives to my X configuration in order to have my
+    wheel button enabled.
+</p>
+<p>
+    I'm not sure where I found the directives, but I decided to simply try them
+    and restart X. Here they are:
+</p>
+<pre>
+# In /etc/X11/xorg.conf:
+Section "InputDevice"
+    Identifier  "Configured Mouse"
+    Driver      "mouse"
+    Option      "CorePointer"
+    Option      "Device"               "/dev/input/mice"
+    Option      "Protocol"             "ExplorerPS/2"
+    Option      "ZAxisMapping"         "4 5"
+    Option      "EmulateWheel"         "on"
+    Option      "EmulateWheelButton"   "2"
+    Option      "EmulateWheelInertia"  "50"
+    Option      "EmulateWheelTimeOut"  "200"
+    Option      "EmulateWheelClickToo" "true"
+    Option      "YAxisMapping"         "4 5"
+    Option      "XAxisMapping"         "6 7"
+EndSection
+</pre>
+<p>
+    With these settings in place, restart your X server (Ctrl-Alt-Backspace),
+    and you're in business. I found that this actually provided <em>better</em>
+    functionality than on Windows; I now can do all of:
+</p>
+<ul>
+    <li>Use button two as a wheel lock, allowing vertical scrolling<li>
+    <li>and also do <em>horizontal</em> scrolling (never could do that in
+    Windows)</li>
+    <li><em>and</em> use it as a middle mouse button, allowing me to paste in
+    X</li>
+</ul>
+
+<h3>Suspend and Hibernate</h3>
+<p>
+    As I said earlier, each of these caused bizarre issues when I'd resume. The
+    little 'sleep' indicator would blink continually, the wireless adapter would
+    never work, and, if I tried to connect my vpn client, my machine would
+    freeze. And suspend never truly suspended the machine; it would turn off the
+    display, but the machine was still fully powered. It was a nightmare.
+</p>
+<p>
+    I remembered trying suspend2 last year, but with mixed results. I decided to
+    look into it some more, to see if te project has matured. I was disappointed
+    at first, because it looked like I'd need to build my own kernel, and I
+    didn't want to do anything that would potentially impinge on my ability to
+    work. And then I saw mention of a 'hibernate' program.
+</p>
+<p>
+    I did a quick search of the apt repositories, and saw that it was available:
+</p>
+<pre>
+$ apt-cache search hibernate
+$ apt-get install hibernate
+</pre>
+<p>
+    Once installed, I still had some configuration to do. GNOME has some
+    utilities for battery/power management that can initiate suspend and
+    hibernate, and GDM of course has them as well. However, they interact with
+    the acpid process. I needed to figure out how to get acpid to work with
+    hibernate.
+</p>
+<p>
+    This turned out to be pretty easy. First, replace /etc/acpi/sleep.sh with
+    the following:
+</p>
+<pre>
+#!/bin/sh
+/usr/sbin/hibernate --config-file=/etc/hibernate/ram.conf
+</pre>
+<p>
+    The, replace /etc/acpi/hibernate.sh and /etc/acpi/powerbtn.sh with:
+</p>
+<pre>
+#!/bin/bash
+# Skip if we're in the middle of resuming
+test -f /var/lock/acpisleep && exit 0
+
+/usr/sbin/hibernate --config-file=/etc/hibernate/disk.conf
+</pre>
+<p>
+    This was only half the issue, however; while I was truly suspending and
+    hibernating, and resuming, the wireless adapter was still not coming up by
+    itself.
+</p>
+<p>
+    hibernate comes with a number of configuration files. One is called
+    <kbd>blacklisted-modules</kbd>. I placed the following in it:
+</p>
+<pre>
+ath_pci
+wlan_scan_sta
+wlan
+</pre>
+<p>
+    I needed to add some additional directies to /etc/hibernate/common.conf to
+    make this work, and to bring the adapter down and up:
+</p>
+<pre>
+# Unload and load modules from the blacklist. These were already set.
+UnloadBlacklistedModules yes
+LoadModules auto
+
+# Bring down and restart networking:
+DownInterfaces ath0
+UpInterfaces ath0
+</pre>
+<p>
+    This solved the issue of the wireless adapter very nicely.
+</p>
+<p>
+    There were also a few other /etc/hibernate/common.conf directives I changed
+    due to my machine's configuration:
+</p>
+<pre>
+# This is an IBM laptop, so turn this on:
+IbmAcpi yes
+
+# I use GNOME; lock the screen on resume:
+LockGnomeScreenSaver yes
+
+# I don't use vbe in my X configuration, so I turned these off:
+EnableVbetool no
+
+# And I wanted to display some messages:
+Xstatus gnome
+XSuspendText Preparing to suspend...
+XResumeText Resuming from suspend...
+</pre>
+<p>
+    One last issue remained. You may recall discussion of a VPN client earlier.
+    Well, I discovered that when I tried to fire it up after resuming from
+    suspend or hibernate, my machine would lock up. The way the VPN client works
+    is that a daemon is run at machine startup that loads a kernel module;
+    evidently, resuming from suspend caused some sort of issue with this.
+    Fortunately, hibernate has some directives for this, and I added this to
+    /etc/hibernate/common.conf:
+</p>
+<pre>
+StopServices vpnclient_init
+StartServices vpnclient_init
+</pre>
+<p>
+    StopServices stops a service located in /etc/init.d/ just prior to a suspend
+    or hibernate process; StartServices does the opposite. With these directives
+    in place, everything worked perfectly for me.
+</p>
+<h3>Muting the microphone</h3>
+<p>
+    I use Skype regularly, and typically in meetings will mute the microphone
+    when others speak. I couldn't find a way to do this easily at first.
+</p>
+<p>
+    The solution is that  you need to enable some extra properties of the volume
+    control.
+</p>
+<p>
+    First off, right click on the volume control applet in the system tray, and
+    select 'Open Volume Control'. Then select the 'Edit' menu item, and
+    'Preferences' under it. You want to select 'Capture' and 'Microphone
+    Capture'. After these are selected, close the dialog.
+</p>
+<p>
+    You'll now have a 'Capture' tab in the volume control applet. It shows a
+    pair of sliders marked 'Capture'; below it are some icons, one of which is a
+    microphone. To mute the microphone, click it; a red 'X' over it shows that
+    it's muted. Clicking it again unmutes the microphone.
+</p>
+<h3>Summary</h3>
+<p>
+    I now have all the functionality of Windows, and then some. Plugging in my
+    flash drive loads it onto the desktop immediately, and also opens up a
+    Nautilus window with it. I have a full range of unix utilities available to
+    use for all of my documents. I've installed beagle, and have, arguably,
+    better desktop search than when using Google Desktop. Xbindkeys allows me to
+    create hot keys for launching common apps. I can use Gvim if I want to,
+    instead of vim, and still have access to a shell within it. The
+    mail-notification applet allows me to query my local maildir store as well
+    as gmail. I can use zenity with atd to create alarms for myself.
+</p>
+<p>
+    And apps run much faster, I'm finding. I've been plaing with Zend Studio,
+    which runs on Java, and it runs much more quickly than the Windows version
+    ever ran for me -- meaning I may actually give it more than a cursory try.
+</p>
+<p>
+    It's good to be back on linux!
 </p>]]></content:encoded>
       <slash:comments>0</slash:comments>
     </item>
@@ -247,6 +921,90 @@
 <p>
     Except when an apt-get based install goes bad, that is, like it did Saturday
     evening. This is the tale of how I got it back up and running.
+</p><p>
+    First off, I want to note that the narrative below shows the final,
+    <em>successful</em> steps I took that got me back up and running. I actually
+    had a number of failed attempts, but, like a scientist, kept changing one
+    variable until I got a success. The below may or may not work for you, but
+    it did work for me.
+</p>
+<p>
+    Now, to the incident: I'd been installing a few updates on my machine,
+    including updates to mutt and some related programs. All of a sudden, my
+    machine locked up, and I knew it was an irrecoverable lockup once the hard
+    drive light ceased all activity and the clock failed to show any updates.
+</p>
+<p>
+    After reboot, my coLinux daemon silently failed on startup, and I couldn't
+    determine if it was failing to start, or crashing after it booted. It took
+    me a while to figure out how to run it from the command line, but that
+    helped me diagnose the issue. To run the coLinux service from the command
+    line, <kbd>cd</kbd> into the directory containing your coLinux executables,
+    and then run <kbd>colinux-daemon.exe -c yourConfig.xml</kbd> (where
+    yourConfig.xml is the name of your configuration file; best is to use the
+    full <em>Windows</em> (not Cygwin) path to the configuration file).
+</p>
+<p>
+    Unfortunately, what I was getting was a kernel panic. I decided I needed to
+    go into single user mode to try and diagnose the issue. Googling told me
+    that I needed to add a trailing '1' to the bootparams directive in my
+    coLinux configuration file:
+</p>
+<pre>
+&lt;bootparams&gt;root=/dev/cobd0 1&lt;/bootparams&gt;
+</pre>
+<p>
+    Unfortunately, the kernel panic was occurring prior to the init phase --
+    apparently, it was having issues with the journaling on the ext3 partition.
+</p>
+<p>
+    So, I was stuck. And then it hit me: if I could boot into a different
+    coLinux install, I could add an additional block device with the root
+    partition of my own, and then do some disk analysis. Fortunately, I had the
+    original Debian image I'd downloaded to use with coLinux, so I started
+    experimenting.
+</p>
+<p>
+    Sure enough, I was able to grab my partition, run an <kbd>e2fsck</kbd> on
+    it, and even use <kbd>tune2fs</kbd> to remove and restore the journaling.
+    The partition mounted fine and I was able to peruse the data without an
+    issue.
+</p>
+<p>
+    But I still couldn't boot it, which left me in a bit of a situation: all my
+    current work is on that machine, and I have my dual-apache setup on there
+    (for PHP 4 and PHP 5). I needed to be able to boot it.
+</p>
+<p>
+    The first step was to create a new 10GB partition with a working Debian
+    install on it. I copied the working Debian install (which is &lt; 2GB), and
+    found a utility called <a href="http://csemler.com/">toporesize</a> that
+    could resize the partition to my desired 10GB. The process takes a fair
+    amount of time, and, because it's disk and CPU intensive, heats up the
+    laptop something awful, so I started it before bed and set aside the
+    machine.
+</p>
+<p>
+    In the morning, I changed my coLinux config file to boot this image -- and
+    it worked flawlessly. A quick <kbd>df -l</kbd> showed that the partition had
+    indeed been resized. Now it was time to test apt-get to install those
+    programs I'd been trying to update. All went perfectly.
+</p>
+<p>
+    I quit the session, added a block device for my old coLinux install to the
+    coLinux configuration, and restarted the virtual machine. The device was
+    found, and I mounted it locally so I could start rsyncing. I needed to rsync
+    my /home and /usr/local trees, as well as some key files in my /etc tree
+    (samba configuration, resolve.conf files, hosts file, and a custom apache
+    initscript). Again, this was a time and CPU intensive operation; however, it
+    was now morning, and time to be working, so I limited my activities to
+    checking email while I waited.
+</p>
+<p>
+    The end result is that I have a shiny new install with all my tools, and,
+    better yet, all my working data. Better yet, I now better understand how
+    coLinux works, and know I can recover fairly quickly and effectively from
+    failures in the future.
 </p>]]></content:encoded>
       <slash:comments>0</slash:comments>
     </item>
@@ -262,6 +1020,75 @@
     a move I've considered somewhat unfortunate but necessary. I've added a
     couple more tools to my toolbox since that have made the environment even
     better.
+</p><p>
+    A co-worker told me about <a href="http://colinux.sourceforge.net/">coLinux</a>,
+    a port of the linux kernel that allows it to run side-by-side with Windows
+    on the same machine. It's kind of like vmware, only more optimized, and
+    free. I'd looked at it, but was a bit daunted as I wanted to try and use my
+    existing Ubuntu install with it, and was worried about messing up the
+    machine.
+</p>
+<p>
+    I finally came to the realization, however, that I simply won't be using
+    linux as my day-to-day OS until some of my tools are ported. So, I blew away
+    my ubuntu install and made room for coLinux.
+</p>
+<p>
+    I'd heard that it was difficult to setup, but I found it fairly easy --
+    download the coLinux tools, get a filesystem image, add the service, fire it
+    up. You then need to do a few other things -- bridge your network interface
+    with the coLinux network interface, set your network IP for the coLinux
+    install, setup your root password and any new users you want -- but then
+    it's running. You can then use <a href="http://www.cygwin.com/">Cygwin</a> 
+    to SSH into the install.
+</p>
+<p>
+    The basic coLinux filesystem is Debian, and based on an old Sid version. It
+    is very stripped down, and has no developer tools. I had to apt-get a ton of
+    stuff -- gcc, cpp, cvs, subversion, darcs, libtool, some development
+    libraries, etc -- so I could start compiling things. I compiled Vim by hand,
+    because if you want Vim with perl support in Debian, it insists on
+    installing a ton of X related stuff. I then compiled Apache2, PHP4, and PHP5
+    by hand (and needed to get additional development libraries for some
+    features I wanted). But the compiles worked flawlessly, and I now have
+    coLinux running on the machine with a flexible development environment that
+    I control.
+</p>
+<p>
+    (I've also figured out a way to run PHP4 and PHP5 seemingly on the same
+    Apache install, side-by-side, but that's a topic for another day.)
+</p>
+<p>
+    While you can access the system via SSH, I find that's not terribly
+    convenient for doing simple things like editing files. So I installed Samba
+    in my coLinux install, and set it up with a few shares. With that in place,
+    I can now access files directly from Windows -- editing them in gVim, etc.
+</p>
+<p>
+    I setup <a href="http://www.exim.org/">Exim</a> via cygwin. However, I
+    noticed when I'd try and send emails from my coLinux install via the cygwin
+    exim, exim typically errored -- usually an inability to fork a process. So I
+    installed it via coLinux instead, and all is hunky dory -- my PHP scripts
+    can now send mail, and I have a local SMTP server for queuing and sending
+    mail instead of having to rely on the company or personal mail server. 
+</p>
+<p>
+    In reading on the coLinux site, I discovered that you can setup programs
+    that utilize esd, and run esd off of cygwin. This has allowed me to once
+    again use <a href="http://musicpd.org/">mpd</a> as my preferred music 
+    player.
+</p>
+<p>
+    Since I'm constantly going into my coLinux install, I created a copy of the
+    cygwin.bat script that adds a '-c "ssh myname@myCoLinuxInstall"' to the bash
+    command; this allows me to click on a single icon in order to SSH into
+    coLinux -- very handy.
+</p>
+<p>
+    All-in-all, I now have what I consider to be the best of both worlds --
+    access to the work programs I need, ease of configuration for a variety of
+    tools (wireless, bluetooth, USB devices), and a robust server/development
+    environment -- all on the same box.
 </p>]]></content:encoded>
       <slash:comments>0</slash:comments>
     </item>

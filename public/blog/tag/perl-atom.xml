@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title type="text">Tag: perl :: phly, boy, phly</title>
   <updated>2012-06-25T02:50:00+0000</updated>
-  <generator uri="http://framework.zend.com" version="2.0.0beta5">Zend_Feed_Writer</generator>
+  <generator uri="http://framework.zend.com" version="2.0.0">Zend_Feed_Writer</generator>
   <link rel="alternate" type="text/html" href="http://mwop.net/blog/tag/perl.html"/>
   <link rel="self" type="application/atom+xml" href="http://mwop.net/blog/tag/perl-atom.xml"/>
   <id>http://mwop.net/blog/tag/perl.html</id>
@@ -23,6 +23,117 @@ concept is nothing new: you set up a hook that listens for commits
 on specific branches or tags, and it then deploys your site from
 that revision.</xhtml:p>
 <xhtml:p>Except I'd not done it myself. This is how I got there.</xhtml:p>
+<xhtml:p>Sean's approach uses <xhtml:a href="https://help.github.com/articles/post-receive-hooks" target="_blank">Github webhooks</xhtml:a>, which are a fantastic concept.
+Basically, once your commit completes, Github will send a
+JSON-encoded payload to a specific URI. Sean uses this to trigger
+an API call to a specific page in his website, which will then
+trigger a deployment activity.</xhtml:p>
+<xhtml:p>Awesome, this should be easy; I already have a deploy script
+written that I trigger manually.</xhtml:p>
+<xhtml:p>One small problem: my site, while in Git, is not on Github. I
+maintain it on my own <xhtml:a href="https://github.com/sitaramc/gitolite" target="_blank">Gitolite</xhtml:a>
+repository. Which means I needed to write my own hooks.</xhtml:p>
+<xhtml:p>I originally went down the route of using a post-receive hook.
+However, I had problems determining what branch the given commit
+was on, despite a variety of advice I found on the subject on
+<xhtml:a href="http://stackoverflow.com/" target="_blank">StackOverflow</xhtml:a> and git mailing lists. I ended up
+finding a great example using post-update, which was actually
+perfect for my needs.</xhtml:p>
+<xhtml:p>In order to keep the post-update script non-blocking when I
+commit, I made it do very little: It simply determines what branch
+the commit was on, and if it was the master branch, it touches a
+specific file on the filesystem and finishes. The entire hook looks
+like this:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+#!/bin/bash
+branch=$(git rev-parse --symbolic --abbrev-ref $1)
+echo "Commit was for branch $branch"
+if [[ "$branch" == "master" ]];then
+    echo "Preparing to deploy"
+    echo "1" &gt; /var/local/mwop.net.update
+fi
+</xhtml:pre></xhtml:div>
+<xhtml:p>Now I needed something to detect such a push, and act on it.</xhtml:p>
+<xhtml:p>I considered using cron for this; it'd be relatively easy to
+have it fire up once a minute, and simply act on it. But I decided
+instead to write a simple little daemon using perl. Perl daemons
+are trivially easy to write, and if you use module such as
+<xhtml:code>Proc::Daemon</xhtml:code> and follow a few trivial defensive coding
+practices, you can keep memory leaks contained (or at least
+minimal). Besides, it gave me a chance to dust off my perl
+chops.</xhtml:p>
+<xhtml:p>I decided I'd have it check for the file in 30 second intervals,
+simply sleeping if no changes were detected. If the file was found,
+however, it should attempt to deploy. Additionally, I wanted it to
+quit if it was unable to remove the file (as this could lead to
+multiple deploy attempts), and log success and failure status of
+the deploy. The full script looks like this:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+#!/usr/bin/perl
+use strict;
+use warnings;
+use Proc::Daemon;
+
+Proc::Daemon::Init;
+
+my $continue = 1;
+$SIG{TERM} = sub { $continue = 0 };
+
+my $updateFile   = "/var/local/mwop.net.update";
+my $updateScript = "/home/matthew/bin/deploy-mwop";
+my $logFile      = "/var/local/mwop.net-deploy.log";
+while ($continue) {
+    # 30s intervals between iterations
+    sleep 30;
+
+    # Check for update file, and restart loop if not found
+    unless (-e $updateFile) {
+        next;
+    }
+
+    # Remove update file
+    if (!unlink($updateFile)) {
+        # If unable to unlink, we need to quit
+        system('echo "' . time() . ': Failed to REMOVE ' . $updateFile . '" &gt;&gt; ' . $logFile);
+        $continue = 0;
+        next;
+    }
+
+    # Deploy
+    system($updateScript);
+    if ( $? == -1 ) {
+        system('echo "' . time() . ': FAILED to deploy: ' . $! . '" &gt;&gt; ' .  $logFile);
+    } else {
+        system('echo "' . time() . ': Successfully DEPLOYED" &gt;&gt; ' . $logFile);
+    }
+}
+</xhtml:pre></xhtml:div>
+<xhtml:p>The <xhtml:code>system()</xhtml:code> calls for logging could have been done
+using Perl, but I didn't want to deal with additional error
+handling and file pointers; simply proxying to the system seemed
+reasonable and expedient.</xhtml:p>
+<xhtml:p>When all was ready, I started the above listener, which
+automatically daemonizes itself. I then installed the post-update
+hook into my bare repository, and tested it out. And it runs! When
+I push to master, my site is automatically deployed, typically
+within 15-20 seconds from completion.</xhtml:p>
+<xhtml:h4>Caveats</xhtml:h4>
+<xhtml:p>This solution, of course, relies on a daemonized process. If
+that process were to terminate, I'd have no idea until I discovered
+my site didn't refresh after the most recent push. Clearly, some
+sort of monitor checking for the status of the daemon should be in
+place.</xhtml:p>
+<xhtml:p>Also, note that I'm having this update on changes to the master
+branch; you may need to adapt it for your own needs, depending on
+your branching strategy.</xhtml:p>
+<xhtml:p>Finally, this approach does not address issues that might
+require a roll-back. Ideally, the script should probably log what
+revision was current prior to the deployment, allowing roll-back to
+the previous state. Alternately, the deployment script should
+create a new clone of the site and swap symlinks to allow quick
+roll-back when required.</xhtml:p>
 </xhtml:div>
     </content>
   </entry>
@@ -60,6 +171,109 @@ simply so they can read it and follow its flow.</xhtml:p>
 <xhtml:p>Additionally, TMTOWTDI can actually be a foe of simple, elegant
 solutions.</xhtml:p>
 <xhtml:p>Why do I claim this?</xhtml:p>
+<xhtml:p>Recently, discussing module structure in Zend Framework 2, some
+folks were arguing that our recommended directory structure invokes
+the <xhtml:a href="http://en.wikipedia.org/wiki/YAGNI">YAGNI</xhtml:a>
+principle: You Ain't Gonna Need It. Our recommendation is this:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+ModuleName/
+    autoload_classmap.php
+    Module.php
+    config/
+        module.config.php
+        (other config files)
+    public/
+        css/
+        images/
+        js/
+    src/
+        ModuleName/
+            (source files)
+    test/
+    view/
+</xhtml:pre></xhtml:div>
+<xhtml:p>The argument is that since most modules implement a single
+namespace, and because we recommend following <xhtml:a href="https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md">
+PSR-0</xhtml:a> for autoloaders, it makes sense to simply have the source
+files directly under the module directory.</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+ModuleName/
+    autoload_classmap.php
+    Module.php
+    (other source files)
+    config/
+        module.config.php
+        (other config files)
+    public/
+    test/
+    view/
+</xhtml:pre></xhtml:div>
+<xhtml:p>The argument myself and others made was that it makes sense to
+group the files by responsibility. However, the module system
+ultimately <xhtml:em>doesn't care</xhtml:em> how you organize the module --
+we've embraced TMTOWTDI, and our only requirement is that for your
+module to be consumed, you must define a
+<xhtml:code>ModuleName\Module</xhtml:code> class, and notify the module manager
+how to find it. Anything goes.</xhtml:p>
+<xhtml:p>How does that bolster my argument about the importance of
+conventions? It doesn't. What does is what following the
+recommended structure enabled me to do.</xhtml:p>
+<xhtml:p>One common concern identified with having a re-usable module
+system is that you should be able to expose public assets easily:
+things like module-specific CSS or JavaScript, or even images. The
+first question that arises when you consider this is: where do I
+put them in my module? That's why the recommendation includes a
+<xhtml:code>public</xhtml:code> directory. In fact, the recommendation goes a
+step further, and suggests <xhtml:code>css</xhtml:code>, <xhtml:code>images</xhtml:code>,
+and <xhtml:code>js</xhtml:code> directories as well.</xhtml:p>
+<xhtml:p>Now, your modules are typically <xhtml:em>outside</xhtml:em> the document
+root. This is a rudimentary and fundamental security measure, and
+also simplifies deployment to a degree -- you don't need to worry
+about telling the web server about what it <xhtml:em>shouldn't</xhtml:em>
+serve. But if the modules are outside the document root, how can I
+expose their public assets?</xhtml:p>
+<xhtml:p>There are a two possibilities that immediately jump to mind:</xhtml:p>
+<xhtml:ul>
+<xhtml:li>Install scripts for modules, which copy the files into the
+document root.</xhtml:li>
+<xhtml:li>Symlink the files into the document root.</xhtml:li>
+</xhtml:ul>
+<xhtml:p>Both are valid, and easy to accomplish. Both raise the same
+question: where, exactly? What if multiple modules have public
+assets named the same? how do I refer to my assets withing things
+like view scripts?</xhtml:p>
+<xhtml:p>This is where having a convention starts to make sense: having a
+convention should answer these questions unambiguously.</xhtml:p>
+<xhtml:p>My answer: public access should be at
+<xhtml:code>/css/ModuleName/stylesheetname</xhtml:code>, or
+<xhtml:code>/js/ModuleName/scriptname</xhtml:code> or
+<xhtml:code>/images/Modulename/imagename</xhtml:code>. It's a dirt-simple rule
+that fulfills the use cases.</xhtml:p>
+<xhtml:p>However, I'm now stuck with having to develop either install
+scripts or remembering to create symlinks -- ugh. And that's where
+having conventions led me to a simple, elegant solution.</xhtml:p>
+<xhtml:p>I added one line to my Apache vhost definition:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+AliasMatch /(css|js|images)/([^/]+)/(.*) /path/to/module/$2/public/$1/$3
+</xhtml:pre></xhtml:div>
+<xhtml:p>The translation:</xhtml:p>
+<xhtml:blockquote>When I come across a path to CSS, JS, or image files
+that are in a subdirectory, alias it to the corresponding public
+asset of the matched module directory.</xhtml:blockquote>
+<xhtml:p>I dropped this into my vhost, restarted Apache, and now not only
+were the assets I'd created already served, but any new ones I
+create are immediately available as well. Having a convention
+actually simplified my choices and my solutions.</xhtml:p>
+<xhtml:p>Rapid application development at its finest.</xhtml:p>
+<xhtml:p>My point is this: there will always be more than one way to do
+things when you're programming, and you may not always agree with
+the decisions your team has made, or the component library or
+framework you're using has made. However, if you poke around a
+little and play within those confines, you may find that those
+decisions make other decisions easier, or disappear altogether.</xhtml:p>
 </xhtml:div>
     </content>
   </entry>
@@ -80,6 +294,105 @@ solutions.</xhtml:p>
 Casey</xhtml:a> did a drive-by tagging of me on New Year's Eve.</xhtml:p>
 <xhtml:p>So, without further ado, seven things you may not know about
 me...</xhtml:p>
+<xhtml:ul>
+<xhtml:li><xhtml:em>My actual college degree is in comparative religion.</xhtml:em> I
+ended up in the Religion department at the <xhtml:a href="http://www.ups.edu/">University of Puget Sound</xhtml:a> (yes, the
+initials are UPS, which can easily cause confusion with brown,
+parcel-bearing trucks), due to a line of questioning that occurred
+during an Artificial Intelligence course I was taking. The
+instructor was asking if there would be any ethical barrier to
+unplugging an AI -- i.e., since it would be capable of thought,
+would this be equivalent to "killing" it? My initial response was,
+"No," because humans consist of more than thought... and then I
+started wondering a bit about that. My emphasis in religion was in
+Eastern religions. I have a minor in Mathematics (CS at UPS was
+actually CS/Mathematics).</xhtml:li>
+<xhtml:li><xhtml:em>I have an FCC Commercial Radio Operator's License.</xhtml:em> My
+parents were volunteer DJs at <xhtml:a href="http://www.kglt.net/">KGLT</xhtml:a> while I was growing up, and I did
+my first radio announcing at... get this... the ripe age of 11. I
+finally got my license before starting college so that I could be a
+DJ at the university station... and ended up as the General Manager
+of <xhtml:a href="http://en.wikipedia.org/wiki/KUPS">KUPS</xhtml:a> my last two
+years.</xhtml:li>
+<xhtml:li><xhtml:em>I had long hair -- down to my butt at times -- for around
+ten years.</xhtml:em> Which likely comes as a huge shock to those of you
+who have met me at conferences. Ironically, I cut it off just prior
+to moving to Vermont as part of an effort to increase the success
+of my job hunt.</xhtml:li>
+<xhtml:li><xhtml:em>Before I started my programming career, I was a graphics
+technician.</xhtml:em> The job immediately prior to my first programming
+position was with a small book publisher that specialized in bird
+hunting and flyfishing guidebooks, for which I created maps,
+scanned and processed images for books, and did book and catalog
+layout.</xhtml:li>
+<xhtml:li><xhtml:em>My first Object Oriented Programming was in Perl.</xhtml:em> If
+you've ever done OOP in Perl, you'll likely agree with the
+following statement: OOP in any other language is easy by
+comparison. I mean, come on, a syntax where the very definition of
+an object requires that you "bless" a "thingy"? Truly; this is from
+the "bless" documentation:
+<xhtml:blockquote>bless REF: This function tells the thingy referenced by
+REF that it is now an object in the CLASSNAME package. If CLASSNAME
+is omitted, the current package is used. Because a bless is often
+the last thing in a constructor, it returns the reference for
+convenience. Always use the two-argument version if a derived class
+might inherit the function doing the blessing. See perltoot and
+perlobj for more about the blessing (and blessings) of
+objects.</xhtml:blockquote>
+This made OOP in PHP look easy.</xhtml:li>
+<xhtml:li><xhtml:em>I hold the degree of shodan in Aikido,</xhtml:em> though I
+haven't trained in several years, due to time and travel
+constraints. I love the movement and flow of Aikido, and always
+found it very meditative. I also liked working with weapons,
+especially the bokken (wooden sword). This is why when I say,
+"don't make me get my clue bat out," you should take heed; I know
+from experience that white oak leaves a mark.</xhtml:li>
+<xhtml:li><xhtml:em>I could have been <xhtml:a href="http://calevans.com/">Cal</xhtml:a>.</xhtml:em> When <xhtml:a href="http://www.zend.com/">Zend</xhtml:a> first interviewed me, it was for
+the position of Editor-in-Chief of <xhtml:a href="http://devzone.zend.com/">DevZone</xhtml:a>. After my in-house
+interview, I had reservations -- I didn't feel experienced or
+connected enough, and was worried I'd botch it. Fortunately for me,
+and probably the PHP community in general, they decided to hire me
+as a PHP developer instead.</xhtml:li>
+</xhtml:ul>
+<xhtml:p>So, that's seven things (and quite a bit more, really) about me.
+And now it's time to tag some others:</xhtml:p>
+<xhtml:ul>
+<xhtml:li><xhtml:a href="http://calevans.com/">Cal Evans</xhtml:a> is an obvious
+choice for me. Besides having worked together for some years, he's
+a great friend.</xhtml:li>
+<xhtml:li><xhtml:a href="http://www.leftontheweb.com/">Stefan Koopmanschap</xhtml:a>,
+who took a train to Amsterdam just to have dinner and a beer with
+me.</xhtml:li>
+<xhtml:li><xhtml:a href="http://seancoates.com/">Sean Coates</xhtml:a>, whom I met in
+an airport on the way back from ZendCon two years ago, who lives
+less than two hours away, and whom I haven't seen since that
+ZendCon.</xhtml:li>
+<xhtml:li><xhtml:a href="http://www.lornajane.net/">Lorna Jane Mitchell</xhtml:a>,
+with whom I'll be doing a tutorial session on Subversion at
+php|tek, and who will be clearly flustered by being tagged.</xhtml:li>
+<xhtml:li><xhtml:a href="http://jansch.nl/">Ivo Jansch</xhtml:a>, whom I met almost
+two years ago, and somebody I admire and respect greatly.</xhtml:li>
+<xhtml:li><xhtml:a href="http://www.khankennnels.com/blog/">Ligaya
+Turmelle</xhtml:a>, one of my co-authors for "The PHP Anthology," the
+woman who got me to volunteer as a phpwomen Booth Babe, and now
+MySQL guru.</xhtml:li>
+<xhtml:li><xhtml:a href="http://akrabat.com/">Rob Allen</xhtml:a>, who has made my
+job easier by publishing tutorials and now a book on Zend
+Framework, and who in real-life is a mild-mannered Clark Kent I'd
+gladly raise a pint with any day.</xhtml:li>
+</xhtml:ul>
+<xhtml:p>And here are the rules I'm supposed to pass on to the above
+bloggers:</xhtml:p>
+<xhtml:ul>
+<xhtml:li>Link your original tagger(s), and list these rules on your
+blog.</xhtml:li>
+<xhtml:li>Share seven facts about yourself in the post - some random,
+some wierd.</xhtml:li>
+<xhtml:li>Tag seven people at the end of your post by leaving their names
+and the links to their blogs.</xhtml:li>
+<xhtml:li>Let them know they've been tagged by leaving a comment on their
+blogs and/or Twitter.</xhtml:li>
+</xhtml:ul>
 </xhtml:div>
     </content>
   </entry>
@@ -105,6 +418,131 @@ staying on IRC. To me, the ultimate client would provide me
 notifications when somebody mentions my name or a watch word -
 allowing me to read the channel at my leisure, yet still respond to
 people in a timely fashion.</xhtml:p>
+<xhtml:p>I've tried a variety of IRC clients over the months, starting
+with Pidgin (poor interface for IRC), mirc (huge difficulties
+figuring out the UI), xchat (not bad, but seemed a bit heavy),
+Chatzilla (I liked the interface, but once you got many tabs going,
+it was unwieldy switching around between them; I also hated that
+Firefox dying or restarting caused Chatzilla to do likewise), and
+now <xhtml:a href="http://irssi.org/">irssi</xhtml:a>.</xhtml:p>
+<xhtml:p>So far, irssi is the best I've tried -- I can run it in screen,
+allowing me to keep it open as long as my machine is running. The
+interface is reasonable, and cleanly keeps channels separate from
+private messages. Opening, closing, and manipulating windows is
+easy. And it's highly scriptable... including in a language I
+actually use! The perl bindings are top notch, though sometimes
+cryptic. What's important, however, is that there are plenty of
+examples out there if you want to try doing something. So, I
+figured I'd write up a quick plugin to trigger notifications.</xhtml:p>
+<xhtml:p>I've been using a number of different notification servers for
+linux, and personally like both <xhtml:a href="http://gnotify.sourceforge.net">gnotify</xhtml:a> and <xhtml:a href="http://www.mumbles-project.org/">mumbles</xhtml:a>. Both are very
+lightweight and offer network protocols for triggering
+notifications.</xhtml:p>
+<xhtml:p>I first tried using gnotify. It has a very, very simple TCP
+protocol, and I've had success creating messages from the shell,
+PHP, and perl. Unfortunately, for some reason, using it in irssi
+displayed some odd behavior: I'd lose the cursor and the ability to
+enter input from the time a notification triggered until it
+completed (i.e., the notification disappeared). Forking the process
+did not appear to help.</xhtml:p>
+<xhtml:p>So, I decided to try out mumbles. Mumbles is written in python,
+and has themeable notifications -- already a plus. It runs via dbus
+by default, but can also optionally spawn a server that implements
+the <xhtml:a href="http://growl.info/">Growl protocol</xhtml:a> -- making it
+accessible for any process to send notifications. Additionally, it
+has a command-line utility for triggering notifications -- by
+default over dbus, but optionally by contacting the growl server,
+if running.</xhtml:p>
+<xhtml:p>Growl's protocol is a bit involved, and I didn't want to spend
+too much time on this. So, I did a quick, dirty hack: I used
+backticks to trigger the CLI utility. And it works
+<xhtml:em>fantastically</xhtml:em> -- no delays whatsoever. Here's the
+code:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code lang="perl" xml:lang="perl">
+# $HOME/.irssi/scripts/mumbles.pl
+use strict;
+use Irssi;
+use Irssi::Irc;
+use vars qw($VERSION %IRSSI);
+
+$VERSION = '0.1.0';
+%IRSSI = (
+    authors     =&gt; \"Matthew Weier O'Phinney\",
+    contact     =&gt; 'matthew@weierophinney.net',
+    name        =&gt; 'Mumbles notifications for irssi',
+    description =&gt; 'This script enables mumbles notifications for irssi',
+    license     =&gt; 'New BSD',
+        changed     =&gt; \"2008-12-10\"
+);
+
+
+sub mumbles_sig_printtext {
+  my ($dest, $text, $stripped) = @_;
+
+  if (($dest-&gt;{level} &amp; (MSGLEVEL_HILIGHT|MSGLEVEL_MSGS)) &amp;&amp; ($dest-&gt;{level} &amp; MSGLEVEL_NOHILIGHT) == 0)
+  {
+    if ($dest-&gt;{level} &amp; MSGLEVEL_PUBLIC)
+    {
+      mumbles($dest-&gt;{target} . \" : \" . $text);
+    }
+  }
+}
+
+sub mumbles {
+    my $message = shift;
+    my $response;
+
+    $message =~ s/[^!-~\s]//g;
+
+    `/usr/bin/mumbles-send -g 127.0.0.1 -s \"IRC\" \"$message\"`;
+}
+
+Irssi::command_bind 'mumbles' =&gt; sub {
+    my ($message) = @_;
+    mumbles($message);
+};
+
+Irssi::signal_add({
+  'print text'    =&gt; \&amp;mumbles_sig_printtext
+});
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>This triggers a notification for any "highlight" event --
+basically, anytime anybody "says" my name in a channel, or mentions
+a keyword I've marked for highlighting. Additionally, I created a
+"mumbles" command so that I can send test messages (usage:
+"/mumbles "this is the message..."). You could certainly bind to
+other events, such as topic changes, joins, parts, etc -- I'm only
+interested in highlight events.</xhtml:p>
+<xhtml:p>You may note the regexp in there. One thing I discovered was
+that most messages contained control and non-ascii characters that
+often resulted in unreadable notifications, as well as some nasty
+messages reported by irssi. The regexp removes anything not in the
+ascii character set or the set of whitespace definitions prior to
+emitting the notification.</xhtml:p>
+<xhtml:p>Something else I needed to do was configure compiz to ensure
+that the notifications actually popped <xhtml:em>above</xhtml:em> my windows. I
+did this by going into the compiz configuration manager, selecting
+"General Options", selecting the "Focus &amp; Raise Behaviour" tab,
+and modifying the "Focus Prevention Windows" to read as
+follows:</xhtml:p>
+<xhtml:pre>
+<xhtml:code>(any) &amp; !(class=Mumbles)
+</xhtml:code>
+</xhtml:pre>
+<xhtml:p>To test it, I placed the script in
+$HOME/.irssi/scripts/mumbles.pl, and then, in irssi, executed
+"/load mumbles.pl".</xhtml:p>
+<xhtml:p>Once I had it to my liking, I symlinked it into my
+$HOME/.irssi/scripts/autorun/ directory, allowing it to run as soon
+as irssi loads. I can now have irssi running in a screen session,
+or minimize the terminal, and get notifications -- keeping me
+productive and informed at the same time.</xhtml:p>
+<xhtml:p><xhtml:b>UPDATED 2008-12-12:</xhtml:b> Added information on how to load the
+script, as well as fixed the location to the autorun directory.
+Thanks, @sidhighwind!</xhtml:p>
 </xhtml:div>
     </content>
   </entry>
@@ -130,6 +568,57 @@ vim, of course, is its unix roots; typically if you know the unix
 command for doing something, you can find what you need in vim. In
 this case, the key is the vimgrep plugin, which ships in the
 standard vim distribution.</xhtml:p>
+<xhtml:p>There are a variety of resources on vimgrep. The vim
+documentation includes a chapter on it, and a quick <xhtml:a href="http://www.google.com/search?q=vimgrep">google search</xhtml:a> on the
+subject turns up some nice tutorials immediately. If you've ever
+used grep, the syntax is very straightforward:</xhtml:p>
+<xhtml:pre>
+<xhtml:code>vimgrep /{pattern}/[g][j] {file} ...
+</xhtml:code>
+</xhtml:pre>
+<xhtml:p>The "g" option indicates that all matches for a search will be
+returned instead of just one per line, and the "j" option tells vim
+<xhtml:em>not</xhtml:em> to jump to the first match automatically. What does
+the "g" flag really mean, though, and how are searches
+returned?</xhtml:p>
+<xhtml:p>Vimgrep returns search results in what's known as a "quickfix"
+window, and this is where the vimgrep documentation falls apart...
+it doesn't explain what this is, or link to it (which would be a
+nice indication that it actually has a separate topic for
+this).</xhtml:p>
+<xhtml:p>The Quickfix window is a pane that shows a search result per
+line. Each line shows the file that matches, the line number, and
+the contents of that line:</xhtml:p>
+<xhtml:pre>
+<xhtml:code>/home/matthew/git/bugapp/application/controllers/helpers/GetForm.php|10| * @var Zend_Loader_PluginLoader
+</xhtml:code>
+</xhtml:pre>
+<xhtml:p>You can't do much from this window; it simply serves as a visual
+indicator of what file you're currently looking at from the list.
+However, in the main window, you can start iterating through the
+results one at a time, using a subset of the Quickfix commands. As
+a quick summary:</xhtml:p>
+<xhtml:ul>
+<xhtml:li><xhtml:b>:cc</xhtml:b> will move to the next match in the list</xhtml:li>
+<xhtml:li><xhtml:b>:cn</xhtml:b> will move to the next match in the list</xhtml:li>
+<xhtml:li><xhtml:b>:cp</xhtml:b> will move to the previous match in the list</xhtml:li>
+<xhtml:li><xhtml:b>:cr</xhtml:b> will rewind to the first match in the list</xhtml:li>
+<xhtml:li><xhtml:b>:cla</xhtml:b> will fast forward to the last match in the
+list</xhtml:li>
+</xhtml:ul>
+<xhtml:p>When done, you can simply close the Quickfix window/pane, and
+continue working.</xhtml:p>
+<xhtml:p>I should note that vimgrep <xhtml:em>is</xhtml:em> cross-platform. On
+*nix-based systems, it defaults to using the native grep command,
+but it also contains an internal (slower) implementation for use on
+operating systems that do not provide grep by default. You may also
+map the command to alternate implementations if desired.</xhtml:p>
+<xhtml:p>I personally use this feature most with the <xhtml:a href="http://www.vim.org/scripts/script.php?script_id=69">project
+plugin</xhtml:a>. Project maps vimgrep to two different commands:
+&lt;Leader&gt;g and &lt;Leader&gt;G. The first will grep all files
+in the current project at the current level; the second does the
+same, but also recurses into subprojects. This is an incredibly
+easy way to refactor code, particularly for name changes.</xhtml:p>
 </xhtml:div>
     </content>
   </entry>

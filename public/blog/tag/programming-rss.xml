@@ -4,7 +4,7 @@
     <title>Tag: programming :: phly, boy, phly</title>
     <description>Tag: programming :: phly, boy, phly</description>
     <pubDate>Mon, 05 Jan 2009 07:00:49 +0000</pubDate>
-    <generator>Zend_Feed_Writer 2.0.0beta5 (http://framework.zend.com)</generator>
+    <generator>Zend_Feed_Writer 2.0.0 (http://framework.zend.com)</generator>
     <link>http://mwop.net/blog/tag/programming.html</link>
     <atom:link rel="self" type="application/rss+xml" href="http://mwop.net/blog/tag/programming-rss.xml"/>
     <item>
@@ -50,6 +50,345 @@
 
 <p>
     Read on for the gruesome, month-by-month breakdown.
+</p><h2>January and February</h2>
+
+<p>
+    I started coding <code>Zend_Form</code> in earnest in January, and had a
+    preview ready for testing mid-month. The pace continued into February, as I
+    addressed user feedback and issues, and continued working feverishly towards
+    what would become Zend Framework's 1.5.0 release.
+</p>
+
+<p>
+    I also answered many questions for and had many discussions with 
+    <a href="http://www.calevans.com/">Cal Evans</a> relating to his "Guide to
+    Programming Zend Framework".
+</p>
+
+<h2>March</h2>
+
+<p>
+    I gave my first webinar of the year early in March, on the subject of
+    <code>Zend_Form</code>; it was very well attended, but unfortunately there
+    was an issue recording the sound, so the recording was never released. After
+    two more failed attempts at re-recording, we gave up. I apologize to all who
+    have wanted to view it.
+</p>
+
+<p>
+    While working towards the 1.5.0 release, <a href="http://ralphschindler.com/">Ralph Schindler</a>
+    and I also finished up final touches on <code>Zend_Layout</code> and the
+    various "placeholder" view helper implementations.
+</p>
+
+<p>
+    On 17 March 2008, we released Zend Framework 1.5, our first minor release
+    following 1.0.0.
+</p>
+
+<p>
+    I started blogging tips and tricks for 1.5, and also writing articles for
+    <a href="http://devzone.zend.com/">DevZone</a> during March, and had
+    tremendous amounts of feedback. In fact, one blog post, on "Login and
+    Authentication", is still one of the most trafficked on my blog after 9
+    months.
+</p>
+
+<p>
+    I also began what I envisioned as a series of Vim posts, but, alas, it has
+    resulted only in two.
+</p>
+
+<h2>April</h2>
+
+<p>
+    Following the 1.5 release, I did weekly posts for a month or so covering
+    various features of Zend Framework, including Front Controller plugins,
+    Action Controller helpers, and View helpers. Towards the end of the month,
+    the entire team participated in a Q&amp;A webinar to discuss the 1.5
+    release.
+</p>
+
+<h2>May</h2>
+
+<p>
+    At the beginning of the month, I released the last in my series of 1.5
+    tutorials on <a href="http://devzone.zend.com/">DevZone</a>, covering Form
+    decorators. This has saved me countless hours on IRC and in the mailing
+    lists explaining how this aspect of forms work.
+</p>
+
+<p>
+    During this month, we also finally announced that Zend Framework would be
+    partnering with <a href="http://dojotoolkit.org/">Dojo</a> to provide an
+    out-of-the-box RIA solution. I began work identifying the various
+    integration points and creating proposals for implementation. I also did a
+    Q&amp;A webinar with the Dojo team outlining the proposed integration.
+</p>
+
+<p>
+    At the end of the month, the ZF team reorganized the subversion repository
+    to allow for an "Extras" repository, and also to ensure that projects
+    originating in the laboratory or extras and migrating to the standard
+    library retain all history. Even with the big notices we put on the ZF site,
+    articles on DevZone, and posts on various blogs, we still get questions on
+    this seven months later. Let this be a lesson to you: plan your repositories
+    for any contingency as early as you can!
+</p>
+
+<h2>June</h2>
+
+<p>
+    I started June with a trip to Israel, to visit the Zend offices. I met up
+    with <a href="http://andigutmans.blogspot.com/">Andi</a> in Newark, and we
+    flew from there to Israel several rows apart in coach. One of the best meals
+    I've ever had was after we landed and he invited me to his sister's place
+    for dinner, and we dined on chicken marinated in home-pressed olive oil and
+    fresh herbs, hummus, and pitas baked with fresh oregano. The rest of the
+    week was spent in the office, in endless meetings.
+</p>
+
+<p>
+    Four days after returning from Israel, I flew to Amsterdam for the 
+    <a href="http://www.phpconference.nl">Dutch PHP Conference</a>, to which I'd
+    been invited to speak. My good friend <a href="http://wolerized.com/">Remi</a> 
+    took the
+    train up to Amsterdam to meet me the day I flew in, and we walked and walked
+    and walked around the city, until dinnertime. 
+    <a href="http://www.leftontheweb.com/">Stefan Koopmanschap</a> then met us
+    for a lovely dinner, and I returned to the hotel to finish screenshots for
+    the six-hour workshop on Zend Framework I was presenting the next day. The
+    entire conference was wonderful, and I met many fantastic people, including
+    <a href="http://www.priebsch.de/">Stefan Priebsch</a>, 
+    <a href="http://www.lornajane.net/">Lorna Jane Mitchell</a>, 
+    <a href="http://andries.systray.be/">Andries Seutens</a>, and many, many
+    more -- plus many familiar faces, such as Sebastian Bergmann, Derek Rethans,
+    Mike Van Dam, Felix de Vliegher, and Marco Tabini.
+</p>
+
+<p>
+    On my blog, I started raising the question of how we will refer to Abstract
+    classes and Interfaces in PHP 5.3, but I think my arguments went largely
+    unheard and/or misunderstood.
+</p>
+
+<p>
+    The last half of the month was spent working on both Dojo integration with
+    Zend Framework (a task that turned out fairly easy, in large part due to
+    some wonderful guidance from <a href="http://higginsforpresident.net/">Pete Higgins</a>), 
+    and preparing <code>Zend_Test_PHPUnit</code> for inclusion in Zend Framework
+    1.6.
+</p>
+
+<h2>July</h2>
+
+<p>
+    I think I'll remember July as the month of the neverending release cycle.
+</p>
+
+<h2>August</h2>
+
+<p>
+    On 8 August 2008, PHP 4 officially died. I thought about drinking a toast
+    for about 3 seconds, forgot about it, and finished my beer.
+</p>
+
+<p>
+    The following Monday, we released the second release candidate of Zend
+    Framework 1.6.0. 
+</p>
+
+<p>
+    August, too, became part of the month of the neverending release cycle.
+</p>
+    
+<h2>September</h2>
+
+<p>
+    Finally, on 2 September 2008, we released 1.6.0 into the wild.  My
+    contributions included, as noted earlier, Dojo integration, PHPUnit
+    integration, and code assistance on our Captcha solution and file upload
+    support.
+</p>
+
+<p>
+    The next day, I gave yet another webinar on Zend Framework and Dojo
+    integration, but finally actually had some code samples and working demos to
+    show off, soundly quieting the claims of vaporware. I also started
+    learning about Dojo release builds, under the tutelage of Pete Higgins.
+</p>
+
+<p>
+    Mid-month saw the fourth annual Zend/PHP Conference, this time in Santa
+    Clara. I was involved in a marathon of seven different sessions over three
+    days. I've rarely been so exhausted, and it's a wonder I remember anything
+    following -- but I had a wonderful time with the PHP <em>community</em>
+    following, including <a href="http://www.bombdiggity.net/">Jon
+        Whitcraft</a>, <a href="http://akrabat.com/">Rob Allen</a>, the <a
+        href="http://ibuildings.nl/">ibuildings</a> crew, and
+    more. 
+</p>
+    
+<p>
+    I also finally got to meet <a href="http://sklar.com/">David Sklar</a>, to
+    whom I owe the fact of my first public speaking engagement at the first
+    ZendCon.
+</p>
+
+<p>
+    Following ZendCon, there were announcements that two colleagues at Zend I
+    respect highly were leaving for new opportunities: Mark de Visser left to
+    join Sonatype as its CEO, and Cal Evans left to head ibuildings' new Center
+    for PHP Expertise. I wish them both luck in their new endeavors.
+</p>
+
+<h2>October</h2>
+
+<p>
+    I helped <a href="http://wadearnold.com/blog/">Wade Arnold</a> complete
+    testing of <code>Zend_Amf</code> as we prepared for the Zend Framework 1.7.0
+    release, and learned a fair deal about Flex in the process.
+</p>
+
+<p>
+    During this time, I also completed a technical review of 
+    <a href="http://zendframeworkinaction.com">Zend Framework in Action</a>. 
+    Rob Allen and Nick Lo had contacted me earlier in the year, but I'd
+    been unable to commit to it. In July, I agreed, only to get sucked into the
+    neverending release cycle. Fortunately, in October I had time to complete
+    the review. The book is very well written and organized, and I can't
+    recommend it highly enough. I was able to give some constructive feedback
+    and have some dialog with Rob that, hopefully, helped clarify a few areas of
+    Zend Framework, and will hopefully help their readers.
+</p>
+
+<p>
+    For the 1.7 release of Zend Framework, I worked on performance benchmarking,
+    profiling, improvements, and a best practices guide.
+</p>
+
+<p>
+    Late in the month, I delivered a webinar with Lee Brimelow for Adobe to
+    showcase the upcoming AMF support in Zend Framework.
+</p>
+
+<h2>November</h2>
+
+<p>
+    The last few days of October and first week of November, I organized a bug
+    hunt week for Zend Framework, culminating in a 
+    <a href="http://bughuntday.org/">Bug Hunt Day</a> event held and organized
+    by <a href="http://www.phpbelgium.be/">PHP Belgium</a> and 
+    <a href="http://phpgg.nl/">phpGG</a> (The Netherlands). We closed out close
+    to 150 issues over the course of the week and a couple dozen during the Bug
+    Hunt Day, and got many contributors started on the path of professional bug
+    squashing enlightenment.
+</p>
+
+<p>
+    The second week of November, I flew down to Atlanta, GA, to attend
+    <a href="http://phpworks.mtacon.com/">php|works</a>.. err,
+    php|works/pyworks.  First off, a huge thank you to 
+    <a href="http://naramore.net/blog/">Elizabeth Naramore</a>, who
+    helped me fairly last minute to make sure I had a room to stay in. While
+    there, I presented my Dojo and Zend Framework talk, but with some updated
+    content. Of course, every presenter's nightmare occurred, and I had to
+    reboot my laptop mid-stream. I surprised myself, and, I think, the attendees
+    by actually being able to continue speaking while we waited for my machine
+    to reboot.
+</p>
+
+<p>
+    I also presented a <a href="http://en.wikipedia.org/wiki/Pecha_Kucha">Pecha Kucha</a> 
+    talk -- I re-branded the phrase as "Pikachu" a couple weeks earlier (a
+    reference to the iconic character in <a href="http://www.pokemon.com/">Pokemon</a>, 
+    a game I play with my daughter), and that phrase has, for better or for
+    worse, stuck. My talk was on how to be banned from an open source project,
+    and I swore entirely too much. It was a nice release, however, as I try to
+    be politic in public usually, and sometimes just need to rant.
+</p>
+
+<p>
+    I got to see a ton of old and new friends alike while there -- former
+    Zenders <a href="http://mikenaberezny.com/">Mike Naberezny</a> and 
+    <a href="http://paul-m-jones.com/">Paul M. Jones</a>, 
+    <a href="http://caseysoftware.com/blog/">Keith Casey</a>, 
+    <a href="http://ishouldbecoding.com/">Matthew Turland</a>, 
+    <a href="http://jansch.nl/">Ivo</a>
+    and a bunch of the ibuildings crew, Pollita (sorry, I have to stop linking
+    everyone now...), Sebastian... basically, a ton of the usual suspects. I
+    also met a lot of new people, many of them introducing themselves as ZF
+    users; I appreciate all of you introducing yourselves, as <em>you</em> are
+    the reason I code.
+</p>
+
+<p>
+    The following Monday, 17 November 2008, we released Zend Framework 1.7.0,
+    timed to coincide with the the Adobe MAX conference, as AMF support was our
+    major story for the release. <code>Zend_Amf</code> has generated tremendous
+    buzz in both the PHP and Flash/Flex communities, due to the simplicity and
+    robustness of its design. This release also marked the first release to
+    include the extras repository -- which now ships with community-contributed
+    <a href="http://jquery.com/">JQuery</a> support.
+</p>
+
+<h2>December</h2>
+
+<p>
+    <a href="http://shiflett.org/">Chris Shiflett</a> and 
+    <a href="http://seancoates.com/">Sean Coates</a> organized this year's 
+    <a href="http://phpadvent.org/2008/">PHP Advent Calendar</a>,
+    and solicited entries from a select group of PHP community members a week in
+    advance. I didn't volunteer to contribute for the first week, but managed to
+    get mine in on the first day... only to see it appear the very next.
+    Hopefuly, my guide to responsible contributions will help those wondering
+    how to report and/or fix bugs in open source projects.
+</p>
+
+<p>
+    I started blogging more, in part due to more free time in the evenings (it's
+    nice when the kids go to bed at a reasonable hour!), and in part due to
+    finally putting a number of ideas into a blogging "backlog" so that I could
+    pick up and post when I had time. From this, I added an entry on
+    mumbles/irssi integration, autocompletion with ZF and Dojo, created a simple
+    pubsub implementation for PHP, and started a series of posts on how to
+    architect models (and some concrete tips for doing so). I have more posts in
+    December than I have in several other months combined.
+</p>
+
+<h2>Reflection</h2>
+
+<p>
+    This past year, I became much more involved with both the Zend Framework and
+    greater PHP communities, and feel I have enriched my life with many
+    wonderful new friends -- some local, some global. I feel truly fortunate to
+    be working in a job I love, contributing to a project that helps others do
+    the jobs they love, and part of such an accepting and vibrant group of
+    people.
+</p>
+
+<p>
+    Looking back, I travelled less, though because most of it was in a five
+    month period, it felt like more. On that note, I vow never to do back to
+    back trips across the big pond, as it was incredibly exhausting.
+</p>
+
+<h2>Looking ahead to 2009</h2>
+
+<p>
+    I have several things to look forward to already in 2009.  I'll be
+    continuing my series of posts on models. In February, I will have an article
+    published in a print magazine for the first tiem.  I'll be speaking at PHP
+    Quebec in March, presenting two sessions and sitting in on a panel. I hope
+    to speak at several other conferences, and potentially write more articles
+    and tutorials. Overall, I want to contribute more to the ecosystem of best
+    practices in PHP, particularly in the areas of testing and deployment
+    strategies.
+</p>
+
+<p>
+    I hope this post finds <em>you</em> in good health and spirits, and that you
+    have a fantastic start to the new year!
 </p>]]></content:encoded>
       <slash:comments>0</slash:comments>
     </item>
@@ -74,6 +413,151 @@
     To me, the ultimate client would provide me notifications when somebody
     mentions my name or a watch word - allowing me to read the channel at my
     leisure, yet still respond to people in a timely fashion.
+</p><p>
+    I've tried a variety of IRC clients over the months, starting with Pidgin
+    (poor interface for IRC), mirc (huge difficulties figuring out the UI),
+    xchat (not bad, but seemed a bit heavy), Chatzilla (I liked the interface,
+    but once you got many tabs going, it was unwieldy switching around between
+    them; I also hated that Firefox dying or restarting caused Chatzilla to do
+    likewise), and now <a href="http://irssi.org/">irssi</a>. 
+</p>
+
+<p>
+    So far, irssi is the best I've tried -- I can run it in screen,
+    allowing me to keep it open as long as my machine is running. The interface
+    is reasonable, and cleanly keeps channels separate from private messages.
+    Opening, closing, and manipulating windows is easy. And it's highly
+    scriptable... including in a language I actually use! The perl bindings are
+    top notch, though sometimes cryptic. What's important, however, is that
+    there are plenty of examples out there if you want to try doing something.
+    So, I figured I'd write up a quick plugin to trigger notifications.
+</p>
+
+<p>
+    I've been using a number of different notification servers for linux, and
+    personally like both <a href="http://gnotify.sourceforge.net">gnotify</a>
+    and <a href="http://www.mumbles-project.org/">mumbles</a>. Both are very
+    lightweight and offer network protocols for triggering notifications.
+</p>
+
+<p>
+    I first tried using gnotify. It has a very, very simple TCP protocol, and
+    I've had success creating messages from the shell, PHP, and perl.
+    Unfortunately, for some reason, using it in irssi displayed some odd
+    behavior: I'd lose the cursor and the ability to enter input from the time a
+    notification triggered until it completed (i.e., the notification
+    disappeared). Forking the process did not appear to help.
+</p>
+
+<p>
+    So, I decided to try out mumbles. Mumbles is written in python, and has
+    themeable notifications -- already a plus. It runs via dbus by default, but
+    can also optionally spawn a server that implements the 
+    <a href="http://growl.info/">Growl protocol</a> -- making it accessible for
+    any process to send notifications. Additionally, it has a command-line
+    utility for triggering notifications -- by default over dbus, but optionally
+    by contacting the growl server, if running.
+</p>
+
+<p>
+    Growl's protocol is a bit involved, and I didn't want to spend too much time
+    on this. So, I did a quick, dirty hack: I used backticks to trigger the CLI
+    utility. And it works <em>fantastically</em> -- no delays whatsoever. Here's
+    the code:
+</p>
+
+<div class="example"><pre><code lang="perl">
+# $HOME/.irssi/scripts/mumbles.pl
+use strict;
+use Irssi;
+use Irssi::Irc;
+use vars qw($VERSION %IRSSI);
+
+$VERSION = '0.1.0';
+%IRSSI = (
+    authors     =&gt; \&quot;Matthew Weier O'Phinney\&quot;,
+    contact     =&gt; 'matthew@weierophinney.net',
+    name        =&gt; 'Mumbles notifications for irssi',
+    description =&gt; 'This script enables mumbles notifications for irssi',
+    license     =&gt; 'New BSD',
+	changed     =&gt; \&quot;2008-12-10\&quot;
+);
+
+
+sub mumbles_sig_printtext {
+  my ($dest, $text, $stripped) = @_;
+
+  if (($dest-&gt;{level} &amp; (MSGLEVEL_HILIGHT|MSGLEVEL_MSGS)) &amp;&amp; ($dest-&gt;{level} &amp; MSGLEVEL_NOHILIGHT) == 0)
+  {
+    if ($dest-&gt;{level} &amp; MSGLEVEL_PUBLIC)
+    {
+      mumbles($dest-&gt;{target} . \&quot; : \&quot; . $text);
+    }
+  }
+}
+
+sub mumbles {
+    my $message = shift;
+    my $response;
+
+    $message =~ s/[^!-~\s]//g;
+
+    `/usr/bin/mumbles-send -g 127.0.0.1 -s \&quot;IRC\&quot; \&quot;$message\&quot;`;
+}
+
+Irssi::command_bind 'mumbles' =&gt; sub {
+    my ($message) = @_;
+    mumbles($message);
+};
+
+Irssi::signal_add({
+  'print text'    =&gt; \&amp;mumbles_sig_printtext
+});
+</code></pre></div>
+
+<p>
+    This triggers a notification for any "highlight" event -- basically, anytime
+    anybody "says" my name in a channel, or mentions a keyword I've marked for
+    highlighting. Additionally, I created a "mumbles" command so that I can send
+    test messages (usage: "/mumbles "this is the message..."). You could
+    certainly bind to other events, such as topic changes, joins, parts, etc --
+    I'm only interested in highlight events.
+</p>
+
+<p>
+    You may note the regexp in there. One thing I discovered was that most
+    messages contained control and non-ascii characters that often resulted in
+    unreadable notifications, as well as some nasty messages reported by irssi.
+    The regexp removes anything not in the ascii character set or the set of
+    whitespace definitions prior to emitting the notification.
+</p>
+
+<p>
+    Something else I needed to do was configure compiz to ensure that the
+    notifications actually popped <em>above</em> my windows. I did this by going
+    into the compiz configuration manager, selecting "General Options",
+    selecting the "Focus &amp; Raise Behaviour" tab, and modifying the "Focus
+    Prevention Windows" to read as follows:
+</p>
+
+<code><pre>
+(any) &amp; !(class=Mumbles)
+</pre></code>
+
+<p>
+    To test it, I placed the script in $HOME/.irssi/scripts/mumbles.pl, and then, 
+    in irssi, executed "/load mumbles.pl".
+
+<p>
+    Once I had it to my liking, I symlinked it into my $HOME/.irssi/scripts/autorun/
+    directory, allowing it to run as soon as irssi loads. I can now have irssi 
+    running in a screen session, or minimize the terminal, and get notifications 
+    -- keeping me productive and informed at the same time.
+</p>
+
+<p>
+    <b>UPDATED 2008-12-12:</b> Added information on how to load the script, as 
+    well as fixed the location to the autorun directory. Thanks, @sidhighwind!
 </p>]]></content:encoded>
       <slash:comments>0</slash:comments>
     </item>
@@ -96,6 +580,75 @@
     unix roots; typically if you know the unix command for doing something, you
     can find what you need in vim. In this case, the key is the vimgrep plugin,
     which ships in the standard vim distribution.
+</p><p>
+    There are a variety of resources on vimgrep. The vim documentation includes
+    a chapter on it, and a quick <a href="http://www.google.com/search?q=vimgrep">google search</a>
+    on the subject turns up some nice tutorials immediately. If you've ever used
+    grep, the syntax is very straightforward:
+</p>
+
+<code><pre>
+vimgrep /{pattern}/[g][j] {file} ...
+</pre></code>
+
+<p>
+    The "g" option indicates that all matches for a search will be returned
+    instead of just one per line, and the "j" option tells vim <em>not</em> to
+    jump to the first match automatically. What does the "g" flag really mean,
+    though, and how are searches returned?
+</p>
+
+<p>
+    Vimgrep returns search results in what's known as a "quickfix" window, and
+    this is where the vimgrep documentation falls apart... it doesn't explain
+    what this is, or link to it (which would be a nice indication that it
+    actually has a separate topic for this).
+</p>
+
+<p>
+    The Quickfix window is a pane that shows a search result per line. Each line
+    shows the file that matches, the line number, and the contents of that line:
+</p>
+
+<code><pre>
+/home/matthew/git/bugapp/application/controllers/helpers/GetForm.php|10| * @var Zend_Loader_PluginLoader
+</pre></code>
+
+<p>
+    You can't do much from this window; it simply serves as a visual indicator
+    of what file you're currently looking at from the list. However, in the main
+    window, you can start iterating through the results one at a time, using a
+    subset of the Quickfix commands. As a quick summary:
+</p>
+
+<ul>
+    <li><b>:cc</b> will move to the next match in the list</li>
+    <li><b>:cn</b> will move to the next match in the list</li>
+    <li><b>:cp</b> will move to the previous match in the list</li>
+    <li><b>:cr</b> will rewind to the first match in the list</li>
+    <li><b>:cla</b> will fast forward to the last match in the list</li>
+</ul>
+
+<p>
+    When done, you can simply close the Quickfix window/pane, and continue
+    working.
+</p>
+
+<p>
+    I should note that vimgrep <em>is</em> cross-platform. On *nix-based
+    systems, it defaults to using the native grep command, but it also contains
+    an internal (slower) implementation for use on operating systems that do not
+    provide grep by default. You may also map the command to alternate
+    implementations if desired.
+</p>
+
+<p>
+    I personally use this feature most with the <a href="http://www.vim.org/scripts/script.php?script_id=69">project plugin</a>.
+    Project maps vimgrep to two different commands: &lt;Leader&gt;g and
+    &lt;Leader&gt;G. The first will grep all files in the current project at the
+    current level; the second does the same, but also recurses into subprojects.
+    This is an incredibly easy way to refactor code, particularly for name
+    changes.
 </p>]]></content:encoded>
       <slash:comments>0</slash:comments>
     </item>
@@ -235,7 +788,176 @@
     <li>What is the minimum code necessary to reproduce the issue or show the desired API?</li>
     <li>What is the expected result?</li>
     <li>What is the actual result?</li>
-</ul>]]></content:encoded>
+</ul><h2>What makes up a good issue report?</h2>
+
+<p>
+    A good issue report has to contain the above three points, plain and simple.
+    Without this information, a reviewer simply does not have the tools with
+    which to properly deal with the issue.
+</p>
+
+<h3>Reproduce code</h3>
+
+<p>
+    Quite often, you'll find that an application breaks. It is up to you to find
+    the root cause of that breakage: what minimal amount of code do I need to
+    write in order to cause the breakage to occur? Sometimes this will require a
+    little digging -- you may have a result that is unexpected, but it may be a
+    symptom of something breaking earlier.
+</p>
+
+<p>
+    For example, in working on Zend_Form in the past couple weeks, I had a
+    number of issues reported against how the new MultiCheckbox element was
+    working. One issue noted that populate() was not properly populating the
+    checkboxes.
+</p>
+
+<p>
+    When pressed for reproduce code, the reporter provided the $_POST array with
+    which they were trying to populate the form:
+</p>
+
+<div class="example"><pre><code lang="php">
+$_POST = array(
+    'foo' =&gt; array(
+        0 =&gt; array(0 =&gt; 'bar'),
+        1 =&gt; array(0 =&gt; 'baz'),
+        2 =&gt; array(0 =&gt; 'bat')
+    )
+);
+</code></pre></div>
+    
+<p>
+    In looking at it, I knew immediately that it was related to another issue
+    that had been reported. In that issue, the reporter noted that the input
+    elements rendered by Zend_Form for MultiCheckbox elements had redundant
+    array notation:
+</p>
+
+<div class="example"><pre><code lang="html">
+    &lt;input type=\&quot;checkbox\&quot; value=\&quot;foo\&quot; name=\&quot;foo[][]\&quot; value=\&quot;bar\&quot; /&gt;
+</code></pre></div>
+<br />
+
+<p>
+    In the former case, we're seeing a symptom of the latter case: the redundant
+    array notation was causing a form submission that simply could not populate
+    the element. If the reporter of the former case had looked at the form used
+    to send the $_POST data they posted in the tracker, either they likely would
+    have noticed the similar issue already reported in the tracker -- or I, as
+    the reviewer, would have been able to quickly mark the bug as a duplicate.
+</p>
+
+<p>
+    Regardless, the main point is this: using the value of a POST request to
+    reproduce an issue is not doing your homework. You need to look for the
+    <em>minimal</em> code necessary to reproduce the issue, and the value
+    provided in $_POST is typically a <em>symptom</em> of an issue that has
+    already occurred.
+</p>
+
+<p>
+    Another rule of thumb with creating reproduce code is to keep the
+    environment minimal. Try writing up <em>fresh</em> code in a scratchpad that
+    you can run over and over again until you get the result that you're trying
+    to report. This does a few things: it helps simplify the use case causing
+    the issue, and it often will help you track down exactly where things begin
+    to break. Sometimes, and I can attest to this, it helps you find places
+    where you're doing things wrong in your <em>own</em> code in the first
+    place, alleviating the need entirely to submit a report.
+</p>
+
+<p>
+    What does the reviewer do with this code? Well, a <em>good</em> developer
+    will use it as a test case in the unit test suite -- which is another reason
+    to keep the code down to the minimum required to reproduce the issue. This
+    code will often end up in the test suite in order to document the issue
+    report -- as well as to prove, once a solution is in place, that the issue
+    has been resolved.
+</p>
+
+<p>
+    The above advice is useful even when reporting a feature request, this
+    information is useful. The reviewer then gets an idea of the desired API,
+    and they can write a test case against it.
+</p>
+
+<h3>Expected Results</h3>
+
+<p>
+    In addition to the reproduce case, you should provide the expected results.
+    These show clearly your expectations of the code. The reviewer can use this
+    information in several ways:
+</p>
+
+<ul>
+    <li>In the test suite, the reviewer can use the expected results in
+    assertions to verify the issue (or prove that it is now corrected)</li>
+
+    <li>To show where the reporter has flawed assumptions. In some cases, the
+    expectations of the code are different than the documented assertions, and
+    the reviewer can then point out where the differences lie -- which helps to
+    educate the reporter in proper usage of the code.</li>
+
+    <li>In the case of a feature request, this will indicate how the reporter
+    expects the new feature to behave. The reviewer can then use that
+    expectation as an assertion in the test suite.</li>
+</ul>
+
+<h3>Actual Results</h3>
+
+<p>
+    The actual results are important as they contrast against the expected
+    results, showing where the breakage is. If the reviewer cannot recreate
+    these results, then it likely means that the reproduce code provided is not
+    the actual code needed to reproduce the issue, or it may mean that
+    environmental differences -- differences in OS or PHP version, for instance
+    -- may be a factor in recreating the issue.
+</p>
+
+<p>
+    In the case of a feature request, you could omit the actual results, as
+    there won't be any.
+</p>
+
+<h3>Always search for your issue or feature request</h3>
+
+<p>
+    Finally, one additional mantra to add to your repertoire: search the issue
+    tracker and/or mailing lists <em>before</em> reporting an issue or
+    requesting a feature. I cannot tell you how many bugs I've closed as
+    duplicates, or how many times I've had to respond to an email with the
+    phrase, "this is a known issue." It pays to do your homework: search and see
+    if others have made the same request. In many cases, you may actually find a
+    <em>solution</em> to your issue posted by others -- either a way to extend a
+    class to get the behaviour you're expecting, a patch to the software, or
+    even a note regarding what public release or snapshot contains a fix.
+    There's no reason to waste people's time by reporting a known issue.
+</p>
+
+<p>
+    The best time to search for your issue, believe it or not, is <em>after</em>
+    you've done the other steps. Until you know exactly what code reproduces the
+    issue, and have clearly defined your expectations and the real results, it
+    can be difficult to identify when your issue matches another. 
+</p>
+
+<h2>In Conclusion</h2>
+
+<ul>
+    <li>What is the minimum code necessary to reproduce the issue?</li>
+    <li>What is the expected result?</li>
+    <li>What is the actual result?</li>
+    <li>Have you searched for similar requests in public forums?</li>
+</ul>
+
+<p>
+    If you can start answering the above questions <em>before</em> posting your
+    issues, you'll start receiving more detailed and useful responses from those
+    reviewing your issues or feature requests, and reduce the number of "I don't
+    understand" or "I need more information" responses. Guaranteed.
+</p>]]></content:encoded>
       <slash:comments>0</slash:comments>
     </item>
     <item>
@@ -341,6 +1063,281 @@
 
 <p>
     What follows is my month-by-month breakdown:
+</p><h3>January</h3>
+<p>
+    I finished up the last of my three chapters for 
+    <a href="http://sitepoint.com/books/phpant2/">The PHP Anthology, 2nd Edition</a>, 
+    and promptly used my advance to buy the family a Wii. 
+</p>
+
+<p>
+    I was also introduced to <a href="http://jansch.nl/">Ivo Jansch</a> through
+    work, and had him wow me with one of the 
+    <a href="http://ibuildings.nl">ibuildings</a> products.
+</p>
+
+<h3>February</h3>
+<p>
+    Mid-month, my boss at <a href="http://www.zend.com/">Zend</a>, Boaz, got the
+    go-ahead to use the ibuildings WDE platform to build our new website CMS;
+    part of the plan would include training at the ibuildings home office in
+    Vlissingen, NL... which meant I had to get my passport pronto.
+</p>
+
+<p>
+    Towards the end of the month, I was invited to 
+    <a href="http://bostonphp.org">BostonPHP</a> to present 
+    building a simple <a href="http://framework.zend.com/">Zend Framework</a>
+    CRUD application, along with <a href="http://hagunbu.ch/">Chuck Hagenbuch</a> 
+    of the <a href="http://horde.org/">HORDE project</a>. While there, 
+    <a href="http://cake.insertdesignhere.com/">Nate Abele</a> heckled me, and
+    then joined Chuck and myself for an impromptu framework panel; a good time
+    was had by all.
+</p>
+
+<h3>March</h3>
+<p>
+    I flew to Brussels, Belgium, where I met my supervisor, Boaz, so we could go
+    to Vlissingen. We spent the day in Brussels, walking around and visiting
+    such sites as the Cathedral of St. Michael, La Grand Place, and the Mannekin
+    Pis. 
+</p>
+
+<p>
+    Our visit to ibuildings was very productive, and I was very impressed by the
+    team there; everybody was very knowledgeable and skilled. I presented a Zend
+    Framework overview, as well as an abbreviated version of the Best Practices
+    talk I'd given with Mike Naberezny at the 2006 ZendCon; the latter ignited a
+    ton of questions and enthusiasm.
+</p>
+
+<p>
+    On returning home, I had a ton of work to do on the zend.com CMS, and this
+    continued in spurts through November. The job was made much easier by the
+    ibuildings WDE product.
+</p>
+
+<p>
+    I closed out a ton of MVC issues in the Zend Framework, and we released the
+    first beta version late in the month.
+</p>
+
+<h3>April</h3>
+<p>
+    At the beginning of the month, our landlord threw us for a loop and
+    announced he was going to sell our apartment... meaning that we either had
+    to step up our plans to purchase a home, or start looking for a new rental.
+    Ultimately, we ended up looking for a rental, due to time constraints. The
+    next two months would be highlighted with the look for a new place as well
+    as countless showings of our apartment to potential buyers.
+</p>
+
+<p>
+    Mid-month, we packed up the family and flew down to Atlanta, GA, to visit my
+    wife's family. While there, we were able to go to the Atlanta Zoo and see
+    Mei Lan, their baby panda -- way cute!
+</p>
+
+<h3>May</h3>
+<p>
+    Mid-month, we found a new place in Richmond, VT -- a small village about 10
+    minutes from Burlington, near where we originally lived when we first moved
+    to Vermont. 
+</p>
+
+<p>
+    During the first RC for Zend Framework, released at the end of the month, I
+    introduced the ViewRenderer, a feature for auto-rendering views based on the
+    current controller and action name -- a feature common to many frameworks.
+    However, it ostensibly broke a ton of existing applications by being enabled
+    by default -- not one of my more popular decisions. Since the 1.0.0 release,
+    I've heard little grumbling about it, and it's now often cited as an
+    ease-of-use feature -- go figure.
+</p>
+
+<h3>June</h3>
+<p>
+    The first week of June, I flew to Tel Aviv, Israel, to start training people
+    on the new CMS, as well as to work with our entire ebiz team to finalize the
+    work plan for completing the CMS. It was, needless to say, my first time to
+    Israel or the Middle East, and I was constantly confronted with culture
+    shock. Europe was an easy transition to make, but Israel was completely
+    foreign to me -- everything from the way people drove, to the architecture,
+    to the food was different. Unfortunately, I arrived a day late due to a
+    flight cancellation, and missed the tour of Jerusalem my supervisor had
+    planned for all of us. However, he took me to the city of Yafa, an Arabic
+    city where the Israeli's originally tried to settle before building Tel Aviv
+    to the north. The architecture was amazing, as were the winding, narrow
+    streets of the old city.
+</p>
+
+<p>
+    I was also told during this trip that Andi had requested transferring me
+    full-time to the Zend Framework team. I would spend the next week or two
+    weighing my options, and ultimately decided to do so.
+</p>
+
+<p>
+    A week after I returned, we moved into our new rental in Richmond. The kids
+    love the new place, which has a bedroom for each of them, a yard, and
+    porches on each entrance.
+</p>
+
+<p>
+    Somehow, I also found time to record my first (and so far only) 
+    <a href="http://devzone.zend.com/article/2140-PHP-Abstract-Podcast-Episode-2---Backup-or-Die">PHP Abstract podcast</a>.
+</p>
+
+<h3>July</h3>
+<p>
+    We released <a href="http://framework.zend.com/">Zend Framework</a> 1.0.0 at
+    the beginning of the month, marking our first stable release. While many
+    still view it as incomplete, the overwhelming feedback has been positive,
+    and we've had over 2 million downloads to date.
+</p>
+
+<p>
+    I accepted the transfer to the Zend Framework team, but the condition was
+    made that I would stay part-time on the ebiz team until the new site was
+    launched.  This meant that the next 5 months were spent splitting my time
+    between the two projects, often working late and on weekends to get work
+    done.
+</p>
+
+<p>
+    Towards the end of the month, we took a long weekend camping in Vermont's
+    Northeast Kingdom. The weather was unseasonably wet, but we persevered and
+    had a great time. 5 days of offline time was definitely needed!
+</p>
+
+<p>
+    I also finally released the first stable version of 
+    <a href="http://pear.php.net/packages/File_Fortune">File_Fortune</a> on 
+    <a href="http://pear.php.net/">PEAR</a>, over a year since I'd first
+    proposed it. The package interfaces with mod_fortune files, allowing both
+    the ability to read and write such files, with full binary compatability.
+</p>
+
+<h3>August</h3>
+<p>
+    Not much to report in August, except work, work, and more work.
+</p>
+
+<h3>September</h3>
+<p>
+    My ebiz supervisor, Boaz, flew me to Tel Aviv for a second time, this time
+    to perform a "brain dump" for the rest of the team before I transitioned
+    fully out of the team, and also to help setup our new data center and
+    release procedures. This time, Boaz took me to Jerusalem himself during my
+    last full day in the country. If you've never been to the city, you should
+    definitely put it on your list of things to do before you die. With my
+    degree in religion, the place was full of meaning for me, but it would be
+    putting it lightly to say that religion is palpable in the air there. We
+    visited the Wailing Wall, the Via Dolorosa, the Church of the Holy
+    Sepulchre, and listened to the muezzins sing the call to prayer for the
+    muslims. The tour was simply amazing.
+</p>
+
+<p>
+    A few days after I returned, I flew down to New York City for a special
+    meeting of <a href="http://nyphp.org/">NYPHP</a>, where 
+    <a href="http://blogs.zend.com/author/mark/">Mark de Visser</a> presented on
+    various Zend products and initiatives, and I gave a Zend Framework overview.
+</p>
+
+<p>
+    A week after the NYPHP presentation, I did a
+    <a href="http://www.zend.com/webinars">zend.com webinar</a>
+    on the Zend Framework MVC layer.
+</p>
+
+<h3>October</h3>
+<p>
+    October was the month of <a href="http://www.zendcon.con/">ZendCon</a>. I
+    presented a full-day tutorial on best practices and unit testing with 
+    <a href="http://sebastian-bergmann.de/">Sebastian Bergmann</a> and 
+    <a href="http://naberezny.com/">Mike Naberezny</a>; despite the length and
+    subject matter, we were SRO for most of the day. 
+</p>
+<p>
+    I also did a main-stage presentation on Zend Framework's MVC components,
+    directly following <a href="http://terrychay.com/blog/">Terry Chay</a> -- an
+    intimidating situation at best. From the feedback I've seen, the
+    presentation was well-received, and I had somewhere between 120 and 150
+    attendees -- phenomenal! (Even more amazing was how many people were
+    familiar with MVC in general!)
+</p>
+
+<p>
+    One great thing about the conference was the fact that I got to network with
+    a number of framework developers, both Zend Framework and otherwise,
+    including Nate Abele of CakePHP as well as 
+    <a href="http://paul-m-jones.com">Paul M. Jones</a> of 
+    <a href="http://solarphp.com">the Solar framework</a>. Many good
+    conversations were had.
+</p>
+
+<p>
+    Late in the month, 
+    <a href="http://sitepoint.com/books/phpant2/">The PHP Anthology, 2nd Edition</a>, 
+    my first published book as an author, was finally released!
+</p>
+
+<h3>November</h3>
+<p>
+    I spent much of the month working on 
+    <a href="http://framework.zend.com/wiki/display/ZFPROP/Zend_Layout">Zend_Layout</a>,
+    a much requested component that simplifies and automates Two Step Views in
+    Zend Framework. I also started work implementing 
+    <a href="http://framework.zend.com/wiki/pages/viewpage.action?pageId=33071">Zend_View Enhanced</a>,
+    a set of view helpers for making complex views with Zend_View possible.
+</p>
+
+<p>
+    I also started playing with <a href="http://twitter.com/">Twitter</a> a bit,
+    and came up with a 
+    <a href="http://framework.zend.com/wiki/display/ZFPROP/Zend_Service_Twitter">Zend_Service_Twitter</a>
+    proposal for interacting with the Twitter API via PHP.
+</p>
+
+<p>
+    And finally, the Sunday before Thanksgiving, we finally launched the new 
+    <a href="http://www.zend.com/">Zend.com</a> site, which was well-received in
+    the blogosphere.
+</p>
+
+<h3>December</h3>
+<p>
+    A goal I've had for some time has been to form a PHP user group in the
+    Burlington area. A friend of mine pointed out to me sometime this fall that
+    there's actually already
+    <a href="http://groups.google.com/group/Burlington-VT-PHP">a Google Group</a> 
+    formed; he and the original founder started planning a meeting for early
+    December. I spoke at this inaugural meeting, presenting Zend Framework's MVC
+    layer yet again; a good time was had by all, and a lot of enthusiasm for
+    future meetings was generated.
+</p>
+
+<p>
+    I finished up Zend_Layout and Zend_View Enhanced with the help of Ralph
+    Schindler, and got a new proposal up for 
+    <a href="http://framework.zend.com/wiki/display/ZFPROP/Zend_Form">Zend_Form</a>,
+    just in time for my holidays to begin -- 11 days with family and with little
+    to no internet connectivity during a trip to Atlanta, GA for one of only a
+    handful of Christmases I've spent without snow.
+</p>
+
+<h2>Summary</h2>
+<p>
+    This year was <em>incredibly</em> busy -- three cross-seas trips, one
+    cross-continent trip, a move, and several trips along the Eastern Seaboard;
+    three user group presentations, and eight presentations over the course of
+    the year; one conference; one move; one PEAR release; one podcast; one
+    webinar; one book; and countless hours of programming.
+</p>
+
+<p>
+    My goals for the coming year? I'm too tired to even think about it ;-).
 </p>]]></content:encoded>
       <slash:comments>0</slash:comments>
     </item>

@@ -4,7 +4,7 @@
     <title>Tag: dpc09 :: phly, boy, phly</title>
     <description>Tag: dpc09 :: phly, boy, phly</description>
     <pubDate>Fri, 10 Apr 2009 11:17:17 +0000</pubDate>
-    <generator>Zend_Feed_Writer 2.0.0beta5 (http://framework.zend.com)</generator>
+    <generator>Zend_Feed_Writer 2.0.0 (http://framework.zend.com)</generator>
     <link>http://mwop.net/blog/tag/dpc09.html</link>
     <atom:link rel="self" type="application/rss+xml" href="http://mwop.net/blog/tag/dpc09-rss.xml"/>
     <item>
@@ -28,6 +28,27 @@
     to be more advanced. I noticed last year both in terms of audience
     participation as well as in speaking with attendees that I'd be able to step
     it up a notch were I to return.
+</p><p>
+    My Zend Framework Workshop will therefor focus on some more advanced
+    material -- and in particular the various plugin systems we offer and how
+    to utilize them to make your life easier. Additionally, I'll likely
+    incorporate much of my the material from my various Zend_Form posts to give
+    some more advanced modelling and rendering material than I have in the past.
+</p>
+
+<p>
+    I'm also giving a "regular" session, entitled simply, "Contribute!" In this
+    session, I'll show how <em>you</em> can be a good open source netizen, and
+    provide some tools, tips, and tricks for contributing to your favorite open
+    source projects.
+</p>
+
+<p>
+    So, plan on attending -- if not for me, for one of the other fantastic
+    speakers who will be at the event (Andrei Zmievski, Sebastian Bergmann,
+    Derick Rethans, Rob Allen, Paul Reinheimer, and many, many more). Convince
+    your boss to book your tickets before 30 April 2009 to save her some money
+    (100 on Full Ticket and 55 on the Tutorial only ticket). Just get there!
 </p>]]></content:encoded>
       <slash:comments>0</slash:comments>
     </item>

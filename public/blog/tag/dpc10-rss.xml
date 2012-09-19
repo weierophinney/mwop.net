@@ -4,7 +4,7 @@
     <title>Tag: dpc10 :: phly, boy, phly</title>
     <description>Tag: dpc10 :: phly, boy, phly</description>
     <pubDate>Tue, 20 Apr 2010 13:35:46 +0000</pubDate>
-    <generator>Zend_Feed_Writer 2.0.0beta5 (http://framework.zend.com)</generator>
+    <generator>Zend_Feed_Writer 2.0.0 (http://framework.zend.com)</generator>
     <link>http://mwop.net/blog/tag/dpc10.html</link>
     <atom:link rel="self" type="application/rss+xml" href="http://mwop.net/blog/tag/dpc10-rss.xml"/>
     <item>
@@ -20,7 +20,42 @@
     Amsterdam this coming 10-12 of June.
 </p>
 
-<p style="text-align:center"><a href="http://phpconference.nl/" title="2010 Dutch PHP Conference"><img src="/uploads/dpc10_speaker.jpg" /></a></p>]]></content:encoded>
+<p style="text-align:center"><a href="http://phpconference.nl/" title="2010 Dutch PHP Conference"><img src="/uploads/dpc10_speaker.jpg" /></a></p><p>
+    Once again, I'll be doing another <a href="http://framework.zend.com/">Zend
+        Framework</a> workshop, but this year I'll be teaming up with <a
+        href="http://akrabat.com/">Rob Allen</a>. Our focus this year will be on
+    oft-used application patterns found in the ZF ecosystem, and how you can
+    weave them together to create complex and robust applications.
+</p>
+
+<p>
+    I'm also presenting two regular sessions. The first is a session on writing
+    RESTful web services with Zend Framework. My goal is to show you a handful
+    of techniques that should get you up and running, building RESTful
+    applications that can respond to normal HTML requests as well as XML and
+    JSON payloads with a minimum of effort.
+</p>
+
+<p>
+    My second session will be a continuation of my "Models" talk, but this time
+    looking at domain models from the perspective of NoSQL databases. "NoSQL"
+    means "Not Only SQL", and refers to the new proliferation of data stores
+    that focus on key/value storage and document storage. They offer some new
+    paradigms to how we store and retrieve data, and also introduce some
+    potentially more flexible, lightweight ways to map your domain objects to
+    the data store.
+</p>
+
+<p>
+    There will be a ton of great speakers at DPC again this year -- from
+    stalwart PHP veterans such as Chris Shiflett and Sebastian Bergmann to core
+    PHP developers like Scott MacVicar, Ilia Alshanetsky and Melanie Rhianna
+    Lewis, and many, many more. It's not one to miss!
+</p>
+
+<p>
+    Hoping to meet <em>you</em> in Amsterdam this June!
+</p>]]></content:encoded>
       <slash:comments>0</slash:comments>
     </item>
   </channel>
