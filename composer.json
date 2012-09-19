@@ -1,8 +1,15 @@
 {
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "http://packages.zendframework.com/"
+        }
+    ],
     "minimum-stability": "dev",
     "require": {
         "phly/phly-blog": "dev-master",
         "phly/phly-contact": "dev-master",
+        "zendframework/zendservice-recaptcha": "2.*",
         "zf-commons/zfc-user": "dev-master"
     }
 }

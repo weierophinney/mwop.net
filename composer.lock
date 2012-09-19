@@ -1,41 +1,402 @@
 {
-    "hash": "191e15acffc6fc1461ee0263612c8b57",
+    "hash": "36f2a0238cad022226724731d281ac17",
     "packages": [
         {
-            "package": "phly/phly-blog",
+            "name": "phly/phly-blog",
             "version": "dev-master",
-            "source-reference": "02ac0b39dfbe7cc501e3f9c25207b2e362fdd5cf",
-            "commit-date": "1342212634"
+            "source": {
+                "type": "git",
+                "url": "https://github.com/weierophinney/PhlyBlog",
+                "reference": "531f9c3dd671d12a2fd764a1a5e560d0ac8554de"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/weierophinney/PhlyBlog/zipball/531f9c3dd671d12a2fd764a1a5e560d0ac8554de",
+                "reference": "531f9c3dd671d12a2fd764a1a5e560d0ac8554de",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3",
+                "zendframework/zendframework": "dev-master",
+                "phly/phly-common": "dev-master"
+            },
+            "time": "1346896977",
+            "type": "library",
+            "installation-source": "source",
+            "autoload": {
+                "psr-0": {
+                    "PhlyBlog": "src/"
+                },
+                "classmap": [
+                    "./"
+                ]
+            },
+            "authors": [
+                {
+                    "name": "Matthew Weier O'Phinney",
+                    "email": "matthew@weierophinney.net",
+                    "homepage": "http://mwop.net/"
+                }
+            ],
+            "description": "ZF2 Module implementing a static blog generator",
+            "homepage": "https://github.com/weierophinney/PhlyBlog",
+            "keywords": [
+                "blog",
+                "zend",
+                "zf2",
+                "module"
+            ]
         },
         {
-            "package": "phly/phly-common",
+            "name": "phly/phly-common",
             "version": "dev-master",
-            "source-reference": "2.0.0beta5",
-            "commit-date": "1342210205"
+            "source": {
+                "type": "git",
+                "url": "https://github.com/weierophinney/PhlyCommon",
+                "reference": "2.0.0beta5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/weierophinney/PhlyCommon/zipball/2.0.0beta5",
+                "reference": "2.0.0beta5",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3",
+                "zendframework/zendframework": "dev-master"
+            },
+            "time": "1342210205",
+            "type": "library",
+            "installation-source": "source",
+            "autoload": {
+                "psr-0": {
+                    "PhlyCommon": "src/"
+                },
+                "classmap": [
+                    "./"
+                ]
+            },
+            "authors": [
+                {
+                    "name": "Matthew Weier O'Phinney",
+                    "email": "matthew@weierophinney.net",
+                    "homepage": "http://mwop.net/",
+                    "role": null
+                }
+            ],
+            "description": "A set of interfaces and generic classes used across various Phly modules.",
+            "homepage": "https://github.com/weierophinney/PhlyCommon",
+            "keywords": [
+                "zend",
+                "zf2",
+                "module"
+            ]
         },
         {
-            "package": "phly/phly-contact",
+            "name": "phly/phly-contact",
             "version": "dev-master",
-            "source-reference": "2.0.0beta5",
-            "commit-date": "1342209489"
+            "source": {
+                "type": "git",
+                "url": "https://github.com/weierophinney/PhlyContact",
+                "reference": "337cefe68214902e7a88f365c6c8601c6eee7e2b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/weierophinney/PhlyContact/zipball/337cefe68214902e7a88f365c6c8601c6eee7e2b",
+                "reference": "337cefe68214902e7a88f365c6c8601c6eee7e2b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3",
+                "zendframework/zendframework": "2.*"
+            },
+            "time": "1347664585",
+            "type": "library",
+            "installation-source": "source",
+            "autoload": {
+                "psr-0": {
+                    "PhlyContact": "src/"
+                },
+                "classmap": [
+                    "./"
+                ]
+            },
+            "authors": [
+                {
+                    "name": "Matthew Weier O'Phinney",
+                    "email": "matthew@weierophinney.net",
+                    "homepage": "http://mwop.net/"
+                }
+            ],
+            "description": "ZF2 Module implementing contact form functionality",
+            "homepage": "https://github.com/weierophinney/PhlyContact",
+            "keywords": [
+                "zend",
+                "zf2",
+                "module"
+            ]
         },
         {
-            "package": "zendframework/zendframework",
-            "version": "dev-master",
-            "source-reference": "6220c1f5298cb735551c2b1023996368c4615c4a",
-            "commit-date": "1342202904"
+            "name": "zendframework/zend-version",
+            "version": "2.0.0",
+            "target-dir": "Zend/Version",
+            "dist": {
+                "type": "zip",
+                "url": "http://packages.zendframework.com/composer/Zend_Version-2.0.0.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-0": {
+                    "Zend\\Version": ""
+                }
+            },
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": " ",
+            "homepage": "http://packages.zendframework.com/",
+            "keywords": [
+                "zf2",
+                "version"
+            ]
         },
         {
-            "package": "zf-commons/zfc-base",
+            "name": "zendframework/zendframework",
             "version": "dev-master",
-            "source-reference": "1676e2abadde922741b53e58f4969dd81a41a366",
-            "commit-date": "1342033549"
+            "source": {
+                "type": "git",
+                "url": "git://github.com/zendframework/zf2.git",
+                "reference": "836249f7b4fd035adc6b5e92472102792fc54bd0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/zendframework/zf2/zipball/836249f7b4fd035adc6b5e92472102792fc54bd0",
+                "reference": "836249f7b4fd035adc6b5e92472102792fc54bd0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "replace": {
+                "zendframework/zend-acl": "self.version",
+                "zendframework/zend-authentication": "self.version",
+                "zendframework/zend-barcode": "self.version",
+                "zendframework/zend-cache": "self.version",
+                "zendframework/zend-captcha": "self.version",
+                "zendframework/zend-code": "self.version",
+                "zendframework/zend-config": "self.version",
+                "zendframework/zend-console": "self.version",
+                "zendframework/zend-crypt": "self.version",
+                "zendframework/zend-db": "self.version",
+                "zendframework/zend-di": "self.version",
+                "zendframework/zend-dom": "self.version",
+                "zendframework/zend-eventmanager": "self.version",
+                "zendframework/zend-feed": "self.version",
+                "zendframework/zend-file": "self.version",
+                "zendframework/zend-filter": "self.version",
+                "zendframework/zend-form": "self.version",
+                "zendframework/zend-http": "self.version",
+                "zendframework/zend-inputfilter": "self.version",
+                "zendframework/zend-json": "self.version",
+                "zendframework/zend-ldap": "self.version",
+                "zendframework/zend-loader": "self.version",
+                "zendframework/zend-log": "self.version",
+                "zendframework/zend-mail": "self.version",
+                "zendframework/zend-markup": "self.version",
+                "zendframework/zend-math": "self.version",
+                "zendframework/zend-memory": "self.version",
+                "zendframework/zend-mime": "self.version",
+                "zendframework/zend-modulemanager": "self.version",
+                "zendframework/zend-mvc": "self.version",
+                "zendframework/zend-navigation": "self.version",
+                "zendframework/zend-paginator": "self.version",
+                "zendframework/zend-progressbar": "self.version",
+                "zendframework/zend-serializer": "self.version",
+                "zendframework/zend-server": "self.version",
+                "zendframework/zend-servicemanager": "self.version",
+                "zendframework/zend-session": "self.version",
+                "zendframework/zend-soap": "self.version",
+                "zendframework/zend-stdlib": "self.version",
+                "zendframework/zend-tag": "self.version",
+                "zendframework/zend-text": "self.version",
+                "zendframework/zend-uri": "self.version",
+                "zendframework/zend-validator": "self.version",
+                "zendframework/zend-view": "self.version",
+                "zendframework/zend-xmlrpc": "self.version",
+                "zendframework/zend-escaper": "self.version",
+                "zendframework/zend-i18n": "self.version"
+            },
+            "require-dev": {
+                "doctrine/common": ">=2.1"
+            },
+            "suggest": {
+                "doctrine/common": "Doctrine\\Common >=2.1 for annotation features",
+                "ext-intl": "ext/intl for i18n features",
+                "zendframework/zendservice-recaptcha": "ZendService\\ReCaptcha for rendering ReCaptchas in Zend\\Captcha and/or Zend\\Form",
+                "zendframework/zendpdf": "ZendPdf for creating PDF representations of barcodes",
+                "pecl-weakref": "Implementation of weak references for Zend\\Stdlib\\CallbackHandler"
+            },
+            "time": "1347998115",
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0-dev"
+                }
+            },
+            "installation-source": "source",
+            "autoload": {
+                "psr-0": {
+                    "Zend\\": "library/",
+                    "ZendTest\\": "tests/"
+                }
+            },
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Zend Framework 2",
+            "homepage": "http://framework.zend.com/",
+            "keywords": [
+                "framework",
+                "zf2"
+            ]
         },
         {
-            "package": "zf-commons/zfc-user",
+            "name": "zendframework/zendservice-recaptcha",
+            "version": "2.0.0",
+            "dist": {
+                "type": "zip",
+                "url": "http://packages.zendframework.com/composer/ZendService_ReCaptcha-2.0.0.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "php": ">=5.3.3",
+                "zendframework/zend-http": ">=2.0.0rc4",
+                "zendframework/zend-uri": ">=2.0.0rc4",
+                "zendframework/zend-version": ">=2.0.0rc4"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0-dev"
+                }
+            },
+            "installation-source": "dist",
+            "autoload": {
+                "psr-0": {
+                    "ZendService": "library/"
+                }
+            },
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "OOP wrapper for the ReCaptcha web service",
+            "homepage": "http://packages.zendframework.com/",
+            "keywords": [
+                "zf2",
+                "recaptcha"
+            ]
+        },
+        {
+            "name": "zf-commons/zfc-base",
             "version": "dev-master",
-            "source-reference": "de6bfcaf7fe3a79706b44e1fe7c16e59356bef58",
-            "commit-date": "1342033629"
+            "source": {
+                "type": "git",
+                "url": "git://github.com/ZF-Commons/ZfcBase.git",
+                "reference": "5057eb22bdc5a97e4b23716079485bfa92e44054"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/ZF-Commons/ZfcBase/zipball/5057eb22bdc5a97e4b23716079485bfa92e44054",
+                "reference": "5057eb22bdc5a97e4b23716079485bfa92e44054",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3",
+                "zendframework/zendframework": "2.*"
+            },
+            "time": "1347633346",
+            "type": "library",
+            "installation-source": "source",
+            "autoload": {
+                "psr-0": {
+                    "ZfcBase": "src/"
+                },
+                "classmap": [
+                    "./Module.php"
+                ]
+            },
+            "authors": [
+                {
+                    "name": "Kyle Spraggs",
+                    "email": "theman@spiffyjr.me",
+                    "homepage": "http://www.spiffyjr.me/"
+                },
+                {
+                    "name": "Evan Coury",
+                    "email": "me@evancoury.com",
+                    "homepage": "http://blog.evan.pro/"
+                }
+            ],
+            "description": "A set of genetic (abstract) classes which are commonly used across multiple modules.",
+            "homepage": "https://github.com/ZF-Commons/ZfcBase",
+            "keywords": [
+                "zf2"
+            ]
+        },
+        {
+            "name": "zf-commons/zfc-user",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "git://github.com/ZF-Commons/ZfcUser.git",
+                "reference": "25232341dd0426a238e1ff53b2e2eb987a3430bc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/ZF-Commons/ZfcUser/zipball/25232341dd0426a238e1ff53b2e2eb987a3430bc",
+                "reference": "25232341dd0426a238e1ff53b2e2eb987a3430bc",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3",
+                "zf-commons/zfc-base": "dev-master",
+                "zendframework/zendframework": "2.*"
+            },
+            "time": "1347632312",
+            "type": "library",
+            "installation-source": "source",
+            "autoload": {
+                "psr-0": {
+                    "ZfcUser": "src/"
+                },
+                "classmap": [
+                    "./Module.php"
+                ]
+            },
+            "authors": [
+                {
+                    "name": "Kyle Spraggs",
+                    "email": "theman@spiffyjr.me",
+                    "homepage": "http://www.spiffyjr.me/"
+                },
+                {
+                    "name": "Evan Coury",
+                    "email": "me@evancoury.com",
+                    "homepage": "http://blog.evan.pro/"
+                }
+            ],
+            "description": "A generic user registration and authentication module for ZF2. Supports Zend\\Db and Doctrine2.",
+            "homepage": "https://github.com/ZF-Commons/ZfcUser",
+            "keywords": [
+                "zf2"
+            ]
         }
     ],
     "packages-dev": null,
