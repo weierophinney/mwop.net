@@ -61,16 +61,13 @@ class Module
         ));
     }
 
-    public function getViewHelperConfiguration()
+    public function getViewHelperConfig()
     {
         return array('factories' => array(
-            'disqus' => function ($services) {
-                $sm     = $services->getServiceLocator();
-                $config = $sm->get('config');
-                if ($config instanceof \Zend\Config\Config) {
-                    $config = $config->toArray();
-                }
-                $config = $config['disqus'];
+            'disqus' => function ($helpers) {
+                $services = $helpers->getServiceLocator();
+                $config   = $services->get('config');
+                $config   = $config['disqus'];
                 return new View\Helper\Disqus($config);
             },
         ));
