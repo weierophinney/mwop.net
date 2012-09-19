@@ -4,7 +4,11 @@ namespace Application;
 
 use Traversable;
 use Zend\Config\Config;
+use Zend\Http\PhpEnvironment\Request;
+use Zend\Http\PhpEnvironment\Response;
 use Zend\Mvc\ModuleRouteListener;
+use Zend\Mvc\Router\Http\TreeRouteStack;
+use Zend\Mvc\View\Http\ViewManager;
 use Zend\Stdlib\ArrayUtils;
 use Zend\View\Model;
 
@@ -25,6 +29,36 @@ class Module
     public function getConfig()
     {
         return include __DIR__ . '/config/module.config.php';
+    }
+
+    public function getServiceConfig()
+    {
+        // If we're in the console environment, we need to force usage
+        // of the HTTP environment to ensure our routing and view 
+        // usage is consistent with the site while generating the
+        // static blog files.
+
+        if (!defined('MWOP_CONSOLE') || !constant('MWOP_CONSOLE')) {
+            return array();
+        }
+
+        return array('factories' => array(
+            'request' => function ($services) {
+                return new Request();
+            },
+            'response' => function ($services) {
+                return new Response();
+            },
+            'router' => function ($services) {
+                $config       = $services->get('Configuration');
+                $routerConfig = isset($config['router']) ? $config['router'] : array();
+                $router       = TreeRouteStack::factory($routerConfig);
+                return $router;
+            },
+            'viewmanager' => function ($services) {
+                return new ViewManager();
+            },
+        ));
     }
 
     public function getViewHelperConfiguration()
