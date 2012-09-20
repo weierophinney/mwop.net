@@ -130,7 +130,7 @@ following script, found at
 in order to encode my files:
 </p>
 
-<a name="script" /><div class="example"><pre><code language="bash">
+<div id="script" class="example"><pre><code language="bash">
 for f in *.ogv;do
 newFile=${f%.*}
 mencoder "$f" -o "$newFile.avi" -oac mp3lame -lameopts fast:preset=standard -ovc lavc -lavcopts vcodec=mpeg4:vbitrate=4000
