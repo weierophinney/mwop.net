@@ -1,0 +1,379 @@
+<!DOCTYPE html><!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8" />
+    <title>Screencasting on Linux :: phly, boy, phly</title>
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <link href="/css/SkeletonCss/base.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/SkeletonCss/skeleton.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/SkeletonCss/layout.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/Application/site.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/images/Application/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" >
+<link href="/css/Application/blog.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/blog-atom.xml" rel="alternate" type="application/atom+xml" title="phly, boy, phly Atom Feed" >
+<link href="/blog-rss.xml" rel="alternate" type="application/rss+xml" title="phly, boy, phly RSS Feed" >
+    <script type="text/javascript">
+    //<!--
+    dojoConfig={
+    has: {
+        "dojo-firebug": false
+    },
+    baseurl: "/js/",
+    parseOnLoad: false,
+    async: true,
+    tlmSiblingOfDojo: false,
+    packages: [
+        { name: "dijit", location: "../dijit" },
+        { name: "dojox", location: "../dojox" },
+        { name: "Application", location: "../Application" }
+    ]
+};
+    //-->
+</script>
+<script type="text/javascript" src="/js/dojo/dojo.js"></script>
+<script type="text/javascript">
+    //<!--
+    require(["Application/blog"]);    //-->
+</script>
+<script type="text/javascript">
+    //<!--
+    require(["Application/scroll"], function(scroll) {});    //-->
+</script>
+    <script src="https://www.google.com/jsapi?ABQIAAAAGybdRRvLZwVUcF0dE3oVdBTO-MlgA7VGJpGqyqTOeDXlNzyZQxTGq17s-iAB0m0vwqLQ_A2dHhTg2Q"></script>
+<script type="text/javascript">
+    google.load('search', '1', {style: google.loader.themes.ESPRESSO});
+    google.setOnLoadCallback(function(){
+        new google.search.CustomSearchControl().draw('search');
+    }, true);
+</script>
+
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-27037983-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</head>
+<body>
+<div class="container">
+    <header class="sixteen columns">
+        <div class="one-half column logo">
+            <a href="/"><img src="/images/Application/logo.gif" height="37" width="37" alt="Celtic Knot" /></a>
+            <span class="main_title">phly, boy, phly: matthew weier o'phinney</span>
+        </div>
+
+        <nav class="one-half column" id="menu"><ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/blog.html">Blog</a></li>
+            <li><a href="/resume">R&eacute;sum&eacute;</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </ul></nav>
+    </header>
+
+
+    <div class="sixteen columns content">
+        <div class="row">
+<article class="eleven columns alpha blog">
+<h2>Screencasting on Linux</h2>
+<p>
+    I've been wanting to do screencasts on Linux for some time now, and my big
+    stumbling block has been determining what tools to use.
+</p>
+
+<p>
+    The <strong>tl;dr</strong>:
+</p>
+
+<ul>
+    <li>
+        Use <code>recordMyDesktop</code> to record video clips, but afterwards, re-encode them
+        to AVI (<a href="#script">see the script I used</a>)
+    </li>
+
+    <li>
+        Record audio to WAV, or convert compressed audio to WAV format afterwards.
+    </li>
+
+    <li>
+        Use OpenShot to stitch clips together and layer audio and video tracks.
+    </li>
+
+    <li>
+        Remember to reset the video length if you change the playback rate.
+    </li>
+
+    <li>
+        Export to a Web + Vimeo profile for best results.
+    </li>
+</ul><h2 id="toc_1.1">Stumbling Blocks</h2>
+
+<p>
+<code>recordMyDesktop</code> is a fairly simple tool, and allows you to
+record actions you're taking, and simultaneously capture audio. However, it
+creates an ".ogv" (Ogg Vorbis video file) -- which is basically useless for
+anybody not on Linux or FreeBSD. Additionally, I often like to record in
+segments; this makes it less likely that I'll make mistakes, and, if I do, I
+only need to record a small segment again, not the entire thing. <code>recordMyDesktop</code>
+is only for creating screencasts, not merging them.
+</p>
+
+<p>
+So, <code>recordMyDesktop</code> went into my toolbox for the purpose of recording the video
+portion of my screencasts.
+</p>
+
+<p>
+Which brings me to the next point: I also prefer to record the audio separately
+from the screencast portion itself; this way I don't get typing sounds in the
+recording, and I'm less likely to lose my train of thought as I'm speaking. 
+To this end, I ended up using quite simply the "Sound Recorder" utility
+(<code>gnome-sound-recorder</code>). It's not great, but with a reasonable microphone, it
+gets the job done. I chose to record the audio as MP3 files.
+</p>
+
+<p>
+However, this means that I now have video and audio tracks. So my toolbox needed
+a utility for overlaying tracks and laying them out on a timeline independently.
+</p>
+
+<p>
+I looked at a few different free tools for Linux, including <code>Avidemux</code>, <code>Cinelerra</code>,
+and <code>PiTiVi</code>. <code>Avidemux</code> was not featurful enough, <code>Cinelerra</code> was too difficult to
+learn (it's more of an advanced user's tool), and <code>PiTiVi</code> kept crashing on me.
+So, I used the lazyweb, and tweeted a question asking what others were using --
+and the unanimous response was <code>OpenShot</code> (<a href="http://www.openshotvideo.com/">http://www.openshotvideo.com/</a>).
+</p>
+
+<p>
+<code>OpenShot</code> hit the sweet spot for me -- it was easy to pick up, and didn't crash.
+However, I discovered problems when I exported my project to a video file. My
+video, regardless of whether or not I changed the playback rate, always played
+at about 2X normal speed. The audio always truncated 1 to 2 seconds before
+completion.
+</p>
+
+<p>
+In doing some research, I discovered:
+</p>
+
+<ul>
+<li>
+There are known issues with Ogg Vorbis video files. Evidently, the
+   compression creates issues when re-encoding the video to another format.
+</li>
+<li>
+Similarly, compressed audio can lead to issues such as truncation.
+</li>
+</ul>
+
+<p>
+Since <code>recordMyDesktop</code> doesn't allow you to select an alternate video codec, I
+had to use <code>mencoder</code> to transcode it to another format. I chose AVI (Audio
+Video Interleave, a video container format developed by Microsoft), as I knew it
+had widespread support, using an mpeg4 codec (also widely supported). I used the
+following script, found at
+<a href="http://askubuntu.com/questions/17309/video-converter-ogv-to-avi-or-another-more-common-format">http://askubuntu.com/questions/17309/video-converter-ogv-to-avi-or-another-more-common-format</a>,
+in order to encode my files:
+</p>
+
+<div id="script" class="example"><pre><code language="bash">
+for f in *.ogv;do
+newFile=${f%.*}
+mencoder "$f" -o "$newFile.avi" -oac mp3lame -lameopts fast:preset=standard -ovc lavc -lavcopts vcodec=mpeg4:vbitrate=4000
+done
+</code></pre></div>
+
+<p>
+That solved the video issue, but I still had to solve the audio issues. I
+quickly re-recorded one audio segment in Sound Recorder, and told it to use the
+"Voice,Lossless (.wav type)". When I used this version of the audio, I had no
+issues, other than the audio length being mis-reported within <code>OpenShot</code>. Instead
+of re-recording all segments, I installed the "Sound Converter" utility (`sudo
+aptitude isntall soundconverter`), and used that to convert all my MP3 files to 
+WAV. Interestingly, <code>OpenShot</code> reported the audio lengths correctly this time; go
+figure.
+</p>
+
+<p>
+Once that was done, I was able to start stitching everything together. A few
+notes, in the hopes others learn from my mistakes:
+</p>
+
+<ul>
+<li>
+Several times, I wanted my video to playback slower. This is very easy to do:
+   right click on the clip, select "Properties", and select the "Speed" tab, and
+   adjust as necessary. However, that's not all you need to do; you need to also
+   re-adjust the <em>length</em> of the clip. Simply take the existing length, and
+   divide it by the rate of play. As an example, if the length is 44 seconds,
+   and you specify a 1/2 rate (0.5), you'd do 44 / 0.5 = 88, and set the length
+   of the clip to 88s.
+</li>
+<li>
+If you find that <code>OpenShot</code> is reporting your audio clip lengths incorrectly,
+   use another tool to find the accurate length, and then set the length to
+   that. I typically rounded up to the next second, as most tools were giving
+   the floor value from rounding.
+</li>
+<li>
+I chose to export using the Web + Vimeo HD profile. This worked perfectly for
+   me. It created an mpeg4 file that I could preview in a browser, and then
+   upload without issues. Your mileage may vary.
+</li>
+</ul>
+
+<p>
+Hopefully, this will serve as a reasonable guide for others foraying into
+screencasts on Linux!
+</p><div class="social-media">
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="weierophinney">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</div>
+
+<div class="social-media">
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<div class="fb-like" data-send="true" data-width="450" data-show-faces="true"></div>
+</div>
+
+<div class="social-media">
+<div class="g-plusone" data-size="medium" data-annotation="inline"></div>
+</div>
+
+<!-- Place this render call where appropriate -->
+<script type="text/javascript">
+dojo.ready(function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+});
+</script>
+
+<div class="social-media">
+<a href="http://www.reddit.com/submit" onclick="window.location = 'http://www.reddit.com/submit?url=' + encodeURIComponent(window.location); return false"> <img src="http://www.reddit.com/static/spreddit1.gif" alt="submit to reddit" border="0" /> </a>
+</div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_developer = 0;
+        var disqus_shortname = 'phlyboyphly';
+        var disqus_identifier = '2012-09-20-screencasting-on-linux';
+        var disqus_url = 'http://mwop.net/blog/2012-09-20-screencasting-on-linux.html';
+        var disqus_title = 'Screencasting on Linux';
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a></article>
+
+<aside class="four columns offset-by-one omega sidebar blog">
+    <div class="metadata">
+        <ul>
+            <li>Posted on <b>2012-09-20 17:30:00</b>.</li>
+            <li>Last updated on <b>2012-09-20 17:30:00</b>.</li>
+        </ul>
+    </div>
+
+    <div class="metadata">
+        <h4>Tags for this entry</h4>
+        <p class="tags"><a href="/blog/tag/linux.html">linux</a><br />
+<a href="/blog/tag/screencast.html">screencast</a></p>
+    </div>
+
+        <div class="metadata">
+        <h4>Blogroll</h4>
+        <ul>
+            <li><a href="http://sebastian-bergmann.de/">Sebastian Bergmann</a></li>
+            <li><a href="http://blog.calevans.com/">Cal Evans</a></li>
+            <li><a href="http://prematureoptimization.org/blog/">Shahar Evron</a></li>
+            <li><a href="http://paul-m-jones.com/blog/">Paul M. Jones</a></li>
+            <li><a href="http://karwin.blogspot.com/">Bill Karwin</a></li>
+            <li><a href="http://mikenaberezny.com/">Mike Naberezny</a></li>
+            <li><a href="http://fabien.potencier.org/">Fabien Potencier</a></li>
+            <li><a href="http://benramsey.com/">Ben Ramsey</a></li>
+            <li><a href="http://derickrethans.nl/">Derick Rethans</a></li>
+            <li><a href="http://ralphschindler.com/">Ralph Schindler</a></li>
+            <li><a href="http://www.zimuel.it/blog/">Enrico Zimuel</a></li>
+        </ul>
+    </div>
+
+</aside>
+
+    </div>
+
+    <footer class="sixteen columns footer">
+        <div class="column one-third alpha about">
+            <h4>About</h4>
+            <p>
+    I'm a husband, father of two, plaything of a Basset puppy, and web 
+    architect by day.
+</p>
+
+<ul class="resume">
+    <li><a href="/resume">Resume</a></li>
+    <li><a href="http://twitter.com/weierophinney">Twitter</a></li>
+    <li><a href="http://www.linkedin.com/in/mweierophinney">LinkedIn</a></li>
+    <li><a href="http://www.ohloh.net/accounts/weierophinney">OhLoh</a></li>
+    <li><a href="http://resume.github.com/?weierophinney">GitHub</a></li>
+</ul>
+
+        </div>
+
+        <div class="column one-third projects">
+            <h4>Projects</h4>
+            <ul class="projects">
+    <li><a href="http://framework.zend.com/">Zend Framework (Project Lead)</a></li>
+    <li><a href="http://www.the-pastry-box-project.net/baker/matthew-weier-ophinney/">The Pastry Box Project</a> (as a Baker)</li>
+    <li><a href="http://github.com/weierophinney/phly_mustache">Phly_Mustache</a></li>
+    <li>ZF2 Modules
+    <ul>
+        <li><a href="https://github.com/weierophinney/PhlyContact">PhlyContact</a></li>
+        <li><a href="https://github.com/weierophinney/PhlyBlog">PhlyBlog</a></li>
+        <li><a href="https://github.com/weierophinney/PhlyPeep">PhlyPeep</a> (demo purposes only)</li>
+    </ul>
+    </li>
+</ul>
+
+        </div>
+
+        <div class="column one-third omega tags">
+        <div id="search" style="width:100%;">Loading...</div>
+<h4>Tag Cloud</h4>
+<div class="cloud">
+<ul class="Zend\Tag\Cloud"><li><a href="/blog/tag/php.html" style="font-size: 20px;">php</a></li> <li><a href="/blog/tag/zend+framework.html" style="font-size: 15px;">zend framework</a></li> <li><a href="/blog/tag/zf2.html" style="font-size: 11px;">zf2</a></li> <li><a href="/blog/tag/vim.html" style="font-size: 11px;">vim</a></li> <li><a href="/blog/tag/family.html" style="font-size: 11px;">family</a></li> <li><a href="/blog/tag/programming.html" style="font-size: 12px;">programming</a></li> <li><a href="/blog/tag/personal.html" style="font-size: 13px;">personal</a></li> <li><a href="/blog/tag/phpconcom.html" style="font-size: 10px;">phpconcom</a></li> <li><a href="/blog/tag/mvc.html" style="font-size: 11px;">mvc</a></li> <li><a href="/blog/tag/oop.html" style="font-size: 11px;">oop</a></li> <li><a href="/blog/tag/testing.html" style="font-size: 10px;">testing</a></li> <li><a href="/blog/tag/rest.html" style="font-size: 11px;">rest</a></li> <li><a href="/blog/tag/linux.html" style="font-size: 12px;">linux</a></li> <li><a href="/blog/tag/zendcon08.html" style="font-size: 11px;">zendcon08</a></li> <li><a href="/blog/tag/file_fortune.html" style="font-size: 10px;">file_fortune</a></li> <li><a href="/blog/tag/pear.html" style="font-size: 11px;">pear</a></li> <li><a href="/blog/tag/zendcon.html" style="font-size: 11px;">zendcon</a></li> <li><a href="/blog/tag/perl.html" style="font-size: 12px;">perl</a></li> <li><a href="/blog/tag/fastcgi.html" style="font-size: 10px;">fastcgi</a></li> <li><a href="/blog/tag/ubuntu.html" style="font-size: 11px;">ubuntu</a></li> <li><a href="/blog/tag/tekx.html" style="font-size: 10px;">tekx</a></li> <li><a href="/blog/tag/zendcon10.html" style="font-size: 10px;">zendcon10</a></li> <li><a href="/blog/tag/dojo.html" style="font-size: 11px;">dojo</a></li> <li><a href="/blog/tag/symfony.html" style="font-size: 11px;">symfony</a></li> <li><a href="/blog/tag/zeta+components.html" style="font-size: 10px;">zeta components</a></li> <li><a href="/blog/tag/tek09.html" style="font-size: 10px;">tek09</a></li> <li><a href="/blog/tag/spl.html" style="font-size: 11px;">spl</a></li> <li><a href="/blog/tag/subversion.html" style="font-size: 11px;">subversion</a></li> <li><a href="/blog/tag/zend+framewor.html" style="font-size: 10px;">zend framewor</a></li> <li><a href="/blog/tag/rails.html" style="font-size: 10px;">rails</a></li> <li><a href="/blog/tag/conferences.html" style="font-size: 11px;">conferences</a></li> <li><a href="/blog/tag/dpc08.html" style="font-size: 11px;">dpc08</a></li> <li><a href="/blog/tag/phpworks08.html" style="font-size: 11px;">phpworks08</a></li> <li><a href="/blog/tag/webinar.html" style="font-size: 11px;">webinar</a></li> <li><a href="/blog/tag/zencon08.html" style="font-size: 10px;">zencon08</a></li> <li><a href="/blog/tag/cw09.html" style="font-size: 11px;">cw09</a></li> <li><a href="/blog/tag/zend+server.html" style="font-size: 10px;">zend server</a></li> <li><a href="/blog/tag/dpc09.html" style="font-size: 10px;">dpc09</a></li> <li><a href="/blog/tag/sflive2010.html" style="font-size: 10px;">sflive2010</a></li> <li><a href="/blog/tag/security.html" style="font-size: 10px;">security</a></li> <li><a href="/blog/tag/wifi.html" style="font-size: 10px;">wifi</a></li> <li><a href="/blog/tag/aikido.html" style="font-size: 10px;">aikido</a></li> <li><a href="/blog/tag/books.html" style="font-size: 10px;">books</a></li> <li><a href="/blog/tag/dpc10.html" style="font-size: 10px;">dpc10</a></li> <li><a href="/blog/tag/zendcon09.html" style="font-size: 11px;">zendcon09</a></li> <li><a href="/blog/tag/git.html" style="font-size: 11px;">git</a></li> <li><a href="/blog/tag/phpwomen.html" style="font-size: 10px;">phpwomen</a></li> <li><a href="/blog/tag/virtualbox.html" style="font-size: 10px;">virtualbox</a></li> <li><a href="/blog/tag/screencast.html" style="font-size: 11px;">screencast</a></li> <li><a href="/blog/tag/advocacy.html" style="font-size: 10px;">advocacy</a></li> <li><a href="/blog/tag/politics.html" style="font-size: 10px;">politics</a></li> <li><a href="/blog/tag/internet.html" style="font-size: 10px;">internet</a></li> <li><a href="/blog/tag/microphp.html" style="font-size: 10px;">microphp</a></li> <li><a href="/blog/tag/doctrine.html" style="font-size: 10px;">doctrine</a></li></ul></div>
+        </div>
+
+        <br class="clear"/>
+
+        <div class="copyright">
+            Unless otherwise noted, &#169; 2004 - 2012, Matthew Weier O'Phinney
+        </div>
+    </footer>
+</div>
+</body>
+</html>
