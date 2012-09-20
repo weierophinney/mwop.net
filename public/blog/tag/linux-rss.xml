@@ -3,10 +3,170 @@
   <channel>
     <title>Tag: linux :: phly, boy, phly</title>
     <description>Tag: linux :: phly, boy, phly</description>
-    <pubDate>Thu, 25 Mar 2010 10:57:03 +0000</pubDate>
+    <pubDate>Thu, 20 Sep 2012 22:30:00 +0000</pubDate>
     <generator>Zend_Feed_Writer 2.0.0 (http://framework.zend.com)</generator>
     <link>http://mwop.net/blog/tag/linux.html</link>
     <atom:link rel="self" type="application/rss+xml" href="http://mwop.net/blog/tag/linux-rss.xml"/>
+    <item>
+      <title>Screencasting on Linux</title>
+      <pubDate>Thu, 20 Sep 2012 22:30:00 +0000</pubDate>
+      <link>http://mwop.net/blog/2012-09-20-screencasting-on-linux.html</link>
+      <guid>http://mwop.net/blog/2012-09-20-screencasting-on-linux.html</guid>
+      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
+      <dc:creator>Matthew Weier O'Phinney</dc:creator>
+      <content:encoded><![CDATA[<p>
+    I've been wanting to do screencasts on Linux for some time now, and my big
+    stumbling block has been determining what tools to use.
+</p>
+
+<p>
+    The <strong>tl;dr</strong>:
+</p>
+
+<ul>
+    <li>
+        Use <code>recordMyDesktop</code> to record video clips, but afterwards, re-encode them
+        to AVI (<a href="#script">see the script I used</a>)
+    </li>
+
+    <li>
+        Record audio to WAV, or convert compressed audio to WAV format afterwards.
+    </li>
+
+    <li>
+        Use OpenShot to stitch clips together and layer audio and video tracks.
+    </li>
+
+    <li>
+        Remember to reset the video length if you change the playback rate.
+    </li>
+
+    <li>
+        Export to a Web + Vimeo profile for best results.
+    </li>
+</ul><h2 id="toc_1.1">Stumbling Blocks</h2>
+
+<p>
+<code>recordMyDesktop</code> is a fairly simple tool, and allows you to
+record actions you're taking, and simultaneously capture audio. However, it
+creates an ".ogv" (Ogg Vorbis video file) -- which is basically useless for
+anybody not on Linux or FreeBSD. Additionally, I often like to record in
+segments; this makes it less likely that I'll make mistakes, and, if I do, I
+only need to record a small segment again, not the entire thing. <code>recordMyDesktop</code>
+is only for creating screencasts, not merging them.
+</p>
+
+<p>
+So, <code>recordMyDesktop</code> went into my toolbox for the purpose of recording the video
+portion of my screencasts.
+</p>
+
+<p>
+Which brings me to the next point: I also prefer to record the audio separately
+from the screencast portion itself; this way I don't get typing sounds in the
+recording, and I'm less likely to lose my train of thought as I'm speaking. 
+To this end, I ended up using quite simply the "Sound Recorder" utility
+(<code>gnome-sound-recorder</code>). It's not great, but with a reasonable microphone, it
+gets the job done. I chose to record the audio as MP3 files.
+</p>
+
+<p>
+However, this means that I now have video and audio tracks. So my toolbox needed
+a utility for overlaying tracks and laying them out on a timeline independently.
+</p>
+
+<p>
+I looked at a few different free tools for Linux, including <code>Avidemux</code>, <code>Cinelerra</code>,
+and <code>PiTiVi</code>. <code>Avidemux</code> was not featurful enough, <code>Cinelerra</code> was too difficult to
+learn (it's more of an advanced user's tool), and <code>PiTiVi</code> kept crashing on me.
+So, I used the lazyweb, and tweeted a question asking what others were using --
+and the unanimous response was <code>OpenShot</code> (<a href="http://www.openshotvideo.com/">http://www.openshotvideo.com/</a>).
+</p>
+
+<p>
+<code>OpenShot</code> hit the sweet spot for me -- it was easy to pick up, and didn't crash.
+However, I discovered problems when I exported my project to a video file. My
+video, regardless of whether or not I changed the playback rate, always played
+at about 2X normal speed. The audio always truncated 1 to 2 seconds before
+completion.
+</p>
+
+<p>
+In doing some research, I discovered:
+</p>
+
+<ul>
+<li>
+There are known issues with Ogg Vorbis video files. Evidently, the
+   compression creates issues when re-encoding the video to another format.
+</li>
+<li>
+Similarly, compressed audio can lead to issues such as truncation.
+</li>
+</ul>
+
+<p>
+Since <code>recordMyDesktop</code> doesn't allow you to select an alternate video codec, I
+had to use <code>mencoder</code> to transcode it to another format. I chose AVI (Audio
+Video Interleave, a video container format developed by Microsoft), as I knew it
+had widespread support, using an mpeg4 codec (also widely supported). I used the
+following script, found at
+<a href="http://askubuntu.com/questions/17309/video-converter-ogv-to-avi-or-another-more-common-format">http://askubuntu.com/questions/17309/video-converter-ogv-to-avi-or-another-more-common-format</a>,
+in order to encode my files:
+</p>
+
+<div id="script" class="example"><pre><code language="bash">
+for f in *.ogv;do
+newFile=${f%.*}
+mencoder "$f" -o "$newFile.avi" -oac mp3lame -lameopts fast:preset=standard -ovc lavc -lavcopts vcodec=mpeg4:vbitrate=4000
+done
+</code></pre></div>
+
+<p>
+That solved the video issue, but I still had to solve the audio issues. I
+quickly re-recorded one audio segment in Sound Recorder, and told it to use the
+"Voice,Lossless (.wav type)". When I used this version of the audio, I had no
+issues, other than the audio length being mis-reported within <code>OpenShot</code>. Instead
+of re-recording all segments, I installed the "Sound Converter" utility (`sudo
+aptitude isntall soundconverter`), and used that to convert all my MP3 files to 
+WAV. Interestingly, <code>OpenShot</code> reported the audio lengths correctly this time; go
+figure.
+</p>
+
+<p>
+Once that was done, I was able to start stitching everything together. A few
+notes, in the hopes others learn from my mistakes:
+</p>
+
+<ul>
+<li>
+Several times, I wanted my video to playback slower. This is very easy to do:
+   right click on the clip, select "Properties", and select the "Speed" tab, and
+   adjust as necessary. However, that's not all you need to do; you need to also
+   re-adjust the <em>length</em> of the clip. Simply take the existing length, and
+   divide it by the rate of play. As an example, if the length is 44 seconds,
+   and you specify a 1/2 rate (0.5), you'd do 44 / 0.5 = 88, and set the length
+   of the clip to 88s.
+</li>
+<li>
+If you find that <code>OpenShot</code> is reporting your audio clip lengths incorrectly,
+   use another tool to find the accurate length, and then set the length to
+   that. I typically rounded up to the next second, as most tools were giving
+   the floor value from rounding.
+</li>
+<li>
+I chose to export using the Web + Vimeo HD profile. This worked perfectly for
+   me. It created an mpeg4 file that I could preview in a browser, and then
+   upload without issues. Your mileage may vary.
+</li>
+</ul>
+
+<p>
+Hopefully, this will serve as a reasonable guide for others foraying into
+screencasts on Linux!
+</p>]]></content:encoded>
+      <slash:comments>0</slash:comments>
+    </item>
     <item>
       <title>GPG-signing Git Commits</title>
       <pubDate>Thu, 25 Mar 2010 10:57:03 +0000</pubDate>
@@ -1089,55 +1249,6 @@ StartServices vpnclient_init
     access to the work programs I need, ease of configuration for a variety of
     tools (wireless, bluetooth, USB devices), and a robust server/development
     environment -- all on the same box.
-</p>]]></content:encoded>
-      <slash:comments>0</slash:comments>
-    </item>
-    <item>
-      <title>File_SMBPasswd woes</title>
-      <pubDate>Thu, 08 Sep 2005 13:50:23 +0000</pubDate>
-      <link>http://mwop.net/blog/93-File_SMBPasswd-woes.html</link>
-      <guid>http://mwop.net/blog/93-File_SMBPasswd-woes.html</guid>
-      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
-      <dc:creator>Matthew Weier O'Phinney</dc:creator>
-      <content:encoded><![CDATA[<p>
-    I've been cobbling together a system at work for the last couple months to
-    allow a single place for changing all network passwords. This includes a
-    variety of database sources, as well as <i>passwd</i> files and
-    <i>smbpasswd</i> files.
-    I've been making use of PEAR's <a href="http://pear.php.net/package/File_Passwd">File_Passwd</a> and <a href="http://pear.php.net/package/File_SMBPasswd">File_SMBPasswd</a>, and they've
-    greatly simplified the task of updating passwords for those types of
-    systems. However, I've encountered some issues that I never would have
-    expected.
-</p>
-<p>
-    I have the web user in a group called 'samba', and I have the
-    <i>smbpasswd</i> file owned by root:samba. I then set the <i>smbpasswd</i>
-    file to be group +rw. Simple, right? The web user should then be able to
-    update the <i>smbpasswd</i> file without a problem, right? Wrong.
-</p>
-<p>
-    I kept getting errors, and on investigation continually found that the
-    <i>smbpasswd</i> file permissions had reverted to 0600 -- i.e., only the
-    root user could access it. I tried using 'chattr -i' on the off-chance that
-    the file had been made immutable (which didn't make sense, as I was able to
-    see the permissions change). No luck.
-</p>
-<p>
-    Based on observations of when the permissions reverted, it appears that the
-    various SMB processes will reset the permissions! An example is when
-    someone attempts to mount a resource from the server; this accesses the
-    smbpasswd file to perform authentication -- and at this point the file
-    permissions change.  I can find no documentation to support this; these are
-    simply my observations.
-</p>
-<p>
-    So, to get around the behaviour, I created a script that will set the file
-    permissions to what I want them, and then gave <i>sudo</i> privileges to the
-    samba group for that script. This script is then called via <i>system()</i>
-    in the update script just before processing.
-</p>
-<p>
-    It's a hack, and could be made more secure, but it works.
 </p>]]></content:encoded>
       <slash:comments>0</slash:comments>
     </item>
