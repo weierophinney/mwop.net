@@ -198,11 +198,16 @@ class Module
         $response = $app->getResponse();
         $locator  = $app->getServiceManager();
         $view     = $locator->get('View');
+        $helpers  = $locator->get('ViewHelperManager');
+        $url      = $helpers->get('url');
+        $origin   = $url();
+
         $view->setRequest($request);
         $view->setResponse($response);
 
         $model = new Model\ViewModel();
         $model->setTemplate('pages/401');
+        $model->setVariable('redirect', $origin);
 
         if ($baseModel instanceof Model\ModelInterface) {
             $baseModel->addChild($model);

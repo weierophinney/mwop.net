@@ -7,6 +7,12 @@
 </p>
 
 <p>
-    <a href="<?php echo $this->url('zfcuser') ?>">Login to continue.</a>
+<?php
+$url = $this->url('zfcuser/login');
+if (isset($this->redirect) && !empty($this->redirect)) {
+    $url .= '?redirect=' . $this->redirect;
+}
+?>
+    <a href="<?php echo $url ?>">Login to continue.</a>
 </p>
 </section>
