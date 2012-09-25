@@ -11,6 +11,7 @@ use Zend\Mvc\Router\Http\TreeRouteStack;
 use Zend\Mvc\View\Http\ViewManager;
 use Zend\Stdlib\ArrayUtils;
 use Zend\View\Model;
+use Zend\View\Renderer\PhpRenderer;
 
 class Module
 {
@@ -55,8 +56,29 @@ class Module
                 $router       = TreeRouteStack::factory($routerConfig);
                 return $router;
             },
-            'viewmanager' => function ($services) {
-                return new ViewManager();
+            'viewphprenderer' => function ($services) {
+                $helpers  = $services->get('ViewHelperManager');
+                $resolver = $services->get('ViewResolver');
+
+                $renderer = new PhpRenderer();
+                $renderer->setHelperPluginManager($helpers);
+                $renderer->setResolver($resolver);
+
+                $config = $services->get('Config');
+                if ($services->has('MvcEvent')) {
+                    $event  = $services->get('MvcEvent');
+                    $model  = $event->getViewModel();
+                } else {
+                    $model = new Model\ViewModel();
+                }
+                $layout = 'layout/layout';
+                if (isset($config['view_manager']['layout'])) {
+                    $layout = $config['view_manager']['layout'];
+                }
+                $model->setTemplate($layout);
+                $helpers->plugin('view_model')->setRoot($model);
+
+                return $renderer;
             },
         ));
     }
@@ -79,6 +101,7 @@ class Module
         $services     = $app->getServiceManager();
         $events       = $app->getEventManager();
         $this->config = $services->get('config');
+        $services->setService('MvcEvent', $e);
         $this->initAcls($e);
         $this->initView($e);
 
@@ -96,6 +119,9 @@ class Module
     {
         $app      = $e->getApplication();
         $services = $app->getServiceManager();
+        if (!$services->has('ViewRenderer')) {
+            return;
+        }
         $config   = $this->config;
         $view     = $services->get('ViewRenderer');
 
@@ -119,7 +145,7 @@ class Module
 
     public static function prepareCompilerView($view, $config, $services)
     {
-        $renderer = $services->get('ViewRenderer');
+        $renderer = $services->get('ViewPhpRenderer');
         $view->addRenderingStrategy(function($e) use ($renderer) {
             return $renderer;
         }, 100);
