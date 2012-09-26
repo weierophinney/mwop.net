@@ -15,3 +15,4 @@ include_once 'vendor/autoload.php';
 
 // Bootstrap application
 $application = Zend\Mvc\Application::init(include 'config/application.config.php');
+return $application;
