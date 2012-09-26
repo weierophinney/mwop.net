@@ -2,10 +2,13 @@
 
 namespace GithubFeed;
 
+use Zend\Console\Adapter\AdapterInterface as Console;
 use Zend\Feed\Reader\Reader as FeedReader;
 use Zend\Http\Client as HttpClient;
+use Zend\ModuleManager\Feature\ConsoleUsageProviderInterface;
+use Zend\View\Renderer\PhpRenderer;
 
-class Module
+class Module implements ConsoleUsageProviderInterface
 {
     public function getAutoloaderConfig()
     {
@@ -44,6 +47,42 @@ class Module
                 }
                 return $reader;
             },
+            'GithubFeed\Renderer' => function ($services) {
+                $helpers  = $services->get('ViewHelperManager');
+                $resolver = $services->get('ViewResolver');
+
+                $renderer = new PhpRenderer();
+                $renderer->setHelperPluginManager($helpers);
+                $renderer->setResolver($resolver);
+
+                return $renderer;
+            },
         ));
+    }
+
+    public function getControllerConfig()
+    {
+        return array('factories' => array(
+            'GithubFeed\Fetch' => function ($controllers) {
+                $services = $controllers->getServiceLocator();
+                $config   = $services->get('Config');
+                $config   = $config['github_feed'];
+
+                $controller = new FetchController();
+                $controller->setConsole($services->get('Console'));
+                $controller->setFeedFile($config['content_path']);
+                $controller->setReader($services->get('GithubFeed\AtomReader'));
+                $controller->setRenderer($services->get('GithubFeed\Renderer'));
+
+                return $controller;
+            },
+        ));
+    }
+
+    public function getConsoleUsage(Console $console)
+    {
+        return array(
+            'githubfeed fetch' => 'Fetch and cache Github activity',
+        );
     }
 }
