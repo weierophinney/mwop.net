@@ -3,29 +3,3 @@ PURPOSE
 
 This is the code behind mwop.net. One part of its purpose is to demonstrate
 the capabilities of Zend Framework 2.
-
-In order to run this code, you will need:
-
- * mongo running on your server or elsewhere
- * ext/mongo for PHP
- * A Google search API key
- * A ReCaptcha API key
- * A registered Disqus site
- * Some way to send mail, and the configuration necessary to do so
-
-To configure the application, copy modules/Local/configs/module.config.php.dist
-to modules/Local/configs/module.config.php, and edit it to supply the
-configuration values and/or DI substitutions you desire.
-
-To post entries to the blog, you will need to setup an API key. This is simply a
-file containing a string; you indicate its location in the Local configuration
-file. Once configured, you will need to ensure this key is also available from
-any machine that will post to it. To create a post, you will need a
-configuration file that defines two values, "apikey" (the value of the API key
-on the server to which you are posting) and "url" (the URL to the server and
-blog resource). Then, follow the instructions in modules/Blog/bin/post.php, and
-invoke that script using:
-
-    ./console Blog:post -c "path/to/config/file" -p "path/to/post/file"
-
-This will take the entry you've created and post it to the server.
