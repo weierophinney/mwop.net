@@ -12,6 +12,7 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
   posts.config.php
   autoload=autoload {
    database.global.php
+   global.php
    module.application.global.php
    module.application.local.php
    module.blog.global.php
