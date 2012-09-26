@@ -34,52 +34,8 @@ class Module
 
     public function getServiceConfig()
     {
-        // If we're in the console environment, we need to force usage
-        // of the HTTP environment to ensure our routing and view 
-        // usage is consistent with the site while generating the
-        // static blog files.
-
-        if (!defined('MWOP_CONSOLE') || !constant('MWOP_CONSOLE')) {
-            return array();
-        }
-
-        return array('factories' => array(
-            'request' => function ($services) {
-                return new Request();
-            },
-            'response' => function ($services) {
-                return new Response();
-            },
-            'router' => function ($services) {
-                $config       = $services->get('Configuration');
-                $routerConfig = isset($config['router']) ? $config['router'] : array();
-                $router       = TreeRouteStack::factory($routerConfig);
-                return $router;
-            },
-            'viewphprenderer' => function ($services) {
-                $helpers  = $services->get('ViewHelperManager');
-                $resolver = $services->get('ViewResolver');
-
-                $renderer = new PhpRenderer();
-                $renderer->setHelperPluginManager($helpers);
-                $renderer->setResolver($resolver);
-
-                $config = $services->get('Config');
-                if ($services->has('MvcEvent')) {
-                    $event  = $services->get('MvcEvent');
-                    $model  = $event->getViewModel();
-                } else {
-                    $model = new Model\ViewModel();
-                }
-                $layout = 'layout/layout';
-                if (isset($config['view_manager']['layout'])) {
-                    $layout = $config['view_manager']['layout'];
-                }
-                $model->setTemplate($layout);
-                $helpers->plugin('view_model')->setRoot($model);
-
-                return $renderer;
-            },
+        return array('initializers' => array(
+            array($this, 'initViewVariables'),
         ));
     }
 
@@ -124,14 +80,7 @@ class Module
         }
         $config   = $this->config;
         $view     = $services->get('ViewRenderer');
-
-        $persistent = $view->placeholder('layout');
-        foreach ($config['view'] as $var => $value) {
-            if (is_array($value)) {
-                $value = new Config($value, true);
-            }
-            $persistent->{$var} = $value;
-        }
+        $this->initViewVariables($view);
 
         $view->headTitle()->setSeparator(' :: ')
                           ->setAutoEscape(false)
@@ -143,9 +92,38 @@ class Module
         ));
     }
 
+    public function initViewVariables($renderer, $services = null)
+    {
+        if (!$renderer instanceof PhpRenderer) {
+            return;
+        }
+
+        if (!isset($this->config) && null === $services) {
+            return;
+        }
+
+        if (!isset($this->config)) {
+            $this->config = $services->get('Config');
+        }
+
+        $config = $this->config;
+        if (!isset($config['view'])) {
+            return;
+        }
+
+        $config     = $config['view'];
+        $persistent = $renderer->placeholder('layout');
+        foreach ($config as $var => $value) {
+            if (is_array($value)) {
+                $value = new Config($value, true);
+            }
+            $persistent->{$var} = $value;
+        }
+    }
+
     public static function prepareCompilerView($view, $config, $services)
     {
-        $renderer = $services->get('ViewPhpRenderer');
+        $renderer  = $services->get('BlogRenderer');
         $view->addRenderingStrategy(function($e) use ($renderer) {
             return $renderer;
         }, 100);

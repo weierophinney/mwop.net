@@ -7,12 +7,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/weierophinney/PhlyBlog",
-                "reference": "d9c09ddc8c672412dc32f5a6bb046345fceff6db"
+                "reference": "1.0.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/weierophinney/PhlyBlog/zipball/d9c09ddc8c672412dc32f5a6bb046345fceff6db",
-                "reference": "d9c09ddc8c672412dc32f5a6bb046345fceff6db",
+                "url": "https://github.com/weierophinney/PhlyBlog/zipball/1.0.0",
+                "reference": "1.0.0",
                 "shasum": ""
             },
             "require": {
@@ -20,7 +20,7 @@
                 "phly/phly-common": "dev-master",
                 "zendframework/zendframework": "2.*"
             },
-            "time": "1348521447",
+            "time": "1348672911",
             "type": "library",
             "installation-source": "source",
             "autoload": {
@@ -172,12 +172,12 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/zendframework/zf2.git",
-                "reference": "2b55e08780d2212cca9aab8717e44407e878ee4d"
+                "reference": "7a69c342c2afe18e67dd5b736ab92023250baeaa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/zendframework/zf2/zipball/2b55e08780d2212cca9aab8717e44407e878ee4d",
-                "reference": "2b55e08780d2212cca9aab8717e44407e878ee4d",
+                "url": "https://github.com/zendframework/zf2/zipball/7a69c342c2afe18e67dd5b736ab92023250baeaa",
+                "reference": "7a69c342c2afe18e67dd5b736ab92023250baeaa",
                 "shasum": ""
             },
             "require": {
@@ -242,7 +242,7 @@
                 "zendframework/zendpdf": "ZendPdf for creating PDF representations of barcodes",
                 "pecl-weakref": "Implementation of weak references for Zend\\Stdlib\\CallbackHandler"
             },
-            "time": "1348587564",
+            "time": "1348605562",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -356,12 +356,12 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/ZF-Commons/ZfcUser.git",
-                "reference": "334c5aa6e801a9af61c683d1aca6391c0791c32d"
+                "reference": "f190c9b4f45c9b631231de0f7f679d259c602c0c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/ZF-Commons/ZfcUser/zipball/334c5aa6e801a9af61c683d1aca6391c0791c32d",
-                "reference": "334c5aa6e801a9af61c683d1aca6391c0791c32d",
+                "url": "https://github.com/ZF-Commons/ZfcUser/zipball/f190c9b4f45c9b631231de0f7f679d259c602c0c",
+                "reference": "f190c9b4f45c9b631231de0f7f679d259c602c0c",
                 "shasum": ""
             },
             "require": {
@@ -369,7 +369,7 @@
                 "zf-commons/zfc-base": "dev-master",
                 "zendframework/zendframework": "2.*"
             },
-            "time": "1348517487",
+            "time": "1348656444",
             "type": "library",
             "installation-source": "source",
             "autoload": {
