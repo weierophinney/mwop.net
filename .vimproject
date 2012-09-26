@@ -115,15 +115,13 @@ mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.tx
    autoload_function.php
    autoload_register.php
    Module.php
-   bin=bin{
-    fetch.php
-   }
    config=config filter="*.ini *.xml *.php *.php.dist" {
     module.config.php
    }
    src=src {
     GithubFeed=GithubFeed {
      AtomReader.php
+     FetchController.php
     }
    }
    view=view filter="*.mustache *.phtml" {
