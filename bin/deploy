@@ -1,5 +1,4 @@
 #!/usr/bin/zsh
-mkdir /tmp/mwop.net
 (
     # update local config files
     cd /var/local/mwop.net ;
