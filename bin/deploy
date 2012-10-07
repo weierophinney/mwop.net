@@ -2,8 +2,8 @@
 (
     # update local config files
     cd /var/local/mwop.net ;
-    git fetch origin ;
-    git rebase origin/production
+    git fetch github ;
+    git rebase github/mwop.net.config
 )
 (
     # checkout site, and ensure submodules are correct
