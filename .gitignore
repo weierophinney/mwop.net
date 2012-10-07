@@ -21,3 +21,5 @@ vendor/composer
 vendor/phly
 vendor/zendframework
 vendor/zf-commons
+.*.sw*
+.*.un~
