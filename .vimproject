@@ -1,8 +1,8 @@
-mwop=/home/matthew/git/mwop CD=. filter="README TODO.md console *.php *.xml *.txt" {
+mwop=/home/matthew/git/sites/mwop CD=. filter="README TODO.md *.php *.xml *.txt *.json" {
  README
  TODO.md
  bootstrap.php
- console
+ composer.json
  bin=bin filter="*.sh deploy" {
   deploy
   deploy-listener.pl
