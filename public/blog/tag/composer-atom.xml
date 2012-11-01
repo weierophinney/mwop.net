@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title type="text">Tag: composer :: phly, boy, phly</title>
+  <updated>2012-11-01T20:25:00+0000</updated>
+  <generator uri="http://framework.zend.com" version="2.0.2">Zend_Feed_Writer</generator>
+  <link rel="alternate" type="text/html" href="http://mwop.net/blog/tag/composer.html"/>
+  <link rel="self" type="application/atom+xml" href="http://mwop.net/blog/tag/composer-atom.xml"/>
+  <id>http://mwop.net/blog/tag/composer.html</id>
+  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <title type="html"><![CDATA[OpenShift, ZF2, and Composer]]></title>
+    <published>2012-11-01T20:25:00+0000</published>
+    <updated>2012-11-01T20:25:00+0000</updated>
+    <link rel="alternate" type="text/html" href="http://mwop.net/blog/2012-11-01-openshift-zf2-composer.html"/>
+    <id>http://mwop.net/blog/2012-11-01-openshift-zf2-composer.html</id>
+    <author>
+      <name>Matthew Weier O'Phinney</name>
+      <email>me@mwop.net</email>
+      <uri>http://mwop.net</uri>
+    </author>
+    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
+      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>I was recently shopping around for inexpensive cloud hosting; I
+want to try out a couple of ideas that may or may not have much
+traffic, but which aren't suited for my VPS setup (the excellent
+<xhtml:a href="http://servergrove.com/">ServerGrove</xhtml:a>); additionally,
+I'm unsure how long I will maintain these projects. My budget for
+this is quite small as a result; I'm already paying for hosting,
+and am quite happy with it, so this is really for experimental
+stuff.</xhtml:p>
+<xhtml:p>I considered Amazon, Orchestra.io, and a few others, but was
+concerned about the idea of a ~$50/month cost for something I'm
+uncertain about.</xhtml:p>
+<xhtml:p>When I asked in <xhtml:a href="irc://irc.freenode.net/zftalk.dev">#zftalk.dev</xhtml:a>, someone
+suggested <xhtml:a href="http://openshift.redhat.com/">OpenShift</xhtml:a> as
+an idea, and coincidentally, the very next day <xhtml:a href="http://www.zend.com/en/company/news/press/379_red-hat-expands-openshift-ecosystem-with-zend-partnership-to-offer-professional-grade-environment-for-php-developers">
+Zend announced a partnership with RedHat surrounding OpenShift</xhtml:a>.
+The stars were in alignment.</xhtml:p>
+<xhtml:p>In the past month, in the few spare moments I've had (which
+included an excellent OpenShift hackathon at ZendCon), I've created
+a quick application that I've deployed and tested in OpenShift.
+These are my findings.</xhtml:p>
+<xhtml:h2>ZF2</xhtml:h2>
+<xhtml:p>I didn't really have to do anything different to have <xhtml:a href="http://framework.zend.com/">zf2</xhtml:a> work; the standard
+<xhtml:code>.htaccess</xhtml:code> provided in the skeleton application worked
+flawlessly the first time (I've worked with some cloud environments
+where this is not the case).</xhtml:p>
+<xhtml:p>The only frustration I had was the default directory structure
+OpenShift foists upon us:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+data/
+libs/
+misc/
+php/
+</xhtml:pre></xhtml:div>
+<xhtml:p>This is not terrible, by any stretch. However, it's attempting
+to dictate the application structure, which I'm not terribly happy
+with -- particularly as my structure may vary based on the
+framework I'm using (or not!), and because I may already have a
+project written that I simply want to deploy.</xhtml:p>
+<xhtml:p>In particular, the <xhtml:code>php</xhtml:code> directory is galling -- it's
+simply the document root. Most frameworks I've used or seen call
+the equivalent directory <xhtml:code>public</xhtml:code>, or <xhtml:code>web</xhtml:code>,
+or <xhtml:code>html</xhtml:code> -- but never <xhtml:code>php</xhtml:code> (in large part
+because the only PHP file under the document root in most
+frameworks is the <xhtml:code>index.php</xhtml:code> that acts as the front
+controller). It would be nice if this were configurable.</xhtml:p>
+<xhtml:p>This conflicts a bit with how a ZF2 app is structured. I ended
+up doing the following:</xhtml:p>
+<xhtml:ul>
+<xhtml:li>Removed <xhtml:code>php</xhtml:code> and symlinked my <xhtml:code>public</xhtml:code>
+directory to it.</xhtml:li>
+<xhtml:li>Removed <xhtml:code>libs</xhtml:code> and symlinked my <xhtml:code>vendor</xhtml:code>
+directory to it.</xhtml:li>
+<xhtml:li>Removed <xhtml:code>misc</xhtml:code> as I had no need to it.</xhtml:li>
+</xhtml:ul>
+<xhtml:p>Nothing too big, thankfully -- but problematic from the
+perspective of, "I've already developed this app, but now I have to
+make changes for it to work on a specific cloud vendor."</xhtml:p>
+<xhtml:h2>Composer</xhtml:h2>
+<xhtml:p>My next question was how to use <xhtml:a href="http://getcomposer.org/">Composer</xhtml:a> during my deployment
+process, and some some googling <xhtml:a href="https://openshift.redhat.com/community/content/support-for-git-clone-on-the-server-aka-support-php-composerphar">
+found some answers for me</xhtml:a>.</xhtml:p>
+<xhtml:p>Basically, I needed to create a <xhtml:code>deploy</xhtml:code> task that
+does two things:</xhtml:p>
+<xhtml:ul>
+<xhtml:li>Unset the <xhtml:code>GIT_DIR</xhtml:code> environment variable. Evidently,
+the build process operates as part of a git hook, and since
+Composer often uses git repositories, this can lead to
+problems.</xhtml:li>
+<xhtml:li>Change directory to <xhtml:code>OPENSHIFT_REPO_DIR</xhtml:code>, which is
+where the application root (not document root!) lives.</xhtml:li>
+</xhtml:ul>
+<xhtml:p>Once I did those, I could run my normal composer installation.
+The <xhtml:code>deploy</xhtml:code> task looks like this:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="bash">
+#!/bin/bash
+# .openshift/action_hooks/deploy
+( unset GIT_DIR ; cd $OPENSHIFT_REPO_DIR ; /usr/local/zend/bin/php composer.phar install )
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>This leads into my next topic.</xhtml:p>
+<xhtml:h2>Deployment</xhtml:h2>
+<xhtml:p>First off, as you probably guessed from that last secton, there
+<xhtml:strong>are</xhtml:strong> hooks for deployment -- it doesn't have to be
+simply git. I like this, as I may have additional things I want to
+do during deployment, such as retrieving and installing
+site-specific configuration files, installing Composer-defined
+dependencies (as already noted), etc.</xhtml:p>
+<xhtml:p>Over all, this is pretty seamless, but it's not without issues.
+I've been told that some of my issues are being worked on, so those
+I won't bring up here. The ones that were a bit strange, and which
+caught me by surprise, though, were:</xhtml:p>
+<xhtml:ul>
+<xhtml:li>Though the build process creates the site build from git, your
+<xhtml:strong>submodules are not updated recursively</xhtml:strong>. This
+tripped me up, as I was using <xhtml:a href="https://github.com/EvanDotPro/EdpMarkdown">EdpMarkdown</xhtml:a>, and
+had installed it as a submodule. I ended up having to import it,
+and its own submodule, directly into my project so that it would
+work.</xhtml:li>
+<xhtml:li>I installed the <xhtml:a href="http://www.mongodb.org/">MongoDB</xhtml:a>
+cartridge. Ironically, it was not then enabled in Zend Server, and
+I had to go do this. This should be turnkey.</xhtml:li>
+<xhtml:li><xhtml:code>/usr/bin/php</xhtml:code> is not the same as
+<xhtml:code>/usr/local/zend/bin/php</xhtml:code>. This makes no sense to me if
+I've installed Zend Server as my base gear. Considering they're
+different versions, this can be hugely misleading and lead to
+errors. I understand there are reasons to have both -- so simply be
+aware that if you use the Zend Server gear, your tasks likely
+should use <xhtml:code>/usr/local/zend/bin/php</xhtml:code>.</xhtml:li>
+</xhtml:ul>
+<xhtml:h2>The good parts?</xhtml:h2>
+<xhtml:ul>
+<xhtml:li><xhtml:a href="https://openshift.redhat.com/community/faq/i-have-deployed-my-app-but-i-don%E2%80%99t-like-telling-people-to-visit-myapp-myusernamerhcloudcom-how-c">
+You can alias an application to a DNS CNAME</xhtml:a> -- meaning you can
+point your domain name to your OpenShift applications.
+Awesome!</xhtml:li>
+<xhtml:li>Simplicity of adding capabilities, such as Mongo, MySQL, Cron,
+and others. In most cases, this is simply a "click on the button"
+and it's installed and available.</xhtml:li>
+<xhtml:li><xhtml:a href="http://www.zend.com/en/products/server">Zend
+Server</xhtml:a>. For most PHP extensions, I can turn them on or off with
+a few mouse clicks. If I want page-level caching, I don't have to
+do anything to my application; I can simply setup some rules in the
+Zend Server interface and get on with it, and enjoy tremendous
+boosts to performance. I used to enjoy taming and tuning servers;
+most days anymore, I just want them to work.</xhtml:li>
+<xhtml:li><xhtml:a href="https://openshift.redhat.com/community/developers/remote-access">SSH</xhtml:a>
+access to the server, with a number of commands to which I've been
+given <xhtml:code>sudoer</xhtml:code> access. If you're going to sandbox
+somebody, this is a fantastic way to do it. Oh, also: SSH tunnels
+to services like Mongo and MySQL just work (via the
+<xhtml:code>rhc-port-forward</xhtml:code> command).</xhtml:li>
+</xhtml:ul>
+<xhtml:h2>Summary</xhtml:h2>
+<xhtml:p>Over all, I'm quite pleased. While it took me a bit to find the
+various incantations I needed, the service is quite flexible. For
+my needs, considering I'm doing experimental stuff, the price can't
+be beat (the current developer preview is free). Considering most
+stuff I do will fall into this or the basic tier, and that most
+cartridges do not end up counting against your alotment of gears,
+the pricing ($0.05/hour) is extremely competitive.</xhtml:p>
+</xhtml:div>
+    </content>
+  </entry>
+</feed>
