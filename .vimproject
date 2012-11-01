@@ -40,6 +40,7 @@ mwop=/home/matthew/git/sites/mwop CD=. filter="README TODO.md *.php *.xml *.txt 
     2012-09-06-Zf2.php
     2012-09-19-Zf2-Module-Screencast.php
     2012-09-20-Screencasting-on-linux.php
+    2012-11-01-Openshift.php
    }
   }
  }
