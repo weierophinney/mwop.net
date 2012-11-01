@@ -1,11 +1,169 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title type="text">Blog Entries :: phly, boy, phly</title>
-  <updated>2012-09-20T22:30:00+0000</updated>
+  <updated>2012-11-01T20:25:00+0000</updated>
   <generator uri="http://framework.zend.com" version="2.0.2">Zend_Feed_Writer</generator>
   <link rel="alternate" type="text/html" href="http://mwop.net/blog.html"/>
   <link rel="self" type="application/atom+xml" href="http://mwop.net/blog-atom.xml"/>
   <id>http://mwop.net/blog.html</id>
+  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <title type="html"><![CDATA[OpenShift, ZF2, and Composer]]></title>
+    <published>2012-11-01T20:25:00+0000</published>
+    <updated>2012-11-01T20:25:00+0000</updated>
+    <link rel="alternate" type="text/html" href="http://mwop.net/blog/2012-11-01-openshift-zf2-composer.html"/>
+    <id>http://mwop.net/blog/2012-11-01-openshift-zf2-composer.html</id>
+    <author>
+      <name>Matthew Weier O'Phinney</name>
+      <email>me@mwop.net</email>
+      <uri>http://mwop.net</uri>
+    </author>
+    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
+      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>I was recently shopping around for inexpensive cloud hosting; I
+want to try out a couple of ideas that may or may not have much
+traffic, but which aren't suited for my VPS setup (the excellent
+<xhtml:a href="http://servergrove.com/">ServerGrove</xhtml:a>); additionally,
+I'm unsure how long I will maintain these projects. My budget for
+this is quite small as a result; I'm already paying for hosting,
+and am quite happy with it, so this is really for experimental
+stuff.</xhtml:p>
+<xhtml:p>I considered Amazon, Orchestra.io, and a few others, but was
+concerned about the idea of a ~$50/month cost for something I'm
+uncertain about.</xhtml:p>
+<xhtml:p>When I asked in <xhtml:a href="irc://irc.freenode.net/zftalk.dev">#zftalk.dev</xhtml:a>, someone
+suggested <xhtml:a href="http://openshift.redhat.com/">OpenShift</xhtml:a> as
+an idea, and coincidentally, the very next day <xhtml:a href="http://www.zend.com/en/company/news/press/379_red-hat-expands-openshift-ecosystem-with-zend-partnership-to-offer-professional-grade-environment-for-php-developers">
+Zend announced a partnership with RedHat surrounding OpenShift</xhtml:a>.
+The stars were in alignment.</xhtml:p>
+<xhtml:p>In the past month, in the few spare moments I've had (which
+included an excellent OpenShift hackathon at ZendCon), I've created
+a quick application that I've deployed and tested in OpenShift.
+These are my findings.</xhtml:p>
+<xhtml:h2>ZF2</xhtml:h2>
+<xhtml:p>I didn't really have to do anything different to have <xhtml:a href="http://framework.zend.com/">zf2</xhtml:a> work; the standard
+<xhtml:code>.htaccess</xhtml:code> provided in the skeleton application worked
+flawlessly the first time (I've worked with some cloud environments
+where this is not the case).</xhtml:p>
+<xhtml:p>The only frustration I had was the default directory structure
+OpenShift foists upon us:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+data/
+libs/
+misc/
+php/
+</xhtml:pre></xhtml:div>
+<xhtml:p>This is not terrible, by any stretch. However, it's attempting
+to dictate the application structure, which I'm not terribly happy
+with -- particularly as my structure may vary based on the
+framework I'm using (or not!), and because I may already have a
+project written that I simply want to deploy.</xhtml:p>
+<xhtml:p>In particular, the <xhtml:code>php</xhtml:code> directory is galling -- it's
+simply the document root. Most frameworks I've used or seen call
+the equivalent directory <xhtml:code>public</xhtml:code>, or <xhtml:code>web</xhtml:code>,
+or <xhtml:code>html</xhtml:code> -- but never <xhtml:code>php</xhtml:code> (in large part
+because the only PHP file under the document root in most
+frameworks is the <xhtml:code>index.php</xhtml:code> that acts as the front
+controller). It would be nice if this were configurable.</xhtml:p>
+<xhtml:p>This conflicts a bit with how a ZF2 app is structured. I ended
+up doing the following:</xhtml:p>
+<xhtml:ul>
+<xhtml:li>Removed <xhtml:code>php</xhtml:code> and symlinked my <xhtml:code>public</xhtml:code>
+directory to it.</xhtml:li>
+<xhtml:li>Removed <xhtml:code>libs</xhtml:code> and symlinked my <xhtml:code>vendor</xhtml:code>
+directory to it.</xhtml:li>
+<xhtml:li>Removed <xhtml:code>misc</xhtml:code> as I had no need to it.</xhtml:li>
+</xhtml:ul>
+<xhtml:p>Nothing too big, thankfully -- but problematic from the
+perspective of, "I've already developed this app, but now I have to
+make changes for it to work on a specific cloud vendor."</xhtml:p>
+<xhtml:h2>Composer</xhtml:h2>
+<xhtml:p>My next question was how to use <xhtml:a href="http://getcomposer.org/">Composer</xhtml:a> during my deployment
+process, and some some googling <xhtml:a href="https://openshift.redhat.com/community/content/support-for-git-clone-on-the-server-aka-support-php-composerphar">
+found some answers for me</xhtml:a>.</xhtml:p>
+<xhtml:p>Basically, I needed to create a <xhtml:code>deploy</xhtml:code> task that
+does two things:</xhtml:p>
+<xhtml:ul>
+<xhtml:li>Unset the <xhtml:code>GIT_DIR</xhtml:code> environment variable. Evidently,
+the build process operates as part of a git hook, and since
+Composer often uses git repositories, this can lead to
+problems.</xhtml:li>
+<xhtml:li>Change directory to <xhtml:code>OPENSHIFT_REPO_DIR</xhtml:code>, which is
+where the application root (not document root!) lives.</xhtml:li>
+</xhtml:ul>
+<xhtml:p>Once I did those, I could run my normal composer installation.
+The <xhtml:code>deploy</xhtml:code> task looks like this:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="bash">
+#!/bin/bash
+# .openshift/action_hooks/deploy
+( unset GIT_DIR ; cd $OPENSHIFT_REPO_DIR ; /usr/local/zend/bin/php composer.phar install )
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>This leads into my next topic.</xhtml:p>
+<xhtml:h2>Deployment</xhtml:h2>
+<xhtml:p>First off, as you probably guessed from that last secton, there
+<xhtml:strong>are</xhtml:strong> hooks for deployment -- it doesn't have to be
+simply git. I like this, as I may have additional things I want to
+do during deployment, such as retrieving and installing
+site-specific configuration files, installing Composer-defined
+dependencies (as already noted), etc.</xhtml:p>
+<xhtml:p>Over all, this is pretty seamless, but it's not without issues.
+I've been told that some of my issues are being worked on, so those
+I won't bring up here. The ones that were a bit strange, and which
+caught me by surprise, though, were:</xhtml:p>
+<xhtml:ul>
+<xhtml:li>Though the build process creates the site build from git, your
+<xhtml:strong>submodules are not updated recursively</xhtml:strong>. This
+tripped me up, as I was using <xhtml:a href="https://github.com/EvanDotPro/EdpMarkdown">EdpMarkdown</xhtml:a>, and
+had installed it as a submodule. I ended up having to import it,
+and its own submodule, directly into my project so that it would
+work.</xhtml:li>
+<xhtml:li>I installed the <xhtml:a href="http://www.mongodb.org/">MongoDB</xhtml:a>
+cartridge. Ironically, it was not then enabled in Zend Server, and
+I had to go do this. This should be turnkey.</xhtml:li>
+<xhtml:li><xhtml:code>/usr/bin/php</xhtml:code> is not the same as
+<xhtml:code>/usr/local/zend/bin/php</xhtml:code>. This makes no sense to me if
+I've installed Zend Server as my base gear. Considering they're
+different versions, this can be hugely misleading and lead to
+errors. I understand there are reasons to have both -- so simply be
+aware that if you use the Zend Server gear, your tasks likely
+should use <xhtml:code>/usr/local/zend/bin/php</xhtml:code>.</xhtml:li>
+</xhtml:ul>
+<xhtml:h2>The good parts?</xhtml:h2>
+<xhtml:ul>
+<xhtml:li><xhtml:a href="https://openshift.redhat.com/community/faq/i-have-deployed-my-app-but-i-don%E2%80%99t-like-telling-people-to-visit-myapp-myusernamerhcloudcom-how-c">
+You can alias an application to a DNS CNAME</xhtml:a> -- meaning you can
+point your domain name to your OpenShift applications.
+Awesome!</xhtml:li>
+<xhtml:li>Simplicity of adding capabilities, such as Mongo, MySQL, Cron,
+and others. In most cases, this is simply a "click on the button"
+and it's installed and available.</xhtml:li>
+<xhtml:li><xhtml:a href="http://www.zend.com/en/products/server">Zend
+Server</xhtml:a>. For most PHP extensions, I can turn them on or off with
+a few mouse clicks. If I want page-level caching, I don't have to
+do anything to my application; I can simply setup some rules in the
+Zend Server interface and get on with it, and enjoy tremendous
+boosts to performance. I used to enjoy taming and tuning servers;
+most days anymore, I just want them to work.</xhtml:li>
+<xhtml:li><xhtml:a href="https://openshift.redhat.com/community/developers/remote-access">SSH</xhtml:a>
+access to the server, with a number of commands to which I've been
+given <xhtml:code>sudoer</xhtml:code> access. If you're going to sandbox
+somebody, this is a fantastic way to do it. Oh, also: SSH tunnels
+to services like Mongo and MySQL just work (via the
+<xhtml:code>rhc-port-forward</xhtml:code> command).</xhtml:li>
+</xhtml:ul>
+<xhtml:h2>Summary</xhtml:h2>
+<xhtml:p>Over all, I'm quite pleased. While it took me a bit to find the
+various incantations I needed, the service is quite flexible. For
+my needs, considering I'm doing experimental stuff, the price can't
+be beat (the current developer preview is free). Considering most
+stuff I do will fall into this or the basic tier, and that most
+cartridges do not end up counting against your alotment of gears,
+the pricing ($0.05/hour) is extremely competitive.</xhtml:p>
+</xhtml:div>
+    </content>
+  </entry>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <title type="html"><![CDATA[Screencasting on Linux]]></title>
     <published>2012-09-20T22:30:00+0000</published>
@@ -2195,246 +2353,6 @@ server. In short, it's a good fit <xhtml:em>for me</xhtml:em>.</xhtml:p>
 and showing how to develop both modules and sites built on top of
 modules this June, via a full-day tutorial at the <xhtml:a href="http://phpconference.nl">Dutch PHP Conference</xhtml:a>. Please join me,
 and a host of incredible speakers, in Amsterdam this summer!</xhtml:p>
-</xhtml:div>
-    </content>
-  </entry>
-  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
-    <title type="html"><![CDATA[View Layers, Database Abstraction, Configuration, Oh, My!]]></title>
-    <published>2012-03-05T22:32:45+0000</published>
-    <updated>2012-03-05T22:32:45+0000</updated>
-    <link rel="alternate" type="text/html" href="http://mwop.net/blog/zf2-beta3.html"/>
-    <id>http://mwop.net/blog/zf2-beta3.html</id>
-    <author>
-      <name>Matthew Weier O'Phinney</name>
-      <email>me@mwop.net</email>
-      <uri>http://mwop.net</uri>
-    </author>
-    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
-      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>Late last week, the Zend Framework community <xhtml:a href="http://framework.zend.com/zf2/blog/entry/Zend-Framework-2-0-0beta3-Released">
-2.0.0beta3</xhtml:a>, the latest iteration of the v2 framework. What have
-we been busy doing the last couple months? In a nutshell, getting
-dirty with view layers, database abstraction, and
-configuration.</xhtml:p>
-<xhtml:h2>View Layers</xhtml:h2>
-<xhtml:p>Working with and on Zend Framework as long as I have, one thing
-that has always been a bit of a thorn in my side is how difficult
-it is to specify differing view strategies based on arbitrary
-criteria. For instance, if I want to return JSON, or XML, how can I
-do so? The "answer" in ZF1 is to use the ContextSwitch action
-helper, which basically simply overloads the filename suffix used
-for the view to include the format type -- ".js.phtml",
-".xml.phtml". This works, but it's a bit of a hack. (Full
-disclosure: I authored the hack.)</xhtml:p>
-<xhtml:p>Another problem I've always had is that rendering has occurred
-in multiple places of request execution. Action view scripts are
-rendered immediately following the action's execution, layouts are
-rendered at another time entirely. Using <xhtml:code>Zend_View</xhtml:code> as
-the renderer, this is fine, but if you want to switch to a solution
-that is capable of rendering the entire payload, including "child"
-views, at once, it becomes quite difficult to work around.</xhtml:p>
-<xhtml:p>For Zend Framework 2, I <xhtml:a href="http://framework.zend.com/wiki/display/ZFDEV2/RFC+-+View+Layer">proposed
-a new view layer</xhtml:a>, which helps mitigate some of these factors.
-As part of the work for this proposal, I reorganized the component
-slightly to separate it into "helpers", "renderers", and
-"resolvers" -- the latter are used to resolve a template to a
-renderer-specific resource. Additionally, I introduced a new
-concept into the framework, that of "View Models". This is a
-concept borrowed from a number of different places, but most
-notably Microsoft, who implemented them as part of a new pattern
-entitled "Model-View-ViewModel". In this pattern, you bind data to
-a "ViewModel" object, which can contain optional presentation
-logic, and pass the ViewModel to the View. The View then grabs data
-from the ViewModel to present to the client.</xhtml:p>
-<xhtml:p>The biggest change, however, was introducing a "gateway" class,
-<xhtml:code>Zend\View\View</xhtml:code>, with the responsibility of martialling
-a renderer and injecting a response object. The code for this
-leverages the EventManager component to allow attaching
-"strategies" for selecting a renderer. The selected renderer is
-then used to render the template present in the ViewModel passed to
-the View object. Once complete, we loop through response
-strategies, where the results of rendering can be injected into the
-response. This also provides an ideal location for adding headers,
-such as HTTP caching headers.</xhtml:p>
-<xhtml:p>Finally, I introduced a number of MVC listeners for view
-integration. Some of these are quite basic -- such as ensuring we
-have a listener that will trigger the view, and a default rendering
-strategy. Others help streamline the MVC - while we recommend
-returning ViewModel objects from your controllers, with templates
-set, default listeners provided will create ViewModels from
-returned associative arrays, and inject a template name based on
-the requested controller and action.</xhtml:p>
-<xhtml:p>What do you really need to know from the outset? Not much!</xhtml:p>
-<xhtml:div class="example">
-<xhtml:pre>
-<xhtml:code lang="php" xml:lang="php">
-namespace Sample\Controller;
-
-use Zend\Mvc\Controller\ActionController;
-
-class HelloController extends ActionController
-{
-    public function worldAction()
-    {
-        // Implicitly creates a ViewModel with the below variables, and sets
-        // the template to hello/world (:controller/:action)
-        return array(
-            'message' =&gt; 'Hello world!',
-        );
-    }
-}
-</xhtml:code>
-</xhtml:pre></xhtml:div>
-<xhtml:p>Basically, the most common use case is the one you'd expect to
-work. The fun really starts when you want to perform other common
-tasks: change the layout, disable the layout, specify an alternate
-template, add additional templates to render and aggregate in the
-layout, and more. In all cases, you work with ViewModels, and then
-let the renderer worry about how to represent them.</xhtml:p>
-<xhtml:p>For more details, <xhtml:a href="http://packages.zendframework.com/docs/latest/manual/en/zend.view.html#zend.view.quick-start">
-read the Zend\View quickstart</xhtml:a>.</xhtml:p>
-<xhtml:h2>Database Abstraction</xhtml:h2>
-<xhtml:p><xhtml:code>Zend_Db</xhtml:code> provides a ton of capabilities in Zend
-Framework v1. However, over the years, we've discovered some design
-issues both in the code itself as well as the tests which have made
-a number of features difficult to support, and others difficult if
-not impossible to implement. As <xhtml:a href="http://ralphschindler.com/">Ralph</xhtml:a> noted in his <xhtml:a href="http://framework.zend.com/wiki/display/ZFDEV2/RFC+-+Zend+Db">DB
-refactoring RFC</xhtml:a>,</xhtml:p>
-<xhtml:blockquote>Each new feature request generally comes with it's own
-concerns that apply to the project as a whole: "How useful is the
-feature?", "How does this feature impact performance?", "How wide
-spread is the need for this feature?". Generally, features are
-added to the core component bloating the core component and adding
-a new set of code that has to be maintained.</xhtml:blockquote>
-<xhtml:p>The iteration for beta3 was to get the basic structure up and
-running for drivers and adapters (drivers are the low-level
-connections, adapters provide basic abstraction around common
-operations), resultset abstraction, the basic infrastructure for
-SQL abstraction, metadata support, and a table/row data gateway
-implementation. All operations were tested on PDO_Sqlite, mysqli,
-and sqlsrv; preliminary reports indicate most PDO drivers work out
-of the box at this point.</xhtml:p>
-<xhtml:p>What does it look like?</xhtml:p>
-<xhtml:h4>Inserting data</xhtml:h4>
-<xhtml:div class="example">
-<xhtml:pre>
-<xhtml:code lang="php" xml:lang="php">
-// where $adapter is an adapter object
-$qi = function($name) use ($adapter) { 
-    return $adapter-&gt;platform-&gt;quoteIdentifier($name); 
-};
-$fp = function($name) use ($adapter) { 
-    return $adapter-&gt;driver-&gt;formatParameterName($name); 
-};
-
-$sql = 'INSERT INTO '
-    . $qi('artist')
-    . ' (' . $qi('name') . ', ' . $qi('history') . ') VALUES ('
-    . $fp('name') . ', ' . $fp('history') . ')';
-
-$statement = $adapter-&gt;query($sql);
-
-$parameters = array(
-    'name'    =&gt; 'New Artist',
-    'history' =&gt; 'This is the history',
-);
-
-$statement-&gt;execute($parameters);
-</xhtml:code>
-</xhtml:pre></xhtml:div>
-<xhtml:h4>Selecting data</xhtml:h4>
-<xhtml:div class="example">
-<xhtml:pre>
-<xhtml:code lang="php" xml:lang="php">
-// where $adapter is an adapter object
-$qi = function($name) use ($adapter) { 
-    return $adapter-&gt;platform-&gt;quoteIdentifier($name); 
-};
-$fp = function($name) use ($adapter) { 
-    return $adapter-&gt;driver-&gt;formatParameterName($name); 
-};
-
-$sql = 'SELECT * FROM ' . $qi('artist');
-$statement = $adapter-&gt;query($sql);
-$results = $statement-&gt;execute(array());
-
-foreach ($results as $row) {
-    var_export($row);
-}
-</xhtml:code>
-</xhtml:pre></xhtml:div>
-<xhtml:h4>TableGateway</xhtml:h4>
-<xhtml:div class="example">
-<xhtml:pre>
-<xhtml:code lang="php" xml:lang="php">
-// where $adapter is an adapter object
-$artistTable = new TableGateway('artist', $adapter);
-$rowset = $artistTable-&gt;select(function (Select $select) {
-    $select-&gt;where-&gt;like('name', 'Bar%');
-});
-$row = $rowset-&gt;current();
-echo $row-&gt;name;
-</xhtml:code>
-</xhtml:pre></xhtml:div>
-<xhtml:p>During my review of the code, which included assisting Ralph
-with testing, I was impressed with the heavy level of de-coupling
-present, and how easily it will allow us to support things like
-platform-specific SQL, custom rowsets, and more.</xhtml:p>
-<xhtml:p>For more details, <xhtml:a href="http://packages.zendframework.com/docs/latest/manual/en/zend.db.html">
-read the Zend\Db documentation</xhtml:a>.</xhtml:p>
-<xhtml:h2>Configuration</xhtml:h2>
-<xhtml:p>Configuration should be very fast. Interestingly, developers
-often also expect configuration to support a multitude of features
--- key translation, section inheritance, importing of additional
-configuration files, constant substitution, compatibility with many
-configuration formats, and more. These things tend to work in
-direct opposition to performance goals.</xhtml:p>
-<xhtml:p>Several ZF2 community members decided to tackle these issues.
-Their goal was to create a streamlined core for
-<xhtml:code>Zend\Config</xhtml:code>, but provide a variety of plugins and
-filters to provide the rich features many users have come to
-expect. The result is a very nice, de-coupled component.</xhtml:p>
-<xhtml:p>Basic usage remains the same as it always has. However, without
-enabling any optional features, you will not get things such as
-constant or token substitution; to get that, you can use the new
-Processor API:</xhtml:p>
-<xhtml:div class="example">
-<xhtml:pre>
-<xhtml:code lang="php" xml:lang="php">
-// Get our config object; second argument tells the factory to return
-// a Config object, vs. an array
-$config = Zend\Config\Factory::fromFile($pathToConfigFile, true);
-
-// Process values, substituting constant values whenever a defined constant name 
-// is encountered
-$constants = new Zend\Config\Processor\Constant();
-$constants-&gt;process($config);
-
-// Define some tokens to substitute
-$tokens = new Zend\Config\Processor\Token();
-$tokens-&gt;addToken('TOKEN', 'bar');
-$tokens-&gt;process($config);
-</xhtml:code>
-</xhtml:pre></xhtml:div>
-<xhtml:p>This API makes performance-intensive features explicitly opt-in,
-leaving the core functionality intact and fast.</xhtml:p>
-<xhtml:p>For more details, <xhtml:a href="http://packages.zendframework.com/docs/latest/manual/en/zend.config.html">
-read the Zend\Config documentation</xhtml:a>.</xhtml:p>
-<xhtml:h2>Fin!</xhtml:h2>
-<xhtml:p>I've only gone into depth on those features that had big
-iterations for the beta release; plenty more work went into it --
-as I noted in the release announcement, we handled around 200 pull
-requests over a 2 month period -- this is roughly double what we
-accomplished for beta2 over a similar timeframe! I'm quite
-impressed and humbled by the spirit of the ZF2 community and
-collaborators.</xhtml:p>
-<xhtml:p>If you haven't tried Zend Framework 2 yet, please give it a
-spin! While there's still work to be done, for many -- most,
-potentially -- use cases, the functionality necessary is present
-and working very well. Trying it now, and building real
-functionality on it now, is not only possible, but will allow you
-to shape what ZF2 looks like when we're ready to go stable.</xhtml:p>
-<xhtml:p><xhtml:a href="http://packages.zendframework.com">Download it
-today!</xhtml:a></xhtml:p>
 </xhtml:div>
     </content>
   </entry>
