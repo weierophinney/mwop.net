@@ -92,6 +92,47 @@
 
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
+    <p class="date">2005-01-14 00:12:03</p>
+    <p class="tags"><a href="/blog/tag/personal.html">personal</a><br />
+<a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/55-Cgiapp-1.5.2-released.html">Cgiapp 1.5.2 released</a></h4>
+
+    <div class="entry body"><p>
+    At work, we've been developing a new platform for our website, based
+    entirely on Cgiapp. This week we released the first stage of it: <a href="http://www.garden.org/home">garden.org</a> and <a href="http://assoc.garden.org">assoc.garden.org</a>. These should stand
+    as good testament to Cgiapp's robustness!
+</p>
+<p>
+    With all that development, and also with some communication from other
+    Cgiapp users, I've made some changes to Cgiapp, and release version 1.5.2
+    this evening.
+</p>
+<p>
+    1.5.2 is mainly security and bugfixes. Error handling was somewhat broken in
+    1.5.1 -- it wouldn't restore the original error handler gracefully. This is
+    now corrected. Additionally, I've made run() use the array returned by
+    query() -- consisting of the $_GET and $_POST arrays -- in determining the
+    run mode. Finally, I've modified the behaviour of how run() determines the
+    current run mode: if the mode parameter is a method or function name, it
+    cannot be a Cgiapp method or a PHP internal function. This allows more
+    flexibility on the part of the programmer in determining the mode param --
+    words like 'run' and 'do' can now be used without causing massive problems
+    (using 'run' would cause a race condition in the past).
+</p>
+<p>
+    As usual, Cgiapp is avaiable <a href="download?mode=view_download&id=11">in
+        the downloads area</a>. Grab your tarball today!
+</p></div>
+
+    <p><a href="/blog/55-Cgiapp-1.5.2-released.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
     <p class="date">2005-01-08 22:22:18</p>
     <p class="tags"><a href="/blog/tag/programming.html">programming</a><br />
 <a href="/blog/tag/personal.html">personal</a></p>
@@ -454,45 +495,6 @@ your template might need.
 </section>
 
 </div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2004-10-12 21:34:57</p>
-    <p class="tags"><a href="/blog/tag/perl.html">perl</a><br />
-<a href="/blog/tag/personal.html">personal</a><br />
-<a href="/blog/tag/php.html">php</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/45-PHP_SELF-versus-SCRIPT_NAME.html">PHP_SELF versus SCRIPT_NAME</a></h4>
-
-    <div class="entry body"><p>
-    I've standardized my PHP programming to use the environment variable
-    <b>SCRIPT_NAME</b> when I want my script to refer to itself in links and
-    form actions. I've known that <b>PHP_SELF</b> has the same information, but
-    I was more familiar with the name 'SCRIPT_NAME' from using it in perl, and
-    liked the feel of it more as it seems to describe the resource better
-    ('PHP_SELF' could stand for the path to the PHP executable if I were to go
-    by the name only).
-</p>
-<p>
-    However, I just noticed a post on the php.general newsgroup where somebody
-    asked what the difference was between them. Semantically, there isn't any;
-    they should contain the same information. However, historically and
-    technically speaking, there is. <b>SCRIPT_NAME</b> is defined in the CGI 1.1
-    specification, and is thus a standard. <em>However</em>, not all web servers
-    actually implement it, and thus it isn't necessarily <em>portable</em>.
-    <b>PHP_SELF</b>, on the other hand, is implemented directly by PHP, and as
-    long as you're programming in PHP, will always be present.
-</p>
-<p>
-    Guess I have some grep and sed in my future as I change a bunch of
-    scripts...
-</p></div>
-
-    <p><a href="/blog/45-PHP_SELF-versus-SCRIPT_NAME.html">Continue reading...</a></p>
-</section>
-
-</div>
 <div class="paginationControl">
         <a href="/blog.html" class="first">&lt;&lt; First</a> |
         <a href="/blog-p22.html"> &lt; Previous </a> |
@@ -569,6 +571,11 @@ your template might need.
         <li><a href="https://github.com/weierophinney/PhlyPaste">PhlyPaste</a></li>
         <li><a href="https://github.com/weierophinney/PhlyPeep">PhlyPeep</a> (demo purposes only)</li>
         <li><a href="https://github.com/weierophinney/SkeletonCssModule">SkeletonCssModule</a></li>
+    </ul>
+    </li>
+    <li>Tools
+    <ul>
+        <li><a href="http://p.mwop.net">PhlyPaste</a> (pastebin)</li>
     </ul>
     </li>
 </ul>

@@ -92,6 +92,47 @@
 
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
+    <p class="date">2008-09-24 12:16:27</p>
+    <p class="tags"><a href="/blog/tag/programming.html">programming</a><br />
+<a href="/blog/tag/git.html">git</a><br />
+<a href="/blog/tag/subversion.html">subversion</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/191-git-svn-Tip-dont-use-core.autocrlf.html">git-svn Tip: don&#039;t use core.autocrlf</a></h4>
+
+    <div class="entry body"><p>
+    I've been playing around with <a href="http://git.or.cz/">Git</a> in the 
+    past couple months, and have been really enjoying it. Paired with
+    subversion, I get the best of all worlds -- distributed source control when
+    I want it (working on new features or trying out performance tuning), and
+    non-distributed source control for my public commits.
+</p>
+
+<p>
+    <a href="http://github.com/guides/dealing-with-newlines-in-git">Github</a> 
+    suggests that when working with remote repositories, you turn on the
+    autocrlf option, which ensures that changes in line endings do not get
+    accounted for when pushing to and pulling from the remote repo.  However,
+    when working with git-svn, this actually causes issues. After turning this
+    option on, I started getting the error "Delta source ended unexpectedly"
+    from git-svn. After a bunch of aimless tinkering, I finally asked myself the
+    questions, "When did this start happening?" and, "Have I changed anything
+    with Git lately?" Once I'd backed out the config change, all started working
+    again.
+</p>
+
+<p>
+    In summary: don't use "git config --global core.autocrlf true" when using
+    git-svn.
+</p></div>
+
+    <p><a href="/blog/191-git-svn-Tip-dont-use-core.autocrlf.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
     <p class="date">2008-09-11 15:00:00</p>
     <p class="tags"><a href="/blog/tag/php.html">php</a><br />
 <a href="/blog/tag/mvc.html">mvc</a><br />
@@ -472,50 +513,6 @@
 </section>
 
 </div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2008-06-30 09:00:00</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
-<a href="/blog/tag/oop.html">oop</a><br />
-<a href="/blog/tag/zend+framework.html">zend framework</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/181-Migrating-OOP-Libraries-and-Frameworks-to-PHP-5.3.html">Migrating OOP Libraries and Frameworks to PHP 5.3</a></h4>
-
-    <div class="entry body"><p>
-    With PHP 5.3 coming up on the horizon, I'm of course looking forward to
-    using namespaces. Let's be honest, who wants to write the following line?
-</p>
-
-<div class="example"><pre><code lang="php">
-$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
-</code></pre></div>
-
-<p>
-    when the more succinct:
-</p>
-
-<div class="example"><pre><code lang="php">
-$viewRenderer = HelperBroker::getStaticHelper('viewRenderer');
-</code></pre></div>
-
-<p>
-    could be used? (Assuming you've executed <code>'use
-    Zend::Controller::Action;'</code> somewhere earlier...)
-</p>
-
-<p>
-    However, while namespaces will hopefully lead to more readable code,
-    particularly code in libraries and frameworks, PHP developers will finally
-    need to start thinking about sane standards for abstract classes and
-    interfaces. 
-</p></div>
-
-    <p><a href="/blog/181-Migrating-OOP-Libraries-and-Frameworks-to-PHP-5.3.html">Continue reading...</a></p>
-</section>
-
-</div>
 <div class="paginationControl">
         <a href="/blog.html" class="first">&lt;&lt; First</a> |
         <a href="/blog-p9.html"> &lt; Previous </a> |
@@ -592,6 +589,11 @@ $viewRenderer = HelperBroker::getStaticHelper('viewRenderer');
         <li><a href="https://github.com/weierophinney/PhlyPaste">PhlyPaste</a></li>
         <li><a href="https://github.com/weierophinney/PhlyPeep">PhlyPeep</a> (demo purposes only)</li>
         <li><a href="https://github.com/weierophinney/SkeletonCssModule">SkeletonCssModule</a></li>
+    </ul>
+    </li>
+    <li>Tools
+    <ul>
+        <li><a href="http://p.mwop.net">PhlyPaste</a> (pastebin)</li>
     </ul>
     </li>
 </ul>
