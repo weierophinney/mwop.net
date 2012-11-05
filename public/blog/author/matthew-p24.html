@@ -92,6 +92,45 @@
 
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
+    <p class="date">2004-10-12 21:34:57</p>
+    <p class="tags"><a href="/blog/tag/perl.html">perl</a><br />
+<a href="/blog/tag/personal.html">personal</a><br />
+<a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/45-PHP_SELF-versus-SCRIPT_NAME.html">PHP_SELF versus SCRIPT_NAME</a></h4>
+
+    <div class="entry body"><p>
+    I've standardized my PHP programming to use the environment variable
+    <b>SCRIPT_NAME</b> when I want my script to refer to itself in links and
+    form actions. I've known that <b>PHP_SELF</b> has the same information, but
+    I was more familiar with the name 'SCRIPT_NAME' from using it in perl, and
+    liked the feel of it more as it seems to describe the resource better
+    ('PHP_SELF' could stand for the path to the PHP executable if I were to go
+    by the name only).
+</p>
+<p>
+    However, I just noticed a post on the php.general newsgroup where somebody
+    asked what the difference was between them. Semantically, there isn't any;
+    they should contain the same information. However, historically and
+    technically speaking, there is. <b>SCRIPT_NAME</b> is defined in the CGI 1.1
+    specification, and is thus a standard. <em>However</em>, not all web servers
+    actually implement it, and thus it isn't necessarily <em>portable</em>.
+    <b>PHP_SELF</b>, on the other hand, is implemented directly by PHP, and as
+    long as you're programming in PHP, will always be present.
+</p>
+<p>
+    Guess I have some grep and sed in my future as I change a bunch of
+    scripts...
+</p></div>
+
+    <p><a href="/blog/45-PHP_SELF-versus-SCRIPT_NAME.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
     <p class="date">2004-10-08 08:50:23</p>
     <p class="tags"><a href="/blog/tag/personal.html">personal</a><br />
 <a href="/blog/tag/php.html">php</a></p>
@@ -656,53 +695,6 @@ $body = $tmpl->fetch();
 </section>
 
 </div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2004-03-30 21:57:31</p>
-    <p class="tags"><a href="/blog/tag/programming.html">programming</a><br />
-<a href="/blog/tag/perl.html">perl</a><br />
-<a href="/blog/tag/personal.html">personal</a><br />
-<a href="/blog/tag/php.html">php</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/32-Cgiapp-A-PHP-Class.html">Cgiapp: A PHP Class</a></h4>
-
-    <div class="entry body"><p>
-    After working on some OO classes yesterday for an application backend I'm
-    developing for work, I decided I needed to create a <tt>BREAD</tt> class to
-    make this simpler. You know,
-    <b>B</b>rowse-<b>R</b>ead-<b>E</b>dit-<b>A</b>dd-<b>D</b>elete.
-</p>
-<p>
-    At first, I figured I'd build off of what I'd done yesterday. But then I got
-    to thinking (ah, thinking, my curse). I ran into the <tt>BREAD</tt> concept
-    originally when investigating <tt>CGI::Application</tt>; a number of
-    individuals had developed <tt>CGI::Apps</tt> that provided this
-    functionality. I'd discarded them usually because they provided more
-    functionality than I needed or because they introduced more complexity than
-    I was willing to tackle right then.
-</p>
-<p>
-    But once my thoughts had gone to <tt>BREAD</tt> and <tt>CGI::App</tt>, I
-    started thinking how nice it would be to have <tt>CGI::Application</tt> for
-    PHP. And then I thought, why not? What prevents me from porting it? I have
-    the source...
-</p>
-<p>
-    So, today I stayed home with Maeve, who, on the tail end of an illness,
-    evidently ran herself down when at daycare yesterday, and stayed home
-    sleeping most of the day. So, while she was resting, I sat down with a
-    printout of the non-POD code of <tt>CGI::App</tt> and hammered out what I
-    needed to do. Then, when she fell asleep for a nap, I typed it all out and
-    started testing. And, I'm proud to say, it works. For an example, visit <a href="http://dev.weierophinney.net/cgiapp/test.php">my development
-        site</a> to see a very simple, templated application in action.
-</p></div>
-
-    <p><a href="/blog/32-Cgiapp-A-PHP-Class.html">Continue reading...</a></p>
-</section>
-
-</div>
 <div class="paginationControl">
         <a href="/blog/author/matthew.html" class="first">&lt;&lt; First</a> |
         <a href="/blog/author/matthew-p23.html"> &lt; Previous </a> |
@@ -779,6 +771,11 @@ $body = $tmpl->fetch();
         <li><a href="https://github.com/weierophinney/PhlyPaste">PhlyPaste</a></li>
         <li><a href="https://github.com/weierophinney/PhlyPeep">PhlyPeep</a> (demo purposes only)</li>
         <li><a href="https://github.com/weierophinney/SkeletonCssModule">SkeletonCssModule</a></li>
+    </ul>
+    </li>
+    <li>Tools
+    <ul>
+        <li><a href="http://p.mwop.net">PhlyPaste</a> (pastebin)</li>
     </ul>
     </li>
 </ul>

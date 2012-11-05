@@ -92,6 +92,75 @@
 
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
+    <p class="date">2005-05-22 12:31:14</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/74-PEAR-and-DocBook-documentation.html">PEAR and DocBook documentation</a></h4>
+
+    <div class="entry body"><p>
+    Sean Coates has posted a rant and <a
+        href="http://blog.phpdoc.info/comment.php?type=trackback&entry_id=14">a
+        blog entry</a> regarding DocBook and the various proposals on PEAR
+    related to using a wiki for package documentation.
+</p>
+<p>
+    A little background is probably in order. Many PEAR developers feel that
+    DocBook is needlessly difficult and provides a barrier to writing good
+    documentation for PEAR projects; this is actually the most often-cited
+    reason for lack of documentation for a PEAR package. Many actually create
+    wikis that they then link to in a minimal DocBook tutorial as "full
+    documentation".
+</p>
+<p>
+    One proposed remedy is to create a PEAR wiki for each PEAR package. A
+    scheduled process would then transform the wiki markup to DocBook, HTML,
+    PDF, whatever.
+</p>
+<p>
+    What Sean rants about is simply this: wiki markup is meant to be simple,
+    and much code documentation would require specialized wiki markup.
+    Additionally, DocBook is already meant to do the transformations required;
+    it is a structured language that is meant to be processed into a variety of
+    output formats.
+</p>
+<p>
+    While I agree with Sean's ideas in essence, I still feel that DocBook is a
+    real pain to work with. <a href="http://www.phpdoc.org">PhpDocumentor</a>
+    offers some real convenience when documenting code: doc blocks can contain
+    HTML, some simple inline elements like {@link} -- and they make documenting
+    a snap. But I just fail to understand why, when providing tutorials, a
+    switch to DocBook is necessary. Whenever I use it, I find that I have to
+    retool a set of tutorials I have, or somebody else has, already written in
+    order to get formatting correct, and that I have to switch my thinking
+    altogether to accomodate a new set of rules and logic.
+</p>
+<p>
+    Yes, DocBook is simply XML with a documented schema. However, I've never
+    enjoyed XML. I find it too pedantic, I don't like having to escape out CDATA
+    sequences in order to render HTML (and code, and XML, etc.), I don't like
+    having to learn new DTDs for every project, and more. I feel for
+    configuration, unless you have nested elements, there's no reason to use XML
+    whatsoever. And when it comes to documentation, why use anything other than
+    HTML? Since HTML is a subset of SGML (as is XML), there's no reason it can't
+    be transformed to other formats itself -- and for the majority of PHP
+    developers, HTML is a known, while XML/DocBook may or may not be.
+</p>
+<p>
+    Whether or not DocBook is hard can be debated from here to eternity. The
+    fact of the matter is that it is <em>perceived</em> as being hard to learn,
+    and thus many PEAR developers are simply choosing not to bother. Why not
+    give them a tool they can use <em>easily</em>? Maybe then the amount and
+    quality of documentation on PEAR will improve.
+</p></div>
+
+    <p><a href="/blog/74-PEAR-and-DocBook-documentation.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
     <p class="date">2005-05-20 23:32:03</p>
     <p class="tags"><a href="/blog/tag/php.html">php</a></p>
 </aside>
@@ -508,74 +577,6 @@
 </section>
 
 </div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2005-04-20 15:49:11</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/64-PHP-Unit-Tests-and-the-winner-is-phpt.html">PHP Unit Tests: and the winner is: phpt</a></h4>
-
-    <div class="entry body"><p>
-    I've been tinkering with <a
-    href="http://www.wikipedia.org/wiki/Unit_testing" target="_blank">Unit
-    Testing</a> for around a year now, and have tried using <a
-    href="http://pear.php.net/package/PHPUnit">PHP Unit</a> as well as <a
-    href="http://www.lastcraft.com/simple_test.php">Simple Test</a>. It was
-    while following the Simple Test tutorial that I finally grokked the idea of
-    unit testing, and so that has been my favored class for testing.
-</p>
-<p>
-    However, I find writing the tests tedious. In Simple Test, as in PHP Unit,
-    you need to create a class that sets up the testing harness, and then you
-    create a method for each test you wish to run, and so on... I found it
-    incredibly time consuming. Additionally, I found the test harness often felt
-    like a foreign way of testing my code; I was setting up a structure I would
-    never use my code in, typically. All in all, I only test when I have extra
-    time (which is rare) or when I'm really having trouble nailing down bugs
-    (and the unit tests often don't help me find them).
-</p>
-<p>
-    Recently, I've been hearing some buzz over on the <a
-        href="http://pear.php.net">PEAR</a> lists and the blogs of some of its
-    developers about 'phpt' tests. From what I hear, phpt tests sound very
-    similar to how one tests in perl (though I've never written perl tests, I've
-    at least glanced through them). However, until recently, I haven't seen any
-    documentation on them, and installing PEAR packages via pear doesn't install
-    tests.
-</p>
-<p>
-    We got a copy of <a href="http://php5powerprogramming.com/">PHP5 Power
-        Programming</a> a few weeks ago, and in the section on preparing a PEAR
-    package was a brief section on phpt tests. The section was small, and when I
-    looked at it, my immediate thought was, "it can't be <em>that</em> simple,
-    can it?"
-</p>
-<p>
-    So, I decided to try it out with <a
-        href="http://cgiapp.sourceforge.net/">Cgiapp</a>. A few minutes later, I
-    had some working tests for my static methods. "Hmmm," I thought, "That was
-    easy. Let's try some more." 
-</p>
-<p>
-    Turns out they're kind of addictive to geeks like me. In a matter of a few
-    hours, I'd knocked out tests for over half the functionality, and
-    disccovered, to my chagrine and joy, a number of bugs and bad coding
-    practices... which I promptly corrected so I could get that magical 'PASS'
-    from the test harness.
-</p>
-<p>
-    In the process of writing the tests, my understanding of the tool evolved
-    quite a bit, and by the end, I had the knack for it down. I'll blog later
-    about some of the ways I made them easier to use for myself -- and how I
-    made them more useful for debugging purposes.
-</p></div>
-
-    <p><a href="/blog/64-PHP-Unit-Tests-and-the-winner-is-phpt.html">Continue reading...</a></p>
-</section>
-
-</div>
 <div class="paginationControl">
         <a href="/blog/author/matthew.html" class="first">&lt;&lt; First</a> |
         <a href="/blog/author/matthew-p20.html"> &lt; Previous </a> |
@@ -652,6 +653,11 @@
         <li><a href="https://github.com/weierophinney/PhlyPaste">PhlyPaste</a></li>
         <li><a href="https://github.com/weierophinney/PhlyPeep">PhlyPeep</a> (demo purposes only)</li>
         <li><a href="https://github.com/weierophinney/SkeletonCssModule">SkeletonCssModule</a></li>
+    </ul>
+    </li>
+    <li>Tools
+    <ul>
+        <li><a href="http://p.mwop.net">PhlyPaste</a> (pastebin)</li>
     </ul>
     </li>
 </ul>
