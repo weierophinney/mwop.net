@@ -92,6 +92,28 @@
 
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
+    <p class="date">2012-11-05 15:25:00</p>
+    <p class="tags"><a href="/blog/tag/zf2.html">zf2</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/2012-11-05-zend-server-caching.html">Zend Server, ZF2, and Page Caching</a></h4>
+
+    <div class="entry body"><p>
+    Zend Server has a very cool
+    <a href="http://www.youtube.com/watch_v=i2XXn2SA5zM.html" target="_blank">Page Caching feature</a>. Basically, you can provide
+    URLs or URL regular expressions, and tell Zend Server to provide full-page
+    caching of those pages. This can provide a tremendous performance boost, without
+    needing to change anything in your application structure; simply enable it for a
+    set of pages, and sit back and relax.
+</p></div>
+
+    <p><a href="/blog/2012-11-05-zend-server-caching.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
     <p class="date">2012-11-01 15:25:00</p>
     <p class="tags"><a href="/blog/tag/zf2.html">zf2</a><br />
 <a href="/blog/tag/cloud.html">cloud</a><br />
@@ -418,98 +440,6 @@ class MyController extends Zend_Controller_Action
 </section>
 
 </div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2012-04-03 08:45:00</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
-<a href="/blog/tag/zend+framework.html">zend framework</a><br />
-<a href="/blog/tag/zf2.html">zf2</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/2012-05-developing-a-zf2-blog.html">Developing A ZF2 Blog</a></h4>
-
-    <div class="entry body"><p>
-    This post tells a story.
-</p>
-
-<p>
-    A long time ago, I set out to write my own blog platform. Yes, <a 
-    href="http://wordpress.org">WordPress</a> is a fine blogging platform, as is 
-    <a href="http://www.s9y.org/">Serendipity</a> (aka "s9y", and my previous 
-    platform). And yes, I know about <a 
-    href="http://habariproject.org">Habari</a>. And, for those of you skimming 
-    ahead, yes, I'm quite aware of <a href="http://github.com/mojombo/jekyll">Jekyll</a>, 
-    thank you anyways.
-</p>
-
-<p>
-    Why write something of my own? Well, of course, there's the fact that I'm
-    a developer, and have control issues. Then there's also the fact that a 
-    blog is both a simple enough domain to allow easily experimenting with new
-    technology and paradigms, while simultaneously providing a complex enough
-    domain to expose non-trivial issues. 
-</p>
-    
-<p>
-    When I started this project, it was a technology-centered endeavor; I 
-    wanted to play with document databases such as <a 
-    href="http://couchdb.apache.org/">CouchDB</a> and <a 
-    href="http://www.mongodb.org/">MongoDB</a>, and with caching technologies 
-    like <a href="http://memcached.org">memcached</a> and <a 
-    href="http://redis.io">redis</a>.
-</p>
-
-<p>
-    Not long after I started, I also realized it was a great playground for me
-    to prototype ideas for <a href="http://framework.zend.com/zf2">ZF2</a>;
-    in fact, the original DI and MVC prototypes lived as branches of my blog.
-    (My repository is still named "zf2sandbox" to this day, though it 
-    technically houses just my site.)
-</p>
-
-<p>
-    Over time, I had a few realizations. First, my <em>actual</em> blog was
-    suffering. I wasn't taking the time to perform security updates, nor even
-    normal upgrades, and was so far behind as to make the process non-trivial,
-    particularly as I had a custom theme, and because I was proxying to my 
-    blog via a ZF app in order to facilitate a cohesive site look-and-feel. I
-    needed to either sink time into upgrading, or finish my blog.
-</p>
-    
-<p>
-    My second realization, however, was the more important one: I wanted a 
-    platform where I could write how <em>I</em> want to write. I am
-    a keyboard-centric developer and computer user, and while I love the web,
-    I hate typing in its forms. Additionally, my posts often take longer than
-    a typical browser session -- which leaves me either losing my work in a
-    GUI admin, or having to write first in my editor of choice, and then 
-    cut-and-paste it to the web forms. Finally, I want versions I can easily
-    browse with standard diffing tools.
-</p>
-
-<p>
-    When it came down to it, my blog content is basically static. Occasionally,
-    I'll update a post, but it's rare. Comments are really the only dynamic
-    aspect of the blog... and what I had with s9y was not cutting it, as I was
-    getting more spam than I could keep up with. New commenting platforms such 
-    as <a href="http://livefyre.com">Livefyre</a> and <a href="http://disqus.com">Disqus</a>
-    provide more features than most blogging platforms I know, and provide 
-    another side benefit: because they are javascript-based, you can simply
-    drop in a small amount of markup into your post <em>once</em> -- meaning
-    your pages can be fully static!
-</p>
-
-<p>
-    Add these thoughts to the rise of static blogging platforms such as the 
-    aforementioned Jekyll, and I had a kernel of an idea: take the work I'd
-    done already, and create a static blog generator. 
-</p></div>
-
-    <p><a href="/blog/2012-05-developing-a-zf2-blog.html">Continue reading...</a></p>
-</section>
-
-</div>
 <div class="paginationControl">
         <span class="current">1</span> |
             <a href="/blog-p2.html">2</a> |
@@ -584,6 +514,11 @@ class MyController extends Zend_Controller_Action
         <li><a href="https://github.com/weierophinney/PhlyPaste">PhlyPaste</a></li>
         <li><a href="https://github.com/weierophinney/PhlyPeep">PhlyPeep</a> (demo purposes only)</li>
         <li><a href="https://github.com/weierophinney/SkeletonCssModule">SkeletonCssModule</a></li>
+    </ul>
+    </li>
+    <li>Tools
+    <ul>
+        <li><a href="http://p.mwop.net">PhlyPaste</a> (pastebin)</li>
     </ul>
     </li>
 </ul>
