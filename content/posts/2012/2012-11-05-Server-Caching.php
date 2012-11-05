@@ -38,6 +38,7 @@ $entry->setBody($body);
 $extended=<<<'EOT'
 <p style="text-align: center;">
     <img 
+        style="max-width: 100%; max-height: 100%;"
         src="/images/blog/2012-11-04-Server-CachingRule.png"
         alt="Zend Server Page Caching"
         title="Zend Server Page Caching" />
@@ -68,6 +69,7 @@ $extended=<<<'EOT'
 
 <p>
     <img 
+        style="max-width: 100%; max-height: 100%;"
         src="/images/blog/2012-11-04-Server-Caching-Request.png"
         alt="Zend Server Page Caching by Request"
         title="Zend Server Page Caching by Request" />
