@@ -7,12 +7,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/weierophinney/PhlyBlog",
-                "reference": "1.0.0"
+                "reference": "48937193596cee6ec8aa9fe6800be6d19b814edd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/weierophinney/PhlyBlog/zipball/1.0.0",
-                "reference": "1.0.0",
+                "url": "https://github.com/weierophinney/PhlyBlog/archive/48937193596cee6ec8aa9fe6800be6d19b814edd.zip",
+                "reference": "48937193596cee6ec8aa9fe6800be6d19b814edd",
                 "shasum": ""
             },
             "require": {
@@ -20,7 +20,7 @@
                 "phly/phly-common": "dev-master",
                 "zendframework/zendframework": "2.*"
             },
-            "time": "1348672911",
+            "time": "1348684380",
             "type": "library",
             "installation-source": "source",
             "autoload": {
@@ -138,11 +138,11 @@
         },
         {
             "name": "zendframework/zend-version",
-            "version": "2.0.2",
+            "version": "2.0.3",
             "target-dir": "Zend/Version",
             "dist": {
                 "type": "zip",
-                "url": "http://packages.zendframework.com/composer/Zend_Version-2.0.2.zip",
+                "url": "http://packages.zendframework.com/composer/Zend_Version-2.0.3.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -153,7 +153,7 @@
             "installation-source": "dist",
             "autoload": {
                 "psr-0": {
-                    "Zend\\Version": ""
+                    "Zend\\Version\\": ""
                 }
             },
             "license": [
@@ -164,7 +164,13 @@
             "keywords": [
                 "zf2",
                 "version"
-            ]
+            ],
+            "support": {
+                "email": "fw-general-subscribe@lists.zend.com",
+                "irc": "irc://irc.freenode.net/zftalk",
+                "issues": "https://github.com/zendframework/zf2/issues",
+                "source": "https://github.com/zendframework/zf2"
+            }
         },
         {
             "name": "zendframework/zendframework",
@@ -172,13 +178,13 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/zendframework/zf2.git",
-                "reference": "7a69c342c2afe18e67dd5b736ab92023250baeaa"
+                "reference": "0e70e048a402fe73fd6ff51613d47fa8b6589c63"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/zendframework/zf2/zipball/7a69c342c2afe18e67dd5b736ab92023250baeaa",
-                "reference": "7a69c342c2afe18e67dd5b736ab92023250baeaa",
-                "shasum": ""
+                "url": "https://github.com/zendframework/zf2/zipball/master",
+                "reference": null,
+                "shasum": null
             },
             "require": {
                 "php": ">=5.3.3"
@@ -196,12 +202,14 @@
                 "zendframework/zend-db": "self.version",
                 "zendframework/zend-di": "self.version",
                 "zendframework/zend-dom": "self.version",
+                "zendframework/zend-escaper": "self.version",
                 "zendframework/zend-eventmanager": "self.version",
                 "zendframework/zend-feed": "self.version",
                 "zendframework/zend-file": "self.version",
                 "zendframework/zend-filter": "self.version",
                 "zendframework/zend-form": "self.version",
                 "zendframework/zend-http": "self.version",
+                "zendframework/zend-i18n": "self.version",
                 "zendframework/zend-inputfilter": "self.version",
                 "zendframework/zend-json": "self.version",
                 "zendframework/zend-ldap": "self.version",
@@ -228,9 +236,7 @@
                 "zendframework/zend-uri": "self.version",
                 "zendframework/zend-validator": "self.version",
                 "zendframework/zend-view": "self.version",
-                "zendframework/zend-xmlrpc": "self.version",
-                "zendframework/zend-escaper": "self.version",
-                "zendframework/zend-i18n": "self.version"
+                "zendframework/zend-xmlrpc": "self.version"
             },
             "require-dev": {
                 "doctrine/common": ">=2.1"
@@ -238,15 +244,14 @@
             "suggest": {
                 "doctrine/common": "Doctrine\\Common >=2.1 for annotation features",
                 "ext-intl": "ext/intl for i18n features",
-                "zendframework/zendservice-recaptcha": "ZendService\\ReCaptcha for rendering ReCaptchas in Zend\\Captcha and/or Zend\\Form",
+                "pecl-weakref": "Implementation of weak references for Zend\\Stdlib\\CallbackHandler",
                 "zendframework/zendpdf": "ZendPdf for creating PDF representations of barcodes",
-                "pecl-weakref": "Implementation of weak references for Zend\\Stdlib\\CallbackHandler"
+                "zendframework/zendservice-recaptcha": "ZendService\\ReCaptcha for rendering ReCaptchas in Zend\\Captcha and/or Zend\\Form"
             },
-            "time": "1348605562",
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.0-dev"
+                    "dev-master": "2.0.x-dev"
                 }
             },
             "installation-source": "source",
@@ -260,11 +265,17 @@
                 "BSD-3-Clause"
             ],
             "description": "Zend Framework 2",
-            "homepage": "http://framework.zend.com/",
             "keywords": [
                 "framework",
                 "zf2"
-            ]
+            ],
+            "support": {
+                "email": "fw-general-subscribe@lists.zend.com",
+                "irc": "irc://irc.freenode.net/zftalk",
+                "issues": "https://github.com/zendframework/zf2/issues",
+                "source": "https://github.com/zendframework/zf2"
+            },
+            "time": "1350509831"
         },
         {
             "name": "zendframework/zendservice-recaptcha",
@@ -309,19 +320,19 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/ZF-Commons/ZfcBase.git",
-                "reference": "5057eb22bdc5a97e4b23716079485bfa92e44054"
+                "reference": "38990ad5f51002dd271ab676b90a3d59728190e2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/ZF-Commons/ZfcBase/zipball/5057eb22bdc5a97e4b23716079485bfa92e44054",
-                "reference": "5057eb22bdc5a97e4b23716079485bfa92e44054",
+                "url": "https://github.com/ZF-Commons/ZfcBase/archive/38990ad5f51002dd271ab676b90a3d59728190e2.zip",
+                "reference": "38990ad5f51002dd271ab676b90a3d59728190e2",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3",
                 "zendframework/zendframework": "2.*"
             },
-            "time": "1347633346",
+            "time": "1351100548",
             "type": "library",
             "installation-source": "source",
             "autoload": {
@@ -356,12 +367,12 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/ZF-Commons/ZfcUser.git",
-                "reference": "f190c9b4f45c9b631231de0f7f679d259c602c0c"
+                "reference": "5787eb8bcbc974308d8c31eb1da7a6b5044e7715"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/ZF-Commons/ZfcUser/zipball/f190c9b4f45c9b631231de0f7f679d259c602c0c",
-                "reference": "f190c9b4f45c9b631231de0f7f679d259c602c0c",
+                "url": "https://github.com/ZF-Commons/ZfcUser/archive/5787eb8bcbc974308d8c31eb1da7a6b5044e7715.zip",
+                "reference": "5787eb8bcbc974308d8c31eb1da7a6b5044e7715",
                 "shasum": ""
             },
             "require": {
@@ -369,7 +380,7 @@
                 "zf-commons/zfc-base": "dev-master",
                 "zendframework/zendframework": "2.*"
             },
-            "time": "1348656444",
+            "time": "1352735726",
             "type": "library",
             "installation-source": "source",
             "autoload": {
