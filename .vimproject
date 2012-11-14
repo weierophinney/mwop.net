@@ -21,6 +21,8 @@ mwop=/home/matthew/git/sites/mwop CD=. filter="README TODO.md *.php *.xml *.txt 
    module.phly-contact.global.php
    module.phly-contact.local.php
    module.zfcuser.global.php
+   scn-social-auth.global.php
+   scn-social-auth.local.php
   }
  }
  content=content {

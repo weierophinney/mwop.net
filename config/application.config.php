@@ -7,6 +7,7 @@ return array(
         'PhlyBlog',
         'PhlyComic',
         'PhlyContact',
+        'ScnSocialAuth',
         'ZfcBase',
         'ZfcUser',
     ),
