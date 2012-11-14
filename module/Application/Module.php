@@ -22,7 +22,16 @@ class Module
     {
         return array(
             'Zend\Loader\ClassMapAutoloader' => array(
-                __DIR__ . '/autoload_classmap.php'
+                __DIR__ . '/autoload_classmap.php',
+                array(
+                    'Hybrid_Storage'               => getcwd() . '/vendor/hybridauth/hybridauth/hybridauth/Hybrid/Storage.php',
+                    'Hybrid_Error'                 => getcwd() . '/vendor/hybridauth/hybridauth/hybridauth/Hybrid/Error.php',
+                    'Hybrid_Logger'                => getcwd() . '/vendor/hybridauth/hybridauth/hybridauth/Hybrid/Logger.php',
+                    'Hybrid_Auth'                  => getcwd() . '/vendor/hybridauth/hybridauth/hybridauth/Hybrid/Auth.php',
+                    'Hybrid_Provider_Model'        => getcwd() . '/vendor/hybridauth/hybridauth/hybridauth/Hybrid/Provider_Model.php',
+                    'Hybrid_Provider_Model_OAuth2' => getcwd() . '/vendor/hybridauth/hybridauth/hybridauth/Hybrid/Provider_Model_OAuth2.php',
+                    'Hybrid_Providers_GitHub'      => getcwd() . '/vendor/hybridauth/hybridauth/additional-providers/hybridauth-github/Providers/GitHub.php',
+                ),
             ),
         );
     }

@@ -10,6 +10,6 @@
         "phly/phly-blog": "dev-master",
         "phly/phly-contact": "dev-master",
         "zendframework/zendservice-recaptcha": "2.*",
-        "zf-commons/zfc-user": "dev-master"
+        "socalnick/scn-social-auth": "dev-master"
     }
 }

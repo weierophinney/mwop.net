@@ -1,6 +1,55 @@
 {
-    "hash": "36f2a0238cad022226724731d281ac17",
+    "hash": "32773b89530a66d40f579dc0cb50fc51",
     "packages": [
+        {
+            "name": "hybridauth/hybridauth",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hybridauth/hybridauth",
+                "reference": "4aa2e49006b617aa9feb10c834c5d0d47ae19b9d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/hybridauth/hybridauth/archive/4aa2e49006b617aa9feb10c834c5d0d47ae19b9d.zip",
+                "reference": "4aa2e49006b617aa9feb10c834c5d0d47ae19b9d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.0",
+                "ext-curl": "*"
+            },
+            "time": "1352832260",
+            "type": "library",
+            "installation-source": "source",
+            "autoload": {
+                "psr-0": {
+                    "Hybrid": "hybridauth/"
+                }
+            },
+            "license": [
+                "(MIT or GPL-3.0+)"
+            ],
+            "authors": [
+                {
+                    "name": "Miled",
+                    "email": "hybridauth@gmail.com"
+                }
+            ],
+            "description": "Open source social sign on PHP library.",
+            "homepage": "http://hybridauth.sourceforge.net",
+            "keywords": [
+                "OpenId",
+                "oauth",
+                "twitter",
+                "login",
+                "google",
+                "facebook",
+                "social",
+                "hybridauth",
+                "yahoo"
+            ]
+        },
         {
             "name": "phly/phly-blog",
             "version": "dev-master",
@@ -134,6 +183,52 @@
                 "zend",
                 "zf2",
                 "module"
+            ]
+        },
+        {
+            "name": "socalnick/scn-social-auth",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SocalNick/ScnSocialAuth",
+                "reference": "1.1.2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/SocalNick/ScnSocialAuth/archive/1.1.2.zip",
+                "reference": "1.1.2",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3",
+                "zf-commons/zfc-base": "dev-master",
+                "zf-commons/zfc-user": "dev-master",
+                "zendframework/zendframework": "2.*",
+                "hybridauth/hybridauth": "dev-master"
+            },
+            "time": "1352496715",
+            "type": "library",
+            "installation-source": "source",
+            "autoload": {
+                "psr-0": {
+                    "ScnSocialAuth": "src/"
+                },
+                "classmap": [
+                    "./"
+                ]
+            },
+            "authors": [
+                {
+                    "name": "Nicholas Calugar",
+                    "email": "njcalugar@gmail.com",
+                    "homepage": "http://socalnick.github.com/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Uses the HybridAuth PHP library to Enable authentication via Google, Facebook, Twitter, Yahoo!, etc for the ZfcUser ZF2 module.",
+            "homepage": "https://github.com/SocalNick/ScnSocialAuth",
+            "keywords": [
+                "zf2"
             ]
         },
         {
@@ -418,6 +513,6 @@
     "stability-flags": {
         "phly/phly-blog": 20,
         "phly/phly-contact": 20,
-        "zf-commons/zfc-user": 20
+        "socalnick/scn-social-auth": 20
     }
 }
