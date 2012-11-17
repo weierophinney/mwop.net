@@ -53,7 +53,7 @@ $entry->setBody($body);
 
 $extended=<<<'EOT'
 <p>
-    I've also <a href="/slides/2012-10-25-BeautfulSoftware/BeautifulSoftware.html">posted the slides</a>.
+    I've also <a href="/slides/2012-10-25-BeautifulSoftware/BeautifulSoftware.html">posted the slides</a>.
 </p>
 
 EOT;
