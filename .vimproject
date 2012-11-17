@@ -72,7 +72,6 @@ mwop=/home/matthew/git/sites/mwop CD=. filter="README TODO.md *.php *.xml *.txt 
     js=js filter="*.js" {
      blog.js
      scroll.js
-     tweets.js
     }
    }
    src=src {
