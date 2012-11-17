@@ -10,14 +10,14 @@
 	<![endif]-->
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-    <link href="/css/SkeletonCss/base.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/css/SkeletonCss/skeleton.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/css/SkeletonCss/layout.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/css/Application/site.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/images/Application/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" >
-<link href="/css/Application/blog.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/blog/author/matthew-atom.xml" rel="alternate" type="application/atom+xml" title="Blog Entries by Matthew Weier O&#039;Phinney Atom Feed" >
-<link href="/blog/author/matthew-rss.xml" rel="alternate" type="application/rss+xml" title="Blog Entries by Matthew Weier O&#039;Phinney RSS Feed" >
+    <link href="/css/SkeletonCss/base.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/SkeletonCss/skeleton.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/SkeletonCss/layout.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/Application/site.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/images/Application/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon">
+<link href="/css/Application/blog.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/blog/author/matthew-atom.xml" rel="alternate" type="application/atom+xml" title="Blog Entries by Matthew Weier O&#039;Phinney Atom Feed">
+<link href="/blog/author/matthew-rss.xml" rel="alternate" type="application/rss+xml" title="Blog Entries by Matthew Weier O&#039;Phinney RSS Feed">
     <script type="text/javascript">
     //<!--
     dojoConfig={
@@ -90,6 +90,56 @@
 <section class="eleven columns alpha blog">
     <h2>Blog Entries by Matthew Weier O'Phinney</h2>
 
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2009-08-31 15:34:37</p>
+    <p class="tags"><a href="/blog/tag/linux.html">linux</a><br />
+<a href="/blog/tag/security.html">security</a><br />
+<a href="/blog/tag/wifi.html">wifi</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/223-Enabling-VPN-split-tunnel-with-NetworkManager.html">Enabling VPN split tunnel with NetworkManager</a></h4>
+
+    <div class="entry body"><p>
+    I've been using <a
+        href="http://projects.gnome.org/NetworkManager/">NetworkManager</a> for
+    some time now, and appreciate how easy it makes both connecting to wifi as
+    well as VPNs. That said, I've had an issue with it that I only resolved
+    today.
+</p>
+
+<p>
+    When working from home, I prefer to use a VPN split tunnel setup -- I'm
+    behind a firewall all the time, and it's useful to be able to run virtual
+    machines while still connected to my VPN (e.g., when doing training or
+    webinar sessions). However, I noticed some months ago that this wasn't
+    working. I assumed at first it was a change in our network setup, but others
+    reported that the split tunnel was working fine. It's been particularly
+    problematic when on IRC -- if the VPN drops, I lose my IRC connection,
+    meaning I have to re-connect and re-claim my nick.
+</p>
+
+<p>
+    So, I did some searching, and found an interesting setting. In
+    NetworkManager, "Configure..." then "Edit" your VPN connection,
+    and navigate to the "IPv4 Settings" tab. Once there, click the button that
+    says "Routes..." and select the checkbox next to "Use this connection only
+    for resources on its network". Press Ok to close the dialog, then "Apply" to
+    exit out of the VPN configuration. Re-connect to the VPN, and you should be
+    all set.
+</p>
+
+<p>
+    <em>Note: this will only work if your VPN server is configured to allow
+    split tunnels. Additionally, only do so if you are behind a firewall.
+    Practice safe networking.</em>
+</p></div>
+
+    <p><a href="/blog/223-Enabling-VPN-split-tunnel-with-NetworkManager.html">Continue reading...</a></p>
+</section>
+
+</div>
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
     <p class="date">2009-08-31 12:54:37</p>
@@ -371,27 +421,6 @@
 </p></div>
 
     <p><a href="/blog/213-From-the-inside-out-How-to-layer-decorators.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2009-04-03 08:30:00</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
-<a href="/blog/tag/zend+framework.html">zend framework</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/212-The-simplest-Zend_Form-decorator.html">The simplest Zend_Form decorator</a></h4>
-
-    <div class="entry body"><p>
-    I've been seeing ranting and general confusion about 
-    <a href="http://framework.zend.com/manual/en/zend.form.html">Zend_Form</a> 
-    decorators (as well as the occasional praises), and thought I'd do a
-    mini-series of blog posts showing how they work.
-</p></div>
-
-    <p><a href="/blog/212-The-simplest-Zend_Form-decorator.html">Continue reading...</a></p>
 </section>
 
 </div>

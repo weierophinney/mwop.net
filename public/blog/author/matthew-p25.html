@@ -10,14 +10,14 @@
 	<![endif]-->
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-    <link href="/css/SkeletonCss/base.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/css/SkeletonCss/skeleton.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/css/SkeletonCss/layout.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/css/Application/site.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/images/Application/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" >
-<link href="/css/Application/blog.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/blog/author/matthew-atom.xml" rel="alternate" type="application/atom+xml" title="Blog Entries by Matthew Weier O&#039;Phinney Atom Feed" >
-<link href="/blog/author/matthew-rss.xml" rel="alternate" type="application/rss+xml" title="Blog Entries by Matthew Weier O&#039;Phinney RSS Feed" >
+    <link href="/css/SkeletonCss/base.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/SkeletonCss/skeleton.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/SkeletonCss/layout.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/Application/site.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/images/Application/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon">
+<link href="/css/Application/blog.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/blog/author/matthew-atom.xml" rel="alternate" type="application/atom+xml" title="Blog Entries by Matthew Weier O&#039;Phinney Atom Feed">
+<link href="/blog/author/matthew-rss.xml" rel="alternate" type="application/rss+xml" title="Blog Entries by Matthew Weier O&#039;Phinney RSS Feed">
     <script type="text/javascript">
     //<!--
     dojoConfig={
@@ -90,6 +90,53 @@
 <section class="eleven columns alpha blog">
     <h2>Blog Entries by Matthew Weier O'Phinney</h2>
 
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2004-04-22 22:10:10</p>
+    <p class="tags"><a href="/blog/tag/linux.html">linux</a><br />
+<a href="/blog/tag/personal.html">personal</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/31-Gentoo-for-several-weeks.html">Gentoo for several weeks</a></h4>
+
+    <div class="entry body"><p>
+    I've had a bunch of problems with my new computer -- it uses ACPI, but if I
+    load the ACPI modules, it won't boot; if I don't load them, I have to go
+    through contortions to get the ethernet working, and it won't power down;
+    and a bunch of other little stuff.
+</p>
+<p>
+    So, a few weeks ago, I thought, what the heck? Why not try <a href="http://www.gentoo.org">Gentoo</a>? I've been reading about it
+    since it first came out, and I remember talking with Duane about it once,
+    and it has a reputation for both being cutting edge and stable. Heck, even
+    Wil Wheaton's endorsing it... it can't be <b>all</b> bad, right?
+</p>
+<p>
+    I had a few misstarts -- bad CDs, not quite getting how the chroot thing
+    worked, problems with DNS (which I <em>still</em> don't understand; and Rob
+    has them as well, so it's not just me). But once I got it installed... well,
+    I'm impressed.
+</p>
+<p>
+    The thing about Gentoo is, it <em>compiles</em> everything from source. It's
+    like <a href="http://www.debian.org">Debian</a>, in that it fetches all
+    dependencies and installs those... but it's all source. So it's not exactly
+    fast. But because everything is compiled, and because you setup C flags
+    specific to your machine, what you get is incredibly optimized for your own
+    machine. This 1.6GHz machine simply flies. And the memory usage <em>just
+        stays low</em>.
+</p>
+<p>
+    I'd like to use it for my server... but I can't really take the server down
+    at this point when it's making both my mom and myself money. But what a
+    great system... I only wish I'd used it for the mail server at work.
+</p></div>
+
+    <p><a href="/blog/31-Gentoo-for-several-weeks.html">Continue reading...</a></p>
+</section>
+
+</div>
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
     <p class="date">2004-03-30 21:57:31</p>
@@ -511,47 +558,6 @@
 </p></div>
 
     <p><a href="/blog/28-HTMLFillInForm.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2004-02-05 20:18:20</p>
-    <p class="tags"><a href="/blog/tag/programming.html">programming</a><br />
-<a href="/blog/tag/perl.html">perl</a><br />
-<a href="/blog/tag/personal.html">personal</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/27-HTMLTemplate-notes.html">HTML::Template notes</a></h4>
-
-    <div class="entry body"><p>
-    I've used HTML::Template a little, mainly in the Secret Santa project I did
-    this past Christmas for my wife's family. One thing I disliked was using the
-    normal syntax: &lt;TMPL_VAR NAME=IMAGE_SRC&gt; -- it made looking at it
-    difficult (it wasn't always easy to tell what was an HTML tag, what was
-    plain text, and what was HTML::Template stuff), and it made it impossible to
-    validate my pages before they had data.
-</p>
-<p>
-    Fortunately, there's an alternate syntax: wrap the syntax in HTML comments:
-    &lt;!-- TMPL_VAR NAME=IMAGE_SRC --&gt; does the job. It uses more
-    characters, true, but it gets highlighted different than HTML tags, as well,
-    and that's worth a lot.
-</p>
-<p>
-    And why do I have to say "NAME=" every time? That gets annoying. As it turns
-    out, I can simply say: &lt;!-- TMPL_VAR IMAGE_SRC --&gt;, and that, too will
-    get the job done.
-</p>
-<p>
-    Finally, what about those times when I want to define a template, but have
-    it broken into parts, too? Basically, I want HTML::Template to behave a
-    little like SSI. No worries; there's a TMPL_INCLUDE tag that can do this:
-    &lt;!-- TMPL_INCLUDE NAME="filename.tmpl" --&gt;. 
-</p></div>
-
-    <p><a href="/blog/27-HTMLTemplate-notes.html">Continue reading...</a></p>
 </section>
 
 </div>

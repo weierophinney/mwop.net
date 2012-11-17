@@ -10,14 +10,14 @@
 	<![endif]-->
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-    <link href="/css/SkeletonCss/base.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/css/SkeletonCss/skeleton.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/css/SkeletonCss/layout.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/css/Application/site.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/images/Application/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" >
-<link href="/css/Application/blog.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/blog/tag/php-atom.xml" rel="alternate" type="application/atom+xml" title="Tag: php Atom Feed" >
-<link href="/blog/tag/php-rss.xml" rel="alternate" type="application/rss+xml" title="Tag: php RSS Feed" >
+    <link href="/css/SkeletonCss/base.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/SkeletonCss/skeleton.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/SkeletonCss/layout.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/Application/site.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/images/Application/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon">
+<link href="/css/Application/blog.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/blog/tag/php-atom.xml" rel="alternate" type="application/atom+xml" title="Tag: php Atom Feed">
+<link href="/blog/tag/php-rss.xml" rel="alternate" type="application/rss+xml" title="Tag: php RSS Feed">
     <script type="text/javascript">
     //<!--
     dojoConfig={
@@ -90,6 +90,46 @@
 <section class="eleven columns alpha blog">
     <h2>Tag: php</h2>
 
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2008-09-25 23:11:30</p>
+    <p class="tags"><a href="/blog/tag/dojo.html">dojo</a><br />
+<a href="/blog/tag/php.html">php</a><br />
+<a href="/blog/tag/zencon08.html">zencon08</a><br />
+<a href="/blog/tag/zend+framework.html">zend framework</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/192-ZendCon08-Wrapup.html">ZendCon08 Wrapup</a></h4>
+
+    <div class="entry body"><p>
+    I'm a bit late on my <a href="http://www.zendcon.com/">ZendCon'08</a>
+    wrapup; the conference left me both exhausted and with a backlog of email
+    and work that has consumed me since it ended. However, this, too, is good,
+    as it has given me time to reflect... and to finally get my slides up on
+    SlideShare.
+</p>
+
+<p>
+    ZendCon was alternately exhausting, rewarding, educational, fruitful,
+    infurating, and ultimately wonderful. I've been to every single ZendCon so
+    far -- I started at Zend a scant month before the inaugural event -- and
+    have spoken at each. My first time speaking was a fluke; 
+    <a href="http://www.sklar.com/">David Sklar</a> had just started at 
+    <a href="http://www.ning.com/">Ning</a> and had to back out of his
+    "Configuring PHP" tutorial session. 
+    <a href="http://mikenaberezny.com/">Mike Naberezny</a> and I were drafted to
+    take it over, and we had N+1 attendees, where N was the number of speakers.
+    Since that inauspicious beginning, I've gradually taken on more sessions and
+    stuck around to participate in the conference more. I can honestly say that
+    this was the biggest, busiest, and most community focussed ZendCon I can
+    remember.
+</p></div>
+
+    <p><a href="/blog/192-ZendCon08-Wrapup.html">Continue reading...</a></p>
+</section>
+
+</div>
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
     <p class="date">2008-09-11 15:00:00</p>
@@ -469,50 +509,6 @@
 </ul></div>
 
     <p><a href="/blog/182-Testing-Zend-Framework-MVC-Applications.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2008-06-30 09:00:00</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
-<a href="/blog/tag/oop.html">oop</a><br />
-<a href="/blog/tag/zend+framework.html">zend framework</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/181-Migrating-OOP-Libraries-and-Frameworks-to-PHP-5.3.html">Migrating OOP Libraries and Frameworks to PHP 5.3</a></h4>
-
-    <div class="entry body"><p>
-    With PHP 5.3 coming up on the horizon, I'm of course looking forward to
-    using namespaces. Let's be honest, who wants to write the following line?
-</p>
-
-<div class="example"><pre><code lang="php">
-$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
-</code></pre></div>
-
-<p>
-    when the more succinct:
-</p>
-
-<div class="example"><pre><code lang="php">
-$viewRenderer = HelperBroker::getStaticHelper('viewRenderer');
-</code></pre></div>
-
-<p>
-    could be used? (Assuming you've executed <code>'use
-    Zend::Controller::Action;'</code> somewhere earlier...)
-</p>
-
-<p>
-    However, while namespaces will hopefully lead to more readable code,
-    particularly code in libraries and frameworks, PHP developers will finally
-    need to start thinking about sane standards for abstract classes and
-    interfaces. 
-</p></div>
-
-    <p><a href="/blog/181-Migrating-OOP-Libraries-and-Frameworks-to-PHP-5.3.html">Continue reading...</a></p>
 </section>
 
 </div>

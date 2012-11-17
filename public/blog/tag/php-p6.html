@@ -10,14 +10,14 @@
 	<![endif]-->
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-    <link href="/css/SkeletonCss/base.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/css/SkeletonCss/skeleton.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/css/SkeletonCss/layout.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/css/Application/site.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/images/Application/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" >
-<link href="/css/Application/blog.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/blog/tag/php-atom.xml" rel="alternate" type="application/atom+xml" title="Tag: php Atom Feed" >
-<link href="/blog/tag/php-rss.xml" rel="alternate" type="application/rss+xml" title="Tag: php RSS Feed" >
+    <link href="/css/SkeletonCss/base.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/SkeletonCss/skeleton.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/SkeletonCss/layout.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/Application/site.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/images/Application/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon">
+<link href="/css/Application/blog.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/blog/tag/php-atom.xml" rel="alternate" type="application/atom+xml" title="Tag: php Atom Feed">
+<link href="/blog/tag/php-rss.xml" rel="alternate" type="application/rss+xml" title="Tag: php RSS Feed">
     <script type="text/javascript">
     //<!--
     dojoConfig={
@@ -90,6 +90,45 @@
 <section class="eleven columns alpha blog">
     <h2>Tag: php</h2>
 
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2009-12-10 15:51:22</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
+<a href="/blog/tag/zend+framework.html">zend framework</a><br />
+<a href="/blog/tag/zend+server.html">zend server</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/229-Real-time-ZF-Monitoring-via-Zend-Server.html">Real-time ZF Monitoring via Zend Server</a></h4>
+
+    <div class="entry body"><p>
+    When keeping tabs on your ZF applications, it's often difficult to separate
+    application errors from general PHP errors, and if you aggregate them in the
+    same location as your web server errors, this can become more difficult
+    still.
+</p>
+
+<p>
+    Additionally, PHP's error reporting doesn't provide a ton of context, even
+    when reporting uncaught exceptions -- typically you'll only get a cryptic
+    exception message, and what file and line emitted it.
+</p>
+
+<p>
+    Zend Server's Monitor extension has some capabilities for providing more
+    context, and does much of this by default: request and environment settings
+    available when the error was logged, the function name and arguments
+    provided, and a full backtrace are available for you to inspect.
+    Additionally, the Monitor extension includes an API that allows you to
+    trigger custom Monitor events, and you can provide additional context when
+    doing so -- such as passing objects or arrays that may help provide context
+    when debugging.
+</p></div>
+
+    <p><a href="/blog/229-Real-time-ZF-Monitoring-via-Zend-Server.html">Continue reading...</a></p>
+</section>
+
+</div>
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
     <p class="date">2009-11-09 09:00:00</p>
@@ -332,46 +371,6 @@
 </p></div>
 
     <p><a href="/blog/219-Speaking-at-phptek.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2009-04-13 08:30:00</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
-<a href="/blog/tag/zend+framework.html">zend framework</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/217-Creating-composite-elements.html">Creating composite elements</a></h4>
-
-    <div class="entry body"><p>
-    In my <a href="/matthew/archives/215-Rendering-Zend_Form-decorators-individually.html">last post on decorators</a>,
-    I had an example that showed rendering a "date of birth" element:
-</p>
-
-<div class="example"><pre><code lang="php">
-&lt;div class=\&quot;element\&quot;&gt;
-    &lt;?php echo $form-&gt;dateOfBirth-&gt;renderLabel() ?&gt;
-    &lt;?php echo $this-&gt;formText('dateOfBirth[day]', '', array(
-        'size' =&gt; 2, 'maxlength' =&gt; 2)) ?&gt;
-    /
-    &lt;?php echo $this-&gt;formText('dateOfBirth[month]', '', array(
-        'size' =&gt; 2, 'maxlength' =&gt; 2)) ?&gt;
-    /
-    &lt;?php echo $this-&gt;formText('dateOfBirth[year]', '', array(
-        'size' =&gt; 4, 'maxlength' =&gt; 4)) ?&gt;
-&lt;/div&gt;
-</code></pre></div>
-
-<p>
-    This has prompted some questions about how this element might be represented
-    as a <code>Zend_Form_Element</code>, as well as how a decorator might be
-    written to encapsulate this logic. Fortunately, I'd already planned to
-    tackle those very subjects for this post!
-</p></div>
-
-    <p><a href="/blog/217-Creating-composite-elements.html">Continue reading...</a></p>
 </section>
 
 </div>

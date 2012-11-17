@@ -10,14 +10,14 @@
 	<![endif]-->
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-    <link href="/css/SkeletonCss/base.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/css/SkeletonCss/skeleton.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/css/SkeletonCss/layout.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/css/Application/site.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/images/Application/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" >
-<link href="/css/Application/blog.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/blog-atom.xml" rel="alternate" type="application/atom+xml" title="Blog Entries Atom Feed" >
-<link href="/blog-rss.xml" rel="alternate" type="application/rss+xml" title="Blog Entries RSS Feed" >
+    <link href="/css/SkeletonCss/base.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/SkeletonCss/skeleton.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/SkeletonCss/layout.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/Application/site.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/images/Application/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon">
+<link href="/css/Application/blog.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/blog-atom.xml" rel="alternate" type="application/atom+xml" title="Blog Entries Atom Feed">
+<link href="/blog-rss.xml" rel="alternate" type="application/rss+xml" title="Blog Entries RSS Feed">
     <script type="text/javascript">
     //<!--
     dojoConfig={
@@ -90,6 +90,27 @@
 <section class="eleven columns alpha blog">
     <h2>Blog Entries</h2>
 
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2005-01-14 12:43:17</p>
+    <p class="tags"><a href="/blog/tag/personal.html">personal</a><br />
+<a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/56-Cgiapp-1.5.3-released.html">Cgiapp 1.5.3 released</a></h4>
+
+    <div class="entry body"><p>
+    1.5.3 fixes an issue introduced by 1.5.2 that creates a performance hit
+    whenever the run mode is being determined by function name or CGI
+    parameter. More details <a href="/matthew/download?mode=view_download&id=11">on the
+    Cgiapp download page</a>.
+</p></div>
+
+    <p><a href="/blog/56-Cgiapp-1.5.3-released.html">Continue reading...</a></p>
+</section>
+
+</div>
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
     <p class="date">2005-01-14 00:12:03</p>
@@ -442,56 +463,6 @@ your template might need.
 </p></div>
 
     <p><a href="/blog/47-When-array_key_exists-just-doesnt-work.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2004-10-20 16:51:20</p>
-    <p class="tags"><a href="/blog/tag/programming.html">programming</a><br />
-<a href="/blog/tag/personal.html">personal</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/46-MySQL-Miscellanae.html">MySQL Miscellanae</a></h4>
-
-    <div class="entry body"><p>
-    Inspired by a <a href="http://slashdot.org/article.pl?sid=04/10/13/2016211">Slashdot book
-        review</a> of <a href="http://www.oreilly.com/catalog/hpmysql/index.html">High
-        Performance MySQL</a>.
-</p>
-<p>
-    I've often suspected that I'm not a SQL guru... little things like being
-    self taught and having virtually no resources for learning it. This has been
-    confirmed to a large degree at work, where our DBA has taught me many tricks
-    about databases: indexing, when to use DISTINCT, how and when to do JOINs,
-    and the magic of TEMPORARY TABLEs. I now feel fairly competent, though far
-    from being an expert -- I certainly don't know much about how to tune a
-    server for MySQL, or tuning MySQL for performance.
-</p>
-<p>
-    Last year around this time, we needed to replace our MySQL server, and I
-    got handed the job of getting the data from the old one onto the new. At the
-    time, I looked into replication, and from there discovered about binary
-    copies of a data store. I started using this as a way to backup data,
-    instead of periodic mysqldumps.
-</p>
-<p>
-    One thing I've often wondered since: would replication be a good way to do
-    backups? It seems like it would, but I haven't investigated.
-    One post on the aforementioned Slashdot article addressed this, with the
-    following summary:
-</p>
-<ol>
-     <li>Set up replication</li>
-     <li>Do a locked table backup on the slave</li>
-</ol>
-<p>
-    Concise and to the point. I only wish I had a spare server on which to
-    implement it!
-</p></div>
-
-    <p><a href="/blog/46-MySQL-Miscellanae.html">Continue reading...</a></p>
 </section>
 
 </div>

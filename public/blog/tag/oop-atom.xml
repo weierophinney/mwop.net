@@ -1,11 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title type="text">Tag: oop :: phly, boy, phly</title>
-  <updated>2012-06-30T15:00:00+0000</updated>
-  <generator uri="http://framework.zend.com" version="2.0.2">Zend_Feed_Writer</generator>
+  <updated>2012-11-17T13:53:00+0000</updated>
+  <generator uri="http://framework.zend.com" version="2.0.3">Zend_Feed_Writer</generator>
   <link rel="alternate" type="text/html" href="http://mwop.net/blog/tag/oop.html"/>
   <link rel="self" type="application/atom+xml" href="http://mwop.net/blog/tag/oop-atom.xml"/>
   <id>http://mwop.net/blog/tag/oop.html</id>
+  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <title type="html"><![CDATA[My ZendCon Beautiful Software Talk]]></title>
+    <published>2012-11-17T13:53:00+0000</published>
+    <updated>2012-11-17T13:53:00+0000</updated>
+    <link rel="alternate" type="text/html" href="http://mwop.net/blog/2012-11-17-zendcon-beautiful-software.html"/>
+    <id>http://mwop.net/blog/2012-11-17-zendcon-beautiful-software.html</id>
+    <author>
+      <name>Matthew Weier O'Phinney</name>
+      <email>me@mwop.net</email>
+      <uri>http://mwop.net</uri>
+    </author>
+    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
+      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>Once again, I spoke at <xhtml:a href="http://www.zendcon.com/">ZendCon</xhtml:a> this year; in talking with
+<xhtml:a href="http://twitter.com/chwenz">Christian Wenz</xhtml:a>, we're
+pretty sure that the two of us and <xhtml:a href="http://andigutmans.blogspot.com">Andi</xhtml:a> are the only ones who
+have spoken at all eight events.</xhtml:p>
+<xhtml:p>Unusually for me, I did not speak on a Zend Framework topic, and
+had only one regular slot (I also co-presented a Design Patterns
+tutorial with my team). That slot, however, became one of my
+favorite talks I've delivered: "Designing Beautiful Software". I've
+given this talk a couple times before, but I completely rewrote it
+for this conference in order to better convey my core message:
+beautiful software is maintainable and extensible; writing software
+is a craft.</xhtml:p>
+<xhtml:p>I discovered today that not only was it recorded, but it's been
+<xhtml:a href="http://youtu.be/mQsQ6QZ4dGg">posted on YouTube</xhtml:a>:</xhtml:p>
+<xhtml:iframe width="420" height="315" src="http://www.youtube.com/embed/mQsQ6QZ4dGg" frameborder="0" allowfullscreen=""/>
+<xhtml:p>I've also <xhtml:a href="/slides/2012-10-25-BeautfulSoftware/BeautifulSoftware.html">posted
+the slides</xhtml:a>.</xhtml:p>
+</xhtml:div>
+    </content>
+  </entry>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <title type="html"><![CDATA[On Visibility in OOP]]></title>
     <published>2012-06-29T02:20:00+0000</published>

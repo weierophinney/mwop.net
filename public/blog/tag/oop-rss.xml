@@ -3,10 +3,44 @@
   <channel>
     <title>Tag: oop :: phly, boy, phly</title>
     <description>Tag: oop :: phly, boy, phly</description>
-    <pubDate>Sat, 30 Jun 2012 15:00:00 +0000</pubDate>
-    <generator>Zend_Feed_Writer 2.0.2 (http://framework.zend.com)</generator>
+    <pubDate>Sat, 17 Nov 2012 13:53:00 +0000</pubDate>
+    <generator>Zend_Feed_Writer 2.0.3 (http://framework.zend.com)</generator>
     <link>http://mwop.net/blog/tag/oop.html</link>
     <atom:link rel="self" type="application/rss+xml" href="http://mwop.net/blog/tag/oop-rss.xml"/>
+    <item>
+      <title>My ZendCon Beautiful Software Talk</title>
+      <pubDate>Sat, 17 Nov 2012 13:53:00 +0000</pubDate>
+      <link>http://mwop.net/blog/2012-11-17-zendcon-beautiful-software.html</link>
+      <guid>http://mwop.net/blog/2012-11-17-zendcon-beautiful-software.html</guid>
+      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
+      <dc:creator>Matthew Weier O'Phinney</dc:creator>
+      <content:encoded><![CDATA[<p>
+    Once again, I spoke at <a href="http://www.zendcon.com/">ZendCon</a> 
+    this year; in talking with <a href="http://twitter.com/chwenz">Christian Wenz</a>,
+    we're pretty sure that the two of us and <a href="http://andigutmans.blogspot.com">Andi</a>
+    are the only ones who have spoken at all eight events.
+</p>
+
+<p>
+    Unusually for me, I did not speak on a Zend Framework topic, and had
+    only one regular slot (I also co-presented a Design Patterns tutorial
+    with my team). That slot, however, became one of my favorite talks I've
+    delivered: "Designing Beautiful Software". I've given this talk a couple
+    times before, but I completely rewrote it for this conference in order 
+    to better convey my core message: beautiful software is maintainable
+    and extensible; writing software is a craft.
+</p>
+
+<p>
+    I discovered today that not only was it recorded, but it's been <a href="http://youtu.be/mQsQ6QZ4dGg">posted
+    on YouTube</a>:
+</p>
+
+<iframe width="420" height="315" src="http://www.youtube.com/embed/mQsQ6QZ4dGg" frameborder="0" allowfullscreen></iframe><p>
+    I've also <a href="/slides/2012-10-25-BeautfulSoftware/BeautifulSoftware.html">posted the slides</a>.
+</p>]]></content:encoded>
+      <slash:comments>0</slash:comments>
+    </item>
     <item>
       <title>On Visibility in OOP</title>
       <pubDate>Sat, 30 Jun 2012 15:00:00 +0000</pubDate>

@@ -44,6 +44,7 @@ mwop=/home/matthew/git/sites/mwop CD=. filter="README TODO.md *.php *.xml *.txt 
     2012-09-20-Screencasting-on-linux.php
     2012-11-01-Openshift.php
     2012-11-05-Server-Caching.php
+    2012-11-17-ZendCon.php
    }
   }
  }
