@@ -1,6 +1,3 @@
-<?php
-$this->headScript()->appendScript('require(["Application/tweets"]);')
-?>
 <article class="one-third column alpha home">
 <h2>Welcome!</h2>
 
@@ -39,8 +36,8 @@ $this->headScript()->appendScript('require(["Application/tweets"]);')
 <aside class="one-third column omega home">
     <?php echo $this->render('github-links'); ?>
 
-    <h3>Recent Tweets</h3>
-    <ul id="tweets"></ul>
-    <p><em><a href="http://twitter.com/weierophinney">View more tweets</a></em></p>
+    <a class="twitter-timeline" href="https://twitter.com/weierophinney" data-widget-id="269876420560420864">Tweets by @weierophinney</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
 </aside>
 
