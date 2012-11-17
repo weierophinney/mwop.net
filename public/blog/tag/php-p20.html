@@ -10,14 +10,14 @@
 	<![endif]-->
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-    <link href="/css/SkeletonCss/base.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/css/SkeletonCss/skeleton.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/css/SkeletonCss/layout.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/css/Application/site.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/images/Application/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" >
-<link href="/css/Application/blog.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/blog/tag/php-atom.xml" rel="alternate" type="application/atom+xml" title="Tag: php Atom Feed" >
-<link href="/blog/tag/php-rss.xml" rel="alternate" type="application/rss+xml" title="Tag: php RSS Feed" >
+    <link href="/css/SkeletonCss/base.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/SkeletonCss/skeleton.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/SkeletonCss/layout.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/Application/site.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/images/Application/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon">
+<link href="/css/Application/blog.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/blog/tag/php-atom.xml" rel="alternate" type="application/atom+xml" title="Tag: php Atom Feed">
+<link href="/blog/tag/php-rss.xml" rel="alternate" type="application/rss+xml" title="Tag: php RSS Feed">
     <script type="text/javascript">
     //<!--
     dojoConfig={
@@ -90,6 +90,33 @@
 <section class="eleven columns alpha blog">
     <h2>Tag: php</h2>
 
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2005-03-25 22:42:40</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/60-s9y-%2B-s4y-phly.html">s9y + s4y = phly</a></h4>
+
+    <div class="entry body"><p>
+    So, I did a little experimentation, and I was able to seamlessly integrate
+    Serendipity into my existing website via Smarty, some CSS, and changing just
+    a couple of links!
+</p>
+<p>
+    The result is the website you're currently reading!
+</p>
+<p>
+    This means I can now offer trackbacks, comments, RSS feeds, and all the
+    other stuff a modern blog should offer... and with minimum fuss and with a
+    lot of standards and security. I wish everything I did was this easy.
+</p></div>
+
+    <p><a href="/blog/60-s9y-%2B-s4y-phly.html">Continue reading...</a></p>
+</section>
+
+</div>
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
     <p class="date">2005-03-24 21:28:06</p>
@@ -379,51 +406,6 @@ your template might need.
 </p></div>
 
     <p><a href="/blog/48-Cgiapp-1.5-released.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2004-10-22 23:02:45</p>
-    <p class="tags"><a href="/blog/tag/personal.html">personal</a><br />
-<a href="/blog/tag/php.html">php</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/47-When-array_key_exists-just-doesnt-work.html">When array_key_exists just doesn&#039;t work</a></h4>
-
-    <div class="entry body"><p>
-    I've been playing with parameter testing in my various Cgiapp classes, and
-    one test that seemed pretty slick was the following:
-</p>
-<pre>
-    if (!array_key_exists('some_string', $_REQUEST)) {
-        // some error
-    }
-</pre>
-<p>
-    Seems pretty straight-forward: $_REQUEST is an associative array, and I want
-    to test for the existence of a key in it. Sure, I could use isset(), but it
-    seemed...  ugly, and verbose, and a waste of keystrokes, particularly when
-    I'm using the param() method:
-</p>
-<pre>
-    if (!isset($_REQUEST[$this->param('some_param')])) {
-        // some error
-    }
-</pre>
-<p>
-    However, I ran into a pitfall: when it comes to array_key_exists(),
-    $_REQUEST isn't exactly an array. I think what's going on is that $_REQUEST
-    is actually a superset of several other arrays -- $_POST, $_GET, and
-    $_COOKIE -- and isset() has some logic to descend amongst the various keys,
-    while array_key_exists() can only work on a single level.
-</p>
-<p>
-    Whatever the explanation, I ended up reverting a bunch of code. :-(
-</p></div>
-
-    <p><a href="/blog/47-When-array_key_exists-just-doesnt-work.html">Continue reading...</a></p>
 </section>
 
 </div>

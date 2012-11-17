@@ -10,14 +10,14 @@
 	<![endif]-->
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-    <link href="/css/SkeletonCss/base.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/css/SkeletonCss/skeleton.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/css/SkeletonCss/layout.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/css/Application/site.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/images/Application/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" >
-<link href="/css/Application/blog.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/blog/author/matthew-atom.xml" rel="alternate" type="application/atom+xml" title="Blog Entries by Matthew Weier O&#039;Phinney Atom Feed" >
-<link href="/blog/author/matthew-rss.xml" rel="alternate" type="application/rss+xml" title="Blog Entries by Matthew Weier O&#039;Phinney RSS Feed" >
+    <link href="/css/SkeletonCss/base.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/SkeletonCss/skeleton.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/SkeletonCss/layout.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/Application/site.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/images/Application/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon">
+<link href="/css/Application/blog.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/blog/author/matthew-atom.xml" rel="alternate" type="application/atom+xml" title="Blog Entries by Matthew Weier O&#039;Phinney Atom Feed">
+<link href="/blog/author/matthew-rss.xml" rel="alternate" type="application/rss+xml" title="Blog Entries by Matthew Weier O&#039;Phinney RSS Feed">
     <script type="text/javascript">
     //<!--
     dojoConfig={
@@ -90,6 +90,48 @@
 <section class="eleven columns alpha blog">
     <h2>Blog Entries by Matthew Weier O'Phinney</h2>
 
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2010-08-09 10:45:00</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
+<a href="/blog/tag/fastcgi.html">fastcgi</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/243-Running-mod_php-and-FastCGI-side-by-side.html">Running mod_php and FastCGI side-by-side</a></h4>
+
+    <div class="entry body"><p>
+    Because we're in full throes of <a href="http://framework.zend.com">Zend
+        Framework</a> 2.0 development, I find myself with a variety of PHP
+    binaries floating around my system from both the PHP 5.2 and 5.3 release
+    series. We're at a point now where I'm wanting to test migrating
+    applications from ZF 1.X to 2.0 to se see what works and what doesn't. But
+    that means I need more than one PHP binary enabled on my server...
+</p>
+
+<p>
+    I use <a href="http://www.zend.com/products/server/">Zend Server</a> on my
+    development box; it's easy to install, and uses my native Ubuntu update
+    manager to get updates. On Ubuntu, it installs the Debian Apache2 packages,
+    so I get the added bonus of familiarity with the configuration structure.
+</p>
+
+<p>
+    I installed Zend Server some time ago, so I'm still on a PHP 5.2 mod_php
+    binary. I have several PHP 5.3 binaries compiled and installed locally for
+    running unit tests and sample scripts already -- so the question was how to
+    keep my 5.2 mod_php running while simultaneously allowing the ability to run
+    selected vhosts in 5.3?
+</p>
+
+<p>
+    The answer can be summed up in one acronym: FastCGI.
+</p></div>
+
+    <p><a href="/blog/243-Running-mod_php-and-FastCGI-side-by-side.html">Continue reading...</a></p>
+</section>
+
+</div>
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
     <p class="date">2010-07-01 09:05:00</p>
@@ -342,45 +384,6 @@
 </p></div>
 
     <p><a href="/blog/234-Module-Bootstraps-in-Zend-Framework-Dos-and-Donts.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2010-03-04 15:28:07</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
-<a href="/blog/tag/rest.html">rest</a><br />
-<a href="/blog/tag/zend+framework.html">zend framework</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/233-Responding-to-Different-Content-Types-in-RESTful-ZF-Apps.html">Responding to Different Content Types in RESTful ZF Apps</a></h4>
-
-    <div class="entry body"><p>
-    In <a
-        href="/matthew/archives/227-Exposing-Service-APIs-via-Zend-Framework.html">previous</a>
-    <a
-        href="/matthew/archives/228-Building-RESTful-Services-with-Zend-Framework.html">articles</a>,
-    I've explored building service endpoints and RESTful services with Zend
-    Framework. With RPC-style services, you get to cheat: the protocol dictates
-    the content type (XML-RPC uses XML, JSON-RPC uses JSON, SOAP uses XML,
-    etc.). With REST, however, you have to make choices: what serialization
-    format will you support? 
-</p>
-
-<p> 
-    Why not support multiple formats?
-</p>
-
-<p>
-    There's no reason you can't re-use your RESTful web service to support
-    multiple formats. Zend Framework and PHP have plenty of tools to assist you
-    in responding to different format requests, so don't limit yourself. With a
-    small amount of work, you can make your controllers format agnostic, and
-    ensure that you respond appropriately to different requests.
-</p></div>
-
-    <p><a href="/blog/233-Responding-to-Different-Content-Types-in-RESTful-ZF-Apps.html">Continue reading...</a></p>
 </section>
 
 </div>

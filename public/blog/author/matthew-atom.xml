@@ -1,11 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title type="text">Author: Matthew Weier O'Phinney :: phly, boy, phly</title>
-  <updated>2012-11-05T21:25:00+0000</updated>
-  <generator uri="http://framework.zend.com" version="2.0.2">Zend_Feed_Writer</generator>
+  <updated>2012-11-17T13:53:00+0000</updated>
+  <generator uri="http://framework.zend.com" version="2.0.3">Zend_Feed_Writer</generator>
   <link rel="alternate" type="text/html" href="http://mwop.net/blog/author/matthew.html"/>
   <link rel="self" type="application/atom+xml" href="http://mwop.net/blog/author/matthew-atom.xml"/>
   <id>http://mwop.net/blog/author/matthew.html</id>
+  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <title type="html"><![CDATA[My ZendCon Beautiful Software Talk]]></title>
+    <published>2012-11-17T13:53:00+0000</published>
+    <updated>2012-11-17T13:53:00+0000</updated>
+    <link rel="alternate" type="text/html" href="http://mwop.net/blog/2012-11-17-zendcon-beautiful-software.html"/>
+    <id>http://mwop.net/blog/2012-11-17-zendcon-beautiful-software.html</id>
+    <author>
+      <name>Matthew Weier O'Phinney</name>
+      <email>me@mwop.net</email>
+      <uri>http://mwop.net</uri>
+    </author>
+    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
+      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>Once again, I spoke at <xhtml:a href="http://www.zendcon.com/">ZendCon</xhtml:a> this year; in talking with
+<xhtml:a href="http://twitter.com/chwenz">Christian Wenz</xhtml:a>, we're
+pretty sure that the two of us and <xhtml:a href="http://andigutmans.blogspot.com">Andi</xhtml:a> are the only ones who
+have spoken at all eight events.</xhtml:p>
+<xhtml:p>Unusually for me, I did not speak on a Zend Framework topic, and
+had only one regular slot (I also co-presented a Design Patterns
+tutorial with my team). That slot, however, became one of my
+favorite talks I've delivered: "Designing Beautiful Software". I've
+given this talk a couple times before, but I completely rewrote it
+for this conference in order to better convey my core message:
+beautiful software is maintainable and extensible; writing software
+is a craft.</xhtml:p>
+<xhtml:p>I discovered today that not only was it recorded, but it's been
+<xhtml:a href="http://youtu.be/mQsQ6QZ4dGg">posted on YouTube</xhtml:a>:</xhtml:p>
+<xhtml:iframe width="420" height="315" src="http://www.youtube.com/embed/mQsQ6QZ4dGg" frameborder="0" allowfullscreen=""/>
+<xhtml:p>I've also <xhtml:a href="/slides/2012-10-25-BeautfulSoftware/BeautifulSoftware.html">posted
+the slides</xhtml:a>.</xhtml:p>
+</xhtml:div>
+    </content>
+  </entry>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <title type="html"><![CDATA[Zend Server, ZF2, and Page Caching]]></title>
     <published>2012-11-05T21:25:00+0000</published>
@@ -1988,113 +2020,6 @@ revision was current prior to the deployment, allowing roll-back to
 the previous state. Alternately, the deployment script should
 create a new clone of the site and swap symlinks to allow quick
 roll-back when required.</xhtml:p>
-</xhtml:div>
-    </content>
-  </entry>
-  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
-    <title type="html"><![CDATA[Why Modules?]]></title>
-    <published>2012-04-30T21:00:00+0000</published>
-    <updated>2012-04-30T21:00:00+0000</updated>
-    <link rel="alternate" type="text/html" href="http://mwop.net/blog/2012-04-30-why-modules.html"/>
-    <id>http://mwop.net/blog/2012-04-30-why-modules.html</id>
-    <author>
-      <name>Matthew Weier O'Phinney</name>
-      <email>me@mwop.net</email>
-      <uri>http://mwop.net</uri>
-    </author>
-    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
-      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>I've blogged <xhtml:a href="/blog/267-Getting-started-writing-ZF2-modules.html">about getting
-started with ZF2 modules</xhtml:a>, as well as <xhtml:a href="/blog/zf2-modules-you-can-use-today.html">about ZF2 modules you
-can already use</xhtml:a>. But after fielding some questions recently, I
-realized I should talk about <xhtml:em>why</xhtml:em> modules are important for
-the ZF2 ecosystem.</xhtml:p>
-<xhtml:h2>History</xhtml:h2>
-<xhtml:p>In the autumn of 2006, <xhtml:a href="http://andigutmans.blogspot.com/">Andi</xhtml:a> asked me to spearhead a
-refactor of the Zend Framework MVC, prior to a stable release. The
-idea was to address the growing number of issues and feature
-requests, get it well-tested, and document it thoroughly before we
-were ready for a 1.0.0 stable release.</xhtml:p>
-<xhtml:p>Late in that refactoring, a few folks approached me saying they
-wanted support for "modules". The idea would be to have
-self-contained directories containing discrete MVC functionality --
-controllers, views, related models, etc. Additionally, they wanted
-routing to take into account the module, so that we could have
-controllers with the same "name", but resolving to separate,
-discrete classes.</xhtml:p>
-<xhtml:p>The "solution" I came up with basically worked, but was quite
-limited. You could drop modules into a directory, which the front
-controller would scan in order to be able to resolve URLs of the
-form "/:module/:controller/:action/*". (You could also explicitly
-define a module in the route configuration if desired).</xhtml:p>
-<xhtml:p>This mostly worked, until we introduced
-<xhtml:code>Zend_Application</xhtml:code>, at which point it fell apart. Why?
-Because we couldn't quite get bootstrapping to work. Bootstrapping
-the application was easy, but adding modules and their bootstraps,
-and sharing dependencies between all of them, proved to be quite
-difficult, and we never truly solved it.</xhtml:p>
-<xhtml:p>Add to this the fact that the only way to get dependencies into
-controllers was via <xhtml:code>Zend_Registry</xhtml:code> or the front
-controller singleton, and the end result were modules that could
-never truly be shared or simply dropped into an application.</xhtml:p>
-<xhtml:h2>Modules in ZF2</xhtml:h2>
-<xhtml:p>One of the very first requirements for ZF2, therefor, was to
-solve the module problem. The goals were fairly simple:</xhtml:p>
-<xhtml:blockquote>Modules should be re-usable. Developers should be able
-to drop in third-party modules easily, and immediately utilize them
-with zero or small amounts of configuration. Developers should
-never have to directly alter module code, ever, to get them to work
-in their applications; customization should be easily achieved via
-configuration or substitution.</xhtml:blockquote>
-<xhtml:p>Why?</xhtml:p>
-<xhtml:p>The goal of any good application framework or content system
-should be to make development of websites as easy as possible. Good
-systems make it possible to use as little or as much of the
-framework as needed, and to make extension of the framework
-trivial. This latter point is perhaps the most important aspect:
-the quality of any good application ecosystem can typically be
-judged by the amount and quality of third-party plugins developed
-for it.</xhtml:p>
-<xhtml:p>If your framework is making you write boilerplate code to handle
-authentication for every site you write, or making you write code
-for common application features such as blogs, comment systems,
-contact forms, etc., then something is wrong. These sorts of tasks
-should be done at most a handful of times, and <xhtml:em>shared</xhtml:em> with
-the community.</xhtml:p>
-<xhtml:p>The end-goal is to be able to pull in a handful or more of
-plugins that do these tasks for you, configure them to suit your
-needs, and then focus on building out the functionality that is
-truly unique to your website.</xhtml:p>
-<xhtml:h2>Building Blocks</xhtml:h2>
-<xhtml:p>I'll give a concrete example. In parallel with ZF2 development,
-I've been rebuilding this very site. I've needed the following
-pieces:</xhtml:p>
-<xhtml:ul>
-<xhtml:li>A handful of static pages (home page, résumé, etc.)</xhtml:li>
-<xhtml:li>A contact form</xhtml:li>
-<xhtml:li>A blog</xhtml:li>
-<xhtml:li>Authentication in order to "password protect" a few pages</xhtml:li>
-<xhtml:li>A few view helpers (github status, disqus display, etc)</xhtml:li>
-</xhtml:ul>
-<xhtml:p>How much of this functionality is unique to my site, other than
-the content? Pretty much none of it. Ideally, I should be able to
-find some modules, drop them in, and create some custom view
-scripts.</xhtml:p>
-<xhtml:p>Which is what I did. That said, I developed several of the
-modules, but in some cases, such as authentication, I was able to
-grab modules from elsewhere. The beauty, though, is that in the
-future, I or others can re-use what I've created, and quite
-easily.</xhtml:p>
-<xhtml:p>This kind of building-block development makes <xhtml:em>your</xhtml:em> job
-easier as a developer -- and allows you to focus on the bits and
-pieces that make your site unique. As such, I truly feel that
-<xhtml:em><xhtml:strong>modules are the most important new feature of
-ZF2</xhtml:strong></xhtml:em>.</xhtml:p>
-<xhtml:h2>Fin</xhtml:h2>
-<xhtml:p>If you're developing on top of ZF2 today, I have one piece of
-advice: create and consume modules. Share your modules. Help make
-ZF2 a productive, fun, collaborative ecosystem that allows
-developers to get things done and create fantastic new
-applications.</xhtml:p>
 </xhtml:div>
     </content>
   </entry>

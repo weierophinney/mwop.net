@@ -10,14 +10,14 @@
 	<![endif]-->
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-    <link href="/css/SkeletonCss/base.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/css/SkeletonCss/skeleton.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/css/SkeletonCss/layout.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/css/Application/site.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/images/Application/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" >
-<link href="/css/Application/blog.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/blog/tag/php-atom.xml" rel="alternate" type="application/atom+xml" title="Tag: php Atom Feed" >
-<link href="/blog/tag/php-rss.xml" rel="alternate" type="application/rss+xml" title="Tag: php RSS Feed" >
+    <link href="/css/SkeletonCss/base.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/SkeletonCss/skeleton.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/SkeletonCss/layout.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/Application/site.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/images/Application/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon">
+<link href="/css/Application/blog.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/blog/tag/php-atom.xml" rel="alternate" type="application/atom+xml" title="Tag: php Atom Feed">
+<link href="/blog/tag/php-rss.xml" rel="alternate" type="application/rss+xml" title="Tag: php RSS Feed">
     <script type="text/javascript">
     //<!--
     dojoConfig={
@@ -90,6 +90,73 @@
 <section class="eleven columns alpha blog">
     <h2>Tag: php</h2>
 
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2004-03-19 09:49:57</p>
+    <p class="tags"><a href="/blog/tag/programming.html">programming</a><br />
+<a href="/blog/tag/personal.html">personal</a><br />
+<a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/36-PHP-Class-Tips.html">PHP Class Tips</a></h4>
+
+    <div class="entry body"><p>
+    We're starting to use OO in our PHP at work. I discovered when I started
+    using it why I'd been having problems wrapping my head around some of the
+    applications I've been programming lately: I've become accustomed in Perl to
+    using an OO framework. Suddenly, programming in PHP was much easier.
+</p>
+<p>
+    There's a few things that are different, however. It appears that you cannot
+    pass objects in object attributes, and then reference them like thus:
+</p>
+<pre>    $object->db>query($sql)
+</pre>
+<p>
+    PHP doesn't like that kind of syntax (at least not in versions 4.x).
+    Instead, you have to pass a reference to the object in the attribute, then
+    set a temporary variable to that reference whenever you wish to use it:
+</p>
+<pre>    $object->db =& $db;
+    ...
+    $db = $object->db;
+    $res = $db->query($sql);
+</pre>
+<p>
+    What if you want to inherit from another class and extend one of the
+    methods? In other words, you want to use the method from the parent class,
+    but you want to do some additional items with it? Simple: use
+    <kbd>parent</kbd>:
+</p>
+<pre>    function method1()
+    {
+        /* do some pre-processing */
+
+        parent::method1(); // Do the parent's version of the method
+
+        /* do some more stuff here */
+    }
+</pre>
+<h4>Update:</h4>
+<p>
+    Actually, you *can* reference objects when they are attributes of another
+    object; you just have to define the references in the correct order:
+</p>
+<pre>    $db =& DB::connect('dsn');
+    $this->db =& $db;
+    ...
+    $res = $this->db->query($sql);
+</pre>
+<p>
+    I've tested the above syntax with both PEAR's DB and with Smarty, and it
+    works without issue.
+</p></div>
+
+    <p><a href="/blog/36-PHP-Class-Tips.html">Continue reading...</a></p>
+</section>
+
+</div>
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
     <p class="date">2004-01-23 08:52:10</p>

@@ -10,14 +10,14 @@
 	<![endif]-->
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-    <link href="/css/SkeletonCss/base.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/css/SkeletonCss/skeleton.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/css/SkeletonCss/layout.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/css/Application/site.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/images/Application/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" >
-<link href="/css/Application/blog.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/blog/tag/php-atom.xml" rel="alternate" type="application/atom+xml" title="Tag: php Atom Feed" >
-<link href="/blog/tag/php-rss.xml" rel="alternate" type="application/rss+xml" title="Tag: php RSS Feed" >
+    <link href="/css/SkeletonCss/base.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/SkeletonCss/skeleton.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/SkeletonCss/layout.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/Application/site.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/images/Application/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon">
+<link href="/css/Application/blog.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/blog/tag/php-atom.xml" rel="alternate" type="application/atom+xml" title="Tag: php Atom Feed">
+<link href="/blog/tag/php-rss.xml" rel="alternate" type="application/rss+xml" title="Tag: php RSS Feed">
     <script type="text/javascript">
     //<!--
     dojoConfig={
@@ -90,6 +90,35 @@
 <section class="eleven columns alpha blog">
     <h2>Tag: php</h2>
 
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2006-10-09 10:58:00</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/125-PHP-5s-Reflection-API.html">PHP 5&#039;s Reflection API</a></h4>
+
+    <div class="entry body"><p>
+    As <a href="http://pixelated-dreams.com/archives/251-More-Web-Services.html">Davey Shafik noted recently</a>,
+    he and I have been working together on some web services for the 
+    <a href="http://framework.zend.com/">Zend Framework</a>. In doing so, I've
+    become very familiar with PHP 5's Reflection API, and am coming to love it.
+</p>
+<p>
+    When I first read about the Reflection API in a pre-PHP 5 changelog, my
+    initial reaction was, "who cares?" I simply failed to see how it was a
+    useful addition to the language. Having done some projects recently that
+    needed to know something about the classes they are using, I now understand
+    when and how it can be used. It shines when you need to work with classes
+    that may not be defined when you write your code -- any code that dispatches
+    to other classes, basically.
+</p></div>
+
+    <p><a href="/blog/125-PHP-5s-Reflection-API.html">Continue reading...</a></p>
+</section>
+
+</div>
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
     <p class="date">2006-09-19 17:45:00</p>
@@ -429,52 +458,6 @@ Last week, I had someone bring to my attention that the <a href="http://php.net/
 </p></div>
 
     <p><a href="/blog/114-Always-check-the-version-before-release.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2006-05-22 17:08:00</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/113-Phly_Struct-no%2C-Phly_Hash....html">Phly_Struct? no, Phly_Hash...</a></h4>
-
-    <div class="entry body"><p>
-    After some discussion with <a href="http://paul-m-jones.com/blog/">Paul</a>
-    and <a href="http://mikenaberezny.com/">Mike</a>, I was convinced that
-    'Struct' was a bad name for Phly_Struct; structs are rarely if ever
-    iterable, and one key feature of Phly_Struct is its iterable nature.
-</p>
-<p>
-    The question is: what to name it? Associative arrays go by a variety of
-    names in different languages. In Perl, they're 'hashes'; Ruby and
-    Javascript, 'collections'; Python, 'dictionaries'. I ruled out
-    'Phly_Dictionary' immediately, as (a) I don't want it to be confused with
-    online dictionaries, and (b), it's too long. The term 'Collection' also
-    feels too long (although I write things like
-    'Cgiapp2_ErrorException_Observer_Interface', so I don't know why length
-    should be such an issue), as well as unfamiliar to many PHP developers. Hash
-    can imply cryptographic algorithms, but, overall, is short and used often
-    enough in PHP circles that it makes sense to me.
-</p>
-<p>
-    So, I've renamed Phly_Struct to <a href="http://weierophinney.net/phly/index.php?package=Phly_Hash">Phly_Hash</a>,
-    and updated Phly_Config to use the new package as its dependency. In
-    addition, I've had it implement Countable, so you can do things like:
-</p>
-<div class="example"><pre><code lang="php">
-$idxCount = count($struct);
-</code></pre></div>
-<p>
-    Go to the <a href="http://weierophinney.net/phly/">channel page</a> for
-    instructions on adding Phly to your PEAR channels list, and grab the new
-    package with <tt>pear install -a phly/Phly_Hash</tt>, or <tt>pear upgrade -a
-    phly/Phly_Config</tt>.
-</p></div>
-
-    <p><a href="/blog/113-Phly_Struct-no%2C-Phly_Hash....html">Continue reading...</a></p>
 </section>
 
 </div>

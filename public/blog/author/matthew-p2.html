@@ -10,14 +10,14 @@
 	<![endif]-->
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-    <link href="/css/SkeletonCss/base.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/css/SkeletonCss/skeleton.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/css/SkeletonCss/layout.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/css/Application/site.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/images/Application/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" >
-<link href="/css/Application/blog.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/blog/author/matthew-atom.xml" rel="alternate" type="application/atom+xml" title="Blog Entries by Matthew Weier O&#039;Phinney Atom Feed" >
-<link href="/blog/author/matthew-rss.xml" rel="alternate" type="application/rss+xml" title="Blog Entries by Matthew Weier O&#039;Phinney RSS Feed" >
+    <link href="/css/SkeletonCss/base.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/SkeletonCss/skeleton.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/SkeletonCss/layout.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/Application/site.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/images/Application/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon">
+<link href="/css/Application/blog.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/blog/author/matthew-atom.xml" rel="alternate" type="application/atom+xml" title="Blog Entries by Matthew Weier O&#039;Phinney Atom Feed">
+<link href="/blog/author/matthew-rss.xml" rel="alternate" type="application/rss+xml" title="Blog Entries by Matthew Weier O&#039;Phinney RSS Feed">
     <script type="text/javascript">
     //<!--
     dojoConfig={
@@ -90,6 +90,29 @@
 <section class="eleven columns alpha blog">
     <h2>Blog Entries by Matthew Weier O'Phinney</h2>
 
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2012-04-30 16:00:00</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
+<a href="/blog/tag/zend+framework.html">zend framework</a><br />
+<a href="/blog/tag/zf2.html">zf2</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/2012-04-30-why-modules.html">Why Modules?</a></h4>
+
+    <div class="entry body"><p>
+    I've blogged <a href="/blog/267-Getting-started-writing-ZF2-modules.html">about 
+    getting started with ZF2 modules</a>, as well as <a href="/blog/zf2-modules-you-can-use-today.html">about 
+    ZF2 modules you can already use</a>. But after fielding some questions recently, 
+    I realized I should talk about <em>why</em> modules are important for the 
+    ZF2 ecosystem.
+</p></div>
+
+    <p><a href="/blog/2012-04-30-why-modules.html">Continue reading...</a></p>
+</section>
+
+</div>
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
     <p class="date">2012-04-03 08:45:00</p>
@@ -484,37 +507,6 @@ introduce you to DocBlox so that you can evaluate it yourself.
 </p></div>
 
     <p><a href="/blog/265-Using-DocBlox.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2011-07-19 17:49:00</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/264-Converting-DocBook4-to-DocBook5.html">Converting DocBook4 to DocBook5</a></h4>
-
-    <div class="entry body"><p>
-Within the <a href="https://github.com/zendframework/zf2">Zend Framework 2 repository</a>, I
-recently performed a conversion from <a href="http://docbook.org/">DocBook</a> 4 to 5. The
-latter is a more modern version of the toolchain, and offers a somewhat simpler
-syntax and workflow. For example, you no longer need to track how many levels
-deep you are in your chapter sections -- you simply use a <code>&lt;section&gt;</code> tag. One
-of the nicer changes is that you do not need to specify a doctype any more; you
-simply declare XML namespaces on your root elements and continue merrily on your
-way. This actually allows us to remove some actions in our build process, and
-makes validation much simpler.
-</p>
-
-<p>
-Interestingly, for DocBook5 being available in beta since 2005 and an official
-standard since 2009, there is very little material on migrating from DocBook 4
-to 5. 
-</p></div>
-
-    <p><a href="/blog/264-Converting-DocBook4-to-DocBook5.html">Continue reading...</a></p>
 </section>
 
 </div>

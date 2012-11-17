@@ -10,14 +10,14 @@
 	<![endif]-->
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-    <link href="/css/SkeletonCss/base.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/css/SkeletonCss/skeleton.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/css/SkeletonCss/layout.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/css/Application/site.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/images/Application/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" >
-<link href="/css/Application/blog.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/blog/author/matthew-atom.xml" rel="alternate" type="application/atom+xml" title="Blog Entries by Matthew Weier O&#039;Phinney Atom Feed" >
-<link href="/blog/author/matthew-rss.xml" rel="alternate" type="application/rss+xml" title="Blog Entries by Matthew Weier O&#039;Phinney RSS Feed" >
+    <link href="/css/SkeletonCss/base.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/SkeletonCss/skeleton.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/SkeletonCss/layout.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/Application/site.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/images/Application/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon">
+<link href="/css/Application/blog.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/blog/author/matthew-atom.xml" rel="alternate" type="application/atom+xml" title="Blog Entries by Matthew Weier O&#039;Phinney Atom Feed">
+<link href="/blog/author/matthew-rss.xml" rel="alternate" type="application/rss+xml" title="Blog Entries by Matthew Weier O&#039;Phinney RSS Feed">
     <script type="text/javascript">
     //<!--
     dojoConfig={
@@ -90,6 +90,27 @@
 <section class="eleven columns alpha blog">
     <h2>Blog Entries by Matthew Weier O'Phinney</h2>
 
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2009-04-03 08:30:00</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
+<a href="/blog/tag/zend+framework.html">zend framework</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/212-The-simplest-Zend_Form-decorator.html">The simplest Zend_Form decorator</a></h4>
+
+    <div class="entry body"><p>
+    I've been seeing ranting and general confusion about 
+    <a href="http://framework.zend.com/manual/en/zend.form.html">Zend_Form</a> 
+    decorators (as well as the occasional praises), and thought I'd do a
+    mini-series of blog posts showing how they work.
+</p></div>
+
+    <p><a href="/blog/212-The-simplest-Zend_Form-decorator.html">Continue reading...</a></p>
+</section>
+
+</div>
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
     <p class="date">2009-03-12 08:30:00</p>
@@ -409,38 +430,6 @@
 </p></div>
 
     <p><a href="/blog/203-2008-The-year-in-review.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2008-12-30 07:35:01</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
-<a href="/blog/tag/mvc.html">mvc</a><br />
-<a href="/blog/tag/zend+framework.html">zend framework</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/202-Model-Infrastructure.html">Model Infrastructure</a></h4>
-
-    <div class="entry body"><p>
-    In the last two entries in this series on models, I covered 
-    <a href="http://weierophinney.net/matthew/archives/200-Using-Zend_Form-in-Your-Models.html">using forms as input filters</a> 
-    and <a href="http://weierophinney.net/matthew/archives/201-Applying-ACLs-to-Models.html">integrating ACLs into models</a>. 
-    In this entry, I tackle some potential infrastructure for your models.
-</p>
-
-<p>
-    The Model is a complex subject. However, it is often boiled down to either a
-    single model class or a full object relational mapping (ORM). I personally
-    have never been much of a fan of ORMs as they tie models to the underlying
-    database structure; I don't always use a database, nor do I want
-    to rely on an ORM solution too heavily on the off-chance that I later need
-    to refactor to use services or another type of persistence store. On the
-    other hand, the model as a single class is typically too simplistic.
-</p></div>
-
-    <p><a href="/blog/202-Model-Infrastructure.html">Continue reading...</a></p>
 </section>
 
 </div>

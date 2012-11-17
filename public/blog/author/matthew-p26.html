@@ -10,14 +10,14 @@
 	<![endif]-->
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-    <link href="/css/SkeletonCss/base.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/css/SkeletonCss/skeleton.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/css/SkeletonCss/layout.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/css/Application/site.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/images/Application/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" >
-<link href="/css/Application/blog.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/blog/author/matthew-atom.xml" rel="alternate" type="application/atom+xml" title="Blog Entries by Matthew Weier O&#039;Phinney Atom Feed" >
-<link href="/blog/author/matthew-rss.xml" rel="alternate" type="application/rss+xml" title="Blog Entries by Matthew Weier O&#039;Phinney RSS Feed" >
+    <link href="/css/SkeletonCss/base.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/SkeletonCss/skeleton.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/SkeletonCss/layout.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/Application/site.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/images/Application/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon">
+<link href="/css/Application/blog.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/blog/author/matthew-atom.xml" rel="alternate" type="application/atom+xml" title="Blog Entries by Matthew Weier O&#039;Phinney Atom Feed">
+<link href="/blog/author/matthew-rss.xml" rel="alternate" type="application/rss+xml" title="Blog Entries by Matthew Weier O&#039;Phinney RSS Feed">
     <script type="text/javascript">
     //<!--
     dojoConfig={
@@ -90,6 +90,47 @@
 <section class="eleven columns alpha blog">
     <h2>Blog Entries by Matthew Weier O'Phinney</h2>
 
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2004-02-05 20:18:20</p>
+    <p class="tags"><a href="/blog/tag/programming.html">programming</a><br />
+<a href="/blog/tag/perl.html">perl</a><br />
+<a href="/blog/tag/personal.html">personal</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/27-HTMLTemplate-notes.html">HTML::Template notes</a></h4>
+
+    <div class="entry body"><p>
+    I've used HTML::Template a little, mainly in the Secret Santa project I did
+    this past Christmas for my wife's family. One thing I disliked was using the
+    normal syntax: &lt;TMPL_VAR NAME=IMAGE_SRC&gt; -- it made looking at it
+    difficult (it wasn't always easy to tell what was an HTML tag, what was
+    plain text, and what was HTML::Template stuff), and it made it impossible to
+    validate my pages before they had data.
+</p>
+<p>
+    Fortunately, there's an alternate syntax: wrap the syntax in HTML comments:
+    &lt;!-- TMPL_VAR NAME=IMAGE_SRC --&gt; does the job. It uses more
+    characters, true, but it gets highlighted different than HTML tags, as well,
+    and that's worth a lot.
+</p>
+<p>
+    And why do I have to say "NAME=" every time? That gets annoying. As it turns
+    out, I can simply say: &lt;!-- TMPL_VAR IMAGE_SRC --&gt;, and that, too will
+    get the job done.
+</p>
+<p>
+    Finally, what about those times when I want to define a template, but have
+    it broken into parts, too? Basically, I want HTML::Template to behave a
+    little like SSI. No worries; there's a TMPL_INCLUDE tag that can do this:
+    &lt;!-- TMPL_INCLUDE NAME="filename.tmpl" --&gt;. 
+</p></div>
+
+    <p><a href="/blog/27-HTMLTemplate-notes.html">Continue reading...</a></p>
+</section>
+
+</div>
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
     <p class="date">2004-02-05 20:07:43</p>
@@ -508,77 +549,6 @@ Analogous to the UN*X command which.
 </p></div>
 
     <p><a href="/blog/18-More-CGIApp-research...-Try-the-manual%21.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2004-01-23 21:59:02</p>
-    <p class="tags"><a href="/blog/tag/programming.html">programming</a><br />
-<a href="/blog/tag/perl.html">perl</a><br />
-<a href="/blog/tag/personal.html">personal</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/17-CGIApplication-Research.html">CGI::Application Research</a></h4>
-
-    <div class="entry body"><p>
-    I've been wanting to redevelop my home website for some time using
-    CGI::Application. The last time I rewrote it from PHP to perl, I developed
-    something that was basically a subset of the things CGI::App does, and those
-    things weren't done nearly as well.
-</p>
-<p>
-    The problem I've been running into has to do with having sidebar content,
-    and wanting to run basically a variety of applications. I want to have a
-    WikiWikiWeb, a photo gallery, some mail forms, and an article database/blog;
-    CGI::App-based modules for each of these all exist. But I want them all to
-    utilize the same sidebar content, as well -- and that sidebar content may
-    vary based on the user.
-</p>
-<p>
-    My interest got sparked by <a href="http://www.perlmonks.org/index.pl?node_id=320946">this node</a> on
-    <a href="http://www.perlmonks.org">Perl Monks</a>. The author tells of an
-    acquaintance who goes by the rule that a CGI::App should have 10-12 states
-    at most; more than that, and you need to either break it apart or rethink
-    your design. And all CGI::Apps inherit from a common superclass, so that
-    they share the same DB connections, templates, etc.
-</p>
-<p>
-    So, I've been investigating this problem. <a href="http://www.perlmonks.org/index.pl?node_id=229260">One node on PM</a>
-    notes that his ISP uses CGI::App with hundreds of run modes spread across
-    many applications; they created a module for session management and access
-    control that calls <tt>use base CGI::Application</tt>; each aplication then
-    calls <tt>use base Control</tt>, and they all automatically have that same
-    session management and access, as well as CGI::Application.
-</p>
-<p>
-    <a href="http://www.perlmonks.org/index.pl?node_id=94879">Another node</a>
-    mentions the same thing, but gives a little more detail. That author writes
-    a module per application, each inheriting from a super class:
-    UserManager.pm, Survey.pm, RSS.pm, Search.pm, etc. You create an API for
-    that super class, and each CGI::App utilizes that API to do its work.
-</p>
-<p>
-    This also seems to be the idea behind <a href="http://cheesepizza.venzia.com">CheesePizza</a>, a CGI::App-based
-    framework for building applications. (All pizzas start out as cheese pizzas;
-    you simply add ingredients.) The problem with that, though, is that I have
-    to learn another framework on top of CGI::App, instead of intuiting my own.
-</p>
-<p>
-    But how do I write the superclass? Going back to the original node that
-    sparked my interest, I found a <a href="http://www.perlmonks.org/index.pl?node_id=321064">later reply</a>
-    that described how you do this. The big key is that you override the
-    <tt>print</tt> method -- this allows you to customize the output, and from
-    here you could call functions that create your sidebar blocks, and output
-    the content of the CGI::App you just called in a main content area of your
-    template.
-</p>
-<p>
-    Grist for the mill...
-</p></div>
-
-    <p><a href="/blog/17-CGIApplication-Research.html">Continue reading...</a></p>
 </section>
 
 </div>
