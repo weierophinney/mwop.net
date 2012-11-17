@@ -10,14 +10,14 @@
 	<![endif]-->
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-    <link href="/css/SkeletonCss/base.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/css/SkeletonCss/skeleton.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/css/SkeletonCss/layout.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/css/Application/site.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/images/Application/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" >
-<link href="/css/Application/blog.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/blog/author/matthew-atom.xml" rel="alternate" type="application/atom+xml" title="Blog Entries by Matthew Weier O&#039;Phinney Atom Feed" >
-<link href="/blog/author/matthew-rss.xml" rel="alternate" type="application/rss+xml" title="Blog Entries by Matthew Weier O&#039;Phinney RSS Feed" >
+    <link href="/css/SkeletonCss/base.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/SkeletonCss/skeleton.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/SkeletonCss/layout.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/Application/site.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/images/Application/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon">
+<link href="/css/Application/blog.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/blog/author/matthew-atom.xml" rel="alternate" type="application/atom+xml" title="Blog Entries by Matthew Weier O&#039;Phinney Atom Feed">
+<link href="/blog/author/matthew-rss.xml" rel="alternate" type="application/rss+xml" title="Blog Entries by Matthew Weier O&#039;Phinney RSS Feed">
     <script type="text/javascript">
     //<!--
     dojoConfig={
@@ -90,6 +90,50 @@
 <section class="eleven columns alpha blog">
     <h2>Blog Entries by Matthew Weier O'Phinney</h2>
 
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2005-04-20 21:41:12</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/65-phpt-Tutorial.html">phpt Tutorial</a></h4>
+
+    <div class="entry body"><p>
+    As promised in my earlier entry from today, here's my quick-and-dirty
+    tutorial on unit testing in PHP using phpt.
+</p>
+<p>
+    First off, phpt test files, from what I can see, were created as part of the
+    <a href="http://qa.php.net/">PHP-QA</a> effort. While I cannot find a link
+    within the PHP-QA site, they <a href="http://qa.php.net/write-test.php">have
+        a page detailing phpt test files</a>, and this page shows all the
+    sections of a phpt test file, though they do not necessarily show examples
+    of each.
+</p>
+<p>
+    Also, you might find <a
+        href="http://www.phpmag.net/itr/kolumnen/psecom,id,26,nodeid,207.html">this
+        International PHP Magazine article</a> informative; in it <a
+        href="http://www.wormus.com/aaron">Aaron Wormus</a> gives a brief
+    tutorial on them, as well as some ways to use phpt tests with PHPUnit.
+</p>
+<p>
+    Finally, before I jump in, I want to note: I am not an expert on unit
+    testing. However, the idea behind unit tests is straightforward: keep your
+    code simple and modular, and test each little bit (or module) for all types
+    of input and output. If the code you're testing is a function or class
+    method, test all permutations of arguments that could be passed to it, and
+    all possible return values.
+</p>
+<p>
+    Okay, let's jump in!
+</p></div>
+
+    <p><a href="/blog/65-phpt-Tutorial.html">Continue reading...</a></p>
+</section>
+
+</div>
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
     <p class="date">2005-04-20 15:49:11</p>
@@ -554,27 +598,6 @@ So, you can now keep track of me via RSS... Read away!
 </p></div>
 
     <p><a href="/blog/57-New-Cgiapp-Site.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2005-01-14 12:43:17</p>
-    <p class="tags"><a href="/blog/tag/personal.html">personal</a><br />
-<a href="/blog/tag/php.html">php</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/56-Cgiapp-1.5.3-released.html">Cgiapp 1.5.3 released</a></h4>
-
-    <div class="entry body"><p>
-    1.5.3 fixes an issue introduced by 1.5.2 that creates a performance hit
-    whenever the run mode is being determined by function name or CGI
-    parameter. More details <a href="/matthew/download?mode=view_download&id=11">on the
-    Cgiapp download page</a>.
-</p></div>
-
-    <p><a href="/blog/56-Cgiapp-1.5.3-released.html">Continue reading...</a></p>
 </section>
 
 </div>

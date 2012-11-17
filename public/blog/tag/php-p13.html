@@ -10,14 +10,14 @@
 	<![endif]-->
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-    <link href="/css/SkeletonCss/base.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/css/SkeletonCss/skeleton.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/css/SkeletonCss/layout.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/css/Application/site.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/images/Application/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" >
-<link href="/css/Application/blog.css" media="screen" rel="stylesheet" type="text/css" >
-<link href="/blog/tag/php-atom.xml" rel="alternate" type="application/atom+xml" title="Tag: php Atom Feed" >
-<link href="/blog/tag/php-rss.xml" rel="alternate" type="application/rss+xml" title="Tag: php RSS Feed" >
+    <link href="/css/SkeletonCss/base.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/SkeletonCss/skeleton.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/SkeletonCss/layout.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/Application/site.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/images/Application/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon">
+<link href="/css/Application/blog.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/blog/tag/php-atom.xml" rel="alternate" type="application/atom+xml" title="Tag: php Atom Feed">
+<link href="/blog/tag/php-rss.xml" rel="alternate" type="application/rss+xml" title="Tag: php RSS Feed">
     <script type="text/javascript">
     //<!--
     dojoConfig={
@@ -90,6 +90,27 @@
 <section class="eleven columns alpha blog">
     <h2>Tag: php</h2>
 
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2007-10-30 15:33:07</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
+<a href="/blog/tag/books.html">books</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/148-PHP-Anthology%2C-2nd-Edition-is-out.html">PHP Anthology, 2nd Edition is out</a></h4>
+
+    <div class="entry body"><p>
+    Well, it's now official: <a href="http://www.sitepoint.com/books/phpant2/">The PHP Anthology, 2nd Edition</a>
+    is finally out, and, as you'll see if you follow the link, I'm listed as an
+    author on it. :-) It's a pleasant surprise to see it out -- I finished my
+    chapters back in January, and had almost forgotten about it.
+</p></div>
+
+    <p><a href="/blog/148-PHP-Anthology%2C-2nd-Edition-is-out.html">Continue reading...</a></p>
+</section>
+
+</div>
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
     <p class="date">2007-10-11 20:50:47</p>
@@ -645,93 +666,6 @@ class S9y_IndexController extends Zend_Controller_Action
 </p></div>
 
     <p><a href="/blog/137-BostonPHP-Framework-Presentations.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2007-02-05 10:04:01</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/135-Extending-Singletons.html">Extending Singletons</a></h4>
-
-    <div class="entry body"><p>
-    This morning, I was wondering about how to extend a singleton class such
-    that you could retrieve the new class when retrieving the singleton later.
-    In particular, Zend_Controller_Front is a singleton, but what if I want to
-    extend it later? A number of plugins in the Zend Framework, particularly
-    view helpers and routing functionality, make use of the singleton; would I
-    need to alter all of these later so I could make use of the new subclass?
-</p>
-<p>
-    For instance, try the following code:
-</p>
-<div class="example"><pre><code lang="php">
-class My_Controller_Front extends Zend_Controller_Front
-{}
-
-$front = My_Controller_Front::getInstance();
-</code></pre></div>
-<p>
-    You'll get an instance of Zend_Controller_Front. But if you do the
-    following:
-</p>
-<div class="example"><pre><code lang="php">
-class My_Controller_Front extends Zend_Controller_Front
-{
-    protected static $_instance;
-
-    public static function getInstance()
-    {
-        if (null === self::$_instance) {
-            self::$_instance = new self();
-        }
-
-        return self::$_instance;
-    }
-}
-
-$front = My_Controller_Front::getInstance();
-</code></pre></div>
-<p>
-    You'll now get an instance of My_Controller_Front. However, since
-    <kbd>$_instance</kbd> is <em>private</em> in Zend_Controller_Front, calling
-    <kbd>Zend_Controller_Front::getInstance()</kbd> will still return a
-    Zend_Controller_Front instance -- not good.
-</p>
-<p>
-    However, if I redefine <kbd>Zend_Controller_Front::$_instance</kbd> as
-    <em>protected</em>, and have the following:
-</p>
-<div class="example"><pre><code lang="php">
-class My_Controller_Front extends Zend_Controller_Front
-{
-    public static function getInstance()
-    {
-        if (null === self::$_instance) {
-            self::$_instance = new self();
-        }
-
-        return self::$_instance;
-    }
-}
-
-$front = My_Controller_Front::getInstance();
-</code></pre></div>
-<p>
-    Then the any time I call <kbd>getInstance()</kbd> on either
-    My_Controller_Front or Zend_Controller_Front, I get a My_Controller_Front
-    instance!
-</p>
-<p>
-    So, the takeaway is: if you think a singleton object could ever benefit from
-    extension, define the static property holding the instance as protected, and
-    then, in any extending class, override the method retrieving the instance.
-</p></div>
-
-    <p><a href="/blog/135-Extending-Singletons.html">Continue reading...</a></p>
 </section>
 
 </div>
