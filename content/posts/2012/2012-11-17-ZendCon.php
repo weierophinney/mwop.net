@@ -42,8 +42,8 @@ $body =<<<'EOT'
 </p>
 
 <p>
-    I discovered today that not only was it recorded, but it's been posted
-    on YouTube:
+    I discovered today that not only was it recorded, but it's been <a href="http://youtu.be/mQsQ6QZ4dGg">posted
+    on YouTube</a>:
 </p>
 
 <iframe width="420" height="315" src="http://www.youtube.com/embed/mQsQ6QZ4dGg" frameborder="0" allowfullscreen></iframe>
