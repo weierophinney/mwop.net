@@ -3,6 +3,10 @@
         {
             "type": "composer",
             "url": "http://packages.zendframework.com/"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/weierophinney/hybridauth"
         }
     ],
     "minimum-stability": "dev",
@@ -10,6 +14,7 @@
         "phly/phly-blog": "dev-master",
         "phly/phly-contact": "dev-master",
         "zendframework/zendservice-recaptcha": "2.*",
-        "socalnick/scn-social-auth": "dev-master"
+        "socalnick/scn-social-auth": "dev-master",
+        "hybridauth/hybridauth": "dev-hotfix/session-key-test as dev-master"
     }
 }
