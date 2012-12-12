@@ -1,7 +1,7 @@
 <?php
 return array(
     'authentication' => array(
-        'Application\Controller\PageController' => array(
+        'PhlySimplePage\Controller\PageController' => array(
             'comics',
         ),
     ),
@@ -40,12 +40,6 @@ return array(
         'not_found_template' => 'pages/404',
     ),
 
-    'controllers' => array(
-        'invokables' => array(
-            'Application\Controller\Page' => 'Application\Controller\PageController',
-        ),
-    ),
-
     'router' => array(
         'routes' => array(
             'default' => array(
@@ -53,8 +47,8 @@ return array(
                 'options' => array(
                     'regex' => '/.*',
                     'defaults' => array(
-                        'controller' => 'Application\Controller\Page',
-                        'action'     => '404',
+                        'controller' => 'PhlySimplePage\Controller\Page',
+                        'template'   => 'pages/404',
                     ),
                     'spec' => '404',
                 ),
@@ -64,8 +58,8 @@ return array(
                 'options' => array(
                     'route' => '/',
                     'defaults' => array(
-                        'controller' => 'Application\Controller\Page',
-                        'action'     => 'home',
+                        'controller' => 'PhlySimplePage\Controller\Page',
+                        'template'   => 'pages/home',
                     ),
                 ),
             ),
@@ -74,8 +68,8 @@ return array(
                 'options' => array(
                     'route' => '/comics',
                     'defaults' => array(
-                        'controller' => 'Application\Controller\Page',
-                        'action'     => 'comics',
+                        'controller' => 'PhlySimplePage\Controller\Page',
+                        'template'   => 'pages/comics',
                     ),
                 ),
             ),
@@ -84,8 +78,8 @@ return array(
                 'options' => array(
                     'route' => '/resume',
                     'defaults' => array(
-                        'controller' => 'Application\Controller\Page',
-                        'action'     => 'resume',
+                        'controller' => 'PhlySimplePage\Controller\Page',
+                        'template'   => 'pages/resume',
                     ),
                 ),
             ),
