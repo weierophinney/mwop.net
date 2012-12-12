@@ -2,7 +2,7 @@
 return array(
     'authentication' => array(
         'PhlySimplePage\Controller\PageController' => array(
-            'comics',
+            'pages/comics',
         ),
     ),
 
