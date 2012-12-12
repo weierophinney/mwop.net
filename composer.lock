@@ -197,12 +197,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/weierophinney/PhlySimplePage",
-                "reference": "f78ba8e42794289b2fb9253e272c802690d0a1f3"
+                "reference": "8626611d6ca9142c733e3a5d6dd07fb41684f36a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/weierophinney/PhlySimplePage/archive/f78ba8e42794289b2fb9253e272c802690d0a1f3.zip",
-                "reference": "f78ba8e42794289b2fb9253e272c802690d0a1f3",
+                "url": "https://github.com/weierophinney/PhlySimplePage/archive/8626611d6ca9142c733e3a5d6dd07fb41684f36a.zip",
+                "reference": "8626611d6ca9142c733e3a5d6dd07fb41684f36a",
                 "shasum": ""
             },
             "require": {
@@ -211,9 +211,10 @@
                 "zendframework/zend-http": "2.*",
                 "zendframework/zend-mvc": "2.*",
                 "zendframework/zend-stdlib": "2.*",
-                "zendframework/zend-view": "2.*"
+                "zendframework/zend-view": "2.*",
+                "zendframework/zend-console": "2.*"
             },
-            "time": "1355331949",
+            "time": "1355352710",
             "type": "library",
             "installation-source": "source",
             "autoload": {
