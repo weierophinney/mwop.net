@@ -13,6 +13,7 @@
     "require": {
         "phly/phly-blog": "dev-master",
         "phly/phly-contact": "dev-master",
+        "phly/phly-simple-page": "dev-master",
         "zendframework/zendservice-recaptcha": "2.*",
         "socalnick/scn-social-auth": "dev-master",
         "hybridauth/hybridauth": "dev-hotfix/session-key-test as dev-master"
