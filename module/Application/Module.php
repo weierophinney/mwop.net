@@ -183,13 +183,13 @@ class Module
         }
 
         $controller = $routeMatch->getParam('controller', false);
-        if ($controller != 'Application\Controller\Page') {
+        if ($controller != 'PhlySimplePage\Controller\Page') {
             return;
         }
 
-        $protectedActions = $this->config['authentication']['Application\Controller\PageController'];
-        $action           = $routeMatch->getParam('action');
-        if (!in_array($action, $protectedActions)) {
+        $protectedActions = $this->config['authentication']['PhlySimplePage\Controller\PageController'];
+        $page             = $routeMatch->getParam('template');
+        if (!in_array($page, $protectedActions)) {
             // does not require authorization
             return;
         }

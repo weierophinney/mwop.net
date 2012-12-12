@@ -1,5 +1,5 @@
 {
-    "hash": "e43023f76cb9647c38e0ba3077cd3588",
+    "hash": "1436c20a6d3e88cf830a5ed8934cb56c",
     "packages": [
         {
             "name": "hybridauth/hybridauth",
@@ -185,6 +185,55 @@
             ],
             "description": "ZF2 Module implementing contact form functionality",
             "homepage": "https://github.com/weierophinney/PhlyContact",
+            "keywords": [
+                "zend",
+                "zf2",
+                "module"
+            ]
+        },
+        {
+            "name": "phly/phly-simple-page",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/weierophinney/PhlySimplePage",
+                "reference": "f78ba8e42794289b2fb9253e272c802690d0a1f3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/weierophinney/PhlySimplePage/archive/f78ba8e42794289b2fb9253e272c802690d0a1f3.zip",
+                "reference": "f78ba8e42794289b2fb9253e272c802690d0a1f3",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3",
+                "zendframework/zend-eventmanager": "2.*",
+                "zendframework/zend-http": "2.*",
+                "zendframework/zend-mvc": "2.*",
+                "zendframework/zend-stdlib": "2.*",
+                "zendframework/zend-view": "2.*"
+            },
+            "time": "1355331949",
+            "type": "library",
+            "installation-source": "source",
+            "autoload": {
+                "psr-0": {
+                    "PhlySimplePage\\": "src/",
+                    "PhlySimplePageTest\\": "test/"
+                },
+                "classmap": [
+                    "./"
+                ]
+            },
+            "authors": [
+                {
+                    "name": "Matthew Weier O'Phinney",
+                    "email": "matthew@weierophinney.net",
+                    "homepage": "http://mwop.net/"
+                }
+            ],
+            "description": "ZF2 Module for easily creating static pages",
+            "homepage": "https://github.com/weierophinney/PhlySimplePage",
             "keywords": [
                 "zend",
                 "zf2",
@@ -524,6 +573,7 @@
     "stability-flags": {
         "phly/phly-blog": 20,
         "phly/phly-contact": 20,
+        "phly/phly-simple-page": 20,
         "socalnick/scn-social-auth": 20,
         "hybridauth/hybridauth": 20
     }

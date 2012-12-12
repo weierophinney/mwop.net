@@ -76,9 +76,6 @@ mwop=/home/matthew/git/sites/mwop CD=. filter="README TODO.md *.php *.xml *.txt 
    }
    src=src {
     Application=Application {
-     Controller=Controller {
-      PageController.php
-     }
      View=View {
       Helper=Helper {
        Disqus.php
