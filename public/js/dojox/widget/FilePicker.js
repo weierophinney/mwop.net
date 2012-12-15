@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox","dojo/i18n!dojox/widget/nls/FilePicker","dojo/require!dojox/widget/RollingList,dojo/i18n"],function(_1,_2,_3){
+define("dojox/widget/FilePicker",["dijit","dojo","dojox","dojo/i18n!dojox/widget/nls/FilePicker","dojo/require!dojox/widget/RollingList,dojo/i18n"],function(_1,_2,_3){
 _2.provide("dojox.widget.FilePicker");
 _2.require("dojox.widget.RollingList");
 _2.require("dojo.i18n");

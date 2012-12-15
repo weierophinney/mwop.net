@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox","dojo/require!dojo/NodeList-traverse,dojo/NodeList-manipulate,dojo/io/script"],function(_1,_2,_3){
+define("dojox/jq",["dijit","dojo","dojox","dojo/require!dojo/NodeList-traverse,dojo/NodeList-manipulate,dojo/io/script"],function(_1,_2,_3){
 _2.provide("dojox.jq");
 _2.require("dojo.NodeList-traverse");
 _2.require("dojo.NodeList-manipulate");
@@ -935,7 +935,7 @@ if(_2.isString(_ff)){
 if(_ff=="slow"){
 _ff=700;
 }else{
-if(_ff="fast"){
+if(_ff=="fast"){
 _ff=300;
 }else{
 _ff=500;

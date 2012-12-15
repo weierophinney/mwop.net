@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox","dojo/require!dojox/help/_base"],function(_1,_2,_3){
+define("dojox/help/console",["dijit","dojo","dojox","dojo/require!dojox/help/_base"],function(_1,_2,_3){
 _2.provide("dojox.help.console");
 _2.require("dojox.help._base");
 _2.mixin(_3.help,{_plainText:function(_4){

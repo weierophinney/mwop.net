@@ -1,7 +1,7 @@
 //>>built
 define("dojox/av/FLAudio",["dojo","dojox/embed/Flash","dojox/timing/doLater"],function(_1,_2){
 _1.experimental("dojox.av.FLVideo");
-_1.declare("dojox.av.FLAudio",null,{id:"",initialVolume:0.7,initialPan:0,isDebug:false,statusInterval:200,_swfPath:_1.moduleUrl("dojox.av","resources/audio.swf"),allowScriptAccess:"always",allowNetworking:"all",constructor:function(_3){
+return _1.declare("dojox.av.FLAudio",null,{id:"",initialVolume:0.7,initialPan:0,isDebug:false,statusInterval:200,_swfPath:_1.moduleUrl("dojox.av","resources/audio.swf"),allowScriptAccess:"always",allowNetworking:"all",constructor:function(_3){
 _1.global.swfIsInHTML=function(){
 return true;
 };
@@ -16,7 +16,7 @@ this.init();
 },init:function(){
 this._subs=[];
 this.initialVolume=this._normalizeVolume(this.initialVolume);
-var _4={path:this._swfPath.uri,width:"1px",height:"1px",minimumVersion:9,expressInstall:true,params:{wmode:"transparent",allowScriptAccess:this.allowScriptAccess,allowNetworking:this.allowNetworking},vars:{id:this.id,autoPlay:this.autoPlay,initialVolume:this.initialVolume,initialPan:this.initialPan,statusInterval:this.statusInterval,isDebug:this.isDebug}};
+var _4={path:this._swfPath,width:"1px",height:"1px",minimumVersion:9,expressInstall:true,params:{wmode:"transparent",allowScriptAccess:this.allowScriptAccess,allowNetworking:this.allowNetworking},vars:{id:this.id,autoPlay:this.autoPlay,initialVolume:this.initialVolume,initialPan:this.initialPan,statusInterval:this.statusInterval,isDebug:this.isDebug}};
 this._sub("mediaError","onError");
 this._sub("filesProgress","onLoadStatus");
 this._sub("filesAllLoaded","onAllLoaded");
@@ -39,7 +39,6 @@ return false;
 }
 if(!_7.url){
 throw new Error("An url is required for loading media");
-return false;
 }else{
 _7.url=this._normalizeUrl(_7.url);
 }
@@ -99,5 +98,4 @@ _15=loc+_15;
 }
 return _15;
 }});
-return dojox.av.FLAudio;
 });

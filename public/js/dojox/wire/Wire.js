@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox","dojo/require!dojox/wire/_base"],function(_1,_2,_3){
+define("dojox/wire/Wire",["dijit","dojo","dojox","dojo/require!dojox/wire/_base"],function(_1,_2,_3){
 _2.provide("dojox.wire.Wire");
 _2.require("dojox.wire._base");
 _2.declare("dojox.wire.Wire",null,{_wireClass:"dojox.wire.Wire",constructor:function(_4){

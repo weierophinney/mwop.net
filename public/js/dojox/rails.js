@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox","dojo/require!dojo/NodeList-traverse"],function(_1,_2,_3){
+define("dojox/rails",["dijit","dojo","dojox","dojo/require!dojo/NodeList-traverse"],function(_1,_2,_3){
 _2.provide("dojox.rails");
 _2.require("dojo.NodeList-traverse");
 _3.rails.live=function(_4,_5,fn){

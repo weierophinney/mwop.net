@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox"],function(_1,_2,_3){
+define("dojox/drawing/plugins/drawing/Silverlight",["dijit","dojo","dojox"],function(_1,_2,_3){
 _2.provide("dojox.drawing.plugins.drawing.Silverlight");
 _3.drawing.plugins.drawing.Silverlight=_3.drawing.util.oo.declare(function(_4){
 if(_3.gfx.renderer!="silverlight"){

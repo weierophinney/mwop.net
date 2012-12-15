@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox"],function(_1,_2,_3){
+define("dojox/wire/_base",["dijit","dojo","dojox"],function(_1,_2,_3){
 _2.provide("dojox.wire._base");
 _3.wire._defaultWireClass="dojox.wire.Wire";
 _3.wire._wireClasses={"attribute":"dojox.wire.DataWire","path":"dojox.wire.XmlWire","children":"dojox.wire.CompositeWire","columns":"dojox.wire.TableAdapter","nodes":"dojox.wire.TreeAdapter","segments":"dojox.wire.TextAdapter"};

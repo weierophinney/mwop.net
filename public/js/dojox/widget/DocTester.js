@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox","dojo/require!dojo/string,dijit/_Widget,dijit/_Templated,dojox/form/BusyButton,dojox/testing/DocTest"],function(_1,_2,_3){
+define("dojox/widget/DocTester",["dijit","dojo","dojox","dojo/require!dojo/string,dijit/_Widget,dijit/_Templated,dojox/form/BusyButton,dojox/testing/DocTest"],function(_1,_2,_3){
 _2.provide("dojox.widget.DocTester");
 _2.require("dojo.string");
 _2.require("dijit._Widget");

@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox"],function(_1,_2,_3){
+define("dojox/lang/async",["dijit","dojo","dojox"],function(_1,_2,_3){
 _2.provide("dojox.lang.async");
 (function(){
 var d=_2,_4=d.Deferred,_5=d.forEach,_6=d.some,_7=_3.lang.async,_8=Array.prototype.slice,_9=Object.prototype.toString;

@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox","dojo/i18n!dojox/editor/plugins/nls/SpellCheck","dojo/require!dijit/_base/popup,dijit/_Widget,dijit/_Templated,dijit/form/TextBox,dijit/form/DropDownButton,dijit/TooltipDialog,dijit/form/MultiSelect,dojo/io/script,dijit/Menu"],function(_1,_2,_3){
+define("dojox/editor/plugins/SpellCheck",["dijit","dojo","dojox","dojo/i18n!dojox/editor/plugins/nls/SpellCheck","dojo/require!dijit/_base/popup,dijit/_Widget,dijit/_Templated,dijit/form/TextBox,dijit/form/DropDownButton,dijit/TooltipDialog,dijit/form/MultiSelect,dojo/io/script,dijit/Menu"],function(_1,_2,_3){
 _2.provide("dojox.editor.plugins.SpellCheck");
 _2.require("dijit._base.popup");
 _2.require("dijit._Widget");
@@ -12,7 +12,7 @@ _2.require("dojo.io.script");
 _2.require("dijit.Menu");
 _2.requireLocalization("dojox.editor.plugins","SpellCheck");
 _2.experimental("dojox.editor.plugins.SpellCheck");
-_2.declare("dojox.editor.plugins._spellCheckControl",[_1._Widget,_1._Templated],{widgetsInTemplate:true,templateString:"<table class='dijitEditorSpellCheckTable'>"+"<tr><td colspan='3' class='alignBottom'><label for='${textId}' id='${textId}_label'>${unfound}</label>"+"<div class='dijitEditorSpellCheckBusyIcon' id='${id}_progressIcon'></div></td></tr>"+"<tr>"+"<td class='dijitEditorSpellCheckBox'><input dojoType='dijit.form.TextBox' required='false' intermediateChanges='true' "+"class='dijitEditorSpellCheckBox' dojoAttachPoint='unfoundTextBox' id='${textId}'/></td>"+"<td><button dojoType='dijit.form.Button' class='blockButton' dojoAttachPoint='skipButton'>${skip}</button></td>"+"<td><button dojoType='dijit.form.Button' class='blockButton' dojoAttachPoint='skipAllButton'>${skipAll}</button></td>"+"</tr>"+"<tr>"+"<td class='alignBottom'><label for='${selectId}'>${suggestions}</td></label>"+"<td colspan='2'><button dojoType='dijit.form.Button' class='blockButton' dojoAttachPoint='toDicButton'>${toDic}</button></td>"+"</tr>"+"<tr>"+"<td>"+"<select dojoType='dijit.form.MultiSelect' id='${selectId}' "+"class='dijitEditorSpellCheckBox listHeight' dojoAttachPoint='suggestionSelect'></select>"+"</td>"+"<td colspan='2'>"+"<button dojoType='dijit.form.Button' class='blockButton' dojoAttachPoint='replaceButton'>${replace}</button>"+"<div class='topMargin'><button dojoType='dijit.form.Button' class='blockButton' "+"dojoAttachPoint='replaceAllButton'>${replaceAll}</button><div>"+"</td>"+"</tr>"+"<tr>"+"<td><div class='topMargin'><button dojoType='dijit.form.Button' dojoAttachPoint='cancelButton'>${cancel}</button></div></td>"+"<td></td>"+"<td></td>"+"</tr>"+"</table>",constructor:function(){
+_2.declare("dojox.editor.plugins._spellCheckControl",[_1._Widget,_1._Templated],{widgetsInTemplate:true,templateString:"<table role='presentation' class='dijitEditorSpellCheckTable'>"+"<tr><td colspan='3' class='alignBottom'><label for='${textId}' id='${textId}_label'>${unfound}</label>"+"<div class='dijitEditorSpellCheckBusyIcon' id='${id}_progressIcon'></div></td></tr>"+"<tr>"+"<td class='dijitEditorSpellCheckBox'><input dojoType='dijit.form.TextBox' required='false' intermediateChanges='true' "+"class='dijitEditorSpellCheckBox' dojoAttachPoint='unfoundTextBox' id='${textId}'/></td>"+"<td><button dojoType='dijit.form.Button' class='blockButton' dojoAttachPoint='skipButton'>${skip}</button></td>"+"<td><button dojoType='dijit.form.Button' class='blockButton' dojoAttachPoint='skipAllButton'>${skipAll}</button></td>"+"</tr>"+"<tr>"+"<td class='alignBottom'><label for='${selectId}'>${suggestions}</td></label>"+"<td colspan='2'><button dojoType='dijit.form.Button' class='blockButton' dojoAttachPoint='toDicButton'>${toDic}</button></td>"+"</tr>"+"<tr>"+"<td>"+"<select dojoType='dijit.form.MultiSelect' id='${selectId}' "+"class='dijitEditorSpellCheckBox listHeight' dojoAttachPoint='suggestionSelect'></select>"+"</td>"+"<td colspan='2'>"+"<button dojoType='dijit.form.Button' class='blockButton' dojoAttachPoint='replaceButton'>${replace}</button>"+"<div class='topMargin'><button dojoType='dijit.form.Button' class='blockButton' "+"dojoAttachPoint='replaceAllButton'>${replaceAll}</button><div>"+"</td>"+"</tr>"+"<tr>"+"<td><div class='topMargin'><button dojoType='dijit.form.Button' dojoAttachPoint='cancelButton'>${cancel}</button></div></td>"+"<td></td>"+"<td></td>"+"</tr>"+"</table>",constructor:function(){
 this.ignoreChange=false;
 this.isChanged=false;
 this.isOpen=false;
@@ -404,7 +404,7 @@ while(++i<_4f&&_4e.charAt(i)==nv.charAt(i)){
 }
 return i;
 },_moveToBookmark:function(){
-var ed=this._editor,cps=_2.withGlobal(ed.window,"query",_2,["."+this._cursorSelector]),_50=cps&&cps[0];
+var ed=this._editor,cps=_2.query("."+this._cursorSelector,ed.document),_50=cps&&cps[0];
 if(_50){
 ed._sCall("selectElement",[_50]);
 ed._sCall("collapse",[true]);
@@ -461,8 +461,8 @@ _67=true;
 _5e.set("value",_68.join(""));
 _5e._cursorToStart=false;
 this._moveToBookmark();
-_69=this._spanList=_2.withGlobal(_5e.window,"query",_2,["."+this._selector]);
-_2.forEach(_69,function(_6c,i){
+_69=this._spanList=_2.query("."+this._selector,_5e.document);
+_69.forEach(function(_6c,i){
 _6c.id=_61+i;
 });
 if(!this.interactive){
@@ -481,7 +481,7 @@ var _6e,win;
 if(_6d.tagName.toLowerCase()=="iframe"){
 _6e=_6d;
 win=this._iframeContentWindow(_6e);
-cn=_2.withGlobal(win,_2.body);
+cn=_2.body(_5e.document);
 }else{
 cn=(_6d==_2.body()?_2.doc.documentElement:_6d);
 }
@@ -533,8 +533,7 @@ this._scheduleOpen(evt.target,_6e);
 _6f.connects=cn?_70(cn):[];
 if(_6e){
 _6f.onloadHandler=_2.hitch(this,function(){
-var win=this._iframeContentWindow(_6e);
-cn=_2.withGlobal(win,_2.body);
+var win=this._iframeContentWindow(_6e),cn=_2.body(_5e.document);
 _6f.connects=_70(cn);
 });
 if(_6e.addEventListener){
@@ -546,10 +545,10 @@ _6e.attachEvent("onload",_6f.onloadHandler);
 }});
 }
 },_selectWord:function(_77){
-var _78=this._spanList,win=this._editor.window;
+var ed=this._editor,_78=this._spanList;
 if(_77<_78.length&&_78.length>0){
-_2.withGlobal(win,"selectElement",_1._editor.selection,[_78[_77]]);
-_2.withGlobal(win,"collapse",_1._editor.selection,[true]);
+ed._sCall("selectElement",[_78[_77]]);
+ed._sCall("collapse",[true]);
 this._findText(_78[_77].innerHTML,false,false);
 if(_2.isIE){
 _2.style(_78[_77],this._highlightedIncorrectStyle);

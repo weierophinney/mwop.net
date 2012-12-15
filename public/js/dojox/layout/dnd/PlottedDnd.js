@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox","dojo/require!dojo/dnd/Source,dojo/dnd/Manager,dojox/layout/dnd/Avatar"],function(_1,_2,_3){
+define("dojox/layout/dnd/PlottedDnd",["dijit","dojo","dojox","dojo/require!dojo/dnd/Source,dojo/dnd/Manager,dojox/layout/dnd/Avatar"],function(_1,_2,_3){
 _2.provide("dojox.layout.dnd.PlottedDnd");
 _2.require("dojo.dnd.Source");
 _2.require("dojo.dnd.Manager");

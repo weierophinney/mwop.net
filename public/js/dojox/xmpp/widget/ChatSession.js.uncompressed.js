@@ -1,4 +1,3 @@
-//>>built
 // wrapped by build app
 define("dojox/xmpp/widget/ChatSession", ["dijit","dojo","dojox","dojo/require!dijit/layout/LayoutContainer,dijit/_Templated"], function(dijit,dojo,dojox){
 dojo.provide("dojox.xmpp.widget.ChatSession");

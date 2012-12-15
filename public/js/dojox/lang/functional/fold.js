@@ -1,5 +1,5 @@
 //>>built
-define("dojox/lang/functional/fold",["dojo/_base/lang","dojo/_base/array","dojo/_base/window","./lambda"],function(_1,_2,_3,df){
+define("dojox/lang/functional/fold",["dojo/_base/lang","dojo/_base/array","dojo/_base/kernel","./lambda"],function(_1,_2,_3,df){
 var _4={};
 _1.mixin(df,{foldl:function(a,f,z,o){
 if(typeof a=="string"){

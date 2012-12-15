@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox"],function(_1,_2,_3){
+define("dojox/mobile/app/_event",["dijit","dojo","dojox"],function(_1,_2,_3){
 _2.provide("dojox.mobile.app._event");
 _2.experimental("dojox.mobile.app._event.js");
 _2.mixin(_3.mobile.app,{eventMap:{},connectFlick:function(_4,_5,_6){

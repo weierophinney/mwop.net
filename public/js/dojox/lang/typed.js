@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox","dojo/require!dojox/json/schema"],function(_1,_2,_3){
+define("dojox/lang/typed",["dijit","dojo","dojox","dojo/require!dojox/json/schema"],function(_1,_2,_3){
 (function(){
 var _4,_5=typeof _2!="undefined";
 if(_5){

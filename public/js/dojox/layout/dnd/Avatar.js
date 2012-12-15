@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox","dojo/require!dojo/dnd/Avatar,dojo/dnd/common"],function(_1,_2,_3){
+define("dojox/layout/dnd/Avatar",["dijit","dojo","dojox","dojo/require!dojo/dnd/Avatar,dojo/dnd/common"],function(_1,_2,_3){
 _2.provide("dojox.layout.dnd.Avatar");
 _2.require("dojo.dnd.Avatar");
 _2.require("dojo.dnd.common");

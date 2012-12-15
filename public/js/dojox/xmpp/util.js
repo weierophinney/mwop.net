@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox","dojo/require!dojox/string/Builder,dojox/encoding/base64"],function(_1,_2,_3){
+define("dojox/xmpp/util",["dijit","dojo","dojox","dojo/require!dojox/string/Builder,dojox/encoding/base64"],function(_1,_2,_3){
 _2.provide("dojox.xmpp.util");
 _2.require("dojox.string.Builder");
 _2.require("dojox.encoding.base64");

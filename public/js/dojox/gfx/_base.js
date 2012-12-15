@@ -1,6 +1,6 @@
 //>>built
-define("dojox/gfx/_base",["dojo/_base/lang","dojo/_base/html","dojo/_base/Color","dojo/_base/sniff","dojo/_base/window","dojo/_base/array","dojo/dom","dojo/dom-construct","dojo/dom-geometry"],function(_1,_2,_3,_4,_5,_6,_7,_8,_9){
-var g=_1.getObject("dojox.gfx",true),b=g._base={};
+define("dojox/gfx/_base",["dojo/_base/kernel","dojo/_base/lang","dojo/_base/Color","dojo/_base/sniff","dojo/_base/window","dojo/_base/array","dojo/dom","dojo/dom-construct","dojo/dom-geometry"],function(_1,_2,_3,_4,_5,_6,_7,_8,_9){
+var g=_2.getObject("dojox.gfx",true),b=g._base={};
 g._hasClass=function(_a,_b){
 var _c=_a.getAttribute("className");
 return _c&&(" "+_c+" ").indexOf(" "+_b+" ")>=0;
@@ -75,11 +75,11 @@ var _1a=0;
 b._getUniqueId=function(){
 var id;
 do{
-id=dojo._scopeName+"xUnique"+(++_1a);
+id=_1._scopeName+"xUnique"+(++_1a);
 }while(_7.byId(id));
 return id;
 };
-_1.mixin(g,{defaultPath:{type:"path",path:""},defaultPolyline:{type:"polyline",points:[]},defaultRect:{type:"rect",x:0,y:0,width:100,height:100,r:0},defaultEllipse:{type:"ellipse",cx:0,cy:0,rx:200,ry:100},defaultCircle:{type:"circle",cx:0,cy:0,r:100},defaultLine:{type:"line",x1:0,y1:0,x2:100,y2:100},defaultImage:{type:"image",x:0,y:0,width:0,height:0,src:""},defaultText:{type:"text",x:0,y:0,text:"",align:"start",decoration:"none",rotated:false,kerning:true},defaultTextPath:{type:"textpath",text:"",align:"start",decoration:"none",rotated:false,kerning:true},defaultStroke:{type:"stroke",color:"black",style:"solid",width:1,cap:"butt",join:4},defaultLinearGradient:{type:"linear",x1:0,y1:0,x2:100,y2:100,colors:[{offset:0,color:"black"},{offset:1,color:"white"}]},defaultRadialGradient:{type:"radial",cx:0,cy:0,r:100,colors:[{offset:0,color:"black"},{offset:1,color:"white"}]},defaultPattern:{type:"pattern",x:0,y:0,width:0,height:0,src:""},defaultFont:{type:"font",style:"normal",variant:"normal",weight:"normal",size:"10pt",family:"serif"},getDefault:(function(){
+_2.mixin(g,{defaultPath:{type:"path",path:""},defaultPolyline:{type:"polyline",points:[]},defaultRect:{type:"rect",x:0,y:0,width:100,height:100,r:0},defaultEllipse:{type:"ellipse",cx:0,cy:0,rx:200,ry:100},defaultCircle:{type:"circle",cx:0,cy:0,r:100},defaultLine:{type:"line",x1:0,y1:0,x2:100,y2:100},defaultImage:{type:"image",x:0,y:0,width:0,height:0,src:""},defaultText:{type:"text",x:0,y:0,text:"",align:"start",decoration:"none",rotated:false,kerning:true},defaultTextPath:{type:"textpath",text:"",align:"start",decoration:"none",rotated:false,kerning:true},defaultStroke:{type:"stroke",color:"black",style:"solid",width:1,cap:"butt",join:4},defaultLinearGradient:{type:"linear",x1:0,y1:0,x2:100,y2:100,colors:[{offset:0,color:"black"},{offset:1,color:"white"}]},defaultRadialGradient:{type:"radial",cx:0,cy:0,r:100,colors:[{offset:0,color:"black"},{offset:1,color:"white"}]},defaultPattern:{type:"pattern",x:0,y:0,width:0,height:0,src:""},defaultFont:{type:"font",style:"normal",variant:"normal",weight:"normal",size:"10pt",family:"serif"},getDefault:(function(){
 var _1b={};
 return function(_1c){
 var t=_1b[_1c];
@@ -106,12 +106,12 @@ return _1e;
 },makeParameters:function(_21,_22){
 var i=null;
 if(!_22){
-return _1.delegate(_21);
+return _2.delegate(_21);
 }
 var _23={};
 for(i in _21){
 if(!(i in _23)){
-_23[i]=_1.clone((i in _22)?_22[i]:_21[i]);
+_23[i]=_2.clone((i in _22)?_22[i]:_21[i]);
 }
 }
 return _23;

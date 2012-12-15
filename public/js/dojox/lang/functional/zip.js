@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox"],function(_1,_2,_3){
+define("dojox/lang/functional/zip",["dijit","dojo","dojox"],function(_1,_2,_3){
 _2.provide("dojox.lang.functional.zip");
 (function(){
 var df=_3.lang.functional;

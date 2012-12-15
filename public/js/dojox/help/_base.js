@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox","dojo/require!dojox/rpc/Service,dojo/io/script"],function(_1,_2,_3){
+define("dojox/help/_base",["dijit","dojo","dojox","dojo/require!dojox/rpc/Service,dojo/io/script"],function(_1,_2,_3){
 _2.provide("dojox.help._base");
 _2.require("dojox.rpc.Service");
 _2.require("dojo.io.script");

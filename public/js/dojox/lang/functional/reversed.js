@@ -1,5 +1,5 @@
 //>>built
-define("dojox/lang/functional/reversed",["dojo/_base/lang","dojo/_base/window","./lambda"],function(_1,_2,df){
+define("dojox/lang/functional/reversed",["dojo/_base/lang","dojo/_base/kernel","./lambda"],function(_1,_2,df){
 _1.mixin(df,{filterRev:function(a,f,o){
 if(typeof a=="string"){
 a=a.split("");

@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox"],function(_1,_2,_3){
+define("dojox/lang/functional/listcomp",["dijit","dojo","dojox"],function(_1,_2,_3){
 _2.provide("dojox.lang.functional.listcomp");
 (function(){
 var _4=/\bfor\b|\bif\b/gm;

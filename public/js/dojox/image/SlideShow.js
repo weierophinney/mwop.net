@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox","dojo/require!dojo/string,dojo/fx,dijit/_Widget,dijit/_Templated"],function(_1,_2,_3){
+define("dojox/image/SlideShow",["dijit","dojo","dojox","dojo/require!dojo/string,dojo/fx,dijit/_Widget,dijit/_Templated"],function(_1,_2,_3){
 _2.provide("dojox.image.SlideShow");
 _2.require("dojo.string");
 _2.require("dojo.fx");

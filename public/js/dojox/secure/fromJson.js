@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox"],function(_1,_2,_3){
+define("dojox/secure/fromJson",["dijit","dojo","dojox"],function(_1,_2,_3){
 _2.provide("dojox.secure.fromJson");
 _3.secure.fromJson=typeof JSON!="undefined"?JSON.parse:(function(){
 var _4="(?:-?\\b(?:0|[1-9][0-9]*)(?:\\.[0-9]+)?(?:[eE][+-]?[0-9]+)?\\b)";

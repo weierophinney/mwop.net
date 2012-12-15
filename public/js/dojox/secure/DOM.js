@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox","dojo/require!dojox/lang/observable"],function(_1,_2,_3){
+define("dojox/secure/DOM",["dijit","dojo","dojox","dojo/require!dojox/lang/observable"],function(_1,_2,_3){
 _2.provide("dojox.secure.DOM");
 _2.require("dojox.lang.observable");
 _3.secure.DOM=function(_4){

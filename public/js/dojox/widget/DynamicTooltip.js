@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox","dojo/i18n!dijit/nls/loading","dojo/require!dijit/Tooltip"],function(_1,_2,_3){
+define("dojox/widget/DynamicTooltip",["dijit","dojo","dojox","dojo/i18n!dijit/nls/loading","dojo/require!dijit/Tooltip"],function(_1,_2,_3){
 _2.provide("dojox.widget.DynamicTooltip");
 _2.experimental("dojox.widget.DynamicTooltip");
 _2.require("dijit.Tooltip");

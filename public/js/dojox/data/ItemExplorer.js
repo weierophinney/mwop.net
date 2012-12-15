@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox","dojo/require!dijit/Tree,dijit/Dialog,dijit/Menu,dijit/form/ValidationTextBox,dijit/form/Textarea,dijit/form/Button,dijit/form/RadioButton,dijit/form/FilteringSelect"],function(_1,_2,_3){
+define("dojox/data/ItemExplorer",["dijit","dojo","dojox","dojo/require!dijit/Tree,dijit/Dialog,dijit/Menu,dijit/form/ValidationTextBox,dijit/form/Textarea,dijit/form/Button,dijit/form/RadioButton,dijit/form/FilteringSelect"],function(_1,_2,_3){
 _2.provide("dojox.data.ItemExplorer");
 _2.require("dijit.Tree");
 _2.require("dijit.Dialog");

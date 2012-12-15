@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox","dojo/require!dojox/xmpp/util,dojo/AdapterRegistry,dojox/encoding/digests/MD5"],function(_1,_2,_3){
+define("dojox/xmpp/sasl",["dijit","dojo","dojox","dojo/require!dojox/xmpp/util,dojo/AdapterRegistry,dojox/encoding/digests/MD5"],function(_1,_2,_3){
 _2.provide("dojox.xmpp.sasl");
 _2.require("dojox.xmpp.util");
 _2.require("dojo.AdapterRegistry");

@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox","dojo/require!dojo/string,dijit/_WidgetBase"],function(_1,_2,_3){
+define("dojox/mobile/app/List",["dijit","dojo","dojox","dojo/require!dojo/string,dijit/_WidgetBase"],function(_1,_2,_3){
 _2.provide("dojox.mobile.app.List");
 _2.experimental("dojox.mobile.app.List");
 _2.require("dojo.string");

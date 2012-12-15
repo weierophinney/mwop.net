@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox"],function(_1,_2,_3){
+define("dojox/lang/oo/rearrange",["dijit","dojo","dojox"],function(_1,_2,_3){
 _2.provide("dojox.lang.oo.rearrange");
 (function(){
 var _4=_2._extraNames,_5=_4.length,_6=Object.prototype.toString,_7={};

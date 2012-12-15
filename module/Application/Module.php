@@ -72,6 +72,7 @@ class Module
 
         $moduleRouteListener = new ModuleRouteListener();
         $events->attach($moduleRouteListener);
+        $events->getSharedManager()->attach('PhlySimplePage\PageController', 'dispatch', array($this, 'onPageDispatchPost'), -20);
     }
 
     public function initAcls($e)
@@ -229,5 +230,29 @@ class Module
 
         $view->render($model);
         return $response;
+    }
+
+    public function onPageDispatchPost($e)
+    {
+        $result = $e->getResult();
+        if (!$result instanceof Model\ModelInterface) {
+            return;
+        }
+        $template = $result->getTemplate();
+        if (empty($template)) {
+            return;
+        }
+
+        $app      = $e->getApplication();
+        $services = $app->getServiceManager();
+        $config   = $services->get('Config');
+        if (!isset($config['xhr']) || !is_array($config['xhr'])) {
+            return;
+        }
+        if (!in_array($template, $config['xhr'])) {
+            return;
+        }
+
+        $result->setTerminal(true);
     }
 }

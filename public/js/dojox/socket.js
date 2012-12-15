@@ -1,5 +1,5 @@
 //>>built
-define("dojox/socket",["dojo","dojo/Evented","dojo/cookie","dojo/_base/url"],function(_1,_2){
+define("dojox/socket",["dojo","dojo/on","dojo/Evented","dojo/cookie","dojo/_base/url"],function(_1,on,_2){
 var _3=window.WebSocket;
 function _4(_5){
 if(typeof _5=="string"){
@@ -36,80 +36,74 @@ _10("open");
 _1.forEach(["message","close","error"],_10);
 function _10(_11){
 (_e.addEventListener||_e.on).call(_e,_11,function(_12){
-var _13=document.createEvent("MessageEvent");
-_13.initMessageEvent(_12.type,false,false,_12.data,_12.origin,_12.lastEventId,_12.source);
-_d.dispatchEvent(_13);
+on.emit(_d,_12.type,_12);
 },true);
 };
 };
-_4.LongPoll=function(_14){
-var _15=false,_16=true,_17,_18=[];
-var _19={send:function(_1a){
-var _1b=_1.delegate(_14);
-_1b.rawBody=_1a;
-clearTimeout(_17);
-var _1c=_16?(_16=false)||_19.firstRequest(_1b):_19.transport(_1b);
-_18.push(_1c);
-_1c.then(function(_1d){
-_19.readyState=1;
-_18.splice(_1.indexOf(_18,_1c),1);
-if(!_18.length){
-_17=setTimeout(_23,_14.interval);
+_4.LongPoll=function(_13){
+var _14=false,_15=true,_16,_17=[];
+var _18={send:function(_19){
+var _1a=_1.delegate(_13);
+_1a.rawBody=_19;
+clearTimeout(_16);
+var _1b=_15?(_15=false)||_18.firstRequest(_1a):_18.transport(_1a);
+_17.push(_1b);
+_1b.then(function(_1c){
+_18.readyState=1;
+_17.splice(_1.indexOf(_17,_1b),1);
+if(!_17.length){
+_16=setTimeout(_21,_13.interval);
 }
-if(_1d){
-_1f("message",{data:_1d},_1c);
+if(_1c){
+_1e("message",{data:_1c},_1b);
 }
-},function(_1e){
-_18.splice(_1.indexOf(_18,_1c),1);
-if(!_15){
-_1f("error",{error:_1e},_1c);
-if(!_18.length){
-_19.readyState=3;
-_1f("close",{wasClean:false},_1c);
+},function(_1d){
+_17.splice(_1.indexOf(_17,_1b),1);
+if(!_14){
+_1e("error",{error:_1d},_1b);
+if(!_17.length){
+_18.readyState=3;
+_1e("close",{wasClean:false},_1b);
 }
 }
 });
-return _1c;
+return _1b;
 },close:function(){
-_19.readyState=2;
-_15=true;
-for(var i=0;i<_18.length;i++){
-_18[i].cancel();
+_18.readyState=2;
+_14=true;
+for(var i=0;i<_17.length;i++){
+_17[i].cancel();
 }
-_19.readyState=3;
-_1f("close",{wasClean:true});
-},transport:_14.transport||_1.xhrPost,args:_14,url:_14.url,readyState:0,CONNECTING:0,OPEN:1,CLOSING:2,CLOSED:3,dispatchEvent:function(_20){
-_1f(_20.type,_20);
-},on:_2.prototype.on,firstRequest:function(_21){
-var _22=(_21.headers||(_21.headers={}));
-_22.Pragma="start-long-poll";
+_18.readyState=3;
+_1e("close",{wasClean:true});
+},transport:_13.transport||_1.xhrPost,args:_13,url:_13.url,readyState:0,CONNECTING:0,OPEN:1,CLOSING:2,CLOSED:3,on:_2.prototype.on,firstRequest:function(_1f){
+var _20=(_1f.headers||(_1f.headers={}));
+_20.Pragma="start-long-poll";
 try{
-return this.transport(_21);
+return this.transport(_1f);
 }
 finally{
-delete _22.Pragma;
+delete _20.Pragma;
 }
 }};
-function _23(){
-if(_19.readyState==0){
-_1f("open",{});
+function _21(){
+if(_18.readyState==0){
+_1e("open",{});
 }
-if(!_18.length){
-_19.send();
-}
-};
-function _1f(_24,_25,_26){
-if(_19["on"+_24]){
-var _27=document.createEvent("HTMLEvents");
-_27.initEvent(_24,false,false);
-_1.mixin(_27,_25);
-_27.ioArgs=_26&&_26.ioArgs;
-_19["on"+_24](_27);
+if(!_17.length){
+_18.send();
 }
 };
-_19.connect=_19.on;
-setTimeout(_23);
-return _19;
+function _1e(_22,_23,_24){
+if(_18["on"+_22]){
+_23.ioArgs=_24&&_24.ioArgs;
+_23.type=_22;
+on.emit(_18,_22,_23);
+}
+};
+_18.connect=_18.on;
+setTimeout(_21);
+return _18;
 };
 return _4;
 });

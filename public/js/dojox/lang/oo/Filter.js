@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox"],function(_1,_2,_3){
+define("dojox/lang/oo/Filter",["dijit","dojo","dojox"],function(_1,_2,_3){
 _2.provide("dojox.lang.oo.Filter");
 (function(){
 var oo=_3.lang.oo,F=oo.Filter=function(_4,_5){

@@ -3,6 +3,7 @@ define("dojox/gesture/tap",["dojo/_base/kernel","dojo/_base/declare","dojo/_base
 _1.experimental("dojox.gesture.tap");
 var _6=_2(_4,{defaultEvent:"tap",subEvents:["hold","doubletap"],holdThreshold:500,doubleTapTimeout:250,tapRadius:10,press:function(_7,e){
 if(e.touches&&e.touches.length>=2){
+clearTimeout(_7.tapTimeOut);
 delete _7.context;
 return;
 }
