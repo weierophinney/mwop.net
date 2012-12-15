@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox"],function(_1,_2,_3){
+define("dojox/sql/_crypto",["dijit","dojo","dojox"],function(_1,_2,_3){
 _2.provide("dojox.sql._crypto");
 _2.mixin(_3.sql._crypto,{_POOL_SIZE:100,encrypt:function(_4,_5,_6){
 this._initWorkerPool();

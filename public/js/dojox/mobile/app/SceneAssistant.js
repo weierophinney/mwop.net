@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox"],function(_1,_2,_3){
+define("dojox/mobile/app/SceneAssistant",["dijit","dojo","dojox"],function(_1,_2,_3){
 _2.provide("dojox.mobile.app.SceneAssistant");
 _2.experimental("dojox.mobile.app.SceneAssistant");
 _2.declare("dojox.mobile.app.SceneAssistant",null,{constructor:function(){

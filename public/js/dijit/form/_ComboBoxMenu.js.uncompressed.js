@@ -1,39 +1,30 @@
-//>>built
 define("dijit/form/_ComboBoxMenu", [
 	"dojo/_base/declare", // declare
 	"dojo/dom-class", // domClass.add domClass.remove
-	"dojo/dom-construct", // domConstruct.create
 	"dojo/dom-style", // domStyle.get
 	"dojo/keys", // keys.DOWN_ARROW keys.PAGE_DOWN keys.PAGE_UP keys.UP_ARROW
 	"../_WidgetBase",
 	"../_TemplatedMixin",
 	"./_ComboBoxMenuMixin",
 	"./_ListMouseMixin"
-], function(declare, domClass, domConstruct, domStyle, keys,
+], function(declare, domClass, domStyle, keys,
 			_WidgetBase, _TemplatedMixin, _ComboBoxMenuMixin, _ListMouseMixin){
 
-/*=====
-	var _WidgetBase = dijit._WidgetBase;
-	var _TemplatedMixin = dijit._TemplatedMixin;
-	var _ComboBoxMenuMixin = dijit.form._ComboBoxMenuMixin;
-	var _ListMouseMixin = dijit.form._ListMouseMixin;
-=====*/
 
 	// module:
 	//		dijit/form/_ComboBoxMenu
-	// summary:
-	//		Focus-less menu for internal use in `dijit.form.ComboBox`
 
 	return declare("dijit.form._ComboBoxMenu",[_WidgetBase, _TemplatedMixin, _ListMouseMixin, _ComboBoxMenuMixin], {
 		// summary:
-		//		Focus-less menu for internal use in `dijit.form.ComboBox`
-		//              Abstract methods that must be defined externally:
-		//                      onChange: item was explicitly chosen (mousedown somewhere on the menu and mouseup somewhere on the menu)
-		//                      onPage: next(1) or previous(-1) button pressed
+		//		Focus-less menu for internal use in `dijit/form/ComboBox`
+		//		Abstract methods that must be defined externally:
+		//
+		//		- onChange: item was explicitly chosen (mousedown somewhere on the menu and mouseup somewhere on the menu)
+		//		- onPage: next(1) or previous(-1) button pressed
 		// tags:
 		//		private
 
-		templateString: "<div class='dijitReset dijitMenu' data-dojo-attach-point='containerNode' style='overflow: auto; overflow-x: hidden;'>"
+		templateString: "<div class='dijitReset dijitMenu' data-dojo-attach-point='containerNode' style='overflow: auto; overflow-x: hidden;' role='listbox'>"
 				+"<div class='dijitMenuItem dijitMenuPreviousButton' data-dojo-attach-point='previousButton' role='option'></div>"
 				+"<div class='dijitMenuItem dijitMenuNextButton' data-dojo-attach-point='nextButton' role='option'></div>"
 				+"</div>",
@@ -49,10 +40,11 @@ define("dijit/form/_ComboBoxMenu", [
 		},
 
 		_createMenuItem: function(){
-			return domConstruct.create("div", {
-				"class": "dijitReset dijitMenuItem" +(this.isLeftToRight() ? "" : " dijitMenuItemRtl"),
-				role: "option"
-			});
+			// note: not using domConstruct.create() because need to specify document
+			var item = this.ownerDocument.createElement("div");
+			item.className = "dijitReset dijitMenuItem" +(this.isLeftToRight() ? "" : " dijitMenuItemRtl");
+			item.setAttribute("role", "option");
+			return item;
 		},
 
 		onHover: function(/*DomNode*/ node){
@@ -118,7 +110,7 @@ define("dijit/form/_ComboBoxMenu", [
 			// summary:
 			//		Handle keystroke event forwarded from ComboBox, returning false if it's
 			//		a keystroke I recognize and process, true otherwise.
-			switch(evt.charOrCode){
+			switch(evt.keyCode){
 				case keys.DOWN_ARROW:
 					this.selectNextNode();
 					return false;

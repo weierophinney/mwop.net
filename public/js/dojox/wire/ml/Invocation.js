@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox","dojo/require!dojox/wire/ml/Action"],function(_1,_2,_3){
+define("dojox/wire/ml/Invocation",["dijit","dojo","dojox","dojo/require!dojox/wire/ml/Action"],function(_1,_2,_3){
 _2.provide("dojox.wire.ml.Invocation");
 _2.require("dojox.wire.ml.Action");
 _2.declare("dojox.wire.ml.Invocation",_3.wire.ml.Action,{object:"",method:"",topic:"",parameters:"",result:"",error:"",_run:function(){

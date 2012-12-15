@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox"],function(_1,_2,_3){
+define("dojox/lang/aspect/memoizerGuard",["dijit","dojo","dojox"],function(_1,_2,_3){
 _2.provide("dojox.lang.aspect.memoizerGuard");
 (function(){
 var _4=_3.lang.aspect,_5=function(_6){

@@ -1,6 +1,5 @@
 //>>built
 define("dojox/embed/Flash",["dojo"],function(_1){
-_1.getObject("embed",true,dojox);
 var _2,_3;
 var _4=9;
 var _5="dojox-embed-flash-",_6=0;
@@ -105,22 +104,22 @@ return {major:(v[0]!=null)?parseInt(v[0]):0,minor:(v[1]!=null)?parseInt(v[1]):0,
 return {major:0,minor:0,rev:0};
 })();
 }
-dojox.embed.Flash=function(_13,_14){
+var _13=function(_14,_15){
 if(location.href.toLowerCase().indexOf("file://")>-1){
 throw new Error("dojox.embed.Flash can't be run directly from a file. To instatiate the required SWF correctly it must be run from a server, like localHost.");
 }
 this.available=dojox.embed.Flash.available;
-this.minimumVersion=_13.minimumVersion||_4;
+this.minimumVersion=_14.minimumVersion||_4;
 this.id=null;
 this.movie=null;
 this.domNode=null;
-if(_14){
-_14=_1.byId(_14);
+if(_15){
+_15=_1.byId(_15);
 }
 setTimeout(_1.hitch(this,function(){
-if(_13.expressInstall||this.available&&this.available>=this.minimumVersion){
-if(_13&&_14){
-this.init(_13,_14);
+if(_14.expressInstall||this.available&&this.available>=this.minimumVersion){
+if(_14&&_15){
+this.init(_14,_15);
 }else{
 this.onError("embed.Flash was not provided with the proper arguments.");
 }
@@ -133,8 +132,8 @@ this.onError("Flash version detected: "+this.available+" is out of date. Minimum
 }
 }),100);
 };
-_1.extend(dojox.embed.Flash,{onReady:function(_15){
-},onLoad:function(_16){
+_1.extend(_13,{onReady:function(_16){
+},onLoad:function(_17){
 },onError:function(msg){
 },_onload:function(){
 clearInterval(this._poller);
@@ -142,22 +141,22 @@ delete this._poller;
 delete this._pollCount;
 delete this._pollMax;
 this.onLoad(this.movie);
-},init:function(_17,_18){
+},init:function(_18,_19){
 this.destroy();
-_18=_1.byId(_18||this.domNode);
-if(!_18){
+_19=_1.byId(_19||this.domNode);
+if(!_19){
 throw new Error("dojox.embed.Flash: no domNode reference has been passed.");
 }
-var p=0,_19=false;
+var p=0,_1a=false;
 this._poller=null;
 this._pollCount=0;
 this._pollMax=15;
 this.pollTime=100;
 if(dojox.embed.Flash.initialized){
-this.id=dojox.embed.Flash.place(_17,_18);
-this.domNode=_18;
+this.id=dojox.embed.Flash.place(_18,_19);
+this.domNode=_19;
 setTimeout(_1.hitch(this,function(){
-this.movie=this.byId(this.id,_17.doc);
+this.movie=this.byId(this.id,_18.doc);
 this.onReady(this.movie);
 this._poller=setInterval(_1.hitch(this,function(){
 try{
@@ -188,9 +187,9 @@ this.id=this.movie=this.domNode=null;
 if(!this.movie){
 return;
 }
-var _1a=_1.delegate({id:true,movie:true,domNode:true,onReady:true,onLoad:true});
+var _1b=_1.delegate({id:true,movie:true,domNode:true,onReady:true,onLoad:true});
 for(var p in this){
-if(!_1a[p]){
+if(!_1b[p]){
 delete this[p];
 }
 }
@@ -199,51 +198,52 @@ _1.connect(this,"onLoad",this,"_destroy");
 }else{
 this._destroy();
 }
-},byId:function(_1b,doc){
+},byId:function(_1c,doc){
 doc=doc||document;
-if(doc.embeds[_1b]){
-return doc.embeds[_1b];
+if(doc.embeds[_1c]){
+return doc.embeds[_1c];
 }
-if(doc[_1b]){
-return doc[_1b];
+if(doc[_1c]){
+return doc[_1c];
 }
-if(window[_1b]){
-return window[_1b];
+if(window[_1c]){
+return window[_1c];
 }
-if(document[_1b]){
-return document[_1b];
+if(document[_1c]){
+return document[_1c];
 }
 return null;
 }});
-_1.mixin(dojox.embed.Flash,{minSupported:8,available:_3.major,supported:(_3.major>=_3.required),minimumRequired:_3.required,version:_3,initialized:false,onInitialize:function(){
-dojox.embed.Flash.initialized=true;
-},__ie_markup__:function(_1c){
-return _2(_1c);
-},proxy:function(obj,_1d){
-_1.forEach((_1.isArray(_1d)?_1d:[_1d]),function(_1e){
-this[_1e]=_1.hitch(this,function(){
+_1.mixin(_13,{minSupported:8,available:_3.major,supported:(_3.major>=_3.required),minimumRequired:_3.required,version:_3,initialized:false,onInitialize:function(){
+_13.initialized=true;
+},__ie_markup__:function(_1d){
+return _2(_1d);
+},proxy:function(obj,_1e){
+_1.forEach((_1.isArray(_1e)?_1e:[_1e]),function(_1f){
+this[_1f]=_1.hitch(this,function(){
 return (function(){
-return eval(this.movie.CallFunction("<invoke name=\""+_1e+"\" returntype=\"javascript\">"+"<arguments>"+_1.map(arguments,function(_1f){
-return __flash__toXML(_1f);
+return eval(this.movie.CallFunction("<invoke name=\""+_1f+"\" returntype=\"javascript\">"+"<arguments>"+_1.map(arguments,function(_20){
+return __flash__toXML(_20);
 }).join("")+"</arguments>"+"</invoke>"));
 }).apply(this,arguments||[]);
 });
 },obj);
 }});
-dojox.embed.Flash.place=function(_20,_21){
-var o=_2(_20);
-_21=_1.byId(_21);
-if(!_21){
-_21=_1.doc.createElement("div");
-_21.id=o.id+"-container";
-_1.body().appendChild(_21);
+_13.place=function(_21,_22){
+var o=_2(_21);
+_22=_1.byId(_22);
+if(!_22){
+_22=_1.doc.createElement("div");
+_22.id=o.id+"-container";
+_1.body().appendChild(_22);
 }
 if(o){
-_21.innerHTML=o.markup;
+_22.innerHTML=o.markup;
 return o.id;
 }
 return null;
 };
-dojox.embed.Flash.onInitialize();
-return dojox.embed.Flash;
+_13.onInitialize();
+_1.setObject("dojox.embed.Flash",_13);
+return _13;
 });

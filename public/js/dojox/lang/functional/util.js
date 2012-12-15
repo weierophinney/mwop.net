@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox","dojo/require!dojox/lang/functional/lambda"],function(_1,_2,_3){
+define("dojox/lang/functional/util",["dijit","dojo","dojox","dojo/require!dojox/lang/functional/lambda"],function(_1,_2,_3){
 _2.provide("dojox.lang.functional.util");
 _2.require("dojox.lang.functional.lambda");
 (function(){

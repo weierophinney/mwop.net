@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox","dojo/require!dojox/mobile/app/_Widget,dojo/fx"],function(_1,_2,_3){
+define("dojox/mobile/app/ListSelector",["dijit","dojo","dojox","dojo/require!dojox/mobile/app/_Widget,dojo/fx"],function(_1,_2,_3){
 _2.provide("dojox.mobile.app.ListSelector");
 _2.experimental("dojox.mobile.app.ListSelector");
 _2.require("dojox.mobile.app._Widget");

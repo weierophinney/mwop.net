@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox","dojo/require!dijit/_Widget,dojox/wire/_base"],function(_1,_2,_3){
+define("dojox/wire/ml/DataStore",["dijit","dojo","dojox","dojo/require!dijit/_Widget,dojox/wire/_base"],function(_1,_2,_3){
 _2.provide("dojox.wire.ml.DataStore");
 _2.require("dijit._Widget");
 _2.require("dojox.wire._base");

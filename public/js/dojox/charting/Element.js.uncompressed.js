@@ -1,29 +1,28 @@
-//>>built
-define("dojox/charting/Element", ["dojo/_base/lang", "dojo/_base/array", "dojo/dom-construct","dojo/_base/declare", "dojox/gfx", "dojox/gfx/utils", "dojox/gfx/shape"],
-	function(lang, arr, domConstruct, declare, gfx, utils, shape){
-	
+define("dojox/charting/Element", ["dojo/_base/lang", "dojo/_base/array", "dojo/dom-construct","dojo/_base/declare", "dojox/gfx", "dojox/gfx/shape"],
+	function(lang, arr, domConstruct, declare, gfx, shape){
+
 	return declare("dojox.charting.Element", null, {
-		//	summary:
+		// summary:
 		//		A base class that is used to build other elements of a chart, such as
 		//		a series.
-		//	chart: dojox.charting.Chart
+		// chart: dojox/charting/Chart
 		//		The parent chart for this element.
-		//	group: dojox.gfx.Group
+		// group: dojox/gfx/shape.Group
 		//		The visual GFX group representing this element.
-		//	htmlElement: Array
+		// htmlElement: Array
 		//		Any DOMNodes used as a part of this element (such as HTML-based labels).
-		//	dirty: Boolean
+		// dirty: Boolean
 		//		A flag indicating whether or not this element needs to be rendered.
-	
+
 		chart: null,
 		group: null,
 		htmlElements: null,
 		dirty: true,
-	
+
 		constructor: function(chart){
-			//	summary:
+			// summary:
 			//		Creates a new charting element.
-			//	chart: dojox.charting.Chart
+			// chart: dojox/charting/Chart
 			//		The chart that this element belongs to.
 			this.chart = chart;
 			this.group = null;
@@ -32,32 +31,21 @@ define("dojox/charting/Element", ["dojo/_base/lang", "dojo/_base/array", "dojo/d
 			this.trailingSymbol = "...";
 			this._events = [];
 		},
-		createGroup: function(creator){
-			//	summary:
-			//		Convenience function to create a new dojox.gfx.Group.
-			//	creator: dojox.gfx.Surface?
-			//		An optional surface in which to create this group.
-			//	returns: dojox.charting.Element
-			//		A reference to this object for functional chaining.
-			if(!creator){ creator = this.chart.surface; }
-			if(!this.group){
-				this.group = creator.createGroup();
-			}
-			return this;	//	dojox.charting.Element
-		},
 		purgeGroup: function(){
-			//	summary:
+			// summary:
 			//		Clear any elements out of our group, and destroy the group.
-			//	returns: dojox.charting.Element
+			// returns: dojox/charting/Element
 			//		A reference to this object for functional chaining.
 			this.destroyHtmlElements();
 			if(this.group){
 				// since 1.7.x we need dispose shape otherwise there is a memoryleak
-				utils.forEach(this.group, function(child){
-					shape.dispose(child);
-				});
-				this.group.clear();
 				this.group.removeShape();
+				var children = this.group.children;
+				for(var i = 0; i < children.length;++i){
+					shape.dispose(children[i], true);
+				}
+				this.group.clear();
+				shape.dispose(this.group, true);
 				this.group = null;
 			}
 			this.dirty = true;
@@ -70,15 +58,19 @@ define("dojox/charting/Element", ["dojo/_base/lang", "dojo/_base/array", "dojo/d
 			return this;	//	dojox.charting.Element
 		},
 		cleanGroup: function(creator){
-			//	summary:
+			// summary:
 			//		Clean any elements (HTML or GFX-based) out of our group, and create a new one.
-			//	creator: dojox.gfx.Surface?
+			// creator: dojox/gfx/shape.Surface?
 			//		An optional surface to work with.
-			//	returns: dojox.charting.Element
+			// returns: dojox/charting/Element
 			//		A reference to this object for functional chaining.
 			this.destroyHtmlElements();
 			if(!creator){ creator = this.chart.surface; }
 			if(this.group){
+				var children = this.group.children;
+				for(var i = 0; i < children.length;++i){
+					shape.dispose(children[i], true);
+				}
 				this.group.clear();
 			}else{
 				this.group = creator.createGroup();
@@ -87,7 +79,7 @@ define("dojox/charting/Element", ["dojo/_base/lang", "dojo/_base/array", "dojo/d
 			return this;	//	dojox.charting.Element
 		},
 		destroyHtmlElements: function(){
-			//	summary:
+			// summary:
 			//		Destroy any DOMNodes that may have been created as a part of this element.
 			if(this.htmlElements.length){
 				arr.forEach(this.htmlElements, domConstruct.destroy);
@@ -95,7 +87,7 @@ define("dojox/charting/Element", ["dojo/_base/lang", "dojo/_base/array", "dojo/d
 			}
 		},
 		destroy: function(){
-			//	summary:
+			// summary:
 			//		API addition to conform to the rest of the Dojo Toolkit's standard.
 			this.purgeGroup();
 		},
@@ -104,22 +96,22 @@ define("dojox/charting/Element", ["dojo/_base/lang", "dojo/_base/array", "dojo/d
 			return gfx._base._getTextBox(s, {font: font}).w || 0;
 		},
 		getTextWithLimitLength: function(s, font, limitWidth, truncated){
-			//	summary:
+			// summary:
 			//		Get the truncated string based on the limited width in px(dichotomy algorithm)
-			//	s: String?
+			// s: String?
 			//		candidate text.
-			//	font: String?
+			// font: String?
 			//		text's font style.
-			//	limitWidth: Number?
+			// limitWidth: Number?
 			//		text limited width in px.
-			//	truncated: Boolean?
+			// truncated: Boolean?
 			//		whether the input text(s) has already been truncated.
-			//	returns: Object
-			//		{
-			//			text: processed text, maybe truncated or not
-			//			truncated: whether text has been truncated
-			//		}
-			if (!s || s.length <= 0) {
+			// returns: Object
+			// |	{
+			// |		text: processed text, maybe truncated or not,
+			// |		truncated: whether text has been truncated
+			// |	}
+			if(!s || s.length <= 0){
 				return {
 					text: "",
 					truncated: truncated || false
@@ -136,7 +128,7 @@ define("dojox/charting/Element", ["dojo/_base/lang", "dojo/_base/array", "dojo/d
 				trucPercentage = 0.618,
 				minStr = s.substring(0,1) + this.trailingSymbol,
 				minWidth = this.getTextWidth(minStr, font);
-			if (limitWidth <= minWidth) {
+			if(limitWidth <= minWidth){
 				return {
 					text: minStr,
 					truncated: true
@@ -159,7 +151,7 @@ define("dojox/charting/Element", ["dojo/_base/lang", "dojo/_base/array", "dojo/d
 						return {
 							text: (s.substring(0,begin) + this.trailingSymbol),
 							truncated: true
-						};
+							};
 					}
 					var index = begin + Math.round((end - begin) * trucPercentage),
 						widthIntercepted = this.getTextWidth(s.substring(0, index), font);
@@ -174,21 +166,21 @@ define("dojox/charting/Element", ["dojo/_base/lang", "dojo/_base/array", "dojo/d
 			}
 		},
 		getTextWithLimitCharCount: function(s, font, wcLimit, truncated){
-			//	summary:
+			// summary:
 			//		Get the truncated string based on the limited character count(dichotomy algorithm)
-			//	s: String?
+			// s: String?
 			//		candidate text.
-			//	font: String?
+			// font: String?
 			//		text's font style.
-			//	wcLimit: Number?
+			// wcLimit: Number?
 			//		text limited character count.
-			//	truncated: Boolean?
+			// truncated: Boolean?
 			//		whether the input text(s) has already been truncated.
-			//	returns: Object
-			//		{
-			//			text: processed text, maybe truncated or not
-			//			truncated: whether text has been truncated
-			//		}
+			// returns: Object
+			// |	{
+			// |		text: processed text, maybe truncated or not,
+			// |		truncated: whether text has been truncated
+			// |	}
 			if (!s || s.length <= 0) {
 				return {
 					text: "",
@@ -212,7 +204,7 @@ define("dojox/charting/Element", ["dojo/_base/lang", "dojo/_base/array", "dojo/d
 			if(!fill || !fill.type || !fill.space){
 				return fill;
 			}
-			var space = fill.space;
+			var space = fill.space, span;
 			switch(fill.type){
 				case "linear":
 					if(space === "plot" || space === "shapeX" || space === "shapeY"){
@@ -222,13 +214,13 @@ define("dojox/charting/Element", ["dojo/_base/lang", "dojo/_base/array", "dojo/d
 						// process dimensions
 						if(space === "plot" || space === "shapeX"){
 							// process Y
-							var span = dim.height - offsets.t - offsets.b;
+							span = dim.height - offsets.t - offsets.b;
 							fill.y1 = offsets.t + span * fill.y1 / 100;
 							fill.y2 = offsets.t + span * fill.y2 / 100;
 						}
 						if(space === "plot" || space === "shapeY"){
 							// process X
-							var span = dim.width - offsets.l - offsets.r;
+							span = dim.width - offsets.l - offsets.r;
 							fill.x1 = offsets.l + span * fill.x1 / 100;
 							fill.x2 = offsets.l + span * fill.x2 / 100;
 						}
@@ -256,13 +248,13 @@ define("dojox/charting/Element", ["dojo/_base/lang", "dojo/_base/array", "dojo/d
 						// process dimensions
 						if(space === "plot" || space === "shapeX"){
 							// process Y
-							var span = dim.height - offsets.t - offsets.b;
+							span = dim.height - offsets.t - offsets.b;
 							fill.y = offsets.t + span * fill.y / 100;
 							fill.height = span * fill.height / 100;
 						}
 						if(space === "plot" || space === "shapeY"){
 							// process X
-							var span = dim.width - offsets.l - offsets.r;
+							span = dim.width - offsets.l - offsets.r;
 							fill.x = offsets.l + span * fill.x / 100;
 							fill.width = span * fill.width / 100;
 						}
@@ -276,7 +268,7 @@ define("dojox/charting/Element", ["dojo/_base/lang", "dojo/_base/array", "dojo/d
 			if(!fill || !fill.space){
 				return fill;
 			}
-			var space = fill.space;
+			var space = fill.space, span;
 			switch(fill.type){
 				case "linear":
 					if(space === "shape" || space === "shapeX" || space === "shapeY"){
@@ -286,13 +278,13 @@ define("dojox/charting/Element", ["dojo/_base/lang", "dojo/_base/array", "dojo/d
 						// process dimensions
 						if(space === "shape" || space === "shapeX"){
 							// process X
-							var span = bbox.width;
+							span = bbox.width;
 							fill.x1 = bbox.x + span * fill.x1 / 100;
 							fill.x2 = bbox.x + span * fill.x2 / 100;
 						}
 						if(space === "shape" || space === "shapeY"){
 							// process Y
-							var span = bbox.height;
+							span = bbox.height;
 							fill.y1 = bbox.y + span * fill.y1 / 100;
 							fill.y2 = bbox.y + span * fill.y2 / 100;
 						}
@@ -318,13 +310,13 @@ define("dojox/charting/Element", ["dojo/_base/lang", "dojo/_base/array", "dojo/d
 						// process dimensions
 						if(space === "shape" || space === "shapeX"){
 							// process X
-							var span = bbox.width;
+							span = bbox.width;
 							fill.x = bbox.x + span * fill.x / 100;
 							fill.width = span * fill.width / 100;
 						}
 						if(space === "shape" || space === "shapeY"){
 							// process Y
-							var span = bbox.height;
+							span = bbox.height;
 							fill.y = bbox.y + span * fill.y / 100;
 							fill.height = span * fill.height / 100;
 						}

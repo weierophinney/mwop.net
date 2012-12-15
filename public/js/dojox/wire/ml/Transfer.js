@@ -1,11 +1,11 @@
 //>>built
-define(["dijit","dojo","dojox","dojo/require!dijit/_Widget,dijit/_Container,dojox/wire/_base,dojox/wire/ml/Action"],function(_1,_2,_3){
+define("dojox/wire/ml/Transfer",["dijit","dojo","dojox","dojo/require!dijit/_Widget,dijit/_Container,dojox/wire/_base,dojox/wire/ml/Action"],function(_1,_2,_3){
 _2.provide("dojox.wire.ml.Transfer");
 _2.require("dijit._Widget");
 _2.require("dijit._Container");
 _2.require("dojox.wire._base");
 _2.require("dojox.wire.ml.Action");
-_2.declare("dojox.wire.ml.Transfer",_3.wire.ml.Action,{source:"",sourceStore:"",sourceAttribute:"",sourcePath:"",type:"",converter:"",delimiter:"",target:"",targetStore:"",targetAttribute:"",targetPath:"",_run:function(){
+_2.declare("dojox.wire.ml.Transfer",_3.wire.ml.Action,{source:"",sourceStore:"",sourceAttribute:"",sourcePath:"",type:"",converter:"",target:"",targetStore:"",targetAttribute:"",targetPath:"",delimiter:"",_run:function(){
 var _4=this._getWire("source");
 var _5=this._getWire("target");
 _3.wire.transfer(_4,_5,arguments);

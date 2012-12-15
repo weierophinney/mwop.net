@@ -71,6 +71,7 @@ mwop=/home/matthew/git/sites/mwop CD=. filter="README TODO.md *.php *.xml *.txt 
     }
     js=js filter="*.js" {
      blog.js
+     githublinks.js
      scroll.js
     }
    }
@@ -88,6 +89,7 @@ mwop=/home/matthew/git/sites/mwop CD=. filter="README TODO.md *.php *.xml *.txt 
     analytics.phtml
     dojo-config.phtml
     error.phtml
+    github.phtml
     github-links.phtml
     layout.phtml
     projects.phtml

@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox"],function(_1,_2,_3){
+define("dojox/storage/manager",["dijit","dojo","dojox"],function(_1,_2,_3){
 _2.provide("dojox.storage.manager");
 _3.storage.manager=new function(){
 this.currentProvider=null;

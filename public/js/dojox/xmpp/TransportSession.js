@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox","dojo/require!dojox/xmpp/bosh,dojox/xmpp/util,dojox/data/dom"],function(_1,_2,_3){
+define("dojox/xmpp/TransportSession",["dijit","dojo","dojox","dojo/require!dojox/xmpp/bosh,dojox/xmpp/util,dojox/data/dom"],function(_1,_2,_3){
 _2.provide("dojox.xmpp.TransportSession");
 _2.require("dojox.xmpp.bosh");
 _2.require("dojox.xmpp.util");

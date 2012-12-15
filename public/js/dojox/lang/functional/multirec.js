@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox","dojo/require!dojox/lang/functional/lambda,dojox/lang/functional/util"],function(_1,_2,_3){
+define("dojox/lang/functional/multirec",["dijit","dojo","dojox","dojo/require!dojox/lang/functional/lambda,dojox/lang/functional/util"],function(_1,_2,_3){
 _2.provide("dojox.lang.functional.multirec");
 _2.require("dojox.lang.functional.lambda");
 _2.require("dojox.lang.functional.util");

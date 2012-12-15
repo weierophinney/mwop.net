@@ -1,4 +1,3 @@
-//>>built
 define("dijit/form/_ToggleButtonMixin", [
 	"dojo/_base/declare", // declare
 	"dojo/dom-attr" // domAttr.set
@@ -6,15 +5,13 @@ define("dijit/form/_ToggleButtonMixin", [
 
 // module:
 //		dijit/form/_ToggleButtonMixin
-// summary:
-//		A mixin to provide functionality to allow a button that can be in two states (checked or not).
 
 return declare("dijit.form._ToggleButtonMixin", null, {
 	// summary:
 	//		A mixin to provide functionality to allow a button that can be in two states (checked or not).
 
 	// checked: Boolean
-	//		Corresponds to the native HTML <input> element's attribute.
+	//		Corresponds to the native HTML `<input>` element's attribute.
 	//		In markup, specified as "checked='checked'" or just "checked".
 	//		True if the button is depressed, or the checkbox is checked,
 	//		or the radio button is selected, etc.
@@ -33,8 +30,14 @@ return declare("dijit.form._ToggleButtonMixin", null, {
 
 	_setCheckedAttr: function(/*Boolean*/ value, /*Boolean?*/ priorityChange){
 		this._set("checked", value);
-		domAttr.set(this.focusNode || this.domNode, "checked", value);
-		(this.focusNode || this.domNode).setAttribute(this._aria_attr, value ? "true" : "false"); // aria values should be strings
+		var node = this.focusNode || this.domNode;
+		domAttr.set(node, "checked", !!value); // "mixed" -> true
+		if(value){
+			node.setAttribute("checked", "");
+		}else{
+			node.removeAttribute("checked");
+		}
+		node.setAttribute(this._aria_attr, String(value)); // aria values should be strings
 		this._handleOnChange(value, priorityChange);
 	},
 

@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox","dojo/require!dojox/secure/DOM,dojox/secure/capability,dojo/NodeList-fx,dojo/_base/url"],function(_1,_2,_3){
+define("dojox/secure/sandbox",["dijit","dojo","dojox","dojo/require!dojox/secure/DOM,dojox/secure/capability,dojo/NodeList-fx,dojo/_base/url"],function(_1,_2,_3){
 _2.provide("dojox.secure.sandbox");
 _2.require("dojox.secure.DOM");
 _2.require("dojox.secure.capability");

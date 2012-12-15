@@ -6,6 +6,10 @@ return array(
         ),
     ),
 
+    'xhr' => array(
+        'github-links',
+    ),
+
     'view' => array(
         'dojo-config' => 'dojo-config.phtml',
         'search'      => array(
@@ -80,6 +84,17 @@ return array(
                     'defaults' => array(
                         'controller' => 'PhlySimplePage\Controller\Page',
                         'template'   => 'pages/resume',
+                    ),
+                ),
+            ),
+            'github-links' => array(
+                'type'    => 'Literal',
+                'options' => array(
+                    'route' => '/github/links.xhr',
+                    'defaults' => array(
+                        'controller'   => 'PhlySimplePage\Controller\Page',
+                        'template'     => 'github-links',
+                        'do_not_cache' => true,
                     ),
                 ),
             ),

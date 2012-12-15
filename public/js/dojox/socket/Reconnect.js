@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox"],function(_1,_2,_3){
+define("dojox/socket/Reconnect",["dijit","dojo","dojox"],function(_1,_2,_3){
 _2.provide("dojox.socket.Reconnect");
 _3.socket.Reconnect=function(_4,_5){
 _5=_5||{};

@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox"],function(_1,_2,_3){
+define("dojox/lang/aspect/cflow",["dijit","dojo","dojox"],function(_1,_2,_3){
 _2.provide("dojox.lang.aspect.cflow");
 (function(){
 var _4=_3.lang.aspect;

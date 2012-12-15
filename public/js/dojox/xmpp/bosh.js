@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox","dojo/require!dojo/io/script,dojo/io/iframe,dojox/xml/parser"],function(_1,_2,_3){
+define("dojox/xmpp/bosh",["dijit","dojo","dojox","dojo/require!dojo/io/script,dojo/io/iframe,dojox/xml/parser"],function(_1,_2,_3){
 _2.provide("dojox.xmpp.bosh");
 _2.require("dojo.io.script");
 _2.require("dojo.io.iframe");

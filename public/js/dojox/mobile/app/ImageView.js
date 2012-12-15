@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox","dojo/require!dojox/mobile/app/_Widget,dojo/fx/easing"],function(_1,_2,_3){
+define("dojox/mobile/app/ImageView",["dijit","dojo","dojox","dojo/require!dojox/mobile/app/_Widget,dojo/fx/easing"],function(_1,_2,_3){
 _2.provide("dojox.mobile.app.ImageView");
 _2.experimental("dojox.mobile.app.ImageView");
 _2.require("dojox.mobile.app._Widget");

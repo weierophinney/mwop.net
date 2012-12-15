@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox","dojo/require!dijit/_Widget,dijit/_Templated"],function(_1,_2,_3){
+define("dojox/widget/Loader",["dijit","dojo","dojox","dojo/require!dijit/_Widget,dijit/_Templated"],function(_1,_2,_3){
 _2.provide("dojox.widget.Loader");
 _2.deprecated("dojox.widget.Loader","","2.0");
 _2.require("dijit._Widget");

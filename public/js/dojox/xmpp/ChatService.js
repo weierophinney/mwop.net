@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox"],function(_1,_2,_3){
+define("dojox/xmpp/ChatService",["dijit","dojo","dojox"],function(_1,_2,_3){
 _2.provide("dojox.xmpp.ChatService");
 _3.xmpp.chat={CHAT_STATE_NS:"http://jabber.org/protocol/chatstates",ACTIVE_STATE:"active",COMPOSING_STATE:"composing",INACTIVE_STATE:"inactive",PAUSED_STATE:"paused",GONE_STATE:"gone"};
 _2.declare("dojox.xmpp.ChatService",null,{state:"",constructor:function(){

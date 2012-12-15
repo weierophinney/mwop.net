@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox","dojo/require!dijit/layout/_LayoutWidget,dijit/_Templated"],function(_1,_2,_3){
+define("dojox/widget/SortList",["dijit","dojo","dojox","dojo/require!dijit/layout/_LayoutWidget,dijit/_Templated"],function(_1,_2,_3){
 _2.provide("dojox.widget.SortList");
 _2.experimental("dojox.widget.SortList");
 _2.require("dijit.layout._LayoutWidget");
