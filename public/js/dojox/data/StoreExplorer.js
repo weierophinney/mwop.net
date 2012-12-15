@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox","dojo/require!dojox/grid/DataGrid,dojox/data/ItemExplorer,dijit/layout/BorderContainer,dijit/layout/ContentPane"],function(_1,_2,_3){
+define("dojox/data/StoreExplorer",["dijit","dojo","dojox","dojo/require!dojox/grid/DataGrid,dojox/data/ItemExplorer,dijit/layout/BorderContainer,dijit/layout/ContentPane"],function(_1,_2,_3){
 _2.provide("dojox.data.StoreExplorer");
 _2.require("dojox.grid.DataGrid");
 _2.require("dojox.data.ItemExplorer");

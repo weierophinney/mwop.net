@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox","dojo/require!dojox/flash,dojox/storage/manager,dojox/storage/Provider"],function(_1,_2,_3){
+define("dojox/storage/FlashStorageProvider",["dijit","dojo","dojox","dojo/require!dojox/flash,dojox/storage/manager,dojox/storage/Provider"],function(_1,_2,_3){
 _2.provide("dojox.storage.FlashStorageProvider");
 _2.require("dojox.flash");
 _2.require("dojox.storage.manager");

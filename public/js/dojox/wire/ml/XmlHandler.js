@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox","dojo/require!dojox/wire/ml/RestHandler,dojox/xml/parser,dojox/wire/_base,dojox/wire/ml/util"],function(_1,_2,_3){
+define("dojox/wire/ml/XmlHandler",["dijit","dojo","dojox","dojo/require!dojox/wire/ml/RestHandler,dojox/xml/parser,dojox/wire/_base,dojox/wire/ml/util"],function(_1,_2,_3){
 _2.provide("dojox.wire.ml.XmlHandler");
 _2.require("dojox.wire.ml.RestHandler");
 _2.require("dojox.xml.parser");

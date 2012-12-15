@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox","dojo/require!dojox/wire/CompositeWire"],function(_1,_2,_3){
+define("dojox/wire/TableAdapter",["dijit","dojo","dojox","dojo/require!dojox/wire/CompositeWire"],function(_1,_2,_3){
 _2.provide("dojox.wire.TableAdapter");
 _2.require("dojox.wire.CompositeWire");
 _2.declare("dojox.wire.TableAdapter",_3.wire.CompositeWire,{_wireClass:"dojox.wire.TableAdapter",constructor:function(_4){

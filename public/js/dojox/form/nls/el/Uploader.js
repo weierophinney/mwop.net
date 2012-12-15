@@ -1,6 +1,2 @@
 //>>built
-define(
-"dojox/form/nls/el/Uploader", ({
-	label: "Επιλογή αρχείων..."
-})
-);
+define("dojox/form/nls/el/Uploader",({label:"Επιλογή αρχείων..."}));

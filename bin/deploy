@@ -17,4 +17,6 @@
     php composer.phar install ;
     # ensure users DB has proper permissions
     chmod a+rw data/users.db
+    # flush cache
+    php public/index.php phlysimplepage cache clear all
 )

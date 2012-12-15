@@ -1,7 +1,2 @@
 //>>built
-define(
-"dojox/form/nls/ru/CheckedMultiSelect", ({
-	invalidMessage: "Необходимо выбрать, как минимум, один элемент.",
-	multiSelectLabelText: "Выбрано элементов: {num}"
-})
-);
+define("dojox/form/nls/ru/CheckedMultiSelect",({invalidMessage:"Выберите хотя бы один элемент.",multiSelectLabelText:"Выбрано: {num}"}));

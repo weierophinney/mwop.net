@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox","dojo/require!dojox/widget/Portlet,dijit/Tooltip,dijit/form/TextBox,dijit/form/Button,dojox/data/GoogleFeedStore"],function(_1,_2,_3){
+define("dojox/widget/FeedPortlet",["dijit","dojo","dojox","dojo/require!dojox/widget/Portlet,dijit/Tooltip,dijit/form/TextBox,dijit/form/Button,dojox/data/GoogleFeedStore"],function(_1,_2,_3){
 _2.provide("dojox.widget.FeedPortlet");
 _2.require("dojox.widget.Portlet");
 _2.require("dijit.Tooltip");

@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox","dojo/require!dojox/mobile/app/SceneController"],function(_1,_2,_3){
+define("dojox/mobile/app/StageController",["dijit","dojo","dojox","dojo/require!dojox/mobile/app/SceneController"],function(_1,_2,_3){
 _2.provide("dojox.mobile.app.StageController");
 _2.experimental("dojox.mobile.app.StageController");
 _2.require("dojox.mobile.app.SceneController");

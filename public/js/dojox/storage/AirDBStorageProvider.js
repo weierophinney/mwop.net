@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox","dojo/require!dojox/storage/manager,dojox/storage/Provider"],function(_1,_2,_3){
+define("dojox/storage/AirDBStorageProvider",["dijit","dojo","dojox","dojo/require!dojox/storage/manager,dojox/storage/Provider"],function(_1,_2,_3){
 _2.provide("dojox.storage.AirDBStorageProvider");
 _2.require("dojox.storage.manager");
 _2.require("dojox.storage.Provider");

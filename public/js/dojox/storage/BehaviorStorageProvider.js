@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox","dojo/require!dojox/storage/Provider,dojox/storage/manager"],function(_1,_2,_3){
+define("dojox/storage/BehaviorStorageProvider",["dijit","dojo","dojox","dojo/require!dojox/storage/Provider,dojox/storage/manager"],function(_1,_2,_3){
 _2.provide("dojox.storage.BehaviorStorageProvider");
 _2.require("dojox.storage.Provider");
 _2.require("dojox.storage.manager");

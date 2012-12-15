@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox","dojo/require!dijit/_WidgetBase,dojo/string"],function(_1,_2,_3){
+define("dojox/mobile/app/ImageThumbView",["dijit","dojo","dojox","dojo/require!dijit/_WidgetBase,dojo/string"],function(_1,_2,_3){
 _2.provide("dojox.mobile.app.ImageThumbView");
 _2.experimental("dojox.mobile.app.ImageThumbView");
 _2.require("dijit._WidgetBase");

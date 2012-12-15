@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox","dojo/require!dojo/window,dijit/_WidgetBase,dijit/focus"],function(_1,_2,_3){
+define("dojox/mobile/app/_FormWidget",["dijit","dojo","dojox","dojo/require!dojo/window,dijit/_WidgetBase,dijit/focus"],function(_1,_2,_3){
 _2.provide("dojox.mobile.app._FormWidget");
 _2.experimental("dojox.mobile.app._FormWidget");
 _2.require("dojo.window");

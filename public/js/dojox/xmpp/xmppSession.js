@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox","dojo/require!dojox/xmpp/TransportSession,dojox/xmpp/RosterService,dojox/xmpp/PresenceService,dojox/xmpp/UserService,dojox/xmpp/ChatService,dojox/xmpp/sasl"],function(_1,_2,_3){
+define("dojox/xmpp/xmppSession",["dijit","dojo","dojox","dojo/require!dojox/xmpp/TransportSession,dojox/xmpp/RosterService,dojox/xmpp/PresenceService,dojox/xmpp/UserService,dojox/xmpp/ChatService,dojox/xmpp/sasl"],function(_1,_2,_3){
 _2.provide("dojox.xmpp.xmppSession");
 _2.require("dojox.xmpp.TransportSession");
 _2.require("dojox.xmpp.RosterService");
@@ -323,7 +323,7 @@ case "status":
 case "show":
 p[n.nodeName]=n.firstChild.nodeValue;
 break;
-case "status":
+case "priority":
 p.priority=parseInt(n.firstChild.nodeValue);
 break;
 case "x":

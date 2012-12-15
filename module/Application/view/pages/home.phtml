@@ -34,7 +34,10 @@
 </aside>
 
 <aside class="six columns omega home">
-    <?php echo $this->render('github-links'); ?>
+    <?php 
+        $this->headScript()->appendScript('require(["Application/githublinks"], function(links) {});');
+        echo $this->render('github'); 
+    ?>
 
     <a class="twitter-timeline" href="https://twitter.com/mwop" data-widget-id="269876420560420864">Tweets by @mwop</a>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>

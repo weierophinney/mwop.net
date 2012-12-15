@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox","dojo/require!dojox/lang/oo/Decorator,dojox/lang/oo/general"],function(_1,_2,_3){
+define("dojox/lang/oo/aop",["dijit","dojo","dojox","dojo/require!dojox/lang/oo/Decorator,dojox/lang/oo/general"],function(_1,_2,_3){
 _2.provide("dojox.lang.oo.aop");
 _2.require("dojox.lang.oo.Decorator");
 _2.require("dojox.lang.oo.general");

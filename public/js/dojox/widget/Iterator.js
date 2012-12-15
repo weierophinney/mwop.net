@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox","dojo/require!dijit/Declaration"],function(_1,_2,_3){
+define("dojox/widget/Iterator",["dijit","dojo","dojox","dojo/require!dijit/Declaration"],function(_1,_2,_3){
 _2.provide("dojox.widget.Iterator");
 _2.require("dijit.Declaration");
 _2.experimental("dojox.widget.Iterator");

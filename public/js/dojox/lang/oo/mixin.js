@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox","dojo/require!dojox/lang/oo/Filter,dojox/lang/oo/Decorator"],function(_1,_2,_3){
+define("dojox/lang/oo/mixin",["dijit","dojo","dojox","dojo/require!dojox/lang/oo/Filter,dojox/lang/oo/Decorator"],function(_1,_2,_3){
 _2.provide("dojox.lang.oo.mixin");
 _2.experimental("dojox.lang.oo.mixin");
 _2.require("dojox.lang.oo.Filter");

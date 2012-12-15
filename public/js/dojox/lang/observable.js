@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox"],function(_1,_2,_3){
+define("dojox/lang/observable",["dijit","dojo","dojox"],function(_1,_2,_3){
 _2.provide("dojox.lang.observable");
 _2.experimental("dojox.lang.observable");
 _3.lang.observable=function(_4,_5,_6,_7){

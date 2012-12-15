@@ -19,7 +19,7 @@
                 "php": ">=5.2.0",
                 "ext-curl": "*"
             },
-            "time": "1355336724",
+            "time": "2012-12-12 18:25:24",
             "type": "library",
             "installation-source": "source",
             "autoload": {
@@ -75,7 +75,7 @@
                 "phly/phly-common": "dev-master",
                 "zendframework/zendframework": "2.*"
             },
-            "time": "1348684380",
+            "time": "2012-09-26 18:33:00",
             "type": "library",
             "installation-source": "source",
             "autoload": {
@@ -120,7 +120,7 @@
                 "php": ">=5.3.3",
                 "zendframework/zendframework": "dev-master"
             },
-            "time": "1342210205",
+            "time": "2012-07-13 20:10:05",
             "type": "library",
             "installation-source": "source",
             "autoload": {
@@ -165,7 +165,7 @@
                 "php": ">=5.3.3",
                 "zendframework/zendframework": "2.*"
             },
-            "time": "1347664585",
+            "time": "2012-09-14 23:16:25",
             "type": "library",
             "installation-source": "source",
             "autoload": {
@@ -197,12 +197,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/weierophinney/PhlySimplePage",
-                "reference": "8626611d6ca9142c733e3a5d6dd07fb41684f36a"
+                "reference": "3e1c324d81a9c679b579b1892a05a856ce190636"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/weierophinney/PhlySimplePage/archive/8626611d6ca9142c733e3a5d6dd07fb41684f36a.zip",
-                "reference": "8626611d6ca9142c733e3a5d6dd07fb41684f36a",
+                "url": "https://github.com/weierophinney/PhlySimplePage/archive/3e1c324d81a9c679b579b1892a05a856ce190636.zip",
+                "reference": "3e1c324d81a9c679b579b1892a05a856ce190636",
                 "shasum": ""
             },
             "require": {
@@ -214,7 +214,10 @@
                 "zendframework/zend-view": "2.*",
                 "zendframework/zend-console": "2.*"
             },
-            "time": "1355352710",
+            "require-dev": {
+                "zendframework/zend-servicemanager": "2.*"
+            },
+            "time": "2012-12-15 20:59:15",
             "type": "library",
             "installation-source": "source",
             "autoload": {
@@ -226,6 +229,7 @@
                     "./"
                 ]
             },
+            "notification-url": "https://packagist.org/downloads/",
             "authors": [
                 {
                     "name": "Matthew Weier O'Phinney",
@@ -247,12 +251,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/SocalNick/ScnSocialAuth",
-                "reference": "1.3.0"
+                "reference": "dcc428a6a7b02b8c90a763097f04e627273993d4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/SocalNick/ScnSocialAuth/archive/1.3.0.zip",
-                "reference": "1.3.0",
+                "url": "https://github.com/SocalNick/ScnSocialAuth/archive/dcc428a6a7b02b8c90a763097f04e627273993d4.zip",
+                "reference": "dcc428a6a7b02b8c90a763097f04e627273993d4",
                 "shasum": ""
             },
             "require": {
@@ -262,7 +266,7 @@
                 "zendframework/zendframework": "2.*",
                 "hybridauth/hybridauth": "dev-master"
             },
-            "time": "1355291392",
+            "time": "2012-12-14 19:21:02",
             "type": "library",
             "installation-source": "source",
             "autoload": {
@@ -273,6 +277,7 @@
                     "./"
                 ]
             },
+            "notification-url": "https://packagist.org/downloads/",
             "authors": [
                 {
                     "name": "Nicholas Calugar",
@@ -426,7 +431,7 @@
                 "issues": "https://github.com/zendframework/zf2/issues",
                 "source": "https://github.com/zendframework/zf2"
             },
-            "time": "1354308671"
+            "time": "2012-11-30 20:51:11"
         },
         {
             "name": "zendframework/zendservice-recaptcha",
@@ -483,7 +488,7 @@
                 "php": ">=5.3.3",
                 "zendframework/zendframework": "2.*"
             },
-            "time": "1351100548",
+            "time": "2012-10-24 17:42:28",
             "type": "library",
             "installation-source": "source",
             "autoload": {
@@ -531,7 +536,7 @@
                 "zf-commons/zfc-base": "dev-master",
                 "zendframework/zendframework": "2.*"
             },
-            "time": "1355010566",
+            "time": "2012-12-08 23:49:26",
             "type": "library",
             "installation-source": "source",
             "autoload": {

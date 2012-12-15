@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox","dojo/require!dojox/sql/_crypto"],function(_1,_2,_3){
+define("dojox/sql/_base",["dijit","dojo","dojox","dojo/require!dojox/sql/_crypto"],function(_1,_2,_3){
 _2.provide("dojox.sql._base");
 _2.require("dojox.sql._crypto");
 _2.mixin(_3.sql,{dbName:null,debug:(_2.exists("dojox.sql.debug")?_3.sql.debug:false),open:function(_4){

@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox","dojo/require!dijit/layout/LayoutContainer,dijit/_Templated"],function(_1,_2,_3){
+define("dojox/xmpp/widget/ChatSession",["dijit","dojo","dojox","dojo/require!dijit/layout/LayoutContainer,dijit/_Templated"],function(_1,_2,_3){
 _2.provide("dojox.xmpp.widget.ChatSession");
 _2.require("dijit.layout.LayoutContainer");
 _2.require("dijit._Templated");

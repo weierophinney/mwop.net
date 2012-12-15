@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox","dojo/require!dojox/xml/parser,dojox/wire/Wire"],function(_1,_2,_3){
+define("dojox/wire/ml/util",["dijit","dojo","dojox","dojo/require!dojox/xml/parser,dojox/wire/Wire"],function(_1,_2,_3){
 _2.provide("dojox.wire.ml.util");
 _2.require("dojox.xml.parser");
 _2.require("dojox.wire.Wire");

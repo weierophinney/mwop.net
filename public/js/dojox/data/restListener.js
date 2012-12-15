@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox"],function(_1,_2,_3){
+define("dojox/data/restListener",["dijit","dojo","dojox"],function(_1,_2,_3){
 _2.provide("dojox.data.restListener");
 _3.data.restListener=function(_4){
 var _5=_4.channel;

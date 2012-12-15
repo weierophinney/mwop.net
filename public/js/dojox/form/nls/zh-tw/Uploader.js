@@ -1,6 +1,2 @@
 //>>built
-define(
-"dojox/form/nls/zh-tw/Uploader", ({
-	label: "選取檔案..."
-})
-);
+define("dojox/form/nls/zh-tw/Uploader",({label:"選取檔案..."}));

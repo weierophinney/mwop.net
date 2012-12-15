@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox","dojo/require!dojo/gears,dojox/storage/Provider,dojox/storage/manager,dojox/sql"],function(_1,_2,_3){
+define("dojox/storage/GearsStorageProvider",["dijit","dojo","dojox","dojo/require!dojo/gears,dojox/storage/Provider,dojox/storage/manager,dojox/sql"],function(_1,_2,_3){
 _2.provide("dojox.storage.GearsStorageProvider");
 _2.require("dojo.gears");
 _2.require("dojox.storage.Provider");

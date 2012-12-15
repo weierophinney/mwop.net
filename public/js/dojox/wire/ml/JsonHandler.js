@@ -1,5 +1,5 @@
 //>>built
-define(["dijit","dojo","dojox","dojo/require!dojox/wire/ml/RestHandler,dojox/wire/_base,dojox/wire/ml/util"],function(_1,_2,_3){
+define("dojox/wire/ml/JsonHandler",["dijit","dojo","dojox","dojo/require!dojox/wire/ml/RestHandler,dojox/wire/_base,dojox/wire/ml/util"],function(_1,_2,_3){
 _2.provide("dojox.wire.ml.JsonHandler");
 _2.require("dojox.wire.ml.RestHandler");
 _2.require("dojox.wire._base");
