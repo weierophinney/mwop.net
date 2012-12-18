@@ -92,6 +92,30 @@
 
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
+    <p class="date">2006-10-15 22:23:00</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/126-Zend_XmlRpc_Server.html">Zend_XmlRpc_Server</a></h4>
+
+    <div class="entry body"><p>
+    As <a href="http://weierophinney.net/matthew/archives/125-PHP-5s-Reflection-API.html">noted previously by myself</a> and 
+    <a href="http://pixelated-dreams.com/archives/251-More-Web-Services.html">Davey</a>,
+    I've been working on Zend_XmlRpc_Server for some months now. In the past
+    couple weeks, I've refactored it to push the class/function reflection into
+    Zend_Server_Reflection, and, in doing so, noted that there were further
+    areas for refactoring into additional helper classes. Currently, it now has
+    classes for the Request, Response, and Faults, and all actual XML wrangling
+    is done in those, making the server basically XML-agnostic.
+</p></div>
+
+    <p><a href="/blog/126-Zend_XmlRpc_Server.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
     <p class="date">2006-10-09 10:58:00</p>
     <p class="tags"><a href="/blog/tag/php.html">php</a></p>
 </aside>
@@ -441,23 +465,6 @@ I have included <a href="http://cgiapp.sourceforge.net/cgiapp2_doc/Cgiapp2/tutor
 In testing the release, I have been writing some apps that take advantage of some of the new features, and I will be writing some tutorials in the coming weeks.</p></div>
 
     <p><a href="/blog/115-Cgiapp2-2.0.0-FINAL-Released.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2006-06-04 22:17:35</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/114-Always-check-the-version-before-release.html">Always check the version before release</a></h4>
-
-    <div class="entry body"><p>
-Last week, I had someone bring to my attention that the <a href="http://php.net/spl">SPL's</a> Countable interface was actually first released in PHP 5.1.0... which means I needed to update the PHP dependency on <a href="/phly/index.php?package=Phly_Hash">Phly_Hash</a>. I also needed to do so on <a href="/phly/index.php?package=Phly_Config">Phly_Config</a> as it depends on Phly_Hash. I released 1.1.1 versions of each yesterday; the only change in each is the PHP version dependency.
-</p></div>
-
-    <p><a href="/blog/114-Always-check-the-version-before-release.html">Continue reading...</a></p>
 </section>
 
 </div>

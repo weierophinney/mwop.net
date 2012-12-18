@@ -92,6 +92,58 @@
 
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
+    <p class="date">2008-06-30 12:00:00</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
+<a href="/blog/tag/mvc.html">mvc</a><br />
+<a href="/blog/tag/zend%20framework.html">zend framework</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/182-Testing-Zend-Framework-MVC-Applications.html">Testing Zend Framework MVC Applications</a></h4>
+
+    <div class="entry body"><p>
+    Since I originally started hacking on the <a
+    href="http://framework.zend.com/">Zend Framework</a> MVC in the fall of
+    2006, I've been touting the fact that you can test ZF MVC projects by
+    utilizing the Request and Response objects; indeed, this is what I actually
+    did to test the Front Controller and Dispatcher. However, until recently,
+    there was never an easy way to do so in your userland projects; the default
+    request and response objects make it difficult to easily and quickly setup
+    tests, and the methods introduced into the front controller to make it
+    testable are largely undocumented. 
+</p>
+
+<p>
+    So, one of my ongoing projects the past few months has been to create an
+    infrastructure for functional testing of ZF projects using <a
+        href="http://phpunit.de/">PHPUnit</a>. This past weekend, I made the
+    final commits that make this functionality feature complete.
+</p>
+
+<p>
+    The new functionality provides several facets:
+</p>
+
+<ul>
+    <li>Stub test case classes for the HTTP versions of our Request and Response
+        objects, containing methods for setting up the request environment
+        (including setting GET, POST, and COOKIE parameters, HTTP request
+        headers, etc).</li>
+    <li><code>Zend_Dom_Query</code>, a class for using CSS selectors (and XPath)
+        to query (X)HTML and XML documents.</li>
+    <li>PHPUnit constraints that consume <code>Zend_Dom_Query</code> and the
+        Response object to make their comparisons.</li>
+    <li>A specialized PHPUnit test case that contains functionality for
+        bootstrapping an MVC application, dispatching requests, and a variety of
+        assertions that utilize the above constraints and objects.</li>
+</ul></div>
+
+    <p><a href="/blog/182-Testing-Zend-Framework-MVC-Applications.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
     <p class="date">2008-06-30 09:00:00</p>
     <p class="tags"><a href="/blog/tag/php.html">php</a><br />
 <a href="/blog/tag/oop.html">oop</a><br />
@@ -411,41 +463,6 @@ $viewRenderer = HelperBroker::getStaticHelper('viewRenderer');
 </p></div>
 
     <p><a href="/blog/174-Form-Decorators-Tutorial-posted.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2008-04-28 14:50:00</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
-<a href="/blog/tag/webinar.html">webinar</a><br />
-<a href="/blog/tag/zend%20framework.html">zend framework</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/173-Zend-Framework-QA-Session.html">Zend Framework Q&amp;amp;A Session</a></h4>
-
-    <div class="entry body"><p>
-    With 1.0 and 1.5 of <a href="http://framework.zend.com/">Zend Framework</a>
-    now released, there are a lot of questions flying around -- what will we do
-    next, what components to expect, what are some of the best practices, etc.
-    So, we're going to have an open 
-    <a href="http://devzone.zend.com/article/3448-Zend-Framework">Question and
-        Answer Session</a> webinar, with all of us on the internal team.
-</p>
-
-<p>
-    If you have a question you want answered, please be kind enough to <a href="http://framework.zend.com/wiki/pages/viewpage.action?pageId=43922">submit
-    your question in advance</a>, so we have time to actually think about it
-    (though you can always broadside us during the webinar).
-</p>
-
-<p>
-    <a href="http://www.zend.com/en/company/news/event/webinar-zend-framework-the-big-q-a">Sign up</a> 
-    in advance so you don't miss out!
-</p></div>
-
-    <p><a href="/blog/173-Zend-Framework-QA-Session.html">Continue reading...</a></p>
 </section>
 
 </div>

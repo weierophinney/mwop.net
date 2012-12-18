@@ -92,6 +92,46 @@
 
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
+    <p class="date">2010-03-11 11:55:55</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
+<a href="/blog/tag/zend%20framework.html">zend framework</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/234-Module-Bootstraps-in-Zend-Framework-Dos-and-Donts.html">Module Bootstraps in Zend Framework: Do&#039;s and Don&#039;ts</a></h4>
+
+    <div class="entry body"><p>
+    I see a number of questions regularly about module bootstraps in Zend
+    Framework, and decided it was time to write a post about them finally.
+</p>
+
+<p>
+    In Zend Framework 1.8.0, we added <code>Zend_Application</code>, which is
+    intended to (a) formalize the bootstrapping process, and (b) make it
+    re-usable. One aspect of it was to allow bootstrapping of individual
+    application modules -- which are discrete collections of controllers, views,
+    and models.
+</p>
+
+<p>
+    The most common question I get regarding module bootstraps is: 
+</p>
+
+<blockquote>
+    Why are all module bootstraps run on every request, and not just the one for
+    the requested module?
+</blockquote>
+
+<p>
+    To answer that question, first I need to provide some background.
+</p></div>
+
+    <p><a href="/blog/234-Module-Bootstraps-in-Zend-Framework-Dos-and-Donts.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
     <p class="date">2010-03-04 15:28:07</p>
     <p class="tags"><a href="/blog/tag/php.html">php</a><br />
 <a href="/blog/tag/rest.html">rest</a><br />
@@ -380,31 +420,6 @@
 </section>
 
 </div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2009-09-22 13:08:47</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
-<a href="/blog/tag/cw09.html">cw09</a><br />
-<a href="/blog/tag/zend%20framework.html">zend framework</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/224-CodeWorks-2009-Begins.html">CodeWorks 2009 Begins</a></h4>
-
-    <div class="entry body"><p>
-    Today is the kickoff for <a href="http://codeworks.mtacon.com/">CodeWorks
-        2009</a>, a remarkable PHP road show hitting seven cities in 14 days.
-    While I'm not joining the tour until Atlanta, I'm proud to be joining up at
-    that stop and presenting a Zend Framework tutorial during the tour.
-</p>
-
-<p style="text-align: center;"><img src="/uploads/CW09_Speaker.png"
-    alt="CodeWorks'09" height="200" width="150" /></p></div>
-
-    <p><a href="/blog/224-CodeWorks-2009-Begins.html">Continue reading...</a></p>
-</section>
-
-</div>
 <div class="paginationControl">
         <a href="/blog/author/matthew.html" class="first">&lt;&lt; First</a> |
         <a href="/blog/author/matthew-p5.html"> &lt; Previous </a> |
@@ -419,7 +434,7 @@
             <a href="/blog/author/matthew-p10.html">10</a> |
             <a href="/blog/author/matthew-p11.html">11</a> |
             <a href="/blog/author/matthew-p7.html"> Next &gt;</a> |
-        <a href="/blog/author/matthew-p27.html" class="last"> Last &gt;&gt;</a>
+        <a href="/blog/author/matthew-p28.html" class="last"> Last &gt;&gt;</a>
 </div>
 
 </section>

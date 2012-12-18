@@ -92,6 +92,51 @@
 
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
+    <p class="date">2004-10-22 23:02:45</p>
+    <p class="tags"><a href="/blog/tag/personal.html">personal</a><br />
+<a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/47-When-array_key_exists-just-doesnt-work.html">When array_key_exists just doesn&#039;t work</a></h4>
+
+    <div class="entry body"><p>
+    I've been playing with parameter testing in my various Cgiapp classes, and
+    one test that seemed pretty slick was the following:
+</p>
+<pre>
+    if (!array_key_exists('some_string', $_REQUEST)) {
+        // some error
+    }
+</pre>
+<p>
+    Seems pretty straight-forward: $_REQUEST is an associative array, and I want
+    to test for the existence of a key in it. Sure, I could use isset(), but it
+    seemed...  ugly, and verbose, and a waste of keystrokes, particularly when
+    I'm using the param() method:
+</p>
+<pre>
+    if (!isset($_REQUEST[$this->param('some_param')])) {
+        // some error
+    }
+</pre>
+<p>
+    However, I ran into a pitfall: when it comes to array_key_exists(),
+    $_REQUEST isn't exactly an array. I think what's going on is that $_REQUEST
+    is actually a superset of several other arrays -- $_POST, $_GET, and
+    $_COOKIE -- and isset() has some logic to descend amongst the various keys,
+    while array_key_exists() can only work on a single level.
+</p>
+<p>
+    Whatever the explanation, I ended up reverting a bunch of code. :-(
+</p></div>
+
+    <p><a href="/blog/47-When-array_key_exists-just-doesnt-work.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
     <p class="date">2004-10-20 16:51:20</p>
     <p class="tags"><a href="/blog/tag/programming.html">programming</a><br />
 <a href="/blog/tag/personal.html">personal</a></p>
@@ -664,45 +709,10 @@ $body = $tmpl->fetch();
 </section>
 
 </div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2004-04-27 22:48:53</p>
-    <p class="tags"><a href="/blog/tag/linux.html">linux</a><br />
-<a href="/blog/tag/personal.html">personal</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/30-Binary-packages-for-Gentoo.html">Binary packages for Gentoo</a></h4>
-
-    <div class="entry body"><p>
-    I'd read that you could get binary packages for gentoo, thus alleviating the
-    need to compile everything. (Of course, then  you lose some of the benefits
-    of compiling everything, but you gain in speed...) Unfortunately, I mistook
-    this with ebuilds, and never quite figured it out.
-</p>
-<p>
-    The key is to throw the -g flag:
-</p>
-<pre>    % emerge -g gnumeric # which is like 'emerge --getbinpkg gnumeric'
-</pre>
-<p>
-    I also learned how to update packages tonight:
-</p>
-<pre>    % emerge sync             # to sync your mirror with the gentoo mirrors
-    % emerge --update portage # if necessary
-    % emerge --update system  # updates core system files
-    % emerge --update world   # updates all packages 
-</pre></div>
-
-    <p><a href="/blog/30-Binary-packages-for-Gentoo.html">Continue reading...</a></p>
-</section>
-
-</div>
 <div class="paginationControl">
         <a href="/blog/author/matthew.html" class="first">&lt;&lt; First</a> |
         <a href="/blog/author/matthew-p23.html"> &lt; Previous </a> |
-        <a href="/blog/author/matthew-p18.html">18</a> |
-            <a href="/blog/author/matthew-p19.html">19</a> |
+        <a href="/blog/author/matthew-p19.html">19</a> |
             <a href="/blog/author/matthew-p20.html">20</a> |
             <a href="/blog/author/matthew-p21.html">21</a> |
             <a href="/blog/author/matthew-p22.html">22</a> |
@@ -711,8 +721,9 @@ $body = $tmpl->fetch();
             <a href="/blog/author/matthew-p25.html">25</a> |
             <a href="/blog/author/matthew-p26.html">26</a> |
             <a href="/blog/author/matthew-p27.html">27</a> |
+            <a href="/blog/author/matthew-p28.html">28</a> |
             <a href="/blog/author/matthew-p25.html"> Next &gt;</a> |
-        <a href="/blog/author/matthew-p27.html" class="last"> Last &gt;&gt;</a>
+        <a href="/blog/author/matthew-p28.html" class="last"> Last &gt;&gt;</a>
 </div>
 
 </section>

@@ -92,6 +92,50 @@
 
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
+    <p class="date">2010-08-16 10:30:00</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
+<a href="/blog/tag/spl.html">spl</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/244-Applying-FilterIterator-to-Directory-Iteration.html">Applying FilterIterator to Directory Iteration</a></h4>
+
+    <div class="entry body"><p>
+    I'm currently doing research and prototyping for autoloading alternatives in
+    <a href="http://framework.zend.com/">Zend Framework</a> 2.0. One approach
+    I'm looking at involves creating explicit class/file maps; these tend to be
+    much faster than using the <code>include_path</code>, but do require some
+    additional setup.
+</p>
+
+<p>
+    My algorithm for generating the maps was absurdly simple:
+</p>
+
+<ul>
+    <li>Scan the filesystem for PHP files</li>
+    <li>If the file does not contain an interface, class, or abstract class,
+    skip it.</li>
+    <li>If it does, get its declared namespace and classname</li>
+</ul>
+
+<p>
+    The question was what implementation approach to use.
+</p>
+
+<p>
+    I'm well aware of <code>RecursiveDirectoryIterator</code>, and planned to
+    use that. However, I also had heard of <code>FilterIterator</code>, and
+    wondered if I could tie that in somehow. In the end, I could, but the
+    solution was non-obvious.
+</p></div>
+
+    <p><a href="/blog/244-Applying-FilterIterator-to-Directory-Iteration.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
     <p class="date">2010-08-09 10:45:00</p>
     <p class="tags"><a href="/blog/tag/php.html">php</a><br />
 <a href="/blog/tag/fastcgi.html">fastcgi</a></p>
@@ -347,46 +391,6 @@
 </section>
 
 </div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2010-03-11 11:55:55</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
-<a href="/blog/tag/zend%20framework.html">zend framework</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/234-Module-Bootstraps-in-Zend-Framework-Dos-and-Donts.html">Module Bootstraps in Zend Framework: Do&#039;s and Don&#039;ts</a></h4>
-
-    <div class="entry body"><p>
-    I see a number of questions regularly about module bootstraps in Zend
-    Framework, and decided it was time to write a post about them finally.
-</p>
-
-<p>
-    In Zend Framework 1.8.0, we added <code>Zend_Application</code>, which is
-    intended to (a) formalize the bootstrapping process, and (b) make it
-    re-usable. One aspect of it was to allow bootstrapping of individual
-    application modules -- which are discrete collections of controllers, views,
-    and models.
-</p>
-
-<p>
-    The most common question I get regarding module bootstraps is: 
-</p>
-
-<blockquote>
-    Why are all module bootstraps run on every request, and not just the one for
-    the requested module?
-</blockquote>
-
-<p>
-    To answer that question, first I need to provide some background.
-</p></div>
-
-    <p><a href="/blog/234-Module-Bootstraps-in-Zend-Framework-Dos-and-Donts.html">Continue reading...</a></p>
-</section>
-
-</div>
 <div class="paginationControl">
         <a href="/blog.html" class="first">&lt;&lt; First</a> |
         <a href="/blog-p4.html"> &lt; Previous </a> |
@@ -401,7 +405,7 @@
             <a href="/blog-p9.html">9</a> |
             <a href="/blog-p10.html">10</a> |
             <a href="/blog-p6.html"> Next &gt;</a> |
-        <a href="/blog-p27.html" class="last"> Last &gt;&gt;</a>
+        <a href="/blog-p28.html" class="last"> Last &gt;&gt;</a>
 </div>
 
 </section>

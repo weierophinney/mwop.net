@@ -1,11 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title type="text">Tag: php :: phly, boy, phly</title>
-  <updated>2012-11-17T13:53:00+0000</updated>
+  <updated>2012-12-18T20:24:00+0000</updated>
   <generator uri="http://framework.zend.com" version="2.0.5">Zend_Feed_Writer</generator>
   <link rel="alternate" type="text/html" href="http://mwop.net/blog/tag/php.html"/>
   <link rel="self" type="application/atom+xml" href="http://mwop.net/blog/tag/php-atom.xml"/>
   <id>http://mwop.net/blog/tag/php.html</id>
+  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <title type="html"><![CDATA[PHP Master Series on Day Camp For Developers]]></title>
+    <published>2012-12-18T20:24:00+0000</published>
+    <updated>2012-12-18T20:24:00+0000</updated>
+    <link rel="alternate" type="text/html" href="http://mwop.net/blog/2012-12-18-php-master-series.html"/>
+    <id>http://mwop.net/blog/2012-12-18-php-master-series.html</id>
+    <author>
+      <name>Matthew Weier O'Phinney</name>
+      <email>me@mwop.net</email>
+      <uri>http://mwop.net</uri>
+    </author>
+    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
+      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p><xhtml:a href="http://blog.calevans.com">Cal Evans</xhtml:a> has organized
+another DayCamp4Developers event, this time entitled "<xhtml:a href="http://blog.calevans.com/2012/11/19/php-master-series-vol-1">PHP
+Master Series, Volume 1</xhtml:a>". I'm honored to be an invited speaker
+for this first edition, where I'll be presenting my talk,
+"Designing Beautiful Software".</xhtml:p>
+<xhtml:p>Why would you want to participate? Well, for one, because you
+can interact directly with the various speakers during the
+presentations. Sure, you can likely find the slide decks elsewhere,
+or possibly even recordings. But if we all do our jobs right, we'll
+likely raise more questions than answers; if you attend, you'll get
+a chance to ask some of your questions immediately, <xhtml:em>and we may
+even answer them!</xhtml:em></xhtml:p>
+<xhtml:p>On top of that, this is a fantastic lineup of speakers, and,
+frankly, not a lineup I've ever participated in. In a typical
+conference, you'd likely see one or two of us, and be lucky if we
+weren't scheduled against each other; if you attend this week,
+you'll get to see us all, back-to-back.</xhtml:p>
+<xhtml:p>What else will you be doing this Friday, anyways, while <xhtml:a href="http://en.wikipedia.org/wiki/2012_phenomenon">you wait for the end
+of the world?</xhtml:a></xhtml:p>
+<xhtml:p>So, do yourself a favor, and <xhtml:a href="http://phpmasterseriesv1.eventbrite.com/">register today</xhtml:a>!</xhtml:p>
+</xhtml:div>
+    </content>
+  </entry>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <title type="html"><![CDATA[My ZendCon Beautiful Software Talk]]></title>
     <published>2012-11-17T13:53:00+0000</published>
@@ -2209,90 +2244,6 @@ functionality on it now, is not only possible, but will allow you
 to shape what ZF2 looks like when we're ready to go stable.</xhtml:p>
 <xhtml:p><xhtml:a href="http://packages.zendframework.com">Download it
 today!</xhtml:a></xhtml:p>
-</xhtml:div>
-    </content>
-  </entry>
-  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
-    <title type="html"><![CDATA[ZF2 Modules You Can Use Today]]></title>
-    <published>2012-02-08T16:31:47+0000</published>
-    <updated>2012-02-08T16:31:47+0000</updated>
-    <link rel="alternate" type="text/html" href="http://mwop.net/blog/zf2-modules-you-can-use-today.html"/>
-    <id>http://mwop.net/blog/zf2-modules-you-can-use-today.html</id>
-    <author>
-      <name>Matthew Weier O'Phinney</name>
-      <email>me@mwop.net</email>
-      <uri>http://mwop.net</uri>
-    </author>
-    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
-      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>One key new architectural feature of Zend Framework 2 is its new
-module infrastructure. The basic idea behind modules is to allow
-developers to both create and consume re-usable application
-functionality -- anything from packaging common assets such as CSS
-and JavaScript to providing MVC application classes.</xhtml:p>
-<xhtml:p>As an example, for my own site, I've created: a "Contact" module
-for rendering and processing contact forms; a "SkeletonCSS" module
-for dropping in <xhtml:a href="http://getskeleton.com">Skeleton</xhtml:a> into
-my sites; a "CommonResource" module with a very, very basic data
-mapper implementation, and a "Blog" module that consumes it to
-deliver the very blog you're reading now.</xhtml:p>
-<xhtml:p>But the <xhtml:em>real</xhtml:em> goal of the module infrastructure is for
-developers to <xhtml:em>share</xhtml:em> their modules, so that other
-developers don't need to develop that very same functionality for
-their own site. And to my delight, that's already happening!</xhtml:p>
-<xhtml:p>So, here's a list of some of the ZF2 modules I've found in the
-wild.</xhtml:p>
-<xhtml:ul>
-<xhtml:li><xhtml:a href="http://bit.ly/yVBXkw">SkeletonCss</xhtml:a>. I mentioned
-this one already, but it's a version of SkeletonCss, an adaptive
-response CSS/JS framework, packaged for easy consumption as a ZF2
-module. The git URI is "git://mwop.net/SkeletonCss.git".</xhtml:li>
-<xhtml:li><xhtml:a href="https://github.com/doctrine/DoctrineModule">DoctrineModule</xhtml:a>.
-One of the most frequently asked questions I get is, "Will ZF2 use
-Doctrine?" My answer has been that we'll provide a bridge -- but
-the cool thing is that the Doctrine project has already decided to
-do it. Spear-headed by an enthusiastic ZF2
-contributor/collaborator, <xhtml:a href="http://twitter.com/SpiffyJr">Kyle Spraggs</xhtml:a>, this module
-provides the base functionality for integrating Doctrine 2 into
-your ZF2 site (primarily access to the base/common functionality).
-Two other modules provide additional functionality: <xhtml:a href="https://github.com/doctrine/DoctrineORMModule">DoctrineORMModule</xhtml:a>
-provides the ability to interact with the Doctrine 2 ORM, and
-<xhtml:a href="https://github.com/doctrine/DoctrineMongoODMModule">DoctrineMongoODMModule</xhtml:a>
-provides the ability to interact with and consume the Doctrine 2
-Object Document Mapper for MongoDB.</xhtml:li>
-<xhtml:li><xhtml:a href="https://github.com/EvanDotPro/EdpSuperluminal">EdpSuperluminal</xhtml:a>.
-This module can be used to cache all classes you use in your
-application to a single include file -- giving you a performance
-boost.</xhtml:li>
-<xhtml:li><xhtml:a href="https://github.com/ZF-Commons/ZfcUser">ZfcUser</xhtml:a>.
-This module was begun by <xhtml:a href="http://evan.pro">Evan Coury</xhtml:a>,
-the lead developer behind ZF2's module system; its purpose is to
-provide a drop-in solution for registering and authenticating
-users. The module itself provides functionality consuming Zend\Db;
-however, several other modules are also offered to provide other
-persistence layers, including a <xhtml:a href="https://github.com/ZF-Commons/ZfcUserDoctrineORM">ZfcUserDoctrineORM</xhtml:a>
-module and a <xhtml:a href="https://github.com/ZF-Commons/ZfcUserDoctrineORM">ZfcUserDoctrineMongoODM</xhtml:a>
-module; more are planned. The "Zfc" namespace is used because Evan
-realized he and several others were working on similar solutions,
-and felt that collaboration would lead to a better solution than
-each would develop individually; this in turn led to the creation
-of a "Zend Framework Commons" organization on GitHub, with the goal
-of providing high-quality modules solving common application
-problems.</xhtml:li>
-<xhtml:li><xhtml:a href="https://github.com/widmogrod/zf2-assetic-module">AsseticBundle</xhtml:a>.
-This is a module providing integration with the excellent <xhtml:a href="https://github.com/kriswallsmith/assetic">Assetic</xhtml:a> asset
-management framework.</xhtml:li>
-<xhtml:li><xhtml:a href="https://github.com/widmogrod/zf2-twitter-bootstrap-module">TwitterBootstrap</xhtml:a>.
-Many developers are gravitating to the <xhtml:a href="https://github.com/twitter/bootstrap">Twitter Bootstrap</xhtml:a>
-project for CSS layouts. This module depends on the AsseticBundle
-already listed above, and provides both Twitter Bootstrap as well
-as integration with the current (ZF1) incarnation of
-Zend\Form.</xhtml:li>
-</xhtml:ul>
-<xhtml:p>I've seen a number of others as well, and know of more on their
-way (as an example, a ZfcAcl module to complement the ZfcUser
-module). Writing modules is incredibly easy, and a great way to
-both learn ZF2 and collaborate and share with other developers.</xhtml:p>
-<xhtml:p>Where are <xhtml:em>your</xhtml:em> modules?</xhtml:p>
 </xhtml:div>
     </content>
   </entry>

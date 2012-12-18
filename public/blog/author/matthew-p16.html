@@ -92,6 +92,47 @@
 
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
+    <p class="date">2007-01-18 15:39:00</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/131-Overloading-arrays-in-PHP-5.2.0.html">Overloading arrays in PHP 5.2.0</a></h4>
+
+    <div class="entry body"><p>
+    <b>Update:</b> I ran into issues with the ArrayObject solution, as there was
+    a bug in PHP 5.2.0 (now fixed) with its interaction with empty() and isset()
+    when used with the ARRAY_AS_PROPS flag. I tried a number of fixes, but
+    eventually my friend <a href="http://mikenaberezny.com/">Mike</a> pointed
+    out something I'd missed: as of PHP 5.1, setting undefined public properties
+    no longer raises an E_STRICT notice. Knowing this, you can now do the
+    following without raising any errors:
+</p>
+<div class="example"><pre><code lang="php">
+class Foo
+{
+    public function __set($key, $value)
+    {
+        $this-&gt;$key = $value;
+    }
+}
+
+$foo        = new Foo();
+$foo-&gt;bar   = array();
+$foo-&gt;bar[] = 42;
+</code></pre></div>
+<p>
+    This is a much simpler solution, performs better, and solves all the issues
+    I was presented. Thanks, Mike!
+</p>
+<hr /></div>
+
+    <p><a href="/blog/131-Overloading-arrays-in-PHP-5.2.0.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
     <p class="date">2007-01-05 09:58:00</p>
     <p class="tags"><a href="/blog/tag/programming.html">programming</a><br />
 <a href="/blog/tag/php.html">php</a></p>
@@ -501,41 +542,6 @@ $ make install
 </section>
 
 </div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2006-06-23 11:00:00</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/121-Benchmarking-dynamic-functionmethod-calls.html">Benchmarking dynamic function/method calls</a></h4>
-
-    <div class="entry body"><p>
-    In response to <a href="http://fuzzyblog.com/archives/2006/06/22/php-advice-requested-variable-functions-versus-call_user_func-and-call_user_func_array/">Scott Johnson's request for advice on variable functions</a>,
-    I decided to run some benchmarks.
-</p>
-<p>
-    &lt;rant&gt;Writing benchmarks is easy. Yet I see a lot of blog entries and
-    mailing list postings asking, "Which is faster?" My first thought is always,
-    "Why didn't they test and find out?" If I ever have a question about how
-    something will work, I open up a temporary file, start coding, and run the
-    code. It's the easiest way to learn. Also, it teaches you to break things
-    into manageable, testable chunks, and this code often forms the basis for a
-    unit test later.&lt;/rant&gt;
-</p>
-<p>
-    Back to benchmarking. Scott asks, "Is there a real difference between
-    call_user_func versus call_user_func_array and the variable function syntax
-    i.e. $function_name()?"
-</p>
-<p>
-    The short answer: absolutely. The long answer? Read on.
-</p></div>
-
-    <p><a href="/blog/121-Benchmarking-dynamic-functionmethod-calls.html">Continue reading...</a></p>
-</section>
-
-</div>
 <div class="paginationControl">
         <a href="/blog/author/matthew.html" class="first">&lt;&lt; First</a> |
         <a href="/blog/author/matthew-p15.html"> &lt; Previous </a> |
@@ -550,7 +556,7 @@ $ make install
             <a href="/blog/author/matthew-p20.html">20</a> |
             <a href="/blog/author/matthew-p21.html">21</a> |
             <a href="/blog/author/matthew-p17.html"> Next &gt;</a> |
-        <a href="/blog/author/matthew-p27.html" class="last"> Last &gt;&gt;</a>
+        <a href="/blog/author/matthew-p28.html" class="last"> Last &gt;&gt;</a>
 </div>
 
 </section>
