@@ -92,6 +92,66 @@
 
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
+    <p class="date">2006-02-19 18:02:47</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/104-Cgiapp-dual-releases.html">Cgiapp dual releases</a></h4>
+
+    <div class="entry body"><p>
+    Today, I have released two versions of Cgiapp into the wild, Cgiapp 1.8.0
+    and Cgiapp2 2.0.0rc1.
+</p>
+<p>
+    Cgiapp 1.8.0 is a performance release. I did a complete code audit of the
+    class, and did a number of changes to improve performance and fix some
+    previously erratic behaviours. Additionally, I tested under both PHP4 and
+    PHP5 to make sure that behaviour is the same in both environments.
+</p>
+<p>
+    However, Cgiapp 1.8.0 markes the last feature release of Cgiapp. I am
+    deprecating the branch in favor of Cgiapp2.
+</p>
+<p>
+    Cgiapp2 is a PHP5-only version of Cgiapp. Some of the changes:
+</p>
+<ul>
+    <li>Cgiapp2 is an abstract class, with the abstract method setup(). Now it
+    is truly non-instantiable!</li>
+    <li>Cgiapp2 makes extensive use of visibility operators. Key methods have
+    been marked final, some methods are now protected, others static. See <a href="http://cgiapp.sourceforge.net/index.php/view/Changelog2">the changelog</a> for more information.</li>
+    <li>Cgiapp2 is now E_STRICT compliant.</li>
+    <li>Cgiapp2 implements the CGI::Application 4.x series callback hook system.
+    This is basically an observer pattern, allowing developers to register
+    callbacks that execute at different locations in the runtime.</li>
+    <li>Cgiapp2 adds some extensive error and exception handling classes,
+    including observable errors and exceptions.</li>
+    <li>I created a template interface. If implemented, a template engine can be
+    plugged into the architecture at will -- at the superclass, application
+    class, and instance script level, allowing developers to mix-and-match
+    template engines or choose whichever matches their taste, <em>without</em>
+    having to rewrite application code. Three template plugins are included:
+    <ul>
+        <li><a href="http://smarty.php.net/">Smarty</a></li>
+        <li><a href="http://phpsavant.com/yawiki/">Savant2</a></li>
+        <li><a href="http://phpsavant.com/yawiki/index.php?area=Savant3&page=HomePage">Savant3</a></li>
+    </ul>
+    </li>
+</ul>
+<p>
+    <a href="http://sourceforge.net/project/showfiles.php?group_id=125419&package_id=137071">Cgiapp</a> and <a href="http://sourceforge.net/project/showfiles.php?group_id=125419&package_id=180286">Cgiapp2</a> are available at
+    Sourceforge.
+<p>
+    Keep reading for more information on the evolution of Cgiapp2.
+</p></div>
+
+    <p><a href="/blog/104-Cgiapp-dual-releases.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
     <p class="date">2006-01-05 16:57:00</p>
     <p class="tags"><a href="/blog/tag/php.html">php</a><br />
 <a href="/blog/tag/programming.html">programming</a><br />
@@ -378,44 +438,6 @@
 </p></div>
 
     <p><a href="/blog/88-Form-madness.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2005-07-14 14:38:12</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/85-File_Fortune-0.9.0-Released.html">File_Fortune 0.9.0 Released</a></h4>
-
-    <div class="entry body"><p>
-    <a href="http://pear.php.net/package/File_Fortune">File_Fortune</a> has been
-    released via <a href="http://pear.php.net/">PEAR</a>.
-</p>
-<p>
-    Changes since the proposal include the addition of a static method for
-    retrieving a random fortune from a list of files, the addition of a DocBook
-    tutorial listing several usage examples, renaming the exception classes to
-    conform to PEAR CS, some minor bugfixes, and some streamlining of the
-    package definition.
-</p>
-<p>
-    Included in the release is an example script, phpFortune, that can be used
-    on the command line to get random fortunes from one or more fortune files.
-    Usage is:
-</p>
-<pre>
-    $> phpFortune fortunes
-    $> phpFortune fortunes simpsons hitchhiker
-    $> phpFortune
-</pre>
-<p>
-    Enjoy!
-</p></div>
-
-    <p><a href="/blog/85-File_Fortune-0.9.0-Released.html">Continue reading...</a></p>
 </section>
 
 </div>

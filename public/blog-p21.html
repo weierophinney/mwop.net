@@ -92,6 +92,33 @@
 
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
+    <p class="date">2005-06-05 13:00:00</p>
+    <p class="tags"><a href="/blog/tag/personal.html">personal</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/77-Moving-into-City-Living.html">Moving into City Living</a></h4>
+
+    <div class="entry body"><p>
+    We did it... we moved, again.
+</p>
+<p>
+    However, unlike our previous two moves, which were interstate, this time we
+    stayed in the same state. The same county, even. What made (makes; we're
+    still finishing up as I write this) this one so jarring is the fact that
+    we're going from the rural mountainside to the fourth floor of a new
+    apartment/condo building adjoining an interstate spur.
+</p>
+<p>
+    Why would we do this?
+</p></div>
+
+    <p><a href="/blog/77-Moving-into-City-Living.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
     <p class="date">2005-05-26 12:48:11</p>
     <p class="tags"><a href="/blog/tag/php.html">php</a></p>
 </aside>
@@ -520,57 +547,6 @@
 </section>
 
 </div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2005-04-22 23:50:31</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/66-Cgiapp-1.6.0-Released.html">Cgiapp 1.6.0 Released</a></h4>
-
-    <div class="entry body"><p>
-    Cgiapp 1.6.0, "Wart Removal", has been released!
-</p>
-<p>
-    This release does not add any new methods, but adds quite a lot in terms of
-    functionality:
-</p>
-<ul>
-    <li><b>phpt tests.</b> I finished writing a suite of unit tests using the
-    phpt framework popularized by the PHP-QA project and PEAR. This process
-    helped me find some obscure bugs in the class, as well as some... well,
-    downright ugly code, and to fix these areas. (To be honest, most of the
-    'ugly' code was a result of being too literal when porting from perl and not
-    using more standard PHP functionality.) Among the bugs fixed:
-        <ul>
-            <li>s_delete() now works properly.</li>
-            <li>param() and s_param() now behave gracefully when given bad data
-            (as do a number of other methods)</li>
-            <li>_send_headers() and the header_*() suite now function as
-            documented.</li>
-            <li>All methods now react gracefully to bad input.</li>
-        </ul>
-    </li>
-    <li><b>Error handling.</b> carp() and croak() no longer echo directly to the
-    output stream (and, in the case of croak(), die); they use trigger_error().
-    This will allow developers to use carp() and croak() as part of their
-    regular arsenal of PHP errors -- including allowing PHP error handling.
-    Additionally, most croak() calls in the class were changed to carp() as they
-    were not truly fatal errors.</li>
-    <li><b>PEAR packaging.</b> Cgiapp can now be installed using PEAR's
-    installer. Simply download the package and type 'pear install
-    Cgiapp-1.6.0.tgz' to get Cgiapp installed sitewide on your system!</li>
-</ul>
-<p>
-    As usual, Cgiapp is available at <a
-        href="http://cgiapp.sourceforge.net/">the Cgiapp website</a>.
-</p></div>
-
-    <p><a href="/blog/66-Cgiapp-1.6.0-Released.html">Continue reading...</a></p>
-</section>
-
-</div>
 <div class="paginationControl">
         <a href="/blog.html" class="first">&lt;&lt; First</a> |
         <a href="/blog-p20.html"> &lt; Previous </a> |
@@ -585,7 +561,7 @@
             <a href="/blog-p25.html">25</a> |
             <a href="/blog-p26.html">26</a> |
             <a href="/blog-p22.html"> Next &gt;</a> |
-        <a href="/blog-p27.html" class="last"> Last &gt;&gt;</a>
+        <a href="/blog-p28.html" class="last"> Last &gt;&gt;</a>
 </div>
 
 </section>

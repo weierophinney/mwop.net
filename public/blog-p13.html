@@ -92,6 +92,43 @@
 
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
+    <p class="date">2008-03-18 17:13:26</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
+<a href="/blog/tag/zend%20framework.html">zend framework</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/163-Using-Zend_View-Placeholders-to-Your-Advantage.html">Using Zend_View Placeholders to Your Advantage</a></h4>
+
+    <div class="entry body"><p>
+    Somebody asked for some examples of how I use the <code>headLink()</code>,
+    <code>headScript()</code>, and other placeholder helpers, so I thought I'd
+    take a crack at that today.
+</p>
+
+<p>
+    First off, let's look at what these helpers do. Each are concrete instances
+    of a <em>placeholder</em>. In Zend Framework, placeholders are used for a
+    number of purposes:
+</p>
+
+<ul>
+    <li>Doctype awareness</li>
+    <li>Aggregation and formatting of aggregated content</li>
+    <li>Capturing content</li>
+    <li>Persistence of content between view scripts and layout scripts</li>
+</ul>
+
+<p>
+    Let's look at these in detail.
+</p></div>
+
+    <p><a href="/blog/163-Using-Zend_View-Placeholders-to-Your-Advantage.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
     <p class="date">2008-03-16 21:26:54</p>
     <p class="tags"><a href="/blog/tag/php.html">php</a><br />
 <a href="/blog/tag/zend%20framework.html">zend framework</a></p>
@@ -431,41 +468,6 @@
 </section>
 
 </div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2007-12-20 12:00:00</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/153-Sqlite-Version-Mismatch.html">Sqlite Version Mismatch</a></h4>
-
-    <div class="entry body"><p>
-    I ran into an issue recently in testing a site where PDO_SQLITE was claiming
-    that it could not read my PDO database files. The only recent change I'd had
-    was that I'd installed a new version of PHP, and hence a new version of
-    PDO_SQLITE. Searching the web (we're not supposed to say <em>googling</em>
-    or <em>googled</em> anymore, remember ;-)), I found that the issue was that
-    the version of sqlite compiled into my PHP install was not compatible with
-    the version I used to create the databases in the first place. Never mind
-    that they're only a micro version or two different.
-</p>
-
-<p>
-    So, I was left with a conundrum: I needed to create files compatible with my
-    PDO_SQLITE install, but my CLI sqlite tool was incompatible. And if I used
-    PDO_SQLITE to create the db file, I'd lose my data, right?
-</p>
-
-<p>
-    Wrong. And here's what you can do should you find yourself in the same
-    situation sometime.
-</p></div>
-
-    <p><a href="/blog/153-Sqlite-Version-Mismatch.html">Continue reading...</a></p>
-</section>
-
-</div>
 <div class="paginationControl">
         <a href="/blog.html" class="first">&lt;&lt; First</a> |
         <a href="/blog-p12.html"> &lt; Previous </a> |
@@ -480,7 +482,7 @@
             <a href="/blog-p17.html">17</a> |
             <a href="/blog-p18.html">18</a> |
             <a href="/blog-p14.html"> Next &gt;</a> |
-        <a href="/blog-p27.html" class="last"> Last &gt;&gt;</a>
+        <a href="/blog-p28.html" class="last"> Last &gt;&gt;</a>
 </div>
 
 </section>

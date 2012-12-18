@@ -92,6 +92,50 @@
 
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
+    <p class="date">2011-03-25 11:08:09</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
+<a href="/blog/tag/zend%20framework.html">zend framework</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/261-Code-Generation-with-ZendCodeGenerator.html">Code Generation with Zend\CodeGenerator</a></h4>
+
+    <div class="entry body"><p>
+Zend Framework has offerred a code generation component since version 1.8, when
+we started shipping <code>Zend_Tool</code>. <code>Zend_CodeGenerator</code> largely mimics PHP's
+<code>ReflectionAPI</code>, but does the opposite: it instead generates code.
+</p>
+
+<p>
+Why might you want to generate code?
+</p>
+
+<ul>
+<li>
+You can use it as an assistive form of "copy and paste" for common tasks (as
+   an example, it's used in <code>zf.sh</code> to generate controller classes and action
+   methods).
+</li>
+<li>
+You might want to generate code from configuration, to remove the "compile"
+   phase of generating objects from configuration values. This is often done to
+   improve performance in situations that rely heavily on configurable values.
+</li>
+</ul>
+
+<p>
+<code>Zend\CodeGenerator</code> in the ZF2 repository is largely ported from Zend Framework
+1, but also includes some functionality surrounding namespace usage and imports.
+I used it this week when working on some prototypes, and found it useful enough
+that I want to share some of what I've learned.
+</p></div>
+
+    <p><a href="/blog/261-Code-Generation-with-ZendCodeGenerator.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
     <p class="date">2011-03-21 17:52:15</p>
     <p class="tags"><a href="/blog/tag/php.html">php</a><br />
 <a href="/blog/tag/oop.html">oop</a></p>
@@ -382,36 +426,6 @@ encrypted.
 </p></div>
 
     <p><a href="/blog/252-Making-Zend-Server-Available-Via-SSL-Only.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2010-12-22 18:07:04</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
-<a href="/blog/tag/zend%20framework.html">zend framework</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/250-Simple-Interfaces-and-Micro-MVCs.html">Simple Interfaces and Micro MVCs</a></h4>
-
-    <div class="entry body"><p>
-My job is great: I get to play with technology and code most days. My job is
-also hard: how does one balance both functionality and usability in programming
-interfaces?
-</p>
-
-<p>
-I've been working, with <a href="http://ralphschindler.com">Ralph Schindler</a>, on a
-<a href="http://bit.ly/zf2mvcprops">set of proposals</a> around the 
-<a href="http://framework.zend.com/">Zend Framework</a> 2.0 MVC layer,
-specifically the "C", or "Controller" portion of the triad. There are a ton of
-requirements we're trying to juggle, from making the code approachable to
-newcomers all the way to making the code as extensible as possible for the
-radical performance tuning developers out there. 
-</p></div>
-
-    <p><a href="/blog/250-Simple-Interfaces-and-Micro-MVCs.html">Continue reading...</a></p>
 </section>
 
 </div>
