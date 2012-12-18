@@ -92,6 +92,47 @@
 
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
+    <p class="date">2007-09-14 10:27:56</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
+<a href="/blog/tag/zend%20framework.html">zend framework</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/143-NYPHP-Zend-Framework-Presentation.html">NYPHP Zend Framework Presentation</a></h4>
+
+    <div class="entry body"><p>
+    This past Wednesday, <a href="http://www.zend.com/">Zend's</a> Chief
+    Marketing Officer, <a href="http://blogs.zend.com/author/mark/">Mark de
+        Visser</a>, and myself joined the <a href="http://nyphp.org/">NYPHP</a>
+    group for a <a
+        href="http://nyphp.org/content/calendar/view_entry.php?id=112&date=20070912">special
+        event meeting</a>. Mark presented information on Zend's development
+    stack and toolset (which I entirely missed, as I was still in transit), and
+    I came in to give an overview of <a href="http://framework.zend.com/">Zend
+        Framework</a>.
+</p>
+
+<p>
+    There were some great questions, and nice discussions following the event.
+    If you live in New York and do PHP for a living, and haven't attended, you
+    should; if you're ever visiting the area, see if you can attend a meeting!
+</p>
+
+<p>
+    <a href="/uploads/FrameworkPresentation.zip"
+        title="FrameworkPresentation.zip" target="_blank">Here are the
+        slides.</a> They're done using <a
+        href="http://meyerweb.com/eric/tools/s5/">S5</a>, a browser-based
+    slideshow system. Simply unzip and double-click on index.html to start
+    viewing.
+</p></div>
+
+    <p><a href="/blog/143-NYPHP-Zend-Framework-Presentation.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
     <p class="date">2007-07-05 17:26:00</p>
     <p class="tags"><a href="/blog/tag/php.html">php</a><br />
 <a href="/blog/tag/pear.html">pear</a></p>
@@ -718,47 +759,6 @@ function utf8Urldecode($value)
 </section>
 
 </div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2007-01-18 15:39:00</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/131-Overloading-arrays-in-PHP-5.2.0.html">Overloading arrays in PHP 5.2.0</a></h4>
-
-    <div class="entry body"><p>
-    <b>Update:</b> I ran into issues with the ArrayObject solution, as there was
-    a bug in PHP 5.2.0 (now fixed) with its interaction with empty() and isset()
-    when used with the ARRAY_AS_PROPS flag. I tried a number of fixes, but
-    eventually my friend <a href="http://mikenaberezny.com/">Mike</a> pointed
-    out something I'd missed: as of PHP 5.1, setting undefined public properties
-    no longer raises an E_STRICT notice. Knowing this, you can now do the
-    following without raising any errors:
-</p>
-<div class="example"><pre><code lang="php">
-class Foo
-{
-    public function __set($key, $value)
-    {
-        $this-&gt;$key = $value;
-    }
-}
-
-$foo        = new Foo();
-$foo-&gt;bar   = array();
-$foo-&gt;bar[] = 42;
-</code></pre></div>
-<p>
-    This is a much simpler solution, performs better, and solves all the issues
-    I was presented. Thanks, Mike!
-</p>
-<hr /></div>
-
-    <p><a href="/blog/131-Overloading-arrays-in-PHP-5.2.0.html">Continue reading...</a></p>
-</section>
-
-</div>
 <div class="paginationControl">
         <a href="/blog/author/matthew.html" class="first">&lt;&lt; First</a> |
         <a href="/blog/author/matthew-p14.html"> &lt; Previous </a> |
@@ -773,7 +773,7 @@ $foo-&gt;bar[] = 42;
             <a href="/blog/author/matthew-p19.html">19</a> |
             <a href="/blog/author/matthew-p20.html">20</a> |
             <a href="/blog/author/matthew-p16.html"> Next &gt;</a> |
-        <a href="/blog/author/matthew-p27.html" class="last"> Last &gt;&gt;</a>
+        <a href="/blog/author/matthew-p28.html" class="last"> Last &gt;&gt;</a>
 </div>
 
 </section>

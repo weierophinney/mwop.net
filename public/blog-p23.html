@@ -92,6 +92,54 @@
 
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
+    <p class="date">2005-02-19 14:38:08</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
+<a href="/blog/tag/programming.html">programming</a><br />
+<a href="/blog/tag/personal.html">personal</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/57-New-Cgiapp-Site.html">New Cgiapp Site</a></h4>
+
+    <div class="entry body"><p>
+    I've been extremely busy at work, and will continue to be through the end of
+    March. I realized this past week that I'd set a goal of having a <a
+        href="http://sourceforge.net" target="_blank">SourceForge</a> website up
+    and running for Cgiapp by the end of January -- and it's now mid-February.
+    Originally, I was going to backport some of my libraries from PHP5 to PHP4
+    so I could do so... and I think that was beginning to daunt me a little. 
+</p>
+<p>
+    Fortunately, I ran across a quick-and-dirty content management solution
+    yesterday called <a href="http://gunther.sourceforge.net/"
+        target="_blank">Gunther</a>. It does templating in Smarty, and uses a
+    wiki-esque syntax for markup -- though page editing is limited to admin
+    users only (something I was looking for). I decided to try it out, and
+    within an hour or so had a working site ready to upload.
+</p>
+<p>
+    Cgiapp's new site can be found at <a
+        href="http://cgiapp.sourceforge.net/">cgiapp.sourceforge.net</a>.
+</p>
+
+<h4>UPDATE</h4>
+<p>
+    Shortly after I wrote this original post, I figured out what the strength of
+    Gunther was -- and why I no longer needed it. Gunther was basically taking
+    content entered from a form and then inserting that content (after some
+    processing for wiki-like syntax) into a Smarty template. Which meant that I
+    could do the same thing with Cgiapp and <a
+        href="http://pear.php.net/text_wiki">Text_Wiki</a>. Within an hour, I
+    wrote an application module in Cgiapp that did just that, and am proud to
+    say that the Cgiapp website is 100% Cgiapp.
+</p></div>
+
+    <p><a href="/blog/57-New-Cgiapp-Site.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
     <p class="date">2005-01-14 12:43:17</p>
     <p class="tags"><a href="/blog/tag/personal.html">personal</a><br />
 <a href="/blog/tag/php.html">php</a></p>
@@ -421,56 +469,10 @@ your template might need.
 </section>
 
 </div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2004-10-22 23:02:45</p>
-    <p class="tags"><a href="/blog/tag/personal.html">personal</a><br />
-<a href="/blog/tag/php.html">php</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/47-When-array_key_exists-just-doesnt-work.html">When array_key_exists just doesn&#039;t work</a></h4>
-
-    <div class="entry body"><p>
-    I've been playing with parameter testing in my various Cgiapp classes, and
-    one test that seemed pretty slick was the following:
-</p>
-<pre>
-    if (!array_key_exists('some_string', $_REQUEST)) {
-        // some error
-    }
-</pre>
-<p>
-    Seems pretty straight-forward: $_REQUEST is an associative array, and I want
-    to test for the existence of a key in it. Sure, I could use isset(), but it
-    seemed...  ugly, and verbose, and a waste of keystrokes, particularly when
-    I'm using the param() method:
-</p>
-<pre>
-    if (!isset($_REQUEST[$this->param('some_param')])) {
-        // some error
-    }
-</pre>
-<p>
-    However, I ran into a pitfall: when it comes to array_key_exists(),
-    $_REQUEST isn't exactly an array. I think what's going on is that $_REQUEST
-    is actually a superset of several other arrays -- $_POST, $_GET, and
-    $_COOKIE -- and isset() has some logic to descend amongst the various keys,
-    while array_key_exists() can only work on a single level.
-</p>
-<p>
-    Whatever the explanation, I ended up reverting a bunch of code. :-(
-</p></div>
-
-    <p><a href="/blog/47-When-array_key_exists-just-doesnt-work.html">Continue reading...</a></p>
-</section>
-
-</div>
 <div class="paginationControl">
         <a href="/blog.html" class="first">&lt;&lt; First</a> |
         <a href="/blog-p22.html"> &lt; Previous </a> |
-        <a href="/blog-p18.html">18</a> |
-            <a href="/blog-p19.html">19</a> |
+        <a href="/blog-p19.html">19</a> |
             <a href="/blog-p20.html">20</a> |
             <a href="/blog-p21.html">21</a> |
             <a href="/blog-p22.html">22</a> |
@@ -479,8 +481,9 @@ your template might need.
             <a href="/blog-p25.html">25</a> |
             <a href="/blog-p26.html">26</a> |
             <a href="/blog-p27.html">27</a> |
+            <a href="/blog-p28.html">28</a> |
             <a href="/blog-p24.html"> Next &gt;</a> |
-        <a href="/blog-p27.html" class="last"> Last &gt;&gt;</a>
+        <a href="/blog-p28.html" class="last"> Last &gt;&gt;</a>
 </div>
 
 </section>

@@ -92,6 +92,30 @@
 
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
+    <p class="date">2011-02-04 09:30:00</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/254-Why-PHP-Namespaces-Matter.html">Why PHP Namespaces Matter</a></h4>
+
+    <div class="entry body"><p>
+You've heard about PHP namespaces by now. Most likely, you've heard about -- and
+likely participated in -- the <a href="http://en.wikipedia.org/wiki/Bikeshedding">bikeshedding</a> surrounding the selection of the namespace separator. 
+</p>
+
+<p>
+Regardless of your thoughts on the namespace separator, or how namespaces may or
+may not work in other languages, I submit to you several reasons for why I think
+namespaces in PHP are a positive addition to the language.
+</p></div>
+
+    <p><a href="/blog/254-Why-PHP-Namespaces-Matter.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
     <p class="date">2011-01-17 10:02:00</p>
     <p class="tags"><a href="/blog/tag/php.html">php</a><br />
 <a href="/blog/tag/spl.html">spl</a></p>
@@ -362,50 +386,6 @@ In this post, I'll outline the approaches I've tried, the benchmarking stategy I
 </section>
 
 </div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2010-08-16 10:30:00</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
-<a href="/blog/tag/spl.html">spl</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/244-Applying-FilterIterator-to-Directory-Iteration.html">Applying FilterIterator to Directory Iteration</a></h4>
-
-    <div class="entry body"><p>
-    I'm currently doing research and prototyping for autoloading alternatives in
-    <a href="http://framework.zend.com/">Zend Framework</a> 2.0. One approach
-    I'm looking at involves creating explicit class/file maps; these tend to be
-    much faster than using the <code>include_path</code>, but do require some
-    additional setup.
-</p>
-
-<p>
-    My algorithm for generating the maps was absurdly simple:
-</p>
-
-<ul>
-    <li>Scan the filesystem for PHP files</li>
-    <li>If the file does not contain an interface, class, or abstract class,
-    skip it.</li>
-    <li>If it does, get its declared namespace and classname</li>
-</ul>
-
-<p>
-    The question was what implementation approach to use.
-</p>
-
-<p>
-    I'm well aware of <code>RecursiveDirectoryIterator</code>, and planned to
-    use that. However, I also had heard of <code>FilterIterator</code>, and
-    wondered if I could tie that in somehow. In the end, I could, but the
-    solution was non-obvious.
-</p></div>
-
-    <p><a href="/blog/244-Applying-FilterIterator-to-Directory-Iteration.html">Continue reading...</a></p>
-</section>
-
-</div>
 <div class="paginationControl">
         <a href="/blog.html" class="first">&lt;&lt; First</a> |
         <a href="/blog-p3.html"> &lt; Previous </a> |
@@ -420,7 +400,7 @@ In this post, I'll outline the approaches I've tried, the benchmarking stategy I
             <a href="/blog-p9.html">9</a> |
             <a href="/blog-p10.html">10</a> |
             <a href="/blog-p5.html"> Next &gt;</a> |
-        <a href="/blog-p27.html" class="last"> Last &gt;&gt;</a>
+        <a href="/blog-p28.html" class="last"> Last &gt;&gt;</a>
 </div>
 
 </section>

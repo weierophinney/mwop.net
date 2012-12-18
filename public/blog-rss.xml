@@ -3,10 +3,52 @@
   <channel>
     <title>Blog Entries :: phly, boy, phly</title>
     <description>Blog Entries :: phly, boy, phly</description>
-    <pubDate>Sat, 17 Nov 2012 13:53:00 +0000</pubDate>
+    <pubDate>Tue, 18 Dec 2012 20:24:00 +0000</pubDate>
     <generator>Zend_Feed_Writer 2.0.5 (http://framework.zend.com)</generator>
     <link>http://mwop.net/blog.html</link>
     <atom:link rel="self" type="application/rss+xml" href="http://mwop.net/blog-rss.xml"/>
+    <item>
+      <title>PHP Master Series on Day Camp For Developers</title>
+      <pubDate>Tue, 18 Dec 2012 20:24:00 +0000</pubDate>
+      <link>http://mwop.net/blog/2012-12-18-php-master-series.html</link>
+      <guid>http://mwop.net/blog/2012-12-18-php-master-series.html</guid>
+      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
+      <dc:creator>Matthew Weier O'Phinney</dc:creator>
+      <content:encoded><![CDATA[<p>
+    <a href="http://blog.calevans.com">Cal Evans</a> has organized another 
+    DayCamp4Developers event, this time entitled "<a 
+    href="http://blog.calevans.com/2012/11/19/php-master-series-vol-1">PHP 
+    Master Series, Volume 1</a>". I'm honored to be an invited speaker for this 
+    first edition, where I'll be presenting my talk, "Designing Beautiful Software".
+</p>
+
+<p>
+    Why would you want to participate? Well, for one, because you can interact directly
+    with the various speakers during the presentations. Sure, you can likely find the slide
+    decks elsewhere, or possibly even recordings. But if we all do our jobs right, we'll
+    likely raise more questions than answers; if you attend, you'll get a chance to ask
+    some of your questions immediately, <em>and we may even answer them!</em>
+</p>
+
+<p>
+    On top of that, this is a fantastic lineup of speakers, and, frankly, not a lineup 
+    I've ever participated in. In a typical conference, you'd likely see one or two of
+    us, and be lucky if we weren't scheduled against each other; if you attend 
+    this week, you'll get to see us all, back-to-back. 
+</p>
+
+<p>
+    What else will you be doing this Friday, anyways, while <a 
+    href="http://en.wikipedia.org/wiki/2012_phenomenon">you wait for the end of the 
+    world?</a>
+</p>
+
+<p>
+    So, do yourself a favor, and <a 
+    href="http://phpmasterseriesv1.eventbrite.com/">register today</a>!
+</p>]]></content:encoded>
+      <slash:comments>0</slash:comments>
+    </item>
     <item>
       <title>My ZendCon Beautiful Software Talk</title>
       <pubDate>Sat, 17 Nov 2012 13:53:00 +0000</pubDate>
@@ -2245,170 +2287,6 @@ class Foo
     I'll probably continue shying away from <em>private</em> and <em>final</em> 
     visibility, but I do plan to experiment with it more in the future. What 
     about you?
-</p>]]></content:encoded>
-      <slash:comments>0</slash:comments>
-    </item>
-    <item>
-      <title>Automatic deployment with git and gitolite</title>
-      <pubDate>Mon, 25 Jun 2012 02:50:00 +0000</pubDate>
-      <link>http://mwop.net/blog/2012-06-24-git-deploy.html</link>
-      <guid>http://mwop.net/blog/2012-06-24-git-deploy.html</guid>
-      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
-      <dc:creator>Matthew Weier O'Phinney</dc:creator>
-      <content:encoded><![CDATA[<p>
-    I read a <a 
-    href="http://seancoates.com/blogs/deploy-on-push-from-github" 
-    target="_blank">post recently by Sean Coates about deploy on 
-    push</a>. The concept is nothing new: you set up a hook that 
-    listens for commits on specific branches or tags, and it then
-    deploys your site from that revision.
-</p>
-
-<p>
-    Except I'd not done it myself. This is how I got there.
-</p><p>
-    Sean's approach uses <a href="https://help.github.com/articles/post-receive-hooks" target="_blank">Github webhooks</a>,
-    which are a fantastic concept. Basically, once your commit completes, Github
-    will send a JSON-encoded payload to a specific URI. Sean uses this to 
-    trigger an API call to a specific page in his website, which will then
-    trigger a deployment activity.
-</p>
-
-<p>
-    Awesome, this should be easy; I already have a deploy script written
-    that I trigger manually.
-</p>
-
-<p>
-    One small problem: my site, while in Git, is not on Github. I maintain
-    it on my own <a href="https://github.com/sitaramc/gitolite" target="_blank">Gitolite</a>
-    repository. Which means I needed to write my own hooks.
-</p>
-
-<p>
-    I originally went down the route of using a post-receive hook. However,
-    I had problems determining what branch the given commit was on, despite
-    a variety of advice I found on the subject on 
-    <a href="http://stackoverflow.com/" target="_blank">StackOverflow</a> and git mailing
-    lists. I ended up finding a great example using post-update, which
-    was actually perfect for my needs.
-</p>
-
-<p>
-    In order to keep the post-update script non-blocking when I commit, I made 
-    it do very little: It simply determines what branch the commit was on, and if
-    it was the master branch, it touches a specific file on the filesystem and
-    finishes. The entire hook looks like this:
-</p>
-
-<div class="example"><pre>
-#!/bin/bash
-branch=$(git rev-parse --symbolic --abbrev-ref $1)
-echo "Commit was for branch $branch"
-if [[ "$branch" == "master" ]];then
-    echo "Preparing to deploy"
-    echo "1" > /var/local/mwop.net.update
-fi
-</pre></div>
-
-<p>
-    Now I needed something to detect such a push, and act on it.
-</p>
-
-<p>
-    I considered using cron for this; it'd be relatively easy to have it fire
-    up once a minute, and simply act on it. But I decided instead to write a 
-    simple little daemon using perl. Perl daemons are trivially easy to write,
-    and if you use module such as <code>Proc::Daemon</code> and follow a few
-    trivial defensive coding practices, you can keep memory leaks contained (or
-    at least minimal). Besides, it gave me a chance to dust off my perl chops.
-</p>
-
-<p>
-    I decided I'd have it check for the file in 30 second intervals, simply
-    sleeping if no changes were detected. If the file was found, however, it
-    should attempt to deploy. Additionally, I wanted it to quit if it was
-    unable to remove the file (as this could lead to multiple deploy attempts),
-    and log success and failure status of the deploy. The full script looks like
-    this:
-</p>
-
-<div class="example"><pre>
-#!/usr/bin/perl
-use strict;
-use warnings;
-use Proc::Daemon;
-
-Proc::Daemon::Init;
-
-my $continue = 1;
-$SIG{TERM} = sub { $continue = 0 };
-
-my $updateFile   = "/var/local/mwop.net.update";
-my $updateScript = "/home/matthew/bin/deploy-mwop";
-my $logFile      = "/var/local/mwop.net-deploy.log";
-while ($continue) {
-    # 30s intervals between iterations
-    sleep 30;
-
-    # Check for update file, and restart loop if not found
-    unless (-e $updateFile) {
-        next;
-    }
-
-    # Remove update file
-    if (!unlink($updateFile)) {
-        # If unable to unlink, we need to quit
-        system('echo "' . time() . ': Failed to REMOVE ' . $updateFile . '" >> ' . $logFile);
-        $continue = 0;
-        next;
-    }
-
-    # Deploy
-    system($updateScript);
-    if ( $? == -1 ) {
-        system('echo "' . time() . ': FAILED to deploy: ' . $! . '" >> ' .  $logFile);
-    } else {
-        system('echo "' . time() . ': Successfully DEPLOYED" >> ' . $logFile);
-    }
-}
-</pre></div>
-
-<p>
-    The <code>system()</code> calls for logging could have been done using 
-    Perl, but I didn't want to deal with additional error handling and file
-    pointers; simply proxying to the system seemed reasonable and expedient.
-</p>
-
-<p>
-    When all was ready, I started the above listener, which automatically
-    daemonizes itself. I then installed the post-update hook into my bare
-    repository, and tested it out. And it runs! When I push to master, my
-    site is automatically deployed, typically within 15-20 seconds from
-    completion.
-</p>
-
-<h4>Caveats</h4>
-
-<p>
-    This solution, of course, relies on a daemonized process. If that process
-    were to terminate, I'd have no idea until I discovered my site didn't
-    refresh after the most recent push. Clearly, some sort of monitor checking
-    for the status of the daemon should be in place.
-</p>
-
-<p>
-    Also, note that I'm having this update on changes to the master branch;
-    you may need to adapt it for your own needs, depending on your branching
-    strategy.
-</p>
-
-<p>
-    Finally, this approach does not address issues that might require a 
-    roll-back. Ideally, the script should probably log what revision was 
-    current prior to the deployment, allowing roll-back to the previous
-    state. Alternately, the deployment script should create a new clone
-    of the site and swap symlinks to allow quick roll-back when required.
 </p>]]></content:encoded>
       <slash:comments>0</slash:comments>
     </item>

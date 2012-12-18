@@ -3,10 +3,52 @@
   <channel>
     <title>Tag: oop :: phly, boy, phly</title>
     <description>Tag: oop :: phly, boy, phly</description>
-    <pubDate>Sat, 17 Nov 2012 13:53:00 +0000</pubDate>
+    <pubDate>Tue, 18 Dec 2012 20:24:00 +0000</pubDate>
     <generator>Zend_Feed_Writer 2.0.5 (http://framework.zend.com)</generator>
     <link>http://mwop.net/blog/tag/oop.html</link>
     <atom:link rel="self" type="application/rss+xml" href="http://mwop.net/blog/tag/oop-rss.xml"/>
+    <item>
+      <title>PHP Master Series on Day Camp For Developers</title>
+      <pubDate>Tue, 18 Dec 2012 20:24:00 +0000</pubDate>
+      <link>http://mwop.net/blog/2012-12-18-php-master-series.html</link>
+      <guid>http://mwop.net/blog/2012-12-18-php-master-series.html</guid>
+      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
+      <dc:creator>Matthew Weier O'Phinney</dc:creator>
+      <content:encoded><![CDATA[<p>
+    <a href="http://blog.calevans.com">Cal Evans</a> has organized another 
+    DayCamp4Developers event, this time entitled "<a 
+    href="http://blog.calevans.com/2012/11/19/php-master-series-vol-1">PHP 
+    Master Series, Volume 1</a>". I'm honored to be an invited speaker for this 
+    first edition, where I'll be presenting my talk, "Designing Beautiful Software".
+</p>
+
+<p>
+    Why would you want to participate? Well, for one, because you can interact directly
+    with the various speakers during the presentations. Sure, you can likely find the slide
+    decks elsewhere, or possibly even recordings. But if we all do our jobs right, we'll
+    likely raise more questions than answers; if you attend, you'll get a chance to ask
+    some of your questions immediately, <em>and we may even answer them!</em>
+</p>
+
+<p>
+    On top of that, this is a fantastic lineup of speakers, and, frankly, not a lineup 
+    I've ever participated in. In a typical conference, you'd likely see one or two of
+    us, and be lucky if we weren't scheduled against each other; if you attend 
+    this week, you'll get to see us all, back-to-back. 
+</p>
+
+<p>
+    What else will you be doing this Friday, anyways, while <a 
+    href="http://en.wikipedia.org/wiki/2012_phenomenon">you wait for the end of the 
+    world?</a>
+</p>
+
+<p>
+    So, do yourself a favor, and <a 
+    href="http://phpmasterseriesv1.eventbrite.com/">register today</a>!
+</p>]]></content:encoded>
+      <slash:comments>0</slash:comments>
+    </item>
     <item>
       <title>My ZendCon Beautiful Software Talk</title>
       <pubDate>Sat, 17 Nov 2012 13:53:00 +0000</pubDate>

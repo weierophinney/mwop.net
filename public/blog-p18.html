@@ -92,6 +92,53 @@
 
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
+    <p class="date">2006-05-16 18:25:00</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/111-mbstring-comes-to-the-rescue.html">mbstring comes to the rescue</a></h4>
+
+    <div class="entry body"><p>
+    I've been working with SimpleXML a fair amount lately, and have run into an
+    issue a number of times with character encodings. Basically, if a string 
+    has a mixture of UTF-8 and non-UTF-8 characters, SimpleXML barfs, claiming
+    the "String could not be parsed as XML."
+</p>
+<p>
+    I tried a number of solutions, hoping actually to automate it via mbstring
+    INI settings; these schemes all failed. iconv didn't work properly. 
+    The only thing that did work was to convert the encoding to latin1 -- but
+    this wreaked havoc with actual UTF-8 characters.
+</p>
+<p>
+    Then, through a series of trial-and-error, all-or-nothing shots, I stumbled
+    on a simple solution. Basically, I needed to take two steps:
+</p>
+<ul>
+    <li>Detect the current encoding of the string</li>
+    <li>Convert that encoding to UTF-8</li>
+</ul>
+<p>which is accomplished with:</p>
+<div class="example"><pre><code lang="php">
+$enc = mb_detect_encoding($xml);
+$xml = mb_convert_encoding($xml, 'UTF-8', $enc);
+</code></pre></div>
+<p>
+    The conversion is performed even if the detected encoding is UTF-8; the
+    conversion ensures that <em>all</em> characters in the string are properly
+    encoded when done.
+</p>
+<p>
+    It's a non-intuitive solution, but it works! QED.
+</p></div>
+
+    <p><a href="/blog/111-mbstring-comes-to-the-rescue.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
     <p class="date">2006-05-16 00:01:00</p>
     <p class="tags"><a href="/blog/tag/php.html">php</a></p>
 </aside>
@@ -541,37 +588,6 @@
 </section>
 
 </div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2005-12-10 16:56:58</p>
-    <p class="tags"><a href="/blog/tag/family.html">family</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/102-Name-recognition.html">Name recognition</a></h4>
-
-    <div class="entry body"><p>
-    Don't know if this is actually possible, but it appears Liam is already
-    starting to associate names with people!
-</p>
-<p>
-    Just now, Jen was holding Liam, and turned him to face Maeve and I, who were
-    sitting on the couch. He wasn't looking anywhere in particular. Then, Jen
-    said, "Hi, Papa!" and his eyes moved to focus on me. A moment later, she
-    said, "Hi, big sister!" and he moved is eyes to focus on Maeve.
-</p>
-<p>
-    As I type this, Jen just tried the experiment again with Maeve, and again he
-    moved his eyes and head to look at her!
-</p>
-<p>
-    How cool and amazing it is to witness child development!
-</p></div>
-
-    <p><a href="/blog/102-Name-recognition.html">Continue reading...</a></p>
-</section>
-
-</div>
 <div class="paginationControl">
         <a href="/blog.html" class="first">&lt;&lt; First</a> |
         <a href="/blog-p17.html"> &lt; Previous </a> |
@@ -586,7 +602,7 @@
             <a href="/blog-p22.html">22</a> |
             <a href="/blog-p23.html">23</a> |
             <a href="/blog-p19.html"> Next &gt;</a> |
-        <a href="/blog-p27.html" class="last"> Last &gt;&gt;</a>
+        <a href="/blog-p28.html" class="last"> Last &gt;&gt;</a>
 </div>
 
 </section>
