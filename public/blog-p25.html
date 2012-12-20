@@ -92,6 +92,114 @@
 
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
+    <p class="date">2004-09-04 19:12:21</p>
+    <p class="tags"><a href="/blog/tag/personal.html">personal</a><br />
+<a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/2-PHP-and-Template-Engines.html">PHP and Template Engines</a></h4>
+
+    <div class="entry body"><p>
+    On <a href="http://www.phppatterns.com">PhpPatterns</a>, I recently read <a
+        href="http://www.phppatterns.com/index.php/article/articleview/4/1/1/">an
+        article on Template Engines in PHP</a>. It got my ire up, as it said (my
+    interpretation):
+</p>
+<ul>
+     <li>"template engines are a bad idea"</li>
+     <li>"templating using PHP natively can be a good idea"</li>
+     <li>"template engines... are not worth the text
+         their written in"</li>
+</ul>
+<p>
+    Okay, so that's actually direct quotes from the article. I took issue with
+    it, immediately -- I use <a href="http://smarty.php.net">Smarty</a> for
+    everything I do, and the decision to do so was not done lightly. I have in
+    fact been advocating the use of template engines in one language or another
+    for several years with the various positions in which I've been employed; I
+    think they are an essential tool for projects larger than a few pages. Why?
+</p>
+<ul>
+    <li>Mixing of languages causes inefficiency. When I'm programming, it's
+    incredibly inefficient to be writing in up to four different languages: PHP
+    or Perl, X/HTML, CSS, and Javascript. Switching between them while in the
+    same file is cumbersome and confusing, and trying to find HTML entities
+    buried within quoting can be a nightmare, even when done in heredocs.
+    Separating the languages into different files seems not only natural, but
+    essential.</li>
+    <li>Views contain their own logic. In an MVC pattern, the final web page
+    View may be dependent on data passed to it via the Controller; however,
+    this doesn't mean that I want the full functionality of a language like PHP
+    or Perl to do that. I should only be doing simple logic or looping
+    constructs -- and a full scripting language is overkill. (I do recognize,
+    however, that template engines such as Smarty are written using PHP, so the
+    language is being invoked regardless. What I speak of here is the language
+    used to <em>compose the template</em>.)</li>
+    <li>Abstraction and Security. The fewer internals that are divulged on the
+    template page, the better. For security purposes, I may not want clients
+    able to know <em>how</em> data got to the page, only what data is available
+    to them. In addition, if this data is abstracted enough, any number of
+    backends could be connected to the page to produce output.</li>
+</ul>
+<p>
+    So, reading the aforementioned article really got my hackles up. However, it
+    got me thinking, as well. One issue raised is that PHP can be used as your
+    templating language. While I can understand why this might be desirable --
+    everything from load issues to flexibility -- I also feel that this doesn't
+    give enough abstraction. 
+</p>
+<p>
+    Using PHP seems to me to be inefficient on two fundamental levels, based on
+    my understanding of <em>The Pragmatic Programmer</em>:
+</p>
+<ul>
+    <li><b>Domain Langauge.</b> <em>The Pragmatic Programmer</em> suggests that
+    <em>subsets</em> of a language should be used, or wholly new mini-languages
+    developed, that speak to the domain at hand. As an example, you might want
+    to use a sharp tool to open a can; an axe would be overkill, but a knife
+    might work nicely. Using PHP to describe a template is like using an axe to
+    open a can; it'll do the job, but it may also make a mess of it all, simply
+    because it's too much sharp edge for the job.</li>
+    <li><b>Metadata.</b> Metadata is data about data; to my thinking, templates
+    describe the data they are communicating; the compiled template actually
+    contains the data. In this regard, again, putting PHP into the script is
+    overkill as doing so gives more than just some hints as to what the data
+    is.</li>
+</ul>
+<p>
+    The author of the article also makes a case for teaching web designers PHP
+    -- that the language is sufficiently easy to pick up that they typically
+    will be able to learn it as easily, if not more easily, than a template
+    language. I agree to a degree... But my experience has shown that web
+    designers typically struggle with HTML, let alone PHP. (Note: my experience
+    in this regard is not huge, and I'm sure that this is an exaggeration.) I
+    find that it's typically easiest for me to give an example template, explain
+    what the funny, non-HTML stuff can do, and let them go from there. Using
+    this approach, they do not need to learn anything new -- they simply work
+    with placeholders.
+</p>
+<p>
+    Still, I think the author raises some fine points. I wish he'd bothered to
+    do more research into <em>why</em> people choose template engines and the
+    benefits that arise from using them <em>before</em> simply outright slamming
+    them. Of course, the article is also a bit dated; it was written over two
+    years ago, and much has changed in the world of PHP and many of its template
+    engines. I'm curious as to whether they would feel the same way today.
+</p>
+<p>
+    Me? My mind is made up -- the benefits, in my circumstances, far outweigh
+    any costs associated. I'll be using template engines, and <a
+        href="http://smarty.php.net">Smarty</a> in particular, for years to
+    come.
+</p></div>
+
+    <p><a href="/blog/2-PHP-and-Template-Engines.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
     <p class="date">2004-04-27 22:48:53</p>
     <p class="tags"><a href="/blog/tag/linux.html">linux</a><br />
 <a href="/blog/tag/personal.html">personal</a></p>
@@ -513,60 +621,6 @@
 </section>
 
 </div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2004-02-09 22:25:56</p>
-    <p class="tags"><a href="/blog/tag/personal.html">personal</a><br />
-<a href="/blog/tag/aikido.html">aikido</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/29-Random-thoughts-of-violence.html">Random thoughts of violence</a></h4>
-
-    <div class="entry body"><p>
-    I began the day with sudden images and body remembrances of an escrima or
-    arnis drill Morgan used to teach during weapons class years ago -- it
-    utilizes a short stick or wakazashi in one hand, the other hand free, and
-    consists of five steps on each side; when you finish one side, you do the
-    other, because the drill is done with a partner.
-</p>
-<p>
-    I haven't done the drill for years, but I remembered all the nuances, all
-    the little tips and secrets Morgan showed me over the year or two he
-    continued teaching it. And I wanted desperately to do it with someone right
-    that moment as I was getting out of bed so that I wouldn't lose it. But, of
-    course, I had no such opportunity. The movement is still tracing its way
-    through my body.
-</p>
-<p>
-    And this evening, we watched Fight Club. I still remember watching it in the
-    theater, and how it affected me then -- and it affects me in many of the
-    same ways now. There's some cultural references I 'get' more now --
-    references to Ikea, and now I understand groups and guided meditation and
-    therapy better. And there's new references, too -- the image of the
-    buildings falling is much different now that the WTC buildings have been
-    viewed collapsing.
-</p>
-<p>
-    But the message, the message is still the same, still present. Do things own
-    us, or do we own them? What do I most want to do before I die, and am I
-    doing it? These are big questions for a film to raise, and I'm still
-    surprised that Fight Club remains such a huge hit and success because of
-    them. And they're not necessarily buried in the film -- though I can see how
-    many people might simply glorify the violence in the film, and pass over the
-    message. I find the violence is a part of the message -- can you teach
-    yourself to live with pain, that pain is transient and ceases? can you learn
-    to stop living in fear?
-</p>
-<p>
-    So my day was marked by violence, beginning and end. The middle was all
-    consumer fluff. And hedonism. But hey, that's okay, too.
-</p></div>
-
-    <p><a href="/blog/29-Random-thoughts-of-violence.html">Continue reading...</a></p>
-</section>
-
-</div>
 <div class="paginationControl">
         <a href="/blog.html" class="first">&lt;&lt; First</a> |
         <a href="/blog-p24.html"> &lt; Previous </a> |
@@ -659,7 +713,7 @@
         <div id="search" style="width:100%;">Loading...</div>
 <h4>Tag Cloud</h4>
 <div class="cloud">
-<ul class="Zend&#x5C;Tag&#x5C;Cloud"><li><a href="/blog/tag/php.html" style="font-size: 20px;">php</a></li> <li><a href="/blog/tag/zend+framework.html" style="font-size: 15px;">zend framework</a></li> <li><a href="/blog/tag/zf2.html" style="font-size: 11px;">zf2</a></li> <li><a href="/blog/tag/vim.html" style="font-size: 11px;">vim</a></li> <li><a href="/blog/tag/family.html" style="font-size: 11px;">family</a></li> <li><a href="/blog/tag/programming.html" style="font-size: 12px;">programming</a></li> <li><a href="/blog/tag/personal.html" style="font-size: 13px;">personal</a></li> <li><a href="/blog/tag/phpconcom.html" style="font-size: 10px;">phpconcom</a></li> <li><a href="/blog/tag/mvc.html" style="font-size: 11px;">mvc</a></li> <li><a href="/blog/tag/oop.html" style="font-size: 11px;">oop</a></li> <li><a href="/blog/tag/testing.html" style="font-size: 10px;">testing</a></li> <li><a href="/blog/tag/rest.html" style="font-size: 11px;">rest</a></li> <li><a href="/blog/tag/linux.html" style="font-size: 12px;">linux</a></li> <li><a href="/blog/tag/zendcon08.html" style="font-size: 11px;">zendcon08</a></li> <li><a href="/blog/tag/file_fortune.html" style="font-size: 10px;">file_fortune</a></li> <li><a href="/blog/tag/pear.html" style="font-size: 11px;">pear</a></li> <li><a href="/blog/tag/zendcon.html" style="font-size: 11px;">zendcon</a></li> <li><a href="/blog/tag/perl.html" style="font-size: 12px;">perl</a></li> <li><a href="/blog/tag/fastcgi.html" style="font-size: 10px;">fastcgi</a></li> <li><a href="/blog/tag/ubuntu.html" style="font-size: 11px;">ubuntu</a></li> <li><a href="/blog/tag/tekx.html" style="font-size: 10px;">tekx</a></li> <li><a href="/blog/tag/zendcon10.html" style="font-size: 10px;">zendcon10</a></li> <li><a href="/blog/tag/dojo.html" style="font-size: 11px;">dojo</a></li> <li><a href="/blog/tag/symfony.html" style="font-size: 11px;">symfony</a></li> <li><a href="/blog/tag/zeta+components.html" style="font-size: 10px;">zeta components</a></li> <li><a href="/blog/tag/tek09.html" style="font-size: 10px;">tek09</a></li> <li><a href="/blog/tag/spl.html" style="font-size: 11px;">spl</a></li> <li><a href="/blog/tag/subversion.html" style="font-size: 11px;">subversion</a></li> <li><a href="/blog/tag/zend+framewor.html" style="font-size: 10px;">zend framewor</a></li> <li><a href="/blog/tag/rails.html" style="font-size: 10px;">rails</a></li> <li><a href="/blog/tag/conferences.html" style="font-size: 11px;">conferences</a></li> <li><a href="/blog/tag/dpc08.html" style="font-size: 11px;">dpc08</a></li> <li><a href="/blog/tag/phpworks08.html" style="font-size: 11px;">phpworks08</a></li> <li><a href="/blog/tag/webinar.html" style="font-size: 11px;">webinar</a></li> <li><a href="/blog/tag/zencon08.html" style="font-size: 10px;">zencon08</a></li> <li><a href="/blog/tag/cw09.html" style="font-size: 11px;">cw09</a></li> <li><a href="/blog/tag/zend+server.html" style="font-size: 10px;">zend server</a></li> <li><a href="/blog/tag/dpc09.html" style="font-size: 10px;">dpc09</a></li> <li><a href="/blog/tag/sflive2010.html" style="font-size: 10px;">sflive2010</a></li> <li><a href="/blog/tag/security.html" style="font-size: 10px;">security</a></li> <li><a href="/blog/tag/wifi.html" style="font-size: 10px;">wifi</a></li> <li><a href="/blog/tag/aikido.html" style="font-size: 10px;">aikido</a></li> <li><a href="/blog/tag/books.html" style="font-size: 10px;">books</a></li> <li><a href="/blog/tag/dpc10.html" style="font-size: 10px;">dpc10</a></li> <li><a href="/blog/tag/zendcon09.html" style="font-size: 11px;">zendcon09</a></li> <li><a href="/blog/tag/git.html" style="font-size: 11px;">git</a></li> <li><a href="/blog/tag/phpwomen.html" style="font-size: 10px;">phpwomen</a></li> <li><a href="/blog/tag/virtualbox.html" style="font-size: 10px;">virtualbox</a></li> <li><a href="/blog/tag/screencast.html" style="font-size: 11px;">screencast</a></li> <li><a href="/blog/tag/advocacy.html" style="font-size: 10px;">advocacy</a></li> <li><a href="/blog/tag/politics.html" style="font-size: 10px;">politics</a></li> <li><a href="/blog/tag/internet.html" style="font-size: 10px;">internet</a></li> <li><a href="/blog/tag/microphp.html" style="font-size: 10px;">microphp</a></li> <li><a href="/blog/tag/cloud.html" style="font-size: 10px;">cloud</a></li> <li><a href="/blog/tag/composer.html" style="font-size: 10px;">composer</a></li> <li><a href="/blog/tag/doctrine.html" style="font-size: 10px;">doctrine</a></li></ul></div>
+<ul class="Zend&#x5C;Tag&#x5C;Cloud"><li><a href="/blog/tag/php.html" style="font-size: 20px;">php</a></li> <li><a href="/blog/tag/zend+framework.html" style="font-size: 14px;">zend framework</a></li> <li><a href="/blog/tag/zf2.html" style="font-size: 11px;">zf2</a></li> <li><a href="/blog/tag/vim.html" style="font-size: 11px;">vim</a></li> <li><a href="/blog/tag/family.html" style="font-size: 11px;">family</a></li> <li><a href="/blog/tag/programming.html" style="font-size: 12px;">programming</a></li> <li><a href="/blog/tag/personal.html" style="font-size: 13px;">personal</a></li> <li><a href="/blog/tag/phpconcom.html" style="font-size: 10px;">phpconcom</a></li> <li><a href="/blog/tag/mvc.html" style="font-size: 11px;">mvc</a></li> <li><a href="/blog/tag/oop.html" style="font-size: 11px;">oop</a></li> <li><a href="/blog/tag/testing.html" style="font-size: 10px;">testing</a></li> <li><a href="/blog/tag/rest.html" style="font-size: 11px;">rest</a></li> <li><a href="/blog/tag/linux.html" style="font-size: 12px;">linux</a></li> <li><a href="/blog/tag/zendcon08.html" style="font-size: 11px;">zendcon08</a></li> <li><a href="/blog/tag/file_fortune.html" style="font-size: 10px;">file_fortune</a></li> <li><a href="/blog/tag/pear.html" style="font-size: 11px;">pear</a></li> <li><a href="/blog/tag/zendcon.html" style="font-size: 11px;">zendcon</a></li> <li><a href="/blog/tag/perl.html" style="font-size: 12px;">perl</a></li> <li><a href="/blog/tag/fastcgi.html" style="font-size: 10px;">fastcgi</a></li> <li><a href="/blog/tag/ubuntu.html" style="font-size: 11px;">ubuntu</a></li> <li><a href="/blog/tag/tekx.html" style="font-size: 10px;">tekx</a></li> <li><a href="/blog/tag/zendcon10.html" style="font-size: 10px;">zendcon10</a></li> <li><a href="/blog/tag/dojo.html" style="font-size: 11px;">dojo</a></li> <li><a href="/blog/tag/symfony.html" style="font-size: 11px;">symfony</a></li> <li><a href="/blog/tag/zeta+components.html" style="font-size: 10px;">zeta components</a></li> <li><a href="/blog/tag/tek09.html" style="font-size: 10px;">tek09</a></li> <li><a href="/blog/tag/spl.html" style="font-size: 11px;">spl</a></li> <li><a href="/blog/tag/subversion.html" style="font-size: 11px;">subversion</a></li> <li><a href="/blog/tag/zend+framewor.html" style="font-size: 10px;">zend framewor</a></li> <li><a href="/blog/tag/rails.html" style="font-size: 10px;">rails</a></li> <li><a href="/blog/tag/conferences.html" style="font-size: 11px;">conferences</a></li> <li><a href="/blog/tag/dpc08.html" style="font-size: 11px;">dpc08</a></li> <li><a href="/blog/tag/phpworks08.html" style="font-size: 11px;">phpworks08</a></li> <li><a href="/blog/tag/webinar.html" style="font-size: 11px;">webinar</a></li> <li><a href="/blog/tag/zencon08.html" style="font-size: 10px;">zencon08</a></li> <li><a href="/blog/tag/cw09.html" style="font-size: 11px;">cw09</a></li> <li><a href="/blog/tag/zend+server.html" style="font-size: 10px;">zend server</a></li> <li><a href="/blog/tag/dpc09.html" style="font-size: 10px;">dpc09</a></li> <li><a href="/blog/tag/sflive2010.html" style="font-size: 10px;">sflive2010</a></li> <li><a href="/blog/tag/security.html" style="font-size: 10px;">security</a></li> <li><a href="/blog/tag/wifi.html" style="font-size: 10px;">wifi</a></li> <li><a href="/blog/tag/aikido.html" style="font-size: 10px;">aikido</a></li> <li><a href="/blog/tag/books.html" style="font-size: 10px;">books</a></li> <li><a href="/blog/tag/dpc10.html" style="font-size: 10px;">dpc10</a></li> <li><a href="/blog/tag/zendcon09.html" style="font-size: 11px;">zendcon09</a></li> <li><a href="/blog/tag/git.html" style="font-size: 11px;">git</a></li> <li><a href="/blog/tag/phpwomen.html" style="font-size: 10px;">phpwomen</a></li> <li><a href="/blog/tag/virtualbox.html" style="font-size: 10px;">virtualbox</a></li> <li><a href="/blog/tag/screencast.html" style="font-size: 11px;">screencast</a></li> <li><a href="/blog/tag/advocacy.html" style="font-size: 10px;">advocacy</a></li> <li><a href="/blog/tag/politics.html" style="font-size: 10px;">politics</a></li> <li><a href="/blog/tag/internet.html" style="font-size: 10px;">internet</a></li> <li><a href="/blog/tag/microphp.html" style="font-size: 10px;">microphp</a></li> <li><a href="/blog/tag/cloud.html" style="font-size: 10px;">cloud</a></li> <li><a href="/blog/tag/composer.html" style="font-size: 10px;">composer</a></li> <li><a href="/blog/tag/doctrine.html" style="font-size: 10px;">doctrine</a></li></ul></div>
         </div>
 
         <br class="clear"/>
