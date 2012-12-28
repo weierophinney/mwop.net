@@ -3,7 +3,6 @@ $localConfigDir = '/var/local/mwop.net/';
 if (getenv('OPENSHIFT_DATA_DIR')) {
     $localConfigDir = getenv('OPENSHIFT_DATA_DIR') . 'config/';
 }
-die('Local config dir: ' . $localConfigDir);
 return array(
     'modules' => array(
         'Application',
