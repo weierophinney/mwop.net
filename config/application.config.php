@@ -25,7 +25,7 @@ return array(
         'config_cache_enabled'     => $configCache,
         'config_glob_paths'        => array(
             'config/autoload/{,*.}{global,local}.php',
-            $localConfigDir . '{,*.}{local}.php',
+            $localConfigDir . '{,*.}local.php',
         ),
         'cache_dir'                => $localCacheDir,
         'module_paths'             => array(
