@@ -3,5 +3,4 @@
 # available.  Otherwise it will execute while your application is stopped
 # before the build step.  This script gets executed directly, so it
 # could be python, php, ruby, etc.
-ssh-add $OPENSHIFT_DATA_DIR/ssh/github-key
-(cd $OPENSHIFT_DATA_DIR/config ; git fetch origin ; git rebase origin/mwop.net.config)
+ssh-agent `ssh-add $OPENSHIFT_DATA_DIR/ssh/github-key && (cd $OPENSHIFT_DATA_DIR/config ; git fetch origin ; git rebase origin/mwop.net.config)`
