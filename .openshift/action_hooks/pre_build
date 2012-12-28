@@ -3,8 +3,4 @@
 # available.  Otherwise it will execute while your application is stopped
 # before the build step.  This script gets executed directly, so it
 # could be python, php, ruby, etc.
-(
-    cd $OPENSHIFT_DATA_DIR/config ;
-    git fetch github ;
-    git rebase github/mwop.net.config
-)
+$OPENSHIFT_DATA_DIR/config-fetch.sh
