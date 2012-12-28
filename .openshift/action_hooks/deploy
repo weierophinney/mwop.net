@@ -6,10 +6,16 @@
 (
     unset GIT_DIR ;
     cd $OPENSHIFT_REPO_DIR ;
+    # remove config cache
+    echo "Flush configuration cache" ;
+    rm $OPENSHIFT_DATA_DIR/cache/module-config-cache*.php ;
     # install composer dependencies
+    echo "Invoking composer" ;
     /usr/local/zend/bin/php composer.phar install ;
     # ensure users DB has proper permissions
-    chmod a+rw $OPENSHIFT_DATA_DIR/users.db
+    echo "Ensure user database has correct permissions" ;
+    chmod a+rw $OPENSHIFT_DATA_DIR/users.db ;
     # flush cache
+    echo "Flush page cache" ;
     php public/index.php phlysimplepage cache clear all
 )
