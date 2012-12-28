@@ -9,7 +9,7 @@
     # install composer dependencies
     /usr/local/zend/bin/php composer.phar install ;
     # ensure users DB has proper permissions
-    chmod +rw data/users.db
+    chmod a+rw $OPENSHIFT_DATA_DIR/users.db
     # flush cache
     php public/index.php phlysimplepage cache clear all
 )
