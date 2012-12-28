@@ -5,7 +5,7 @@
 <?php 
 $path = 'data/comics.html';
 if (getenv('OPENSHIFT_DATA_DIR')) {
-    $path = getenv('OPENSHIFT_DATA_DIR' . 'comics.html');
+    $path = getenv('OPENSHIFT_DATA_DIR') . 'comics.html';
 }
 include $path; 
 ?>
