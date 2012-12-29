@@ -88,7 +88,7 @@ RewriteRule ^/?blog/tag/([^/.-]+)\.xml /blog/tag/$1-atom.xml [R=301,L]
 RewriteRule ^/?blog/tag/([^/.-]+)$ /blog/tag/$1.html [R=301,L]
 RewriteCond %{REQUEST_URI} ^/?blog
 RewriteCond %{REQUEST_URI} !(\.(ht|x)ml$)
-RewriteRule ^(.*)$ $1.html [R=301,L]
+RewriteRule ^(.*)$ /$1.html [R=301,L]
                                                                             
 # tag feeds                                                                 
 RewriteCond %{QUERY_STRING} ^serendipity\[tag\]=([^&=]+)$                   
