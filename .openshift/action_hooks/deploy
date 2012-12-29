@@ -1,0 +1,22 @@
+#!/bin/bash
+# This deploy hook gets executed after dependencies are resolved and the
+# build hook has been run but before the application has been started back
+# up again.  This script gets executed directly, so it could be python, php,
+# ruby, etc.
+(
+    unset GIT_DIR ;
+    cd $OPENSHIFT_REPO_DIR ;
+    # remove config cache
+    echo "Flush configuration cache" ;
+    rm $OPENSHIFT_DATA_DIR/cache/module-config-cache*.php ;
+    # install composer dependencies
+    echo "Invoking composer" ;
+    export COMPOSER_HOME="$OPENSHIFT_DATA_DIR/.composer" ;
+    /usr/local/zend/bin/php composer.phar install ;
+    # ensure users DB has proper permissions
+    echo "Ensure user database has correct permissions" ;
+    chmod a+rw $OPENSHIFT_DATA_DIR/users.db ;
+    # flush cache
+    echo "Flush page cache" ;
+    php public/index.php phlysimplepage cache clear all
+)
