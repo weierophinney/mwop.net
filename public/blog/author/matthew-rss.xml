@@ -3,10 +3,199 @@
   <channel>
     <title>Author: Matthew Weier O'Phinney :: phly, boy, phly</title>
     <description>Author: Matthew Weier O'Phinney :: phly, boy, phly</description>
-    <pubDate>Thu, 20 Dec 2012 20:23:00 +0000</pubDate>
+    <pubDate>Sun, 30 Dec 2012 15:52:00 +0000</pubDate>
     <generator>Zend_Feed_Writer 2.0.5 (http://framework.zend.com)</generator>
     <link>http://mwop.net/blog/author/matthew.html</link>
     <atom:link rel="self" type="application/rss+xml" href="http://mwop.net/blog/author/matthew-rss.xml"/>
+    <item>
+      <title>OpenShift, Cron, and Naked Domains</title>
+      <pubDate>Sun, 30 Dec 2012 15:52:00 +0000</pubDate>
+      <link>http://mwop.net/blog/2012-12-30-openshift-cron-and-naked-domains.html</link>
+      <guid>http://mwop.net/blog/2012-12-30-openshift-cron-and-naked-domains.html</guid>
+      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
+      <dc:creator>Matthew Weier O'Phinney</dc:creator>
+      <content:encoded><![CDATA[<p>
+    As an experiment, I migrated my website over to <a 
+    href="http://openshift.redhat.com">OpenShift</a> yesterday. I've been hosting
+    a pastebin there already, and have found the service to be both straightforward
+    and flexible; it was time to put it to a more thorough test.
+</p>
+
+<p>
+    In the process, I ran into a number of interesting issues, some of which took quite
+    some time to resolve; this post is both to help inform other potential users of the
+    service, as well as act as a reminder to myself.
+</p><h2>Cron</h2>
+
+<p>
+    OpenShift offers a <a href="http://en.wikipedia.org/wiki/Cron">Cron</a> cartridge,
+    which I was excited to try out.<sup><a href="#f1">1</a></sup>
+</p>
+
+<p>
+    The basics are quite easy. In your repository's <code>.openshift</code> 
+    directory is a <code>cron</code> subdirectory, further divided into 
+    <code>minutely</code>, <code>hourly</code>, <code>daily</code>, <code>weekly</code>,
+    and <code>monthly</code> subdirectories. You drop a script you want to run
+    into one of these directories, and push your changes upstream.
+</p>
+
+<p>
+    The problem is: what if I want a job to run at a specific time daily? or on 
+    the quarter hour? or on a specific day of the week?
+</p>
+
+<p>
+    As it turns out, you can manage all of the above, just not quite as succinctly as
+    you would in a normal crontab. Here, for example, is a script that I run at 
+    5AM daily; I placed it in the <code>hourly</code> directory so that it can test
+    more frequently:
+</p>
+
+<div class="example"><pre><code language="bash">
+#!/bin/bash
+if [ `date +%H` == "05" ]
+then
+    (
+        export PHP=/usr/local/zend/bin/php ;
+        cd $OPENSHIFT_REPO_DIR ; 
+        $PHP public/index.php phlycomic fetch all ; 
+        $PHP public/index.php phlysimplepage cache clear --page=pages/comics 
+    )
+fi
+</code></pre></div>
+
+<p>
+    And here's one that runs on the quarter-hour, placed in the <code>minutely</code>
+    directory:
+</p>
+
+<div class="example"><pre><code language="bash">
+#!/bin/bash
+MINUTES=`date +%M`
+
+for i in "00" "15" "30" "45";do
+    if [ "$MINUTES" == "$i" ];then
+        (
+            export PHP=/usr/local/zend/bin/php ;
+            cd $OPENSHIFT_REPO_DIR ;
+            $PHP public/index.php githubfeed fetch 
+        )
+    fi
+done
+</code></pre></div>
+
+<p>
+    The point is that if you need more specificity, push the script into the 
+    next more specific directory, and test against the time of execution.
+</p>
+
+<h2>Naked Domains</h2>
+
+<p>
+    Naked domains are domains without a preceding subdomain. In my case, this
+    means "mwop.net", vs. "www.mwop.net".
+</p>
+
+<p>
+    The problem that cloud hosting presents is that the IP address on which you
+    are hosted can change at any time, for a variety of reasons. As such, you
+    typically cannot use DNS A records to point to your domain; the recommendation
+    is to use a CNAME record that points the domain to a "virtual" domain 
+    registered with your cloud hosting provider.
+</p>
+
+<p>
+    However, most domain registrars and DNS providers do not let you do this for
+    a naked domain, particularly if you also have MX or other records associated
+    with that naked domain.
+</p>
+
+<p>
+    Some registrars will allow you to forward the A record to a subdomain. I tried
+    this, but had limited success; I personally found that I ended up in an infinite
+    loop situation when doing the DNS lookup.
+</p>
+
+<p>
+    Another solution is to have a redirect in place for your naked domain to the
+    subdomain, which can then be a CNAME record. Typically, this would require you
+    have a web server under your control with a fixed IP that then simply redirects
+    to the subdomain. Fortunately, there's an easier solution: <a 
+    href="http://wwwizer.com/naked-domain-redirect">wwwizer</a>. You simply point
+    your naked domain A record to the wwwizer IP address, and they will do a 
+    redirect to your <code>www</code> subdomain.
+</p>
+
+<p>
+    I implemented wwwizer on my domain (which is why you'll see "www.mwop.net" in
+    your location bar), and it's been working flawlessly since doing so.
+</p>
+
+<h4>Private repositories</h4>
+
+<p>
+    I keep my critical site settings in a private repository, which allows me 
+    to version them while keeping the credentials they hold out of the public eye.
+    This means, however, that I need to use <a href="https://help.github.com/articles/managing-deploy-keys">GitHub deploy keys</a> on my server
+    in order to retrieve changes.
+</p>
+
+<p>
+    This was simple enough: I created an <code>ssh</code> subdirectory in my
+    <code>$OPENSHIFT_DATA_DIR</code> directory, and generated a new SSH keypair.
+</p>
+
+<p>
+    The problem was telling SSH to <em>use</em> this key when fetching changes.
+</p>
+
+<p>
+    The solution is to use a combination of <code>ssh-agent</code> and <code>ssh-add</code>,
+    and it looks something like this:
+</p>
+
+<div class="example"><pre><code language="bash">
+#!/bin/bash
+ssh-agent `ssh-add $OPENSHIFT_DATA_DIR/ssh/github-key && (
+    cd $OPENSHIFT_DATA_DIR/config ; 
+    git fetch origin ; 
+    git rebase origin/mwop.net.config
+)`
+</code></pre></div>
+
+<p>
+    After testing the above, I put this in a <code>pre_build</code> script in 
+    my OpenShift configuration so that I can autoupdate my private 
+    configuration on each build. However, I discovered a new problem: when
+    a build is being done, the <code>ssh-agent</code> is not available, which
+    means the above cannot be executed. I'm still trying to find a solution.
+</p>
+
+<h2>Fin</h2>
+
+<p>
+    I'm pretty happy with the move. I don't have to do anything special
+    to automate deployment, and all my cronjobs and deployment scripts are now
+    self-contained in the repository, which makes my site more portable.
+    While a few things could use more documentation, all the pieces are there
+    and discoverable with a small amount of work.
+</p>
+
+<p>
+    I'll likely give some other PaaS providers a try in the future, but for 
+    the moment, I'm quite happy with the functionality and flexibility of 
+    OpenShift.
+</p>
+
+<h4>Footnotes</h4>
+
+<ul>
+    <li id="f1">Zend Server's JobQueue can also be used as a cron replacement, 
+    but I was not keen on exposing the job functionality via HTTP.</li>
+</ul>]]></content:encoded>
+      <slash:comments>0</slash:comments>
+    </item>
     <item>
       <title>On php-fig and Shared Interfaces</title>
       <pubDate>Thu, 20 Dec 2012 20:23:00 +0000</pubDate>
@@ -1874,241 +2063,6 @@ class Module
     attach the listener, and then inject the event manager into the controller.
     If you wanted to do more complex work, you definitely could -- and this
     would be the place to do it.
-</p>]]></content:encoded>
-      <slash:comments>0</slash:comments>
-    </item>
-    <item>
-      <title>ZF2 Forms in Beta5</title>
-      <pubDate>Thu, 05 Jul 2012 20:40:00 +0000</pubDate>
-      <link>http://mwop.net/blog/2012-07-02-zf2-beta5-forms.html</link>
-      <guid>http://mwop.net/blog/2012-07-02-zf2-beta5-forms.html</guid>
-      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
-      <dc:creator>Matthew Weier O'Phinney</dc:creator>
-      <content:encoded><![CDATA[<p>
-    Forms are a nightmare for web development. They break the concept of 
-    separation of concerns:
-</p>
-
-<ul>
-    <li>They have a <em>display</em> aspect (the actual HTML form)</li>
-    <li>They have a <em>validation</em> aspect</li>
-    <li>And the two mix, as you need to display validation error messages.</li>
-</ul>
-
-<p>
-    On top of that, the submitted data is often directly related to your domain
-    models, causing more issues:
-</p>
-
-<ul>
-    <li>Not all elements will have a 1:1 mapping to the domain model -- 
-    buttons, CSRF protection, CAPTCHAs, etc. usually are application-level 
-    concerns, but not domain issues.</li>
-    <li>Names valid for your domain model may not be valid names for HTML 
-    entities.</li>
-</ul>
-
-<p>
-    Add to this that the validation logic may be re-usable outside of a forms 
-    context, and you've got a rather complex problem.
-</p><h2>Forms in ZF2</h2>
-
-<p>
-    Starting in 2.0.0beta4, we offerred a completely rewritten Form component. 
-    In fact, it's not just a Form component -- a new component, InputFilter, 
-    was also added. InputFilter is a component that provides re-usable validation
-    and normalization logic, and can be used with forms or your domain model.
-    The Form component is basically a bridge between domain models/validation 
-    and the view layer.
-</p>
-
-<p>
-    However, this means a bit more complexity for the end-user. You now must:
-</p>
-
-<ul>
-    <li>Create your form, which consists of elements and fieldsets.</li>
-    <li>Create an input filter, consisting of inputs.</li>
-    <li>Inform the form of the input filter.</li>
-</ul>
-
-<p>
-    It's a bit of work. And there's more: we wanted to simplify the process of
-    getting your validated values into your domain objects. For this, we added
-    a concept of <em>hydrators</em>, which map the validated form values to
-    an object you <em>bind</em> to the form. Now you have <em>three</em> pieces
-    to keep track of -- form (and its elements), input filter (and its inputs),
-    and a hydrator.
-</p>
-
-<p>
-    So, a few developers had an idea: use annotations on the domain model objects
-    to define these items, letting you keep it all in one place.
-</p>
-
-<p>
-    While I'm not normally a fan of annotations, I immediately saw the appeal 
-    in this particular situation.
-</p>
-
-<h2>An Example</h2>
-
-<p>
-    Let's consider a very simple example. The following domain object represents
-    data for a user, and includes a variety of elements we'd represent in a form.
-</p>
-
-<div class="example"><pre><code language="php">
-namespace MyVendor\Model;
-
-use Zend\Form\Annotation;
-
-/**
- * @Annotation\Hydrator("Zend\Stdlib\Hydrator\ObjectProperty")
- * @Annotation\Name("user")
- */
-class User
-{
-    /**
-     * @Annotation\Attributes({"type":"text" })
-     * @Annotation\Validator({"type":"Regex","options":{"regex":"/^[a-zA-Z][a-zA-Z0-9_-]{1,19}/"}})
-     * @Annotation\Options({"label":"Username:"})
-     */
-    public $username;
-
-    /**
-     * @Annotation\Required(false)
-     * @Annotation\Attributes({"type":"text" })
-     * @Annotation\Options({"label":"Your full name:"})
-     */
-    public $fullname;
-
-    /**
-     * @Annotation\Type("Zend\Form\Element\Email")
-     * @Annotation\Options({"label":"Your email address:"})
-     */
-    public $email;
-
-    /**
-     * @Annotation\Type("Zend\Form\Element\Url")
-     * @Annotation\Options({"label":"Your home page:"})
-     */
-    public $uri;
-}
-</code></pre></div>
-
-<p>
-    So, what does the above do?
-</p>
-
-<ul>
-    <li>The "name" annotation gives a form or element a specific name.</li>
-    <li>The "attributes" annotation indicates what attributes to compose into 
-        the form or element.</li>
-    <li>Similarly, the "options" annotation specifies options to compose into
-        an element. These typically include the label, but may include other
-        configuration that doesn't have an exact analog in the HTML attributes.</li>
-    <li>The "validator" annotation indicates a validator to compose for the 
-        input for a given element. We also ship a "filter" annotation.</li>
-    <li>The "type" annotation indicates a class to use for that particular form 
-        or element. In the specific cases used above, the elements actually 
-        provide default filters and validators, simplifying setup further!</li>
-    <li>Last, but not least, the "hydrator" annotation indicates a 
-        <code>Zend\Stdlib\Hydrator</code> implementation to use to relay data 
-        between the form and the object.  I'll cover this more shortly.</li>
-</ul>
-
-<p>
-    So, let's now turn to creating a form and consuming it.
-</p>
-
-<div class="example"><pre><code language="php">
-use MyVendor\Model\User;
-use Zend\Form\Annotation\AnnotationBuilder;
-
-$user    = new User();
-$builder = new AnnotationBuilder();
-$form    = $builder->createForm($user);
-
-$form->bind($user);
-$form->setData($dataFromSomewhere);
-if ($form->isValid()) {
-    // $user is now populated!
-    echo $form->username;
-    return;
-} else {
-    // probably need to render the form now.
-}
-</code></pre></div>
-
-<p>
-    You're not quite done, really -- most likely, you'll need to include a 
-    submit button of some sort, and it's always good practice to include a
-    token to prevent CSRF injections. But with the above, you've accomplished
-    the major headaches of setting up a form -- and using the data -- with 
-    minimal fuss.
-</p>
-
-
-<h2>Much more!</h2>
-
-<p>
-    The form support in ZF2 offers a ton of other features, some of which
-    are not specific to forms even.
-</p>
-
-<ul>
-    <li>
-        <p>
-            ZF2 supports a variety of hydration strategies, which allow you to pass
-            data to and from objects. The example above uses one that suggests a 1:1
-            mapping between the inputs and the object properties; other strategies
-            include using <code>ArrayObject</code>, using class mutator 
-            methods, and more.
-        </p>
-
-        <p>
-            At this point, you can hydrate an entire form, as well as individual
-            fieldsets!
-        </p>
-    </li>
-
-    <li>
-        <p>
-            You can provide custom annotations. While this feature is not 
-            documented yet, you can tell the <code>AnnotationBuilder</code> 
-            about additional annotation classes, as well as provide listeners
-            for those annotations so that they can interact with the form
-            construction process. As an example, one contributor has already
-            used these features to utilize <a 
-            href="http://doctrine-project.org">Doctrine</a> annotations to
-            inform the builder about the name of a property, as well as
-            indicate validators. (Side note: ZF2 now uses Doctrine's annotation
-            syntax and parser by default.)
-        </p>
-    </li>
-
-    <li>
-        <p>
-            There are a number of features targetting collections, so that
-            your client-side code can return arbitrary numbers of a specific
-            fieldset type (e.g., collecting addresses for an applicant), and
-            the form will be able to validate each. You can <a 
-            href="http://www.michaelgallego.fr/blog/?p=190">read more about 
-            those features from the author himself</a>.
-        </p>
-    </li>
-</ul>
-
-<p>
-    These features are all now available starting with the newly released 
-    2.0.0beta5 version, which you can grab from the <a 
-    href="http://packages.zendframework.com/">ZF2 packages site</a>. 
-</p>
-
-<p>
-    I'm really excited with the solutions we've created in ZF2, and even more
-    excited to see people put them to use!
 </p>]]></content:encoded>
       <slash:comments>0</slash:comments>
     </item>

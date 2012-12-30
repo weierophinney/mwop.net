@@ -1,11 +1,161 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title type="text">Tag: php :: phly, boy, phly</title>
-  <updated>2012-12-20T20:23:00+0000</updated>
+  <updated>2012-12-30T15:52:00+0000</updated>
   <generator uri="http://framework.zend.com" version="2.0.5">Zend_Feed_Writer</generator>
   <link rel="alternate" type="text/html" href="http://mwop.net/blog/tag/php.html"/>
   <link rel="self" type="application/atom+xml" href="http://mwop.net/blog/tag/php-atom.xml"/>
   <id>http://mwop.net/blog/tag/php.html</id>
+  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <title type="html"><![CDATA[OpenShift, Cron, and Naked Domains]]></title>
+    <published>2012-12-30T15:52:00+0000</published>
+    <updated>2012-12-30T15:52:00+0000</updated>
+    <link rel="alternate" type="text/html" href="http://mwop.net/blog/2012-12-30-openshift-cron-and-naked-domains.html"/>
+    <id>http://mwop.net/blog/2012-12-30-openshift-cron-and-naked-domains.html</id>
+    <author>
+      <name>Matthew Weier O'Phinney</name>
+      <email>me@mwop.net</email>
+      <uri>http://mwop.net</uri>
+    </author>
+    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
+      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>As an experiment, I migrated my website over to <xhtml:a href="http://openshift.redhat.com">OpenShift</xhtml:a> yesterday. I've been
+hosting a pastebin there already, and have found the service to be
+both straightforward and flexible; it was time to put it to a more
+thorough test.</xhtml:p>
+<xhtml:p>In the process, I ran into a number of interesting issues, some
+of which took quite some time to resolve; this post is both to help
+inform other potential users of the service, as well as act as a
+reminder to myself.</xhtml:p>
+<xhtml:h2>Cron</xhtml:h2>
+<xhtml:p>OpenShift offers a <xhtml:a href="http://en.wikipedia.org/wiki/Cron">Cron</xhtml:a> cartridge, which I was
+excited to try out.<xhtml:sup><xhtml:a href="#f1">1</xhtml:a></xhtml:sup></xhtml:p>
+<xhtml:p>The basics are quite easy. In your repository's
+<xhtml:code>.openshift</xhtml:code> directory is a <xhtml:code>cron</xhtml:code>
+subdirectory, further divided into <xhtml:code>minutely</xhtml:code>,
+<xhtml:code>hourly</xhtml:code>, <xhtml:code>daily</xhtml:code>, <xhtml:code>weekly</xhtml:code>, and
+<xhtml:code>monthly</xhtml:code> subdirectories. You drop a script you want to
+run into one of these directories, and push your changes
+upstream.</xhtml:p>
+<xhtml:p>The problem is: what if I want a job to run at a specific time
+daily? or on the quarter hour? or on a specific day of the
+week?</xhtml:p>
+<xhtml:p>As it turns out, you can manage all of the above, just not quite
+as succinctly as you would in a normal crontab. Here, for example,
+is a script that I run at 5AM daily; I placed it in the
+<xhtml:code>hourly</xhtml:code> directory so that it can test more
+frequently:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="bash">
+#!/bin/bash
+if [ `date +%H` == "05" ]
+then
+    (
+        export PHP=/usr/local/zend/bin/php ;
+        cd $OPENSHIFT_REPO_DIR ; 
+        $PHP public/index.php phlycomic fetch all ; 
+        $PHP public/index.php phlysimplepage cache clear --page=pages/comics 
+    )
+fi
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>And here's one that runs on the quarter-hour, placed in the
+<xhtml:code>minutely</xhtml:code> directory:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="bash">
+#!/bin/bash
+MINUTES=`date +%M`
+
+for i in "00" "15" "30" "45";do
+    if [ "$MINUTES" == "$i" ];then
+        (
+            export PHP=/usr/local/zend/bin/php ;
+            cd $OPENSHIFT_REPO_DIR ;
+            $PHP public/index.php githubfeed fetch 
+        )
+    fi
+done
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>The point is that if you need more specificity, push the script
+into the next more specific directory, and test against the time of
+execution.</xhtml:p>
+<xhtml:h2>Naked Domains</xhtml:h2>
+<xhtml:p>Naked domains are domains without a preceding subdomain. In my
+case, this means "mwop.net", vs. "www.mwop.net".</xhtml:p>
+<xhtml:p>The problem that cloud hosting presents is that the IP address
+on which you are hosted can change at any time, for a variety of
+reasons. As such, you typically cannot use DNS A records to point
+to your domain; the recommendation is to use a CNAME record that
+points the domain to a "virtual" domain registered with your cloud
+hosting provider.</xhtml:p>
+<xhtml:p>However, most domain registrars and DNS providers do not let you
+do this for a naked domain, particularly if you also have MX or
+other records associated with that naked domain.</xhtml:p>
+<xhtml:p>Some registrars will allow you to forward the A record to a
+subdomain. I tried this, but had limited success; I personally
+found that I ended up in an infinite loop situation when doing the
+DNS lookup.</xhtml:p>
+<xhtml:p>Another solution is to have a redirect in place for your naked
+domain to the subdomain, which can then be a CNAME record.
+Typically, this would require you have a web server under your
+control with a fixed IP that then simply redirects to the
+subdomain. Fortunately, there's an easier solution: <xhtml:a href="http://wwwizer.com/naked-domain-redirect">wwwizer</xhtml:a>. You simply
+point your naked domain A record to the wwwizer IP address, and
+they will do a redirect to your <xhtml:code>www</xhtml:code> subdomain.</xhtml:p>
+<xhtml:p>I implemented wwwizer on my domain (which is why you'll see
+"www.mwop.net" in your location bar), and it's been working
+flawlessly since doing so.</xhtml:p>
+<xhtml:h4>Private repositories</xhtml:h4>
+<xhtml:p>I keep my critical site settings in a private repository, which
+allows me to version them while keeping the credentials they hold
+out of the public eye. This means, however, that I need to use
+<xhtml:a href="https://help.github.com/articles/managing-deploy-keys">GitHub
+deploy keys</xhtml:a> on my server in order to retrieve changes.</xhtml:p>
+<xhtml:p>This was simple enough: I created an <xhtml:code>ssh</xhtml:code>
+subdirectory in my <xhtml:code>$OPENSHIFT_DATA_DIR</xhtml:code> directory, and
+generated a new SSH keypair.</xhtml:p>
+<xhtml:p>The problem was telling SSH to <xhtml:em>use</xhtml:em> this key when
+fetching changes.</xhtml:p>
+<xhtml:p>The solution is to use a combination of <xhtml:code>ssh-agent</xhtml:code>
+and <xhtml:code>ssh-add</xhtml:code>, and it looks something like this:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="bash">
+#!/bin/bash
+ssh-agent `ssh-add $OPENSHIFT_DATA_DIR/ssh/github-key &amp;&amp; (
+    cd $OPENSHIFT_DATA_DIR/config ; 
+    git fetch origin ; 
+    git rebase origin/mwop.net.config
+)`
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>After testing the above, I put this in a <xhtml:code>pre_build</xhtml:code>
+script in my OpenShift configuration so that I can autoupdate my
+private configuration on each build. However, I discovered a new
+problem: when a build is being done, the <xhtml:code>ssh-agent</xhtml:code> is
+not available, which means the above cannot be executed. I'm still
+trying to find a solution.</xhtml:p>
+<xhtml:h2>Fin</xhtml:h2>
+<xhtml:p>I'm pretty happy with the move. I don't have to do anything
+special to automate deployment, and all my cronjobs and deployment
+scripts are now self-contained in the repository, which makes my
+site more portable. While a few things could use more
+documentation, all the pieces are there and discoverable with a
+small amount of work.</xhtml:p>
+<xhtml:p>I'll likely give some other PaaS providers a try in the future,
+but for the moment, I'm quite happy with the functionality and
+flexibility of OpenShift.</xhtml:p>
+<xhtml:h4>Footnotes</xhtml:h4>
+<xhtml:ul>
+<xhtml:li id="f1">Zend Server's JobQueue can also be used as a cron
+replacement, but I was not keen on exposing the job functionality
+via HTTP.</xhtml:li>
+</xhtml:ul>
+</xhtml:div>
+    </content>
+  </entry>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <title type="html"><![CDATA[On php-fig and Shared Interfaces]]></title>
     <published>2012-12-20T20:23:00+0000</published>
@@ -1905,313 +2055,6 @@ advice: create and consume modules. Share your modules. Help make
 ZF2 a productive, fun, collaborative ecosystem that allows
 developers to get things done and create fantastic new
 applications.</xhtml:p>
-</xhtml:div>
-    </content>
-  </entry>
-  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
-    <title type="html"><![CDATA[Developing A ZF2 Blog]]></title>
-    <published>2012-04-03T13:45:00+0000</published>
-    <updated>2012-04-04T02:50:00+0000</updated>
-    <link rel="alternate" type="text/html" href="http://mwop.net/blog/2012-05-developing-a-zf2-blog.html"/>
-    <id>http://mwop.net/blog/2012-05-developing-a-zf2-blog.html</id>
-    <author>
-      <name>Matthew Weier O'Phinney</name>
-      <email>me@mwop.net</email>
-      <uri>http://mwop.net</uri>
-    </author>
-    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
-      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>This post tells a story.</xhtml:p>
-<xhtml:p>A long time ago, I set out to write my own blog platform. Yes,
-<xhtml:a href="http://wordpress.org">WordPress</xhtml:a> is a fine blogging
-platform, as is <xhtml:a href="http://www.s9y.org/">Serendipity</xhtml:a> (aka
-"s9y", and my previous platform). And yes, I know about <xhtml:a href="http://habariproject.org">Habari</xhtml:a>. And, for those of you
-skimming ahead, yes, I'm quite aware of <xhtml:a href="http://github.com/mojombo/jekyll">Jekyll</xhtml:a>, thank you
-anyways.</xhtml:p>
-<xhtml:p>Why write something of my own? Well, of course, there's the fact
-that I'm a developer, and have control issues. Then there's also
-the fact that a blog is both a simple enough domain to allow easily
-experimenting with new technology and paradigms, while
-simultaneously providing a complex enough domain to expose
-non-trivial issues.</xhtml:p>
-<xhtml:p>When I started this project, it was a technology-centered
-endeavor; I wanted to play with document databases such as <xhtml:a href="http://couchdb.apache.org/">CouchDB</xhtml:a> and <xhtml:a href="http://www.mongodb.org/">MongoDB</xhtml:a>, and with caching
-technologies like <xhtml:a href="http://memcached.org">memcached</xhtml:a> and
-<xhtml:a href="http://redis.io">redis</xhtml:a>.</xhtml:p>
-<xhtml:p>Not long after I started, I also realized it was a great
-playground for me to prototype ideas for <xhtml:a href="http://framework.zend.com/zf2">ZF2</xhtml:a>; in fact, the original DI
-and MVC prototypes lived as branches of my blog. (My repository is
-still named "zf2sandbox" to this day, though it technically houses
-just my site.)</xhtml:p>
-<xhtml:p>Over time, I had a few realizations. First, my <xhtml:em>actual</xhtml:em>
-blog was suffering. I wasn't taking the time to perform security
-updates, nor even normal upgrades, and was so far behind as to make
-the process non-trivial, particularly as I had a custom theme, and
-because I was proxying to my blog via a ZF app in order to
-facilitate a cohesive site look-and-feel. I needed to either sink
-time into upgrading, or finish my blog.</xhtml:p>
-<xhtml:p>My second realization, however, was the more important one: I
-wanted a platform where I could write how <xhtml:em>I</xhtml:em> want to write.
-I am a keyboard-centric developer and computer user, and while I
-love the web, I hate typing in its forms. Additionally, my posts
-often take longer than a typical browser session -- which leaves me
-either losing my work in a GUI admin, or having to write first in
-my editor of choice, and then cut-and-paste it to the web forms.
-Finally, I want versions I can easily browse with standard diffing
-tools.</xhtml:p>
-<xhtml:p>When it came down to it, my blog content is basically static.
-Occasionally, I'll update a post, but it's rare. Comments are
-really the only dynamic aspect of the blog... and what I had with
-s9y was not cutting it, as I was getting more spam than I could
-keep up with. New commenting platforms such as <xhtml:a href="http://livefyre.com">Livefyre</xhtml:a> and <xhtml:a href="http://disqus.com">Disqus</xhtml:a> provide more features than most
-blogging platforms I know, and provide another side benefit:
-because they are javascript-based, you can simply drop in a small
-amount of markup into your post <xhtml:em>once</xhtml:em> -- meaning your pages
-can be fully static!</xhtml:p>
-<xhtml:p>Add these thoughts to the rise of static blogging platforms such
-as the aforementioned Jekyll, and I had a kernel of an idea: take
-the work I'd done already, and create a static blog generator.</xhtml:p>
-<xhtml:h2>Getting There</xhtml:h2>
-<xhtml:p>This was not an overnight decision, nor an all-nighter
-project.</xhtml:p>
-<xhtml:p>The ground-work for my blog goes back a couple years, and
-originates with some of my presentations on domain models. The
-"kernel" of my blog today is the same as when I began a couple
-years ago, and is simply a domain entity class in plain old PHP
-that composes some values and behaviors. It composes an
-InputFilter, which allows it to validate itself. I have
-<xhtml:code class="hl">fromArray()</xhtml:code> and <xhtml:code class="hl">toArray()</xhtml:code> methods to allow easy de/serialization for
-both PHP and JSON. In a nutshell, though, the following properties
-define my entries:</xhtml:p>
-<xhtml:div class="example">
-<xhtml:pre>
-<xhtml:code lang="php" xml:lang="php">
-class EntryEntity implements EntityDefinition
-{
-    protected $filter;
-
-    protected $id;
-    protected $title;
-    protected $body = '';
-    protected $extended = '';
-    protected $author;
-    protected $isDraft = true;
-    protected $isPublic = true;
-    protected $created;
-    protected $updated;
-    protected $timezone = 'America/New_York';
-    protected $tags = array();
-    protected $metadata = array();
-    protected $comments = array();
-    protected $version = 2;
-}
-</xhtml:code>
-</xhtml:pre></xhtml:div>
-<xhtml:p>The "id" is the "stub", the unique identifier for a given post,
-and is used in URLs. "isDraft" and "isPublic" are used to determine
-whether or not a post is published on the site, and exposed in the
-various paginated views. The "created" and "updated" fields are
-timestamps, resolved in relation to the "timezone". Tags are
-incorporated directly as a PHP array.</xhtml:p>
-<xhtml:p>Some fields are legacy fields. The "version" was originally for
-me to transition entries -- those in a version "1" would fold in
-"comments" directly in the entry (as an array of Comment entities),
-while those in version "2" would use Disqus. Once I discovered that
-I could import old comments into Disqus, I no longer needed to
-incorporate comments at all, nor have separate versions. "metadata"
-was information that s9y stored about the post -- usually hints for
-rendering, or information on categories (which became simply tags
-in my system). In future versions, I'll likely remove these
-fields.</xhtml:p>
-<xhtml:p>I eventually added an "Author" entity. I realized I would like
-primarily to re-use this code in places where multiple authors
-might occur (such as the <xhtml:a href="http://framework.zend.com/zf2/blog">ZF2 blog</xhtml:a>). Additionally,
-feeds need authorship information, and while I could provide
-defaults, it's even better to incorporate it directly into the
-posts. It is a simple value-object, composing only an identifier,
-name, email, and URL for the author.</xhtml:p>
-<xhtml:p>With these building blocks, I was able to do any number of
-things. I wrote a script to grab my s9y entries from the database,
-create entry entities, and then push them into first CouchDB, and
-later MongoDB. I exported comments to WXR, and imported them to
-Disqus. The architecture proved more than flexible enough for me to
-do all this. I wrote a service layer on top of my code to provide
-easy ways to get paginated lists of recent entries, entries by
-year, entries by tag, and more. I wrote a small, custom mapper to
-persist the data, as well as retrieve it. I wrote my MVC layer to
-be restful, which would allow me to write entities locally, and
-then serialize them to JSON and PUT them to the server. A simple
-API-key authentication layer ensured I'd not get inundated with
-bogus, third-party posts.</xhtml:p>
-<xhtml:p>Life was good, and I re-launched my blog in December 2011, using
-MongoDB.</xhtml:p>
-<xhtml:h2>Refactoring</xhtml:h2>
-<xhtml:p>I had a RESTful API, and it worked. But it still didn't feel
-right. I have a small VPS, and running both Apache and MongoDB was
-starting to tax it. I tried an experiment with caching, but quickly
-discovered that for the amounts of data I wanted to cache, I'd use
-almost the same I/O as if I just served the content from my
-framework.</xhtml:p>
-<xhtml:p>And that RESTful API? Well, it worked, but it never felt like a
-natural way to post entries, never mind updates.</xhtml:p>
-<xhtml:p>I revisited the idea of a static blog, almost by accident. I
-started wondering if I could pre-compile my blog views to prime my
-cache. And once I started, I realized I could actually just
-generate the entire blog as static files. And it was fast! (I can
-generate several hundred posts in a matter of seconds.)</xhtml:p>
-<xhtml:p>I exported all my entries from MongoDB to plain old PHP files
-(for those keeping track: fourth persistence format: MySQL,
-CouchDB, MongoDB, filesystem) that defined and returned entry
-entity objects. I then started writing a compiler and code
-generator in three parts. The first part iterates recursively over
-a directory, looking for PHP files (in fact, I had <xhtml:a href="http://mwop.net/blog/244-Applying-FilterIterator-to-Directory-Iteration.html">
-to use my blog to remember how to do this</xhtml:a>). The second part
-iterates over those files, grabbing the entries, and putting them
-into PriorityQueue objects, based on their timestamp; newer entries
-sort to the top. The third part is a collection of methods that
-iterate over the various queues, rendering paginated views, tag
-clouds, feeds, and entries, and writing the artifacts to disk.
-(This last part actually leverages and bastardizes the new ZF2 View
-layer introduced in beta3.)</xhtml:p>
-<xhtml:p>The result is a ZF2 module I called <xhtml:a href="http://git.mwop.net/?a=summary&amp;p=PhlyBlog">PhlyBlog</xhtml:a>. It
-needs some refinement still, but it works; you can generate all the
-above artifacts, and more.</xhtml:p>
-<xhtml:p>The interesting part about code generation is that you can
-generate just about anything you want. I started out thinking I'd
-generate some view scripts that my controller would consume and
-inject into the layout. But I realized quickly that I could just as
-easily inject them into the layout during the generation
-process.</xhtml:p>
-<xhtml:p>And this is where I realized how happy I was with where ZF2 has
-gone. I removed my "blog" module from my repository, exported it
-into a standalone repository, and re-imported it to my site as a
-"third-party" vendor module. Now, the mantra with ZF2 developers is
-that you should not alter vendor code. However, if you do things
-right, you should be able to <xhtml:em>override</xhtml:em> configuration and
-dependencies via <xhtml:em>local configuration</xhtml:em>. So I did just that,
-to see if it would work.</xhtml:p>
-<xhtml:p>I first created callbacks to pass to my configuration -- one to
-handle the tag cloud, and store it in a variable so I could inject
-it into templates later; the other was to set my rendering
-strategy, as well as create a "response" strategy that would inject
-the blog contents into a layout.</xhtml:p>
-<xhtml:div class="example">
-<xhtml:pre>
-<xhtml:code lang="php" xml:lang="php">
-namespace Application;
-
-use Traversable;
-use Zend\View\Model;
-
-class Module
-{
-    // there's more; this is just the blog-specific stuff
-
-    protected static $layout;
-    public static function prepareCompilerView($view, $config, $locator)
-    {
-        // Setup the rendering strategy for the blog; use the PhpRenderer
-        $renderer = $locator-&gt;get('Zend\View\Renderer\PhpRenderer');
-        $view-&gt;addRenderingStrategy(function($e) use ($renderer) {
-            return $renderer;
-        }, 100);
-
-        // Setup a layout view model
-        self::$layout = $layout   = new Model\ViewModel();
-        $layout-&gt;setTemplate('layout');
-
-        // Add a "response" strategy; inject the rendered blog contents
-        // into the layout. When done, reset artifacts such as the title,
-        // shortcut icon, and javascript.
-        $view-&gt;addResponseStrategy(function($e) use ($layout, $renderer) {
-            $result = $e-&gt;getResult();
-            $layout-&gt;setVariable('content', $result);
-            $page   = $renderer-&gt;render($layout);
-            $e-&gt;setResult($page);
-
-            // Cleanup
-            $headTitle = $renderer-&gt;plugin('headtitle');
-            $headTitle-&gt;getContainer()-&gt;exchangeArray(array());
-            $headTitle-&gt;append('phly, boy, phly');
-
-            $headLink = $renderer-&gt;plugin('headLink');
-            $headLink-&gt;getContainer()-&gt;exchangeArray(array());
-            $headLink(array(
-                'rel' =&gt; 'shortcut icon',
-                'type' =&gt; 'image/vnd.microsoft.icon',
-                'href' =&gt; '/images/Application/favicon.ico',
-            ));
-
-            $headScript = $renderer-&gt;plugin('headScript');
-            $headScript-&gt;getContainer()-&gt;exchangeArray(array());
-        }, 100);
-    }
-
-    public static function handleTagCloud($cloud, $view, $config, $locator)
-    {
-        // If we don't have a layout, don't do anything
-        if (!self::$layout) {
-            return;
-        }
-
-        // Add the rendered tag cloud to the footer
-        self::$layout-&gt;setVariable('footer', sprintf(
-            "&lt;h4&gt;Tag Cloud&lt;/h4&gt;\n&lt;div class=\"cloud\"&gt;\n%s&lt;/div&gt;\n",
-            $cloud-&gt;render()
-        ));
-    }
-}
-</xhtml:code>
-</xhtml:pre></xhtml:div>
-<xhtml:p>I then overrode the configuration locally -- again, not in the
-module, but at the application level configuration. Specifically, I
-setup custom paths for where to write my files, custom link
-specifications, defaults for titles and author, and configuration
-for the tag cloud. I did something else, too: I told it to use
-specific templates, not the ones in the official module I'd
-created. Finally, I told it to use the callbacks above.</xhtml:p>
-<xhtml:p>And it just worked.</xhtml:p>
-<xhtml:p>I've moved all of my modules into separate projects at this
-time, and built my site from these building blocks. The site itself
-is very lean, and just consists of some basic wiring to setup
-template names and paths, configuration for services I use,
-specifications for assets. Deployment is basically pushing files to
-my repository, and running a simple script to update my site
-version and configuration; it's completely hands-off now, a goal
-I've wanted for literally years.</xhtml:p>
-<xhtml:p>And you know what? I'm enjoying tweaking my site and making it
-my own again for the first time in years.</xhtml:p>
-<xhtml:h2>My Blog Process</xhtml:h2>
-<xhtml:p>Blogging for me now is done in the following steps:</xhtml:p>
-<xhtml:ul>
-<xhtml:li>I go to my local working directory for my site.</xhtml:li>
-<xhtml:li>I create a new branch off my development branch: <xhtml:code class="hl">git checkout -b post/blahblah develop</xhtml:code></xhtml:li>
-<xhtml:li>I start editing a "post" file: <xhtml:code class="hl">vim
-content/some-new-post.php</xhtml:code></xhtml:li>
-<xhtml:li>It's a PHP file that creates an EntryEntity. I fill in some
-details, and start writing the content in plain old HTML. If I
-want, I can use Markdown or some other format, and use a PHP
-library to convert it to HTML.</xhtml:li>
-<xhtml:li>I commit the code, edit, commit again, lather, rinse, repeat
-until I like it.</xhtml:li>
-<xhtml:li>I merge it back to my development branch, and generate my blog.
-(I have a CLI tool for this: <xhtml:code class="hl">./console
-PhlyBlog:compile</xhtml:code>)</xhtml:li>
-<xhtml:li>I preview it locally, as a sanity check.</xhtml:li>
-<xhtml:li>I merge it to my master branch, and deploy.</xhtml:li>
-</xhtml:ul>
-<xhtml:p>Yes, it's less "simple" than going to an admin page in the
-browser and typing. But it allows me to craft my entries exactly
-how I want. I can have many entries being drafted at any given
-time, without needing to worry about session timeouts or accidently
-hitting a "publish" button. I can write my posts in the editor I
-want, and eliminate copy-and-paste entirely from my workflow. I
-don't have to worry about traffic bringing down my database and/or
-server. In short, it's a good fit <xhtml:em>for me</xhtml:em>.</xhtml:p>
-<xhtml:h2>An invitation</xhtml:h2>
-<xhtml:p>If you're interested in this story, I'll be talking about it,
-and showing how to develop both modules and sites built on top of
-modules this June, via a full-day tutorial at the <xhtml:a href="http://phpconference.nl">Dutch PHP Conference</xhtml:a>. Please join me,
-and a host of incredible speakers, in Amsterdam this summer!</xhtml:p>
 </xhtml:div>
     </content>
   </entry>
