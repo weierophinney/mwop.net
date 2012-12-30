@@ -3,6 +3,40 @@ mwop=/home/matthew/git/sites/mwop CD=. filter="README TODO.md *.php *.xml *.txt 
  TODO.md
  bootstrap.php
  composer.json
+ openshift=.openshift filter="*" {
+  action_hooks=action_hooks {
+   build
+   deploy
+   post_deploy
+   post_start_zend-5.6
+   post_stop_zend-5.6
+   pre_build
+   pre_start_zend-5.6
+   pre_stop_zend-5.6
+  }
+  cron=cron {
+   README.cron
+   daily=daily {
+   }
+   hourly=hourly {
+    fetch_comics.sh
+   }
+   minutely=minutely {
+    fetch_github_links.sh
+   }
+   monthly=monthly {
+   }
+   weekly=weekly {
+    README
+    jobs.allow
+    jobs.deny
+   }
+  }
+  markers=markers {
+   README
+   hot_deploy
+  }
+ }
  bin=bin filter="*.sh deploy" {
   deploy
   deploy-listener.pl
