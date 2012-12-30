@@ -81,6 +81,7 @@ mwop=/home/matthew/git/sites/mwop CD=. filter="README TODO.md *.php *.xml *.txt 
     2012-11-17-ZendCon.php
     2012-12-18-PHP-Masters.php
     2012-12-20-On-Shared-Interfaces.php
+    2012-12-30-Openshift-Cron.php
    }
   }
  }
