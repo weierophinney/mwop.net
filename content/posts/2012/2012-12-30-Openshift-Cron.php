@@ -15,8 +15,8 @@ $entry->setTitle('OpenShift, Cron, and Naked Domains');
 $entry->setAuthor($author);
 $entry->setDraft(false);
 $entry->setPublic(true);
-$entry->setCreated(new \DateTime('2012-12-30 09:11', new \DateTimezone('America/Chicago')));
-$entry->setUpdated(new \DateTime('2012-12-30 09:11', new \DateTimezone('America/Chicago')));
+$entry->setCreated(new \DateTime('2012-12-30 09:52', new \DateTimezone('America/Chicago')));
+$entry->setUpdated(new \DateTime('2012-12-30 09:52', new \DateTimezone('America/Chicago')));
 $entry->setTimezone('America/Chicago');
 $entry->setTags(array(
   'php',
@@ -92,7 +92,6 @@ fi
 <div class="example"><pre><code language="bash">
 #!/bin/bash
 MINUTES=`date +%M`
-INTERVALS=("00" "15" "30" "45")
 
 for i in "00" "15" "30" "45";do
     if [ "$MINUTES" == "$i" ];then
@@ -155,9 +154,9 @@ done
 <h4>Private repositories</h4>
 
 <p>
-    I keep my criticial site settings in a private repository, which allows me 
+    I keep my critical site settings in a private repository, which allows me 
     to version them while keeping the credentials they hold out of the public eye.
-    This means, however, that I need to use GitHub deploy keys on my server
+    This means, however, that I need to use <a href="https://help.github.com/articles/managing-deploy-keys">GitHub deploy keys</a> on my server
     in order to retrieve changes.
 </p>
 
