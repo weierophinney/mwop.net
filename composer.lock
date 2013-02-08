@@ -1,5 +1,5 @@
 {
-    "hash": "1436c20a6d3e88cf830a5ed8934cb56c",
+    "hash": "c1529d138cdfc989840476cbbcac2bb0",
     "packages": [
         {
             "name": "hybridauth/hybridauth",
@@ -11,17 +11,16 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/weierophinney/hybridauth/archive/31b58de3db6fd5d3d0ae4eeca56724b253e214f3.zip",
+                "url": "https://api.github.com/repos/weierophinney/hybridauth/zipball/31b58de3db6fd5d3d0ae4eeca56724b253e214f3",
                 "reference": "31b58de3db6fd5d3d0ae4eeca56724b253e214f3",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.2.0",
-                "ext-curl": "*"
+                "ext-curl": "*",
+                "php": ">=5.2.0"
             },
             "time": "2012-12-12 18:25:24",
             "type": "library",
-            "installation-source": "source",
             "autoload": {
                 "psr-0": {
                     "Hybrid": "hybridauth/"
@@ -39,13 +38,13 @@
             "description": "Open source social sign on PHP library.",
             "homepage": "http://hybridauth.sourceforge.net",
             "keywords": [
+                "facebook",
+                "google",
                 "hybridauth",
                 "login",
                 "oauth",
-                "social",
                 "openid",
-                "facebook",
-                "google",
+                "social",
                 "twitter",
                 "yahoo"
             ],
@@ -66,18 +65,17 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/weierophinney/PhlyBlog/archive/48937193596cee6ec8aa9fe6800be6d19b814edd.zip",
+                "url": "https://api.github.com/repos/weierophinney/PhlyBlog/zipball/48937193596cee6ec8aa9fe6800be6d19b814edd",
                 "reference": "48937193596cee6ec8aa9fe6800be6d19b814edd",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.3",
                 "phly/phly-common": "dev-master",
+                "php": ">=5.3.3",
                 "zendframework/zendframework": "2.*"
             },
             "time": "2012-09-26 18:33:00",
             "type": "library",
-            "installation-source": "source",
             "autoload": {
                 "psr-0": {
                     "PhlyBlog": "src/"
@@ -86,6 +84,7 @@
                     "./"
                 ]
             },
+            "notification-url": "https://packagist.org/downloads/",
             "authors": [
                 {
                     "name": "Matthew Weier O'Phinney",
@@ -97,9 +96,9 @@
             "homepage": "https://github.com/weierophinney/PhlyBlog",
             "keywords": [
                 "blog",
+                "module",
                 "zend",
-                "zf2",
-                "module"
+                "zf2"
             ]
         },
         {
@@ -108,21 +107,20 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/weierophinney/PhlyCommon",
-                "reference": "2.0.0beta5"
+                "reference": "51dd4751e516db0b7e216084a84ae9207176c5c4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/weierophinney/PhlyCommon/zipball/2.0.0beta5",
-                "reference": "2.0.0beta5",
+                "url": "https://api.github.com/repos/weierophinney/PhlyCommon/zipball/51dd4751e516db0b7e216084a84ae9207176c5c4",
+                "reference": "51dd4751e516db0b7e216084a84ae9207176c5c4",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3",
-                "zendframework/zendframework": "dev-master"
+                "zendframework/zendframework": "2.*"
             },
-            "time": "2012-07-13 20:10:05",
+            "time": "2013-02-07 12:36:33",
             "type": "library",
-            "installation-source": "source",
             "autoload": {
                 "psr-0": {
                     "PhlyCommon": "src/"
@@ -131,20 +129,20 @@
                     "./"
                 ]
             },
+            "notification-url": "https://packagist.org/downloads/",
             "authors": [
                 {
                     "name": "Matthew Weier O'Phinney",
                     "email": "matthew@weierophinney.net",
-                    "homepage": "http://mwop.net/",
-                    "role": null
+                    "homepage": "http://mwop.net/"
                 }
             ],
             "description": "A set of interfaces and generic classes used across various Phly modules.",
             "homepage": "https://github.com/weierophinney/PhlyCommon",
             "keywords": [
+                "module",
                 "zend",
-                "zf2",
-                "module"
+                "zf2"
             ]
         },
         {
@@ -157,7 +155,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/weierophinney/PhlyContact/zipball/337cefe68214902e7a88f365c6c8601c6eee7e2b",
+                "url": "https://api.github.com/repos/weierophinney/PhlyContact/zipball/337cefe68214902e7a88f365c6c8601c6eee7e2b",
                 "reference": "337cefe68214902e7a88f365c6c8601c6eee7e2b",
                 "shasum": ""
             },
@@ -167,7 +165,6 @@
             },
             "time": "2012-09-14 23:16:25",
             "type": "library",
-            "installation-source": "source",
             "autoload": {
                 "psr-0": {
                     "PhlyContact": "src/"
@@ -176,6 +173,7 @@
                     "./"
                 ]
             },
+            "notification-url": "https://packagist.org/downloads/",
             "authors": [
                 {
                     "name": "Matthew Weier O'Phinney",
@@ -186,9 +184,9 @@
             "description": "ZF2 Module implementing contact form functionality",
             "homepage": "https://github.com/weierophinney/PhlyContact",
             "keywords": [
+                "module",
                 "zend",
-                "zf2",
-                "module"
+                "zf2"
             ]
         },
         {
@@ -201,25 +199,24 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/weierophinney/PhlySimplePage/archive/3e1c324d81a9c679b579b1892a05a856ce190636.zip",
+                "url": "https://api.github.com/repos/weierophinney/PhlySimplePage/zipball/3e1c324d81a9c679b579b1892a05a856ce190636",
                 "reference": "3e1c324d81a9c679b579b1892a05a856ce190636",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3",
+                "zendframework/zend-console": "2.*",
                 "zendframework/zend-eventmanager": "2.*",
                 "zendframework/zend-http": "2.*",
                 "zendframework/zend-mvc": "2.*",
                 "zendframework/zend-stdlib": "2.*",
-                "zendframework/zend-view": "2.*",
-                "zendframework/zend-console": "2.*"
+                "zendframework/zend-view": "2.*"
             },
             "require-dev": {
                 "zendframework/zend-servicemanager": "2.*"
             },
             "time": "2012-12-15 20:59:15",
             "type": "library",
-            "installation-source": "source",
             "autoload": {
                 "psr-0": {
                     "PhlySimplePage\\": "src/",
@@ -240,9 +237,9 @@
             "description": "ZF2 Module for easily creating static pages",
             "homepage": "https://github.com/weierophinney/PhlySimplePage",
             "keywords": [
+                "module",
                 "zend",
-                "zf2",
-                "module"
+                "zf2"
             ]
         },
         {
@@ -251,27 +248,27 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/SocalNick/ScnSocialAuth",
-                "reference": "dcc428a6a7b02b8c90a763097f04e627273993d4"
+                "reference": "1.6.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/SocalNick/ScnSocialAuth/archive/dcc428a6a7b02b8c90a763097f04e627273993d4.zip",
-                "reference": "dcc428a6a7b02b8c90a763097f04e627273993d4",
+                "url": "https://api.github.com/repos/SocalNick/ScnSocialAuth/zipball/1.6.0",
+                "reference": "1.6.0",
                 "shasum": ""
             },
             "require": {
+                "hybridauth/hybridauth": "dev-master",
                 "php": ">=5.3.3",
-                "zf-commons/zfc-base": "dev-master",
-                "zf-commons/zfc-user": "dev-master",
                 "zendframework/zendframework": "2.*",
-                "hybridauth/hybridauth": "dev-master"
+                "zf-commons/zfc-base": "0.*",
+                "zf-commons/zfc-user": "0.*"
             },
-            "time": "2012-12-14 19:21:02",
+            "time": "2013-02-07 21:22:32",
             "type": "library",
-            "installation-source": "source",
             "autoload": {
                 "psr-0": {
-                    "ScnSocialAuth": "src/"
+                    "ScnSocialAuth": "src/",
+                    "ScnSocialAuthTest": "test/"
                 },
                 "classmap": [
                     "./"
@@ -294,53 +291,51 @@
         },
         {
             "name": "zendframework/zend-version",
-            "version": "2.0.5",
+            "version": "dev-master",
             "target-dir": "Zend/Version",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zendframework/Component_ZendVersion.git",
+                "reference": "840d4c4fa3a86231fa4e642b65757af60a76b126"
+            },
             "dist": {
                 "type": "zip",
-                "url": "http://packages.zendframework.com/composer/Zend_Version-2.0.5.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://api.github.com/repos/zendframework/Component_ZendVersion/zipball/840d4c4fa3a86231fa4e642b65757af60a76b126",
+                "reference": "840d4c4fa3a86231fa4e642b65757af60a76b126",
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
             },
+            "time": "2013-01-29 23:10:42",
             "type": "library",
-            "installation-source": "dist",
             "autoload": {
                 "psr-0": {
                     "Zend\\Version\\": ""
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause"
             ],
-            "description": " ",
-            "homepage": "http://packages.zendframework.com/",
             "keywords": [
-                "zf2",
-                "version"
-            ],
-            "support": {
-                "email": "fw-general-subscribe@lists.zend.com",
-                "irc": "irc://irc.freenode.net/zftalk",
-                "issues": "https://github.com/zendframework/zf2/issues",
-                "source": "https://github.com/zendframework/zf2"
-            }
+                "version",
+                "zf2"
+            ]
         },
         {
             "name": "zendframework/zendframework",
-            "version": "dev-master",
+            "version": "2.1.1",
             "source": {
                 "type": "git",
                 "url": "git://github.com/zendframework/zf2.git",
-                "reference": "8ff0dee87f2bc33cc970b516e2f7ba5f662e38aa"
+                "reference": "release-2.1.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/zendframework/zf2/zipball/master",
-                "reference": null,
-                "shasum": null
+                "url": "http://packages.zendframework.com/releases/ZendFramework-2.1.1/ZendFramework-2.1.1.zip",
+                "reference": "release-2.1.1",
+                "shasum": "9233f83104283a10e5625d1bf629be4d93277ce1"
             },
             "require": {
                 "php": ">=5.3.3"
@@ -405,12 +400,6 @@
                 "zendframework/zendservice-recaptcha": "ZendService\\ReCaptcha for rendering ReCaptchas in Zend\\Captcha and/or Zend\\Form"
             },
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.0.x-dev"
-                }
-            },
-            "installation-source": "source",
             "autoload": {
                 "psr-0": {
                     "Zend\\": "library/",
@@ -430,8 +419,7 @@
                 "irc": "irc://irc.freenode.net/zftalk",
                 "issues": "https://github.com/zendframework/zf2/issues",
                 "source": "https://github.com/zendframework/zf2"
-            },
-            "time": "2012-11-30 20:51:11"
+            }
         },
         {
             "name": "zendframework/zendservice-recaptcha",
@@ -454,7 +442,6 @@
                     "dev-master": "2.0.x-dev"
                 }
             },
-            "installation-source": "dist",
             "autoload": {
                 "psr-0": {
                     "ZendService": "library/"
@@ -466,22 +453,28 @@
             "description": "OOP wrapper for the ReCaptcha web service",
             "homepage": "http://packages.zendframework.com/",
             "keywords": [
-                "zf2",
-                "recaptcha"
-            ]
+                "recaptcha",
+                "zf2"
+            ],
+            "support": {
+                "email": "fw-general-subscribe@lists.zend.com",
+                "irc": "irc://irc.freenode.net/zftalk",
+                "issues": "https://github.com/zendframework/zf2/issues",
+                "source": "https://github.com/zendframework/zf2"
+            }
         },
         {
             "name": "zf-commons/zfc-base",
-            "version": "dev-master",
+            "version": "0.1.0",
             "source": {
                 "type": "git",
                 "url": "git://github.com/ZF-Commons/ZfcBase.git",
-                "reference": "38990ad5f51002dd271ab676b90a3d59728190e2"
+                "reference": "0.1.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/ZF-Commons/ZfcBase/archive/38990ad5f51002dd271ab676b90a3d59728190e2.zip",
-                "reference": "38990ad5f51002dd271ab676b90a3d59728190e2",
+                "url": "https://api.github.com/repos/ZF-Commons/ZfcBase/zipball/0.1.0",
+                "reference": "0.1.0",
                 "shasum": ""
             },
             "require": {
@@ -490,7 +483,6 @@
             },
             "time": "2012-10-24 17:42:28",
             "type": "library",
-            "installation-source": "source",
             "autoload": {
                 "psr-0": {
                     "ZfcBase": "src/"
@@ -499,6 +491,7 @@
                     "./Module.php"
                 ]
             },
+            "notification-url": "https://packagist.org/downloads/",
             "authors": [
                 {
                     "name": "Kyle Spraggs",
@@ -519,26 +512,25 @@
         },
         {
             "name": "zf-commons/zfc-user",
-            "version": "dev-master",
+            "version": "0.1.0",
             "source": {
                 "type": "git",
                 "url": "git://github.com/ZF-Commons/ZfcUser.git",
-                "reference": "18c4fc2e71a53b558e1feec51c9c5fb10a070188"
+                "reference": "0.1.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/ZF-Commons/ZfcUser/archive/18c4fc2e71a53b558e1feec51c9c5fb10a070188.zip",
-                "reference": "18c4fc2e71a53b558e1feec51c9c5fb10a070188",
+                "url": "https://api.github.com/repos/ZF-Commons/ZfcUser/zipball/0.1.0",
+                "reference": "0.1.0",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3",
-                "zf-commons/zfc-base": "dev-master",
-                "zendframework/zendframework": "2.*"
+                "zendframework/zendframework": "2.1.*",
+                "zf-commons/zfc-base": "0.*"
             },
-            "time": "2012-12-08 23:49:26",
+            "time": "2013-02-07 00:18:14",
             "type": "library",
-            "installation-source": "source",
             "autoload": {
                 "psr-0": {
                     "ZfcUser": "src/"
@@ -547,6 +539,7 @@
                     "./Module.php"
                 ]
             },
+            "notification-url": "https://packagist.org/downloads/",
             "authors": [
                 {
                     "name": "Kyle Spraggs",
