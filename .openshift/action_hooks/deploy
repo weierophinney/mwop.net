@@ -18,5 +18,5 @@
     chmod a+rw $OPENSHIFT_DATA_DIR/users.db ;
     # flush cache
     echo "Flush page cache" ;
-    php public/index.php phlysimplepage cache clear all
+    /usr/local/zend/bin/php public/index.php phlysimplepage cache clear all
 )
