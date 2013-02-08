@@ -2,7 +2,7 @@
     "repositories": [
         {
             "type": "composer",
-            "url": "http://packages.zendframework.com/"
+            "url": "https://packages.zendframework.com/"
         },
         {
             "type": "vcs",
@@ -14,6 +14,7 @@
         "phly/phly-blog": "dev-master",
         "phly/phly-contact": "dev-master",
         "phly/phly-simple-page": "dev-master",
+        "zendframework/zendframework": "2.1.1",
         "zendframework/zendservice-recaptcha": "2.*",
         "socalnick/scn-social-auth": "dev-master",
         "hybridauth/hybridauth": "dev-hotfix/session-key-test as dev-master"
