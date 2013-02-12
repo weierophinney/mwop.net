@@ -16,7 +16,7 @@ $entry->setAuthor($author);
 $entry->setDraft(false);
 $entry->setPublic(true);
 $entry->setCreated(new \DateTime('2013-02-12 05:42', new \DateTimezone('America/Chicago')));
-$entry->setUpdated(new \DateTime('2013-02-12 05:42', new \DateTimezone('America/Chicago')));
+$entry->setUpdated(new \DateTime('2013-02-12 10:05', new \DateTimezone('America/Chicago')));
 $entry->setTimezone('America/Chicago');
 $entry->setTags(array(
   'php',
