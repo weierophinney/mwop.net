@@ -78,6 +78,7 @@ mwop=/home/matthew/git/sites/mwop CD=. filter="README TODO.md *.php *.xml *.txt 
     2012-12-20-On-Shared-Interfaces.php
     2012-12-30-Openshift-Cron.php
     2013-02-11-RestfulApis-Part1.php
+    2013-02-12-RestfulApis-Part2.php
     call-a-spade-a-spade.php
     why-conventions-matter.php
     zf2-beta3.php

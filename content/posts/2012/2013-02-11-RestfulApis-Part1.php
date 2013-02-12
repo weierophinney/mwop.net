@@ -417,12 +417,16 @@ Content-Type: application/hal+json
     I'll get there. But there's another detour to take: reporting errors.
 </p>
 
-<h3></h3>
+<h3>Updates</h3>
 
 <p>
     <em>Note: I'll update this post with links to the other posts in the series 
     as I publish them.</em>
 </p>
+
+<ul>
+    <li><a href="/blog/2013-02-12-restful-apis-with-zf2-part-2">Part 2</a></li>
+</ul>
 
 EOT;
 $entry->setExtended($extended);
