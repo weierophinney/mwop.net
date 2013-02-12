@@ -192,7 +192,7 @@ Content-Type: application/api-problem+json
     "httpStatus": 500,
     "title": "Internal Server Error"
 }
-</div>
+</code></pre></div>
 
 <p>
     The specification allows a large amount of flexibility -- you can have your
@@ -266,7 +266,7 @@ Content-Type: application/vnd.error+json
         }
     }
 ]
-</div>
+</code></pre></div>
 
 <p>
     vnd.error basically begs you to create custom error types, with documentation 
