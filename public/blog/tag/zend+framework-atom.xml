@@ -1,11 +1,329 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title type="text">Tag: zend framework :: phly, boy, phly</title>
-  <updated>2012-09-19T18:10:00+0000</updated>
-  <generator uri="http://framework.zend.com" version="2.0.5">Zend_Feed_Writer</generator>
+  <updated>2013-02-12T11:42:00+0000</updated>
+  <generator uri="http://framework.zend.com" version="2.1.1dev">Zend_Feed_Writer</generator>
   <link rel="alternate" type="text/html" href="http://mwop.net/blog/tag/zend+framework.html"/>
   <link rel="self" type="application/atom+xml" href="http://mwop.net/blog/tag/zend+framework-atom.xml"/>
   <id>http://mwop.net/blog/tag/zend+framework.html</id>
+  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <title type="html"><![CDATA[RESTful APIs with ZF2, Part 1]]></title>
+    <published>2013-02-12T11:42:00+0000</published>
+    <updated>2013-02-12T11:42:00+0000</updated>
+    <link rel="alternate" type="text/html" href="http://mwop.net/blog/2013-02-11-restful-apis-with-zf2-part-1.html"/>
+    <id>http://mwop.net/blog/2013-02-11-restful-apis-with-zf2-part-1.html</id>
+    <author>
+      <name>Matthew Weier O'Phinney</name>
+      <email>me@mwop.net</email>
+      <uri>http://mwop.net</uri>
+    </author>
+    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
+      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>RESTful APIs have been an interest of mine for a couple of
+years, but due to <xhtml:a href="http://framework.zend.com/blog//zend-framework-2-0-0-stable-released.html">
+circumstances</xhtml:a>, I've not had much chance to work with them in
+any meaningful fashion until recently.</xhtml:p>
+<xhtml:p><xhtml:a href="http://akrabat.com/">Rob Allen</xhtml:a> and I proposed a
+workshop for <xhtml:a href="http://conference.phpbenelux.eu/2013/">PHP
+Benelux 2013</xhtml:a> covering RESTful APIs with ZF2. When it was
+accepted, it gave me the perfect opportunity to dive in and start
+putting the various pieces together.</xhtml:p>
+<xhtml:h2>Background</xhtml:h2>
+<xhtml:p>I've attended any number of conference sessions on API design,
+read countless articles, and engaged in quite a number of
+conversations. Three facts keep cropping up:</xhtml:p>
+<xhtml:ol>
+<xhtml:li>JSON is fast becoming the preferred exchange format due to the
+ease with which it de/serializes in almost every language.</xhtml:li>
+<xhtml:li>The "holy grail" is <xhtml:a href="http://martinfowler.com/articles/richardsonMaturityModel.html">Richardson
+Maturity Model</xhtml:a> Level 3.</xhtml:li>
+<xhtml:li>It's really hard to achieve RMM level 3 with JSON.</xhtml:li>
+</xhtml:ol>
+<xhtml:h3>Richardson Maturity Model</xhtml:h3>
+<xhtml:p>As a quick review, the Richardson Maturity Model has the
+following 4 levels:</xhtml:p>
+<xhtml:ul>
+<xhtml:li>Level 0: "The swamp of POX." Basically, a service that uses TCP
+for transport, primarily as a form of remote procedure call (RPC).
+Typically, these are not really leveraging HTTP in any meaningful
+fashion; most systems will use HTTP POST for all interactions.
+Also, you will often have a single endpoint for all interactions,
+regardless of whether or not they are strictly related. XML-RPC,
+SOAP, and JSON-RPC fall under this category.</xhtml:li>
+<xhtml:li>Level 1: "Resources." In these services, you start breaking the
+service into multiple services, one per "resource," or, in object
+oriented terms, per object. This means a distinct URL per object,
+which means each has its own distinct identity on the web; this
+often extends not only to the collection of objects, but to
+individual objects under the collection as well (e.g., "/books" as
+well as "/books/life-of-pi"). The service may still be RPC in
+nature, however, and, at this level, often is still using a single
+HTTP method for all interactions with the resource.</xhtml:li>
+<xhtml:li>Level 2: "HTTP Verbs." At this level, we start using HTTP verbs
+with our services in the way the HTTP specification intends. GET is
+for safe operations, and should be cacheable; POST is used for
+creation and/or updating; DELETE can be used to delete a resource;
+etc. Rather than doing RPC style methods, we leverage HTTP,
+occasionally passing additional parameters via the query string or
+request body. Considerations such as HTTP caching and idempotence
+are taken into account.</xhtml:li>
+<xhtml:li>Level 3: "Hypermedia Controls." Building on the previous level,
+our resource representations now also include <xhtml:em>links</xhtml:em>, which
+indicate what we can <xhtml:em>do next</xhtml:em>. At this level, our API
+becomes practically self-describing; given a single end-point, we
+should be able to start crawling it, using the links in a
+representation to lead us to the next actions.</xhtml:li>
+</xhtml:ul>
+<xhtml:p>When I first started playing with web services around a decade
+ago, everything was stuck at Level 0 or Level 1 -- usually with
+Level 1 users downgrading to Level 0 because Level 0 offerred
+consistency and predictability if you chose to use a service type
+that had a defined envelope format (such as XML-RPC or SOAP). (I
+even wrote the XML-RPC server implementation for Zend Framework
+because I got sick of writing one-off parsers/serializers for
+custom XML web service implementations. When you're implementing
+many services, predictability is a huge win.)</xhtml:p>
+<xhtml:p>A few years ago, I started seeing a trend towards Level 2. Web
+developers like the simplicity of using HTTP verbs, as they map
+very well to <xhtml:a href="http://en.wikipedia.org/wiki/Create,_read,_update_and_delete">CRUD</xhtml:a>
+operations -- the bread and butter of web development. Couple this
+concept with JSON, and it becomes trivially simple to both create a
+web service, as well as consume it.</xhtml:p>
+<xhtml:p><xhtml:em>I'd argue that the majority of web developers are quite
+happy to be at Level 2 -- and have no problem staying there.
+They're productive, and the concepts are easy -- both to understand
+and to implement.</xhtml:em></xhtml:p>
+<xhtml:p>Level 3, though, is where it becomes really interesting. The
+idea that I can examine the represention <xhtml:em>alone</xhtml:em> in order to
+understand what I can do next is very intriguing and
+empowering.</xhtml:p>
+<xhtml:h3>JSON and Hypermedia</xhtml:h3>
+<xhtml:p>With XML, hypermedia basically comes for free. Add some
+&lt;link&gt; elements to your representation, and you're done --
+and don't forget the link <xhtml:code>rel</xhtml:code>ations!</xhtml:p>
+<xhtml:p>JSON, however, is another story.</xhtml:p>
+<xhtml:p>Where do the links go? <xhtml:em>There is no single, defined way to
+represent a hyperlink in JSON.</xhtml:em></xhtml:p>
+<xhtml:p>Fortunately, there are some emerging standards.</xhtml:p>
+<xhtml:p>First is use of the <xhtml:a href="http://www.w3.org/wiki/LinkHeader">"Link" HTTP header</xhtml:a>. While
+the page I linked shows only a single link in the header, you can
+have multiple links separated by commas. GitHub uses this when
+providing pagination links in their API. Critics will point out
+that the HTTP headers are not technically part of the
+representation, however; strict interpetations of REST and RMM
+indicate that the hypermedia links should be part of the resource
+representation. Regardless, having the links in the HTTP headers is
+useful for pre-traversal of a service, as you can perform HEAD
+requests only to discover possible actions and workflows.</xhtml:p>
+<xhtml:p><xhtml:a href="http://amundsen.com/media-types/collection/format/">Collection+JSON</xhtml:a>
+is interesting, as it describes the entire JSON envelope. My one
+criticism is that it details too much; whenever I see a format that
+dictates how to describe types, I think of XML-RPC or SOAP, and get
+a little twitchy. It's definitely worth a look, though.</xhtml:p>
+<xhtml:p>What's captured my attention of late, however, is <xhtml:a href="http://stateless.co/hal_specification.html">Hypertext Application
+Language</xhtml:a>, or HAL for short. HAL has very few rules, but
+succinctly describes both how to provide hypermedia in JSON as well
+as how to represent embedded resources - the two things that most
+need standardized structure in JSON. It does this while still
+providing a generic media type, and also describing a mirror image
+XML format!</xhtml:p>
+<xhtml:h3>HAL Media Types</xhtml:h3>
+<xhtml:p>HAL defines two generic media types:
+<xhtml:code>application/hal+xml</xhtml:code> and
+<xhtml:code>application/hal+json</xhtml:code>. You will use these as the
+response Content-Type, as they describe the response
+representation; the client can simply request
+<xhtml:code>application/json</xhtml:code>, and the response format remains
+compatible.</xhtml:p>
+<xhtml:h3>HAL and Links</xhtml:h3>
+<xhtml:p>HAL provides a very simple structure for JSON hypermedia links.
+First, all resource representations must contain hypermedia links,
+and all links are provided in a "_links" object:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="javascript">
+{
+    "_links": {
+    }
+}
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>Second, links are properties of this object. The property name
+is the link relation, and the value is an object containing
+minimally an "href" property.</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="javascript">
+{
+    "_links": {
+        "self": {"href": "http://example.com/api/status/1234"}
+    }
+}
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>If a given relation can have multiple links, you provide instead
+an array of objects:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="javascript">
+{
+    "_links": {
+        "self": {"href": "http://example.com/api/status/1234"},
+        "conversation": [
+            {"href": "http://example.com/api/status/1237"},
+            {"href": "http://example.com/api/status/1241"}
+        ]
+    }
+}
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>Individual links can contain other attributes as desired -- I've
+seen people include the relation again so that it's self-contained
+in the link object, and it's not uncommon to include a title or
+name.</xhtml:p>
+<xhtml:h3>HAL and Resources</xhtml:h3>
+<xhtml:p>HAL imposes no structure over resources other than requiring the
+hypermedia links; even then, you typically do not include the
+hypermedia links when making a request of the web service; the
+hypermedia links are included only in the representations
+<xhtml:em>returned</xhtml:em> by the service.</xhtml:p>
+<xhtml:p>So, as an example, you would POST the following:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="http">
+POST /api/status
+Host: example.com
+Accept: application/json
+Content-Type: application/json
+
+{
+    "status": "This is my awesome status update!",
+    "user": "mwop"
+}
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>And from that request, you'd receive the following:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="http">
+201 Created
+Location: http://example.com/api/status/1347
+Content-Type: application/hal+json
+
+{
+    "_links": {
+        "self": {"href": "http://example.com/api/status/1347"}
+    },
+    "id": "1347",
+    "timestamp": "2013-02-11 23:33:47",
+    "status": "This is my awesome status update!",
+    "user": "mwop"
+}
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:h3>HAL and Embedded Resources</xhtml:h3>
+<xhtml:p>The other important thing that HAL defines is how to
+<xhtml:em>embed</xhtml:em> resources. Why is this important? If the resource
+references other resources, you will want to be able to link to
+them so you can perform operations on them, too.</xhtml:p>
+<xhtml:p>Embedded resources are represented inside an "_embedded" object
+of the representation, and, as resources, contain their own
+"_links" object as well. Each resource you embed is assigned to a
+property of that object, and if multiple objects of the same type
+are returned, an array of resources is assigned. In fact, this
+latter is how you represent <xhtml:em>collections</xhtml:em> in HAL.</xhtml:p>
+<xhtml:p>Let's consider a simple example first. In previous code samples,
+I have a "user" that's a string; let's make that an embedded
+resource instead.</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="javascript">
+{
+    "_links": {
+        "self": {"href": "http://example.com/api/status/1347"}
+    },
+    "id": "1347",
+    "timestamp": "2013-02-11 23:33:47",
+    "status": "This is my awesome status update!",
+    "_embedded": {
+        "user": {
+            "_links": {
+                "self": {"href": "http://example.com/api/user/mwop"}
+            }
+            "id": "mwop",
+            "name": "Matthew Weier O'Phinney",
+            "url": "http://mwop.net"
+        }
+    }
+}
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>I've moved the "user" out of the representation, and into the
+"_embedded" object -- because this is where you define embedded
+resources. Note that the "user" is a standard HAL resource itself
+-- containing hypermedia links.</xhtml:p>
+<xhtml:p>Now let's look at a collection:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="javascript">
+{
+    "_links": {
+        "self": {"href": "http://example.com/api/status"},
+        "next": {"href": "http://example.com/api/status?page=2"},
+        "last": {"href": "http://example.com/api/status?page=100"}
+    },
+    "count": 2973,
+    "per_page": 30,
+    "page": 1,
+    "_embedded": {
+        "status": [
+            {
+                "_links": {
+                    "self": {"href": "http://example.com/api/status/1347"}
+                },
+                "id": "1347",
+                "timestamp": "2013-02-11 23:33:47",
+                "status": "This is my awesome status update!",
+                "_embedded": {
+                    "user": {
+                        "_links": {
+                            "self": {"href": "http://example.com/api/user/mwop"}
+                        }
+                        "id": "mwop",
+                        "name": "Matthew Weier O'Phinney",
+                        "url": "http://mwop.net"
+                    }
+                }
+            }
+            /* ... */
+        ]
+    }
+}
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>Note that the "status" property is an array; semantically, all
+resources under this key are of the same type. Also note that the
+parent resource has some additional link relations -- these are
+related to pagination, and allow a client to determine what the
+next and last pages are (and, if we were midway into the
+collection, previous and first pages). Since the collection is also
+a resource, it has some interesting metadata -- how many resources
+are in the collection, how many we represent per page, and what the
+current page is.</xhtml:p>
+<xhtml:p>Also note that you can nest resources -- simply include an
+"_embedded" object inside an embedded resource, with additional
+resources, as I've done with the "user" resource inside the status
+resource shown here. It's turtles all the way down.</xhtml:p>
+<xhtml:h2>Next Time</xhtml:h2>
+<xhtml:p>The title of this post indicates I'll be talking about building
+RESTful APIs with ZF2 -- but so far, I've not said anything about
+ZF2.</xhtml:p>
+<xhtml:p>I'll get there. But there's another detour to take: reporting
+errors.</xhtml:p>
+<xhtml:p><xhtml:em>Note: I'll update this post with links to the other posts in
+the series as I publish them.</xhtml:em></xhtml:p>
+</xhtml:div>
+    </content>
+  </entry>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <title type="html"><![CDATA[ZF2 Modules Quickstart (Screencast)]]></title>
     <published>2012-09-19T18:10:00+0000</published>
@@ -2008,505 +2326,6 @@ the decisions your team has made, or the component library or
 framework you're using has made. However, if you poke around a
 little and play within those confines, you may find that those
 decisions make other decisions easier, or disappear altogether.</xhtml:p>
-</xhtml:div>
-    </content>
-  </entry>
-  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
-    <title type="html"><![CDATA[Getting started writing ZF2 modules]]></title>
-    <published>2011-11-07T18:19:00+0000</published>
-    <updated>2011-11-12T18:02:42+0000</updated>
-    <link rel="alternate" type="text/html" href="http://mwop.net/blog/267-Getting-started-writing-ZF2-modules.html"/>
-    <id>http://mwop.net/blog/267-Getting-started-writing-ZF2-modules.html</id>
-    <author>
-      <name>Matthew Weier O'Phinney</name>
-      <email>me@mwop.net</email>
-      <uri>http://mwop.net</uri>
-    </author>
-    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
-      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>During <xhtml:a href="http://zendcon.com/">ZendCon</xhtml:a> this year, we
-<xhtml:a href="http://framework.zend.com/zf2/blog/entry/Zend-Framework-2-0-0beta1-Released">
-released 2.0.0beta1</xhtml:a> of <xhtml:a href="http://framework.zend.com">Zend
-Framework</xhtml:a>. The key story in the release is the creation of a
-new MVC layer, and to sweeten the story, the addition of a modular
-application architecture.</xhtml:p>
-<xhtml:p>"Modular? What's that mean?" For ZF2, "modular" means that your
-application is built of one or more "modules". In a lexicon agreed
-upon during our IRC meetings, a module is a collection of code and
-other files that solves a specific atomic problem of the
-application or website.</xhtml:p>
-<xhtml:p>As an example, consider a typical corporate website in a
-technical arena. You might have:</xhtml:p>
-<xhtml:ul>
-<xhtml:li>A home page</xhtml:li>
-<xhtml:li>Product and other marketing pages</xhtml:li>
-<xhtml:li>Some forums</xhtml:li>
-<xhtml:li>A corporate blog</xhtml:li>
-<xhtml:li>A knowledge base/FAQ area</xhtml:li>
-<xhtml:li>Contact forms</xhtml:li>
-</xhtml:ul>
-<xhtml:p>These can be divided into discrete modules:</xhtml:p>
-<xhtml:ul>
-<xhtml:li>A "pages" modules for the home page, product, and marketing
-pages</xhtml:li>
-<xhtml:li>A "forum" module</xhtml:li>
-<xhtml:li>A "blog" module</xhtml:li>
-<xhtml:li>An "faq" or "kb" module</xhtml:li>
-<xhtml:li>A "contact" module</xhtml:li>
-</xhtml:ul>
-<xhtml:p>Furthermore, if these are developed well and discretely, they
-can be <xhtml:em>re-used</xhtml:em> between different applications!</xhtml:p>
-<xhtml:p>So, let's dive into ZF2 modules!</xhtml:p>
-<xhtml:h2 id="toc_1.2">What is a module?</xhtml:h2>
-<xhtml:p>In ZF2, a module is simply a namespaced directory, with a single
-"Module" class under it; no more, and no less, is required.</xhtml:p>
-<xhtml:p>So, as an example:</xhtml:p>
-<xhtml:pre>
-modules/
-    FooBlog/
-        Module.php
-    FooPages/
-        Module.php
-</xhtml:pre>
-<xhtml:p>The above shows two modules, "FooBlog" and "FooPages". The
-"Module.php" file under each contains a single "Module" class,
-namespaced per the module: <xhtml:code>FooBlog\Module</xhtml:code> and
-<xhtml:code>FooPages\Module</xhtml:code>, respectively.</xhtml:p>
-<xhtml:p>This is the one and only requirement of modules; you can
-structure them however you want from here. However, we <xhtml:em>do</xhtml:em>
-have a <xhtml:em>recommended</xhtml:em> directory structure:</xhtml:p>
-<xhtml:pre>
-modules/
-    SpinDoctor/
-        Module.php
-        configs/
-            module.config.php
-        public/
-            images/
-            css/
-                spin-doctor.css
-            js/
-                spin-doctor.js
-        src/
-            SpinDoctor/
-                Controller/
-                    SpinDoctorController.php
-                    DiscJockeyController.php
-                Form/
-                    Request.php
-        tests/
-            bootstrap.php
-            phpunit.xml
-            SpinDoctor/
-                Controller/
-                    SpinDoctorControllerTest.php
-                    DiscJockeyControllerTest.php
-</xhtml:pre>
-<xhtml:p>The important bits from above:</xhtml:p>
-<xhtml:ul>
-<xhtml:li>Configuration goes in a "configs" directory.</xhtml:li>
-<xhtml:li>Public assets, such as javascript, CSS, and images, go in a
-"public" directory.</xhtml:li>
-<xhtml:li>PHP source code goes in a "src" directory; code under that
-directory should follow <xhtml:a href="https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md">
-PSR-0 standard structure</xhtml:a>.</xhtml:li>
-<xhtml:li>Unit tests should go in a "tests" directory, which should also
-contain your PHPUnit configuration and bootstrapping.</xhtml:li>
-</xhtml:ul>
-<xhtml:p>Again, the above is simply a <xhtml:em>recommendation</xhtml:em>. Modules in
-that structure clearly dileneate the purpose of each subtree,
-allowing developers to easily introspect them.</xhtml:p>
-<xhtml:h2 id="toc_1.3">The Module class</xhtml:h2>
-<xhtml:p>Now that we've discussed the minimum requirements for creating a
-module and its structure, let's discuss the minimum requirement:
-the Module class.</xhtml:p>
-<xhtml:p>The module class, as noted previously, should exist in the
-module's namespace. Usually this will be equivalent to the module's
-directory name. Beyond that, however, there are no real
-requirements, other than the constructor should not require any
-arguments.</xhtml:p>
-<xhtml:div class="example">
-<xhtml:pre>
-<xhtml:code lang="php" xml:lang="php">
-namespace FooBlog;
-
-class Module
-{
-}
-</xhtml:code>
-</xhtml:pre></xhtml:div>
-<xhtml:p>So, what do module classes do, then?</xhtml:p>
-<xhtml:p>The module manager (class <xhtml:code>Zend\Module\Manager</xhtml:code>)
-fulfills three key purposes:</xhtml:p>
-<xhtml:ul>
-<xhtml:li>It aggregates the enabled modules (allowing you to loop over
-the classes manually).</xhtml:li>
-<xhtml:li>It aggregates configuration from each module.</xhtml:li>
-<xhtml:li>It triggers module initialization, if any.</xhtml:li>
-</xhtml:ul>
-<xhtml:p>I'm going to skip the first item and move directly to the
-configuration aspect.</xhtml:p>
-<xhtml:p>Most applications require some sort of configuration. In an MVC
-application, this may include routing information, and likely some
-dependency injection configuration. In both cases, you likely don't
-want to configure anything until you have the full configuration
-available -- which means all modules must be loaded.</xhtml:p>
-<xhtml:p>The module manager does this for you. It loops over all modules
-it knows about, and then merges their configuration into a single
-configuration object. To do this, it checks each Module class for a
-<xhtml:code>getConfig()</xhtml:code> method.</xhtml:p>
-<xhtml:p>The <xhtml:code>getConfig()</xhtml:code> method simply needs to return an
-<xhtml:code>array</xhtml:code> or <xhtml:code>Traversable</xhtml:code> object. This data
-structure should have "environments" at the top level -- the
-"production", "staging", "testing", and "development" keys that
-you're used to with ZF1 and <xhtml:code>Zend_Config</xhtml:code>. Once
-returned, the module manager merges it with its master
-configuration so you can grab it again later.</xhtml:p>
-<xhtml:p>Typically, you should provide the following in your
-configuration:</xhtml:p>
-<xhtml:ul>
-<xhtml:li>Dependency Injection configuration</xhtml:li>
-<xhtml:li>Routing configuration</xhtml:li>
-<xhtml:li>If you have module-specific configuration that falls outside
-those, the module-specific configuration. We recommend namespacing
-these keys after the module name: <xhtml:code>foo_blog.apikey =
-"..."</xhtml:code></xhtml:li>
-</xhtml:ul>
-<xhtml:p>The easiest way to provide configuration? Define it as an array,
-and return it from a PHP file -- usually your
-<xhtml:code>configs/module.config.php</xhtml:code> file. Then your
-<xhtml:code>getConfig()</xhtml:code> method can be quite simple:</xhtml:p>
-<xhtml:div class="example">
-<xhtml:pre>
-<xhtml:code lang="php" xml:lang="php">
-public function getConfig()
-{
-    return include __DIR__ . '/configs/module.config.php';
-}
-</xhtml:code>
-</xhtml:pre></xhtml:div>
-<xhtml:p>In the original bullet points covering the purpose of the module
-manager, the third bullet point was about module initialization.
-Quite often you may need to provide additional initialization once
-the full configuration is known and the application is bootstrapped
--- meaning the router and locator are primed and ready. Some
-examples of things you might do:</xhtml:p>
-<xhtml:ul>
-<xhtml:li>Setup event listeners. Often, these require configured objects,
-and thus need access to the locator.</xhtml:li>
-<xhtml:li>Configure plugins. Often, you may need to inject plugins with
-objects managed by the locator. As an example, the
-<xhtml:code>url()</xhtml:code> view helper needs a configured router in order
-to work.</xhtml:li>
-</xhtml:ul>
-<xhtml:p>The way to do these tasks is to subscribe to the bootstrap
-object's "bootstrap" event:</xhtml:p>
-<xhtml:div class="example">
-<xhtml:pre>
-<xhtml:code lang="php" xml:lang="php">
-$events = StaticEventManager::getInstance();
-$events-&gt;attach('bootstrap', 'bootstrap', array($this, 'doMoarInit'));
-</xhtml:code>
-</xhtml:pre></xhtml:div>
-<xhtml:p>That event gets the application and module manager objects as
-parameters, which gives you access to everything you might possibly
-need.</xhtml:p>
-<xhtml:p>The question is: where do I do this? The answer: the module
-manager will call a Module class's <xhtml:code>init()</xhtml:code> method if
-found. So, with that in hand, you'll have the following:</xhtml:p>
-<xhtml:div class="example">
-<xhtml:pre>
-<xhtml:code lang="php" xml:lang="php">
-namespace FooBlog;
-
-use Zend\EventManager\StaticEventManager,
-    Zend\Module\Manager as ModuleManager
-
-class Module
-{
-    public function init(ModuleManager $manager)
-    {
-        $events = StaticEventManager::getInstance();
-        $events-&gt;attach('bootstrap', 'bootstrap', array($this, 'doMoarInit'));
-    }
-    
-    public function doMoarInit($e)
-    {
-        $application = $e-&gt;getParam('application');
-        $modules     = $e-&gt;getParam('modules');
-        
-        $locator = $application-&gt;getLocator();
-        $router  = $application-&gt;getRouter();
-        $config  = $modules-&gt;getMergedConfig();
-        
-        // do something with the above!
-    }
-}
-</xhtml:code>
-</xhtml:pre></xhtml:div>
-<xhtml:p>As you can see, when the bootstrap event is triggered, you have
-access to the <xhtml:code>Zend\Mvc\Application</xhtml:code> instance as well as
-the <xhtml:code>Zend\Module\Manager</xhtml:code> instance, giving you access to
-your configured locator and router, as well as merged configuration
-from all modules! Basically, you have everything you could possibly
-want to access right at your fingertips.</xhtml:p>
-<xhtml:p>What else might you want to do during <xhtml:code>init()</xhtml:code>? One
-very, very important thing: setup autoloading for the PHP classes
-in your module!</xhtml:p>
-<xhtml:p>ZF2 offers several different autoloaders to provide different
-strategies geared towards ease of development to production speed.
-For beta1, they were refactored slightly to make them even more
-useful. The primary change was to the
-<xhtml:code>AutoloaderFactory</xhtml:code>, to allow it to keep single
-instances of each autoloader it handles, and thus allow specifying
-additional configuration for each. As such, this means that if you
-use the <xhtml:code>AutoloaderFactory</xhtml:code>, you'll only ever have one
-instance of a <xhtml:code>ClassMapAutoloader</xhtml:code> or
-<xhtml:code>StandardAutoloader</xhtml:code> -- and this means each module can
-simply add to their configuration.</xhtml:p>
-<xhtml:p>As such, here's a typical autoloading boilerplate:</xhtml:p>
-<xhtml:div class="example">
-<xhtml:pre>
-<xhtml:code lang="php" xml:lang="php">
-namespace FooBlog;
-
-use Zend\EventManager\StaticEventManager,
-    Zend\Loader\AutoloaderFactory,
-    Zend\Module\Manager as ModuleManager
-
-class Module
-{
-    public function init(ModuleManager $manager)
-    {
-        $this-&gt;initializeAutoloader();
-        // ...
-    }
-    
-    public function initializeAutoloader()
-    {
-        AutoloaderFactory::factory(array(
-            'Zend\Loader\ClassMapAutoloader' =&gt; array(
-                include __DIR__ .  '/autoload_classmap.php',
-            ),
-            'Zend\Loader\StandardAutoloader' =&gt; array(
-                'namespaces' =&gt; array(
-                    __NAMESPACE__ =&gt; __DIR__ . '/src/' .  __NAMESPACE__,
-                ),
-            ),
-        ));
-    }
-</xhtml:code>
-</xhtml:pre></xhtml:div>
-<xhtml:p>During development, you can have
-<xhtml:code>autoload_classmap.php</xhtml:code> return an empty array, but then
-during production, you can generate it based on the classes in your
-module. By having the <xhtml:code>StandardAutoloader</xhtml:code> in place, you
-have a backup solution until the classmap is updated.</xhtml:p>
-<xhtml:p>Now that you know how your module can provide configuration, and
-how it can tie into bootstrapping, I can finally cover the original
-point: the module manager aggregates enabled modules. This allows
-modules to "opt-in" to additional features of an application. As an
-example, you could make modules "ACL aware", and have a "security"
-module grab module-specific ACLs:</xhtml:p>
-<xhtml:div class="example">
-<xhtml:pre>
-<xhtml:code lang="php" xml:lang="php">
-    public function initializeAcls($e)
-    {
-        $this-&gt;acl = new Acl;
-        $modules   = $e-&gt;getParam('modules');
-        foreach ($modules-&gt;getLoadedModules() as $module) {
-            if (!method_exists($module, 'getAcl')) {
-                continue;
-            }
-            $this-&gt;processModuleAcl($module-&gt;getAcl());
-        }
-    }
-</xhtml:code>
-</xhtml:pre></xhtml:div>
-<xhtml:p>This is an immensely powerful technique, and I'm sure we'll see
-a lot of creative uses for it in the future!</xhtml:p>
-<xhtml:h2 id="toc_1.4">Composing modules into your application</xhtml:h2>
-<xhtml:p>So, writing modules should be easy, right? Right?!?!?</xhtml:p>
-<xhtml:p>The other trick, then, is telling the module manager about your
-modules. There's a reason I've used phrases like, "enabled modules"
-"modules it [the module manager] knows about," and such: the module
-manager is opt-in. You have to <xhtml:em>tell</xhtml:em> it what modules it
-will load.</xhtml:p>
-<xhtml:p>Some may say, "Why? Isn't that against rapid application
-development?" Well, yes and no. Consider this: what if you discover
-a security issue in a module? You could remove it entirely from the
-repository, sure. Or you could simply update the module manager
-configuration so it doesn't load it, and then start testing and
-patching it in place; when done, all you need to do is re-enable
-it.</xhtml:p>
-<xhtml:p>Loading modules is a two-stage process. First, the system needs
-to know where and how to locate module classes. Second, it needs to
-actually load them. We have two components surrounding this:</xhtml:p>
-<xhtml:ul>
-<xhtml:li><xhtml:code>Zend\Loader\ModuleAutoloader</xhtml:code></xhtml:li>
-<xhtml:li><xhtml:code>Zend\Module\Manager</xhtml:code></xhtml:li>
-</xhtml:ul>
-<xhtml:p>The <xhtml:code>ModuleAutoloader</xhtml:code> takes a list of paths, or
-associations of module names to paths, and uses that information to
-resolve <xhtml:code>Module</xhtml:code> classes. Often, modules will live under
-a single directory, and configuration is as simple as this:</xhtml:p>
-<xhtml:div class="example">
-<xhtml:pre>
-<xhtml:code lang="php" xml:lang="php">
-$loader = new Zend\Loader\ModuleAutoloader(array(
-    __DIR__ . '/../modules',
-));
-$loader-&gt;register();
-</xhtml:code>
-</xhtml:pre></xhtml:div>
-<xhtml:p>You can specify multiple paths, or explicit module:directory
-pairs:</xhtml:p>
-<xhtml:div class="example">
-<xhtml:pre>
-<xhtml:code lang="php" xml:lang="php">
-$loader = new Zend\Loader\ModuleAutoloader(array(
-    __DIR__ . '/../vendors',
-    __DIR__ . '/../modules',
-    'User' =&gt; __DIR__ . '/../vendors/EdpUser-0.1.0',
-));
-$loader-&gt;register();
-</xhtml:code>
-</xhtml:pre></xhtml:div>
-<xhtml:p>In the above, the last will look for a <xhtml:code>User\Module</xhtml:code>
-class in the file <xhtml:code>vendors/EdpUser-0.1.0/Module.php</xhtml:code>,
-but expect that modules found in the other two directories
-specified will always have a 1:1 correlation between the directory
-name and module namespace.</xhtml:p>
-<xhtml:p>Once you have your <xhtml:code>ModuleAutoloader</xhtml:code> in place, you
-can invoke the module manager, and inform it of what modules it
-should load. Let's say that we have the following modules:</xhtml:p>
-<xhtml:pre>
-modules/
-    Application/
-        Module.php
-    Security/
-        Module.php
-vendors/
-    FooBlog/
-        Module.php
-    SpinDoctor/
-        Module.php
-</xhtml:pre>
-<xhtml:p>and we wanted to load the "Application", "Security", and
-"FooBlog" modules. Let's also assume we've configured the
-<xhtml:code>ModuleAutoloader</xhtml:code> correctly already. We can then do
-this:</xhtml:p>
-<xhtml:div class="example">
-<xhtml:pre>
-<xhtml:code lang="php" xml:lang="php">
-$manager = new Zend\Module\Manager(array(
-    'Application',
-    'Security',
-    'FooBlog',
-));
-$manager-&gt;loadModules();
-</xhtml:code>
-</xhtml:pre></xhtml:div>
-<xhtml:p>We're done! If you were to do some profiling and introspection
-at this point, you'd see that the "SpinDoctor" module will not be
-represented -- only those modules we've configured.</xhtml:p>
-<xhtml:p>To make the story easy and reduce boilerplate, the <xhtml:a href="https://github.com/zendframework/ZendSkeletonApplication">ZendSkeletonApplication</xhtml:a>
-repository provides a basic bootstrap for you in
-<xhtml:code>public/index.php</xhtml:code>. This file consumes
-<xhtml:code>configs/application.config.php</xhtml:code>, in which you specify
-two keys, "module_paths" and "modules":</xhtml:p>
-<xhtml:div class="example">
-<xhtml:pre>
-<xhtml:code lang="php" xml:lang="php">
-return array(
-    'module_paths' =&gt; array(
-        realpath(__DIR__ . '/../modules'),
-        realpath(__DIR__ . '/../vendors'),
-    ),
-    'modules' =&gt; array(
-        'Application',
-        'Security',
-        'FooBlog',
-    ),
-);
-</xhtml:code>
-</xhtml:pre></xhtml:div>
-<xhtml:p>It doesn't get much simpler at this point.</xhtml:p>
-<xhtml:h2 id="toc_1.5">Tips and Tricks</xhtml:h2>
-<xhtml:p>One trick I've learned deals with how and when modules are
-loaded. In the previous section, I introduced the module manager
-and how it's notified of what modules we're composing in this
-application. One interesting thing is that modules are processed in
-the order in which they are provided in your configuration. This
-means that the configuration is merged in that order as well.</xhtml:p>
-<xhtml:p>The trick then, is this: if you want to override configuration
-settings, don't do it in the modules; create a special module that
-loads last to do it!</xhtml:p>
-<xhtml:p>So, consider this module class:</xhtml:p>
-<xhtml:div class="example">
-<xhtml:pre>
-<xhtml:code lang="php" xml:lang="php">
-namespace Local;
-
-class Module
-{
-    public function getConfig()
-    {
-        return include __DIR__ . '/configs/module.config.php';
-    }
-}
-</xhtml:code>
-</xhtml:pre></xhtml:div>
-<xhtml:p>We then create a configuration file in
-<xhtml:code>configs/module.config.php</xhtml:code>, and specify any
-configuration overrides we want there!</xhtml:p>
-<xhtml:div class="example">
-<xhtml:pre>
-<xhtml:code lang="php" xml:lang="php">
-return array(
-    'production' =&gt; array(
-        'di' =&gt; 'alias' =&gt; array(
-            'view' =&gt; 'My\Custom\Renderer',
-        ),
-    ),
-);
-</xhtml:code>
-</xhtml:pre></xhtml:div>
-<xhtml:p>Then, in our <xhtml:code>configs/application.config.php</xhtml:code>, we
-simply enable this module as the last in our list:</xhtml:p>
-<xhtml:div class="example">
-<xhtml:pre>
-<xhtml:code lang="php" xml:lang="php">
-return array(
-    // ...
-    'modules' =&gt; array(
-        'Application',
-        'Security',
-        'FooBlog',
-        'Local',
-    ),
-);
-</xhtml:code>
-</xhtml:pre></xhtml:div>
-<xhtml:p>Done!</xhtml:p>
-<xhtml:h2 id="toc_1.6">Fin</xhtml:h2>
-<xhtml:p>Modules in ZF2 are incredibly flexible and powerful. I didn't
-even cover some of the features -- such as the ability to use phar
-files (or any format phar supports) as modules, or the ability to
-cache module configuration, etc. Hopefully, however, I've outlined
-their simplicity for you, so you can start harnessing their power
-for yourself!</xhtml:p>
-<xhtml:h3 id="toc_1.6.1">Disclaimer</xhtml:h3>
-<xhtml:p>ZF2 is in beta stage at this time, and Zend Framework is not
-guaranteeing BC between beta releases. If you choose to test or
-build on ZF2, be aware that you may need to make changes between
-releases. That said, please <xhtml:em>do</xhtml:em> test, and provide your
-feedback!</xhtml:p>
-<xhtml:h3 id="toc_1.6.2">Updates</xhtml:h3>
-<xhtml:ul>
-<xhtml:li><xhtml:b>2011-11-07 14:30 CST</xhtml:b>: Updated config FooBlog.apikey to
-read foo_blog.apikey, per ZF2 config naming standards</xhtml:li>
-</xhtml:ul>
 </xhtml:div>
     </content>
   </entry>
