@@ -15,8 +15,8 @@ $entry->setTitle('RESTful APIs with ZF2, Part 1');
 $entry->setAuthor($author);
 $entry->setDraft(false);
 $entry->setPublic(true);
-$entry->setCreated(new \DateTime('2013-02-11 19:30', new \DateTimezone('America/Chicago')));
-$entry->setUpdated(new \DateTime('2013-02-11 19:30', new \DateTimezone('America/Chicago')));
+$entry->setCreated(new \DateTime('2013-02-12 05:42', new \DateTimezone('America/Chicago')));
+$entry->setUpdated(new \DateTime('2013-02-12 05:42', new \DateTimezone('America/Chicago')));
 $entry->setTimezone('America/Chicago');
 $entry->setTags(array(
   'php',
@@ -32,6 +32,13 @@ $body =<<<'EOT'
     to <a href="http://framework.zend.com/blog//zend-framework-2-0-0-stable-released.html">circumstances</a>,
     I've not had much chance to work with them in any meaningful fashion until
     recently.
+</p>
+
+<p>
+    <a href="http://akrabat.com/">Rob Allen</a> and I proposed a workshop for
+    <a href="http://conference.phpbenelux.eu/2013/">PHP Benelux 2013</a> 
+    covering RESTful APIs with ZF2. When it was accepted, it gave me the perfect
+    opportunity to dive in and start putting the various pieces together.
 </p>
 EOT;
 $entry->setBody($body);
@@ -61,12 +68,13 @@ $extended=<<<'EOT'
 </p>
 
 <ul>
-    <li>Level 0: "The swamp of POX." Basically, a service that uses the TCP, 
-        primarily as a form of remote procedure call (RPC). Typically, these
-        are not really leveraging HTTP in any meaningful fashion; most systems will 
-        use HTTP POST for all interactions. Also, you will often have a single
-        endpoint for all interactions, regardless of whether or not they are
-        strictly related. XML-RPC, SOAP, and JSON-RPC fall under this category.
+    <li>Level 0: "The swamp of POX." Basically, a service that uses TCP for 
+        transport, primarily as a form of remote procedure call (RPC). 
+        Typically, these are not really leveraging HTTP in any meaningful 
+        fashion; most systems will use HTTP POST for all interactions. Also, 
+        you will often have a single endpoint for all interactions, regardless 
+        of whether or not they are strictly related. XML-RPC, SOAP, and 
+        JSON-RPC fall under this category.
     </li>
 
     <li>Level 1: "Resources." In these services, you start breaking the service
@@ -76,15 +84,18 @@ $extended=<<<'EOT'
         to the collection of objects, but to individual objects under the 
         collection as well (e.g., "/books" as well as "/books/life-of-pi"). The 
         service may still be RPC in nature, however, and, at this level, often 
-        is still using a single HTTP method for all interactions.
+        is still using a single HTTP method for all interactions with the 
+        resource.
     </li>
 
     <li>Level 2: "HTTP Verbs." At this level, we start using HTTP verbs with
-        our services in the way the HTTP specification intends. GET is for
-        safe operations, and should be cacheable; POST is used for creation
-        and/or updating; DELETE can be used to delete a resource; etc. Rather
-        than doing RPC style methods, we leverage HTTP, occasionally passing
-        additional parameters via the query string or request body.
+        our services in the way the HTTP specification intends. GET is for safe 
+        operations, and should be cacheable; POST is used for creation and/or 
+        updating; DELETE can be used to delete a resource; etc. Rather than 
+        doing RPC style methods, we leverage HTTP, occasionally passing 
+        additional parameters via the query string or request body.  
+        Considerations such as HTTP caching and idempotence are taken into 
+        account.
     </li>
 
     <li>Level 3: "Hypermedia Controls." Building on the previous level, our
@@ -97,13 +108,14 @@ $extended=<<<'EOT'
 </ul>
 
 <p>
-    When I first started playing with web services, everything was stuck at 
-    Level 0 or Level 1 -- usually with Level 1 users downgrading to Level 0 
-    because Level 0 offerred consistency and predictability if you chose to
-    use a service type that had a defined envelope format (such as XML-RPC or SOAP).
-    (I even wrote the XML-RPC server implementation for Zend Framework because
-    I got sick of writing one-off parsers/serializers for custom XML web service
-    implementations).
+    When I first started playing with web services around a decade ago, 
+    everything was stuck at Level 0 or Level 1 -- usually with Level 1 users 
+    downgrading to Level 0 because Level 0 offerred consistency and 
+    predictability if you chose to use a service type that had a defined 
+    envelope format (such as XML-RPC or SOAP).  (I even wrote the XML-RPC 
+    server implementation for Zend Framework because I got sick of writing 
+    one-off parsers/serializers for custom XML web service implementations.
+    When you're implementing many services, predictability is a huge win.)
 </p>
 
 <p>
@@ -130,8 +142,9 @@ $extended=<<<'EOT'
 <h3>JSON and Hypermedia</h3>
 
 <p>
-    With XML, hypermedia comes for free. Add some &lt;link&gt; elements to your
-    representation, and you're done -- and don't forget the <code>rel</code>ation!
+    With XML, hypermedia basically comes for free. Add some &lt;link&gt; 
+    elements to your representation, and you're done -- and don't forget the 
+    link <code>rel</code>ations!
 </p>
 
 <p>
@@ -139,7 +152,7 @@ $extended=<<<'EOT'
 </p>
 
 <p>
-    Where to the links go? <em>There is no single, defined way to represent a 
+    Where do the links go? <em>There is no single, defined way to represent a 
     hyperlink in JSON.</em>
 </p>
 
@@ -151,7 +164,12 @@ $extended=<<<'EOT'
     First is use of the <a href="http://www.w3.org/wiki/LinkHeader">"Link" HTTP 
     header</a>. While the page I linked shows only a single link in the
     header, you can have multiple links separated by commas. GitHub uses this
-    when providing pagination links in their API.
+    when providing pagination links in their API. Critics will point out that
+    the HTTP headers are not technically part of the representation, however;
+    strict interpetations of REST and RMM indicate that the hypermedia links
+    should be part of the resource representation. Regardless, having the links
+    in the HTTP headers is useful for pre-traversal of a service, as you can
+    perform HEAD requests only to discover possible actions and workflows.
 </p>
 
 <p>
@@ -186,9 +204,9 @@ $extended=<<<'EOT'
 <h3>HAL and Links</h3>
 
 <p>
-    HAL provides very simple structure for hypermedia links. First, all resource
-    representations must contain hyperlinks, and all links are provided in a 
-    "_links" object:
+    HAL provides a very simple structure for JSON hypermedia links. First, all 
+    resource representations must contain hypermedia links, and all links are 
+    provided in a "_links" object:
 </p>
 
 <div class="example"><pre><code language="javascript">
@@ -238,10 +256,10 @@ $extended=<<<'EOT'
 <h3>HAL and Resources</h3>
 
 <p>
-    HAL imposes no structure over resources other than requiring the hyperlinks;
-    even then, you typically do not include the hyperlinks when making a request
-    of the web service; the hyperlinks are included only in the representations
-    <em>returned</em> by the service.
+    HAL imposes no structure over resources other than requiring the hypermedia 
+    links; even then, you typically do not include the hypermedia links when 
+    making a request of the web service; the hypermedia links are included only 
+    in the representations <em>returned</em> by the service.
 </p>
 
 <p>
