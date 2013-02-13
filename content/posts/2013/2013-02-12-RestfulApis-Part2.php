@@ -91,7 +91,7 @@ $extended=<<<'EOT'
 </p>
 
 <p>
-    4xx error codes are errors made by the requestor, and are actually fairly 
+    <code>4xx</code> error codes are errors made by the requestor, and are actually fairly 
     reasonable to use for reporting things such as lack of authorization tokens,
     incomplete requests, unsupportable operations, or non-supported media types.
 </p>
@@ -99,9 +99,9 @@ $extended=<<<'EOT'
 <p>
     But what happens when the error is on the server - because something has
     gone wrong such as inability to reach your persistence layer or credential
-    storage? The 5xx series of status codes is sparse and wholly unsuited to
+    storage? The <code>5xx</code> series of status codes is sparse and wholly unsuited to
     reporting errors of these types -- <em>though you'll likely still want to use
-    a 500 status to report the failure</em>. But what do you present to the consumer
+    a <code>500</code> status to report the failure</em>. But what do you present to the consumer
     so that they know whether or not to try again, or what to report to you
     so that you can fix the issue?
 </p>
@@ -129,7 +129,7 @@ $extended=<<<'EOT'
 </p>
 
 <p>
-    Sure, you can make up your own format -- and as long as you are consistent
+    Sure, you can make up your own format -- as long as you are consistent
     in using it, and you document it. But personally, I don't like inventing
     new formats when standard formats exist already. Custom formats mean that 
     custom clients are required for working with the services; using a standard
@@ -158,23 +158,23 @@ $extended=<<<'EOT'
 
 <ul>
     <li>
-        "describedBy": a URL to a document describing the error condition (required)
+        <strong>describedBy</strong>: a URL to a document describing the error condition (required)
     </li>
 
     <li>
-        "title": a brief title for the error condition (required)
+        <strong>title</strong>: a brief title for the error condition (required)
     </li>
 
     <li>
-        "httpStatus": the HTTP status code for the current request (optional)
+        <strong>httpStatus</strong>: the HTTP status code for the current request (optional)
     </li>
 
     <li>
-        "detail": error details specific to this request (optional)
+        <strong>detail</strong>: error details specific to this request (optional)
     </li>
 
     <li>
-        "supportId": a URL to the specific problem occurrence (e.g., to a log message) (optional)
+        <strong>supportId</strong>: a URL to the specific problem occurrence (e.g., to a log message) (optional)
     </li>
 </ul>
 
@@ -183,7 +183,7 @@ $extended=<<<'EOT'
 </p>
 
 <div class="example"><pre><code language="http">
-500 Internal Error
+HTTP/1.1 500 Internal Error
 Content-Type: application/api-problem+json
 
 {
@@ -195,18 +195,18 @@ Content-Type: application/api-problem+json
 </code></pre></div>
 
 <p>
-    The specification allows a large amount of flexibility -- you can have your
-    own custom error types, so long as you have a description of them. You can
-    provide as little or as much detail as you want, and even decide what 
-    information to expose based on environment.
+    The specification allows a large amount of flexibility -- you can have your 
+    own custom error types, so long as you have a description of them to link 
+    to. You can provide as little or as much detail as you want, and even 
+    decide what information to expose based on environment.
 </p>
 
 <p>
-    I personally like to point to the HTTP status code definitions, and then
-    provide request-specific detail; I find this gives quick and simple
-    results that I can later shape as I add more detail to my API. However,
-    it definitely encourages you to have unique error types with discrete
-    URIs that describe them -- never a bad thing when creating APIs.
+    I personally like to point to the HTTP status code definitions, and then 
+    provide request-specific detail; I find this gives quick and simple results 
+    that I can later shape as I add more detail to my API. However, the 
+    specification definitely encourages you to have unique error types with 
+    discrete URIs that describe them -- never a bad thing when creating APIs.
 </p>
 
 <h3>vnd.error</h3>
@@ -218,13 +218,13 @@ Content-Type: application/api-problem+json
 </p>
 
 <p>
-    It differentiates from API-Problem in a few ways. First, it allows, and even
-    encourages, reporting collections of errors. If you consider PHP exceptions
-    and the fact that they support "previous" exceptions, this is a powerful
-    concept; you can report the entire chain of errors that led to the response.
-    Second, it encourages pushing detail out of the web service; errors include
-    a "logRef" that points to where the error detail lives. This is probably
-    better illustrated than explained.
+    It differentiates from API-Problem in a few ways. First, it allows, and 
+    even encourages, reporting collections of errors. If you consider PHP 
+    exceptions and the fact that they support "previous" exceptions, this is a 
+    powerful concept; you can report the entire chain of errors that led to the 
+    response.  Second, it encourages pushing detail out of the web service; 
+    errors include a "logRef" property that points to where the error detail lives. 
+    This is probably better illustrated than explained.
 </p>
 
 <p>
@@ -234,16 +234,16 @@ Content-Type: application/api-problem+json
 
 <ul>
     <li>
-        "logRef": a unique identifier for the specific error which can then be
+        <strong>logRef</strong>: a unique identifier for the specific error which can then be
         used to identify the error within server-side logs (required)
     </li>
 
     <li>
-        "message": the error message itself (required)
+        <strong>message</strong>: the error message itself (required)
     </li>
 
     <li>
-        "_links": HAL-compatible links. Typically, "help", "describes", and/or 
+        <strong>_links</strong>: HAL-compatible links. Typically, "help", "describes", and/or 
         "describedBy" relations will be defined here.
     </li>
 </ul>
@@ -254,7 +254,7 @@ Content-Type: application/api-problem+json
 </p>
 
 <div class="example"><pre><code language="http">
-500 Internal Error
+HTTP/1.1 500 Internal Error
 Content-Type: application/vnd.error+json
 
 [
@@ -275,10 +275,10 @@ Content-Type: application/vnd.error+json
 </p>
 
 <p>
-    The requirement to include "logRef" and have it be unique can be a stumbling 
-    block to implementation, however, as it requires effort for uniquely 
-    identifying requests, and logging. However, both the identification and
-    logging can be automated.
+    The requirement to include a log reference ("logRef") and have it be unique 
+    can be a stumbling block to implementation, however, as it requires effort 
+    for uniquely identifying requests, and logging. However, both the 
+    identification and logging can be automated.
 </p>
 
 <h2>Summary</h2>
