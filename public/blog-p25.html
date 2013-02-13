@@ -95,6 +95,146 @@
 
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
+    <p class="date">2004-09-21 10:40:45</p>
+    <p class="tags"><a href="/blog/tag/programming.html">programming</a><br />
+<a href="/blog/tag/perl.html">perl</a><br />
+<a href="/blog/tag/personal.html">personal</a><br />
+<a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/41-Cgiapp-Roadmap.html">Cgiapp Roadmap</a></h4>
+
+    <div class="entry body"><p>
+    I've had a few people contact me indicating interest in Cgiapp, and I've
+    noticed a number of subscribers to the freshmeat project I've setup. In
+    addition, we're using the library extensively at the <a href="http://www.garden.org">National Gardening Association</a> in
+    developing our new site (the current site is using a mixture of ASP and
+    Tango, with several newer applications using PHP). I've also been monitoring
+    the CGI::Application mailing list. As a result of all this activity, I've
+    decided I need to develop a roadmap for Cgiapp.
+</p>
+<p>Currently, planned changes include:</p>
+<ul>
+    <li><b>Version 1.x series:</b>
+        <ul>
+            <li>Adding a Smarty registration for stripslashes (the Smarty
+            "function" call will be sslashes).</li>
+            <li>param() bugfix: currently, calling param() with no arguments
+            simply gives you a list of parameters registered with the method,
+            but not their values; this will be fixed.</li>
+            <li>error_mode() method. The CGI::Application ML brought up and
+            implemented the idea of an error_mode() method to register
+            an error_mode with the object (similar to run_modes()). While
+            non-essential, it would offer a standard, built-in hook for error
+            handling.</li>
+            <li>$PATH_INFO traversing. Again, on the CGI::App ML, a request was
+            brought up for built-in support for using $PATH_INFO to determine
+            the run mode. Basically, you would pass a parameter indicating which
+            location in the $PATH_INFO string holds the run mode.</li>
+            <li>DocBook tutorials. I feel that too much information is given in
+            the class-level documentation, and that usage tutorials need to be
+            written. Since I'm documenting with PhpDoc and targetting PEAR,
+            moving tutorials into DocBook is a logical step.</li>
+        </ul>
+    </li>
+    <li><b>Version 2.x series:</b><br>
+        Yes, a Cgiapp2 is in the future. There are a few changes that are either
+        necessitating (a) PHP5, or (b) API changes. In keeping with PEAR
+        guidelines, I'll rename the module Cgiapp2 so as not to break
+        applications designed for Cgiapp.<br><br>
+        Changes expected include:
+        <ul>
+            <li>Inherit from PEAR. This will allow for some built in error
+            handling, among other things. I suspect that this will tie in with
+            the error_mode(), and may also deprecate croak() and carp().</li>
+            <li>Changes to tmpl_path() and load_tmpl(). In the perl version, you
+            would instantiate a template using load_tmpl(), assign your
+            variables to it, and then do your fetch() on it. So, this:
+                <pre>
+$this->tmpl_assign('var1', 'val1');
+$body = $this->load_tmpl('template.html');
+                </pre>
+            Becomes this:
+                <pre>
+$tmpl = $this->load_tmpl();
+$tmpl->assign('var1', 'val1');
+$body = $tmpl->fetch('template.html');
+                </pre>
+            OR
+                <pre>
+$tmpl = $this->load_tmpl('template.html');
+$tmpl->assign('var1', 'val1');
+$body = $tmpl->fetch();
+                </pre>
+            (Both examples assume use of Smarty.) I want to revert to
+            this behaviour for several reasons:
+                <ul>
+                    <li>Portability with perl. This is one area in which the PHP
+                    and perl versions differ greatly; going to the perl way
+                    makes porting classes between the two languages
+                    simpler.</li>
+                    <li>Decoupling. The current set of template methods create
+                    an object as a parameter of the application object - which
+                    is fine, unless the template object instantiator returns an
+                    object of a different kind.</li>
+                </ul>
+            Cons:
+                <ul>
+                     <li>Smarty can use the same object to fill multiple
+                     templates, and the current methods make use of this. By
+                     assigning the template object locally to each method, this
+                     could be lost.<br><br>
+                     HOWEVER... an easy work-around would be for load_tmpl() to
+                     create the object and store it an a parameter; subsequent
+                     calls would return the same object reference. The
+                     difficulty then would be if load_tmpl() assumed a template
+                     name would be passed.  However, even in CGI::App, you
+                     decide on a template engine and design for that engine;
+                     there is never an assumption that template engines should
+                     be swappable.</li>
+                     <li>Existing Cgiapp1 applications would need to be
+                     rewritten.</li>
+                </ul>
+            </li>
+            <li><b>Plugin Architecture:</b>
+                The CGI::App ML has produced a ::Plugin namespace that utilizes
+                a common plugin architecture. The way it is done in perl is
+                through some magic of namespaces and export routines... both of
+                which are, notably, missing from PHP.<br><br>
+                However, I think I may know a workaround for this, if I use
+                PHP5: the magic __call() overloader method.<br><br>
+                My idea is to have plugin classes register methods that should
+                be accessible by a Cgiapp-based class a special key in the
+                $_GLOBALS array.  Then, the __call() method would check the
+                key for registered methods; if one is found matching a method
+                requested, that method is called (using call_user_func()), with
+                the Cgiapp-based object reference as the first reference. Voila!
+                instant plugins!<br><br>
+                Why do this? A library of 'standard' plugins could then be
+                created, such as:
+                <ul>
+                    <li>A form validation plugin</li>
+                    <li>Alternate template engines as plugins (instead of
+                    overriding the tmpl_* methods)</li>
+                    <li>An authorization plugin</li>
+                </ul>
+                Since the 'exported' methods would have access to the Cgiapp
+                object, they could even register objects or parameters with it.
+            </li>
+        </ul>
+    </li>
+</ul>
+<p>
+    If you have any requests or comments on the roadmap, please feel free to <a href="/matthew/contact">contact me</a>.
+</p></div>
+
+    <p><a href="/blog/41-Cgiapp-Roadmap.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
     <p class="date">2004-09-20 21:09:32</p>
     <p class="tags"><a href="/blog/tag/programming.html">programming</a><br />
 <a href="/blog/tag/personal.html">personal</a><br />
@@ -560,73 +700,6 @@
 </section>
 
 </div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2004-03-19 09:49:57</p>
-    <p class="tags"><a href="/blog/tag/programming.html">programming</a><br />
-<a href="/blog/tag/personal.html">personal</a><br />
-<a href="/blog/tag/php.html">php</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/36-PHP-Class-Tips.html">PHP Class Tips</a></h4>
-
-    <div class="entry body"><p>
-    We're starting to use OO in our PHP at work. I discovered when I started
-    using it why I'd been having problems wrapping my head around some of the
-    applications I've been programming lately: I've become accustomed in Perl to
-    using an OO framework. Suddenly, programming in PHP was much easier.
-</p>
-<p>
-    There's a few things that are different, however. It appears that you cannot
-    pass objects in object attributes, and then reference them like thus:
-</p>
-<pre>    $object->db>query($sql)
-</pre>
-<p>
-    PHP doesn't like that kind of syntax (at least not in versions 4.x).
-    Instead, you have to pass a reference to the object in the attribute, then
-    set a temporary variable to that reference whenever you wish to use it:
-</p>
-<pre>    $object->db =& $db;
-    ...
-    $db = $object->db;
-    $res = $db->query($sql);
-</pre>
-<p>
-    What if you want to inherit from another class and extend one of the
-    methods? In other words, you want to use the method from the parent class,
-    but you want to do some additional items with it? Simple: use
-    <kbd>parent</kbd>:
-</p>
-<pre>    function method1()
-    {
-        /* do some pre-processing */
-
-        parent::method1(); // Do the parent's version of the method
-
-        /* do some more stuff here */
-    }
-</pre>
-<h4>Update:</h4>
-<p>
-    Actually, you *can* reference objects when they are attributes of another
-    object; you just have to define the references in the correct order:
-</p>
-<pre>    $db =& DB::connect('dsn');
-    $this->db =& $db;
-    ...
-    $res = $this->db->query($sql);
-</pre>
-<p>
-    I've tested the above syntax with both PEAR's DB and with Smarty, and it
-    works without issue.
-</p></div>
-
-    <p><a href="/blog/36-PHP-Class-Tips.html">Continue reading...</a></p>
-</section>
-
-</div>
 <div class="paginationControl">
         <a href="/blog.html" class="first">&lt;&lt; First</a> |
         <a href="/blog-p24.html"> &lt; Previous </a> |
@@ -721,7 +794,7 @@
         <div id="search" style="width:100%;">Loading...</div>
 <h4>Tag Cloud</h4>
 <div class="cloud">
-<ul class="Zend&#x5C;Tag&#x5C;Cloud"><li><a href="/blog/tag/php.html" style="font-size: 20px;">php</a></li> <li><a href="/blog/tag/zend+framework.html" style="font-size: 14px;">zend framework</a></li> <li><a href="/blog/tag/zf2.html" style="font-size: 11px;">zf2</a></li> <li><a href="/blog/tag/vim.html" style="font-size: 11px;">vim</a></li> <li><a href="/blog/tag/family.html" style="font-size: 11px;">family</a></li> <li><a href="/blog/tag/programming.html" style="font-size: 12px;">programming</a></li> <li><a href="/blog/tag/personal.html" style="font-size: 13px;">personal</a></li> <li><a href="/blog/tag/phpconcom.html" style="font-size: 10px;">phpconcom</a></li> <li><a href="/blog/tag/mvc.html" style="font-size: 11px;">mvc</a></li> <li><a href="/blog/tag/oop.html" style="font-size: 11px;">oop</a></li> <li><a href="/blog/tag/testing.html" style="font-size: 10px;">testing</a></li> <li><a href="/blog/tag/rest.html" style="font-size: 11px;">rest</a></li> <li><a href="/blog/tag/linux.html" style="font-size: 12px;">linux</a></li> <li><a href="/blog/tag/zendcon08.html" style="font-size: 11px;">zendcon08</a></li> <li><a href="/blog/tag/file_fortune.html" style="font-size: 10px;">file_fortune</a></li> <li><a href="/blog/tag/pear.html" style="font-size: 11px;">pear</a></li> <li><a href="/blog/tag/zendcon.html" style="font-size: 11px;">zendcon</a></li> <li><a href="/blog/tag/perl.html" style="font-size: 12px;">perl</a></li> <li><a href="/blog/tag/fastcgi.html" style="font-size: 10px;">fastcgi</a></li> <li><a href="/blog/tag/ubuntu.html" style="font-size: 11px;">ubuntu</a></li> <li><a href="/blog/tag/tekx.html" style="font-size: 10px;">tekx</a></li> <li><a href="/blog/tag/zendcon10.html" style="font-size: 10px;">zendcon10</a></li> <li><a href="/blog/tag/dojo.html" style="font-size: 11px;">dojo</a></li> <li><a href="/blog/tag/symfony.html" style="font-size: 11px;">symfony</a></li> <li><a href="/blog/tag/zeta+components.html" style="font-size: 10px;">zeta components</a></li> <li><a href="/blog/tag/tek09.html" style="font-size: 10px;">tek09</a></li> <li><a href="/blog/tag/spl.html" style="font-size: 11px;">spl</a></li> <li><a href="/blog/tag/subversion.html" style="font-size: 11px;">subversion</a></li> <li><a href="/blog/tag/zend+framewor.html" style="font-size: 10px;">zend framewor</a></li> <li><a href="/blog/tag/rails.html" style="font-size: 10px;">rails</a></li> <li><a href="/blog/tag/conferences.html" style="font-size: 11px;">conferences</a></li> <li><a href="/blog/tag/dpc08.html" style="font-size: 11px;">dpc08</a></li> <li><a href="/blog/tag/phpworks08.html" style="font-size: 11px;">phpworks08</a></li> <li><a href="/blog/tag/webinar.html" style="font-size: 11px;">webinar</a></li> <li><a href="/blog/tag/zencon08.html" style="font-size: 10px;">zencon08</a></li> <li><a href="/blog/tag/cw09.html" style="font-size: 11px;">cw09</a></li> <li><a href="/blog/tag/zend+server.html" style="font-size: 10px;">zend server</a></li> <li><a href="/blog/tag/dpc09.html" style="font-size: 10px;">dpc09</a></li> <li><a href="/blog/tag/sflive2010.html" style="font-size: 10px;">sflive2010</a></li> <li><a href="/blog/tag/security.html" style="font-size: 10px;">security</a></li> <li><a href="/blog/tag/wifi.html" style="font-size: 10px;">wifi</a></li> <li><a href="/blog/tag/aikido.html" style="font-size: 10px;">aikido</a></li> <li><a href="/blog/tag/books.html" style="font-size: 10px;">books</a></li> <li><a href="/blog/tag/dpc10.html" style="font-size: 10px;">dpc10</a></li> <li><a href="/blog/tag/zendcon09.html" style="font-size: 11px;">zendcon09</a></li> <li><a href="/blog/tag/git.html" style="font-size: 11px;">git</a></li> <li><a href="/blog/tag/phpwomen.html" style="font-size: 10px;">phpwomen</a></li> <li><a href="/blog/tag/virtualbox.html" style="font-size: 10px;">virtualbox</a></li> <li><a href="/blog/tag/screencast.html" style="font-size: 11px;">screencast</a></li> <li><a href="/blog/tag/advocacy.html" style="font-size: 10px;">advocacy</a></li> <li><a href="/blog/tag/politics.html" style="font-size: 10px;">politics</a></li> <li><a href="/blog/tag/internet.html" style="font-size: 10px;">internet</a></li> <li><a href="/blog/tag/microphp.html" style="font-size: 10px;">microphp</a></li> <li><a href="/blog/tag/cloud.html" style="font-size: 11px;">cloud</a></li> <li><a href="/blog/tag/composer.html" style="font-size: 10px;">composer</a></li> <li><a href="/blog/tag/http.html" style="font-size: 10px;">http</a></li> <li><a href="/blog/tag/doctrine.html" style="font-size: 10px;">doctrine</a></li></ul></div>
+<ul class="Zend&#x5C;Tag&#x5C;Cloud"><li><a href="/blog/tag/php.html" style="font-size: 20px;">php</a></li> <li><a href="/blog/tag/zend+framework.html" style="font-size: 15px;">zend framework</a></li> <li><a href="/blog/tag/zf2.html" style="font-size: 11px;">zf2</a></li> <li><a href="/blog/tag/vim.html" style="font-size: 11px;">vim</a></li> <li><a href="/blog/tag/family.html" style="font-size: 11px;">family</a></li> <li><a href="/blog/tag/programming.html" style="font-size: 12px;">programming</a></li> <li><a href="/blog/tag/personal.html" style="font-size: 13px;">personal</a></li> <li><a href="/blog/tag/phpconcom.html" style="font-size: 10px;">phpconcom</a></li> <li><a href="/blog/tag/mvc.html" style="font-size: 11px;">mvc</a></li> <li><a href="/blog/tag/oop.html" style="font-size: 11px;">oop</a></li> <li><a href="/blog/tag/testing.html" style="font-size: 10px;">testing</a></li> <li><a href="/blog/tag/rest.html" style="font-size: 11px;">rest</a></li> <li><a href="/blog/tag/linux.html" style="font-size: 12px;">linux</a></li> <li><a href="/blog/tag/zendcon08.html" style="font-size: 11px;">zendcon08</a></li> <li><a href="/blog/tag/file_fortune.html" style="font-size: 10px;">file_fortune</a></li> <li><a href="/blog/tag/pear.html" style="font-size: 11px;">pear</a></li> <li><a href="/blog/tag/zendcon.html" style="font-size: 11px;">zendcon</a></li> <li><a href="/blog/tag/perl.html" style="font-size: 12px;">perl</a></li> <li><a href="/blog/tag/fastcgi.html" style="font-size: 10px;">fastcgi</a></li> <li><a href="/blog/tag/ubuntu.html" style="font-size: 11px;">ubuntu</a></li> <li><a href="/blog/tag/tekx.html" style="font-size: 10px;">tekx</a></li> <li><a href="/blog/tag/zendcon10.html" style="font-size: 10px;">zendcon10</a></li> <li><a href="/blog/tag/dojo.html" style="font-size: 11px;">dojo</a></li> <li><a href="/blog/tag/symfony.html" style="font-size: 11px;">symfony</a></li> <li><a href="/blog/tag/zeta+components.html" style="font-size: 10px;">zeta components</a></li> <li><a href="/blog/tag/tek09.html" style="font-size: 10px;">tek09</a></li> <li><a href="/blog/tag/spl.html" style="font-size: 11px;">spl</a></li> <li><a href="/blog/tag/subversion.html" style="font-size: 11px;">subversion</a></li> <li><a href="/blog/tag/zend+framewor.html" style="font-size: 10px;">zend framewor</a></li> <li><a href="/blog/tag/rails.html" style="font-size: 10px;">rails</a></li> <li><a href="/blog/tag/conferences.html" style="font-size: 11px;">conferences</a></li> <li><a href="/blog/tag/dpc08.html" style="font-size: 11px;">dpc08</a></li> <li><a href="/blog/tag/phpworks08.html" style="font-size: 11px;">phpworks08</a></li> <li><a href="/blog/tag/webinar.html" style="font-size: 11px;">webinar</a></li> <li><a href="/blog/tag/zencon08.html" style="font-size: 10px;">zencon08</a></li> <li><a href="/blog/tag/cw09.html" style="font-size: 11px;">cw09</a></li> <li><a href="/blog/tag/zend+server.html" style="font-size: 10px;">zend server</a></li> <li><a href="/blog/tag/dpc09.html" style="font-size: 10px;">dpc09</a></li> <li><a href="/blog/tag/sflive2010.html" style="font-size: 10px;">sflive2010</a></li> <li><a href="/blog/tag/security.html" style="font-size: 10px;">security</a></li> <li><a href="/blog/tag/wifi.html" style="font-size: 10px;">wifi</a></li> <li><a href="/blog/tag/aikido.html" style="font-size: 10px;">aikido</a></li> <li><a href="/blog/tag/books.html" style="font-size: 10px;">books</a></li> <li><a href="/blog/tag/dpc10.html" style="font-size: 10px;">dpc10</a></li> <li><a href="/blog/tag/zendcon09.html" style="font-size: 11px;">zendcon09</a></li> <li><a href="/blog/tag/git.html" style="font-size: 11px;">git</a></li> <li><a href="/blog/tag/phpwomen.html" style="font-size: 10px;">phpwomen</a></li> <li><a href="/blog/tag/virtualbox.html" style="font-size: 10px;">virtualbox</a></li> <li><a href="/blog/tag/screencast.html" style="font-size: 11px;">screencast</a></li> <li><a href="/blog/tag/advocacy.html" style="font-size: 10px;">advocacy</a></li> <li><a href="/blog/tag/politics.html" style="font-size: 10px;">politics</a></li> <li><a href="/blog/tag/internet.html" style="font-size: 10px;">internet</a></li> <li><a href="/blog/tag/microphp.html" style="font-size: 10px;">microphp</a></li> <li><a href="/blog/tag/cloud.html" style="font-size: 11px;">cloud</a></li> <li><a href="/blog/tag/composer.html" style="font-size: 10px;">composer</a></li> <li><a href="/blog/tag/doctrine.html" style="font-size: 10px;">doctrine</a></li> <li><a href="/blog/tag/http.html" style="font-size: 11px;">http</a></li></ul></div>
         </div>
 
         <br class="clear"/>
