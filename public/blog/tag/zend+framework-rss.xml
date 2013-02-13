@@ -3,13 +3,337 @@
   <channel>
     <title>Tag: zend framework :: phly, boy, phly</title>
     <description>Tag: zend framework :: phly, boy, phly</description>
-    <pubDate>Tue, 12 Feb 2013 11:42:00 +0000</pubDate>
+    <pubDate>Wed, 13 Feb 2013 13:40:00 +0000</pubDate>
     <generator>Zend_Feed_Writer 2.1.1dev (http://framework.zend.com)</generator>
     <link>http://mwop.net/blog/tag/zend+framework.html</link>
     <atom:link rel="self" type="application/rss+xml" href="http://mwop.net/blog/tag/zend+framework-rss.xml"/>
     <item>
+      <title>RESTful APIs with ZF2, Part 2</title>
+      <pubDate>Wed, 13 Feb 2013 13:40:00 +0000</pubDate>
+      <link>http://mwop.net/blog/2013-02-13-restful-apis-with-zf2-part-2.html</link>
+      <guid>http://mwop.net/blog/2013-02-13-restful-apis-with-zf2-part-2.html</guid>
+      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
+      <dc:creator>Matthew Weier O'Phinney</dc:creator>
+      <content:encoded><![CDATA[<p>
+    In my <a href="/blog/2013-02-11-restful-apis-with-zf2-part-1.html">last post</a>,
+    I covered some background on REST and the Richardson Maturity Model, and some
+    emerging standards around hypermedia APIs in JSON; in particular, I outlined
+    aspects of Hypermedia Application Language (HAL), and how it can be used to
+    define a generic structure for JSON resources.
+</p>
+
+<p>
+    In this post, I cover an aspect of RESTful APIs that's often overlooked:
+    reporting problems.
+</p><h2>Background</h2>
+
+<p>
+    APIs are useful when they're working. But when they fail, they're only 
+    useful if they provide us with meaningful information; if all I get is
+    a status code, and no indication of what caused the issue, or where I might
+    look for more information, I get frustrated.
+</p>
+
+<p>
+    In consuming APIs, I've come to the following conclusions:
+</p>
+
+<ul>
+    <li>
+        Error conditions need to provide detailed information as to what went 
+        wrong, and what steps I may be able to take next. An error code with
+        no context gives me nothing to go on.
+    </li>
+
+    <li>
+        Errors need to be reported consistently. Don't report the error one way
+        one time, and another way the next.
+    </li>
+
+    <li>
+        <strong>DO</strong> use HTTP status codes to indicate an error happened.
+        Nothing is more irksome than getting back a 200 status with an error 
+        payload.
+    </li>
+
+    <li>
+        Errors should be reported in a format I have indicated I will Accept 
+        (as in the HTTP header). Perhaps the only think more irksome than a 200
+        status code for an error is getting back an HTML page when I expect 
+        JSON.
+    </li>
+</ul>
+
+<h2>Why Status Codes Aren't Enough</h2>
+
+<p>
+    Since REST leverages and builds on HTTP, an expedient solution for reporting
+    problems is to simply use <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html">HTTP status codes</a>. 
+    These are well understood by web developers, right?
+</p>
+
+<p>
+    <code>4xx</code> error codes are errors made by the requestor, and are actually fairly 
+    reasonable to use for reporting things such as lack of authorization tokens,
+    incomplete requests, unsupportable operations, or non-supported media types.
+</p>
+
+<p>
+    But what happens when the error is on the server - because something has
+    gone wrong such as inability to reach your persistence layer or credential
+    storage? The <code>5xx</code> series of status codes is sparse and wholly unsuited to
+    reporting errors of these types -- <em>though you'll likely still want to use
+    a <code>500</code> status to report the failure</em>. But what do you present to the consumer
+    so that they know whether or not to try again, or what to report to you
+    so that you can fix the issue?
+</p>
+
+<p>
+    A status code simply isn't enough information most of the time. Yes, you 
+    want to define standard status codes so that your clients can perform
+    reasonable branching, but you also need a way to communicate <em>details</em>
+    to the end-user, so that they can log the information for themselves, display
+    information to their own end-users, and/or report it back to you so you can
+    do something to resolve the situation.
+</p>
+
+<h2>Custom Media Types</h2>
+
+<p>
+    The first step is to use a custom media type. Media types are typically 
+    both a name as well as a structure -- and the latter is what we're after
+    when it comes to error reporting. 
+</p>
+
+<p>
+    If we return a response using this media type, the client then knows how
+    to parse it, and can then process it, log it, whatever.
+</p>
+
+<p>
+    Sure, you can make up your own format -- as long as you are consistent
+    in using it, and you document it. But personally, I don't like inventing
+    new formats when standard formats exist already. Custom formats mean that 
+    custom clients are required for working with the services; using a standard
+    format can save effort and time.
+</p>
+
+<p>
+    In the world of JSON, I've come across two error media types that appear to
+    be gaining traction: <code>application/api-problem+json</code> and 
+    <code>application/vnd.error+json</code>
+</p>
+
+<h3>API-Problem</h3>
+
+<p>
+    This particular media type is <a 
+    href="http://tools.ietf.org/html/draft-nottingham-http-problem-02">via the 
+    IETF</a>. Like HAL, it provides formats in both JSON and XML, making it 
+    a nice cross-platform choice.
+</p>
+
+<p>
+    As noted already, the media type is <code>application/api-problem+json</code>.
+    The representation is a single resource, with the following properties:
+</p>
+
+<ul>
+    <li>
+        <strong>describedBy</strong>: a URL to a document describing the error condition (required)
+    </li>
+
+    <li>
+        <strong>title</strong>: a brief title for the error condition (required)
+    </li>
+
+    <li>
+        <strong>httpStatus</strong>: the HTTP status code for the current request (optional)
+    </li>
+
+    <li>
+        <strong>detail</strong>: error details specific to this request (optional)
+    </li>
+
+    <li>
+        <strong>supportId</strong>: a URL to the specific problem occurrence (e.g., to a log message) (optional)
+    </li>
+</ul>
+
+<p>
+    As an example:
+</p>
+
+<div class="example"><pre><code language="http">
+HTTP/1.1 500 Internal Error
+Content-Type: application/api-problem+json
+
+{
+    "describedBy": "http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html",
+    "detail": "Status failed validation",
+    "httpStatus": 500,
+    "title": "Internal Server Error"
+}
+</code></pre></div>
+
+<p>
+    The specification allows a large amount of flexibility -- you can have your 
+    own custom error types, so long as you have a description of them to link 
+    to. You can provide as little or as much detail as you want, and even 
+    decide what information to expose based on environment.
+</p>
+
+<p>
+    I personally like to point to the HTTP status code definitions, and then 
+    provide request-specific detail; I find this gives quick and simple results 
+    that I can later shape as I add more detail to my API. However, the 
+    specification definitely encourages you to have unique error types with 
+    discrete URIs that describe them -- never a bad thing when creating APIs.
+</p>
+
+<h3>vnd.error</h3>
+
+<p>
+    This is a <a href="https://github.com/blongden/vnd.error">proposed media 
+    type</a> within the HAL community. Like HAL, it provides formats in both 
+    JSON and XML, making it a nice cross-platform choice.
+</p>
+
+<p>
+    It differentiates from API-Problem in a few ways. First, it allows, and 
+    even encourages, reporting collections of errors. If you consider PHP 
+    exceptions and the fact that they support "previous" exceptions, this is a 
+    powerful concept; you can report the entire chain of errors that led to the 
+    response.  Second, it encourages pushing detail out of the web service; 
+    errors include a "logRef" property that points to where the error detail lives. 
+    This is probably better illustrated than explained.
+</p>
+
+<p>
+    The response payload is an array of objects. Each object has the following 
+    members:
+</p>
+
+<ul>
+    <li>
+        <strong>logRef</strong>: a unique identifier for the specific error which can then be
+        used to identify the error within server-side logs (required)
+    </li>
+
+    <li>
+        <strong>message</strong>: the error message itself (required)
+    </li>
+
+    <li>
+        <strong>_links</strong>: HAL-compatible links. Typically, "help", "describes", and/or 
+        "describedBy" relations will be defined here.
+    </li>
+</ul>
+
+<p>
+    As an example, let's consider the API-Problem example I had earlier, and
+    provide a vnd.error equivalent:
+</p>
+
+<div class="example"><pre><code language="http">
+HTTP/1.1 500 Internal Error
+Content-Type: application/vnd.error+json
+
+[
+    {
+        "logRef": "someSha1HashMostLikely",
+        "message": "Status failed validation",
+        "_links": {
+            "describedBy": {"href": "http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html"}
+        }
+    }
+]
+</code></pre></div>
+
+<p>
+    vnd.error basically begs you to create custom error types, with documentation 
+    end-points that detail the source of the error and what you can do about it 
+    (this is true of API-Problem as well).
+</p>
+
+<p>
+    The requirement to include a log reference ("logRef") and have it be unique 
+    can be a stumbling block to implementation, however, as it requires effort 
+    for uniquely identifying requests, and logging. However, both the 
+    identification and logging can be automated.
+</p>
+
+<h2>Summary</h2>
+
+<p>
+    Error reporting in APIs is as important as the normal resource payloads 
+    themselves. Without good error reporting, when an API raises errors, 
+    clients have difficulty understanding what they can do next, and cannot
+    provide you, the API provider, with information that will allow you to
+    debug on the server side.
+</p>
+
+<p>
+    As noted at the beginning of the article, if you follow the rules below,
+    you'll make consumers of your API happier and more productive.
+</p>
+
+<ul>
+    <li>
+        <strong>DO</strong> use appropriate HTTP status codes to indicate an 
+        error happened.
+    </li>
+
+    <li>
+        Report errors in a format I have indicated I will Accept 
+        (as in the HTTP header). 
+    </li>
+    <li>
+        Report errors consistently. Don't report the error one way one time, 
+        and another way the next. Standardize on a specific error-reporting 
+        media type .  While you <em>can</em> create your own error structure, I 
+        recommend using documented, accepted standards. This will make clients 
+        more re-usable, and make many of your decisions for you.
+    </li>
+
+    <li>
+        Provide detailed information as to what went wrong, and what steps I 
+        may be able to take next. Provide documentation for each type of error, 
+        and link to that documentation from your error payloads.
+    </li>
+
+</ul>
+
+<p>
+    Which brings me to...
+</p>
+
+<h2>Next time</h2>
+
+<p>
+    I realize I still haven't covered anything specific to ZF2, but I'll start 
+    next time, when I cover the next topic: documenting your API. An 
+    undocumented API is a useless API, so it's good to start baking 
+    documentation in immediately. I'll survey some of the possibilities and how 
+    they can be implemented in ZF2 in the next installment, and then we can get 
+    our hands dirty with actual API development.
+</p>
+
+<h3>Updates</h3>
+
+<p>
+    <em>Note: I'll update this post with links to the other posts in the series 
+    as I publish them.</em>
+</p>
+
+<ul>
+    <li><a href="/blog/2013-02-11-restful-apis-with-zf2-part-1">Part 1</a></li>
+</ul>]]></content:encoded>
+      <slash:comments>0</slash:comments>
+    </item>
+    <item>
       <title>RESTful APIs with ZF2, Part 1</title>
-      <pubDate>Tue, 12 Feb 2013 11:42:00 +0000</pubDate>
+      <pubDate>Wed, 13 Feb 2013 13:40:00 +0000</pubDate>
       <link>http://mwop.net/blog/2013-02-11-restful-apis-with-zf2-part-1.html</link>
       <guid>http://mwop.net/blog/2013-02-11-restful-apis-with-zf2-part-1.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -399,12 +723,16 @@ Content-Type: application/hal+json
     I'll get there. But there's another detour to take: reporting errors.
 </p>
 
-<h3></h3>
+<h3>Updates</h3>
 
 <p>
     <em>Note: I'll update this post with links to the other posts in the series 
     as I publish them.</em>
-</p>]]></content:encoded>
+</p>
+
+<ul>
+    <li><a href="/blog/2013-02-13-restful-apis-with-zf2-part-2">Part 2</a></li>
+</ul>]]></content:encoded>
       <slash:comments>0</slash:comments>
     </item>
     <item>
@@ -2619,199 +2947,6 @@ $tokens->process($config);
 
 <p>
     Where are <em>your</em> modules?
-</p>]]></content:encoded>
-      <slash:comments>0</slash:comments>
-    </item>
-    <item>
-      <title>Why Conventions Matter</title>
-      <pubDate>Thu, 12 Jan 2012 03:58:28 +0000</pubDate>
-      <link>http://mwop.net/blog/why-conventions-matter.html</link>
-      <guid>http://mwop.net/blog/why-conventions-matter.html</guid>
-      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
-      <dc:creator>Matthew Weier O'Phinney</dc:creator>
-      <content:encoded><![CDATA[<p>
-    When I started teaching myself scripting languages, I started with Perl. One
-    Perl motto is <a href="http://en.wikipedia.org/wiki/TMTOWTDI">"TMTOWTDI"</a>
-    -- "There's More Than One Way To Do It," and pronounced "tim-toady." The
-    idea is that there's likely multiple ways to accomplish the very same thing,
-    and the culture of the language encourages finding novel ways to do things.
-</p>
-
-<p>
-    I've seen this principle used everywhere and in just about every programming
-    situation possible, applied to logical operations, naming conventions,
-    formatting, and even project structure.  Everyone has an opinion on these
-    topics, and given free rein to implement as they see fit, it's rare that two
-    developers will come up with the same conventions.
-</p>
-
-<p>
-    TMTOWTDI is an incredibly freeing and egalitarian principle.
-</p>
-
-<p>
-    Over the years, however, my love for TMTOWTDI has diminished some.  Freeing
-    as it is, is also a driving force behind having coding standards and
-    conventions -- because when everyone does it their own way, projects become
-    quickly hard to maintain. Each person finds themselves reformatting code to
-    their own standards, simply so they can read it and follow its flow.
-</p>
-
-<p>
-    Additionally, TMTOWTDI can actually be a foe of simple, elegant solutions.
-</p>
-
-<p>
-    Why do I claim this?
-</p><p>
-    Recently, discussing module structure in Zend Framework 2, some folks were
-    arguing that our recommended directory structure invokes the <a
-        href="http://en.wikipedia.org/wiki/YAGNI">YAGNI</a> principle: You Ain't
-    Gonna Need It.  Our recommendation is this:
-</p>
-
-<div class="example"><pre>
-ModuleName/
-    autoload_classmap.php
-    Module.php
-    config/
-        module.config.php
-        (other config files)
-    public/
-        css/
-        images/
-        js/
-    src/
-        ModuleName/
-            (source files)
-    test/
-    view/
-</pre></div>
-
-<p>
-    The argument is that since most modules implement a single namespace, and
-    because we recommend following <a
-        href="https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md">PSR-0</a>
-    for autoloaders, it makes sense to simply have the source files directly
-    under the module directory.
-</p>
-
-<div class="example"><pre>
-ModuleName/
-    autoload_classmap.php
-    Module.php
-    (other source files)
-    config/
-        module.config.php
-        (other config files)
-    public/
-    test/
-    view/
-</pre></div>
-
-<p>
-    The argument myself and others made was that it makes sense to group the
-    files by responsibility. However, the module system ultimately <em>doesn't
-        care</em> how you organize the module -- we've embraced TMTOWTDI, and
-    our only requirement is that for your module to be consumed, you must define
-    a <code>ModuleName\Module</code> class, and notify the module manager how to
-    find it. Anything goes.
-</p>
-
-<p>
-    How does that bolster my argument about the importance of conventions? It
-    doesn't. What does is what following the recommended structure enabled me to
-    do.
-</p>
-
-<p>
-    One common concern identified with having a re-usable module system is that
-    you should be able to expose public assets easily: things like
-    module-specific CSS or JavaScript, or even images. The first question that
-    arises when you consider this is: where do I put them in my module? That's
-    why the recommendation includes a <code>public</code> directory. In fact,
-    the recommendation goes a step further, and suggests <code>css</code>,
-    <code>images</code>, and <code>js</code> directories as well.
-</p>
-
-<p>
-    Now, your modules are typically <em>outside</em> the document root. This is
-    a rudimentary and fundamental security measure, and also simplifies
-    deployment to a degree -- you don't need to worry about telling the web
-    server about what it <em>shouldn't</em> serve. But if the modules are
-    outside the document root, how can I expose their public assets?
-</p>
-
-<p>
-    There are a two possibilities that immediately jump to mind:
-</p>
-
-<ul>
-    <li>Install scripts for modules, which copy the files into the document root.</li>
-    <li>Symlink the files into the document root.</li>
-</ul>
-
-<p>
-    Both are valid, and easy to accomplish. Both raise the same question: where,
-    exactly? What if multiple modules have public assets named the same? how do
-    I refer to my assets withing things like view scripts?
-</p>
-
-<p>
-    This is where having a convention starts to make sense: having a convention
-    should answer these questions unambiguously.
-</p>
-
-<p>
-    My answer: public access should be at
-    <code>/css/ModuleName/stylesheetname</code>, or
-    <code>/js/ModuleName/scriptname</code> or
-    <code>/images/Modulename/imagename</code>. It's a dirt-simple rule that
-    fulfills the use cases.
-</p>
-
-<p>
-    However, I'm now stuck with having to develop either install scripts or
-    remembering to create symlinks -- ugh. And that's where having conventions
-    led me to a simple, elegant solution.
-</p>
-
-<p>
-    I added one line to my Apache vhost definition:
-</p>
-
-<div class="example"><pre>
-AliasMatch /(css|js|images)/([^/]+)/(.*) /path/to/module/$2/public/$1/$3
-</pre></div>
-
-<p>
-    The translation:
-</p>
-
-<blockquote>
-    When I come across a path to CSS, JS, or image files that are in a
-    subdirectory, alias it to the corresponding public asset of the matched
-    module directory.
-</blockquote>
-
-<p>
-    I dropped this into my vhost, restarted Apache, and now not only were the
-    assets I'd created already served, but any new ones I create are immediately
-    available as well. Having a convention actually simplified my choices and my
-    solutions.
-</p>
-
-<p>
-    Rapid application development at its finest.
-</p>
-
-<p>
-    My point is this: there will always be more than one way to do things when
-    you're programming, and you may not always agree with the decisions your
-    team has made, or the component library or framework you're using has made.
-    However, if you poke around a little and play within those confines, you may
-    find that those decisions make other decisions easier, or disappear
-    altogether.
 </p>]]></content:encoded>
       <slash:comments>0</slash:comments>
     </item>

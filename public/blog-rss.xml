@@ -3,13 +3,337 @@
   <channel>
     <title>Blog Entries :: phly, boy, phly</title>
     <description>Blog Entries :: phly, boy, phly</description>
-    <pubDate>Tue, 12 Feb 2013 11:42:00 +0000</pubDate>
+    <pubDate>Wed, 13 Feb 2013 13:40:00 +0000</pubDate>
     <generator>Zend_Feed_Writer 2.1.1dev (http://framework.zend.com)</generator>
     <link>http://mwop.net/blog.html</link>
     <atom:link rel="self" type="application/rss+xml" href="http://mwop.net/blog-rss.xml"/>
     <item>
+      <title>RESTful APIs with ZF2, Part 2</title>
+      <pubDate>Wed, 13 Feb 2013 13:40:00 +0000</pubDate>
+      <link>http://mwop.net/blog/2013-02-13-restful-apis-with-zf2-part-2.html</link>
+      <guid>http://mwop.net/blog/2013-02-13-restful-apis-with-zf2-part-2.html</guid>
+      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
+      <dc:creator>Matthew Weier O'Phinney</dc:creator>
+      <content:encoded><![CDATA[<p>
+    In my <a href="/blog/2013-02-11-restful-apis-with-zf2-part-1.html">last post</a>,
+    I covered some background on REST and the Richardson Maturity Model, and some
+    emerging standards around hypermedia APIs in JSON; in particular, I outlined
+    aspects of Hypermedia Application Language (HAL), and how it can be used to
+    define a generic structure for JSON resources.
+</p>
+
+<p>
+    In this post, I cover an aspect of RESTful APIs that's often overlooked:
+    reporting problems.
+</p><h2>Background</h2>
+
+<p>
+    APIs are useful when they're working. But when they fail, they're only 
+    useful if they provide us with meaningful information; if all I get is
+    a status code, and no indication of what caused the issue, or where I might
+    look for more information, I get frustrated.
+</p>
+
+<p>
+    In consuming APIs, I've come to the following conclusions:
+</p>
+
+<ul>
+    <li>
+        Error conditions need to provide detailed information as to what went 
+        wrong, and what steps I may be able to take next. An error code with
+        no context gives me nothing to go on.
+    </li>
+
+    <li>
+        Errors need to be reported consistently. Don't report the error one way
+        one time, and another way the next.
+    </li>
+
+    <li>
+        <strong>DO</strong> use HTTP status codes to indicate an error happened.
+        Nothing is more irksome than getting back a 200 status with an error 
+        payload.
+    </li>
+
+    <li>
+        Errors should be reported in a format I have indicated I will Accept 
+        (as in the HTTP header). Perhaps the only think more irksome than a 200
+        status code for an error is getting back an HTML page when I expect 
+        JSON.
+    </li>
+</ul>
+
+<h2>Why Status Codes Aren't Enough</h2>
+
+<p>
+    Since REST leverages and builds on HTTP, an expedient solution for reporting
+    problems is to simply use <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html">HTTP status codes</a>. 
+    These are well understood by web developers, right?
+</p>
+
+<p>
+    <code>4xx</code> error codes are errors made by the requestor, and are actually fairly 
+    reasonable to use for reporting things such as lack of authorization tokens,
+    incomplete requests, unsupportable operations, or non-supported media types.
+</p>
+
+<p>
+    But what happens when the error is on the server - because something has
+    gone wrong such as inability to reach your persistence layer or credential
+    storage? The <code>5xx</code> series of status codes is sparse and wholly unsuited to
+    reporting errors of these types -- <em>though you'll likely still want to use
+    a <code>500</code> status to report the failure</em>. But what do you present to the consumer
+    so that they know whether or not to try again, or what to report to you
+    so that you can fix the issue?
+</p>
+
+<p>
+    A status code simply isn't enough information most of the time. Yes, you 
+    want to define standard status codes so that your clients can perform
+    reasonable branching, but you also need a way to communicate <em>details</em>
+    to the end-user, so that they can log the information for themselves, display
+    information to their own end-users, and/or report it back to you so you can
+    do something to resolve the situation.
+</p>
+
+<h2>Custom Media Types</h2>
+
+<p>
+    The first step is to use a custom media type. Media types are typically 
+    both a name as well as a structure -- and the latter is what we're after
+    when it comes to error reporting. 
+</p>
+
+<p>
+    If we return a response using this media type, the client then knows how
+    to parse it, and can then process it, log it, whatever.
+</p>
+
+<p>
+    Sure, you can make up your own format -- as long as you are consistent
+    in using it, and you document it. But personally, I don't like inventing
+    new formats when standard formats exist already. Custom formats mean that 
+    custom clients are required for working with the services; using a standard
+    format can save effort and time.
+</p>
+
+<p>
+    In the world of JSON, I've come across two error media types that appear to
+    be gaining traction: <code>application/api-problem+json</code> and 
+    <code>application/vnd.error+json</code>
+</p>
+
+<h3>API-Problem</h3>
+
+<p>
+    This particular media type is <a 
+    href="http://tools.ietf.org/html/draft-nottingham-http-problem-02">via the 
+    IETF</a>. Like HAL, it provides formats in both JSON and XML, making it 
+    a nice cross-platform choice.
+</p>
+
+<p>
+    As noted already, the media type is <code>application/api-problem+json</code>.
+    The representation is a single resource, with the following properties:
+</p>
+
+<ul>
+    <li>
+        <strong>describedBy</strong>: a URL to a document describing the error condition (required)
+    </li>
+
+    <li>
+        <strong>title</strong>: a brief title for the error condition (required)
+    </li>
+
+    <li>
+        <strong>httpStatus</strong>: the HTTP status code for the current request (optional)
+    </li>
+
+    <li>
+        <strong>detail</strong>: error details specific to this request (optional)
+    </li>
+
+    <li>
+        <strong>supportId</strong>: a URL to the specific problem occurrence (e.g., to a log message) (optional)
+    </li>
+</ul>
+
+<p>
+    As an example:
+</p>
+
+<div class="example"><pre><code language="http">
+HTTP/1.1 500 Internal Error
+Content-Type: application/api-problem+json
+
+{
+    "describedBy": "http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html",
+    "detail": "Status failed validation",
+    "httpStatus": 500,
+    "title": "Internal Server Error"
+}
+</code></pre></div>
+
+<p>
+    The specification allows a large amount of flexibility -- you can have your 
+    own custom error types, so long as you have a description of them to link 
+    to. You can provide as little or as much detail as you want, and even 
+    decide what information to expose based on environment.
+</p>
+
+<p>
+    I personally like to point to the HTTP status code definitions, and then 
+    provide request-specific detail; I find this gives quick and simple results 
+    that I can later shape as I add more detail to my API. However, the 
+    specification definitely encourages you to have unique error types with 
+    discrete URIs that describe them -- never a bad thing when creating APIs.
+</p>
+
+<h3>vnd.error</h3>
+
+<p>
+    This is a <a href="https://github.com/blongden/vnd.error">proposed media 
+    type</a> within the HAL community. Like HAL, it provides formats in both 
+    JSON and XML, making it a nice cross-platform choice.
+</p>
+
+<p>
+    It differentiates from API-Problem in a few ways. First, it allows, and 
+    even encourages, reporting collections of errors. If you consider PHP 
+    exceptions and the fact that they support "previous" exceptions, this is a 
+    powerful concept; you can report the entire chain of errors that led to the 
+    response.  Second, it encourages pushing detail out of the web service; 
+    errors include a "logRef" property that points to where the error detail lives. 
+    This is probably better illustrated than explained.
+</p>
+
+<p>
+    The response payload is an array of objects. Each object has the following 
+    members:
+</p>
+
+<ul>
+    <li>
+        <strong>logRef</strong>: a unique identifier for the specific error which can then be
+        used to identify the error within server-side logs (required)
+    </li>
+
+    <li>
+        <strong>message</strong>: the error message itself (required)
+    </li>
+
+    <li>
+        <strong>_links</strong>: HAL-compatible links. Typically, "help", "describes", and/or 
+        "describedBy" relations will be defined here.
+    </li>
+</ul>
+
+<p>
+    As an example, let's consider the API-Problem example I had earlier, and
+    provide a vnd.error equivalent:
+</p>
+
+<div class="example"><pre><code language="http">
+HTTP/1.1 500 Internal Error
+Content-Type: application/vnd.error+json
+
+[
+    {
+        "logRef": "someSha1HashMostLikely",
+        "message": "Status failed validation",
+        "_links": {
+            "describedBy": {"href": "http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html"}
+        }
+    }
+]
+</code></pre></div>
+
+<p>
+    vnd.error basically begs you to create custom error types, with documentation 
+    end-points that detail the source of the error and what you can do about it 
+    (this is true of API-Problem as well).
+</p>
+
+<p>
+    The requirement to include a log reference ("logRef") and have it be unique 
+    can be a stumbling block to implementation, however, as it requires effort 
+    for uniquely identifying requests, and logging. However, both the 
+    identification and logging can be automated.
+</p>
+
+<h2>Summary</h2>
+
+<p>
+    Error reporting in APIs is as important as the normal resource payloads 
+    themselves. Without good error reporting, when an API raises errors, 
+    clients have difficulty understanding what they can do next, and cannot
+    provide you, the API provider, with information that will allow you to
+    debug on the server side.
+</p>
+
+<p>
+    As noted at the beginning of the article, if you follow the rules below,
+    you'll make consumers of your API happier and more productive.
+</p>
+
+<ul>
+    <li>
+        <strong>DO</strong> use appropriate HTTP status codes to indicate an 
+        error happened.
+    </li>
+
+    <li>
+        Report errors in a format I have indicated I will Accept 
+        (as in the HTTP header). 
+    </li>
+    <li>
+        Report errors consistently. Don't report the error one way one time, 
+        and another way the next. Standardize on a specific error-reporting 
+        media type .  While you <em>can</em> create your own error structure, I 
+        recommend using documented, accepted standards. This will make clients 
+        more re-usable, and make many of your decisions for you.
+    </li>
+
+    <li>
+        Provide detailed information as to what went wrong, and what steps I 
+        may be able to take next. Provide documentation for each type of error, 
+        and link to that documentation from your error payloads.
+    </li>
+
+</ul>
+
+<p>
+    Which brings me to...
+</p>
+
+<h2>Next time</h2>
+
+<p>
+    I realize I still haven't covered anything specific to ZF2, but I'll start 
+    next time, when I cover the next topic: documenting your API. An 
+    undocumented API is a useless API, so it's good to start baking 
+    documentation in immediately. I'll survey some of the possibilities and how 
+    they can be implemented in ZF2 in the next installment, and then we can get 
+    our hands dirty with actual API development.
+</p>
+
+<h3>Updates</h3>
+
+<p>
+    <em>Note: I'll update this post with links to the other posts in the series 
+    as I publish them.</em>
+</p>
+
+<ul>
+    <li><a href="/blog/2013-02-11-restful-apis-with-zf2-part-1">Part 1</a></li>
+</ul>]]></content:encoded>
+      <slash:comments>0</slash:comments>
+    </item>
+    <item>
       <title>RESTful APIs with ZF2, Part 1</title>
-      <pubDate>Tue, 12 Feb 2013 11:42:00 +0000</pubDate>
+      <pubDate>Wed, 13 Feb 2013 13:40:00 +0000</pubDate>
       <link>http://mwop.net/blog/2013-02-11-restful-apis-with-zf2-part-1.html</link>
       <guid>http://mwop.net/blog/2013-02-11-restful-apis-with-zf2-part-1.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -399,12 +723,16 @@ Content-Type: application/hal+json
     I'll get there. But there's another detour to take: reporting errors.
 </p>
 
-<h3></h3>
+<h3>Updates</h3>
 
 <p>
     <em>Note: I'll update this post with links to the other posts in the series 
     as I publish them.</em>
-</p>]]></content:encoded>
+</p>
+
+<ul>
+    <li><a href="/blog/2013-02-13-restful-apis-with-zf2-part-2">Part 2</a></li>
+</ul>]]></content:encoded>
       <slash:comments>0</slash:comments>
     </item>
     <item>
@@ -1767,500 +2095,6 @@ Suspenseful, isn't it?
     should see that number grow. This is truly a wonderful step forward for
     developers, and I hope you find it as exciting as I do.
 </p>]]></content:encoded>
-      <slash:comments>0</slash:comments>
-    </item>
-    <item>
-      <title>On Microframeworks</title>
-      <pubDate>Fri, 17 Aug 2012 16:00:00 +0000</pubDate>
-      <link>http://mwop.net/blog/2012-08-17-on-microframeworks.html</link>
-      <guid>http://mwop.net/blog/2012-08-17-on-microframeworks.html</guid>
-      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
-      <dc:creator>Matthew Weier O'Phinney</dc:creator>
-      <content:encoded><![CDATA[<p>
-    A number of months ago, <a href="http://funkatron.com/">Ed Finkler</a> 
-    started a discussion in the PHP community about &#8220;<a 
-    href="http://microphp.org/">MicroPHP</a>&#8221;; to summarize, the movement
-    is about:
-</p>
-
-<ul>
-    <li>Building small, single-purpose libraries.</li>
-    <li>Using small things that work together to solve larger problems.</li>
-</ul>
-
-<p>
-    I think there are some really good ideas that have come out of this, and 
-    also a number of questionable practices<sup><a name="t1" href="#f1">1</a></sup>.
-</p>
-
-<p>
-    One piece in particular I've focussed on is the concept of so-called 
-    &#8220;microframeworks&#8221;.
-</p><h2>What is a microframework?</h2>
-
-<p>
-    PHP has had microframeworks for quite some time<sup><a name="t2" href="#f2">2</a></sup>, 
-    though I only really first saw the term being used around 3 years ago. The 
-    &#8220;grand-daddy&#8221; of modern-day microframeworks can actually be 
-    traced to Ruby, however, and specifically 
-    <a href="http://www.sinatrarb.com">Sinatra</a>.
-</p>
-
-<p>
-    Sinatra is not so much a framework as it is a domain-specific language (DSL).
-    The language and structure it created, however, have been re-created in the
-    vast majority of microframeworks you see currently in the PHP arena. 
-    Specifically, it describes how to map HTTP request methods and paths to the
-    code that will handle them. It borrowed route matching ideas from
-    <a href="http://rubyonrails.org/">Ruby on Rails</a>, and relied on the fact 
-    that Ruby uses the last value of a block as the return value.
-</p>
-
-<p>
-    As some simple examples:
-</p>
-
-<div class="example"><pre><code language="ruby">
-get '/hello/:name' do |n|
-    "Hello #{n}!"
-end
-
-post '/address'
-    # create address
-end
-
-put '/address/:id' |i|
-    # update address
-end
-
-get '/feed.?:format?', :provides => ['rss', 'atom', 'xml'] do
-    builder :feed
-end
-</code></pre></div>
-
-<p>
-    The language is expressive, and allows the developer to focus on two things:
-</p>
-
-<ul>
-    <li>What are the specific entry points (URIs) for the application?</li>
-    <li>What needs to be done for each specific entry point?</li>
-</ul>
-
-<p>
-    I'd argue that the above two points are the defining characteristics of 
-    modern microframeworks. Typically, the entry points are given the term
-    &#8220;routing &#8221;, and the second corresponds to &#8220;controllers&#8221;.
-</p>
-
-<h2>PHP implementations</h2>
-
-<p>
-    I'd argue one of the earliest microframework implementations, though it 
-    wasn't termed as such, was <a href="http://dev.horde.org/routes/">Horde 
-    Routes</a><sup><a name="t3" href="#f3">3</a></sup> (which was itself inspired by <a 
-    href="http://routes.readthedocs.org/en/latest/index.html">Python Routes</a>, 
-    in turn inspired by the Rails routing system, like Sinatra). It follows
-    the two principles I outlined above: it allows defining routes (entry points),
-    and mapping them to controllers. Controllers for Routes are simply classes, 
-    and a route must provide both a controller and an action in the match, with 
-    the latter corresponding to a method on the controller class.
-</p>
-
-<p>
-    Since around 2009, I've seen an increasing number of new PHP microframeworks<sup><a name="t4" href="#f4">4</a></sup>
-    that follow in the steps of Sinatra and Horde. In the various 
-    implementations I've looked at, instead of using a DSL, the authors have all
-    opted for either a procedural or OOP interface. Starting with PHP 5.3, most
-    authors have also primarily targetted any PHP callable as a controller, 
-    favoring callbacks specifically. The fundamental ideas remain the same as 
-    Sinatra, however:
-</p>
-
-<div class="example"><pre><code language="php">
-/* Procedural */
-get('/hello/:name', function ($n) {
-    return "Hello {$n}!";
-});
-
-post('/address', function () {
-    // create address
-});
-
-put('/address/:id' function ($i) {
-    // update address
-});
-
-get('/feed.?:format?', function($feed, $format) {
-    return builder($feed, $format);
-});
-
-/* OOP */
-$app->get('/hello/:name', function ($n) {
-    return "Hello {$n}!";
-});
-
-$app->post('/address', function () {
-    // create address
-});
-end
-
-$app->put('/address/:id', function ($i) {
-    // update address
-});
-
-$app->get('/feed.?:format?', function ($feed, $format) use ($app) {
-    return $app->builder($feed, $format);
-})->constraints(['format' => '/^(rss|atom|xml)$/']);
-</code></pre></div>
-
-<p>
-    One key difference I've witnessed in the implementations is surrounding
-    how route matches are passed to the callback. In the examples above, they
-    are passed as individual arguments to the handler. Some, however, opt for
-    an approach more like Sinatra, which passes a single "params" argument into
-    the scope of the handler. This approach tends to be more expedient both 
-    from an implementation standpoint as well as a performance standpoint, as
-    it does not require reflection to determine name and position of arguments,
-    and makes handling wildcard arguments simpler. I've seen this latter 
-    approach handled several ways:
-</p>
-
-<div class="example"><pre><code language="php">
-// Pass in route match parameters as an argument.
-$app->get('/feed.:format', function ($params) {
-    $format = $params['format'];
-});
-
-// Pass in the $app instance, and retrieve route 
-// match parameters from it.
-$app->get('/feed.:format', function ($app) {
-    $format = $app->params('format');
-});
-
-// Curry in the $app instance when desired, and 
-// retrieve route match parameters from it.
-$app->get('/feed.:format', function () use ($app) {
-    $format = $app->params('format');
-});
-</code></pre></div>
-
-<p>
-    Another difference I've seen is in how route constraints, defaults, and
-    names are handled. The most elegant solutions usually allow chaining
-    method calls in order to alter this data:
-</p>
-
-<div class="example"><pre><code language="php">
-$app->get('/feed.:format', function ($app) {
-  })->constraints(['format' => '/^(atom|xml|json)$/'])
-    ->name('feed');
-</code></pre></div>
-
-<p>
-    One common feature I've seen is the ability to generate URLs based on the 
-    defined routes. Most commonly, this is a function or method 
-    <code>urlTo()</code>, which takes a route name, and an associative array
-    of replacements.
-</p>
-
-<div class="example"><pre><code language="php">
-echo $app->urlTo('feed', ['format' => 'atom']);
-</code></pre></div>
-
-<p>
-    That's it in a nutshell: the ability to match HTTP request methods and
-    path information, and map it to controllers/handlers, and to generate
-    URLs based on those present in the application.
-</p>
-
-<h2>What are they good for?</h2>
-
-<p>
-    In my research and experience, microframeworks have three typical use cases:
-</p>
-
-<ol>
-    <li>
-        <b>Prototyping.</b> Because of their simplicity, microframeworks are 
-        fantastic for prototyping a basic website. Very often, in the early
-        stages of a site, you have a limited number of pages, and most often
-        simply need to render a template with limited variable substitutions.
-        Microframeworks are a perfect fit for this.
-    </li>
-
-    <li>
-        <b>APIs</b>. API needs are usually quite well-defined, and often 
-        involve a small, finite number of URLs. The logic required is usually
-        already encapsulated in business objects, so the application layer
-        is simply for filtering and returning a representation. Microframeworks
-        again offer a nice fit.
-    </li>
-
-    <li>
-        <b>Small, mostly static sites</b>. Similar to the first point, if you
-        know the site will be relatively small and mostly static, then the
-        minimal overhead of a microframework is often a good fit.
-    </li>
-</ol>
-
-<h2>Where do microframeworks fail?</h2>
-
-<p>
-    Because of the rather declarative nature of microframeworks, and the
-    typically 1:1 mapping of a route to a controller, microframeworks do
-    not tend to promote code re-use. Additionally, this extends to how
-    microframework applications are organized: usually, there are no clear
-    guidelines on how to organize routes and controllers, much less separate
-    them into multiple files. This can lead to maintenance issues as the
-    application grows, as well as logistical issues whenever you need to 
-    add new routes and controllers (do they go at the top, or bottom? are
-    there other routes that could potentially match as well? etc.). 
-</p>
-
-<p>
-    Additionally, though many frameworks offer ways to alter the workflow
-    of the application either via hooks, events, or &#8220;middleware&#8221;<sup><a name="t5" href="#f5">5</a></sup>,
-    most of these are limited in scope, often non-reusable, and often
-    non-stackable. As such, comprehensive manipulation of the application
-    workflow is out of reach.
-</p>
-
-<p>
-    One other area that is overlooked, however, is one I find curious, 
-    particularly in light of the MicroPHP movement: so much of the
-    underlying plumbing is basically the same, yet every microframework
-    re-implements it. Specifically:
-</p>
-
-<ul>
-    <li>
-        Routing is basically the same across most implementations, following the
-        same basic specifications outlined in Rails. There are very few differences
-        in the public APIs.
-    </li>
-
-    <li>
-        Request and Response object abstraction is largely the same as well, 
-        providing access to query/post/cookie/session/etc. parameters through
-        roughly equivalent APIs.
-    </li>
-
-    <li>
-        Many implement their own view layers.<sup><a name="t6" href="f6">6</a></sup>
-    </li>
-</ul>
-
-<p>
-    Most of this code should be considered commodity code at this point. There are 
-    several outstanding view layers and templating engines available (Smarty, Twig,
-    Savant, Zend\View). Standalone routing libraries exist such as Horde Routes,
-    and even those bundled with frameworks are often available separately via
-    Composer or Pyrus; the same is true with Request and Response object 
-    abstraction. It seems to me that a few microframework authors should be 
-    working on abstracting these concerns, and then focussing their efforts on
-    differentiators in their own microframeworks.
-</p>
-
-<h2>An experiment</h2>
-
-<p>
-    Building on my last point, I looked at the APIs of <a 
-    href="http://limonade-php.github.com/">Limonade</a> and <a 
-    href="http://www.slimframework.com/">Slim Framework</a>, and built up a 
-    specification for a microframework. I then matched as many pieces of it 
-    as possible to existing components in <a 
-    href="http://packages.zendframework.com/">ZF2</a>, and started building.
-</p>
-
-<p>
-    In a matter of a few hours, I had written up a complete test suite<sup><a name="t7" href="#f7">7</a></sup> 
-    and all code for a microframework, featuring the following (this is 
-    basically the testdox output from the unit test suite):
-</p>
-
-<ul>
-    <li>Lazy loads request</li>
-    <li>Lazy loads response</li>
-    <li>Request is injectible</li>
-    <li>Response is injectible</li>
-    <li>Halt should raise halt exception</li>
-    <li>Response should contain status provided to halt</li>
-    <li>Response should contain message provided to halt</li>
-    <li>Stop should raise halt exception</li>
-    <li>Response should remain unaltered after stop</li>
-    <li>Redirect should raise halt exception</li>
-    <li>Redirect should set 302 response status by default</li>
-    <li>Redirect should set response status based on provided status code</li>
-    <li>Redirect should set location header</li>
-    <li>Map creates a segment route when provided with a string route</li>
-    <li>Map can receive a route object</li>
-    <li>Passing invalid route raises exception</li>
-    <li>Map can receive a callable</li>
-    <li>Passing invalid controller to route does not immediately raise exception</li>
-    <li>Accessing invalid controller raises exception</li>
-    <li>Passing invalid method to route via method raises exception</li>
-    <li>Can set methods route responds to singly</li>
-    <li>Can set methods route responds to as array</li>
-    <li>Can set methods route responds to as multiple arguments</li>
-    <li>Can specify additional method types to respond to</li>
-    <li>Can specify route name</li>
-    <li>Adding route using method type creates route that responds to that method type</li>
-    <li>Running with no matching routes raises page not found exception</li>
-    <li>Routing sets list of named routes</li>
-    <li>Routing sets lists of routes by method</li>
-    <li>Successful routing dispatches controller</li>
-    <li>Unsuccessful routing triggers 404 event</li>
-    <li>Calling halt triggers halt event</li>
-    <li>Invalid controller triggers 501 event</li>
-    <li>Exception raised in controller triggers 500 event</li>
-    <li>Can pass to next matching route</li>
-    <li>Url for helper assembles url based on name provided</li>
-    <li>Url for helper assembles url based on name and params provided</li>
-    <li>Url for helper assembles url based on current route match when no name provided</li>
-    <li>Composes logger instance by default</li>
-    <li>Can inject specific logger instance</li>
-    <li>Mustache view is used by default</li>
-    <li>Can inject alternate view instance</li>
-    <li>Render renders a template to the response</li>
-    <li>View model returns mustache view model by default</li>
-    <li>Subsequent calls to view model return separate instances</li>
-    <li>Can provide view model prototype</li>
-</ul>
-
-<p>
-    I utilized ZF2's routing library from its MVC component, the request and response
-    objects from its HTTP component, its Log component, and the Session component. These
-    had a few other dependencies, but nothing terribly onerous.
-</p>
-
-<p>
-    For the view, I used my own <a 
-    href="http://weierophinney.github.com/phly_mustache">phly_mustache</a>, and provided
-    a basic "view model" implementation that receives the application instance, thus
-    allowing the ability to call application helpers (such as url generation).
-</p>
-
-<p>
-    To make installation simple, I used <a href="http://getcomposer.org">Composer</a>
-    to manage my dependencies on specific ZF2 components and for phly_mustache. The
-    microframework contains only the code it needs to get its work done, leveraging
-    the work of others whenever possible.
-</p>
-
-<p>
-    This post is not meant as a way to announce a new microframework, however.<sup><a name="t8" href="#f8">8</a></sup>
-    The point of the experiment was to prove something: microframeworks are
-    trivially easy to write, <em>particularly if you follow the principals of 
-    MicroPHP, and re-use existing code</em>. Just because code comes from a framework
-    or a third-party library does not make it suspect or inferior; in fact,
-    whenever possible, you should leverage such code so you can focus on 
-    <em>writing awesome applications</em>.
-</p>
-
-<h2>Lessons learned</h2>
-
-<p>
-    I really like microframeworks for specific problems: prototyping, APIs, and 
-    small, simple sites. I think they are ideally suited for these tasks. That
-    said, I'd love to see some solid libraries targetting the fundamental, shared
-    aspects of these efforts: routing, request and response abstraction, etc.
-    With dependency management tools such as Composer and Pyrus, having required
-    dependencies is not a big deal anymore, and re-use should be encouraged.
-</p>
-
-<p>
-    Also, writing a microframework is an excellent coding exercise. It helps a 
-    developer appreciate the complexities of abstraction while limiting the number
-    of moving parts. I highly recommend it as an exercise -- but do it using 
-    available components, and be prepared to throw it away and instead collaborate
-    with others, or adopt something which better solves both the problems you have
-    and the problems you anticipate.
-</p>
-
-<p>
-    In sum: <em>Use the right tool for the job</em>. If you foresee expanding 
-    requirements in your project's future, you may want to evaluate a full-stack
-    framework,<sup><a name="t9" href="#f9">9</a></sup> or consider building something 
-    robust that suits your specific project's needs. Use microframeworks where
-    and when they make sense.
-</p>
-
-<h4>Afterword</h4>
-
-<p>
-    I'm well aware that Fabien Potencier has written
-    <a href="http://fabien.potencier.org/article/50/create-your-own-framework-on-top-of-the-symfony2-components-part-1">a comprehensive series of posts on creating a microframework using Symfony 2
-    components</a>. I deliberately chose not to read them until (a) ZF2 was 
-    almost ready to release, and (b) I'd had a chance to formulate my own
-    opinions on microframeworks. They're an excellent read, however, and show a 
-    nice progression of development from flat PHP to a fully functional 
-    microframework; click the link and see for yourself.
-</p>
-
-<h4>Footnotes</h4>
-
-<ul>
-    <li>
-        <sup><a name="f1" href="#t1">1</a></sup> In particular, I feel that the movement 
-        (a) disparages components from larger libraries simply because they
-        originate from a larger library, and (b) distrust any code that has 
-        additional dependencies. This latter I find truly puzzling, as I'd 
-        think it fits the idea of &#8220;use small things that work together to 
-        solve larger problems.&#8221; If the code solves a particular problem
-        and allows you to focus on a larger problem, where it originates and 
-        the number of dependencies should not be an issue.
-    </li>
-
-    <li>
-        <sup><a name="f2" href="#t2">2</a></sup> In fact, my first foray into MVC in PHP 
-        was writing a clone of Perl's <a href="http://cgi-app.org/">CGI::Application</a>,
-        which in many ways is also a microframework.
-    </li>
-
-    <li>
-        <sup><a name="f3" href="#t3">3</a></sup> Trivia: Both authors of Horde Routes 
-        worked at Zend when I first started at the company, and Mike Naberezny
-        wrote the very first lines of code for Zend Framework.
-    </li>
-
-    <li>
-        <sup><a name="f4" href="#t4">4</a></sup> I swear, you see new ones on Github daily,
-        and on <a href="http://phpdeveloper.org/">PHP Developer</a> at least
-        once a week.
-    </li>
-
-    <li>
-        <sup><a name="f5" href="#t5">5</a></sup> <a href="http://www.slimframework.com">Slim</a>
-        has this concept. Basically, any callables placed between the route 
-        string and the last callable when defining a route -- i.e., the &#8220;middle&#8221;
-        arguments, and thus middleware -- will be executed in order prior to 
-        attempting to execute the controller.
-    </li>
-
-    <li>
-        <sup><a name="f6" href="#t6">6</a></sup> <a href="http://www.slimframework.com">Slim</a>
-        is an outlier here, as it utilizes <a href="http://twig.sensiolabs.org/">Twig</a>
-        by default.
-    </li>
-
-    <li>
-        <sup><a name="f7" href="#t7">7</a></sup> I'm sure that my TDD experiment will warm the
-        soul of <a href="http://www.littlehart.net/atthekeyboard/" alt="Chris 
-        Hartjes">the Grumpy Programmer</a>.
-    </li>
-
-    <li>
-        <sup><a name="f8" href="#t8">8</a></sup> That said, if you want to look at the results, 
-        you can <a href="http://github.com/weierophinney/phlyty">find Phlyty on Github</a>.
-    </li>
-
-    <li>
-        <sup><a name="f9" href="#t9">9</a></sup> As you may guess, I'm biased towards <a 
-        href="http://framework.zend.com/">Zend Framework</a>. However, you should always
-        carefully evaluate a framework against your project's needs.
-    </li>
-</ul>]]></content:encoded>
       <slash:comments>0</slash:comments>
     </item>
   </channel>

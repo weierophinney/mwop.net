@@ -1,15 +1,237 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title type="text">Tag: http :: phly, boy, phly</title>
-  <updated>2013-02-12T11:42:00+0000</updated>
+  <updated>2013-02-13T13:40:00+0000</updated>
   <generator uri="http://framework.zend.com" version="2.1.1dev">Zend_Feed_Writer</generator>
   <link rel="alternate" type="text/html" href="http://mwop.net/blog/tag/http.html"/>
   <link rel="self" type="application/atom+xml" href="http://mwop.net/blog/tag/http-atom.xml"/>
   <id>http://mwop.net/blog/tag/http.html</id>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <title type="html"><![CDATA[RESTful APIs with ZF2, Part 2]]></title>
+    <published>2013-02-13T13:40:00+0000</published>
+    <updated>2013-02-13T13:40:00+0000</updated>
+    <link rel="alternate" type="text/html" href="http://mwop.net/blog/2013-02-13-restful-apis-with-zf2-part-2.html"/>
+    <id>http://mwop.net/blog/2013-02-13-restful-apis-with-zf2-part-2.html</id>
+    <author>
+      <name>Matthew Weier O'Phinney</name>
+      <email>me@mwop.net</email>
+      <uri>http://mwop.net</uri>
+    </author>
+    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
+      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>In my <xhtml:a href="/blog/2013-02-11-restful-apis-with-zf2-part-1.html">last post</xhtml:a>,
+I covered some background on REST and the Richardson Maturity
+Model, and some emerging standards around hypermedia APIs in JSON;
+in particular, I outlined aspects of Hypermedia Application
+Language (HAL), and how it can be used to define a generic
+structure for JSON resources.</xhtml:p>
+<xhtml:p>In this post, I cover an aspect of RESTful APIs that's often
+overlooked: reporting problems.</xhtml:p>
+<xhtml:h2>Background</xhtml:h2>
+<xhtml:p>APIs are useful when they're working. But when they fail,
+they're only useful if they provide us with meaningful information;
+if all I get is a status code, and no indication of what caused the
+issue, or where I might look for more information, I get
+frustrated.</xhtml:p>
+<xhtml:p>In consuming APIs, I've come to the following conclusions:</xhtml:p>
+<xhtml:ul>
+<xhtml:li>Error conditions need to provide detailed information as to
+what went wrong, and what steps I may be able to take next. An
+error code with no context gives me nothing to go on.</xhtml:li>
+<xhtml:li>Errors need to be reported consistently. Don't report the error
+one way one time, and another way the next.</xhtml:li>
+<xhtml:li><xhtml:strong>DO</xhtml:strong> use HTTP status codes to indicate an error
+happened. Nothing is more irksome than getting back a 200 status
+with an error payload.</xhtml:li>
+<xhtml:li>Errors should be reported in a format I have indicated I will
+Accept (as in the HTTP header). Perhaps the only think more irksome
+than a 200 status code for an error is getting back an HTML page
+when I expect JSON.</xhtml:li>
+</xhtml:ul>
+<xhtml:h2>Why Status Codes Aren't Enough</xhtml:h2>
+<xhtml:p>Since REST leverages and builds on HTTP, an expedient solution
+for reporting problems is to simply use <xhtml:a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html">HTTP
+status codes</xhtml:a>. These are well understood by web developers,
+right?</xhtml:p>
+<xhtml:p><xhtml:code>4xx</xhtml:code> error codes are errors made by the requestor,
+and are actually fairly reasonable to use for reporting things such
+as lack of authorization tokens, incomplete requests, unsupportable
+operations, or non-supported media types.</xhtml:p>
+<xhtml:p>But what happens when the error is on the server - because
+something has gone wrong such as inability to reach your
+persistence layer or credential storage? The <xhtml:code>5xx</xhtml:code>
+series of status codes is sparse and wholly unsuited to reporting
+errors of these types -- <xhtml:em>though you'll likely still want to use
+a <xhtml:code>500</xhtml:code> status to report the failure</xhtml:em>. But what do
+you present to the consumer so that they know whether or not to try
+again, or what to report to you so that you can fix the issue?</xhtml:p>
+<xhtml:p>A status code simply isn't enough information most of the time.
+Yes, you want to define standard status codes so that your clients
+can perform reasonable branching, but you also need a way to
+communicate <xhtml:em>details</xhtml:em> to the end-user, so that they can log
+the information for themselves, display information to their own
+end-users, and/or report it back to you so you can do something to
+resolve the situation.</xhtml:p>
+<xhtml:h2>Custom Media Types</xhtml:h2>
+<xhtml:p>The first step is to use a custom media type. Media types are
+typically both a name as well as a structure -- and the latter is
+what we're after when it comes to error reporting.</xhtml:p>
+<xhtml:p>If we return a response using this media type, the client then
+knows how to parse it, and can then process it, log it,
+whatever.</xhtml:p>
+<xhtml:p>Sure, you can make up your own format -- as long as you are
+consistent in using it, and you document it. But personally, I
+don't like inventing new formats when standard formats exist
+already. Custom formats mean that custom clients are required for
+working with the services; using a standard format can save effort
+and time.</xhtml:p>
+<xhtml:p>In the world of JSON, I've come across two error media types
+that appear to be gaining traction:
+<xhtml:code>application/api-problem+json</xhtml:code> and
+<xhtml:code>application/vnd.error+json</xhtml:code></xhtml:p>
+<xhtml:h3>API-Problem</xhtml:h3>
+<xhtml:p>This particular media type is <xhtml:a href="http://tools.ietf.org/html/draft-nottingham-http-problem-02">via
+the IETF</xhtml:a>. Like HAL, it provides formats in both JSON and XML,
+making it a nice cross-platform choice.</xhtml:p>
+<xhtml:p>As noted already, the media type is
+<xhtml:code>application/api-problem+json</xhtml:code>. The representation is a
+single resource, with the following properties:</xhtml:p>
+<xhtml:ul>
+<xhtml:li><xhtml:strong>describedBy</xhtml:strong>: a URL to a document describing
+the error condition (required)</xhtml:li>
+<xhtml:li><xhtml:strong>title</xhtml:strong>: a brief title for the error condition
+(required)</xhtml:li>
+<xhtml:li><xhtml:strong>httpStatus</xhtml:strong>: the HTTP status code for the
+current request (optional)</xhtml:li>
+<xhtml:li><xhtml:strong>detail</xhtml:strong>: error details specific to this request
+(optional)</xhtml:li>
+<xhtml:li><xhtml:strong>supportId</xhtml:strong>: a URL to the specific problem
+occurrence (e.g., to a log message) (optional)</xhtml:li>
+</xhtml:ul>
+<xhtml:p>As an example:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="http">
+HTTP/1.1 500 Internal Error
+Content-Type: application/api-problem+json
+
+{
+    "describedBy": "http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html",
+    "detail": "Status failed validation",
+    "httpStatus": 500,
+    "title": "Internal Server Error"
+}
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>The specification allows a large amount of flexibility -- you
+can have your own custom error types, so long as you have a
+description of them to link to. You can provide as little or as
+much detail as you want, and even decide what information to expose
+based on environment.</xhtml:p>
+<xhtml:p>I personally like to point to the HTTP status code definitions,
+and then provide request-specific detail; I find this gives quick
+and simple results that I can later shape as I add more detail to
+my API. However, the specification definitely encourages you to
+have unique error types with discrete URIs that describe them --
+never a bad thing when creating APIs.</xhtml:p>
+<xhtml:h3>vnd.error</xhtml:h3>
+<xhtml:p>This is a <xhtml:a href="https://github.com/blongden/vnd.error">proposed media type</xhtml:a>
+within the HAL community. Like HAL, it provides formats in both
+JSON and XML, making it a nice cross-platform choice.</xhtml:p>
+<xhtml:p>It differentiates from API-Problem in a few ways. First, it
+allows, and even encourages, reporting collections of errors. If
+you consider PHP exceptions and the fact that they support
+"previous" exceptions, this is a powerful concept; you can report
+the entire chain of errors that led to the response. Second, it
+encourages pushing detail out of the web service; errors include a
+"logRef" property that points to where the error detail lives. This
+is probably better illustrated than explained.</xhtml:p>
+<xhtml:p>The response payload is an array of objects. Each object has the
+following members:</xhtml:p>
+<xhtml:ul>
+<xhtml:li><xhtml:strong>logRef</xhtml:strong>: a unique identifier for the specific
+error which can then be used to identify the error within
+server-side logs (required)</xhtml:li>
+<xhtml:li><xhtml:strong>message</xhtml:strong>: the error message itself
+(required)</xhtml:li>
+<xhtml:li><xhtml:strong>_links</xhtml:strong>: HAL-compatible links. Typically,
+"help", "describes", and/or "describedBy" relations will be defined
+here.</xhtml:li>
+</xhtml:ul>
+<xhtml:p>As an example, let's consider the API-Problem example I had
+earlier, and provide a vnd.error equivalent:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="http">
+HTTP/1.1 500 Internal Error
+Content-Type: application/vnd.error+json
+
+[
+    {
+        "logRef": "someSha1HashMostLikely",
+        "message": "Status failed validation",
+        "_links": {
+            "describedBy": {"href": "http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html"}
+        }
+    }
+]
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>vnd.error basically begs you to create custom error types, with
+documentation end-points that detail the source of the error and
+what you can do about it (this is true of API-Problem as well).</xhtml:p>
+<xhtml:p>The requirement to include a log reference ("logRef") and have
+it be unique can be a stumbling block to implementation, however,
+as it requires effort for uniquely identifying requests, and
+logging. However, both the identification and logging can be
+automated.</xhtml:p>
+<xhtml:h2>Summary</xhtml:h2>
+<xhtml:p>Error reporting in APIs is as important as the normal resource
+payloads themselves. Without good error reporting, when an API
+raises errors, clients have difficulty understanding what they can
+do next, and cannot provide you, the API provider, with information
+that will allow you to debug on the server side.</xhtml:p>
+<xhtml:p>As noted at the beginning of the article, if you follow the
+rules below, you'll make consumers of your API happier and more
+productive.</xhtml:p>
+<xhtml:ul>
+<xhtml:li><xhtml:strong>DO</xhtml:strong> use appropriate HTTP status codes to
+indicate an error happened.</xhtml:li>
+<xhtml:li>Report errors in a format I have indicated I will Accept (as in
+the HTTP header).</xhtml:li>
+<xhtml:li>Report errors consistently. Don't report the error one way one
+time, and another way the next. Standardize on a specific
+error-reporting media type . While you <xhtml:em>can</xhtml:em> create your own
+error structure, I recommend using documented, accepted standards.
+This will make clients more re-usable, and make many of your
+decisions for you.</xhtml:li>
+<xhtml:li>Provide detailed information as to what went wrong, and what
+steps I may be able to take next. Provide documentation for each
+type of error, and link to that documentation from your error
+payloads.</xhtml:li>
+</xhtml:ul>
+<xhtml:p>Which brings me to...</xhtml:p>
+<xhtml:h2>Next time</xhtml:h2>
+<xhtml:p>I realize I still haven't covered anything specific to ZF2, but
+I'll start next time, when I cover the next topic: documenting your
+API. An undocumented API is a useless API, so it's good to start
+baking documentation in immediately. I'll survey some of the
+possibilities and how they can be implemented in ZF2 in the next
+installment, and then we can get our hands dirty with actual API
+development.</xhtml:p>
+<xhtml:h3>Updates</xhtml:h3>
+<xhtml:p><xhtml:em>Note: I'll update this post with links to the other posts in
+the series as I publish them.</xhtml:em></xhtml:p>
+<xhtml:ul>
+<xhtml:li><xhtml:a href="/blog/2013-02-11-restful-apis-with-zf2-part-1">Part
+1</xhtml:a></xhtml:li>
+</xhtml:ul>
+</xhtml:div>
+    </content>
+  </entry>
+  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <title type="html"><![CDATA[RESTful APIs with ZF2, Part 1]]></title>
     <published>2013-02-12T11:42:00+0000</published>
-    <updated>2013-02-12T11:42:00+0000</updated>
+    <updated>2013-02-13T13:40:00+0000</updated>
     <link rel="alternate" type="text/html" href="http://mwop.net/blog/2013-02-11-restful-apis-with-zf2-part-1.html"/>
     <id>http://mwop.net/blog/2013-02-11-restful-apis-with-zf2-part-1.html</id>
     <author>
@@ -319,8 +541,13 @@ RESTful APIs with ZF2 -- but so far, I've not said anything about
 ZF2.</xhtml:p>
 <xhtml:p>I'll get there. But there's another detour to take: reporting
 errors.</xhtml:p>
+<xhtml:h3>Updates</xhtml:h3>
 <xhtml:p><xhtml:em>Note: I'll update this post with links to the other posts in
 the series as I publish them.</xhtml:em></xhtml:p>
+<xhtml:ul>
+<xhtml:li><xhtml:a href="/blog/2013-02-13-restful-apis-with-zf2-part-2">Part
+2</xhtml:a></xhtml:li>
+</xhtml:ul>
 </xhtml:div>
     </content>
   </entry>
