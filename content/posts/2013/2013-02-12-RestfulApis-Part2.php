@@ -10,13 +10,13 @@ $author->setUrl("http://mwop.net");
 
 $entry = new EntryEntity();
 
-$entry->setId('2013-02-12-restful-apis-with-zf2-part-2');
+$entry->setId('2013-02-13-restful-apis-with-zf2-part-2');
 $entry->setTitle('RESTful APIs with ZF2, Part 2');
 $entry->setAuthor($author);
 $entry->setDraft(false);
 $entry->setPublic(true);
-$entry->setCreated(new \DateTime('2013-02-12 10:05', new \DateTimezone('America/Chicago')));
-$entry->setUpdated(new \DateTime('2013-02-12 10:05', new \DateTimezone('America/Chicago')));
+$entry->setCreated(new \DateTime('2013-02-13 07:40', new \DateTimezone('America/Chicago')));
+$entry->setUpdated(new \DateTime('2013-02-13 07:40', new \DateTimezone('America/Chicago')));
 $entry->setTimezone('America/Chicago');
 $entry->setTags(array(
   'php',
@@ -292,32 +292,35 @@ Content-Type: application/vnd.error+json
 </p>
 
 <p>
-    Error reporting needs to consist of two distinct elements:
+    As noted at the beginning of the article, if you follow the rules below,
+    you'll make consumers of your API happier and more productive.
 </p>
 
 <ul>
     <li>
-        Return an HTTP error status appropriate to the error. Do <em>not</em>
-        return a 200 response if an error occurred.
+        <strong>DO</strong> use appropriate HTTP status codes to indicate an 
+        error happened.
     </li>
 
     <li>
-        Use a media-type and structure that is documented and parseable.
+        Report errors in a format I have indicated I will Accept 
+        (as in the HTTP header). 
     </li>
+    <li>
+        Report errors consistently. Don't report the error one way one time, 
+        and another way the next. Standardize on a specific error-reporting 
+        media type .  While you <em>can</em> create your own error structure, I 
+        recommend using documented, accepted standards. This will make clients 
+        more re-usable, and make many of your decisions for you.
+    </li>
+
+    <li>
+        Provide detailed information as to what went wrong, and what steps I 
+        may be able to take next. Provide documentation for each type of error, 
+        and link to that documentation from your error payloads.
+    </li>
+
 </ul>
-
-<p>
-    For this latter point, while you <em>can</em> create your own error 
-    structure, I recommend using documented, accepted standards. This will
-    make clients more re-usable, and make many of your decisions for you.
-</p>
-
-<p>
-    Once you get more than a few error types, start documenting them, and
-    pushing that documentation to specific, individual URL endpoints. Use
-    those URLs to further enhance your error payloads, so that users can
-    get a clear picture of causes and next steps.
-</p>
 
 <p>
     Which brings me to...
@@ -326,12 +329,12 @@ Content-Type: application/vnd.error+json
 <h2>Next time</h2>
 
 <p>
-    Nope, still haven't covered ZF2, but I'll start next time, when I cover
-    the next topic: documenting your API. An undocumented API is a useless
-    API, so it's good to start baking documentation in immediately. I'll 
-    survey some of the possibilities and how they can be implemented in
-    ZF2 in the next installment, and then we can get our hands dirty with
-    actual API development.
+    I realize I still haven't covered anything specific to ZF2, but I'll start 
+    next time, when I cover the next topic: documenting your API. An 
+    undocumented API is a useless API, so it's good to start baking 
+    documentation in immediately. I'll survey some of the possibilities and how 
+    they can be implemented in ZF2 in the next installment, and then we can get 
+    our hands dirty with actual API development.
 </p>
 
 <h3>Updates</h3>

@@ -16,7 +16,7 @@ $entry->setAuthor($author);
 $entry->setDraft(false);
 $entry->setPublic(true);
 $entry->setCreated(new \DateTime('2013-02-12 05:42', new \DateTimezone('America/Chicago')));
-$entry->setUpdated(new \DateTime('2013-02-12 10:05', new \DateTimezone('America/Chicago')));
+$entry->setUpdated(new \DateTime('2013-02-13 07:40', new \DateTimezone('America/Chicago')));
 $entry->setTimezone('America/Chicago');
 $entry->setTags(array(
   'php',
@@ -425,7 +425,7 @@ Content-Type: application/hal+json
 </p>
 
 <ul>
-    <li><a href="/blog/2013-02-12-restful-apis-with-zf2-part-2">Part 2</a></li>
+    <li><a href="/blog/2013-02-13-restful-apis-with-zf2-part-2">Part 2</a></li>
 </ul>
 
 EOT;
