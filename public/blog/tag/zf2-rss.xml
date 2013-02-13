@@ -3,13 +3,337 @@
   <channel>
     <title>Tag: zf2 :: phly, boy, phly</title>
     <description>Tag: zf2 :: phly, boy, phly</description>
-    <pubDate>Tue, 12 Feb 2013 11:42:00 +0000</pubDate>
+    <pubDate>Wed, 13 Feb 2013 13:40:00 +0000</pubDate>
     <generator>Zend_Feed_Writer 2.1.1dev (http://framework.zend.com)</generator>
     <link>http://mwop.net/blog/tag/zf2.html</link>
     <atom:link rel="self" type="application/rss+xml" href="http://mwop.net/blog/tag/zf2-rss.xml"/>
     <item>
+      <title>RESTful APIs with ZF2, Part 2</title>
+      <pubDate>Wed, 13 Feb 2013 13:40:00 +0000</pubDate>
+      <link>http://mwop.net/blog/2013-02-13-restful-apis-with-zf2-part-2.html</link>
+      <guid>http://mwop.net/blog/2013-02-13-restful-apis-with-zf2-part-2.html</guid>
+      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
+      <dc:creator>Matthew Weier O'Phinney</dc:creator>
+      <content:encoded><![CDATA[<p>
+    In my <a href="/blog/2013-02-11-restful-apis-with-zf2-part-1.html">last post</a>,
+    I covered some background on REST and the Richardson Maturity Model, and some
+    emerging standards around hypermedia APIs in JSON; in particular, I outlined
+    aspects of Hypermedia Application Language (HAL), and how it can be used to
+    define a generic structure for JSON resources.
+</p>
+
+<p>
+    In this post, I cover an aspect of RESTful APIs that's often overlooked:
+    reporting problems.
+</p><h2>Background</h2>
+
+<p>
+    APIs are useful when they're working. But when they fail, they're only 
+    useful if they provide us with meaningful information; if all I get is
+    a status code, and no indication of what caused the issue, or where I might
+    look for more information, I get frustrated.
+</p>
+
+<p>
+    In consuming APIs, I've come to the following conclusions:
+</p>
+
+<ul>
+    <li>
+        Error conditions need to provide detailed information as to what went 
+        wrong, and what steps I may be able to take next. An error code with
+        no context gives me nothing to go on.
+    </li>
+
+    <li>
+        Errors need to be reported consistently. Don't report the error one way
+        one time, and another way the next.
+    </li>
+
+    <li>
+        <strong>DO</strong> use HTTP status codes to indicate an error happened.
+        Nothing is more irksome than getting back a 200 status with an error 
+        payload.
+    </li>
+
+    <li>
+        Errors should be reported in a format I have indicated I will Accept 
+        (as in the HTTP header). Perhaps the only think more irksome than a 200
+        status code for an error is getting back an HTML page when I expect 
+        JSON.
+    </li>
+</ul>
+
+<h2>Why Status Codes Aren't Enough</h2>
+
+<p>
+    Since REST leverages and builds on HTTP, an expedient solution for reporting
+    problems is to simply use <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html">HTTP status codes</a>. 
+    These are well understood by web developers, right?
+</p>
+
+<p>
+    <code>4xx</code> error codes are errors made by the requestor, and are actually fairly 
+    reasonable to use for reporting things such as lack of authorization tokens,
+    incomplete requests, unsupportable operations, or non-supported media types.
+</p>
+
+<p>
+    But what happens when the error is on the server - because something has
+    gone wrong such as inability to reach your persistence layer or credential
+    storage? The <code>5xx</code> series of status codes is sparse and wholly unsuited to
+    reporting errors of these types -- <em>though you'll likely still want to use
+    a <code>500</code> status to report the failure</em>. But what do you present to the consumer
+    so that they know whether or not to try again, or what to report to you
+    so that you can fix the issue?
+</p>
+
+<p>
+    A status code simply isn't enough information most of the time. Yes, you 
+    want to define standard status codes so that your clients can perform
+    reasonable branching, but you also need a way to communicate <em>details</em>
+    to the end-user, so that they can log the information for themselves, display
+    information to their own end-users, and/or report it back to you so you can
+    do something to resolve the situation.
+</p>
+
+<h2>Custom Media Types</h2>
+
+<p>
+    The first step is to use a custom media type. Media types are typically 
+    both a name as well as a structure -- and the latter is what we're after
+    when it comes to error reporting. 
+</p>
+
+<p>
+    If we return a response using this media type, the client then knows how
+    to parse it, and can then process it, log it, whatever.
+</p>
+
+<p>
+    Sure, you can make up your own format -- as long as you are consistent
+    in using it, and you document it. But personally, I don't like inventing
+    new formats when standard formats exist already. Custom formats mean that 
+    custom clients are required for working with the services; using a standard
+    format can save effort and time.
+</p>
+
+<p>
+    In the world of JSON, I've come across two error media types that appear to
+    be gaining traction: <code>application/api-problem+json</code> and 
+    <code>application/vnd.error+json</code>
+</p>
+
+<h3>API-Problem</h3>
+
+<p>
+    This particular media type is <a 
+    href="http://tools.ietf.org/html/draft-nottingham-http-problem-02">via the 
+    IETF</a>. Like HAL, it provides formats in both JSON and XML, making it 
+    a nice cross-platform choice.
+</p>
+
+<p>
+    As noted already, the media type is <code>application/api-problem+json</code>.
+    The representation is a single resource, with the following properties:
+</p>
+
+<ul>
+    <li>
+        <strong>describedBy</strong>: a URL to a document describing the error condition (required)
+    </li>
+
+    <li>
+        <strong>title</strong>: a brief title for the error condition (required)
+    </li>
+
+    <li>
+        <strong>httpStatus</strong>: the HTTP status code for the current request (optional)
+    </li>
+
+    <li>
+        <strong>detail</strong>: error details specific to this request (optional)
+    </li>
+
+    <li>
+        <strong>supportId</strong>: a URL to the specific problem occurrence (e.g., to a log message) (optional)
+    </li>
+</ul>
+
+<p>
+    As an example:
+</p>
+
+<div class="example"><pre><code language="http">
+HTTP/1.1 500 Internal Error
+Content-Type: application/api-problem+json
+
+{
+    "describedBy": "http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html",
+    "detail": "Status failed validation",
+    "httpStatus": 500,
+    "title": "Internal Server Error"
+}
+</code></pre></div>
+
+<p>
+    The specification allows a large amount of flexibility -- you can have your 
+    own custom error types, so long as you have a description of them to link 
+    to. You can provide as little or as much detail as you want, and even 
+    decide what information to expose based on environment.
+</p>
+
+<p>
+    I personally like to point to the HTTP status code definitions, and then 
+    provide request-specific detail; I find this gives quick and simple results 
+    that I can later shape as I add more detail to my API. However, the 
+    specification definitely encourages you to have unique error types with 
+    discrete URIs that describe them -- never a bad thing when creating APIs.
+</p>
+
+<h3>vnd.error</h3>
+
+<p>
+    This is a <a href="https://github.com/blongden/vnd.error">proposed media 
+    type</a> within the HAL community. Like HAL, it provides formats in both 
+    JSON and XML, making it a nice cross-platform choice.
+</p>
+
+<p>
+    It differentiates from API-Problem in a few ways. First, it allows, and 
+    even encourages, reporting collections of errors. If you consider PHP 
+    exceptions and the fact that they support "previous" exceptions, this is a 
+    powerful concept; you can report the entire chain of errors that led to the 
+    response.  Second, it encourages pushing detail out of the web service; 
+    errors include a "logRef" property that points to where the error detail lives. 
+    This is probably better illustrated than explained.
+</p>
+
+<p>
+    The response payload is an array of objects. Each object has the following 
+    members:
+</p>
+
+<ul>
+    <li>
+        <strong>logRef</strong>: a unique identifier for the specific error which can then be
+        used to identify the error within server-side logs (required)
+    </li>
+
+    <li>
+        <strong>message</strong>: the error message itself (required)
+    </li>
+
+    <li>
+        <strong>_links</strong>: HAL-compatible links. Typically, "help", "describes", and/or 
+        "describedBy" relations will be defined here.
+    </li>
+</ul>
+
+<p>
+    As an example, let's consider the API-Problem example I had earlier, and
+    provide a vnd.error equivalent:
+</p>
+
+<div class="example"><pre><code language="http">
+HTTP/1.1 500 Internal Error
+Content-Type: application/vnd.error+json
+
+[
+    {
+        "logRef": "someSha1HashMostLikely",
+        "message": "Status failed validation",
+        "_links": {
+            "describedBy": {"href": "http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html"}
+        }
+    }
+]
+</code></pre></div>
+
+<p>
+    vnd.error basically begs you to create custom error types, with documentation 
+    end-points that detail the source of the error and what you can do about it 
+    (this is true of API-Problem as well).
+</p>
+
+<p>
+    The requirement to include a log reference ("logRef") and have it be unique 
+    can be a stumbling block to implementation, however, as it requires effort 
+    for uniquely identifying requests, and logging. However, both the 
+    identification and logging can be automated.
+</p>
+
+<h2>Summary</h2>
+
+<p>
+    Error reporting in APIs is as important as the normal resource payloads 
+    themselves. Without good error reporting, when an API raises errors, 
+    clients have difficulty understanding what they can do next, and cannot
+    provide you, the API provider, with information that will allow you to
+    debug on the server side.
+</p>
+
+<p>
+    As noted at the beginning of the article, if you follow the rules below,
+    you'll make consumers of your API happier and more productive.
+</p>
+
+<ul>
+    <li>
+        <strong>DO</strong> use appropriate HTTP status codes to indicate an 
+        error happened.
+    </li>
+
+    <li>
+        Report errors in a format I have indicated I will Accept 
+        (as in the HTTP header). 
+    </li>
+    <li>
+        Report errors consistently. Don't report the error one way one time, 
+        and another way the next. Standardize on a specific error-reporting 
+        media type .  While you <em>can</em> create your own error structure, I 
+        recommend using documented, accepted standards. This will make clients 
+        more re-usable, and make many of your decisions for you.
+    </li>
+
+    <li>
+        Provide detailed information as to what went wrong, and what steps I 
+        may be able to take next. Provide documentation for each type of error, 
+        and link to that documentation from your error payloads.
+    </li>
+
+</ul>
+
+<p>
+    Which brings me to...
+</p>
+
+<h2>Next time</h2>
+
+<p>
+    I realize I still haven't covered anything specific to ZF2, but I'll start 
+    next time, when I cover the next topic: documenting your API. An 
+    undocumented API is a useless API, so it's good to start baking 
+    documentation in immediately. I'll survey some of the possibilities and how 
+    they can be implemented in ZF2 in the next installment, and then we can get 
+    our hands dirty with actual API development.
+</p>
+
+<h3>Updates</h3>
+
+<p>
+    <em>Note: I'll update this post with links to the other posts in the series 
+    as I publish them.</em>
+</p>
+
+<ul>
+    <li><a href="/blog/2013-02-11-restful-apis-with-zf2-part-1">Part 1</a></li>
+</ul>]]></content:encoded>
+      <slash:comments>0</slash:comments>
+    </item>
+    <item>
       <title>RESTful APIs with ZF2, Part 1</title>
-      <pubDate>Tue, 12 Feb 2013 11:42:00 +0000</pubDate>
+      <pubDate>Wed, 13 Feb 2013 13:40:00 +0000</pubDate>
       <link>http://mwop.net/blog/2013-02-11-restful-apis-with-zf2-part-1.html</link>
       <guid>http://mwop.net/blog/2013-02-11-restful-apis-with-zf2-part-1.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -399,12 +723,16 @@ Content-Type: application/hal+json
     I'll get there. But there's another detour to take: reporting errors.
 </p>
 
-<h3></h3>
+<h3>Updates</h3>
 
 <p>
     <em>Note: I'll update this post with links to the other posts in the series 
     as I publish them.</em>
-</p>]]></content:encoded>
+</p>
+
+<ul>
+    <li><a href="/blog/2013-02-13-restful-apis-with-zf2-part-2">Part 2</a></li>
+</ul>]]></content:encoded>
       <slash:comments>0</slash:comments>
     </item>
     <item>
@@ -2521,282 +2849,6 @@ class Module
     how to develop both modules and sites built on top of modules this June, 
     via a full-day tutorial at the <a href="http://phpconference.nl">Dutch PHP Conference</a>.
     Please join me, and a host of incredible speakers, in Amsterdam this summer!
-</p>]]></content:encoded>
-      <slash:comments>0</slash:comments>
-    </item>
-    <item>
-      <title>View Layers, Database Abstraction, Configuration, Oh, My!</title>
-      <pubDate>Mon, 05 Mar 2012 22:32:45 +0000</pubDate>
-      <link>http://mwop.net/blog/zf2-beta3.html</link>
-      <guid>http://mwop.net/blog/zf2-beta3.html</guid>
-      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
-      <dc:creator>Matthew Weier O'Phinney</dc:creator>
-      <content:encoded><![CDATA[<p>
-    Late last week, the Zend Framework community <a href="http://framework.zend.com/zf2/blog/entry/Zend-Framework-2-0-0beta3-Released">2.0.0beta3</a>, 
-    the latest iteration of the v2 framework. What have we been busy doing the 
-    last couple months? In a nutshell, getting dirty with view layers, database
-    abstraction, and configuration.
-</p><h2>View Layers</h2>
-
-<p>
-    Working with and on Zend Framework as long as I have, one thing that has 
-    always been a bit of a thorn in my side is how difficult it is to specify 
-    differing view strategies based on arbitrary criteria. For instance, if 
-    I want to return JSON, or XML, how can I do so? The "answer" in ZF1 is to
-    use the ContextSwitch action helper, which basically simply overloads the
-    filename suffix used for the view to include the format type -- 
-    ".js.phtml", ".xml.phtml". This works, but it's a bit of a hack. (Full
-    disclosure: I authored the hack.)
-</p>
-
-<p>
-    Another problem I've always had is that rendering has occurred in multiple
-    places of request execution. Action view scripts are rendered immediately
-    following the action's execution, layouts are rendered at another time
-    entirely. Using <code>Zend_View</code> as the renderer, this is fine, but
-    if you want to switch to a solution that is capable of rendering the entire
-    payload, including "child" views, at once, it becomes quite difficult to
-    work around.
-</p>
-
-<p>
-    For Zend Framework 2, I <a href="http://framework.zend.com/wiki/display/ZFDEV2/RFC+-+View+Layer">proposed a new view layer</a>,
-    which helps mitigate some of these factors. As part of the work for this 
-    proposal, I reorganized the component slightly to separate it into 
-    "helpers", "renderers", and "resolvers" -- the latter are used to resolve a 
-    template to a renderer-specific resource. Additionally, I introduced a new 
-    concept into the framework, that of "View Models". This is a concept 
-    borrowed from a number of different places, but most notably Microsoft, who 
-    implemented them as part of a new pattern entitled "Model-View-ViewModel". 
-    In this pattern, you bind data to a "ViewModel" object, which can contain 
-    optional presentation logic, and pass the ViewModel to the View. The View 
-    then grabs data from the ViewModel to present to the client.
-</p>
-
-<p>
-    The biggest change, however, was introducing a "gateway" class, 
-    <code>Zend\View\View</code>, with the responsibility of martialling a 
-    renderer and injecting a response object. The code for this leverages the EventManager component to allow attaching "strategies" 
-    for selecting a renderer. The selected renderer is then used to render the 
-    template present in the ViewModel passed to the View object. Once 
-    complete, we loop through response strategies, where the results of 
-    rendering can be injected into the response. This also provides an ideal 
-    location for adding headers, such as HTTP caching headers.
-</p>
-
-<p>
-    Finally, I introduced a number of MVC listeners for view integration. Some of
-    these are quite basic -- such as ensuring we have a listener that will trigger
-    the view, and a default rendering strategy. Others help streamline the MVC -
-    while we recommend returning ViewModel objects from your controllers, with
-    templates set, default listeners provided will create ViewModels from returned
-    associative arrays, and inject a template name based on the requested controller 
-    and action.
-</p>
-
-<p>
-    What do you really need to know from the outset? Not much!
-</p>
-
-<div class="example"><pre><code lang="php">
-namespace Sample\Controller;
-
-use Zend\Mvc\Controller\ActionController;
-
-class HelloController extends ActionController
-{
-    public function worldAction()
-    {
-        // Implicitly creates a ViewModel with the below variables, and sets
-        // the template to hello/world (:controller/:action)
-        return array(
-            'message' => 'Hello world!',
-        );
-    }
-}
-</code></pre></div>
-
-<p>
-    Basically, the most common use case is the one you'd expect to work. The
-    fun really starts when you want to perform other common tasks: change the
-    layout, disable the layout, specify an alternate template, add additional
-    templates to render and aggregate in the layout, and more. In all cases,
-    you work with ViewModels, and then let the renderer worry about how to
-    represent them.
-</p>
-
-<p>
-    For more details, <a href="http://packages.zendframework.com/docs/latest/manual/en/zend.view.html#zend.view.quick-start">read the Zend\View quickstart</a>.
-</p>
-
-<h2>Database Abstraction</h2>
-
-<p>
-    <code>Zend_Db</code> provides a ton of capabilities in Zend Framework v1. 
-    However, over the years, we've discovered some design issues both in the 
-    code itself as well as the tests which have made a number of features 
-    difficult to support, and others difficult if not impossible to implement. 
-    As <a href="http://ralphschindler.com/">Ralph</a> noted in his 
-    <a href="http://framework.zend.com/wiki/display/ZFDEV2/RFC+-+Zend+Db">DB refactoring RFC</a>,
-</p>
-
-<blockquote>
-    Each new feature request generally comes with it's own concerns that apply 
-    to the project as a whole: "How useful is the feature?", "How does this 
-    feature impact performance?", "How wide spread is the need for this 
-    feature?". Generally, features are added to the core component bloating the 
-    core component and adding a new set of code that has to be maintained.
-</blockquote>
-
-<p>
-    The iteration for beta3 was to get the basic structure up and running for
-    drivers and adapters (drivers are the low-level connections, adapters provide
-    basic abstraction around common operations), resultset abstraction, the basic 
-    infrastructure for SQL abstraction, metadata support, and a table/row data 
-    gateway implementation.  All operations were tested on PDO_Sqlite, mysqli, 
-    and sqlsrv; preliminary reports indicate most PDO drivers work out of the 
-    box at this point.
-</p>
-
-<p>
-    What does it look like?
-</p>
-
-<h4>Inserting data</h4>
-<div class="example"><pre><code lang="php">
-// where $adapter is an adapter object
-$qi = function($name) use ($adapter) { 
-    return $adapter->platform->quoteIdentifier($name); 
-};
-$fp = function($name) use ($adapter) { 
-    return $adapter->driver->formatParameterName($name); 
-};
-
-$sql = 'INSERT INTO '
-    . $qi('artist')
-    . ' (' . $qi('name') . ', ' . $qi('history') . ') VALUES ('
-    . $fp('name') . ', ' . $fp('history') . ')';
-
-$statement = $adapter->query($sql);
-
-$parameters = array(
-    'name'    => 'New Artist',
-    'history' => 'This is the history',
-);
-
-$statement->execute($parameters);
-</code></pre></div>
-
-<h4>Selecting data</h4>
-<div class="example"><pre><code lang="php">
-// where $adapter is an adapter object
-$qi = function($name) use ($adapter) { 
-    return $adapter->platform->quoteIdentifier($name); 
-};
-$fp = function($name) use ($adapter) { 
-    return $adapter->driver->formatParameterName($name); 
-};
-
-$sql = 'SELECT * FROM ' . $qi('artist');
-$statement = $adapter->query($sql);
-$results = $statement->execute(array());
-
-foreach ($results as $row) {
-    var_export($row);
-}
-</code></pre></div>
-
-<h4>TableGateway</h4>
-<div class="example"><pre><code lang="php">
-// where $adapter is an adapter object
-$artistTable = new TableGateway('artist', $adapter);
-$rowset = $artistTable->select(function (Select $select) {
-    $select->where->like('name', 'Bar%');
-});
-$row = $rowset->current();
-echo $row->name;
-</code></pre></div>
-
-<p>
-    During my review of the code, which included assisting Ralph with testing,
-    I was impressed with the heavy level of de-coupling present, and how easily
-    it will allow us to support things like platform-specific SQL, custom 
-    rowsets, and more.
-</p>
-
-<p>
-    For more details, <a href="http://packages.zendframework.com/docs/latest/manual/en/zend.db.html">read the Zend\Db documentation</a>.
-</p>
-
-<h2>Configuration</h2>
-
-<p>
-    Configuration should be very fast. Interestingly, developers often also expect
-    configuration to support a multitude of features -- key translation, 
-    section inheritance, importing of additional configuration files, constant 
-    substitution, compatibility with many configuration formats, and more. These 
-    things tend to work in direct opposition to performance goals.
-</p>
-
-<p>
-    Several ZF2 community members decided to tackle these issues. Their goal was 
-    to create a streamlined core for <code>Zend\Config</code>, but provide a 
-    variety of plugins and filters to provide the rich features many users
-    have come to expect. The result is a very nice, de-coupled component.
-</p>
-
-<p>
-    Basic usage remains the same as it always has. However, without enabling
-    any optional features, you will not get things such as constant or token
-    substitution; to get that, you can use the new Processor API:
-</p>
-
-<div class="example"><pre><code lang="php">
-// Get our config object; second argument tells the factory to return
-// a Config object, vs. an array
-$config = Zend\Config\Factory::fromFile($pathToConfigFile, true);
-
-// Process values, substituting constant values whenever a defined constant name 
-// is encountered
-$constants = new Zend\Config\Processor\Constant();
-$constants->process($config);
-
-// Define some tokens to substitute
-$tokens = new Zend\Config\Processor\Token();
-$tokens->addToken('TOKEN', 'bar');
-$tokens->process($config);
-</code></pre></div>
-
-<p>
-    This API makes performance-intensive features explicitly opt-in, leaving
-    the core functionality intact and fast.
-</p>
-
-<p>
-    For more details, <a href="http://packages.zendframework.com/docs/latest/manual/en/zend.config.html">read the Zend\Config documentation</a>.
-</p>
-
-<h2>Fin!</h2>
-
-<p>
-    I've only gone into depth on those features that had big iterations for the
-    beta release; plenty more work went into it -- as I noted in the release 
-    announcement, we handled around 200 pull requests over a 2 month period -- 
-    this is roughly double what we accomplished for beta2 over a similar 
-    timeframe! I'm quite impressed and humbled by the spirit of the ZF2 
-    community and collaborators.
-</p>
-
-<p>
-    If you haven't tried Zend Framework 2 yet, please give it a spin! While 
-    there's still work to be done, for many -- most, potentially -- use cases,
-    the functionality necessary is present and working very well. Trying it now,
-    and building real functionality on it now, is not only possible, but will
-    allow you to shape what ZF2 looks like when we're ready to go stable.
-</p>
-
-<p>
-    <a href="http://packages.zendframework.com">Download it today!</a>
 </p>]]></content:encoded>
       <slash:comments>0</slash:comments>
     </item>
