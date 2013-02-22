@@ -16,6 +16,7 @@ module/Blog/bin/post.log.html
 *.log
 vendor/.composer
 vendor/autoload.php
+vendor/bin
 vendor/composer
 vendor/phly
 vendor/zendframework
