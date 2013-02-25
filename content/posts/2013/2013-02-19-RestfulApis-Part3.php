@@ -10,13 +10,13 @@ $author->setUrl("http://mwop.net");
 
 $entry = new EntryEntity();
 
-$entry->setId('2013-02-19-restful-apis-with-zf2-part-3');
+$entry->setId('2013-02-25-restful-apis-with-zf2-part-3');
 $entry->setTitle('RESTful APIs with ZF2, Part 3');
 $entry->setAuthor($author);
 $entry->setDraft(false);
 $entry->setPublic(true);
-$entry->setCreated(new \DateTime('2013-02-19 14:27', new \DateTimezone('America/Chicago')));
-$entry->setUpdated(new \DateTime('2013-02-19 14:27', new \DateTimezone('America/Chicago')));
+$entry->setCreated(new \DateTime('2013-02-25 06:29', new \DateTimezone('America/Chicago')));
+$entry->setUpdated(new \DateTime('2013-02-25 06:29', new \DateTimezone('America/Chicago')));
 $entry->setTimezone('America/Chicago');
 $entry->setTags(array(
   'php',
@@ -79,7 +79,8 @@ $extended=<<<'EOT'
 
 <p>
     If you're asking this question, you've either never consumed software, or
-    your software is perfect. I frankly don't believe either one.
+    your software is perfect and self-documenting. I frankly don't believe 
+    either one.
 </p>
 
 <p>
@@ -115,7 +116,7 @@ $extended=<<<'EOT'
     else falls under end-user documentation.
 </p>
 
-<h3>OPTIONS</h3>
+<h2>OPTIONS</h2>
 
 <p>
     The HTTP specification details the <code>OPTIONS</code> method as 
@@ -160,7 +161,7 @@ $extended=<<<'EOT'
 </p>
 
 <p>
-    When creating RESTful endpoints in ZF2, we recommend using
+    When creating RESTful endpoints in ZF2, I recommend using
     <code>Zend\Mvc\Controller\AbstractRestfulController</code>. This controller
     contains an <code>options()</code> method which you can use to respond to
     an <code>OPTIONS</code> request. As with any ZF2 controller, returning
@@ -274,7 +275,7 @@ class FooController extends AbstractRestfulController
     discover the problem and return early.
 </p>
 
-<h3>End-User Documentation</h3>
+<h2>End-User Documentation</h2>
 
 <p>
     Now that we have the technical solution out of the way, we're still left 
@@ -426,12 +427,12 @@ class FooController extends AbstractRestfulController
 <p>
     <strong>However, there's one cautionary tale to tell</strong>, something I 
     already mentioned: <code>OPTIONS</code>, per the specification, is 
-    non-cacheable.  What this means is that everytime somebody makes an 
+    <em>non-cacheable</em>.  What this means is that everytime somebody makes an 
     <code>OPTIONS</code> request, any cache control headers you provide will be 
     ignored, which means hitting the server for each and every request to the 
     documentation.  Considering documentation is static, this is problematic; 
     it has even prompted <a href="http://www.mnot.net/blog/2012/10/29/NO_OPTIONS">blog 
-    posts urging you not to do this</a>.
+    posts urging you not to use OPTIONS for documentation</a>.
 </p>
 
 <p>
@@ -487,7 +488,7 @@ class FooController extends AbstractRestfulController
 <p>
     If you want to ensure you get a fully qualified URL that includes the 
     schema, hostname, and port, there are a number of ways to do that as
-    well; this gives you the basic idea.
+    well; the above gives you the basic idea.
 </p>
 
 <p>
