@@ -95,6 +95,39 @@
 
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
+    <p class="date">2009-02-23 08:17:00</p>
+    <p class="tags"><a href="/blog/tag/dojo.html">dojo</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/208-Recursively-Destroying-Dojo-ContentPanes.html">Recursively Destroying Dojo ContentPanes</a></h4>
+
+    <div class="entry body"><p>
+    I ran into an issue recently with Dojo's ContentPanes. I was using them with
+    a TabContainer, and had made them closable; however, user actions might
+    re-open tabs that pull from the same source. This led to conflicts with
+    dijit IDs that I had to resolve.
+</p>
+
+<p>
+    Most Dijits have a <code>destroyRecursive()</code> method which should,
+    theoretically, destroy any dijits contained within them. However, for many
+    Dijits, this functionality simply does not work due to how they are
+    implemented; many do not actually have any knowledge of the dijits beneath
+    them.
+</p>
+
+<p>
+    ContentPanes fall into this latter category. fortunately, it's relatively
+    easy to accomplish, due to Dojo's heavily object oriented nature.
+</p></div>
+
+    <p><a href="/blog/208-Recursively-Destroying-Dojo-ContentPanes.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
     <p class="date">2009-02-20 08:11:41</p>
     <p class="tags"><a href="/blog/tag/dojo.html">dojo</a></p>
 </aside>
@@ -409,29 +442,6 @@
 </p></div>
 
     <p><a href="/blog/199-A-Simple-PHP-Publish-Subscribe-System.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2008-12-12 11:07:29</p>
-    <p class="tags"><a href="/blog/tag/dojo.html">dojo</a><br />
-<a href="/blog/tag/php.html">php</a><br />
-<a href="/blog/tag/zend%20framework.html">zend framework</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/198-Autocompletion-with-Zend-Framework-and-Dojo.html">Autocompletion with Zend Framework and Dojo</a></h4>
-
-    <div class="entry body"><p>
-    I've fielded several questions about setting up an autocompleter with
-    <a href="http://framework.zend.com/">Zend Framework</a> and
-    <a href="http://dojotoolkit.org/">Dojo</a>, and decided it was time to
-    create a HOWTO on the subject, particularly as there are some nuances you
-    need to pay attention to.
-</p></div>
-
-    <p><a href="/blog/198-Autocompletion-with-Zend-Framework-and-Dojo.html">Continue reading...</a></p>
 </section>
 
 </div>

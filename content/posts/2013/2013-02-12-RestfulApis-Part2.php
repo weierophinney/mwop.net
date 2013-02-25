@@ -346,6 +346,7 @@ Content-Type: application/vnd.error+json
 
 <ul>
     <li><a href="/blog/2013-02-11-restful-apis-with-zf2-part-1">Part 1</a></li>
+    <li><a href="/blog/2013-02-25-restful-apis-with-zf2-part-3">Part 3</a></li>
 </ul>
 
 EOT;

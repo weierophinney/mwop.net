@@ -1,11 +1,383 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title type="text">Tag: http :: phly, boy, phly</title>
-  <updated>2013-02-13T13:40:00+0000</updated>
-  <generator uri="http://framework.zend.com" version="2.1.1dev">Zend_Feed_Writer</generator>
+  <updated>2013-02-25T12:29:00+0000</updated>
+  <generator uri="http://framework.zend.com" version="2.1.4dev">Zend_Feed_Writer</generator>
   <link rel="alternate" type="text/html" href="http://mwop.net/blog/tag/http.html"/>
   <link rel="self" type="application/atom+xml" href="http://mwop.net/blog/tag/http-atom.xml"/>
   <id>http://mwop.net/blog/tag/http.html</id>
+  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <title type="html"><![CDATA[RESTful APIs with ZF2, Part 3]]></title>
+    <published>2013-02-25T12:29:00+0000</published>
+    <updated>2013-02-25T12:29:00+0000</updated>
+    <link rel="alternate" type="text/html" href="http://mwop.net/blog/2013-02-25-restful-apis-with-zf2-part-3.html"/>
+    <id>http://mwop.net/blog/2013-02-25-restful-apis-with-zf2-part-3.html</id>
+    <author>
+      <name>Matthew Weier O'Phinney</name>
+      <email>me@mwop.net</email>
+      <uri>http://mwop.net</uri>
+    </author>
+    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
+      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>In my <xhtml:a href="/blog/2013-02-11-restful-apis-with-zf2-part-1.html">previous</xhtml:a>
+<xhtml:a href="/blog/2013-02-13-restful-apis-with-zf2-part-2.html">posts</xhtml:a>, I
+covered basics of JSON hypermedia APIs using Hypermedia Application
+Language (HAL), and methods for reporting errors, including
+API-Problem and vnd.error.</xhtml:p>
+<xhtml:p>In this post, I'll be covering <xhtml:em>documenting</xhtml:em> your API --
+techniques you can use to indicate what HTTP operations are
+allowed, as well as convey the full documentation on what endpoints
+are available, what they accept, and what you can expect them to
+return.</xhtml:p>
+<xhtml:p>While I will continue covering general aspects of RESTful APIs
+in this post, I will also finally introduce several ZF2-specific
+techniques.</xhtml:p>
+<xhtml:h2>Why Document?</xhtml:h2>
+<xhtml:p>If you're asking this question, you've either never consumed
+software, or your software is perfect and self-documenting. I
+frankly don't believe either one.</xhtml:p>
+<xhtml:p>In the case of APIs, those consuming the API need to know how to
+use it.</xhtml:p>
+<xhtml:ul>
+<xhtml:li>What endpoints are available? Which operations are available
+for each endpoint?</xhtml:li>
+<xhtml:li>What does each endpoint expect as a payload during the
+request?</xhtml:li>
+<xhtml:li>What can you expect as a payload in return?</xhtml:li>
+<xhtml:li>How will errors be communicated?</xhtml:li>
+</xhtml:ul>
+<xhtml:p>While the promise of hypermedia APIs is that each response tells
+you the next steps available, you still, somewhere along the way,
+need more information - what payloads look like, which HTTP verbs
+should be used, and more. If you're <xhtml:strong>not</xhtml:strong>
+documenting your API, you're "doing it wrong."</xhtml:p>
+<xhtml:h2>Where Should Documentation Live?</xhtml:h2>
+<xhtml:p>This is the much bigger question.</xhtml:p>
+<xhtml:p>Of the questions I raised above, detailing what should be
+documented, there are two specific types. When discussing what
+operations are available, we have a technical solution in the form
+of the <xhtml:code>OPTIONS</xhtml:code> method and its counterpart, the
+<xhtml:code>Allow</xhtml:code> header. Everything else falls under end-user
+documentation.</xhtml:p>
+<xhtml:h2>OPTIONS</xhtml:h2>
+<xhtml:p>The HTTP specification details the <xhtml:code>OPTIONS</xhtml:code> method
+as idempotent, non-cacheable, and for use in detailing what
+operations are available for the given resource specified by the
+request URI. It makes specific mention of the <xhtml:code>Allow</xhtml:code>
+header, but does not limit what is returned for requests made via
+this method.</xhtml:p>
+<xhtml:p>The <xhtml:code>Allow</xhtml:code> header details the allowed HTTP methods
+for the given resource.</xhtml:p>
+<xhtml:p>Used in combination, you make an <xhtml:code>OPTIONS</xhtml:code> request to
+a URI, and it should return a response containing an
+<xhtml:code>Allow</xhtml:code> header; from that header value, you then know
+what other HTTP methods can be made to that URI.</xhtml:p>
+<xhtml:p>What this tells us is that our RESTful endpoint should do the
+following:</xhtml:p>
+<xhtml:ul>
+<xhtml:li>When an <xhtml:code>OPTIONS</xhtml:code> request is made, return a response
+with an <xhtml:code>Allow</xhtml:code> header that has a list of the available
+HTTP methods allowed.</xhtml:li>
+<xhtml:li>For any HTTP method we do <xhtml:em>not</xhtml:em> allow, we should return
+a "405 Not Allowed" response.</xhtml:li>
+</xhtml:ul>
+<xhtml:p>These are fairly easy to accomplish in ZF2. <xhtml:em>(See? I promised
+I'd get to some ZF2 code in this post!)</xhtml:em></xhtml:p>
+<xhtml:p>When creating RESTful endpoints in ZF2, I recommend using
+<xhtml:code>Zend\Mvc\Controller\AbstractRestfulController</xhtml:code>. This
+controller contains an <xhtml:code>options()</xhtml:code> method which you can
+use to respond to an <xhtml:code>OPTIONS</xhtml:code> request. As with any ZF2
+controller, returning a response object will prevent rendering and
+bubble out immediately so that the response is returned.</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="php">
+namespace My\Controller;
+use Zend\Mvc\Controller\AbstractRestfulController;
+
+class FooController extends AbstractRestfulController
+{
+    public function options()
+    {
+        $response = $this-&gt;getResponse();
+        $headers  = $response-&gt;getHeaders();
+
+        // If you want to vary based on whether this is a collection or an
+        // individual item in that collection, check if an identifier from
+        // the route is present
+        if ($this-&gt;params()-&gt;fromRoute('id', false)) {
+            // Allow viewing, partial updating, replacement, and deletion
+            // on individual items
+            $headers-&gt;addHeaderLine('Allow', implode(',', array(
+                'GET',
+                'PATCH',
+                'PUT',
+                'DELETE',
+            )));
+            return $response;
+        }
+
+        // Allow only retrieval and creation on collections
+        $headers-&gt;addHeaderLine('Allow', implode(',', array(
+            'GET',
+            'POST',
+        )));
+        return $response;
+    }
+}
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>The next trick is returning the 405 response if an invalid
+option is used. For this, you can create a listener in your
+controller, and wire it to listen at higher-than-default priority.
+As an example:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="php">
+namespace My\Controller;
+use Zend\EventManager\EventManagerInterface;
+use Zend\Mvc\Controller\AbstractRestfulController;
+
+class FooController extends AbstractRestfulController
+{
+    protected $allowedCollectionMethods = array(
+        'GET',
+        'POST',
+    );
+
+    protected $allowedResourceMethods = array(
+        'GET',
+        'PATCH',
+        'PUT',
+        'DELETE',
+    );
+
+    public function setEventManager(EventManagerInterface $events)
+    {
+        parent::setEventManager($events);
+        $events-&gt;attach('dispatch', array($this, 'checkOptions'), 10);
+    }
+
+    public function checkOptions($e)
+    {
+        $matches  = $e-&gt;getRouteMatch();
+        $response = $e-&gt;getResponse();
+        $request  = $e-&gt;getRequest();
+        $method   = $request-&gt;getMethod();
+
+        // test if we matched an individual resource, and then test
+        // if we allow the particular request method
+        if ($matches-&gt;getParam('id', false)) {
+            if (!in_array($method, $this-&gt;allowedResourceMethods)) {
+                $response-&gt;setStatusCode(405);
+                return $response;
+            }
+            return;
+        }
+
+        // We matched a collection; test if we allow the particular request 
+        // method
+        if (!in_array($method, $this-&gt;allowedCollectionMethods)) {
+            $response-&gt;setStatusCode(405);
+            return $response;
+        }
+    }
+}
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>Note that I moved the allowed methods into properties; if I did
+the above, I'd refactor the <xhtml:code>options()</xhtml:code> method to use
+those properties as well to ensure they are kept in sync.</xhtml:p>
+<xhtml:p>Also note that in the case of an invalid method, I return a
+response object. This ensures that nothing else needs to execute in
+the controller; I discover the problem and return early.</xhtml:p>
+<xhtml:h2>End-User Documentation</xhtml:h2>
+<xhtml:p>Now that we have the technical solution out of the way, we're
+still left with the bulk of the work left to accomplish: providing
+end-user documentation detailing the various payloads, errors,
+etc.</xhtml:p>
+<xhtml:p>I've seen two compelling approaches to this problem. The first
+builds on the <xhtml:code>OPTIONS</xhtml:code> method, and the other uses a
+hypermedia link in every response to point to documentation.</xhtml:p>
+<xhtml:p>The <xhtml:code>OPTIONS</xhtml:code> solution is this: <xhtml:a href="http://zacstewart.com/2012/04/14/http-options-method.html">use the
+body of an <xhtml:code>OPTIONS</xhtml:code> response to provide
+documentation</xhtml:a>. (Keith Casey <xhtml:a href="http://vimeo.com/49613738">gave an excellent short presentation
+about this at REST Fest 2012</xhtml:a>).</xhtml:p>
+<xhtml:p>The <xhtml:code>OPTIONS</xhtml:code> method allows for you to return a body
+in the response, and also allows for content negotiation. The
+theory, then, is that you return media-type-specific documentation
+that details the methods allowed, and what they specifically accept
+in the body. While there is no standard for this at this time, the
+first article I linked suggested including a description, the
+parameters expected, and one or more example request bodies for
+each HTTP method allowed; you'd likely also want to detail the
+responses that can be expected.</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="javascript">
+{
+    "POST": {
+        "description": "Create a new status",
+        "parameters": {
+            "type": {
+                "type": "string",
+                "description": "Status type -- text, image, or url; defaults to text",
+                "required": false
+            },
+            "text": {
+                "type": "string",
+                "description": "Status text; required for text types, optional for others",
+                "required": false
+            },
+            "image_url": {
+                "type": "string",
+                "description": "URL of image for image types; required for image types",
+                "required": false
+            },
+            "link_url": {
+                "type": "string",
+                "description": "URL of image for link types; required for link types",
+                "required": false
+            }
+        },
+        "responses": [
+            {
+                "describedBy": "http://example.com/problems/invalid-status",
+                "title": "Submitted status was invalid",
+                "detail": "Missing text field required for text type"
+            },
+            {
+                "id": "abcdef123456",
+                "type": "text",
+                "text": "This is a status update",
+                "timestamp": "2013-02-22T10:06:05+0:00"
+            }
+        ],
+        "examples": [
+            {
+                "text": "This is a status update"
+            },
+            {
+                "type": "image",
+                "text": "This is the image caption",
+                "image_url": "http://example.com/favicon.ico"
+            },
+            {
+                "type": "link",
+                "text": "This is a description of the link",
+                "link_url": "http://example.com/"
+            },
+        ]
+    }
+}
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>If you were to use this methodology, you would alter the
+<xhtml:code>options()</xhtml:code> method such that it does not return a
+response object, but instead return a view model with the
+documentation.</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="php">
+namespace My\Controller;
+use Zend\Mvc\Controller\AbstractRestfulController;
+
+class FooController extends AbstractRestfulController
+{
+    protected $viewModelMap = array(/* ... */);
+
+    public function options()
+    {
+        $response = $this-&gt;getResponse();
+        $headers  = $response-&gt;getHeaders();
+
+        // Get a view model based on Accept types
+        $model    = $this-&gt;acceptableViewModelSelector($this-&gt;viewModelMap);
+
+        // If you want to vary based on whether this is a collection or an
+        // individual item in that collection, check if an identifier from
+        // the route is present
+        if ($this-&gt;params()-&gt;fromRoute('id', false)) {
+            // Still set the Allow header
+            $headers-&gt;addHeaderLine('Allow', implode(
+                ',', 
+                $this-&gt;allowedResourceMethods
+            ));
+
+            // Set documentation specification as variables
+            $model-&gt;setVariables($this-&gt;getResourceDocumentationSpec());
+            return $model;
+        }
+
+        // Allow only retrieval and creation on collections
+        $headers-&gt;addHeaderLine('Allow', implode(
+            ',',
+            $this-&gt;allowedCollectionMethods
+        ));
+        $model-&gt;setVariables($this-&gt;getCollectionDocumentationSpec());
+        return $model;
+    }
+}
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>I purposely didn't provide the implementations of the
+<xhtml:code>getResourceDocumentationSpec()</xhtml:code> and
+<xhtml:code>getCollectionDocumentationSpec()</xhtml:code> methods, as that will
+likely be highly specific to your application. Another possibility
+is to use your view engine for this, and specify a template file
+that has the fully-populated information. This would require a
+custom renderer when using JSON or XML, but is a pretty easy
+solution.</xhtml:p>
+<xhtml:p><xhtml:strong>However, there's one cautionary tale to tell</xhtml:strong>,
+something I already mentioned: <xhtml:code>OPTIONS</xhtml:code>, per the
+specification, is <xhtml:em>non-cacheable</xhtml:em>. What this means is that
+everytime somebody makes an <xhtml:code>OPTIONS</xhtml:code> request, any cache
+control headers you provide will be ignored, which means hitting
+the server for each and every request to the documentation.
+Considering documentation is static, this is problematic; it has
+even prompted <xhtml:a href="http://www.mnot.net/blog/2012/10/29/NO_OPTIONS">blog posts urging
+you not to use OPTIONS for documentation</xhtml:a>.</xhtml:p>
+<xhtml:p>Which brings us to the second solution for end-user
+documentation: a static page referenced via a hypermedia link.</xhtml:p>
+<xhtml:p>This solution is insanely easy: you simply provide a
+<xhtml:code>Link</xhtml:code> header in your response, and provide a
+<xhtml:code>describedby</xhtml:code> reference pointing to the documentation
+page:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="http">
+Link: &lt;http://example.com/api/documentation.md&gt;; rel="describedby"
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>With ZF2, this is trivially easy to accomplish: create a route
+and endpoint for your documentation, and then a listener on your
+controller that adds the <xhtml:code>Link</xhtml:code> header to your
+response.</xhtml:p>
+<xhtml:p>The latter, adding the link header, might look like this:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="php">
+namespace My\Controller;
+use Zend\EventManager\EventManagerInterface;
+use Zend\Mvc\Controller\AbstractRestfulController;
+
+class FooController extends AbstractRestfulController
+{
+    public function setEventManager(EventManagerInterface $events)
+    {
+        parent::setEventManager($events);
+        $events-&gt;attach('dispatch', array($this, 'injectLinkHeader'), 20);
+    }
+
+    public function injectLinkHeader($e)
+    {
+        $response = $e-&gt;getResponse();
+        $headers  = $response-&gt;getHeaders();
+        $headers-&gt;addHeaderLine('Link', sprintf(
+            '</xhtml:code>
+</xhtml:pre></xhtml:div>
+</xhtml:div>
+    </content>
+  </entry>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <title type="html"><![CDATA[RESTful APIs with ZF2, Part 2]]></title>
     <published>2013-02-13T13:40:00+0000</published>
@@ -224,6 +596,8 @@ the series as I publish them.</xhtml:em></xhtml:p>
 <xhtml:ul>
 <xhtml:li><xhtml:a href="/blog/2013-02-11-restful-apis-with-zf2-part-1">Part
 1</xhtml:a></xhtml:li>
+<xhtml:li><xhtml:a href="/blog/2013-02-25-restful-apis-with-zf2-part-3">Part
+3</xhtml:a></xhtml:li>
 </xhtml:ul>
 </xhtml:div>
     </content>
@@ -547,6 +921,8 @@ the series as I publish them.</xhtml:em></xhtml:p>
 <xhtml:ul>
 <xhtml:li><xhtml:a href="/blog/2013-02-13-restful-apis-with-zf2-part-2">Part
 2</xhtml:a></xhtml:li>
+<xhtml:li><xhtml:a href="/blog/2013-02-25-restful-apis-with-zf2-part-3">Part
+3</xhtml:a></xhtml:li>
 </xhtml:ul>
 </xhtml:div>
     </content>
