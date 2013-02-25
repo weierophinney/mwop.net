@@ -95,6 +95,45 @@
 
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
+    <p class="date">2009-12-10 15:51:22</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
+<a href="/blog/tag/zend%20framework.html">zend framework</a><br />
+<a href="/blog/tag/zend%20server.html">zend server</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/229-Real-time-ZF-Monitoring-via-Zend-Server.html">Real-time ZF Monitoring via Zend Server</a></h4>
+
+    <div class="entry body"><p>
+    When keeping tabs on your ZF applications, it's often difficult to separate
+    application errors from general PHP errors, and if you aggregate them in the
+    same location as your web server errors, this can become more difficult
+    still.
+</p>
+
+<p>
+    Additionally, PHP's error reporting doesn't provide a ton of context, even
+    when reporting uncaught exceptions -- typically you'll only get a cryptic
+    exception message, and what file and line emitted it.
+</p>
+
+<p>
+    Zend Server's Monitor extension has some capabilities for providing more
+    context, and does much of this by default: request and environment settings
+    available when the error was logged, the function name and arguments
+    provided, and a full backtrace are available for you to inspect.
+    Additionally, the Monitor extension includes an API that allows you to
+    trigger custom Monitor events, and you can provide additional context when
+    doing so -- such as passing objects or arrays that may help provide context
+    when debugging.
+</p></div>
+
+    <p><a href="/blog/229-Real-time-ZF-Monitoring-via-Zend-Server.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
     <p class="date">2009-11-09 09:00:00</p>
     <p class="tags"><a href="/blog/tag/php.html">php</a><br />
 <a href="/blog/tag/rest.html">rest</a><br />
@@ -349,42 +388,6 @@
 </p></div>
 
     <p><a href="/blog/220-Autoloading-Doctrine-and-Doctrine-entities-from-Zend-Framework.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2009-05-13 11:33:45</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
-<a href="/blog/tag/tek09.html">tek09</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/219-Speaking-at-phptek.html">Speaking at php|tek</a></h4>
-
-    <div class="entry body"><p>
-    I announced this earlier in the year, but for those that missed it, I'm
-    speaking at <a href="http://tek.mtacon.com/">php|tek</a> next week.
-</p>
-
-<p style="text-align: center">
-    <img src="/uploads/tek_09_badge_speaker.gif" 
-        alt="Speaking at php|tek 2009" />
-</p>
-
-<p>
-    I'll be co-presenting a workshop entitled <a
-        href="http://tek.mtacon.com/c/schedule/talk/ts2/0">Practical SVN for PHP
-        Developers</a> along with the lovely and talented 
-    <a href="http://www.lornajane.net/">Lorna Jane Mitchell</a>. In a way, it's
-    a continuation of the unconference session we did together at ZendCon08, and
-    will provide much more in-depth information on the subject -- including how
-    to create and organize your repositories, branching and tagging strategies,
-    how and when to commit, as well as more basic usage of subversion for
-    day-to-day use.
-</p></div>
-
-    <p><a href="/blog/219-Speaking-at-phptek.html">Continue reading...</a></p>
 </section>
 
 </div>

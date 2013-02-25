@@ -95,6 +95,50 @@
 
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
+    <p class="date">2012-07-05 15:40:00</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
+<a href="/blog/tag/zf2.html">zf2</a><br />
+<a href="/blog/tag/zend%20framework.html">zend framework</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/2012-07-02-zf2-beta5-forms.html">ZF2 Forms in Beta5</a></h4>
+
+    <div class="entry body"><p>
+    Forms are a nightmare for web development. They break the concept of 
+    separation of concerns:
+</p>
+
+<ul>
+    <li>They have a <em>display</em> aspect (the actual HTML form)</li>
+    <li>They have a <em>validation</em> aspect</li>
+    <li>And the two mix, as you need to display validation error messages.</li>
+</ul>
+
+<p>
+    On top of that, the submitted data is often directly related to your domain
+    models, causing more issues:
+</p>
+
+<ul>
+    <li>Not all elements will have a 1:1 mapping to the domain model -- 
+    buttons, CSRF protection, CAPTCHAs, etc. usually are application-level 
+    concerns, but not domain issues.</li>
+    <li>Names valid for your domain model may not be valid names for HTML 
+    entities.</li>
+</ul>
+
+<p>
+    Add to this that the validation logic may be re-usable outside of a forms 
+    context, and you've got a rather complex problem.
+</p></div>
+
+    <p><a href="/blog/2012-07-02-zf2-beta5-forms.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
     <p class="date">2012-06-28 21:20:00</p>
     <p class="tags"><a href="/blog/tag/php.html">php</a><br />
 <a href="/blog/tag/doctrine.html">doctrine</a><br />
@@ -477,35 +521,6 @@ So, let's dive into ZF2 modules!
 </p></div>
 
     <p><a href="/blog/267-Getting-started-writing-ZF2-modules.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2011-09-12 16:45:13</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
-<a href="/blog/tag/zend%20framework.html">zend framework</a><br />
-<a href="/blog/tag/zf2.html">zf2</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/266-Using-the-ZF2-EventManager.html">Using the ZF2 EventManager</a></h4>
-
-    <div class="entry body"><p>
-Earlier this year, I <a href="http://weierophinney.net/matthew/archives/251-Aspects,-Filters,-and-Signals,-Oh,-My!.html">wrote about Aspects, Intercepting Filters, Signal Slots, and Events</a>, 
-in order to compare these similar approaches to handling both asychronous
-programming as well as handling cross-cutting application concerns in a cohesive
-way.
-</p>
-
-<p>
-I took the research I did for that article, and applied it to what was then a
-"SignalSlot" implementation within Zend Framework 2, and refactored that work
-into a new "EventManager" component. This article is intended to get you up and
-running with it.
-</p></div>
-
-    <p><a href="/blog/266-Using-the-ZF2-EventManager.html">Continue reading...</a></p>
 </section>
 
 </div>
