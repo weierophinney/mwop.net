@@ -95,6 +95,40 @@
 
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
+    <p class="date">2008-08-28 11:50:52</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
+<a href="/blog/tag/zend%20framework.html">zend framework</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/186-Using-dijit.Editor-with-Zend-Framework.html">Using dijit.Editor with Zend Framework</a></h4>
+
+    <div class="entry body"><p>
+    We're getting ready to release Zend Framework 1.6.0. However, one important
+    Dijit had to be omitted from the release as I was not able to get it working
+    in time: dijit.Editor.
+</p>
+
+<p>
+    This dijit is important as it provides an out-of-the-box WYSIWYG editor that
+    you can use with your forms. Unfortunately, actually using it with forms is
+    pretty tricky -- Dojo actually ends up storing content <em>outside</em> the
+    form, which means you need to create a handler that pulls the content into a
+    hidden element when saving.
+</p>
+
+<p>
+    I <em>have</em> created an implementation, however, that you can start using
+    now, and I'm posting it below. It includes both a view helper for displaying
+    it, as well as a form element for use with Zend_Form. 
+</p></div>
+
+    <p><a href="/blog/186-Using-dijit.Editor-with-Zend-Framework.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
     <p class="date">2008-08-27 08:49:45</p>
     <p class="tags"><a href="/blog/tag/php.html">php</a><br />
 <a href="/blog/tag/zend%20framework.html">zend framework</a><br />
@@ -456,41 +490,6 @@ $viewRenderer = HelperBroker::getStaticHelper('viewRenderer');
 </p></div>
 
     <p><a href="/blog/175-Speaking-at-the-Dutch-PHP-Conference.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2008-05-05 10:25:00</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
-<a href="/blog/tag/zend%20framework.html">zend framework</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/174-Form-Decorators-Tutorial-posted.html">Form Decorators Tutorial posted</a></h4>
-
-    <div class="entry body"><p>
-    As a continuing part of my MVC series, I've posted a new article on 
-    <a href="http://devzone.zend.com/article/3450-Decorators-with-Zend_Form">Form Decorators</a>
-    up on the DevZone.
-</p>
-
-<p>
-    I'm hoping this will be the definitive guide to using form decorators. I
-    cover the design decisions behind them, basics of operation, how to
-    customize output by mixing and matching standard decorators, and how to
-    create your own custom decorators. Among the examples are how to create a
-    table-based layout for your forms (instead of the dynamic list layout used
-    by default), and how to use a View Script as your form decorator in order to
-    have full control over your form layout.
-</p>
-
-<p>
-    So, if you've been playing with Zend_Form and having trouble wrapping your
-    head around decorators, <a href="http://devzone.zend.com/article/3450-Decorators-with-Zend_Form">give it a read</a>!
-</p></div>
-
-    <p><a href="/blog/174-Form-Decorators-Tutorial-posted.html">Continue reading...</a></p>
 </section>
 
 </div>

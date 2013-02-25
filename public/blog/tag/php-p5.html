@@ -95,6 +95,29 @@
 
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
+    <p class="date">2010-08-17 09:30:00</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
+<a href="/blog/tag/pear.html">pear</a><br />
+<a href="/blog/tag/zend%20framework.html">zend framework</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/245-Autoloading-Benchmarks.html">Autoloading Benchmarks</a></h4>
+
+    <div class="entry body"><p>
+During the past week, I've been looking at different strategies for <a href="http://php.net/autoload">autoloading</a> in <a href="http://framework.zend.com/">Zend Framework</a>. I've suspected for some time that our class loading strategy might be one source of performance degradation, and wanted to research some different approaches, and compare performance.
+</p>
+
+<p>
+In this post, I'll outline the approaches I've tried, the benchmarking stategy I applied, and the results of benchmarking each approach.
+</p></div>
+
+    <p><a href="/blog/245-Autoloading-Benchmarks.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
     <p class="date">2010-08-16 10:30:00</p>
     <p class="tags"><a href="/blog/tag/php.html">php</a><br />
 <a href="/blog/tag/spl.html">spl</a></p>
@@ -364,33 +387,6 @@
 </p></div>
 
     <p><a href="/blog/236-GPG-signing-Git-Commits.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2010-03-19 16:20:42</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
-<a href="/blog/tag/zend%20framework.html">zend framework</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/235-A-Simple-Resource-Injector-for-ZF-Action-Controllers.html">A Simple Resource Injector for ZF Action Controllers</a></h4>
-
-    <div class="entry body"><p>
-    <a href="http://www.brandonsavage.net/">Brandon Savage</a> approached me
-    with an interesting issue regarding ZF bootstrap resources, and accessing
-    them in your action controllers. Basically, he'd like to see any resource
-    initialized by the bootstrap immediately available as simply a public member
-    of his action controller.
-</p>
-
-<p>
-    So, for instance, if you were using the "DB" resource in your application,
-    your controller could access it via <code>$this-&gt;db</code>.
-</p></div>
-
-    <p><a href="/blog/235-A-Simple-Resource-Injector-for-ZF-Action-Controllers.html">Continue reading...</a></p>
 </section>
 
 </div>

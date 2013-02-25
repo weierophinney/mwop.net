@@ -95,6 +95,58 @@
 
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
+    <p class="date">2006-10-15 23:40:27</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/127-ZendCon-Best-Practices-Session.html">ZendCon: Best Practices Session</a></h4>
+
+    <div class="entry body"><p>
+    As <a href="http://mikenaberezny.com/archives/53">Mike already noted,</a>
+    he and I are presenting a session on "Best Practices of PHP Development" at
+    <a href="http://www.zendcon.com/speakers_list.php#day1">this year's Zend Conference and Expo</a>.
+    It has been my fortunate experience to work with Mike in the past, and, as
+    he noted, we had so much fun presenting during last year's conference, we
+    thought we'd do it again.
+</p>
+<p>
+    The session is a pre-conference tutorial session, running for 3 hours on
+    Monday morning, 30 October 2006.  Currently, we're shaping up the session
+    into the following subject areas:
+</p>
+<ul>
+    <li><b>Programming Practices</b>
+        <ul>
+            <li>Coding Standards</li>
+            <li>Test Driven Development and Unit Testing</li>
+            <li>Project Documentation</li>
+        </ul>
+    </li>
+    <li><b>Tools and Processes</b>
+        <ul>
+            <li>Software Configuration Management (SCM)</li>
+            <li>Collaboration tips and tools</li>
+            <li>Deployment</li>
+        </ul>
+    </li>
+</ul>
+<p>
+    Emphasis is going to be on working in teams, particularly those operating in
+    geographically diverse areas.  With roughly 30 minute blocks per topic,
+    we've certainly got plenty to cover!
+</p>
+<p>
+    If you're coming to the conference, we look forward to seeing you in our
+    session! 
+</p></div>
+
+    <p><a href="/blog/127-ZendCon-Best-Practices-Session.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
     <p class="date">2006-10-15 22:23:00</p>
     <p class="tags"><a href="/blog/tag/php.html">php</a></p>
 </aside>
@@ -395,50 +447,6 @@
 </p></div>
 
     <p><a href="/blog/117-Cgiapp2-Tutorial-1-Switch-Template-Plugins-at-Will.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2006-06-05 21:49:49</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/116-Phly-Darcs-Repository-online.html">Phly Darcs Repository online</a></h4>
-
-    <div class="entry body"><p>
-    A <a href="http://weierophinney.net/phly/darcs/">darcs repository browser</a> is now online for the
-    <a href="http://weierophinney.net/phly/">Phly channel</a>.
-</p>
-<p>
-    If you're not familiar with <a href="http://abridgegame.org/darcs/">darcs</a>, 
-    it's a revision control system, similar to <a href="http://www.gnu.org/software/gnu-arch/">GNU Arch</a>
-    and <a href="http://git.or.cz/">git</a>; changes are kept as patch sets, and
-    repositories are branched simply by checking them out. This makes darcs
-    repositories very flexible, and incredibly easy to implement. Static
-    binaries are available for most systems, which makes it easy to install on
-    systems to which you have no administrator rights.
-</p>
-<p>
-    A perl CGI script is shipped with darcs, and provides a web-based repository
-    viewer. It utilizes darcs' <code>--xml-output</code> switch to create XML, which is
-    then transformed using XSLT. However, there are some issues with the script;
-    it is somewhat difficult to customize, and makes many assumptions about your
-    system (location of configuration files, repositories, etc.). To make it
-    more flexible, I ported it to PHP, using <a href="http://weierophinney.net/phly/index.php?package=Cgiapp2">Cgiapp2</a>
-    and its XSLT template plugin and <a href="http://weierophinney.net/phly/index.php?package=Phly_Config">Phly_Config</a>.
-</p>
-<p>
-    I have released this PHP darcs repository browser as <a href="http://weierophinney.net/phly/index.php?package=Phly_Darcs">Phly_Darcs</a>, 
-    which contains both a Model and Controller, as well as example XSLT view
-    templates. It is currently in beta as I'm still developing PHPUnit2 tests
-    for some of the model functionality, as well as debating the ability to add
-    write capabilities (to authenticated users only, of course).
-</p>
-<p><b>Update:</b> fixed links to internal pages to use absolute urls.</p></div>
-
-    <p><a href="/blog/116-Phly-Darcs-Repository-online.html">Continue reading...</a></p>
 </section>
 
 </div>

@@ -95,6 +95,45 @@
 
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
+    <p class="date">2010-03-04 15:28:07</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
+<a href="/blog/tag/rest.html">rest</a><br />
+<a href="/blog/tag/zend%20framework.html">zend framework</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/233-Responding-to-Different-Content-Types-in-RESTful-ZF-Apps.html">Responding to Different Content Types in RESTful ZF Apps</a></h4>
+
+    <div class="entry body"><p>
+    In <a
+        href="/matthew/archives/227-Exposing-Service-APIs-via-Zend-Framework.html">previous</a>
+    <a
+        href="/matthew/archives/228-Building-RESTful-Services-with-Zend-Framework.html">articles</a>,
+    I've explored building service endpoints and RESTful services with Zend
+    Framework. With RPC-style services, you get to cheat: the protocol dictates
+    the content type (XML-RPC uses XML, JSON-RPC uses JSON, SOAP uses XML,
+    etc.). With REST, however, you have to make choices: what serialization
+    format will you support? 
+</p>
+
+<p> 
+    Why not support multiple formats?
+</p>
+
+<p>
+    There's no reason you can't re-use your RESTful web service to support
+    multiple formats. Zend Framework and PHP have plenty of tools to assist you
+    in responding to different format requests, so don't limit yourself. With a
+    small amount of work, you can make your controllers format agnostic, and
+    ensure that you respond appropriately to different requests.
+</p></div>
+
+    <p><a href="/blog/233-Responding-to-Different-Content-Types-in-RESTful-ZF-Apps.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
     <p class="date">2010-02-17 11:39:43</p>
     <p class="tags"><a href="/blog/tag/php.html">php</a><br />
 <a href="/blog/tag/sflive2010.html">sflive2010</a><br />
@@ -369,35 +408,6 @@
 </p></div>
 
     <p><a href="/blog/221-Blog-Backlog.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2009-08-20 15:17:46</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
-<a href="/blog/tag/zend%20framework.html">zend framework</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/220-Autoloading-Doctrine-and-Doctrine-entities-from-Zend-Framework.html">Autoloading Doctrine and Doctrine entities from Zend Framework</a></h4>
-
-    <div class="entry body"><p>
-    A number of people on the mailing list and twitter recently have asked how
-    to autoload Doctrine using Zend Framework's autoloader, as well as how to
-    autoload Doctrine models you've created. Having done a few projects using
-    Doctrine recently, I can actually give an answer.
-</p>
-
-<p>
-    The short answer: just attach it to <code>Zend_Loader_Autoloader</code>.
-</p>
-
-<p>
-    Now for the details.
-</p></div>
-
-    <p><a href="/blog/220-Autoloading-Doctrine-and-Doctrine-entities-from-Zend-Framework.html">Continue reading...</a></p>
 </section>
 
 </div>

@@ -95,6 +95,42 @@
 
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
+    <p class="date">2013-02-25 06:29:00</p>
+    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
+<a href="/blog/tag/rest.html">rest</a><br />
+<a href="/blog/tag/http.html">http</a><br />
+<a href="/blog/tag/zf2.html">zf2</a><br />
+<a href="/blog/tag/zend%20framework.html">zend framework</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/2013-02-25-restful-apis-with-zf2-part-3.html">RESTful APIs with ZF2, Part 3</a></h4>
+
+    <div class="entry body"><p>
+    In my <a href="/blog/2013-02-11-restful-apis-with-zf2-part-1.html">previous</a> 
+    <a href="/blog/2013-02-13-restful-apis-with-zf2-part-2.html">posts</a>, I 
+    covered basics of JSON hypermedia APIs using Hypermedia Application Language
+    (HAL), and methods for reporting errors, including API-Problem and vnd.error.
+</p>
+
+<p>
+    In this post, I'll be covering <em>documenting</em> your API -- techniques 
+    you can use to indicate what HTTP operations are allowed, as well as convey 
+    the full documentation on what endpoints are available, what they accept, 
+    and what you can expect them to return.
+</p>
+
+<p>
+    While I will continue covering general aspects of RESTful APIs in this 
+    post, I will also finally introduce several ZF2-specific techniques.
+</p></div>
+
+    <p><a href="/blog/2013-02-25-restful-apis-with-zf2-part-3.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
     <p class="date">2013-02-13 07:40:00</p>
     <p class="tags"><a href="/blog/tag/php.html">php</a><br />
 <a href="/blog/tag/rest.html">rest</a><br />
@@ -449,50 +485,6 @@ class MyController extends Zend_Controller_Action
 </p></div>
 
     <p><a href="/blog/2012-07-30-the-new-init.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2012-07-05 15:40:00</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
-<a href="/blog/tag/zf2.html">zf2</a><br />
-<a href="/blog/tag/zend%20framework.html">zend framework</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/2012-07-02-zf2-beta5-forms.html">ZF2 Forms in Beta5</a></h4>
-
-    <div class="entry body"><p>
-    Forms are a nightmare for web development. They break the concept of 
-    separation of concerns:
-</p>
-
-<ul>
-    <li>They have a <em>display</em> aspect (the actual HTML form)</li>
-    <li>They have a <em>validation</em> aspect</li>
-    <li>And the two mix, as you need to display validation error messages.</li>
-</ul>
-
-<p>
-    On top of that, the submitted data is often directly related to your domain
-    models, causing more issues:
-</p>
-
-<ul>
-    <li>Not all elements will have a 1:1 mapping to the domain model -- 
-    buttons, CSRF protection, CAPTCHAs, etc. usually are application-level 
-    concerns, but not domain issues.</li>
-    <li>Names valid for your domain model may not be valid names for HTML 
-    entities.</li>
-</ul>
-
-<p>
-    Add to this that the validation logic may be re-usable outside of a forms 
-    context, and you've got a rather complex problem.
-</p></div>
-
-    <p><a href="/blog/2012-07-02-zf2-beta5-forms.html">Continue reading...</a></p>
 </section>
 
 </div>

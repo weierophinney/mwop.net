@@ -1,11 +1,383 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title type="text">Author: Matthew Weier O'Phinney :: phly, boy, phly</title>
-  <updated>2013-02-13T13:40:00+0000</updated>
-  <generator uri="http://framework.zend.com" version="2.1.1dev">Zend_Feed_Writer</generator>
+  <updated>2013-02-25T12:29:00+0000</updated>
+  <generator uri="http://framework.zend.com" version="2.1.4dev">Zend_Feed_Writer</generator>
   <link rel="alternate" type="text/html" href="http://mwop.net/blog/author/matthew.html"/>
   <link rel="self" type="application/atom+xml" href="http://mwop.net/blog/author/matthew-atom.xml"/>
   <id>http://mwop.net/blog/author/matthew.html</id>
+  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <title type="html"><![CDATA[RESTful APIs with ZF2, Part 3]]></title>
+    <published>2013-02-25T12:29:00+0000</published>
+    <updated>2013-02-25T12:29:00+0000</updated>
+    <link rel="alternate" type="text/html" href="http://mwop.net/blog/2013-02-25-restful-apis-with-zf2-part-3.html"/>
+    <id>http://mwop.net/blog/2013-02-25-restful-apis-with-zf2-part-3.html</id>
+    <author>
+      <name>Matthew Weier O'Phinney</name>
+      <email>me@mwop.net</email>
+      <uri>http://mwop.net</uri>
+    </author>
+    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
+      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>In my <xhtml:a href="/blog/2013-02-11-restful-apis-with-zf2-part-1.html">previous</xhtml:a>
+<xhtml:a href="/blog/2013-02-13-restful-apis-with-zf2-part-2.html">posts</xhtml:a>, I
+covered basics of JSON hypermedia APIs using Hypermedia Application
+Language (HAL), and methods for reporting errors, including
+API-Problem and vnd.error.</xhtml:p>
+<xhtml:p>In this post, I'll be covering <xhtml:em>documenting</xhtml:em> your API --
+techniques you can use to indicate what HTTP operations are
+allowed, as well as convey the full documentation on what endpoints
+are available, what they accept, and what you can expect them to
+return.</xhtml:p>
+<xhtml:p>While I will continue covering general aspects of RESTful APIs
+in this post, I will also finally introduce several ZF2-specific
+techniques.</xhtml:p>
+<xhtml:h2>Why Document?</xhtml:h2>
+<xhtml:p>If you're asking this question, you've either never consumed
+software, or your software is perfect and self-documenting. I
+frankly don't believe either one.</xhtml:p>
+<xhtml:p>In the case of APIs, those consuming the API need to know how to
+use it.</xhtml:p>
+<xhtml:ul>
+<xhtml:li>What endpoints are available? Which operations are available
+for each endpoint?</xhtml:li>
+<xhtml:li>What does each endpoint expect as a payload during the
+request?</xhtml:li>
+<xhtml:li>What can you expect as a payload in return?</xhtml:li>
+<xhtml:li>How will errors be communicated?</xhtml:li>
+</xhtml:ul>
+<xhtml:p>While the promise of hypermedia APIs is that each response tells
+you the next steps available, you still, somewhere along the way,
+need more information - what payloads look like, which HTTP verbs
+should be used, and more. If you're <xhtml:strong>not</xhtml:strong>
+documenting your API, you're "doing it wrong."</xhtml:p>
+<xhtml:h2>Where Should Documentation Live?</xhtml:h2>
+<xhtml:p>This is the much bigger question.</xhtml:p>
+<xhtml:p>Of the questions I raised above, detailing what should be
+documented, there are two specific types. When discussing what
+operations are available, we have a technical solution in the form
+of the <xhtml:code>OPTIONS</xhtml:code> method and its counterpart, the
+<xhtml:code>Allow</xhtml:code> header. Everything else falls under end-user
+documentation.</xhtml:p>
+<xhtml:h2>OPTIONS</xhtml:h2>
+<xhtml:p>The HTTP specification details the <xhtml:code>OPTIONS</xhtml:code> method
+as idempotent, non-cacheable, and for use in detailing what
+operations are available for the given resource specified by the
+request URI. It makes specific mention of the <xhtml:code>Allow</xhtml:code>
+header, but does not limit what is returned for requests made via
+this method.</xhtml:p>
+<xhtml:p>The <xhtml:code>Allow</xhtml:code> header details the allowed HTTP methods
+for the given resource.</xhtml:p>
+<xhtml:p>Used in combination, you make an <xhtml:code>OPTIONS</xhtml:code> request to
+a URI, and it should return a response containing an
+<xhtml:code>Allow</xhtml:code> header; from that header value, you then know
+what other HTTP methods can be made to that URI.</xhtml:p>
+<xhtml:p>What this tells us is that our RESTful endpoint should do the
+following:</xhtml:p>
+<xhtml:ul>
+<xhtml:li>When an <xhtml:code>OPTIONS</xhtml:code> request is made, return a response
+with an <xhtml:code>Allow</xhtml:code> header that has a list of the available
+HTTP methods allowed.</xhtml:li>
+<xhtml:li>For any HTTP method we do <xhtml:em>not</xhtml:em> allow, we should return
+a "405 Not Allowed" response.</xhtml:li>
+</xhtml:ul>
+<xhtml:p>These are fairly easy to accomplish in ZF2. <xhtml:em>(See? I promised
+I'd get to some ZF2 code in this post!)</xhtml:em></xhtml:p>
+<xhtml:p>When creating RESTful endpoints in ZF2, I recommend using
+<xhtml:code>Zend\Mvc\Controller\AbstractRestfulController</xhtml:code>. This
+controller contains an <xhtml:code>options()</xhtml:code> method which you can
+use to respond to an <xhtml:code>OPTIONS</xhtml:code> request. As with any ZF2
+controller, returning a response object will prevent rendering and
+bubble out immediately so that the response is returned.</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="php">
+namespace My\Controller;
+use Zend\Mvc\Controller\AbstractRestfulController;
+
+class FooController extends AbstractRestfulController
+{
+    public function options()
+    {
+        $response = $this-&gt;getResponse();
+        $headers  = $response-&gt;getHeaders();
+
+        // If you want to vary based on whether this is a collection or an
+        // individual item in that collection, check if an identifier from
+        // the route is present
+        if ($this-&gt;params()-&gt;fromRoute('id', false)) {
+            // Allow viewing, partial updating, replacement, and deletion
+            // on individual items
+            $headers-&gt;addHeaderLine('Allow', implode(',', array(
+                'GET',
+                'PATCH',
+                'PUT',
+                'DELETE',
+            )));
+            return $response;
+        }
+
+        // Allow only retrieval and creation on collections
+        $headers-&gt;addHeaderLine('Allow', implode(',', array(
+            'GET',
+            'POST',
+        )));
+        return $response;
+    }
+}
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>The next trick is returning the 405 response if an invalid
+option is used. For this, you can create a listener in your
+controller, and wire it to listen at higher-than-default priority.
+As an example:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="php">
+namespace My\Controller;
+use Zend\EventManager\EventManagerInterface;
+use Zend\Mvc\Controller\AbstractRestfulController;
+
+class FooController extends AbstractRestfulController
+{
+    protected $allowedCollectionMethods = array(
+        'GET',
+        'POST',
+    );
+
+    protected $allowedResourceMethods = array(
+        'GET',
+        'PATCH',
+        'PUT',
+        'DELETE',
+    );
+
+    public function setEventManager(EventManagerInterface $events)
+    {
+        parent::setEventManager($events);
+        $events-&gt;attach('dispatch', array($this, 'checkOptions'), 10);
+    }
+
+    public function checkOptions($e)
+    {
+        $matches  = $e-&gt;getRouteMatch();
+        $response = $e-&gt;getResponse();
+        $request  = $e-&gt;getRequest();
+        $method   = $request-&gt;getMethod();
+
+        // test if we matched an individual resource, and then test
+        // if we allow the particular request method
+        if ($matches-&gt;getParam('id', false)) {
+            if (!in_array($method, $this-&gt;allowedResourceMethods)) {
+                $response-&gt;setStatusCode(405);
+                return $response;
+            }
+            return;
+        }
+
+        // We matched a collection; test if we allow the particular request 
+        // method
+        if (!in_array($method, $this-&gt;allowedCollectionMethods)) {
+            $response-&gt;setStatusCode(405);
+            return $response;
+        }
+    }
+}
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>Note that I moved the allowed methods into properties; if I did
+the above, I'd refactor the <xhtml:code>options()</xhtml:code> method to use
+those properties as well to ensure they are kept in sync.</xhtml:p>
+<xhtml:p>Also note that in the case of an invalid method, I return a
+response object. This ensures that nothing else needs to execute in
+the controller; I discover the problem and return early.</xhtml:p>
+<xhtml:h2>End-User Documentation</xhtml:h2>
+<xhtml:p>Now that we have the technical solution out of the way, we're
+still left with the bulk of the work left to accomplish: providing
+end-user documentation detailing the various payloads, errors,
+etc.</xhtml:p>
+<xhtml:p>I've seen two compelling approaches to this problem. The first
+builds on the <xhtml:code>OPTIONS</xhtml:code> method, and the other uses a
+hypermedia link in every response to point to documentation.</xhtml:p>
+<xhtml:p>The <xhtml:code>OPTIONS</xhtml:code> solution is this: <xhtml:a href="http://zacstewart.com/2012/04/14/http-options-method.html">use the
+body of an <xhtml:code>OPTIONS</xhtml:code> response to provide
+documentation</xhtml:a>. (Keith Casey <xhtml:a href="http://vimeo.com/49613738">gave an excellent short presentation
+about this at REST Fest 2012</xhtml:a>).</xhtml:p>
+<xhtml:p>The <xhtml:code>OPTIONS</xhtml:code> method allows for you to return a body
+in the response, and also allows for content negotiation. The
+theory, then, is that you return media-type-specific documentation
+that details the methods allowed, and what they specifically accept
+in the body. While there is no standard for this at this time, the
+first article I linked suggested including a description, the
+parameters expected, and one or more example request bodies for
+each HTTP method allowed; you'd likely also want to detail the
+responses that can be expected.</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="javascript">
+{
+    "POST": {
+        "description": "Create a new status",
+        "parameters": {
+            "type": {
+                "type": "string",
+                "description": "Status type -- text, image, or url; defaults to text",
+                "required": false
+            },
+            "text": {
+                "type": "string",
+                "description": "Status text; required for text types, optional for others",
+                "required": false
+            },
+            "image_url": {
+                "type": "string",
+                "description": "URL of image for image types; required for image types",
+                "required": false
+            },
+            "link_url": {
+                "type": "string",
+                "description": "URL of image for link types; required for link types",
+                "required": false
+            }
+        },
+        "responses": [
+            {
+                "describedBy": "http://example.com/problems/invalid-status",
+                "title": "Submitted status was invalid",
+                "detail": "Missing text field required for text type"
+            },
+            {
+                "id": "abcdef123456",
+                "type": "text",
+                "text": "This is a status update",
+                "timestamp": "2013-02-22T10:06:05+0:00"
+            }
+        ],
+        "examples": [
+            {
+                "text": "This is a status update"
+            },
+            {
+                "type": "image",
+                "text": "This is the image caption",
+                "image_url": "http://example.com/favicon.ico"
+            },
+            {
+                "type": "link",
+                "text": "This is a description of the link",
+                "link_url": "http://example.com/"
+            },
+        ]
+    }
+}
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>If you were to use this methodology, you would alter the
+<xhtml:code>options()</xhtml:code> method such that it does not return a
+response object, but instead return a view model with the
+documentation.</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="php">
+namespace My\Controller;
+use Zend\Mvc\Controller\AbstractRestfulController;
+
+class FooController extends AbstractRestfulController
+{
+    protected $viewModelMap = array(/* ... */);
+
+    public function options()
+    {
+        $response = $this-&gt;getResponse();
+        $headers  = $response-&gt;getHeaders();
+
+        // Get a view model based on Accept types
+        $model    = $this-&gt;acceptableViewModelSelector($this-&gt;viewModelMap);
+
+        // If you want to vary based on whether this is a collection or an
+        // individual item in that collection, check if an identifier from
+        // the route is present
+        if ($this-&gt;params()-&gt;fromRoute('id', false)) {
+            // Still set the Allow header
+            $headers-&gt;addHeaderLine('Allow', implode(
+                ',', 
+                $this-&gt;allowedResourceMethods
+            ));
+
+            // Set documentation specification as variables
+            $model-&gt;setVariables($this-&gt;getResourceDocumentationSpec());
+            return $model;
+        }
+
+        // Allow only retrieval and creation on collections
+        $headers-&gt;addHeaderLine('Allow', implode(
+            ',',
+            $this-&gt;allowedCollectionMethods
+        ));
+        $model-&gt;setVariables($this-&gt;getCollectionDocumentationSpec());
+        return $model;
+    }
+}
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>I purposely didn't provide the implementations of the
+<xhtml:code>getResourceDocumentationSpec()</xhtml:code> and
+<xhtml:code>getCollectionDocumentationSpec()</xhtml:code> methods, as that will
+likely be highly specific to your application. Another possibility
+is to use your view engine for this, and specify a template file
+that has the fully-populated information. This would require a
+custom renderer when using JSON or XML, but is a pretty easy
+solution.</xhtml:p>
+<xhtml:p><xhtml:strong>However, there's one cautionary tale to tell</xhtml:strong>,
+something I already mentioned: <xhtml:code>OPTIONS</xhtml:code>, per the
+specification, is <xhtml:em>non-cacheable</xhtml:em>. What this means is that
+everytime somebody makes an <xhtml:code>OPTIONS</xhtml:code> request, any cache
+control headers you provide will be ignored, which means hitting
+the server for each and every request to the documentation.
+Considering documentation is static, this is problematic; it has
+even prompted <xhtml:a href="http://www.mnot.net/blog/2012/10/29/NO_OPTIONS">blog posts urging
+you not to use OPTIONS for documentation</xhtml:a>.</xhtml:p>
+<xhtml:p>Which brings us to the second solution for end-user
+documentation: a static page referenced via a hypermedia link.</xhtml:p>
+<xhtml:p>This solution is insanely easy: you simply provide a
+<xhtml:code>Link</xhtml:code> header in your response, and provide a
+<xhtml:code>describedby</xhtml:code> reference pointing to the documentation
+page:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="http">
+Link: &lt;http://example.com/api/documentation.md&gt;; rel="describedby"
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>With ZF2, this is trivially easy to accomplish: create a route
+and endpoint for your documentation, and then a listener on your
+controller that adds the <xhtml:code>Link</xhtml:code> header to your
+response.</xhtml:p>
+<xhtml:p>The latter, adding the link header, might look like this:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="php">
+namespace My\Controller;
+use Zend\EventManager\EventManagerInterface;
+use Zend\Mvc\Controller\AbstractRestfulController;
+
+class FooController extends AbstractRestfulController
+{
+    public function setEventManager(EventManagerInterface $events)
+    {
+        parent::setEventManager($events);
+        $events-&gt;attach('dispatch', array($this, 'injectLinkHeader'), 20);
+    }
+
+    public function injectLinkHeader($e)
+    {
+        $response = $e-&gt;getResponse();
+        $headers  = $response-&gt;getHeaders();
+        $headers-&gt;addHeaderLine('Link', sprintf(
+            '</xhtml:code>
+</xhtml:pre></xhtml:div>
+</xhtml:div>
+    </content>
+  </entry>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <title type="html"><![CDATA[RESTful APIs with ZF2, Part 2]]></title>
     <published>2013-02-13T13:40:00+0000</published>
@@ -224,6 +596,8 @@ the series as I publish them.</xhtml:em></xhtml:p>
 <xhtml:ul>
 <xhtml:li><xhtml:a href="/blog/2013-02-11-restful-apis-with-zf2-part-1">Part
 1</xhtml:a></xhtml:li>
+<xhtml:li><xhtml:a href="/blog/2013-02-25-restful-apis-with-zf2-part-3">Part
+3</xhtml:a></xhtml:li>
 </xhtml:ul>
 </xhtml:div>
     </content>
@@ -547,6 +921,8 @@ the series as I publish them.</xhtml:em></xhtml:p>
 <xhtml:ul>
 <xhtml:li><xhtml:a href="/blog/2013-02-13-restful-apis-with-zf2-part-2">Part
 2</xhtml:a></xhtml:li>
+<xhtml:li><xhtml:a href="/blog/2013-02-25-restful-apis-with-zf2-part-3">Part
+3</xhtml:a></xhtml:li>
 </xhtml:ul>
 </xhtml:div>
     </content>
@@ -1307,356 +1683,6 @@ vary.</xhtml:li>
 </xhtml:ul>
 <xhtml:p>Hopefully, this will serve as a reasonable guide for others
 foraying into screencasts on Linux!</xhtml:p>
-</xhtml:div>
-    </content>
-  </entry>
-  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
-    <title type="html"><![CDATA[ZF2 Modules Quickstart (Screencast)]]></title>
-    <published>2012-09-19T18:10:00+0000</published>
-    <updated>2012-09-19T18:10:00+0000</updated>
-    <link rel="alternate" type="text/html" href="http://mwop.net/blog/2012-09-19-zf2-module-screencast.html"/>
-    <id>http://mwop.net/blog/2012-09-19-zf2-module-screencast.html</id>
-    <author>
-      <name>Matthew Weier O'Phinney</name>
-      <email>me@mwop.net</email>
-      <uri>http://mwop.net</uri>
-    </author>
-    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
-      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>One of the exciting features of the newly released Zend
-Framework 2 is the new module system.</xhtml:p>
-<xhtml:p>While ZF1 had modules, they were difficult to manage. All
-resources for all modules were initialized on each request, and
-bootstrapping modules was an onerous task. Due to the difficulties,
-modules were never truly "plug-and-play", and thus no ecosystem
-ever evolved for sharing modules.</xhtml:p>
-<xhtml:p>In Zend Framework 2, we've architected the MVC from the ground
-up to make modular applications as easy as possible. Within ZF2,
-the MVC simply cares about events and services — and controllers
-are simply one kind of service. As such, modules are primarily
-about telling the MVC about services and wiring event
-listeners.</xhtml:p>
-<xhtml:p>To give you an example, in this tutorial, I'll show you how to
-install the Zend Framework 2 skeleton application, and we'll then
-install a module and see how easy it is to add it to the
-application and then configure it.</xhtml:p>
-<xhtml:p>To keep things simple, I'm using a unix-like environment. As
-such, if you are on Windows, you may not have the same command-line
-tools available. If you are in such a situation, perhaps try this
-inside a Linux virtual machine.</xhtml:p>
-<xhtml:iframe src="http://player.vimeo.com/video/49775540" width="500" height="281" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""/>
-<xhtml:p><xhtml:a href="http://vimeo.com/49775540">Zend Framework 2 Module
-Quickstart</xhtml:a></xhtml:p>
-<xhtml:p>Let's start by creating a new project. We'll execute a few
-commands to download a skeleton application archive and extract
-it.</xhtml:p>
-<xhtml:div class="example">
-<xhtml:pre>
-<xhtml:code language="bash">
-% mkdir newproject
-% cd newproject
-% wget https://github.com/zendframework/ZendSkeletonApplication/tarball/master \
-    -O ZendSkeletonApplication.tgz
-% tar xzf ZendSkeletonApplication.tgz --strip-components=1
-</xhtml:code>
-</xhtml:pre></xhtml:div>
-<xhtml:p>The Zend Framework skeleton application can be downloaded
-directly off of <xhtml:a href="https://github.com">GitHub</xhtml:a>. I'm
-showing using the download from master, but you can also download a
-tarball or zipball for individual tags as well. Because the
-download URL does not include an extension, I use the
-<xhtml:code>-O</xhtml:code> switch to tell <xhtml:code>wget</xhtml:code> what filename to
-save to.</xhtml:p>
-<xhtml:p><xhtml:code>tar</xhtml:code> has a nice option,
-`<xhtml:code>--strip-components</xhtml:code>`, which allows you to tell it to
-descend a certain number of levels deep into the archive when
-deflating. Since I know the tarball has a top-level directory named
-after the repository and a sha1, I'm simply telling
-<xhtml:code>tar</xhtml:code> to skip that and give me the contents of its child
-directory.</xhtml:p>
-<xhtml:p>At this point you have the skeleton application, but it has no
-dependencies — not even Zend Framework itself! Let's rectify that
-situation. We'll use the dependency management tool <xhtml:a href="https://getcomposer.org/">Composer</xhtml:a> to do this. We include the
-Composer phar file within the skeleton application to make this
-fairly easy. Simply execute the following:</xhtml:p>
-<xhtml:div class="example">
-<xhtml:pre>
-<xhtml:code language="bash">
-% php composer.phar install
-</xhtml:code>
-</xhtml:pre></xhtml:div>
-<xhtml:p>You may get a notice indicating that the composer version is
-older, and to run "self-update"; you can ignore that for now.</xhtml:p>
-<xhtml:p>If all goes well, you should now have Zend Framework installed.
-Let's test it out. I'm going to use the built-in web server in PHP
-5.4 to demonstrate.</xhtml:p>
-<xhtml:div class="example">
-<xhtml:pre>
-<xhtml:code language="bash">
-% cd public
-% php -S localhost:8080
-</xhtml:code>
-</xhtml:pre></xhtml:div>
-<xhtml:p>If I browse to <xhtml:code>http://localhost:8080</xhtml:code> I should now
-see the landing page for the skeleton application.</xhtml:p>
-<xhtml:img src="/images/screencasts/2012-09-19-zf2-module-screencast-01-zsa.png" style="width: 100%; height: 100%;"/>
-<xhtml:p>Let's add a module to the application. Many sites require a
-contact form. I've written one as a module some time ago, and
-called it <xhtml:a href="https://github.com/weierophinney/PhlyContact">PhlyContact</xhtml:a>. To
-install it, I'll edit my project's <xhtml:code>composer.json</xhtml:code> and
-tell it about that dependency:</xhtml:p>
-<xhtml:div class="example">
-<xhtml:pre>
-<xhtml:code language="json">
-{
-    "require": {
-        "php": "&gt;=5.3.3",
-        "zendframework/zendframework": "dev-master",
-        "phly/phly-contact": "dev-master"
-    }
-}
-</xhtml:code>
-</xhtml:pre></xhtml:div>
-<xhtml:p>I know the name of the component from <xhtml:a href="http://packagist.org/">http://packagist.org/</xhtml:a>, and I'm telling
-Composer that I want to use whatever the latest version is on its
-master branch on GitHub. I happen to also know that PhlyContact
-requires a dev-master version of Zend Framework, so I'll alter that
-dependency for now.</xhtml:p>
-<xhtml:p>Now, we need to tell composer to update our dependencies.</xhtml:p>
-<xhtml:div class="example">
-<xhtml:pre>
-<xhtml:code language="bash">
-% php composer.phar update
-</xhtml:code>
-</xhtml:pre></xhtml:div>
-<xhtml:p>After executing the command, we should now see that it has
-installed; this may take a little while.</xhtml:p>
-<xhtml:p>You need to inform the application about the module. This is so
-that we don't have to perform expensive file-system scanning
-operations, but also to make it explicit in your code what modules
-you're actually using. Enabling a module is usually as easy as
-adding an entry to <xhtml:code>config\application.config.php</xhtml:code>:</xhtml:p>
-<xhtml:div class="example">
-<xhtml:pre>
-<xhtml:code language="php">
-'modules' =&gt; array(
-    'Application',
-    'PhlyContact',
-),
-</xhtml:code>
-</xhtml:pre></xhtml:div>
-<xhtml:p>This particular module provides some reasonable defaults. In
-particular, it uses a CAPTCHA adapter that doesn't require
-additional configuration, and assumes that you will want to use the
-default <xhtml:code>Sendmail</xhtml:code> mail transport. As such, we can
-simply browse to it now. I happen to know that the module defines a
-<xhtml:code>/contact</xhtml:code> end point. Let's fire up our PHP web server
-again, and browse to that URL.</xhtml:p>
-<xhtml:div class="example">
-<xhtml:pre>
-<xhtml:code language="bash">
-% cd public
-% php -S localhost:8080
-</xhtml:code>
-</xhtml:pre></xhtml:div>
-<xhtml:img src="/images/screencasts/2012-09-19-zf2-module-screencast-02-contact.png" style="width: 100%; height: 100%;"/>
-<xhtml:p>It just works!</xhtml:p>
-<xhtml:p>One philosophy we have for distributable modules in Zend
-Framework 2 is that you should not need to touch the code in
-modules you install in your application. Instead, you should be
-able to configure and override behavior within the application
-configuration or in your application's site-specific modules. Let's
-alter the contact module to:</xhtml:p>
-<xhtml:ul>
-<xhtml:li>first, change the URL it responds to, and</xhtml:li>
-<xhtml:li>second, use the "file" mail transport.</xhtml:li>
-</xhtml:ul>
-<xhtml:p>Let's look at the default configuration. I'll browse to
-<xhtml:code>vendor/phly/phly-contact/config/</xhtml:code> and look at the
-<xhtml:code>module.config.php</xhtml:code> file.</xhtml:p>
-<xhtml:div class="example">
-<xhtml:pre>
-<xhtml:code language="php">
-return array(
-    'phly_contact' =&gt; array(
-        'captcha' =&gt; array(
-            'class' =&gt; 'dumb',
-        ),
-        'form' =&gt; array(
-            'name' =&gt; 'contact',
-        ),
-        'mail_transport' =&gt; array(
-            'class' =&gt; 'Zend\Mail\Transport\Sendmail',
-            'options' =&gt; array(
-            )
-        ),
-        'message' =&gt; array(
-            /*
-            'to' =&gt; array(
-                'EMAIL HERE' =&gt; 'NAME HERE',
-            ),
-            'sender' =&gt; array(
-                'address' =&gt; 'EMAIL HERE',
-                'name'    =&gt; 'NAME HERE',
-            ),
-            'from' =&gt; array(
-                'EMAIL HERE' =&gt; 'NAME HERE',
-            ),
-             */
-        ),
-    ),
-
-    /* ... */
-
-    'router' =&gt; array(
-        'routes' =&gt; array(
-            'contact' =&gt; array(
-                'type' =&gt; 'Literal',
-                'options' =&gt; array(
-                    'route' =&gt; '/contact',
-                    'defaults' =&gt; array(
-                        '__NAMESPACE__' =&gt; 'PhlyContact\Controller',
-                        'controller'    =&gt; 'Contact',
-                        'action'        =&gt; 'index',
-                    ),
-                ),
-                'may_terminate' =&gt; true,
-                'child_routes' =&gt; array(
-                    'process' =&gt; array(
-                        'type' =&gt; 'Literal',
-                        'options' =&gt; array(
-                            'route' =&gt; '/process',
-                            'defaults' =&gt; array(
-                                'action' =&gt; 'process',
-                            ),
-                        ),
-                    ),
-                    'thank-you' =&gt; array(
-                        'type' =&gt; 'Literal',
-                        'options' =&gt; array(
-                            'route' =&gt; '/thank-you',
-                            'defaults' =&gt; array(
-                                'action' =&gt; 'thank-you',
-                            ),
-                        ),
-                    ),
-                ),
-            ),
-        ),
-    ),
-    /* ... */
-);
-</xhtml:code>
-</xhtml:pre></xhtml:div>
-<xhtml:p>Okay, that's interesting. I can define the captcha and options
-to use, the name of the contact form, the mail transport I want to
-use, and even who the email is sent from and who it goes to. In
-addition, it defines some routes.</xhtml:p>
-<xhtml:p>I'll create a new file,
-<xhtml:code>config/autoload/phly-contact.local.php</xhtml:code>. This is a
-local configuration file that will not be checked into my version
-control system. Now, let's add some configuration. First, I'll
-configure my mail transport.</xhtml:p>
-<xhtml:div class="example">
-<xhtml:pre>
-<xhtml:code language="php">
-return array(
-    'phly_contact' =&gt; array(
-        'mail_transport' =&gt; array(
-            'class'   =&gt; 'Zend\Mail\Transport\File',
-            'options' =&gt; array(
-                'path' =&gt; 'data/mail/',
-            ),
-        ),
-    ),
-);
-</xhtml:code>
-</xhtml:pre></xhtml:div>
-<xhtml:p>I'm telling the module to use the <xhtml:code>File</xhtml:code> mail
-transport, and telling the transport where I want messages written.
-By default, Zend Framework calls <xhtml:code>chdir()</xhtml:code> to change
-directory to the project root, so I can reference a directory
-relative to that. I'm simply going to write to a
-<xhtml:code>data/mail/</xhtml:code> directory. Let's create that, and make it
-world-writable for now to ensure the web server can write to it.
-(In production, you'd only want it writable by the web server
-user.)</xhtml:p>
-<xhtml:div class="example">
-<xhtml:pre>
-<xhtml:code language="bash">
-% mkdir -p data/mail
-% chmod a+rwX data/mail
-</xhtml:code>
-</xhtml:pre></xhtml:div>
-<xhtml:p>Now, let's change the base URL the contact form responds to; I
-want it to respond to <xhtml:code>/contact-us</xhtml:code>. Another principle
-of re-usable modules in ZF2 is that we recommend creating tree
-routes for each module, with the root of the tree being a literal
-route. This makes it easy to alter the base for routing, without
-needing to redefine all the routes in the module.</xhtml:p>
-<xhtml:p>I'll add the following to my local configuration, then. I'll
-simply override the parent route for my module, named "contact",
-and point it at a different URL.</xhtml:p>
-<xhtml:div class="example">
-<xhtml:pre>
-<xhtml:code language="php">
-'router' =&gt; array(
-    'routes' =&gt; array(
-        'contact' =&gt; array(
-            'options' =&gt; array(
-                'route' =&gt; '/contact-us',
-            ),
-        ),
-    ),
-),
-</xhtml:code>
-</xhtml:pre></xhtml:div>
-<xhtml:p>Let's see if all this worked! Once again, I'll fire up PHP's
-built-in web server.</xhtml:p>
-<xhtml:div class="example">
-<xhtml:pre>
-<xhtml:code language="bash">
-% cd public
-% php -S localhost:8080
-</xhtml:code>
-</xhtml:pre></xhtml:div>
-<xhtml:p>Now, let's browse to
-<xhtml:code>http://localhost:8080/contact-us</xhtml:code> -- looks good! Just
-as an experiment, let's try the previously configured URL,
-<xhtml:code>http://localhost:8080/contact</xhtml:code>. We get a 404 now!</xhtml:p>
-<xhtml:img src="/images/screencasts/2012-09-19-zf2-module-screencast-03-config.png" style="width: 100%; height: 100%;"/> <xhtml:img src="/images/screencasts/2012-09-19-zf2-module-screencast-04-404.png" style="width: 100%; height: 100%;"/>
-<xhtml:p>Now, let's submit the form. I'll fill in some information; it's
-asking for my email address, a subject line, and a message, as well
-as for me to solve a simple CAPTCHA. Once I've done all that, I can
-send it.</xhtml:p>
-<xhtml:p>If all is well, we should now have a mail file in our data
-directory. Let's check.</xhtml:p>
-<xhtml:div class="example">
-<xhtml:pre>
-<xhtml:code language="bash">
-% ls -l data/mail/
-</xhtml:code>
-</xhtml:pre></xhtml:div>
-<xhtml:p>And now let's look at it.</xhtml:p>
-<xhtml:div class="example">
-<xhtml:pre>
-<xhtml:code language="bash">
-% cat data/mail/ZendMail_1347989389_1009740165.tmp
-Date: Tue, 18 Sep 2012 12:29:49 -0500
-From: me@mwop.net
-Reply-To: me@mwop.net
-Subject: [Contact Form] Suspense!
-
-Suspenseful, isn't it?
-</xhtml:code>
-</xhtml:pre></xhtml:div>
-<xhtml:p>Looks good!</xhtml:p>
-<xhtml:p>Zend Framework 2 provides a wonderful modular architecture that
-will enable an ecosystem of 3rd party modules that should save you
-time and energy when developing your applications. I've
-demonstrated a simple one, a contact form, but many, many more
-already exist, and with a stable release now available, you should
-see that number grow. This is truly a wonderful step forward for
-developers, and I hope you find it as exciting as I do.</xhtml:p>
 </xhtml:div>
     </content>
   </entry>
