@@ -447,7 +447,7 @@ class FooController extends AbstractRestfulController
 </p>
 
 <div class="example"><pre><code language="http">
-Link: <http://example.com/api/documentation.md>; rel="describedby"
+Link: &lt;http://example.com/api/documentation.md&gt;; rel="describedby"
 </code></pre></div>
 
 <p>
