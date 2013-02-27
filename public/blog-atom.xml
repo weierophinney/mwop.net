@@ -1,135 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title type="text">Blog Entries :: phly, boy, phly</title>
-  <updated>2013-02-27T18:41:00+0000</updated>
+  <updated>2013-02-25T12:29:00+0000</updated>
   <generator uri="http://framework.zend.com" version="2.1.4dev">Zend_Feed_Writer</generator>
   <link rel="alternate" type="text/html" href="http://mwop.net/blog.html"/>
   <link rel="self" type="application/atom+xml" href="http://mwop.net/blog-atom.xml"/>
   <id>http://mwop.net/blog.html</id>
-  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
-    <title type="html"><![CDATA[On PHP-FIG]]></title>
-    <published>2013-02-27T18:41:00+0000</published>
-    <updated>2013-02-27T18:41:00+0000</updated>
-    <link rel="alternate" type="text/html" href="http://mwop.net/blog/2013-02-27-resigned-from-php-fig.html"/>
-    <id>http://mwop.net/blog/2013-02-27-resigned-from-php-fig.html</id>
-    <author>
-      <name>Matthew Weier O'Phinney</name>
-      <email>me@mwop.net</email>
-      <uri>http://mwop.net</uri>
-    </author>
-    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
-      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>Yesterday, I left the PHP-FIG group.</xhtml:p>
-<xhtml:p>As in: left the github organization I created, and removed
-myself from the mailing list I created.</xhtml:p>
-<xhtml:p>I have contacted members of my development team and the Zend
-Framework community review team to see if anybody is willing to
-represent ZF in the group. I no longer am.</xhtml:p>
-<xhtml:p>I was going to leave quietly, but as a favor to Paul M. Jones --
-a good friend and sometimes collaborator -- I'm writing now.</xhtml:p>
-<xhtml:p>I had high hopes for the group. It was the culmination of
-something I've been ruminating on for almost a decade (<xhtml:a href="http://www.mwop.net/blog/12-PHP-standards-ruminations.html">see
-post number 12 on my blog, dated to January 2004, for proof</xhtml:a>).
-My thoughts have mainly been around coding standards and best
-practices, helping educate developers around their benefits, and
-how to leverage both in order to create maintainable code.</xhtml:p>
-<xhtml:p>First, a few thoughts:</xhtml:p>
-<xhtml:ul>
-<xhtml:li>I personally feel that interfaces are a bad fit for the
-organization; <xhtml:a href="http://www.mwop.net/blog/2012-12-20-on-shared-interfaces.html">I
-have outlined my thoughts on interface standardization
-elsewhere</xhtml:a>.</xhtml:li>
-<xhtml:li>Multiple coding standards are okay. A standard for every
-project, organization, or developer is not. The ideal is a handful
-or so for any given language, as more than that means there are no
-standards; it's just a free-for-all.</xhtml:li>
-<xhtml:li>No individual coding standard will satisfy all developers. In
-fact, in my experience, there will always be choices in
-<xhtml:em>any</xhtml:em> standard that even the authors of the standard are
-unhappy with. The point of a coding standard is not to make
-everyone happy. It's to have a document that details the structure
-of code so that developers focus on the intent of code, not the way
-it's formatted.</xhtml:li>
-<xhtml:li>Coding standards are useless if they do not contain hard rules,
-as automated tooling to sniff for CS issues cannot be written.
-"COULD", "SHOULD", and "CAN" are all problematic, and any use of
-"EITHER" is going to make automation ridiculously complex.</xhtml:li>
-<xhtml:li>In the end, no matter what the technical arguments are for any
-given detail, all coding standards are ultimately subjective. The
-only objective standard is what is parseable in the given
-language.</xhtml:li>
-<xhtml:li>What matters is that you <xhtml:em>adopt</xhtml:em> an <xhtml:em>existing</xhtml:em>
-standard, and <xhtml:em>use</xhtml:em> it. When you do, you can automate some
-code review, prevent developer commit skirmishes arising from
-differences in formatting aesthetics, and focus on the problem
-you're trying to solve in your code.</xhtml:li>
-</xhtml:ul>
-<xhtml:p>With those thoughts as background, then, I can better explain my
-departure.</xhtml:p>
-<xhtml:p>The point of PHP-FIG was to create consensus around practices
-shared by its member groups, no more, no less.</xhtml:p>
-<xhtml:p>When PSR-0 was created, we had around a half-dozen member
-groups. You have to start somewhere.</xhtml:p>
-<xhtml:p>Each proposal since then has had an increasing number of members
-both discussing and voting on proposals. That means the early
-proposals may not be representative of the later membership. That's
-a simple fact.</xhtml:p>
-<xhtml:p>That does not mean the standards should <xhtml:em>change</xhtml:em>. Once
-published, a standard is done. The only thing that can happen is
-that a <xhtml:em>new</xhtml:em> standard may be created that can
-<xhtml:em>supersede</xhtml:em> an existing standard, or be used
-<xhtml:em>instead</xhtml:em> <xhtml:em>of</xhtml:em> an existing standard. As examples from
-existing standards bodies, consider RFC 822, which codified the
-format of internet text messages (email); it superseded at least
-one other RFC, and has itself been superseded twice (in RFC 2822
-and RFC 5322).</xhtml:p>
-<xhtml:p>PHP-FIG adopted the same workflow. If new practices emerge, or
-the makeup of the organization significantly changes, and existing
-recommendations are found to be obsolete or outdated, a
-<xhtml:em>new</xhtml:em> recommendation may be proposed to supersede or be
-adopted in parallel to them.</xhtml:p>
-<xhtml:p>Parallel standards from the same body, however, should be
-considered <xhtml:em>very</xhtml:em> carefully, as they lead to splintering and
-fragmentation of the standards body and member organizations. If
-consensus cannot be achieved, why bother?</xhtml:p>
-<xhtml:p>What I see happening in the PHP-FIG github organization (in pull
-request comment threads) and google group, however, is the exact
-opposite of the goals that originally led to the group being
-formed. Instead of people trying to achieve consensus, I see a lot
-of polarizing, all-or-nothing arguments occurring, often over very
-subjective things. Developers are defending their opinions and
-viewpoints with little to no real analysis of what others present.
-I see a lot of "you're wrong" types of remarks. These are coming
-largely from non-voting members, but it means the signal-to-noise
-ratio within these forums is skewed; it's hard to find reasonable
-discussion occurring due to this behavior.</xhtml:p>
-<xhtml:p>The "old guard" is guilty of this at times, too -- but not as
-often as many might insist. The insistence of folks like Paul M
-Jones, Paul Dragoonis, and Lukas Kahwe Smith that discussion should
-happen on-list, and that PRs are not considered for existing,
-accepted standards is actually reasonable -- for the reasons I
-outlined above. A standard is written once; if it needs revision, a
-<xhtml:em>new</xhtml:em> standard should be written superseding it.</xhtml:p>
-<xhtml:p>What is most irritating, however, is it doesn't matter how many
-times such statements are made; people insist on debating their pet
-peeves on existing standards without following the guidelines and
-established process -- nor listening when others point out that the
-debate has occurred before, will occur again, and needs to stop for
-now so that we can focus on constructive tasks. I see a lot of name
-calling, a lot of accusations of a "dictatorship" (they're
-<xhtml:em>recommendations</xhtml:em> people; they're not
-<xhtml:em>requirements</xhtml:em>), and overall egotistical behavior.</xhtml:p>
-<xhtml:p>I'm tired of it. I have better things to do with my time, things
-I want to create, software I want to support, hobbies and interests
-I want to pursue. Debating brace placement, tabs vs spaces (for the
-umpteenth time), or whether or not annotations have a place in
-programming in a dynamic language? Not so much.</xhtml:p>
-<xhtml:p>I hope PHP-FIG can achieve the goals it started with. It will
-have to do so without my participation, though.</xhtml:p>
-<xhtml:h4>Note</xhtml:h4>
-<xhtml:p>I've disabled comments on this post.</xhtml:p>
-</xhtml:div>
-    </content>
-  </entry>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <title type="html"><![CDATA[RESTful APIs with ZF2, Part 3]]></title>
     <published>2013-02-25T12:29:00+0000</published>
@@ -1680,6 +1556,133 @@ be beat (the current developer preview is free). Considering most
 stuff I do will fall into this or the basic tier, and that most
 cartridges do not end up counting against your alotment of gears,
 the pricing ($0.05/hour) is extremely competitive.</xhtml:p>
+</xhtml:div>
+    </content>
+  </entry>
+  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <title type="html"><![CDATA[Screencasting on Linux]]></title>
+    <published>2012-09-20T22:30:00+0000</published>
+    <updated>2012-09-20T22:30:00+0000</updated>
+    <link rel="alternate" type="text/html" href="http://mwop.net/blog/2012-09-20-screencasting-on-linux.html"/>
+    <id>http://mwop.net/blog/2012-09-20-screencasting-on-linux.html</id>
+    <author>
+      <name>Matthew Weier O'Phinney</name>
+      <email>me@mwop.net</email>
+      <uri>http://mwop.net</uri>
+    </author>
+    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
+      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>I've been wanting to do screencasts on Linux for some time now,
+and my big stumbling block has been determining what tools to
+use.</xhtml:p>
+<xhtml:p>The <xhtml:strong>tl;dr</xhtml:strong>:</xhtml:p>
+<xhtml:ul>
+<xhtml:li>Use <xhtml:code>recordMyDesktop</xhtml:code> to record video clips, but
+afterwards, re-encode them to AVI (<xhtml:a href="#script">see the script
+I used</xhtml:a>)</xhtml:li>
+<xhtml:li>Record audio to WAV, or convert compressed audio to WAV format
+afterwards.</xhtml:li>
+<xhtml:li>Use OpenShot to stitch clips together and layer audio and video
+tracks.</xhtml:li>
+<xhtml:li>Remember to reset the video length if you change the playback
+rate.</xhtml:li>
+<xhtml:li>Export to a Web + Vimeo profile for best results.</xhtml:li>
+</xhtml:ul>
+<xhtml:h2 id="toc_1.1">Stumbling Blocks</xhtml:h2>
+<xhtml:p><xhtml:code>recordMyDesktop</xhtml:code> is a fairly simple tool, and allows
+you to record actions you're taking, and simultaneously capture
+audio. However, it creates an ".ogv" (Ogg Vorbis video file) --
+which is basically useless for anybody not on Linux or FreeBSD.
+Additionally, I often like to record in segments; this makes it
+less likely that I'll make mistakes, and, if I do, I only need to
+record a small segment again, not the entire thing.
+<xhtml:code>recordMyDesktop</xhtml:code> is only for creating screencasts, not
+merging them.</xhtml:p>
+<xhtml:p>So, <xhtml:code>recordMyDesktop</xhtml:code> went into my toolbox for the
+purpose of recording the video portion of my screencasts.</xhtml:p>
+<xhtml:p>Which brings me to the next point: I also prefer to record the
+audio separately from the screencast portion itself; this way I
+don't get typing sounds in the recording, and I'm less likely to
+lose my train of thought as I'm speaking. To this end, I ended up
+using quite simply the "Sound Recorder" utility
+(<xhtml:code>gnome-sound-recorder</xhtml:code>). It's not great, but with a
+reasonable microphone, it gets the job done. I chose to record the
+audio as MP3 files.</xhtml:p>
+<xhtml:p>However, this means that I now have video and audio tracks. So
+my toolbox needed a utility for overlaying tracks and laying them
+out on a timeline independently.</xhtml:p>
+<xhtml:p>I looked at a few different free tools for Linux, including
+<xhtml:code>Avidemux</xhtml:code>, <xhtml:code>Cinelerra</xhtml:code>, and
+<xhtml:code>PiTiVi</xhtml:code>. <xhtml:code>Avidemux</xhtml:code> was not featurful
+enough, <xhtml:code>Cinelerra</xhtml:code> was too difficult to learn (it's
+more of an advanced user's tool), and <xhtml:code>PiTiVi</xhtml:code> kept
+crashing on me. So, I used the lazyweb, and tweeted a question
+asking what others were using -- and the unanimous response was
+<xhtml:code>OpenShot</xhtml:code> (<xhtml:a href="http://www.openshotvideo.com/">http://www.openshotvideo.com/</xhtml:a>).</xhtml:p>
+<xhtml:p><xhtml:code>OpenShot</xhtml:code> hit the sweet spot for me -- it was easy
+to pick up, and didn't crash. However, I discovered problems when I
+exported my project to a video file. My video, regardless of
+whether or not I changed the playback rate, always played at about
+2X normal speed. The audio always truncated 1 to 2 seconds before
+completion.</xhtml:p>
+<xhtml:p>In doing some research, I discovered:</xhtml:p>
+<xhtml:ul>
+<xhtml:li>There are known issues with Ogg Vorbis video files. Evidently,
+the compression creates issues when re-encoding the video to
+another format.</xhtml:li>
+<xhtml:li>Similarly, compressed audio can lead to issues such as
+truncation.</xhtml:li>
+</xhtml:ul>
+<xhtml:p>Since <xhtml:code>recordMyDesktop</xhtml:code> doesn't allow you to select
+an alternate video codec, I had to use <xhtml:code>mencoder</xhtml:code> to
+transcode it to another format. I chose AVI (Audio Video
+Interleave, a video container format developed by Microsoft), as I
+knew it had widespread support, using an mpeg4 codec (also widely
+supported). I used the following script, found at <xhtml:a href="http://askubuntu.com/questions/17309/video-converter-ogv-to-avi-or-another-more-common-format">
+http://askubuntu.com/questions/17309/video-converter-ogv-to-avi-or-another-more-common-format</xhtml:a>,
+in order to encode my files:</xhtml:p>
+<xhtml:div id="script" class="example">
+<xhtml:pre>
+<xhtml:code language="bash">
+for f in *.ogv;do
+newFile=${f%.*}
+mencoder "$f" -o "$newFile.avi" -oac mp3lame -lameopts fast:preset=standard -ovc lavc -lavcopts vcodec=mpeg4:vbitrate=4000
+done
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>That solved the video issue, but I still had to solve the audio
+issues. I quickly re-recorded one audio segment in Sound Recorder,
+and told it to use the "Voice,Lossless (.wav type)". When I used
+this version of the audio, I had no issues, other than the audio
+length being mis-reported within <xhtml:code>OpenShot</xhtml:code>. Instead of
+re-recording all segments, I installed the "Sound Converter"
+utility (`sudo aptitude isntall soundconverter`), and used that to
+convert all my MP3 files to WAV. Interestingly,
+<xhtml:code>OpenShot</xhtml:code> reported the audio lengths correctly this
+time; go figure.</xhtml:p>
+<xhtml:p>Once that was done, I was able to start stitching everything
+together. A few notes, in the hopes others learn from my
+mistakes:</xhtml:p>
+<xhtml:ul>
+<xhtml:li>Several times, I wanted my video to playback slower. This is
+very easy to do: right click on the clip, select "Properties", and
+select the "Speed" tab, and adjust as necessary. However, that's
+not all you need to do; you need to also re-adjust the
+<xhtml:em>length</xhtml:em> of the clip. Simply take the existing length, and
+divide it by the rate of play. As an example, if the length is 44
+seconds, and you specify a 1/2 rate (0.5), you'd do 44 / 0.5 = 88,
+and set the length of the clip to 88s.</xhtml:li>
+<xhtml:li>If you find that <xhtml:code>OpenShot</xhtml:code> is reporting your audio
+clip lengths incorrectly, use another tool to find the accurate
+length, and then set the length to that. I typically rounded up to
+the next second, as most tools were giving the floor value from
+rounding.</xhtml:li>
+<xhtml:li>I chose to export using the Web + Vimeo HD profile. This worked
+perfectly for me. It created an mpeg4 file that I could preview in
+a browser, and then upload without issues. Your mileage may
+vary.</xhtml:li>
+</xhtml:ul>
+<xhtml:p>Hopefully, this will serve as a reasonable guide for others
+foraying into screencasts on Linux!</xhtml:p>
 </xhtml:div>
     </content>
   </entry>

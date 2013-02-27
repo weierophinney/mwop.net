@@ -95,40 +95,6 @@
 
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
-    <p class="date">2004-04-27 22:48:53</p>
-    <p class="tags"><a href="/blog/tag/linux.html">linux</a><br />
-<a href="/blog/tag/personal.html">personal</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/30-Binary-packages-for-Gentoo.html">Binary packages for Gentoo</a></h4>
-
-    <div class="entry body"><p>
-    I'd read that you could get binary packages for gentoo, thus alleviating the
-    need to compile everything. (Of course, then  you lose some of the benefits
-    of compiling everything, but you gain in speed...) Unfortunately, I mistook
-    this with ebuilds, and never quite figured it out.
-</p>
-<p>
-    The key is to throw the -g flag:
-</p>
-<pre>    % emerge -g gnumeric # which is like 'emerge --getbinpkg gnumeric'
-</pre>
-<p>
-    I also learned how to update packages tonight:
-</p>
-<pre>    % emerge sync             # to sync your mirror with the gentoo mirrors
-    % emerge --update portage # if necessary
-    % emerge --update system  # updates core system files
-    % emerge --update world   # updates all packages 
-</pre></div>
-
-    <p><a href="/blog/30-Binary-packages-for-Gentoo.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
     <p class="date">2004-04-22 22:10:10</p>
     <p class="tags"><a href="/blog/tag/linux.html">linux</a><br />
 <a href="/blog/tag/personal.html">personal</a></p>
@@ -570,6 +536,34 @@
 </section>
 
 </div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2004-02-05 20:23:17</p>
+    <p class="tags"><a href="/blog/tag/programming.html">programming</a><br />
+<a href="/blog/tag/perl.html">perl</a><br />
+<a href="/blog/tag/personal.html">personal</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/28-HTMLFillInForm.html">HTML::FillInForm</a></h4>
+
+    <div class="entry body"><p>
+    The CGI::Application::ValidateRM module utilizes HTML::FillInForm to fill in
+    values in the form if portions did not pass validation. Basically, it
+    utilizes HTML::Parser to go through and find the elements and match them to
+    values. It's used because the assumption is that you've built your form into
+    an HTML::Template, and that way you don't need to put in program logic into
+    the form.
+</p>
+<p>
+    Seems another good candidate for using FillInForm would be to populate a
+    form with values grabbed from a database... I should look into that as well!
+</p></div>
+
+    <p><a href="/blog/28-HTMLFillInForm.html">Continue reading...</a></p>
+</section>
+
+</div>
 <div class="paginationControl">
         <a href="/blog/tag/personal.html" class="first">&lt;&lt; First</a> |
         <a href="/blog/tag/personal-p3.html"> &lt; Previous </a> |
@@ -579,9 +573,8 @@
             <span class="current">4</span> |
             <a href="/blog/tag/personal-p5.html">5</a> |
             <a href="/blog/tag/personal-p6.html">6</a> |
-            <a href="/blog/tag/personal-p7.html">7</a> |
             <a href="/blog/tag/personal-p5.html"> Next &gt;</a> |
-        <a href="/blog/tag/personal-p7.html" class="last"> Last &gt;&gt;</a>
+        <a href="/blog/tag/personal-p6.html" class="last"> Last &gt;&gt;</a>
 </div>
 
 </section>
