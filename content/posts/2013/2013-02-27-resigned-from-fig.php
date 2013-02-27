@@ -14,7 +14,7 @@ $entry->setId('2013-02-27-resigned-from-php-fig');
 $entry->setTitle('On PHP-FIG');
 $entry->setAuthor($author);
 $entry->setDraft(false);
-$entry->setPublic(false);
+$entry->setPublic(true);
 $entry->setCreated(new \DateTime('2013-02-27 12:41', new \DateTimezone('America/Chicago')));
 $entry->setUpdated(new \DateTime('2013-02-27 12:41', new \DateTimezone('America/Chicago')));
 $entry->setTimezone('America/Chicago');
