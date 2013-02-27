@@ -95,43 +95,6 @@
 
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
-    <p class="date">2004-03-28 19:33:39</p>
-    <p class="tags"><a href="/blog/tag/perl.html">perl</a><br />
-<a href="/blog/tag/personal.html">personal</a><br />
-<a href="/blog/tag/php.html">php</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/34-POD-for-PHP.html">POD for PHP</a></h4>
-
-    <div class="entry body"><p>
-    I was lamenting at work the other day that now that I've discovered OO and
-    templating with PHP, the only major feature missing for me is a way to
-    easily document my programs. I'm a big fan of perl's POD, and use it fairly
-    extensively, even for simple scripts -- it's a way to provide a quick manual
-    without needing to worry too much about how to format it.
-</p>
-<p>
-    So, it hit me on the way home Friday night: what prevents me from using POD
-    in multiline comments of PHP scripts? I thought I'd give it a try when I got
-    home.
-</p>
-<p>
-    First I googled for 'POD for PHP', and found a link to perlmongers where
-    somebody recounted seeing that exact thing done, and how nicely it worked.
-</p>
-<p>
-    Then I tried it.. and it indeed worked. So, basically, I've got all the
-    tools I love from perl in PHP, one of which is borrowed directly from the
-    language!
-</p></div>
-
-    <p><a href="/blog/34-POD-for-PHP.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
     <p class="date">2004-03-28 19:24:12</p>
     <p class="tags"><a href="/blog/tag/programming.html">programming</a><br />
 <a href="/blog/tag/perl.html">perl</a><br />
@@ -540,6 +503,55 @@
 </p></div>
 
     <p><a href="/blog/25-Design-Ideas.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="two columns alpha entry meta">
+    <p class="date">2004-02-04 13:40:36</p>
+    <p class="tags"><a href="/blog/tag/linux.html">linux</a><br />
+<a href="/blog/tag/personal.html">personal</a></p>
+</aside>
+
+<section class="nine columns omega">
+    <h4 class="entry"><a href="/blog/24-Fun-with-Find.html">Fun with Find</a></h4>
+
+    <div class="entry body"><p>
+    I've had occasion to need to grab a specific set of files from a large
+    directory -- most recently, I needed to grab some specific access logs from
+    our Apache logfiles at work.
+</p>
+<p>
+    Enter <kbd>find</kbd>.
+</p>
+<p>
+    I needed to get all files newer than a specific date, and with the pattern
+    'sitename-access_log.timestamp.gz'. I then needed to tar up these files and
+    grab them for processing. So, here's what I did:
+</p>
+<ul>
+    <li>The <kbd>-newer filename</kbd> tells find to locate files newer than
+        filename.
+    </li>
+    <li>The <kbd>-regex</kbd> flag tells find to locate files matching the
+        regular expression. The regex that find uses is a little strange,
+        however, and didn't follow many conventions I know; for one thing, it's
+        assumed that the pattern you write will match against the entire string,
+        and not just a portion of it. What I ended up using was 
+        <kbd>-regex '.*access_log.*gz'</kbd>, and that worked.
+    </li>
+    <li>The <kbd>-printf</kbd> flag tells find to format the printing. This is
+        useful when using the output of find in another program. For instance,
+        tar likes a list of filenames... so I used <kbd>printf "%p "</kbd>,
+        which separated each filename with a space.
+    </li>
+</ul>
+<p>
+    I then backticked my full find statement and used it as the final argument
+    to a tar command; voila! instant tar file with the files I need!
+</p></div>
+
+    <p><a href="/blog/24-Fun-with-Find.html">Continue reading...</a></p>
 </section>
 
 </div>

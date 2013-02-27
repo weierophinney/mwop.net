@@ -3,131 +3,10 @@
   <channel>
     <title>Blog Entries :: phly, boy, phly</title>
     <description>Blog Entries :: phly, boy, phly</description>
-    <pubDate>Wed, 27 Feb 2013 18:41:00 +0000</pubDate>
+    <pubDate>Mon, 25 Feb 2013 12:29:00 +0000</pubDate>
     <generator>Zend_Feed_Writer 2.1.4dev (http://framework.zend.com)</generator>
     <link>http://mwop.net/blog.html</link>
     <atom:link rel="self" type="application/rss+xml" href="http://mwop.net/blog-rss.xml"/>
-    <item>
-      <title>On PHP-FIG</title>
-      <pubDate>Wed, 27 Feb 2013 18:41:00 +0000</pubDate>
-      <link>http://mwop.net/blog/2013-02-27-resigned-from-php-fig.html</link>
-      <guid>http://mwop.net/blog/2013-02-27-resigned-from-php-fig.html</guid>
-      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
-      <dc:creator>Matthew Weier O'Phinney</dc:creator>
-      <content:encoded><![CDATA[<p>Yesterday, I left the PHP-FIG group.</p>
-
-<p>As in: left the github organization I created, and removed myself from the
-mailing list I created.</p>
-
-<p>I have contacted members of my development team and the Zend Framework community
-review team to see if anybody is willing to represent ZF in the group. I no
-longer am.</p>
-
-<p>I was going to leave quietly, but as a favor to Paul M. Jones -- a good friend
-and sometimes collaborator -- I'm writing now.</p><p>I had high hopes for the group. It was the culmination of something I've been
-ruminating on for almost a decade (<a href="http://www.mwop.net/blog/12-PHP-standards-ruminations.html">see post number 12 on my blog, dated to
-January 2004, for
-proof</a>). My thoughts
-have mainly been around coding standards and best practices, helping educate
-developers around their benefits, and how to leverage both in order to
-create maintainable code.</p>
-
-<p>First, a few thoughts:</p>
-
-<ul>
-<li>I personally feel that interfaces are a bad fit for the organization;
-<a href="http://www.mwop.net/blog/2012-12-20-on-shared-interfaces.html">I have outlined my thoughts on interface standardization
-elsewhere</a>.</li>
-<li>Multiple coding standards are okay. A standard for every project,
-organization, or developer is not. The ideal is a handful or so for any given
-language, as more than that means there are no standards; it's just a
-free-for-all.</li>
-<li>No individual coding standard will satisfy all developers. In fact, in my
-experience, there will always be choices in <em>any</em> standard that even the
-authors of the standard are unhappy with. The point of a coding standard is
-not to make everyone happy. It's to have a document that details the structure
-of code so that developers focus on the intent of code, not the way it's
-formatted.</li>
-<li>Coding standards are useless if they do not contain hard rules, as automated
-tooling to sniff for CS issues cannot be written. "COULD", "SHOULD", and "CAN"
-are all problematic, and any use of "EITHER" is going to make automation
-ridiculously complex.</li>
-<li>In the end, no matter what the technical arguments are for any given detail,
-all coding standards are ultimately subjective. The only objective standard is
-what is parseable in the given language.</li>
-<li>What matters is that you <em>adopt</em> an <em>existing</em> standard, and <em>use</em> it. When
-you do, you can automate some code review, prevent developer commit skirmishes
-arising from differences in formatting aesthetics, and focus on the problem
-you're trying to solve in your code.</li>
-</ul><p>With those thoughts as background, then, I can better explain my departure.</p>
-
-<p>The point of PHP-FIG was to create consensus around practices shared by its
-member groups, no more, no less.</p>
-
-<p>When PSR-0 was created, we had around a half-dozen member groups. You have to
-start somewhere.</p>
-
-<p>Each proposal since then has had an increasing number of members both
-discussing and voting on proposals. That means the early proposals may not be
-representative of the later membership. That's a simple fact.</p>
-
-<p>That does not mean the standards should <em>change</em>. Once published, a standard is
-done. The only thing that can happen is that a <em>new</em> standard may be created
-that can <em>supersede</em> an existing standard, or be used <em>instead</em> <em>of</em> an existing
-standard. As examples from existing standards bodies, consider RFC 822, which
-codified the format of internet text messages (email); it superseded at least
-one other RFC, and has itself been superseded twice (in RFC 2822 and RFC 5322).</p>
-
-<p>PHP-FIG adopted the same workflow. If new practices emerge, or the makeup of the
-organization significantly changes, and existing recommendations are found to be
-obsolete or outdated, a <em>new</em> recommendation may be proposed to supersede or be
-adopted in parallel to them. </p>
-
-<p>Parallel standards from the same body, however, should be considered <em>very</em>
-carefully, as they lead to splintering and fragmentation of the standards body
-and member organizations. If consensus cannot be achieved, why bother?</p>
-
-<p>What I see happening in the PHP-FIG github organization (in pull request comment
-threads) and google group, however, is the exact opposite of the goals that
-originally led to the group being formed. Instead of people trying to achieve
-consensus, I see a lot of polarizing, all-or-nothing arguments occurring, often
-over very subjective things. Developers are defending their opinions and
-viewpoints with little to no real analysis of what others present.  I see a lot
-of "you're wrong" types of remarks. These are coming largely from non-voting
-members, but it means the signal-to-noise ratio within these forums is skewed;
-it's hard to find reasonable discussion occurring due to this behavior.</p>
-
-<p>The "old guard" is guilty of this at times, too -- but not as often as many
-might insist. The insistence of folks like Paul M Jones, Paul Dragoonis, and
-Lukas Kahwe Smith that discussion should happen on-list, and that PRs are not
-considered for existing, accepted standards is actually reasonable -- for the
-reasons I outlined above. A standard is written once; if it needs revision, a
-<em>new</em> standard should be written superseding it.</p>
-
-<p>What is most irritating, however, is it doesn't matter how many times such
-statements are made; people insist on debating their pet peeves on existing
-standards without following the guidelines and established process -- nor
-listening when others point out that the debate has occurred before, will occur
-again, and needs to stop for now so that we can focus on constructive tasks.
-I see a lot of name calling, a lot of accusations of a "dictatorship" (they're
-<em>recommendations</em> people; they're not <em>requirements</em>), and overall egotistical
-behavior.</p>
-
-<p>I'm tired of it. I have better things to do with my time, things I want to
-create, software I want to support, hobbies and interests I want to pursue.
-Debating brace placement, tabs vs spaces (for the umpteenth time), or whether or
-not annotations have a place in programming in a dynamic language? Not so much.</p>
-
-<p>I hope PHP-FIG can achieve the goals it started with. It will have to do so
-without my participation, though.</p>
-
-<h4>Note</h4>
-
-<p>
-    I've disabled comments on this post.
-</p>]]></content:encoded>
-      <slash:comments>0</slash:comments>
-    </item>
     <item>
       <title>RESTful APIs with ZF2, Part 3</title>
       <pubDate>Mon, 25 Feb 2013 12:29:00 +0000</pubDate>
@@ -2206,6 +2085,166 @@ I'm doing experimental stuff, the price can't be beat (the current developer
 preview is free). Considering most stuff I do will fall into this or the basic
 tier, and that most cartridges do not end up counting against your alotment of
 gears, the pricing ($0.05/hour) is extremely competitive. 
+</p>]]></content:encoded>
+      <slash:comments>0</slash:comments>
+    </item>
+    <item>
+      <title>Screencasting on Linux</title>
+      <pubDate>Thu, 20 Sep 2012 22:30:00 +0000</pubDate>
+      <link>http://mwop.net/blog/2012-09-20-screencasting-on-linux.html</link>
+      <guid>http://mwop.net/blog/2012-09-20-screencasting-on-linux.html</guid>
+      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
+      <dc:creator>Matthew Weier O'Phinney</dc:creator>
+      <content:encoded><![CDATA[<p>
+    I've been wanting to do screencasts on Linux for some time now, and my big
+    stumbling block has been determining what tools to use.
+</p>
+
+<p>
+    The <strong>tl;dr</strong>:
+</p>
+
+<ul>
+    <li>
+        Use <code>recordMyDesktop</code> to record video clips, but afterwards, re-encode them
+        to AVI (<a href="#script">see the script I used</a>)
+    </li>
+
+    <li>
+        Record audio to WAV, or convert compressed audio to WAV format afterwards.
+    </li>
+
+    <li>
+        Use OpenShot to stitch clips together and layer audio and video tracks.
+    </li>
+
+    <li>
+        Remember to reset the video length if you change the playback rate.
+    </li>
+
+    <li>
+        Export to a Web + Vimeo profile for best results.
+    </li>
+</ul><h2 id="toc_1.1">Stumbling Blocks</h2>
+
+<p>
+<code>recordMyDesktop</code> is a fairly simple tool, and allows you to
+record actions you're taking, and simultaneously capture audio. However, it
+creates an ".ogv" (Ogg Vorbis video file) -- which is basically useless for
+anybody not on Linux or FreeBSD. Additionally, I often like to record in
+segments; this makes it less likely that I'll make mistakes, and, if I do, I
+only need to record a small segment again, not the entire thing. <code>recordMyDesktop</code>
+is only for creating screencasts, not merging them.
+</p>
+
+<p>
+So, <code>recordMyDesktop</code> went into my toolbox for the purpose of recording the video
+portion of my screencasts.
+</p>
+
+<p>
+Which brings me to the next point: I also prefer to record the audio separately
+from the screencast portion itself; this way I don't get typing sounds in the
+recording, and I'm less likely to lose my train of thought as I'm speaking. 
+To this end, I ended up using quite simply the "Sound Recorder" utility
+(<code>gnome-sound-recorder</code>). It's not great, but with a reasonable microphone, it
+gets the job done. I chose to record the audio as MP3 files.
+</p>
+
+<p>
+However, this means that I now have video and audio tracks. So my toolbox needed
+a utility for overlaying tracks and laying them out on a timeline independently.
+</p>
+
+<p>
+I looked at a few different free tools for Linux, including <code>Avidemux</code>, <code>Cinelerra</code>,
+and <code>PiTiVi</code>. <code>Avidemux</code> was not featurful enough, <code>Cinelerra</code> was too difficult to
+learn (it's more of an advanced user's tool), and <code>PiTiVi</code> kept crashing on me.
+So, I used the lazyweb, and tweeted a question asking what others were using --
+and the unanimous response was <code>OpenShot</code> (<a href="http://www.openshotvideo.com/">http://www.openshotvideo.com/</a>).
+</p>
+
+<p>
+<code>OpenShot</code> hit the sweet spot for me -- it was easy to pick up, and didn't crash.
+However, I discovered problems when I exported my project to a video file. My
+video, regardless of whether or not I changed the playback rate, always played
+at about 2X normal speed. The audio always truncated 1 to 2 seconds before
+completion.
+</p>
+
+<p>
+In doing some research, I discovered:
+</p>
+
+<ul>
+<li>
+There are known issues with Ogg Vorbis video files. Evidently, the
+   compression creates issues when re-encoding the video to another format.
+</li>
+<li>
+Similarly, compressed audio can lead to issues such as truncation.
+</li>
+</ul>
+
+<p>
+Since <code>recordMyDesktop</code> doesn't allow you to select an alternate video codec, I
+had to use <code>mencoder</code> to transcode it to another format. I chose AVI (Audio
+Video Interleave, a video container format developed by Microsoft), as I knew it
+had widespread support, using an mpeg4 codec (also widely supported). I used the
+following script, found at
+<a href="http://askubuntu.com/questions/17309/video-converter-ogv-to-avi-or-another-more-common-format">http://askubuntu.com/questions/17309/video-converter-ogv-to-avi-or-another-more-common-format</a>,
+in order to encode my files:
+</p>
+
+<div id="script" class="example"><pre><code language="bash">
+for f in *.ogv;do
+newFile=${f%.*}
+mencoder "$f" -o "$newFile.avi" -oac mp3lame -lameopts fast:preset=standard -ovc lavc -lavcopts vcodec=mpeg4:vbitrate=4000
+done
+</code></pre></div>
+
+<p>
+That solved the video issue, but I still had to solve the audio issues. I
+quickly re-recorded one audio segment in Sound Recorder, and told it to use the
+"Voice,Lossless (.wav type)". When I used this version of the audio, I had no
+issues, other than the audio length being mis-reported within <code>OpenShot</code>. Instead
+of re-recording all segments, I installed the "Sound Converter" utility (`sudo
+aptitude isntall soundconverter`), and used that to convert all my MP3 files to 
+WAV. Interestingly, <code>OpenShot</code> reported the audio lengths correctly this time; go
+figure.
+</p>
+
+<p>
+Once that was done, I was able to start stitching everything together. A few
+notes, in the hopes others learn from my mistakes:
+</p>
+
+<ul>
+<li>
+Several times, I wanted my video to playback slower. This is very easy to do:
+   right click on the clip, select "Properties", and select the "Speed" tab, and
+   adjust as necessary. However, that's not all you need to do; you need to also
+   re-adjust the <em>length</em> of the clip. Simply take the existing length, and
+   divide it by the rate of play. As an example, if the length is 44 seconds,
+   and you specify a 1/2 rate (0.5), you'd do 44 / 0.5 = 88, and set the length
+   of the clip to 88s.
+</li>
+<li>
+If you find that <code>OpenShot</code> is reporting your audio clip lengths incorrectly,
+   use another tool to find the accurate length, and then set the length to
+   that. I typically rounded up to the next second, as most tools were giving
+   the floor value from rounding.
+</li>
+<li>
+I chose to export using the Web + Vimeo HD profile. This worked perfectly for
+   me. It created an mpeg4 file that I could preview in a browser, and then
+   upload without issues. Your mileage may vary.
+</li>
+</ul>
+
+<p>
+Hopefully, this will serve as a reasonable guide for others foraying into
+screencasts on Linux!
 </p>]]></content:encoded>
       <slash:comments>0</slash:comments>
     </item>

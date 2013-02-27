@@ -1,135 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title type="text">Tag: personal :: phly, boy, phly</title>
-  <updated>2013-02-27T18:41:00+0000</updated>
+  <updated>2009-01-04T21:31:52+0000</updated>
   <generator uri="http://framework.zend.com" version="2.1.4dev">Zend_Feed_Writer</generator>
   <link rel="alternate" type="text/html" href="http://mwop.net/blog/tag/personal.html"/>
   <link rel="self" type="application/atom+xml" href="http://mwop.net/blog/tag/personal-atom.xml"/>
   <id>http://mwop.net/blog/tag/personal.html</id>
-  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
-    <title type="html"><![CDATA[On PHP-FIG]]></title>
-    <published>2013-02-27T18:41:00+0000</published>
-    <updated>2013-02-27T18:41:00+0000</updated>
-    <link rel="alternate" type="text/html" href="http://mwop.net/blog/2013-02-27-resigned-from-php-fig.html"/>
-    <id>http://mwop.net/blog/2013-02-27-resigned-from-php-fig.html</id>
-    <author>
-      <name>Matthew Weier O'Phinney</name>
-      <email>me@mwop.net</email>
-      <uri>http://mwop.net</uri>
-    </author>
-    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
-      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>Yesterday, I left the PHP-FIG group.</xhtml:p>
-<xhtml:p>As in: left the github organization I created, and removed
-myself from the mailing list I created.</xhtml:p>
-<xhtml:p>I have contacted members of my development team and the Zend
-Framework community review team to see if anybody is willing to
-represent ZF in the group. I no longer am.</xhtml:p>
-<xhtml:p>I was going to leave quietly, but as a favor to Paul M. Jones --
-a good friend and sometimes collaborator -- I'm writing now.</xhtml:p>
-<xhtml:p>I had high hopes for the group. It was the culmination of
-something I've been ruminating on for almost a decade (<xhtml:a href="http://www.mwop.net/blog/12-PHP-standards-ruminations.html">see
-post number 12 on my blog, dated to January 2004, for proof</xhtml:a>).
-My thoughts have mainly been around coding standards and best
-practices, helping educate developers around their benefits, and
-how to leverage both in order to create maintainable code.</xhtml:p>
-<xhtml:p>First, a few thoughts:</xhtml:p>
-<xhtml:ul>
-<xhtml:li>I personally feel that interfaces are a bad fit for the
-organization; <xhtml:a href="http://www.mwop.net/blog/2012-12-20-on-shared-interfaces.html">I
-have outlined my thoughts on interface standardization
-elsewhere</xhtml:a>.</xhtml:li>
-<xhtml:li>Multiple coding standards are okay. A standard for every
-project, organization, or developer is not. The ideal is a handful
-or so for any given language, as more than that means there are no
-standards; it's just a free-for-all.</xhtml:li>
-<xhtml:li>No individual coding standard will satisfy all developers. In
-fact, in my experience, there will always be choices in
-<xhtml:em>any</xhtml:em> standard that even the authors of the standard are
-unhappy with. The point of a coding standard is not to make
-everyone happy. It's to have a document that details the structure
-of code so that developers focus on the intent of code, not the way
-it's formatted.</xhtml:li>
-<xhtml:li>Coding standards are useless if they do not contain hard rules,
-as automated tooling to sniff for CS issues cannot be written.
-"COULD", "SHOULD", and "CAN" are all problematic, and any use of
-"EITHER" is going to make automation ridiculously complex.</xhtml:li>
-<xhtml:li>In the end, no matter what the technical arguments are for any
-given detail, all coding standards are ultimately subjective. The
-only objective standard is what is parseable in the given
-language.</xhtml:li>
-<xhtml:li>What matters is that you <xhtml:em>adopt</xhtml:em> an <xhtml:em>existing</xhtml:em>
-standard, and <xhtml:em>use</xhtml:em> it. When you do, you can automate some
-code review, prevent developer commit skirmishes arising from
-differences in formatting aesthetics, and focus on the problem
-you're trying to solve in your code.</xhtml:li>
-</xhtml:ul>
-<xhtml:p>With those thoughts as background, then, I can better explain my
-departure.</xhtml:p>
-<xhtml:p>The point of PHP-FIG was to create consensus around practices
-shared by its member groups, no more, no less.</xhtml:p>
-<xhtml:p>When PSR-0 was created, we had around a half-dozen member
-groups. You have to start somewhere.</xhtml:p>
-<xhtml:p>Each proposal since then has had an increasing number of members
-both discussing and voting on proposals. That means the early
-proposals may not be representative of the later membership. That's
-a simple fact.</xhtml:p>
-<xhtml:p>That does not mean the standards should <xhtml:em>change</xhtml:em>. Once
-published, a standard is done. The only thing that can happen is
-that a <xhtml:em>new</xhtml:em> standard may be created that can
-<xhtml:em>supersede</xhtml:em> an existing standard, or be used
-<xhtml:em>instead</xhtml:em> <xhtml:em>of</xhtml:em> an existing standard. As examples from
-existing standards bodies, consider RFC 822, which codified the
-format of internet text messages (email); it superseded at least
-one other RFC, and has itself been superseded twice (in RFC 2822
-and RFC 5322).</xhtml:p>
-<xhtml:p>PHP-FIG adopted the same workflow. If new practices emerge, or
-the makeup of the organization significantly changes, and existing
-recommendations are found to be obsolete or outdated, a
-<xhtml:em>new</xhtml:em> recommendation may be proposed to supersede or be
-adopted in parallel to them.</xhtml:p>
-<xhtml:p>Parallel standards from the same body, however, should be
-considered <xhtml:em>very</xhtml:em> carefully, as they lead to splintering and
-fragmentation of the standards body and member organizations. If
-consensus cannot be achieved, why bother?</xhtml:p>
-<xhtml:p>What I see happening in the PHP-FIG github organization (in pull
-request comment threads) and google group, however, is the exact
-opposite of the goals that originally led to the group being
-formed. Instead of people trying to achieve consensus, I see a lot
-of polarizing, all-or-nothing arguments occurring, often over very
-subjective things. Developers are defending their opinions and
-viewpoints with little to no real analysis of what others present.
-I see a lot of "you're wrong" types of remarks. These are coming
-largely from non-voting members, but it means the signal-to-noise
-ratio within these forums is skewed; it's hard to find reasonable
-discussion occurring due to this behavior.</xhtml:p>
-<xhtml:p>The "old guard" is guilty of this at times, too -- but not as
-often as many might insist. The insistence of folks like Paul M
-Jones, Paul Dragoonis, and Lukas Kahwe Smith that discussion should
-happen on-list, and that PRs are not considered for existing,
-accepted standards is actually reasonable -- for the reasons I
-outlined above. A standard is written once; if it needs revision, a
-<xhtml:em>new</xhtml:em> standard should be written superseding it.</xhtml:p>
-<xhtml:p>What is most irritating, however, is it doesn't matter how many
-times such statements are made; people insist on debating their pet
-peeves on existing standards without following the guidelines and
-established process -- nor listening when others point out that the
-debate has occurred before, will occur again, and needs to stop for
-now so that we can focus on constructive tasks. I see a lot of name
-calling, a lot of accusations of a "dictatorship" (they're
-<xhtml:em>recommendations</xhtml:em> people; they're not
-<xhtml:em>requirements</xhtml:em>), and overall egotistical behavior.</xhtml:p>
-<xhtml:p>I'm tired of it. I have better things to do with my time, things
-I want to create, software I want to support, hobbies and interests
-I want to pursue. Debating brace placement, tabs vs spaces (for the
-umpteenth time), or whether or not annotations have a place in
-programming in a dynamic language? Not so much.</xhtml:p>
-<xhtml:p>I hope PHP-FIG can achieve the goals it started with. It will
-have to do so without my participation, though.</xhtml:p>
-<xhtml:h4>Note</xhtml:h4>
-<xhtml:p>I've disabled comments on this post.</xhtml:p>
-</xhtml:div>
-    </content>
-  </entry>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <title type="html"><![CDATA[Seven Things - Tagged by Keith Casey]]></title>
     <published>2009-01-02T15:44:54+0000</published>
@@ -817,6 +693,44 @@ sessions; I suspect Rob and I will have to do a divide-and-conquer
 that day.)</xhtml:p>
 <xhtml:p>Drop me a line if you'll be attending -- I'm looking forward to
 meeting other PHP junkies!</xhtml:p>
+</xhtml:div>
+    </content>
+  </entry>
+  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <title type="html"><![CDATA[New Cgiapp Site]]></title>
+    <published>2005-02-19T19:38:08+0000</published>
+    <updated>2005-03-26T03:51:18+0000</updated>
+    <link rel="alternate" type="text/html" href="http://mwop.net/blog/57-New-Cgiapp-Site.html"/>
+    <id>http://mwop.net/blog/57-New-Cgiapp-Site.html</id>
+    <author>
+      <name>Matthew Weier O'Phinney</name>
+      <email>me@mwop.net</email>
+      <uri>http://mwop.net</uri>
+    </author>
+    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
+      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>I've been extremely busy at work, and will continue to be
+through the end of March. I realized this past week that I'd set a
+goal of having a <xhtml:a href="http://sourceforge.net" target="_blank">SourceForge</xhtml:a> website up and running for Cgiapp by the
+end of January -- and it's now mid-February. Originally, I was
+going to backport some of my libraries from PHP5 to PHP4 so I could
+do so... and I think that was beginning to daunt me a little.</xhtml:p>
+<xhtml:p>Fortunately, I ran across a quick-and-dirty content management
+solution yesterday called <xhtml:a href="http://gunther.sourceforge.net/" target="_blank">Gunther</xhtml:a>. It does templating in Smarty, and uses
+a wiki-esque syntax for markup -- though page editing is limited to
+admin users only (something I was looking for). I decided to try it
+out, and within an hour or so had a working site ready to
+upload.</xhtml:p>
+<xhtml:p>Cgiapp's new site can be found at <xhtml:a href="http://cgiapp.sourceforge.net/">cgiapp.sourceforge.net</xhtml:a>.</xhtml:p>
+<xhtml:h4>UPDATE</xhtml:h4>
+<xhtml:p>Shortly after I wrote this original post, I figured out what the
+strength of Gunther was -- and why I no longer needed it. Gunther
+was basically taking content entered from a form and then inserting
+that content (after some processing for wiki-like syntax) into a
+Smarty template. Which meant that I could do the same thing with
+Cgiapp and <xhtml:a href="http://pear.php.net/text_wiki">Text_Wiki</xhtml:a>.
+Within an hour, I wrote an application module in Cgiapp that did
+just that, and am proud to say that the Cgiapp website is 100%
+Cgiapp.</xhtml:p>
 </xhtml:div>
     </content>
   </entry>
