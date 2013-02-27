@@ -4,7 +4,7 @@
 <!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
 <head>
 	<meta charset="utf-8" />
-    <title>Blog Entries for February 2013phly, boy, phly</title>
+    <title>Tag: personalphly, boy, phly</title>
 	<!--[if lt IE 9]>
 		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
@@ -16,8 +16,8 @@
 <link href="/css/Application/site.css" media="screen" rel="stylesheet" type="text/css">
 <link href="/images/Application/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon">
 <link href="/css/Application/blog.css" media="screen" rel="stylesheet" type="text/css">
-<link href="/blog/month/2013/02-atom.xml" rel="alternate" type="application/atom+xml" title="Blog Entries for February 2013 Atom Feed">
-<link href="/blog/month/2013/02-rss.xml" rel="alternate" type="application/rss+xml" title="Blog Entries for February 2013 RSS Feed">
+<link href="/blog/tag/personal-atom.xml" rel="alternate" type="application/atom+xml" title="Tag: personal Atom Feed">
+<link href="/blog/tag/personal-rss.xml" rel="alternate" type="application/rss+xml" title="Tag: personal RSS Feed">
     <script type="text/javascript">
     //<!--
     dojoConfig={
@@ -91,130 +91,116 @@
     <div class="sixteen columns clearfix content">
         <div class="row">
 <section class="eleven columns alpha blog">
-    <h2>Blog Entries for February 2013</h2>
+    <h2>Tag: personal</h2>
 
 <div class="row clearfix">
 <aside class="two columns alpha entry meta">
-    <p class="date">2013-02-27 12:41:00</p>
+    <p class="date">2004-01-20 22:34:42</p>
     <p class="tags"><a href="/blog/tag/personal.html">personal</a></p>
 </aside>
 
 <section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/2013-02-27-resigned-from-php-fig.html">On PHP-FIG</a></h4>
-
-    <div class="entry body"><p>Yesterday, I left the PHP-FIG group.</p>
-
-<p>As in: left the github organization I created, and removed myself from the
-mailing list I created.</p>
-
-<p>I have contacted members of my development team and the Zend Framework community
-review team to see if anybody is willing to represent ZF in the group. I no
-longer am.</p>
-
-<p>I was going to leave quietly, but as a favor to Paul M. Jones -- a good friend
-and sometimes collaborator -- I'm writing now.</p></div>
-
-    <p><a href="/blog/2013-02-27-resigned-from-php-fig.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2013-02-25 06:29:00</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
-<a href="/blog/tag/rest.html">rest</a><br />
-<a href="/blog/tag/http.html">http</a><br />
-<a href="/blog/tag/zf2.html">zf2</a><br />
-<a href="/blog/tag/zend%20framework.html">zend framework</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/2013-02-25-restful-apis-with-zf2-part-3.html">RESTful APIs with ZF2, Part 3</a></h4>
+    <h4 class="entry"><a href="/blog/7-Perl-Cookbook%2C-2nd-Edition.html">Perl Cookbook, 2nd Edition</a></h4>
 
     <div class="entry body"><p>
-    In my <a href="/blog/2013-02-11-restful-apis-with-zf2-part-1.html">previous</a> 
-    <a href="/blog/2013-02-13-restful-apis-with-zf2-part-2.html">posts</a>, I 
-    covered basics of JSON hypermedia APIs using Hypermedia Application Language
-    (HAL), and methods for reporting errors, including API-Problem and vnd.error.
+    Tonight was Papa night, which meant that I got to look after Maeve while Jen
+    worked late doing a group at work. Last week, Maeve and I established that
+    Papa Night would always include going to the bookstore, which means Barnes
+    & Noble in South Burlington.
 </p>
-
 <p>
-    In this post, I'll be covering <em>documenting</em> your API -- techniques 
-    you can use to indicate what HTTP operations are allowed, as well as convey 
-    the full documentation on what endpoints are available, what they accept, 
-    and what you can expect them to return.
+    Last week, Maeve was perfectly content to look at books by herself, and
+    didn't want me interfering, so I decided this week to grab a book for myself
+    to peruse while she was busy. It didn't work as I intended -- Maeve saw that
+    I wasn't paying full attention to her, and then demanded my attention -- but
+    I was able to look through some of the new items in the second edition of
+    <em>The Perl Cookbook</em>.
 </p>
-
 <p>
-    While I will continue covering general aspects of RESTful APIs in this 
-    post, I will also finally introduce several ZF2-specific techniques.
-</p></div>
+    Among them were:
+</p>
+<ul>
+    <li>Setting up both an XML-RPC server and client, using SOAP::Lite</li>
+    <li>Setting up both a SOAP-RPC server and client, using SOAP::Lite and other
+        modules; I could have used this in ROX::Filer to communicate with ROX
+        instead of using the filer's RPC call.
+    </li>
+    <li>Better coverage of DBI (it actually covered it!):
+        <ul>
+            <li>When you expect only a single row, this is a nice way to grab
+                it:
+                <pre>$row = $dbi->selectrow_(array|hash)ref($statement)
+                </pre>
+            </li>
+            <li>This is a great way to grab a bunch of columns from a large
+                resultset:
+                <pre>                    $results = $dbi->selectall_hashref($sql);
+                    foreach $record (keys(%{$results})) {
+                        print $results->{$record}{fieldname};
+                    }
+                </pre>
+            </li>
+            <li>This one is nice for a large resultset from which you only want
+                one column:
+                <pre>                    $results = $dbi->selectcol_arrayref($sql);
+                    foreach $result (@{$results}) {
+                        print $result;
+                    }
+                </pre>
+            </li>
+            <li>If you need to quote values before inserting them, try:
+                <pre>                    $quoted = $dbi->quote($unquoted);
+                    $sql = "UPDATE table SET textfield = $quoted";
+                </pre>
+            </li>
+            <li>If you need to check for errors, don't check with each DBI call;
+                instead, wrap all of them in an eval statement:
+                <pre>                    eval {
+                        $sth = $dbi->prepare($sql);
+                        $sth->do;
+                        while ($row = $sth->fetchrow_hashref) {
+                            ...
+                        }
+                    }
+                    if ($@) {
+                        print $DBI::errstr; 
+                    }
+                </pre>
+            </li>
+        </ul>
+    </li>
+    <li>Coverage of templating, including Text::Template (<em>very</em>
+        interesting!)
+    </li>
+    <li>Whole new chapters on mod_perl and XML (including DOM!) which I didn't
+        really even get to peruse.
+    </li>
+    <li><strong>autouse pragma</strong>: if you use:
+        <pre>use autouse Module::Name;</pre>
+        perl will <em>use</em> the module at runtime instead of compiletime;
+        basically, it only uses it if it actually needs it (i.e., if it
+        encounters code that utilizes functionality from that module). It's a
+        good way to keep down on the bloat -- I should use this with
+        librox-perl, and possibly with CGI::App.
+    </li>
+</ul></div>
 
-    <p><a href="/blog/2013-02-25-restful-apis-with-zf2-part-3.html">Continue reading...</a></p>
+    <p><a href="/blog/7-Perl-Cookbook%2C-2nd-Edition.html">Continue reading...</a></p>
 </section>
 
 </div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2013-02-13 07:40:00</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
-<a href="/blog/tag/rest.html">rest</a><br />
-<a href="/blog/tag/http.html">http</a><br />
-<a href="/blog/tag/zf2.html">zf2</a><br />
-<a href="/blog/tag/zend%20framework.html">zend framework</a></p>
-</aside>
+<div class="paginationControl">
+        <a href="/blog/tag/personal.html" class="first">&lt;&lt; First</a> |
+        <a href="/blog/tag/personal-p6.html"> &lt; Previous </a> |
+        <a href="/blog/tag/personal.html">1</a> |
+            <a href="/blog/tag/personal-p2.html">2</a> |
+            <a href="/blog/tag/personal-p3.html">3</a> |
+            <a href="/blog/tag/personal-p4.html">4</a> |
+            <a href="/blog/tag/personal-p5.html">5</a> |
+            <a href="/blog/tag/personal-p6.html">6</a> |
+            <span class="current">7</span> |
+    </div>
 
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/2013-02-13-restful-apis-with-zf2-part-2.html">RESTful APIs with ZF2, Part 2</a></h4>
-
-    <div class="entry body"><p>
-    In my <a href="/blog/2013-02-11-restful-apis-with-zf2-part-1.html">last post</a>,
-    I covered some background on REST and the Richardson Maturity Model, and some
-    emerging standards around hypermedia APIs in JSON; in particular, I outlined
-    aspects of Hypermedia Application Language (HAL), and how it can be used to
-    define a generic structure for JSON resources.
-</p>
-
-<p>
-    In this post, I cover an aspect of RESTful APIs that's often overlooked:
-    reporting problems.
-</p></div>
-
-    <p><a href="/blog/2013-02-13-restful-apis-with-zf2-part-2.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="two columns alpha entry meta">
-    <p class="date">2013-02-12 05:42:00</p>
-    <p class="tags"><a href="/blog/tag/php.html">php</a><br />
-<a href="/blog/tag/rest.html">rest</a><br />
-<a href="/blog/tag/http.html">http</a><br />
-<a href="/blog/tag/zf2.html">zf2</a><br />
-<a href="/blog/tag/zend%20framework.html">zend framework</a></p>
-</aside>
-
-<section class="nine columns omega">
-    <h4 class="entry"><a href="/blog/2013-02-11-restful-apis-with-zf2-part-1.html">RESTful APIs with ZF2, Part 1</a></h4>
-
-    <div class="entry body"><p>
-    RESTful APIs have been an interest of mine for a couple of years, but due
-    to <a href="http://framework.zend.com/blog//zend-framework-2-0-0-stable-released.html">circumstances</a>,
-    I've not had much chance to work with them in any meaningful fashion until
-    recently.
-</p>
-
-<p>
-    <a href="http://akrabat.com/">Rob Allen</a> and I proposed a workshop for
-    <a href="http://conference.phpbenelux.eu/2013/">PHP Benelux 2013</a> 
-    covering RESTful APIs with ZF2. When it was accepted, it gave me the perfect
-    opportunity to dive in and start putting the various pieces together.
-</p></div>
-
-    <p><a href="/blog/2013-02-11-restful-apis-with-zf2-part-1.html">Continue reading...</a></p>
-</section>
-
-</div>
 </section>
 
 <aside class="four columns offset-by-one omega sidebar blog">
