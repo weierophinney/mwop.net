@@ -3,10 +3,131 @@
   <channel>
     <title>Tag: personal :: phly, boy, phly</title>
     <description>Tag: personal :: phly, boy, phly</description>
-    <pubDate>Sun, 04 Jan 2009 21:31:52 +0000</pubDate>
+    <pubDate>Wed, 27 Feb 2013 18:41:00 +0000</pubDate>
     <generator>Zend_Feed_Writer 2.1.4dev (http://framework.zend.com)</generator>
     <link>http://mwop.net/blog/tag/personal.html</link>
     <atom:link rel="self" type="application/rss+xml" href="http://mwop.net/blog/tag/personal-rss.xml"/>
+    <item>
+      <title>On PHP-FIG</title>
+      <pubDate>Wed, 27 Feb 2013 18:41:00 +0000</pubDate>
+      <link>http://mwop.net/blog/2013-02-27-resigned-from-php-fig.html</link>
+      <guid>http://mwop.net/blog/2013-02-27-resigned-from-php-fig.html</guid>
+      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
+      <dc:creator>Matthew Weier O'Phinney</dc:creator>
+      <content:encoded><![CDATA[<p>Yesterday, I left the PHP-FIG group.</p>
+
+<p>As in: left the github organization I created, and removed myself from the
+mailing list I created.</p>
+
+<p>I have contacted members of my development team and the Zend Framework community
+review team to see if anybody is willing to represent ZF in the group. I no
+longer am.</p>
+
+<p>I was going to leave quietly, but as a favor to Paul M. Jones -- a good friend
+and sometimes collaborator -- I'm writing now.</p><p>I had high hopes for the group. It was the culmination of something I've been
+ruminating on for almost a decade (<a href="http://www.mwop.net/blog/12-PHP-standards-ruminations.html">see post number 12 on my blog, dated to
+January 2004, for
+proof</a>). My thoughts
+have mainly been around coding standards and best practices, helping educate
+developers around their benefits, and how to leverage both in order to
+create maintainable code.</p>
+
+<p>First, a few thoughts:</p>
+
+<ul>
+<li>I personally feel that interfaces are a bad fit for the organization;
+<a href="http://www.mwop.net/blog/2012-12-20-on-shared-interfaces.html">I have outlined my thoughts on interface standardization
+elsewhere</a>.</li>
+<li>Multiple coding standards are okay. A standard for every project,
+organization, or developer is not. The ideal is a handful or so for any given
+language, as more than that means there are no standards; it's just a
+free-for-all.</li>
+<li>No individual coding standard will satisfy all developers. In fact, in my
+experience, there will always be choices in <em>any</em> standard that even the
+authors of the standard are unhappy with. The point of a coding standard is
+not to make everyone happy. It's to have a document that details the structure
+of code so that developers focus on the intent of code, not the way it's
+formatted.</li>
+<li>Coding standards are useless if they do not contain hard rules, as automated
+tooling to sniff for CS issues cannot be written. "COULD", "SHOULD", and "CAN"
+are all problematic, and any use of "EITHER" is going to make automation
+ridiculously complex.</li>
+<li>In the end, no matter what the technical arguments are for any given detail,
+all coding standards are ultimately subjective. The only objective standard is
+what is parseable in the given language.</li>
+<li>What matters is that you <em>adopt</em> an <em>existing</em> standard, and <em>use</em> it. When
+you do, you can automate some code review, prevent developer commit skirmishes
+arising from differences in formatting aesthetics, and focus on the problem
+you're trying to solve in your code.</li>
+</ul><p>With those thoughts as background, then, I can better explain my departure.</p>
+
+<p>The point of PHP-FIG was to create consensus around practices shared by its
+member groups, no more, no less.</p>
+
+<p>When PSR-0 was created, we had around a half-dozen member groups. You have to
+start somewhere.</p>
+
+<p>Each proposal since then has had an increasing number of members both
+discussing and voting on proposals. That means the early proposals may not be
+representative of the later membership. That's a simple fact.</p>
+
+<p>That does not mean the standards should <em>change</em>. Once published, a standard is
+done. The only thing that can happen is that a <em>new</em> standard may be created
+that can <em>supersede</em> an existing standard, or be used <em>instead</em> <em>of</em> an existing
+standard. As examples from existing standards bodies, consider RFC 822, which
+codified the format of internet text messages (email); it superseded at least
+one other RFC, and has itself been superseded twice (in RFC 2822 and RFC 5322).</p>
+
+<p>PHP-FIG adopted the same workflow. If new practices emerge, or the makeup of the
+organization significantly changes, and existing recommendations are found to be
+obsolete or outdated, a <em>new</em> recommendation may be proposed to supersede or be
+adopted in parallel to them. </p>
+
+<p>Parallel standards from the same body, however, should be considered <em>very</em>
+carefully, as they lead to splintering and fragmentation of the standards body
+and member organizations. If consensus cannot be achieved, why bother?</p>
+
+<p>What I see happening in the PHP-FIG github organization (in pull request comment
+threads) and google group, however, is the exact opposite of the goals that
+originally led to the group being formed. Instead of people trying to achieve
+consensus, I see a lot of polarizing, all-or-nothing arguments occurring, often
+over very subjective things. Developers are defending their opinions and
+viewpoints with little to no real analysis of what others present.  I see a lot
+of "you're wrong" types of remarks. These are coming largely from non-voting
+members, but it means the signal-to-noise ratio within these forums is skewed;
+it's hard to find reasonable discussion occurring due to thsi behavior.</p>
+
+<p>The "old guard" is guilty of this at times, too -- but not as often as many
+might insist. The insistence of folks like Paul M Jones, Paul Dragoonis, and
+Lukas Kahwe Smith that discussion should happen on-list, and that PRs are not
+considered for existing, accepted standards is actually reasonable -- for the
+reasons I outlined above. A standard is written once; if it needs revision, a
+<em>new</em> standard should be written superseding it.</p>
+
+<p>What is most irritating, however, is it doesn't matter how many times such
+statements are made; people insist on debating their pet peeves on existing
+standards without following the guidelines and established process -- nor
+listening when others point out that the debate has occurred before, will occur
+again, and needs to stop for now so that we can focus on constructive tasks.
+I see a lot of name calling, a lot of accusations of a "dictatorship" (they're
+<em>recommendations</em> people; they're not <em>requirements</em>), and overall egotistical
+behavior.</p>
+
+<p>I'm tired of it. I have better things to do with my time, things I want to
+create, software I want to support, hobbies and interests I want to pursue.
+Debating brace placement, tabs vs spaces (for the umpteenth time), or whether or
+not annotations have a place in programming in a dynamic language? Not so much.</p>
+
+<p>I hope PHP-FIG can achieve the goals it started with. It will have to do so
+without my participation, though.</p>
+
+<h4>Note</h4>
+
+<p>
+    I've disabled comments on this post.
+</p>]]></content:encoded>
+      <slash:comments>0</slash:comments>
+    </item>
     <item>
       <title>Seven Things - Tagged by Keith Casey</title>
       <pubDate>Sun, 04 Jan 2009 21:31:52 +0000</pubDate>
@@ -834,47 +955,6 @@
 <p>
     Drop me a line if you'll be attending -- I'm looking forward to meeting
     other PHP junkies!
-</p>]]></content:encoded>
-      <slash:comments>0</slash:comments>
-    </item>
-    <item>
-      <title>New Cgiapp Site</title>
-      <pubDate>Sat, 26 Mar 2005 03:51:18 +0000</pubDate>
-      <link>http://mwop.net/blog/57-New-Cgiapp-Site.html</link>
-      <guid>http://mwop.net/blog/57-New-Cgiapp-Site.html</guid>
-      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
-      <dc:creator>Matthew Weier O'Phinney</dc:creator>
-      <content:encoded><![CDATA[<p>
-    I've been extremely busy at work, and will continue to be through the end of
-    March. I realized this past week that I'd set a goal of having a <a
-        href="http://sourceforge.net" target="_blank">SourceForge</a> website up
-    and running for Cgiapp by the end of January -- and it's now mid-February.
-    Originally, I was going to backport some of my libraries from PHP5 to PHP4
-    so I could do so... and I think that was beginning to daunt me a little. 
-</p>
-<p>
-    Fortunately, I ran across a quick-and-dirty content management solution
-    yesterday called <a href="http://gunther.sourceforge.net/"
-        target="_blank">Gunther</a>. It does templating in Smarty, and uses a
-    wiki-esque syntax for markup -- though page editing is limited to admin
-    users only (something I was looking for). I decided to try it out, and
-    within an hour or so had a working site ready to upload.
-</p>
-<p>
-    Cgiapp's new site can be found at <a
-        href="http://cgiapp.sourceforge.net/">cgiapp.sourceforge.net</a>.
-</p>
-
-<h4>UPDATE</h4>
-<p>
-    Shortly after I wrote this original post, I figured out what the strength of
-    Gunther was -- and why I no longer needed it. Gunther was basically taking
-    content entered from a form and then inserting that content (after some
-    processing for wiki-like syntax) into a Smarty template. Which meant that I
-    could do the same thing with Cgiapp and <a
-        href="http://pear.php.net/text_wiki">Text_Wiki</a>. Within an hour, I
-    wrote an application module in Cgiapp that did just that, and am proud to
-    say that the Cgiapp website is 100% Cgiapp.
 </p>]]></content:encoded>
       <slash:comments>0</slash:comments>
     </item>
