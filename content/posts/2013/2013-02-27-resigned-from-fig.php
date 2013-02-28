@@ -16,13 +16,47 @@ $entry->setAuthor($author);
 $entry->setDraft(false);
 $entry->setPublic(false);
 $entry->setCreated(new \DateTime('2013-02-27 12:41', new \DateTimezone('America/Chicago')));
-$entry->setUpdated(new \DateTime('2013-02-27 12:41', new \DateTimezone('America/Chicago')));
+$entry->setUpdated(new \DateTime('2013-02-28 08:22', new \DateTimezone('America/Chicago')));
 $entry->setTimezone('America/Chicago');
 $entry->setTags(array(
     'personal'
 ));
 
 $body =<<<'EOT'
+<h2><em>Update (2012-02-28)</em></h2>
+
+<p><em>
+    Based on reactions I've seen on Twitter, mailed to me, and reported to me, 
+    I want to clarify a few points.
+</em></p>
+
+<ul>
+    <li><em>
+        While I do not support shared interfaces, I do understand that some 
+        people do. Had I stayed in the group, I would have simply voted "no" on such 
+        proposals. That does not mean I would be upset if they passed, simply 
+        that I might not choose to implement them.
+    </em></li>
+
+    <li><em>
+        My leaving the group has no effect on whether or not ZF will continue to
+        follow any of the recommendations. I am simply saying I will not participate
+        in the development of or passing of recommendations.
+    </em></li>
+
+    <li><em>
+        I am not "rage quitting," nor did I ever view the group as my personal 
+        fiefdom, or only useful when it had a group of like-minded developers 
+        (which was never the case; the original group was incredibly 
+        disparate). My argument is simply this: too many participating are 
+        forgetting to check their egos at the door so that they may work 
+        towards consensus. <strong>As long as any arguments are couched in terms of 
+        "right" or "wrong," somebody is missing the point of the group.</strong>
+    </em></li>
+</ul>
+
+<h2>Original Post</h2>
+
 <p>Yesterday, I left the PHP-FIG group.</p>
 
 <p>As in: left the github organization I created, and removed myself from the
