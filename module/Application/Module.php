@@ -149,7 +149,9 @@ class Module
             // Cleanup
             $headTitle = $renderer->plugin('headtitle');
             $headTitle->getContainer()->exchangeArray(array());
-            $headTitle->append('phly, boy, phly');
+            $headTitle->setAutoEscape(false)
+                      ->setSeparator(' :: ')
+                      ->append('phly, boy, phly');
 
             $headLink = $renderer->plugin('headLink');
             $headLink->getContainer()->exchangeArray(array());
