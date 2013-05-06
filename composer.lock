@@ -64,13 +64,13 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/weierophinney/PhlyBlog",
-                "reference": "48937193596cee6ec8aa9fe6800be6d19b814edd"
+                "url": "https://github.com/weierophinney/PhlyBlog.git",
+                "reference": "b4d54c29a3dfd25d6e4116819f99f00458ede105"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/weierophinney/PhlyBlog/zipball/48937193596cee6ec8aa9fe6800be6d19b814edd",
-                "reference": "48937193596cee6ec8aa9fe6800be6d19b814edd",
+                "url": "https://api.github.com/repos/weierophinney/PhlyBlog/zipball/b4d54c29a3dfd25d6e4116819f99f00458ede105",
+                "reference": "b4d54c29a3dfd25d6e4116819f99f00458ede105",
                 "shasum": ""
             },
             "require": {
@@ -103,7 +103,7 @@
                 "zend",
                 "zf2"
             ],
-            "time": "2012-09-26 18:33:00"
+            "time": "2013-05-06 11:47:58"
         },
         {
             "name": "phly/phly-common",
