@@ -12,7 +12,7 @@
     # install composer dependencies
     echo "Invoking composer" ;
     export COMPOSER_HOME="$OPENSHIFT_DATA_DIR/.composer" ;
-    /usr/local/zend/bin/php composer.phar install ;
+    /usr/local/zend/bin/php composer.phar install --no-dev ;
     # ensure users DB has proper permissions
     echo "Ensure user database has correct permissions" ;
     chmod a+rw $OPENSHIFT_DATA_DIR/users.db ;
