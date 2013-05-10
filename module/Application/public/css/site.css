@@ -19,6 +19,27 @@
     src: local('Droid Sans Mono'), local('DroidSansMono'), url('/css/Application/fonts/DroidSansMono.woff') format('woff');
 }
 
+@font-face {
+  font-family: 'Libre Baskerville';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Libre Baskerville'), local('LibreBaskerville-Regular'), url('/css/Application/fonts/Libre-Baskerville-Normal.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Libre Baskerville';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Libre Baskerville Bold'), local('LibreBaskerville-Bold'), url('/css/Application/fonts/Libre-Baskerville-Bold.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Libre Baskerville';
+  font-style: italic;
+  font-weight: 400;
+  src: local('Libre Baskerville Italic'), local('LibreBaskerville-Italic'), url('/css/Application/fonts/Libre-Baskerville-Italic.woff') format('woff');
+}
+
 body {
 }
 
@@ -36,6 +57,10 @@ code {
 
 code.hl {
     background-color: #E6E6E6;
+}
+
+p, dt {
+    font-family: 'Libre Baskerville', serif;
 }
 
 header {
