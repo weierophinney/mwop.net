@@ -302,13 +302,13 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zf2.git",
-                "reference": "482f9a1b50bc0fe6cc884fcceb72679b19fa1199"
+                "reference": "23bb49413fa9d3088fe8653a618d48511a91ae0e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://packages.zendframework.com/composer/zendframework-zendframework-482f9a1b50bc0fe6cc884fcceb72679b19fa1199-zip-07eda5.zip",
+                "url": "https://packages.zendframework.com/composer/zendframework-zendframework-23bb49413fa9d3088fe8653a618d48511a91ae0e-zip-e72187.zip",
                 "reference": "dev-master",
-                "shasum": "ec6beb848598ac589898bc947f5053f772bed7b0"
+                "shasum": "eb5d694961a627420293f3d1ef2236d2314ea3d6"
             },
             "require": {
                 "php": ">=5.3.3"
@@ -377,7 +377,6 @@
                 "ext-intl": "ext/intl for i18n features (included in default builds of PHP)",
                 "ircmaxell/random-lib": "Fallback random byte generator for Zend\\Math\\Rand if OpenSSL/Mcrypt extensions are unavailable",
                 "ocramius/proxy-manager": "ProxyManager to handle lazy initialization of services",
-                "pecl-weakref": "Implementation of weak references for Zend\\Stdlib\\CallbackHandler",
                 "zendframework/zendpdf": "ZendPdf for creating PDF representations of barcodes",
                 "zendframework/zendservice-recaptcha": "ZendService\\ReCaptcha for rendering ReCaptchas in Zend\\Captcha and/or Zend\\Form"
             },
@@ -410,7 +409,7 @@
                 "source": "https://github.com/zendframework/zf2/tree/master",
                 "issues": "https://github.com/zendframework/zf2/issues"
             },
-            "time": "2013-05-02 14:25:41"
+            "time": "2013-05-10 11:08:12"
         },
         {
             "name": "zendframework/zendservice-recaptcha",
