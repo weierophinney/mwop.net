@@ -29,53 +29,51 @@ div.example {
     filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#000000');
 }
 
-.blog .metadata {
-    background-color: #F3F3F3;
-    padding: 3px;
-    margin: 1em;
-    border: 1px solid #000;
-    overflow: auto;
-    -moz-box-shadow: 3px 3px 4px #000;
-    -webkit-box-shadow: 3px 3px 4px #000;
-    box-shadow: 3px 3px 4px #000;
-    /* For IE 8 */
-    -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#000000')";
-    /* For IE 5.5 - 7 */
-    filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#000000');
+.blog.sidebar {
+    padding: 3px 3px 3px 0;
+    margin: 1em 1em 1em 0;
+    color: #A8A8A8;
+    font-style: italic;
 }
 
-.blog .metadata li {
+.blog.sidebar:hover {
+    color: #000;
+}
+
+.blog.sidebar li:before {
+    content: "-";
+    position: relative;
+    left: -5px;
+}
+
+.blog.sidebar li {
     padding-left: 0;
     margin-left: 0;
+    list-style-type: none;
+    text-indent: -5px;
+    font-family: 'Libre Baskerville', serif;
 }
 
-
-.blog .entry.meta {
-    border-top: 3px solid #676767;
-    text-align: right;
-    background-color: #F3F3F3;
+.blog.sidebar li a {
+    color: #A8A8A8;
+    text-decoration: none;
 }
 
-.blog .entry.meta p {
-    padding-left: 0.5em;
-    padding-right: 0.5em;
-}
-
-.blog p.tags {
-    padding-bottom: 0.5em;
-}
-
-.blog p.date {
-    font-weight: bold;
+.blog.sidebar li a:hover {
+    color: #000;
 }
 
 .blog h4.entry {
-    border-top: 1px dotted #676767;
+    font-size: 2em;
     padding-top: 0.5em;
 }
 
 .blog .entry.body {
     padding-left: 2em;
+}
+
+.blog section {
+    padding-bottom: 2em;
 }
 
 .social-media {

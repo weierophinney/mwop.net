@@ -21,7 +21,7 @@ $this->headLink(array(
 ));
 ?>
 <div class="row">
-<section class="eleven columns alpha blog">
+<section class="sixteen columns blog">
     <h2><?php echo $this->title ?></h2>
 
 <?php 
@@ -34,8 +34,4 @@ foreach ($this->entries as $entry) {
 echo $this->paginationControl($this->entries, 'Sliding', 'blog/paginator', array('url' => $paginatorUrl, 'substitution' => $urlSubstitutionString));
 ?>
 </section>
-
-<aside class="four columns offset-by-one omega sidebar blog">
-    <?php echo $this->render('blog/blogroll') ?>
-</aside>
 </div>
