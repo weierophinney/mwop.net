@@ -10,4 +10,4 @@ foreach ($tags as $tag) {
         $tag
     );
 }
-echo implode("<br />\n", $renderedTags);
+echo "<ul class=\"tags\">\n    <li>", implode("</li>\n    <li>", $renderedTags), "</li>\n</ul>\n";
