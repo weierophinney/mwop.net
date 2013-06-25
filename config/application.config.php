@@ -1,13 +1,6 @@
 <?php
 $configCache    = false;
-$localConfigDir = '/var/local/mwop.net/';
 $localCacheDir  = realpath(dirname(__DIR__) . '/data/cache');
-if (getenv('OPENSHIFT_DATA_DIR')) {
-    $dataDir        = getenv('OPENSHIFT_DATA_DIR');
-    $configCache    = true;
-    $localConfigDir = $dataDir . 'config/';
-    $localCacheDir  = $dataDir . 'cache';
-}
 return array(
     'modules' => array(
         'Application',
@@ -25,7 +18,6 @@ return array(
         'config_cache_enabled'     => $configCache,
         'config_glob_paths'        => array(
             'config/autoload/{,*.}{global,local}.php',
-            $localConfigDir . '{,*.}local.php',
         ),
         'cache_dir'                => $localCacheDir,
         'module_paths'             => array(
