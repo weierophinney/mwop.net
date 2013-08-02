@@ -3,43 +3,43 @@
 
 # The lines below need to be added to the vhost definition in order
 # to properly work (otherwise, redirects to a filesystem path)
-# RewriteEngine On
-# RewriteRule ^/matthew/feeds/index.rss2 /blog-rss.xml [R=301,L]         
-# RewriteRule ^/matthew/feeds/atom.xml /blog-atom.xml [R=301,L]                    
-# RewriteRule ^/matthew/archives/(\d{4}).html /blog/year/$1.html [R=301,L]         
-# RewriteRule ^/matthew/archives/(\d{4})/(\d{2}).html /blog/month/$1/$2.html [R=301,L]
-# RewriteRule ^/matthew/archives/(\d{4})/(\d{2})/(\d{2}).html /blog/day/$1/$2/$3.html [R=301,L]
-# RewriteRule ^/matthew/archives/([^/]+).html /blog/$1.html [R=301,L]              
-# RewriteRule ^/matthew/plugin/tag/([^/]+) /blog/tag/$1.html [R=301,L]             
-# RewriteRule ^/matthew/categories/\d+-([^/]+).rss /blog/tag/$1-rss.xml [R=301,L]
-# RewriteRule ^/matthew/categories/\d+-([^/]+) /blog/tag/$1.html [R=301,L]         
-# 
-# RewriteCond %{QUERY_STRING} ^page=(\d+)$
-# RewriteRule ^/blog$ /blog-p%1.html? [R=301,L]
-# RewriteCond %{QUERY_STRING} ^type=rss$
-# RewriteRule ^/blog\.xml$ /blog-rss.xml? [R=301,L]
-# RewriteRule ^/blog\.xml$ /blog-atom.xml [R=301,L]
-# RewriteCond %{QUERY_STRING} ^page=(\d+)$
-# RewriteRule ^/blog/year/(\d{4})$ /blog/year/$1-p%1.html? [R=301,L]
-# RewriteRule ^/blog/year/(\d{4})$ /blog/year/$1.html [R=301,L]
-# RewriteCond %{QUERY_STRING} ^page=(\d+)$
-# RewriteRule ^/blog/month/(\d{4})/(\d{2})$ /blog/month/$1/$2-p%1.html? [R=301,L]
-# RewriteRule ^/blog/month/(\d{4})/(\d{2})$ /blog/month/$1/$2.html [R=301,L]
-# RewriteCond %{QUERY_STRING} ^page=(\d+)$
-# RewriteRule ^/blog/day/(\d{4})/(\d{2})/(\d{2})$ /blog/day/$1/$2/$3-p%1.html? [R=301,L]
-# RewriteRule ^/blog/day/(\d{4})/(\d{2})/(\d{2})$ /blog/day/$1/$2/$3.html [R=301,L]
-# RewriteCond %{QUERY_STRING} ^type=rss$
-# RewriteRule ^/blog/tag/([^/.-]+)\.xml$ /blog/tag/$1-rss.xml [R=301,L]
-# RewriteRule ^/blog/tag/([^/.-]+)\.xml /blog/tag/$1-atom.xml [R=301,L]
-# RewriteRule ^/blog/tag/([^/.-]+)$ /blog/tag/$1.html [R=301,L]
-# RewriteCond %{REQUEST_URI} ^/blog
-# RewriteCond %{REQUEST_URI} !(\.(ht|x)ml$)
-# RewriteRule ^(.*)$ $1.html [R=301,L]
-#                                                                             
-# # tag feeds                                                                 
-# RewriteCond %{QUERY_STRING} ^serendipity\[tag\]=([^&=]+)$                   
-# RewriteRule ^/matthew/rss\.php$ /blog/tag/%1-rss.xml [R=301,L]
-# 
+RewriteEngine On
+RewriteRule ^/matthew/feeds/index.rss2 /blog-rss.xml [R=301,L]         
+RewriteRule ^/matthew/feeds/atom.xml /blog-atom.xml [R=301,L]                    
+RewriteRule ^/matthew/archives/(\d{4}).html /blog/year/$1.html [R=301,L]         
+RewriteRule ^/matthew/archives/(\d{4})/(\d{2}).html /blog/month/$1/$2.html [R=301,L]
+RewriteRule ^/matthew/archives/(\d{4})/(\d{2})/(\d{2}).html /blog/day/$1/$2/$3.html [R=301,L]
+RewriteRule ^/matthew/archives/([^/]+).html /blog/$1.html [R=301,L]              
+RewriteRule ^/matthew/plugin/tag/([^/]+) /blog/tag/$1.html [R=301,L]             
+RewriteRule ^/matthew/categories/\d+-([^/]+).rss /blog/tag/$1-rss.xml [R=301,L]
+RewriteRule ^/matthew/categories/\d+-([^/]+) /blog/tag/$1.html [R=301,L]         
+
+RewriteCond %{QUERY_STRING} ^page=(\d+)$
+RewriteRule ^/blog$ /blog-p%1.html? [R=301,L]
+RewriteCond %{QUERY_STRING} ^type=rss$
+RewriteRule ^/blog\.xml$ /blog-rss.xml? [R=301,L]
+RewriteRule ^/blog\.xml$ /blog-atom.xml [R=301,L]
+RewriteCond %{QUERY_STRING} ^page=(\d+)$
+RewriteRule ^/blog/year/(\d{4})$ /blog/year/$1-p%1.html? [R=301,L]
+RewriteRule ^/blog/year/(\d{4})$ /blog/year/$1.html [R=301,L]
+RewriteCond %{QUERY_STRING} ^page=(\d+)$
+RewriteRule ^/blog/month/(\d{4})/(\d{2})$ /blog/month/$1/$2-p%1.html? [R=301,L]
+RewriteRule ^/blog/month/(\d{4})/(\d{2})$ /blog/month/$1/$2.html [R=301,L]
+RewriteCond %{QUERY_STRING} ^page=(\d+)$
+RewriteRule ^/blog/day/(\d{4})/(\d{2})/(\d{2})$ /blog/day/$1/$2/$3-p%1.html? [R=301,L]
+RewriteRule ^/blog/day/(\d{4})/(\d{2})/(\d{2})$ /blog/day/$1/$2/$3.html [R=301,L]
+RewriteCond %{QUERY_STRING} ^type=rss$
+RewriteRule ^/blog/tag/([^/.-]+)\.xml$ /blog/tag/$1-rss.xml [R=301,L]
+RewriteRule ^/blog/tag/([^/.-]+)\.xml /blog/tag/$1-atom.xml [R=301,L]
+RewriteRule ^/blog/tag/([^/.-]+)$ /blog/tag/$1.html [R=301,L]
+RewriteCond %{REQUEST_URI} ^/blog
+RewriteCond %{REQUEST_URI} !(\.(ht|x)ml$)
+RewriteRule ^(.*)$ $1.html [R=301,L]
+                                                                            
+# tag feeds                                                                 
+RewriteCond %{QUERY_STRING} ^serendipity\[tag\]=([^&=]+)$                   
+RewriteRule ^/matthew/rss\.php$ /blog/tag/%1-rss.xml [R=301,L]
+
 # # Directory access for document root
 # <Directory /home/matthew/git/mwop/public>                                   
 #     DirectoryIndex index.php index.html                                     
