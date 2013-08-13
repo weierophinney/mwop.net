@@ -12,6 +12,9 @@ error_reporting(E_ALL | E_STRICT);
 
 date_default_timezone_set('America/Chicago');
 
+// Redirects
+include 'redirect.php';
+
 // Setup autoloading
 include_once 'vendor/autoload.php';
 
