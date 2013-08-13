@@ -199,12 +199,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/weierophinney/PhlySimplePage.git",
-                "reference": "3840a24c66f51c4a7ce451d5f76f6298776ee480"
+                "reference": "v1.0.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/weierophinney/PhlySimplePage/zipball/3840a24c66f51c4a7ce451d5f76f6298776ee480",
-                "reference": "3840a24c66f51c4a7ce451d5f76f6298776ee480",
+                "url": "https://api.github.com/repos/weierophinney/PhlySimplePage/zipball/v1.0.0",
+                "reference": "v1.0.0",
                 "shasum": ""
             },
             "require": {
@@ -234,7 +234,8 @@
                 {
                     "name": "Matthew Weier O'Phinney",
                     "email": "matthew@weierophinney.net",
-                    "homepage": "http://mwop.net/"
+                    "homepage": "http://mwop.net/",
+                    "role": "Developer"
                 }
             ],
             "description": "ZF2 Module for easily creating static pages",
@@ -252,12 +253,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/SocalNick/ScnSocialAuth.git",
-                "reference": "4707ac54c1969302509c3c55d6f5927940871cbd"
+                "reference": "1.10.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SocalNick/ScnSocialAuth/zipball/4707ac54c1969302509c3c55d6f5927940871cbd",
-                "reference": "4707ac54c1969302509c3c55d6f5927940871cbd",
+                "url": "https://api.github.com/repos/SocalNick/ScnSocialAuth/zipball/1.10.0",
+                "reference": "1.10.0",
                 "shasum": ""
             },
             "require": {
@@ -294,7 +295,7 @@
             "keywords": [
                 "zf2"
             ],
-            "time": "2013-04-30 04:26:21"
+            "time": "2013-07-29 17:46:15"
         },
         {
             "name": "zendframework/zendframework",
@@ -302,13 +303,13 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zf2.git",
-                "reference": "23bb49413fa9d3088fe8653a618d48511a91ae0e"
+                "reference": "26e400daf0671c0312b78e53beceb3668d7329bd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://packages.zendframework.com/composer/zendframework-zendframework-23bb49413fa9d3088fe8653a618d48511a91ae0e-zip-e72187.zip",
+                "url": "https://packages.zendframework.com/composer/zendframework-zendframework-26e400daf0671c0312b78e53beceb3668d7329bd-zip-960041.zip",
                 "reference": "dev-master",
-                "shasum": "eb5d694961a627420293f3d1ef2236d2314ea3d6"
+                "shasum": "a9d9d48e62fcfd7852397799b28390dad1a7a09c"
             },
             "require": {
                 "php": ">=5.3.3"
@@ -350,6 +351,7 @@
                 "zendframework/zend-permissions-acl": "self.version",
                 "zendframework/zend-permissions-rbac": "self.version",
                 "zendframework/zend-progressbar": "self.version",
+                "zendframework/zend-resources": "self.version",
                 "zendframework/zend-serializer": "self.version",
                 "zendframework/zend-server": "self.version",
                 "zendframework/zend-servicemanager": "self.version",
@@ -369,7 +371,7 @@
                 "doctrine/annotations": ">=1.0",
                 "ircmaxell/random-lib": "dev-master",
                 "ircmaxell/security-lib": "dev-master",
-                "ocramius/proxy-manager": "0.3.*",
+                "ocramius/proxy-manager": "0.4.*",
                 "phpunit/phpunit": "3.7.*"
             },
             "suggest": {
@@ -381,7 +383,9 @@
                 "zendframework/zendservice-recaptcha": "ZendService\\ReCaptcha for rendering ReCaptchas in Zend\\Captcha and/or Zend\\Form"
             },
             "bin": [
-                "bin/classmap_generator.php"
+                "bin/classmap_generator.php",
+                "bin/pluginmap_generator.php",
+                "bin/templatemap_generator.php"
             ],
             "type": "library",
             "extra": {
@@ -392,8 +396,7 @@
             },
             "autoload": {
                 "psr-0": {
-                    "Zend\\": "library/",
-                    "ZendTest\\": "tests/"
+                    "Zend\\": "library/"
                 }
             },
             "license": [
@@ -409,7 +412,7 @@
                 "source": "https://github.com/zendframework/zf2/tree/master",
                 "issues": "https://github.com/zendframework/zf2/issues"
             },
-            "time": "2013-05-10 11:08:12"
+            "time": "2013-07-24 14:09:18"
         },
         {
             "name": "zendframework/zendservice-recaptcha",
@@ -515,37 +518,42 @@
         },
         {
             "name": "zf-commons/zfc-user",
-            "version": "0.1.2",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ZF-Commons/ZfcUser.git",
-                "reference": "0.1.2"
+                "reference": "fbbe5fdeabd9229bf7d1328358c2d95538a6081e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ZF-Commons/ZfcUser/zipball/0.1.2",
-                "reference": "0.1.2",
+                "url": "https://api.github.com/repos/ZF-Commons/ZfcUser/zipball/fbbe5fdeabd9229bf7d1328358c2d95538a6081e",
+                "reference": "fbbe5fdeabd9229bf7d1328358c2d95538a6081e",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3",
-                "zendframework/zend-authentication": ">=2.1,<3.0",
-                "zendframework/zend-crypt": ">=2.1,<3.0",
-                "zendframework/zend-form": ">=2.1,<3.0",
-                "zendframework/zend-inputfilter": ">=2.1,<3.0",
-                "zendframework/zend-loader": ">=2.1,<3.0",
-                "zendframework/zend-modulemanager": ">=2.1,<3.0",
-                "zendframework/zend-mvc": ">=2.1,<3.0",
-                "zendframework/zend-servicemanager": ">=2.1,<3.0",
-                "zendframework/zend-stdlib": ">=2.1,<3.0",
-                "zendframework/zend-validator": ">=2.1,<3.0",
-                "zendframework/zend-view": ">=2.1,<3.0",
+                "zendframework/zend-authentication": "~2.1",
+                "zendframework/zend-crypt": "~2.1",
+                "zendframework/zend-form": "~2.1",
+                "zendframework/zend-inputfilter": "~2.1",
+                "zendframework/zend-loader": "~2.1",
+                "zendframework/zend-modulemanager": "~2.1",
+                "zendframework/zend-mvc": "~2.1",
+                "zendframework/zend-servicemanager": "~2.1",
+                "zendframework/zend-stdlib": "~2.1",
+                "zendframework/zend-validator": "~2.1",
+                "zendframework/zend-view": "~2.1",
                 "zf-commons/zfc-base": "0.*"
             },
             "suggest": {
                 "zendframework/zend-session": "To use the default authentication adapter."
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.1.x-dev"
+                }
+            },
             "autoload": {
                 "psr-0": {
                     "ZfcUser": "src/"
@@ -572,7 +580,7 @@
             "keywords": [
                 "zf2"
             ],
-            "time": "2013-05-02 12:33:31"
+            "time": "2013-07-17 15:48:13"
         }
     ],
     "packages-dev": [
