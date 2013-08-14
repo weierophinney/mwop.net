@@ -4,9 +4,10 @@ $url          = $this->plugin('url');
 $renderedTags = array();
 
 foreach ($tags as $tag) {
+    $tagForUrl = str_replace(array(' ', '%20'), '+', $tag);
     $renderedTags[] = sprintf(
         '<a href="%s">%s</a>', 
-        $url('phly-blog/tag/page', array('tag' => $tag)),
+        $url('phly-blog/tag/page', array('tag' => $tagForUrl)),
         $tag
     );
 }
