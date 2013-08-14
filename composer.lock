@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "fcbd26b098f0a21e8e157535675a49f3",
+    "hash": "963702055420f7b5db3327c3a4b1863e",
     "packages": [
         {
             "name": "hybridauth/hybridauth",
@@ -253,12 +253,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/SocalNick/ScnSocialAuth.git",
-                "reference": "1.10.0"
+                "reference": "4707ac54c1969302509c3c55d6f5927940871cbd"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/SocalNick/ScnSocialAuth/zipball/1.10.0",
-                "reference": "1.10.0",
+                "reference": "4707ac54c1969302509c3c55d6f5927940871cbd",
                 "shasum": ""
             },
             "require": {
@@ -295,7 +295,7 @@
             "keywords": [
                 "zf2"
             ],
-            "time": "2013-07-29 17:46:15"
+            "time": "2013-04-30 04:26:21"
         },
         {
             "name": "zendframework/zendframework",
