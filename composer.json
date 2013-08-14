@@ -16,7 +16,7 @@
         "phly/phly-simple-page": "dev-master",
         "zendframework/zendframework": "2.2.*",
         "zendframework/zendservice-recaptcha": "2.*",
-        "socalnick/scn-social-auth": "dev-master",
+        "socalnick/scn-social-auth": "dev-master#4707ac54c1969302509c3c55d6f5927940871cbd",
         "hybridauth/hybridauth": "dev-hotfix/session-key-test as dev-master"
     }
 }
