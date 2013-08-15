@@ -1,4 +1,5 @@
 run "cp #{shared_path}/appconfig/*.php #{release_path}/config/autoload/"
+run "cd #{release_path} && mkdir -p data/cache"
 run "ln -nfs #{shared_path}/users.db #{release_path}/data/users.db"
 sudo "chmod -R a+rwX #{release_path}/data"
 run "cd #{release_path} && /usr/bin/php public/index.php githubfeed fetch"
