@@ -24,6 +24,7 @@ if (preg_match('#^/matthew#', $uri)) {
         '^/matthew/rss\.php\?.*serendipity\[tag\]\=([^&=]+)$' => '/blog/tag/$1-rss.xml',
     );
     foreach ($regexes as $regex => $replacement) {
+        $regex = '#' . $regex . '#';
         if (preg_match($regex, $uri)) {
             $newUri = preg_replace($regex, $replacement, $uri);
             header(sprintf('Location: %s', $newUri), true, 301);
