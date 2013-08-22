@@ -30,6 +30,6 @@ if (preg_match('#^/matthew#', $uri)) {
             exit(0);
         }
     }
-    header('Location: http://mwop.net/blog.html', true, 301);
+    header('Location: /blog.html', true, 301);
     exit(0);
 }
