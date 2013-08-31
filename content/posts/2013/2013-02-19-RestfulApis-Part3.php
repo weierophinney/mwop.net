@@ -589,8 +589,8 @@ return array(
 </p>
 
 <ul>
-    <li><a href="/blog/2013-02-11-restful-apis-with-zf2-part-1">Part 1</a></li>
-    <li><a href="/blog/2013-02-13-restful-apis-with-zf2-part-2">Part 2</a></li>
+    <li><a href="/blog/2013-02-11-restful-apis-with-zf2-part-1.html">Part 1</a></li>
+    <li><a href="/blog/2013-02-13-restful-apis-with-zf2-part-2.html">Part 2</a></li>
 </ul>
 
 EOT;
