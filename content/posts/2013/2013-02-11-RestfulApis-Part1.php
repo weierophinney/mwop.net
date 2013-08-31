@@ -425,8 +425,8 @@ Content-Type: application/hal+json
 </p>
 
 <ul>
-    <li><a href="/blog/2013-02-13-restful-apis-with-zf2-part-2">Part 2</a></li>
-    <li><a href="/blog/2013-02-25-restful-apis-with-zf2-part-3">Part 3</a></li>
+    <li><a href="/blog/2013-02-13-restful-apis-with-zf2-part-2.html">Part 2</a></li>
+    <li><a href="/blog/2013-02-25-restful-apis-with-zf2-part-3.html">Part 3</a></li>
 </ul>
 
 EOT;
