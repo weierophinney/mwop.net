@@ -102,6 +102,35 @@
 
     <ul class="tags">
     <li><a href="/blog/tag/personal.html">personal</a></li>
+</ul>
+
+</aside>
+
+<section class="eleven columns omega">
+    <h4 class="entry"><a href="/blog/53-Happy-New-Year%21.html">Happy New Year!</a></h4>
+
+    <div class="entry body"><p>
+    It's about 50 minutes shy of 2005 here, and Maeve has finally succumbed to
+    sleep, I'm almost done with my stout, and we're in West Bolton without TV
+    for the second year running (yay!).
+</p>
+<p>
+    I hope the new year brings peace and happiness to one and all! Happy coding!
+</p></div>
+
+    <p><a href="/blog/53-Happy-New-Year%21.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="four columns offset-by-one alpha sidebar blog">
+    <p>
+        Written on 31 December 2004.
+                <br />Last updated on 31 December 2004.
+            </p>
+
+    <ul class="tags">
+    <li><a href="/blog/tag/personal.html">personal</a></li>
     <li><a href="/blog/tag/php.html">php</a></li>
 </ul>
 
@@ -484,90 +513,6 @@ your template might need.
 </section>
 
 </div>
-<div class="row clearfix">
-<aside class="four columns offset-by-one alpha sidebar blog">
-    <p>
-        Written on 07 October 2004.
-                <br />Last updated on 07 October 2004.
-            </p>
-
-    <ul class="tags">
-    <li><a href="/blog/tag/personal.html">personal</a></li>
-    <li><a href="/blog/tag/php.html">php</a></li>
-</ul>
-
-</aside>
-
-<section class="eleven columns omega">
-    <h4 class="entry"><a href="/blog/43-Practical-PHP-Programming.html">Practical PHP Programming</a></h4>
-
-    <div class="entry body"><p>
-    In the past two days, I've seen two references to <a href="http://www.hudzilla.org/php/">Practical PHP Programming</a>, an
-    online book that serves both as an introduction to programming with PHP5 and
-    MySQL as well as a good advanced reference with many good tips.
-</p>
-<p>
-    This evening, I was browsing through the Performance chapter (chapter 18),
-    and found a number of cool things, both for PHP and MySQL. Many were common
-    sense things that I've been doing for awhile, but which I've also seen and
-    shaken my head at in code I've seen from others (calculating loop
-    invariables at every iteration, not using variables passed to a function,
-    not returning a value from a function, not using a return value from a
-    function). Others were new and gave me pause for thought (string
-    concatenation with the '.' operator is expensive, especially when done more
-    than once in an operation; echo can take a comma separated list).
-</p>
-<p>
-    Some PHP myths were also dispelled, some of which I've been wondering about
-    for awhile. For instance, the amount of comments and whitespace in PHP are
-    not a factor in performance (and PHP caching systems will often strip them
-    out anyways); double quotes are not more expensive than single quotes unless
-    variable interpolation occurs.
-</p>
-<p>
-    It also has some good advice for SQL optimization, and, more importantly,
-    MySQL <em>server</em> optimization. For instance, the author suggests
-    running 'OPTIMIZE TABLE table;' on any table that has been
-    added/updated/deleted from to any large extent since creation; this will
-    defrag the table and give it better performance. Use CHAR() versus
-    VARCHAR(); VARCHAR() saves on space, but MySQL has to calculate how much
-    space was used each time it queries in order to determine where the next
-    field or record starts. However, if you have any variable length fields, you
-    may as well use as many as you need -- or split off variable length fields
-    (such as a TEXT() field) into a different table in order to speed up
-    searching. When performing JOINs, compare on numeric fields instead of
-    character fields, and always JOIN on rows that are indexed.
-</p>
-<p>
-    I haven't read the entire book, but glancing through the TOC, there are some
-    potential downfalls to its content:
-</p>
-<ul>
-    <li>It doesn't cover PhpDoc</li>
-    <li>It doesn't appear to cover unit testing</li>
-    <li>Limited coverage of templating solutions (though they are mentioned)</li>
-    <li>Limited usage of PEAR. The author does mention PEAR a number of times,
-    and often indicates that use of certain PEAR modules is preferable to using
-    the corresponding low-level PHP calls (e.g., Mail and Mail_MIME, DB), but in
-    the examples rarely uses them.</li>
-    <li>PHP-HTML-PHP... The examples I browsed all created self-contained
-    scripts that did all HTML output. While I can appreciate this to a degree,
-    I'd still like to see a book that shows OOP development in PHP <em>and which
-    creates re-usable web components</em> in doing so. For instance, instead of
-    creating a message board <em>script</em>, create a message board
-    <em>class</em> that can be called from anywhere with metadata specifying the
-    database and templates to use.</li>
-</ul>
-<p>
-    All told, there's plenty of meat in this book -- I wish it were in dead tree
-    format already so I could browse through it at my leisure, instead of in
-    front of the computer.
-</p></div>
-
-    <p><a href="/blog/43-Practical-PHP-Programming.html">Continue reading...</a></p>
-</section>
-
-</div>
 <div class="paginationControl">
         <a href="/blog/author/matthew.html" class="first">&lt;&lt; First</a> |
         <a href="/blog/author/matthew-p23.html"> &lt; Previous </a> |
@@ -641,7 +586,7 @@ your template might need.
         <div id="search" style="width:100%;">Loading...</div>
 <h4>Tag Cloud</h4>
 <div class="cloud">
-<ul class="Zend&#x5C;Tag&#x5C;Cloud"><li><a href="/blog/tag/php.html" style="font-size: 20px;">php</a></li> <li><a href="/blog/tag/zend+framework.html" style="font-size: 15px;">zend framework</a></li> <li><a href="/blog/tag/zf2.html" style="font-size: 11px;">zf2</a></li> <li><a href="/blog/tag/vim.html" style="font-size: 11px;">vim</a></li> <li><a href="/blog/tag/family.html" style="font-size: 11px;">family</a></li> <li><a href="/blog/tag/programming.html" style="font-size: 12px;">programming</a></li> <li><a href="/blog/tag/personal.html" style="font-size: 13px;">personal</a></li> <li><a href="/blog/tag/phpconcom.html" style="font-size: 10px;">phpconcom</a></li> <li><a href="/blog/tag/mvc.html" style="font-size: 11px;">mvc</a></li> <li><a href="/blog/tag/oop.html" style="font-size: 11px;">oop</a></li> <li><a href="/blog/tag/testing.html" style="font-size: 10px;">testing</a></li> <li><a href="/blog/tag/rest.html" style="font-size: 11px;">rest</a></li> <li><a href="/blog/tag/linux.html" style="font-size: 12px;">linux</a></li> <li><a href="/blog/tag/zendcon08.html" style="font-size: 11px;">zendcon08</a></li> <li><a href="/blog/tag/file_fortune.html" style="font-size: 10px;">file_fortune</a></li> <li><a href="/blog/tag/pear.html" style="font-size: 11px;">pear</a></li> <li><a href="/blog/tag/zendcon.html" style="font-size: 11px;">zendcon</a></li> <li><a href="/blog/tag/perl.html" style="font-size: 12px;">perl</a></li> <li><a href="/blog/tag/fastcgi.html" style="font-size: 10px;">fastcgi</a></li> <li><a href="/blog/tag/ubuntu.html" style="font-size: 11px;">ubuntu</a></li> <li><a href="/blog/tag/tekx.html" style="font-size: 10px;">tekx</a></li> <li><a href="/blog/tag/zendcon10.html" style="font-size: 10px;">zendcon10</a></li> <li><a href="/blog/tag/dojo.html" style="font-size: 11px;">dojo</a></li> <li><a href="/blog/tag/symfony.html" style="font-size: 11px;">symfony</a></li> <li><a href="/blog/tag/zeta+components.html" style="font-size: 10px;">zeta components</a></li> <li><a href="/blog/tag/tek09.html" style="font-size: 10px;">tek09</a></li> <li><a href="/blog/tag/spl.html" style="font-size: 11px;">spl</a></li> <li><a href="/blog/tag/subversion.html" style="font-size: 11px;">subversion</a></li> <li><a href="/blog/tag/zend+framewor.html" style="font-size: 10px;">zend framewor</a></li> <li><a href="/blog/tag/rails.html" style="font-size: 10px;">rails</a></li> <li><a href="/blog/tag/conferences.html" style="font-size: 11px;">conferences</a></li> <li><a href="/blog/tag/dpc08.html" style="font-size: 11px;">dpc08</a></li> <li><a href="/blog/tag/phpworks08.html" style="font-size: 11px;">phpworks08</a></li> <li><a href="/blog/tag/webinar.html" style="font-size: 11px;">webinar</a></li> <li><a href="/blog/tag/zencon08.html" style="font-size: 10px;">zencon08</a></li> <li><a href="/blog/tag/cw09.html" style="font-size: 11px;">cw09</a></li> <li><a href="/blog/tag/zend+server.html" style="font-size: 10px;">zend server</a></li> <li><a href="/blog/tag/dpc09.html" style="font-size: 10px;">dpc09</a></li> <li><a href="/blog/tag/sflive2010.html" style="font-size: 10px;">sflive2010</a></li> <li><a href="/blog/tag/security.html" style="font-size: 10px;">security</a></li> <li><a href="/blog/tag/wifi.html" style="font-size: 10px;">wifi</a></li> <li><a href="/blog/tag/aikido.html" style="font-size: 10px;">aikido</a></li> <li><a href="/blog/tag/books.html" style="font-size: 10px;">books</a></li> <li><a href="/blog/tag/dpc10.html" style="font-size: 10px;">dpc10</a></li> <li><a href="/blog/tag/zendcon09.html" style="font-size: 11px;">zendcon09</a></li> <li><a href="/blog/tag/git.html" style="font-size: 11px;">git</a></li> <li><a href="/blog/tag/phpwomen.html" style="font-size: 10px;">phpwomen</a></li> <li><a href="/blog/tag/virtualbox.html" style="font-size: 10px;">virtualbox</a></li> <li><a href="/blog/tag/screencast.html" style="font-size: 11px;">screencast</a></li> <li><a href="/blog/tag/advocacy.html" style="font-size: 10px;">advocacy</a></li> <li><a href="/blog/tag/politics.html" style="font-size: 10px;">politics</a></li> <li><a href="/blog/tag/internet.html" style="font-size: 10px;">internet</a></li> <li><a href="/blog/tag/microphp.html" style="font-size: 10px;">microphp</a></li> <li><a href="/blog/tag/cloud.html" style="font-size: 11px;">cloud</a></li> <li><a href="/blog/tag/composer.html" style="font-size: 10px;">composer</a></li> <li><a href="/blog/tag/doctrine.html" style="font-size: 10px;">doctrine</a></li> <li><a href="/blog/tag/http.html" style="font-size: 11px;">http</a></li></ul></div>
+<ul class="Zend&#x5C;Tag&#x5C;Cloud"><li><a href="/blog/tag/php.html" style="font-size: 20px;">php</a></li> <li><a href="/blog/tag/zend+framework.html" style="font-size: 15px;">zend framework</a></li> <li><a href="/blog/tag/zf2.html" style="font-size: 11px;">zf2</a></li> <li><a href="/blog/tag/vim.html" style="font-size: 11px;">vim</a></li> <li><a href="/blog/tag/family.html" style="font-size: 11px;">family</a></li> <li><a href="/blog/tag/programming.html" style="font-size: 12px;">programming</a></li> <li><a href="/blog/tag/personal.html" style="font-size: 13px;">personal</a></li> <li><a href="/blog/tag/phpconcom.html" style="font-size: 10px;">phpconcom</a></li> <li><a href="/blog/tag/mvc.html" style="font-size: 11px;">mvc</a></li> <li><a href="/blog/tag/oop.html" style="font-size: 11px;">oop</a></li> <li><a href="/blog/tag/testing.html" style="font-size: 10px;">testing</a></li> <li><a href="/blog/tag/rest.html" style="font-size: 11px;">rest</a></li> <li><a href="/blog/tag/linux.html" style="font-size: 12px;">linux</a></li> <li><a href="/blog/tag/zendcon08.html" style="font-size: 11px;">zendcon08</a></li> <li><a href="/blog/tag/file_fortune.html" style="font-size: 10px;">file_fortune</a></li> <li><a href="/blog/tag/pear.html" style="font-size: 11px;">pear</a></li> <li><a href="/blog/tag/zendcon.html" style="font-size: 11px;">zendcon</a></li> <li><a href="/blog/tag/perl.html" style="font-size: 12px;">perl</a></li> <li><a href="/blog/tag/fastcgi.html" style="font-size: 10px;">fastcgi</a></li> <li><a href="/blog/tag/ubuntu.html" style="font-size: 11px;">ubuntu</a></li> <li><a href="/blog/tag/tekx.html" style="font-size: 10px;">tekx</a></li> <li><a href="/blog/tag/zendcon10.html" style="font-size: 10px;">zendcon10</a></li> <li><a href="/blog/tag/dojo.html" style="font-size: 11px;">dojo</a></li> <li><a href="/blog/tag/symfony.html" style="font-size: 11px;">symfony</a></li> <li><a href="/blog/tag/zeta+components.html" style="font-size: 10px;">zeta components</a></li> <li><a href="/blog/tag/tek09.html" style="font-size: 10px;">tek09</a></li> <li><a href="/blog/tag/spl.html" style="font-size: 11px;">spl</a></li> <li><a href="/blog/tag/subversion.html" style="font-size: 11px;">subversion</a></li> <li><a href="/blog/tag/zend+framewor.html" style="font-size: 10px;">zend framewor</a></li> <li><a href="/blog/tag/rails.html" style="font-size: 10px;">rails</a></li> <li><a href="/blog/tag/conferences.html" style="font-size: 11px;">conferences</a></li> <li><a href="/blog/tag/dpc08.html" style="font-size: 11px;">dpc08</a></li> <li><a href="/blog/tag/phpworks08.html" style="font-size: 11px;">phpworks08</a></li> <li><a href="/blog/tag/webinar.html" style="font-size: 11px;">webinar</a></li> <li><a href="/blog/tag/zencon08.html" style="font-size: 10px;">zencon08</a></li> <li><a href="/blog/tag/cw09.html" style="font-size: 11px;">cw09</a></li> <li><a href="/blog/tag/zend+server.html" style="font-size: 10px;">zend server</a></li> <li><a href="/blog/tag/dpc09.html" style="font-size: 10px;">dpc09</a></li> <li><a href="/blog/tag/sflive2010.html" style="font-size: 10px;">sflive2010</a></li> <li><a href="/blog/tag/security.html" style="font-size: 10px;">security</a></li> <li><a href="/blog/tag/wifi.html" style="font-size: 10px;">wifi</a></li> <li><a href="/blog/tag/aikido.html" style="font-size: 10px;">aikido</a></li> <li><a href="/blog/tag/books.html" style="font-size: 10px;">books</a></li> <li><a href="/blog/tag/dpc10.html" style="font-size: 10px;">dpc10</a></li> <li><a href="/blog/tag/zendcon09.html" style="font-size: 11px;">zendcon09</a></li> <li><a href="/blog/tag/git.html" style="font-size: 11px;">git</a></li> <li><a href="/blog/tag/phpwomen.html" style="font-size: 10px;">phpwomen</a></li> <li><a href="/blog/tag/virtualbox.html" style="font-size: 10px;">virtualbox</a></li> <li><a href="/blog/tag/screencast.html" style="font-size: 11px;">screencast</a></li> <li><a href="/blog/tag/advocacy.html" style="font-size: 10px;">advocacy</a></li> <li><a href="/blog/tag/politics.html" style="font-size: 10px;">politics</a></li> <li><a href="/blog/tag/internet.html" style="font-size: 10px;">internet</a></li> <li><a href="/blog/tag/microphp.html" style="font-size: 10px;">microphp</a></li> <li><a href="/blog/tag/cloud.html" style="font-size: 11px;">cloud</a></li> <li><a href="/blog/tag/composer.html" style="font-size: 10px;">composer</a></li> <li><a href="/blog/tag/doctrine.html" style="font-size: 10px;">doctrine</a></li> <li><a href="/blog/tag/javascript.html" style="font-size: 10px;">javascript</a></li> <li><a href="/blog/tag/bower.html" style="font-size: 10px;">bower</a></li> <li><a href="/blog/tag/http.html" style="font-size: 11px;">http</a></li></ul></div>
         </div>
 
         <br class="clear"/>
