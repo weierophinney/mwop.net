@@ -1,11 +1,265 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title type="text">Tag: zend framework :: phly, boy, phly</title>
-  <updated>2013-02-25T12:29:00+0000</updated>
+  <updated>2014-03-26T20:30:00+0000</updated>
   <generator uri="http://framework.zend.com" version="2">Zend_Feed_Writer</generator>
   <link rel="alternate" type="text/html" href="http://mwop.net/blog/tag/zend+framework.html"/>
   <link rel="self" type="application/atom+xml" href="http://mwop.net/blog/tag/zend+framework-atom.xml"/>
   <id>http://mwop.net/blog/tag/zend+framework.html</id>
+  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <title type="html"><![CDATA[Apigility: Using RPC with HAL]]></title>
+    <published>2014-03-26T20:30:00+0000</published>
+    <updated>2014-03-26T20:30:00+0000</updated>
+    <link rel="alternate" type="text/html" href="http://mwop.net/blog/2014-03-26-apigility-rpc-with-hal.html"/>
+    <id>http://mwop.net/blog/2014-03-26-apigility-rpc-with-hal.html</id>
+    <author>
+      <name>Matthew Weier O'Phinney</name>
+      <email>me@mwop.net</email>
+      <uri>http://mwop.net</uri>
+    </author>
+    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
+      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>A few days ago, we <xhtml:a href="http://bit.ly/ag-1-beta1">released
+our first beta of Apigility</xhtml:a>. We've started our documentation
+effort now, and one question has arisen a few times that I want to
+address: How can you use Hypermedia Application Language (HAL) in
+RPC services?</xhtml:p>
+<xhtml:h2>HAL?</xhtml:h2>
+<xhtml:p><xhtml:a href="http://tools.ietf.org/html/draft-kelly-json-hal-06">Hypermedia
+Application Language</xhtml:a> is an IETF proposal for how to represent
+resources and their relations within APIs. Technically, it provides
+two mediatypes, <xhtml:code>application/hal+json</xhtml:code> and
+<xhtml:code>application/hal+xml</xhtml:code>; however, Apigility only provides
+the JSON variant.</xhtml:p>
+<xhtml:p>The important things to know about HAL are:</xhtml:p>
+<xhtml:ul>
+<xhtml:li>
+<xhtml:p>It provides a standard way of describing relational links. All
+relational links are under a <xhtml:code>_links</xhtml:code> property of the
+resource. That property is an object. Each property of that object
+is a link relation; the value of each link relation is an object
+(or array of such objects) describing the link that must minimally
+contain an <xhtml:code>href</xhtml:code> proerty. The link object itself can
+contain some additional metadata, such as a mediatype, a name
+(useful for differentiating between multiple link objects assigned
+to the same relation).</xhtml:p>
+<xhtml:p>While not required, the specification recommends resources
+contain a "self" relational link, indicating the canonical location
+for the resource. This is particularly useful when we consider
+embedding (the next topic).</xhtml:p>
+<xhtml:p>Sound hard? It's not:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="javascript">
+{
+    "_links": {
+        "self": {
+            "href": "/blog/2014-03-26-apigility-rpc-with-hal"
+        }
+    }
+}
+        </xhtml:code>
+</xhtml:pre></xhtml:div>
+</xhtml:li>
+<xhtml:li>
+<xhtml:p>Besides link relations, HAL also provides a standard way of
+describing <xhtml:em>embedded resources</xhtml:em>. An embedded resource is any
+other resource you can address via your API, and, as such, would be
+structured as a HAL resource -- in other words, it would have a
+<xhtml:code>_links</xhtml:code> property with relational links. Essentially,
+any property of the resource you're returning that can itself be
+addressed via the URI must be <xhtml:em>embedded</xhtml:em> in the resource.
+This is done via the property <xhtml:code>_embedded</xhtml:code>.</xhtml:p>
+<xhtml:p>Like <xhtml:code>_links</xhtml:code>, <xhtml:code>_embedded</xhtml:code> is an object.
+Each key in the object is the local name by which the resource
+refers to the embedded resource. The value of such keys can either
+be HAL resources or <xhtml:em>arrays</xhtml:em> of HAL resources; in fact, this
+is how <xhtml:em>collections</xhtml:em> are represented in HAL!</xhtml:p>
+<xhtml:p>As examples:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="javascript">
+{
+    "_links": {
+        "self": {
+            "href": "/blog/2014-03-26-apigility-rpc-with-hal"
+        }
+    },
+    "_embedded": {
+        "author": {
+            "_links": {
+                "self": {
+                    "href": "/blog/author/matthew"
+                }
+            },
+            "id": "matthew",
+            "name": "Matthew Weier O'Phinney",
+            "url": "http://mwop.net"
+        },
+        "tags": [
+            {
+                "_links": {
+                    "self": {
+                        "href": "/blog/tag/php"
+                    }
+                },
+                "id": "php"
+            },
+            {
+                "_links": {
+                    "self": {
+                        "href": "/blog/tag/rest"
+                    }
+                },
+                "id": "rest"
+            }
+        ]
+    }
+}
+        </xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>The example above shows two embedded resources. The first is the
+author; the second, a collection of tags. Note that <xhtml:em>every</xhtml:em>
+object under <xhtml:code>_embedded</xhtml:code> is a HAL object!</xhtml:p>
+<xhtml:p>You can go quite far with this -- you can also have embedded
+resources inside your embedded resources, arbitrarily deep.</xhtml:p>
+</xhtml:li>
+</xhtml:ul>
+<xhtml:h2>RPC?</xhtml:h2>
+<xhtml:p>RPC stands for Remote Procedure Call, and, when describing a web
+API, is usually used to describe a web service that publishes
+multiple method calls at a single URI using only <xhtml:code>POST</xhtml:code>;
+XML-RPC and SOAP are the usual suspects.</xhtml:p>
+<xhtml:p>In Apigility, we use the term RPC in a much looser sense; we use
+it to describe one-off services: actions like "authenticate," or
+"notify," or "register" would all make sense here. They are actions
+that usually only need to respond to a single HTTP method, and
+which may or may not describe a "thing", which is what we usually
+consider a "resource" when discussing REST terminology.</xhtml:p>
+<xhtml:p>That said: what if what we want to return from the RPC call
+<xhtml:em>are</xhtml:em> REST resources?</xhtml:p>
+<xhtml:h2>Returning HAL from RPC Services</xhtml:h2>
+<xhtml:p>In order to return HAL from RPC services, we need to understand
+(a) how Content Negotiation works, and (b) what needs to be
+returned in order for the HAL renderer to be able to create a
+representation.</xhtml:p>
+<xhtml:p>For purposes of this example, I'm positing a
+<xhtml:code>RegisterController</xhtml:code> as an RPC service that, on success,
+is returning a <xhtml:code>User</xhtml:code> object that I want rendered as a
+HAL resource.</xhtml:p>
+<xhtml:p>The <xhtml:a href="https://github.com/zfcampus/zf-content-negotiation">zf-content-negotiation</xhtml:a>
+module takes care of content negotiation for Apigility. It
+introspects the <xhtml:code>Accept</xhtml:code> header in order to determine if
+we can return a representation, and then, if it can, will cast any
+<xhtml:code>ZF\ContentNegotiation\ViewModel</xhtml:code> returned from a
+controller to the appropriate view model for the representation.
+From there, a renderer will pick up the view model and do what
+needs to be done.</xhtml:p>
+<xhtml:p>So, the first thing we have to do is return
+<xhtml:code>ZF\ContentNegotiation\ViewModel</xhtml:code> instances from our
+controller.</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="php">
+use Zend\Mvc\Controller\AbstractActionController;
+use ZF\ContentNegotiation\ViewModel;
+
+class RegisterController extends AbstractActionController
+{
+    public function registerAction()
+    {
+        /* ... do some work ... get a user ... */
+        return new ViewModel(array('user' =&gt; $user));
+    }
+}
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>The <xhtml:a href="https://github.com/zfcampus/zf-hal">zf-hal</xhtml:a>
+module in Apigility creates the actual HAL representations.
+<xhtml:code>zf-hal</xhtml:code> looks for a "payload" variable in the view
+model, and expects that value to be either a
+<xhtml:code>ZF\Hal\Entity</xhtml:code> (single item) or
+<xhtml:code>ZF\Hal\Collection</xhtml:code>. When creating an
+<xhtml:code>Entity</xhtml:code> object, you need the object being represented,
+as well as the identifier. So, let's update our return value.</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="php">
+use Zend\Mvc\Controller\AbstractActionController;
+use ZF\ContentNegotiation\ViewModel;
+use ZF\Hal\Entity;
+
+class RegisterController extends AbstractActionController
+{
+    public function registerAction()
+    {
+        /* ... do some work
+         * ... get a $user
+         * ... assume we have also now have an $id
+         */
+        return new ViewModel(array('payload' =&gt; array(
+            'user' =&gt; new Entity($user, $id),
+        )));
+    }
+}
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p><xhtml:code>zf-hal</xhtml:code> contains what's called a "metadata map".
+This is a map of classes to information on how <xhtml:code>zf-hal</xhtml:code>
+should render them: what route to use, what additional relational
+links to inject, how to serialize the object, what field represents
+the identifier, etc.</xhtml:p>
+<xhtml:p>In most cases, you will have likely already defined a REST
+service for the resource you want to return from the RPC service,
+in which case you will be done. However, if you want, you can go in
+and manually configure the metadata map in your API module's
+<xhtml:code>config/module.config.php</xhtml:code> file:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="php">
+return array(
+    /* ... */
+    'zf-hal' =&gt; array(
+        'metadata_map' =&gt; array(
+            'User' =&gt; array(
+                'route_name' =&gt; 'api.rest.user',
+                'entity_identifier_name' =&gt; 'username',
+                'route_identifier_name' =&gt; 'user_id',
+                'hydrator' =&gt; 'Zend\Stdlib\Hydrator\ObjectProperty',
+            ),
+        ),
+    ),
+);
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>Finally, we need to make sure that the service is configured to
+actually return HAL. We can do this in the admin if we want. Find
+the "Content Negotiation" section of the admin, and the "Content
+Negotiation Selector" item, and set that to "HalJson"; don't forget
+to save! Alternately, you can do this manually in the API module's
+<xhtml:code>config/module.config.php</xhtml:code> file, under the
+<xhtml:code>zf-content-negotiation</xhtml:code> section:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="php">
+return array(
+    /* ... */
+    'zf-content-negotiation' =&gt; array(
+        'controllers' =&gt; array(
+            /* ... */
+            'RegisterController' =&gt; 'HalJson',
+        ),
+        /* ... */
+    ),
+);
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>Once your changes are complete, when you make a successful
+request to the URI for your "register" RPC service, you'll receive
+a HAL response pointing to the canonical URI for the user resource
+created!</xhtml:p>
+</xhtml:div>
+    </content>
+  </entry>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <title type="html"><![CDATA[RESTful APIs with ZF2, Part 3]]></title>
     <published>2013-02-25T12:29:00+0000</published>
@@ -2465,246 +2719,6 @@ server. In short, it's a good fit <xhtml:em>for me</xhtml:em>.</xhtml:p>
 and showing how to develop both modules and sites built on top of
 modules this June, via a full-day tutorial at the <xhtml:a href="http://phpconference.nl">Dutch PHP Conference</xhtml:a>. Please join me,
 and a host of incredible speakers, in Amsterdam this summer!</xhtml:p>
-</xhtml:div>
-    </content>
-  </entry>
-  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
-    <title type="html"><![CDATA[View Layers, Database Abstraction, Configuration, Oh, My!]]></title>
-    <published>2012-03-05T22:32:45+0000</published>
-    <updated>2012-03-05T22:32:45+0000</updated>
-    <link rel="alternate" type="text/html" href="http://mwop.net/blog/zf2-beta3.html"/>
-    <id>http://mwop.net/blog/zf2-beta3.html</id>
-    <author>
-      <name>Matthew Weier O'Phinney</name>
-      <email>me@mwop.net</email>
-      <uri>http://mwop.net</uri>
-    </author>
-    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
-      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>Late last week, the Zend Framework community <xhtml:a href="http://framework.zend.com/zf2/blog/entry/Zend-Framework-2-0-0beta3-Released">
-2.0.0beta3</xhtml:a>, the latest iteration of the v2 framework. What have
-we been busy doing the last couple months? In a nutshell, getting
-dirty with view layers, database abstraction, and
-configuration.</xhtml:p>
-<xhtml:h2>View Layers</xhtml:h2>
-<xhtml:p>Working with and on Zend Framework as long as I have, one thing
-that has always been a bit of a thorn in my side is how difficult
-it is to specify differing view strategies based on arbitrary
-criteria. For instance, if I want to return JSON, or XML, how can I
-do so? The "answer" in ZF1 is to use the ContextSwitch action
-helper, which basically simply overloads the filename suffix used
-for the view to include the format type -- ".js.phtml",
-".xml.phtml". This works, but it's a bit of a hack. (Full
-disclosure: I authored the hack.)</xhtml:p>
-<xhtml:p>Another problem I've always had is that rendering has occurred
-in multiple places of request execution. Action view scripts are
-rendered immediately following the action's execution, layouts are
-rendered at another time entirely. Using <xhtml:code>Zend_View</xhtml:code> as
-the renderer, this is fine, but if you want to switch to a solution
-that is capable of rendering the entire payload, including "child"
-views, at once, it becomes quite difficult to work around.</xhtml:p>
-<xhtml:p>For Zend Framework 2, I <xhtml:a href="http://framework.zend.com/wiki/display/ZFDEV2/RFC+-+View+Layer">proposed
-a new view layer</xhtml:a>, which helps mitigate some of these factors.
-As part of the work for this proposal, I reorganized the component
-slightly to separate it into "helpers", "renderers", and
-"resolvers" -- the latter are used to resolve a template to a
-renderer-specific resource. Additionally, I introduced a new
-concept into the framework, that of "View Models". This is a
-concept borrowed from a number of different places, but most
-notably Microsoft, who implemented them as part of a new pattern
-entitled "Model-View-ViewModel". In this pattern, you bind data to
-a "ViewModel" object, which can contain optional presentation
-logic, and pass the ViewModel to the View. The View then grabs data
-from the ViewModel to present to the client.</xhtml:p>
-<xhtml:p>The biggest change, however, was introducing a "gateway" class,
-<xhtml:code>Zend\View\View</xhtml:code>, with the responsibility of martialling
-a renderer and injecting a response object. The code for this
-leverages the EventManager component to allow attaching
-"strategies" for selecting a renderer. The selected renderer is
-then used to render the template present in the ViewModel passed to
-the View object. Once complete, we loop through response
-strategies, where the results of rendering can be injected into the
-response. This also provides an ideal location for adding headers,
-such as HTTP caching headers.</xhtml:p>
-<xhtml:p>Finally, I introduced a number of MVC listeners for view
-integration. Some of these are quite basic -- such as ensuring we
-have a listener that will trigger the view, and a default rendering
-strategy. Others help streamline the MVC - while we recommend
-returning ViewModel objects from your controllers, with templates
-set, default listeners provided will create ViewModels from
-returned associative arrays, and inject a template name based on
-the requested controller and action.</xhtml:p>
-<xhtml:p>What do you really need to know from the outset? Not much!</xhtml:p>
-<xhtml:div class="example">
-<xhtml:pre>
-<xhtml:code lang="php" xml:lang="php">
-namespace Sample\Controller;
-
-use Zend\Mvc\Controller\ActionController;
-
-class HelloController extends ActionController
-{
-    public function worldAction()
-    {
-        // Implicitly creates a ViewModel with the below variables, and sets
-        // the template to hello/world (:controller/:action)
-        return array(
-            'message' =&gt; 'Hello world!',
-        );
-    }
-}
-</xhtml:code>
-</xhtml:pre></xhtml:div>
-<xhtml:p>Basically, the most common use case is the one you'd expect to
-work. The fun really starts when you want to perform other common
-tasks: change the layout, disable the layout, specify an alternate
-template, add additional templates to render and aggregate in the
-layout, and more. In all cases, you work with ViewModels, and then
-let the renderer worry about how to represent them.</xhtml:p>
-<xhtml:p>For more details, <xhtml:a href="http://packages.zendframework.com/docs/latest/manual/en/zend.view.html#zend.view.quick-start">
-read the Zend\View quickstart</xhtml:a>.</xhtml:p>
-<xhtml:h2>Database Abstraction</xhtml:h2>
-<xhtml:p><xhtml:code>Zend_Db</xhtml:code> provides a ton of capabilities in Zend
-Framework v1. However, over the years, we've discovered some design
-issues both in the code itself as well as the tests which have made
-a number of features difficult to support, and others difficult if
-not impossible to implement. As <xhtml:a href="http://ralphschindler.com/">Ralph</xhtml:a> noted in his <xhtml:a href="http://framework.zend.com/wiki/display/ZFDEV2/RFC+-+Zend+Db">DB
-refactoring RFC</xhtml:a>,</xhtml:p>
-<xhtml:blockquote>Each new feature request generally comes with it's own
-concerns that apply to the project as a whole: "How useful is the
-feature?", "How does this feature impact performance?", "How wide
-spread is the need for this feature?". Generally, features are
-added to the core component bloating the core component and adding
-a new set of code that has to be maintained.</xhtml:blockquote>
-<xhtml:p>The iteration for beta3 was to get the basic structure up and
-running for drivers and adapters (drivers are the low-level
-connections, adapters provide basic abstraction around common
-operations), resultset abstraction, the basic infrastructure for
-SQL abstraction, metadata support, and a table/row data gateway
-implementation. All operations were tested on PDO_Sqlite, mysqli,
-and sqlsrv; preliminary reports indicate most PDO drivers work out
-of the box at this point.</xhtml:p>
-<xhtml:p>What does it look like?</xhtml:p>
-<xhtml:h4>Inserting data</xhtml:h4>
-<xhtml:div class="example">
-<xhtml:pre>
-<xhtml:code lang="php" xml:lang="php">
-// where $adapter is an adapter object
-$qi = function($name) use ($adapter) { 
-    return $adapter-&gt;platform-&gt;quoteIdentifier($name); 
-};
-$fp = function($name) use ($adapter) { 
-    return $adapter-&gt;driver-&gt;formatParameterName($name); 
-};
-
-$sql = 'INSERT INTO '
-    . $qi('artist')
-    . ' (' . $qi('name') . ', ' . $qi('history') . ') VALUES ('
-    . $fp('name') . ', ' . $fp('history') . ')';
-
-$statement = $adapter-&gt;query($sql);
-
-$parameters = array(
-    'name'    =&gt; 'New Artist',
-    'history' =&gt; 'This is the history',
-);
-
-$statement-&gt;execute($parameters);
-</xhtml:code>
-</xhtml:pre></xhtml:div>
-<xhtml:h4>Selecting data</xhtml:h4>
-<xhtml:div class="example">
-<xhtml:pre>
-<xhtml:code lang="php" xml:lang="php">
-// where $adapter is an adapter object
-$qi = function($name) use ($adapter) { 
-    return $adapter-&gt;platform-&gt;quoteIdentifier($name); 
-};
-$fp = function($name) use ($adapter) { 
-    return $adapter-&gt;driver-&gt;formatParameterName($name); 
-};
-
-$sql = 'SELECT * FROM ' . $qi('artist');
-$statement = $adapter-&gt;query($sql);
-$results = $statement-&gt;execute(array());
-
-foreach ($results as $row) {
-    var_export($row);
-}
-</xhtml:code>
-</xhtml:pre></xhtml:div>
-<xhtml:h4>TableGateway</xhtml:h4>
-<xhtml:div class="example">
-<xhtml:pre>
-<xhtml:code lang="php" xml:lang="php">
-// where $adapter is an adapter object
-$artistTable = new TableGateway('artist', $adapter);
-$rowset = $artistTable-&gt;select(function (Select $select) {
-    $select-&gt;where-&gt;like('name', 'Bar%');
-});
-$row = $rowset-&gt;current();
-echo $row-&gt;name;
-</xhtml:code>
-</xhtml:pre></xhtml:div>
-<xhtml:p>During my review of the code, which included assisting Ralph
-with testing, I was impressed with the heavy level of de-coupling
-present, and how easily it will allow us to support things like
-platform-specific SQL, custom rowsets, and more.</xhtml:p>
-<xhtml:p>For more details, <xhtml:a href="http://packages.zendframework.com/docs/latest/manual/en/zend.db.html">
-read the Zend\Db documentation</xhtml:a>.</xhtml:p>
-<xhtml:h2>Configuration</xhtml:h2>
-<xhtml:p>Configuration should be very fast. Interestingly, developers
-often also expect configuration to support a multitude of features
--- key translation, section inheritance, importing of additional
-configuration files, constant substitution, compatibility with many
-configuration formats, and more. These things tend to work in
-direct opposition to performance goals.</xhtml:p>
-<xhtml:p>Several ZF2 community members decided to tackle these issues.
-Their goal was to create a streamlined core for
-<xhtml:code>Zend\Config</xhtml:code>, but provide a variety of plugins and
-filters to provide the rich features many users have come to
-expect. The result is a very nice, de-coupled component.</xhtml:p>
-<xhtml:p>Basic usage remains the same as it always has. However, without
-enabling any optional features, you will not get things such as
-constant or token substitution; to get that, you can use the new
-Processor API:</xhtml:p>
-<xhtml:div class="example">
-<xhtml:pre>
-<xhtml:code lang="php" xml:lang="php">
-// Get our config object; second argument tells the factory to return
-// a Config object, vs. an array
-$config = Zend\Config\Factory::fromFile($pathToConfigFile, true);
-
-// Process values, substituting constant values whenever a defined constant name 
-// is encountered
-$constants = new Zend\Config\Processor\Constant();
-$constants-&gt;process($config);
-
-// Define some tokens to substitute
-$tokens = new Zend\Config\Processor\Token();
-$tokens-&gt;addToken('TOKEN', 'bar');
-$tokens-&gt;process($config);
-</xhtml:code>
-</xhtml:pre></xhtml:div>
-<xhtml:p>This API makes performance-intensive features explicitly opt-in,
-leaving the core functionality intact and fast.</xhtml:p>
-<xhtml:p>For more details, <xhtml:a href="http://packages.zendframework.com/docs/latest/manual/en/zend.config.html">
-read the Zend\Config documentation</xhtml:a>.</xhtml:p>
-<xhtml:h2>Fin!</xhtml:h2>
-<xhtml:p>I've only gone into depth on those features that had big
-iterations for the beta release; plenty more work went into it --
-as I noted in the release announcement, we handled around 200 pull
-requests over a 2 month period -- this is roughly double what we
-accomplished for beta2 over a similar timeframe! I'm quite
-impressed and humbled by the spirit of the ZF2 community and
-collaborators.</xhtml:p>
-<xhtml:p>If you haven't tried Zend Framework 2 yet, please give it a
-spin! While there's still work to be done, for many -- most,
-potentially -- use cases, the functionality necessary is present
-and working very well. Trying it now, and building real
-functionality on it now, is not only possible, but will allow you
-to shape what ZF2 looks like when we're ready to go stable.</xhtml:p>
-<xhtml:p><xhtml:a href="http://packages.zendframework.com">Download it
-today!</xhtml:a></xhtml:p>
 </xhtml:div>
     </content>
   </entry>
