@@ -226,7 +226,7 @@ class RegisterController extends AbstractActionController
 
 <p>
     The <a href="https://github.com/zfcampus/zf-hal">zf-hal</a> module in Apigility
-    creates the actual HAL representations. zf-hal looks for a "payload" variable in
+    creates the actual HAL representations. <code>zf-hal</code> looks for a "payload" variable in
     the view model, and expects that value to be either a <code>ZF\Hal\Entity</code>
     (single item) or <code>ZF\Hal\Collection</code>. When creating an <code>Entity</code>
     object, you need the object being represented, as well as the identifier. 
@@ -254,8 +254,8 @@ class RegisterController extends AbstractActionController
 </code></pre></div>
 
 <p>
-    zf-hal contains what's called a "metadata map". This is a map of classes to
-    information on how zf-hal should render them: what route to use, what additional
+    <code>zf-hal</code> contains what's called a "metadata map". This is a map of classes to
+    information on how <code>zf-hal</code> should render them: what route to use, what additional
     relational links to inject, how to serialize the object, what field represents
     the identifier, etc.
 </p>
@@ -263,7 +263,7 @@ class RegisterController extends AbstractActionController
 <p>
     In most cases, you will have likely already defined a REST service for the
     resource you want to return from the RPC service, in which case you will
-    likely be done. However, if you want, you can go in and manually configure
+    be done. However, if you want, you can go in and manually configure
     the metadata map in your API module's <code>config/module.config.php</code>
     file:
 </p>
