@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title type="text">Tag: apigility :: phly, boy, phly</title>
+  <updated>2014-03-26T20:30:00+0000</updated>
+  <generator uri="http://framework.zend.com" version="2">Zend_Feed_Writer</generator>
+  <link rel="alternate" type="text/html" href="http://mwop.net/blog/tag/apigility.html"/>
+  <link rel="self" type="application/atom+xml" href="http://mwop.net/blog/tag/apigility-atom.xml"/>
+  <id>http://mwop.net/blog/tag/apigility.html</id>
+  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <title type="html"><![CDATA[Apigility: Using RPC with HAL]]></title>
+    <published>2014-03-26T20:30:00+0000</published>
+    <updated>2014-03-26T20:30:00+0000</updated>
+    <link rel="alternate" type="text/html" href="http://mwop.net/blog/2014-03-26-apigility-rpc-with-hal.html"/>
+    <id>http://mwop.net/blog/2014-03-26-apigility-rpc-with-hal.html</id>
+    <author>
+      <name>Matthew Weier O'Phinney</name>
+      <email>me@mwop.net</email>
+      <uri>http://mwop.net</uri>
+    </author>
+    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
+      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>A few days ago, we <xhtml:a href="http://bit.ly/ag-1-beta1">released
+our first beta of Apigility</xhtml:a>. We've started our documentation
+effort now, and one question has arisen a few times that I want to
+address: How can you use Hypermedia Application Language (HAL) in
+RPC services?</xhtml:p>
+<xhtml:h2>HAL?</xhtml:h2>
+<xhtml:p><xhtml:a href="http://tools.ietf.org/html/draft-kelly-json-hal-06">Hypermedia
+Application Language</xhtml:a> is an IETF proposal for how to represent
+resources and their relations within APIs. Technically, it provides
+two mediatypes, <xhtml:code>application/hal+json</xhtml:code> and
+<xhtml:code>application/hal+xml</xhtml:code>; however, Apigility only provides
+the JSON variant.</xhtml:p>
+<xhtml:p>The important things to know about HAL are:</xhtml:p>
+<xhtml:ul>
+<xhtml:li>
+<xhtml:p>It provides a standard way of describing relational links. All
+relational links are under a <xhtml:code>_links</xhtml:code> property of the
+resource. That property is an object. Each property of that object
+is a link relation; the value of each link relation is an object
+(or array of such objects) describing the link that must minimally
+contain an <xhtml:code>href</xhtml:code> proerty. The link object itself can
+contain some additional metadata, such as a mediatype, a name
+(useful for differentiating between multiple link objects assigned
+to the same relation).</xhtml:p>
+<xhtml:p>While not required, the specification recommends resources
+contain a "self" relational link, indicating the canonical location
+for the resource. This is particularly useful when we consider
+embedding (the next topic).</xhtml:p>
+<xhtml:p>Sound hard? It's not:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="javascript">
+{
+    "_links": {
+        "self": {
+            "href": "/blog/2014-03-26-apigility-rpc-with-hal"
+        }
+    }
+}
+        </xhtml:code>
+</xhtml:pre></xhtml:div>
+</xhtml:li>
+<xhtml:li>
+<xhtml:p>Besides link relations, HAL also provides a standard way of
+describing <xhtml:em>embedded resources</xhtml:em>. An embedded resource is any
+other resource you can address via your API, and, as such, would be
+structured as a HAL resource -- in other words, it would have a
+<xhtml:code>_links</xhtml:code> property with relational links. Essentially,
+any property of the resource you're returning that can itself be
+addressed via the URI must be <xhtml:em>embedded</xhtml:em> in the resource.
+This is done via the property <xhtml:code>_embedded</xhtml:code>.</xhtml:p>
+<xhtml:p>Like <xhtml:code>_links</xhtml:code>, <xhtml:code>_embedded</xhtml:code> is an object.
+Each key in the object is the local name by which the resource
+refers to the embedded resource. The value of such keys can either
+be HAL resources or <xhtml:em>arrays</xhtml:em> of HAL resources; in fact, this
+is how <xhtml:em>collections</xhtml:em> are represented in HAL!</xhtml:p>
+<xhtml:p>As examples:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="javascript">
+{
+    "_links": {
+        "self": {
+            "href": "/blog/2014-03-26-apigility-rpc-with-hal"
+        }
+    },
+    "_embedded": {
+        "author": {
+            "_links": {
+                "self": {
+                    "href": "/blog/author/matthew"
+                }
+            },
+            "id": "matthew",
+            "name": "Matthew Weier O'Phinney",
+            "url": "http://mwop.net"
+        },
+        "tags": [
+            {
+                "_links": {
+                    "self": {
+                        "href": "/blog/tag/php"
+                    }
+                },
+                "id": "php"
+            },
+            {
+                "_links": {
+                    "self": {
+                        "href": "/blog/tag/rest"
+                    }
+                },
+                "id": "rest"
+            }
+        ]
+    }
+}
+        </xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>The example above shows two embedded resources. The first is the
+author; the second, a collection of tags. Note that <xhtml:em>every</xhtml:em>
+object under <xhtml:code>_embedded</xhtml:code> is a HAL object!</xhtml:p>
+<xhtml:p>You can go quite far with this -- you can also have embedded
+resources inside your embedded resources, arbitrarily deep.</xhtml:p>
+</xhtml:li>
+</xhtml:ul>
+<xhtml:h2>RPC?</xhtml:h2>
+<xhtml:p>RPC stands for Remote Procedure Call, and, when describing a web
+API, is usually used to describe a web service that publishes
+multiple method calls at a single URI using only <xhtml:code>POST</xhtml:code>;
+XML-RPC and SOAP are the usual suspects.</xhtml:p>
+<xhtml:p>In Apigility, we use the term RPC in a much looser sense; we use
+it to describe one-off services: actions like "authenticate," or
+"notify," or "register" would all make sense here. They are actions
+that usually only need to respond to a single HTTP method, and
+which may or may not describe a "thing", which is what we usually
+consider a "resource" when discussing REST terminology.</xhtml:p>
+<xhtml:p>That said: what if what we want to return from the RPC call
+<xhtml:em>are</xhtml:em> REST resources?</xhtml:p>
+<xhtml:h2>Returning HAL from RPC Services</xhtml:h2>
+<xhtml:p>In order to return HAL from RPC services, we need to understand
+(a) how Content Negotiation works, and (b) what needs to be
+returned in order for the HAL renderer to be able to create a
+representation.</xhtml:p>
+<xhtml:p>For purposes of this example, I'm positing a
+<xhtml:code>RegisterController</xhtml:code> as an RPC service that, on success,
+is returning a <xhtml:code>User</xhtml:code> object that I want rendered as a
+HAL resource.</xhtml:p>
+<xhtml:p>The <xhtml:a href="https://github.com/zfcampus/zf-content-negotiation">zf-content-negotiation</xhtml:a>
+module takes care of content negotiation for Apigility. It
+introspects the <xhtml:code>Accept</xhtml:code> header in order to determine if
+we can return a representation, and then, if it can, will cast any
+<xhtml:code>ZF\ContentNegotiation\ViewModel</xhtml:code> returned from a
+controller to the appropriate view model for the representation.
+From there, a renderer will pick up the view model and do what
+needs to be done.</xhtml:p>
+<xhtml:p>So, the first thing we have to do is return
+<xhtml:code>ZF\ContentNegotiation\ViewModel</xhtml:code> instances from our
+controller.</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="php">
+use Zend\Mvc\Controller\AbstractActionController;
+use ZF\ContentNegotiation\ViewModel;
+
+class RegisterController extends AbstractActionController
+{
+    public function registerAction()
+    {
+        /* ... do some work ... get a user ... */
+        return new ViewModel(array('user' =&gt; $user));
+    }
+}
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>The <xhtml:a href="https://github.com/zfcampus/zf-hal">zf-hal</xhtml:a>
+module in Apigility creates the actual HAL representations.
+<xhtml:code>zf-hal</xhtml:code> looks for a "payload" variable in the view
+model, and expects that value to be either a
+<xhtml:code>ZF\Hal\Entity</xhtml:code> (single item) or
+<xhtml:code>ZF\Hal\Collection</xhtml:code>. When creating an
+<xhtml:code>Entity</xhtml:code> object, you need the object being represented,
+as well as the identifier. So, let's update our return value.</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="php">
+use Zend\Mvc\Controller\AbstractActionController;
+use ZF\ContentNegotiation\ViewModel;
+use ZF\Hal\Entity;
+
+class RegisterController extends AbstractActionController
+{
+    public function registerAction()
+    {
+        /* ... do some work
+         * ... get a $user
+         * ... assume we have also now have an $id
+         */
+        return new ViewModel(array('payload' =&gt; array(
+            'user' =&gt; new Entity($user, $id),
+        )));
+    }
+}
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p><xhtml:code>zf-hal</xhtml:code> contains what's called a "metadata map".
+This is a map of classes to information on how <xhtml:code>zf-hal</xhtml:code>
+should render them: what route to use, what additional relational
+links to inject, how to serialize the object, what field represents
+the identifier, etc.</xhtml:p>
+<xhtml:p>In most cases, you will have likely already defined a REST
+service for the resource you want to return from the RPC service,
+in which case you will be done. However, if you want, you can go in
+and manually configure the metadata map in your API module's
+<xhtml:code>config/module.config.php</xhtml:code> file:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="php">
+return array(
+    /* ... */
+    'zf-hal' =&gt; array(
+        'metadata_map' =&gt; array(
+            'User' =&gt; array(
+                'route_name' =&gt; 'api.rest.user',
+                'entity_identifier_name' =&gt; 'username',
+                'route_identifier_name' =&gt; 'user_id',
+                'hydrator' =&gt; 'Zend\Stdlib\Hydrator\ObjectProperty',
+            ),
+        ),
+    ),
+);
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>Finally, we need to make sure that the service is configured to
+actually return HAL. We can do this in the admin if we want. Find
+the "Content Negotiation" section of the admin, and the "Content
+Negotiation Selector" item, and set that to "HalJson"; don't forget
+to save! Alternately, you can do this manually in the API module's
+<xhtml:code>config/module.config.php</xhtml:code> file, under the
+<xhtml:code>zf-content-negotiation</xhtml:code> section:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="php">
+return array(
+    /* ... */
+    'zf-content-negotiation' =&gt; array(
+        'controllers' =&gt; array(
+            /* ... */
+            'RegisterController' =&gt; 'HalJson',
+        ),
+        /* ... */
+    ),
+);
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>Once your changes are complete, when you make a successful
+request to the URI for your "register" RPC service, you'll receive
+a HAL response pointing to the canonical URI for the user resource
+created!</xhtml:p>
+</xhtml:div>
+    </content>
+  </entry>
+</feed>

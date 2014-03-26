@@ -1,0 +1,503 @@
+<!DOCTYPE html><!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8" />
+    <title>Apigility: Using RPC with HAL</title>
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <link href="/css/SkeletonCss/base.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/SkeletonCss/skeleton.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/SkeletonCss/layout.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/Application/site.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/Application/blog.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/blog-atom.xml" rel="alternate" type="application/atom+xml" title="Apigility: Using RPC with HAL Atom Feed">
+<link href="/blog-rss.xml" rel="alternate" type="application/rss+xml" title="Apigility: Using RPC with HAL RSS Feed">
+    <script type="text/javascript">
+    //<!--
+    dojoConfig={
+    has: {
+        "dojo-firebug": false
+    },
+    baseurl: "/js/",
+    parseOnLoad: false,
+    async: true,
+    tlmSiblingOfDojo: false,
+    packages: [
+        { name: "dijit", location: "../dijit" },
+        { name: "dojox", location: "../dojox" },
+        { name: "Application", location: "../Application" }
+    ]
+};
+
+    //-->
+</script>
+<script type="text/javascript" src="/js/dojo/dojo.js"></script>
+<script type="text/javascript">
+    //<!--
+    require(["Application/blog"]);
+    //-->
+</script>
+<script type="text/javascript">
+    //<!--
+    require(["Application/scroll"], function(scroll) {});
+    //-->
+</script>
+    <script src="https://www.google.com/jsapi?ABQIAAAAGybdRRvLZwVUcF0dE3oVdBTO-MlgA7VGJpGqyqTOeDXlNzyZQxTGq17s-iAB0m0vwqLQ_A2dHhTg2Q"></script>
+<script type="text/javascript">
+    google.load('search', '1', {style: google.loader.themes.ESPRESSO});
+    google.setOnLoadCallback(function(){
+        new google.search.CustomSearchControl().draw('search');
+    }, true);
+</script>
+
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-27037983-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</head>
+<body>
+<div class="container">
+    <header class="sixteen columns">
+        <div class="one-half column logo">
+            <a href="/"><img src="/images/Application/logo.gif" height="37" width="37" alt="Celtic Knot" /></a>
+            <span class="main_title">phly, boy, phly: matthew weier o'phinney</span>
+        </div>
+
+        <nav class="one-half column" id="menu"><ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/blog.html">Blog</a></li>
+            <li><a href="/resume">R&eacute;sum&eacute;</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </ul></nav>
+    </header>
+
+
+    <div class="sixteen columns clearfix content">
+        <div class="row">
+<aside class="four columns offset-by-one alpha sidebar blog">
+    <p>
+        Written on 26 March 2014.
+            </p>
+
+    <ul class="tags">
+    <li><a href="/blog/tag/php.html">php</a></li>
+    <li><a href="/blog/tag/apigility.html">apigility</a></li>
+    <li><a href="/blog/tag/zf2.html">zf2</a></li>
+    <li><a href="/blog/tag/zend%2Bframework.html">zend framework</a></li>
+    <li><a href="/blog/tag/rest.html">rest</a></li>
+    <li><a href="/blog/tag/hal.html">hal</a></li>
+</ul>
+
+</aside>
+
+<article class="eleven columns omega blog">
+<h2>Apigility: Using RPC with HAL</h2>
+<p>
+    A few days ago, we <a href="http://bit.ly/ag-1-beta1">released our first beta of Apigility</a>.
+    We've started our documentation effort now, and one question has arisen a few times that I
+    want to address: How can you use Hypermedia Application Language (HAL) in RPC services?
+</p><h2>HAL?</h2>
+
+<p>
+    <a href="http://tools.ietf.org/html/draft-kelly-json-hal-06">Hypermedia Application Language</a>
+    is an IETF proposal for how to represent resources and their relations within APIs. Technically,
+    it provides two mediatypes, <code>application/hal+json</code> and <code>application/hal+xml</code>;
+    however, Apigility only provides the JSON variant.
+</p>
+
+<p>
+    The important things to know about HAL are:
+</p>
+
+<ul>
+    <li>
+        <p>
+            It provides a standard way of describing relational links. All relational
+            links are under a <code>_links</code> property of the resource. That property
+            is an object. Each property of that object is a link relation; the value of
+            each link relation is an object (or array of such objects) describing the link
+            that must minimally contain an <code>href</code> proerty. The link object
+            itself can contain some additional metadata, such as a mediatype, a name
+            (useful for differentiating between multiple link objects assigned to the same
+            relation).
+        </p>
+
+        <p>
+            While not required, the specification recommends resources contain a "self"
+            relational link, indicating the canonical location for the resource. This
+            is particularly useful when we consider embedding (the next topic).
+        </p>
+
+        <p>
+            Sound hard? It's not:
+        </p>
+
+        <div class="example"><pre><code language="javascript">
+{
+    "_links": {
+        "self": {
+            "href": "/blog/2014-03-26-apigility-rpc-with-hal"
+        }
+    }
+}
+        </code></pre></div>
+    </li>
+
+    <li>
+        <p>
+            Besides link relations, HAL also provides a standard way of describing
+            <em>embedded resources</em>. An embedded resource is any other resource
+            you can address via your API, and, as such, would be structured as a HAL
+            resource -- in other words, it would have a <code>_links</code> property
+            with relational links. Essentially, any property of the resource you're
+            returning that can itself be addressed via the URI must be <em>embedded</em>
+            in the resource. This is done via the property <code>_embedded</code>.
+        </p>
+
+        <p>
+            Like <code>_links</code>, <code>_embedded</code> is an object. Each key in the
+            object is the local name by which the resource refers to the embedded resource.
+            The value of such keys can either be HAL resources or <em>arrays</em> of HAL
+            resources; in fact, this is how <em>collections</em> are represented in HAL!
+        </p>
+
+        <p>
+            As examples:
+        </p>
+
+        <div class="example"><pre><code language="javascript">
+{
+    "_links": {
+        "self": {
+            "href": "/blog/2014-03-26-apigility-rpc-with-hal"
+        }
+    },
+    "_embedded": {
+        "author": {
+            "_links": {
+                "self": {
+                    "href": "/blog/author/matthew"
+                }
+            },
+            "id": "matthew",
+            "name": "Matthew Weier O'Phinney",
+            "url": "http://mwop.net"
+        },
+        "tags": [
+            {
+                "_links": {
+                    "self": {
+                        "href": "/blog/tag/php"
+                    }
+                },
+                "id": "php"
+            },
+            {
+                "_links": {
+                    "self": {
+                        "href": "/blog/tag/rest"
+                    }
+                },
+                "id": "rest"
+            }
+        ]
+    }
+}
+        </code></pre></div>
+
+        <p>
+            The example above shows two embedded resources. The first is the author;
+            the second, a collection of tags. Note that <em>every</em> object
+            under <code>_embedded</code> is a HAL object!
+        </p>
+
+        <p>
+            You can go quite far with this -- you can also have embedded resources
+            inside your embedded resources, arbitrarily deep.
+        </p>
+    </li>
+</ul>
+
+<h2>RPC?</h2>
+
+<p>
+    RPC stands for Remote Procedure Call, and, when describing a web API, is 
+    usually used to describe a web service that publishes multiple method calls 
+    at a single URI using only <code>POST</code>; XML-RPC and SOAP are the
+    usual suspects.
+</p>
+
+<p>
+    In Apigility, we use the term RPC in a much looser sense; we use it to describe
+    one-off services: actions like "authenticate," or "notify," or "register" 
+    would all make sense here. They are actions that usually only need to respond
+    to a single HTTP method, and which may or may not describe a "thing", which
+    is what we usually consider a "resource" when discussing REST terminology.
+</p>
+
+<p>
+    That said: what if what we want to return from the RPC call <em>are</em> REST
+    resources?
+</p>
+
+<h2>Returning HAL from RPC Services</h2>
+
+<p>
+    In order to return HAL from RPC services, we need to understand (a) how 
+    Content Negotiation works, and (b) what needs to be returned in order for the
+    HAL renderer to be able to create a representation.
+</p>
+
+<p>
+    For purposes of this example, I'm positing a <code>RegisterController</code> as
+    an RPC service that, on success, is returning a <code>User</code> object 
+    that I want rendered as a HAL resource.
+</p>
+
+<p>
+    The <a href="https://github.com/zfcampus/zf-content-negotiation">zf-content-negotiation</a>
+    module takes care of content negotiation for Apigility. It introspects the <code>Accept</code>
+    header in order to determine if we can return a representation, and then, if it can, will
+    cast any <code>ZF\ContentNegotiation\ViewModel</code> returned from a controller to the
+    appropriate view model for the representation. From there, a renderer will pick up the view
+    model and do what needs to be done.
+</p>
+
+<p>
+    So, the first thing we have to do is return <code>ZF\ContentNegotiation\ViewModel</code>
+    instances from our controller.
+</p>
+
+<div class="example"><pre><code language="php">
+use Zend\Mvc\Controller\AbstractActionController;
+use ZF\ContentNegotiation\ViewModel;
+
+class RegisterController extends AbstractActionController
+{
+    public function registerAction()
+    {
+        /* ... do some work ... get a user ... */
+        return new ViewModel(array('user' => $user));
+    }
+}
+</code></pre></div>
+
+<p>
+    The <a href="https://github.com/zfcampus/zf-hal">zf-hal</a> module in Apigility
+    creates the actual HAL representations. <code>zf-hal</code> looks for a "payload" variable in
+    the view model, and expects that value to be either a <code>ZF\Hal\Entity</code>
+    (single item) or <code>ZF\Hal\Collection</code>. When creating an <code>Entity</code>
+    object, you need the object being represented, as well as the identifier. 
+    So, let's update our return value.
+</p>
+
+<div class="example"><pre><code language="php">
+use Zend\Mvc\Controller\AbstractActionController;
+use ZF\ContentNegotiation\ViewModel;
+use ZF\Hal\Entity;
+
+class RegisterController extends AbstractActionController
+{
+    public function registerAction()
+    {
+        /* ... do some work
+         * ... get a $user
+         * ... assume we have also now have an $id
+         */
+        return new ViewModel(array('payload' => array(
+            'user' => new Entity($user, $id),
+        )));
+    }
+}
+</code></pre></div>
+
+<p>
+    <code>zf-hal</code> contains what's called a "metadata map". This is a map of classes to
+    information on how <code>zf-hal</code> should render them: what route to use, what additional
+    relational links to inject, how to serialize the object, what field represents
+    the identifier, etc.
+</p>
+
+<p>
+    In most cases, you will have likely already defined a REST service for the
+    resource you want to return from the RPC service, in which case you will
+    be done. However, if you want, you can go in and manually configure
+    the metadata map in your API module's <code>config/module.config.php</code>
+    file:
+</p>
+
+<div class="example"><pre><code language="php">
+return array(
+    /* ... */
+    'zf-hal' => array(
+        'metadata_map' => array(
+            'User' => array(
+                'route_name' => 'api.rest.user',
+                'entity_identifier_name' => 'username',
+                'route_identifier_name' => 'user_id',
+                'hydrator' => 'Zend\Stdlib\Hydrator\ObjectProperty',
+            ),
+        ),
+    ),
+);
+</code></pre></div>
+
+<p>
+    Finally, we need to make sure that the service is configured to actually return
+    HAL. We can do this in the admin if we want. Find the "Content Negotiation" section
+    of the admin, and the "Content Negotiation Selector" item, and set that to "HalJson";
+    don't forget to save! Alternately, you can do this manually in the API module's 
+    <code>config/module.config.php</code> file, under the <code>zf-content-negotiation</code>
+    section:
+</p>
+
+<div class="example"><pre><code language="php">
+return array(
+    /* ... */
+    'zf-content-negotiation' => array(
+        'controllers' => array(
+            /* ... */
+            'RegisterController' => 'HalJson',
+        ),
+        /* ... */
+    ),
+);
+</code></pre></div>
+
+<p>
+    Once your changes are complete, when you make a successful request to the URI
+    for your "register" RPC service, you'll receive a HAL response pointing to the
+    canonical URI for the user resource created!
+</p><div class="social-media">
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="mwop">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</div>
+
+<div class="social-media">
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<div class="fb-like" data-send="true" data-width="450" data-show-faces="true"></div>
+</div>
+
+<div class="social-media">
+<div class="g-plusone" data-size="medium" data-annotation="inline"></div>
+</div>
+
+<!-- Place this render call where appropriate -->
+<script type="text/javascript">
+dojo.ready(function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+});
+</script>
+
+<div class="social-media">
+<a href="http://www.reddit.com/submit" onclick="window.location = 'http://www.reddit.com/submit?url=' + encodeURIComponent(window.location); return false"> <img src="http://www.reddit.com/static/spreddit1.gif" alt="submit to reddit" border="0" /> </a>
+</div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_developer = 1;
+        var disqus_shortname = 'phlyboyphly';
+        var disqus_identifier = '2014-03-26-apigility-rpc-with-hal';
+        var disqus_url = 'http://mwop.net/blog/2014-03-26-apigility-rpc-with-hal.html';
+        var disqus_title = 'Apigility: Using RPC with HAL';
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a></article>
+
+    </div>
+
+    <footer class="sixteen columns footer">
+        <div class="column one-third alpha about">
+            <h4>About</h4>
+            <p>
+    I'm a husband and father of two, and web architect by day.
+</p>
+
+<ul class="resume">
+    <li><a href="/resume">Resume</a></li>
+    <li><a href="http://twitter.com/mwop">Twitter (@mwop)</a></li>
+    <li><a href="http://www.linkedin.com/in/mweierophinney">LinkedIn</a></li>
+    <li><a href="http://www.ohloh.net/accounts/weierophinney">OhLoh</a></li>
+    <li><a href="http://resume.github.com/?weierophinney">GitHub</a></li>
+</ul>
+
+        </div>
+
+        <div class="column one-third projects">
+            <h4>Projects</h4>
+            <ul class="projects">
+    <li><a href="http://framework.zend.com/">Zend Framework (Project Lead)</a></li>
+    <li><a href="http://www.the-pastry-box-project.net/baker/matthew-weier-ophinney/">The Pastry Box Project 2012</a> (as a Baker)</li>
+    <li><a href="http://github.com/phly/phly_mustache">Phly_Mustache</a></li>
+    <li><a href="http://github.com/phly/phlyty">phlyty</a> (ZF2-based microframework)</li>
+    <li>ZF2 Modules
+    <ul>
+        <li><a href="https://github.com/phly/PhlyBlog">PhlyBlog</a></li>
+        <li><a href="https://github.com/weierophinney/PhlyComic">PhlyComic</a></li>
+        <li><a href="https://github.com/phly/PhlyCommon">PhlyCommon</a></li>
+        <li><a href="https://github.com/phly/PhlyContact">PhlyContact</a></li>
+        <li><a href="https://github.com/phly/PhlyMongo">PhlyMongo</a></li>
+        <li><a href="https://github.com/phly/PhlyPaste">PhlyPaste</a></li>
+        <li><a href="https://github.com/weierophinney/PhlyPeep">PhlyPeep</a> (demo purposes only)</li>
+        <li><a href="https://github.com/phly/PhlyRequireJs">PhlyRequireJs</a></li>
+        <li><a href="https://github.com/phly/PhlyRestfully">PhlyRestfully</a></li>
+        <li><a href="https://github.com/phly/PhlySimplePage">PhlySimplePage</a></li>
+        <li><a href="https://github.com/weierophinney/SkeletonCssModule">SkeletonCssModule</a></li>
+    </ul>
+    </li>
+    <li>Tools
+    <ul>
+        <li><a href="http://p.mwop.net">PhlyPaste</a> (pastebin)</li>
+    </ul>
+    </li>
+</ul>
+
+        </div>
+
+        <div class="column one-third omega tags">
+        <div id="search" style="width:100%;">Loading...</div>
+<h4>Tag Cloud</h4>
+<div class="cloud">
+<ul class="Zend&#x5C;Tag&#x5C;Cloud"><li><a href="/blog/tag/php.html" style="font-size: 20px;">php</a></li> <li><a href="/blog/tag/apigility.html" style="font-size: 10px;">apigility</a></li> <li><a href="/blog/tag/zf2.html" style="font-size: 11px;">zf2</a></li> <li><a href="/blog/tag/zend+framework.html" style="font-size: 15px;">zend framework</a></li> <li><a href="/blog/tag/rest.html" style="font-size: 11px;">rest</a></li> <li><a href="/blog/tag/hal.html" style="font-size: 10px;">hal</a></li> <li><a href="/blog/tag/vim.html" style="font-size: 11px;">vim</a></li> <li><a href="/blog/tag/family.html" style="font-size: 11px;">family</a></li> <li><a href="/blog/tag/programming.html" style="font-size: 12px;">programming</a></li> <li><a href="/blog/tag/personal.html" style="font-size: 13px;">personal</a></li> <li><a href="/blog/tag/phpconcom.html" style="font-size: 10px;">phpconcom</a></li> <li><a href="/blog/tag/mvc.html" style="font-size: 11px;">mvc</a></li> <li><a href="/blog/tag/oop.html" style="font-size: 11px;">oop</a></li> <li><a href="/blog/tag/testing.html" style="font-size: 10px;">testing</a></li> <li><a href="/blog/tag/linux.html" style="font-size: 12px;">linux</a></li> <li><a href="/blog/tag/zendcon08.html" style="font-size: 11px;">zendcon08</a></li> <li><a href="/blog/tag/file_fortune.html" style="font-size: 10px;">file_fortune</a></li> <li><a href="/blog/tag/pear.html" style="font-size: 11px;">pear</a></li> <li><a href="/blog/tag/zendcon.html" style="font-size: 11px;">zendcon</a></li> <li><a href="/blog/tag/perl.html" style="font-size: 12px;">perl</a></li> <li><a href="/blog/tag/fastcgi.html" style="font-size: 10px;">fastcgi</a></li> <li><a href="/blog/tag/ubuntu.html" style="font-size: 11px;">ubuntu</a></li> <li><a href="/blog/tag/tekx.html" style="font-size: 10px;">tekx</a></li> <li><a href="/blog/tag/zendcon10.html" style="font-size: 10px;">zendcon10</a></li> <li><a href="/blog/tag/dojo.html" style="font-size: 11px;">dojo</a></li> <li><a href="/blog/tag/symfony.html" style="font-size: 11px;">symfony</a></li> <li><a href="/blog/tag/zeta+components.html" style="font-size: 10px;">zeta components</a></li> <li><a href="/blog/tag/tek09.html" style="font-size: 10px;">tek09</a></li> <li><a href="/blog/tag/spl.html" style="font-size: 11px;">spl</a></li> <li><a href="/blog/tag/subversion.html" style="font-size: 11px;">subversion</a></li> <li><a href="/blog/tag/zend+framewor.html" style="font-size: 10px;">zend framewor</a></li> <li><a href="/blog/tag/rails.html" style="font-size: 10px;">rails</a></li> <li><a href="/blog/tag/conferences.html" style="font-size: 11px;">conferences</a></li> <li><a href="/blog/tag/dpc08.html" style="font-size: 11px;">dpc08</a></li> <li><a href="/blog/tag/phpworks08.html" style="font-size: 11px;">phpworks08</a></li> <li><a href="/blog/tag/webinar.html" style="font-size: 11px;">webinar</a></li> <li><a href="/blog/tag/zencon08.html" style="font-size: 10px;">zencon08</a></li> <li><a href="/blog/tag/cw09.html" style="font-size: 11px;">cw09</a></li> <li><a href="/blog/tag/zend+server.html" style="font-size: 10px;">zend server</a></li> <li><a href="/blog/tag/dpc09.html" style="font-size: 10px;">dpc09</a></li> <li><a href="/blog/tag/sflive2010.html" style="font-size: 10px;">sflive2010</a></li> <li><a href="/blog/tag/security.html" style="font-size: 10px;">security</a></li> <li><a href="/blog/tag/wifi.html" style="font-size: 10px;">wifi</a></li> <li><a href="/blog/tag/aikido.html" style="font-size: 10px;">aikido</a></li> <li><a href="/blog/tag/books.html" style="font-size: 10px;">books</a></li> <li><a href="/blog/tag/dpc10.html" style="font-size: 10px;">dpc10</a></li> <li><a href="/blog/tag/zendcon09.html" style="font-size: 11px;">zendcon09</a></li> <li><a href="/blog/tag/git.html" style="font-size: 11px;">git</a></li> <li><a href="/blog/tag/phpwomen.html" style="font-size: 10px;">phpwomen</a></li> <li><a href="/blog/tag/virtualbox.html" style="font-size: 10px;">virtualbox</a></li> <li><a href="/blog/tag/screencast.html" style="font-size: 11px;">screencast</a></li> <li><a href="/blog/tag/advocacy.html" style="font-size: 10px;">advocacy</a></li> <li><a href="/blog/tag/politics.html" style="font-size: 10px;">politics</a></li> <li><a href="/blog/tag/internet.html" style="font-size: 10px;">internet</a></li> <li><a href="/blog/tag/microphp.html" style="font-size: 10px;">microphp</a></li> <li><a href="/blog/tag/cloud.html" style="font-size: 11px;">cloud</a></li> <li><a href="/blog/tag/composer.html" style="font-size: 10px;">composer</a></li> <li><a href="/blog/tag/doctrine.html" style="font-size: 10px;">doctrine</a></li> <li><a href="/blog/tag/javascript.html" style="font-size: 10px;">javascript</a></li> <li><a href="/blog/tag/bower.html" style="font-size: 10px;">bower</a></li> <li><a href="/blog/tag/http.html" style="font-size: 11px;">http</a></li></ul></div>
+        </div>
+
+        <br class="clear"/>
+
+        <div class="copyright">
+            Unless otherwise noted, &#169; 2004 - 2014, Matthew Weier O'Phinney
+        </div>
+    </footer>
+</div>
+</body>
+</html>
