@@ -227,19 +227,28 @@ class RegisterController extends AbstractActionController
 <p>
     The <a href="https://github.com/zfcampus/zf-hal">zf-hal</a> module in Apigility
     creates the actual HAL representations. zf-hal looks for a "payload" variable in
-    the view model. So, let's update our return value.
+    the view model, and expects that value to be either a <code>ZF\Hal\Entity</code>
+    (single item) or <code>ZF\Hal\Collection</code>. When creating an <code>Entity</code>
+    object, you need the object being represented, as well as the identifier. 
+    So, let's update our return value.
 </p>
 
 <div class="example"><pre><code language="php">
 use Zend\Mvc\Controller\AbstractActionController;
 use ZF\ContentNegotiation\ViewModel;
+use ZF\Hal\Entity;
 
 class RegisterController extends AbstractActionController
 {
     public function registerAction()
     {
-        /* ... do some work ... get a user ... */
-        return new ViewModel(array('payload' => array('user' => $user)));
+        /* ... do some work
+         * ... get a $user
+         * ... assume we have also now have an $id
+         */
+        return new ViewModel(array('payload' => array(
+            'user' => new Entity($user, $id),
+        )));
     }
 }
 </code></pre></div>
