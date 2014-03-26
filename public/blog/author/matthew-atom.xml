@@ -1,11 +1,265 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title type="text">Author: Matthew Weier O'Phinney :: phly, boy, phly</title>
-  <updated>2013-12-03T15:50:00+0000</updated>
+  <updated>2014-03-26T20:30:00+0000</updated>
   <generator uri="http://framework.zend.com" version="2">Zend_Feed_Writer</generator>
   <link rel="alternate" type="text/html" href="http://mwop.net/blog/author/matthew.html"/>
   <link rel="self" type="application/atom+xml" href="http://mwop.net/blog/author/matthew-atom.xml"/>
   <id>http://mwop.net/blog/author/matthew.html</id>
+  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <title type="html"><![CDATA[Apigility: Using RPC with HAL]]></title>
+    <published>2014-03-26T20:30:00+0000</published>
+    <updated>2014-03-26T20:30:00+0000</updated>
+    <link rel="alternate" type="text/html" href="http://mwop.net/blog/2014-03-26-apigility-rpc-with-hal.html"/>
+    <id>http://mwop.net/blog/2014-03-26-apigility-rpc-with-hal.html</id>
+    <author>
+      <name>Matthew Weier O'Phinney</name>
+      <email>me@mwop.net</email>
+      <uri>http://mwop.net</uri>
+    </author>
+    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
+      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>A few days ago, we <xhtml:a href="http://bit.ly/ag-1-beta1">released
+our first beta of Apigility</xhtml:a>. We've started our documentation
+effort now, and one question has arisen a few times that I want to
+address: How can you use Hypermedia Application Language (HAL) in
+RPC services?</xhtml:p>
+<xhtml:h2>HAL?</xhtml:h2>
+<xhtml:p><xhtml:a href="http://tools.ietf.org/html/draft-kelly-json-hal-06">Hypermedia
+Application Language</xhtml:a> is an IETF proposal for how to represent
+resources and their relations within APIs. Technically, it provides
+two mediatypes, <xhtml:code>application/hal+json</xhtml:code> and
+<xhtml:code>application/hal+xml</xhtml:code>; however, Apigility only provides
+the JSON variant.</xhtml:p>
+<xhtml:p>The important things to know about HAL are:</xhtml:p>
+<xhtml:ul>
+<xhtml:li>
+<xhtml:p>It provides a standard way of describing relational links. All
+relational links are under a <xhtml:code>_links</xhtml:code> property of the
+resource. That property is an object. Each property of that object
+is a link relation; the value of each link relation is an object
+(or array of such objects) describing the link that must minimally
+contain an <xhtml:code>href</xhtml:code> proerty. The link object itself can
+contain some additional metadata, such as a mediatype, a name
+(useful for differentiating between multiple link objects assigned
+to the same relation).</xhtml:p>
+<xhtml:p>While not required, the specification recommends resources
+contain a "self" relational link, indicating the canonical location
+for the resource. This is particularly useful when we consider
+embedding (the next topic).</xhtml:p>
+<xhtml:p>Sound hard? It's not:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="javascript">
+{
+    "_links": {
+        "self": {
+            "href": "/blog/2014-03-26-apigility-rpc-with-hal"
+        }
+    }
+}
+        </xhtml:code>
+</xhtml:pre></xhtml:div>
+</xhtml:li>
+<xhtml:li>
+<xhtml:p>Besides link relations, HAL also provides a standard way of
+describing <xhtml:em>embedded resources</xhtml:em>. An embedded resource is any
+other resource you can address via your API, and, as such, would be
+structured as a HAL resource -- in other words, it would have a
+<xhtml:code>_links</xhtml:code> property with relational links. Essentially,
+any property of the resource you're returning that can itself be
+addressed via the URI must be <xhtml:em>embedded</xhtml:em> in the resource.
+This is done via the property <xhtml:code>_embedded</xhtml:code>.</xhtml:p>
+<xhtml:p>Like <xhtml:code>_links</xhtml:code>, <xhtml:code>_embedded</xhtml:code> is an object.
+Each key in the object is the local name by which the resource
+refers to the embedded resource. The value of such keys can either
+be HAL resources or <xhtml:em>arrays</xhtml:em> of HAL resources; in fact, this
+is how <xhtml:em>collections</xhtml:em> are represented in HAL!</xhtml:p>
+<xhtml:p>As examples:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="javascript">
+{
+    "_links": {
+        "self": {
+            "href": "/blog/2014-03-26-apigility-rpc-with-hal"
+        }
+    },
+    "_embedded": {
+        "author": {
+            "_links": {
+                "self": {
+                    "href": "/blog/author/matthew"
+                }
+            },
+            "id": "matthew",
+            "name": "Matthew Weier O'Phinney",
+            "url": "http://mwop.net"
+        },
+        "tags": [
+            {
+                "_links": {
+                    "self": {
+                        "href": "/blog/tag/php"
+                    }
+                },
+                "id": "php"
+            },
+            {
+                "_links": {
+                    "self": {
+                        "href": "/blog/tag/rest"
+                    }
+                },
+                "id": "rest"
+            }
+        ]
+    }
+}
+        </xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>The example above shows two embedded resources. The first is the
+author; the second, a collection of tags. Note that <xhtml:em>every</xhtml:em>
+object under <xhtml:code>_embedded</xhtml:code> is a HAL object!</xhtml:p>
+<xhtml:p>You can go quite far with this -- you can also have embedded
+resources inside your embedded resources, arbitrarily deep.</xhtml:p>
+</xhtml:li>
+</xhtml:ul>
+<xhtml:h2>RPC?</xhtml:h2>
+<xhtml:p>RPC stands for Remote Procedure Call, and, when describing a web
+API, is usually used to describe a web service that publishes
+multiple method calls at a single URI using only <xhtml:code>POST</xhtml:code>;
+XML-RPC and SOAP are the usual suspects.</xhtml:p>
+<xhtml:p>In Apigility, we use the term RPC in a much looser sense; we use
+it to describe one-off services: actions like "authenticate," or
+"notify," or "register" would all make sense here. They are actions
+that usually only need to respond to a single HTTP method, and
+which may or may not describe a "thing", which is what we usually
+consider a "resource" when discussing REST terminology.</xhtml:p>
+<xhtml:p>That said: what if what we want to return from the RPC call
+<xhtml:em>are</xhtml:em> REST resources?</xhtml:p>
+<xhtml:h2>Returning HAL from RPC Services</xhtml:h2>
+<xhtml:p>In order to return HAL from RPC services, we need to understand
+(a) how Content Negotiation works, and (b) what needs to be
+returned in order for the HAL renderer to be able to create a
+representation.</xhtml:p>
+<xhtml:p>For purposes of this example, I'm positing a
+<xhtml:code>RegisterController</xhtml:code> as an RPC service that, on success,
+is returning a <xhtml:code>User</xhtml:code> object that I want rendered as a
+HAL resource.</xhtml:p>
+<xhtml:p>The <xhtml:a href="https://github.com/zfcampus/zf-content-negotiation">zf-content-negotiation</xhtml:a>
+module takes care of content negotiation for Apigility. It
+introspects the <xhtml:code>Accept</xhtml:code> header in order to determine if
+we can return a representation, and then, if it can, will cast any
+<xhtml:code>ZF\ContentNegotiation\ViewModel</xhtml:code> returned from a
+controller to the appropriate view model for the representation.
+From there, a renderer will pick up the view model and do what
+needs to be done.</xhtml:p>
+<xhtml:p>So, the first thing we have to do is return
+<xhtml:code>ZF\ContentNegotiation\ViewModel</xhtml:code> instances from our
+controller.</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="php">
+use Zend\Mvc\Controller\AbstractActionController;
+use ZF\ContentNegotiation\ViewModel;
+
+class RegisterController extends AbstractActionController
+{
+    public function registerAction()
+    {
+        /* ... do some work ... get a user ... */
+        return new ViewModel(array('user' =&gt; $user));
+    }
+}
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>The <xhtml:a href="https://github.com/zfcampus/zf-hal">zf-hal</xhtml:a>
+module in Apigility creates the actual HAL representations.
+<xhtml:code>zf-hal</xhtml:code> looks for a "payload" variable in the view
+model, and expects that value to be either a
+<xhtml:code>ZF\Hal\Entity</xhtml:code> (single item) or
+<xhtml:code>ZF\Hal\Collection</xhtml:code>. When creating an
+<xhtml:code>Entity</xhtml:code> object, you need the object being represented,
+as well as the identifier. So, let's update our return value.</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="php">
+use Zend\Mvc\Controller\AbstractActionController;
+use ZF\ContentNegotiation\ViewModel;
+use ZF\Hal\Entity;
+
+class RegisterController extends AbstractActionController
+{
+    public function registerAction()
+    {
+        /* ... do some work
+         * ... get a $user
+         * ... assume we have also now have an $id
+         */
+        return new ViewModel(array('payload' =&gt; array(
+            'user' =&gt; new Entity($user, $id),
+        )));
+    }
+}
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p><xhtml:code>zf-hal</xhtml:code> contains what's called a "metadata map".
+This is a map of classes to information on how <xhtml:code>zf-hal</xhtml:code>
+should render them: what route to use, what additional relational
+links to inject, how to serialize the object, what field represents
+the identifier, etc.</xhtml:p>
+<xhtml:p>In most cases, you will have likely already defined a REST
+service for the resource you want to return from the RPC service,
+in which case you will be done. However, if you want, you can go in
+and manually configure the metadata map in your API module's
+<xhtml:code>config/module.config.php</xhtml:code> file:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="php">
+return array(
+    /* ... */
+    'zf-hal' =&gt; array(
+        'metadata_map' =&gt; array(
+            'User' =&gt; array(
+                'route_name' =&gt; 'api.rest.user',
+                'entity_identifier_name' =&gt; 'username',
+                'route_identifier_name' =&gt; 'user_id',
+                'hydrator' =&gt; 'Zend\Stdlib\Hydrator\ObjectProperty',
+            ),
+        ),
+    ),
+);
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>Finally, we need to make sure that the service is configured to
+actually return HAL. We can do this in the admin if we want. Find
+the "Content Negotiation" section of the admin, and the "Content
+Negotiation Selector" item, and set that to "HalJson"; don't forget
+to save! Alternately, you can do this manually in the API module's
+<xhtml:code>config/module.config.php</xhtml:code> file, under the
+<xhtml:code>zf-content-negotiation</xhtml:code> section:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="php">
+return array(
+    /* ... */
+    'zf-content-negotiation' =&gt; array(
+        'controllers' =&gt; array(
+            /* ... */
+            'RegisterController' =&gt; 'HalJson',
+        ),
+        /* ... */
+    ),
+);
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>Once your changes are complete, when you make a successful
+request to the URI for your "register" RPC service, you'll receive
+a HAL response pointing to the canonical URI for the user resource
+created!</xhtml:p>
+</xhtml:div>
+    </content>
+  </entry>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <title type="html"><![CDATA[A Bower Primer]]></title>
     <published>2013-12-03T15:50:00+0000</published>
@@ -1542,164 +1796,6 @@ systems will append to the query string, for instance, in which
 case you may want to select the "entire query string" parameter
 instead of <xhtml:code>_SERVER</xhtml:code>; the point is, there's likely a way
 for you to configure it.</xhtml:p>
-</xhtml:div>
-    </content>
-  </entry>
-  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
-    <title type="html"><![CDATA[OpenShift, ZF2, and Composer]]></title>
-    <published>2012-11-01T20:25:00+0000</published>
-    <updated>2012-11-01T20:25:00+0000</updated>
-    <link rel="alternate" type="text/html" href="http://mwop.net/blog/2012-11-01-openshift-zf2-composer.html"/>
-    <id>http://mwop.net/blog/2012-11-01-openshift-zf2-composer.html</id>
-    <author>
-      <name>Matthew Weier O'Phinney</name>
-      <email>me@mwop.net</email>
-      <uri>http://mwop.net</uri>
-    </author>
-    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
-      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>I was recently shopping around for inexpensive cloud hosting; I
-want to try out a couple of ideas that may or may not have much
-traffic, but which aren't suited for my VPS setup (the excellent
-<xhtml:a href="http://servergrove.com/">ServerGrove</xhtml:a>); additionally,
-I'm unsure how long I will maintain these projects. My budget for
-this is quite small as a result; I'm already paying for hosting,
-and am quite happy with it, so this is really for experimental
-stuff.</xhtml:p>
-<xhtml:p>I considered Amazon, Orchestra.io, and a few others, but was
-concerned about the idea of a ~$50/month cost for something I'm
-uncertain about.</xhtml:p>
-<xhtml:p>When I asked in <xhtml:a href="irc://irc.freenode.net/zftalk.dev">#zftalk.dev</xhtml:a>, someone
-suggested <xhtml:a href="http://openshift.redhat.com/">OpenShift</xhtml:a> as
-an idea, and coincidentally, the very next day <xhtml:a href="http://www.zend.com/en/company/news/press/379_red-hat-expands-openshift-ecosystem-with-zend-partnership-to-offer-professional-grade-environment-for-php-developers">
-Zend announced a partnership with RedHat surrounding OpenShift</xhtml:a>.
-The stars were in alignment.</xhtml:p>
-<xhtml:p>In the past month, in the few spare moments I've had (which
-included an excellent OpenShift hackathon at ZendCon), I've created
-a quick application that I've deployed and tested in OpenShift.
-These are my findings.</xhtml:p>
-<xhtml:h2>ZF2</xhtml:h2>
-<xhtml:p>I didn't really have to do anything different to have <xhtml:a href="http://framework.zend.com/">zf2</xhtml:a> work; the standard
-<xhtml:code>.htaccess</xhtml:code> provided in the skeleton application worked
-flawlessly the first time (I've worked with some cloud environments
-where this is not the case).</xhtml:p>
-<xhtml:p>The only frustration I had was the default directory structure
-OpenShift foists upon us:</xhtml:p>
-<xhtml:div class="example">
-<xhtml:pre>
-data/
-libs/
-misc/
-php/
-</xhtml:pre></xhtml:div>
-<xhtml:p>This is not terrible, by any stretch. However, it's attempting
-to dictate the application structure, which I'm not terribly happy
-with -- particularly as my structure may vary based on the
-framework I'm using (or not!), and because I may already have a
-project written that I simply want to deploy.</xhtml:p>
-<xhtml:p>In particular, the <xhtml:code>php</xhtml:code> directory is galling -- it's
-simply the document root. Most frameworks I've used or seen call
-the equivalent directory <xhtml:code>public</xhtml:code>, or <xhtml:code>web</xhtml:code>,
-or <xhtml:code>html</xhtml:code> -- but never <xhtml:code>php</xhtml:code> (in large part
-because the only PHP file under the document root in most
-frameworks is the <xhtml:code>index.php</xhtml:code> that acts as the front
-controller). It would be nice if this were configurable.</xhtml:p>
-<xhtml:p>This conflicts a bit with how a ZF2 app is structured. I ended
-up doing the following:</xhtml:p>
-<xhtml:ul>
-<xhtml:li>Removed <xhtml:code>php</xhtml:code> and symlinked my <xhtml:code>public</xhtml:code>
-directory to it.</xhtml:li>
-<xhtml:li>Removed <xhtml:code>libs</xhtml:code> and symlinked my <xhtml:code>vendor</xhtml:code>
-directory to it.</xhtml:li>
-<xhtml:li>Removed <xhtml:code>misc</xhtml:code> as I had no need to it.</xhtml:li>
-</xhtml:ul>
-<xhtml:p>Nothing too big, thankfully -- but problematic from the
-perspective of, "I've already developed this app, but now I have to
-make changes for it to work on a specific cloud vendor."</xhtml:p>
-<xhtml:h2>Composer</xhtml:h2>
-<xhtml:p>My next question was how to use <xhtml:a href="http://getcomposer.org/">Composer</xhtml:a> during my deployment
-process, and some some googling <xhtml:a href="https://openshift.redhat.com/community/content/support-for-git-clone-on-the-server-aka-support-php-composerphar">
-found some answers for me</xhtml:a>.</xhtml:p>
-<xhtml:p>Basically, I needed to create a <xhtml:code>deploy</xhtml:code> task that
-does two things:</xhtml:p>
-<xhtml:ul>
-<xhtml:li>Unset the <xhtml:code>GIT_DIR</xhtml:code> environment variable. Evidently,
-the build process operates as part of a git hook, and since
-Composer often uses git repositories, this can lead to
-problems.</xhtml:li>
-<xhtml:li>Change directory to <xhtml:code>OPENSHIFT_REPO_DIR</xhtml:code>, which is
-where the application root (not document root!) lives.</xhtml:li>
-</xhtml:ul>
-<xhtml:p>Once I did those, I could run my normal composer installation.
-The <xhtml:code>deploy</xhtml:code> task looks like this:</xhtml:p>
-<xhtml:div class="example">
-<xhtml:pre>
-<xhtml:code language="bash">
-#!/bin/bash
-# .openshift/action_hooks/deploy
-( unset GIT_DIR ; cd $OPENSHIFT_REPO_DIR ; /usr/local/zend/bin/php composer.phar install )
-</xhtml:code>
-</xhtml:pre></xhtml:div>
-<xhtml:p>This leads into my next topic.</xhtml:p>
-<xhtml:h2>Deployment</xhtml:h2>
-<xhtml:p>First off, as you probably guessed from that last secton, there
-<xhtml:strong>are</xhtml:strong> hooks for deployment -- it doesn't have to be
-simply git. I like this, as I may have additional things I want to
-do during deployment, such as retrieving and installing
-site-specific configuration files, installing Composer-defined
-dependencies (as already noted), etc.</xhtml:p>
-<xhtml:p>Over all, this is pretty seamless, but it's not without issues.
-I've been told that some of my issues are being worked on, so those
-I won't bring up here. The ones that were a bit strange, and which
-caught me by surprise, though, were:</xhtml:p>
-<xhtml:ul>
-<xhtml:li>Though the build process creates the site build from git, your
-<xhtml:strong>submodules are not updated recursively</xhtml:strong>. This
-tripped me up, as I was using <xhtml:a href="https://github.com/EvanDotPro/EdpMarkdown">EdpMarkdown</xhtml:a>, and
-had installed it as a submodule. I ended up having to import it,
-and its own submodule, directly into my project so that it would
-work.</xhtml:li>
-<xhtml:li>I installed the <xhtml:a href="http://www.mongodb.org/">MongoDB</xhtml:a>
-cartridge. Ironically, it was not then enabled in Zend Server, and
-I had to go do this. This should be turnkey.</xhtml:li>
-<xhtml:li><xhtml:code>/usr/bin/php</xhtml:code> is not the same as
-<xhtml:code>/usr/local/zend/bin/php</xhtml:code>. This makes no sense to me if
-I've installed Zend Server as my base gear. Considering they're
-different versions, this can be hugely misleading and lead to
-errors. I understand there are reasons to have both -- so simply be
-aware that if you use the Zend Server gear, your tasks likely
-should use <xhtml:code>/usr/local/zend/bin/php</xhtml:code>.</xhtml:li>
-</xhtml:ul>
-<xhtml:h2>The good parts?</xhtml:h2>
-<xhtml:ul>
-<xhtml:li><xhtml:a href="https://openshift.redhat.com/community/faq/i-have-deployed-my-app-but-i-don%E2%80%99t-like-telling-people-to-visit-myapp-myusernamerhcloudcom-how-c">
-You can alias an application to a DNS CNAME</xhtml:a> -- meaning you can
-point your domain name to your OpenShift applications.
-Awesome!</xhtml:li>
-<xhtml:li>Simplicity of adding capabilities, such as Mongo, MySQL, Cron,
-and others. In most cases, this is simply a "click on the button"
-and it's installed and available.</xhtml:li>
-<xhtml:li><xhtml:a href="http://www.zend.com/en/products/server">Zend
-Server</xhtml:a>. For most PHP extensions, I can turn them on or off with
-a few mouse clicks. If I want page-level caching, I don't have to
-do anything to my application; I can simply setup some rules in the
-Zend Server interface and get on with it, and enjoy tremendous
-boosts to performance. I used to enjoy taming and tuning servers;
-most days anymore, I just want them to work.</xhtml:li>
-<xhtml:li><xhtml:a href="https://openshift.redhat.com/community/developers/remote-access">SSH</xhtml:a>
-access to the server, with a number of commands to which I've been
-given <xhtml:code>sudoer</xhtml:code> access. If you're going to sandbox
-somebody, this is a fantastic way to do it. Oh, also: SSH tunnels
-to services like Mongo and MySQL just work (via the
-<xhtml:code>rhc-port-forward</xhtml:code> command).</xhtml:li>
-</xhtml:ul>
-<xhtml:h2>Summary</xhtml:h2>
-<xhtml:p>Over all, I'm quite pleased. While it took me a bit to find the
-various incantations I needed, the service is quite flexible. For
-my needs, considering I'm doing experimental stuff, the price can't
-be beat (the current developer preview is free). Considering most
-stuff I do will fall into this or the basic tier, and that most
-cartridges do not end up counting against your alotment of gears,
-the pricing ($0.05/hour) is extremely competitive.</xhtml:p>
 </xhtml:div>
     </content>
   </entry>

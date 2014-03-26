@@ -96,6 +96,140 @@
 <div class="row clearfix">
 <aside class="four columns offset-by-one alpha sidebar blog">
     <p>
+        Written on 19 May 2007.
+                <br />Last updated on 20 May 2007.
+            </p>
+
+    <ul class="tags">
+    <li><a href="/blog/tag/php.html">php</a></li>
+</ul>
+
+</aside>
+
+<section class="eleven columns omega">
+    <h4 class="entry"><a href="/blog/139-PHP-globals-for-the-OOP-developer.html">PHP globals for the OOP developer</a></h4>
+
+    <div class="entry body"><p>
+    <b>Update:</b> I evidently simplified the issue too much, and have had several
+    people rightly comment on the bogosity of the issue. However, there are still situations
+    where <kbd>$GLOBALS</kbd> does not act as expected, and I outline these in
+    <a href="http://weierophinney.net/matthew/archives/140-Globals,-continued.html">my next entry</a>.
+</p>
+<hr />
+<p>
+    In my <a
+        href="/matthew/archives/138-Start-Writing-Embeddable-Applications.html">previous
+        entry</a>, I ranted about the use of globals in popular PHP
+    applications, and how they make embedding said applications difficult. I
+    develop using object-oriented practices, and can honestly say I can't recall
+    ever having slung a global variable around in my own code. Globals seem
+    hackish to me, and as a result, trying to get applications that use them
+    to behave correctly has been a challenge.
+</p>
+
+<p>
+    One of the applications I had in mind was <a
+        href="http://www.s9y.org">Serendipity</a>, the software that powers this
+    blog. I was attempting to create a Zend Framework action controller that
+    wraps my s9y instance so that I can do things such as apply ACLs from my
+    website to selected entries, as well as pull the sitewide skeleton out from
+    s9y so that I only have to maintain one version of it (I had one version for
+    s9y, and another for my own content featured on the site (resume, contact
+    form, etc.).
+</p>
+
+<p>
+    I tried importing the various config files into my action method prior to
+    invoking the actual s9y bootstrap, but no dice. I also tried modifying the
+    s9y config files to use the notation <kbd>$GLOBALS['serendipity']</kbd>
+    around the serendipity configuration variables (s9y uses a single
+    multi-dimensional array for all configuration options). This didn't work,
+    either; s9y functions that called <kbd>global $serendipity</kbd> were still
+    getting a null value.
+</p>
+
+<p>
+    So, I did a little closer reading in the manual <a
+        href="http://php.net/language.variables.predefined">section on
+        predefined variables</a>, I discovered something interesting in the
+    description of <kbd>$GLOBALS</kbd> (emphasis mine):
+</p>
+
+<blockquote>
+    Contains a reference to every variable which is <em>currently</em> available
+    within the global scope of the script.
+</blockquote>
+
+<p>
+    Interestingly, the section on variable scope didn't make this distinction at
+    all. Basically, if the variable you reference via <kbd>$GLOBALS</kbd> does
+    not already exist, assigning it <em>does nothing</em>. It doesn't even raise
+    a notice. It just silently goes ahead, leaving you thinking you set a new
+    global variable, but in fact, you cannot assign new globals via
+    <kbd>$GLOBALS</kbd>; you can only modify <em>existing</em> variables in the
+    global scope.
+</p>
+
+<p>
+    So, I got around the issue by putting this in my front controller bootstrap:
+</p>
+
+<div class="example"><pre><code lang="php">
+$serendipity = null;
+</code></pre></div>
+
+<p>
+    After that, I was able to create a wrapper action controller for s9y very
+    easily:
+</p>
+
+<div class="example"><pre><code lang="php">
+/** Zend_Controller_Action */
+require_once 'Zend/Controller/Action.php';
+
+/**
+ * Serendipity integration
+ * 
+ * @uses       Zend_Controller_Action
+  */
+class S9y_IndexController extends Zend_Controller_Action
+{
+    public function init()
+    {
+        // New ViewRenderer helper in ZF incubator; telling it not
+        // to autorender a view script when done
+        $this-&gt;_helper-&gt;viewRenderer-&gt;initView(null, null, array('noRender' =&gt; true));
+    }
+
+    public function indexAction()
+    {
+        global $serendipity;
+        chdir($_SERVER['DOCUMENT_ROOT'] . '/path/to/s9y');
+        include './index.php';
+        chdir($_SERVER['DOCUMENT_ROOT']);
+    }
+}
+</code></pre></div>
+
+<p>
+    Note that I don't do any output buffering; this is because the ZF dispatcher
+    takes care of that for me. All I need to do is execute the s9y bootstrap.
+</p>
+
+<p>
+    So, the lesson to learn from all this: if you need to wrap an application
+    that uses globals, find out what all of them are, and declare them in the
+    global namespace -- just setting them to null is enough -- in your
+    application bootstrap.
+</p></div>
+
+    <p><a href="/blog/139-PHP-globals-for-the-OOP-developer.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="four columns offset-by-one alpha sidebar blog">
+    <p>
         Written on 07 May 2007.
                 <br />Last updated on 08 May 2007.
             </p>
@@ -746,50 +880,6 @@ $ make install
 </section>
 
 </div>
-<div class="row clearfix">
-<aside class="four columns offset-by-one alpha sidebar blog">
-    <p>
-        Written on 07 December 2006.
-                <br />Last updated on 08 December 2006.
-            </p>
-
-    <ul class="tags">
-    <li><a href="/blog/tag/php.html">php</a></li>
-</ul>
-
-</aside>
-
-<section class="eleven columns omega">
-    <h4 class="entry"><a href="/blog/129-MVC-changes-in-Zend-Framework.html">MVC changes in Zend Framework</a></h4>
-
-    <div class="entry body"><p>
-    Several months ago, <a href="http://andigutmans.blogspot.com/">Andi</a>
-    asked me to take the role of lead developer on a refactoring of the 
-    <a href="http://framework.zend.com/">Zend Framework</a> MVC components. I
-    agreed, though somewhat reluctantly; I already maintain 
-    <a href="http://cgiapp.sourceforge.net/">another MVC library</a>, and wasn't
-    sure how well I could fill the shoes of people like my friends 
-    <a href="http://mikenaberezny.com">Mike</a>, who had done the initial
-    development on the controller classes, and 
-    <a href="http://paul-m-jones.com/blog/">Paul</a>, who provided Zend_View.
-</p>
-<p>
-    The experience has been incredibly rewarding, however, and I've had the
-    chance to pick the brains of and work with some top-notch developers in the
-    process. In the next week or so, we'll be releasing version 0.6.0 of the
-    framework, and it will include much of my work in the MVC components as part
-    of the core distribution. A big thanks to all those who have contributed
-    opinions, design help, code, tests, and documentation; another thank you
-    goes to Andi for trusting and supporting me in this endeavor.
-</p>
-<p>
-    So, what are the changes? Read on to find out...
-</p></div>
-
-    <p><a href="/blog/129-MVC-changes-in-Zend-Framework.html">Continue reading...</a></p>
-</section>
-
-</div>
 <div class="paginationControl">
         <a href="/blog.html" class="first">&lt;&lt; First</a> |
         <a href="/blog-p15.html"> &lt; Previous </a> |
@@ -863,13 +953,13 @@ $ make install
         <div id="search" style="width:100%;">Loading...</div>
 <h4>Tag Cloud</h4>
 <div class="cloud">
-<ul class="Zend&#x5C;Tag&#x5C;Cloud"><li><a href="/blog/tag/php.html" style="font-size: 20px;">php</a></li> <li><a href="/blog/tag/zend+framework.html" style="font-size: 15px;">zend framework</a></li> <li><a href="/blog/tag/zf2.html" style="font-size: 11px;">zf2</a></li> <li><a href="/blog/tag/vim.html" style="font-size: 11px;">vim</a></li> <li><a href="/blog/tag/family.html" style="font-size: 11px;">family</a></li> <li><a href="/blog/tag/programming.html" style="font-size: 12px;">programming</a></li> <li><a href="/blog/tag/personal.html" style="font-size: 13px;">personal</a></li> <li><a href="/blog/tag/phpconcom.html" style="font-size: 10px;">phpconcom</a></li> <li><a href="/blog/tag/mvc.html" style="font-size: 11px;">mvc</a></li> <li><a href="/blog/tag/oop.html" style="font-size: 11px;">oop</a></li> <li><a href="/blog/tag/testing.html" style="font-size: 10px;">testing</a></li> <li><a href="/blog/tag/rest.html" style="font-size: 11px;">rest</a></li> <li><a href="/blog/tag/linux.html" style="font-size: 12px;">linux</a></li> <li><a href="/blog/tag/zendcon08.html" style="font-size: 11px;">zendcon08</a></li> <li><a href="/blog/tag/file_fortune.html" style="font-size: 10px;">file_fortune</a></li> <li><a href="/blog/tag/pear.html" style="font-size: 11px;">pear</a></li> <li><a href="/blog/tag/zendcon.html" style="font-size: 11px;">zendcon</a></li> <li><a href="/blog/tag/perl.html" style="font-size: 12px;">perl</a></li> <li><a href="/blog/tag/fastcgi.html" style="font-size: 10px;">fastcgi</a></li> <li><a href="/blog/tag/ubuntu.html" style="font-size: 11px;">ubuntu</a></li> <li><a href="/blog/tag/tekx.html" style="font-size: 10px;">tekx</a></li> <li><a href="/blog/tag/zendcon10.html" style="font-size: 10px;">zendcon10</a></li> <li><a href="/blog/tag/dojo.html" style="font-size: 11px;">dojo</a></li> <li><a href="/blog/tag/symfony.html" style="font-size: 11px;">symfony</a></li> <li><a href="/blog/tag/zeta+components.html" style="font-size: 10px;">zeta components</a></li> <li><a href="/blog/tag/tek09.html" style="font-size: 10px;">tek09</a></li> <li><a href="/blog/tag/spl.html" style="font-size: 11px;">spl</a></li> <li><a href="/blog/tag/subversion.html" style="font-size: 11px;">subversion</a></li> <li><a href="/blog/tag/zend+framewor.html" style="font-size: 10px;">zend framewor</a></li> <li><a href="/blog/tag/rails.html" style="font-size: 10px;">rails</a></li> <li><a href="/blog/tag/conferences.html" style="font-size: 11px;">conferences</a></li> <li><a href="/blog/tag/dpc08.html" style="font-size: 11px;">dpc08</a></li> <li><a href="/blog/tag/phpworks08.html" style="font-size: 11px;">phpworks08</a></li> <li><a href="/blog/tag/webinar.html" style="font-size: 11px;">webinar</a></li> <li><a href="/blog/tag/zencon08.html" style="font-size: 10px;">zencon08</a></li> <li><a href="/blog/tag/cw09.html" style="font-size: 11px;">cw09</a></li> <li><a href="/blog/tag/zend+server.html" style="font-size: 10px;">zend server</a></li> <li><a href="/blog/tag/dpc09.html" style="font-size: 10px;">dpc09</a></li> <li><a href="/blog/tag/sflive2010.html" style="font-size: 10px;">sflive2010</a></li> <li><a href="/blog/tag/security.html" style="font-size: 10px;">security</a></li> <li><a href="/blog/tag/wifi.html" style="font-size: 10px;">wifi</a></li> <li><a href="/blog/tag/aikido.html" style="font-size: 10px;">aikido</a></li> <li><a href="/blog/tag/books.html" style="font-size: 10px;">books</a></li> <li><a href="/blog/tag/dpc10.html" style="font-size: 10px;">dpc10</a></li> <li><a href="/blog/tag/zendcon09.html" style="font-size: 11px;">zendcon09</a></li> <li><a href="/blog/tag/git.html" style="font-size: 11px;">git</a></li> <li><a href="/blog/tag/phpwomen.html" style="font-size: 10px;">phpwomen</a></li> <li><a href="/blog/tag/virtualbox.html" style="font-size: 10px;">virtualbox</a></li> <li><a href="/blog/tag/screencast.html" style="font-size: 11px;">screencast</a></li> <li><a href="/blog/tag/advocacy.html" style="font-size: 10px;">advocacy</a></li> <li><a href="/blog/tag/politics.html" style="font-size: 10px;">politics</a></li> <li><a href="/blog/tag/internet.html" style="font-size: 10px;">internet</a></li> <li><a href="/blog/tag/microphp.html" style="font-size: 10px;">microphp</a></li> <li><a href="/blog/tag/cloud.html" style="font-size: 11px;">cloud</a></li> <li><a href="/blog/tag/composer.html" style="font-size: 10px;">composer</a></li> <li><a href="/blog/tag/doctrine.html" style="font-size: 10px;">doctrine</a></li> <li><a href="/blog/tag/javascript.html" style="font-size: 10px;">javascript</a></li> <li><a href="/blog/tag/bower.html" style="font-size: 10px;">bower</a></li> <li><a href="/blog/tag/http.html" style="font-size: 11px;">http</a></li></ul></div>
+<ul class="Zend&#x5C;Tag&#x5C;Cloud"><li><a href="/blog/tag/php.html" style="font-size: 20px;">php</a></li> <li><a href="/blog/tag/apigility.html" style="font-size: 10px;">apigility</a></li> <li><a href="/blog/tag/zf2.html" style="font-size: 11px;">zf2</a></li> <li><a href="/blog/tag/zend+framework.html" style="font-size: 15px;">zend framework</a></li> <li><a href="/blog/tag/rest.html" style="font-size: 11px;">rest</a></li> <li><a href="/blog/tag/hal.html" style="font-size: 10px;">hal</a></li> <li><a href="/blog/tag/vim.html" style="font-size: 11px;">vim</a></li> <li><a href="/blog/tag/family.html" style="font-size: 11px;">family</a></li> <li><a href="/blog/tag/programming.html" style="font-size: 12px;">programming</a></li> <li><a href="/blog/tag/personal.html" style="font-size: 13px;">personal</a></li> <li><a href="/blog/tag/phpconcom.html" style="font-size: 10px;">phpconcom</a></li> <li><a href="/blog/tag/mvc.html" style="font-size: 11px;">mvc</a></li> <li><a href="/blog/tag/oop.html" style="font-size: 11px;">oop</a></li> <li><a href="/blog/tag/testing.html" style="font-size: 10px;">testing</a></li> <li><a href="/blog/tag/linux.html" style="font-size: 12px;">linux</a></li> <li><a href="/blog/tag/zendcon08.html" style="font-size: 11px;">zendcon08</a></li> <li><a href="/blog/tag/file_fortune.html" style="font-size: 10px;">file_fortune</a></li> <li><a href="/blog/tag/pear.html" style="font-size: 11px;">pear</a></li> <li><a href="/blog/tag/zendcon.html" style="font-size: 11px;">zendcon</a></li> <li><a href="/blog/tag/perl.html" style="font-size: 12px;">perl</a></li> <li><a href="/blog/tag/fastcgi.html" style="font-size: 10px;">fastcgi</a></li> <li><a href="/blog/tag/ubuntu.html" style="font-size: 11px;">ubuntu</a></li> <li><a href="/blog/tag/tekx.html" style="font-size: 10px;">tekx</a></li> <li><a href="/blog/tag/zendcon10.html" style="font-size: 10px;">zendcon10</a></li> <li><a href="/blog/tag/dojo.html" style="font-size: 11px;">dojo</a></li> <li><a href="/blog/tag/symfony.html" style="font-size: 11px;">symfony</a></li> <li><a href="/blog/tag/zeta+components.html" style="font-size: 10px;">zeta components</a></li> <li><a href="/blog/tag/tek09.html" style="font-size: 10px;">tek09</a></li> <li><a href="/blog/tag/spl.html" style="font-size: 11px;">spl</a></li> <li><a href="/blog/tag/subversion.html" style="font-size: 11px;">subversion</a></li> <li><a href="/blog/tag/zend+framewor.html" style="font-size: 10px;">zend framewor</a></li> <li><a href="/blog/tag/rails.html" style="font-size: 10px;">rails</a></li> <li><a href="/blog/tag/conferences.html" style="font-size: 11px;">conferences</a></li> <li><a href="/blog/tag/dpc08.html" style="font-size: 11px;">dpc08</a></li> <li><a href="/blog/tag/phpworks08.html" style="font-size: 11px;">phpworks08</a></li> <li><a href="/blog/tag/webinar.html" style="font-size: 11px;">webinar</a></li> <li><a href="/blog/tag/zencon08.html" style="font-size: 10px;">zencon08</a></li> <li><a href="/blog/tag/cw09.html" style="font-size: 11px;">cw09</a></li> <li><a href="/blog/tag/zend+server.html" style="font-size: 10px;">zend server</a></li> <li><a href="/blog/tag/dpc09.html" style="font-size: 10px;">dpc09</a></li> <li><a href="/blog/tag/sflive2010.html" style="font-size: 10px;">sflive2010</a></li> <li><a href="/blog/tag/security.html" style="font-size: 10px;">security</a></li> <li><a href="/blog/tag/wifi.html" style="font-size: 10px;">wifi</a></li> <li><a href="/blog/tag/aikido.html" style="font-size: 10px;">aikido</a></li> <li><a href="/blog/tag/books.html" style="font-size: 10px;">books</a></li> <li><a href="/blog/tag/dpc10.html" style="font-size: 10px;">dpc10</a></li> <li><a href="/blog/tag/zendcon09.html" style="font-size: 11px;">zendcon09</a></li> <li><a href="/blog/tag/git.html" style="font-size: 11px;">git</a></li> <li><a href="/blog/tag/phpwomen.html" style="font-size: 10px;">phpwomen</a></li> <li><a href="/blog/tag/virtualbox.html" style="font-size: 10px;">virtualbox</a></li> <li><a href="/blog/tag/screencast.html" style="font-size: 11px;">screencast</a></li> <li><a href="/blog/tag/advocacy.html" style="font-size: 10px;">advocacy</a></li> <li><a href="/blog/tag/politics.html" style="font-size: 10px;">politics</a></li> <li><a href="/blog/tag/internet.html" style="font-size: 10px;">internet</a></li> <li><a href="/blog/tag/microphp.html" style="font-size: 10px;">microphp</a></li> <li><a href="/blog/tag/cloud.html" style="font-size: 11px;">cloud</a></li> <li><a href="/blog/tag/composer.html" style="font-size: 10px;">composer</a></li> <li><a href="/blog/tag/doctrine.html" style="font-size: 10px;">doctrine</a></li> <li><a href="/blog/tag/javascript.html" style="font-size: 10px;">javascript</a></li> <li><a href="/blog/tag/bower.html" style="font-size: 10px;">bower</a></li> <li><a href="/blog/tag/http.html" style="font-size: 11px;">http</a></li></ul></div>
         </div>
 
         <br class="clear"/>
 
         <div class="copyright">
-            Unless otherwise noted, &#169; 2004 - 2013, Matthew Weier O'Phinney
+            Unless otherwise noted, &#169; 2004 - 2014, Matthew Weier O'Phinney
         </div>
     </footer>
 </div>
