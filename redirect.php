@@ -4,6 +4,13 @@ if (!isset($_SERVER['REQUEST_URI'])) {
 }
 
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+
+if (preg_match('#^/blog/tag/(?P<tag>[^/.]+)(?!-(atom|rss))\.xml#', $uri, $matches)) {
+    $newUri = sprintf('/blog/tag/%s-rss.xml', $matches['tag']);
+    header(sprintf('Location: %s', $newUri), true, 301);
+    exit(0);
+}
+
 if (preg_match('#^/slides/#', $uri)) {
     $newUri = sprintf('http://slides.mwop.net/%s', substr($uri, 8));
     header(sprintf('Location: %s', $newUri), true, 301);
