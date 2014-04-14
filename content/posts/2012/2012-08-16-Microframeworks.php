@@ -303,7 +303,7 @@ echo $app->urlTo('feed', ['format' => 'atom']);
     </li>
 
     <li>
-        Many implement their own view layers.<sup><a name="t6" href="f6">6</a></sup>
+        Many implement their own view layers.<sup><a name="t6" href="#f6">6</a></sup>
     </li>
 </ul>
 
