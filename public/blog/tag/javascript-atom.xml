@@ -1,11 +1,120 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title type="text">Tag: javascript :: phly, boy, phly</title>
-  <updated>2013-12-03T15:50:00+0000</updated>
+  <updated>2014-05-08T17:00:00+0000</updated>
   <generator uri="http://framework.zend.com" version="2">Zend_Feed_Writer</generator>
   <link rel="alternate" type="text/html" href="http://mwop.net/blog/tag/javascript.html"/>
   <link rel="self" type="application/atom+xml" href="http://mwop.net/blog/tag/javascript-atom.xml"/>
   <id>http://mwop.net/blog/tag/javascript.html</id>
+  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <title type="html"><![CDATA[A Better $state.reload for the AngularJS UI-Router]]></title>
+    <published>2014-05-08T17:00:00+0000</published>
+    <updated>2014-05-08T17:00:00+0000</updated>
+    <link rel="alternate" type="text/html" href="http://mwop.net/blog/2014-05-08-angular-ui-router-reload.html"/>
+    <id>http://mwop.net/blog/2014-05-08-angular-ui-router-reload.html</id>
+    <author>
+      <name>Matthew Weier O'Phinney</name>
+      <email>me@mwop.net</email>
+      <uri>http://mwop.net</uri>
+    </author>
+    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
+      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>While working on <xhtml:a href="http://apigility.org/">Apigility</xhtml:a>,
+several times I ran into an odd issue: after fetching new data via
+an API and assigning it to a scoped variable, content would flash
+into existence... and then disappear. Nothing would cause it to
+display again other than a browser reload of the page.</xhtml:p>
+<xhtml:h2>Setup</xhtml:h2>
+<xhtml:p>I have a page that lists a set of items. When you create an
+item, you push data to the API, and, when done, the new item should
+be in that list.</xhtml:p>
+<xhtml:h2>First try: append to list</xhtml:h2>
+<xhtml:p>My first attempt was just appending the data to the list.</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="javascript">
+service.create(data).then(function (newItem) {
+    flash.success = 'Successfully created something';
+    /* append new item to list */
+    $scope.services.push(newItem);
+});
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>This worked... until you left that screen and returned. At that
+point, the new item would be gone, even if I coded my ui-router
+states to force a cache refresh.</xhtml:p>
+<xhtml:h2>Refresh list</xhtml:h2>
+<xhtml:p>My next attempt was to write a routine that would do a cache
+refresh after creating the new item.</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="javascript">
+service.create(data).then(function (newItem) {
+    flash.success = 'Successfully created something';
+    service.fetchAll(var force = true).then(function (services) {
+        $scope.services = services;
+    });
+});
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>This is when I started noticing the "flash of content" problem.
+Essentially, immediately after fetching the set of services, you'd
+see the new item appended... and then it would disappear.</xhtml:p>
+<xhtml:h2>$state.reload()</xhtml:h2>
+<xhtml:p>At this point, I figured I'd use the ui-router to force a
+refresh, specifically via <xhtml:code>$state.reload()</xhtml:code>.</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="javascript">
+service.create(data).then(function (newItem) {
+    flash.success = 'Successfully created something';
+    service.fetchAll(var force = true).then(function (services) {
+        $scope.services = services;
+        $state.reload();
+    });
+});
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>I tried both with and without setting the scoped variable.
+Initially, I thought it was working -- but, as it turned out, I
+missed a case. I tested every single time with at least one item
+already in the list -- and this approach worked. However, when I
+tried with the list not yet populated, failure once again.</xhtml:p>
+<xhtml:h2>Success: $timeout</xhtml:h2>
+<xhtml:p>Surprisingly, the least intuitive solution ended up working:
+introducing a delay.</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="javascript">
+service.create(data).then(function (newItem) {
+    flash.success = 'Successfully created something';
+    service.fetchAll(var force = true)
+        .then(function (services) {
+            $scope.services = services;
+        }).then(function () {
+            return $timeout(function () {
+                $state.go('.', {}, { reload: true });
+            }, 100);
+        });
+});
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>I have a few things to note about this. First, I moved the
+"reload" into its own promise. This was done to ensure it doesn't
+block on the scope assignment. Second, I introduce a
+<xhtml:code>$timeout</xhtml:code> call. This essentially gives the scope a
+chance to populate before the reload triggers. Some examples I saw
+did a 1ms timeout; I found in practice that this was not long
+enough; 100ms was long enough, and did not introduce a noticeable
+delay in UI responsiveness. Finally, you'll note this does not use
+<xhtml:code>$state.reload()</xhtml:code>. This is due to discovering that part
+of my problem is a <xhtml:a href="https://github.com/angular-ui/ui-router/issues/582">known bug in
+<xhtml:code>$state.reload()</xhtml:code></xhtml:a>, whereby state "resolve"
+configuration is not honored.</xhtml:p>
+<xhtml:p>I hope this approach helps others -- I've found it to be robust
+and predictable.</xhtml:p>
+</xhtml:div>
+    </content>
+  </entry>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <title type="html"><![CDATA[A Bower Primer]]></title>
     <published>2013-12-03T15:50:00+0000</published>

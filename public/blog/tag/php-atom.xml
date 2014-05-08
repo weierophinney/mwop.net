@@ -2184,7 +2184,7 @@ are very few differences in the public APIs.</xhtml:li>
 <xhtml:li>Request and Response object abstraction is largely the same as
 well, providing access to query/post/cookie/session/etc. parameters
 through roughly equivalent APIs.</xhtml:li>
-<xhtml:li>Many implement their own view layers.<xhtml:sup><xhtml:a name="t6" href="f6">6</xhtml:a></xhtml:sup></xhtml:li>
+<xhtml:li>Many implement their own view layers.<xhtml:sup><xhtml:a name="t6" href="#f6">6</xhtml:a></xhtml:sup></xhtml:li>
 </xhtml:ul>
 <xhtml:p>Most of this code should be considered commodity code at this
 point. There are several outstanding view layers and templating
