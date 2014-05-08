@@ -96,6 +96,82 @@
 <div class="row clearfix">
 <aside class="four columns offset-by-one alpha sidebar blog">
     <p>
+        Written on 22 May 2005.
+                <br />Last updated on 22 May 2005.
+            </p>
+
+    <ul class="tags">
+    <li><a href="/blog/tag/php.html">php</a></li>
+</ul>
+
+</aside>
+
+<section class="eleven columns omega">
+    <h4 class="entry"><a href="/blog/74-PEAR-and-DocBook-documentation.html">PEAR and DocBook documentation</a></h4>
+
+    <div class="entry body"><p>
+    Sean Coates has posted a rant and <a
+        href="http://blog.phpdoc.info/comment.php?type=trackback&entry_id=14">a
+        blog entry</a> regarding DocBook and the various proposals on PEAR
+    related to using a wiki for package documentation.
+</p>
+<p>
+    A little background is probably in order. Many PEAR developers feel that
+    DocBook is needlessly difficult and provides a barrier to writing good
+    documentation for PEAR projects; this is actually the most often-cited
+    reason for lack of documentation for a PEAR package. Many actually create
+    wikis that they then link to in a minimal DocBook tutorial as "full
+    documentation".
+</p>
+<p>
+    One proposed remedy is to create a PEAR wiki for each PEAR package. A
+    scheduled process would then transform the wiki markup to DocBook, HTML,
+    PDF, whatever.
+</p>
+<p>
+    What Sean rants about is simply this: wiki markup is meant to be simple,
+    and much code documentation would require specialized wiki markup.
+    Additionally, DocBook is already meant to do the transformations required;
+    it is a structured language that is meant to be processed into a variety of
+    output formats.
+</p>
+<p>
+    While I agree with Sean's ideas in essence, I still feel that DocBook is a
+    real pain to work with. <a href="http://www.phpdoc.org">PhpDocumentor</a>
+    offers some real convenience when documenting code: doc blocks can contain
+    HTML, some simple inline elements like {@link} -- and they make documenting
+    a snap. But I just fail to understand why, when providing tutorials, a
+    switch to DocBook is necessary. Whenever I use it, I find that I have to
+    retool a set of tutorials I have, or somebody else has, already written in
+    order to get formatting correct, and that I have to switch my thinking
+    altogether to accomodate a new set of rules and logic.
+</p>
+<p>
+    Yes, DocBook is simply XML with a documented schema. However, I've never
+    enjoyed XML. I find it too pedantic, I don't like having to escape out CDATA
+    sequences in order to render HTML (and code, and XML, etc.), I don't like
+    having to learn new DTDs for every project, and more. I feel for
+    configuration, unless you have nested elements, there's no reason to use XML
+    whatsoever. And when it comes to documentation, why use anything other than
+    HTML? Since HTML is a subset of SGML (as is XML), there's no reason it can't
+    be transformed to other formats itself -- and for the majority of PHP
+    developers, HTML is a known, while XML/DocBook may or may not be.
+</p>
+<p>
+    Whether or not DocBook is hard can be debated from here to eternity. The
+    fact of the matter is that it is <em>perceived</em> as being hard to learn,
+    and thus many PEAR developers are simply choosing not to bother. Why not
+    give them a tool they can use <em>easily</em>? Maybe then the amount and
+    quality of documentation on PEAR will improve.
+</p></div>
+
+    <p><a href="/blog/74-PEAR-and-DocBook-documentation.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="four columns offset-by-one alpha sidebar blog">
+    <p>
         Written on 20 May 2005.
                 <br />Last updated on 20 May 2005.
             </p>
@@ -574,81 +650,6 @@
 </section>
 
 </div>
-<div class="row clearfix">
-<aside class="four columns offset-by-one alpha sidebar blog">
-    <p>
-        Written on 20 April 2005.
-                <br />Last updated on 20 April 2005.
-            </p>
-
-    <ul class="tags">
-    <li><a href="/blog/tag/php.html">php</a></li>
-</ul>
-
-</aside>
-
-<section class="eleven columns omega">
-    <h4 class="entry"><a href="/blog/64-PHP-Unit-Tests-and-the-winner-is-phpt.html">PHP Unit Tests: and the winner is: phpt</a></h4>
-
-    <div class="entry body"><p>
-    I've been tinkering with <a
-    href="http://www.wikipedia.org/wiki/Unit_testing" target="_blank">Unit
-    Testing</a> for around a year now, and have tried using <a
-    href="http://pear.php.net/package/PHPUnit">PHP Unit</a> as well as <a
-    href="http://www.lastcraft.com/simple_test.php">Simple Test</a>. It was
-    while following the Simple Test tutorial that I finally grokked the idea of
-    unit testing, and so that has been my favored class for testing.
-</p>
-<p>
-    However, I find writing the tests tedious. In Simple Test, as in PHP Unit,
-    you need to create a class that sets up the testing harness, and then you
-    create a method for each test you wish to run, and so on... I found it
-    incredibly time consuming. Additionally, I found the test harness often felt
-    like a foreign way of testing my code; I was setting up a structure I would
-    never use my code in, typically. All in all, I only test when I have extra
-    time (which is rare) or when I'm really having trouble nailing down bugs
-    (and the unit tests often don't help me find them).
-</p>
-<p>
-    Recently, I've been hearing some buzz over on the <a
-        href="http://pear.php.net">PEAR</a> lists and the blogs of some of its
-    developers about 'phpt' tests. From what I hear, phpt tests sound very
-    similar to how one tests in perl (though I've never written perl tests, I've
-    at least glanced through them). However, until recently, I haven't seen any
-    documentation on them, and installing PEAR packages via pear doesn't install
-    tests.
-</p>
-<p>
-    We got a copy of <a href="http://php5powerprogramming.com/">PHP5 Power
-        Programming</a> a few weeks ago, and in the section on preparing a PEAR
-    package was a brief section on phpt tests. The section was small, and when I
-    looked at it, my immediate thought was, "it can't be <em>that</em> simple,
-    can it?"
-</p>
-<p>
-    So, I decided to try it out with <a
-        href="http://cgiapp.sourceforge.net/">Cgiapp</a>. A few minutes later, I
-    had some working tests for my static methods. "Hmmm," I thought, "That was
-    easy. Let's try some more." 
-</p>
-<p>
-    Turns out they're kind of addictive to geeks like me. In a matter of a few
-    hours, I'd knocked out tests for over half the functionality, and
-    disccovered, to my chagrine and joy, a number of bugs and bad coding
-    practices... which I promptly corrected so I could get that magical 'PASS'
-    from the test harness.
-</p>
-<p>
-    In the process of writing the tests, my understanding of the tool evolved
-    quite a bit, and by the end, I had the knack for it down. I'll blog later
-    about some of the ways I made them easier to use for myself -- and how I
-    made them more useful for debugging purposes.
-</p></div>
-
-    <p><a href="/blog/64-PHP-Unit-Tests-and-the-winner-is-phpt.html">Continue reading...</a></p>
-</section>
-
-</div>
 <div class="paginationControl">
         <a href="/blog.html" class="first">&lt;&lt; First</a> |
         <a href="/blog-p21.html"> &lt; Previous </a> |
@@ -722,7 +723,7 @@
         <div id="search" style="width:100%;">Loading...</div>
 <h4>Tag Cloud</h4>
 <div class="cloud">
-<ul class="Zend&#x5C;Tag&#x5C;Cloud"><li><a href="/blog/tag/php.html" style="font-size: 20px;">php</a></li> <li><a href="/blog/tag/apigility.html" style="font-size: 10px;">apigility</a></li> <li><a href="/blog/tag/zf2.html" style="font-size: 11px;">zf2</a></li> <li><a href="/blog/tag/zend+framework.html" style="font-size: 15px;">zend framework</a></li> <li><a href="/blog/tag/rest.html" style="font-size: 11px;">rest</a></li> <li><a href="/blog/tag/hal.html" style="font-size: 10px;">hal</a></li> <li><a href="/blog/tag/vim.html" style="font-size: 11px;">vim</a></li> <li><a href="/blog/tag/family.html" style="font-size: 11px;">family</a></li> <li><a href="/blog/tag/programming.html" style="font-size: 12px;">programming</a></li> <li><a href="/blog/tag/personal.html" style="font-size: 13px;">personal</a></li> <li><a href="/blog/tag/phpconcom.html" style="font-size: 10px;">phpconcom</a></li> <li><a href="/blog/tag/mvc.html" style="font-size: 11px;">mvc</a></li> <li><a href="/blog/tag/oop.html" style="font-size: 11px;">oop</a></li> <li><a href="/blog/tag/testing.html" style="font-size: 10px;">testing</a></li> <li><a href="/blog/tag/linux.html" style="font-size: 12px;">linux</a></li> <li><a href="/blog/tag/zendcon08.html" style="font-size: 11px;">zendcon08</a></li> <li><a href="/blog/tag/file_fortune.html" style="font-size: 10px;">file_fortune</a></li> <li><a href="/blog/tag/pear.html" style="font-size: 11px;">pear</a></li> <li><a href="/blog/tag/zendcon.html" style="font-size: 11px;">zendcon</a></li> <li><a href="/blog/tag/perl.html" style="font-size: 12px;">perl</a></li> <li><a href="/blog/tag/fastcgi.html" style="font-size: 10px;">fastcgi</a></li> <li><a href="/blog/tag/ubuntu.html" style="font-size: 11px;">ubuntu</a></li> <li><a href="/blog/tag/tekx.html" style="font-size: 10px;">tekx</a></li> <li><a href="/blog/tag/zendcon10.html" style="font-size: 10px;">zendcon10</a></li> <li><a href="/blog/tag/dojo.html" style="font-size: 11px;">dojo</a></li> <li><a href="/blog/tag/symfony.html" style="font-size: 11px;">symfony</a></li> <li><a href="/blog/tag/zeta+components.html" style="font-size: 10px;">zeta components</a></li> <li><a href="/blog/tag/tek09.html" style="font-size: 10px;">tek09</a></li> <li><a href="/blog/tag/spl.html" style="font-size: 11px;">spl</a></li> <li><a href="/blog/tag/subversion.html" style="font-size: 11px;">subversion</a></li> <li><a href="/blog/tag/zend+framewor.html" style="font-size: 10px;">zend framewor</a></li> <li><a href="/blog/tag/rails.html" style="font-size: 10px;">rails</a></li> <li><a href="/blog/tag/conferences.html" style="font-size: 11px;">conferences</a></li> <li><a href="/blog/tag/dpc08.html" style="font-size: 11px;">dpc08</a></li> <li><a href="/blog/tag/phpworks08.html" style="font-size: 11px;">phpworks08</a></li> <li><a href="/blog/tag/webinar.html" style="font-size: 11px;">webinar</a></li> <li><a href="/blog/tag/zencon08.html" style="font-size: 10px;">zencon08</a></li> <li><a href="/blog/tag/cw09.html" style="font-size: 11px;">cw09</a></li> <li><a href="/blog/tag/zend+server.html" style="font-size: 10px;">zend server</a></li> <li><a href="/blog/tag/dpc09.html" style="font-size: 10px;">dpc09</a></li> <li><a href="/blog/tag/sflive2010.html" style="font-size: 10px;">sflive2010</a></li> <li><a href="/blog/tag/security.html" style="font-size: 10px;">security</a></li> <li><a href="/blog/tag/wifi.html" style="font-size: 10px;">wifi</a></li> <li><a href="/blog/tag/aikido.html" style="font-size: 10px;">aikido</a></li> <li><a href="/blog/tag/books.html" style="font-size: 10px;">books</a></li> <li><a href="/blog/tag/dpc10.html" style="font-size: 10px;">dpc10</a></li> <li><a href="/blog/tag/zendcon09.html" style="font-size: 11px;">zendcon09</a></li> <li><a href="/blog/tag/git.html" style="font-size: 11px;">git</a></li> <li><a href="/blog/tag/phpwomen.html" style="font-size: 10px;">phpwomen</a></li> <li><a href="/blog/tag/virtualbox.html" style="font-size: 10px;">virtualbox</a></li> <li><a href="/blog/tag/screencast.html" style="font-size: 11px;">screencast</a></li> <li><a href="/blog/tag/advocacy.html" style="font-size: 10px;">advocacy</a></li> <li><a href="/blog/tag/politics.html" style="font-size: 10px;">politics</a></li> <li><a href="/blog/tag/internet.html" style="font-size: 10px;">internet</a></li> <li><a href="/blog/tag/microphp.html" style="font-size: 10px;">microphp</a></li> <li><a href="/blog/tag/cloud.html" style="font-size: 11px;">cloud</a></li> <li><a href="/blog/tag/composer.html" style="font-size: 10px;">composer</a></li> <li><a href="/blog/tag/doctrine.html" style="font-size: 10px;">doctrine</a></li> <li><a href="/blog/tag/javascript.html" style="font-size: 10px;">javascript</a></li> <li><a href="/blog/tag/bower.html" style="font-size: 10px;">bower</a></li> <li><a href="/blog/tag/http.html" style="font-size: 11px;">http</a></li></ul></div>
+<ul class="Zend&#x5C;Tag&#x5C;Cloud"><li><a href="/blog/tag/php.html" style="font-size: 20px;">php</a></li> <li><a href="/blog/tag/apigility.html" style="font-size: 10px;">apigility</a></li> <li><a href="/blog/tag/zf2.html" style="font-size: 11px;">zf2</a></li> <li><a href="/blog/tag/zend+framework.html" style="font-size: 15px;">zend framework</a></li> <li><a href="/blog/tag/rest.html" style="font-size: 11px;">rest</a></li> <li><a href="/blog/tag/hal.html" style="font-size: 10px;">hal</a></li> <li><a href="/blog/tag/javascript.html" style="font-size: 11px;">javascript</a></li> <li><a href="/blog/tag/angularjs.html" style="font-size: 10px;">angularjs</a></li> <li><a href="/blog/tag/ui-router.html" style="font-size: 10px;">ui-router</a></li> <li><a href="/blog/tag/vim.html" style="font-size: 11px;">vim</a></li> <li><a href="/blog/tag/family.html" style="font-size: 11px;">family</a></li> <li><a href="/blog/tag/programming.html" style="font-size: 12px;">programming</a></li> <li><a href="/blog/tag/personal.html" style="font-size: 13px;">personal</a></li> <li><a href="/blog/tag/phpconcom.html" style="font-size: 10px;">phpconcom</a></li> <li><a href="/blog/tag/mvc.html" style="font-size: 11px;">mvc</a></li> <li><a href="/blog/tag/oop.html" style="font-size: 11px;">oop</a></li> <li><a href="/blog/tag/testing.html" style="font-size: 10px;">testing</a></li> <li><a href="/blog/tag/linux.html" style="font-size: 12px;">linux</a></li> <li><a href="/blog/tag/zendcon08.html" style="font-size: 11px;">zendcon08</a></li> <li><a href="/blog/tag/file_fortune.html" style="font-size: 10px;">file_fortune</a></li> <li><a href="/blog/tag/pear.html" style="font-size: 11px;">pear</a></li> <li><a href="/blog/tag/zendcon.html" style="font-size: 11px;">zendcon</a></li> <li><a href="/blog/tag/perl.html" style="font-size: 12px;">perl</a></li> <li><a href="/blog/tag/fastcgi.html" style="font-size: 10px;">fastcgi</a></li> <li><a href="/blog/tag/ubuntu.html" style="font-size: 11px;">ubuntu</a></li> <li><a href="/blog/tag/tekx.html" style="font-size: 10px;">tekx</a></li> <li><a href="/blog/tag/zendcon10.html" style="font-size: 10px;">zendcon10</a></li> <li><a href="/blog/tag/dojo.html" style="font-size: 11px;">dojo</a></li> <li><a href="/blog/tag/symfony.html" style="font-size: 11px;">symfony</a></li> <li><a href="/blog/tag/zeta+components.html" style="font-size: 10px;">zeta components</a></li> <li><a href="/blog/tag/tek09.html" style="font-size: 10px;">tek09</a></li> <li><a href="/blog/tag/spl.html" style="font-size: 11px;">spl</a></li> <li><a href="/blog/tag/subversion.html" style="font-size: 11px;">subversion</a></li> <li><a href="/blog/tag/zend+framewor.html" style="font-size: 10px;">zend framewor</a></li> <li><a href="/blog/tag/rails.html" style="font-size: 10px;">rails</a></li> <li><a href="/blog/tag/conferences.html" style="font-size: 11px;">conferences</a></li> <li><a href="/blog/tag/dpc08.html" style="font-size: 11px;">dpc08</a></li> <li><a href="/blog/tag/phpworks08.html" style="font-size: 11px;">phpworks08</a></li> <li><a href="/blog/tag/webinar.html" style="font-size: 11px;">webinar</a></li> <li><a href="/blog/tag/zencon08.html" style="font-size: 10px;">zencon08</a></li> <li><a href="/blog/tag/cw09.html" style="font-size: 11px;">cw09</a></li> <li><a href="/blog/tag/zend+server.html" style="font-size: 10px;">zend server</a></li> <li><a href="/blog/tag/dpc09.html" style="font-size: 10px;">dpc09</a></li> <li><a href="/blog/tag/sflive2010.html" style="font-size: 10px;">sflive2010</a></li> <li><a href="/blog/tag/security.html" style="font-size: 10px;">security</a></li> <li><a href="/blog/tag/wifi.html" style="font-size: 10px;">wifi</a></li> <li><a href="/blog/tag/aikido.html" style="font-size: 10px;">aikido</a></li> <li><a href="/blog/tag/books.html" style="font-size: 10px;">books</a></li> <li><a href="/blog/tag/dpc10.html" style="font-size: 10px;">dpc10</a></li> <li><a href="/blog/tag/zendcon09.html" style="font-size: 11px;">zendcon09</a></li> <li><a href="/blog/tag/git.html" style="font-size: 11px;">git</a></li> <li><a href="/blog/tag/phpwomen.html" style="font-size: 10px;">phpwomen</a></li> <li><a href="/blog/tag/virtualbox.html" style="font-size: 10px;">virtualbox</a></li> <li><a href="/blog/tag/screencast.html" style="font-size: 11px;">screencast</a></li> <li><a href="/blog/tag/advocacy.html" style="font-size: 10px;">advocacy</a></li> <li><a href="/blog/tag/politics.html" style="font-size: 10px;">politics</a></li> <li><a href="/blog/tag/internet.html" style="font-size: 10px;">internet</a></li> <li><a href="/blog/tag/microphp.html" style="font-size: 10px;">microphp</a></li> <li><a href="/blog/tag/cloud.html" style="font-size: 11px;">cloud</a></li> <li><a href="/blog/tag/composer.html" style="font-size: 10px;">composer</a></li> <li><a href="/blog/tag/doctrine.html" style="font-size: 10px;">doctrine</a></li> <li><a href="/blog/tag/bower.html" style="font-size: 10px;">bower</a></li> <li><a href="/blog/tag/http.html" style="font-size: 11px;">http</a></li></ul></div>
         </div>
 
         <br class="clear"/>
