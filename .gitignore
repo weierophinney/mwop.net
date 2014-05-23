@@ -18,10 +18,11 @@ vendor/.composer
 vendor/autoload.php
 vendor/bin
 vendor/composer
-vendor/phly
-vendor/zendframework
-vendor/zf-commons
 vendor/hybridauth
+vendor/phly
 vendor/socalnick
+vendor/zendframework
+vendor/zfcampus
+vendor/zf-commons
 .*.sw*
 .*.un~

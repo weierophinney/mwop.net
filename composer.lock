@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "4bcf4d9456ada973750ae4a96a7ab9af",
+    "hash": "3deeb617d69f2d34fc6f50caa8e0b7ad",
     "packages": [
         {
             "name": "hybridauth/hybridauth",
@@ -106,6 +106,64 @@
             "time": "2013-05-06 11:47:58"
         },
         {
+            "name": "phly/phly-comic",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/weierophinney/PhlyComic.git",
+                "reference": "f7e5dfd89465bb2d609946e9faa51c0dc9ad6f83"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/weierophinney/PhlyComic/zipball/f7e5dfd89465bb2d609946e9faa51c0dc9ad6f83",
+                "reference": "f7e5dfd89465bb2d609946e9faa51c0dc9ad6f83",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3",
+                "zendframework/zend-dom": "~2.0",
+                "zendframework/zend-filter": "~2.0",
+                "zendframework/zend-validator": "~2.0",
+                "zfcampus/zf-console": "~1.0"
+            },
+            "bin": [
+                "bin/phly-comic.php"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev",
+                    "dev-develop": "1.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "PhlyComic\\": "src/"
+                }
+            },
+            "license": [
+                "BSD-2-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Matthew Weier O'Phinney",
+                    "email": "matthew@weierophinney.net",
+                    "homepage": "http://mwop.net/"
+                }
+            ],
+            "description": "Library for fetching various web comic sources",
+            "homepage": "https://github.com/weierophinney/PhlyComic",
+            "keywords": [
+                "comics",
+                "console"
+            ],
+            "support": {
+                "source": "https://github.com/weierophinney/PhlyComic",
+                "issues": "https://github.com/weierophinney/PhlyComic/issues"
+            },
+            "time": "2014-05-23 17:15:24"
+        },
+        {
             "name": "phly/phly-common",
             "version": "dev-master",
             "source": {
@@ -198,13 +256,13 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/weierophinney/PhlySimplePage.git",
-                "reference": "v1.0.0"
+                "url": "https://github.com/phly/PhlySimplePage.git",
+                "reference": "57ac072d46be93a4df931ca483f114b0509e572b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/weierophinney/PhlySimplePage/zipball/v1.0.0",
-                "reference": "v1.0.0",
+                "url": "https://api.github.com/repos/phly/PhlySimplePage/zipball/57ac072d46be93a4df931ca483f114b0509e572b",
+                "reference": "57ac072d46be93a4df931ca483f114b0509e572b",
                 "shasum": ""
             },
             "require": {
@@ -245,7 +303,7 @@
                 "zend",
                 "zf2"
             ],
-            "time": "2013-04-29 13:00:12"
+            "time": "2013-11-05 14:08:50"
         },
         {
             "name": "socalnick/scn-social-auth",
@@ -253,23 +311,23 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/SocalNick/ScnSocialAuth.git",
-                "reference": "1.10.0"
+                "reference": "a73796402866f51c7447527ae8e93dc0ef399cf3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SocalNick/ScnSocialAuth/zipball/1.10.0",
-                "reference": "1.10.0",
+                "url": "https://api.github.com/repos/SocalNick/ScnSocialAuth/zipball/a73796402866f51c7447527ae8e93dc0ef399cf3",
+                "reference": "a73796402866f51c7447527ae8e93dc0ef399cf3",
                 "shasum": ""
             },
             "require": {
                 "hybridauth/hybridauth": "dev-master",
                 "php": ">=5.3.3",
                 "zendframework/zendframework": "2.*",
-                "zf-commons/zfc-base": "0.*",
-                "zf-commons/zfc-user": "0.*"
+                "zf-commons/zfc-base": "0.1.*",
+                "zf-commons/zfc-user": "0.1.*"
             },
             "require-dev": {
-                "mockery/mockery": ">=0.7.2"
+                "mockery/mockery": "0.8.0"
             },
             "type": "library",
             "autoload": {
@@ -282,6 +340,9 @@
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
             "authors": [
                 {
                     "name": "Nicholas Calugar",
@@ -295,24 +356,25 @@
             "keywords": [
                 "zf2"
             ],
-            "time": "2013-07-29 17:46:15"
+            "time": "2014-03-09 00:14:03"
         },
         {
             "name": "zendframework/zendframework",
-            "version": "dev-master",
+            "version": "dev-develop",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zf2.git",
-                "reference": "26e400daf0671c0312b78e53beceb3668d7329bd"
+                "reference": "d270f73b2ccdc36609ba5ae0232f895352b67197"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://packages.zendframework.com/composer/zendframework-zendframework-26e400daf0671c0312b78e53beceb3668d7329bd-zip-960041.zip",
-                "reference": "dev-master",
-                "shasum": "a9d9d48e62fcfd7852397799b28390dad1a7a09c"
+                "url": "https://packages.zendframework.com/composer/zendframework-zendframework-d270f73b2ccdc36609ba5ae0232f895352b67197-zip-0fa010.zip",
+                "reference": "dev-develop",
+                "shasum": "05c902a91fc8645833ec552a0c40c7d9de01c918"
             },
             "require": {
-                "php": ">=5.3.3"
+                "php": ">=5.3.23",
+                "zendframework/zendxml": "~1.0-dev"
             },
             "replace": {
                 "zendframework/zend-authentication": "self.version",
@@ -369,16 +431,19 @@
             },
             "require-dev": {
                 "doctrine/annotations": ">=1.0",
+                "fabpot/php-cs-fixer": "dev-master",
                 "ircmaxell/random-lib": "dev-master",
                 "ircmaxell/security-lib": "dev-master",
-                "ocramius/proxy-manager": "0.4.*",
-                "phpunit/phpunit": "3.7.*"
+                "mikey179/vfsstream": "1.2.*",
+                "phpunit/phpunit": "3.7.*",
+                "satooshi/php-coveralls": "dev-master",
+                "sebastianbergmann/phpcov": "1.1.0"
             },
             "suggest": {
                 "doctrine/annotations": "Doctrine Annotations >=1.0 for annotation features",
                 "ext-intl": "ext/intl for i18n features (included in default builds of PHP)",
                 "ircmaxell/random-lib": "Fallback random byte generator for Zend\\Math\\Rand if OpenSSL/Mcrypt extensions are unavailable",
-                "ocramius/proxy-manager": "ProxyManager to handle lazy initialization of services",
+                "ocramius/proxy-manager": "ProxyManager 0.5.* to handle lazy initialization of services",
                 "zendframework/zendpdf": "ZendPdf for creating PDF representations of barcodes",
                 "zendframework/zendservice-recaptcha": "ZendService\\ReCaptcha for rendering ReCaptchas in Zend\\Captcha and/or Zend\\Form"
             },
@@ -390,8 +455,8 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.2-dev",
-                    "dev-develop": "2.3-dev"
+                    "dev-master": "2.3-dev",
+                    "dev-develop": "2.4-dev"
                 }
             },
             "autoload": {
@@ -409,10 +474,10 @@
                 "zf2"
             ],
             "support": {
-                "source": "https://github.com/zendframework/zf2/tree/master",
+                "source": "https://github.com/zendframework/zf2/tree/develop",
                 "issues": "https://github.com/zendframework/zf2/issues"
             },
-            "time": "2013-07-24 14:09:18"
+            "time": "2014-05-20 23:29:09"
         },
         {
             "name": "zendframework/zendservice-recaptcha",
@@ -462,6 +527,54 @@
                 "issues": "https://github.com/zendframework/ZendService_ReCaptcha/issues"
             },
             "time": "2012-12-11 22:09:14"
+        },
+        {
+            "name": "zendframework/zendxml",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zendframework/ZendXml.git",
+                "reference": "559b34f426d33a11c3db118e00ce14bb8dc64e5f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://packages.zendframework.com/composer/zendframework-zendxml-559b34f426d33a11c3db118e00ce14bb8dc64e5f-zip-6cf7a2.zip",
+                "reference": "dev-master",
+                "shasum": "39abc614b5c26bcbf8102e203c52dee73c4460a8"
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "fabpot/php-cs-fixer": "*@dev",
+                "phpunit/phpunit": "~3.7"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "ZendXml": "library/"
+                }
+            },
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Utility library for XML usage, best practices, and security in PHP",
+            "homepage": "http://packages.zendframework.com/",
+            "keywords": [
+                "security",
+                "xml",
+                "zf2"
+            ],
+            "support": {
+                "source": "https://github.com/zendframework/ZendXml/tree/master",
+                "issues": "https://github.com/zendframework/ZendXml/issues"
+            },
+            "time": "2014-03-05 22:25:44"
         },
         {
             "name": "zf-commons/zfc-base",
@@ -576,6 +689,60 @@
                 "zf2"
             ],
             "time": "2013-05-02 12:33:31"
+        },
+        {
+            "name": "zfcampus/zf-console",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zfcampus/zf-console.git",
+                "reference": "8a4ce84f636bb3a73dd362025fb76c3884f87442"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://packages.zendframework.com/composer/zfcampus-zf-console-8a4ce84f636bb3a73dd362025fb76c3884f87442-zip-19e263.zip",
+                "reference": "dev-develop",
+                "shasum": "95b7a02250889f4c6a8b0a9f38aecebcb04037f7"
+            },
+            "require": {
+                "php": ">=5.3.23",
+                "zendframework/zend-console": "~2.0"
+            },
+            "require-dev": {
+                "fabpot/php-cs-fixer": "*@dev",
+                "phpunit/phpunit": "3.7.*"
+            },
+            "suggest": {
+                "zendframework/zend-filter": "~2.0; Useful for filtering/normalizing argument values",
+                "zendframework/zend-validator": "~2.0; Useful for providing more thorough argument validation logic"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev",
+                    "dev-develop": "1.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "ZF\\Console\\": "src/",
+                    "ZFTest\\Console\\": "test/"
+                }
+            },
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Library for creating and dispatching console commands",
+            "homepage": "http://framework.zend.com/",
+            "keywords": [
+                "zend",
+                "zf2"
+            ],
+            "support": {
+                "source": "https://github.com/zfcampus/zf-console",
+                "issues": "https://github.com/zfcampus/zf-console/issues"
+            },
+            "time": "2014-05-07 16:27:28"
         }
     ],
     "packages-dev": [
