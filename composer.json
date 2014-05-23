@@ -16,10 +16,10 @@
     "minimum-stability": "dev",
     "require": {
         "phly/phly-blog": "dev-master",
-        "phly/phly-comic": "~1.0",
+        "phly/phly-comic": "~1.0.0",
         "phly/phly-contact": "dev-master",
         "phly/phly-simple-page": "dev-master",
-        "zendframework/zendframework": "2.2.*",
+        "zendframework/zendframework": "~2.0",
         "zendframework/zendservice-recaptcha": "2.*",
         "zf-commons/zfc-user": "0.1.2",
         "socalnick/scn-social-auth": "dev-master",
