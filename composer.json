@@ -6,12 +6,17 @@
         },
         {
             "type": "vcs",
+            "url": "https://github.com/weierophinney/PhlyComic"
+        },
+        {
+            "type": "vcs",
             "url": "https://github.com/weierophinney/hybridauth"
         }
     ],
     "minimum-stability": "dev",
     "require": {
         "phly/phly-blog": "dev-master",
+        "phly/phly-comic": "~1.0",
         "phly/phly-contact": "dev-master",
         "phly/phly-simple-page": "dev-master",
         "zendframework/zendframework": "2.2.*",
