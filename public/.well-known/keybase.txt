@@ -1,0 +1,55 @@
+https://keybase.io/mwop
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of http://mwop.net
+  * I am mwop (https://keybase.io/mwop) on keybase.
+  * I have a public key with fingerprint 8D98 47CD E15F 050B 8197  6BA7 B545 7969 23ED 29DA
+
+To claim this, I am signing this object:
+
+{
+    "body": {
+        "key": {
+            "fingerprint": "8d9847cde15f050b81976ba7b545796923ed29da",
+            "host": "keybase.io",
+            "key_id": "B545796923ED29DA",
+            "uid": "9a89e5672b134e8905a6ac50c6ed5600",
+            "username": "mwop"
+        },
+        "service": {
+            "hostname": "mwop.net",
+            "protocol": "http:"
+        },
+        "type": "web_service_binding",
+        "version": 1
+    },
+    "ctime": 1400855444,
+    "expire_in": 157680000,
+    "prev": "fa32224d3c33ca37a9695f20f7c4ff61781d3308aec053002de0e343d06314fb",
+    "seqno": 31,
+    "tag": "signature"
+}
+
+with the aforementioned key, yielding the PGP signature:
+
+-----BEGIN PGP MESSAGE-----
+Version: GnuPG v1
+
+owFNUTtrFUEUXq8PUImYVkwzVuIlzHtnljRKkkaxsVC0WOZx9mbQ7K67e2+8XELQ
+WNgZ0dr8AVtb0U7QX6A/QBCsxc6ZoOI0h/le5xzOwdLxbLT8dmMeLv24/OXYp/ff
+bXZr796rBbKNn6Nige7DUalCPYGu7UI9oAIprxXPnQciKiywVUTn0prcCi5yLTVl
+4Kn2Bo3RVtMnR4yxpofV0EQsfsrgI3rtn35jner1q5GbHhHaKA1C5tQSxkFpLIw0
+TmAnwQuJcRL20NVmG6J6e6dp0e4YRWQWHKR5U9v/2NUahuhpu2ZoXPMgolvD0BbJ
+NMzbpNoBW/7xlzbUPu4bDTPo+tDUqCBR6YaQAgnHWAnBOR8jeNSGDsqQFCKXCseX
+2sAsRlaGUUq5Z44xZ1hu4qaiorjKHa8qSXJFPGNYGXBYMIypBwyMM48lI7yyKG30
+sG5QwUic00xiZh8mtRmmHaDdZ5snsuVRdurkKF0sO3P6/N87Pl7LDm8u3d07W658
+/fBkevHzzxcvf125vpIdbr47WHvzdPxxcefc/o0Lr78937/NfwM=
+=WaYM
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/mwop
