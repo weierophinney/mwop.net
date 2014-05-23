@@ -16,7 +16,7 @@
     "minimum-stability": "dev",
     "require": {
         "phly/phly-blog": "dev-master",
-        "phly/phly-comic": "~1.0.0",
+        "phly/phly-comic": "~1.0@stable",
         "phly/phly-contact": "dev-master",
         "phly/phly-simple-page": "dev-master",
         "zendframework/zendframework": "~2.0",
