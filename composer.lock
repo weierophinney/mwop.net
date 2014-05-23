@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "3deeb617d69f2d34fc6f50caa8e0b7ad",
+    "hash": "ee0713da9a77cd136386865fe909c0a1",
     "packages": [
         {
             "name": "hybridauth/hybridauth",
@@ -107,16 +107,16 @@
         },
         {
             "name": "phly/phly-comic",
-            "version": "dev-master",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/weierophinney/PhlyComic.git",
-                "reference": "f7e5dfd89465bb2d609946e9faa51c0dc9ad6f83"
+                "reference": "871fe239490f4030936bd46c4e9846072aa1c186"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/weierophinney/PhlyComic/zipball/f7e5dfd89465bb2d609946e9faa51c0dc9ad6f83",
-                "reference": "f7e5dfd89465bb2d609946e9faa51c0dc9ad6f83",
+                "url": "https://api.github.com/repos/weierophinney/PhlyComic/zipball/871fe239490f4030936bd46c4e9846072aa1c186",
+                "reference": "871fe239490f4030936bd46c4e9846072aa1c186",
                 "shasum": ""
             },
             "require": {
@@ -161,7 +161,7 @@
                 "source": "https://github.com/weierophinney/PhlyComic",
                 "issues": "https://github.com/weierophinney/PhlyComic/issues"
             },
-            "time": "2014-05-23 17:15:24"
+            "time": "2014-05-23 18:07:11"
         },
         {
             "name": "phly/phly-common",
@@ -759,6 +759,7 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "phly/phly-blog": 20,
+        "phly/phly-comic": 0,
         "phly/phly-contact": 20,
         "phly/phly-simple-page": 20,
         "socalnick/scn-social-auth": 20,
