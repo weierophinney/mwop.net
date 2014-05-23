@@ -1,6 +1,3 @@
 [submodule "vendor/SkeletonCss"]
 	path = vendor/SkeletonCss
 	url = git://github.com/weierophinney/SkeletonCssModule.git
-[submodule "vendor/PhlyComic"]
-	path = vendor/PhlyComic
-	url = git://github.com/weierophinney/PhlyComic.git
