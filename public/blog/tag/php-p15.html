@@ -96,6 +96,81 @@
 <div class="row clearfix">
 <aside class="four columns offset-by-one alpha sidebar blog">
     <p>
+        Written on 31 January 2007.
+                <br />Last updated on 01 February 2007.
+            </p>
+
+    <ul class="tags">
+    <li><a href="/blog/tag/php.html">php</a></li>
+</ul>
+
+</aside>
+
+<section class="eleven columns omega">
+    <h4 class="entry"><a href="/blog/133-PHP-decoding-of-Javascript-encodeURIComponent-values.html">PHP decoding of Javascript encodeURIComponent values</a></h4>
+
+    <div class="entry body"><p>
+    Recently, I was having some issues with a site that was attempting to use
+    UTF-8 in order to support multiple languages. Basically, you could enter
+    UTF-8 characters -- for instance, characters with umlauts -- but they
+    weren't going through to the web services or database correctly. After more
+    debugging, I discovered that when I turned off javascript on the site, and
+    used the degradable interface to submit the form via plain old HTTP,
+    everything worked fine -- which meant the issue was with how we were sending
+    the data via XHR.
+</p>
+<p>
+    We were using <a href="http://prototypejs.org">Prototype</a>, and in
+    particular, POSTing data back to our site -- which meant that the UI
+    designer was using <kbd>Form.serialize()</kbd> to encode the data for
+    transmission.  This in turn uses the javascript function
+    <kbd>encodeURIComponent()</kbd> to do its dirty work.
+</p>
+<p>
+    I tried a ton of things in PHP to decode this to UTF-8, before stumbling on 
+    <a href="http://www.garayed.com/perl/218742-how-decode-javascripts-encodeuricomponent-perl.html">a solution written in Perl.</a>
+    Basically, the solution uses a regular expression to grab urlencoded hex
+    values out of a string, and then does a double conversion on the value,
+    first to decimal and then to a character. The PHP version looks like this:
+</p>
+<div class="example"><pre><code lang="php">
+$value = preg_replace('/%([0-9a-f]{2})/ie', \&quot;chr(hexdec('\\1'))\&quot;, $value);
+</code></pre></div>
+<p>
+    We have a method in our code to detect if the incoming request is via XHR.
+    In that logic, once XHR is detected, I then pass <kbd>$_POST</kbd> through the
+    following function:
+</p>
+<div class="example"><pre><code lang="php">
+function utf8Urldecode($value)
+{
+    if (is_array($value)) {
+        foreach ($key =&gt; $val) {
+            $value[$key] = utf8Urldecode($val);
+        }
+    } else {
+        $value = preg_replace('/%([0-9a-f]{2})/ie', 'chr(hexdec($1))', (string) $value);
+    }
+
+    return $value;
+}
+</code></pre></div>
+<p>
+    This casts all UTF-8 urlencoded values in the $_POST array back to UTF-8,
+    and from there we can continue processing as normal.
+</p>
+<p>
+    Man, but I can't wait until PHP 6 comes out and fixes these unicode
+    issues...
+</p></div>
+
+    <p><a href="/blog/133-PHP-decoding-of-Javascript-encodeURIComponent-values.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="four columns offset-by-one alpha sidebar blog">
+    <p>
         Written on 18 January 2007.
                 <br />Last updated on 21 January 2007.
             </p>
@@ -582,48 +657,6 @@ $ make install
 </section>
 
 </div>
-<div class="row clearfix">
-<aside class="four columns offset-by-one alpha sidebar blog">
-    <p>
-        Written on 23 June 2006.
-                <br />Last updated on 23 June 2006.
-            </p>
-
-    <ul class="tags">
-    <li><a href="/blog/tag/php.html">php</a></li>
-</ul>
-
-</aside>
-
-<section class="eleven columns omega">
-    <h4 class="entry"><a href="/blog/121-Benchmarking-dynamic-functionmethod-calls.html">Benchmarking dynamic function/method calls</a></h4>
-
-    <div class="entry body"><p>
-    In response to <a href="http://fuzzyblog.com/archives/2006/06/22/php-advice-requested-variable-functions-versus-call_user_func-and-call_user_func_array/">Scott Johnson's request for advice on variable functions</a>,
-    I decided to run some benchmarks.
-</p>
-<p>
-    &lt;rant&gt;Writing benchmarks is easy. Yet I see a lot of blog entries and
-    mailing list postings asking, "Which is faster?" My first thought is always,
-    "Why didn't they test and find out?" If I ever have a question about how
-    something will work, I open up a temporary file, start coding, and run the
-    code. It's the easiest way to learn. Also, it teaches you to break things
-    into manageable, testable chunks, and this code often forms the basis for a
-    unit test later.&lt;/rant&gt;
-</p>
-<p>
-    Back to benchmarking. Scott asks, "Is there a real difference between
-    call_user_func versus call_user_func_array and the variable function syntax
-    i.e. $function_name()?"
-</p>
-<p>
-    The short answer: absolutely. The long answer? Read on.
-</p></div>
-
-    <p><a href="/blog/121-Benchmarking-dynamic-functionmethod-calls.html">Continue reading...</a></p>
-</section>
-
-</div>
 <div class="paginationControl">
         <a href="/blog/tag/php.html" class="first">&lt;&lt; First</a> |
         <a href="/blog/tag/php-p14.html"> &lt; Previous </a> |
@@ -638,7 +671,7 @@ $ make install
             <a href="/blog/tag/php-p19.html">19</a> |
             <a href="/blog/tag/php-p20.html">20</a> |
             <a href="/blog/tag/php-p16.html"> Next &gt;</a> |
-        <a href="/blog/tag/php-p22.html" class="last"> Last &gt;&gt;</a>
+        <a href="/blog/tag/php-p23.html" class="last"> Last &gt;&gt;</a>
 </div>
 
 </section>
@@ -697,7 +730,7 @@ $ make install
         <div id="search" style="width:100%;">Loading...</div>
 <h4>Tag Cloud</h4>
 <div class="cloud">
-<ul class="Zend&#x5C;Tag&#x5C;Cloud"><li><a href="/blog/tag/php.html" style="font-size: 20px;">php</a></li> <li><a href="/blog/tag/apigility.html" style="font-size: 10px;">apigility</a></li> <li><a href="/blog/tag/zf2.html" style="font-size: 11px;">zf2</a></li> <li><a href="/blog/tag/zend+framework.html" style="font-size: 15px;">zend framework</a></li> <li><a href="/blog/tag/rest.html" style="font-size: 11px;">rest</a></li> <li><a href="/blog/tag/hal.html" style="font-size: 10px;">hal</a></li> <li><a href="/blog/tag/javascript.html" style="font-size: 11px;">javascript</a></li> <li><a href="/blog/tag/angularjs.html" style="font-size: 10px;">angularjs</a></li> <li><a href="/blog/tag/ui-router.html" style="font-size: 10px;">ui-router</a></li> <li><a href="/blog/tag/vim.html" style="font-size: 11px;">vim</a></li> <li><a href="/blog/tag/family.html" style="font-size: 11px;">family</a></li> <li><a href="/blog/tag/programming.html" style="font-size: 12px;">programming</a></li> <li><a href="/blog/tag/personal.html" style="font-size: 13px;">personal</a></li> <li><a href="/blog/tag/phpconcom.html" style="font-size: 10px;">phpconcom</a></li> <li><a href="/blog/tag/mvc.html" style="font-size: 11px;">mvc</a></li> <li><a href="/blog/tag/oop.html" style="font-size: 11px;">oop</a></li> <li><a href="/blog/tag/testing.html" style="font-size: 10px;">testing</a></li> <li><a href="/blog/tag/linux.html" style="font-size: 12px;">linux</a></li> <li><a href="/blog/tag/zendcon08.html" style="font-size: 11px;">zendcon08</a></li> <li><a href="/blog/tag/file_fortune.html" style="font-size: 10px;">file_fortune</a></li> <li><a href="/blog/tag/pear.html" style="font-size: 11px;">pear</a></li> <li><a href="/blog/tag/zendcon.html" style="font-size: 11px;">zendcon</a></li> <li><a href="/blog/tag/perl.html" style="font-size: 12px;">perl</a></li> <li><a href="/blog/tag/fastcgi.html" style="font-size: 10px;">fastcgi</a></li> <li><a href="/blog/tag/ubuntu.html" style="font-size: 11px;">ubuntu</a></li> <li><a href="/blog/tag/tekx.html" style="font-size: 10px;">tekx</a></li> <li><a href="/blog/tag/zendcon10.html" style="font-size: 10px;">zendcon10</a></li> <li><a href="/blog/tag/dojo.html" style="font-size: 11px;">dojo</a></li> <li><a href="/blog/tag/symfony.html" style="font-size: 11px;">symfony</a></li> <li><a href="/blog/tag/zeta+components.html" style="font-size: 10px;">zeta components</a></li> <li><a href="/blog/tag/tek09.html" style="font-size: 10px;">tek09</a></li> <li><a href="/blog/tag/spl.html" style="font-size: 11px;">spl</a></li> <li><a href="/blog/tag/subversion.html" style="font-size: 11px;">subversion</a></li> <li><a href="/blog/tag/zend+framewor.html" style="font-size: 10px;">zend framewor</a></li> <li><a href="/blog/tag/rails.html" style="font-size: 10px;">rails</a></li> <li><a href="/blog/tag/conferences.html" style="font-size: 11px;">conferences</a></li> <li><a href="/blog/tag/dpc08.html" style="font-size: 11px;">dpc08</a></li> <li><a href="/blog/tag/phpworks08.html" style="font-size: 11px;">phpworks08</a></li> <li><a href="/blog/tag/webinar.html" style="font-size: 11px;">webinar</a></li> <li><a href="/blog/tag/zencon08.html" style="font-size: 10px;">zencon08</a></li> <li><a href="/blog/tag/cw09.html" style="font-size: 11px;">cw09</a></li> <li><a href="/blog/tag/zend+server.html" style="font-size: 10px;">zend server</a></li> <li><a href="/blog/tag/dpc09.html" style="font-size: 10px;">dpc09</a></li> <li><a href="/blog/tag/sflive2010.html" style="font-size: 10px;">sflive2010</a></li> <li><a href="/blog/tag/security.html" style="font-size: 10px;">security</a></li> <li><a href="/blog/tag/wifi.html" style="font-size: 10px;">wifi</a></li> <li><a href="/blog/tag/aikido.html" style="font-size: 10px;">aikido</a></li> <li><a href="/blog/tag/books.html" style="font-size: 10px;">books</a></li> <li><a href="/blog/tag/dpc10.html" style="font-size: 10px;">dpc10</a></li> <li><a href="/blog/tag/zendcon09.html" style="font-size: 11px;">zendcon09</a></li> <li><a href="/blog/tag/git.html" style="font-size: 11px;">git</a></li> <li><a href="/blog/tag/phpwomen.html" style="font-size: 10px;">phpwomen</a></li> <li><a href="/blog/tag/virtualbox.html" style="font-size: 10px;">virtualbox</a></li> <li><a href="/blog/tag/screencast.html" style="font-size: 11px;">screencast</a></li> <li><a href="/blog/tag/advocacy.html" style="font-size: 10px;">advocacy</a></li> <li><a href="/blog/tag/politics.html" style="font-size: 10px;">politics</a></li> <li><a href="/blog/tag/internet.html" style="font-size: 10px;">internet</a></li> <li><a href="/blog/tag/microphp.html" style="font-size: 10px;">microphp</a></li> <li><a href="/blog/tag/cloud.html" style="font-size: 11px;">cloud</a></li> <li><a href="/blog/tag/composer.html" style="font-size: 10px;">composer</a></li> <li><a href="/blog/tag/doctrine.html" style="font-size: 10px;">doctrine</a></li> <li><a href="/blog/tag/bower.html" style="font-size: 10px;">bower</a></li> <li><a href="/blog/tag/http.html" style="font-size: 11px;">http</a></li></ul></div>
+<ul class="zend-tag-cloud"><li><a href="/blog/tag/php.html" style="font-size: 20px;">php</a></li> <li><a href="/blog/tag/apigility.html" style="font-size: 10px;">apigility</a></li> <li><a href="/blog/tag/zf2.html" style="font-size: 11px;">zf2</a></li> <li><a href="/blog/tag/zend+framework.html" style="font-size: 15px;">zend framework</a></li> <li><a href="/blog/tag/rest.html" style="font-size: 11px;">rest</a></li> <li><a href="/blog/tag/hal.html" style="font-size: 10px;">hal</a></li> <li><a href="/blog/tag/mvc.html" style="font-size: 11px;">mvc</a></li> <li><a href="/blog/tag/patterns.html" style="font-size: 10px;">patterns</a></li> <li><a href="/blog/tag/programming.html" style="font-size: 12px;">programming</a></li> <li><a href="/blog/tag/rails.html" style="font-size: 11px;">rails</a></li> <li><a href="/blog/tag/javascript.html" style="font-size: 11px;">javascript</a></li> <li><a href="/blog/tag/angularjs.html" style="font-size: 10px;">angularjs</a></li> <li><a href="/blog/tag/ui-router.html" style="font-size: 10px;">ui-router</a></li> <li><a href="/blog/tag/vim.html" style="font-size: 11px;">vim</a></li> <li><a href="/blog/tag/family.html" style="font-size: 11px;">family</a></li> <li><a href="/blog/tag/personal.html" style="font-size: 13px;">personal</a></li> <li><a href="/blog/tag/phpconcom.html" style="font-size: 10px;">phpconcom</a></li> <li><a href="/blog/tag/oop.html" style="font-size: 11px;">oop</a></li> <li><a href="/blog/tag/testing.html" style="font-size: 10px;">testing</a></li> <li><a href="/blog/tag/linux.html" style="font-size: 12px;">linux</a></li> <li><a href="/blog/tag/zendcon08.html" style="font-size: 11px;">zendcon08</a></li> <li><a href="/blog/tag/file_fortune.html" style="font-size: 10px;">file_fortune</a></li> <li><a href="/blog/tag/pear.html" style="font-size: 11px;">pear</a></li> <li><a href="/blog/tag/zendcon.html" style="font-size: 11px;">zendcon</a></li> <li><a href="/blog/tag/perl.html" style="font-size: 12px;">perl</a></li> <li><a href="/blog/tag/fastcgi.html" style="font-size: 10px;">fastcgi</a></li> <li><a href="/blog/tag/ubuntu.html" style="font-size: 11px;">ubuntu</a></li> <li><a href="/blog/tag/tekx.html" style="font-size: 10px;">tekx</a></li> <li><a href="/blog/tag/zendcon10.html" style="font-size: 10px;">zendcon10</a></li> <li><a href="/blog/tag/dojo.html" style="font-size: 11px;">dojo</a></li> <li><a href="/blog/tag/symfony.html" style="font-size: 11px;">symfony</a></li> <li><a href="/blog/tag/zeta+components.html" style="font-size: 10px;">zeta components</a></li> <li><a href="/blog/tag/tek09.html" style="font-size: 10px;">tek09</a></li> <li><a href="/blog/tag/spl.html" style="font-size: 11px;">spl</a></li> <li><a href="/blog/tag/subversion.html" style="font-size: 11px;">subversion</a></li> <li><a href="/blog/tag/zend+framewor.html" style="font-size: 10px;">zend framewor</a></li> <li><a href="/blog/tag/conferences.html" style="font-size: 11px;">conferences</a></li> <li><a href="/blog/tag/dpc08.html" style="font-size: 11px;">dpc08</a></li> <li><a href="/blog/tag/phpworks08.html" style="font-size: 11px;">phpworks08</a></li> <li><a href="/blog/tag/webinar.html" style="font-size: 11px;">webinar</a></li> <li><a href="/blog/tag/zencon08.html" style="font-size: 10px;">zencon08</a></li> <li><a href="/blog/tag/cw09.html" style="font-size: 11px;">cw09</a></li> <li><a href="/blog/tag/zend+server.html" style="font-size: 10px;">zend server</a></li> <li><a href="/blog/tag/dpc09.html" style="font-size: 10px;">dpc09</a></li> <li><a href="/blog/tag/sflive2010.html" style="font-size: 10px;">sflive2010</a></li> <li><a href="/blog/tag/security.html" style="font-size: 10px;">security</a></li> <li><a href="/blog/tag/wifi.html" style="font-size: 10px;">wifi</a></li> <li><a href="/blog/tag/aikido.html" style="font-size: 10px;">aikido</a></li> <li><a href="/blog/tag/books.html" style="font-size: 10px;">books</a></li> <li><a href="/blog/tag/dpc10.html" style="font-size: 10px;">dpc10</a></li> <li><a href="/blog/tag/zendcon09.html" style="font-size: 11px;">zendcon09</a></li> <li><a href="/blog/tag/git.html" style="font-size: 11px;">git</a></li> <li><a href="/blog/tag/phpwomen.html" style="font-size: 10px;">phpwomen</a></li> <li><a href="/blog/tag/virtualbox.html" style="font-size: 10px;">virtualbox</a></li> <li><a href="/blog/tag/screencast.html" style="font-size: 11px;">screencast</a></li> <li><a href="/blog/tag/advocacy.html" style="font-size: 10px;">advocacy</a></li> <li><a href="/blog/tag/politics.html" style="font-size: 10px;">politics</a></li> <li><a href="/blog/tag/internet.html" style="font-size: 10px;">internet</a></li> <li><a href="/blog/tag/microphp.html" style="font-size: 10px;">microphp</a></li> <li><a href="/blog/tag/cloud.html" style="font-size: 11px;">cloud</a></li> <li><a href="/blog/tag/composer.html" style="font-size: 10px;">composer</a></li> <li><a href="/blog/tag/doctrine.html" style="font-size: 10px;">doctrine</a></li> <li><a href="/blog/tag/bower.html" style="font-size: 10px;">bower</a></li> <li><a href="/blog/tag/http.html" style="font-size: 11px;">http</a></li></ul></div>
         </div>
 
         <br class="clear"/>
