@@ -36,13 +36,13 @@ $body =<<<'EOT'
 </p>
 
 <p>
-    I agree with a ton of it -- heck, I've contributed to it a fair bit via conversations
+    I agree with a ton of it &#8212; heck, I've contributed to it a fair bit via conversations
     with Paul. But there's been one thing nagging at me for a bit now, and I was
     finally able to put it into words recently.
 </p>
 
 <p>
-    Controllers -- Actions in ADR -- can be explained as <em>facades</em>.
+    Controllers &#8212; Actions in ADR &#8212; can be explained as <em>facades</em>.
 </p>
 
 EOT;
@@ -126,7 +126,7 @@ $mailer->send('New transaction')
 <p>
     Straight-forward. But imagine if you needed to do this more than once. Or if
     you wanted to re-use this logic in multiple places in your application. This
-    is a situation just waiting to go out-of-sync -- and one where developers
+    is a situation just waiting to go out-of-sync &#8212; and one where developers
     will come to rely on cut-and-paste for doing it correctly.
 </p>
 
@@ -169,9 +169,9 @@ class DataTransaction
 </code></pre></div>
 
 <p>
-    You would then instantiate the facade -- likely using an
+    You would then instantiate the facade &#8212; likely using an
     <a href="http://en.wikipedia.org/wiki/Inversion_of_control">Inversion of Control</a>
-    container to inject the dependencies -- and then invoke it:
+    container to inject the dependencies &#8212; and then invoke it:
 </p>
 
 <div class="example"><pre><code language="php">
@@ -191,7 +191,7 @@ $dataTransaction->execute(array_merge_recursive($_POST, $_FILES));
 
 <blockquote>
     Controllers in MVC, and Actions in ADR, are best characterized as Facades.
-<blockquote>
+</blockquote>
 
 <p>
     You can define Controllers or Actions as Facades for the following operations:
@@ -207,7 +207,7 @@ $dataTransaction->execute(array_merge_recursive($_POST, $_FILES));
     I think characterizing Controllers and Actions as Facades has some huge benefits.
     In both <a href="http://blog.astrumfutura.com/archives/373-The-M-in-MVC-Why-Models-are-Misunderstood-and-Unappreciated.html">PHP</a>
     and <a href="https://www.google.com/search?q=fat+controllers+rails">Rails</a>,
-    we've witnessed the problems that arise from so-called "Fat Controllers" --
+    we've witnessed the problems that arise from so-called "Fat Controllers" &#8212;
     controllers that do a ton of work, making them untestable, unreadable, non-reusable
     nightmares. If we think of them as Facades, specifically for the three items
     noted above, we focus on the specific purpose they fulfill within the system,
@@ -219,7 +219,7 @@ $dataTransaction->execute(array_merge_recursive($_POST, $_FILES));
     <li>Adherence to the <a href="http://en.wikipedia.org/wiki/Dependency_inversion_principle">Dependency Inversion Priniciple</a></li>
     <li>Adherence to the <a href="http://en.wikipedia.org/wiki/Law_Of_Demeter">Law of Demeter</a></li>
     <li>Ability to unit test our Controllers and Actions (instead of requiring integration tests with complex configuration and setup)</li>
-    <li>The possibility of <a href="http://en.wikipedia.org/wiki/Hierarchical_model%E2%80%93view%E2%80%93controller">hierarchical MVC (usually tacked on, or poorly implemented)</li>
+    <li>The possibility of <a href="http://en.wikipedia.org/wiki/Hierarchical_model%E2%80%93view%E2%80%93controller">hierarchical MVC</a> (usually tacked on, or poorly implemented)</li>
     <li>Clarity of purpose when creating Controllers and Actions (do only those three things)</li>
 </ul>
 
@@ -249,7 +249,7 @@ $dataTransaction->execute(array_merge_recursive($_POST, $_FILES));
 
 <p>
     Consider this post a <em>refinement</em> of the MVC and ADR architectural 
-    patterns -- a way of describing them in terms of more fundamental design patterns.
+    patterns &#8212; a way of describing them in terms of more fundamental design patterns.
 </p>
 
 <p>
