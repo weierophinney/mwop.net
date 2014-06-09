@@ -1,11 +1,219 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title type="text">Tag: rails :: phly, boy, phly</title>
-  <updated>2008-04-10T19:45:53+0000</updated>
+  <updated>2014-06-09T17:00:00+0000</updated>
   <generator uri="http://framework.zend.com" version="2">Zend_Feed_Writer</generator>
   <link rel="alternate" type="text/html" href="http://mwop.net/blog/tag/rails.html"/>
   <link rel="self" type="application/atom+xml" href="http://mwop.net/blog/tag/rails-atom.xml"/>
   <id>http://mwop.net/blog/tag/rails.html</id>
+  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <title type="html"><![CDATA[Better Understanding Controllers Through Basic Patterns]]></title>
+    <published>2014-06-09T17:00:00+0000</published>
+    <updated>2014-06-09T17:00:00+0000</updated>
+    <link rel="alternate" type="text/html" href="http://mwop.net/blog/2014-06-09-controllers-as-facades.html"/>
+    <id>http://mwop.net/blog/2014-06-09-controllers-as-facades.html</id>
+    <author>
+      <name>Matthew Weier O'Phinney</name>
+      <email>me@mwop.net</email>
+      <uri>http://mwop.net</uri>
+    </author>
+    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
+      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p><xhtml:a href="http://paul-m-jones.com/">Paul M. Jones</xhtml:a> has started
+an interesting discussion rethinking the <xhtml:a href="http://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller">
+MVC</xhtml:a> pattern as applied to the web, which he has dubbed <xhtml:a href="https://github.com/pmjones/mvc-refinement">Action-Domain-Responder
+(ADR)</xhtml:a>. If you haven't given it a read yet, click the link and
+do that; this page will still be sitting here waiting when you
+return.</xhtml:p>
+<xhtml:p>I agree with a ton of it — heck, I've contributed to it a fair
+bit via conversations with Paul. But there's been one thing nagging
+at me for a bit now, and I was finally able to put it into words
+recently.</xhtml:p>
+<xhtml:p>Controllers — Actions in ADR — can be explained as
+<xhtml:em>facades</xhtml:em>.</xhtml:p>
+<xhtml:h2>Definitions</xhtml:h2>
+<xhtml:p>The design pattern <xhtml:em>Facade</xhtml:em> originates in the book
+"Design Patterns: Elements of Reusable Object Oriented Software,"
+written by Erich Gamma, Ralph Johnson, Richard Helm, and John
+Vlissides. Over the years, that book has come to be referred to as
+the "Gang of Four", referring to the four authors, and often
+abbreviated as "GoF".</xhtml:p>
+<xhtml:p>The Facade pattern itself is one of the seven structural design
+patterns defined in the GoF. Structural design patterns are those
+that provide a mechanism for defining the <xhtml:em>relationships</xhtml:em>
+between classes or objects in a system. Specifically:</xhtml:p>
+<xhtml:blockquote>Facade defines a simplifed interface to a complex
+system.</xhtml:blockquote>
+<xhtml:p><xhtml:a href="http://en.wikipedia.org/wiki/Facade_pattern">Wikipedia
+has a general entry on the pattern</xhtml:a> as well, and provides some
+other general characteristics of a Facade:</xhtml:p>
+<xhtml:ul>
+<xhtml:li>A Facade creates a convenience method around a set of
+operations, thus reducing the complexity of operations.</xhtml:li>
+<xhtml:li>A Facade reduces the immediate dependencies of the calling code
+(they call the Facade, not the underlying code).</xhtml:li>
+</xhtml:ul>
+<xhtml:h2>Facade Example</xhtml:h2>
+<xhtml:p>As an example, let's consider the following workflow:</xhtml:p>
+<xhtml:ul>
+<xhtml:li>Marshal some objects</xhtml:li>
+<xhtml:li>Munge some incoming data</xhtml:li>
+<xhtml:li>Call a validator</xhtml:li>
+<xhtml:li>If the data does not validate, raise an error</xhtml:li>
+<xhtml:li>Start a transaction</xhtml:li>
+<xhtml:li>Pass data to several different tables</xhtml:li>
+<xhtml:li>Commit the transaction</xhtml:li>
+<xhtml:li>Log the changes</xhtml:li>
+<xhtml:li>Email notifications</xhtml:li>
+</xhtml:ul>
+<xhtml:p>Now, we could just write the code:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="php">
+$db     = new Db($connectionConfig);
+$log    = new Logger($loggerConfig);
+$mailer = new Mailer($mailerConfig);
+$data   = array_merge_recursive($_POST, $_FILES);
+
+$inputFilter = new InputFilter();
+$inputFilter-&gt;setData($data);
+if (! $inputFilter-&gt;isValid()) {
+    throw new DomainException();
+}
+
+$db-&gt;transactionStart();
+$db-&gt;insertInto(/* ... */);
+$db-&gt;insertInto(/* ... */);
+$db-&gt;insertInto(/* ... */);
+$db-&gt;transactionStop();
+
+$log-&gt;info('Finished a transaction');
+$mailer-&gt;send('New transaction')
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>Straight-forward. But imagine if you needed to do this more than
+once. Or if you wanted to re-use this logic in multiple places in
+your application. This is a situation just waiting to go
+out-of-sync — and one where developers will come to rely on
+cut-and-paste for doing it correctly.</xhtml:p>
+<xhtml:p>A facade would wrap this logic:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="php">
+class DataTransaction
+{
+    protected $db;
+    protected $logger;
+    protected $mailer;
+
+    public function __construct(Db $db, Logger $logger, Mailer $mailer)
+    {
+        $this-&gt;db     = $db;
+        $this-&gt;logger = $logger;
+        $this-&gt;mailer = $mailer;
+    }
+
+    public function execute($data)
+    {
+        $inputFilter = new InputFilter();
+        $inputFilter-&gt;setData($data);
+        if (! $inputFilter-&gt;isValid()) {
+            throw new DomainException();
+        }
+
+        $this-&gt;db-&gt;transactionStart();
+        $this-&gt;db-&gt;insertInto(/* ... */);
+        $this-&gt;db-&gt;insertInto(/* ... */);
+        $this-&gt;db-&gt;insertInto(/* ... */);
+        $this-&gt;db-&gt;transactionStop();
+
+        $this-&gt;logger-&gt;info('Finished a transaction');
+        $this-&gt;mailer-&gt;send('New transaction')
+    }
+}
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>You would then instantiate the facade — likely using an <xhtml:a href="http://en.wikipedia.org/wiki/Inversion_of_control">Inversion of
+Control</xhtml:a> container to inject the dependencies — and then invoke
+it:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="php">
+$dataTransaction-&gt;execute(array_merge_recursive($_POST, $_FILES));
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>This code fulfills the Facade pattern: we're no longer directly
+manipulating dependencies, and we've simplified a complex set of
+operations to a single, unified API.</xhtml:p>
+<xhtml:h2>Controllers and Actions</xhtml:h2>
+<xhtml:p>Hopefully you can see where I'm going with this.</xhtml:p>
+<xhtml:blockquote>Controllers in MVC, and Actions in ADR, are best
+characterized as Facades.</xhtml:blockquote>
+<xhtml:p>You can define Controllers or Actions as Facades for the
+following operations:</xhtml:p>
+<xhtml:ul>
+<xhtml:li>Marshaling arguments from the request.</xhtml:li>
+<xhtml:li>Invoking any domain/model logic, using arguments marshaled from
+the request.</xhtml:li>
+<xhtml:li>Marshaling and returning a response/responder.</xhtml:li>
+</xhtml:ul>
+<xhtml:p>I think characterizing Controllers and Actions as Facades has
+some huge benefits. In both <xhtml:a href="http://blog.astrumfutura.com/archives/373-The-M-in-MVC-Why-Models-are-Misunderstood-and-Unappreciated.html">
+PHP</xhtml:a> and <xhtml:a href="https://www.google.com/search?q=fat+controllers+rails">Rails</xhtml:a>,
+we've witnessed the problems that arise from so-called "Fat
+Controllers" — controllers that do a ton of work, making them
+untestable, unreadable, non-reusable nightmares. If we think of
+them as Facades, specifically for the three items noted above, we
+focus on the specific purpose they fulfill within the system,
+giving us:</xhtml:p>
+<xhtml:ul>
+<xhtml:li>Adherence to the <xhtml:a href="http://en.wikipedia.org/wiki/Single_responsibility_principle">Single
+Responsibility Principle</xhtml:a></xhtml:li>
+<xhtml:li>Adherence to the <xhtml:a href="http://en.wikipedia.org/wiki/Dependency_inversion_principle">Dependency
+Inversion Priniciple</xhtml:a></xhtml:li>
+<xhtml:li>Adherence to the <xhtml:a href="http://en.wikipedia.org/wiki/Law_Of_Demeter">Law of
+Demeter</xhtml:a></xhtml:li>
+<xhtml:li>Ability to unit test our Controllers and Actions (instead of
+requiring integration tests with complex configuration and
+setup)</xhtml:li>
+<xhtml:li>The possibility of <xhtml:a href="http://en.wikipedia.org/wiki/Hierarchical_model%E2%80%93view%E2%80%93controller">
+hierarchical MVC</xhtml:a> (usually tacked on, or poorly
+implemented)</xhtml:li>
+<xhtml:li>Clarity of purpose when creating Controllers and Actions (do
+only those three things)</xhtml:li>
+</xhtml:ul>
+<xhtml:p>Defining them as Facades for these three specific operations
+means we push logic into specific domains, achieving a proper
+<xhtml:a href="http://en.wikipedia.org/wiki/Separation_of_concerns">separation of
+concerns</xhtml:a>. Anything that falls outside those three operations
+gets pushed elsewhere:</xhtml:p>
+<xhtml:ul>
+<xhtml:li>Models/Domains are invoked with the arguments marshaled from
+the request. If you find yourself calling many models, or
+manipulating the results returned by models, you need to create
+Facades in your model/domain layer.</xhtml:li>
+<xhtml:li>If you find yourself doing lots of work in creating your
+response, you need to create a Facade for marshaling the response
+(in ADR, that would mean encapsulating more logic in your
+Responder).</xhtml:li>
+</xhtml:ul>
+<xhtml:p>For me, thinking of Controllers and Actions as Facades has an
+additional benefit: it describes rather complex
+<xhtml:em>architectural</xhtml:em> patterns in terms of <xhtml:em>basic design
+patterns</xhtml:em>. I find the more I can reduce the complexity of a
+definition, the more likely I will understand and use it
+correctly.</xhtml:p>
+<xhtml:h3>Epilogue</xhtml:h3>
+<xhtml:p>Consider this post a <xhtml:em>refinement</xhtml:em> of the MVC and ADR
+architectural patterns — a way of describing them in terms of more
+fundamental design patterns.</xhtml:p>
+<xhtml:p>Also, this article is littered with links. Click them. Read
+them. Digest them. Read the books they reference. Design and
+architectural patterns exist because developers observed the
+patterns and gave them names; learn to recognize them and apply
+them, at all levels of your application.</xhtml:p>
+</xhtml:div>
+    </content>
+  </entry>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <title type="html"><![CDATA[DHH on PHP]]></title>
     <published>2008-04-04T13:06:14+0000</published>
