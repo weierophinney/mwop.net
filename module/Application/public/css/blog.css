@@ -13,6 +13,10 @@
     margin: 0;
 }
 
+article li {
+    font-family: 'Libre Baskerville', serif;
+}
+
 div.example {
     font-family: 'Droid Sans Mono', arial, serif;
     background-color: #F3F3F3;
