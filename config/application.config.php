@@ -7,7 +7,6 @@ return array(
         'GithubFeed',
         'PhlyCommon',
         'PhlyBlog',
-        'PhlyComic',
         'PhlyContact',
         'PhlySimplePage',
         'ScnSocialAuth',
