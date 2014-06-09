@@ -96,6 +96,121 @@
 <div class="row clearfix">
 <aside class="four columns offset-by-one alpha sidebar blog">
     <p>
+        Written on 05 January 2007.
+                <br />Last updated on 10 January 2007.
+            </p>
+
+    <ul class="tags">
+    <li><a href="/blog/tag/programming.html">programming</a></li>
+    <li><a href="/blog/tag/php.html">php</a></li>
+</ul>
+
+</aside>
+
+<section class="eleven columns omega">
+    <h4 class="entry"><a href="/blog/132-svnexternals.html">svn:externals</a></h4>
+
+    <div class="entry body"><p>
+    I was recently working with someone who was using Zend Framework in their
+    project. To keep things stable and releasable, he was doing an export of
+    framework into his repository and checking it in. Since files change so much
+    in the ZF project currently, instead of doing an rsync from a checkout into
+    his own repository, he decided instead to delete the directory from the
+    repository and re-add it everytime he was updating framework.
+</p>
+<p>
+    This seemed really inefficient to me, especially considering that it made it
+    incredibly difficult to merge changes from his development branch into his
+    production branch (deleting and re-adding directories breaks the merge
+    process considerably). I knew there had to be a better way.
+</p>
+<p>
+    I'd heard of the svn:externals property before, but never really played with
+    it. As it turns out, it exists for just this very type of situation. The
+    problem is that the 
+    <a href="http://svnbook.red-bean.com/nightly/en/svn-book.html#svn.advanced.externals">documentation of svn:externals</a> 
+    in the SVN book doesn't indicate at all how the property should be set, and
+    most howto's I've read omit one or more very important details. I finally
+    figured things out through some trial and error of my own, so I'm going to
+    share the process so others hopefully can learn from the experience as well.
+</p>
+<p>
+    It's actually pretty easy. This assumes that your project layout looks
+    something like this:
+</p>
+<pre>
+project/
+    branch/
+        production/
+    tag/
+    trunk/
+</pre>
+<ul>
+    <li>In the top of your project trunk, execute the following:
+<pre>
+svn propedit svn:externals .
+</pre>
+    </li>
+    <li>This will open an editor session. In the file opened by your editor,
+    each line indicates a different external svn repo to pull. The first segment
+    of the line is the directory where you want the pull to exist. The last
+    segment is the svn repo URL to pull. You can have an optional middle
+    argument indicating the revision to use. Some examples:
+    <ul>
+        <li>Pull framework repo from head:
+<pre>
+framework http://framework.zend.com/svn/framework/trunk
+</pre>
+        </li>
+        <li>Pull framework repo from revision 2616:
+<pre>
+framework -r2616 http://framework.zend.com/svn/framework/trunk
+</pre>
+        </li>
+    </ul>
+    <li>After saving and exiting, update the repo:
+<pre>
+svn up
+</pre>
+    </li>
+    <li>Commit changes:
+<pre>
+svn commit
+</pre>
+    </li>
+</ul>
+<p>
+    One thing to note: any directory you specify for an svn:externals checkout
+    should <b>not</b> already exist in your repository. If it does, you will get
+    an error like the following:
+</p>
+<pre>
+svn: Working copy 'sharedproject' locked
+svn: run 'svn cleanup' to remove locks
+</pre>
+<p>
+    I show using revisions above; you could also pin to tags by simply checkout
+    the external repository from a given tag. Either way works well.
+</p>
+<p>
+    Then, when moving from one branch to another, or from the trunk to a branch,
+    you simply set a different svn:externals for each branch. For instance, your
+    current production might check from one particular revision, but your trunk
+    might simply track head; you then simply determine what the current revision
+    being used is on your trunk, and update svn:externals in your production
+    branch when you're ready to push changes in.
+</p>
+<p>
+    Hope this helps some of you out there!
+</p></div>
+
+    <p><a href="/blog/132-svnexternals.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="four columns offset-by-one alpha sidebar blog">
+    <p>
         Written on 19 September 2006.
                 <br />Last updated on 22 September 2006.
             </p>
@@ -648,60 +763,6 @@
 </section>
 
 </div>
-<div class="row clearfix">
-<aside class="four columns offset-by-one alpha sidebar blog">
-    <p>
-        Written on 17 November 2004.
-                <br />Last updated on 17 November 2004.
-            </p>
-
-    <ul class="tags">
-    <li><a href="/blog/tag/perl.html">perl</a></li>
-    <li><a href="/blog/tag/programming.html">programming</a></li>
-    <li><a href="/blog/tag/personal.html">personal</a></li>
-</ul>
-
-</aside>
-
-<section class="eleven columns omega">
-    <h4 class="entry"><a href="/blog/51-Sign-of-a-Geek.html">Sign of a Geek</a></h4>
-
-    <div class="entry body"><p>
-    It's now been confirmed: I'm a geek. 
-</p>
-<p>
-    Okay, so that probably comes as no shocker to those of you who know me, but
-    it's the little things that make me realize it myself.
-</p>
-<p>
-    I've been frequenting <a href="http://www.perlmonks.org">Perl Monks</a> for
-    a couple of years now, mainly to garner ideas and code to help me with my
-    personal or work projects. I rarely post comments, and I've only once
-    submitted a question to the site. However, I <strong>do</strong> frequent
-    the site regularly, and the few comments I've put in -- generally regarding
-    usage of <a href="http::/search.cpan.org/search?query=CGI%3A%3AApplication">CGI::Application</a>
-    -- have been typically well-moderated.
-</p>
-<p>
-    Well, yesterday I <a href="http://www.perlmonks.org/?node_id=408255">made a comment</a> to a user <a href="http://www.perlmonks.org/?node_id=408231">asking about editors to
-        use with perl</a>. I was incensed by a remark he made about <a href="http://www.vim.org">VIM</a> not having the features he needed.
-    Now, as I said in my comment, I've used VIM on a daily basis for over two
-    years, and I'm <em>still</em> discovering new features -- and I've used all
-    of the features he was looking for.
-</p>
-<p>
-    This is where I discovered I'm a geek: my comment made it into the <a href="http://www.perlmonks.org/?node=Best%20Nodes">Daily
-    Best</a> for today, peaking around number 5. The fact that that made my day
-    indicates to me that I <em>must</em> be a geek.
-</p>
-<p>
-    Oh -- and VIM rules!
-</p></div>
-
-    <p><a href="/blog/51-Sign-of-a-Geek.html">Continue reading...</a></p>
-</section>
-
-</div>
 <div class="paginationControl">
         <a href="/blog/tag/programming.html" class="first">&lt;&lt; First</a> |
         <a href="/blog/tag/programming.html"> &lt; Previous </a> |
@@ -769,7 +830,7 @@
         <div id="search" style="width:100%;">Loading...</div>
 <h4>Tag Cloud</h4>
 <div class="cloud">
-<ul class="Zend&#x5C;Tag&#x5C;Cloud"><li><a href="/blog/tag/php.html" style="font-size: 20px;">php</a></li> <li><a href="/blog/tag/apigility.html" style="font-size: 10px;">apigility</a></li> <li><a href="/blog/tag/zf2.html" style="font-size: 11px;">zf2</a></li> <li><a href="/blog/tag/zend+framework.html" style="font-size: 15px;">zend framework</a></li> <li><a href="/blog/tag/rest.html" style="font-size: 11px;">rest</a></li> <li><a href="/blog/tag/hal.html" style="font-size: 10px;">hal</a></li> <li><a href="/blog/tag/javascript.html" style="font-size: 11px;">javascript</a></li> <li><a href="/blog/tag/angularjs.html" style="font-size: 10px;">angularjs</a></li> <li><a href="/blog/tag/ui-router.html" style="font-size: 10px;">ui-router</a></li> <li><a href="/blog/tag/vim.html" style="font-size: 11px;">vim</a></li> <li><a href="/blog/tag/family.html" style="font-size: 11px;">family</a></li> <li><a href="/blog/tag/programming.html" style="font-size: 12px;">programming</a></li> <li><a href="/blog/tag/personal.html" style="font-size: 13px;">personal</a></li> <li><a href="/blog/tag/phpconcom.html" style="font-size: 10px;">phpconcom</a></li> <li><a href="/blog/tag/mvc.html" style="font-size: 11px;">mvc</a></li> <li><a href="/blog/tag/oop.html" style="font-size: 11px;">oop</a></li> <li><a href="/blog/tag/testing.html" style="font-size: 10px;">testing</a></li> <li><a href="/blog/tag/linux.html" style="font-size: 12px;">linux</a></li> <li><a href="/blog/tag/zendcon08.html" style="font-size: 11px;">zendcon08</a></li> <li><a href="/blog/tag/file_fortune.html" style="font-size: 10px;">file_fortune</a></li> <li><a href="/blog/tag/pear.html" style="font-size: 11px;">pear</a></li> <li><a href="/blog/tag/zendcon.html" style="font-size: 11px;">zendcon</a></li> <li><a href="/blog/tag/perl.html" style="font-size: 12px;">perl</a></li> <li><a href="/blog/tag/fastcgi.html" style="font-size: 10px;">fastcgi</a></li> <li><a href="/blog/tag/ubuntu.html" style="font-size: 11px;">ubuntu</a></li> <li><a href="/blog/tag/tekx.html" style="font-size: 10px;">tekx</a></li> <li><a href="/blog/tag/zendcon10.html" style="font-size: 10px;">zendcon10</a></li> <li><a href="/blog/tag/dojo.html" style="font-size: 11px;">dojo</a></li> <li><a href="/blog/tag/symfony.html" style="font-size: 11px;">symfony</a></li> <li><a href="/blog/tag/zeta+components.html" style="font-size: 10px;">zeta components</a></li> <li><a href="/blog/tag/tek09.html" style="font-size: 10px;">tek09</a></li> <li><a href="/blog/tag/spl.html" style="font-size: 11px;">spl</a></li> <li><a href="/blog/tag/subversion.html" style="font-size: 11px;">subversion</a></li> <li><a href="/blog/tag/zend+framewor.html" style="font-size: 10px;">zend framewor</a></li> <li><a href="/blog/tag/rails.html" style="font-size: 10px;">rails</a></li> <li><a href="/blog/tag/conferences.html" style="font-size: 11px;">conferences</a></li> <li><a href="/blog/tag/dpc08.html" style="font-size: 11px;">dpc08</a></li> <li><a href="/blog/tag/phpworks08.html" style="font-size: 11px;">phpworks08</a></li> <li><a href="/blog/tag/webinar.html" style="font-size: 11px;">webinar</a></li> <li><a href="/blog/tag/zencon08.html" style="font-size: 10px;">zencon08</a></li> <li><a href="/blog/tag/cw09.html" style="font-size: 11px;">cw09</a></li> <li><a href="/blog/tag/zend+server.html" style="font-size: 10px;">zend server</a></li> <li><a href="/blog/tag/dpc09.html" style="font-size: 10px;">dpc09</a></li> <li><a href="/blog/tag/sflive2010.html" style="font-size: 10px;">sflive2010</a></li> <li><a href="/blog/tag/security.html" style="font-size: 10px;">security</a></li> <li><a href="/blog/tag/wifi.html" style="font-size: 10px;">wifi</a></li> <li><a href="/blog/tag/aikido.html" style="font-size: 10px;">aikido</a></li> <li><a href="/blog/tag/books.html" style="font-size: 10px;">books</a></li> <li><a href="/blog/tag/dpc10.html" style="font-size: 10px;">dpc10</a></li> <li><a href="/blog/tag/zendcon09.html" style="font-size: 11px;">zendcon09</a></li> <li><a href="/blog/tag/git.html" style="font-size: 11px;">git</a></li> <li><a href="/blog/tag/phpwomen.html" style="font-size: 10px;">phpwomen</a></li> <li><a href="/blog/tag/virtualbox.html" style="font-size: 10px;">virtualbox</a></li> <li><a href="/blog/tag/screencast.html" style="font-size: 11px;">screencast</a></li> <li><a href="/blog/tag/advocacy.html" style="font-size: 10px;">advocacy</a></li> <li><a href="/blog/tag/politics.html" style="font-size: 10px;">politics</a></li> <li><a href="/blog/tag/internet.html" style="font-size: 10px;">internet</a></li> <li><a href="/blog/tag/microphp.html" style="font-size: 10px;">microphp</a></li> <li><a href="/blog/tag/cloud.html" style="font-size: 11px;">cloud</a></li> <li><a href="/blog/tag/composer.html" style="font-size: 10px;">composer</a></li> <li><a href="/blog/tag/doctrine.html" style="font-size: 10px;">doctrine</a></li> <li><a href="/blog/tag/bower.html" style="font-size: 10px;">bower</a></li> <li><a href="/blog/tag/http.html" style="font-size: 11px;">http</a></li></ul></div>
+<ul class="zend-tag-cloud"><li><a href="/blog/tag/php.html" style="font-size: 20px;">php</a></li> <li><a href="/blog/tag/apigility.html" style="font-size: 10px;">apigility</a></li> <li><a href="/blog/tag/zf2.html" style="font-size: 11px;">zf2</a></li> <li><a href="/blog/tag/zend+framework.html" style="font-size: 15px;">zend framework</a></li> <li><a href="/blog/tag/rest.html" style="font-size: 11px;">rest</a></li> <li><a href="/blog/tag/hal.html" style="font-size: 10px;">hal</a></li> <li><a href="/blog/tag/mvc.html" style="font-size: 11px;">mvc</a></li> <li><a href="/blog/tag/patterns.html" style="font-size: 10px;">patterns</a></li> <li><a href="/blog/tag/programming.html" style="font-size: 12px;">programming</a></li> <li><a href="/blog/tag/rails.html" style="font-size: 11px;">rails</a></li> <li><a href="/blog/tag/javascript.html" style="font-size: 11px;">javascript</a></li> <li><a href="/blog/tag/angularjs.html" style="font-size: 10px;">angularjs</a></li> <li><a href="/blog/tag/ui-router.html" style="font-size: 10px;">ui-router</a></li> <li><a href="/blog/tag/vim.html" style="font-size: 11px;">vim</a></li> <li><a href="/blog/tag/family.html" style="font-size: 11px;">family</a></li> <li><a href="/blog/tag/personal.html" style="font-size: 13px;">personal</a></li> <li><a href="/blog/tag/phpconcom.html" style="font-size: 10px;">phpconcom</a></li> <li><a href="/blog/tag/oop.html" style="font-size: 11px;">oop</a></li> <li><a href="/blog/tag/testing.html" style="font-size: 10px;">testing</a></li> <li><a href="/blog/tag/linux.html" style="font-size: 12px;">linux</a></li> <li><a href="/blog/tag/zendcon08.html" style="font-size: 11px;">zendcon08</a></li> <li><a href="/blog/tag/file_fortune.html" style="font-size: 10px;">file_fortune</a></li> <li><a href="/blog/tag/pear.html" style="font-size: 11px;">pear</a></li> <li><a href="/blog/tag/zendcon.html" style="font-size: 11px;">zendcon</a></li> <li><a href="/blog/tag/perl.html" style="font-size: 12px;">perl</a></li> <li><a href="/blog/tag/fastcgi.html" style="font-size: 10px;">fastcgi</a></li> <li><a href="/blog/tag/ubuntu.html" style="font-size: 11px;">ubuntu</a></li> <li><a href="/blog/tag/tekx.html" style="font-size: 10px;">tekx</a></li> <li><a href="/blog/tag/zendcon10.html" style="font-size: 10px;">zendcon10</a></li> <li><a href="/blog/tag/dojo.html" style="font-size: 11px;">dojo</a></li> <li><a href="/blog/tag/symfony.html" style="font-size: 11px;">symfony</a></li> <li><a href="/blog/tag/zeta+components.html" style="font-size: 10px;">zeta components</a></li> <li><a href="/blog/tag/tek09.html" style="font-size: 10px;">tek09</a></li> <li><a href="/blog/tag/spl.html" style="font-size: 11px;">spl</a></li> <li><a href="/blog/tag/subversion.html" style="font-size: 11px;">subversion</a></li> <li><a href="/blog/tag/zend+framewor.html" style="font-size: 10px;">zend framewor</a></li> <li><a href="/blog/tag/conferences.html" style="font-size: 11px;">conferences</a></li> <li><a href="/blog/tag/dpc08.html" style="font-size: 11px;">dpc08</a></li> <li><a href="/blog/tag/phpworks08.html" style="font-size: 11px;">phpworks08</a></li> <li><a href="/blog/tag/webinar.html" style="font-size: 11px;">webinar</a></li> <li><a href="/blog/tag/zencon08.html" style="font-size: 10px;">zencon08</a></li> <li><a href="/blog/tag/cw09.html" style="font-size: 11px;">cw09</a></li> <li><a href="/blog/tag/zend+server.html" style="font-size: 10px;">zend server</a></li> <li><a href="/blog/tag/dpc09.html" style="font-size: 10px;">dpc09</a></li> <li><a href="/blog/tag/sflive2010.html" style="font-size: 10px;">sflive2010</a></li> <li><a href="/blog/tag/security.html" style="font-size: 10px;">security</a></li> <li><a href="/blog/tag/wifi.html" style="font-size: 10px;">wifi</a></li> <li><a href="/blog/tag/aikido.html" style="font-size: 10px;">aikido</a></li> <li><a href="/blog/tag/books.html" style="font-size: 10px;">books</a></li> <li><a href="/blog/tag/dpc10.html" style="font-size: 10px;">dpc10</a></li> <li><a href="/blog/tag/zendcon09.html" style="font-size: 11px;">zendcon09</a></li> <li><a href="/blog/tag/git.html" style="font-size: 11px;">git</a></li> <li><a href="/blog/tag/phpwomen.html" style="font-size: 10px;">phpwomen</a></li> <li><a href="/blog/tag/virtualbox.html" style="font-size: 10px;">virtualbox</a></li> <li><a href="/blog/tag/screencast.html" style="font-size: 11px;">screencast</a></li> <li><a href="/blog/tag/advocacy.html" style="font-size: 10px;">advocacy</a></li> <li><a href="/blog/tag/politics.html" style="font-size: 10px;">politics</a></li> <li><a href="/blog/tag/internet.html" style="font-size: 10px;">internet</a></li> <li><a href="/blog/tag/microphp.html" style="font-size: 10px;">microphp</a></li> <li><a href="/blog/tag/cloud.html" style="font-size: 11px;">cloud</a></li> <li><a href="/blog/tag/composer.html" style="font-size: 10px;">composer</a></li> <li><a href="/blog/tag/doctrine.html" style="font-size: 10px;">doctrine</a></li> <li><a href="/blog/tag/bower.html" style="font-size: 10px;">bower</a></li> <li><a href="/blog/tag/http.html" style="font-size: 11px;">http</a></li></ul></div>
         </div>
 
         <br class="clear"/>
