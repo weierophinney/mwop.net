@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "ee0713da9a77cd136386865fe909c0a1",
+    "hash": "d7d5dae63eff5b33af94de9861fcc085",
     "packages": [
         {
             "name": "hybridauth/hybridauth",
@@ -107,16 +107,16 @@
         },
         {
             "name": "phly/phly-comic",
-            "version": "1.0.1",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/weierophinney/PhlyComic.git",
-                "reference": "871fe239490f4030936bd46c4e9846072aa1c186"
+                "reference": "00dbe9cf43c89bd2f2c7f6b874fdb57a694e9b7b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/weierophinney/PhlyComic/zipball/871fe239490f4030936bd46c4e9846072aa1c186",
-                "reference": "871fe239490f4030936bd46c4e9846072aa1c186",
+                "url": "https://api.github.com/repos/weierophinney/PhlyComic/zipball/00dbe9cf43c89bd2f2c7f6b874fdb57a694e9b7b",
+                "reference": "00dbe9cf43c89bd2f2c7f6b874fdb57a694e9b7b",
                 "shasum": ""
             },
             "require": {
@@ -161,7 +161,7 @@
                 "source": "https://github.com/weierophinney/PhlyComic",
                 "issues": "https://github.com/weierophinney/PhlyComic/issues"
             },
-            "time": "2014-05-23 18:07:11"
+            "time": "2014-06-11 17:55:17"
         },
         {
             "name": "phly/phly-common",
@@ -307,7 +307,7 @@
         },
         {
             "name": "socalnick/scn-social-auth",
-            "version": "dev-master",
+            "version": "1.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SocalNick/ScnSocialAuth.git",
@@ -364,13 +364,13 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zf2.git",
-                "reference": "d270f73b2ccdc36609ba5ae0232f895352b67197"
+                "reference": "ebd07fac85d62037921ae3af870dda51053c2a3b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://packages.zendframework.com/composer/zendframework-zendframework-d270f73b2ccdc36609ba5ae0232f895352b67197-zip-0fa010.zip",
+                "url": "https://packages.zendframework.com/composer/zendframework-zendframework-ebd07fac85d62037921ae3af870dda51053c2a3b-zip-892adf.zip",
                 "reference": "dev-develop",
-                "shasum": "05c902a91fc8645833ec552a0c40c7d9de01c918"
+                "shasum": "561a49436e7329f3aa9301c21a1e1b9687d95b18"
             },
             "require": {
                 "php": ">=5.3.23",
@@ -477,7 +477,7 @@
                 "source": "https://github.com/zendframework/zf2/tree/develop",
                 "issues": "https://github.com/zendframework/zf2/issues"
             },
-            "time": "2014-05-20 23:29:09"
+            "time": "2014-05-28 10:22:19"
         },
         {
             "name": "zendframework/zendservice-recaptcha",
@@ -696,13 +696,13 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/zfcampus/zf-console.git",
-                "reference": "8a4ce84f636bb3a73dd362025fb76c3884f87442"
+                "reference": "2922843e67f332bf6571d051988100d0176d20e2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://packages.zendframework.com/composer/zfcampus-zf-console-8a4ce84f636bb3a73dd362025fb76c3884f87442-zip-19e263.zip",
+                "url": "https://packages.zendframework.com/composer/zfcampus-zf-console-2922843e67f332bf6571d051988100d0176d20e2-zip-bddc51.zip",
                 "reference": "dev-develop",
-                "shasum": "95b7a02250889f4c6a8b0a9f38aecebcb04037f7"
+                "shasum": "41525bf410f89ada582c28433691881721868efd"
             },
             "require": {
                 "php": ">=5.3.23",
@@ -742,7 +742,7 @@
                 "source": "https://github.com/zfcampus/zf-console",
                 "issues": "https://github.com/zfcampus/zf-console/issues"
             },
-            "time": "2014-05-07 16:27:28"
+            "time": "2014-06-04 15:20:37"
         }
     ],
     "packages-dev": [
@@ -762,7 +762,6 @@
         "phly/phly-comic": 0,
         "phly/phly-contact": 20,
         "phly/phly-simple-page": 20,
-        "socalnick/scn-social-auth": 20,
         "hybridauth/hybridauth": 20
     },
     "platform": [

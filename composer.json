@@ -22,7 +22,7 @@
         "zendframework/zendframework": "~2.0",
         "zendframework/zendservice-recaptcha": "2.*",
         "zf-commons/zfc-user": "0.1.2",
-        "socalnick/scn-social-auth": "dev-master",
+        "socalnick/scn-social-auth": "1.13.0",
         "hybridauth/hybridauth": "dev-hotfix/session-key-test as dev-master"
     }
 }
