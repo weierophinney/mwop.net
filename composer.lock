@@ -107,16 +107,16 @@
         },
         {
             "name": "phly/phly-comic",
-            "version": "1.0.3",
+            "version": "1.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/weierophinney/PhlyComic.git",
-                "reference": "e20c1990f6eae432dfe8b8aa37e447b62c2a553a"
+                "reference": "032f7085e2f6a2e6c1630ebc3abb9830aaf113c1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/weierophinney/PhlyComic/zipball/e20c1990f6eae432dfe8b8aa37e447b62c2a553a",
-                "reference": "e20c1990f6eae432dfe8b8aa37e447b62c2a553a",
+                "url": "https://api.github.com/repos/weierophinney/PhlyComic/zipball/032f7085e2f6a2e6c1630ebc3abb9830aaf113c1",
+                "reference": "032f7085e2f6a2e6c1630ebc3abb9830aaf113c1",
                 "shasum": ""
             },
             "require": {
@@ -161,7 +161,7 @@
                 "source": "https://github.com/weierophinney/PhlyComic",
                 "issues": "https://github.com/weierophinney/PhlyComic/issues"
             },
-            "time": "2014-06-11 18:38:50"
+            "time": "2014-06-12 15:22:33"
         },
         {
             "name": "phly/phly-common",
