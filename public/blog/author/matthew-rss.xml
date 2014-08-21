@@ -3,10 +3,194 @@
   <channel>
     <title>Author: Matthew Weier O'Phinney :: phly, boy, phly</title>
     <description>Author: Matthew Weier O'Phinney :: phly, boy, phly</description>
-    <pubDate>Mon, 09 Jun 2014 17:00:00 +0000</pubDate>
+    <pubDate>Thu, 21 Aug 2014 19:30:00 +0000</pubDate>
     <generator>Zend_Feed_Writer 2 (http://framework.zend.com)</generator>
     <link>http://mwop.net/blog/author/matthew.html</link>
     <atom:link rel="self" type="application/rss+xml" href="http://mwop.net/blog/author/matthew-rss.xml"/>
+    <item>
+      <title>Testing Code That Emits Output</title>
+      <pubDate>Thu, 21 Aug 2014 19:30:00 +0000</pubDate>
+      <link>http://mwop.net/blog/2014-08-11-testing-output-generating-code.html</link>
+      <guid>http://mwop.net/blog/2014-08-11-testing-output-generating-code.html</guid>
+      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
+      <dc:creator>Matthew Weier O'Phinney</dc:creator>
+      <content:encoded><![CDATA[<p>
+    Here's the scenario: you have code that will emit headers and content,
+    for instance, a front controller. How do you test this?
+</p>
+
+<p>
+    The answer is remarkably simple, but non-obvious: namespaces.
+</p><h2>Prerequisites</h2>
+
+<p>
+    For this approach to work, the assumptions are:
+</p>
+
+<ul>
+    <li>Your code emitting headers and output lives in a namespace other than the global namespace.</li>
+</ul>
+
+<p>
+    That's it. Considering that most PHP code you grab anymore does this, and
+    most coding standards you run across will require this, it's a safe bet
+    that you're already ready. If you're not, go refactor your code now, before
+    continuing; you'll thank me later.
+</p>
+
+<h2>The technique</h2>
+
+<p>
+    PHP introduced namespaces in PHP 5.3. Namespaces cover classes, as most of
+    us are well aware, but they also cover constants and functions -- a fact
+    often overlooked, as before 5.6 (releasing next week!), you cannot import
+    them via <kbd>use</kbd> statements!
+</p>
+
+<p>
+    That does not mean they cannot be defined and used, however -- it just
+    means that you need to manually import them, typically via a
+    <kbd>require</kbd> or <kbd>require_once</kbd> statement. These are usually
+    anathema in libraries, but for testing, they work just fine.
+</p>
+
+<p>
+    Here's an approach I took recently. I created a file that lives -- this is
+    the important bit, so pay attention -- <em>in the same namespace as the
+    code emitting headers and output</em>. This file defines several functions
+    that live in the global (aka PHP's built-in) namespace, and an accumulator
+    static object I can then use in my tests for assertions. Here's what it
+    looks like:
+</p>
+
+<div class="example"><pre><code language="php">
+namespace Some\Project;
+
+abstract class Output
+{
+    public static $headers = array();
+    public static $body;
+
+    public static function reset()
+    {
+        self::$headers = array();
+        self::$body = null;
+    }
+}
+
+function headers_sent()
+{
+    return false;
+}
+
+function header($value)
+{
+    Output::$headers[] = $value;
+}
+
+function printf($text)
+{
+    Output::$body .= $text;
+}
+</code></pre></div>
+
+<p>
+    A few notes:
+</p>
+
+<ul>
+    <li><kbd>headers_sent()</kbd> always returns <kbd>false</kbd> here, as most
+        emitters test for a boolean <kbd>true</kbd> value and bail early when
+        that occurs.</li>
+
+    <li>I used <kbd>printf()</kbd> here, as <kbd>echo</kbd> cannot be overridden
+        due to being a PHP language construct and not an actual function. As such,
+        if you use this technique, you will have to likely alter your emitter
+        to call <kbd>printf()</kbd> instead of <kbd>echo</kbd>. The benefits,
+        however, are worth it.</li>
+
+    <li>I marked <kbd>Output</kbd> abstract, to prevent instantiation; it should
+        only be used statically.</kbd>
+</ul>
+
+<p>
+    I place the above file within my test suite, usually under a "TestAsset"
+    directory adjacent to the test itself; since it contains functions, I'll 
+    name the file "Functions.php" as well. This combination typically will 
+    prevent it from being autoloaded in any way, as the test directory will 
+    often not have autoloading defined, or will be under a separate namespace.
+</p>
+
+<p>
+    Inside your PHPUnit test suite, then, you would do the following:
+</p>
+
+<div class="example"><pre><code language="php">
+namespace SomeTest\Project;
+
+use PHPUnit_Framework_TestCase as TestCase;
+use Some\Project\FrontController;
+use Some\Project\Output;                 // <-- our Output class from above
+require_once __DIR__ . '/TestAsset/Functions.php'; // <-- get our functions
+
+class FrontControllerTest extends TestCase
+{
+    public function setUp()
+    {
+        Output::reset();
+        /* ... */
+    }
+
+    public function tearDown()
+    {
+        Output::reset();
+        /* ... */
+    }
+}
+</code></pre></div>
+
+<p>
+    From here, you test as normal -- but when you invoke methods that will
+    cause headers or content to emit, you can now test to see what those
+    contain:
+</p>
+
+<div class="example"><pre><code language="php">
+public function testEmitsExpectedHeadersAndContent()
+{
+    /* ... */
+
+    $this->assertContains('Content-Type: application/json', Output::$headers);
+    $json = Output::$body;
+    $data = json_decode($json, true);
+    $this->assertArrayHasKey('foo', $data);
+    $this->assertEquals('bar', $data['foo']);
+}
+</code></pre></div>
+
+<h2>How it works</h2>
+
+<p>
+    Why does this work?
+</p>
+
+<p>
+    PHP performs some magic when it resolves functions. With classes, it looks
+    for a matching class either in the current namespace, or one that was
+    imported (and potentially aliased); if a match is not found, it stops, and
+    raises an error. With functions, however, it looks first in the current
+    namespace, and if it isn't found, then looks in the global namespace. This
+    last part is key -- it means that if you redefine a function in the current
+    namespace, it will be used in lieu of the original function defined by
+    PHP. This also means that any code operating in the same namespace as the 
+    function -- even if defined in another file -- will use that function.
+</p>
+
+<p>
+    This technique just leverages this fact.
+</p>]]></content:encoded>
+      <slash:comments>0</slash:comments>
+    </item>
     <item>
       <title>Better Understanding Controllers Through Basic Patterns</title>
       <pubDate>Mon, 09 Jun 2014 17:00:00 +0000</pubDate>
@@ -2551,48 +2735,6 @@ class FrameworkACache implements CacheInterface
 <p>
     Following these principals, you can play nice with each other, while still 
     fostering innovative and differentiating solutions to shared problems.
-</p>]]></content:encoded>
-      <slash:comments>0</slash:comments>
-    </item>
-    <item>
-      <title>PHP Master Series on Day Camp For Developers</title>
-      <pubDate>Tue, 18 Dec 2012 20:24:00 +0000</pubDate>
-      <link>http://mwop.net/blog/2012-12-18-php-master-series.html</link>
-      <guid>http://mwop.net/blog/2012-12-18-php-master-series.html</guid>
-      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
-      <dc:creator>Matthew Weier O'Phinney</dc:creator>
-      <content:encoded><![CDATA[<p>
-    <a href="http://blog.calevans.com">Cal Evans</a> has organized another 
-    DayCamp4Developers event, this time entitled "<a 
-    href="http://blog.calevans.com/2012/11/19/php-master-series-vol-1">PHP 
-    Master Series, Volume 1</a>". I'm honored to be an invited speaker for this 
-    first edition, where I'll be presenting my talk, "Designing Beautiful Software".
-</p>
-
-<p>
-    Why would you want to participate? Well, for one, because you can interact directly
-    with the various speakers during the presentations. Sure, you can likely find the slide
-    decks elsewhere, or possibly even recordings. But if we all do our jobs right, we'll
-    likely raise more questions than answers; if you attend, you'll get a chance to ask
-    some of your questions immediately, <em>and we may even answer them!</em>
-</p>
-
-<p>
-    On top of that, this is a fantastic lineup of speakers, and, frankly, not a lineup 
-    I've ever participated in. In a typical conference, you'd likely see one or two of
-    us, and be lucky if we weren't scheduled against each other; if you attend 
-    this week, you'll get to see us all, back-to-back. 
-</p>
-
-<p>
-    What else will you be doing this Friday, anyways, while <a 
-    href="http://en.wikipedia.org/wiki/2012_phenomenon">you wait for the end of the 
-    world?</a>
-</p>
-
-<p>
-    So, do yourself a favor, and <a 
-    href="http://phpmasterseriesv1.eventbrite.com/">register today</a>!
 </p>]]></content:encoded>
       <slash:comments>0</slash:comments>
     </item>
