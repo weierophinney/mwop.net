@@ -1,0 +1,400 @@
+<!DOCTYPE html><!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8" />
+    <title>Testing Code That Emits Output :: phly, boy, phly</title>
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <link href="/css/SkeletonCss/base.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/SkeletonCss/skeleton.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/SkeletonCss/layout.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/Application/site.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/images/Application/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon">
+<link href="/css/Application/blog.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/blog-atom.xml" rel="alternate" type="application/atom+xml" title="phly, boy, phly Atom Feed">
+<link href="/blog-rss.xml" rel="alternate" type="application/rss+xml" title="phly, boy, phly RSS Feed">
+    <script type="text/javascript">
+    //<!--
+    dojoConfig={
+    has: {
+        "dojo-firebug": false
+    },
+    baseurl: "/js/",
+    parseOnLoad: false,
+    async: true,
+    tlmSiblingOfDojo: false,
+    packages: [
+        { name: "dijit", location: "../dijit" },
+        { name: "dojox", location: "../dojox" },
+        { name: "Application", location: "../Application" }
+    ]
+};
+
+    //-->
+</script>
+<script type="text/javascript" src="/js/dojo/dojo.js"></script>
+<script type="text/javascript">
+    //<!--
+    require(["Application/blog"]);
+    //-->
+</script>
+<script type="text/javascript">
+    //<!--
+    require(["Application/scroll"], function(scroll) {});
+    //-->
+</script>
+    <script src="https://www.google.com/jsapi?ABQIAAAAGybdRRvLZwVUcF0dE3oVdBTO-MlgA7VGJpGqyqTOeDXlNzyZQxTGq17s-iAB0m0vwqLQ_A2dHhTg2Q"></script>
+<script type="text/javascript">
+    google.load('search', '1', {style: google.loader.themes.ESPRESSO});
+    google.setOnLoadCallback(function(){
+        new google.search.CustomSearchControl().draw('search');
+    }, true);
+</script>
+
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-27037983-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</head>
+<body>
+<div class="container">
+    <header class="sixteen columns">
+        <div class="one-half column logo">
+            <a href="/"><img src="/images/Application/logo.gif" height="37" width="37" alt="Celtic Knot" /></a>
+            <span class="main_title">phly, boy, phly: matthew weier o'phinney</span>
+        </div>
+
+        <nav class="one-half column" id="menu"><ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/blog.html">Blog</a></li>
+            <li><a href="/resume">R&eacute;sum&eacute;</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </ul></nav>
+    </header>
+
+
+    <div class="sixteen columns clearfix content">
+        <div class="row">
+<aside class="four columns offset-by-one alpha sidebar blog">
+    <p>
+        Written on 21 August 2014.
+            </p>
+
+    <ul class="tags">
+    <li><a href="/blog/tag/patterns.html">patterns</a></li>
+    <li><a href="/blog/tag/php.html">php</a></li>
+    <li><a href="/blog/tag/programming.html">programming</a></li>
+    <li><a href="/blog/tag/testing.html">testing</a></li>
+</ul>
+
+</aside>
+
+<article class="eleven columns omega blog">
+<h2>Testing Code That Emits Output</h2>
+<p>
+    Here's the scenario: you have code that will emit headers and content,
+    for instance, a front controller. How do you test this?
+</p>
+
+<p>
+    The answer is remarkably simple, but non-obvious: namespaces.
+</p><h2>Prerequisites</h2>
+
+<p>
+    For this approach to work, the assumptions are:
+</p>
+
+<ul>
+    <li>Your code emitting headers and output lives in a namespace other than the global namespace.</li>
+</ul>
+
+<p>
+    That's it. Considering that most PHP code you grab anymore does this, and
+    most coding standards you run across will require this, it's a safe bet
+    that you're already ready. If you're not, go refactor your code now, before
+    continuing; you'll thank me later.
+</p>
+
+<h2>The technique</h2>
+
+<p>
+    PHP introduced namespaces in PHP 5.3. Namespaces cover classes, as most of
+    us are well aware, but they also cover constants and functions -- a fact
+    often overlooked, as before 5.6 (releasing next week!), you cannot import
+    them via <kbd>use</kbd> statements!
+</p>
+
+<p>
+    That does not mean they cannot be defined and used, however -- it just
+    means that you need to manually import them, typically via a
+    <kbd>require</kbd> or <kbd>require_once</kbd> statement. These are usually
+    anathema in libraries, but for testing, they work just fine.
+</p>
+
+<p>
+    Here's an approach I took recently. I created a file that lives -- this is
+    the important bit, so pay attention -- <em>in the same namespace as the
+    code emitting headers and output</em>. This file defines several functions
+    that live in the global (aka PHP's built-in) namespace, and an accumulator
+    static object I can then use in my tests for assertions. Here's what it
+    looks like:
+</p>
+
+<div class="example"><pre><code language="php">
+namespace Some\Project;
+
+abstract class Output
+{
+    public static $headers = array();
+    public static $body;
+
+    public static function reset()
+    {
+        self::$headers = array();
+        self::$body = null;
+    }
+}
+
+function headers_sent()
+{
+    return false;
+}
+
+function header($value)
+{
+    Output::$headers[] = $value;
+}
+
+function printf($text)
+{
+    Output::$body .= $text;
+}
+</code></pre></div>
+
+<p>
+    A few notes:
+</p>
+
+<ul>
+    <li><kbd>headers_sent()</kbd> always returns <kbd>false</kbd> here, as most
+        emitters test for a boolean <kbd>true</kbd> value and bail early when
+        that occurs.</li>
+
+    <li>I used <kbd>printf()</kbd> here, as <kbd>echo</kbd> cannot be overridden
+        due to being a PHP language construct and not an actual function. As such,
+        if you use this technique, you will have to likely alter your emitter
+        to call <kbd>printf()</kbd> instead of <kbd>echo</kbd>. The benefits,
+        however, are worth it.</li>
+
+    <li>I marked <kbd>Output</kbd> abstract, to prevent instantiation; it should
+        only be used statically.</kbd>
+</ul>
+
+<p>
+    I place the above file within my test suite, usually under a "TestAsset"
+    directory adjacent to the test itself; since it contains functions, I'll 
+    name the file "Functions.php" as well. This combination typically will 
+    prevent it from being autoloaded in any way, as the test directory will 
+    often not have autoloading defined, or will be under a separate namespace.
+</p>
+
+<p>
+    Inside your PHPUnit test suite, then, you would do the following:
+</p>
+
+<div class="example"><pre><code language="php">
+namespace SomeTest\Project;
+
+use PHPUnit_Framework_TestCase as TestCase;
+use Some\Project\FrontController;
+use Some\Project\Output;                 // <-- our Output class from above
+require_once __DIR__ . '/TestAsset/Functions.php'; // <-- get our functions
+
+class FrontControllerTest extends TestCase
+{
+    public function setUp()
+    {
+        Output::reset();
+        /* ... */
+    }
+
+    public function tearDown()
+    {
+        Output::reset();
+        /* ... */
+    }
+}
+</code></pre></div>
+
+<p>
+    From here, you test as normal -- but when you invoke methods that will
+    cause headers or content to emit, you can now test to see what those
+    contain:
+</p>
+
+<div class="example"><pre><code language="php">
+public function testEmitsExpectedHeadersAndContent()
+{
+    /* ... */
+
+    $this->assertContains('Content-Type: application/json', Output::$headers);
+    $json = Output::$body;
+    $data = json_decode($json, true);
+    $this->assertArrayHasKey('foo', $data);
+    $this->assertEquals('bar', $data['foo']);
+}
+</code></pre></div>
+
+<h2>How it works</h2>
+
+<p>
+    Why does this work?
+</p>
+
+<p>
+    PHP performs some magic when it resolves functions. With classes, it looks
+    for a matching class either in the current namespace, or one that was
+    imported (and potentially aliased); if a match is not found, it stops, and
+    raises an error. With functions, however, it looks first in the current
+    namespace, and if it isn't found, then looks in the global namespace. This
+    last part is key -- it means that if you redefine a function in the current
+    namespace, it will be used in lieu of the original function defined by
+    PHP. This also means that any code operating in the same namespace as the 
+    function -- even if defined in another file -- will use that function.
+</p>
+
+<p>
+    This technique just leverages this fact.
+</p><div class="social-media">
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="mwop">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</div>
+
+<div class="social-media">
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<div class="fb-like" data-send="true" data-width="450" data-show-faces="true"></div>
+</div>
+
+<div class="social-media">
+<div class="g-plusone" data-size="medium" data-annotation="inline"></div>
+</div>
+
+<!-- Place this render call where appropriate -->
+<script type="text/javascript">
+dojo.ready(function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+});
+</script>
+
+<div class="social-media">
+<a href="http://www.reddit.com/submit" onclick="window.location = 'http://www.reddit.com/submit?url=' + encodeURIComponent(window.location); return false"> <img src="http://www.reddit.com/static/spreddit1.gif" alt="submit to reddit" border="0" /> </a>
+</div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_developer = 1;
+        var disqus_shortname = 'phlyboyphly';
+        var disqus_identifier = '2014-08-11-testing-output-generating-code';
+        var disqus_url = 'http://mwop.net/blog/2014-08-11-testing-output-generating-code.html';
+        var disqus_title = 'Testing Code That Emits Output';
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a></article>
+
+    </div>
+
+    <footer class="sixteen columns footer">
+        <div class="column one-third alpha about">
+            <h4>About</h4>
+            <p>
+    I'm a husband and father of two, and web architect by day.
+</p>
+
+<ul class="resume">
+    <li><a href="/resume">Resume</a></li>
+    <li><a href="http://twitter.com/mwop">Twitter (@mwop)</a></li>
+    <li><a href="http://www.linkedin.com/in/mweierophinney">LinkedIn</a></li>
+    <li><a href="http://www.ohloh.net/accounts/weierophinney">OhLoh</a></li>
+    <li><a href="http://resume.github.com/?weierophinney">GitHub</a></li>
+</ul>
+
+        </div>
+
+        <div class="column one-third projects">
+            <h4>Projects</h4>
+            <ul class="projects">
+    <li><a href="http://framework.zend.com/">Zend Framework (Project Lead)</a></li>
+    <li><a href="http://www.the-pastry-box-project.net/baker/matthew-weier-ophinney/">The Pastry Box Project 2012</a> (as a Baker)</li>
+    <li><a href="http://github.com/phly/phly_mustache">Phly_Mustache</a></li>
+    <li><a href="http://github.com/phly/phlyty">phlyty</a> (ZF2-based microframework)</li>
+    <li>ZF2 Modules
+    <ul>
+        <li><a href="https://github.com/phly/PhlyBlog">PhlyBlog</a></li>
+        <li><a href="https://github.com/weierophinney/PhlyComic">PhlyComic</a></li>
+        <li><a href="https://github.com/phly/PhlyCommon">PhlyCommon</a></li>
+        <li><a href="https://github.com/phly/PhlyContact">PhlyContact</a></li>
+        <li><a href="https://github.com/phly/PhlyMongo">PhlyMongo</a></li>
+        <li><a href="https://github.com/phly/PhlyPaste">PhlyPaste</a></li>
+        <li><a href="https://github.com/weierophinney/PhlyPeep">PhlyPeep</a> (demo purposes only)</li>
+        <li><a href="https://github.com/phly/PhlyRequireJs">PhlyRequireJs</a></li>
+        <li><a href="https://github.com/phly/PhlyRestfully">PhlyRestfully</a></li>
+        <li><a href="https://github.com/phly/PhlySimplePage">PhlySimplePage</a></li>
+        <li><a href="https://github.com/weierophinney/SkeletonCssModule">SkeletonCssModule</a></li>
+    </ul>
+    </li>
+    <li>Tools
+    <ul>
+        <li><a href="http://p.mwop.net">PhlyPaste</a> (pastebin)</li>
+    </ul>
+    </li>
+</ul>
+
+        </div>
+
+        <div class="column one-third omega tags">
+        <div id="search" style="width:100%;">Loading...</div>
+<h4>Tag Cloud</h4>
+<div class="cloud">
+<ul class="zend-tag-cloud"><li><a href="/blog/tag/php.html" style="font-size: 20px;">php</a></li> <li><a href="/blog/tag/apigility.html" style="font-size: 10px;">apigility</a></li> <li><a href="/blog/tag/zf2.html" style="font-size: 11px;">zf2</a></li> <li><a href="/blog/tag/zend+framework.html" style="font-size: 15px;">zend framework</a></li> <li><a href="/blog/tag/rest.html" style="font-size: 11px;">rest</a></li> <li><a href="/blog/tag/hal.html" style="font-size: 10px;">hal</a></li> <li><a href="/blog/tag/patterns.html" style="font-size: 11px;">patterns</a></li> <li><a href="/blog/tag/programming.html" style="font-size: 12px;">programming</a></li> <li><a href="/blog/tag/testing.html" style="font-size: 11px;">testing</a></li> <li><a href="/blog/tag/mvc.html" style="font-size: 11px;">mvc</a></li> <li><a href="/blog/tag/rails.html" style="font-size: 11px;">rails</a></li> <li><a href="/blog/tag/javascript.html" style="font-size: 11px;">javascript</a></li> <li><a href="/blog/tag/angularjs.html" style="font-size: 10px;">angularjs</a></li> <li><a href="/blog/tag/ui-router.html" style="font-size: 10px;">ui-router</a></li> <li><a href="/blog/tag/vim.html" style="font-size: 11px;">vim</a></li> <li><a href="/blog/tag/family.html" style="font-size: 11px;">family</a></li> <li><a href="/blog/tag/personal.html" style="font-size: 13px;">personal</a></li> <li><a href="/blog/tag/phpconcom.html" style="font-size: 10px;">phpconcom</a></li> <li><a href="/blog/tag/oop.html" style="font-size: 11px;">oop</a></li> <li><a href="/blog/tag/linux.html" style="font-size: 12px;">linux</a></li> <li><a href="/blog/tag/zendcon08.html" style="font-size: 11px;">zendcon08</a></li> <li><a href="/blog/tag/file_fortune.html" style="font-size: 10px;">file_fortune</a></li> <li><a href="/blog/tag/pear.html" style="font-size: 11px;">pear</a></li> <li><a href="/blog/tag/zendcon.html" style="font-size: 11px;">zendcon</a></li> <li><a href="/blog/tag/perl.html" style="font-size: 12px;">perl</a></li> <li><a href="/blog/tag/fastcgi.html" style="font-size: 10px;">fastcgi</a></li> <li><a href="/blog/tag/ubuntu.html" style="font-size: 11px;">ubuntu</a></li> <li><a href="/blog/tag/tekx.html" style="font-size: 10px;">tekx</a></li> <li><a href="/blog/tag/zendcon10.html" style="font-size: 10px;">zendcon10</a></li> <li><a href="/blog/tag/dojo.html" style="font-size: 11px;">dojo</a></li> <li><a href="/blog/tag/symfony.html" style="font-size: 11px;">symfony</a></li> <li><a href="/blog/tag/zeta+components.html" style="font-size: 10px;">zeta components</a></li> <li><a href="/blog/tag/tek09.html" style="font-size: 10px;">tek09</a></li> <li><a href="/blog/tag/spl.html" style="font-size: 11px;">spl</a></li> <li><a href="/blog/tag/subversion.html" style="font-size: 11px;">subversion</a></li> <li><a href="/blog/tag/zend+framewor.html" style="font-size: 10px;">zend framewor</a></li> <li><a href="/blog/tag/conferences.html" style="font-size: 11px;">conferences</a></li> <li><a href="/blog/tag/dpc08.html" style="font-size: 11px;">dpc08</a></li> <li><a href="/blog/tag/phpworks08.html" style="font-size: 11px;">phpworks08</a></li> <li><a href="/blog/tag/webinar.html" style="font-size: 11px;">webinar</a></li> <li><a href="/blog/tag/zencon08.html" style="font-size: 10px;">zencon08</a></li> <li><a href="/blog/tag/cw09.html" style="font-size: 11px;">cw09</a></li> <li><a href="/blog/tag/zend+server.html" style="font-size: 10px;">zend server</a></li> <li><a href="/blog/tag/dpc09.html" style="font-size: 10px;">dpc09</a></li> <li><a href="/blog/tag/sflive2010.html" style="font-size: 10px;">sflive2010</a></li> <li><a href="/blog/tag/security.html" style="font-size: 10px;">security</a></li> <li><a href="/blog/tag/wifi.html" style="font-size: 10px;">wifi</a></li> <li><a href="/blog/tag/aikido.html" style="font-size: 10px;">aikido</a></li> <li><a href="/blog/tag/books.html" style="font-size: 10px;">books</a></li> <li><a href="/blog/tag/dpc10.html" style="font-size: 10px;">dpc10</a></li> <li><a href="/blog/tag/zendcon09.html" style="font-size: 11px;">zendcon09</a></li> <li><a href="/blog/tag/git.html" style="font-size: 11px;">git</a></li> <li><a href="/blog/tag/phpwomen.html" style="font-size: 10px;">phpwomen</a></li> <li><a href="/blog/tag/virtualbox.html" style="font-size: 10px;">virtualbox</a></li> <li><a href="/blog/tag/screencast.html" style="font-size: 11px;">screencast</a></li> <li><a href="/blog/tag/advocacy.html" style="font-size: 10px;">advocacy</a></li> <li><a href="/blog/tag/politics.html" style="font-size: 10px;">politics</a></li> <li><a href="/blog/tag/internet.html" style="font-size: 10px;">internet</a></li> <li><a href="/blog/tag/microphp.html" style="font-size: 10px;">microphp</a></li> <li><a href="/blog/tag/cloud.html" style="font-size: 11px;">cloud</a></li> <li><a href="/blog/tag/composer.html" style="font-size: 10px;">composer</a></li> <li><a href="/blog/tag/doctrine.html" style="font-size: 10px;">doctrine</a></li> <li><a href="/blog/tag/bower.html" style="font-size: 10px;">bower</a></li> <li><a href="/blog/tag/http.html" style="font-size: 11px;">http</a></li></ul></div>
+        </div>
+
+        <br class="clear"/>
+
+        <div class="copyright">
+            Unless otherwise noted, &#169; 2004 - 2014, Matthew Weier O'Phinney
+        </div>
+    </footer>
+</div>
+</body>
+</html>
