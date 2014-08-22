@@ -11,6 +11,18 @@ if (preg_match('#^/blog/tag/(?P<tag>[^/.]+)(?!-(atom|rss))\.xml#', $uri, $matche
     exit(0);
 }
 
+if (preg_match('#^/uploads/#', $uri)) {
+    $newUri = sprintf('http://uploads.mwop.net/%s', substr($uri, 9));
+    header(sprintf('Location: %s', $newUri), true, 301);
+    exit(0);
+}
+
+if (preg_match('#^/screencasts/#', $uri)) {
+    $newUri = sprintf('http://screencasts.mwop.net/%s', substr($uri, 13));
+    header(sprintf('Location: %s', $newUri), true, 301);
+    exit(0);
+}
+
 if (preg_match('#^/slides/#', $uri)) {
     $newUri = sprintf('http://slides.mwop.net/%s', substr($uri, 8));
     header(sprintf('Location: %s', $newUri), true, 301);
