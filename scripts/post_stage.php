@@ -11,7 +11,16 @@ if (!chdir($baseDir)) {
 if (!is_dir('data/cache')) {
     mkdir('data/cache');
 }
+
 $command = '/usr/local/zend/bin/php -d date.timezone=America/Chicago public/index.php phlysimplepage cache clear all';
+$output  = shell_exec($command);
+
+// Update github stats
+$command = '/usr/local/zend/bin/php -d date.timezone=America/Chicago public/index.php githubfeed fetch';
+$output  = shell_exec($command);
+
+// Update comics
+$command = '/usr/local/zend/bin/php -d date.timezone=America/Chicago vendor/bin/phly-comic.php fetch-all';
 $output  = shell_exec($command);
 
 // Ensure data directory is writeable by the web server
