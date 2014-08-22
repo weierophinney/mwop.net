@@ -15,14 +15,17 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "phly/phly-blog": "dev-master",
+        "phly/phly-blog": "~1.0@stable",
         "phly/phly-comic": "~1.0@stable",
         "phly/phly-contact": "dev-master",
-        "phly/phly-simple-page": "dev-master",
-        "zendframework/zendframework": "~2.0",
-        "zendframework/zendservice-recaptcha": "2.*",
+        "phly/phly-simple-page": "~1.0@stable",
+        "zendframework/zendframework": "~2.0@stable",
+        "zendframework/zendservice-recaptcha": "2.*@stable",
         "zf-commons/zfc-user": "0.1.2",
         "socalnick/scn-social-auth": "1.13.0",
         "hybridauth/hybridauth": "dev-hotfix/session-key-test as dev-master"
+    },
+    "require-dev": {
+        "zfcampus/zf-deploy": "~1.0@stable"
     }
 }
