@@ -1,10 +1,10 @@
 <?php
 chdir(__DIR__ . '/../../');
 
-if ($_SERVER['REMOTE_ADDR'] !== $_SERVER['SERVER_ADDR']) {
+if (! ZendJobQueue::getCurrentJobId()) {
     header('HTTP/1.1 403 Forbidden');
     exit(1);
-};
+}
 
 $command = '/usr/local/zend/bin/php -d date.timezone=America/Chicago public/index.php githubfeed fetch';
 exec($command, $output, $return);

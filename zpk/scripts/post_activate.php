@@ -2,14 +2,8 @@
 $server = 'http://staging.mwop.net';
 $queue  = new ZendJobQueue();
 
-// First, remove any existing jobs for our application
-$jobs  = $queue->getJobsList([]);
-foreach ($jobs as $job) {
-    if (! empty($job['end_time'])) {
-        // Job is either complete or removed
-        continue;
-    }
-
+// First, remove any existing job schedules for our application
+foreach ($queue->getSchedulingRules() as $job) {
     $script = $job['script'];
     if (0 !== strpos($script, $server)) {
         // Job is not one we're interested in
@@ -17,7 +11,7 @@ foreach ($jobs as $job) {
     }
 
     // Remove a previously scheduled job
-    $queue->removeJob($job['id']);
+    $queue->deleteSchedulingRule($job['id']);
 }
 
 // Add scheduled job for fetching comics
