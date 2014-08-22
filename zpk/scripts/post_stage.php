@@ -22,7 +22,7 @@ echo "\nExecuting `$command`\n";
 system($command);
 
 // Update comics
-$command = '/usr/local/zend/bin/php -d date.timezone=America/Chicago vendor/bin/phly-comic.php fetch-all';
+$command = '/usr/local/zend/bin/php -d date.timezone=America/Chicago vendor/phly/phly-comic/bin/phly-comic.php fetch-all';
 echo "\nExecuting `$command`\n";
 system($command);
 
