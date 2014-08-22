@@ -13,16 +13,20 @@ if (!is_dir('data/cache')) {
 }
 
 $command = '/usr/local/zend/bin/php -d date.timezone=America/Chicago public/index.php phlysimplepage cache clear all';
-$output  = shell_exec($command);
+echo "\nExecuting `$command`\n";
+system($command);
 
 // Update github stats
 $command = '/usr/local/zend/bin/php -d date.timezone=America/Chicago public/index.php githubfeed fetch';
-$output  = shell_exec($command);
+echo "\nExecuting `$command`\n";
+system($command);
 
 // Update comics
 $command = '/usr/local/zend/bin/php -d date.timezone=America/Chicago vendor/bin/phly-comic.php fetch-all';
-$output  = shell_exec($command);
+echo "\nExecuting `$command`\n";
+system($command);
 
 // Ensure data directory is writeable by the web server
 $command = 'chmod -R a+rwX data';
-$output  = shell_exec($command);
+echo "\nExecuting `$command`\n";
+system($command);
