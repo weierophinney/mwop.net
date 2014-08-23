@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cache_settings>
+    <dont_cache/>
+    <cache>
+        <url schema="http" lifetime="900" path="" host="((staging|www)\.)?mwop\.net" compress="true" match_type="regex_match_i" app_id="-1" id="3">
+            <name><![CDATA[mwop_home]]></name>
+            <split_by>
+                <split_condition global="_SERVER[REQUEST_URI]"/>
+            </split_by>
+        </url>
+        <url schema="http" lifetime="18600" path="resume" host="((staging|www)\.)?mwop\.net" compress="true" match_type="regex_match_i" app_id="-1" id="4">
+            <name><![CDATA[mwop_resume]]></name>
+            <split_by>
+                <split_condition global="_SERVER[REQUEST_URI]"/>
+            </split_by>
+        </url>
+    </cache>
+</cache_settings>
