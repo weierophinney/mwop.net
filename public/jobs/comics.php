@@ -16,7 +16,7 @@ if ($return != 0) {
 header('Content-Type: application/json');
 echo json_encode([
     'status' => $return,
-    'output' => explode("\n", $output),
+    'output' => $output,
 ]);
 
 // Clear caches
