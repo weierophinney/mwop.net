@@ -12,5 +12,13 @@ if ($return != 0) {
     ZendJobQueue::setCurrentJobStatus(ZendJobQueue::FAILED);
     exit(1);
 }
+
+// Clear caches
+$queue  = new ZendJobQueue();
+$queue->createHttpJob('/jobs/clear-cache.php', [], [
+    'name'       => 'clear-cache',
+    'persistent' => false,
+]);
+
 ZendJobQueue::setCurrentJobStatus(ZendJobQueue::OK);
 exit(0);

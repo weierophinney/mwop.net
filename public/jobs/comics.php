@@ -12,5 +12,19 @@ if ($return != 0) {
     ZendJobQueue::setCurrentJobStatus(ZendJobQueue::FAILED);
     exit(1);
 }
+
+header('Content-Type: application/json');
+echo json_encode([
+    'status' => $return,
+    'output' => explode("\n", $output),
+]);
+
+// Clear caches
+$queue  = new ZendJobQueue();
+$queue->createHttpJob('/jobs/clear-cache.php', [], [
+    'name'       => 'clear-cache',
+    'persistent' => false,
+]);
+
 ZendJobQueue::setCurrentJobStatus(ZendJobQueue::OK);
 exit(0);
