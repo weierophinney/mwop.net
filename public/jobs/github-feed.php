@@ -10,8 +10,13 @@ $command = '/usr/local/zend/bin/php -d date.timezone=America/Chicago public/inde
 exec($command, $output, $return);
 if ($return != 0) {
     ZendJobQueue::setCurrentJobStatus(ZendJobQueue::FAILED);
+    echo implode("\n", $output);
     exit(1);
 }
+
+ZendJobQueue::setCurrentJobStatus(ZendJobQueue::OK);
+header('Content-Type: text/plain');
+echo implode("\n", $output);
 
 // Clear caches
 $queue  = new ZendJobQueue();
@@ -20,5 +25,4 @@ $queue->createHttpJob('/jobs/clear-cache.php', [], [
     'persistent' => false,
 ]);
 
-ZendJobQueue::setCurrentJobStatus(ZendJobQueue::OK);
 exit(0);
