@@ -13,4 +13,9 @@ if ($return != 0) {
     exit(1);
 }
 ZendJobQueue::setCurrentJobStatus(ZendJobQueue::OK);
+header('Content-Type: application/json');
+echo json_encode([
+    'status' => $return,
+    'output' => $output,
+]);
 exit(0);
