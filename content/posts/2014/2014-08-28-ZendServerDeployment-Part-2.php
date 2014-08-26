@@ -16,7 +16,7 @@ $entry->setAuthor($author);
 $entry->setDraft(false);
 $entry->setPublic(true);
 $entry->setCreated(new \DateTime('2014-08-26 08:30', new \DateTimezone('America/Chicago')));
-$entry->setUpdated(new \DateTime('2014-08-26 08:30', new \DateTimezone('America/Chicago')));
+$entry->setUpdated(new \DateTime('2014-09-02 08:30', new \DateTimezone('America/Chicago')));
 $entry->setTimezone('America/Chicago');
 $entry->setTags(array(
   'apigility',
@@ -147,6 +147,7 @@ $queue->createHttpJob($server . '/jobs/github-feed.php', [], [
 
 <ul>
     <li><a href="/blog/2014-08-11-zend-server-deployment-part-1.html">Tip 1: zf-deploy</a></li>
+    <li><a href="/blog/2014-09-02-zend-server-deployment-part-3.html">Tip 3: chmod</a></li>
 </ul
 
 <p>
