@@ -16,7 +16,7 @@ $entry->setAuthor($author);
 $entry->setDraft(false);
 $entry->setPublic(true);
 $entry->setCreated(new \DateTime('2014-09-04 08:30', new \DateTimezone('America/Chicago')));
-$entry->setUpdated(new \DateTime('2014-09-04 08:30', new \DateTimezone('America/Chicago')));
+$entry->setUpdated(new \DateTime('2014-09-09 08:30', new \DateTimezone('America/Chicago')));
 $entry->setTimezone('America/Chicago');
 $entry->setTags(array(
   'apigility',
@@ -87,6 +87,7 @@ if (! ZendJobQueue::getCurrentJobId()) {
     <li><a href="/blog/2014-08-11-zend-server-deployment-part-1.html">Tip 1: zf-deploy</a></li>
     <li><a href="/blog/2014-08-28-zend-server-deployment-part-2.html">Tip 2: Recurring Jobs</a></li>
     <li><a href="/blog/2014-09-02-zend-server-deployment-part-3.html">Tip 3: chmod</a></li>
+    <li><a href="/blog/2014-09-09-zend-server-deployment-part-5.html">Tip 5: Set your job status</a></li>
 </ul
 
 <p>
