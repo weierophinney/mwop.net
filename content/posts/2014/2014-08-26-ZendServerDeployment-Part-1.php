@@ -182,7 +182,7 @@ $ vendor/bin/zfdeploy.php mwop.net.zpk --configs=../mwop.net-config --zpk=zpk
 <h2>Other articles in the series</h2>
 
 <ul>
-    <li><a href="/blog/2014-08-28-zend-server-deployment-part-2">Tip 2: Recurring Jobs</a></li>
+    <li><a href="/blog/2014-08-28-zend-server-deployment-part-2.html">Tip 2: Recurring Jobs</a></li>
 </ul
 
 <p>
