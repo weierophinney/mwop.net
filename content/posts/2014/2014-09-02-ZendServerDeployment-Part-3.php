@@ -29,7 +29,7 @@ $entry->setTags(array(
 $body =<<<'EOT'
 <p>
     This is the third in a series of eight posts detailing tips on deploying
-    to Zend Server. <a href="/blog/2014-08-28-zend-server-deployment-part-3.html">The previous post in the series</a>
+    to Zend Server. <a href="/blog/2014-08-28-zend-server-deployment-part-2.html">The previous post in the series</a>
     detailed creating recurring jobs via Zend Job Queue, à la cronjobs.
 </p>
 
