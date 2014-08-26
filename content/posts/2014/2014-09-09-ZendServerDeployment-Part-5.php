@@ -45,7 +45,7 @@ $extended=<<<'EOT'
 <h2>Tip 5: Set your job status</h2>
 
 <p>
-    You should always set your job scriptstatus, and exit with an appropriate 
+    You should always set your job script status, and exit with an appropriate 
     return status. This ensures that Job Queue knows for sure if the job completed 
     successfully, which can help you better identify failed jobs in the UI. I use 
     the following:
