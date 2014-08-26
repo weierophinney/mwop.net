@@ -96,6 +96,65 @@
 <div class="row clearfix">
 <aside class="four columns offset-by-one alpha sidebar blog">
     <p>
+        Written on 24 January 2004.
+                <br />Last updated on 20 September 2004.
+            </p>
+
+    <ul class="tags">
+    <li><a href="/blog/tag/perl.html">perl</a></li>
+    <li><a href="/blog/tag/personal.html">personal</a></li>
+</ul>
+
+</aside>
+
+<section class="eleven columns omega">
+    <h4 class="entry"><a href="/blog/19-use-autouse-...-or-not.html">use autouse ... or not</a></h4>
+
+    <div class="entry body"><p>
+    Due to my cursory reading in the <em>Perl Cookbook, 2nd Edition</em>,
+    earlier this week, I've been investigating the <tt>use autouse</tt> pragma,
+    to see if it will indeed solve my issue of wanting to use different modules
+    based on the current situation. Unfortunately, I cannot find any
+    documentation on it in <tt>perldoc</tt>.
+</p>
+<p>
+    I remember seeing something about wrapping this stuff into a <tt>BEGIN</tt>
+    block, but that would require knowing certain information immediately, and I
+    might need the code to work through some steps before getting there.
+</p>
+<p>
+    Fortunately, <a href="http://www.perlmonks.org/index.pl?node_id=323606">this
+        node</a> just appeared on Perl Monks today, and I got to see other ways
+    of doing it:
+</p>
+<ul>
+    <li>The <tt>if</tt> module lets you do something like <tt>use if $type eq
+        'x', "Some::Module";</tt> However, $type must be known at compile time
+        (i.e., it's based on system info or on @ARGV); this probably wouldn't
+        work in a web-based application.
+    </li>
+    <li>Use <tt>require</tt> and <tt>import</tt> instead: <tt>if $type wq 'ex')
+        { require Some::Module; Some::Module->import if
+        Some::Module->can("import"); }</tt> If your module doesn't export
+        anything, you can even omit the call to <tt>import</tt>.
+    </li>
+    <li>Use an <tt>eval</tt>: <tt>if ($type eq 'x') { eval "use Some::Module";
+        }</tt> This gets around the <tt>import</tt> problem, but could possibly
+        run into other compile time issues.
+    </li>
+</ul>
+<p>
+    So, basically, I already had the tools to do the job; just needed to examine
+    the problem more.
+</p></div>
+
+    <p><a href="/blog/19-use-autouse-...-or-not.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="four columns offset-by-one alpha sidebar blog">
+    <p>
         Written on 23 January 2004.
                 <br />Last updated on 20 September 2004.
             </p>
@@ -644,96 +703,6 @@ put in the version placeholder in comments somewhere at the top or bottom:</p>
 </section>
 
 </div>
-<div class="row clearfix">
-<aside class="four columns offset-by-one alpha sidebar blog">
-    <p>
-        Written on 20 January 2004.
-                <br />Last updated on 10 September 2004.
-            </p>
-
-    <ul class="tags">
-    <li><a href="/blog/tag/personal.html">personal</a></li>
-</ul>
-
-</aside>
-
-<section class="eleven columns omega">
-    <h4 class="entry"><a href="/blog/8-Linux-Server-Hacks.html">Linux Server Hacks</a></h4>
-
-    <div class="entry body"><p>
-    I stopped at Borders in downtown Burlington on New Year's Eve day, and found
-    a book called <em>Linux Server Hacks</em>. I loved it immediately, but I
-    wasn't quite willing to shell out $25 for such a slim volume, even if it did
-    have many tidbits I could immediately use.
-</p>
-<p>
-    When I told my co-worker, Rob, about it, it turned out he already had the
-    book, and brought it in to work for me to borrow the next day.
-</p>
-<p>
-    My nose has barely been out of it since. I've done such things as:
-</p>
-<ul>
-    <li>
-        Create personal firewalls for my home and office machines. I've always
-        used scripts for this, but the hacks for iptables showed the basics of
-        how they work, and I've now got nice robust firewalls that are very
-        simple scripts. To make them even more user-friendly, I borrowed some
-        syntax from the various /etc/init.d scripts so that I can start, stop,
-        and reload the firewall at will.
-    </li>
-    <li>
-        I don't use perl at the command line much, even though I've long known
-        the '-e' switch; it just seems to cumbersome. However, combine it with
-        the '-p' and/or '-i' switch, and you can use perl as a filter on globbed
-        files!
-    </li>
-    <li>
-        I know <strong>much</strong> more about SSH now, and am using ssh-agent
-        effectively at work now to bounce around servers and transfer groups of
-        files between servers (often by piping tar commands with ssh).
-    </li>
-    <li>
-        A script called 'movein.sh' turned my life around when it came to
-        working on the servers. I now have a .skel directory on my work machine
-        that contains links to oft-used configuration files and directories, as
-        well as to my ~/bin directory; this allows me to then type 'movein.sh
-        server' and have all these files uploaded to the server. I can now use
-        vim, screen, and other programs on any system we have in exactly the
-        manner I expect to.
-    </li>
-    <li>
-        I've started thinking about versioning more, and have plans to put into
-        place a subversion repository to store server configs, database schema,
-        and development projects so we won't make as many mistakes in the future
-        -- at least not ones we can't rollback from.
-    </li>
-    <li>
-        I rewrote a shell script in perl that was originally intended for IP
-        takeover, and have been utilizing it to determine if and/or when a
-        server we've reinstalled goes down.
-    </li>
-    <li>
-        A bunch of Apache and MySQL tips are included, including mod_rewrite
-        hacks, how to make your directory indexes show full file names, and
-        more; as well as how to monitor your mysql processes and, if necessary,
-        kill them. I'm also very interested in how to use MySQL as an
-        authentication backend for an FTP daemon -- it could give us very
-        fine-grained control of our webserver for editors.
-    </li>
-</ul>
-<p>
-    And that's just the tip of the iceberg. All in all, I highly recommend the
-    book -- though most likely as a book to check out from the library for a few
-    weeks, digest, put into practice, and return. The hacks are so damn useful,
-    I've found that after using one, I don't need to refer to that one ever
-    again. But that's the point.
-</p></div>
-
-    <p><a href="/blog/8-Linux-Server-Hacks.html">Continue reading...</a></p>
-</section>
-
-</div>
 <div class="paginationControl">
         <a href="/blog/author/matthew.html" class="first">&lt;&lt; First</a> |
         <a href="/blog/author/matthew-p27.html"> &lt; Previous </a> |
@@ -807,7 +776,7 @@ put in the version placeholder in comments somewhere at the top or bottom:</p>
         <div id="search" style="width:100%;">Loading...</div>
 <h4>Tag Cloud</h4>
 <div class="cloud">
-<ul class="zend-tag-cloud"><li><a href="/blog/tag/php.html" style="font-size: 20px;">php</a></li> <li><a href="/blog/tag/apigility.html" style="font-size: 10px;">apigility</a></li> <li><a href="/blog/tag/zf2.html" style="font-size: 11px;">zf2</a></li> <li><a href="/blog/tag/zend+framework.html" style="font-size: 15px;">zend framework</a></li> <li><a href="/blog/tag/rest.html" style="font-size: 11px;">rest</a></li> <li><a href="/blog/tag/hal.html" style="font-size: 10px;">hal</a></li> <li><a href="/blog/tag/patterns.html" style="font-size: 11px;">patterns</a></li> <li><a href="/blog/tag/programming.html" style="font-size: 12px;">programming</a></li> <li><a href="/blog/tag/testing.html" style="font-size: 11px;">testing</a></li> <li><a href="/blog/tag/mvc.html" style="font-size: 11px;">mvc</a></li> <li><a href="/blog/tag/rails.html" style="font-size: 11px;">rails</a></li> <li><a href="/blog/tag/javascript.html" style="font-size: 11px;">javascript</a></li> <li><a href="/blog/tag/angularjs.html" style="font-size: 10px;">angularjs</a></li> <li><a href="/blog/tag/ui-router.html" style="font-size: 10px;">ui-router</a></li> <li><a href="/blog/tag/vim.html" style="font-size: 11px;">vim</a></li> <li><a href="/blog/tag/family.html" style="font-size: 11px;">family</a></li> <li><a href="/blog/tag/personal.html" style="font-size: 13px;">personal</a></li> <li><a href="/blog/tag/phpconcom.html" style="font-size: 10px;">phpconcom</a></li> <li><a href="/blog/tag/oop.html" style="font-size: 11px;">oop</a></li> <li><a href="/blog/tag/linux.html" style="font-size: 12px;">linux</a></li> <li><a href="/blog/tag/zendcon08.html" style="font-size: 11px;">zendcon08</a></li> <li><a href="/blog/tag/file_fortune.html" style="font-size: 10px;">file_fortune</a></li> <li><a href="/blog/tag/pear.html" style="font-size: 11px;">pear</a></li> <li><a href="/blog/tag/zendcon.html" style="font-size: 11px;">zendcon</a></li> <li><a href="/blog/tag/perl.html" style="font-size: 12px;">perl</a></li> <li><a href="/blog/tag/fastcgi.html" style="font-size: 10px;">fastcgi</a></li> <li><a href="/blog/tag/ubuntu.html" style="font-size: 11px;">ubuntu</a></li> <li><a href="/blog/tag/tekx.html" style="font-size: 10px;">tekx</a></li> <li><a href="/blog/tag/zendcon10.html" style="font-size: 10px;">zendcon10</a></li> <li><a href="/blog/tag/dojo.html" style="font-size: 11px;">dojo</a></li> <li><a href="/blog/tag/symfony.html" style="font-size: 11px;">symfony</a></li> <li><a href="/blog/tag/zeta+components.html" style="font-size: 10px;">zeta components</a></li> <li><a href="/blog/tag/tek09.html" style="font-size: 10px;">tek09</a></li> <li><a href="/blog/tag/spl.html" style="font-size: 11px;">spl</a></li> <li><a href="/blog/tag/subversion.html" style="font-size: 11px;">subversion</a></li> <li><a href="/blog/tag/zend+framewor.html" style="font-size: 10px;">zend framewor</a></li> <li><a href="/blog/tag/conferences.html" style="font-size: 11px;">conferences</a></li> <li><a href="/blog/tag/dpc08.html" style="font-size: 11px;">dpc08</a></li> <li><a href="/blog/tag/phpworks08.html" style="font-size: 11px;">phpworks08</a></li> <li><a href="/blog/tag/webinar.html" style="font-size: 11px;">webinar</a></li> <li><a href="/blog/tag/zencon08.html" style="font-size: 10px;">zencon08</a></li> <li><a href="/blog/tag/cw09.html" style="font-size: 11px;">cw09</a></li> <li><a href="/blog/tag/zend+server.html" style="font-size: 10px;">zend server</a></li> <li><a href="/blog/tag/dpc09.html" style="font-size: 10px;">dpc09</a></li> <li><a href="/blog/tag/sflive2010.html" style="font-size: 10px;">sflive2010</a></li> <li><a href="/blog/tag/security.html" style="font-size: 10px;">security</a></li> <li><a href="/blog/tag/wifi.html" style="font-size: 10px;">wifi</a></li> <li><a href="/blog/tag/aikido.html" style="font-size: 10px;">aikido</a></li> <li><a href="/blog/tag/books.html" style="font-size: 10px;">books</a></li> <li><a href="/blog/tag/dpc10.html" style="font-size: 10px;">dpc10</a></li> <li><a href="/blog/tag/zendcon09.html" style="font-size: 11px;">zendcon09</a></li> <li><a href="/blog/tag/git.html" style="font-size: 11px;">git</a></li> <li><a href="/blog/tag/phpwomen.html" style="font-size: 10px;">phpwomen</a></li> <li><a href="/blog/tag/virtualbox.html" style="font-size: 10px;">virtualbox</a></li> <li><a href="/blog/tag/screencast.html" style="font-size: 11px;">screencast</a></li> <li><a href="/blog/tag/advocacy.html" style="font-size: 10px;">advocacy</a></li> <li><a href="/blog/tag/politics.html" style="font-size: 10px;">politics</a></li> <li><a href="/blog/tag/internet.html" style="font-size: 10px;">internet</a></li> <li><a href="/blog/tag/microphp.html" style="font-size: 10px;">microphp</a></li> <li><a href="/blog/tag/cloud.html" style="font-size: 11px;">cloud</a></li> <li><a href="/blog/tag/composer.html" style="font-size: 10px;">composer</a></li> <li><a href="/blog/tag/doctrine.html" style="font-size: 10px;">doctrine</a></li> <li><a href="/blog/tag/bower.html" style="font-size: 10px;">bower</a></li> <li><a href="/blog/tag/http.html" style="font-size: 11px;">http</a></li></ul></div>
+<ul class="zend-tag-cloud"><li><a href="/blog/tag/apigility.html" style="font-size: 11px;">apigility</a></li> <li><a href="/blog/tag/php.html" style="font-size: 20px;">php</a></li> <li><a href="/blog/tag/programming.html" style="font-size: 12px;">programming</a></li> <li><a href="/blog/tag/zend-framework.html" style="font-size: 10px;">zend-framework</a></li> <li><a href="/blog/tag/zend-server.html" style="font-size: 10px;">zend-server</a></li> <li><a href="/blog/tag/zf2.html" style="font-size: 11px;">zf2</a></li> <li><a href="/blog/tag/zend+framework.html" style="font-size: 15px;">zend framework</a></li> <li><a href="/blog/tag/rest.html" style="font-size: 11px;">rest</a></li> <li><a href="/blog/tag/hal.html" style="font-size: 10px;">hal</a></li> <li><a href="/blog/tag/patterns.html" style="font-size: 11px;">patterns</a></li> <li><a href="/blog/tag/testing.html" style="font-size: 11px;">testing</a></li> <li><a href="/blog/tag/mvc.html" style="font-size: 11px;">mvc</a></li> <li><a href="/blog/tag/rails.html" style="font-size: 11px;">rails</a></li> <li><a href="/blog/tag/javascript.html" style="font-size: 11px;">javascript</a></li> <li><a href="/blog/tag/angularjs.html" style="font-size: 10px;">angularjs</a></li> <li><a href="/blog/tag/ui-router.html" style="font-size: 10px;">ui-router</a></li> <li><a href="/blog/tag/vim.html" style="font-size: 11px;">vim</a></li> <li><a href="/blog/tag/family.html" style="font-size: 11px;">family</a></li> <li><a href="/blog/tag/personal.html" style="font-size: 13px;">personal</a></li> <li><a href="/blog/tag/phpconcom.html" style="font-size: 10px;">phpconcom</a></li> <li><a href="/blog/tag/oop.html" style="font-size: 11px;">oop</a></li> <li><a href="/blog/tag/linux.html" style="font-size: 12px;">linux</a></li> <li><a href="/blog/tag/zendcon08.html" style="font-size: 11px;">zendcon08</a></li> <li><a href="/blog/tag/file_fortune.html" style="font-size: 10px;">file_fortune</a></li> <li><a href="/blog/tag/pear.html" style="font-size: 11px;">pear</a></li> <li><a href="/blog/tag/zendcon.html" style="font-size: 11px;">zendcon</a></li> <li><a href="/blog/tag/perl.html" style="font-size: 12px;">perl</a></li> <li><a href="/blog/tag/fastcgi.html" style="font-size: 10px;">fastcgi</a></li> <li><a href="/blog/tag/ubuntu.html" style="font-size: 11px;">ubuntu</a></li> <li><a href="/blog/tag/tekx.html" style="font-size: 10px;">tekx</a></li> <li><a href="/blog/tag/zendcon10.html" style="font-size: 10px;">zendcon10</a></li> <li><a href="/blog/tag/dojo.html" style="font-size: 11px;">dojo</a></li> <li><a href="/blog/tag/symfony.html" style="font-size: 11px;">symfony</a></li> <li><a href="/blog/tag/zeta+components.html" style="font-size: 10px;">zeta components</a></li> <li><a href="/blog/tag/tek09.html" style="font-size: 10px;">tek09</a></li> <li><a href="/blog/tag/spl.html" style="font-size: 11px;">spl</a></li> <li><a href="/blog/tag/subversion.html" style="font-size: 11px;">subversion</a></li> <li><a href="/blog/tag/zend+framewor.html" style="font-size: 10px;">zend framewor</a></li> <li><a href="/blog/tag/conferences.html" style="font-size: 11px;">conferences</a></li> <li><a href="/blog/tag/dpc08.html" style="font-size: 11px;">dpc08</a></li> <li><a href="/blog/tag/phpworks08.html" style="font-size: 11px;">phpworks08</a></li> <li><a href="/blog/tag/webinar.html" style="font-size: 11px;">webinar</a></li> <li><a href="/blog/tag/zencon08.html" style="font-size: 10px;">zencon08</a></li> <li><a href="/blog/tag/cw09.html" style="font-size: 11px;">cw09</a></li> <li><a href="/blog/tag/zend+server.html" style="font-size: 10px;">zend server</a></li> <li><a href="/blog/tag/dpc09.html" style="font-size: 10px;">dpc09</a></li> <li><a href="/blog/tag/sflive2010.html" style="font-size: 10px;">sflive2010</a></li> <li><a href="/blog/tag/security.html" style="font-size: 10px;">security</a></li> <li><a href="/blog/tag/wifi.html" style="font-size: 10px;">wifi</a></li> <li><a href="/blog/tag/aikido.html" style="font-size: 10px;">aikido</a></li> <li><a href="/blog/tag/books.html" style="font-size: 10px;">books</a></li> <li><a href="/blog/tag/dpc10.html" style="font-size: 10px;">dpc10</a></li> <li><a href="/blog/tag/zendcon09.html" style="font-size: 11px;">zendcon09</a></li> <li><a href="/blog/tag/git.html" style="font-size: 11px;">git</a></li> <li><a href="/blog/tag/phpwomen.html" style="font-size: 10px;">phpwomen</a></li> <li><a href="/blog/tag/virtualbox.html" style="font-size: 10px;">virtualbox</a></li> <li><a href="/blog/tag/screencast.html" style="font-size: 11px;">screencast</a></li> <li><a href="/blog/tag/advocacy.html" style="font-size: 10px;">advocacy</a></li> <li><a href="/blog/tag/politics.html" style="font-size: 10px;">politics</a></li> <li><a href="/blog/tag/internet.html" style="font-size: 10px;">internet</a></li> <li><a href="/blog/tag/microphp.html" style="font-size: 10px;">microphp</a></li> <li><a href="/blog/tag/cloud.html" style="font-size: 11px;">cloud</a></li> <li><a href="/blog/tag/composer.html" style="font-size: 10px;">composer</a></li> <li><a href="/blog/tag/doctrine.html" style="font-size: 10px;">doctrine</a></li> <li><a href="/blog/tag/bower.html" style="font-size: 10px;">bower</a></li> <li><a href="/blog/tag/http.html" style="font-size: 11px;">http</a></li></ul></div>
         </div>
 
         <br class="clear"/>
