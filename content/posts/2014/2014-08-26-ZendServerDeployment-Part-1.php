@@ -16,7 +16,7 @@ $entry->setAuthor($author);
 $entry->setDraft(false);
 $entry->setPublic(true);
 $entry->setCreated(new \DateTime('2014-08-26 15:15', new \DateTimezone('America/Chicago')));
-$entry->setUpdated(new \DateTime('2014-08-26 15:15', new \DateTimezone('America/Chicago')));
+$entry->setUpdated(new \DateTime('2014-08-28 08:30', new \DateTimezone('America/Chicago')));
 $entry->setTimezone('America/Chicago');
 $entry->setTags(array(
   'apigility',
@@ -177,6 +177,16 @@ $ vendor/bin/zfdeploy.php mwop.net.zpk --configs=../mwop.net-config --zpk=zpk
     be publishing on Tuesdays and Thursdays; I'll update each post
     to link to the others in the series. Next tip: creating scheduled
     Job Queue jobs, à la cronjobs.
+</p>
+
+<h2>Other articles in the series</h2>
+
+<ul>
+    <li><a href="/blog/2014-08-28-zend-server-deployment-part-2">Tip 2: Recurring Jobs</a></li>
+</ul
+
+<p>
+    I will update this post to link to each article as it releases.
 </p>
 EOT;
 $entry->setExtended($extended);
