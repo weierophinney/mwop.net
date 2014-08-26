@@ -16,7 +16,7 @@ $entry->setAuthor($author);
 $entry->setDraft(false);
 $entry->setPublic(true);
 $entry->setCreated(new \DateTime('2014-09-09 08:30', new \DateTimezone('America/Chicago')));
-$entry->setUpdated(new \DateTime('2014-09-16 08:30', new \DateTimezone('America/Chicago')));
+$entry->setUpdated(new \DateTime('2014-09-18 08:30', new \DateTimezone('America/Chicago')));
 $entry->setTimezone('America/Chicago');
 $entry->setTags(array(
   'apigility',
@@ -114,11 +114,8 @@ exit(0);
     <li><a href="/blog/2014-09-04-zend-server-deployment-part-4.html">Tip 4: Secure your job scripts</a></li>
     <li><a href="/blog/2014-09-11-zend-server-deployment-part-6.html">Tip 6: Page caching</a></li>
     <li><a href="/blog/2014-09-16-zend-server-deployment-part-7.html">Tip 7: zs-client</a></li>
+    <li><a href="/blog/2014-09-18-zend-server-deployment-part-8.html">Tip 8: Automate</a></li>
 </ul
-
-<p>
-    I will update this post to link to each article as it releases.
-</p>
 EOT;
 $entry->setExtended($extended);
 

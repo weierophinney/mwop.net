@@ -16,7 +16,7 @@ $entry->setAuthor($author);
 $entry->setDraft(false);
 $entry->setPublic(true);
 $entry->setCreated(new \DateTime('2014-08-26 15:15', new \DateTimezone('America/Chicago')));
-$entry->setUpdated(new \DateTime('2014-09-16 08:30', new \DateTimezone('America/Chicago')));
+$entry->setUpdated(new \DateTime('2014-09-18 08:30', new \DateTimezone('America/Chicago')));
 $entry->setTimezone('America/Chicago');
 $entry->setTags(array(
   'apigility',
@@ -173,10 +173,7 @@ $ vendor/bin/zfdeploy.php mwop.net.zpk --configs=../mwop.net-config --zpk=zpk
 <h2>Next time...</h2>
 
 <p>
-    I've got a total of 8 tips queued up, including this one, and will 
-    be publishing on Tuesdays and Thursdays; I'll update each post
-    to link to the others in the series. Next tip: creating scheduled
-    Job Queue jobs, à la cronjobs.
+    Next tip: creating scheduled Job Queue jobs, à la cronjobs.
 </p>
 
 <h2>Other articles in the series</h2>
@@ -188,11 +185,8 @@ $ vendor/bin/zfdeploy.php mwop.net.zpk --configs=../mwop.net-config --zpk=zpk
     <li><a href="/blog/2014-09-09-zend-server-deployment-part-5.html">Tip 5: Set your job status</a></li>
     <li><a href="/blog/2014-09-11-zend-server-deployment-part-6.html">Tip 6: Page caching</a></li>
     <li><a href="/blog/2014-09-16-zend-server-deployment-part-7.html">Tip 7: zs-client</a></li>
+    <li><a href="/blog/2014-09-18-zend-server-deployment-part-8.html">Tip 8: Automate</a></li>
 </ul
-
-<p>
-    I will update this post to link to each article as it releases.
-</p>
 EOT;
 $entry->setExtended($extended);
 
