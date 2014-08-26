@@ -1,11 +1,131 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title type="text">Author: Matthew Weier O'Phinney :: phly, boy, phly</title>
-  <updated>2014-08-21T19:30:00+0000</updated>
+  <updated>2014-08-26T20:15:00+0000</updated>
   <generator uri="http://framework.zend.com" version="2">Zend_Feed_Writer</generator>
   <link rel="alternate" type="text/html" href="http://mwop.net/blog/author/matthew.html"/>
   <link rel="self" type="application/atom+xml" href="http://mwop.net/blog/author/matthew-atom.xml"/>
   <id>http://mwop.net/blog/author/matthew.html</id>
+  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <title type="html"><![CDATA[Deployment with Zend Server (Part 1 of 8)]]></title>
+    <published>2014-08-26T20:15:00+0000</published>
+    <updated>2014-08-26T20:15:00+0000</updated>
+    <link rel="alternate" type="text/html" href="http://mwop.net/blog/2014-08-11-zend-server-deployment-part-1.html"/>
+    <id>http://mwop.net/blog/2014-08-11-zend-server-deployment-part-1.html</id>
+    <author>
+      <name>Matthew Weier O'Phinney</name>
+      <email>me@mwop.net</email>
+      <uri>http://mwop.net</uri>
+    </author>
+    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
+      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>I manage a number of websites running on Zend Server, Zend's PHP
+application platform. I've started accumulating a number of
+patterns and tricks that make the deployments more successful, and
+which also allow me to do more advanced things such as setting up
+recurring jobs for the application, clearing page caches, and
+more.</xhtml:p>
+<xhtml:h2>Yes, YOU can afford Zend Server</xhtml:h2>
+<xhtml:p>"But, wait, Zend Server is uber-expensive!" I hear some folks
+saying.</xhtml:p>
+<xhtml:p>Well, yes and no.</xhtml:p>
+<xhtml:p>With the release of Zend Server 7, Zend now offers a
+"Development Edition" that contains all the features I've covered
+here, and which runs $195. This makes it affordable for small shops
+and freelancers, but potentially out of the reach of
+individuals.</xhtml:p>
+<xhtml:p>But there's another option, which I'm using, which is even more
+intriguing: <xhtml:a href="http://www.zend.com/en/solutions/cloud-solutions/aws-marketplace">Zend
+Server on the Amazon Web Services (AWS) Marketplace</xhtml:a>. On AWS,
+you can try out Zend Server free for 30 days. After that, you get
+charged a fee on top of your normal AWS EC2 usage. Depending on the
+EC2 instance you choose, this can run as low as ~$24/month (this is
+on the t1.micro, and that's the total per month for both AWS and
+Zend Server usage). That's cheaper than most VPS hosting or PaaS
+providers, and gives you a full license for Zend Server.</xhtml:p>
+<xhtml:p>Considering Zend Server is available on almost every PaaS and
+IaaS offering available, this is a great way to try it out, as well
+as to setup staging and testing servers cheaply; you can then
+choose the provider you want based on its other features. For those
+of you running low traffic or small, personal or hobbyist sites,
+it's an inexpensive alternative to VPS hosting.</xhtml:p>
+<xhtml:p>So... onwards with my first tip.</xhtml:p>
+<xhtml:h2>Tip 1: zf-deploy</xhtml:h2>
+<xhtml:p>My first trick is to use <xhtml:a href="https://github.com/zfcampus/zf-deploy">zf-deploy</xhtml:a>. This is a
+tool <xhtml:a href="https://twitter.com/ezimuel">Enrico</xhtml:a> and I wrote
+when prepping <xhtml:a href="https://apigility.org">Apigility</xhtml:a> for its
+initial stable release. It allows you to create deployment packages
+from your application, including zip, tarball, and ZPKs (Zend
+Server deployment packages). We designed it to simplify packaging
+<xhtml:a href="http://framework.zend.com">Zend Framework 2</xhtml:a> and
+Apigility applications, but with a small amount of work, it could
+likely be used for a greater variety of PHP applications.</xhtml:p>
+<xhtml:p>zf-deploy takes the current state of your working directory, and
+clones it to a working path. It then runs Composer (though you can
+disable this), and strips out anything configured in your
+<xhtml:kbd>.gitignore</xhtml:kbd> file (again, you can disable this). From
+there, it creates your package.</xhtml:p>
+<xhtml:p>One optional piece is that, when creating a ZPK, you can tell it
+which <xhtml:kbd>deployment.xml</xhtml:kbd> you want to use and/or specify a
+directory containing the <xhtml:kbd>deployment.xml</xhtml:kbd> and any install
+scripts you want to include in the package. This latter is
+incredibly useful, as you can use this to shape your
+deployment.</xhtml:p>
+<xhtml:p>As an example, on my own website, I have a CLI job that will
+fetch my latest <xhtml:a href="https://github.com">GitHub</xhtml:a> activity. I
+can invoke that in my <xhtml:kbd>post_stage.php</xhtml:kbd> script:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="php">
+if (! chdir(getenv('ZS_APPLICATION_BASE_DIR'))) {
+  throw new Exception('Unable to change to application directory');
+}
+
+$php = '/usr/local/zend/bin/php';
+
+$command = $php . ' public/index.php githubfeed fetch';
+echo "\nExecuting `$command`\n";
+system($command);
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>One task I always do is make sure my application data directory
+is writable by the web server. This next line builds on the above,
+in that it assumes you've changed to your application directory
+first:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="php">
+$command = 'chmod -R a+rwX ./data';
+echo "\nExecuting `$command`\n";
+system($command);
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>Yes, PHP has a built-in for <xhtml:kbd>chmod</xhtml:kbd>, but it doesn't act
+recursively.</xhtml:p>
+<xhtml:p>For ZF2 and Apigility applications, zf-deploy also allows you to
+specify a directory that contains the <xhtml:kbd>*local.php</xhtml:kbd> config
+scripts for your <xhtml:kbd>config/autoload/</xhtml:kbd> directory, allowing
+you to merge in configuration specific for the deployment
+environment. This is a fantastic capability, as I can keep any
+private configuration separate from my main repository.</xhtml:p>
+<xhtml:p>Deployment now becomes:</xhtml:p>
+<xhtml:div class="example">
+<xhtml:pre>
+<xhtml:code language="bash">
+$ vendor/bin/zfdeploy.php mwop.net.zpk --configs=../mwop.net-config --zpk=zpk
+</xhtml:code>
+</xhtml:pre></xhtml:div>
+<xhtml:p>and I now have a ZPK ready to push to Zend Server.</xhtml:p>
+<xhtml:p>In sum: zf-deploy simplifies ZPK creation, and allows you to add
+deployment scripts that let you perform other tasks on the
+server.</xhtml:p>
+<xhtml:h2>Next time...</xhtml:h2>
+<xhtml:p>I've got a total of 8 tips queued up, including this one, and
+will be publishing on Tuesdays and Thursdays; I'll update each post
+to link to the others in the series. Next tip: creating scheduled
+Job Queue jobs, à la cronjobs.</xhtml:p>
+</xhtml:div>
+    </content>
+  </entry>
   <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <title type="html"><![CDATA[Testing Code That Emits Output]]></title>
     <published>2014-08-21T19:30:00+0000</published>
@@ -1948,214 +2068,6 @@ flexibility of OpenShift.</xhtml:p>
 replacement, but I was not keen on exposing the job functionality
 via HTTP.</xhtml:li>
 </xhtml:ul>
-</xhtml:div>
-    </content>
-  </entry>
-  <entry xmlns:xhtml="http://www.w3.org/1999/xhtml">
-    <title type="html"><![CDATA[On php-fig and Shared Interfaces]]></title>
-    <published>2012-12-20T20:23:00+0000</published>
-    <updated>2012-12-20T20:23:00+0000</updated>
-    <link rel="alternate" type="text/html" href="http://mwop.net/blog/2012-12-20-on-shared-interfaces.html"/>
-    <id>http://mwop.net/blog/2012-12-20-on-shared-interfaces.html</id>
-    <author>
-      <name>Matthew Weier O'Phinney</name>
-      <email>me@mwop.net</email>
-      <uri>http://mwop.net</uri>
-    </author>
-    <content xmlns:xhtml="http://www.w3.org/1999/xhtml" type="xhtml">
-      <xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml"><xhtml:p>This is a post I've been meaning to write for a long time, and
-one requested of me personally by <xhtml:a href="http://www.rooftopsolutions.nl/blog/">Evert Pot</xhtml:a> during the
-Dutch PHP Conference in June 2012. It details some observations I
-have of php-fig, and hopefully will serve as a record of why I'm
-not directly participating any longer.</xhtml:p>
-<xhtml:p>I was a founding member of the <xhtml:a href="http://www.php-fig.org/">Framework Interoperability Group</xhtml:a>, now
-called "php-fig". I was one of around a dozen folks who sat around
-a table in 2009 in Chicago during php|tek and started discussions
-about what we could all do to make it possible to work better
-together between our projects, and make it simpler for users to
-pick and choose from our projects in order to build the solutions
-to their own problems.</xhtml:p>
-<xhtml:p>The first "standard" that came from this was <xhtml:a href="https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md">
-PSR-0</xhtml:a>, which promoted a standard class naming convention that
-uses a 1:1 relationship between the namespace and/or vendor prefix
-and the directory hierarchy, and the class name and the filename in
-which it lives. To this day, there are both those who hail this as
-a great step forward for cooperation, and simultaneously others who
-feel it's a terrible practice.</xhtml:p>
-<xhtml:p>And then nothing, for years. But a little over a year ago, there
-was a new push by a number of folks wanting to do more. Paul Jones
-did a remarkable job of spearheading the next <xhtml:a href="https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-1-basic-coding-standard.md">
-two</xhtml:a> <xhtml:a href="https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md">
-standards</xhtml:a>, which centered around coding style. Again, just like
-with PSR-0, we had both those feeling it was a huge step forward,
-and those who loathe the direction.</xhtml:p>
-<xhtml:p>What was interesting, though, was that once we started seeing
-some new energy and momentum, it seemed that <xhtml:em>everyone</xhtml:em>
-wanted a say. And we started getting dozens of folks a week asking
-to be voting members, and new proposal after new proposal. Whether
-or not somebody likes an existing standard, they want to have
-backing for a standard they propose.</xhtml:p>
-<xhtml:p>And this is when we started seeing proposals surface for shared
-interfaces, first around caching, and now around logging (though
-the latter is the first up for vote).</xhtml:p>
-<xhtml:h2>Shared Interfaces</xhtml:h2>
-<xhtml:p>The idea around shared interfaces is simple: if we can come to a
-consensus on the basic interface for a common application task,
-libraries and frameworks can typehint on that shared interface,
-allowing developers to drop in the implementation of their choosing
--- or even a standard, reference implementation. The goal is to
-prevent Not Invented Here (NIH) syndrome, as well as to make it
-simpler to re-use components between one library and another. As an
-example, if you're using Framework A, and it has a caching library,
-and you're consuming ORM B, you'd be able to pass the same cache
-object to the ORM as you use in the framework.</xhtml:p>
-<xhtml:p>Great goals, really.</xhtml:p>
-<xhtml:p>But I'm not sure I buy into them.</xhtml:p>
-<xhtml:h2>Problems</xhtml:h2>
-<xhtml:p>First, I agree that NIH is a problem.</xhtml:p>
-<xhtml:p>Second, I <xhtml:em>also</xhtml:em> think there's space for <xhtml:em>multiple
-implementations</xhtml:em> of any given component. Often there are
-different approaches that different authors will take: one might
-focus on performance, another on having multiple adapters for
-providing different capabilities, etc. Sometimes having a different
-background will present different problem areas you want to
-resolve. As such, having multiple implementations can be a very
-good thing; developers can look at what each provides, and
-determine which solves the particular issues presented in the
-current project.</xhtml:p>
-<xhtml:p>Because of this latter point, I have my reservations about
-shared interfaces.</xhtml:p>
-<xhtml:p>What if a particular approach requires deviating from the shared
-interface in order to accomplish its goals? Additionally, in order
-to keep the greatest amount of compatibility between projects,
-shared interfaces tend to be so generic that specific
-implementations require developers to do a ton of manual type
-checking and munging of parameters, leading to more overhead, more
-difficulty testing and maintaining, and more difficulty documenting
-and understanding.</xhtml:p>
-<xhtml:p>As an example, consider the following (made up) signature for a
-log method:</xhtml:p>
-<xhtml:div class="example">
-<xhtml:pre>
-<xhtml:code language="php">
-public function log($message, array $context = null);
-</xhtml:code>
-</xhtml:pre></xhtml:div>
-<xhtml:p>What if your library supports an idea of priorities? Where would
-that information go in the above signature -- and would that differ
-between libraries -- would one library use the key for a completely
-different purpose? What about logging objects -- the signature
-doesn't say you can't, but how would I know if a specific
-implementation supports it, and won't blow up if I do pass one? Why
-must the <xhtml:code>$context</xhtml:code> be an array -- why won't any
-<xhtml:code>Traversable</xhtml:code> or <xhtml:code>ArrayAccess</xhtml:code> object
-work?</xhtml:p>
-<xhtml:p>Basically, by being overly generic, the signature becomes a
-liability for those implementing the interface; it prevents
-meaningful interoperability and leads to splintering
-implementations.</xhtml:p>
-<xhtml:p><xhtml:em>(Please note: the above is completely fictional and has no
-bearing on current proposed or accepted standards. It is a thought
-exercise only.)</xhtml:em></xhtml:p>
-<xhtml:p>Furthermore, if a given project writes their own implementation
-of a component, and it has specialized features, why would they
-want to typehint on a generic, shared interface that doesn't
-implement those features? This would be counter-intuitive, as the
-project would then need to either check on additional interfaces
-for the specialized capabilities, duck-type, etc. -- all of which
-make for more maintenance and code.</xhtml:p>
-<xhtml:p>In summary, my primary problem with the idea of shared
-interfaces is that I feel there is always room for new thinking and
-ideas in any given problem space, and that this thinking should not
-be restricted by what already exists. Secondarily, I feel that it's
-okay for a given project to be selective about what capabilities it
-requires for its internal consumption and consistency, and should
-not limit itself to a standardized interface.</xhtml:p>
-<xhtml:h2>But, but, SHARING</xhtml:h2>
-<xhtml:p><xhtml:em>Remember, the first point I made was that I think NIH is a
-problem.</xhtml:em> How do I reconcile that with a firm stance against
-shared interfaces?</xhtml:p>
-<xhtml:p>Easy: <xhtml:a href="http://en.wikipedia.org/wiki/Bridge_pattern">bridges</xhtml:a> and/or
-<xhtml:a href="http://en.wikipedia.org/wiki/Adapter_pattern">adapters</xhtml:a>.</xhtml:p>
-<xhtml:p>Let's go back to that example of Framework A, its caching
-library, and working with ORM B.</xhtml:p>
-<xhtml:p>Let's assume that ORM B defines an interface for caching, and
-let's say it looks like this:</xhtml:p>
-<xhtml:div class="example">
-<xhtml:pre>
-<xhtml:code language="php">
-interface CacheInterface
-{
-    public function set($key, $data);
-    public function has($key);
-    public function get($key);
-}
-</xhtml:code>
-</xhtml:pre></xhtml:div>
-<xhtml:p>Furthermore, we'll assume that the expected parameter values and
-return types are documented.</xhtml:p>
-<xhtml:p>What we as a consumer of both Framework A and ORM B can do is
-build an <xhtml:em>implementation</xhtml:em> of <xhtml:code>CacheInterface</xhtml:code>
-that accepts a cache instance from Framework A, and proxies the
-various interface methods to that instance.</xhtml:p>
-<xhtml:div class="example">
-<xhtml:pre>
-<xhtml:code language="php">
-class FrameworkACache implements CacheInterface
-{
-    protected $cache;
-
-    public function __construct(Cache $cache)
-    {
-        $this-&gt;cache = $cache;
-    }
-
-    public function set($key, $data)
-    {
-        $item = new CacheItem($key, $data);
-        $this-&gt;cache-&gt;setItem($item);
-    }
-
-    public function has($key)
-    {
-        return $this-&gt;cache-&gt;exists($key);
-    }
-
-    public function get($key)
-    {
-        $item = $this-&gt;cache-&gt;getItem($key);
-        return $item-&gt;getData();
-    }
-}
-</xhtml:code>
-</xhtml:pre></xhtml:div>
-<xhtml:p>Assuming your code is well-decoupled, and you're using some sort
-of Inversion of Control container, you can likely create a factory
-for your ORM that will grab the above class, with the cache
-injected, and inject it into the ORM instance. Yes, it's a bit more
-work, but it's difficult to question the end result: shared caching
-between the framework and the ORM - and no need for shared
-interfaces, nor any need to sacrifice features within the framework
-or the ORM.</xhtml:p>
-<xhtml:h2>Sharing is good, developing solutions is better</xhtml:h2>
-<xhtml:p>I think the core idea of the php-fig group is sound: <xhtml:em>let's
-all start thinking about how we can make it easier to operate with
-each other</xhtml:em>. That said, my thoughts on how to accomplish that
-goal have changed significantly, and boil down to:</xhtml:p>
-<xhtml:ul>
-<xhtml:li>Use naming conventions that will reduce collisions (i.e., use
-per-project vendor prefixes/namespaces)</xhtml:li>
-<xhtml:li>Use semantic versioning</xhtml:li>
-<xhtml:li>Keep your installation packages segregated</xhtml:li>
-<xhtml:li>Have a simple, discoverable way to autoload</xhtml:li>
-<xhtml:li>Provide interfaces for anything that could benefit from
-alternate implementations</xhtml:li>
-<xhtml:li>Don't write code that has side-effects in the global namespace
-(including altering PHP settings or superglobals)</xhtml:li>
-</xhtml:ul>
-<xhtml:p>Following these principals, you can play nice with each other,
-while still fostering innovative and differentiating solutions to
-shared problems.</xhtml:p>
 </xhtml:div>
     </content>
   </entry>
