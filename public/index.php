@@ -22,6 +22,7 @@ $services = createServiceContainer($config);
 $app = new Middleware();
 
 $app->pipe($services->get('query-params'));
+$app->pipe($services->get('body-params'));
 
 $app->pipe('/', function ($req, $res, $next) use ($services) {
     $middleware = $services->get('page.home');

@@ -17,6 +17,7 @@
         "zendframework/zend-feed": "~2.3",
         "zendframework/zend-http": "~2.3",
         "zendframework/zend-inputfilter": "~2.3",
+        "zendframework/zend-mail": "~2.3",
         "zendframework/zend-paginator": "~2.3",
         "zendframework/zend-stdlib": "~2.3",
         "zfcampus/zf-console": "~1.0"

@@ -9,16 +9,7 @@ class Contact
     {
         return new Middleware(
             $services->get('contact.landing'),
-            function ($req, $res, $next) {
-                if ($req->getMethod() !== 'POST') {
-                    $res->setStatusCode(405);
-                    return $next('POST');
-                }
-                $res->setStatusCode(302);
-                $path = str_replace('/process', '', $res->originalUrl);
-                $res->addHeader('Location', $path);
-                $res->end();
-            },
+            $services->get('contact.process'),
             $services->get('contact.thankyou')
         );
     }

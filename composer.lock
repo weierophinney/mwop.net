@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "eb2304cc0c1ea0fc6d4d0a883b97e410",
+    "hash": "e307578315c2c57c11034ac1483c2f4d",
     "packages": [
         {
             "name": "aura/session",
@@ -415,6 +415,52 @@
             "time": "2014-04-15 15:29:14"
         },
         {
+            "name": "zendframework/zend-crypt",
+            "version": "2.3.1",
+            "target-dir": "Zend/Crypt",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zendframework/Component_ZendCrypt.git",
+                "reference": "da16e88a5115bb720318ec9b5220ae2ab81dfb5e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zendframework/Component_ZendCrypt/zipball/da16e88a5115bb720318ec9b5220ae2ab81dfb5e",
+                "reference": "da16e88a5115bb720318ec9b5220ae2ab81dfb5e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.23",
+                "zendframework/zend-math": "self.version",
+                "zendframework/zend-servicemanager": "self.version",
+                "zendframework/zend-stdlib": "self.version"
+            },
+            "suggest": {
+                "ext-mcrypt": "Required for most features of Zend\\Crypt"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.3-dev",
+                    "dev-develop": "2.4-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Zend\\Crypt\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "keywords": [
+                "crypt",
+                "zf2"
+            ],
+            "time": "2014-04-15 15:28:46"
+        },
+        {
             "name": "zendframework/zend-dom",
             "version": "2.3.1",
             "target-dir": "Zend/Dom",
@@ -740,6 +786,151 @@
             "time": "2014-04-15 15:28:53"
         },
         {
+            "name": "zendframework/zend-mail",
+            "version": "2.3.1",
+            "target-dir": "Zend/Mail",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zendframework/Component_ZendMail.git",
+                "reference": "dd32bd774258e7126cf9f22a35ba523c79a66e18"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zendframework/Component_ZendMail/zipball/dd32bd774258e7126cf9f22a35ba523c79a66e18",
+                "reference": "dd32bd774258e7126cf9f22a35ba523c79a66e18",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.23",
+                "zendframework/zend-crypt": "self.version",
+                "zendframework/zend-loader": "self.version",
+                "zendframework/zend-mime": "self.version",
+                "zendframework/zend-stdlib": "self.version",
+                "zendframework/zend-validator": "self.version"
+            },
+            "require-dev": {
+                "zendframework/zend-servicemanager": "self.version"
+            },
+            "suggest": {
+                "zendframework/zend-servicemanager": "Zend\\ServiceManager component"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.3-dev",
+                    "dev-develop": "2.4-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Zend\\Mail\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "provides generalized functionality to compose and send both text and MIME-compliant multipart e-mail messages",
+            "keywords": [
+                "mail",
+                "zf2"
+            ],
+            "time": "2014-04-15 15:28:52"
+        },
+        {
+            "name": "zendframework/zend-math",
+            "version": "2.3.1",
+            "target-dir": "Zend/Math",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zendframework/Component_ZendMath.git",
+                "reference": "be6de5ba3d47e3f9a6732badea8bc724c49d0552"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zendframework/Component_ZendMath/zipball/be6de5ba3d47e3f9a6732badea8bc724c49d0552",
+                "reference": "be6de5ba3d47e3f9a6732badea8bc724c49d0552",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.23"
+            },
+            "suggest": {
+                "ext-bcmath": "If using the bcmath functionality",
+                "ext-gmp": "If using the gmp functionality",
+                "ircmaxell/random-lib": "Fallback random byte generator for Zend\\Math\\Rand if OpenSSL/Mcrypt extensions are unavailable",
+                "zendframework/zend-servicemanager": ">= current version, if using the BigInteger::factory functionality"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.3-dev",
+                    "dev-develop": "2.4-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Zend\\Math\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "keywords": [
+                "math",
+                "zf2"
+            ],
+            "time": "2014-04-15 15:29:09"
+        },
+        {
+            "name": "zendframework/zend-mime",
+            "version": "2.3.1",
+            "target-dir": "Zend/Mime",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zendframework/Component_ZendMime.git",
+                "reference": "b606401e190190426ad091b4da81dbe19cd5283c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zendframework/Component_ZendMime/zipball/b606401e190190426ad091b4da81dbe19cd5283c",
+                "reference": "b606401e190190426ad091b4da81dbe19cd5283c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.23",
+                "zendframework/zend-stdlib": "self.version"
+            },
+            "require-dev": {
+                "zendframework/zend-mail": "self.version"
+            },
+            "suggest": {
+                "zendframework/zend-mail": "Zend\\Mail component"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.3-dev",
+                    "dev-develop": "2.4-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Zend\\Mime\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "keywords": [
+                "mime",
+                "zf2"
+            ],
+            "time": "2014-04-15 15:28:54"
+        },
+        {
             "name": "zendframework/zend-paginator",
             "version": "2.3.1",
             "target-dir": "Zend/Paginator",
@@ -795,6 +986,52 @@
                 "zf2"
             ],
             "time": "2014-04-15 14:47:18"
+        },
+        {
+            "name": "zendframework/zend-servicemanager",
+            "version": "2.3.1",
+            "target-dir": "Zend/ServiceManager",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zendframework/Component_ZendServiceManager.git",
+                "reference": "652ab6e142b7afd1eede8f0f33b47d2599786c84"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zendframework/Component_ZendServiceManager/zipball/652ab6e142b7afd1eede8f0f33b47d2599786c84",
+                "reference": "652ab6e142b7afd1eede8f0f33b47d2599786c84",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.23"
+            },
+            "require-dev": {
+                "zendframework/zend-di": "self.version"
+            },
+            "suggest": {
+                "zendframework/zend-di": "Zend\\Di component"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.3-dev",
+                    "dev-develop": "2.4-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Zend\\ServiceManager\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "keywords": [
+                "servicemanager",
+                "zf2"
+            ],
+            "time": "2014-04-15 15:28:43"
         },
         {
             "name": "zendframework/zend-stdlib",
