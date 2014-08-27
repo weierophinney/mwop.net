@@ -1,0 +1,4 @@
+config/autoload/*local.php
+vendor/
+*.log
+*.zpk

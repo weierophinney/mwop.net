@@ -1,0 +1,22 @@
+    <footer class="sixteen columns footer">
+        <div class="column one-third alpha about">
+            <h4>About</h4>
+            {{>about}}
+        </div>
+
+        <div class="column one-third projects">
+            <h4>Projects</h4>
+            {{>projects}}
+        </div>
+
+        <div class="column one-third omega tags">
+            {{>searchbox}}
+            {{$footer}}{{/footer}}
+        </div>
+
+        <br class="clear"/>
+
+        <div class="copyright">
+            Unless otherwise noted, &#169; 2004 - <?php echo date('Y') ?>, Matthew Weier O'Phinney
+        </div>
+    </footer>

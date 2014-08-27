@@ -1,0 +1,28 @@
+{
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/weierophinney/PhlyComic"
+        }
+    ],
+    "require": {
+        "phly/conduit": ">=0.3.0@dev",
+        "phly/http": ">=0.1.1@dev",
+        "phly/phly-comic": "~1.0",
+        "phly/mustache": "~1.1",
+        "psr/http-message": "~1.0-dev@dev",
+        "hybridauth/hybridauth": "~2.2",
+        "zendframework/zend-inputfilter": "~2.3",
+        "zendframework/zend-paginator": "~2.3",
+        "zendframework/zend-servicemanager": "~2.3",
+        "zendframework/zend-stdlib": "~2.3"
+    },
+    "require-dev": {
+        "zfcampus/zf-deploy": "~1.0@stable"
+    },
+    "autoload": {
+        "psr-4": {
+            "Mwop\\": "src/"
+        }
+    }
+}
