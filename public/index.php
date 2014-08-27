@@ -32,12 +32,9 @@ $app->pipe('/resume', function ($req, $res, $next) use ($services) {
     $middleware($req, $res, $next);
 });
 
-$app->pipe('/contact', function ($req, $res, $next) {
-    if (! in_array($req->getMethod(), ['GET', 'POST'])) {
-        $res->setStatusCode(405);
-        return $next(['GET', 'POST']);
-    }
-    $res->end('CONTACT!');
+$app->pipe('/contact', function ($req, $res, $next) use ($services) {
+    $middleware = $services->get('contact');
+    $middleware($req, $res, $next);
 });
 
 $app->pipe(function ($err, $req, $res, $next) use ($services) {

@@ -6,6 +6,7 @@
         }
     ],
     "require": {
+        "aura/session": "~2.0-dev@dev",
         "phly/conduit": ">=0.3.0@dev",
         "phly/http": ">=0.1.1@dev",
         "phly/phly-comic": "~1.0",
