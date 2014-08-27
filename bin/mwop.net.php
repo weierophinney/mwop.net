@@ -9,21 +9,12 @@ use ZF\Console\Application;
 
 chdir(__DIR__ . '/../');
 require_once 'vendor/autoload.php';
+require_once 'src/functions.php';
 
 define('VERSION', '0.0.1');
 
-$config = include 'config/config.php';
-
-$http   = new HttpClient();
-$http->setOptions(array(
-    'adapter' => 'Zend\Http\Client\Adapter\Curl',
-));
-FeedReader::setHttpClient($http);
-
-$reader = new Github\AtomReader($config['github']['user'], $config['github']['token']);
-$reader->setLimit($config['github']['limit']);
-
-$fetch = new Github\Fetch($reader);
+$config   = include 'config/config.php';
+$services = createServiceContainer($config);
 
 $routes = [
     [
@@ -38,7 +29,10 @@ $routes = [
         'defaults' => [
             'output' => 'data/github-links.mustache',
         ],
-        'handler' => $fetch,
+        'handler' => function ($route, $console) use ($services) {
+            $handler = $services->get('Mwop\Github\Fetch');
+            return $handler($route, $console);
+        },
     ],
 ];
 

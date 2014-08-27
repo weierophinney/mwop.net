@@ -7,13 +7,16 @@ return [
     ],
     'services' => [
         'invokables' => [
-            'not-allowed' => 'Mwop\NotAllowed',
+            'not-allowed'  => 'Mwop\NotAllowed',
             'query-params' => 'Mwop\QueryParams',
         ],
         'factories' => [
-            'page.home' => 'Mwop\Factory\HomePage',
-            'page.resume' => 'Mwop\Factory\ResumePage',
-            'renderer'  => 'Mwop\Factory\Renderer',
+            'http'                   => 'Mwop\Factory\HttpClient',
+            'page.home'              => 'Mwop\Factory\HomePage',
+            'page.resume'            => 'Mwop\Factory\ResumePage',
+            'renderer'               => 'Mwop\Factory\Renderer',
+            'Mwop\Github\AtomReader' => 'Mwop\Factory\AtomReader',
+            'Mwop\Github\Fetch'      => 'Mwop\Factory\GithubFetch',
         ],
     ],
 ];

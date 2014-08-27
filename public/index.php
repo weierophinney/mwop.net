@@ -18,7 +18,7 @@ require_once 'src/functions.php';
 
 $config = include 'config/config.php';
 
-$services = Mwop\createServiceContainer($config['services']);
+$services = Mwop\createServiceContainer($config);
 
 $app = new Middleware();
 

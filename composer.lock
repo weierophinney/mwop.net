@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a6d591ff407137264e4996eb490fe202",
+    "hash": "9be1d2419728fecbbd0c25aa6125fccf",
     "packages": [
         {
             "name": "hybridauth/hybridauth",
@@ -735,52 +735,6 @@
                 "zf2"
             ],
             "time": "2014-04-15 14:47:18"
-        },
-        {
-            "name": "zendframework/zend-servicemanager",
-            "version": "2.3.1",
-            "target-dir": "Zend/ServiceManager",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/zendframework/Component_ZendServiceManager.git",
-                "reference": "652ab6e142b7afd1eede8f0f33b47d2599786c84"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/Component_ZendServiceManager/zipball/652ab6e142b7afd1eede8f0f33b47d2599786c84",
-                "reference": "652ab6e142b7afd1eede8f0f33b47d2599786c84",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.23"
-            },
-            "require-dev": {
-                "zendframework/zend-di": "self.version"
-            },
-            "suggest": {
-                "zendframework/zend-di": "Zend\\Di component"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.3-dev",
-                    "dev-develop": "2.4-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "Zend\\ServiceManager\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "keywords": [
-                "servicemanager",
-                "zf2"
-            ],
-            "time": "2014-04-15 15:28:43"
         },
         {
             "name": "zendframework/zend-stdlib",
