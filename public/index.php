@@ -1,7 +1,6 @@
 <?php
-use Mwop\NotAllowed;
-use Mwop\QueryParams;
-use Mwop\Unauthorized;
+namespace Mwop;
+
 use Phly\Conduit\Middleware;
 use Phly\Http\Server;
 
@@ -18,14 +17,20 @@ require_once 'src/functions.php';
 
 $config = include 'config/config.php';
 
-$services = Mwop\createServiceContainer($config);
+$services = createServiceContainer($config);
 
 $app = new Middleware();
 
 $app->pipe($services->get('query-params'));
 
-$app->pipe('/', $services->get('page.home'));
-$app->pipe('/resume', $services->get('page.resume'));
+$app->pipe('/', function ($req, $res, $next) use ($services) {
+    $middleware = $services->get('page.home');
+    $middleware($req, $res, $next);
+});
+$app->pipe('/resume', function ($req, $res, $next) use ($services) {
+    $middleware = $services->get('page.resume');
+    $middleware($req, $res, $next);
+});
 
 $app->pipe('/contact', function ($req, $res, $next) {
     if (! in_array($req->getMethod(), ['GET', 'POST'])) {
@@ -35,7 +40,10 @@ $app->pipe('/contact', function ($req, $res, $next) {
     $res->end('CONTACT!');
 });
 
-$app->pipe($services->get('not-allowed'));
+$app->pipe(function ($err, $req, $res, $next) use ($services) {
+    $middleware = $services->get('not-allowed');
+    $middleware($err, $req, $res, $next);
+});
 
 $server = Server::createServer($app, $_SERVER);
 $server->listen();
