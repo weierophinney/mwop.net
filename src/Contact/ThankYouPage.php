@@ -1,24 +1,19 @@
 <?php
 namespace Mwop\Contact;
 
-use Aura\Session\Session;
 use Phly\Mustache\Mustache;
 
-class LandingPage
+class ThankYouPage
 {
-    private $config;
     private $page;
     private $path;
     private $renderer;
-    private $session;
 
-    public function __construct(Mustache $renderer, $path, $page, Session $session, array $config)
+    public function __construct(Mustache $renderer, $path, $page)
     {
         $this->renderer = $renderer;
         $this->path     = $path;
         $this->page     = $page;
-        $this->session  = $session;
-        $this->config   = $config;
     }
 
     public function __invoke($request, $response, $next)
@@ -32,11 +27,16 @@ class LandingPage
             return $next('GET');
         }
 
-        $view = array_merge($this->config, [
-            'action' => rtrim($request->originalUrl, '/') . '/process',
-            'csrf'   => $this->session->getCsrfToken()->getValue(),
-        ]);
+        $parentUrl = str_replace('/thank-you', '', $request->originalUrl);
+        if (! $request->hasHeader('Referer')
+            || ! preg_match('#^' . $parentUrl . '#', $request->getHeader('Referer'))
+        ) {
+            $response->setStatusCode(302);
+            $response->addHeader('Location', $parentUrl);
+            $response->end();
+            return;
+        }
 
-        $response->end($this->renderer->render($this->page, $view));
+        $response->end($this->renderer->render($this->page, []));
     }
 }

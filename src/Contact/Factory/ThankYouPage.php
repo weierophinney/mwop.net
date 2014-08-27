@@ -1,7 +1,7 @@
 <?php
 namespace Mwop\Contact\Factory;
 
-use Mwop\Page;
+use Mwop\Contact\ThankYouPage as Page;
 
 class ThankYouPage
 {
