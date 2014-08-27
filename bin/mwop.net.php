@@ -12,7 +12,7 @@ require_once 'vendor/autoload.php';
 
 define('VERSION', '0.0.1');
 
-$config = include 'config.php';
+$config = include 'config/config.php';
 
 $http   = new HttpClient();
 $http->setOptions(array(
