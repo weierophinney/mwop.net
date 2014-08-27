@@ -12,10 +12,14 @@
         "phly/mustache": "~1.1",
         "psr/http-message": "~1.0-dev@dev",
         "hybridauth/hybridauth": "~2.2",
+        "zendframework/zend-escaper": "~2.3",
+        "zendframework/zend-feed": "~2.3",
+        "zendframework/zend-http": "~2.3",
         "zendframework/zend-inputfilter": "~2.3",
         "zendframework/zend-paginator": "~2.3",
         "zendframework/zend-servicemanager": "~2.3",
-        "zendframework/zend-stdlib": "~2.3"
+        "zendframework/zend-stdlib": "~2.3",
+        "zfcampus/zf-console": "~1.0"
     },
     "require-dev": {
         "zfcampus/zf-deploy": "~1.0@stable"
