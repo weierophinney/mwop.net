@@ -4,7 +4,7 @@
 <!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
 <head>
 	<meta charset="utf-8" />
-    <title>Blog Entries for 2013 :: phly, boy, phly</title>
+    <title>Deployment with Zend Server (Part 2 of 8) :: phly, boy, phly</title>
 	<!--[if lt IE 9]>
 		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
@@ -16,8 +16,8 @@
 <link href="/css/Application/site.css" media="screen" rel="stylesheet" type="text/css">
 <link href="/images/Application/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon">
 <link href="/css/Application/blog.css" media="screen" rel="stylesheet" type="text/css">
-<link href="/blog/year/2013-atom.xml" rel="alternate" type="application/atom+xml" title="Blog Entries for 2013 Atom Feed">
-<link href="/blog/year/2013-rss.xml" rel="alternate" type="application/rss+xml" title="Blog Entries for 2013 RSS Feed">
+<link href="/blog-atom.xml" rel="alternate" type="application/atom+xml" title="phly, boy, phly Atom Feed">
+<link href="/blog-rss.xml" rel="alternate" type="application/rss+xml" title="phly, boy, phly RSS Feed">
     <script type="text/javascript">
     //<!--
     dojoConfig={
@@ -90,157 +90,193 @@
 
     <div class="sixteen columns clearfix content">
         <div class="row">
-<section class="sixteen columns blog">
-    <h2>Blog Entries for 2013</h2>
-
-<div class="row clearfix">
 <aside class="four columns offset-by-one alpha sidebar blog">
     <p>
-        Written on 03 December 2013.
+        Written on 26 August 2014.
             </p>
 
     <ul class="tags">
-    <li><a href="/blog/tag/javascript.html">javascript</a></li>
-    <li><a href="/blog/tag/bower.html">bower</a></li>
-</ul>
-
-</aside>
-
-<section class="eleven columns omega">
-    <h4 class="entry"><a href="/blog/2013-12-03-bower-primer.html">A Bower Primer</a></h4>
-
-    <div class="entry body"><p>
-    Recently, I've been doing a fair bit of frontend development with my team 
-    as we've worked on the <a href="http://apigility.org/">Apigility</a> admin.
-    This has meant working with a variety of both JavaScript and CSS
-    libraries, often trying something out only to toss it out again later.
-    Working with frontend libraries has been quite a hassle, due to a combination
-    of discovery, installation issues, and build issues (minimization, primarily).
-    I figured there must a better way.
-</p></div>
-
-    <p><a href="/blog/2013-12-03-bower-primer.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="four columns offset-by-one alpha sidebar blog">
-    <p>
-        Written on 25 February 2013.
-            </p>
-
-    <ul class="tags">
+    <li><a href="/blog/tag/apigility.html">apigility</a></li>
     <li><a href="/blog/tag/php.html">php</a></li>
-    <li><a href="/blog/tag/rest.html">rest</a></li>
-    <li><a href="/blog/tag/http.html">http</a></li>
-    <li><a href="/blog/tag/zf2.html">zf2</a></li>
-    <li><a href="/blog/tag/zend%2Bframework.html">zend framework</a></li>
+    <li><a href="/blog/tag/programming.html">programming</a></li>
+    <li><a href="/blog/tag/zend-framework.html">zend-framework</a></li>
+    <li><a href="/blog/tag/zend-server.html">zend-server</a></li>
 </ul>
 
 </aside>
 
-<section class="eleven columns omega">
-    <h4 class="entry"><a href="/blog/2013-02-25-restful-apis-with-zf2-part-3.html">RESTful APIs with ZF2, Part 3</a></h4>
-
-    <div class="entry body"><p>
-    In my <a href="/blog/2013-02-11-restful-apis-with-zf2-part-1.html">previous</a> 
-    <a href="/blog/2013-02-13-restful-apis-with-zf2-part-2.html">posts</a>, I 
-    covered basics of JSON hypermedia APIs using Hypermedia Application Language
-    (HAL), and methods for reporting errors, including API-Problem and vnd.error.
+<article class="eleven columns omega blog">
+<h2>Deployment with Zend Server (Part 2 of 8)</h2>
+<p>
+    This is the second in a series of eight posts detailing tips on deploying
+    to Zend Server. <a href="/blog/2014-08-11-zend-server-deployment-part-1.html">The previous post in the series</a>
+    detailed getting started with <a href="http://www.zend.com/en/solutions/cloud-solutions/aws-marketplace">Zend
+    Server on the AWS marketplace</a> and using <a href="https://github.com/zfcampus/zf-deploy">zf-deploy</a>
+    to create ZPK packages to deploy to Zend Server.
 </p>
 
 <p>
-    In this post, I'll be covering <em>documenting</em> your API -- techniques 
-    you can use to indicate what HTTP operations are allowed, as well as convey 
-    the full documentation on what endpoints are available, what they accept, 
-    and what you can expect them to return.
+    Today, I'm looking at how to created scheduled/recurring jobs using Zend Server's Job Queue;
+    think of this as application-level cronjobs.
+</p><h2>Tip 2: Recurring Jobs</h2>
+
+<p>
+    I needed to define a few recurring jobs on the server. In the past, I've 
+    used <kbd>cron</kbd> for this, but I've recently had a slight change of mind on 
+    this: if I use <kbd>cron</kbd>, I have to assume I'm running on a unix-like system, 
+    and have some sort of system access to the server. If I have multiple 
+    servers running, that means ensuring they're setup on each server. It seems 
+    better to be able to define these jobs at the applicaton level.
 </p>
 
 <p>
-    While I will continue covering general aspects of RESTful APIs in this 
-    post, I will also finally introduce several ZF2-specific techniques.
-</p></div>
+    Since Zend Server comes with Job Queue, I decided to try it out for 
+    scheduling recurring jobs. This is not terribly intuitive, however. The UI 
+    allows you to define scheduled jobs... but only gives options for every 
+    minute, hour, day, week, and month, without allowing you to specify the 
+    exact interval (e.g., every day at 20:00).
 
-    <p><a href="/blog/2013-02-25-restful-apis-with-zf2-part-3.html">Continue reading...</a></p>
-</section>
+<p>
+    The PHP API, however, makes this easy. I can create a job as follows:
+</p>
 
-</div>
-<div class="row clearfix">
-<aside class="four columns offset-by-one alpha sidebar blog">
-    <p>
-        Written on 13 February 2013.
-            </p>
+<div class="example"><pre><code language="php">
+$queue = new ZendJobQueue();
+$queue->createHttpJob('/jobs/github-feed.php', [], [
+  'name'       => 'github-feed',
+  'persistent' => false,
+  'schedule'   => '5,20,35,40 * * * *',
+]);
+</code></pre></div>
 
-    <ul class="tags">
-    <li><a href="/blog/tag/php.html">php</a></li>
-    <li><a href="/blog/tag/rest.html">rest</a></li>
-    <li><a href="/blog/tag/http.html">http</a></li>
-    <li><a href="/blog/tag/zf2.html">zf2</a></li>
-    <li><a href="/blog/tag/zend%2Bframework.html">zend framework</a></li>
+<p>
+    Essentially, you provide a URL to the script to execute (Job Queue "runs" a 
+    job by accessing a URL on the server), and provide a schedule in crontab 
+    format. I like to give my jobs names as well, as it allows me to search for 
+    them in the UI, and also enables linking between the rules and the logs in 
+    the UI. Marking them as <em>not</em> persistent ensures that if the job is 
+    successful, it will be removed from the events list.
+</p>
+
+<p>
+    The question is, where do you define this? I decided to do this in my 
+    <kbd>post_activate.php</kbd> deployment script. However, this raises two new 
+    problems:
+</p>
+
+<ul>
+    <li>Rules need not just a path to the script, but also the scheme and host. 
+        You _can_ omit those, but only if the script can resolve them via 
+        <kbd>$_SERVER</kbd>... which it cannot due during deployment.</li>
+    <li>Each deployment adds the jobs you define... but this does not overwrite 
+        or remove the jobs you added in previous deployments.</li>
 </ul>
 
-</aside>
-
-<section class="eleven columns omega">
-    <h4 class="entry"><a href="/blog/2013-02-13-restful-apis-with-zf2-part-2.html">RESTful APIs with ZF2, Part 2</a></h4>
-
-    <div class="entry body"><p>
-    In my <a href="/blog/2013-02-11-restful-apis-with-zf2-part-1.html">last post</a>,
-    I covered some background on REST and the Richardson Maturity Model, and some
-    emerging standards around hypermedia APIs in JSON; in particular, I outlined
-    aspects of Hypermedia Application Language (HAL), and how it can be used to
-    define a generic structure for JSON resources.
+<p>
+    I solved these as follows:
 </p>
 
+<div class="example"><pre><code language="php">
+$server = 'http://mwop.net';
+
+// Remove previously scheduled jobs:
+$queue = new ZendJobQueue();
+foreach ($queue->getSchedulingRules() as $job) {
+    if (0 !== strpos($job['script'], $server)) {
+        // not one we're interested in
+        continue;
+    }
+
+    // Remove previously scheduled job
+    $queue->deleteSchedulingRule($job['id']);
+}
+
+$queue->createHttpJob($server . '/jobs/github-feed.php', [], [
+  'name'       => 'github-feed',
+  'persistent' => false,
+  'schedule'   => '5,20,35,40 * * * *',
+]);
+</code></pre></div>
+
 <p>
-    In this post, I cover an aspect of RESTful APIs that's often overlooked:
-    reporting problems.
-</p></div>
+    So, in summary:
+</p>
 
-    <p><a href="/blog/2013-02-13-restful-apis-with-zf2-part-2.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="four columns offset-by-one alpha sidebar blog">
-    <p>
-        Written on 12 February 2013.
-                <br />Last updated on 13 February 2013.
-            </p>
-
-    <ul class="tags">
-    <li><a href="/blog/tag/php.html">php</a></li>
-    <li><a href="/blog/tag/rest.html">rest</a></li>
-    <li><a href="/blog/tag/http.html">http</a></li>
-    <li><a href="/blog/tag/zf2.html">zf2</a></li>
-    <li><a href="/blog/tag/zend%2Bframework.html">zend framework</a></li>
+<ul>
+    <li>Define your rules with names.</li>
+    <li>Define recurring rules using the <kbd>schedule</kbd> option.</li>
+    <li>Define recurring rules in your deployment script, during <kbd>post_activate</kbd>.</li>
+    <li>Remove previously defined rules in your deployment script, prior to defining them.</li>
 </ul>
 
-</aside>
-
-<section class="eleven columns omega">
-    <h4 class="entry"><a href="/blog/2013-02-11-restful-apis-with-zf2-part-1.html">RESTful APIs with ZF2, Part 1</a></h4>
-
-    <div class="entry body"><p>
-    RESTful APIs have been an interest of mine for a couple of years, but due
-    to <a href="http://framework.zend.com/blog//zend-framework-2-0-0-stable-released.html">circumstances</a>,
-    I've not had much chance to work with them in any meaningful fashion until
-    recently.
-</p>
+<h2>Next time...</h2>
 
 <p>
-    <a href="http://akrabat.com/">Rob Allen</a> and I proposed a workshop for
-    <a href="http://conference.phpbenelux.eu/2013/">PHP Benelux 2013</a> 
-    covering RESTful APIs with ZF2. When it was accepted, it gave me the perfect
-    opportunity to dive in and start putting the various pieces together.
-</p></div>
+    The next tip in the series is a short one, perfect for following the US 
+    Labor Day weekend, and details something I learned the hard way from Tip 1 
+    when setting up deployment tasks.
+</p>
 
-    <p><a href="/blog/2013-02-11-restful-apis-with-zf2-part-1.html">Continue reading...</a></p>
-</section>
+<h2>Other articles in the series</h2>
 
+<ul>
+    <li><a href="/blog/2014-08-11-zend-server-deployment-part-1.html">Tip 1: zf-deploy</a></li>
+</ul
+
+<p>
+    I will update this post to link to each article as it releases.
+</p><div class="social-media">
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="mwop">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 </div>
-</section>
+
+<div class="social-media">
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<div class="fb-like" data-send="true" data-width="450" data-show-faces="true"></div>
 </div>
+
+<div class="social-media">
+<div class="g-plusone" data-size="medium" data-annotation="inline"></div>
+</div>
+
+<!-- Place this render call where appropriate -->
+<script type="text/javascript">
+dojo.ready(function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+});
+</script>
+
+<div class="social-media">
+<a href="http://www.reddit.com/submit" onclick="window.location = 'http://www.reddit.com/submit?url=' + encodeURIComponent(window.location); return false"> <img src="http://www.reddit.com/static/spreddit1.gif" alt="submit to reddit" border="0" /> </a>
+</div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_developer = 1;
+        var disqus_shortname = 'phlyboyphly';
+        var disqus_identifier = '2014-08-28-zend-server-deployment-part-2';
+        var disqus_url = 'http://mwop.net/blog/2014-08-28-zend-server-deployment-part-2.html';
+        var disqus_title = 'Deployment with Zend Server (Part 2 of 8)';
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a></article>
+
     </div>
 
     <footer class="sixteen columns footer">
