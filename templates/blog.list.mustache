@@ -1,0 +1,35 @@
+{{<layout}}
+{{$title}}{{title}}{{/title}}
+{{$content}}
+<div class="row">
+    <section class="sixteen columns blog">
+        <h2>{{title}}</h2>
+
+        {{#posts}}
+        <div class="row clearfix">
+            <aside class="four columns offset-by-one alpha sidebar blog">
+                <p>
+                    Written on {{created}}.
+                    {{#updated}}
+                    <br />Last updated on {{when}}.
+                    {{/updated}}
+                </p>
+
+                {{! render tags...}}
+            </aside>
+
+            <section class="eleven columns omega">
+                <h4 class="entry"><a href="{{path}}">{{title}}</a></h4>
+
+                <div class="entry body">{{{body}}}</div>
+
+                <p><a href="{{path}}">Continue reading...</a></p>
+            </section>
+        </div>
+        {{/posts}}
+
+        {{>pagination}}
+    </section>
+</div>
+{{/content}}
+{{/layout}}

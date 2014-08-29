@@ -47,6 +47,11 @@ $app->pipe('/auth', function ($req, $res, $next) use ($services) {
     $middleware($req, $res, $next);
 });
 
+$app->pipe('/blog', function ($req, $res, $next) use ($services) {
+    $middleware = $services->get('Mwop\Blog\Middleware');
+    $middleware($req, $res, $next);
+});
+
 $app->pipe(function ($err, $req, $res, $next) use ($services) {
     $middleware = $services->get('Mwop\Unauthorized');
     $middleware($err, $req, $res, $next);

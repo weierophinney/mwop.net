@@ -1,5 +1,8 @@
 <?php
 return [
+    'blog' => [
+        'db' => 'sqlite:' . realpath(getcwd()) . '/data/posts.db',
+    ],
     'contact' => [
         'recaptcha_pub_key'  => null,
         'recaptcha_priv_key' => null,
@@ -64,6 +67,8 @@ return [
             'page.resume'               => 'Mwop\Factory\ResumePage',
             'renderer'                  => 'Mwop\Factory\Renderer',
             'session'                   => 'Mwop\Factory\Session',
+            'Mwop\Blog\Mapper'          => 'Mwop\Blog\MapperFactory',
+            'Mwop\Blog\Middleware'      => 'Mwop\Blog\MiddlewareFactory',
             'Mwop\ComicsPage'           => 'Mwop\Factory\ComicsPage',
             'Mwop\Github\AtomReader'    => 'Mwop\Factory\AtomReader',
             'Mwop\Github\Fetch'         => 'Mwop\Factory\GithubFetch',

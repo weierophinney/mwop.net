@@ -1,0 +1,30 @@
+{{<layout}}
+{{$title}}{{title}}{{/title}}}
+{{$content}}
+{{%IMPLICIT-ITERATOR}}
+<div class="row">
+    <aside class="four columns offset-by-one alpha sidebar blog">
+        <p>
+            Written on {{created}}.
+            {{#updated}}
+            <br />Last updated on {{when}}.
+            {{/updated}}
+        </p>
+
+        <ul class="tags">
+            {{#tags}}
+            <li>{{.}}</li>
+            {{/tags}}
+        </ul>
+    </aside>
+
+    <article class="eleven columns omega blog">
+        <h2>{{title}}</h2>
+
+        {{{body}}}
+
+        {{{extended}}}
+    </article>
+</div>
+{{/content}}
+{{/layout}}
