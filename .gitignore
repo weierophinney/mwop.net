@@ -1,4 +1,5 @@
 config/autoload/*local.php
+data/comics.mustache
 vendor/
 *.log
 *.zpk

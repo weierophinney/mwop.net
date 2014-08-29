@@ -1,17 +1,17 @@
 <?php
 namespace Mwop;
 
+use Phly\Mustache\Mustache;
+
 class Unauthorized
 {
     private $renderer;
     private $template;
 
-    public function __construct(/* $renderer, $template = 'error/401' */)
+    public function __construct(Mustache $renderer, $template = 'error/401')
     {
-        /*
         $this->renderer = $renderer;
         $this->template = $template;
-         */
     }
 
     public function __invoke($err, $req, $res, $next)
@@ -20,9 +20,12 @@ class Unauthorized
             return $next($err);
         }
 
-        /*
-        $renderer->render($template);
-         */
-        $res->end();
+        $url = $req->getUrl()->setPath('/auth');
+        $view = [
+            'auth_path' => (string) $url,
+            'redirect'  => $req->originalUrl,
+        ];
+
+        $res->end($this->renderer->render($this->template, $view));
     }
 }

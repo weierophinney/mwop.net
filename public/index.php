@@ -28,6 +28,10 @@ $app->pipe('/', function ($req, $res, $next) use ($services) {
     $middleware = $services->get('page.home');
     $middleware($req, $res, $next);
 });
+$app->pipe('/comics', function ($req, $res, $next) use ($services) {
+    $middleware = $services->get('Mwop\ComicsPage');
+    $middleware($req, $res, $next);
+});
 $app->pipe('/resume', function ($req, $res, $next) use ($services) {
     $middleware = $services->get('page.resume');
     $middleware($req, $res, $next);
@@ -38,6 +42,15 @@ $app->pipe('/contact', function ($req, $res, $next) use ($services) {
     $middleware($req, $res, $next);
 });
 
+$app->pipe('/auth', function ($req, $res, $next) use ($services) {
+    $middleware = $services->get('Mwop\User\Middleware');
+    $middleware($req, $res, $next);
+});
+
+$app->pipe(function ($err, $req, $res, $next) use ($services) {
+    $middleware = $services->get('Mwop\Unauthorized');
+    $middleware($err, $req, $res, $next);
+});
 $app->pipe(function ($err, $req, $res, $next) use ($services) {
     $middleware = $services->get('not-allowed');
     $middleware($err, $req, $res, $next);
