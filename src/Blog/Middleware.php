@@ -17,24 +17,27 @@ class Middleware
     public function __invoke($req, $res, $next)
     {
         if (preg_match('#/tag/(?P<tag>[^/]+)#', $req->getUrl()->path, $matches)) {
-            return $this->displayTag($matches['tag'], $req, $res, $next);
+            return $this->listPosts($req, $res, $next, $matches['tag']);
         }
 
         if (preg_match('#^/(?P<id>[^/]+)\.html$#', $req->getUrl()->path, $matches)) {
             return $this->displayPost($matches['id'], $req, $res, $next);
         }
 
-        return $this->display($req, $res, $next);
+        return $this->listPosts($req, $res, $next);
     }
 
-    private function display($req, $res, $next)
+    private function listPosts($req, $res, $next, $tag = null)
     {
         $path  = $req->originalUrl->path;
         $page  = $this->getPageFromRequest($req);
-        $posts = $this->mapper->fetchAll($page);
-        if (! $posts) {
-            $res->setStatusCode(500);
-            return $next('Unknown error fetching posts');
+        $title = 'Blog Posts';
+
+        if ($tag) {
+            $posts = $this->mapper->fetchAllByTag($tag);
+            $title = 'Tag: ' . $tag;
+        } else {
+            $posts = $this->mapper->fetchAll();
         }
 
         $posts->setItemCountPerPage(10);
@@ -68,7 +71,7 @@ class Middleware
         }, iterator_to_array($posts->getItemsByPage($page)));
 
         $res->end($this->renderer->render('blog.list', [
-            'title'      => 'Blog posts',
+            'title'      => $title,
             'posts'      => $entries,
             'pagination' => $pagination,
         ]));

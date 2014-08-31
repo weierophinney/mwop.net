@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "f3ce387d95f604ae72fb1486833072f8",
+    "hash": "57e78cbe20a2ac822aa10f6421d352bc",
     "packages": [
         {
             "name": "aura/session",
@@ -257,12 +257,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phly/conduit.git",
-                "reference": "c51305c13017623fe0ca7425d561ec2340ce1d06"
+                "reference": "92e40aedba280b0b82d7644e34ad69bbc19591be"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phly/conduit/zipball/c51305c13017623fe0ca7425d561ec2340ce1d06",
-                "reference": "c51305c13017623fe0ca7425d561ec2340ce1d06",
+                "url": "https://api.github.com/repos/phly/conduit/zipball/92e40aedba280b0b82d7644e34ad69bbc19591be",
+                "reference": "92e40aedba280b0b82d7644e34ad69bbc19591be",
                 "shasum": ""
             },
             "require": {
@@ -305,7 +305,7 @@
                 "http",
                 "middleware"
             ],
-            "time": "2014-08-25 18:09:12"
+            "time": "2014-08-30 20:32:58"
         },
         {
             "name": "phly/http",
@@ -313,12 +313,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phly/http.git",
-                "reference": "eaae560946585de50f7f4022d7f2ff5613e249a6"
+                "reference": "15ebe63d3654610dded818be5dcf28e9a8088e4c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phly/http/zipball/eaae560946585de50f7f4022d7f2ff5613e249a6",
-                "reference": "eaae560946585de50f7f4022d7f2ff5613e249a6",
+                "url": "https://api.github.com/repos/phly/http/zipball/15ebe63d3654610dded818be5dcf28e9a8088e4c",
+                "reference": "15ebe63d3654610dded818be5dcf28e9a8088e4c",
                 "shasum": ""
             },
             "require": {
@@ -358,7 +358,7 @@
             "keywords": [
                 "http"
             ],
-            "time": "2014-08-27 13:57:28"
+            "time": "2014-08-30 21:15:56"
         },
         {
             "name": "phly/mustache",

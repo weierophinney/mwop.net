@@ -5,6 +5,10 @@
     <section class="sixteen columns blog">
         <h2>{{title}}</h2>
 
+        {{^posts}}
+        <p>No posts found.</p>
+        {{/posts}}
+
         {{#posts}}
         <div class="row clearfix">
             <aside class="four columns offset-by-one alpha sidebar blog">

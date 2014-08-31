@@ -39,7 +39,7 @@ class PdoMapper implements MapperInterface
 
     public function fetchAllByTag($tag)
     {
-        $select = 'SELECT * FROM posts WHERE draft = 0 AND public = 1 AND tags LIKE = :tag ORDER BY created DESC LIMIT :offset, :limit';
+        $select = 'SELECT * FROM posts WHERE draft = 0 AND public = 1 AND tags LIKE :tag ORDER BY created DESC LIMIT :offset, :limit';
         $count  = 'SELECT COUNT(id) FROM posts WHERE draft = 0 AND public = 1 AND tags LIKE :tag';
         return $this->preparePaginator($select, $count, [':tag' => sprintf('%%|%s|%%', $tag)]);
     }
@@ -50,7 +50,8 @@ class PdoMapper implements MapperInterface
         $count  = $this->pdo->prepare($count);
         return new Paginator(new PdoPaginator(
             $select,
-            $count
+            $count,
+            $params
         ));
     }
 }
