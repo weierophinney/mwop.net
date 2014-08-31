@@ -65,9 +65,12 @@ class Middleware
         }
         $pagination->pages = $pages;
 
-        $self    = $this;
-        $entries = array_map(function ($post) use ($self, $path) {
-            return $self->prepPost($post, $path);
+        $self     = $this;
+
+        // Strip "/tag/<tag>" from base path in order to create paths to posts
+        $postPath = ($tag) ? substr($path, 0, - (strlen($tag) + 5)) : $path;
+        $entries  = array_map(function ($post) use ($self, $postPath) {
+            return $self->prepPost($post, $postPath);
         }, iterator_to_array($posts->getItemsByPage($page)));
 
         $res->end($this->renderer->render('blog.list', [
@@ -92,7 +95,7 @@ class Middleware
             return $next('Not found');
         }
 
-        $path = substr($req->originalPath, 0, strlen($req->originalPath) - strlen($req->getUrl()->path));
+        $path = substr($req->originalUrl, 0, -(strlen($post->getId()) + 6));
         $post = $this->prepPost($post->getArrayCopy(), $path);
 
         $res->end($this->renderer->render('blog.post', $post));

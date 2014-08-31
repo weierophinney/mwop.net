@@ -19,7 +19,11 @@
                     {{/updated}}
                 </p>
 
-                {{! render tags...}}
+                <ul class="tags">
+                {{#tags}}
+                    <li><a href="{{link}}">{{tag}}</a>
+                {{/tags}}
+                </ul>
             </aside>
 
             <section class="eleven columns omega">

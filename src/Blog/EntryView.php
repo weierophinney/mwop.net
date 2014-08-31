@@ -63,12 +63,14 @@ class EntryView
     private function marshalTags($tags)
     {
         $basePath = $this->basePath;
+
         if (! is_array($tags)) {
             $tags = explode('|', trim((string) $tags, '|'));
         }
+
         return array_map(function ($tag) use ($basePath) {
             return [
-                'tag' => $tag,
+                'tag'  => $tag,
                 'link' => sprintf('%s/tag/%s', $basePath, $tag),
             ];
         }, $tags);

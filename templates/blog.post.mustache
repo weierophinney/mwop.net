@@ -1,7 +1,6 @@
 {{<layout}}
 {{$title}}{{title}}{{/title}}}
 {{$content}}
-{{%IMPLICIT-ITERATOR}}
 <div class="row">
     <aside class="four columns offset-by-one alpha sidebar blog">
         <p>
@@ -12,9 +11,9 @@
         </p>
 
         <ul class="tags">
-            {{#tags}}
-            <li>{{.}}</li>
-            {{/tags}}
+        {{#tags}}
+            <li><a href="{{link}}">{{tag}}</a>
+        {{/tags}}
         </ul>
     </aside>
 
