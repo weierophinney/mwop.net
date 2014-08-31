@@ -107,18 +107,6 @@ class Middleware
 
     private function prepPost(array $post, $path)
     {
-        $post['path'] = sprintf("%s/%s.html", $path, $post['id']);
-
-        if (! $post['updated']) {
-            return $post;
-        }
-
-        if ($post['updated'] == $post['created']) {
-            $post['updated'] = false;
-            return $post;
-        }
-
-        $post['updated'] = ['when' => $post['updated']];
-        return $post;
+        return new EntryView($post, $path);
     }
 }
