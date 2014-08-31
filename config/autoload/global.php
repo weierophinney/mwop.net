@@ -69,6 +69,7 @@ return [
             'session'                   => 'Mwop\Factory\Session',
             'Mwop\Blog\Mapper'          => 'Mwop\Blog\MapperFactory',
             'Mwop\Blog\Middleware'      => 'Mwop\Blog\MiddlewareFactory',
+            'Mwop\Blog\TagCloud'        => 'Mwop\Blog\TagCloudFactory',
             'Mwop\ComicsPage'           => 'Mwop\Factory\ComicsPage',
             'Mwop\Github\AtomReader'    => 'Mwop\Factory\AtomReader',
             'Mwop\Github\Fetch'         => 'Mwop\Factory\GithubFetch',

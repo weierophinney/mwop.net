@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "57e78cbe20a2ac822aa10f6421d352bc",
+    "hash": "d9fbda6742f208b9863c30962a32f039",
     "packages": [
         {
             "name": "aura/session",
@@ -1279,6 +1279,55 @@
                 "zf2"
             ],
             "time": "2014-04-15 15:28:48"
+        },
+        {
+            "name": "zendframework/zend-tag",
+            "version": "2.3.1",
+            "target-dir": "Zend/Tag",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zendframework/Component_ZendTag.git",
+                "reference": "c5db0536865972392c90c992bfd44b01833bd3cd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zendframework/Component_ZendTag/zipball/c5db0536865972392c90c992bfd44b01833bd3cd",
+                "reference": "c5db0536865972392c90c992bfd44b01833bd3cd",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.23",
+                "zendframework/zend-escaper": "self.version",
+                "zendframework/zend-stdlib": "self.version"
+            },
+            "require-dev": {
+                "zendframework/zend-servicemanager": "self.version"
+            },
+            "suggest": {
+                "zendframework/zend-servicemanager": "Zend\\ServiceManager component"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.3-dev",
+                    "dev-develop": "2.4-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Zend\\Tag\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "a component suite which provides a facility to work with taggable Items",
+            "keywords": [
+                "tag",
+                "zf2"
+            ],
+            "time": "2014-04-15 14:47:18"
         },
         {
             "name": "zendframework/zend-uri",

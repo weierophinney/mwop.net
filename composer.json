@@ -24,6 +24,7 @@
         "zendframework/zend-mail": "~2.3",
         "zendframework/zend-paginator": "~2.3",
         "zendframework/zend-stdlib": "~2.3",
+        "zendframework/zend-tag": "~2.3",
         "zfcampus/zf-console": "~1.0"
     },
     "require-dev": {

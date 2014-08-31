@@ -10,4 +10,6 @@ interface MapperInterface
     public function fetchAllByAuthor($author);
 
     public function fetchAllByTag($tag);
+
+    public function fetchTagCloud();
 }

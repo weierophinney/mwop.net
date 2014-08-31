@@ -19,7 +19,7 @@ $services = createServiceContainer($config);
 $routes = [
     [
         'name' => 'github-links',
-        'route' => '--output= [--template=]',
+        'route' => '[--output=] [--template=]',
         'description' => 'Fetch GitHub activity stream and generate links for the home page.',
         'short_description' => 'Fetch GitHub activity stream.',
         'options_descriptions' => [
@@ -31,6 +31,22 @@ $routes = [
         ],
         'handler' => function ($route, $console) use ($services) {
             $handler = $services->get('Mwop\Github\Fetch');
+            return $handler($route, $console);
+        },
+    ],
+    [
+        'name' => 'tag-cloud',
+        'route' => '[--output=]',
+        'description' => 'Generate a Mustache template containing the tag cloud for the blog.',
+        'short_description' => 'Generate tag cloud.',
+        'options_descriptions' => [
+            '--output'   => 'Output file to which to write the tag cloud',
+        ],
+        'defaults' => [
+            'output' => 'data/tag-cloud.mustache',
+        ],
+        'handler' => function ($route, $console) use ($services) {
+            $handler = $services->get('Mwop\Blog\TagCloud');
             return $handler($route, $console);
         },
     ],
