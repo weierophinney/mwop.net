@@ -3,6 +3,7 @@ namespace Mwop\Blog;
 
 use DateTime;
 use DateTimezone;
+use Phly\Http\Uri;
 
 class EntryView
 {
@@ -11,14 +12,16 @@ class EntryView
     private $updated;
 
     public $body;
+    public $disqus;
     public $extended;
     public $id;
     public $tags;
     public $title;
 
-    public function __construct(array $entry, $basePath)
+    public function __construct(array $entry, $basePath, array $disqus)
     {
         $this->basePath = $basePath;
+        $this->disqus   = $disqus;
 
         foreach ($entry as $key => $value) {
             switch ($key) {
@@ -58,6 +61,15 @@ class EntryView
     public function path()
     {
         return sprintf('%s/%s.html', $this->basePath, $this->id);
+    }
+
+    public function url()
+    {
+        $uri = Uri::fromArray([
+            'host'   => 'mwop.net',
+            'path'   => sprintf('/blog/%s.html', $this->id),
+        ]);
+        return (string) $uri;
     }
 
     private function marshalTags($tags)

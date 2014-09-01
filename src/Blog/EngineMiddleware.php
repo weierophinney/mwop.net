@@ -6,15 +6,21 @@ use Phly\Http\Stream;
 
 class EngineMiddleware
 {
+    private $disqus;
     private $feedPath;
     private $mapper;
     private $renderer;
 
-    public function __construct(MapperInterface $mapper, Mustache $renderer, $feedPath = 'data/feeds')
-    {
+    public function __construct(
+        MapperInterface $mapper,
+        Mustache $renderer,
+        array $disqus = [],
+        $feedPath = 'data/feeds'
+    ) {
         $this->mapper   = $mapper;
         $this->renderer = $renderer;
         $this->feedPath = $feedPath;
+        $this->disqus   = $disqus;
     }
 
     public function __invoke($req, $res, $next)
@@ -79,7 +85,8 @@ class EngineMiddleware
 
         // Strip "/tag/<tag>" from base path in order to create paths to posts
         $postPath = ($tag) ? substr($path, 0, - (strlen($tag) + 5)) : $path;
-        $entries  = array_map(function ($post) use ($self, $postPath) {
+        $url      = $req->getUrl();
+        $entries  = array_map(function ($post) use ($self, $postPath, $url) {
             return $self->prepPost($post, $postPath);
         }, iterator_to_array($posts->getItemsByPage($page)));
 
@@ -145,6 +152,6 @@ class EngineMiddleware
 
     private function prepPost(array $post, $path)
     {
-        return new EntryView($post, $path);
+        return new EntryView($post, $path, $this->disqus);
     }
 }

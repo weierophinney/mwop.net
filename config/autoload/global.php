@@ -4,6 +4,10 @@ return [
         'db'            => 'sqlite:' . realpath(getcwd()) . '/data/posts.db',
         'cache_path'    => 'data/cache/posts',
         'cache_enabled' => true,
+        'disqus'        => [
+            'developer' => 0,
+            'key'       => null,
+        ],
     ],
     'contact' => [
         'recaptcha_pub_key'  => null,
