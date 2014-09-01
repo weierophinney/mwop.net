@@ -67,6 +67,7 @@ return [
             'page.resume'               => 'Mwop\Factory\ResumePage',
             'renderer'                  => 'Mwop\Factory\Renderer',
             'session'                   => 'Mwop\Factory\Session',
+            'Mwop\Blog\FeedGenerator'   => 'Mwop\Blog\FeedGeneratorFactory',
             'Mwop\Blog\Mapper'          => 'Mwop\Blog\MapperFactory',
             'Mwop\Blog\Middleware'      => 'Mwop\Blog\MiddlewareFactory',
             'Mwop\Blog\TagCloud'        => 'Mwop\Blog\TagCloudFactory',

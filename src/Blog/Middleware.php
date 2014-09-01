@@ -2,21 +2,28 @@
 namespace Mwop\Blog;
 
 use Phly\Mustache\Mustache;
+use Phly\Http\Stream;
 
 class Middleware
 {
+    private $feedPath;
     private $mapper;
     private $renderer;
 
-    public function __construct(MapperInterface $mapper, Mustache $renderer)
+    public function __construct(MapperInterface $mapper, Mustache $renderer, $feedPath = 'data/feeds')
     {
-        $this->mapper = $mapper;
+        $this->mapper   = $mapper;
         $this->renderer = $renderer;
+        $this->feedPath = $feedPath;
     }
 
     public function __invoke($req, $res, $next)
     {
         if (preg_match('#/tag/(?P<tag>[^/]+)#', $req->getUrl()->path, $matches)) {
+            $tag = $matches['tag'];
+            if (preg_match('#/(?P<feed>atom|rss)\.xml$#', $req->getUrl()->path, $matches)) {
+                return $this->displayFeed($req, $res, $next, $matches['feed'], $tag);
+            }
             return $this->listPosts($req, $res, $next, $matches['tag']);
         }
 
@@ -24,6 +31,9 @@ class Middleware
             return $this->displayPost($matches['id'], $req, $res, $next);
         }
 
+        if (preg_match('#/(?P<feed>atom|rss)\.xml$#', $req->getUrl()->path, $matches)) {
+            return $this->displayFeed($req, $res, $next, $matches['feed']);
+        }
         return $this->listPosts($req, $res, $next);
     }
 
@@ -99,6 +109,24 @@ class Middleware
         $post = $this->prepPost($post->getArrayCopy(), $path);
 
         $res->end($this->renderer->render('blog.post', $post));
+    }
+
+    private function displayFeed($req, $res, $next, $type, $tag = null)
+    {
+        if ($tag) {
+            $path = sprintf('%s/%s.%s.xml', $this->feedPath, str_replace(' ', '+', $tag), $type);
+        } else {
+            $path = sprintf('%s/%s.xml', $this->feedPath, $type);
+        }
+
+        if (! file_exists($path)) {
+            $res->setStatusCode(404);
+            return $next('Not found');
+        }
+
+        $res->addHeader('Content-Type', sprintf('application/%s+xml', $type));
+        $res->setBody(new Stream(fopen($path, 'r')));
+        $res->end();
     }
 
     private function getPageFromRequest($req)

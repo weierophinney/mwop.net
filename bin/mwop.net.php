@@ -50,6 +50,24 @@ $routes = [
             return $handler($route, $console);
         },
     ],
+    [
+        'name' => 'feed-generator',
+        'route' => '[--outputDir=] [--baseUri=]',
+        'description' => 'Generate feeds (RSS and Atom) for the blog, including all tags.',
+        'short_description' => 'Generate blog feeds.',
+        'options_descriptions' => [
+            '--outputDir' => 'Directory to which to write the feeds (defaults to data/feeds)',
+            '--baseUri' => 'Base URI for the blog (defaults to http://mwop.net/blog)',
+        ],
+        'defaults' => [
+            'outputDir' => 'data/feeds',
+            'baseUri'   => 'http://mwop.net/blog',
+        ],
+        'handler' => function ($route, $console) use ($services) {
+            $handler = $services->get('Mwop\Blog\FeedGenerator');
+            return $handler($route, $console);
+        },
+    ],
 ];
 
 $app = new Application(
