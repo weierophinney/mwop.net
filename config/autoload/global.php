@@ -54,10 +54,11 @@ return [
     ],
     'services' => [
         'invokables' => [
-            'body-params'  => 'Mwop\BodyParams',
-            'not-allowed'  => 'Mwop\NotAllowed',
-            'query-params' => 'Mwop\QueryParams',
+            'body-params'                => 'Mwop\BodyParams',
+            'not-allowed'                => 'Mwop\NotAllowed',
+            'query-params'               => 'Mwop\QueryParams',
             'Mwop\Blog\SeedBlogDatabase' => 'Mwop\Blog\SeedBlogDatabase',
+            'Mwop\Redirects'             => 'Mwop\Redirects',
         ],
         'factories' => [
             'contact'                   => 'Mwop\Contact\Factory\Contact',

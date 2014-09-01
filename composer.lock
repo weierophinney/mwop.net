@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d9fbda6742f208b9863c30962a32f039",
+    "hash": "6cd47494436803f9e792fe7da72b7691",
     "packages": [
         {
             "name": "aura/session",
@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/auraphp/Aura.Session.git",
-                "reference": "49d9f595f531e27ad8ea61824d44ef6d2bf67e62"
+                "reference": "f54f9a44e0f0a43244ceaad93e6e14995ac74f66"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/auraphp/Aura.Session/zipball/49d9f595f531e27ad8ea61824d44ef6d2bf67e62",
-                "reference": "49d9f595f531e27ad8ea61824d44ef6d2bf67e62",
+                "url": "https://api.github.com/repos/auraphp/Aura.Session/zipball/f54f9a44e0f0a43244ceaad93e6e14995ac74f66",
+                "reference": "f54f9a44e0f0a43244ceaad93e6e14995ac74f66",
                 "shasum": ""
             },
             "require": {
@@ -25,7 +25,8 @@
             },
             "suggest": {
                 "ext-mcrypt": "Mcrypt generates the next best secure CSRF tokens.",
-                "ext-openssl": "OpenSSL generates the best secure CSRF tokens."
+                "ext-openssl": "OpenSSL generates the best secure CSRF tokens.",
+                "ircmaxell/random-lib": "A Library For Generating Secure Random Numbers"
             },
             "type": "library",
             "extra": {
@@ -56,7 +57,7 @@
                 }
             ],
             "description": "Provides session management functionality, including lazy session starting, session segments, next-request-only (\"flash\") values, and CSRF tools.",
-            "homepage": "http://auraphp.github.com/Aura.Session",
+            "homepage": "https://github.com/auraphp/Aura.Session",
             "keywords": [
                 "csrf",
                 "flash",
@@ -64,7 +65,7 @@
                 "session",
                 "sessions"
             ],
-            "time": "2014-08-28 21:08:29"
+            "time": "2014-09-01 02:55:57"
         },
         {
             "name": "opauth/github",
