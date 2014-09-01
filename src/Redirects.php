@@ -10,6 +10,14 @@ class Redirects
         $url  = $req->getUrl();
         $path = $url->path;
 
+        // PhlyBlog style pagination
+        if (preg_match('#^/blog-p(?P<page>\d+)\.html$#', $path, $matches)) {
+            return $this->redirect('/blog', $url, $res, ['page' => $matches['page']]);
+        }
+        if (preg_match('#^/blog/tag/(?P<tag>.*?)-p(?P<page>\d+)\.html$#', $path, $matches)) {
+            return $this->redirect(sprintf('/blog/tag/%s', $matches['tag']), $url, $res, ['page' => $matches['page']]);
+        }
+
         // PhlyBlog style feed URIs
         if (preg_match('#^/blog/tag/(?P<tag>.*?)-(?P<type>atom|rss)\.xml#', $path, $matches)) {
             return $this->redirect(sprintf('/blog/tag/%s/%s.xml', $matches['tag'], $matches['type']), $url, $res);
@@ -71,14 +79,20 @@ class Redirects
         $next();
     }
 
-    private function redirect($path, $url, $res)
+    private function redirect($path, $url, $res, $query = [])
     {
-        $url = Uri::fromArray([
+        $urlParams = [
             'scheme' => $url->scheme,
             'host'   => $url->host,
             'port'   => $url->port,
             'path'   => $path,
-        ]);
+        ];
+
+        if (count($query)) {
+            $urlParams['query'] = http_build_query($query);
+        }
+
+        $url = Uri::fromArray($urlParams);
         $res->setStatusCode(301);
         $res->addHeader('Location', (string) $url);
         $res->end();
