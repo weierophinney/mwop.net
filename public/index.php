@@ -28,10 +28,12 @@ $app->pipe('/', function ($req, $res, $next) use ($services) {
     $middleware = $services->get('page.home');
     $middleware($req, $res, $next);
 });
+
 $app->pipe('/comics', function ($req, $res, $next) use ($services) {
     $middleware = $services->get('Mwop\ComicsPage');
     $middleware($req, $res, $next);
 });
+
 $app->pipe('/resume', function ($req, $res, $next) use ($services) {
     $middleware = $services->get('page.resume');
     $middleware($req, $res, $next);

@@ -1,7 +1,9 @@
 <?php
 return [
     'blog' => [
-        'db' => 'sqlite:' . realpath(getcwd()) . '/data/posts.db',
+        'db'            => 'sqlite:' . realpath(getcwd()) . '/data/posts.db',
+        'cache_path'    => 'data/cache/posts',
+        'cache_enabled' => true,
     ],
     'contact' => [
         'recaptcha_pub_key'  => null,
@@ -68,6 +70,8 @@ return [
             'page.resume'               => 'Mwop\Factory\ResumePage',
             'renderer'                  => 'Mwop\Factory\Renderer',
             'session'                   => 'Mwop\Factory\Session',
+            'Mwop\Blog\CachingMiddleware'=> 'Mwop\Blog\CachingMiddlewareFactory',
+            'Mwop\Blog\EngineMiddleware'=> 'Mwop\Blog\EngineMiddlewareFactory',
             'Mwop\Blog\FeedGenerator'   => 'Mwop\Blog\FeedGeneratorFactory',
             'Mwop\Blog\Mapper'          => 'Mwop\Blog\MapperFactory',
             'Mwop\Blog\Middleware'      => 'Mwop\Blog\MiddlewareFactory',
