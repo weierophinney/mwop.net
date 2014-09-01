@@ -68,6 +68,24 @@ $routes = [
             return $handler($route, $console);
         },
     ],
+    [
+        'name' => 'seed-blog-db',
+        'route' => '[--path=] [--dbPath=]',
+        'description' => 'Re-create the blog post database from the post entities.',
+        'short_description' => 'Generate and seed the blog post database.',
+        'options_descriptions' => [
+            '--path'   => 'Base path of the application; posts are expected at $path/data/posts/',
+            '--dbPath' => 'Path to the database file (defaults to data/posts.db)',
+        ],
+        'defaults' => [
+            'path'   => realpath(getcwd()),
+            'dbPath' => realpath(getcwd()) . '/data/posts.db',
+        ],
+        'handler' => function ($route, $console) use ($services) {
+            $handler = $services->get('Mwop\Blog\SeedBlogDatabase');
+            return $handler($route, $console);
+        },
+    ],
 ];
 
 $app = new Application(

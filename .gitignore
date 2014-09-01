@@ -1,6 +1,7 @@
 config/autoload/*local.php
 data/comics.mustache
 data/feeds/*.xml
+data/posts.db
 data/tag-cloud.mustache
 vendor/
 *.log

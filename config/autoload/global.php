@@ -55,6 +55,7 @@ return [
             'body-params'  => 'Mwop\BodyParams',
             'not-allowed'  => 'Mwop\NotAllowed',
             'query-params' => 'Mwop\QueryParams',
+            'Mwop\Blog\SeedBlogDatabase' => 'Mwop\Blog\SeedBlogDatabase',
         ],
         'factories' => [
             'contact'                   => 'Mwop\Contact\Factory\Contact',
