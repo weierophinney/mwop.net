@@ -24,7 +24,7 @@ class Middleware
             if (preg_match('#/(?P<feed>atom|rss)\.xml$#', $req->getUrl()->path, $matches)) {
                 return $this->displayFeed($req, $res, $next, $matches['feed'], $tag);
             }
-            return $this->listPosts($req, $res, $next, $matches['tag']);
+            return $this->listPosts($req, $res, $next, $tag);
         }
 
         if (preg_match('#^/(?P<id>[^/]+)\.html$#', $req->getUrl()->path, $matches)) {
@@ -83,11 +83,17 @@ class Middleware
             return $self->prepPost($post, $postPath);
         }, iterator_to_array($posts->getItemsByPage($page)));
 
-        $res->end($this->renderer->render('blog.list', [
+        $view = [
             'title'      => $title,
             'posts'      => $entries,
             'pagination' => $pagination,
-        ]));
+        ];
+
+        if ($tag) {
+            $view['tag'] = ['tag' => $tag];
+        }
+
+        $res->end($this->renderer->render('blog.list', $view));
     }
 
     private function displayPost($id, $req, $res, $next)
