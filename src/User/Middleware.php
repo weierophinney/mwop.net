@@ -9,10 +9,12 @@ class Middleware extends BaseMiddleware
     {
         parent::__construct();
         $this->pipe('/', $auth);
+        $this->pipe('/github/oauth2callback', $callback);
+        $this->pipe('/google/oauth2callback', $callback);
+        $this->pipe('/twitter/oauth_callback', $callback);
         $this->pipe('/github', $auth);
         $this->pipe('/google', $auth);
         $this->pipe('/twitter', $auth);
-        $this->pipe('/callback', $callback);
         $this->pipe('/logout', $logout);
     }
 }
