@@ -4,7 +4,7 @@
 <!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
 <head>
 	<meta charset="utf-8" />
-    <title>Deployment with Zend Server (Part 1 of 8)</title>
+    <title>Deployment with Zend Server (Part 3 of 8) :: phly, boy, phly</title>
 	<!--[if lt IE 9]>
 		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
@@ -14,9 +14,10 @@
 <link href="/css/SkeletonCss/skeleton.css" media="screen" rel="stylesheet" type="text/css">
 <link href="/css/SkeletonCss/layout.css" media="screen" rel="stylesheet" type="text/css">
 <link href="/css/Application/site.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/images/Application/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon">
 <link href="/css/Application/blog.css" media="screen" rel="stylesheet" type="text/css">
-<link href="/blog-atom.xml" rel="alternate" type="application/atom+xml" title="Deployment with Zend Server (Part 1 of 8) Atom Feed">
-<link href="/blog-rss.xml" rel="alternate" type="application/rss+xml" title="Deployment with Zend Server (Part 1 of 8) RSS Feed">
+<link href="/blog-atom.xml" rel="alternate" type="application/atom+xml" title="phly, boy, phly Atom Feed">
+<link href="/blog-rss.xml" rel="alternate" type="application/rss+xml" title="phly, boy, phly RSS Feed">
     <script type="text/javascript">
     //<!--
     dojoConfig={
@@ -91,8 +92,7 @@
         <div class="row">
 <aside class="four columns offset-by-one alpha sidebar blog">
     <p>
-        Written on 26 August 2014.
-                <br />Last updated on 02 September 2014.
+        Written on 02 September 2014.
             </p>
 
     <ul class="tags">
@@ -106,106 +106,21 @@
 </aside>
 
 <article class="eleven columns omega blog">
-<h2>Deployment with Zend Server (Part 1 of 8)</h2>
+<h2>Deployment with Zend Server (Part 3 of 8)</h2>
 <p>
-    I manage a number of websites running on Zend Server, Zend's PHP 
-    application platform. I've started accumulating a number of patterns and 
-    tricks that make the deployments more successful, and which also allow 
-    me to do more advanced things such as setting up recurring jobs for the 
-    application, clearing page caches, and more.
-</p><h2>Yes, YOU can afford Zend Server</h2>
-
-<p>
-    "But, wait, Zend Server is uber-expensive!" I hear some folks saying.
+    This is the third in a series of eight posts detailing tips on deploying
+    to Zend Server. <a href="/blog/2014-08-28-zend-server-deployment-part-2.html">The previous post in the series</a>
+    detailed creating recurring jobs via Zend Job Queue, à la cronjobs.
 </p>
 
 <p>
-    Well, yes and no.
-</p>
+    Today, I'm sharing a very short deployment script tip learned by experience.
+</p><h2>Tip 3: chmod</h2>
 
 <p>
-    With the release of Zend Server 7, Zend now offers a "Development 
-    Edition" that contains all the features I've covered here, and which 
-    runs $195. This makes it affordable for small shops and freelancers, 
-    but potentially out of the reach of individuals.
-</p>
-
-<p>
-    But there's another option, which I'm using, which is even more 
-    intriguing: <a href="http://www.zend.com/en/solutions/cloud-solutions/aws-marketplace">Zend Server on the Amazon Web Services (AWS) Marketplace</a>. 
-    On AWS, you can try out Zend Server free for 30 days. After that, 
-    you get charged a fee on top of your normal AWS EC2 usage. Depending 
-    on the EC2 instance you choose, this can run as low as ~$24/month 
-    (this is on the t1.micro, and that's the total per month for both 
-    AWS and Zend Server usage). That's cheaper than most VPS hosting or 
-    PaaS providers, and gives you a full license for Zend Server.
-</p>
-
-<p>
-    Considering Zend Server is available on almost every PaaS and IaaS 
-    offering available, this is a great way to try it out, as well as to 
-    setup staging and testing servers cheaply; you can then choose the
-    provider you want based on its other features. For those of you running 
-    low traffic or small, personal or hobbyist sites, it's an 
-    inexpensive alternative to VPS hosting.
-</p>
-
-<p>
-    So... onwards with my first tip.
-</p>
-
-<h2>Tip 1: zf-deploy</h2>
-
-<p>
-    My first trick is to use 
-    <a href="https://github.com/zfcampus/zf-deploy">zf-deploy</a>. This is a tool 
-    <a href="https://twitter.com/ezimuel">Enrico</a> and I wrote when prepping 
-    <a href="https://apigility.org">Apigility</a> for its initial stable release. 
-    It allows you to create deployment packages from your application, 
-    including zip, tarball, and ZPKs (Zend Server deployment packages). 
-    We designed it to simplify packaging <a href="http://framework.zend.com">Zend Framework 2</a> and Apigility applications, but with a 
-    small amount of work, it could likely be used for a greater variety 
-    of PHP applications.
-</p>
-
-<p>
-    zf-deploy takes the current state of your working directory, and 
-    clones it to a working path. It then runs Composer (though you can 
-    disable this), and strips out anything configured in your 
-    <kbd>.gitignore</kbd> file (again, you can disable this). From there, it 
-    creates your package.
-</p>
-
-<p>
-    One optional piece is that, when creating a ZPK, you can tell it 
-    which <kbd>deployment.xml</kbd> you want to use and/or specify a directory 
-    containing the <kbd>deployment.xml</kbd> and any install scripts you want to 
-    include in the package. This latter is incredibly useful, as you can 
-    use this to shape your deployment.
-</p>
-
-<p>
-    As an example, on my own website, I have a CLI job that will fetch 
-    my latest <a href="https://github.com">GitHub</a> activity. I can invoke that 
-    in my <kbd>post_stage.php</kbd> script:
-</p>
-
-<div class="example"><pre><code language="php">
-if (! chdir(getenv('ZS_APPLICATION_BASE_DIR'))) {
-  throw new Exception('Unable to change to application directory');
-}
-
-$php = '/usr/local/zend/bin/php';
-
-$command = $php . ' public/index.php githubfeed fetch';
-echo "\nExecuting `$command`\n";
-system($command);
-</code></pre></div>
-
-<p>
-    One task I always do is make sure my application data directory is 
-    writable by the web server. This next line builds on the above, in 
-    that it assumes you've changed to your application directory first:
+    In the <a href="/blog/2014-08-11-zend-server-deployment-part-1.html">first tip</a>,
+    I detailed writing deployment scripts. One of the snippets I shared was a <kbd>chmod</kbd>
+    routine:
 </p>
 
 <div class="example"><pre><code language="php">
@@ -215,49 +130,36 @@ system($command);
 </code></pre></div>
 
 <p>
-    Yes, PHP has a built-in for <kbd>chmod</kbd>, but it doesn't act recursively.
+    The code is fine; what I did not share is <em>where</em> in the deployment script
+    you should invoke it. As I discovered from experience, this is key.
 </p>
 
 <p>
-    For ZF2 and Apigility applications, zf-deploy also allows you to 
-    specify a directory that contains the <kbd>*local.php</kbd> config 
-    scripts for your <kbd>config/autoload/</kbd> directory, allowing you to 
-    merge in configuration specific for the deployment environment. 
-    This is a fantastic capability, as I can keep any private 
-    configuration separate from my main repository.
+    Zend Server's deployment scripts run as the <kbd>zend</kbd> user. If they are 
+    writing any data to the <kbd>data</kbd> directory, that data is owned by the <kbd>zend</kbd> 
+    user and group -- and often will not be writable by the web server user.  If you 
+    have scheduled jobs that need to write to the same files, they will fail... 
+    unless you have done the <kbd>chmod</kbd> after your deployment tasks are done.
 </p>
 
 <p>
-    Deployment now becomes:
-</p>
-
-<div class="example"><pre><code language="bash">
-$ vendor/bin/zfdeploy.php mwop.net.zpk --configs=../mwop.net-config --zpk=zpk
-</code></pre></div>
-
-<p>
-    and I now have a ZPK ready to push to Zend Server.
-</p>
-
-<p>
-    In sum: zf-deploy simplifies ZPK creation, and allows you to add 
-    deployment scripts that let you perform other tasks on the server.
+    So, that's today's tip: if you need any directory in your application to be
+    writable by scheduled jobs, which will run as the web server user, make sure
+    you do your <kbd>chmod</kbd> as the last step of your deployment script.
 </p>
 
 <h2>Next time...</h2>
 
 <p>
-    I've got a total of 8 tips queued up, including this one, and will 
-    be publishing on Tuesdays and Thursdays; I'll update each post
-    to link to the others in the series. Next tip: creating scheduled
-    Job Queue jobs, à la cronjobs.
+    The next tip in the series is another short one, and will detail how to
+    secure your Job Queue job scripts.
 </p>
 
 <h2>Other articles in the series</h2>
 
 <ul>
+    <li><a href="/blog/2014-08-11-zend-server-deployment-part-1.html">Tip 1: zf-deploy</a></li>
     <li><a href="/blog/2014-08-28-zend-server-deployment-part-2.html">Tip 2: Recurring Jobs</a></li>
-    <li><a href="/blog/2014-09-02-zend-server-deployment-part-3.html">Tip 3: chmod</a></li>
 </ul
 
 <p>
@@ -300,9 +202,9 @@ dojo.ready(function() {
     <script type="text/javascript">
         var disqus_developer = 1;
         var disqus_shortname = 'phlyboyphly';
-        var disqus_identifier = '2014-08-11-zend-server-deployment-part-1';
-        var disqus_url = 'http://mwop.net/blog/2014-08-11-zend-server-deployment-part-1.html';
-        var disqus_title = 'Deployment with Zend Server (Part 1 of 8)';
+        var disqus_identifier = '2014-09-02-zend-server-deployment-part-3';
+        var disqus_url = 'http://mwop.net/blog/2014-09-02-zend-server-deployment-part-3.html';
+        var disqus_title = 'Deployment with Zend Server (Part 3 of 8)';
 
         /* * * DON'T EDIT BELOW THIS LINE * * */
         (function() {

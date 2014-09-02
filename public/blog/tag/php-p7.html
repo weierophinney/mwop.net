@@ -96,6 +96,54 @@
 <div class="row clearfix">
 <aside class="four columns offset-by-one alpha sidebar blog">
     <p>
+        Written on 04 February 2010.
+                <br />Last updated on 08 February 2010.
+            </p>
+
+    <ul class="tags">
+    <li><a href="/blog/tag/php.html">php</a></li>
+    <li><a href="/blog/tag/zend%2Bframework.html">zend framework</a></li>
+</ul>
+
+</aside>
+
+<section class="eleven columns omega">
+    <h4 class="entry"><a href="/blog/231-Creating-Re-Usable-Zend_Application-Resource-Plugins.html">Creating Re-Usable Zend_Application Resource Plugins</a></h4>
+
+    <div class="entry body"><p>
+    In my <a
+        href="/matthew/archives/230-Quick-Start-to-Zend_Application_Bootstrap.html">last
+        article</a>, I wrote about how to get started with
+    <code>Zend_Application</code>, including some information about how to write
+    resource methods, as well as listing available resource plugins. What
+    happens when you need a re-usable resource for which there is no existing
+    plugin shipped? Why, write your own, of course!
+</p>
+
+<p>
+    All plugins in Zend Framework follow a <a
+        href="http://framework.zend.com/manual/en/learning.plugins.intro.html">common
+    pattern</a>. Basically, you group plugins under a common directory, with a
+    common class prefix, and then notify the pluggable class of their location.
+</p>
+
+<p>
+    For this post, let's consider that you may want a resource plugin to do the
+    following:
+</p>
+
+<ul>
+    <li>Set the view doctype</li>
+    <li>Set the default page title and title separator</li>
+</ul></div>
+
+    <p><a href="/blog/231-Creating-Re-Usable-Zend_Application-Resource-Plugins.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="four columns offset-by-one alpha sidebar blog">
+    <p>
         Written on 08 January 2010.
                 <br />Last updated on 02 April 2010.
             </p>
@@ -412,42 +460,6 @@
 </p></div>
 
     <p><a href="/blog/221-Blog-Backlog.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="four columns offset-by-one alpha sidebar blog">
-    <p>
-        Written on 20 August 2009.
-                <br />Last updated on 25 August 2009.
-            </p>
-
-    <ul class="tags">
-    <li><a href="/blog/tag/php.html">php</a></li>
-    <li><a href="/blog/tag/zend%2Bframework.html">zend framework</a></li>
-</ul>
-
-</aside>
-
-<section class="eleven columns omega">
-    <h4 class="entry"><a href="/blog/220-Autoloading-Doctrine-and-Doctrine-entities-from-Zend-Framework.html">Autoloading Doctrine and Doctrine entities from Zend Framework</a></h4>
-
-    <div class="entry body"><p>
-    A number of people on the mailing list and twitter recently have asked how
-    to autoload Doctrine using Zend Framework's autoloader, as well as how to
-    autoload Doctrine models you've created. Having done a few projects using
-    Doctrine recently, I can actually give an answer.
-</p>
-
-<p>
-    The short answer: just attach it to <code>Zend_Loader_Autoloader</code>.
-</p>
-
-<p>
-    Now for the details.
-</p></div>
-
-    <p><a href="/blog/220-Autoloading-Doctrine-and-Doctrine-entities-from-Zend-Framework.html">Continue reading...</a></p>
 </section>
 
 </div>

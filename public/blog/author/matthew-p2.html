@@ -96,6 +96,44 @@
 <div class="row clearfix">
 <aside class="four columns offset-by-one alpha sidebar blog">
     <p>
+        Written on 12 February 2013.
+                <br />Last updated on 13 February 2013.
+            </p>
+
+    <ul class="tags">
+    <li><a href="/blog/tag/php.html">php</a></li>
+    <li><a href="/blog/tag/rest.html">rest</a></li>
+    <li><a href="/blog/tag/http.html">http</a></li>
+    <li><a href="/blog/tag/zf2.html">zf2</a></li>
+    <li><a href="/blog/tag/zend%2Bframework.html">zend framework</a></li>
+</ul>
+
+</aside>
+
+<section class="eleven columns omega">
+    <h4 class="entry"><a href="/blog/2013-02-11-restful-apis-with-zf2-part-1.html">RESTful APIs with ZF2, Part 1</a></h4>
+
+    <div class="entry body"><p>
+    RESTful APIs have been an interest of mine for a couple of years, but due
+    to <a href="http://framework.zend.com/blog//zend-framework-2-0-0-stable-released.html">circumstances</a>,
+    I've not had much chance to work with them in any meaningful fashion until
+    recently.
+</p>
+
+<p>
+    <a href="http://akrabat.com/">Rob Allen</a> and I proposed a workshop for
+    <a href="http://conference.phpbenelux.eu/2013/">PHP Benelux 2013</a> 
+    covering RESTful APIs with ZF2. When it was accepted, it gave me the perfect
+    opportunity to dive in and start putting the various pieces together.
+</p></div>
+
+    <p><a href="/blog/2013-02-11-restful-apis-with-zf2-part-1.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="four columns offset-by-one alpha sidebar blog">
+    <p>
         Written on 30 December 2012.
             </p>
 
@@ -513,52 +551,6 @@ easy it is to add it to the application and then configure it.
 </p></div>
 
     <p><a href="/blog/2012-08-17-on-microframeworks.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="four columns offset-by-one alpha sidebar blog">
-    <p>
-        Written on 30 July 2012.
-                <br />Last updated on 30 July 2012.
-            </p>
-
-    <ul class="tags">
-    <li><a href="/blog/tag/php.html">php</a></li>
-    <li><a href="/blog/tag/zf2.html">zf2</a></li>
-    <li><a href="/blog/tag/zend%2Bframework.html">zend framework</a></li>
-</ul>
-
-</aside>
-
-<section class="eleven columns omega">
-    <h4 class="entry"><a href="/blog/2012-07-30-the-new-init.html">ZF2&#039;s New Controller::init()</a></h4>
-
-    <div class="entry body"><p>
-    In Zend Framework 1, controller's had an <code>init()</code> method, which
-    was called after the controller was instantiated. The reason for it was to
-    encourage developers not to override the constructor, and thus potentially
-    break some of the functionality (as a number of objects were injected via
-    the constructor). <code>init()</code> was useful for doing additional object
-    initialization.
-</p>
-
-<div class="example"><pre><code language="php">
-class MyController extends Zend_Controller_Action
-{
-    public function init()
-    {
-        // do some stuff!
-    }
-}
-</code></pre></div>
-
-<p>
-    But this feature is missing from ZF2; how can we accomplish this sort of
-    pattern?
-</p></div>
-
-    <p><a href="/blog/2012-07-30-the-new-init.html">Continue reading...</a></p>
 </section>
 
 </div>

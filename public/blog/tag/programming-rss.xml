@@ -3,13 +3,209 @@
   <channel>
     <title>Tag: programming :: phly, boy, phly</title>
     <description>Tag: programming :: phly, boy, phly</description>
-    <pubDate>Thu, 28 Aug 2014 13:30:00 +0000</pubDate>
+    <pubDate>Tue, 02 Sep 2014 13:30:00 +0000</pubDate>
     <generator>Zend_Feed_Writer 2 (http://framework.zend.com)</generator>
     <link>http://mwop.net/blog/tag/programming.html</link>
     <atom:link rel="self" type="application/rss+xml" href="http://mwop.net/blog/tag/programming-rss.xml"/>
     <item>
+      <title>Deployment with Zend Server (Part 3 of 8)</title>
+      <pubDate>Tue, 02 Sep 2014 13:30:00 +0000</pubDate>
+      <link>http://mwop.net/blog/2014-09-02-zend-server-deployment-part-3.html</link>
+      <guid>http://mwop.net/blog/2014-09-02-zend-server-deployment-part-3.html</guid>
+      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
+      <dc:creator>Matthew Weier O'Phinney</dc:creator>
+      <content:encoded><![CDATA[<p>
+    This is the third in a series of eight posts detailing tips on deploying
+    to Zend Server. <a href="/blog/2014-08-28-zend-server-deployment-part-2.html">The previous post in the series</a>
+    detailed creating recurring jobs via Zend Job Queue, à la cronjobs.
+</p>
+
+<p>
+    Today, I'm sharing a very short deployment script tip learned by experience.
+</p><h2>Tip 3: chmod</h2>
+
+<p>
+    In the <a href="/blog/2014-08-11-zend-server-deployment-part-1.html">first tip</a>,
+    I detailed writing deployment scripts. One of the snippets I shared was a <kbd>chmod</kbd>
+    routine:
+</p>
+
+<div class="example"><pre><code language="php">
+$command = 'chmod -R a+rwX ./data';
+echo "\nExecuting `$command`\n";
+system($command);
+</code></pre></div>
+
+<p>
+    The code is fine; what I did not share is <em>where</em> in the deployment script
+    you should invoke it. As I discovered from experience, this is key.
+</p>
+
+<p>
+    Zend Server's deployment scripts run as the <kbd>zend</kbd> user. If they are 
+    writing any data to the <kbd>data</kbd> directory, that data is owned by the <kbd>zend</kbd> 
+    user and group -- and often will not be writable by the web server user.  If you 
+    have scheduled jobs that need to write to the same files, they will fail... 
+    unless you have done the <kbd>chmod</kbd> after your deployment tasks are done.
+</p>
+
+<p>
+    So, that's today's tip: if you need any directory in your application to be
+    writable by scheduled jobs, which will run as the web server user, make sure
+    you do your <kbd>chmod</kbd> as the last step of your deployment script.
+</p>
+
+<h2>Next time...</h2>
+
+<p>
+    The next tip in the series is another short one, and will detail how to
+    secure your Job Queue job scripts.
+</p>
+
+<h2>Other articles in the series</h2>
+
+<ul>
+    <li><a href="/blog/2014-08-11-zend-server-deployment-part-1.html">Tip 1: zf-deploy</a></li>
+    <li><a href="/blog/2014-08-28-zend-server-deployment-part-2.html">Tip 2: Recurring Jobs</a></li>
+</ul
+
+<p>
+    I will update this post to link to each article as it releases.
+</p>]]></content:encoded>
+      <slash:comments>0</slash:comments>
+    </item>
+    <item>
+      <title>Deployment with Zend Server (Part 2 of 8)</title>
+      <pubDate>Tue, 02 Sep 2014 13:30:00 +0000</pubDate>
+      <link>http://mwop.net/blog/2014-08-28-zend-server-deployment-part-2.html</link>
+      <guid>http://mwop.net/blog/2014-08-28-zend-server-deployment-part-2.html</guid>
+      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
+      <dc:creator>Matthew Weier O'Phinney</dc:creator>
+      <content:encoded><![CDATA[<p>
+    This is the second in a series of eight posts detailing tips on deploying
+    to Zend Server. <a href="/blog/2014-08-11-zend-server-deployment-part-1.html">The previous post in the series</a>
+    detailed getting started with <a href="http://www.zend.com/en/solutions/cloud-solutions/aws-marketplace">Zend
+    Server on the AWS marketplace</a> and using <a href="https://github.com/zfcampus/zf-deploy">zf-deploy</a>
+    to create ZPK packages to deploy to Zend Server.
+</p>
+
+<p>
+    Today, I'm looking at how to created scheduled/recurring jobs using Zend Server's Job Queue;
+    think of this as application-level cronjobs.
+</p><h2>Tip 2: Recurring Jobs</h2>
+
+<p>
+    I needed to define a few recurring jobs on the server. In the past, I've 
+    used <kbd>cron</kbd> for this, but I've recently had a slight change of mind on 
+    this: if I use <kbd>cron</kbd>, I have to assume I'm running on a unix-like system, 
+    and have some sort of system access to the server. If I have multiple 
+    servers running, that means ensuring they're setup on each server. It seems 
+    better to be able to define these jobs at the applicaton level.
+</p>
+
+<p>
+    Since Zend Server comes with Job Queue, I decided to try it out for 
+    scheduling recurring jobs. This is not terribly intuitive, however. The UI 
+    allows you to define scheduled jobs... but only gives options for every 
+    minute, hour, day, week, and month, without allowing you to specify the 
+    exact interval (e.g., every day at 20:00).
+
+<p>
+    The PHP API, however, makes this easy. I can create a job as follows:
+</p>
+
+<div class="example"><pre><code language="php">
+$queue = new ZendJobQueue();
+$queue->createHttpJob('/jobs/github-feed.php', [], [
+  'name'       => 'github-feed',
+  'persistent' => false,
+  'schedule'   => '5,20,35,40 * * * *',
+]);
+</code></pre></div>
+
+<p>
+    Essentially, you provide a URL to the script to execute (Job Queue "runs" a 
+    job by accessing a URL on the server), and provide a schedule in crontab 
+    format. I like to give my jobs names as well, as it allows me to search for 
+    them in the UI, and also enables linking between the rules and the logs in 
+    the UI. Marking them as <em>not</em> persistent ensures that if the job is 
+    successful, it will be removed from the events list.
+</p>
+
+<p>
+    The question is, where do you define this? I decided to do this in my 
+    <kbd>post_activate.php</kbd> deployment script. However, this raises two new 
+    problems:
+</p>
+
+<ul>
+    <li>Rules need not just a path to the script, but also the scheme and host. 
+        You _can_ omit those, but only if the script can resolve them via 
+        <kbd>$_SERVER</kbd>... which it cannot due during deployment.</li>
+    <li>Each deployment adds the jobs you define... but this does not overwrite 
+        or remove the jobs you added in previous deployments.</li>
+</ul>
+
+<p>
+    I solved these as follows:
+</p>
+
+<div class="example"><pre><code language="php">
+$server = 'http://mwop.net';
+
+// Remove previously scheduled jobs:
+$queue = new ZendJobQueue();
+foreach ($queue->getSchedulingRules() as $job) {
+    if (0 !== strpos($job['script'], $server)) {
+        // not one we're interested in
+        continue;
+    }
+
+    // Remove previously scheduled job
+    $queue->deleteSchedulingRule($job['id']);
+}
+
+$queue->createHttpJob($server . '/jobs/github-feed.php', [], [
+  'name'       => 'github-feed',
+  'persistent' => false,
+  'schedule'   => '5,20,35,40 * * * *',
+]);
+</code></pre></div>
+
+<p>
+    So, in summary:
+</p>
+
+<ul>
+    <li>Define your rules with names.</li>
+    <li>Define recurring rules using the <kbd>schedule</kbd> option.</li>
+    <li>Define recurring rules in your deployment script, during <kbd>post_activate</kbd>.</li>
+    <li>Remove previously defined rules in your deployment script, prior to defining them.</li>
+</ul>
+
+<h2>Next time...</h2>
+
+<p>
+    The next tip in the series is a short one, perfect for following the US 
+    Labor Day weekend, and details something I learned the hard way from Tip 1 
+    when setting up deployment tasks.
+</p>
+
+<h2>Other articles in the series</h2>
+
+<ul>
+    <li><a href="/blog/2014-08-11-zend-server-deployment-part-1.html">Tip 1: zf-deploy</a></li>
+    <li><a href="/blog/2014-09-02-zend-server-deployment-part-3.html">Tip 3: chmod</a></li>
+</ul
+
+<p>
+    I will update this post to link to each article as it releases.
+</p>]]></content:encoded>
+      <slash:comments>0</slash:comments>
+    </item>
+    <item>
       <title>Deployment with Zend Server (Part 1 of 8)</title>
-      <pubDate>Thu, 28 Aug 2014 13:30:00 +0000</pubDate>
+      <pubDate>Tue, 02 Sep 2014 13:30:00 +0000</pubDate>
       <link>http://mwop.net/blog/2014-08-11-zend-server-deployment-part-1.html</link>
       <guid>http://mwop.net/blog/2014-08-11-zend-server-deployment-part-1.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -164,134 +360,7 @@ $ vendor/bin/zfdeploy.php mwop.net.zpk --configs=../mwop.net-config --zpk=zpk
 
 <ul>
     <li><a href="/blog/2014-08-28-zend-server-deployment-part-2.html">Tip 2: Recurring Jobs</a></li>
-</ul
-
-<p>
-    I will update this post to link to each article as it releases.
-</p>]]></content:encoded>
-      <slash:comments>0</slash:comments>
-    </item>
-    <item>
-      <title>Deployment with Zend Server (Part 2 of 8)</title>
-      <pubDate>Tue, 26 Aug 2014 13:30:00 +0000</pubDate>
-      <link>http://mwop.net/blog/2014-08-28-zend-server-deployment-part-2.html</link>
-      <guid>http://mwop.net/blog/2014-08-28-zend-server-deployment-part-2.html</guid>
-      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
-      <dc:creator>Matthew Weier O'Phinney</dc:creator>
-      <content:encoded><![CDATA[<p>
-    This is the second in a series of eight posts detailing tips on deploying
-    to Zend Server. <a href="/blog/2014-08-11-zend-server-deployment-part-1.html">The previous post in the series</a>
-    detailed getting started with <a href="http://www.zend.com/en/solutions/cloud-solutions/aws-marketplace">Zend
-    Server on the AWS marketplace</a> and using <a href="https://github.com/zfcampus/zf-deploy">zf-deploy</a>
-    to create ZPK packages to deploy to Zend Server.
-</p>
-
-<p>
-    Today, I'm looking at how to created scheduled/recurring jobs using Zend Server's Job Queue;
-    think of this as application-level cronjobs.
-</p><h2>Tip 2: Recurring Jobs</h2>
-
-<p>
-    I needed to define a few recurring jobs on the server. In the past, I've 
-    used <kbd>cron</kbd> for this, but I've recently had a slight change of mind on 
-    this: if I use <kbd>cron</kbd>, I have to assume I'm running on a unix-like system, 
-    and have some sort of system access to the server. If I have multiple 
-    servers running, that means ensuring they're setup on each server. It seems 
-    better to be able to define these jobs at the applicaton level.
-</p>
-
-<p>
-    Since Zend Server comes with Job Queue, I decided to try it out for 
-    scheduling recurring jobs. This is not terribly intuitive, however. The UI 
-    allows you to define scheduled jobs... but only gives options for every 
-    minute, hour, day, week, and month, without allowing you to specify the 
-    exact interval (e.g., every day at 20:00).
-
-<p>
-    The PHP API, however, makes this easy. I can create a job as follows:
-</p>
-
-<div class="example"><pre><code language="php">
-$queue = new ZendJobQueue();
-$queue->createHttpJob('/jobs/github-feed.php', [], [
-  'name'       => 'github-feed',
-  'persistent' => false,
-  'schedule'   => '5,20,35,40 * * * *',
-]);
-</code></pre></div>
-
-<p>
-    Essentially, you provide a URL to the script to execute (Job Queue "runs" a 
-    job by accessing a URL on the server), and provide a schedule in crontab 
-    format. I like to give my jobs names as well, as it allows me to search for 
-    them in the UI, and also enables linking between the rules and the logs in 
-    the UI. Marking them as <em>not</em> persistent ensures that if the job is 
-    successful, it will be removed from the events list.
-</p>
-
-<p>
-    The question is, where do you define this? I decided to do this in my 
-    <kbd>post_activate.php</kbd> deployment script. However, this raises two new 
-    problems:
-</p>
-
-<ul>
-    <li>Rules need not just a path to the script, but also the scheme and host. 
-        You _can_ omit those, but only if the script can resolve them via 
-        <kbd>$_SERVER</kbd>... which it cannot due during deployment.</li>
-    <li>Each deployment adds the jobs you define... but this does not overwrite 
-        or remove the jobs you added in previous deployments.</li>
-</ul>
-
-<p>
-    I solved these as follows:
-</p>
-
-<div class="example"><pre><code language="php">
-$server = 'http://mwop.net';
-
-// Remove previously scheduled jobs:
-$queue = new ZendJobQueue();
-foreach ($queue->getSchedulingRules() as $job) {
-    if (0 !== strpos($job['script'], $server)) {
-        // not one we're interested in
-        continue;
-    }
-
-    // Remove previously scheduled job
-    $queue->deleteSchedulingRule($job['id']);
-}
-
-$queue->createHttpJob($server . '/jobs/github-feed.php', [], [
-  'name'       => 'github-feed',
-  'persistent' => false,
-  'schedule'   => '5,20,35,40 * * * *',
-]);
-</code></pre></div>
-
-<p>
-    So, in summary:
-</p>
-
-<ul>
-    <li>Define your rules with names.</li>
-    <li>Define recurring rules using the <kbd>schedule</kbd> option.</li>
-    <li>Define recurring rules in your deployment script, during <kbd>post_activate</kbd>.</li>
-    <li>Remove previously defined rules in your deployment script, prior to defining them.</li>
-</ul>
-
-<h2>Next time...</h2>
-
-<p>
-    The next tip in the series is a short one, perfect for following the US 
-    Labor Day weekend, and details something I learned the hard way from Tip 1 
-    when setting up deployment tasks.
-</p>
-
-<h2>Other articles in the series</h2>
-
-<ul>
-    <li><a href="/blog/2014-08-11-zend-server-deployment-part-1.html">Tip 1: zf-deploy</a></li>
+    <li><a href="/blog/2014-09-02-zend-server-deployment-part-3.html">Tip 3: chmod</a></li>
 </ul
 
 <p>
@@ -1436,237 +1505,6 @@ vimgrep /{pattern}/[g][j] {file} ...
     Now that the install is done, I'm also finalizing some design changes to my
     blog -- it's time to leave the black and white for more colorful grounds.
     Look for a revamp in the coming weeks!
-</p>]]></content:encoded>
-      <slash:comments>0</slash:comments>
-    </item>
-    <item>
-      <title>Submitting Bug Reports</title>
-      <pubDate>Sun, 09 Mar 2008 14:18:36 +0000</pubDate>
-      <link>http://mwop.net/blog/161-Submitting-Bug-Reports.html</link>
-      <guid>http://mwop.net/blog/161-Submitting-Bug-Reports.html</guid>
-      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
-      <dc:creator>Matthew Weier O'Phinney</dc:creator>
-      <content:encoded><![CDATA[<p>
-    Full disclosure: I am employed by <a href="http://www.zend.com/">Zend</a> to
-    program <a href="http://framework.zend.com/">Zend Framework</a>. That said,
-    the following is all my opinion, and is based on my experiences with Zend
-    Framework, as well as answering questions on a variety of mailing lists and
-    with other OSS projects (PEAR, Solar, and Cgiapp in particular).
-</p>
-
-<p>
-    One of my biggest pet peeves in the OSS world is vague bug/issue reports and feature requests. I
-    cannot count the number of times I've seen a report similar to the following:
-</p>
-
-<blockquote>
-    &lt;Feature X&gt; doesn't work; you need to fix it <b>now!</b>
-</blockquote>
-
-<p>
-    If such a report comes in on an issue tracker, it's invariably marked
-    critical and high priority.
-</p>
-
-<p>
-    What bothers me about it? Simply this: it gives those responsible for
-    maintaining Feature X absolutely no information to work on: what result they
-    received, what was expected, or how exactly they were using the feature. The
-    reviewer now has to go into one or more cycles with the reporter fishing for
-    that information -- wasting everyone's time and energy.
-</p>
-
-<p>
-    Only slightly better are these reports:
-</p>
-
-<blockquote>
-    &lt;Feature X&gt; doesn't work -- I keep getting &lt;Result X&gt; from it,
-    which is incorrect.
-</blockquote>
-
-<p>
-    At least this tells the reviewers what they reporter is receiving... but it
-    doesn't tell them how they got there, or what they're expecting.
-</p>
-
-<p>
-    So, the following should be your mantra when reporting issues or making feature requests:
-</p>
-
-<ul>
-    <li>What is the minimum code necessary to reproduce the issue or show the desired API?</li>
-    <li>What is the expected result?</li>
-    <li>What is the actual result?</li>
-</ul><h2>What makes up a good issue report?</h2>
-
-<p>
-    A good issue report has to contain the above three points, plain and simple.
-    Without this information, a reviewer simply does not have the tools with
-    which to properly deal with the issue.
-</p>
-
-<h3>Reproduce code</h3>
-
-<p>
-    Quite often, you'll find that an application breaks. It is up to you to find
-    the root cause of that breakage: what minimal amount of code do I need to
-    write in order to cause the breakage to occur? Sometimes this will require a
-    little digging -- you may have a result that is unexpected, but it may be a
-    symptom of something breaking earlier.
-</p>
-
-<p>
-    For example, in working on Zend_Form in the past couple weeks, I had a
-    number of issues reported against how the new MultiCheckbox element was
-    working. One issue noted that populate() was not properly populating the
-    checkboxes.
-</p>
-
-<p>
-    When pressed for reproduce code, the reporter provided the $_POST array with
-    which they were trying to populate the form:
-</p>
-
-<div class="example"><pre><code lang="php">
-$_POST = array(
-    'foo' =&gt; array(
-        0 =&gt; array(0 =&gt; 'bar'),
-        1 =&gt; array(0 =&gt; 'baz'),
-        2 =&gt; array(0 =&gt; 'bat')
-    )
-);
-</code></pre></div>
-    
-<p>
-    In looking at it, I knew immediately that it was related to another issue
-    that had been reported. In that issue, the reporter noted that the input
-    elements rendered by Zend_Form for MultiCheckbox elements had redundant
-    array notation:
-</p>
-
-<div class="example"><pre><code lang="html">
-    &lt;input type=\&quot;checkbox\&quot; value=\&quot;foo\&quot; name=\&quot;foo[][]\&quot; value=\&quot;bar\&quot; /&gt;
-</code></pre></div>
-<br />
-
-<p>
-    In the former case, we're seeing a symptom of the latter case: the redundant
-    array notation was causing a form submission that simply could not populate
-    the element. If the reporter of the former case had looked at the form used
-    to send the $_POST data they posted in the tracker, either they likely would
-    have noticed the similar issue already reported in the tracker -- or I, as
-    the reviewer, would have been able to quickly mark the bug as a duplicate.
-</p>
-
-<p>
-    Regardless, the main point is this: using the value of a POST request to
-    reproduce an issue is not doing your homework. You need to look for the
-    <em>minimal</em> code necessary to reproduce the issue, and the value
-    provided in $_POST is typically a <em>symptom</em> of an issue that has
-    already occurred.
-</p>
-
-<p>
-    Another rule of thumb with creating reproduce code is to keep the
-    environment minimal. Try writing up <em>fresh</em> code in a scratchpad that
-    you can run over and over again until you get the result that you're trying
-    to report. This does a few things: it helps simplify the use case causing
-    the issue, and it often will help you track down exactly where things begin
-    to break. Sometimes, and I can attest to this, it helps you find places
-    where you're doing things wrong in your <em>own</em> code in the first
-    place, alleviating the need entirely to submit a report.
-</p>
-
-<p>
-    What does the reviewer do with this code? Well, a <em>good</em> developer
-    will use it as a test case in the unit test suite -- which is another reason
-    to keep the code down to the minimum required to reproduce the issue. This
-    code will often end up in the test suite in order to document the issue
-    report -- as well as to prove, once a solution is in place, that the issue
-    has been resolved.
-</p>
-
-<p>
-    The above advice is useful even when reporting a feature request, this
-    information is useful. The reviewer then gets an idea of the desired API,
-    and they can write a test case against it.
-</p>
-
-<h3>Expected Results</h3>
-
-<p>
-    In addition to the reproduce case, you should provide the expected results.
-    These show clearly your expectations of the code. The reviewer can use this
-    information in several ways:
-</p>
-
-<ul>
-    <li>In the test suite, the reviewer can use the expected results in
-    assertions to verify the issue (or prove that it is now corrected)</li>
-
-    <li>To show where the reporter has flawed assumptions. In some cases, the
-    expectations of the code are different than the documented assertions, and
-    the reviewer can then point out where the differences lie -- which helps to
-    educate the reporter in proper usage of the code.</li>
-
-    <li>In the case of a feature request, this will indicate how the reporter
-    expects the new feature to behave. The reviewer can then use that
-    expectation as an assertion in the test suite.</li>
-</ul>
-
-<h3>Actual Results</h3>
-
-<p>
-    The actual results are important as they contrast against the expected
-    results, showing where the breakage is. If the reviewer cannot recreate
-    these results, then it likely means that the reproduce code provided is not
-    the actual code needed to reproduce the issue, or it may mean that
-    environmental differences -- differences in OS or PHP version, for instance
-    -- may be a factor in recreating the issue.
-</p>
-
-<p>
-    In the case of a feature request, you could omit the actual results, as
-    there won't be any.
-</p>
-
-<h3>Always search for your issue or feature request</h3>
-
-<p>
-    Finally, one additional mantra to add to your repertoire: search the issue
-    tracker and/or mailing lists <em>before</em> reporting an issue or
-    requesting a feature. I cannot tell you how many bugs I've closed as
-    duplicates, or how many times I've had to respond to an email with the
-    phrase, "this is a known issue." It pays to do your homework: search and see
-    if others have made the same request. In many cases, you may actually find a
-    <em>solution</em> to your issue posted by others -- either a way to extend a
-    class to get the behaviour you're expecting, a patch to the software, or
-    even a note regarding what public release or snapshot contains a fix.
-    There's no reason to waste people's time by reporting a known issue.
-</p>
-
-<p>
-    The best time to search for your issue, believe it or not, is <em>after</em>
-    you've done the other steps. Until you know exactly what code reproduces the
-    issue, and have clearly defined your expectations and the real results, it
-    can be difficult to identify when your issue matches another. 
-</p>
-
-<h2>In Conclusion</h2>
-
-<ul>
-    <li>What is the minimum code necessary to reproduce the issue?</li>
-    <li>What is the expected result?</li>
-    <li>What is the actual result?</li>
-    <li>Have you searched for similar requests in public forums?</li>
-</ul>
-
-<p>
-    If you can start answering the above questions <em>before</em> posting your
-    issues, you'll start receiving more detailed and useful responses from those
-    reviewing your issues or feature requests, and reduce the number of "I don't
-    understand" or "I need more information" responses. Guaranteed.
 </p>]]></content:encoded>
       <slash:comments>0</slash:comments>
     </item>

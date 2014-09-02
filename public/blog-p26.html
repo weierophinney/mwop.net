@@ -96,6 +96,51 @@
 <div class="row clearfix">
 <aside class="four columns offset-by-one alpha sidebar blog">
     <p>
+        Written on 20 September 2004.
+                <br />Last updated on 20 September 2004.
+            </p>
+
+    <ul class="tags">
+    <li><a href="/blog/tag/programming.html">programming</a></li>
+    <li><a href="/blog/tag/personal.html">personal</a></li>
+    <li><a href="/blog/tag/php.html">php</a></li>
+</ul>
+
+</aside>
+
+<section class="eleven columns omega">
+    <h4 class="entry"><a href="/blog/40-New-site-is-up%21.html">New site is up!</a></h4>
+
+    <div class="entry body"><p>The new weierophinney.net/matthew/ site is now up and running!</p>
+<p>
+    The site has been many months in planning, and about a month or so in actual
+    coding. I have written the site in, instead of flatfiles, PHP, so as to:
+</p>
+<ul>
+    <li>Allow easier updating (it includes its own content management system</li>
+    <li>Include a blog for my web development and IT interests</li>
+    <li>Allow site searching (everything is an article or download)</li>
+</ul>
+<p>
+    I've written it using a strict MVC model, which means that I have libraries
+    for accessing and manipulating the database; all displays are template
+    driven (meaning I can create them with plain-old HTML); and I can create
+    customizable applications out of various controller libraries. I've called
+    this concoction <strong>Dragonfly</strong>.
+</p>
+<p>
+    There will be more developments coming -- sitewide search comes to mind, as
+    well as RSS feeds for the blog and downloads.
+</p>
+<p>Stay Tuned!</p></div>
+
+    <p><a href="/blog/40-New-site-is-up%21.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="four columns offset-by-one alpha sidebar blog">
+    <p>
         Written on 11 September 2004.
                 <br />Last updated on 20 September 2004.
             </p>
@@ -649,50 +694,6 @@
 </p></div>
 
     <p><a href="/blog/36-PHP-Class-Tips.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="four columns offset-by-one alpha sidebar blog">
-    <p>
-        Written on 11 March 2004.
-                <br />Last updated on 20 September 2004.
-            </p>
-
-    <ul class="tags">
-    <li><a href="/blog/tag/linux.html">linux</a></li>
-    <li><a href="/blog/tag/personal.html">personal</a></li>
-</ul>
-
-</aside>
-
-<section class="eleven columns omega">
-    <h4 class="entry"><a href="/blog/37-Making-a-RAID-array-from-the-command-line.html">Making a RAID array from the command line</a></h4>
-
-    <div class="entry body"><p>
-    Last night, I created my first RAID array from the commandline. It was quite
-    simple, I discovered.
-</p>
-<ol>
-    <li>Create your partitions using fstab. Remember, primary partitions must be
-    created <em>before</em> extended partitions.</li>
-    <li>Look in <kbd>/proc/partions</kbd> and note the new partition IDs.</li>
-    <li>Edit <kbd>/etc/raidtab</kbd> and create a new RAID array. If unsure of
-    the syntax, look up the <a href="http://www.tldp.org/HOWTO/Software-RAID-HOWTO.html">Linux Software
-        RAID HOWTO</a> for more details.</li>
-    <li>Type <kbd>mkraid /dev/md?</kbd>, where <kbd>?</kbd> is the id of the
-    RAID device you just entered in <kbd>/etc/raidtab</kbd>.</li>
-    <li>Format the new RAID device with your favorite filesystem, assign it a
-    mount point, and start using it!</li>
-</ol>
-<p>
-    I was impressed with how easy it was; the choices that the Anaconda
-    installer present for creating a RAID array made it seem like the underlying
-    process must be difficult, when in fact it may have been almost the same
-    complexity if not easier.
-</p></div>
-
-    <p><a href="/blog/37-Making-a-RAID-array-from-the-command-line.html">Continue reading...</a></p>
 </section>
 
 </div>

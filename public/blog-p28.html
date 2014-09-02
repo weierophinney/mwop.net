@@ -101,6 +101,69 @@
             </p>
 
     <ul class="tags">
+    <li><a href="/blog/tag/perl.html">perl</a></li>
+    <li><a href="/blog/tag/personal.html">personal</a></li>
+</ul>
+
+</aside>
+
+<section class="eleven columns omega">
+    <h4 class="entry"><a href="/blog/21-ClassDBI.html">Class::DBI</a></h4>
+
+    <div class="entry body"><p>
+    I was reading a thread on the cgiapp mailing list today from several of the
+    core developers about developing a book on CGI::Application. In it, several
+    mentioned that it might/should center around CGI::App and a handful of
+    oft-used modules. One of those modules is <a href="http://search.cpan.org/%7Etmtm/Class-DBI-0.95/lib/Class/DBI.pm">Class::DBI</a>.
+</p>
+<p>
+    I took a gander at Class::DBI over at CPAN, and it looks absolutely amazing,
+    and at the same time perhaps too abstract. Basically, you create a number of
+    packages and/or packages, one for each table you'll be using in your
+    application, and one to establish your basic connection. Then, each package
+    creates an object instance of the connection, and defines a number of
+    properties: the name of the table, the columns you'll be using, and then the
+    relations it has to other tables (<tt>has_a( col_name =>
+        'Package::Name'); has_many( col_name => 'Package::Name');
+        might_have(col_name => 'Package::Name');</tt>) etc.
+</p>
+<p>
+    Then you use the module/packages you need in your script, and you can then
+    use object-oriented notation to do things like insert rows, update rows,
+    search a table, select rows, etc. And it looks fairly natural.
+</p>
+<p>
+    I like the idea of data abstraction like this. I see a couple issues,
+    however:
+</p>
+<ol>
+    <li>I don't like the idea of one package per table; that gets so abstract as
+    to make development come to a stand-still, especially during initial
+    development. However, once development is sufficiently advanced, I could see
+    doing this, particularly for large projects; it could vastly simplify many
+    regular DBI calls.</li>
+    <li>I <strong>like</strong> using SQL. If I need to debug why something
+    isn't working when I interact with the database, I want to have absolute
+    control over the language. Abstracting the SQL means I don't have that
+    fine-grained control that helps me debug.</li>
+</ol>
+<p>
+    So, for now, I'll stick with straight DBI... but this is an interesting
+    avenue to explore.
+</p></div>
+
+    <p><a href="/blog/21-ClassDBI.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="four columns offset-by-one alpha sidebar blog">
+    <p>
+        Written on 25 January 2004.
+                <br />Last updated on 20 September 2004.
+            </p>
+
+    <ul class="tags">
     <li><a href="/blog/tag/linux.html">linux</a></li>
     <li><a href="/blog/tag/personal.html">personal</a></li>
 </ul>
@@ -622,80 +685,6 @@ Disallow: /path/to/file
 </p></div>
 
     <p><a href="/blog/11-Making-RCS-a-little-easier....html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="four columns offset-by-one alpha sidebar blog">
-    <p>
-        Written on 21 January 2004.
-                <br />Last updated on 13 September 2004.
-            </p>
-
-    <ul class="tags">
-    <li><a href="/blog/tag/personal.html">personal</a></li>
-</ul>
-
-</aside>
-
-<section class="eleven columns omega">
-    <h4 class="entry"><a href="/blog/10-SSH-tips-and-tricks.html">SSH tips and tricks</a></h4>
-
-    <div class="entry body"><p>
-    In trying to implement some of the hacks in <em>Linux Server Hacks</em>, I
-    had to go to the ssh manpage, where I discovered a number of cool tricks. 
-</p>
-<ol>
-    <li>In order to get key-based authentication (i.e., passwordless) working,
-    the <tt>$HOME/.ssh</tt> directory must be mode <tt>0700</tt>, and all files
-    in it must be mode <tt>0600</tt>. Once that's setup properly, key-based
-    authentication works perfectly.</li>
-    <li>You can have a file called <em>config</em> in your <tt>$HOME/.ssh</tt>
-    directory that specifies user-specific settings for using SSH, as well as a
-    number of <em>host</em>-specific settings:
-        <ul>
-            <li><tt>Compression yes</tt> turns
-            on compression</li>
-            <li><tt>ForwardX11 yes</tt> turns
-            on X11 forwarding by default</li>
-            <li><tt>ForwardAgent yes</tt> turns
-            on ssh-agent forwarding by default</li>
-            <li><em>Host</em>-based settings go from one <em>Host</em> keyword
-            to the next, so place them at the end of the file. Do it in the
-            following order:
-            <pre>
-    Host nickname
-    HostName actual.host.name
-    User username_on_that_host
-    Port PortToUse
-            </pre>
-            This means, for instance, that I can ssh back and forth between
-            home using the same key-based authentication and the same ssh-to
-            script (<a href="#ssh-to">more below</a>) I use for work servers --
-            because I don't have to specify the port or the username.
-            </li>
-        </ul>
-    </li>
-</ol>
-<p><a name="ssh-to">
-    I mentioned a script called <tt>ssh-to</tt>
-    earlier. This is a neat little hack from the server hacks book as well.
-    Basically, you have the following script in your path somewhere:
-</a></p>
-<pre>
-    #!/bin/bash
-    ssh -C `basename $0` $*
-</a></pre>
-<p>
-    Then, elsewhere in your path, you do a bunch of <tt>ln -s /path/to/ssh-to
-    /path/to/$HOSTNAME</tt>, where <tt>$HOSTNAME</tt> is the name of a host to
-    which you ssh regularly; this is where specifying a host nickname in your
-    <tt>$HOME/.ssh/config</tt> file can come in
-    handy. Then, to ssh to any such server, you simply type <tt>$HOSTNAME</tt>
-    at the command line, and you're there!
-</a></p></div>
-
-    <p><a href="/blog/10-SSH-tips-and-tricks.html">Continue reading...</a></p>
 </section>
 
 </div>
