@@ -1,5 +1,5 @@
 <?php
-$server = 'http://mwop.net';
+$server = 'https://mwop.net';
 $queue  = new ZendJobQueue();
 
 // First, remove any existing job schedules for our application
