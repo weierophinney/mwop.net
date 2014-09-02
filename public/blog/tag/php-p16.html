@@ -106,6 +106,64 @@
 </aside>
 
 <section class="eleven columns omega">
+    <h4 class="entry"><a href="/blog/127-ZendCon-Best-Practices-Session.html">ZendCon: Best Practices Session</a></h4>
+
+    <div class="entry body"><p>
+    As <a href="http://mikenaberezny.com/archives/53">Mike already noted,</a>
+    he and I are presenting a session on "Best Practices of PHP Development" at
+    <a href="http://www.zendcon.com/speakers_list.php#day1">this year's Zend Conference and Expo</a>.
+    It has been my fortunate experience to work with Mike in the past, and, as
+    he noted, we had so much fun presenting during last year's conference, we
+    thought we'd do it again.
+</p>
+<p>
+    The session is a pre-conference tutorial session, running for 3 hours on
+    Monday morning, 30 October 2006.  Currently, we're shaping up the session
+    into the following subject areas:
+</p>
+<ul>
+    <li><b>Programming Practices</b>
+        <ul>
+            <li>Coding Standards</li>
+            <li>Test Driven Development and Unit Testing</li>
+            <li>Project Documentation</li>
+        </ul>
+    </li>
+    <li><b>Tools and Processes</b>
+        <ul>
+            <li>Software Configuration Management (SCM)</li>
+            <li>Collaboration tips and tools</li>
+            <li>Deployment</li>
+        </ul>
+    </li>
+</ul>
+<p>
+    Emphasis is going to be on working in teams, particularly those operating in
+    geographically diverse areas.  With roughly 30 minute blocks per topic,
+    we've certainly got plenty to cover!
+</p>
+<p>
+    If you're coming to the conference, we look forward to seeing you in our
+    session! 
+</p></div>
+
+    <p><a href="/blog/127-ZendCon-Best-Practices-Session.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="four columns offset-by-one alpha sidebar blog">
+    <p>
+        Written on 15 October 2006.
+            </p>
+
+    <ul class="tags">
+    <li><a href="/blog/tag/php.html">php</a></li>
+</ul>
+
+</aside>
+
+<section class="eleven columns omega">
     <h4 class="entry"><a href="/blog/126-Zend_XmlRpc_Server.html">Zend_XmlRpc_Server</a></h4>
 
     <div class="entry body"><p>
@@ -475,66 +533,6 @@
 <p><b>Update:</b> fixed links to internal pages to use absolute urls.</p></div>
 
     <p><a href="/blog/116-Phly-Darcs-Repository-online.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="four columns offset-by-one alpha sidebar blog">
-    <p>
-        Written on 04 June 2006.
-                <br />Last updated on 04 June 2006.
-            </p>
-
-    <ul class="tags">
-    <li><a href="/blog/tag/php.html">php</a></li>
-</ul>
-
-</aside>
-
-<section class="eleven columns omega">
-    <h4 class="entry"><a href="/blog/115-Cgiapp2-2.0.0-FINAL-Released.html">Cgiapp2 2.0.0 FINAL Released</a></h4>
-
-    <div class="entry body"><p>
-After several months of testing and some additional work, I've finally released the first stable version of <a href="http://cgiapp.sourceforge.net/">Cgiapp2.</a>
-</p>
-<p>
-It is available at both the Cgiapp site as well as via <a href="/phly/index.php/package=Cgiapp2">my Phly PEAR channel</a>.</p>
-<p>There were a ton of changes while creating the Cgiapp2 branch. From the release notes:</p>
-<pre>
-The 2.x series of Cgiapp completes a PHP5 port of Cgiapp2. PHP5 compatibility
-changes include visibility operators for all properties and methods, declaration
-of many methods as static and/or final, and the use of exceptions for catching
-run mode errors. Most notably, though, is the fact that Cgiapp2 is now an
-abstract class, with one abstract method, setup(); this enforces the fact that
-you must subclass Cgiapp2 in order to create your application.
-
-New features include:
-* Callback hook system. Cgiapp2 is now an observer subject, and has hooks at
-  several locations within the application. Additionally, it provides a method
-  for registering new hooks in your applications. The callback hook system
-  replaces the plugin system introduced in Cgiapp 1.7.0.
-
-* Template engines are now relegated to plugin classes, and should implement the
-  Cgiapp2_Plugin_Template_Interface. Shipped template engines include Smarty,
-  Savant2, Savant3, and XSLT.
-
-* Improved and more extensive error handling, which has been expanded to
-  exceptions as well. Cgiapp2_Exception and Cgiapp2_Error are both observable
-  subjects, with interface classes for implementing observers. This allows the
-  developer to tie into exceptions and errors and perform actions when triggered
-  (Log and Mail observers are implemented for each).
-
-* Cgiapp2_FrontController class. This is a simple front controller that
-  dispatches to public static methods in registered classes. Included is a
-  'page' controller for handling static pages.
-</pre>
-<p>
-I have included <a href="http://cgiapp.sourceforge.net/cgiapp2_doc/Cgiapp2/tutorial_Cgiapp28.cls.html">migration notes</a>, for those migrating from the 1.x series of Cgiapp; there is very little that you need to do, but some PHP5  changes necessitate some compatability breakages, and the new callback hook architecture and the ability to separate the template engines into plugins introduced some slight changes as well.
-</p>
-<p>
-In testing the release, I have been writing some apps that take advantage of some of the new features, and I will be writing some tutorials in the coming weeks.</p></div>
-
-    <p><a href="/blog/115-Cgiapp2-2.0.0-FINAL-Released.html">Continue reading...</a></p>
 </section>
 
 </div>

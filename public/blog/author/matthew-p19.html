@@ -96,6 +96,30 @@
 <div class="row clearfix">
 <aside class="four columns offset-by-one alpha sidebar blog">
     <p>
+        Written on 04 June 2006.
+                <br />Last updated on 04 June 2006.
+            </p>
+
+    <ul class="tags">
+    <li><a href="/blog/tag/php.html">php</a></li>
+</ul>
+
+</aside>
+
+<section class="eleven columns omega">
+    <h4 class="entry"><a href="/blog/114-Always-check-the-version-before-release.html">Always check the version before release</a></h4>
+
+    <div class="entry body"><p>
+Last week, I had someone bring to my attention that the <a href="http://php.net/spl">SPL's</a> Countable interface was actually first released in PHP 5.1.0... which means I needed to update the PHP dependency on <a href="/phly/index.php?package=Phly_Hash">Phly_Hash</a>. I also needed to do so on <a href="/phly/index.php?package=Phly_Config">Phly_Config</a> as it depends on Phly_Hash. I released 1.1.1 versions of each yesterday; the only change in each is the PHP version dependency.
+</p></div>
+
+    <p><a href="/blog/114-Always-check-the-version-before-release.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="four columns offset-by-one alpha sidebar blog">
+    <p>
         Written on 22 May 2006.
                 <br />Last updated on 23 May 2006.
             </p>
@@ -624,73 +648,6 @@ $xml = mb_convert_encoding($xml, 'UTF-8', $enc);
 </p></div>
 
     <p><a href="/blog/105-PHP-error-reporting-for-Perl-users.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="four columns offset-by-one alpha sidebar blog">
-    <p>
-        Written on 19 February 2006.
-                <br />Last updated on 19 February 2006.
-            </p>
-
-    <ul class="tags">
-    <li><a href="/blog/tag/php.html">php</a></li>
-</ul>
-
-</aside>
-
-<section class="eleven columns omega">
-    <h4 class="entry"><a href="/blog/104-Cgiapp-dual-releases.html">Cgiapp dual releases</a></h4>
-
-    <div class="entry body"><p>
-    Today, I have released two versions of Cgiapp into the wild, Cgiapp 1.8.0
-    and Cgiapp2 2.0.0rc1.
-</p>
-<p>
-    Cgiapp 1.8.0 is a performance release. I did a complete code audit of the
-    class, and did a number of changes to improve performance and fix some
-    previously erratic behaviours. Additionally, I tested under both PHP4 and
-    PHP5 to make sure that behaviour is the same in both environments.
-</p>
-<p>
-    However, Cgiapp 1.8.0 markes the last feature release of Cgiapp. I am
-    deprecating the branch in favor of Cgiapp2.
-</p>
-<p>
-    Cgiapp2 is a PHP5-only version of Cgiapp. Some of the changes:
-</p>
-<ul>
-    <li>Cgiapp2 is an abstract class, with the abstract method setup(). Now it
-    is truly non-instantiable!</li>
-    <li>Cgiapp2 makes extensive use of visibility operators. Key methods have
-    been marked final, some methods are now protected, others static. See <a href="http://cgiapp.sourceforge.net/index.php/view/Changelog2">the changelog</a> for more information.</li>
-    <li>Cgiapp2 is now E_STRICT compliant.</li>
-    <li>Cgiapp2 implements the CGI::Application 4.x series callback hook system.
-    This is basically an observer pattern, allowing developers to register
-    callbacks that execute at different locations in the runtime.</li>
-    <li>Cgiapp2 adds some extensive error and exception handling classes,
-    including observable errors and exceptions.</li>
-    <li>I created a template interface. If implemented, a template engine can be
-    plugged into the architecture at will -- at the superclass, application
-    class, and instance script level, allowing developers to mix-and-match
-    template engines or choose whichever matches their taste, <em>without</em>
-    having to rewrite application code. Three template plugins are included:
-    <ul>
-        <li><a href="http://smarty.php.net/">Smarty</a></li>
-        <li><a href="http://phpsavant.com/yawiki/">Savant2</a></li>
-        <li><a href="http://phpsavant.com/yawiki/index.php?area=Savant3&page=HomePage">Savant3</a></li>
-    </ul>
-    </li>
-</ul>
-<p>
-    <a href="http://sourceforge.net/project/showfiles.php?group_id=125419&package_id=137071">Cgiapp</a> and <a href="http://sourceforge.net/project/showfiles.php?group_id=125419&package_id=180286">Cgiapp2</a> are available at
-    Sourceforge.
-<p>
-    Keep reading for more information on the evolution of Cgiapp2.
-</p></div>
-
-    <p><a href="/blog/104-Cgiapp-dual-releases.html">Continue reading...</a></p>
 </section>
 
 </div>

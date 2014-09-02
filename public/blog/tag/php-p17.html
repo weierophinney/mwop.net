@@ -107,6 +107,66 @@
 </aside>
 
 <section class="eleven columns omega">
+    <h4 class="entry"><a href="/blog/115-Cgiapp2-2.0.0-FINAL-Released.html">Cgiapp2 2.0.0 FINAL Released</a></h4>
+
+    <div class="entry body"><p>
+After several months of testing and some additional work, I've finally released the first stable version of <a href="http://cgiapp.sourceforge.net/">Cgiapp2.</a>
+</p>
+<p>
+It is available at both the Cgiapp site as well as via <a href="/phly/index.php/package=Cgiapp2">my Phly PEAR channel</a>.</p>
+<p>There were a ton of changes while creating the Cgiapp2 branch. From the release notes:</p>
+<pre>
+The 2.x series of Cgiapp completes a PHP5 port of Cgiapp2. PHP5 compatibility
+changes include visibility operators for all properties and methods, declaration
+of many methods as static and/or final, and the use of exceptions for catching
+run mode errors. Most notably, though, is the fact that Cgiapp2 is now an
+abstract class, with one abstract method, setup(); this enforces the fact that
+you must subclass Cgiapp2 in order to create your application.
+
+New features include:
+* Callback hook system. Cgiapp2 is now an observer subject, and has hooks at
+  several locations within the application. Additionally, it provides a method
+  for registering new hooks in your applications. The callback hook system
+  replaces the plugin system introduced in Cgiapp 1.7.0.
+
+* Template engines are now relegated to plugin classes, and should implement the
+  Cgiapp2_Plugin_Template_Interface. Shipped template engines include Smarty,
+  Savant2, Savant3, and XSLT.
+
+* Improved and more extensive error handling, which has been expanded to
+  exceptions as well. Cgiapp2_Exception and Cgiapp2_Error are both observable
+  subjects, with interface classes for implementing observers. This allows the
+  developer to tie into exceptions and errors and perform actions when triggered
+  (Log and Mail observers are implemented for each).
+
+* Cgiapp2_FrontController class. This is a simple front controller that
+  dispatches to public static methods in registered classes. Included is a
+  'page' controller for handling static pages.
+</pre>
+<p>
+I have included <a href="http://cgiapp.sourceforge.net/cgiapp2_doc/Cgiapp2/tutorial_Cgiapp28.cls.html">migration notes</a>, for those migrating from the 1.x series of Cgiapp; there is very little that you need to do, but some PHP5  changes necessitate some compatability breakages, and the new callback hook architecture and the ability to separate the template engines into plugins introduced some slight changes as well.
+</p>
+<p>
+In testing the release, I have been writing some apps that take advantage of some of the new features, and I will be writing some tutorials in the coming weeks.</p></div>
+
+    <p><a href="/blog/115-Cgiapp2-2.0.0-FINAL-Released.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="four columns offset-by-one alpha sidebar blog">
+    <p>
+        Written on 04 June 2006.
+                <br />Last updated on 04 June 2006.
+            </p>
+
+    <ul class="tags">
+    <li><a href="/blog/tag/php.html">php</a></li>
+</ul>
+
+</aside>
+
+<section class="eleven columns omega">
     <h4 class="entry"><a href="/blog/114-Always-check-the-version-before-release.html">Always check the version before release</a></h4>
 
     <div class="entry body"><p>
@@ -559,95 +619,6 @@ $xml = mb_convert_encoding($xml, 'UTF-8', $enc);
 </p></div>
 
     <p><a href="/blog/106-Automating-PHPUnit2-with-SPL.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="four columns offset-by-one alpha sidebar blog">
-    <p>
-        Written on 27 March 2006.
-                <br />Last updated on 28 March 2006.
-            </p>
-
-    <ul class="tags">
-    <li><a href="/blog/tag/perl.html">perl</a></li>
-    <li><a href="/blog/tag/php.html">php</a></li>
-</ul>
-
-</aside>
-
-<section class="eleven columns omega">
-    <h4 class="entry"><a href="/blog/105-PHP-error-reporting-for-Perl-users.html">PHP error reporting for Perl users</a></h4>
-
-    <div class="entry body"><p>
-    On <a href="http://www.perlmonks.org">perlmonks</a> today, a user was
-    needing to maintain a PHP app, and wanted to know what the PHP equivalent of
-    "perl -wc script.pl" was -- specifically, they wanted to know how to run a
-    PHP script from the commandline and have it display any warnings (ala perl's
-    strict and warnings pragmas).
-</p>
-<p>
-    Unfortunately, there's not as simple a way to do this in PHP as in perl.
-    Basically, you need to do the following:
-</p>
-<ul>
-    <li><strong>To display errors:</strong><ul>
-        <li>In you php.ini file, set "display_errors = On", <b>or</b></li>
-        <li>In your script, add the line "ini_set('display_errors', true);"</li>
-    </ul></li>
-    <li><strong>To show notices, warnings, errors, deprecation
-        notices:</strong><ul>
-        <li>In you php.ini file, set "error_reporting = E_ALL | E_STRICT", <b>or</b></li>
-        <li>In your script, add the line "error_reporting(E_ALL | E_STRICT);"</li>
-    </ul></li>
-</ul>
-<p>
-    Alternatively, you can create a file with the lines:
-</p>
-<pre>
-&lt;?php
-    error_reporting(E_ALL | E_STRICT);
-    ini_set('display_errors', true);
-</pre>
-<p>
-    and then set the php.ini setting 'auto_prepend_file' to the path to that
-    file.
-</p>
-<p>
-    <strong>NOTE: do not do any of the above on a production system!</strong>
-    PHP's error messages often reveal a lot about your applications, including
-    file layout and potential vectors of attack. Turn display_errors off on
-    production machines, set your error_reporting somewhat lower, and log_errors
-    to a file so you can keep track of what's going on on your production
-    system.
-</p>
-<p>
-    The second part of the question was how to run a PHP script on the command
-    line. This is incredibly simple: php myscript.php. No different than any
-    other scripting language.
-</p>
-<p>
-    You can get some good information by using some of the switches, though.
-    <strong>'-l'</strong> turns the PHP interpreter into a linter, and can let
-    you know if your code is well-formed (which doesn't necessarily preclude
-    runtime or parse errors). <strong>'-f'</strong> will run the script through
-    the parser, which can give you even more information. I typically bind these
-    actions to keys in vim so I can check my work as I go.
-</p>
-<p>
-    If you plan on running your code <em>solely</em> on the commandline, add a
-    shebang to the first line of your script: #!/path/to/php. Then make the
-    script executable, and you're good to go. This is handy for cronjobs, or
-    batch processing scripts.
-</p>
-<p>
-    All of this information is readily available in <a
-        href="http://www.php.net/manual">the PHP manual</a>, and the commandline
-    options are always available by passing the --help switch to the PHP
-    executable. So, start testing your scripts already!
-</p></div>
-
-    <p><a href="/blog/105-PHP-error-reporting-for-Perl-users.html">Continue reading...</a></p>
 </section>
 
 </div>

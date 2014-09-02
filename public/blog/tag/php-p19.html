@@ -96,6 +96,51 @@
 <div class="row clearfix">
 <aside class="four columns offset-by-one alpha sidebar blog">
     <p>
+        Written on 28 July 2005.
+                <br />Last updated on 28 July 2005.
+            </p>
+
+    <ul class="tags">
+    <li><a href="/blog/tag/php.html">php</a></li>
+</ul>
+
+</aside>
+
+<section class="eleven columns omega">
+    <h4 class="entry"><a href="/blog/88-Form-madness.html">Form madness</a></h4>
+
+    <div class="entry body"><p>
+    Those who follow my blog may remember an <a href="http://weierophinney.net/matthew/archives/83-Thoughts-on-form-validation.html">earlier entry on form validation</a>. I looked into some of the possible
+    solutions those who commented provided, but other than <a href="http://solarphp.com/home/index.php?area=Solar_Form">Solar_Form</a>,
+    each was either trying to generate HTML, or not generating HTML was
+    considered a plugin type of behaviour (i.e., the HTML generation was the
+    norm, and not generating HTML typically added layers). Discouraged, I
+    continued plugging away on my own solution which was incorporating
+    Solar_Valid for validations, adding some filtering, adding the ability to
+    load definitions from a file, and adding the ability to use callbacks for
+    either filters or validation rules.
+</p>
+<p>
+    I got some code together, tried it out, and felt that either something was
+    missing, or I was doing something a little wrong. I posted the code source,
+    and asked Paul Jones for feedback.
+</p>
+<p>
+    After some initial flurries of emails with Paul asking for more detail, me
+    providing it, Paul asking questions, me attempting to answer...  Paul had me
+    look at the source for Solar_Form. In doing so, I discovered what he was
+    suspecting, namely, that we were trying to build something similar. Rather
+    than continue on parallel courses, I decided to jump in and help in this
+    aspect of the <a href="http://solarphp.com/">Solar project</a>.
+</p></div>
+
+    <p><a href="/blog/88-Form-madness.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="four columns offset-by-one alpha sidebar blog">
+    <p>
         Written on 14 July 2005.
                 <br />Last updated on 14 July 2005.
             </p>
@@ -525,53 +570,6 @@
 </p></div>
 
     <p><a href="/blog/74-PEAR-and-DocBook-documentation.html">Continue reading...</a></p>
-</section>
-
-</div>
-<div class="row clearfix">
-<aside class="four columns offset-by-one alpha sidebar blog">
-    <p>
-        Written on 20 May 2005.
-                <br />Last updated on 20 May 2005.
-            </p>
-
-    <ul class="tags">
-    <li><a href="/blog/tag/php.html">php</a></li>
-</ul>
-
-</aside>
-
-<section class="eleven columns omega">
-    <h4 class="entry"><a href="/blog/73-Cgiapp-1.7.0-released.html">Cgiapp 1.7.0 released</a></h4>
-
-    <div class="entry body"><p>
-    I'm getting ready to move in another week, and thought it was time to push a
-    new release out the door... before life descends into utter chaos.
-</p>
-<p>
-    Cgiapp 1.7.0 adds a plugin architecture (which has been present in the perl
-    version since last autumn). Plugins register with the class, and, once
-    registered, their methods may be called from your Cgiapp-based class as if
-    they were part of it through the magic of overloading. This allows for a
-    standard library of utilities to be written -- such as form validation (a
-    sample class for this has been provided utilizing <a
-        href="http://pear.php.net/HTML_QuickForm">HTML_QuickForm</a>),
-    authentication, error logging, etc.
-</p>
-<p>
-    Additionally, I created a 'Cgiapp5' class that inherits from and extends
-    Cgiapp. Along with it is a 'CgiappErrorException' class that can handle PHP
-    errors and rethrow them as exceptions. Combined, the two create some very
-    elegant run mode error handling that simply isn't possible in PHP4.
-</p>
-<p>
-    Visit the <a href="http://cgiapp.sourceforge.net/">Cgiapp website</a> for
-    more information on Cgiapp; if you want to try it, <a
-        href="http://prdownloads.sourceforge.net/cgiapp/Cgiapp-1.7.0.tgz?download">download
-    it</a>. 
-</p></div>
-
-    <p><a href="/blog/73-Cgiapp-1.7.0-released.html">Continue reading...</a></p>
 </section>
 
 </div>
