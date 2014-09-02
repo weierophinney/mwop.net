@@ -15,7 +15,7 @@ $entry->setTitle('Deployment with Zend Server (Part 2 of 8)');
 $entry->setAuthor($author);
 $entry->setDraft(false);
 $entry->setPublic(true);
-$entry->setCreated(new \DateTime('2014-08-26 08:30', new \DateTimezone('America/Chicago')));
+$entry->setCreated(new \DateTime('2014-08-28 08:30', new \DateTimezone('America/Chicago')));
 $entry->setUpdated(new \DateTime('2014-09-02 08:30', new \DateTimezone('America/Chicago')));
 $entry->setTimezone('America/Chicago');
 $entry->setTags(array(
