@@ -55,12 +55,18 @@ $app->pipe('/blog', function ($req, $res, $next) use ($services) {
     $middleware($req, $res, $next);
 });
 
+$app->pipe(new NotFound());
+
 $app->pipe(function ($err, $req, $res, $next) use ($services) {
     $middleware = $services->get('Mwop\Unauthorized');
     $middleware($err, $req, $res, $next);
 });
 $app->pipe(function ($err, $req, $res, $next) use ($services) {
     $middleware = $services->get('not-allowed');
+    $middleware($err, $req, $res, $next);
+});
+$app->pipe(function ($err, $req, $res, $next) use ($services) {
+    $middleware = $services->get('Mwop\ErrorHandler');
     $middleware($err, $req, $res, $next);
 });
 

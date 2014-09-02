@@ -21,6 +21,7 @@ return [
             ],
         ],
     ],
+    'debug' => false,
     'github' => [
         'user'  => 'weierophinney',
         'token' => null,
@@ -82,6 +83,7 @@ return [
             'Mwop\Blog\Middleware'      => 'Mwop\Blog\MiddlewareFactory',
             'Mwop\Blog\TagCloud'        => 'Mwop\Blog\TagCloudFactory',
             'Mwop\ComicsPage'           => 'Mwop\Factory\ComicsPage',
+            'Mwop\ErrorHandler'         => 'Mwop\Factory\ErrorHandler',
             'Mwop\Github\AtomReader'    => 'Mwop\Factory\AtomReader',
             'Mwop\Github\Fetch'         => 'Mwop\Factory\GithubFetch',
             'Mwop\Unauthorized'         => 'Mwop\Factory\Unauthorized',
