@@ -1,0 +1,8 @@
+{
+  "main": "Gruntfile.js",
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-cssmin": "~0.7.0",
+    "load-grunt-tasks": "~0.2.0"
+  }
+}

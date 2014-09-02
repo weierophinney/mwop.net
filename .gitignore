@@ -4,6 +4,7 @@ data/comics.mustache
 data/feeds/*.xml
 data/posts.db
 data/tag-cloud.mustache
+node_modules/
 vendor/
 *.log
 *.zpk
