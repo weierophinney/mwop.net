@@ -46,7 +46,7 @@ zpk : composer sitesub
 
 deploy : zpk
 	@echo "Deploying ZPK..."
-	-$(ZSCLIENT) applicationUpdate --appId=20 --appPackage=mwop-$(VERSION).zpk --target=$(ZSTARGET)
+	-$(ZSCLIENT) applicationUpdate --appId=25 --appPackage=mwop-$(VERSION).zpk --target=$(ZSTARGET)
 	@echo "[DONE] Deploying ZPK."
 
 clean :
