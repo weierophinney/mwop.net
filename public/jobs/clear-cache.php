@@ -8,8 +8,6 @@ if (! ZendJobQueue::getCurrentJobId()) {
 
 $hosts = [
     'mwop.net',
-    'www.mwop.net',
-    'staging.mwop.net',
 ];
 
 $rules = [
@@ -21,7 +19,7 @@ foreach ($hosts as $host) {
     foreach ($rules as $rule => $path) {
         page_cache_remove_cached_contents_by_uri(
             $rule,
-            'http://' . $host . $path
+            'https://' . $host . $path
         );
     }
 }
