@@ -9,6 +9,7 @@
 # - CONFIGS  - Path to directory containing deployment-specific configs
 # - ZSCLIENT - Path to zs-client.phar (defaults to zs-client.phar)
 # - ZSTARGET - Target for zs-client.phar (defaults to mwop)
+# - APPID    - Application ID on Zend Server (defaults to 25)
 #
 # Available targets:
 # - composer - update the composer executable
@@ -23,10 +24,12 @@ VERSION ?= $(shell date -u +"%Y.%m.%d.%H.%M")
 CONFIGS ?= $(CURDIR)/../settings.mwop.net
 ZSCLIENT ?= zs-client.phar
 ZSTARGET ?= mwop
+APPID ?= 25
+GIT = $(shell which git)
 
 COMPOSER = $(CURDIR)/composer.phar
 
-.PHONY : all composer sitesub grunt zpk deploy clean
+.PHONY : all composer sitesub pagerules grunt zpk deploy clean
 
 all : deploy
 
@@ -36,16 +39,22 @@ composer :
 	@echo "[DONE] Ensuring composer is up-to-date..."
 
 sitesub :
-	@echo "Injecting site name into deploy and job scripts..."
+	@echo "Injecting site name into deploy scripts..."
 	-sed --in-place -r -e "s#server \= '[^']+'#server = '$(SITE)'#" $(CURDIR)/zpk/scripts/post_activate.php
-	@echo "[DONE] Injecting site name into deploy and job scripts..."
+	@echo "[DONE] Injecting site name into deploy scripts..."
+
+pagerules :
+	@echo "Configuring page cache rules..."
+	-$(GIT) checkout -- zpk/scripts/pagecache_rules.xml
+	-$(PHP) $(CURDIR)/bin/mwop.net.php prep-page-cache-rules --appId=$(APPID) --site=$(SITE)
+	@echo "[DONE] Configuring page cache rules..."
 
 grunt :
 	@echo "Running grunt to minimize CSS..."
 	-grunt
 	@echo "[DONE] Running grunt to minimize CSS..."
 
-zpk : composer sitesub grunt
+zpk : composer sitesub pagerules grunt
 	@echo "Creating zpk..."
 	-$(CURDIR)/vendor/bin/zfdeploy.php build mwop-$(VERSION).zpk --configs=$(CONFIGS) --zpkdata=$(CURDIR)/zpk --version=$(VERSION)
 	@echo "[DONE] Creating zpk."

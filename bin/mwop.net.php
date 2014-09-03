@@ -102,6 +102,20 @@ $routes = [
             return $handler($route, $console);
         },
     ],
+    [
+        'name' => 'prep-page-cache-rules',
+        'route' => '--appId= --site=',
+        'description' => 'Prepare pagecache_rules.xml for deployment packaging.',
+        'short_description' => 'Prep page cache rules',
+        'options_descriptions' => [
+            '--appId' => 'Zend Server application ID',
+            '--site'  => 'Base URL of site to which to deploy',
+        ],
+        'handler' => function ($route, $console) use ($services) {
+            $handler = new PrepPageCacheRules();
+            return $handler($route, $console);
+        },
+    ],
 ];
 
 $app = new Application(
