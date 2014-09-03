@@ -3,6 +3,7 @@ data/cache/posts/*.html
 data/comics/*.html
 data/comics.mustache
 data/feeds/*.xml
+data/github-links.mustache
 data/posts.db
 data/tag-cloud.mustache
 node_modules/
