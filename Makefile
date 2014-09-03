@@ -35,9 +35,11 @@ composer :
 	@echo "[DONE] Ensuring composer is up-to-date..."
 
 sitesub :
-	@echo "Injecting site name into deploy scripts..."
+	@echo "Injecting site name into deploy and job scripts..."
 	-sed --in-place -r -e "s#server \= '[^']+'#server = '$(SITE)'#" $(CURDIR)/zpk/scripts/post_activate.php
-	@echo "[DONE] Injecting site name into deploy scripts..."
+	-sed --in-place -r -e "s#server \= '[^']+'#server = '$(SITE)'#" $(CURDIR)/public/jobs/comics.php
+	-sed --in-place -r -e "s#server \= '[^']+'#server = '$(SITE)'#" $(CURDIR)/public/jobs/github-feed.php
+	@echo "[DONE] Injecting site name into deploy and job scripts..."
 
 zpk : composer sitesub
 	@echo "Creating zpk..."
