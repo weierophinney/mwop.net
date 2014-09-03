@@ -30,7 +30,7 @@ class GithubFeed
         // Clear caches
         $uri    = (string) $req->getUrl()->setPath('/');
         $queue  = new ZendJobQueue();
-        $queue->createHttpJob($uri . 'jobs/clear-cache.php', [], [
+        $queue->createHttpJob($uri . 'jobs/clear-cache', [], [
             'name'       => 'clear-cache',
             'persistent' => false,
         ]);
