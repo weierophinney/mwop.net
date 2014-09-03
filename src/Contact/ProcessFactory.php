@@ -1,16 +1,14 @@
 <?php
-namespace Mwop\Contact\Factory;
+namespace Mwop\Contact;
 
-use Mwop\Contact\Process as Page;
-
-class Process
+class ProcessFactory
 {
     public function __invoke($services)
     {
         $config = $services->get('Config');
         $config = $config['contact'];
 
-        return new Page(
+        return new Process(
             $services->get('renderer'),
             $services->get('session'),
             $services->get('mail.transport'),

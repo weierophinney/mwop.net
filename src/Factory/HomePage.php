@@ -1,13 +1,13 @@
 <?php
 namespace Mwop\Factory;
 
-use Mwop\Page;
+use Mwop\Page as Middleware;
 
 class HomePage
 {
     public function __invoke($services)
     {
         $renderer = $services->get('renderer');
-        return new Page($renderer, '/', 'home');
+        return new Middleware($renderer, '/', 'home');
     }
 }

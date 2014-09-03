@@ -8,8 +8,8 @@ function createServiceContainer($config)
 
     $config = $config['services'];
 
-    foreach ($config['invokables'] as $name => $class) {
-        $services->add($name, $class);
+    foreach ($config['invokables'] as $class) {
+        $services->add($class, $class);
     }
 
     foreach ($config['factories'] as $name => $factory) {

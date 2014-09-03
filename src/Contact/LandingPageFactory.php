@@ -1,15 +1,13 @@
 <?php
-namespace Mwop\Contact\Factory;
+namespace Mwop\Contact;
 
-use Mwop\Contact\LandingPage as Page;
-
-class LandingPage
+class LandingPageFactory
 {
     public function __invoke($services)
     {
         $renderer = $services->get('renderer');
         $session  = $services->get('session');
         $config   = $services->get('Config')['contact'];
-        return new Page($renderer, '/', 'contact.landing', $session, $config);
+        return new LandingPage($renderer, '/', 'contact.landing', $session, $config);
     }
 }

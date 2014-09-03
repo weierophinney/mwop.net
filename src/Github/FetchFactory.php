@@ -1,9 +1,7 @@
 <?php
-namespace Mwop\Factory;
+namespace Mwop\Github;
 
-use Mwop\Github\Fetch;
-
-class GithubFetch
+class FetchFactory
 {
     public function __invoke($services)
     {

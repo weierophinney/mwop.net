@@ -1,11 +1,9 @@
 <?php
-namespace Mwop\Factory;
+namespace Mwop\Github;
 
-use Mwop\Github\AtomReader as Reader;
-use Mwop\Github\AtomReaderExtensions;
 use Zend\Feed\Reader\Reader as FeedReader;
 
-class AtomReader
+class AtomReaderFactory
 {
     public function __invoke($services)
     {
@@ -16,7 +14,7 @@ class AtomReader
         $config = $services->get('Config');
         $config = $config['github'];
 
-        $reader = new Reader($config['user'], $config['token']);
+        $reader = new AtomReader($config['user'], $config['token']);
         $reader->setLimit($config['limit']);
         return $reader;
     }

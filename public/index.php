@@ -21,27 +21,29 @@ $services = createServiceContainer($config);
 
 $app = new Middleware();
 
-$app->pipe($services->get('query-params'));
+$app->pipe($services->get('Mwop\QueryParams'));
 $app->pipe($services->get('Mwop\Redirects'));
-$app->pipe($services->get('body-params'));
+$app->pipe($services->get('Mwop\BodyParams'));
 
 $app->pipe('/', function ($req, $res, $next) use ($services) {
-    $middleware = $services->get('page.home');
+    $middleware = $services->get('Mwop\HomePage');
     $middleware($req, $res, $next);
 });
 
 $app->pipe('/comics', function ($req, $res, $next) use ($services) {
-    $middleware = $services->get('Mwop\ComicsPage');
+    $middleware   = new Middleware();
+    $middleware->pipe($services->get('Mwop\User\UserSession'));
+    $middleware->pipe($services->get('Mwop\ComicsPage'));
     $middleware($req, $res, $next);
 });
 
 $app->pipe('/resume', function ($req, $res, $next) use ($services) {
-    $middleware = $services->get('page.resume');
+    $middleware = $services->get('Mwop\ResumePage');
     $middleware($req, $res, $next);
 });
 
 $app->pipe('/contact', function ($req, $res, $next) use ($services) {
-    $middleware = $services->get('contact');
+    $middleware = $services->get('Mwop\Contact\Middleware');
     $middleware($req, $res, $next);
 });
 
@@ -67,7 +69,7 @@ $app->pipe(function ($err, $req, $res, $next) use ($services) {
     $middleware($err, $req, $res, $next);
 });
 $app->pipe(function ($err, $req, $res, $next) use ($services) {
-    $middleware = $services->get('not-allowed');
+    $middleware = $services->get('Mwop\NotAllowed');
     $middleware($err, $req, $res, $next);
 });
 $app->pipe(function ($err, $req, $res, $next) use ($services) {
