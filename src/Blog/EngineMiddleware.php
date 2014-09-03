@@ -50,6 +50,7 @@ class EngineMiddleware
         $title = 'Blog Posts';
 
         if ($tag) {
+            $tag   = str_replace(array('+', '%20'), ' ', $tag);
             $posts = $this->mapper->fetchAllByTag($tag);
             $title = 'Tag: ' . $tag;
         } else {
@@ -57,7 +58,7 @@ class EngineMiddleware
         }
 
         $posts->setItemCountPerPage(10);
-        if ($page > count($posts)) {
+        if (count($posts) && $page > count($posts)) {
             $res->setStatusCode(302);
             $res->addHeader('Location', sprintf('%s?page=%d', $path, count($posts)));
             $res->end();
@@ -128,7 +129,7 @@ class EngineMiddleware
     private function displayFeed($req, $res, $next, $type, $tag = null)
     {
         if ($tag) {
-            $path = sprintf('%s/%s.%s.xml', $this->feedPath, str_replace(' ', '+', $tag), $type);
+            $path = sprintf('%s/%s.%s.xml', $this->feedPath, str_replace([' ', '%20'], '+', $tag), $type);
         } else {
             $path = sprintf('%s/%s.xml', $this->feedPath, $type);
         }
