@@ -26,7 +26,7 @@ class Logout
 
     private function redirect($request, $response)
     {
-        $redirectUrl = (string) $request->originalUrl->setPath('/user/login');
+        $redirectUrl = (string) $request->originalUrl->setPath('/');
         $response->setStatusCode(302);
         $response->addHeader('Location', $redirectUrl);
         $response->end();
