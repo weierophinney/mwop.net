@@ -10,6 +10,8 @@
 # - ZSCLIENT - Path to zs-client.phar (defaults to zs-client.phar)
 # - ZSTARGET - Target for zs-client.phar (defaults to mwop)
 # - APPID    - Application ID on Zend Server (defaults to 25)
+# - GIT      - Path to git executable
+# - NPM      - Path to npm executable
 #
 # Available targets:
 # - composer - update the composer executable
@@ -25,11 +27,12 @@ CONFIGS ?= $(CURDIR)/../settings.mwop.net
 ZSCLIENT ?= zs-client.phar
 ZSTARGET ?= mwop
 APPID ?= 25
-GIT = $(shell which git)
+GIT ?= $(shell which git)
+NPM ?= $(shell which npm)
 
 COMPOSER = $(CURDIR)/composer.phar
 
-.PHONY : all composer sitesub pagerules grunt zpk deploy clean
+.PHONY : all composer sitesub pagerules node_modules grunt node_cleanup zpk deploy clean
 
 all : deploy
 
@@ -49,19 +52,29 @@ pagerules :
 	-$(PHP) $(CURDIR)/bin/mwop.net.php prep-page-cache-rules --appId=$(APPID) --site=$(SITE)
 	@echo "[DONE] Configuring page cache rules..."
 
-grunt :
+node_modules :
+	@echo "Installing node packages for grunt..."
+	-$(NPM) install
+	@echo "[DONE] Installing node packages for grunt..."
+
+grunt : node_modules
 	@echo "Running grunt to minimize CSS..."
 	-grunt
 	@echo "[DONE] Running grunt to minimize CSS..."
 
-zpk : composer sitesub pagerules grunt
+node_cleanup : grunt
+	@echo "Removing node modules..."
+	-rm -Rf $(CURDIR)/node_modules
+	@echo "[DONE] Removing node modules..."
+
+zpk : composer sitesub pagerules node_cleanup
 	@echo "Creating zpk..."
 	-$(CURDIR)/vendor/bin/zfdeploy.php build mwop-$(VERSION).zpk --configs=$(CONFIGS) --zpkdata=$(CURDIR)/zpk --version=$(VERSION)
 	@echo "[DONE] Creating zpk."
 
 deploy : zpk
 	@echo "Deploying ZPK..."
-	-$(ZSCLIENT) applicationUpdate --appId=25 --appPackage=mwop-$(VERSION).zpk --target=$(ZSTARGET)
+	-$(ZSCLIENT) applicationUpdate --appId=$(APPID) --appPackage=mwop-$(VERSION).zpk --target=$(ZSTARGET)
 	@echo "[DONE] Deploying ZPK."
 
 clean :
