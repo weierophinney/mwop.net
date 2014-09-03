@@ -55,6 +55,11 @@ $app->pipe('/blog', function ($req, $res, $next) use ($services) {
     $middleware($req, $res, $next);
 });
 
+$app->pipe('/jobs', function ($req, $res, $next) {
+    $middleware = new Job\Middleware();
+    $middleware($req, $res, $next);
+});
+
 $app->pipe(new NotFound());
 
 $app->pipe(function ($err, $req, $res, $next) use ($services) {
