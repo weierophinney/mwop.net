@@ -1,4 +1,5 @@
 <?php
+$server = 'https://mwop.net';
 chdir(__DIR__ . '/../../');
 
 if (! ZendJobQueue::getCurrentJobId()) {
@@ -20,7 +21,7 @@ echo implode("\n", $output);
 
 // Clear caches
 $queue  = new ZendJobQueue();
-$queue->createHttpJob('/jobs/clear-cache.php', [], [
+$queue->createHttpJob($server . '/jobs/clear-cache.php', [], [
     'name'       => 'clear-cache',
     'persistent' => false,
 ]);
