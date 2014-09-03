@@ -86,6 +86,22 @@ $routes = [
             return $handler($route, $console);
         },
     ],
+    [
+        'name' => 'cache-posts',
+        'route' => '[--path=]',
+        'description' => 'Generate the static cache of all blog posts.',
+        'short_description' => 'Cache blog posts.',
+        'options_descriptions' => [
+            '--path'   => 'Base path of the application; posts are expected at $path/data/posts/',
+        ],
+        'defaults' => [
+            'path'   => realpath(getcwd()),
+        ],
+        'handler' => function ($route, $console) use ($services) {
+            $handler = $services->get('Mwop\CachePosts');
+            return $handler($route, $console);
+        },
+    ],
 ];
 
 $app = new Application(

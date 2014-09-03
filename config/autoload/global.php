@@ -82,6 +82,7 @@ return [
             'Mwop\Blog\Mapper'          => 'Mwop\Blog\MapperFactory',
             'Mwop\Blog\Middleware'      => 'Mwop\Blog\MiddlewareFactory',
             'Mwop\Blog\TagCloud'        => 'Mwop\Blog\TagCloudFactory',
+            'Mwop\CachePosts'           => 'Mwop\Factory\CachePosts',
             'Mwop\ComicsPage'           => 'Mwop\Factory\ComicsPage',
             'Mwop\ErrorHandler'         => 'Mwop\Factory\ErrorHandler',
             'Mwop\Github\AtomReader'    => 'Mwop\Factory\AtomReader',
