@@ -1,5 +1,6 @@
 config/autoload/*local.php
 data/cache/posts/*.html
+data/comics/*.html
 data/comics.mustache
 data/feeds/*.xml
 data/posts.db
