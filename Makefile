@@ -17,7 +17,7 @@
 # - all      - synonym for deploy target
 
 PHP ?= $(shell which php)
-SITE ?= mwop.net
+SITE ?= https://mwop.net
 VERSION ?= $(shell date -u +"%Y.%m.%d.%H.%M")
 CONFIGS ?= $(CURDIR)/../site-settings
 ZSCLIENT ?= zs-client.phar
@@ -36,7 +36,7 @@ composer :
 
 sitesub :
 	@echo "Injecting site name into deploy scripts..."
-	-sed --in-place -r -e "s/server \= '[^']+'/server = 'http:\/\/$(SITE)'/" $(CURDIR)/zpk/scripts/post_activate.php
+	-sed --in-place -r -e "s#server \= '[^']+'#server = '$(SITE)'#" $(CURDIR)/zpk/scripts/post_activate.php
 	@echo "[DONE] Injecting site name into deploy scripts..."
 
 zpk : composer sitesub
