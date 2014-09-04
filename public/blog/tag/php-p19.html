@@ -96,6 +96,68 @@
 <div class="row clearfix">
 <aside class="four columns offset-by-one alpha sidebar blog">
     <p>
+        Written on 07 September 2005.
+                <br />Last updated on 08 September 2005.
+            </p>
+
+    <ul class="tags">
+    <li><a href="/blog/tag/linux.html">linux</a></li>
+    <li><a href="/blog/tag/php.html">php</a></li>
+</ul>
+
+</aside>
+
+<section class="eleven columns omega">
+    <h4 class="entry"><a href="/blog/93-File_SMBPasswd-woes.html">File_SMBPasswd woes</a></h4>
+
+    <div class="entry body"><p>
+    I've been cobbling together a system at work for the last couple months to
+    allow a single place for changing all network passwords. This includes a
+    variety of database sources, as well as <i>passwd</i> files and
+    <i>smbpasswd</i> files.
+    I've been making use of PEAR's <a href="http://pear.php.net/package/File_Passwd">File_Passwd</a> and <a href="http://pear.php.net/package/File_SMBPasswd">File_SMBPasswd</a>, and they've
+    greatly simplified the task of updating passwords for those types of
+    systems. However, I've encountered some issues that I never would have
+    expected.
+</p>
+<p>
+    I have the web user in a group called 'samba', and I have the
+    <i>smbpasswd</i> file owned by root:samba. I then set the <i>smbpasswd</i>
+    file to be group +rw. Simple, right? The web user should then be able to
+    update the <i>smbpasswd</i> file without a problem, right? Wrong.
+</p>
+<p>
+    I kept getting errors, and on investigation continually found that the
+    <i>smbpasswd</i> file permissions had reverted to 0600 -- i.e., only the
+    root user could access it. I tried using 'chattr -i' on the off-chance that
+    the file had been made immutable (which didn't make sense, as I was able to
+    see the permissions change). No luck.
+</p>
+<p>
+    Based on observations of when the permissions reverted, it appears that the
+    various SMB processes will reset the permissions! An example is when
+    someone attempts to mount a resource from the server; this accesses the
+    smbpasswd file to perform authentication -- and at this point the file
+    permissions change.  I can find no documentation to support this; these are
+    simply my observations.
+</p>
+<p>
+    So, to get around the behaviour, I created a script that will set the file
+    permissions to what I want them, and then gave <i>sudo</i> privileges to the
+    samba group for that script. This script is then called via <i>system()</i>
+    in the update script just before processing.
+</p>
+<p>
+    It's a hack, and could be made more secure, but it works.
+</p></div>
+
+    <p><a href="/blog/93-File_SMBPasswd-woes.html">Continue reading...</a></p>
+</section>
+
+</div>
+<div class="row clearfix">
+<aside class="four columns offset-by-one alpha sidebar blog">
+    <p>
         Written on 28 July 2005.
                 <br />Last updated on 28 July 2005.
             </p>
@@ -497,82 +559,6 @@
 </section>
 
 </div>
-<div class="row clearfix">
-<aside class="four columns offset-by-one alpha sidebar blog">
-    <p>
-        Written on 22 May 2005.
-                <br />Last updated on 22 May 2005.
-            </p>
-
-    <ul class="tags">
-    <li><a href="/blog/tag/php.html">php</a></li>
-</ul>
-
-</aside>
-
-<section class="eleven columns omega">
-    <h4 class="entry"><a href="/blog/74-PEAR-and-DocBook-documentation.html">PEAR and DocBook documentation</a></h4>
-
-    <div class="entry body"><p>
-    Sean Coates has posted a rant and <a
-        href="http://blog.phpdoc.info/comment.php?type=trackback&entry_id=14">a
-        blog entry</a> regarding DocBook and the various proposals on PEAR
-    related to using a wiki for package documentation.
-</p>
-<p>
-    A little background is probably in order. Many PEAR developers feel that
-    DocBook is needlessly difficult and provides a barrier to writing good
-    documentation for PEAR projects; this is actually the most often-cited
-    reason for lack of documentation for a PEAR package. Many actually create
-    wikis that they then link to in a minimal DocBook tutorial as "full
-    documentation".
-</p>
-<p>
-    One proposed remedy is to create a PEAR wiki for each PEAR package. A
-    scheduled process would then transform the wiki markup to DocBook, HTML,
-    PDF, whatever.
-</p>
-<p>
-    What Sean rants about is simply this: wiki markup is meant to be simple,
-    and much code documentation would require specialized wiki markup.
-    Additionally, DocBook is already meant to do the transformations required;
-    it is a structured language that is meant to be processed into a variety of
-    output formats.
-</p>
-<p>
-    While I agree with Sean's ideas in essence, I still feel that DocBook is a
-    real pain to work with. <a href="http://www.phpdoc.org">PhpDocumentor</a>
-    offers some real convenience when documenting code: doc blocks can contain
-    HTML, some simple inline elements like {@link} -- and they make documenting
-    a snap. But I just fail to understand why, when providing tutorials, a
-    switch to DocBook is necessary. Whenever I use it, I find that I have to
-    retool a set of tutorials I have, or somebody else has, already written in
-    order to get formatting correct, and that I have to switch my thinking
-    altogether to accomodate a new set of rules and logic.
-</p>
-<p>
-    Yes, DocBook is simply XML with a documented schema. However, I've never
-    enjoyed XML. I find it too pedantic, I don't like having to escape out CDATA
-    sequences in order to render HTML (and code, and XML, etc.), I don't like
-    having to learn new DTDs for every project, and more. I feel for
-    configuration, unless you have nested elements, there's no reason to use XML
-    whatsoever. And when it comes to documentation, why use anything other than
-    HTML? Since HTML is a subset of SGML (as is XML), there's no reason it can't
-    be transformed to other formats itself -- and for the majority of PHP
-    developers, HTML is a known, while XML/DocBook may or may not be.
-</p>
-<p>
-    Whether or not DocBook is hard can be debated from here to eternity. The
-    fact of the matter is that it is <em>perceived</em> as being hard to learn,
-    and thus many PEAR developers are simply choosing not to bother. Why not
-    give them a tool they can use <em>easily</em>? Maybe then the amount and
-    quality of documentation on PEAR will improve.
-</p></div>
-
-    <p><a href="/blog/74-PEAR-and-DocBook-documentation.html">Continue reading...</a></p>
-</section>
-
-</div>
 <div class="paginationControl">
         <a href="/blog/tag/php.html" class="first">&lt;&lt; First</a> |
         <a href="/blog/tag/php-p18.html"> &lt; Previous </a> |
@@ -646,7 +632,7 @@
         <div id="search" style="width:100%;">Loading...</div>
 <h4>Tag Cloud</h4>
 <div class="cloud">
-<ul class="zend-tag-cloud"><li><a href="/blog/tag/apigility.html" style="font-size: 11px;">apigility</a></li> <li><a href="/blog/tag/php.html" style="font-size: 20px;">php</a></li> <li><a href="/blog/tag/programming.html" style="font-size: 12px;">programming</a></li> <li><a href="/blog/tag/zend-framework.html" style="font-size: 11px;">zend-framework</a></li> <li><a href="/blog/tag/zend-server.html" style="font-size: 11px;">zend-server</a></li> <li><a href="/blog/tag/zf2.html" style="font-size: 11px;">zf2</a></li> <li><a href="/blog/tag/zend+framework.html" style="font-size: 15px;">zend framework</a></li> <li><a href="/blog/tag/rest.html" style="font-size: 11px;">rest</a></li> <li><a href="/blog/tag/hal.html" style="font-size: 10px;">hal</a></li> <li><a href="/blog/tag/patterns.html" style="font-size: 11px;">patterns</a></li> <li><a href="/blog/tag/testing.html" style="font-size: 11px;">testing</a></li> <li><a href="/blog/tag/mvc.html" style="font-size: 11px;">mvc</a></li> <li><a href="/blog/tag/rails.html" style="font-size: 11px;">rails</a></li> <li><a href="/blog/tag/javascript.html" style="font-size: 11px;">javascript</a></li> <li><a href="/blog/tag/angularjs.html" style="font-size: 10px;">angularjs</a></li> <li><a href="/blog/tag/ui-router.html" style="font-size: 10px;">ui-router</a></li> <li><a href="/blog/tag/vim.html" style="font-size: 11px;">vim</a></li> <li><a href="/blog/tag/family.html" style="font-size: 11px;">family</a></li> <li><a href="/blog/tag/personal.html" style="font-size: 13px;">personal</a></li> <li><a href="/blog/tag/phpconcom.html" style="font-size: 10px;">phpconcom</a></li> <li><a href="/blog/tag/oop.html" style="font-size: 11px;">oop</a></li> <li><a href="/blog/tag/linux.html" style="font-size: 12px;">linux</a></li> <li><a href="/blog/tag/zendcon08.html" style="font-size: 11px;">zendcon08</a></li> <li><a href="/blog/tag/file_fortune.html" style="font-size: 10px;">file_fortune</a></li> <li><a href="/blog/tag/pear.html" style="font-size: 11px;">pear</a></li> <li><a href="/blog/tag/zendcon.html" style="font-size: 11px;">zendcon</a></li> <li><a href="/blog/tag/perl.html" style="font-size: 12px;">perl</a></li> <li><a href="/blog/tag/fastcgi.html" style="font-size: 10px;">fastcgi</a></li> <li><a href="/blog/tag/ubuntu.html" style="font-size: 11px;">ubuntu</a></li> <li><a href="/blog/tag/tekx.html" style="font-size: 10px;">tekx</a></li> <li><a href="/blog/tag/zendcon10.html" style="font-size: 10px;">zendcon10</a></li> <li><a href="/blog/tag/dojo.html" style="font-size: 11px;">dojo</a></li> <li><a href="/blog/tag/symfony.html" style="font-size: 11px;">symfony</a></li> <li><a href="/blog/tag/zeta+components.html" style="font-size: 10px;">zeta components</a></li> <li><a href="/blog/tag/tek09.html" style="font-size: 10px;">tek09</a></li> <li><a href="/blog/tag/spl.html" style="font-size: 11px;">spl</a></li> <li><a href="/blog/tag/subversion.html" style="font-size: 11px;">subversion</a></li> <li><a href="/blog/tag/zend+framewor.html" style="font-size: 10px;">zend framewor</a></li> <li><a href="/blog/tag/conferences.html" style="font-size: 11px;">conferences</a></li> <li><a href="/blog/tag/dpc08.html" style="font-size: 11px;">dpc08</a></li> <li><a href="/blog/tag/phpworks08.html" style="font-size: 11px;">phpworks08</a></li> <li><a href="/blog/tag/webinar.html" style="font-size: 11px;">webinar</a></li> <li><a href="/blog/tag/zencon08.html" style="font-size: 10px;">zencon08</a></li> <li><a href="/blog/tag/cw09.html" style="font-size: 11px;">cw09</a></li> <li><a href="/blog/tag/zend+server.html" style="font-size: 10px;">zend server</a></li> <li><a href="/blog/tag/dpc09.html" style="font-size: 10px;">dpc09</a></li> <li><a href="/blog/tag/sflive2010.html" style="font-size: 10px;">sflive2010</a></li> <li><a href="/blog/tag/security.html" style="font-size: 10px;">security</a></li> <li><a href="/blog/tag/wifi.html" style="font-size: 10px;">wifi</a></li> <li><a href="/blog/tag/aikido.html" style="font-size: 10px;">aikido</a></li> <li><a href="/blog/tag/books.html" style="font-size: 10px;">books</a></li> <li><a href="/blog/tag/dpc10.html" style="font-size: 10px;">dpc10</a></li> <li><a href="/blog/tag/zendcon09.html" style="font-size: 11px;">zendcon09</a></li> <li><a href="/blog/tag/git.html" style="font-size: 11px;">git</a></li> <li><a href="/blog/tag/phpwomen.html" style="font-size: 10px;">phpwomen</a></li> <li><a href="/blog/tag/virtualbox.html" style="font-size: 10px;">virtualbox</a></li> <li><a href="/blog/tag/screencast.html" style="font-size: 11px;">screencast</a></li> <li><a href="/blog/tag/advocacy.html" style="font-size: 10px;">advocacy</a></li> <li><a href="/blog/tag/politics.html" style="font-size: 10px;">politics</a></li> <li><a href="/blog/tag/internet.html" style="font-size: 10px;">internet</a></li> <li><a href="/blog/tag/microphp.html" style="font-size: 10px;">microphp</a></li> <li><a href="/blog/tag/cloud.html" style="font-size: 11px;">cloud</a></li> <li><a href="/blog/tag/composer.html" style="font-size: 10px;">composer</a></li> <li><a href="/blog/tag/doctrine.html" style="font-size: 10px;">doctrine</a></li> <li><a href="/blog/tag/bower.html" style="font-size: 10px;">bower</a></li> <li><a href="/blog/tag/http.html" style="font-size: 11px;">http</a></li></ul></div>
+<ul class="zend-tag-cloud"><li><a href="/blog/tag/apigility.html" style="font-size: 11px;">apigility</a></li> <li><a href="/blog/tag/php.html" style="font-size: 20px;">php</a></li> <li><a href="/blog/tag/programming.html" style="font-size: 12px;">programming</a></li> <li><a href="/blog/tag/zend-framework.html" style="font-size: 11px;">zend-framework</a></li> <li><a href="/blog/tag/zend-server.html" style="font-size: 11px;">zend-server</a></li> <li><a href="/blog/tag/zf2.html" style="font-size: 11px;">zf2</a></li> <li><a href="/blog/tag/zend+framework.html" style="font-size: 14px;">zend framework</a></li> <li><a href="/blog/tag/rest.html" style="font-size: 11px;">rest</a></li> <li><a href="/blog/tag/hal.html" style="font-size: 10px;">hal</a></li> <li><a href="/blog/tag/patterns.html" style="font-size: 11px;">patterns</a></li> <li><a href="/blog/tag/testing.html" style="font-size: 11px;">testing</a></li> <li><a href="/blog/tag/mvc.html" style="font-size: 11px;">mvc</a></li> <li><a href="/blog/tag/rails.html" style="font-size: 11px;">rails</a></li> <li><a href="/blog/tag/javascript.html" style="font-size: 11px;">javascript</a></li> <li><a href="/blog/tag/angularjs.html" style="font-size: 10px;">angularjs</a></li> <li><a href="/blog/tag/ui-router.html" style="font-size: 10px;">ui-router</a></li> <li><a href="/blog/tag/vim.html" style="font-size: 11px;">vim</a></li> <li><a href="/blog/tag/family.html" style="font-size: 11px;">family</a></li> <li><a href="/blog/tag/personal.html" style="font-size: 13px;">personal</a></li> <li><a href="/blog/tag/phpconcom.html" style="font-size: 10px;">phpconcom</a></li> <li><a href="/blog/tag/oop.html" style="font-size: 11px;">oop</a></li> <li><a href="/blog/tag/linux.html" style="font-size: 12px;">linux</a></li> <li><a href="/blog/tag/zendcon08.html" style="font-size: 11px;">zendcon08</a></li> <li><a href="/blog/tag/file_fortune.html" style="font-size: 10px;">file_fortune</a></li> <li><a href="/blog/tag/pear.html" style="font-size: 11px;">pear</a></li> <li><a href="/blog/tag/zendcon.html" style="font-size: 11px;">zendcon</a></li> <li><a href="/blog/tag/perl.html" style="font-size: 12px;">perl</a></li> <li><a href="/blog/tag/fastcgi.html" style="font-size: 10px;">fastcgi</a></li> <li><a href="/blog/tag/ubuntu.html" style="font-size: 11px;">ubuntu</a></li> <li><a href="/blog/tag/tekx.html" style="font-size: 10px;">tekx</a></li> <li><a href="/blog/tag/zendcon10.html" style="font-size: 10px;">zendcon10</a></li> <li><a href="/blog/tag/dojo.html" style="font-size: 11px;">dojo</a></li> <li><a href="/blog/tag/symfony.html" style="font-size: 11px;">symfony</a></li> <li><a href="/blog/tag/zeta+components.html" style="font-size: 10px;">zeta components</a></li> <li><a href="/blog/tag/tek09.html" style="font-size: 10px;">tek09</a></li> <li><a href="/blog/tag/spl.html" style="font-size: 11px;">spl</a></li> <li><a href="/blog/tag/subversion.html" style="font-size: 11px;">subversion</a></li> <li><a href="/blog/tag/zend+framewor.html" style="font-size: 10px;">zend framewor</a></li> <li><a href="/blog/tag/conferences.html" style="font-size: 11px;">conferences</a></li> <li><a href="/blog/tag/dpc08.html" style="font-size: 11px;">dpc08</a></li> <li><a href="/blog/tag/phpworks08.html" style="font-size: 11px;">phpworks08</a></li> <li><a href="/blog/tag/webinar.html" style="font-size: 11px;">webinar</a></li> <li><a href="/blog/tag/zencon08.html" style="font-size: 10px;">zencon08</a></li> <li><a href="/blog/tag/cw09.html" style="font-size: 11px;">cw09</a></li> <li><a href="/blog/tag/zend+server.html" style="font-size: 10px;">zend server</a></li> <li><a href="/blog/tag/dpc09.html" style="font-size: 10px;">dpc09</a></li> <li><a href="/blog/tag/sflive2010.html" style="font-size: 10px;">sflive2010</a></li> <li><a href="/blog/tag/security.html" style="font-size: 10px;">security</a></li> <li><a href="/blog/tag/wifi.html" style="font-size: 10px;">wifi</a></li> <li><a href="/blog/tag/aikido.html" style="font-size: 10px;">aikido</a></li> <li><a href="/blog/tag/books.html" style="font-size: 10px;">books</a></li> <li><a href="/blog/tag/dpc10.html" style="font-size: 10px;">dpc10</a></li> <li><a href="/blog/tag/zendcon09.html" style="font-size: 11px;">zendcon09</a></li> <li><a href="/blog/tag/git.html" style="font-size: 11px;">git</a></li> <li><a href="/blog/tag/phpwomen.html" style="font-size: 10px;">phpwomen</a></li> <li><a href="/blog/tag/virtualbox.html" style="font-size: 10px;">virtualbox</a></li> <li><a href="/blog/tag/screencast.html" style="font-size: 11px;">screencast</a></li> <li><a href="/blog/tag/advocacy.html" style="font-size: 10px;">advocacy</a></li> <li><a href="/blog/tag/politics.html" style="font-size: 10px;">politics</a></li> <li><a href="/blog/tag/internet.html" style="font-size: 10px;">internet</a></li> <li><a href="/blog/tag/microphp.html" style="font-size: 10px;">microphp</a></li> <li><a href="/blog/tag/cloud.html" style="font-size: 11px;">cloud</a></li> <li><a href="/blog/tag/composer.html" style="font-size: 10px;">composer</a></li> <li><a href="/blog/tag/doctrine.html" style="font-size: 10px;">doctrine</a></li> <li><a href="/blog/tag/bower.html" style="font-size: 10px;">bower</a></li> <li><a href="/blog/tag/http.html" style="font-size: 11px;">http</a></li></ul></div>
         </div>
 
         <br class="clear"/>
