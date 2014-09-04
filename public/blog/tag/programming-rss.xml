@@ -3,13 +3,81 @@
   <channel>
     <title>Tag: programming :: phly, boy, phly</title>
     <description>Tag: programming :: phly, boy, phly</description>
-    <pubDate>Tue, 02 Sep 2014 13:30:00 +0000</pubDate>
+    <pubDate>Thu, 04 Sep 2014 13:30:00 +0000</pubDate>
     <generator>Zend_Feed_Writer 2 (http://framework.zend.com)</generator>
     <link>http://mwop.net/blog/tag/programming.html</link>
     <atom:link rel="self" type="application/rss+xml" href="http://mwop.net/blog/tag/programming-rss.xml"/>
     <item>
+      <title>Deployment with Zend Server (Part 4 of 8)</title>
+      <pubDate>Thu, 04 Sep 2014 13:30:00 +0000</pubDate>
+      <link>http://mwop.net/blog/2014-09-04-zend-server-deployment-part-4.html</link>
+      <guid>http://mwop.net/blog/2014-09-04-zend-server-deployment-part-4.html</guid>
+      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
+      <dc:creator>Matthew Weier O'Phinney</dc:creator>
+      <content:encoded><![CDATA[<p>
+    This is the fourth in a series of eight posts detailing tips on deploying
+    to Zend Server. <a href="/blog/2014-09-02-zend-server-deployment-part-3.html">The previous post in the series</a>
+    detailed a trick I learned about when to execute a <kbd>chmod</kbd> statement
+    during deployment.
+</p>
+
+<p>
+    Today, I'm sharing a tip about securing your Job Queue job scripts.
+</p><h2>Tip 4: Secure your job scripts</h2>
+
+<p>
+    In the <a href="/blog/2014-08-28-zend-server-deployment-part-2.html">second tip</a>,
+    I detailed <em>when</em> to register job scripts, but not how to write them.
+    As it turns out, there's one very important facet to consider when writing 
+    job scripts: security.
+</p>
+
+<p>
+    One issue with Job Queue is that jobs are triggered... via the web. This 
+    means that they are exposed via the web, which makes them potential attack 
+    vectors. However, there's a simple trick to prevent access other than from Job 
+    Queue; add this at the top of your job scripts:
+</p>
+
+<div class="example"><pre><code language="php">
+if (! ZendJobQueue::getCurrentJobId()) {
+    header('HTTP/1.1 403 Forbidden');
+    exit(1);
+}
+</code></pre></div>
+
+<p>
+    While the jobs are invoked via HTTP, Zend Server has ways of tracking whether
+    or not they are being executed in the context of Job Queue, and for which job.
+    If the <code>ZendJobQueue::getCurrentJobId()</code> returns a falsy value,
+    then it was not invoked via Job Queue, and you can exit immediately. I like
+    to set a 403 status in these situations as well, but that's just a personal
+    preference.
+</p>
+
+<h2>Next time...</h2>
+
+<p>
+    The next tip in the series is builds on this one, and gives some best
+    practices to follow when writing your job scripts.
+</p>
+
+<h2>Other articles in the series</h2>
+
+<ul>
+    <li><a href="/blog/2014-08-11-zend-server-deployment-part-1.html">Tip 1: zf-deploy</a></li>
+    <li><a href="/blog/2014-08-28-zend-server-deployment-part-2.html">Tip 2: Recurring Jobs</a></li>
+    <li><a href="/blog/2014-09-02-zend-server-deployment-part-3.html">Tip 3: chmod</a></li>
+</ul
+
+<p>
+    I will update this post to link to each article as it releases.
+</p>]]></content:encoded>
+      <slash:comments>0</slash:comments>
+    </item>
+    <item>
       <title>Deployment with Zend Server (Part 3 of 8)</title>
-      <pubDate>Tue, 02 Sep 2014 13:30:00 +0000</pubDate>
+      <pubDate>Thu, 04 Sep 2014 13:30:00 +0000</pubDate>
       <link>http://mwop.net/blog/2014-09-02-zend-server-deployment-part-3.html</link>
       <guid>http://mwop.net/blog/2014-09-02-zend-server-deployment-part-3.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -67,6 +135,7 @@ system($command);
 <ul>
     <li><a href="/blog/2014-08-11-zend-server-deployment-part-1.html">Tip 1: zf-deploy</a></li>
     <li><a href="/blog/2014-08-28-zend-server-deployment-part-2.html">Tip 2: Recurring Jobs</a></li>
+    <li><a href="/blog/2014-09-04-zend-server-deployment-part-4.html">Tip 4: Secure your job scripts</a></li>
 </ul
 
 <p>
@@ -76,7 +145,7 @@ system($command);
     </item>
     <item>
       <title>Deployment with Zend Server (Part 2 of 8)</title>
-      <pubDate>Tue, 02 Sep 2014 13:30:00 +0000</pubDate>
+      <pubDate>Thu, 04 Sep 2014 13:30:00 +0000</pubDate>
       <link>http://mwop.net/blog/2014-08-28-zend-server-deployment-part-2.html</link>
       <guid>http://mwop.net/blog/2014-08-28-zend-server-deployment-part-2.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -196,6 +265,7 @@ $queue->createHttpJob($server . '/jobs/github-feed.php', [], [
 <ul>
     <li><a href="/blog/2014-08-11-zend-server-deployment-part-1.html">Tip 1: zf-deploy</a></li>
     <li><a href="/blog/2014-09-02-zend-server-deployment-part-3.html">Tip 3: chmod</a></li>
+    <li><a href="/blog/2014-09-04-zend-server-deployment-part-4.html">Tip 4: Secure your job scripts</a></li>
 </ul
 
 <p>
@@ -205,7 +275,7 @@ $queue->createHttpJob($server . '/jobs/github-feed.php', [], [
     </item>
     <item>
       <title>Deployment with Zend Server (Part 1 of 8)</title>
-      <pubDate>Tue, 02 Sep 2014 13:30:00 +0000</pubDate>
+      <pubDate>Thu, 04 Sep 2014 13:30:00 +0000</pubDate>
       <link>http://mwop.net/blog/2014-08-11-zend-server-deployment-part-1.html</link>
       <guid>http://mwop.net/blog/2014-08-11-zend-server-deployment-part-1.html</guid>
       <author>me@mwop.net (Matthew Weier O'Phinney)</author>
@@ -361,6 +431,7 @@ $ vendor/bin/zfdeploy.php mwop.net.zpk --configs=../mwop.net-config --zpk=zpk
 <ul>
     <li><a href="/blog/2014-08-28-zend-server-deployment-part-2.html">Tip 2: Recurring Jobs</a></li>
     <li><a href="/blog/2014-09-02-zend-server-deployment-part-3.html">Tip 3: chmod</a></li>
+    <li><a href="/blog/2014-09-04-zend-server-deployment-part-4.html">Tip 4: Secure your job scripts</a></li>
 </ul
 
 <p>
@@ -1462,49 +1533,6 @@ vimgrep /{pattern}/[g][j] {file} ...
 <p>
     In summary: don't use "git config --global core.autocrlf true" when using
     git-svn.
-</p>]]></content:encoded>
-      <slash:comments>0</slash:comments>
-    </item>
-    <item>
-      <title>Server Upgrades... lost entries...</title>
-      <pubDate>Wed, 21 May 2008 18:35:27 +0000</pubDate>
-      <link>http://mwop.net/blog/171-Server-Upgrades...-lost-entries....html</link>
-      <guid>http://mwop.net/blog/171-Server-Upgrades...-lost-entries....html</guid>
-      <author>me@mwop.net (Matthew Weier O'Phinney)</author>
-      <dc:creator>Matthew Weier O'Phinney</dc:creator>
-      <content:encoded><![CDATA[<p>
-    My good friend, Rob, hosts my site for me, in return for helping with server
-    maintenance. After being on Gentoo for the past three years, though, we
-    decided it was time to switch to something a little easier to maintain, so
-    last night we wiped the system partitions and installed Ubuntu server.
-</p>
-
-<p>
-    I'll say this: the setup is much faster! However, we had a few gotchas that
-    surprised us -- it didn't setup our RAID array out-of-the-box, which led to
-    a good hour of frustration as we tried to verify that the install wouldn't
-    wipe it, and then to verify that we could re-assemble it.  (We succeeded.)
-    Additionally, we second-guessed a few things we shouldn't have, which led to
-    needing to back out and reconfigure. But what was over a 12 hour install
-    with Gentoo we accomplished in a matter of a few hours with Ubuntu server --
-    so it was a huge success that way.
-</p>
-
-<p>
-    Unfortunately, our mysqldump of all databases... wasn't, a fact we
-    discovered only after importing it into the new system. I ended up losing my
-    blog database and PEAR channel database. Fortunately, the PEAR channel
-    has not changed at all in the past year, so we had an old backup that
-    worked, and I had a snapshot of my blog database from three weeks ago I was
-    able to use. As a result, there are a few missing entries, but for the most
-    part, all works. If you commented on one of those missing entries, my
-    apologies.
-</p>
-
-<p>
-    Now that the install is done, I'm also finalizing some design changes to my
-    blog -- it's time to leave the black and white for more colorful grounds.
-    Look for a revamp in the coming weeks!
 </p>]]></content:encoded>
       <slash:comments>0</slash:comments>
     </item>
