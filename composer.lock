@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/auraphp/Aura.Session.git",
-                "reference": "f54f9a44e0f0a43244ceaad93e6e14995ac74f66"
+                "reference": "b24472b6db4ba55089bee2651d7f42a46fa05e42"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/auraphp/Aura.Session/zipball/f54f9a44e0f0a43244ceaad93e6e14995ac74f66",
-                "reference": "f54f9a44e0f0a43244ceaad93e6e14995ac74f66",
+                "url": "https://api.github.com/repos/auraphp/Aura.Session/zipball/b24472b6db4ba55089bee2651d7f42a46fa05e42",
+                "reference": "b24472b6db4ba55089bee2651d7f42a46fa05e42",
                 "shasum": ""
             },
             "require": {
@@ -65,7 +65,7 @@
                 "session",
                 "sessions"
             ],
-            "time": "2014-09-01 02:55:57"
+            "time": "2014-09-04 21:04:47"
         },
         {
             "name": "opauth/github",
@@ -258,12 +258,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phly/conduit.git",
-                "reference": "92e40aedba280b0b82d7644e34ad69bbc19591be"
+                "reference": "c25b5648215a21a13c4e2134c9240fe1dbf0eea2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phly/conduit/zipball/92e40aedba280b0b82d7644e34ad69bbc19591be",
-                "reference": "92e40aedba280b0b82d7644e34ad69bbc19591be",
+                "url": "https://api.github.com/repos/phly/conduit/zipball/c25b5648215a21a13c4e2134c9240fe1dbf0eea2",
+                "reference": "c25b5648215a21a13c4e2134c9240fe1dbf0eea2",
                 "shasum": ""
             },
             "require": {
@@ -306,7 +306,7 @@
                 "http",
                 "middleware"
             ],
-            "time": "2014-08-30 20:32:58"
+            "time": "2014-09-01 21:24:12"
         },
         {
             "name": "phly/http",
@@ -314,12 +314,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phly/http.git",
-                "reference": "15ebe63d3654610dded818be5dcf28e9a8088e4c"
+                "reference": "0a56bfb8c9ebae462c34c102781ec7a76ef0b0ea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phly/http/zipball/15ebe63d3654610dded818be5dcf28e9a8088e4c",
-                "reference": "15ebe63d3654610dded818be5dcf28e9a8088e4c",
+                "url": "https://api.github.com/repos/phly/http/zipball/0a56bfb8c9ebae462c34c102781ec7a76ef0b0ea",
+                "reference": "0a56bfb8c9ebae462c34c102781ec7a76ef0b0ea",
                 "shasum": ""
             },
             "require": {
@@ -359,7 +359,7 @@
             "keywords": [
                 "http"
             ],
-            "time": "2014-08-30 21:15:56"
+            "time": "2014-09-03 15:51:50"
         },
         {
             "name": "phly/mustache",
@@ -408,19 +408,20 @@
         },
         {
             "name": "phly/phly-comic",
-            "version": "1.0.5",
+            "version": "1.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/weierophinney/PhlyComic.git",
-                "reference": "04276e0100a0669d048606904ee7897bced2e9e8"
+                "reference": "26ded3e097fee2064f5ec3420a70b55dad961d7f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/weierophinney/PhlyComic/zipball/04276e0100a0669d048606904ee7897bced2e9e8",
-                "reference": "04276e0100a0669d048606904ee7897bced2e9e8",
+                "url": "https://api.github.com/repos/weierophinney/PhlyComic/zipball/26ded3e097fee2064f5ec3420a70b55dad961d7f",
+                "reference": "26ded3e097fee2064f5ec3420a70b55dad961d7f",
                 "shasum": ""
             },
             "require": {
+                "ext-curl": "*",
                 "php": ">=5.3.3",
                 "zendframework/zend-dom": "~2.0",
                 "zendframework/zend-filter": "~2.0",
@@ -462,7 +463,7 @@
                 "source": "https://github.com/weierophinney/PhlyComic",
                 "issues": "https://github.com/weierophinney/PhlyComic/issues"
             },
-            "time": "2014-07-18 14:12:20"
+            "time": "2014-09-04 22:10:48"
         },
         {
             "name": "psr/http-message",
