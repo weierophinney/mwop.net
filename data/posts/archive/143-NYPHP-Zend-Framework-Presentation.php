@@ -1,5 +1,5 @@
 <?php
-use PhlyBlog\EntryEntity;
+use Mwop\Blog\EntryEntity;
 
 $entry = new EntryEntity();
 

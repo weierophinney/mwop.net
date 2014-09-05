@@ -1,9 +1,9 @@
 <?php
-use PhlyBlog\AuthorEntity;
-use PhlyBlog\EntryEntity;
+use Mwop\Blog\AuthorEntity;
+use Mwop\Blog\EntryEntity;
 
 $author = new AuthorEntity();
-$author->fromArray(array(
+$author->exchangeArray(array(
     'id'    => 'matthew',
     'name'  => "Matthew Weier O'Phinney",
     'email' => 'me@mwop.net',
