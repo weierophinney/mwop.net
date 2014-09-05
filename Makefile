@@ -69,7 +69,7 @@ node_cleanup : grunt
 
 zpk : composer sitesub pagerules node_cleanup
 	@echo "Creating zpk..."
-	-$(CURDIR)/vendor/bin/zfdeploy.php build mwop-$(VERSION).zpk --configs=$(CONFIGS) --zpkdata=$(CURDIR)/zpk --version=$(VERSION)
+	-$(CURDIR)/vendor/zfcampus/zf-deploy/bin/zfdeploy.php build mwop-$(VERSION).zpk --configs=$(CONFIGS) --zpkdata=$(CURDIR)/zpk --version=$(VERSION)
 	@echo "[DONE] Creating zpk."
 
 deploy : zpk
