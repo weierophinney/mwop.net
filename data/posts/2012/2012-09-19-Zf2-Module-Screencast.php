@@ -72,7 +72,7 @@ Let's start by creating a new project. We'll execute a few commands to download
 a skeleton application archive and extract it.
 </p>
 
-<div class="example"><pre><code language="bash">
+<div class="example"><pre><code class="language-bash">
 % mkdir newproject
 % cd newproject
 % wget https://github.com/zendframework/ZendSkeletonApplication/tarball/master \
@@ -104,7 +104,7 @@ a skeleton application archive and extract it.
     application to make this fairly easy. Simply execute the following:
 </p>
 
-<div class="example"><pre><code language="bash">
+<div class="example"><pre><code class="language-bash">
 % php composer.phar install
 </code></pre></div>
 
@@ -118,7 +118,7 @@ a skeleton application archive and extract it.
     it out. I'm going to use the built-in web server in PHP 5.4 to demonstrate.
 </p>
 
-<div class="example"><pre><code language="bash">
+<div class="example"><pre><code class="language-bash">
 % cd public
 % php -S localhost:8080
 </code></pre></div>
@@ -138,7 +138,7 @@ a skeleton application archive and extract it.
     dependency:
 </p>
 
-<div class="example"><pre><code language="json">
+<div class="example"><pre><code class="language-json">
 {
     "require": {
         "php": "&gt;=5.3.3",
@@ -160,7 +160,7 @@ a skeleton application archive and extract it.
     Now, we need to tell composer to update our dependencies.
 </p>
 
-<div class="example"><pre><code language="bash">
+<div class="example"><pre><code class="language-bash">
 % php composer.phar update
 </code></pre></div>
     
@@ -176,7 +176,7 @@ a skeleton application archive and extract it.
     usually as easy as adding an entry to <code>config\application.config.php</code>:
 </p>
 
-<div class="example"><pre><code language="php">
+<div class="example"><pre><code class="language-php">
 'modules' => array(
     'Application',
     'PhlyContact',
@@ -191,7 +191,7 @@ a skeleton application archive and extract it.
     end point. Let's fire up our PHP web server again, and browse to that URL.
 </p>
 
-<div class="example"><pre><code language="bash">
+<div class="example"><pre><code class="language-bash">
 % cd public
 % php -S localhost:8080
 </code></pre></div>
@@ -220,7 +220,7 @@ a skeleton application archive and extract it.
     <code>vendor/phly/phly-contact/config/</code> and look at the <code>module.config.php</code> file.
 </p>
 
-<div class="example"><pre><code language="php">
+<div class="example"><pre><code class="language-php">
 return array(
     'phly_contact' => array(
         'captcha' => array(
@@ -305,7 +305,7 @@ return array(
     transport.
 </p>
 
-<div class="example"><pre><code language="php">
+<div class="example"><pre><code class="language-php">
 return array(
     'phly_contact' => array(
         'mail_transport' => array(
@@ -327,7 +327,7 @@ return array(
     production, you'd only want it writable by the web server user.)
 </p>
 
-<div class="example"><pre><code language="bash">
+<div class="example"><pre><code class="language-bash">
 % mkdir -p data/mail
 % chmod a+rwX data/mail
 </code></pre></div>
@@ -345,7 +345,7 @@ return array(
     parent route for my module, named "contact", and point it at a different URL.
 </p>
 
-<div class="example"><pre><code language="php">
+<div class="example"><pre><code class="language-php">
 'router' => array(
     'routes' => array(
         'contact' => array(
@@ -362,7 +362,7 @@ return array(
     server.
 </p>
 
-<div class="example"><pre><code language="bash">
+<div class="example"><pre><code class="language-bash">
 % cd public
 % php -S localhost:8080
 </code></pre></div>
@@ -387,7 +387,7 @@ return array(
     check.
 </p>
 
-<div class="example"><pre><code language="bash">
+<div class="example"><pre><code class="language-bash">
 % ls -l data/mail/
 </code></pre></div>
 
@@ -395,7 +395,7 @@ return array(
     And now let's look at it.
 </p>
 
-<div class="example"><pre><code language="bash">
+<div class="example"><pre><code class="language-bash">
 % cat data/mail/ZendMail_1347989389_1009740165.tmp
 Date: Tue, 18 Sep 2012 12:29:49 -0500
 From: me@mwop.net

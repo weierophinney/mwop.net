@@ -34,7 +34,7 @@ $body =<<<'EOT'
     initialization.
 </p>
 
-<div class="example"><pre><code language="php">
+<div class="example"><pre><code class="language-php">
 class MyController extends Zend_Controller_Action
 {
     public function init()
@@ -65,7 +65,7 @@ $extended=<<<'EOT'
     controller:
 </p>
 
-<div class="example"><pre><code language="php">
+<div class="example"><pre><code class="language-php">
 use Zend\Mvc\Controller\AbstractActionController;
 
 class MyController extends AbstractActionController
@@ -95,7 +95,7 @@ class MyController extends AbstractActionController
     criteria is not met.
 </p>
 
-<div class="example"><pre><code language="php">
+<div class="example"><pre><code class="language-php">
 use Zend\EventManager\EventManagerInterface;
 use Zend\Mvc\Controller\AbstractActionController;
 
@@ -173,7 +173,7 @@ class MyController extends AbstractActionController
     previous example, and wire it in the context of a factory:
 </p>
 
-<div class="example"><pre><code language="php">
+<div class="example"><pre><code class="language-php">
 namespace My
 
 use Zend\EventManager\EventManagerInterface;

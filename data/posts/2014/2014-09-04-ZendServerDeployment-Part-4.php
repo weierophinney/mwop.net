@@ -58,7 +58,7 @@ $extended=<<<'EOT'
     Queue; add this at the top of your job scripts:
 </p>
 
-<div class="example"><pre><code language="php">
+<div class="example"><pre><code class="language-php">
 if (! ZendJobQueue::getCurrentJobId()) {
     header('HTTP/1.1 403 Forbidden');
     exit(1);

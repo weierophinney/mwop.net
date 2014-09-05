@@ -81,7 +81,7 @@ $extended=<<<'EOT'
     looks like:
 </p>
 
-<div class="example"><pre><code language="php">
+<div class="example"><pre><code class="language-php">
 namespace Some\Project;
 
 abstract class Output
@@ -143,7 +143,7 @@ function printf($text)
     Inside your PHPUnit test suite, then, you would do the following:
 </p>
 
-<div class="example"><pre><code language="php">
+<div class="example"><pre><code class="language-php">
 namespace SomeTest\Project;
 
 use PHPUnit_Framework_TestCase as TestCase;
@@ -173,7 +173,7 @@ class FrontControllerTest extends TestCase
     contain:
 </p>
 
-<div class="example"><pre><code language="php">
+<div class="example"><pre><code class="language-php">
 public function testEmitsExpectedHeadersAndContent()
 {
     /* ... */

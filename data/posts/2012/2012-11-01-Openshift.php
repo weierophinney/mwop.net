@@ -146,7 +146,7 @@ Basically, I needed to create a <code>deploy</code> task that does two things:
     <code>deploy</code> task looks like this:
 </p>
 
-<div class="example"><pre><code language="bash">
+<div class="example"><pre><code class="language-bash">
 #!/bin/bash
 # .openshift/action_hooks/deploy
 ( unset GIT_DIR ; cd $OPENSHIFT_REPO_DIR ; /usr/local/zend/bin/php composer.phar install )

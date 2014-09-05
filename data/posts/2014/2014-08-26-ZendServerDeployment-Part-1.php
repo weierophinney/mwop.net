@@ -116,7 +116,7 @@ $extended=<<<'EOT'
     in my <kbd>post_stage.php</kbd> script:
 </p>
 
-<div class="example"><pre><code language="php">
+<div class="example"><pre><code class="language-php">
 if (! chdir(getenv('ZS_APPLICATION_BASE_DIR'))) {
   throw new Exception('Unable to change to application directory');
 }
@@ -134,7 +134,7 @@ system($command);
     that it assumes you've changed to your application directory first:
 </p>
 
-<div class="example"><pre><code language="php">
+<div class="example"><pre><code class="language-php">
 $command = 'chmod -R a+rwX ./data';
 echo "\nExecuting `$command`\n";
 system($command);
@@ -157,7 +157,7 @@ system($command);
     Deployment now becomes:
 </p>
 
-<div class="example"><pre><code language="bash">
+<div class="example"><pre><code class="language-bash">
 $ vendor/bin/zfdeploy.php mwop.net.zpk --configs=../mwop.net-config --zpk=zpk
 </code></pre></div>
 

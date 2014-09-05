@@ -49,7 +49,7 @@ $extended=<<<'EOT'
     routine:
 </p>
 
-<div class="example"><pre><code language="php">
+<div class="example"><pre><code class="language-php">
 $command = 'chmod -R a+rwX ./data';
 echo "\nExecuting `$command`\n";
 system($command);

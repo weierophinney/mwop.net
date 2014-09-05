@@ -66,7 +66,7 @@ $extended=<<<'EOT'
     The PHP API, however, makes this easy. I can create a job as follows:
 </p>
 
-<div class="example"><pre><code language="php">
+<div class="example"><pre><code class="language-php">
 $queue = new ZendJobQueue();
 $queue->createHttpJob('/jobs/github-feed.php', [], [
   'name'       => 'github-feed',
@@ -102,7 +102,7 @@ $queue->createHttpJob('/jobs/github-feed.php', [], [
     I solved these as follows:
 </p>
 
-<div class="example"><pre><code language="php">
+<div class="example"><pre><code class="language-php">
 $server = 'http://mwop.net';
 
 // Remove previously scheduled jobs:

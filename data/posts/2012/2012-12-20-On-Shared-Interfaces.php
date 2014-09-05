@@ -138,7 +138,7 @@ $extended=<<<'EOT'
     As an example, consider the following (made up) signature for a log method:
 </p>
 
-<div class="example"><pre><code language="php">
+<div class="example"><pre><code class="language-php">
 public function log($message, array $context = null);
 </code></pre></div>
 
@@ -206,7 +206,7 @@ public function log($message, array $context = null);
     looks like this:
 </p>
 
-<div class="example"><pre><code language="php">
+<div class="example"><pre><code class="language-php">
 interface CacheInterface
 {
     public function set($key, $data);
@@ -227,7 +227,7 @@ interface CacheInterface
     instance.
 </p>
 
-<div class="example"><pre><code language="php">
+<div class="example"><pre><code class="language-php">
 class FrameworkACache implements CacheInterface
 {
     protected $cache;

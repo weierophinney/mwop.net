@@ -105,7 +105,7 @@ $extended=<<<'EOT'
     data for a user, and includes a variety of elements we'd represent in a form.
 </p>
 
-<div class="example"><pre><code language="php">
+<div class="example"><pre><code class="language-php">
 namespace MyVendor\Model;
 
 use Zend\Form\Annotation;
@@ -169,7 +169,7 @@ class User
     So, let's now turn to creating a form and consuming it.
 </p>
 
-<div class="example"><pre><code language="php">
+<div class="example"><pre><code class="language-php">
 use MyVendor\Model\User;
 use Zend\Form\Annotation\AnnotationBuilder;
 

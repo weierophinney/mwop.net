@@ -74,7 +74,7 @@ $extended=<<<'EOT'
             Sound hard? It's not:
         </p>
 
-        <div class="example"><pre><code language="javascript">
+        <div class="example"><pre><code class="language-javascript">
 {
     "_links": {
         "self": {
@@ -107,7 +107,7 @@ $extended=<<<'EOT'
             As examples:
         </p>
 
-        <div class="example"><pre><code language="javascript">
+        <div class="example"><pre><code class="language-javascript">
 {
     "_links": {
         "self": {
@@ -210,7 +210,7 @@ $extended=<<<'EOT'
     instances from our controller.
 </p>
 
-<div class="example"><pre><code language="php">
+<div class="example"><pre><code class="language-php">
 use Zend\Mvc\Controller\AbstractActionController;
 use ZF\ContentNegotiation\ViewModel;
 
@@ -233,7 +233,7 @@ class RegisterController extends AbstractActionController
     So, let's update our return value.
 </p>
 
-<div class="example"><pre><code language="php">
+<div class="example"><pre><code class="language-php">
 use Zend\Mvc\Controller\AbstractActionController;
 use ZF\ContentNegotiation\ViewModel;
 use ZF\Hal\Entity;
@@ -268,7 +268,7 @@ class RegisterController extends AbstractActionController
     file:
 </p>
 
-<div class="example"><pre><code language="php">
+<div class="example"><pre><code class="language-php">
 return array(
     /* ... */
     'zf-hal' => array(
@@ -293,7 +293,7 @@ return array(
     section:
 </p>
 
-<div class="example"><pre><code language="php">
+<div class="example"><pre><code class="language-php">
 return array(
     /* ... */
     'zf-content-negotiation' => array(

@@ -49,7 +49,7 @@ $extended=<<<'EOT'
     My first attempt was just appending the data to the list.
 </p>
 
-<div class="example"><pre><code language="javascript">
+<div class="example"><pre><code class="language-javascript">
 service.create(data).then(function (newItem) {
     flash.success = 'Successfully created something';
     /* append new item to list */
@@ -70,7 +70,7 @@ service.create(data).then(function (newItem) {
     creating the new item.
 </p>
 
-<div class="example"><pre><code language="javascript">
+<div class="example"><pre><code class="language-javascript">
 service.create(data).then(function (newItem) {
     flash.success = 'Successfully created something';
     service.fetchAll(var force = true).then(function (services) {
@@ -92,7 +92,7 @@ service.create(data).then(function (newItem) {
     <code>$state.reload()</code>.
 </p>
 
-<div class="example"><pre><code language="javascript">
+<div class="example"><pre><code class="language-javascript">
 service.create(data).then(function (newItem) {
     flash.success = 'Successfully created something';
     service.fetchAll(var force = true).then(function (services) {
@@ -115,7 +115,7 @@ service.create(data).then(function (newItem) {
     Surprisingly, the least intuitive solution ended up working: introducing a delay.
 </p>
 
-<div class="example"><pre><code language="javascript">
+<div class="example"><pre><code class="language-javascript">
 service.create(data).then(function (newItem) {
     flash.success = 'Successfully created something';
     service.fetchAll(var force = true)

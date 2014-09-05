@@ -169,7 +169,7 @@ $extended=<<<'EOT'
     that the response is returned.
 </p>
 
-<div class="example"><pre><code language="php">
+<div class="example"><pre><code class="language-php">
 namespace My\Controller;
 use Zend\Mvc\Controller\AbstractRestfulController;
 
@@ -211,7 +211,7 @@ class FooController extends AbstractRestfulController
     listen at higher-than-default priority. As an example:
 </p>
 
-<div class="example"><pre><code language="php">
+<div class="example"><pre><code class="language-php">
 namespace My\Controller;
 use Zend\EventManager\EventManagerInterface;
 use Zend\Mvc\Controller\AbstractRestfulController;
@@ -308,7 +308,7 @@ class FooController extends AbstractRestfulController
     want to detail the responses that can be expected.
 </p>
 
-<div class="example"><pre><code language="javascript">
+<div class="example"><pre><code class="language-javascript">
 {
     "POST": {
         "description": "Create a new status",
@@ -372,7 +372,7 @@ class FooController extends AbstractRestfulController
     object, but instead return a view model with the documentation.
 </p>
 
-<div class="example"><pre><code language="php">
+<div class="example"><pre><code class="language-php">
 namespace My\Controller;
 use Zend\Mvc\Controller\AbstractRestfulController;
 
@@ -446,7 +446,7 @@ class FooController extends AbstractRestfulController
     pointing to the documentation page:
 </p>
 
-<div class="example"><pre><code language="http">
+<div class="example"><pre><code class="language-http">
 Link: &lt;http://example.com/api/documentation.md&gt;; rel="describedby"
 </code></pre></div>
 
@@ -460,7 +460,7 @@ Link: &lt;http://example.com/api/documentation.md&gt;; rel="describedby"
     The latter, adding the link header, might look like this:
 </p>
 
-<div class="example"><pre><code language="php">
+<div class="example"><pre><code class="language-php">
 namespace My\Controller;
 use Zend\EventManager\EventManagerInterface;
 use Zend\Mvc\Controller\AbstractRestfulController;
@@ -506,7 +506,7 @@ class FooController extends AbstractRestfulController
     slightly simpler configuration, so I'll demonstrate it here:
 </p>
 
-<div class="example"><pre><code language="php">
+<div class="example"><pre><code class="language-php">
 return array(
     'soflomo_prototype' => array(
         'documentation-route-name' => array(

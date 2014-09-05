@@ -121,7 +121,7 @@ $extended=<<<'EOT'
     looks like this:
 </p>
 
-<div class="example"><pre><code language="javascript">
+<div class="example"><pre><code class="language-javascript">
 {
     "directory": "public/assets/vendor"
 }
@@ -139,7 +139,7 @@ $extended=<<<'EOT'
     example, the following is a definition I used for an Apigility example:
 </p>
 
-<div class="example"><pre><code language="javascript">
+<div class="example"><pre><code class="language-javascript">
 {
     "name": "ag-contacts-demo",
     "version": "0.0.1",
@@ -173,7 +173,7 @@ $extended=<<<'EOT'
     example:
 </p>
 
-<div class="example"><pre><code language="text">
+<div class="example"><pre><code class="language-text">
 public/assets/vendor/
 </code></pre></div>
 

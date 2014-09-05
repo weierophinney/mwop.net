@@ -101,7 +101,7 @@ $extended=<<<'EOT'
     Now, we could just write the code:
 </p>
 
-<div class="example"><pre><code language="php">
+<div class="example"><pre><code class="language-php">
 $db     = new Db($connectionConfig);
 $log    = new Logger($loggerConfig);
 $mailer = new Mailer($mailerConfig);
@@ -134,7 +134,7 @@ $mailer->send('New transaction')
     A facade would wrap this logic:
 </p>
 
-<div class="example"><pre><code language="php">
+<div class="example"><pre><code class="language-php">
 class DataTransaction
 {
     protected $db;
@@ -174,7 +174,7 @@ class DataTransaction
     container to inject the dependencies &#8212; and then invoke it:
 </p>
 
-<div class="example"><pre><code language="php">
+<div class="example"><pre><code class="language-php">
 $dataTransaction->execute(array_merge_recursive($_POST, $_FILES));
 </code></pre></div>
 

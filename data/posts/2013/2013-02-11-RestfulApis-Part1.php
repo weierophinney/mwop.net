@@ -209,7 +209,7 @@ $extended=<<<'EOT'
     provided in a "_links" object:
 </p>
 
-<div class="example"><pre><code language="javascript">
+<div class="example"><pre><code class="language-javascript">
 {
     "_links": {
     }
@@ -222,7 +222,7 @@ $extended=<<<'EOT'
     property.
 </p>
 
-<div class="example"><pre><code language="javascript">
+<div class="example"><pre><code class="language-javascript">
 {
     "_links": {
         "self": {"href": "http://example.com/api/status/1234"}
@@ -235,7 +235,7 @@ $extended=<<<'EOT'
     of objects:
 </p>
 
-<div class="example"><pre><code language="javascript">
+<div class="example"><pre><code class="language-javascript">
 {
     "_links": {
         "self": {"href": "http://example.com/api/status/1234"},
@@ -266,7 +266,7 @@ $extended=<<<'EOT'
     So, as an example, you would POST the following:
 </p>
 
-<div class="example"><pre><code language="http">
+<div class="example"><pre><code class="language-http">
 POST /api/status
 Host: example.com
 Accept: application/json
@@ -282,7 +282,7 @@ Content-Type: application/json
     And from that request, you'd receive the following:
 </p>
 
-<div class="example"><pre><code language="http">
+<div class="example"><pre><code class="language-http">
 201 Created
 Location: http://example.com/api/status/1347
 Content-Type: application/hal+json
@@ -321,7 +321,7 @@ Content-Type: application/hal+json
     a "user" that's a string; let's make that an embedded resource instead.
 </p>
 
-<div class="example"><pre><code language="javascript">
+<div class="example"><pre><code class="language-javascript">
 {
     "_links": {
         "self": {"href": "http://example.com/api/status/1347"}
@@ -352,7 +352,7 @@ Content-Type: application/hal+json
     Now let's look at a collection:
 </p>
 
-<div class="example"><pre><code language="javascript">
+<div class="example"><pre><code class="language-javascript">
 {
     "_links": {
         "self": {"href": "http://example.com/api/status"},

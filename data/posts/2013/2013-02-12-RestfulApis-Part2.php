@@ -182,7 +182,7 @@ $extended=<<<'EOT'
     As an example:
 </p>
 
-<div class="example"><pre><code language="http">
+<div class="example"><pre><code class="language-http">
 HTTP/1.1 500 Internal Error
 Content-Type: application/api-problem+json
 
@@ -253,7 +253,7 @@ Content-Type: application/api-problem+json
     provide a vnd.error equivalent:
 </p>
 
-<div class="example"><pre><code language="http">
+<div class="example"><pre><code class="language-http">
 HTTP/1.1 500 Internal Error
 Content-Type: application/vnd.error+json
 

@@ -76,7 +76,7 @@ $extended=<<<'EOT'
     As some simple examples:
 </p>
 
-<div class="example"><pre><code language="ruby">
+<div class="example"><pre><code class="language-ruby">
 get '/hello/:name' do |n|
     "Hello #{n}!"
 end
@@ -133,7 +133,7 @@ end
     Sinatra, however:
 </p>
 
-<div class="example"><pre><code language="php">
+<div class="example"><pre><code class="language-php">
 /* Procedural */
 get('/hello/:name', function ($n) {
     return "Hello {$n}!";
@@ -182,7 +182,7 @@ $app->get('/feed.?:format?', function ($feed, $format) use ($app) {
     approach handled several ways:
 </p>
 
-<div class="example"><pre><code language="php">
+<div class="example"><pre><code class="language-php">
 // Pass in route match parameters as an argument.
 $app->get('/feed.:format', function ($params) {
     $format = $params['format'];
@@ -207,7 +207,7 @@ $app->get('/feed.:format', function () use ($app) {
     method calls in order to alter this data:
 </p>
 
-<div class="example"><pre><code language="php">
+<div class="example"><pre><code class="language-php">
 $app->get('/feed.:format', function ($app) {
   })->constraints(['format' => '/^(atom|xml|json)$/'])
     ->name('feed');
@@ -220,7 +220,7 @@ $app->get('/feed.:format', function ($app) {
     of replacements.
 </p>
 
-<div class="example"><pre><code language="php">
+<div class="example"><pre><code class="language-php">
 echo $app->urlTo('feed', ['format' => 'atom']);
 </code></pre></div>
 

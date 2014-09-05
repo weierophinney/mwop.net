@@ -71,7 +71,7 @@ $extended=<<<'EOT'
     more frequently:
 </p>
 
-<div class="example"><pre><code language="bash">
+<div class="example"><pre><code class="language-bash">
 #!/bin/bash
 if [ `date +%H` == "05" ]
 then
@@ -89,7 +89,7 @@ fi
     directory:
 </p>
 
-<div class="example"><pre><code language="bash">
+<div class="example"><pre><code class="language-bash">
 #!/bin/bash
 MINUTES=`date +%M`
 
@@ -174,7 +174,7 @@ done
     and it looks something like this:
 </p>
 
-<div class="example"><pre><code language="bash">
+<div class="example"><pre><code class="language-bash">
 #!/bin/bash
 ssh-agent `ssh-add $OPENSHIFT_DATA_DIR/ssh/github-key && (
     cd $OPENSHIFT_DATA_DIR/config ; 
