@@ -119,7 +119,7 @@ class EngineMiddleware
             return $next('Not found');
         }
 
-        $path = substr($req->originalUrl, 0, -(strlen($post->getId()) + 6));
+        $path = substr($req->originalUrl, 0, -(strlen($post->getId() . '.html') + 1));
         $post = $this->prepPost($post->getArrayCopy(), $path);
 
         $res->end($this->renderer->render('blog.post', $post));

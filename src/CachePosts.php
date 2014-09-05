@@ -1,7 +1,8 @@
 <?php
 namespace Mwop;
 
-use Phly\Http\Request;
+use Phly\Conduit\Http\Request;
+use Phly\Http\Request as PsrRequest;
 use Phly\Http\Response;
 use Phly\Http\Uri;
 use Zend\Console\ColorInterface as Color;
@@ -25,9 +26,10 @@ class CachePosts
             'host'   => 'mwop.net',
             'path'   => '/blog',
         ]);
-        $request  = new Request();
-        $request->setMethod('GET');
         $middleware = $this->blogMiddleware;
+
+        $request  = new Request(new PsrRequest);
+        $request->setMethod('GET');
         
         $console->writeLine('Generating static cache for blog posts', Color::GREEN);
 
@@ -43,8 +45,9 @@ class CachePosts
             $width   = $console->getWidth();
             $console->write($message, Color::BLUE);
 
-            $uri = $uri->setPath(sprintf('/blog/%s.html', $entry->getId()));
-            $request->originalUrl = $uri;
+            $canonical = $uri->setPath(sprintf('/blog/%s.html', $entry->getId()));
+            $request->originalUrl = $canonical;
+
             $uri = $uri->setPath(sprintf('/%s.html', $entry->getId()));
             $request->setUrl($uri);
 
