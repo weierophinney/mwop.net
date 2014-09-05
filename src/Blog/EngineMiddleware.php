@@ -25,6 +25,10 @@ class EngineMiddleware
 
     public function __invoke($req, $res, $next)
     {
+        if ('/tag/php.xml' === $req->getUrl()->path) {
+            return $this->displayFeed($req, $res, $next, 'rss', 'php');
+        }
+
         if (preg_match('#/tag/(?P<tag>[^/]+)#', $req->getUrl()->path, $matches)) {
             $tag = $matches['tag'];
             if (preg_match('#/(?P<feed>atom|rss)\.xml$#', $req->getUrl()->path, $matches)) {
