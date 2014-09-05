@@ -10,6 +10,11 @@ class Redirects
         $url  = $req->getUrl();
         $path = $url->path;
 
+        // Ensure php.net is able to retrieve PHP RSS feed without a problem.
+        if ('/blog/tag/php.xml' === $path) {
+            return $next();
+        }
+
         // PhlyBlog style pagination
         if (preg_match('#^/blog-p(?P<page>\d+)\.html$#', $path, $matches)) {
             return $this->redirect('/blog', $url, $res, ['page' => $matches['page']]);
