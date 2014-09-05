@@ -1,7 +1,0 @@
-run "cp #{config.shared_path}/appconfig/*.php #{config.release_path}/config/autoload/"
-run "cd #{config.release_path} && mkdir -p data/cache"
-run "ln -nfs #{config.shared_path}/users.db #{config.release_path}/data/users.db"
-sudo "chmod -R a+rwX #{config.release_path}/data"
-run "cd #{config.release_path} && /usr/bin/php public/index.php githubfeed fetch"
-run "cd #{config.release_path} && /usr/bin/php -d date.timezone=America/Chicago vendor/bin/phly-comic.php fetch-all --output=data/comics.html"
-run "cd #{config.release_path} && /usr/bin/php public/index.php phlysimplepage cache clear all"
