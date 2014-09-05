@@ -1,0 +1,29 @@
+{{#pagination}}
+<div class="paginationControl">
+    {{^is_first}}
+    <a href="{{base_path}}" class="first">&lt;&lt; First</a> |
+    {{/is_first}}
+
+    {{#previous}}
+    <a href="{{base_path}}?page={{previous}}"> &lt; Previous </a> |
+    {{/previous}}
+
+    {{#pages}}
+        {{#current}}
+    <span class="current">{{number}}</span> |
+        {{/current}}
+
+        {{^current}}
+    <a href="{{base_path}}?page={{number}}">{{number}}</a> |
+        {{/current}}
+    {{/pages}}
+
+    {{#next}}
+    <a href="{{base_path}}?page={{next}}"> Next &gt;</a> |
+    {{/next}}
+
+    {{^is_last}}
+    <a href="{{base_path}}?page={{last}}" class="last"> Last &gt;&gt</a>
+    {{/is_last}}
+</div>
+{{/pagination}}

@@ -1,0 +1,54 @@
+{{<layout}}
+{{$title}}{{title}}{{/title}}}
+{{$links}}
+    <link href="/css/blog.min.css" media="screen" rel="stylesheet" type="text/css">
+{{/links}}
+{{$scripts}}
+<script language="JavaScript" src="/js/prism.js"></script>
+{{/scripts}}
+{{$footer}}{{>tag-cloud}}{{/footer}}
+{{$content}}
+<div class="row">
+    <aside class="four columns offset-by-one alpha sidebar blog">
+        <p>
+            Written on {{created}}.
+            {{#updated}}
+            <br />Last updated on {{when}}.
+            {{/updated}}
+        </p>
+
+        <ul class="tags">
+        {{#tags}}
+            <li><a href="{{link}}">{{tag}}</a>
+        {{/tags}}
+        </ul>
+    </aside>
+
+    <article class="eleven columns omega blog">
+        <h2>{{title}}</h2>
+
+        {{{body}}}
+
+        {{{extended}}}
+
+        <div id="disqus_thread"></div>
+        <script type="text/javascript">
+            var disqus_developer = {{{disqus.developer}}};
+            var disqus_shortname = '{{{disqus.key}}}';
+            var disqus_identifier = '{{id}}';
+            var disqus_url = '{{url}}';
+            var disqus_title = '{{title}}';
+
+            /* * * DON'T EDIT BELOW THIS LINE * * */
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        <a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+    </article>
+</div>
+{{/content}}
+{{/layout}}
