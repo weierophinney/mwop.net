@@ -7,13 +7,13 @@ class Redirects
 {
     public function __invoke($req, $res, $next)
     {
+        $url  = $req->getUrl();
+        $path = $url->path;
+
         // Ensure php.net is able to retrieve PHP RSS feed without a problem
         if ('/blog/tag/php.xml' === $path) {
             return $next();
         }
-
-        $url  = $req->getUrl();
-        $path = $url->path;
 
         // PhlyBlog style pagination
         if (preg_match('#^/blog-p(?P<page>\d+)\.html$#', $path, $matches)) {
