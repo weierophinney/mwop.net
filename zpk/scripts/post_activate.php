@@ -14,21 +14,21 @@ foreach ($queue->getSchedulingRules() as $job) {
 }
 
 // Add scheduled job for fetching comics
-$queue->createHttpJob($server . '/jobs/comics.php', [], [
+$queue->createHttpJob($server . '/jobs/comics', [], [
     'name'       => 'comics',
     'persistent' => false,
     'schedule'   => '0 10 * * *', // every day, at 5 AM America/Chicago (server is in UTC)
 ]);
 
 // Add scheduled job for fetching github feed
-$queue->createHttpJob($server . '/jobs/github-feed.php', [], [
+$queue->createHttpJob($server . '/jobs/github-feed', [], [
     'name'       => 'github-feed',
     'persistent' => false,
     'schedule'   => '5,20,35,40 * * * *', // every 15 minutes
 ]);
 
 // Schedule an immediate cache clear
-$queue->createHttpJob($server . '/jobs/clear-cache.php', [], [
+$queue->createHttpJob($server . '/jobs/clear-cache', [], [
     'name'       => 'clear-cache',
     'persistent' => false,
 ]);
