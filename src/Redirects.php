@@ -7,6 +7,11 @@ class Redirects
 {
     public function __invoke($req, $res, $next)
     {
+        // Ensure php.net is able to retrieve PHP RSS feed without a problem
+        if ('/blog/tag/php.xml' === $path) {
+            return $next();
+        }
+
         $url  = $req->getUrl();
         $path = $url->path;
 
