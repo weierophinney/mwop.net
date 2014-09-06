@@ -13,7 +13,7 @@ class Comics
             return;
         }
 
-        $command = '/usr/local/zend/bin/php -d date.timezone=America/Chicago vendor/phly/phly-comic/bin/phly-comic.php fetch-all';
+        $command = '/usr/local/zend/bin/php -d date.timezone=America/Chicago vendor/phly/phly-comic/bin/phly-comic.php fetch-all --output=data/comics.mustache';
         exec($command, $output, $return);
         if ($return != 0) {
             ZendJobQueue::setCurrentJobStatus(ZendJobQueue::FAILED);

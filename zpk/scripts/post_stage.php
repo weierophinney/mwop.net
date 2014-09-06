@@ -35,7 +35,7 @@ echo "\nExecuting `$command`\n";
 system($command);
 
 // Seed comics
-$command = sprintf('%s vendor/phly/phly-comic/bin/phly-comic.php fetch-all', $php);
+$command = sprintf('%s vendor/phly/phly-comic/bin/phly-comic.php fetch-all --output=data/comics.mustache', $php);
 echo "\nExecuting `$command`\n";
 system($command);
 

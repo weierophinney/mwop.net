@@ -7,7 +7,7 @@ class ComicsPage extends Page
     {
         if (! $request->user) {
             $response->setStatusCode(401);
-            $next(401);
+            return $next(401);
         }
 
         return parent::__invoke($request, $response, $next);

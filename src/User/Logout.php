@@ -20,7 +20,7 @@ class Logout
             return $this->redirect($request, $response);
         }
 
-        $user->clear();
+        $auth->clear();
         return $this->redirect($request, $response);
     }
 

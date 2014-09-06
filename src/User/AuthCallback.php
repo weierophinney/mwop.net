@@ -20,9 +20,9 @@ class AuthCallback
         $auth         = new Opauth($this->config, false);
         $authResponse = null;
 
+        $this->session->start();
         switch($auth->env['callback_transport']) {
             case 'session':
-                $this->session->start();
                 $authResponse = $_SESSION['opauth'];
                 unset($_SESSION['opauth']);
                 break;
@@ -53,27 +53,29 @@ class AuthCallback
             return $next('Invalid authentication response');
         } 
         
-        if (! $auth->validate(
-            sha1(print_r($authResponse['auth'], true)),
-            $authResponse['timestamp'],
-            $response['signature'],
-            $reason
-        )) {
+        if ($auth->env['callback_transport'] !== 'session'
+            && ! $auth->validate(
+                sha1(print_r($authResponse['auth'], true)),
+                $authResponse['timestamp'],
+                $response['signature'],
+                $reason
+            )
+        ) {
             $res->setStatusCode(403);
             return $next('Invalid authentication response');
         }
 
         $auth = $this->session->getSegment('auth');
-        $auth->set('auth', $authResponse);
+        $auth->set('user', $authResponse['auth']);
 
         $url      = (string) $req->getUrl()->setPath('/');
         $redirect = $this->session->getSegment('redirect')->get('auth');
-        if ($auth) {
-            $url = $auth;
+        if ($redirect) {
+            $url = $redirect;
             $this->session->getSegment('redirect')->set('auth', null);
         }
 
-        $res->setStatusCode(301);
+        $res->setStatusCode(302);
         $res->addHeader('Location', $url);
         $res->end();
     }
