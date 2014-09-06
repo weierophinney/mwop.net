@@ -5,7 +5,7 @@
     <version>
         <release>{VERSION}</release>
     </version>
-    <icon>zf2-logo.png</icon>
+    <icon>conduit.jpg</icon>
     <appdir>data</appdir>
     <docroot>data/public</docroot>
     <scriptsdir>scripts</scriptsdir>
