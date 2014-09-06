@@ -1,5 +1,5 @@
 <?php
-namespace Mwop\User;
+namespace Mwop\Auth;
 
 use Aura\Session\Session;
 

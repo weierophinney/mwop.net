@@ -32,7 +32,7 @@ $app->pipe('/', function ($req, $res, $next) use ($services) {
 
 $app->pipe('/comics', function ($req, $res, $next) use ($services) {
     $middleware   = new Middleware();
-    $middleware->pipe($services->get('Mwop\User\UserSession'));
+    $middleware->pipe($services->get('Mwop\Auth\UserSession'));
     $middleware->pipe($services->get('Mwop\ComicsPage'));
     $middleware($req, $res, $next);
 });
@@ -48,7 +48,7 @@ $app->pipe('/contact', function ($req, $res, $next) use ($services) {
 });
 
 $app->pipe('/auth', function ($req, $res, $next) use ($services) {
-    $middleware = $services->get('Mwop\User\Middleware');
+    $middleware = $services->get('Mwop\Auth\Middleware');
     $middleware($req, $res, $next);
 });
 

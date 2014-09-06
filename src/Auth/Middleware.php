@@ -1,5 +1,5 @@
 <?php
-namespace Mwop\User;
+namespace Mwop\Auth;
 
 use Phly\Conduit\Middleware as BaseMiddleware;
 

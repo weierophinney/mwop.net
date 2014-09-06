@@ -1,5 +1,5 @@
 <?php
-namespace Mwop\User;
+namespace Mwop\Auth;
 
 use Aura\Session\Session;
 use Opauth;
@@ -12,7 +12,7 @@ class Auth
     /**
      * Constructor
      * 
-     * @param array $config Configuration for the Hybrid_Auth instance
+     * @param array $config Configuration for the Opauth instance
      */
     public function __construct(array $authConfig, Session $session)
     {

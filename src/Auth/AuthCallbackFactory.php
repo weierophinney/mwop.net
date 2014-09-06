@@ -1,12 +1,12 @@
 <?php
-namespace Mwop\User;
+namespace Mwop\Auth;
 
-class AuthFactory
+class AuthCallbackFactory
 {
     public function __invoke($services)
     {
         $config = $services->get('Config');
         $config = $config['opauth'];
-        return new Auth($config, $services->get('session'));
+        return new AuthCallback($config, $services->get('session'));
     }
 }
