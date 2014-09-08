@@ -1,6 +1,6 @@
 <?php
-use PhlyBlog\AuthorEntity;
-use PhlyBlog\EntryEntity;
+use Mwop\Blog\AuthorEntity;
+use Mwop\Blog\EntryEntity;
 
 $author = new AuthorEntity();
 $author->setId('matthew');
@@ -56,7 +56,7 @@ $extended=<<<'EOT'
 <p>
     The first thing you need to do after downloading it is to create an 
     application target. This simplifies usage of the client for subsequent 
-    requests, allowing you to specify <kbd>--target=[target name]</kbd> instead of 
+    requests, allowing you to specify <kbd>--target={target name}</kbd> instead of 
     having to provide the Zend Server URL, API username, and API token for each 
     call.
 </p>
@@ -65,19 +65,19 @@ $extended=<<<'EOT'
     This is done using the <kbd>addTarget</kbd> command:
 </p>
 
-<div class="example"><pre><code language="bash">
+<div class="example"><pre><code class="language-bash">
 $ zs-client.phar addTarget \
-> --target=<unique target name> \
-> --zsurl=<URL to your Zend Server instance> \
-> --zskey=<API username> \
-> --zssecret=<API token> \
+> --target={unique target name} \
+> --zsurl={URL to your Zend Server instance} \
+> --zskey={API username} \
+> --zssecret={API token} \
 > --http="sslverifypeer=0"
 </code></pre></div>
 
 <p>
     The <kbd>zsurl</kbd> is the scheme, host, and port only; don't include the 
     <kbd>ZendServer</kbd> path. You can find keys and tokens on the 
-    "Administration > Web API" page of your Zend Server UI, and can even 
+    "Administration &gt; Web API" page of your Zend Server UI, and can even 
     generate new ones there.
 </p>
 
@@ -94,8 +94,8 @@ $ zs-client.phar addTarget \
     identifier. Use the <kbd>applicationGetStatus</kbd> command to find it:
 </p>
 
-<div class="example"><pre><code language="bash">
-$ zs-client.phar applicationGetStatus --target=<unique target name>
+<div class="example"><pre><code class="language-bash">
+$ zs-client.phar applicationGetStatus --target={unique target name}
 </code></pre></div>
 
 <p>
@@ -103,14 +103,14 @@ $ zs-client.phar applicationGetStatus --target=<unique target name>
 </p>
 
 <p>
-From here, you can now deploy packages using the `applicationUpdate` command:
+    From here, you can now deploy packages using the <kbd>applicationUpdate</kbd> command:
 </p>
 
-<div class="example"><pre><code language="bash">
+<div class="example"><pre><code class="language-bash">
 $ zs-client.phar applicationUpdate \
-> --appId=<id> \
-> --appPackage=<your ZPK> \
-> --target=<unique target name>
+> --appId={id} \
+> --appPackage={your ZPK} \
+> --target={unique target name}
 </code></pre></div>
 
 <p>
