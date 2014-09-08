@@ -1,4 +1,6 @@
 <?php
+namespace Mwop;
+
 $baseDir = getenv('ZS_APPLICATION_BASE_DIR');
 if (! chdir($baseDir)) {
     throw new Exception(sprintf(
@@ -7,7 +9,9 @@ if (! chdir($baseDir)) {
     ));
 }
 
-$php = '/usr/local/zend/bin/php -d date.timezone=America/Chicago';
+require 'vendor/autoload.php';
+
+$php = getPhpExecutable() . ' -d date.timezone=America/Chicago';
 
 // Setup blog database
 $command = sprintf('%s bin/mwop.net.php seed-blog-db', $php);

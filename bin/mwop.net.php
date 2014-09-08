@@ -9,7 +9,6 @@ use ZF\Console\Application;
 
 chdir(__DIR__ . '/../');
 require_once 'vendor/autoload.php';
-require_once 'src/functions.php';
 
 define('VERSION', '0.0.1');
 

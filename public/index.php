@@ -13,7 +13,6 @@ if (php_sapi_name() === 'cli-server'
 
 chdir(__DIR__ . '/../');
 require_once 'vendor/autoload.php';
-require_once 'src/functions.php';
 
 $config = include 'config/config.php';
 
