@@ -1,6 +1,6 @@
 <?php
-use PhlyBlog\AuthorEntity;
-use PhlyBlog\EntryEntity;
+use Mwop\Blog\AuthorEntity;
+use Mwop\Blog\EntryEntity;
 
 $author = new AuthorEntity();
 $author->setId('matthew');
@@ -51,7 +51,7 @@ $extended=<<<'EOT'
     the following:
 </p>
 
-<div class="example"><pre><code language="php">
+<div class="example"><pre><code class="language-php">
 // for failure:
 ZendJobQueue::setCurrentJobStatus(ZendJobQueue::FAILED);
 exit(1);
@@ -67,7 +67,7 @@ exit(0);
     helps in debugging.
 </p>
 
-<div class="example"><pre><code language="php">
+<div class="example"><pre><code class="language-php">
 exec($command, $output, $return);
 header('Content-Type: text/plain');
 if ($return != 0) {
