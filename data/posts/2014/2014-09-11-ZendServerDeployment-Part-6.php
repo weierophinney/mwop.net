@@ -110,13 +110,13 @@ if (! ZendJobQueue::getCurrentJobId()) {
     exit(1);
 }
 
-$rules = [
+$paths = [
     '/',
     '/resume',
 ];
 
-foreach ($rules as $path) {
-    page_cache_remove_cached_contents_by_uri(
+foreach ($paths as $path) {
+    page_cache_remove_cached_contents(
         'http://(www\.)?mwop\.net:80' . $path
     );
 }
@@ -147,6 +147,20 @@ $queue->createHttpJob($server . '/jobs/clear-cache.php', [], [
     This will schedule it to run immediately once activation is complete. I will also queue
     it from other jobs if what they do should result in flushing the page cache; I use the
     exact same code when I do so.
+</p>
+
+<h3>Note on cache clearing</h3>
+
+<p>
+    The Zend Server PHP API offers another function that would appear to be more
+    relevant and specific: <kbd>page_cache_remove_cached_contents_by_uri()</kbd>. This
+    particular function accepts a rule name, and the URI you wish to clear, and, as
+    documented, seems like a nice way to clear the cache for a specific URI as a subset
+    of a rule, without clearing caches for all pages matching the rule. However,
+    as of version 7.0, this functionality does not work properly (in fact, I was unable
+    to find any combination of rule and url that resulted in a cache clear). I recommend using
+    <kbd>page_cache_remove_cached_contents()</kbd> only for now, or using full page
+    caching within your framework.
 </p>
 
 <h2>Next time...</h2>
