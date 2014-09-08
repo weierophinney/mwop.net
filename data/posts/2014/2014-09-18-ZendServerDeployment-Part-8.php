@@ -10,7 +10,7 @@ $author->setUrl("http://mwop.net");
 
 $entry = new EntryEntity();
 
-$entry->setId('2014-09-16-zend-server-deployment-part-7');
+$entry->setId('2014-09-18-zend-server-deployment-part-8');
 $entry->setTitle('Deployment with Zend Server (Part 8 of 8)');
 $entry->setAuthor($author);
 $entry->setDraft(false);
