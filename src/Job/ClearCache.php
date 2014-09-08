@@ -19,19 +19,23 @@ class ClearCache
             return;
         }
 
-        $uri = $req->getUrl();
-        $uri = Uri::fromArray([
-            'scheme' => $uri->scheme,
-            'host'   => $uri->host,
-            'port'   => $uri->port,
-            'path'   => $uri->path,
-        ]);
+        // Uri removes ports when they are the default for that scheme.
+        // However, ZS page cache REQUIRES the port in order to properly
+        // match. This logic gives us a base URI string to use for
+        // clearing cache contents.
+        $uri  = $req->getUrl();
+        $port = $uri->port;
+        if (! $port) {
+            $port = ($uri->scheme === 'https') ? 443 : 80;
+        }
+        $uri  = sprintf('%s://%s:%d', $uri->scheme, $uri->host, $port);
 
         foreach ($this->rules as $rule => $path) {
-            $uri = $uri->setPath($path);
-            page_cache_remove_cached_contents_by_uri(
-                $rule,
-                (string) $uri
+            // Cannot use the more specific page_cache_remove_cached_contents_by_uri()
+            // as it does not appear to work for any combination of criteria. The
+            // following works reliably.
+            page_cache_remove_cached_contents(
+                $uri . $path
             );
         }
 
