@@ -1,6 +1,6 @@
 <?php
-use PhlyBlog\AuthorEntity;
-use PhlyBlog\EntryEntity;
+use Mwop\Blog\AuthorEntity;
+use Mwop\Blog\EntryEntity;
 
 $author = new AuthorEntity();
 $author->setId('matthew');
@@ -75,7 +75,7 @@ $extended=<<<'EOT'
     dinosaur). As an example:
 </p>
 
-<div class="example"><pre><code language="Makefile">
+<div class="example"><pre><code class="language-bash">
 PHP ?= $(shell which php)
 VERSION ?= $(shell date -u +"%Y.%m.%d.%H.%M")
 CONFIGS ?= $(CURDIR)/../site-settings
