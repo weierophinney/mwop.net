@@ -11,7 +11,7 @@ if (! chdir($baseDir)) {
 
 require 'vendor/autoload.php';
 
-$php = getPhpExecutable() . ' -d date.timezone=America/Chicago';
+$php = getPhpExecutable();
 
 // Setup blog database
 $command = sprintf('%s bin/mwop.net.php seed-blog-db', $php);
