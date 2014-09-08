@@ -13,7 +13,8 @@ class GithubFeed
             return;
         }
 
-        $command = '/usr/local/zend/bin/php -d date.timezone=America/Chicago bin/mwop.net.php github-links';
+        $php     = \Mwop\getPhpExecutable();
+        $command = $php . ' bin/mwop.net.php github-links';
         exec($command, $output, $return);
         if ($return != 0) {
             ZendJobQueue::setCurrentJobStatus(ZendJobQueue::FAILED);
