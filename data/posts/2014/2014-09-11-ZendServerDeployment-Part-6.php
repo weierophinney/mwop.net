@@ -1,6 +1,6 @@
 <?php
-use PhlyBlog\AuthorEntity;
-use PhlyBlog\EntryEntity;
+use Mwop\Blog\AuthorEntity;
+use Mwop\Blog\EntryEntity;
 
 $author = new AuthorEntity();
 $author->setId('matthew');
@@ -46,9 +46,9 @@ $extended=<<<'EOT'
 
 <p>
     Zend Server offers page caching. This can be defined per-application or 
-    globally. I've personally never had luck with per-application caching, but 
-    primarily because I often define server aliases; application-specific rules 
-    are based on the primary server name.
+    globally. I typically use global rules, as I most often define server 
+    aliases; application-specific rules are based on the primary server name
+    only, which makes it impossible to cache per-hostname.
 </p>
 
 <p>
@@ -56,7 +56,7 @@ $extended=<<<'EOT'
     For instance, for my current site, I have this for the host:
 </p>
 
-<div class="example"><pre><code language="regexp">
+<div class="example"><pre><code class="language-markup">
 (www\.)?mwop.net
 </code></pre></div>
 
@@ -77,16 +77,32 @@ $extended=<<<'EOT'
 <p>
     When I deploy, or when I run specific jobs, I typically want to clear my 
     cache. To do that, I have a Job Queue job, and in that script, I use the 
-    <kbd>page_cache_remove_cached_contents_by_uri()</kbd> function defined by the page 
-    cache extension in Zend Server. Because cache hits are per URL, I need to 
-    define a list of hosts as well as paths I want to clear.
+    <kbd>page_cache_remove_cached_contents()</kbd> function defined by the page 
+    cache extension in Zend Server.
+</p>
+
+<p>
+    This function accepts one argument. The documentation says it's a URL, but in actuality
+    you need to provide the pattern from the rule you want to match; it will then
+    clear caches for any pages that match that rule. That means you have to provide the
+    full match -- which will include the scheme, host, <em>port</em>, and path. Note the
+    port -- that absolutely <em>must</em> be present for the match to work, even if it's
+    the default port for the given scheme.
+</p>
+
+<p>
+    What that means is that in my example above, the argument to 
+    <kbd>page_cache_remove_cached_contents()</kbd> becomes <kbd>http://(www\.)?mwop\.net:80/resume</kbd>.
+    If I allow both HTTP and HTTPS access, then I also will need to explicitly clear
+    <kbd>https://(www\.)?mwop\.net:443/resume</kbd>. Note that the regexp escape
+    characters are present, as are any conditional patterns.
 </p>
 
 <p>
     My current cache clearing script looks like this:
 </p>
 
-<div class="example"><pre><code language="php">
+<div class="example"><pre><code class="language-php">
 chdir(__DIR__ . '/../../');
 
 if (! ZendJobQueue::getCurrentJobId()) {
@@ -94,23 +110,15 @@ if (! ZendJobQueue::getCurrentJobId()) {
     exit(1);
 }
 
-$hosts = [
-    'mwop.net',
-    'www.mwop.net',
-];
-
 $rules = [
-    'mwop_home'   => '/',
-    'mwop_resume' => '/resume',
+    '/',
+    '/resume',
 ];
 
-foreach ($hosts as $host) {
-    foreach ($rules as $rule => $path) {
-        page_cache_remove_cached_contents_by_uri(
-            $rule,
-            'http://' . $host . $path
-        );
-    }
+foreach ($rules as $path) {
+    page_cache_remove_cached_contents_by_uri(
+        'http://(www\.)?mwop\.net:80' . $path
+    );
 }
 
 ZendJobQueue::setCurrentJobStatus(ZendJobQueue::OK);
@@ -128,7 +136,7 @@ exit(0);
     I queue this script in my <kbd>post_activate.php</kbd> deployment script, but without a schedule:
 </p>
 
-<div class="example"><pre><code language="php">
+<div class="example"><pre><code class="language-php">
 $queue->createHttpJob($server . '/jobs/clear-cache.php', [], [
     'name' => 'clear-cache',
     'persistent' => false,
