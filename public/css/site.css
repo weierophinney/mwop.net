@@ -51,8 +51,12 @@ a {
     color: #676767;
 }
 
-code {
+kbd, code {
     font-family: 'Droid Sans Mono', mono;
+}
+
+kbd {
+    font-weight: bold;
 }
 
 code.hl {
