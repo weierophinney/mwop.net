@@ -5,17 +5,15 @@ use Zend\Feed\Reader\Reader as FeedReader;
 
 class AtomReader
 {
-    const ATOM_FORMAT = 'https://github.com/%s.private.actor.atom?token=%s';
+    const ATOM_FORMAT = 'https://github.com/%s.atom';
 
     protected $filters = array();
     protected $limit = 5;
-    protected $token;
     protected $user;
 
-    public function __construct($user, $token)
+    public function __construct($user)
     {
         $this->user  = $user;
-        $this->token = $token;
     }
 
     public function setLimit($limit)
@@ -38,7 +36,7 @@ class AtomReader
 
     public function read()
     {
-        $url  = sprintf(self::ATOM_FORMAT, $this->user, $this->token);
+        $url  = sprintf(self::ATOM_FORMAT, $this->user);
         $feed = FeedReader::import($url);
 
         $lastModified = $feed->getDateModified();

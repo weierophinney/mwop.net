@@ -24,7 +24,6 @@ return [
     'debug' => false,
     'github' => [
         'user'  => 'weierophinney',
-        'token' => null,
         'limit' => 4,
     ],
     'mail' => [

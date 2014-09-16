@@ -14,7 +14,7 @@ class AtomReaderFactory
         $config = $services->get('Config');
         $config = $config['github'];
 
-        $reader = new AtomReader($config['user'], $config['token']);
+        $reader = new AtomReader($config['user']);
         $reader->setLimit($config['limit']);
         return $reader;
     }
