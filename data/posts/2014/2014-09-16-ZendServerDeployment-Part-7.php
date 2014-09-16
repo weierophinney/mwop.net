@@ -76,9 +76,8 @@ $ zs-client.phar addTarget \
 
 <p>
     The <kbd>zsurl</kbd> is the scheme, host, and port only; don't include the 
-    <kbd>ZendServer</kbd> path. You can find keys and tokens on the 
-    "Administration &gt; Web API" page of your Zend Server UI, and can even 
-    generate new ones there.
+    path. You can find keys and tokens on the "Administration &gt; Web API" 
+    page of your Zend Server UI, and can even generate new ones there.
 </p>
 
 <div><img src="http://uploads.mwop.net/2014-09-16-WebApiKeys.png"></div>
