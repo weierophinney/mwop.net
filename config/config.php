@@ -1,5 +1,5 @@
 <?php
-use Zend\Stdlib\ArrayUtils;
+use Zend\Config\Factory as Config;
 
 /**
  * Trick zf-deploy into thinking this is a ZF2 app so it can build a package.
@@ -8,13 +8,6 @@ use Zend\Stdlib\ArrayUtils;
  * )
  */
 
-$merged = array();
-foreach (glob('config/autoload/{,*.}{global,local}.php', GLOB_BRACE) as $file) {
-    $config = include $file;
-    if (! is_array($config)) {
-        continue;
-    }
-
-    $merged = ArrayUtils::merge($merged, $config);
-}
-return $merged;
+return Config::fromFiles(
+    glob('config/autoload/{,*.}{global,local}.php', GLOB_BRACE)
+);
