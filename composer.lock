@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "6cd47494436803f9e792fe7da72b7691",
+    "hash": "f2cbf9e093234231d7a1df6a14a35ac2",
     "packages": [
         {
             "name": "aura/session",
@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/auraphp/Aura.Session.git",
-                "reference": "b24472b6db4ba55089bee2651d7f42a46fa05e42"
+                "reference": "231b615bc8581133b578481ecad1b52bf3cc540e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/auraphp/Aura.Session/zipball/b24472b6db4ba55089bee2651d7f42a46fa05e42",
-                "reference": "b24472b6db4ba55089bee2651d7f42a46fa05e42",
+                "url": "https://api.github.com/repos/auraphp/Aura.Session/zipball/231b615bc8581133b578481ecad1b52bf3cc540e",
+                "reference": "231b615bc8581133b578481ecad1b52bf3cc540e",
                 "shasum": ""
             },
             "require": {
@@ -65,7 +65,7 @@
                 "session",
                 "sessions"
             ],
-            "time": "2014-09-04 21:04:47"
+            "time": "2014-09-05 16:13:53"
         },
         {
             "name": "opauth/github",
@@ -510,6 +510,60 @@
                 "response"
             ],
             "time": "2014-07-10 17:31:27"
+        },
+        {
+            "name": "zendframework/zend-config",
+            "version": "2.3.1",
+            "target-dir": "Zend/Config",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zendframework/Component_ZendConfig.git",
+                "reference": "61b81c6ea60c1947e13b4effbfffcd9bb59c2180"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zendframework/Component_ZendConfig/zipball/61b81c6ea60c1947e13b4effbfffcd9bb59c2180",
+                "reference": "61b81c6ea60c1947e13b4effbfffcd9bb59c2180",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.23",
+                "zendframework/zend-stdlib": "self.version"
+            },
+            "require-dev": {
+                "zendframework/zend-filter": "self.version",
+                "zendframework/zend-i18n": "self.version",
+                "zendframework/zend-json": "self.version",
+                "zendframework/zend-servicemanager": "self.version"
+            },
+            "suggest": {
+                "zendframework/zend-filter": "Zend\\Filter component",
+                "zendframework/zend-i18n": "Zend\\I18n component",
+                "zendframework/zend-json": "Zend\\Json to use the Json reader or writer classes",
+                "zendframework/zend-servicemanager": "Zend\\ServiceManager for use with the Config Factory to retrieve reader and writer instances"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.3-dev",
+                    "dev-develop": "2.4-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Zend\\Config\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "provides a nested object property based user interface for accessing this configuration data within application code",
+            "keywords": [
+                "config",
+                "zf2"
+            ],
+            "time": "2014-04-15 15:29:04"
         },
         {
             "name": "zendframework/zend-console",
@@ -1720,16 +1774,16 @@
         },
         {
             "name": "seld/jsonlint",
-            "version": "1.2.0",
+            "version": "1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/jsonlint.git",
-                "reference": "9cae56dbe34f4392e7d0f559474df33749a39f8d"
+                "reference": "a7bc2ec9520ad15382292591b617c43bdb1fec35"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/jsonlint/zipball/9cae56dbe34f4392e7d0f559474df33749a39f8d",
-                "reference": "9cae56dbe34f4392e7d0f559474df33749a39f8d",
+                "url": "https://api.github.com/repos/Seldaek/jsonlint/zipball/a7bc2ec9520ad15382292591b617c43bdb1fec35",
+                "reference": "a7bc2ec9520ad15382292591b617c43bdb1fec35",
                 "shasum": ""
             },
             "require": {
@@ -1762,7 +1816,7 @@
                 "parser",
                 "validator"
             ],
-            "time": "2014-07-20 17:36:11"
+            "time": "2014-09-05 15:36:20"
         },
         {
             "name": "zfcampus/zf-deploy",
