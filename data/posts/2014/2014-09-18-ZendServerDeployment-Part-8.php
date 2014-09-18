@@ -113,7 +113,7 @@ clean :
     The above ensures my ZPKs have versioned names, allowing me to keep the 
     last few in the working directory for reference; the <kbd>clean</kbd> target will 
     remove them for me when I'm ready. Using make also gives me some 
-    granularity; if I want to build the zpk only, so I can inspect it, I can 
+    granularity; if I want to build the ZPK only, so I can inspect it, I can 
     use <kbd>make zpk</kbd>.
 </p>
 
