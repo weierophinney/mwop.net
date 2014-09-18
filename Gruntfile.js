@@ -19,6 +19,9 @@ module.exports = function (grunt) {
           'public/css/blog.min.css': [
             'public/css/blog.css',
             'public/css/prism.css'
+          ],
+          'public/css/fonts.min.css': [
+            'public/css/fonts.css'
           ]
         }
       }
