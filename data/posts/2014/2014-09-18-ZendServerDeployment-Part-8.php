@@ -58,7 +58,7 @@ $extended=<<<'EOT'
     <li>I'm using zf-deploy to create ZPK packages to push to the server, which 
         contain the above scripts, as well as my deployment configuration.</li>
     <li>I'm using the Zend Server SDK to deploy our ZPK.</li>
-</li>
+</ul>
 
 <p>
     But it's a bunch of manual steps. What if I could automate it?
