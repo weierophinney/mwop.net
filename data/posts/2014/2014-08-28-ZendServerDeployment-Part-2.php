@@ -153,7 +153,7 @@ $queue->createHttpJob($server . '/jobs/github-feed.php', [], [
     <li><a href="/blog/2014-09-11-zend-server-deployment-part-6.html">Tip 6: Page caching</a></li>
     <li><a href="/blog/2014-09-16-zend-server-deployment-part-7.html">Tip 7: zs-client</a></li>
     <li><a href="/blog/2014-09-18-zend-server-deployment-part-8.html">Tip 8: Automate</a></li>
-</ul
+</ul>
 EOT;
 $entry->setExtended($extended);
 
