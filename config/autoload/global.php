@@ -92,6 +92,7 @@ return [
             'Mwop\HomePage'             => 'Mwop\Factory\HomePage',
             'Mwop\ResumePage'           => 'Mwop\Factory\ResumePage',
             'Mwop\Unauthorized'         => 'Mwop\Factory\Unauthorized',
+            'Mwop\View'                 => 'Mwop\Factory\View',
         ],
     ],
 ];

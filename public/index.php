@@ -20,6 +20,13 @@ $services = createServiceContainer($config);
 
 $app = new Middleware();
 
+$app->pipe(function ($req, $res, $next) {
+    $req->view = (object) [
+        'template' => null,
+        'model'    => [],
+    ];
+    $next();
+});
 $app->pipe($services->get('Mwop\QueryParams'));
 $app->pipe($services->get('Mwop\Redirects'));
 $app->pipe($services->get('Mwop\BodyParams'));
@@ -58,6 +65,11 @@ $app->pipe('/blog', function ($req, $res, $next) use ($services) {
 
 $app->pipe('/jobs', function ($req, $res, $next) {
     $middleware = new Job\Middleware();
+    $middleware($req, $res, $next);
+});
+
+$app->pipe(function ($req, $res, $next) use ($services) {
+    $middleware = $services->get('Mwop\View');
     $middleware($req, $res, $next);
 });
 
