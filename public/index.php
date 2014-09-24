@@ -20,54 +20,13 @@ $services = createServiceContainer($config);
 
 $app = new Middleware();
 
+// Basic functionality required everywhere
 $app->pipe($services->get('Mwop\QueryParams'));
 $app->pipe($services->get('Mwop\Redirects'));
 $app->pipe($services->get('Mwop\BodyParams'));
 
-// Everything else... is templated.
-$app->pipe(function ($req, $res, $next) use ($services) {
-    $middleware = $services->get('Mwop\Templated');
-
-    // Home page
-    $middleware->pipe('/', $services->get('Mwop\HomePage'));
-
-    // Blog
-    $middleware->pipe('/blog', function ($req, $res, $next) use ($services) {
-        $blog = $services->get('Mwop\Blog\Middleware');
-        $blog($req, $res, $next);
-    });
-
-    // Contact form
-    $middleware->pipe('/contact', function ($req, $res, $next) use ($services) {
-        $contact = $services->get('Mwop\Contact\Middleware');
-        $contact($req, $res, $next);
-    });
-
-    // Comics
-    $middleware->pipe('/comics', function ($req, $res, $next) use ($services) {
-        $comics = new Middleware();
-        $comics->pipe($services->get('Mwop\Auth\UserSession'));
-        $comics->pipe($services->get('Mwop\ComicsPage'));
-        $comics($req, $res, $next);
-    });
-
-    // Resume
-    $middleware->pipe('/resume', $services->get('Mwop\ResumePage'));
-
-    $middleware($req, $res, $next);
-});
-
-// Authentication (opauth)
-$app->pipe('/auth', function ($req, $res, $next) use ($services) {
-    $middleware = $services->get('Mwop\Auth\Middleware');
-    $middleware($req, $res, $next);
-});
-
-// Job Queue jobs
-$app->pipe('/jobs', function ($req, $res, $next) {
-    $middleware = new Job\Middleware();
-    $middleware($req, $res, $next);
-});
+// Site services
+$app->pipe($services->get('Mwop\Site'));
 
 // Errors
 $app->pipe(new NotFound());
