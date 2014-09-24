@@ -26,7 +26,6 @@ class Page
         }
 
         $request->view->template = $this->page;
-error_log(sprintf('Set template to %s', $this->page));
         $next();
     }
 }

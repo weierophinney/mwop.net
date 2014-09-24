@@ -2,7 +2,6 @@
 namespace Mwop\Contact;
 
 use Aura\Session\Session;
-use Phly\Mustache\Mustache;
 use Zend\Mail\Message;
 use Zend\Mail\Transport\TransportInterface;
 
@@ -10,18 +9,15 @@ class Process
 {
     private $config;
     private $page;
-    private $renderer;
     private $session;
     private $transport;
 
     public function __construct(
-        Mustache $renderer,
         Session $session,
         TransportInterface $transport,
         $page,
         array $config
     ) {
-        $this->renderer  = $renderer;
         $this->session   = $session;
         $this->transport = $transport;
         $this->page      = $page;
@@ -44,7 +40,8 @@ class Process
             || ! $token->isValid($data['csrf'])
         ) {
             // re-display form
-            return $this->redisplayForm(['csrf' => 'true', 'data' => $data], $token, $request, $response);
+            $this->redisplayForm(['csrf' => 'true', 'data' => $data], $token, $request, $response);
+            return $next();
         }
 
         $filter = new InputFilter();
@@ -52,7 +49,8 @@ class Process
 
         if (! $filter->isValid()) {
             // re-display form
-            return $this->redisplayForm($filter->getMessages(), $token, $request, $response);
+            $this->redisplayForm($filter->getMessages(), $token, $request, $response);
+            return $next();
         }
 
         $this->sendEmail($filter->getValues());
@@ -73,7 +71,10 @@ class Process
             'csrf'   => $csrfToken->getValue(),
         ]);
 
-        $response->end($this->renderer->render($this->page, $view));
+        $request->view = (object) [
+            'template' => $this->page,
+            'model'    => $view,
+        ];
     }
 
     private function sendEmail(array $data)

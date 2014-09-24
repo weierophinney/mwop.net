@@ -38,10 +38,10 @@ class Templated extends Middleware
     public function render(Request $request, Response $response, callable $next)
     {
         if ($response->isComplete()) {
-            return $next();
+            return;
         }
 
-        if (! $request->view) {
+        if (! $request->view || ! $request->view->template) {
             return $next();
         }
 

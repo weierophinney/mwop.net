@@ -9,7 +9,6 @@ class ProcessFactory
         $config = $config['contact'];
 
         return new Process(
-            $services->get('renderer'),
             $services->get('session'),
             $services->get('mail.transport'),
             'contact.landing',
