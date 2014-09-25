@@ -9,7 +9,6 @@ class EngineMiddlewareFactory
         $config = $config['blog'];
         return new EngineMiddleware(
             $services->get('Mwop\Blog\Mapper'),
-            $services->get('renderer'),
             $config['disqus']
         );
     }

@@ -8,7 +8,6 @@ class ComicsPage
     public function __invoke($services)
     {
         return new Middleware(
-            $services->get('renderer'),
             '/comics',
             'comics.page'
         );

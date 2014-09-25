@@ -1,17 +1,13 @@
 <?php
 namespace Mwop\Contact;
 
-use Phly\Mustache\Mustache;
-
 class ThankYouPage
 {
     private $page;
     private $path;
-    private $renderer;
 
-    public function __construct(Mustache $renderer, $path, $page)
+    public function __construct($path, $page)
     {
-        $this->renderer = $renderer;
         $this->path     = $path;
         $this->page     = $page;
     }
@@ -37,6 +33,10 @@ class ThankYouPage
             return;
         }
 
-        $response->end($this->renderer->render($this->page, []));
+        $request->view = (object) [
+            'template' => $this->page,
+            'model'    => [],
+        ];
+        $next();
     }
 }

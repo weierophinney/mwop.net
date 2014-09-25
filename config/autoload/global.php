@@ -91,6 +91,8 @@ return [
             'Mwop\Github\Fetch'         => 'Mwop\Github\FetchFactory',
             'Mwop\HomePage'             => 'Mwop\Factory\HomePage',
             'Mwop\ResumePage'           => 'Mwop\Factory\ResumePage',
+            'Mwop\Site'                 => 'Mwop\Factory\Site',
+            'Mwop\Templated'            => 'Mwop\Factory\Templated',
             'Mwop\Unauthorized'         => 'Mwop\Factory\Unauthorized',
         ],
     ],
