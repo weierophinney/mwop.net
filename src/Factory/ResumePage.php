@@ -7,7 +7,6 @@ class ResumePage
 {
     public function __invoke($services)
     {
-        $renderer = $services->get('renderer');
-        return new Middleware($renderer, '/resume', 'resume');
+        return new Middleware('/resume', 'resume');
     }
 }

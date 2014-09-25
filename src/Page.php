@@ -7,11 +7,9 @@ class Page
 {
     private $page;
     private $path;
-    private $renderer;
 
-    public function __construct(Mustache $renderer, $path, $page)
+    public function __construct($path, $page)
     {
-        $this->renderer = $renderer;
         $this->path = $path;
         $this->page = $page;
     }
@@ -27,6 +25,7 @@ class Page
             return $next('GET');
         }
 
-        $response->end($this->renderer->render($this->page, []));
+        $request->view->template = $this->page;
+        $next();
     }
 }

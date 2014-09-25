@@ -9,16 +9,13 @@ class EngineMiddleware
     private $disqus;
     private $feedPath;
     private $mapper;
-    private $renderer;
 
     public function __construct(
         MapperInterface $mapper,
-        Mustache $renderer,
         array $disqus = [],
         $feedPath = 'data/feeds'
     ) {
         $this->mapper   = $mapper;
-        $this->renderer = $renderer;
         $this->feedPath = $feedPath;
         $this->disqus   = $disqus;
     }
@@ -105,7 +102,11 @@ class EngineMiddleware
             $view['tag'] = ['tag' => $tag];
         }
 
-        $res->end($this->renderer->render('blog.list', $view));
+        $req->view = (object) [
+            'template' => 'blog.list',
+            'model'    => $view,
+        ];
+        $next();
     }
 
     private function displayPost($id, $req, $res, $next)
@@ -126,7 +127,10 @@ class EngineMiddleware
         $path = substr($req->originalUrl->path, 0, -(strlen($post->getId() . '.html') + 1));
         $post = $this->prepPost($post->getArrayCopy(), $path);
 
-        $res->end($this->renderer->render('blog.post', $post));
+        $req->view = (object) [
+            'template' => 'blog.post',
+            'model'    => $post,
+        ];
         $next();
     }
 

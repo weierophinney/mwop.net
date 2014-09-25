@@ -2,19 +2,16 @@
 namespace Mwop\Contact;
 
 use Aura\Session\Session;
-use Phly\Mustache\Mustache;
 
 class LandingPage
 {
     private $config;
     private $page;
     private $path;
-    private $renderer;
     private $session;
 
-    public function __construct(Mustache $renderer, $path, $page, Session $session, array $config)
+    public function __construct($path, $page, Session $session, array $config)
     {
-        $this->renderer = $renderer;
         $this->path     = $path;
         $this->page     = $page;
         $this->session  = $session;
@@ -37,6 +34,11 @@ class LandingPage
             'csrf'   => $this->session->getCsrfToken()->getValue(),
         ]);
 
-        $response->end($this->renderer->render($this->page, $view));
+        $request->view = (object) [
+            'template' => $this->page,
+            'model'    => $view,
+        ];
+
+        $next();
     }
 }

@@ -13,7 +13,7 @@ class ClearCache
 
     public function __invoke($req, $res, $next)
     {
-        if (! ZendJobQueue::getCurrentJobId()) {
+        if (! class_exists('ZendJobQueue') || ! ZendJobQueue::getCurrentJobId()) {
             $res->setStatusCode(403);
             $res->end();
             return;
