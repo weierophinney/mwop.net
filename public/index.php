@@ -21,7 +21,6 @@ $services = createServiceContainer($config);
 $app = new Middleware();
 
 // Basic functionality required everywhere
-$app->pipe($services->get('Mwop\QueryParams'));
 $app->pipe($services->get('Mwop\Redirects'));
 $app->pipe($services->get('Mwop\BodyParams'));
 

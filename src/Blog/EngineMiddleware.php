@@ -154,7 +154,7 @@ class EngineMiddleware
 
     private function getPageFromRequest($req)
     {
-        $page = isset($req->query['page']) ? $req->query['page'] : 1;
+        $page = isset($req->getQueryParams()['page']) ? $req->getQueryParams()['page'] : 1;
         $page = (int) $page;
         return ($page < 1) ? 1 : $page;
     }

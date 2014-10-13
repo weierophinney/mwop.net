@@ -27,9 +27,9 @@ class Auth
             return $next('GET');
         }
 
-        if (isset($req->query['redirect'])) {
+        if (isset($req->getQueryParams()['redirect'])) {
             $redirect = $this->session->getSegment('redirect');
-            $redirect->set('auth', $req->query['redirect']);
+            $redirect->set('auth', $req->getQueryParams()['redirect']);
         }
 
         $auth = new Opauth($this->config);
