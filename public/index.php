@@ -44,5 +44,5 @@ $app->pipe(function ($err, $req, $res, $next) use ($services) {
 });
 
 // Start listening
-$server = Server::createServer($app, $_SERVER);
+$server = Server::createServer($app, $_SERVER, $_GET, $_POST, $_COOKIE, $_FILES);
 $server->listen();
