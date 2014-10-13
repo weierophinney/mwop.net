@@ -70,12 +70,12 @@ class Redirects
                 }
             }
             if (preg_match('#^/matthew/rss\.php$#', $path)) {
-                if (! isset($req->query['serendipity']['tag'])) {
+                if (! isset($req->getQueryParams()['serendipity']['tag'])) {
                     return $this->redirect('/blog', $url, $res);
                 }
                 return $this->redirect(sprintf(
                     '/blog/tag/%s/rss.xml',
-                    $req->query['serendipity']['tag']
+                    $req->getQueryParams()['serendipity']['tag']
                 ), $url, $res);
             }
             return $this->redirect('/blog', $url, $res);

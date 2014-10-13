@@ -21,7 +21,6 @@ $services = createServiceContainer($config);
 $app = new Middleware();
 
 // Basic functionality required everywhere
-$app->pipe($services->get('Mwop\QueryParams'));
 $app->pipe($services->get('Mwop\Redirects'));
 $app->pipe($services->get('Mwop\BodyParams'));
 
@@ -44,5 +43,5 @@ $app->pipe(function ($err, $req, $res, $next) use ($services) {
 });
 
 // Start listening
-$server = Server::createServer($app, $_SERVER);
+$server = Server::createServer($app, $_SERVER, $_GET, $_POST, $_COOKIE, $_FILES);
 $server->listen();

@@ -4,7 +4,7 @@ namespace Mwop;
 use Phly\Conduit\Http\Request as ConduitRequest;
 use Phly\Conduit\Middleware;
 use Phly\Mustache\Mustache;
-use Psr\Http\Message\RequestInterface as Request;
+use Psr\Http\Message\IncomingRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
 class Templated extends Middleware

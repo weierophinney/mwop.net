@@ -60,7 +60,6 @@ return [
         'invokables' => [
             'Mwop\BodyParams',
             'Mwop\NotAllowed',
-            'Mwop\QueryParams',
             'Mwop\Blog\SeedBlogDatabase',
             'Mwop\Redirects',
         ],

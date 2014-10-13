@@ -27,10 +27,10 @@ class AuthCallback
                 unset($_SESSION['opauth']);
                 break;
             case 'post':
-                $authResponse = unserialize(base64_decode($req->body['opauth']));
+                $authResponse = unserialize(base64_decode($req->getQueryParams()['opauth']));
                 break;
             case 'get':
-                $authResponse = unserialize(base64_decode($req->query['opauth']));
+                $authResponse = unserialize(base64_decode($req->getQueryParams()['opauth']));
                 break;
             default:
                 $res->setStatusCode(400);

@@ -15,8 +15,6 @@ class BodyParams
             return $next();
         }
 
-        $request->body = [];
-
         $header     = $request->getHeader('Content-Type');
         $priorities = [
             'form'     => 'application/x-www-form-urlencoded',
@@ -35,11 +33,12 @@ class BodyParams
 
         switch ($matched) {
             case 'form':
-                $request->body = $_POST;
+                // Nothing to do; $_POST is injected by default into the 
+                // request body parameters
                 break;
             case 'json':
                 $request->rawBody = $request->getBody()->getContents();
-                $request->body = json_decode($request->rawBody, true);
+                $reqest->setBodyParams(json_decode($request->rawBody, true));
                 break;
             default:
                 break;
