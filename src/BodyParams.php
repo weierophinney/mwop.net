@@ -38,7 +38,7 @@ class BodyParams
                 break;
             case 'json':
                 $request->rawBody = $request->getBody()->getContents();
-                $reqest->setBodyParams(json_decode($request->rawBody, true));
+                $request->setBodyParams(json_decode($request->rawBody, true));
                 break;
             default:
                 break;
