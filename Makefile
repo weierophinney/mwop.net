@@ -12,9 +12,11 @@
 # - APPID    - Application ID on Zend Server (defaults to 25)
 # - GIT      - Path to git executable
 # - NPM      - Path to npm executable
+# - PORT     - Port to use with built-in web server (for serve target)
 #
 # Available targets:
 # - composer - update the composer executable
+# - serve    - run the website with the built-in web server
 # - grunt    - run grunt to minimize CSS
 # - zpk      - build a zpk
 # - deploy   - deploy the site
@@ -29,6 +31,7 @@ ZSTARGET ?= mwop
 APPID ?= 25
 GIT ?= $(shell which git)
 NPM ?= $(shell which npm)
+PORT ?= 8080
 
 COMPOSER = $(CURDIR)/composer.phar
 
@@ -76,6 +79,11 @@ deploy : zpk
 	@echo "Deploying ZPK..."
 	-$(ZSCLIENT) applicationUpdate --appId=$(APPID) --appPackage=mwop-$(VERSION).zpk --target=$(ZSTARGET)
 	@echo "[DONE] Deploying ZPK."
+
+serve:
+	@echo "Starting built-in web server"
+	$(PHP) -S 0:$(PORT) -t public/ public/index.php
+	@echo "[DONE] Running built-in web server"
 
 clean :
 	@echo "Cleaning up..."
