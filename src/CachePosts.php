@@ -2,7 +2,7 @@
 namespace Mwop;
 
 use Phly\Conduit\Http\Request;
-use Phly\Http\Request as PsrRequest;
+use Phly\Http\IncomingRequest as PsrRequest;
 use Phly\Http\Response;
 use Phly\Http\Uri;
 use Zend\Console\ColorInterface as Color;
