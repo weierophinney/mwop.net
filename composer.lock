@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "f94463f54c8e4b4388c645e718f27a0b",
+    "hash": "777877addb1faacc3c4db1a93a25fb3b",
     "packages": [
         {
             "name": "aura/session",
@@ -254,22 +254,22 @@
         },
         {
             "name": "phly/conduit",
-            "version": "0.6.1",
+            "version": "0.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phly/conduit.git",
-                "reference": "cad337c76571abff80f5012489e13227640c9152"
+                "reference": "0fe0c96a255d85ef8ed40b86b801837d29442c0e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phly/conduit/zipball/cad337c76571abff80f5012489e13227640c9152",
-                "reference": "cad337c76571abff80f5012489e13227640c9152",
+                "url": "https://api.github.com/repos/phly/conduit/zipball/0fe0c96a255d85ef8ed40b86b801837d29442c0e",
+                "reference": "0fe0c96a255d85ef8ed40b86b801837d29442c0e",
                 "shasum": ""
             },
             "require": {
-                "phly/http": "~0.5.0@dev",
+                "phly/http": "~0.6.0@dev",
                 "php": ">=5.4.8",
-                "psr/http-message": "~0.3.0@dev",
+                "psr/http-message": "~0.4.0@dev",
                 "zendframework/zend-escaper": "~2.3@stable"
             },
             "require-dev": {
@@ -285,8 +285,7 @@
             },
             "autoload": {
                 "psr-4": {
-                    "Phly\\Conduit\\": "src/",
-                    "PhlyTest\\Conduit\\": "test/"
+                    "Phly\\Conduit\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -306,25 +305,25 @@
                 "http",
                 "middleware"
             ],
-            "time": "2014-10-13 18:01:51"
+            "time": "2014-10-18 16:05:44"
         },
         {
             "name": "phly/http",
-            "version": "0.5.0",
+            "version": "0.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phly/http.git",
-                "reference": "f38ed1b8e5773dadb480ba038aeb69027060279a"
+                "reference": "33f478ec2fbd9f5cf97c6aa46049ad9e5fd400c9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phly/http/zipball/f38ed1b8e5773dadb480ba038aeb69027060279a",
-                "reference": "f38ed1b8e5773dadb480ba038aeb69027060279a",
+                "url": "https://api.github.com/repos/phly/http/zipball/33f478ec2fbd9f5cf97c6aa46049ad9e5fd400c9",
+                "reference": "33f478ec2fbd9f5cf97c6aa46049ad9e5fd400c9",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.4.8",
-                "psr/http-message": "~0.3.0"
+                "psr/http-message": "~0.4.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "3.7.*",
@@ -339,8 +338,7 @@
             },
             "autoload": {
                 "psr-4": {
-                    "Phly\\Http\\": "src/",
-                    "PhlyTest\\Http\\": "test/"
+                    "Phly\\Http\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -359,7 +357,7 @@
             "keywords": [
                 "http"
             ],
-            "time": "2014-10-13 17:02:37"
+            "time": "2014-10-17 22:34:06"
         },
         {
             "name": "phly/mustache",
@@ -467,16 +465,16 @@
         },
         {
             "name": "psr/http-message",
-            "version": "0.3.0",
+            "version": "0.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/http-message.git",
-                "reference": "69271a585d8f5fc210a55cb5aa9bac86380d0521"
+                "reference": "05f67fe3f44fa213b543160452cfc202304a7e06"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/http-message/zipball/69271a585d8f5fc210a55cb5aa9bac86380d0521",
-                "reference": "69271a585d8f5fc210a55cb5aa9bac86380d0521",
+                "url": "https://api.github.com/repos/php-fig/http-message/zipball/05f67fe3f44fa213b543160452cfc202304a7e06",
+                "reference": "05f67fe3f44fa213b543160452cfc202304a7e06",
                 "shasum": ""
             },
             "type": "library",
@@ -509,7 +507,7 @@
                 "request",
                 "response"
             ],
-            "time": "2014-10-13 16:47:50"
+            "time": "2014-10-17 16:13:56"
         },
         {
             "name": "zendframework/zend-config",
