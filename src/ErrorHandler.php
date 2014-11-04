@@ -24,7 +24,7 @@ class ErrorHandler
         }
 
         if ($res->getStatusCode() < 400) {
-            $res->setStatusCode(500);
+            $res->setStatus(500);
         }
 
         $error = $err;

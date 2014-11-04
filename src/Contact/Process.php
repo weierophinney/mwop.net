@@ -27,13 +27,13 @@ class Process
     public function __invoke($request, $response, $next)
     {
         if ($request->getMethod() !== 'POST') {
-            $response->setStatusCode(405);
+            $response->setStatus(405);
             return $next('POST');
         }
 
         $this->session->start();
 
-        $data  = $request->getBodyParams();
+        $data  = $request->body;
         $token = $this->session->getCsrfToken();
 
         if (! isset($data['csrf'])
@@ -56,7 +56,7 @@ class Process
         $this->sendEmail($filter->getValues());
 
         $path = str_replace('/process', '', $request->originalUrl) . '/thank-you';
-        $response->setStatusCode(302);
+        $response->setStatus(302);
         $response->addHeader('Location', $path);
         $response->end();
     }

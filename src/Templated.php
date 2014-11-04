@@ -5,7 +5,7 @@ use Phly\Conduit\Http\Request as ConduitRequest;
 use Phly\Conduit\Middleware;
 use Phly\Mustache\Mustache;
 use Psr\Http\Message\IncomingRequestInterface as Request;
-use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\OutgoingResponseInterface as Response;
 
 class Templated extends Middleware
 {

@@ -16,12 +16,12 @@ class Page
 
     public function __invoke($request, $response, $next)
     {
-        if ($request->originalUrl->path !== $this->path) {
+        if (parse_url($request->originalUrl, PHP_URL_PATH) !== $this->path) {
             return $next();
         }
 
         if ($request->getMethod() !== 'GET') {
-            $response->setStatusCode(405);
+            $response->setStatus(405);
             return $next('GET');
         }
 

@@ -1,6 +1,7 @@
 <?php
 namespace Mwop;
 
+use Phly\Http\Uri;
 use Phly\Mustache\Mustache;
 
 class Unauthorized
@@ -20,9 +21,10 @@ class Unauthorized
             return $next($err);
         }
 
-        $url = $req->getUrl()->setPath('/auth');
+        $url = new Uri($req->getUrl());
+        $new = $url->setPath('/auth');
         $view = [
-            'auth_path' => (string) $url,
+            'auth_path' => (string) $new,
             'redirect'  => $req->originalUrl,
         ];
 

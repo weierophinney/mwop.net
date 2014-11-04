@@ -44,7 +44,8 @@ class CachingMiddleware
 
     private function fetchFromCache($req, $res, $next)
     {
-        if (! preg_match('#^/(?P<page>[^/]+\.html)$#', $req->getUrl()->path, $matches)) {
+        $path = parse_url($req->getUrl(), PHP_URL_PATH);
+        if (! preg_match('#^/(?P<page>[^/]+\.html)$#', $path, $matches)) {
             // Nothing to do; not a blog post
             return $next();
         }

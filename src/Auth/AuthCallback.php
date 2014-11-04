@@ -3,6 +3,7 @@ namespace Mwop\Auth;
 
 use Aura\Session\Session;
 use Opauth;
+use Phly\Http\Uri;
 
 class AuthCallback
 {
@@ -33,13 +34,13 @@ class AuthCallback
                 $authResponse = unserialize(base64_decode($req->getQueryParams()['opauth']));
                 break;
             default:
-                $res->setStatusCode(400);
+                $res->setStatus(400);
                 return $next('Invalid request');
                 break;
         }
 
         if (array_key_exists('error', $authResponse)) {
-            $res->setStatusCode(403);
+            $res->setStatus(403);
             return $next('Error authenticating');
         }
 
@@ -49,7 +50,7 @@ class AuthCallback
             || empty($authResponse['auth']['provider'])
             || empty($authResponse['auth']['uid'])
         ) {
-            $res->setStatusCode(403);
+            $res->setStatus(403);
             return $next('Invalid authentication response');
         } 
         
@@ -61,21 +62,22 @@ class AuthCallback
                 $reason
             )
         ) {
-            $res->setStatusCode(403);
+            $res->setStatus(403);
             return $next('Invalid authentication response');
         }
 
         $auth = $this->session->getSegment('auth');
         $auth->set('user', $authResponse['auth']);
 
-        $url      = (string) $req->getUrl()->setPath('/');
+        $uri      = new Uri($req->getUrl());
+        $url      = (string) $uri->setPath('/');
         $redirect = $this->session->getSegment('redirect')->get('auth');
         if ($redirect) {
             $url = $redirect;
             $this->session->getSegment('redirect')->set('auth', null);
         }
 
-        $res->setStatusCode(302);
+        $res->setStatus(302);
         $res->addHeader('Location', $url);
         $res->end();
     }
