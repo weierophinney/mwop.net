@@ -61,7 +61,7 @@ class EngineMiddleware
 
         $posts->setItemCountPerPage(10);
         if (count($posts) && $page > count($posts)) {
-            $res->setStatusCode(302);
+            $res->setStatus(302);
             $res->addHeader('Location', sprintf('%s?page=%d', $path, count($posts)));
             $res->end();
             return;
@@ -114,13 +114,13 @@ class EngineMiddleware
         $post = $this->mapper->fetch($id);
         
         if (! $post) {
-            $res->setStatusCode(404);
+            $res->setStatus(404);
             return $next('Not found');
         }
 
         $post = include $post['path'];
         if (! $post instanceof EntryEntity) {
-            $res->setStatusCode(404);
+            $res->setStatus(404);
             return $next('Not found');
         }
 
@@ -143,7 +143,7 @@ class EngineMiddleware
         }
 
         if (! file_exists($path)) {
-            $res->setStatusCode(404);
+            $res->setStatus(404);
             return $next('Not found');
         }
 

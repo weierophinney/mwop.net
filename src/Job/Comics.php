@@ -9,7 +9,7 @@ class Comics
     public function __invoke($req, $res, $next)
     {
         if (! class_exists('ZendJobQueue') || ! ZendJobQueue::getCurrentJobId()) {
-            $res->setStatusCode(403);
+            $res->setStatus(403);
             $res->end();
             return;
         }
@@ -19,7 +19,7 @@ class Comics
         exec($command, $output, $return);
         if ($return != 0) {
             ZendJobQueue::setCurrentJobStatus(ZendJobQueue::FAILED);
-            $res->setStatusCode(500);
+            $res->setStatus(500);
             $res->addHeader('Content-Type', 'text/plain');
             $res->end(implode("\n", $output));
             return;

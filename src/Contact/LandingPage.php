@@ -26,7 +26,7 @@ class LandingPage
         }
 
         if ($request->getMethod() !== 'GET') {
-            $response->setStatusCode(405);
+            $response->setStatus(405);
             return $next('GET');
         }
 

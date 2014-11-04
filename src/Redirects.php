@@ -98,7 +98,7 @@ class Redirects
         }
 
         $url = Uri::fromArray($urlParams);
-        $res->setStatusCode(301);
+        $res->setStatus(301);
         $res->addHeader('Location', (string) $url);
         $res->end();
     }

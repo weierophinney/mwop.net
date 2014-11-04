@@ -34,13 +34,13 @@ class AuthCallback
                 $authResponse = unserialize(base64_decode($req->getQueryParams()['opauth']));
                 break;
             default:
-                $res->setStatusCode(400);
+                $res->setStatus(400);
                 return $next('Invalid request');
                 break;
         }
 
         if (array_key_exists('error', $authResponse)) {
-            $res->setStatusCode(403);
+            $res->setStatus(403);
             return $next('Error authenticating');
         }
 
@@ -50,7 +50,7 @@ class AuthCallback
             || empty($authResponse['auth']['provider'])
             || empty($authResponse['auth']['uid'])
         ) {
-            $res->setStatusCode(403);
+            $res->setStatus(403);
             return $next('Invalid authentication response');
         } 
         
@@ -62,7 +62,7 @@ class AuthCallback
                 $reason
             )
         ) {
-            $res->setStatusCode(403);
+            $res->setStatus(403);
             return $next('Invalid authentication response');
         }
 
