@@ -20,12 +20,13 @@ class LandingPage
 
     public function __invoke($request, $response, $next)
     {
-        if ($request->getUrl()->path !== $this->path) {
+        $path = parse_url($request->getUrl(), PHP_URL_PATH);
+        if ($path !== $this->path) {
             return $next();
         }
 
         if ($request->getMethod() !== 'GET') {
-            $response->setStatusCode(405);
+            $response->setStatus(405);
             return $next('GET');
         }
 

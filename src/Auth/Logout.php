@@ -2,6 +2,7 @@
 namespace Mwop\Auth;
 
 use Aura\Session\Session;
+use Phly\Http\Uri;
 
 class Logout
 {
@@ -26,8 +27,9 @@ class Logout
 
     private function redirect($request, $response)
     {
-        $redirectUrl = (string) $request->originalUrl->setPath('/');
-        $response->setStatusCode(302);
+        $originalUrl = new Uri($request->originalUrl);
+        $redirectUrl = (string) $originalUrl->setPath('/');
+        $response->setStatus(302);
         $response->addHeader('Location', $redirectUrl);
         $response->end();
     }

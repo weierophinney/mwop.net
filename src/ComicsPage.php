@@ -6,7 +6,7 @@ class ComicsPage extends Page
     public function __invoke($request, $response, $next)
     {
         if (! $request->user) {
-            $response->setStatusCode(401);
+            $response->setStatus(401);
             return $next(401);
         }
 

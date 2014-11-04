@@ -22,23 +22,24 @@ class EngineMiddleware
 
     public function __invoke($req, $res, $next)
     {
-        if ('/tag/php.xml' === $req->getUrl()->path) {
+        $path = parse_url($req->getUrl(), PHP_URL_PATH);
+        if ('/tag/php.xml' === $path) {
             return $this->displayFeed($req, $res, $next, 'rss', 'php');
         }
 
-        if (preg_match('#/tag/(?P<tag>[^/]+)#', $req->getUrl()->path, $matches)) {
+        if (preg_match('#/tag/(?P<tag>[^/]+)#', $path, $matches)) {
             $tag = $matches['tag'];
-            if (preg_match('#/(?P<feed>atom|rss)\.xml$#', $req->getUrl()->path, $matches)) {
+            if (preg_match('#/(?P<feed>atom|rss)\.xml$#', $path, $matches)) {
                 return $this->displayFeed($req, $res, $next, $matches['feed'], $tag);
             }
             return $this->listPosts($req, $res, $next, $tag);
         }
 
-        if (preg_match('#^/(?P<id>[^/]+)\.html$#', $req->getUrl()->path, $matches)) {
+        if (preg_match('#^/(?P<id>[^/]+)\.html$#', $path, $matches)) {
             return $this->displayPost($matches['id'], $req, $res, $next);
         }
 
-        if (preg_match('#/(?P<feed>atom|rss)\.xml$#', $req->getUrl()->path, $matches)) {
+        if (preg_match('#/(?P<feed>atom|rss)\.xml$#', $path, $matches)) {
             return $this->displayFeed($req, $res, $next, $matches['feed']);
         }
         return $this->listPosts($req, $res, $next);
@@ -46,7 +47,7 @@ class EngineMiddleware
 
     private function listPosts($req, $res, $next, $tag = null)
     {
-        $path  = $req->originalUrl->path;
+        $path  = parse_url($req->originalUrl, PHP_URL_PATH);
         $page  = $this->getPageFromRequest($req);
         $title = 'Blog Posts';
 
@@ -60,7 +61,7 @@ class EngineMiddleware
 
         $posts->setItemCountPerPage(10);
         if (count($posts) && $page > count($posts)) {
-            $res->setStatusCode(302);
+            $res->setStatus(302);
             $res->addHeader('Location', sprintf('%s?page=%d', $path, count($posts)));
             $res->end();
             return;
@@ -87,8 +88,7 @@ class EngineMiddleware
 
         // Strip "/tag/<tag>" from base path in order to create paths to posts
         $postPath = ($tag) ? substr($path, 0, - (strlen($tag) + 5)) : $path;
-        $url      = $req->getUrl();
-        $entries  = array_map(function ($post) use ($self, $postPath, $url) {
+        $entries  = array_map(function ($post) use ($self, $postPath) {
             return $self->prepPost($post, $postPath);
         }, iterator_to_array($posts->getItemsByPage($page)));
 
@@ -114,17 +114,18 @@ class EngineMiddleware
         $post = $this->mapper->fetch($id);
         
         if (! $post) {
-            $res->setStatusCode(404);
+            $res->setStatus(404);
             return $next('Not found');
         }
 
         $post = include $post['path'];
         if (! $post instanceof EntryEntity) {
-            $res->setStatusCode(404);
+            $res->setStatus(404);
             return $next('Not found');
         }
 
-        $path = substr($req->originalUrl->path, 0, -(strlen($post->getId() . '.html') + 1));
+        $original = parse_url($req->originalUrl, PHP_URL_PATH);
+        $path = substr($original, 0, -(strlen($post->getId() . '.html') + 1));
         $post = $this->prepPost($post->getArrayCopy(), $path);
 
         $req->view = (object) [
@@ -143,7 +144,7 @@ class EngineMiddleware
         }
 
         if (! file_exists($path)) {
-            $res->setStatusCode(404);
+            $res->setStatus(404);
             return $next('Not found');
         }
 

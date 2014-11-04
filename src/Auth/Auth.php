@@ -23,7 +23,7 @@ class Auth
     public function __invoke($req, $res, $next)
     {
         if ($req->getMethod() !== 'GET') {
-            $res->setStatusCode(405);
+            $res->setStatus(405);
             return $next('GET');
         }
 

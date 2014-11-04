@@ -14,7 +14,7 @@ class ClearCache
     public function __invoke($req, $res, $next)
     {
         if (! class_exists('ZendJobQueue') || ! ZendJobQueue::getCurrentJobId()) {
-            $res->setStatusCode(403);
+            $res->setStatus(403);
             $res->end();
             return;
         }
@@ -23,7 +23,7 @@ class ClearCache
         // However, ZS page cache REQUIRES the port in order to properly
         // match. This logic gives us a base URI string to use for
         // clearing cache contents.
-        $uri  = $req->getUrl();
+        $uri  = new Uri($req->getUrl());
         $port = $uri->port;
         if (! $port) {
             $port = ($uri->scheme === 'https') ? 443 : 80;

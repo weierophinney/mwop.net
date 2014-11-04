@@ -33,12 +33,13 @@ class BodyParams
 
         switch ($matched) {
             case 'form':
-                // Nothing to do; $_POST is injected by default into the 
-                // request body parameters
+                // $_POST is injected by default into the request body parameters;
+                // re-inject them into the attributes.
+                $request->body = $request->getBodyParams();
                 break;
             case 'json':
                 $request->rawBody = $request->getBody()->getContents();
-                $request->setBodyParams(json_decode($request->rawBody, true));
+                $request->body    = json_decode($request->rawBody, true);
                 break;
             default:
                 break;
