@@ -3,6 +3,7 @@ namespace Mwop\Auth;
 
 use Aura\Session\Session;
 use Opauth;
+use Phly\Http\Uri;
 
 class AuthCallback
 {
@@ -68,14 +69,15 @@ class AuthCallback
         $auth = $this->session->getSegment('auth');
         $auth->set('user', $authResponse['auth']);
 
-        $url      = (string) $req->getUrl()->setPath('/');
+        $uri      = new Uri($req->getUrl());
+        $url      = (string) $uri->setPath('/');
         $redirect = $this->session->getSegment('redirect')->get('auth');
         if ($redirect) {
             $url = $redirect;
             $this->session->getSegment('redirect')->set('auth', null);
         }
 
-        $res->setStatusCode(302);
+        $res->setStatus(302);
         $res->addHeader('Location', $url);
         $res->end();
     }

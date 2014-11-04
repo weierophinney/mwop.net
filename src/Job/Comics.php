@@ -1,6 +1,7 @@
 <?php
 namespace Mwop\Job;
 
+use Phly\Http\Uri;
 use ZendJobQueue;
 
 class Comics
@@ -29,7 +30,8 @@ class Comics
         $res->end(implode("\n", $output));
 
         // Clear caches
-        $uri    = (string) $req->getUrl()->setPath('/');
+        $uri    = new Uri($req->getUrl());
+        $uri    = (string) $uri->setPath('/');
         $queue  = new ZendJobQueue();
         $queue->createHttpJob($uri . 'jobs/clear-cache', [], [
             'name'       => 'clear-cache',

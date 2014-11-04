@@ -23,7 +23,7 @@ class ClearCache
         // However, ZS page cache REQUIRES the port in order to properly
         // match. This logic gives us a base URI string to use for
         // clearing cache contents.
-        $uri  = $req->getUrl();
+        $uri  = new Uri($req->getUrl());
         $port = $uri->port;
         if (! $port) {
             $port = ($uri->scheme === 'https') ? 443 : 80;

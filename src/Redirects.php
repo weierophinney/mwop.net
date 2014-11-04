@@ -7,7 +7,7 @@ class Redirects
 {
     public function __invoke($req, $res, $next)
     {
-        $url  = $req->getUrl();
+        $url  = new Uri($req->getUrl());
         $path = $url->path;
 
         // Ensure php.net is able to retrieve PHP RSS feed without a problem

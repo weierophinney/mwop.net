@@ -22,23 +22,24 @@ class EngineMiddleware
 
     public function __invoke($req, $res, $next)
     {
-        if ('/tag/php.xml' === $req->getUrl()->path) {
+        $path = parse_url($req->getUrl(), PHP_URL_PATH);
+        if ('/tag/php.xml' === $path) {
             return $this->displayFeed($req, $res, $next, 'rss', 'php');
         }
 
-        if (preg_match('#/tag/(?P<tag>[^/]+)#', $req->getUrl()->path, $matches)) {
+        if (preg_match('#/tag/(?P<tag>[^/]+)#', $path, $matches)) {
             $tag = $matches['tag'];
-            if (preg_match('#/(?P<feed>atom|rss)\.xml$#', $req->getUrl()->path, $matches)) {
+            if (preg_match('#/(?P<feed>atom|rss)\.xml$#', $path, $matches)) {
                 return $this->displayFeed($req, $res, $next, $matches['feed'], $tag);
             }
             return $this->listPosts($req, $res, $next, $tag);
         }
 
-        if (preg_match('#^/(?P<id>[^/]+)\.html$#', $req->getUrl()->path, $matches)) {
+        if (preg_match('#^/(?P<id>[^/]+)\.html$#', $path, $matches)) {
             return $this->displayPost($matches['id'], $req, $res, $next);
         }
 
-        if (preg_match('#/(?P<feed>atom|rss)\.xml$#', $req->getUrl()->path, $matches)) {
+        if (preg_match('#/(?P<feed>atom|rss)\.xml$#', $path, $matches)) {
             return $this->displayFeed($req, $res, $next, $matches['feed']);
         }
         return $this->listPosts($req, $res, $next);
@@ -87,8 +88,7 @@ class EngineMiddleware
 
         // Strip "/tag/<tag>" from base path in order to create paths to posts
         $postPath = ($tag) ? substr($path, 0, - (strlen($tag) + 5)) : $path;
-        $url      = $req->getUrl();
-        $entries  = array_map(function ($post) use ($self, $postPath, $url) {
+        $entries  = array_map(function ($post) use ($self, $postPath) {
             return $self->prepPost($post, $postPath);
         }, iterator_to_array($posts->getItemsByPage($page)));
 
