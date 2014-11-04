@@ -47,7 +47,7 @@ class EngineMiddleware
 
     private function listPosts($req, $res, $next, $tag = null)
     {
-        $path  = $req->originalUrl->path;
+        $path  = parse_url($req->originalUrl, PHP_URL_PATH);
         $page  = $this->getPageFromRequest($req);
         $title = 'Blog Posts';
 
@@ -124,7 +124,8 @@ class EngineMiddleware
             return $next('Not found');
         }
 
-        $path = substr($req->originalUrl->path, 0, -(strlen($post->getId() . '.html') + 1));
+        $original = parse_url($req->originalUrl, PHP_URL_PATH);
+        $path = substr($original, 0, -(strlen($post->getId() . '.html') + 1));
         $post = $this->prepPost($post->getArrayCopy(), $path);
 
         $req->view = (object) [

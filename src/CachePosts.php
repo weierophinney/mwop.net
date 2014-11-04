@@ -46,7 +46,7 @@ class CachePosts
             $console->write($message, Color::BLUE);
 
             $canonical = $uri->setPath(sprintf('/blog/%s.html', $entry->getId()));
-            $request->originalUrl = $canonical;
+            $request->originalUrl = (string) $canonical;
 
             $uri = $uri->setPath(sprintf('/%s.html', $entry->getId()));
             $request->setUrl($uri);
