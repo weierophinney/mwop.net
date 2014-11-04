@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "7cd1284e560c8c1aad7cc2f541e54cdd",
+    "hash": "b43c4c543761c910f9bcd6dc440bc650",
     "packages": [
         {
             "name": "aura/session",
@@ -254,16 +254,16 @@
         },
         {
             "name": "phly/conduit",
-            "version": "0.8.0",
+            "version": "0.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phly/conduit.git",
-                "reference": "c4da46b2f1e54a4a38cc392b37aa21d8e08b5f96"
+                "reference": "5c6999d1759c6dc17b4bbe3bb7145da2aa687c4a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phly/conduit/zipball/c4da46b2f1e54a4a38cc392b37aa21d8e08b5f96",
-                "reference": "c4da46b2f1e54a4a38cc392b37aa21d8e08b5f96",
+                "url": "https://api.github.com/repos/phly/conduit/zipball/5c6999d1759c6dc17b4bbe3bb7145da2aa687c4a",
+                "reference": "5c6999d1759c6dc17b4bbe3bb7145da2aa687c4a",
                 "shasum": ""
             },
             "require": {
@@ -305,7 +305,7 @@
                 "http",
                 "middleware"
             ],
-            "time": "2014-11-04 18:10:24"
+            "time": "2014-11-04 19:00:55"
         },
         {
             "name": "phly/http",

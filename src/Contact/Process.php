@@ -33,7 +33,7 @@ class Process
 
         $this->session->start();
 
-        $data  = $request->getBodyParams();
+        $data  = $request->body;
         $token = $this->session->getCsrfToken();
 
         if (! isset($data['csrf'])
