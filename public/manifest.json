@@ -1,0 +1,14 @@
+{
+  "name": "mwop.net",
+  "icons": [
+    {
+      "src": "images/logo.gif",
+      "sizes": "72x72",
+      "type": "image/gif",
+      "density": "1.0"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "landscape"
+}
