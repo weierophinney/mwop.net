@@ -76,7 +76,7 @@ $extended=<<<'EOT'
     Now that I've hyped it up, just what do the tools offer? I think examples
     sum it up best. First, Phly_Struct:
 </p>
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 $array = array(
     'key1 =&gt; 'value1',
     'key2 =&gt; array(
@@ -113,7 +113,7 @@ $subarray = $struct-&gt;key2-&gt;subkey1-&gt;toArray();
 <p>
     Now let's turn to Phly_Config:
 </p>
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 $array = array(
     'key1 =&gt; 'value1',
     'key2 =&gt; array(

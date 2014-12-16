@@ -39,7 +39,7 @@ $extended=<<<'EOT'
 </p>
 
 <div>
-<div class="example"><pre><code lang="vim">
+<div class="example"><pre><code class="language-vim">
 \&quot; run file with PHP CLI (CTRL-M)
 :autocmd FileType php noremap &lt;C-M&gt; :w!&lt;CR&gt;:!$HOME/bin/php %&lt;CR&gt;
 

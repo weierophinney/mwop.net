@@ -75,7 +75,7 @@ $extended=<<<'EOT'
     skeleton accordingly:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 &lt;?php
 // Phly/Resource/Layouthelpers.php
 //
@@ -108,7 +108,7 @@ class Phly_Resource_Layouthelpers
     Let's ensure the View resource is initialized, and retrieve it.
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 &lt;?php
 // Phly/Resource/Layouthelpers.php
 //
@@ -140,7 +140,7 @@ class Phly_Resource_Layouthelpers
     property.
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 &lt;?php
 // Phly/Resource/Layouthelpers.php
 //
@@ -168,7 +168,7 @@ class Phly_Resource_Layouthelpers
     We can then grab options using the <code>getOptions()</code> method.
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 &lt;?php
 // Phly/Resource/Layouthelpers.php
 //
@@ -197,7 +197,7 @@ class Phly_Resource_Layouthelpers
     Now, in configuration files, developers can override the defaults:
 </p>
 
-<div class="example"><pre><code lang="ini">
+<div class="example"><pre><code class="language-ini">
 [production]
 ; ...
 resources.layouthelpers.doctype = \&quot;HTML5\&quot;
@@ -212,7 +212,7 @@ resources.layouthelpers.title_separator = \&quot; &amp;emdash; \&quot;
     way, let's do some work:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 &lt;?php
 // Phly/Resource/Layouthelpers.php
 //
@@ -253,7 +253,7 @@ class Phly_Resource_Layouthelpers
     prefixes, and the values the path that corresponds to that prefix.
 </p>
 
-<div class="example"><pre><code lang="ini">
+<div class="example"><pre><code class="language-ini">
 [production]
 ; ...
 pluginPaths.Phly_Resource = \&quot;Phly/Resource\&quot;

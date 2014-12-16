@@ -31,7 +31,7 @@ $body =<<<'EOT'
     So, at times, you find yourself writing code like this:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 if (false === ($fh = @fopen($filename, 'r'))) {
     throw new RuntimeException(sprintf(
         'Could not open file "%s" to read', $filename
@@ -85,7 +85,7 @@ $extended=<<<'EOT'
     the second is used to return error handling to the previously set handler.
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 function handleError($errno, $errmsg = '', $errfile = '', $errline = 0)
 {
     throw new RuntimeException(sprintf(
@@ -115,7 +115,7 @@ restore_error_handler();
     look at an example:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 set_error_handler(
     function($error, $message = '', $file = '', $line = 0) use ($filename) {
         throw new RuntimeException(sprintf(
@@ -134,7 +134,7 @@ restore_error_handler();
     If you just want to ignore the error, it's even simpler:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 set_error_handler(function() { return true; }, E_NOTICE);
 $contents = file_get_contents($filename);
 restore_error_handler();

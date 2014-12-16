@@ -72,7 +72,7 @@ $extended=<<<'EOT'
     parameters the variable types and descriptions, etc.). So, I defined
     something like this:
 </p>
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class Reflection_Class
 {
     public function __construct(ReflectionClass $r)

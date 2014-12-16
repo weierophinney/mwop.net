@@ -233,7 +233,7 @@ $extended=<<<'EOT'
     The API of this gateway might look something like the following.
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 // Instantiate the gateway
 $userGateway = new Spindle_Model_UserGateway();
 
@@ -318,7 +318,7 @@ $user = $userGateway-&gt;createUser(array(
     and fundamental thing you can do.
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class Spindle_Model_User
 {
     protected $_data = array(
@@ -399,7 +399,7 @@ class Spindle_Model_User
     <code>Zend_Db_Table_Row</code> object, and pull its values from there:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class Spindle_Model_User
 {
     /* ... */
@@ -440,7 +440,7 @@ class Spindle_Model_User
     integrity:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class Spindle_Model_User
 {
     /* ... */
@@ -496,7 +496,7 @@ class Spindle_Model_User
     what I need from it. Let's look at how that might work for saving the user.
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class Spindle_Model_User
 {
     /* ... */
@@ -555,7 +555,7 @@ class Spindle_Model_User
     <code>Zend_Auth_Adapter_Interface</code>:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class Spindle_Model_User implements Zend_Auth_Adapter_Interface
 {
     /* ... */
@@ -593,7 +593,7 @@ class Spindle_Model_User implements Zend_Auth_Adapter_Interface
     and password, and then attempt to authenticate it:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 $auth = Zend_Auth::getInstance();
 $user = $gateway-&gt;createUser(array(
     'username' =&gt; $username,
@@ -627,7 +627,7 @@ if ($auth-&gt;authenticate($user)) {
     a gateway instance in the constructor.
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 &lt;?php
 class Spindle_Model_Users implements Iterator,Countable
 {
@@ -713,7 +713,7 @@ class Spindle_Model_Users implements Iterator,Countable
     some easy <code>fetch()</code> and <code>fetchAll()</code> methods:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class Spindle_Model_UserGateway
 {
     /* ... */
@@ -756,7 +756,7 @@ class Spindle_Model_UserGateway
     will be a common task. Define a method for it:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class Spindle_Model_UserGateway
 {
     /* ... */
@@ -788,7 +788,7 @@ class Spindle_Model_UserGateway
     to use a service instead:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class Spindle_Model_UserGateway
 {
     /* ... */

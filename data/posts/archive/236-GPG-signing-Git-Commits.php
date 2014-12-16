@@ -57,7 +57,7 @@ $extended=<<<'EOT'
     My <code>commit-msg</code> hook looks like the following:
 </p>
 
-<div class="example"><pre><code lang="bash">
+<div class="example"><pre><code class="language-bash">
 #!/bin/sh
 echo -n \&quot;GPG Signing message... \&quot;;
 PASSPHRASE=$(git config --get hooks.gpg.passphrase)
@@ -75,7 +75,7 @@ echo \&quot;[DONE]\&quot;
     local git configuration, which can be done as follows:
 </p>
 
-<div class="example"><pre><code lang="bash">
+<div class="example"><pre><code class="language-bash">
 % git config --add hooks.gpg.passphrase \&quot;mySecret\&quot;
 </code></pre></div>
 
@@ -84,7 +84,7 @@ echo \&quot;[DONE]\&quot;
     leading to commit logs that look like the following:
 </p>
 
-<div class="example"><pre><code lang="bash">
+<div class="example"><pre><code class="language-bash">
 commit f921f0defb18f8a5218d5c3346693dbb4179920e
 Author: Matthew Weier O'Phinney &lt;somebody@example.com&gt;
 Date:   Tue Mar 23 17:18:35 2010 -0400
@@ -148,7 +148,7 @@ Date:   Tue Mar 23 17:18:35 2010 -0400
     commit message, and then acts on it. 
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 #!/usr/bin/php
 &lt;?php
 echo \&quot;Checking for GPG signature... \&quot;;

@@ -38,7 +38,7 @@ $extended=<<<'EOT'
     name from the element. Let's review our previous example:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 $element = new Zend_Form_Element('foo', array(
     'label'      =&gt; 'Foo',
     'belongsTo'  =&gt; 'bar',
@@ -58,7 +58,7 @@ $element = new Zend_Form_Element('foo', array(
     so using the <code>getDecorator()</code> method:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 $decorator = $element-&gt;getDecorator('SimpleInput');
 echo $decorator-&gt;render('');
 </code></pre></div>
@@ -68,7 +68,7 @@ echo $decorator-&gt;render('');
     line:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 echo $element-&gt;getDecorator('SimpleInput')-&gt;render('');
 </code></pre></div>
 
@@ -81,7 +81,7 @@ echo $element-&gt;getDecorator('SimpleInput')-&gt;render('');
     simplifies the usage:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 echo $element-&gt;renderSimpleInput();
 </code></pre></div>
 
@@ -110,7 +110,7 @@ echo $element-&gt;renderSimpleInput();
     Here is the basic form definition:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class My_Form_UserDemographics extends Zend_Form
 {
     public function init()
@@ -185,7 +185,7 @@ class My_Form_UserDemographics extends Zend_Form
     Our view script might then look like this:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 &lt;?php 
 $form = $this-&gt;form; 
 // Remove &lt;dt&gt; from label generation
@@ -226,7 +226,7 @@ foreach ($form-&gt;getElements() as $element) {
     HTML (approximate, as the HTML below is formatted):
 </p>
 
-<div class="example"><pre><code lang="html">
+<div class="example"><pre><code class="language-html">
 &lt;form method=\&quot;post\&quot; action=\&quot;\&quot;&gt;
     &lt;div class=\&quot;element\&quot;&gt;
         &lt;label for=\&quot;title\&quot; tag=\&quot;\&quot; class=\&quot;optional\&quot;&gt;Title:&lt;/label&gt;

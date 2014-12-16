@@ -194,7 +194,7 @@ however, there are no real requirements, other than the constructor should not
 require any arguments.
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 namespace FooBlog;
 
 class Module
@@ -273,7 +273,7 @@ from a PHP file -- usually your <code>configs/module.config.php</code> file. The
 <code>getConfig()</code> method can be quite simple:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 public function getConfig()
 {
     return include __DIR__ . '/configs/module.config.php';
@@ -305,7 +305,7 @@ The way to do these tasks is to subscribe to the bootstrap object's "bootstrap"
 event:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 $events = StaticEventManager::getInstance();
 $events-&gt;attach('bootstrap', 'bootstrap', array($this, 'doMoarInit'));
 </code></pre></div>
@@ -321,7 +321,7 @@ Module class's <code>init()</code> method if found. So, with that in hand, you'l
 following:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 namespace FooBlog;
 
 use Zend\EventManager\StaticEventManager,
@@ -377,7 +377,7 @@ each module can simply add to their configuration.
 As such, here's a typical autoloading boilerplate:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 namespace FooBlog;
 
 use Zend\EventManager\StaticEventManager,
@@ -422,7 +422,7 @@ features of an application. As an example, you could make modules "ACL aware",
 and have a "security" module grab module-specific ACLs:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
     public function initializeAcls($e)
     {
         $this-&gt;acl = new Acl;
@@ -483,7 +483,7 @@ paths, and uses that information to resolve <code>Module</code> classes. Often, 
 will live under a single directory, and configuration is as simple as this:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 $loader = new Zend\Loader\ModuleAutoloader(array(
     __DIR__ . '/../modules',
 ));
@@ -494,7 +494,7 @@ $loader-&gt;register();
 You can specify multiple paths, or explicit module:directory pairs:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 $loader = new Zend\Loader\ModuleAutoloader(array(
     __DIR__ . '/../vendors',
     __DIR__ . '/../modules',
@@ -535,7 +535,7 @@ Let's also assume we've configured the <code>ModuleAutoloader</code> correctly a
 can then do this:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 $manager = new Zend\Module\Manager(array(
     'Application',
     'Security',
@@ -554,7 +554,7 @@ modules we've configured.
 To make the story easy and reduce boilerplate, the <a href="https://github.com/zendframework/ZendSkeletonApplication">ZendSkeletonApplication</a> repository provides a basic bootstrap for you in <code>public/index.php</code>. This file consumes <code>configs/application.config.php</code>, in which you specify two keys, "module_paths" and "modules":
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 return array(
     'module_paths' =&gt; array(
         realpath(__DIR__ . '/../modules'),
@@ -592,7 +592,7 @@ do it in the modules; create a special module that loads last to do it!
 So, consider this module class:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 namespace Local;
 
 class Module
@@ -609,7 +609,7 @@ We then create a configuration file in <code>configs/module.config.php</code>, a
 any configuration overrides we want there!
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 return array(
     'production' =&gt; array(
         'di' =&gt; 'alias' =&gt; array(
@@ -624,7 +624,7 @@ Then, in our <code>configs/application.config.php</code>, we simply enable this 
 the last in our list:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 return array(
     // ...
     'modules' =&gt; array(

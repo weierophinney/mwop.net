@@ -67,7 +67,7 @@ $extended=<<<'EOT'
     definition:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class Spindle_Model_Acl_Spindle extends Zend_Acl
 {
     public function __construct()
@@ -120,7 +120,7 @@ class Spindle_Model_Acl_Spindle extends Zend_Acl
     object graph in <code>Zend_Acl</code>. As an example:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 // A simple role:
 class Spindle_Model_Acl_Role_Guest implements Zend_Acl_Role_Interface
 {
@@ -174,7 +174,7 @@ class Spindle_Model_Acl_Resource_Bug implements Zend_Acl_Resource_Interface
     <code>getRoleId()</code> method return that value.
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class Spindle_Model_UserManager_User implements Zend_Acl_Role_Interface
 {
     /* ... */
@@ -214,7 +214,7 @@ class Spindle_Model_UserManager_User implements Zend_Acl_Role_Interface
     First, let's make our model a resource.
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class Spindle_Model_BugTracker implements Zend_Acl_Resource_Interface
 {
     public function getResourceId()
@@ -233,7 +233,7 @@ class Spindle_Model_BugTracker implements Zend_Acl_Resource_Interface
     particular roles will be present.
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class Spindle_Model_BugTracker implements Zend_Acl_Resource_Interface
 {
     /* ... */
@@ -279,7 +279,7 @@ class Spindle_Model_BugTracker implements Zend_Acl_Resource_Interface
     <code>Zend_Auth</code>.
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class Spindle_Model_BugTracker implements Zend_Acl_Resource_Interface
 {
     /* ... */
@@ -341,7 +341,7 @@ class Spindle_Model_BugTracker implements Zend_Acl_Resource_Interface
     responsible for calling on it and acting on its advice.
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class Spindle_Model_BugTracker implements Zend_Acl_Resource_Interface
 {
     /* ... */
@@ -376,7 +376,7 @@ class Spindle_Model_BugTracker implements Zend_Acl_Resource_Interface
     example:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class Spindle_Model_BugTracker implements Zend_Acl_Resource_Interface
 {
     /* ... */
@@ -400,7 +400,7 @@ class Spindle_Model_BugTracker implements Zend_Acl_Resource_Interface
     ACL-controlled action:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 // At instantiation:
 $bugModel = new Spindle_Model_BugTracker(array('identity' =&gt; $user));
 
@@ -424,7 +424,7 @@ $bugModel-&gt;save($data);
     roles and initializes the whitelist:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class Spindle_Model_Acl_Spindle extends Zend_Acl
 {
     public function __construct()

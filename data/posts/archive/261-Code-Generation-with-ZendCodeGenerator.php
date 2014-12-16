@@ -152,7 +152,7 @@ code body for the individual methods!
 As an example, we'll generate a class skeleton now:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 use Zend\CodeGenerator\Php as CodeGen;
 $file = new CodeGen\PhpFile();
 $file-&gt;setNamespace('Application')
@@ -185,7 +185,7 @@ echo $file-&gt;generate();
 The above will generate the following:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 &lt;?php
 
 namespace Application;
@@ -238,7 +238,7 @@ In the above, I didn't generate anything more than a skeleton. However, in my
    found that <code>sprintf</code> was my friend here, as was a variable or constant
    representing the amount of indentation. As an example:
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 $caseStatements = array();
 foreach ($definitions as $definition) {
     // ...
@@ -258,7 +258,7 @@ $method-&gt;setBody($switch); // PhpMethod object
 
    Which in turn generated the following:
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 switch ($name) {
     case 'foo':
     case 'My\Component\Foo':

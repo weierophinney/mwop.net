@@ -84,7 +84,7 @@ $extended=<<<'EOT'
     within my action controller. The helper looks like the following:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class Scrummer_Controller_Helper_Params 
     extends Zend_Controller_Action_Helper_Abstract
 {
@@ -212,7 +212,7 @@ class Scrummer_Controller_Helper_Params
     bootstrap:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
     // ...
@@ -231,7 +231,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     Within your action controller, all you need to do is call the helper:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 $data = $this-&gt;params();
 </code></pre></div>
 
@@ -278,7 +278,7 @@ $data = $this-&gt;params();
     simple, and can be done in a <code>dispatchLoopStartup</code> plugin:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class Scrummer_Controller_Plugin_AcceptHandler
     extends Zend_Controller_Plugin_Abstract
 {
@@ -308,7 +308,7 @@ class Scrummer_Controller_Plugin_AcceptHandler
     The above can be registered in your application configuration:
 </p>
 
-<div class="example"><pre><code lang="ini">
+<div class="example"><pre><code class="language-ini">
 resources.frontController.plugins[] = \&quot;Scrummer_Controller_Plugin_AcceptHandler\&quot;
 </code></pre></div>
 
@@ -320,7 +320,7 @@ resources.frontController.plugins[] = \&quot;Scrummer_Controller_Plugin_AcceptHa
     contexts for the RESTful actions.
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class Scrummer_Controller_Helper_RestContexts
     extends Zend_Controller_Action_Helper_Abstract
 {
@@ -360,7 +360,7 @@ class Scrummer_Controller_Helper_RestContexts
     Register this via the bootstrap as well:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
     // ...
@@ -408,7 +408,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     we will respond to, we have an additional view script per action.
 </p>
 
-<div class="example"><pre><code lang="text">
+<div class="example"><pre><code class="language-text">
 views/
 |-- scripts/
 |   `-- foo/
@@ -434,7 +434,7 @@ views/
     method from my controller:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
     public function postAction()
     {
         $data    = $this-&gt;params();
@@ -461,7 +461,7 @@ views/
     for a JSON response:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 &lt;?php // backlog/post.phtml ?&gt;
 &lt;?php 
 if ($this-&gt;success):

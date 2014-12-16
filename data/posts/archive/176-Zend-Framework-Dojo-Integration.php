@@ -124,7 +124,7 @@ $extended=<<<'EOT'
     an example, on the server side you could have the following:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 // /json-rpc.php
 // Assumes you have a class 'Foo' with methods 'bar' and 'baz':
 $server = new Zend_Json_Server();
@@ -148,7 +148,7 @@ $server-&gt;handle();
     On your view script side, you might then do the following:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 &lt;h2&gt;Dojo JSON-RPC Demo&lt;/h2&gt;
 &lt;input name=\&quot;foo\&quot; type=\&quot;button\&quot; value=\&quot;Demo\&quot; onClick=\&quot;demoRpc()\&quot;/&gt;
 &lt;? 
@@ -168,7 +168,7 @@ function demoRpc()
     And, finally, in your layout script, you might have the following:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 &lt;?= $this-&gt;doctype() ?&gt;
 &lt;html&gt;
     &lt;head&gt;

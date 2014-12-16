@@ -46,7 +46,7 @@ $extended=<<<'EOT'
 <p>
     So, for an example, advanced case usage with all the bells and whistles:
 </p>
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 &lt;?php
 require_once 'Zend/XmlRpc/Server.php';
 require_once 'Zend/XmlRpc/Server/Fault.php';

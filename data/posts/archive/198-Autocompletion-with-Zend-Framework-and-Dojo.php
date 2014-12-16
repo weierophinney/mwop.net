@@ -74,7 +74,7 @@ $extended=<<<'EOT'
     element definitions:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 $form-&gt;addElement('ComboBox', 'myAutoCompleteField', array(
     'label'     =&gt; 'My autocomplete field:',
 ));
@@ -93,7 +93,7 @@ $form-&gt;addElement('ComboBox', 'myAutoCompleteField', array(
     "q", so that's what we'll assign to the view.
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
     public function autocompleteAction()
     {
         // First, get the model somehow
@@ -111,7 +111,7 @@ $form-&gt;addElement('ComboBox', 'myAutoCompleteField', array(
     finally, we'll echo the <code>Zend_Dojo_Data</code> instance.
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 &lt;?php
 // Disable layouts
 $this-&gt;layout()-&gt;disableLayout();
@@ -149,7 +149,7 @@ echo $data;
     as a JSON object:
 </p>
 
-<div class="example"><pre><code lang="javascript">
+<div class="example"><pre><code class="language-javascript">
 {
     query: { name: \&quot;A*\&quot; },
     queryOptions: { ignoreCase: true },
@@ -171,7 +171,7 @@ echo $data;
     method to rewrite the query as a simple GET query with a single parameter.
 </p>
 
-<div class="example"><pre><code lang="javascript">
+<div class="example"><pre><code class="language-javascript">
 dojo.provide(\&quot;custom.AutocompleteReadStore\&quot;);
 
 dojo.declare(
@@ -221,7 +221,7 @@ dojo.declare(
     form:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 &lt;?php
 $this-&gt;dojo()-&gt;requireModule(\&quot;dojox.data.QueryReadStore\&quot;);
 
@@ -314,7 +314,7 @@ public/
     <code>dojo.provide</code> call, add this:
 </p>
 
-<div class="example"><pre><code lang="javascript">
+<div class="example"><pre><code class="language-javascript">
 dojo.require(\&quot;dojox.data.QueryReadStore\&quot;);
 </code></pre></div>
 
@@ -331,7 +331,7 @@ dojo.require(\&quot;dojox.data.QueryReadStore\&quot;);
     will be using:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 $form-&gt;addElement('ComboBox', 'myAutoCompleteField', array(
     'label'     =&gt; 'My autocomplete field:',
 
@@ -361,7 +361,7 @@ $form-&gt;addElement('ComboBox', 'myAutoCompleteField', array(
     any javascript, and can literally simply echo the form:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 &lt;?= $this-&gt;form ?&gt;
 </code></pre></div>
 

@@ -57,7 +57,7 @@ out what to do, however. I added this clause to my
 <code>lighttpd.conf</code><a href="#f1"><sup>[1]</sup></a> file:
 </p>
 
-<div class="example"><pre><code lang="perl">
+<div class="example"><pre><code class="language-perl">
 # Disable access via http (i.e., make admin https-only)
 $SERVER[\&quot;socket\&quot;] == \&quot;:10081\&quot; {
   $HTTP[\&quot;remoteip\&quot;] !~ \&quot;127.0.0.1\&quot; {

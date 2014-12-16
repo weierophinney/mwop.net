@@ -103,7 +103,7 @@ configuration to ensure your author email address matches that in our issue
 tracker:
 </p>
 
-<div class="example"><pre><code lang="bash">
+<div class="example"><pre><code class="language-bash">
 &gt; cd zf2
 &gt; git config set user.email &lt;email&gt;
 </code></pre></div>

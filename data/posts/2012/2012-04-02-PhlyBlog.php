@@ -122,7 +122,7 @@ $extended=<<<'EOT'
     following properties define my entries:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class EntryEntity implements EntityDefinition
 {
     protected $filter;
@@ -264,7 +264,7 @@ class EntryEntity implements EntityDefinition
     "response" strategy that would inject the blog contents into a layout.
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 namespace Application;
 
 use Traversable;

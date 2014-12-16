@@ -65,7 +65,7 @@ You can use <a href="http://pear.docblox-project.org/">use the PEAR installer</a
 I personally prefer using the PEAR installer, as it's as simple as this:
 </p>
 
-<div class="example"><pre><code lang="bash">
+<div class="example"><pre><code class="language-bash">
 prompt&gt; pear channel-discover pear.michelf.com
 prompt&gt; pear channel-discover pear.docblox-project.org
 prompt&gt; pear install -a docblox/DocBlox-beta
@@ -86,7 +86,7 @@ in the past, I usually create a symlink to the <code>bin/docblox.php</code> scri
 path:
 </p>
 
-<div class="example"><pre><code lang="bash">
+<div class="example"><pre><code class="language-bash">
 prompt&gt; ln -s path/to/docblox/bin/docblox.php ~/bin/docblox
 </code></pre></div>
 
@@ -96,7 +96,7 @@ prompt&gt; ln -s path/to/docblox/bin/docblox.php ~/bin/docblox
 Once you have installed DocBlox, how do you use it? It's really quite easy:
 </p>
 
-<div class="example"><pre><code lang="bash">
+<div class="example"><pre><code class="language-bash">
 prompt&gt; cd some/project/of/yours/
 prompt&gt; mkdir -p documentation/api/
 prompt&gt; docblox run -d path/to/source/ -t documentation/api/
@@ -126,7 +126,7 @@ This output is invaluable for identifying places you've omitted docblocks in
 your code. You can capture this information pretty easily using <code>tee</code>:
 </p>
 
-<div class="example"><pre><code lang="bash">
+<div class="example"><pre><code class="language-bash">
 prompt&gt; docblox run -d path/to/source/ -t documentation/api/ 2&gt;&amp;1 | tee -a docblox.log
 </code></pre></div>
 
@@ -166,7 +166,7 @@ documentation and in the "header" line of the output. You can change this using
 the <code>--title</code> switch:
 </p>
 
-<div class="example"><pre><code lang="bash">
+<div class="example"><pre><code class="language-bash">
 prompt&gt; docblox run -d path/to/source/ -t documentation/api/ --title \&quot;My Awesome API Docs\&quot;
 </code></pre></div>
 
@@ -184,7 +184,7 @@ installed a release tarball. Invoking a theme is as easy as using the
 <code>--template</code> argument:
 </p>
 
-<div class="example"><pre><code lang="bash">
+<div class="example"><pre><code class="language-bash">
 prompt&gt; docblox run -d path/to/source/ -t documentation/api/ --title \&quot;My Awesome API Docs\&quot; --template zend
 </code></pre></div>
 
@@ -232,7 +232,7 @@ configuration file, <code>docblox.xml</code>, in your project. The format is rel
 simple; the (mostly) equivalent to the above options I've used is as below:
 </p>
 
-<div class="example"><pre><code lang="xml">
+<div class="example"><pre><code class="language-xml">
 &lt;?xml version=\&quot;1.0\&quot; encoding=\&quot;UTF-8\&quot; ?&gt;                                     
 &lt;docblox&gt;
     &lt;parser&gt;
@@ -262,7 +262,7 @@ DocBlox will then look for this file in the current directory and simply use
 it, allowing you to invoke it as follows:
 </p>
 
-<div class="example"><pre><code lang="bash">
+<div class="example"><pre><code class="language-bash">
 prompt&gt; docblox run
 </code></pre></div>
 
@@ -270,7 +270,7 @@ prompt&gt; docblox run
 Or you can specify the configuration file yourself:
 </p>
 
-<div class="example"><pre><code lang="bash">
+<div class="example"><pre><code class="language-bash">
 prompt&gt; docblos run -c config.xml
 </code></pre></div>
 
