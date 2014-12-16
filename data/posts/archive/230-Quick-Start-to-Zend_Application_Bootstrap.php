@@ -76,7 +76,7 @@ application/
     at first. The <code>application.ini</code> file will contain the following:
 </p>
 
-<div class="example"><pre><code lang="ini">
+<div class="example"><pre><code class="language-ini">
 [production]
 phpSettings.display_startup_errors = 0
 phpSettings.display_errors = 0
@@ -141,7 +141,7 @@ resources.frontController.params.displayExceptions = 1
     to it:
 </p>
 
-<div class="example"><pre><code lang="ini">
+<div class="example"><pre><code class="language-ini">
 autoloaderNamespaces[] = \&quot;Phly_\&quot;
 </code></pre></div>
 
@@ -153,7 +153,7 @@ autoloaderNamespaces[] = \&quot;Phly_\&quot;
     <code>bootstrap.class</code> and <code>boostrap.path</code> settings:
 </p>
 
-<div class="example"><pre><code lang="ini">
+<div class="example"><pre><code class="language-ini">
 bootstrap.class = \&quot;Application_Bootstrap\&quot;
 bootstrap.path = APPLICATION_PATH \&quot;/modules/application/Bootstrap.php\&quot;
 </code></pre></div>
@@ -229,7 +229,7 @@ bootstrap.path = APPLICATION_PATH \&quot;/modules/application/Bootstrap.php\&quo
     an example:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
     protected function _initRegistry()
@@ -245,7 +245,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     bootstrap's <code>getResource()</code> method:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 $registry = $bootstrap-&gt;getResource('Registry');
 </code></pre></div>
 
@@ -268,7 +268,7 @@ $registry = $bootstrap-&gt;getResource('Registry');
     registered for that resource. As an example:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
     protected function _initCurrency()

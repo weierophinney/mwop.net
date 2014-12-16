@@ -40,7 +40,7 @@ $body =<<<'EOT'
     <li>Convert that encoding to UTF-8</li>
 </ul>
 <p>which is accomplished with:</p>
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 $enc = mb_detect_encoding($xml);
 $xml = mb_convert_encoding($xml, 'UTF-8', $enc);
 </code></pre></div>

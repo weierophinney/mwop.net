@@ -42,7 +42,7 @@ EOT;
 $entry->setBody($body);
 
 $extended=<<<'EOT'
-<div class="example"><pre><code lang="javascript">
+<div class="example"><pre><code class="language-javascript">
 dojo.provide(\&quot;custom.ContentPane\&quot;);
 
 dojo.require(\&quot;dijit.layout.ContentPane\&quot;);

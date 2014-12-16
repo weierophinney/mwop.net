@@ -208,7 +208,7 @@ a single script with prompts to indicate the directory and tag file name.
 basically looks like this:
 </p>
 
-<div class="example"><pre><code lang="sh">
+<div class="example"><pre><code class="language-sh">
 #!/bin/sh
 dir=\&quot;\&quot;
 name=\&quot;\&quot;

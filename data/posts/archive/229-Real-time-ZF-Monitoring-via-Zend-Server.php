@@ -62,7 +62,7 @@ $extended=<<<'EOT'
     As an example, you could do the following:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 $log = new Zend_Log(new Zend_Log_Writer_ZendMonitor());
 $log-&gt;crit('Exception occurred processing login', $e);
 
@@ -110,7 +110,7 @@ $log-&gt;crit('Exception occurred processing login', array(
     your configuration:
 </p>
 
-<div class="example"><pre><code lang="ini">
+<div class="example"><pre><code class="language-ini">
 resources.log.zendmonitor.writerName = \&quot;ZendMonitor\&quot;
 </code></pre></div>
 
@@ -123,7 +123,7 @@ resources.log.zendmonitor.writerName = \&quot;ZendMonitor\&quot;
     simply grabbing the bootstrap object and then the Log resource:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 $bootstrap = $this-&gt;getInvokeArg('bootstrap')
 if ($bootstrap-&gt;hasResource('Log')) {
     $log = $bootstrap-&gt;getResource('Log');

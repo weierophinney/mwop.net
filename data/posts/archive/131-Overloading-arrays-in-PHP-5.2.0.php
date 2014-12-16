@@ -28,7 +28,7 @@ $body =<<<'EOT'
     no longer raises an E_STRICT notice. Knowing this, you can now do the
     following without raising any errors:
 </p>
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class Foo
 {
     public function __set($key, $value)
@@ -56,7 +56,7 @@ $extended=<<<'EOT'
     that had me initially stumped. Basically, the following was now failing in
     PHP 5.2.0:
 </p>
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 $view-&gt;foo   = array();
 $view-&gt;foo[] = 42;
 </code></pre></div>
@@ -75,7 +75,7 @@ $view-&gt;foo[] = 42;
     in August. His solution was to use a switch() statement in __get() to cast
     the returned value explicitly as an array:
 </p>
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 public function __get($key)
 {
     if (is_array($this-&gt;_vars[$key])) {
@@ -93,7 +93,7 @@ public function __get($key)
     After some work, I found the best solution was to have the class extend
     ArrayObject, but with a slight twist:
 </p>
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class My_Class extends ArrayObject
 {
     public function __construct($config = array())
@@ -109,7 +109,7 @@ class My_Class extends ArrayObject
     This combination allows some very flexible access to properties in the
     object:
 </p>
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 // from the original example:
 $view-&gt;foo   = array();
 $view-&gt;foo[] = 42;

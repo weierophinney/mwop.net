@@ -143,7 +143,7 @@ search for such cases in your code.
 A simple PluginClassLoader extension might look like this:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 namespace Zend\Paginator;
 
 use Zend\Loader\PluginClassLoader;
@@ -168,7 +168,7 @@ This approach makes it simple to provide presets of expected plugins on a
 per-component basis. To overload a definition (or create a new one), register it:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 $loader-&gt;registerPlugin('array', 'Foo\Paginator\CustomArrayAdapter');
 </code></pre></div>
 
@@ -178,7 +178,7 @@ application, we also provide some static access via the <code>addStaticMap()</co
 method. 
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 Zend\Paginator\AdapterLoader::addStaticMap(array(
     'array' =&gt; 'Foo\Paginator\CustomArrayAdapter',
 ));
@@ -208,7 +208,7 @@ this is done in an ad hoc fashion per-component. The Broker interface
 standardizes the process. This interface defines the following:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 namespace Zend\Loader;
 
 interface Broker
@@ -240,7 +240,7 @@ The LazyLoadingBroker implementation extends Broker, and adds the following
 methods:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 namespace Zend\Loader;
 
 interface LazyLoadingBroker
@@ -277,7 +277,7 @@ consistent in type. At the most basic, you can register any valid callback as a
 validator via the <code>setValidator()</code> method; the easiest way is using a closure:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 $broker-&amp;gt;setValidator(function($plugin) {
     if (!$plugin instanceof Plugin) {
         throw \RuntimeException('Invalid plugin');
@@ -295,7 +295,7 @@ As an example, the companion to the Zend\Paginator\AdapterLoader class above is
 as follows:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 namespace Zend\Paginator;
 
 use Zend\Loader\PluginBroker;
@@ -337,7 +337,7 @@ broker. As an example, the following lines in Paginator load and register the
 appropriate adapter:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 // Assume $adapter is an adapter name, and $data is an array or object to pass
 // to the constructor
 $broker  = self::getAdapterBroker();
@@ -394,7 +394,7 @@ it early, likely from a configuration file.
 As an example, you might have the following configuration:
 </p>
 
-<div class="example"><pre><code lang="ini">
+<div class="example"><pre><code class="language-ini">
 resources.frontcontroller.module_directory = APPLICATION_PATH \&quot;/modules\&quot;
 resources.view.encoding = \&quot;iso-8859-1\&quot;
 resources.view.doctype = \&quot;html5\&quot;
@@ -406,7 +406,7 @@ resources.layout.layout = \&quot;layout\&quot;
 Configuration might be passed as follows:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 // in the Zend\Application namespace:
 $broker = new ResourcesBroker($config-&gt;resources);
 </code></pre></div>
@@ -416,7 +416,7 @@ Then, at a later point, your code loops over these plugins, retrieves them, and
 acts on them:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 foreach ($broker-&gt;getRegisteredPlugins() as $resource) {
     // do something with $resource...
 }

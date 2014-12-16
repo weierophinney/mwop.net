@@ -54,7 +54,7 @@ $body =<<<'EOT'
 <p>
     I whipped up the following script to create my tags index:
 </p>
-<div class="example"><pre><code lang="bash">
+<div class="example"><pre><code class="language-bash">
 #!/bin/bash
 cd /path/to/framework/library
 exec ctags-exuberant -f ~/.vim/mytags/framework \

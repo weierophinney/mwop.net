@@ -63,7 +63,7 @@ $extended=<<<'EOT'
     '.' prefix), and redirect output to a file:
 </p>
 
-<div class="example"><pre><code lang="bash">
+<div class="example"><pre><code class="language-bash">
 sqlite mydata.db .dump &gt; /tmp/mydata.sql
 </code></pre></div>
 
@@ -95,7 +95,7 @@ PDO::__set_state(array(
     database file using it, and PHP will be none the wiser:
 </p>
 
-<div class="example"><pre><code lang="bash">
+<div class="example"><pre><code class="language-bash">
 sqlite mydata.db &lt; /tmp/mydata.sql
 </code></pre></div>
 

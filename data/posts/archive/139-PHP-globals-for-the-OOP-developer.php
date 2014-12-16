@@ -84,7 +84,7 @@ $body =<<<'EOT'
     So, I got around the issue by putting this in my front controller bootstrap:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 $serendipity = null;
 </code></pre></div>
 
@@ -93,7 +93,7 @@ $serendipity = null;
     easily:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 /** Zend_Controller_Action */
 require_once 'Zend/Controller/Action.php';
 

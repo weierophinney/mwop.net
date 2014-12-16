@@ -94,7 +94,7 @@ $extended=<<<'EOT'
     With RecursiveDirectoryIterator in hand, I was then able to whip up a very
     nice quick routine for creating a test suite:
 </p>
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 &lt;?php
 if (!defined('PHPUnit2_MAIN_METHOD')) {
     define('PHPUnit2_MAIN_METHOD', 'AllTests::main');
@@ -204,7 +204,7 @@ if (PHPUnit2_MAIN_METHOD == 'AllTests::main') {
 <p>
     The crux of the class is the createTestList() method:
 </p>
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
     public static function createTestList(RecursiveDirectoryIterator $dir)
     {
         for ($dir-&gt;rewind(); $dir-&gt;valid(); $dir-&gt;next()) {
@@ -258,7 +258,7 @@ if (PHPUnit2_MAIN_METHOD == 'AllTests::main') {
     is when RegexFindFile makes it into a core release -- this will allow you to
     do something like:
 </p>
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
     $files = new RegexFindFile(realpath(dirname(__FILE__)), '/Test\.php$/');
     $files = iterator_to_array($files);
     foreach ($files as $file) {

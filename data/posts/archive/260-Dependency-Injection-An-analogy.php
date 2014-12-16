@@ -95,7 +95,7 @@ container in place, dependencies magically get injected in <em>every</em> object
 that's simply not the case. If you use normal PHP:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 $o = new SomeClass();
 </code></pre></div>
 

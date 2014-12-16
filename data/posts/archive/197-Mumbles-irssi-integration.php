@@ -92,7 +92,7 @@ $extended=<<<'EOT'
     the code:
 </p>
 
-<div class="example"><pre><code lang="perl">
+<div class="example"><pre><code class="language-perl">
 # $HOME/.irssi/scripts/mumbles.pl
 use strict;
 use Irssi;

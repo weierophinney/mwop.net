@@ -52,7 +52,7 @@ the PEAR-style conventions. Why?
 Consider:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 namespace my\Component;
 
 class Gateway {}
@@ -127,7 +127,7 @@ typically extend this. The abstract adapter declaration looks like the
 following:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 namespace mwop\Component\Adapter;
 
 use mwop\Component\Adapter;
@@ -147,7 +147,7 @@ classes within this namespace.
 In my <code>ClassConsumingAdapters</code>, I only make reference to <code>Adapter</code>s:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 namespace mwop\Component;
 
 class ClassConsumingAdapters
@@ -226,7 +226,7 @@ Let's say that <code>ClassConsumingAdapters</code> wants to utilize the new
 it could simply use global resolution:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 namespace mwop\Component;
 
 class ClassConsumingAdapters
@@ -251,7 +251,7 @@ That's pretty ugly, and arguably worse than pre-namespace code. So, let's try
 import classes into the current scope:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 namespace mwop\Component;
 
 use Zend\EventManager\EventCollection,
@@ -285,7 +285,7 @@ class; at the time you import, you indicate an alternate name by which you want
 to refer to the class or interface. An illustration will help:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 namespace mwop\Component;
 
 use Zend\EventManager\EventCollection as Events,
@@ -318,7 +318,7 @@ that nice, clean, pre-PHP 5.3 library code to make use of namespaces! You can
 simply use aliasing in your consumer code:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 namespace Application;
 
 use Zend_Controller_Action as ActionController;
@@ -352,7 +352,7 @@ namespaces themselves -- though when importing namespaces, you then prefix
 classes under that namespace:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 namespace Application;
 
 use Foo\Exception;

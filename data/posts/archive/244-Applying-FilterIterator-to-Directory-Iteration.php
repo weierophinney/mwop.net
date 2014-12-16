@@ -60,7 +60,7 @@ $extended=<<<'EOT'
     define an <code>accept()</code> method. 
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class FooFilter extends FilterIterator
 {
     public function accept()
@@ -75,7 +75,7 @@ class FooFilter extends FilterIterator
     or <code>false</code>, depending on whether you want to keep it or not. 
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class FooFilter extends FilterIterator
 {
     public function accept()
@@ -124,7 +124,7 @@ class FooFilter extends FilterIterator
     <code>FilterIterator</code>. 
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 $rdi      = new RecursiveDirectoryIterator($somePath);
 $rii      = new RecursiveIteratorIterator($rdi);
 $filtered = new FooFilter($rii);
@@ -175,7 +175,7 @@ $filtered = new FooFilter($rii);
     My implementation looks like this:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 /** @namespace */
 namespace Zend\File;
 
@@ -353,7 +353,7 @@ class ClassFileLocater extends FilterIterator
     iterator itself:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 iterator_apply($it, $callback, array($it));
 </code></pre></div>
 
@@ -361,7 +361,7 @@ iterator_apply($it, $callback, array($it));
     You can then grab the current value and/or key from the iterator itself:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 public function process(Iterator $it)
 {
     $value = $it-&gt;current();
@@ -376,7 +376,7 @@ public function process(Iterator $it)
     front:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 iterator_apply($it, function() use ($it) {
     $value = $it-&gt;current();
     $key   = $it-&gt;key();
@@ -389,7 +389,7 @@ iterator_apply($it, function() use ($it) {
     some aggregation:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 $map = new \stdClass;
 iterator_apply($it, function() use ($it, $map) {
     $file = $it-&gt;current();

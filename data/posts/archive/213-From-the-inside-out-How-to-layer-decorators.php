@@ -83,7 +83,7 @@ $extended=<<<'EOT'
     entry in this series. Recall:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class My_Decorator_SimpleInput extends Zend_Form_Decorator_Abstract
 {
     protected $_format = '&lt;label for=\&quot;%s\&quot;&gt;%s&lt;/label&gt;&lt;input id=\&quot;%s\&quot; name=\&quot;%s\&quot; type=\&quot;text\&quot; value=\&quot;%s\&quot;/&gt;';
@@ -107,7 +107,7 @@ class My_Decorator_SimpleInput extends Zend_Form_Decorator_Abstract
     for that.
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class My_Decorator_SimpleInput extends Zend_Form_Decorator_Abstract
 {
     protected $_format = '&lt;input id=\&quot;%s\&quot; name=\&quot;%s\&quot; type=\&quot;text\&quot; value=\&quot;%s\&quot;/&gt;';
@@ -152,7 +152,7 @@ class My_Decorator_SimpleLabel extends Zend_Form_Decorator_Abstract
     with the markup somehow:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 return $content . $markup;
 </code></pre></div>
 
@@ -165,7 +165,7 @@ return $content . $markup;
     a separator to place between the two. Let's make use of those:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class My_Decorator_SimpleInput extends Zend_Form_Decorator_Abstract
 {
     protected $_format = '&lt;input id=\&quot;%s\&quot; name=\&quot;%s\&quot; type=\&quot;text\&quot; value=\&quot;%s\&quot;/&gt;';
@@ -225,7 +225,7 @@ class My_Decorator_SimpleLabel extends Zend_Form_Decorator_Abstract
     Now, let's create a form element that uses these:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 $element = new Zend_Form_Element('foo', array(
     'label'      =&gt; 'Foo',
     'belongsTo'  =&gt; 'bar',
@@ -267,7 +267,7 @@ $element = new Zend_Form_Element('foo', array(
     with the decorator during element creation:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 $element = new Zend_Form_Element('foo', array(
     'label'      =&gt; 'Foo',
     'belongsTo'  =&gt; 'bar',

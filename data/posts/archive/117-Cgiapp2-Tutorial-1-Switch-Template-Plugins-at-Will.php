@@ -56,7 +56,7 @@ $extended=<<<'EOT'
     engine, developers that are instantiating Cgiapp2-based applications can
     choose their own rendering engine at the time of instantiation:
 </p>
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 &lt;?php
 require_once 'Some/Cgiapp2/Application.php';
 require_once 'Cgiapp2/Plugin/Savant3.php';
@@ -68,7 +68,7 @@ $app-&gt;run();
     say you're developer Y, and have an affinity for Smarty, and want to use
     that engine for the application. No problem:
 </p>
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 &lt;?php
 require_once 'Some/Cgiapp2/Application.php';
 require_once 'Cgiapp2/Plugin/Smarty.php';

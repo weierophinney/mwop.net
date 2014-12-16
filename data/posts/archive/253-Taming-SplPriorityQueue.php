@@ -109,7 +109,7 @@ particular order," the fact is that it <em>is</em> predictable, and unintuitive.
 example, given the following:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 $queue-&gt;insert('foo', 1000);
 $queue-&gt;insert('bar', 1000);
 $queue-&gt;insert('baz', 1000);
@@ -140,7 +140,7 @@ Allowing multiple iterations of a queue is as easy as cloning it prior to
 iteration:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 foreach (clone $queue as $datum) echo $datum, \&quot; \&quot;;
 </code></pre></div>
 
@@ -156,7 +156,7 @@ SplPriorityQueue instance, and which also implements <code>IteratorAggregate</co
 allows the following:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 namespace Foo;
 
 class PriorityQueue implements Countable, IteratorAggregate
@@ -208,7 +208,7 @@ What does this mean? It means that the following are not equivalent, and will
 lead to a more expected sort order:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 $queue-&gt;insert('foo', array(1000, 1000));
 $queue-&gt;insert('bar', array(1000, 100));
 $queue-&gt;insert('baz', array(1000, 10));
@@ -226,7 +226,7 @@ The trick, then, is automating the solution. I achieved this in a custom
 SplPriorityQueue extension:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 namespace Foo;
 
 class SplPriorityQueue extends \SplPriorityQueue

@@ -62,7 +62,7 @@ $extended=<<<'EOT'
     'XHTML1_TRANSITIONAL' or 'HTML4_STRICT' to invoke the appropriate doctype:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 &lt;?= $this-&gt;doctype('XHTML1_TRANSITIONAL') ?&gt;
 </code></pre></div>
 
@@ -82,7 +82,7 @@ $extended=<<<'EOT'
     in order to do so:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 $viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('ViewRenderer');
 $viewRenderer-&gt;initView();
 $viewRenderer-&gt;view-&gt;doctype('XHTML1_TRANSITIONAL');
@@ -93,7 +93,7 @@ $viewRenderer-&gt;view-&gt;doctype('XHTML1_TRANSITIONAL');
     return value of the doctype helper later in your layout script:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 &lt;?= $this-&gt;doctype() ?&gt;
 </code></pre></div>
 
@@ -126,7 +126,7 @@ $viewRenderer-&gt;view-&gt;doctype('XHTML1_TRANSITIONAL');
     So, as an example:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 &lt;? // /foo/bar view script: ?&gt;
 &lt;? 
 $this-&gt;headLink()-&gt;appendStylesheet('/css/foo.css'); 
@@ -182,7 +182,7 @@ FOO BAZ!
     First, let's tackle the stylesheets:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 &lt;? $this-&gt;headStyle()-&gt;captureStart() ?&gt;
 @import \&quot;/js/dijit/themes/tundra/tundra.css\&quot;;
 @import \&quot;/js/dojo/resources/dojo.css\&quot;;
@@ -206,7 +206,7 @@ FOO BAZ!
     functionality).
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 &lt;? $this-&gt;headScript()
         -&gt;setAllowArbitraryAttributes(true)
         -&gt;appendFile('/js/dojo/dojo.js', 'text/javascript', array('djConfig' =&gt; 'parseOnLoad: true'))
@@ -236,7 +236,7 @@ dojo.require(\&quot;dijit.form.ComboBox\&quot;);
     look at how we can pull in our doctype and head helpers into our layout:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 &lt;?= $this-&gt;doctype() ?&gt;
 &lt;html&gt;
     &lt;head&gt;

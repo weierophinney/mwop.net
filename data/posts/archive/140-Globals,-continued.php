@@ -57,7 +57,7 @@ $extended=<<<'EOT'
     two files each load one of these and act on the variables set.
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 &lt;?php
 // File: withoutGlobals.php
 $bar = 'baz';
@@ -100,7 +100,7 @@ echo '$GLOBALS access to baz2: ', $GLOBALS['baz2'], \&quot;\n\&quot;;
     to set and access global values:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 &lt;?php
 error_reporting(E_ALL | E_STRICT);
 ini_set('display_errors', true);
@@ -138,7 +138,7 @@ class MyFoo
     Finally, we actually try a few cases:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 &lt;?php
 $o = new MyFoo();
 

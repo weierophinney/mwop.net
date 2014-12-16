@@ -54,7 +54,7 @@ $extended=<<<'EOT'
     bootstrap; you could then subscribe it to all "log" events:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 $log = new Zend_Log(new Zend_Log_Writer_Stream('/tmp/application.log'));
 Phly_PubSub::subscribe('log', $log, 'info');
 </code></pre></div>
@@ -64,7 +64,7 @@ Phly_PubSub::subscribe('log', $log, 'info');
     publish to the "log" topic:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 Phly_PubSub::publish('log', 'Log message...');
 </code></pre></div>
 
@@ -88,7 +88,7 @@ Phly_PubSub::publish('log', 'Log message...');
     Your model's <code>save</code> method might then look like this:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class Foo
 {
     public function save(array $data)
@@ -108,7 +108,7 @@ class Foo
     are defined, you would tell them what topics you're subscribing each to.
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 Phly_PubSub::subscribe('Foo::save::start', $logger, 'logSaveData');
 Phly_PubSub::subscribe('Foo::save::end', $logger, 'logSaveId');
 Phly_PubSub::subscribe('Foo::save::end', $cache, 'updateFooItem');
@@ -153,7 +153,7 @@ Phly_PubSub::subscribe('Foo::save::end', $index, 'updateFooItem');
     providing a per-object plugin system. Usage is as follows:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class Foo
 {
     protected $_plugins;

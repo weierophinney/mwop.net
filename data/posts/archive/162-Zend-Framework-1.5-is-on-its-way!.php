@@ -85,7 +85,7 @@ $extended=<<<'EOT'
     As an example, consider this controller action:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 &lt;?php
 class FooController extends Zend_Controller_Action
 {
@@ -116,7 +116,7 @@ class FooController extends Zend_Controller_Action
 
 <p>And the related view script for displaying the form:</p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 &lt;h2&gt;Please fill out the form&lt;/h2&gt;
 &lt;?= $this-&gt;form ?&gt;
 </code></pre></div>

@@ -60,7 +60,7 @@ $extended=<<<'EOT'
     re-use the same object throughout?
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 // Create your translation object
 $translate = new Zend_Translate(...);
 
@@ -146,7 +146,7 @@ Zend_Form::setDefaultTranslator($translate);
     both a shipping and a billing address:
 </p>
 
-<div class="example"><pre><code lang="html">
+<div class="example"><pre><code class="language-html">
 &lt;form action=\&quot;/foo/bar\&quot; method=\&quot;post\&quot;&gt;
     &lt;fieldset&gt;
         &lt;legend&gt;Shipping Address&lt;/legend&gt;
@@ -189,7 +189,7 @@ Zend_Form::setDefaultTranslator($translate);
     you need to do a little configuration:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 $shipping = new Zend_Form_SubForm('shipping');
 
 // This next line tells the elements, validators, and decorators that they are
@@ -207,7 +207,7 @@ $shipping-&gt;setElementsBelongTo('shipping');
     'billing' were keys in that array, we could do the following:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 // Set base key for entire form:
 $form-&gt;setElementsBelongTo('demographics');
 

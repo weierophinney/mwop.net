@@ -52,7 +52,7 @@ $extended=<<<'EOT'
     As an example, consider the following:
 </p>
 
-<div class="example"><pre><code lang="xml">
+<div class="example"><pre><code class="language-xml">
 &lt;phpunit&gt;
     &lt;testsuite name=\&quot;My Test Suite\&quot;&gt;
         &lt;directory&gt;./&lt;/directory&gt;
@@ -95,7 +95,7 @@ $extended=<<<'EOT'
     following command:
 </p>
 
-<div class="example"><pre><code lang="text">
+<div class="example"><pre><code class="language-text">
 % phpunit --configuration phpunit.xml
 </code></pre></div>
 
@@ -111,7 +111,7 @@ $extended=<<<'EOT'
     my test suite:
 </p>
 
-<div class="example"><pre><code lang="text">
+<div class="example"><pre><code class="language-text">
 tests/
     phpunit.xml
     TestHelper.php
@@ -142,7 +142,7 @@ tests/
     my class-level docblock in my controller test cases:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 /**
  * @group Controllers
  */
@@ -153,7 +153,7 @@ tests/
     individual sets of tests on demand:
 </p>
 
-<div class="example"><pre><code lang="text">
+<div class="example"><pre><code class="language-text">
 % phpunit --configuration phpunit.xml --group Controllers
 </code></pre></div>
 
@@ -176,7 +176,7 @@ tests/
     looks like:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 &lt;?php
 /*
  * Start output buffering

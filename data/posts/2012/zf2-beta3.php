@@ -92,7 +92,7 @@ $extended=<<<'EOT'
     What do you really need to know from the outset? Not much!
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 namespace Sample\Controller;
 
 use Zend\Mvc\Controller\ActionController;
@@ -157,7 +157,7 @@ class HelloController extends ActionController
 </p>
 
 <h4>Inserting data</h4>
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 // where $adapter is an adapter object
 $qi = function($name) use ($adapter) { 
     return $adapter->platform->quoteIdentifier($name); 
@@ -182,7 +182,7 @@ $statement->execute($parameters);
 </code></pre></div>
 
 <h4>Selecting data</h4>
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 // where $adapter is an adapter object
 $qi = function($name) use ($adapter) { 
     return $adapter->platform->quoteIdentifier($name); 
@@ -201,7 +201,7 @@ foreach ($results as $row) {
 </code></pre></div>
 
 <h4>TableGateway</h4>
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 // where $adapter is an adapter object
 $artistTable = new TableGateway('artist', $adapter);
 $rowset = $artistTable->select(function (Select $select) {
@@ -245,7 +245,7 @@ echo $row->name;
     substitution; to get that, you can use the new Processor API:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 // Get our config object; second argument tells the factory to return
 // a Config object, vs. an array
 $config = Zend\Config\Factory::fromFile($pathToConfigFile, true);

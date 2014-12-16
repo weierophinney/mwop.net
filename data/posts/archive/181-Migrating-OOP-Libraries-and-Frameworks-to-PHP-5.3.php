@@ -26,7 +26,7 @@ $body =<<<'EOT'
     using namespaces. Let's be honest, who wants to write the following line?
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 $viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
 </code></pre></div>
 
@@ -34,7 +34,7 @@ $viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRender
     when the more succinct:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 $viewRenderer = HelperBroker::getStaticHelper('viewRenderer');
 </code></pre></div>
 
@@ -70,7 +70,7 @@ $extended=<<<'EOT'
     namespaces. Why? Consider the following:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 namespace Zend::Controller::Request
 
 class Http extends Abstract
@@ -85,7 +85,7 @@ class Http extends Abstract
 </p>
 
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 namespace Zend::View
 
 abstract class Abstract implements Interface
@@ -110,7 +110,7 @@ abstract class Abstract implements Interface
     become:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 namespace Zend::Controller::Request
 
 class Http extends ARequest
@@ -121,7 +121,7 @@ class Http extends ARequest
 
 <p>and:</p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 namespace Zend::View
 
 abstract class AView implements IView
@@ -136,7 +136,7 @@ abstract class AView implements IView
     this:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 namespace Foo::Bar
 
 class Baz
@@ -154,7 +154,7 @@ class Baz
     this, you can do the following:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 namespace Foo::Bar
 
 class Baz

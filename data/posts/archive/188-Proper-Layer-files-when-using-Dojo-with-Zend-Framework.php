@@ -43,7 +43,7 @@ $extended=<<<'EOT'
     The code in question looked like this:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 Zend_Dojo::enableView($view);
 $view-&gt;dojo()-&gt;setDjConfigOption('usePlainJson', true)
              // -&gt;setDjConfigOption('isDebug', true)
@@ -96,7 +96,7 @@ $view-&gt;dojo()-&gt;setDjConfigOption('usePlainJson', true)
     module namespace:
 </p>
 
-<div class="example"><pre><code lang="javascript">
+<div class="example"><pre><code class="language-javascript">
 dojo.provide(\&quot;paste.layer\&quot;);
 
 /* Dojo modules to require... */
@@ -135,7 +135,7 @@ dojo.mixin(paste, {
     that the original code gets slurped into the build. As an example:
 </p>
 
-<div class="example"><pre><code lang="javascript">
+<div class="example"><pre><code class="language-javascript">
 dependencies = {
     layers: [
         {
@@ -157,7 +157,7 @@ dependencies = {
     This changes the original ZF snippet above to simply:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 Zend_Dojo::enableView($view);
 $view-&gt;dojo()-&gt;setDjConfigOption('usePlainJson', true)
              // -&gt;setDjConfigOption('isDebug', true)

@@ -115,7 +115,7 @@ $extended=<<<'EOT'
     registration form.) Let's look at it in action:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class Spindle_Model_Bug
 {
     protected $_forms = array();
@@ -167,7 +167,7 @@ class Spindle_Model_Bug
     you simply attempt to save data to the model:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class BugController
 {
     public function processAction()
@@ -195,7 +195,7 @@ class BugController
     which ultimately gives us access to the form.
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 $form = $this-&gt;model-&gt;getForm();
 $form-&gt;setMethod('post')
      -&gt;setAction($this-&gt;url(array('action' =&gt; 'process')));

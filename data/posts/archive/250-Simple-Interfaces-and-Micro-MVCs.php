@@ -52,7 +52,7 @@ response."
 What I've come up with right now is the following:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 interface Dispatchable
 {
     /**
@@ -120,7 +120,7 @@ So I whipped up a little something using the above <code>Dispatchable</code> int
 see what I might be able to do.
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 use Zend\Stdlib\Dispatchable,
     Zend\Http\Response as HttpResponse,
     Fig\Request,
@@ -193,7 +193,7 @@ is that it's using those same building blocks I referred to earlier: <code>Reque
 <code>Response</code>, <code>Dispatchable</code>. In action, it looks like this:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 use Zend\Controller\Router,
     Zend\Http\Request;
 

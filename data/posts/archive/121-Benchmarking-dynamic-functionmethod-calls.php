@@ -54,7 +54,7 @@ $extended=<<<'EOT'
     number of arguments. Additionally, with call_user_func(), you would have
     each argument ready to pass individually:
 </p>
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 call_user_func($callback, $arg1, $arg2, $arg3);
 </code></pre></div>
 <p>
@@ -64,7 +64,7 @@ call_user_func($callback, $arg1, $arg2, $arg3);
     Basically, call_user_func_array() expects only two arguments: the callback
     and an array of arguments to pass to the callback:
 </p>
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 $callback = 'myFunc';
 $args = ('me', 'myself', I');
 call_user_func_array($callback, $args);
@@ -72,7 +72,7 @@ call_user_func_array($callback, $args);
 <p>
     This gets called as:
 </p>
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 myFunc('me', 'myself', 'I');
 </code></pre></div>
 <p>
@@ -85,7 +85,7 @@ myFunc('me', 'myself', 'I');
     to allow a variable number of arguments, and then passed them en masse to
     the observer:
 </p>
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class myClass
 {
     // observer callback
@@ -116,7 +116,7 @@ class myClass
 <p>
     From a pure execution time standpoint, yes. I ran the following code:
 </p>
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class myTest
 {
     public static function test()

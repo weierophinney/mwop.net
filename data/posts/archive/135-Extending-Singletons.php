@@ -30,7 +30,7 @@ $body =<<<'EOT'
 <p>
     For instance, try the following code:
 </p>
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class My_Controller_Front extends Zend_Controller_Front
 {}
 
@@ -40,7 +40,7 @@ $front = My_Controller_Front::getInstance();
     You'll get an instance of Zend_Controller_Front. But if you do the
     following:
 </p>
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class My_Controller_Front extends Zend_Controller_Front
 {
     protected static $_instance;
@@ -67,7 +67,7 @@ $front = My_Controller_Front::getInstance();
     However, if I redefine <kbd>Zend_Controller_Front::$_instance</kbd> as
     <em>protected</em>, and have the following:
 </p>
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class My_Controller_Front extends Zend_Controller_Front
 {
     public static function getInstance()

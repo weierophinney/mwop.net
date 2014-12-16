@@ -43,7 +43,7 @@ $body =<<<'EOT'
     values out of a string, and then does a double conversion on the value,
     first to decimal and then to a character. The PHP version looks like this:
 </p>
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 $value = preg_replace('/%([0-9a-f]{2})/ie', \&quot;chr(hexdec('\\1'))\&quot;, $value);
 </code></pre></div>
 <p>
@@ -51,7 +51,7 @@ $value = preg_replace('/%([0-9a-f]{2})/ie', \&quot;chr(hexdec('\\1'))\&quot;, $v
     In that logic, once XHR is detected, I then pass <kbd>$_POST</kbd> through the
     following function:
 </p>
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 function utf8Urldecode($value)
 {
     if (is_array($value)) {

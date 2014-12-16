@@ -152,7 +152,7 @@ $extended=<<<'EOT'
     match.
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class Foomodule_Plugin_Layout extends Zend_Controller_Plugin_Abstract
 {
     public function dispatchLoopStartup(Zend_Controller_Request_Abstract $request)
@@ -173,7 +173,7 @@ class Foomodule_Plugin_Layout extends Zend_Controller_Plugin_Abstract
     with the front controller:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class Foomodule_Boootstrap extends Zend_Application_Module_Bootstrap
 {
     protected function _initPlugins()

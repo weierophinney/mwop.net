@@ -47,7 +47,7 @@ $extended=<<<'EOT'
     The View Helper looks like this:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 &lt;?php
 /** Zend_Dojo_View_Helper_Textarea */
 require_once 'Zend/Dojo/View/Helper/Textarea.php';
@@ -169,7 +169,7 @@ EOJ;
     The form element is much easier:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 &lt;?php
 /** Zend_Dojo_Form_Element_Dijit */
 require_once 'Zend/Dojo/Form/Element/Dijit.php';
@@ -202,7 +202,7 @@ class My_Form_Element_Editor extends Zend_Dojo_Form_Element_Dijit
     Putting it all together in a form, you'll need to do the following:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 $view-&gt;addHelperPath('My/View/Helper/', 'My_View_Helper');
 $form-&gt;addPrefixPath('My_Form_Element', 'My/Form/Element');
 
