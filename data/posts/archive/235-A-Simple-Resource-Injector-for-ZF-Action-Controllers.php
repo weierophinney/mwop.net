@@ -40,7 +40,7 @@ $extended=<<<'EOT'
     I quickly drafted up a proof of concept for him using an action helper:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class My_ResourceInjector extends Zend_Controller_Action_Helper_Abstract
 {
     protected $_resources;
@@ -80,7 +80,7 @@ class My_ResourceInjector extends Zend_Controller_Action_Helper_Abstract
     You would initialize it in your bootstrap:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
     protected function _initResourceInjector()
@@ -101,7 +101,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     means you can refer to them directly as properties in your controllers:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class FooController extends Zend_Controller_Action
 {
     public function barAction()
@@ -135,7 +135,7 @@ class FooController extends Zend_Controller_Action
     controller itself:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class My_ResourceInjector extends Zend_Controller_Action_Helper_Abstract
 {
     protected $_resources;
@@ -170,7 +170,7 @@ class My_ResourceInjector extends Zend_Controller_Action_Helper_Abstract
     need any constructor arguments:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
     protected function _initResourceInjector()
@@ -186,7 +186,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     Instead, you define the resources you need to retrieve in your controller:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class FooController extends Zend_Controller_Action
 {
     public $dependencies = array(
@@ -217,7 +217,7 @@ class FooController extends Zend_Controller_Action
     likely throw an exception!
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class My_ResourceInjector extends Zend_Controller_Action_Helper_Abstract
 {
     protected $_resources;

@@ -42,7 +42,7 @@ $extended=<<<'EOT'
         href="http://php.net/functions.anonymous">anonymous function</a>:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 $callback = function ($param) {
     // do something
 };
@@ -95,7 +95,7 @@ $callback = function ($param) {
     which allows you to call an object as if it were a function:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class Greeting
 {
     public function __invoke($name)
@@ -126,7 +126,7 @@ echo $greeting('world'); // \&quot;Hello, world\&quot;
     <li>Like closures, you cannot typehint explicitly for
     <code>__invoke()</code>; you have to either use <code>is_callable()</code>
     or create an interface defining it:
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 interface Filter
 {
     public function filter($value);
@@ -161,7 +161,7 @@ if ($filter instanceof CallableFilter) {
     object properties; they don't do what you expect. For instance, consider the
     following:
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class Foo
 {
     public function __invoke()
@@ -187,7 +187,7 @@ echo $bar-&gt;foo();
     <code>E_FATAL</code>, claiming "Call to undefined method Bar::foo()". If you
     want to execute the property, you have to assign it to a temporary variable
     first, or explicitly call <code>__invoke()</code>:
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 $foo = $bar-&gt;foo;
 echo $foo();
 
@@ -210,7 +210,7 @@ $bar-&gt;foo-&gt;__invoke();
     First off, you declare your namespace at the top of your file:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 namespace Zend\Filter;
 </code></pre></div>
 
@@ -219,7 +219,7 @@ namespace Zend\Filter;
     loose code:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 namespace Zend\Filter;
 // some namespaced code here...
 
@@ -232,7 +232,7 @@ namespace Zend\Validator;
     using multiple namespaces in a single file:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 namespace Zend\Filter 
 {
     // some namespaced code here...
@@ -251,7 +251,7 @@ namespace Zend\Validator
     the <code>as</code> modifier:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 namespace Foo;
 use Zend\Filter;
 use Zend\Validator\Int as IntValidator;
@@ -289,7 +289,7 @@ if ($validator-&gt;isValid($foo) {
 
     For example, consider the following code:
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 namespace Foo;
 use Zend\Filter; // imports are always considered FQN
 
@@ -306,7 +306,7 @@ $validator = new \Zend\Validator\Int; // actual: Zend\Validator\Int
     name as an interface of class. As an example:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 namespace Foo 
 {
     interface Adapter 

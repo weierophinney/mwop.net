@@ -81,7 +81,7 @@ $extended=<<<'EOT'
     The form would look like this:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class LoginForm extends Zend_Form
 {
     public function init()
@@ -158,7 +158,7 @@ class LoginForm extends Zend_Form
     form and authentication adapter.
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class LoginController extends Zend_Controller_Action
 {
     public function getForm()
@@ -196,7 +196,7 @@ class LoginController extends Zend_Controller_Action
     The following <code>preDispatch()</code> routine will do this for us:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class LoginController extends Zend_Controller_Action
 {
     // ...
@@ -225,7 +225,7 @@ class LoginController extends Zend_Controller_Action
     retrieve the form and assign it to the view:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class LoginController extends Zend_Controller_Action
 {
     // ...
@@ -243,7 +243,7 @@ class LoginController extends Zend_Controller_Action
     credentials are valid.
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class LoginController extends Zend_Controller_Action
 {
     // ...
@@ -288,7 +288,7 @@ class LoginController extends Zend_Controller_Action
     authentication object, and redirect:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class LoginController extends Zend_Controller_Action
 {
     // ...
@@ -306,7 +306,7 @@ class LoginController extends Zend_Controller_Action
     associated view we have, the form:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 &lt;? // login/index.phtml ?&gt;
 &lt;h2&gt;Please Login&lt;/h2&gt;
 &lt;?= $this-&gt;form ?&gt;
@@ -329,7 +329,7 @@ class LoginController extends Zend_Controller_Action
     session, allowing you to query it directly using this construct:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 Zend_Auth::getInstance()-&gt;hasIdentity()
 </code></pre></div>
 
@@ -339,7 +339,7 @@ Zend_Auth::getInstance()-&gt;hasIdentity()
     from the auth object as well:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 $identity = Zend_Auth::getInstance()-&gt;getIdentity();
 </code></pre></div>
 
@@ -348,7 +348,7 @@ $identity = Zend_Auth::getInstance()-&gt;getIdentity();
     for instance:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 /**
  * ProfileLink helper
  *

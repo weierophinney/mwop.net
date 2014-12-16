@@ -88,7 +88,7 @@ $extended=<<<'EOT'
     repository that remotes to the svn repository. As an example:
 </p>
 
-<div class="example"><pre><code lang="bash">
+<div class="example"><pre><code class="language-bash">
 % git svn init --trunk=trunk --tags=tags --branches=branches http://framework.zend.com/svn/framework/standard
 </code></pre></div>
 
@@ -133,7 +133,7 @@ standard
     you will have the following after repository intialization:
 </p>
 
-<div class="example"><pre><code lang="ini">
+<div class="example"><pre><code class="language-ini">
 [core]
 	repositoryformatversion = 0
 	filemode = true
@@ -157,7 +157,7 @@ standard
     above ".git/config" file:
 </p>
 
-<div class="example"><pre><code lang="ini">
+<div class="example"><pre><code class="language-ini">
 [svn-remote \&quot;incubator\&quot;]
     url = http://framework.zend.com/svn/framework/standard/incubator
     fetch = :refs/remotes/svn-incubator
@@ -168,7 +168,7 @@ standard
     r15241 myself:
 </p>
 
-<div class="example"><pre><code lang="bash">
+<div class="example"><pre><code class="language-bash">
 % git svn fetch incubator -r 15241
 </code></pre></div>
 
@@ -178,7 +178,7 @@ standard
     utilize:
 </p>
 
-<div class="example"><pre><code lang="bash">
+<div class="example"><pre><code class="language-bash">
 % git checkout -b incubator svn-incubator
 </code></pre></div>
 
@@ -192,7 +192,7 @@ standard
     svn rebase:
 </p>
 
-<div class="example"><pre><code lang="bash">
+<div class="example"><pre><code class="language-bash">
 % git svn rebase
 </code></pre></div>
 

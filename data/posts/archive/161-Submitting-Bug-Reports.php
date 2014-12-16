@@ -107,7 +107,7 @@ $extended=<<<'EOT'
     which they were trying to populate the form:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 $_POST = array(
     'foo' =&gt; array(
         0 =&gt; array(0 =&gt; 'bar'),
@@ -124,7 +124,7 @@ $_POST = array(
     array notation:
 </p>
 
-<div class="example"><pre><code lang="html">
+<div class="example"><pre><code class="language-html">
     &lt;input type=\&quot;checkbox\&quot; value=\&quot;foo\&quot; name=\&quot;foo[][]\&quot; value=\&quot;bar\&quot; /&gt;
 </code></pre></div>
 <br />

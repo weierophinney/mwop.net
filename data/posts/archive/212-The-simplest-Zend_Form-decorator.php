@@ -39,7 +39,7 @@ $extended=<<<'EOT'
     understood:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 interface Window
 {
     public function isOpen();
@@ -123,7 +123,7 @@ class LockedWindow implements Window
     were a Person object.
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class Person
 {
     public function setFirstName($name) {}
@@ -193,7 +193,7 @@ class TextPerson
     just the basics. Such a decorator might look like this:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class My_Decorator_SimpleInput extends Zend_Form_Decorator_Abstract
 {
     protected $_format = '&lt;label for=\&quot;%s\&quot;&gt;%s&lt;/label&gt;&lt;input id=\&quot;%s\&quot; name=\&quot;%s\&quot; type=\&quot;text\&quot; value=\&quot;%s\&quot;/&gt;';
@@ -216,7 +216,7 @@ class My_Decorator_SimpleInput extends Zend_Form_Decorator_Abstract
     Let's create an element that uses this decorator:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 $decorator = new My_Decorator_SimpleInput();
 $element   = new Zend_Form_Element('foo', array(
     'label'      =&gt; 'Foo',
@@ -240,7 +240,7 @@ $element   = new Zend_Form_Element('foo', array(
     "SimpleInput" as well:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 $element = new Zend_Form_Element('foo', array(
     'label'      =&gt; 'Foo',
     'belongsTo'  =&gt; 'bar',

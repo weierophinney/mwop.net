@@ -37,7 +37,7 @@ $body =<<<'EOT'
 <p>
     As some examples:
 </p>
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 require_once 'File/Fortune.php';
 
 // Initialize and point it to a directory of fortunes

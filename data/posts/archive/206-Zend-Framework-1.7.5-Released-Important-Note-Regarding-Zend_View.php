@@ -44,7 +44,7 @@ $extended=<<<'EOT'
     let's say we had Zend_View configured as follows:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 $view-&gt;addScriptPath('/var/www/application/views/scripts');
 </code></pre></div>
 
@@ -77,7 +77,7 @@ $view-&gt;addScriptPath('/var/www/application/views/scripts');
     ways:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 // At instantiation:
 $view = new Zend_View(array(
     'lfiProtectionOn' =&gt; false,

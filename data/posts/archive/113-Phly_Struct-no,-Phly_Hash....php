@@ -42,7 +42,7 @@ $body =<<<'EOT'
     and updated Phly_Config to use the new package as its dependency. In
     addition, I've had it implement Countable, so you can do things like:
 </p>
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 $idxCount = count($struct);
 </code></pre></div>
 <p>

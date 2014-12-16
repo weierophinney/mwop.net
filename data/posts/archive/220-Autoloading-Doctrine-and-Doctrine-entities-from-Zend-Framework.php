@@ -50,7 +50,7 @@ $extended=<<<'EOT'
     to it. Typically, you include the trailing underscore when doing so:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 $autoloader = Zend_Loader_Autoloader::getInstance();
 $autoloader-&gt;registerNamespace('Foo_');
 $autoloader-&gt;pushAutoloader($callback, 'Bar_');
@@ -68,7 +68,7 @@ $autoloader-&gt;pushAutoloader($callback, 'Bar_');
     table classes, listeners, etc.):
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 $autoloader-&gt;registerNamespace('Doctrine')
            -&gt;pushAutoloader(array('Doctrine', 'autoload'), 'Doctrine');
 </code></pre></div>
@@ -83,7 +83,7 @@ $autoloader-&gt;registerNamespace('Doctrine')
     and to autoload table classes:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 $manager = Doctrine_Manager::getInstance();
 $manager-&gt;setAttribute(  
     Doctrine::ATTR_MODEL_LOADING, 
@@ -146,7 +146,7 @@ application
     typically looks as follows:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
     protected function _initAppAutoload()
@@ -184,7 +184,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     Doctrine namespace with the default autoloader, and another for the dsn:
 </p>
 
-<div class="example"><pre><code lang="ini">
+<div class="example"><pre><code class="language-ini">
 autoloaderNamespaces[] = \&quot;Doctrine\&quot;
 dsn = \&quot;DSN to use with Doctrine goes here\&quot;
 </code></pre></div>

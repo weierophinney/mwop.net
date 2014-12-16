@@ -89,7 +89,7 @@ $extended=<<<'EOT'
     controllers, and more. As an example, you can now do this:
 </p>
     
-<div class="example"><pre><code lang="sh">
+<div class="example"><pre><code class="language-sh">
 % zf create project foo
 </code></pre></div>
 
@@ -98,7 +98,7 @@ $extended=<<<'EOT'
     the following structure:
 </p>
 
-<div class="example"><pre><code lang="txt">
+<div class="example"><pre><code class="language-txt">
 |-- application
 |   |-- Bootstrap.php
 |   |-- configs

@@ -129,7 +129,7 @@ A call to <code>trigger()</code> an event
 So, here we go:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 use Zend\EventManager\EventManager;
 
 $events = new EventManager();
@@ -179,7 +179,7 @@ instance. This gives event listeners access to the calling object, which can
 often be useful.
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 use Zend\EventManager\EventCollection,
     Zend\EventManager\EventManager;
 
@@ -287,7 +287,7 @@ At the application level, you grab an instance of <code>StaticEventManager</code
 start attaching events to it.
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 use Zend\EventManager\StaticEventManager;
 
 $events = StaticEventManager::getInstance();
@@ -326,7 +326,7 @@ registered, and also that the <code>Example</code> class is defined as above. We
 execute the following:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 $example = new Example();
 $example-&gt;do('bar', 'bat');
 </code></pre></div>
@@ -343,7 +343,7 @@ Handled event "do" on target "Example", with parameters {"foo":"bar","baz":"bat"
 Now, let's say we extended <code>Example</code> as follows:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class SubExample extends Example
 {
 }
@@ -370,7 +370,7 @@ notify statically attached listeners, you can simply pass a <code>null</code> va
 <code>setStaticConnections()</code> method:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 $events-&gt;setStaticConnections(null);
 </code></pre></div>
 
@@ -379,7 +379,7 @@ and they will be ignored. If at any point, you want to enable them again, pass
 the <code>StaticEventManager</code> instance:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 $events-&gt;setStaticConnections(StaticEventManager::getInstance());
 </code></pre></div>
 
@@ -399,7 +399,7 @@ other, and then it's up to the implementing class to determine what to do.
 As an example:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 use Zend\EventManager\Event,
     Zend\EventManager\EventCollection,
     Zend\EventManager\HandlerAggregate,
@@ -443,7 +443,7 @@ class LogEvents implements HandlerAggregate
 You would then attach it as follows:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 $doLog = new LogEvents($logger);
 $events-&gt;attachAggregate($doLog);
 </code></pre></div>
@@ -520,7 +520,7 @@ callback; if that callback returns a boolean true, execution is halted.
 Here's an example:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
     public function someExpensiveCall($criteria1, $criteria2)
     {
         $params  = compact('criteria1', 'criteria2');
@@ -548,7 +548,7 @@ and the <code>EventManager</code> will then return without notifying any additio
 listeners.
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 $events-&gt;attach('do', function ($e) {
     $e-&gt;stopPropagation();
     return new SomeResultClass();
@@ -583,7 +583,7 @@ priority values execute earlier, while lower (negative) values execute later.
 To borrow an example from earlier:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 $priority = 100;
 $events-&gt;attach('Example', 'do', function($e) {
     $event  = $e-&gt;getName();
@@ -627,7 +627,7 @@ necessary.
     like a code smell is when you have code like this:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 $routeMatch = $e-&gt;getParam('route-match', false);
 if (!$routeMatch) {
     // Oh noes! we cannot do our work! whatever shall we do?!?!?!
@@ -650,7 +650,7 @@ if (!$routeMatch) {
     example:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 // in the method:
 $params['__RESULT'] = $computedResult;
 $events-&gt;trigger(__FUNCTION__ . '.post', $this, $params);
@@ -673,7 +673,7 @@ if (!$result) {
     like this in our listeners:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 $response = $e-&gt;getResponse();
 $result   = $e-&gt;getResult();
 if (is_string($result)) {
@@ -688,7 +688,7 @@ if (is_string($result)) {
     arguments.
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 $event = new CustomEvent();
 $event-&gt;setSomeKey($value);
 
@@ -746,7 +746,7 @@ sytem. If you have better suggestions, I'd love to hear them!
 Here's what the method will look like:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
     public function someExpensiveCall($criteria1, $criteria2)
     {
         $params  = compact('criteria1', 'criteria2');
@@ -780,7 +780,7 @@ we'll set the 'someExpensiveCall.pre' listener to execute with priority <code>10
 and the 'someExpensiveCall.post' listener to execute with priority <code>-100</code>.
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 $events-&gt;attach('someExpensiveCall.pre', function($e) use ($cache) {
     $params = $e-&gt;getParams();
     $key    = md5(json_encode($params));

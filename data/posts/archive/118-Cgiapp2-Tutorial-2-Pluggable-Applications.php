@@ -62,7 +62,7 @@ $extended=<<<'EOT'
     cgiapp_postrun() is executed after the application logic is done, and
     receives the generated content as its first argument:
 </p>
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 public function cgiapp_postrun($body, $cgiapp)
 {
     $cgiapp-&gt;tmpl_assign('content', $body);
@@ -74,7 +74,7 @@ public function cgiapp_postrun($body, $cgiapp)
     for later users of the application. Leave it out. Instead, let the end-user
     developer register their own postrun hook to do this. As an example:
 </p>
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 require_once 'Cgiapp2.class.php';
 require_once 'My/Article.php';
 
@@ -103,7 +103,7 @@ $app-&gt;run();
     the end-user developer, want to require it for the edit, add, and delete
     views?  Register a prerun action. Using our example from above:
 </p>
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 require_once 'Cgiapp2.class.php';
 require_once 'My/Article.php';
 

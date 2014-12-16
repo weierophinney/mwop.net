@@ -54,7 +54,7 @@ $extended=<<<'EOT'
     accessible from any scope. This means the following:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class Foo
 {
     public $bar = 'bar';
@@ -92,7 +92,7 @@ echo $foo->bar . $foo->baz();
     member:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class Foo
 {
     protected $bar = 'bar';
@@ -136,7 +136,7 @@ echo $foo->bar . $foo->baz();
     class.
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class Foo
 {
     private $bar = 'bar';
@@ -181,7 +181,7 @@ echo $foo->bar . $foo->baz();
         public visibility, any access to the member within the extending class or
         an instance of the extending class will see only the new declaration. </p>
 
-        <div class="example"><pre><code lang="php">
+        <div class="example"><pre><code class="language-php">
 class Foo
 {
     public $bar = 'bar';
@@ -210,7 +210,7 @@ echo $foo->baz(); // "foobar"
             same behavior as public -&gt; public.
         </p>
 
-        <div class="example"><pre><code lang="php">
+        <div class="example"><pre><code class="language-php">
 class Foo
 {
     protected $bar = 'bar';
@@ -241,7 +241,7 @@ echo $foo->baz(); // "foobar"
             instance will be used. This is far easier to understand via an example.
         </p>
 
-        <div class="example"><pre><code lang="php">
+        <div class="example"><pre><code class="language-php">
 class Foo
 {
     private $bar = 'bar';
@@ -311,7 +311,7 @@ echo $foo->myBaz2(); // "foobaz"
     would know that that method needed to be injected.
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 use Zend\Di\Definition\Annotation\Inject;
 
 class Foo
@@ -340,7 +340,7 @@ class Bar {}
     at the form level.
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 use Zend\Form\Annotation;
 
 class Foo

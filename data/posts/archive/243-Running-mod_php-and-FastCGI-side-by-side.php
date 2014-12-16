@@ -64,7 +64,7 @@ $extended=<<<'EOT'
     though:
 </p>
 
-<div class="example"><pre><code lang="bash">
+<div class="example"><pre><code class="language-bash">
 % cd /etc/apache2/mods-enabled
 % sudo ln -s ../mods-available/fastcgi.load .
 % sudo ln -s ../mods-available/fastcgi.conf .
@@ -81,7 +81,7 @@ $extended=<<<'EOT'
     <code>DocumentRoot</code>, and added the following lines:
 </p>
 
-<div class="example"><pre><code lang="apache">
+<div class="example"><pre><code class="language-apache">
 ScriptAlias /cgi-bin/ /path/to/zfproject/public/cgi-bin/
 AddHandler php-fcgi .php
 Action php-fcgi /cgi-bin/php-5.3.1
@@ -118,7 +118,7 @@ Action php-fcgi /cgi-bin/php-5.3.1
         compiling, execute the following:
     </p>
 
-<div class="example"><pre><code lang="bash">
+<div class="example"><pre><code class="language-bash">
 php-cgi -i | grep fcgi
 </code></pre></div>
 
@@ -131,7 +131,7 @@ php-cgi -i | grep fcgi
     My script looks like this:
 </p>
 
-<div class="example"><pre><code lang="bash">
+<div class="example"><pre><code class="language-bash">
 #!/bin/bash
 exec /path/to/php/install/bin/php-cgi \&quot;$@\&quot;
 </code></pre></div>
@@ -146,7 +146,7 @@ exec /path/to/php/install/bin/php-cgi \&quot;$@\&quot;
     Once you're done creating the script, make sure it's executable:
 </p>
 
-<div class="example"><pre><code lang="sh">
+<div class="example"><pre><code class="language-sh">
 chmod a+x php-5.3.1
 </code></pre></div>
 

@@ -123,7 +123,7 @@ $extended=<<<'EOT'
     script looks like this:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 #!/usr/bin/env php
 &lt;?php
 $workload = implode(':', $argv);
@@ -159,7 +159,7 @@ $client-&gt;doBackground('rss', $workload);
     The first is the job that triggers my subtree merge:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 &lt;?php
 
 namespace ZF\Git;
@@ -229,7 +229,7 @@ class MergeSubtree implements Command
     creates an RSS feed:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 &lt;?php
 namespace ZF\Git;
 
@@ -374,7 +374,7 @@ class Log2RSS implements Command
     Gearman worker.
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 #!/usr/bin/env php
 &lt;?php
 ini_set('memory_limit', -1);

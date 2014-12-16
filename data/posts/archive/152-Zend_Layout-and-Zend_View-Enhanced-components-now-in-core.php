@@ -64,7 +64,7 @@ $extended=<<<'EOT'
     all I have to do is:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 &lt;?= $this-&gt;doctype('XHTML1_TRANSITIONAL') ?&gt;
 </code></pre></div>
 
@@ -83,7 +83,7 @@ $extended=<<<'EOT'
     application view specify it's needed:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 &lt;?php $this-&gt;headScript()-&gt;appendFile('/js/foo.js') ?&gt;
 </code></pre></div>
 
@@ -92,7 +92,7 @@ $extended=<<<'EOT'
     aggregated:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 &lt;?= $this-&gt;headScript() ?&gt;
 </code></pre></div>
 
@@ -110,7 +110,7 @@ $extended=<<<'EOT'
     create some pretty complex layouts using minimal markup. As an example:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 &lt;?= $this-&gt;doctype('XHTML1_TRANSITIONAL') ?&gt;
 &lt;html&gt;
     &lt;head&gt;

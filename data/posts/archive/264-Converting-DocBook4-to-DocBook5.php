@@ -47,7 +47,7 @@ There is a standard XSL for conversion, <code>db4-update.xsl</code>, which comes
 DocBook5 distribution. The recommendation is simply the following:
 </p>
 
-<div class="example"><pre><code lang="bash">
+<div class="example"><pre><code class="language-bash">
 prompt&gt; xsltproc db4-update.xsl [XML File].xml &gt; [XML File].db5.xml
 </code></pre></div>
 
@@ -148,7 +148,7 @@ actually <em>need</em> a doctype declaration that defines the location of the en
 file. As an example:
 </p>
 
-<div class="example"><pre><code lang="xml">
+<div class="example"><pre><code class="language-xml">
 &lt;!DOCTYPE table
 [
     &lt;!ENTITY % language-snippets SYSTEM \&quot;./language-snippets.xml\&quot;&gt;
@@ -217,7 +217,7 @@ If the above have resulted in modified content, write the revised content to
 The first script is as follows:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 &lt;?php
 // File: docbook-replace-entities.php
 if ($argc &lt; 2) {
@@ -262,7 +262,7 @@ file_put_contents($file, $transformed);
 The second script, which restores the entities, looks like this:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 &lt;?php
 // File: docbook-restore-entities.php
 if ($argc &lt; 2) {
@@ -325,7 +325,7 @@ The first was one to add the XML declaration if missing (and after conversion,
 most likely it is). I did this in PHP:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 &lt;?php
 // File: docbook-xml-intro.php
 if ($argc &lt; 2) {
@@ -352,7 +352,7 @@ Second, I needed the script for fixing the <code>programlisting</code> elements.
 did this in PHP, as this provided me with the necessary DOM tools:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 &lt;?php
 // File: docbook-programlistings.php
 
@@ -420,7 +420,7 @@ XML files in a given directory and invoke that script on each file.
 I'll list the second one first, as it's shorter:
 </p>
 
-<div class="example"><pre><code lang="bash">
+<div class="example"><pre><code class="language-bash">
 #!/bin/bash
 # File: upgradeDocbookBulk
 # vim: ft=sh
@@ -458,7 +458,7 @@ message at the end indicating this, and end with a non-zero exit status.
 Finally, the actual upgrade script:
 </p>
 
-<div class="example"><pre><code lang="bash">
+<div class="example"><pre><code class="language-bash">
 #!/bin/bash
 # File: upgradeDocbook
 if [ \&quot;$#\&quot; -ne 1 ];then
@@ -573,7 +573,7 @@ between the two scripts, I can now process an entire tree of files. As an
 example:
 </p>
 
-<div class="example"><pre><code lang="bash">
+<div class="example"><pre><code class="language-bash">
 prompt&gt; path/to/upgradeDocbookBulk 2&gt;&amp;1 | tee -a error.log
 </code></pre></div>
 
@@ -581,7 +581,7 @@ prompt&gt; path/to/upgradeDocbookBulk 2&gt;&amp;1 | tee -a error.log
 I can then grep the error log for "FAIL" to see what failures I might have had:
 </p>
 
-<div class="example"><pre><code lang="bash">
+<div class="example"><pre><code class="language-bash">
 prompt&gt; grep FAIL error.log
 </code></pre></div>
 

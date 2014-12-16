@@ -25,7 +25,7 @@ $body =<<<'EOT'
     I had an example that showed rendering a "date of birth" element:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 &lt;div class=\&quot;element\&quot;&gt;
     &lt;?php echo $form-&gt;dateOfBirth-&gt;renderLabel() ?&gt;
     &lt;?php echo $this-&gt;formText('dateOfBirth[day]', '', array(
@@ -96,7 +96,7 @@ $extended=<<<'EOT'
     Here's what the class would look like:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 
 &lt;?php
 class My_Form_Element_Date extends Zend_Form_Element_Xhtml
@@ -202,7 +202,7 @@ class My_Form_Element_Date extends Zend_Form_Element_Xhtml
     markup.
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class My_Form_Decorator_Date extends Zend_Form_Decorator_Abstract
 {
     public function render($content)
@@ -255,7 +255,7 @@ class My_Form_Decorator_Date extends Zend_Form_Decorator_Abstract
     constructor:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class My_Form_Element_Date extends Zend_Form_Element_Xhtml
 {
     // ...
@@ -288,7 +288,7 @@ class My_Form_Element_Date extends Zend_Form_Element_Xhtml
     use our new Date decorator:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class My_Form_Element_Date extends Zend_Form_Element_Xhtml
 {
     // ...
@@ -323,7 +323,7 @@ class My_Form_Element_Date extends Zend_Form_Element_Xhtml
     What does the final output look like? Let's consider the following element:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 $d = new My_Form_Element_Date('dateOfBirth');
 $d-&gt;setLabel('Date of Birth: ')
   -&gt;setView(new Zend_View());
@@ -338,7 +338,7 @@ $d-&gt;setValue(array('year' =&gt; '2009', 'month' =&gt; '04', 'day' =&gt; '20')
     slight whitespace modifications for readability):
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 &lt;dt id=\&quot;dateOfBirth-label\&quot;&gt;&lt;label for=\&quot;dateOfBirth\&quot; class=\&quot;optional\&quot;&gt;
     Date of Birth:
 &lt;/label&gt;&lt;/dt&gt;

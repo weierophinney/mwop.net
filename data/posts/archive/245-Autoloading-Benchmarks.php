@@ -134,7 +134,7 @@ In the first two cases, the map is stored in an array that is returned by the sc
 The third case was a trick borrowed from Arne Blankert's Autoload library. I deviated from his design in a couple of ways. First, Arne was defining the map as a static member of his closure. Theoretically, this should ensure the map is defined only once per request. However, in my tests, I discovered that the map was actually being constructed in memory each and every time the closure was invoked, and led to a serious degredation in performance. As a result, my version creates a variable in the local scope which is then passed in to the closure via a <code>use</code> statement:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 namespace test;
 $_map = array( /* ... */ );
 spl_autoload_register(function($class) use ($_map) {
@@ -198,7 +198,7 @@ My test algorithm was as follows:
 Timing was performed only over the loop. Benchmarks were run 10 times for each strategy, in order to determine an average, as well as to correct for outliers.  Additionally, the benchmarks were performed both with and without bytecode caching, to see what differences might occur in both environments. A sample of such a script is as follows:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 include 'benchenv.php';
 require_once '/path/to/zf/library/Zend/Loader/ClassMapAutoloader.php';
 
@@ -222,7 +222,7 @@ echo \&quot;total time: \&quot; . ($end - $start) . \&quot;s\n\&quot;;
 I had one such script for each test case. To automate running all such scripts, and doing 10 iterations of each, I wrote the following scripts:
 </p>
 
-<div class="example"><pre><code lang="bash">
+<div class="example"><pre><code class="language-bash">
 #!/usr/bin/zsh
 # benchmark_noaccel.sh
 # No opcode caching
@@ -234,7 +234,7 @@ for TYPE in baseline.php classmap_abs.php classmap_inc.php spl_autoload.php psr0
 done
 </code></pre></div>
 
-<div class="example"><pre><code lang="bash">
+<div class="example"><pre><code class="language-bash">
 #!/usr/bin/zsh
 # benchmark_accel.sh
 # With opcode caching

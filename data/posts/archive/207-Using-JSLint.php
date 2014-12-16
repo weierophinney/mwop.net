@@ -65,7 +65,7 @@ $extended=<<<'EOT'
     "jslint", with the following:
 </p>
 
-<div class="example"><pre><code lang="sh">
+<div class="example"><pre><code class="language-sh">
 #!/bin/sh
 exec java \
 -jar /path/to/dojo/util/shrinksafe/custom_rhino.jar \

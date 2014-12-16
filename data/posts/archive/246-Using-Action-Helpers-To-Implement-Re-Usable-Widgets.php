@@ -83,7 +83,7 @@ Now, notice a few things about it. First, it has views, helpers, and forms -- bu
 Let's look at the bootstrap file. Since this is in a module, it gets a prefix named after the module, and is thus <code>User_Bootstrap</code>.
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class User_Bootstrap extends Zend_Application_Module_Bootstrap
 {
     public function initResourceLoader()
@@ -130,7 +130,7 @@ Finally, I have an initializer method for loading my action helpers. This method
 Next, lets look at the configuration:
 </p>
 
-<div class="example"><pre><code lang="ini">
+<div class="example"><pre><code class="language-ini">
 [production]
 salt = \&quot;1471998176\&quot;
 adapter.table = \&quot;users\&quot;
@@ -162,7 +162,7 @@ Now, let's look at the action helper itself. As a reminder, action helpers can d
 The initial definition looks like this:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class User_Helper_HandleLogin 
     extends Zend_Controller_Action_Helper_Abstract
 {
@@ -200,7 +200,7 @@ As noted earlier, we expect a configuration object to the constructor. We'll use
 Next, we check for an identity. If we don't have one, we delegate to a <code>handleLogin()</code> method; otherwise, a <code>createWidgetProfile()</code> method. We'll look at the latter first, as it's simpler -- but first, we'll take a small digression and look at how we get the view object.
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class User_Helper_HandleLogin 
     extends Zend_Controller_Action_Helper_Abstract
 {
@@ -234,7 +234,7 @@ In here, we grab the view from the controller. If we don't have one we can work 
 Now, the <code>createWidgetProfile()</code> method:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class User_Helper_HandleLogin 
     extends Zend_Controller_Action_Helper_Abstract
 {
@@ -259,7 +259,7 @@ class User_Helper_HandleLogin
 Again, a simple bit of logic. We attempt to retrieve a view, and exit early if we don't get one. Next, we render a partial view, using the identity from the authentication storage, and assign it to a view member, "user". The view script looks like this:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 &lt;?php $identity = (array) $this-&gt;identity; ?&gt;
 &lt;div id=\&quot;user-profile\&quot;&gt;
     &lt;h4&gt;&lt;?php echo $this-&gt;escape($identity['username']) ?&gt;&lt;/h4&gt;
@@ -294,7 +294,7 @@ Next, the <code>handleLogin()</code> method. In this method we need to do severa
 The logic looks like this:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class User_Helper_HandleLogin 
     extends Zend_Controller_Action_Helper_Abstract
 {
@@ -377,7 +377,7 @@ render our login form for us.
 The form partial looks like this:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 &lt;div id=\&quot;login-widget\&quot;&gt;
 &lt;?php if ($this-&gt;error): ?&gt;
     &lt;p class=\&quot;error\&quot;&gt;&lt;?php echo $this-&gt;escape($this-&gt;error) ?&gt;&lt;/p&gt;
@@ -398,7 +398,7 @@ We could get more fancy, and set decorators and what not, but there's no need wi
 If you've been paying attention, you'll note that in both cases -- displaying the login form or displaying the user profile -- I captured the rendered views to the same view variable, "user". At this point, you can then do the following in your action's view scripts in order to display the widget within the page you generate:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 &lt;?php echo $this-&gt;user ?&gt;
 </code></pre></div>
 

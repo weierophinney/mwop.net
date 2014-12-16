@@ -56,7 +56,7 @@ $extended=<<<'EOT'
     already):
 </p>
 
-<div class="example"><pre><code lang="bash">
+<div class="example"><pre><code class="language-bash">
 % zf create config
 </code></pre></div>
 
@@ -91,7 +91,7 @@ $extended=<<<'EOT'
         frontend to <code>Zend_Tool</code>, you will not need to make any
         changes to your code. This is as easy as:
 
-        <div class="example"><pre><code lang="php">
+        <div class="example"><pre><code class="language-php">
 $response = $this-&gt;_registry-&gt;getResponse();
 $response-&gt;appendContent($content);
 </code></pre></div>
@@ -105,7 +105,7 @@ $response-&gt;appendContent($content);
     The code ends up looking like this:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class Phly_Tool_Feed extends Zend_Tool_Framework_Provider_Abstract
 {
     protected $_feeds = array(
@@ -165,7 +165,7 @@ class Phly_Tool_Feed extends Zend_Tool_Framework_Provider_Abstract
     line:
 </p>
 
-<div class="example"><pre><code lang="ini">
+<div class="example"><pre><code class="language-ini">
 basicloader.classes.1 = \&quot;Phly_Tool_Feed\&quot;
 </code></pre></div>
 
@@ -177,7 +177,7 @@ basicloader.classes.1 = \&quot;Phly_Tool_Feed\&quot;
     the following <em><strong>does not work</strong></em>:
 </p>
 
-<div class="example"><pre><code lang="ini">
+<div class="example"><pre><code class="language-ini">
 basicloader.classes[] = \&quot;Phly_Tool_Feed\&quot;
 </code></pre></div>
 
@@ -192,7 +192,7 @@ basicloader.classes[] = \&quot;Phly_Tool_Feed\&quot;
     can now execute the following:
 </p>
 
-<div class="example"><pre><code lang="bash">
+<div class="example"><pre><code class="language-bash">
 % zf \? feed
 </code></pre></div>
 
@@ -226,7 +226,7 @@ Actions supported by provider "Feed"
     Once your provider is working, fire it up:
 </p>
 
-<div class="example"><pre><code lang="bash">
+<div class="example"><pre><code class="language-bash">
 % zf read feed
 </code></pre></div>
 
@@ -234,7 +234,7 @@ Actions supported by provider "Feed"
     or
 </p>
 
-<div class="example"><pre><code lang="bash">
+<div class="example"><pre><code class="language-bash">
 % zf read feed planetphp
 </code></pre></div>
 
@@ -281,7 +281,7 @@ http://weierophinney.net/matthew/archives/241-State-of-Zend-Framework-2.0.html
     line:
 </p>
 
-<div class="example"><pre><code lang="bash">
+<div class="example"><pre><code class="language-bash">
 % ZF_CONFIG_FILE=./zf.ini; zf &lt;action&gt; &lt;provider&gt; ...
 </code></pre></div>
 EOT;

@@ -114,7 +114,7 @@ Consider the common conception of how visibility works in PHP (this is how
 <em>I</em> thought it worked, too, until recently):
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class SomeObject
 {
     protected $message;
@@ -159,7 +159,7 @@ PHP's visibility applies at the class-level, not instance-level.
 Here we go:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class Proxy extends SomeObject 
 {
     protected $proxied;
@@ -203,7 +203,7 @@ visibility.
 <li>
 You need to override any method that affects your workflow. As an example,
    let's consider the following class definition:
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class SomeObject 
 {
     public function foo()
@@ -226,7 +226,7 @@ class SomeObject
    If you wanted to override <code>bar()</code>, but have it continue to aggregate its
    return value from the <code>foo()</code> method, you'd need to override <em>both</em> these
    methods as follows:
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class Proxy extends SomeObject
 {
     protected $proxy;
@@ -255,7 +255,7 @@ Copy over any properties you may be accessing in your overridden methods,
    <br /><br />
    As an example, consider a class you're proxying where you want want to call a
    method that, in the proxied object, refers to an instance property.
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class Adapter
 {
     protected $name;
@@ -288,7 +288,7 @@ class SomeObject
 </code></pre></div>
    If I want to proxy <code>SomeObject</code> and then call the <code>execute()</code> method, I might
    try the following:
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class Proxy extends SomeObject
 {
     protected $proxy;
@@ -314,7 +314,7 @@ echo $p-&gt;execute();
    <br /><br />
    There are two ways around this. First, define the method in your proxy
    object:
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class Proxy extends SomeObject
 {
     protected $proxy;
@@ -339,7 +339,7 @@ echo $p-&gt;execute();
    <br /><br />
    The better way is to assign any properties from the proxied object directly
    to the proxy object:
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class Proxy extends SomeObject
 {
     protected $proxy;

@@ -95,7 +95,7 @@ $extended=<<<'EOT'
     As examples:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 $front = Zend_Controller_Front::getInstance();
 $router = $front-&gt;getRouter();
 
@@ -125,7 +125,7 @@ $router-&gt;addRoute('rest', $restRoute);
     regardless):
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 // Or extend Zend_Rest_Controller
 class RestController extends Zend_Controller_Action
 {
@@ -152,7 +152,7 @@ class RestController extends Zend_Controller_Action
     following:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 if (!$id = $this-&gt;_getParam('id', false)) {
     // report error, redirect, etc.
 }

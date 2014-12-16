@@ -37,7 +37,7 @@ $extended=<<<'EOT'
     can basically do the following with any server class:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 $server = new Zend_XmlRpc_Server();
 $server-&gt;setClass('My_Awesome_Api');
 echo $server-&gt;handle();
@@ -87,7 +87,7 @@ public
     You might then configure your URL rewriting as follows:
 </p>
 
-<div class="example"><pre><code lang="conf">
+<div class="example"><pre><code class="language-conf">
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} -s [OR]
 RewriteCond %{REQUEST_FILENAME} -l [OR]
@@ -123,7 +123,7 @@ RewriteRule ^.*$ index.php [NC,L]
     scripts:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 // Initialize application
 require_once 'Zend/Application.php';
 $app = new Zend_Application(
@@ -144,7 +144,7 @@ $server = new Zend_XmlRpc_Server();
     like the following:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class XmlRpc_Bootstrap extends Bootstrap
 {
     public function run()
@@ -161,7 +161,7 @@ class XmlRpc_Bootstrap extends Bootstrap
     notify it of your new bootstrap class:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 $app = new Zend_Application(
     APPLICATION_ENV,
     array(

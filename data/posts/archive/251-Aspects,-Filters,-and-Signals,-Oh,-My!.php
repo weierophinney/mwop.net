@@ -52,7 +52,7 @@ implementing write-through caching strategies, and more. The approach is
 daunting, however; typical, naive implementations lead to a lot of boiler-plate code:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 interface Listener
 {
     public function notify($signal, $argv = null);
@@ -108,7 +108,7 @@ explicitly within the body of the code, they suggest that the body of the code
 simply becomes one of the filters, via a closure:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 Dispatcher::applyFilter('run', function ($self, $params, $chain) {
     // do something...
     return $chain-&gt;next($self, $params, $chain);
@@ -134,7 +134,7 @@ described above. The method itself will execute any filters -- typically with
 something like this:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 use lithium/core/Object as BaseObject;
 
 class Foo extends BaseObject
@@ -198,7 +198,7 @@ Fourth, it's sometimes useful to have multiple call points within the main
    you have a cache hit, and return immediatly if found; otherwise, you'd
    execute the code, and cache the result prior to returning it. This might be
    possible in Lithium with constructs like this:
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 Filters::add('SomeClass::doSomething', function ($method, $self, $params) {
     if (null !== ($content = cache_hit($params))) {
         return $content;
@@ -212,7 +212,7 @@ Filters::add('SomeClass::doSomething', function ($method, $self, $params) {
    <br /><br />
    Another example would be with façade methods, where you may wish to introduce
    filters before and after each method call:
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
     public function doSomeWorkflow($message)
     {
         $this-&gt;somePrivateMethod($message);
@@ -232,7 +232,7 @@ Fifth, it's useful to be able to attach callbacks that are not aware of the
    want to add it to the chain. In the Lithium paradigm, you'd need to
    <a href="http://en.wikipedia.org/wiki/Currying">curry</a> the calls in, instead of simply
    using the existing method:
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 // This:
 SomeClass::applyFilter('doSomething', function ($self, $params, $chain) use ($log) {
     $log-&gt;info($params['message'];
@@ -281,7 +281,7 @@ familiar.
 Such an approach looks like this:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class Foo
 {
     protected $signals;
@@ -348,7 +348,7 @@ at this point, the collection is marked as "stopped", and you can pull the
 "last" response and return it:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 $responses = $this-&gt;signals()-&gt;emitUntil(function($response) {
     return ($response instanceof SpecificResultType);
 }, 'doSomething.pre', $this, $with, $these, $args);
@@ -367,7 +367,7 @@ The Signal Slot approach actually supports paradigms similar to those
 illustrated in Lithium. For instance, I can make my method body a slot:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 class Foo
 {
     protected $handlers = array();

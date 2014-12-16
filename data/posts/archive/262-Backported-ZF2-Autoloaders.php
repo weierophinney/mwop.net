@@ -97,7 +97,7 @@ create at least an empty class-map. I will do the following immediately after
 generating a project in order to pre-seed it:
 </p>
 
-<div class="example"><pre><code lang="bash">
+<div class="example"><pre><code class="language-bash">
 prompt&gt; cd application/
 prompt&gt; php /path/to/zf/bin/classmap_generator.php -w
   Creating class file map for library in '/var/www/project/application'...
@@ -117,7 +117,7 @@ present.)
 From there, I do the following in <code>public/index.php</code>:
 </p>
 
-<div class="example"><pre><code lang="php">
+<div class="example"><pre><code class="language-php">
 require_once __DIR__ . '/../library/ZendX/Loader/AutoloaderFactory.php';
 ZendX_Loader_AutoloaderFactory::factory(array(
     'ZendX_Loader_ClassMapAutoloader' =&gt; array(
