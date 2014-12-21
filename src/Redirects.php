@@ -22,6 +22,10 @@ class Redirects
         if (preg_match('#^/blog/tag/(?P<tag>.*?)-p(?P<page>\d+)\.html$#', $path, $matches)) {
             return $this->redirect(sprintf('/blog/tag/%s', $matches['tag']), $url, $res, ['page' => $matches['page']]);
         }
+        if (preg_match('#^/blog\.html(?P<path>/.*)?$#', $path, $matches)) {
+            $blogPath = isset($matches['path']) ? $matches['path'] : '';
+            return $this->redirect('/blog' . $blogPath, $url, $res);
+        }
 
         // PhlyBlog style feed URIs
         if (preg_match('#^/blog/tag/(?P<tag>.*?)-(?P<type>atom|rss)\.xml#', $path, $matches)) {
