@@ -9,7 +9,7 @@ It is built on:
   different middleware for accomplishing different tasks. These include a
   contact form, social authentication, a blog, and static pages.
 - [phly/mustache](https://github.com/phly/phly_mustache) for templating.
-- [Aura.Session](https://github.com/aura/session) for managing sessions.
+- [Aura.Session](https://github.com/auraphp/Aura.Session) for managing sessions.
 - [OPAuth](http://opauth.org) for social authentication.
 - [Zend\InputFilter](http://framework.zend.com/manual/2.3/en/modules/zend.input-filter.intro.html)
   and [Zend\Mail](http://framework.zend.com/manual/2.3/en/modules/zend.mail.introduction.html)
