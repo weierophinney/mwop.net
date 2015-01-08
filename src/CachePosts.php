@@ -28,8 +28,7 @@ class CachePosts
         ]);
         $middleware = $this->blogMiddleware;
 
-        $request  = new Request(new PsrRequest);
-        $request->setMethod('GET');
+        $request  = new Request(new PsrRequest('https://mwop.net/blog/', 'GET'));
         
         $console->writeLine('Generating static cache for blog posts', Color::GREEN);
 
@@ -67,10 +66,10 @@ class CachePosts
 
     /**
      * Report success
-     * 
-     * @param \Zend\Console\Adapter\AdapterInterface $console 
-     * @param int $width 
-     * @param int $length 
+     *
+     * @param \Zend\Console\Adapter\AdapterInterface $console
+     * @param int $width
+     * @param int $length
      * @param bool $success
      * @return int
      */
