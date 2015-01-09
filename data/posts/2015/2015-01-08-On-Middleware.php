@@ -16,7 +16,7 @@ $entry->setAuthor($author);
 $entry->setDraft(false);
 $entry->setPublic(true);
 $entry->setCreated(new \DateTime('2015-01-08 17:15', new \DateTimezone('America/Chicago')));
-$entry->setUpdated(new \DateTime('2015-01-08 17:15', new \DateTimezone('America/Chicago')));
+$entry->setUpdated(new \DateTime('2015-01-09 15:55', new \DateTimezone('America/Chicago')));
 $entry->setTimezone('America/Chicago');
 $entry->setTags(array(
   'http',
@@ -113,10 +113,10 @@ class Action
 <p>PHP does not.</p>
 
 <p>&quot;But PHP was built for the web!&quot; I hear many of you say. True. But 
-    it was built for the web in the 90s. More specifically, it was built with
+    more specifically, it was built with
     <a href="http://en.wikipedia.org/wiki/Common_Gateway_Interface">Common Gateway 
-    Interface</a> (CGI) in mind. CGI was a way for the web server to offload the 
-    incoming request to a script; originally, it actually would set a whole 
+    Interface</a> (CGI) in mind. CGI is a way for the web server to offload the 
+    incoming request to a script; in the early days, it actually would set a whole 
     bunch of environment variables, and your script would pull from those in 
     order to get input and return a response. This evolved into PHP's Server 
     APIs (SAPI) -- <code>mod_php</code> in Apache, the php-fpm/FastCGI SAPI, 
@@ -155,7 +155,8 @@ class Action
     buffering, how to nest output buffers, and more -- and that's even when they're 
     aggregating content to emit at once!</p>
 
-<p>My point is that PHP's HTTP &quot;abstractions&quot; actually create a lot 
+<p>My point is that PHP's HTTP &quot;abstractions&quot;, because they focus
+    on the CGI specification, and not HTTP messages,  actually create a lot 
     of work for PHP developers. The abstractions present in Rack, WSGI, Node, and 
     others are often cleaner and more immediately usable (particularly
     <a href="http://nodejs.org/api/http.html">Node's</a>, in my opinion).</p>
@@ -277,6 +278,14 @@ $app-&gt;run($request, $response);</code></pre>
 </ul>
 
 <p>Join me in developing HTTP-centric PHP!</p>
+
+<h4>Updates</h4>
+
+<ul>
+    <li>Removed some inflammatory verbiage and rephrased a few areas to 
+        emphasize that the focus on CGI is the primary problem I want to address in 
+        PHP today.</li>
+</ul>
 EOT;
 $entry->setExtended($extended);
 
