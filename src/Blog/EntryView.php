@@ -3,7 +3,6 @@ namespace Mwop\Blog;
 
 use DateTime;
 use DateTimezone;
-use Phly\Http\Uri;
 
 class EntryView
 {
@@ -65,11 +64,7 @@ class EntryView
 
     public function url()
     {
-        $uri = Uri::fromArray([
-            'host'   => 'mwop.net',
-            'path'   => sprintf('/blog/%s.html', $this->id),
-        ]);
-        return (string) $uri;
+        return sprintf('https://mwop.net/blog/%s.html', $this->id);
     }
 
     private function marshalTags($tags)

@@ -7,8 +7,8 @@ class Redirects
 {
     public function __invoke($req, $res, $next)
     {
-        $url  = new Uri($req->getUrl());
-        $path = $url->path;
+        $url  = $req->getUri();
+        $path = $url->getPath();
 
         // Ensure php.net is able to retrieve PHP RSS feed without a problem
         if ('/blog/tag/php.xml' === $path) {
@@ -85,25 +85,20 @@ class Redirects
             return $this->redirect('/blog', $url, $res);
         }
 
-        $next();
+        return $next();
     }
 
     private function redirect($path, $url, $res, $query = [])
     {
-        $urlParams = [
-            'scheme' => $url->scheme,
-            'host'   => $url->host,
-            'port'   => $url->port,
-            'path'   => $path,
-        ];
+        $url = $url->withPath($path);
 
         if (count($query)) {
-            $urlParams['query'] = http_build_query($query);
+            $url = $url->withQuery(http_build_query($query));
         }
 
-        $url = Uri::fromArray($urlParams);
-        $res->setStatus(301);
-        $res->addHeader('Location', (string) $url);
-        $res->end();
+        return $res
+            ->withStatus(301)
+            ->withHeader('Location', (string) $url)
+            ->end();
     }
 }

@@ -27,10 +27,11 @@ class Logout
 
     private function redirect($request, $response)
     {
-        $originalUrl = new Uri($request->originalUrl);
-        $redirectUrl = (string) $originalUrl->setPath('/');
-        $response->setStatus(302);
-        $response->addHeader('Location', $redirectUrl);
-        $response->end();
+        $originalUri = $request->getOriginalRequest()->getUri();
+        $redirectUri = $originalUri->withPath('/');
+
+        return $response
+            ->setStatus(302)
+            ->addHeader('Location', (string) $redirectUri);
     }
 }

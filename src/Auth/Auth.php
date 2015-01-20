@@ -11,7 +11,7 @@ class Auth
 
     /**
      * Constructor
-     * 
+     *
      * @param array $config Configuration for the Opauth instance
      */
     public function __construct(array $authConfig, Session $session)
@@ -23,8 +23,7 @@ class Auth
     public function __invoke($req, $res, $next)
     {
         if ($req->getMethod() !== 'GET') {
-            $res->setStatus(405);
-            return $next('GET');
+            return $next('GET', $res->withStatus(405));
         }
 
         if (isset($req->getQueryParams()['redirect'])) {
@@ -33,6 +32,6 @@ class Auth
         }
 
         $auth = new Opauth($this->config);
-        $res->end();
+        return $res;
     }
 }

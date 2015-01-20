@@ -10,9 +10,9 @@ class NotAllowed
         }
 
         if (is_array($err) || is_string($err)) {
-            $res->setHeader('Allow', $err);
+            $res = $res->withHeader('Allow', $err);
         }
 
-        $res->end();
+        return $res->end();
     }
 }

@@ -14,30 +14,28 @@ class ThankYouPage
 
     public function __invoke($request, $response, $next)
     {
-        $path = parse_url($request->getUrl(), PHP_URL_PATH);
+        $path = $request->getUri()->getPath();
         if ($path !== $this->path) {
             return $next();
         }
 
         if ($request->getMethod() !== 'GET') {
-            $response->setStatus(405);
-            return $next('GET');
+            return $next('GET', $response->withStatus(405));
         }
 
         $parentUrl = str_replace('/thank-you', '', $request->originalUrl);
         if (! $request->hasHeader('Referer')
             || ! preg_match('#^' . $parentUrl . '#', $request->getHeader('Referer'))
         ) {
-            $response->setStatus(302);
-            $response->addHeader('Location', $parentUrl);
-            $response->end();
-            return;
+            return $response
+                ->withStatus(302)
+                ->withHeader('Location', $parentUrl)
+                ->end();
         }
 
-        $request->view = (object) [
+        return $next($request->withAttribute('view', (object) [
             'template' => $this->page,
             'model'    => [],
-        ];
-        $next();
+        ]));
     }
 }

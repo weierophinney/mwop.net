@@ -4,8 +4,8 @@ namespace Mwop;
 use Phly\Conduit\Http\Request as ConduitRequest;
 use Phly\Conduit\Middleware;
 use Phly\Mustache\Mustache;
-use Psr\Http\Message\IncomingRequestInterface as Request;
-use Psr\Http\Message\OutgoingResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Message\ResponseInterface as Response;
 
 class Templated extends Middleware
 {
@@ -27,27 +27,27 @@ class Templated extends Middleware
             $request = new ConduitRequest($request);
         }
 
-        $request->view = (object) [
+        return parent::__invoke($request->withAttribute('view', (object) [
             'template' => null,
             'model'    => [],
-        ];
-
-        parent::__invoke($request, $response, $next);
+        ]), $response, $next);
     }
 
     public function render(Request $request, Response $response, callable $next)
     {
         if ($response->isComplete()) {
-            return;
+            return $response;
         }
 
-        if (! $request->view || ! $request->view->template) {
+        $view = $request->getAttribute('view', false);
+
+        if (false === $view || ! $view->template) {
             return $next();
         }
 
-        $response->write($this->renderer->render(
-            $request->view->template,
-            $request->view->model
+        return $response->write($this->renderer->render(
+            $view->template,
+            $view->model
         ));
     }
 
@@ -57,7 +57,7 @@ class Templated extends Middleware
             return;
         }
 
-        // Done in a closure due to how Phly\Conduit\Utils::getArity works 
+        // Done in a closure due to how Phly\Conduit\Utils::getArity works
         $this->pipe(function ($req, $res, $next) {
             return $this->render($req, $res, $next);
         });
