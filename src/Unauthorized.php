@@ -17,17 +17,19 @@ class Unauthorized
 
     public function __invoke($err, $req, $res, $next)
     {
+        error_log('In ' . get_class($this));
         if ($res->getStatusCode() !== 401) {
+            error_log('Invalid status code; passing to next handler');
             return $next($err);
         }
 
-        $url = new Uri($req->getUrl());
-        $new = $url->setPath('/auth');
+        $new = $req->getUri()->withPath('/auth');
         $view = [
             'auth_path' => (string) $new,
-            'redirect'  => $req->originalUrl,
+            'redirect'  => (string) $req->getOriginalRequest()->getUri(),
         ];
 
-        $res->end($this->renderer->render($this->template, $view));
+        error_log('Rendering 401 response');
+        return $res->end($this->renderer->render($this->template, $view));
     }
 }

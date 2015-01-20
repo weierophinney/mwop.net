@@ -15,7 +15,6 @@ class UserSession
     public function __invoke($request, $response, $next)
     {
         $auth = $this->session->getSegment('auth');
-        $request->user = $auth->get('user');
-        $next();
+        return $next($request->withAttribute('user', $auth->get('user')));
     }
 }

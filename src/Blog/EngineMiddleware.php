@@ -22,7 +22,7 @@ class EngineMiddleware
 
     public function __invoke($req, $res, $next)
     {
-        $path = parse_url($req->getUrl(), PHP_URL_PATH);
+        $path = $req->getUri()->getPath();
         if ('/tag/php.xml' === $path) {
             return $this->displayFeed($req, $res, $next, 'rss', 'php');
         }
@@ -47,7 +47,7 @@ class EngineMiddleware
 
     private function listPosts($req, $res, $next, $tag = null)
     {
-        $path  = parse_url($req->originalUrl, PHP_URL_PATH);
+        $path  = $req->getOriginalRequest()->getUri()->getPath();
         $page  = $this->getPageFromRequest($req);
         $title = 'Blog Posts';
 
@@ -61,10 +61,10 @@ class EngineMiddleware
 
         $posts->setItemCountPerPage(10);
         if (count($posts) && $page > count($posts)) {
-            $res->setStatus(302);
-            $res->addHeader('Location', sprintf('%s?page=%d', $path, count($posts)));
-            $res->end();
-            return;
+            return $res
+                ->withStatus(302)
+                ->withHeader('Location', sprintf('%s?page=%d', $path, count($posts)))
+                ->end();
         }
 
         $posts->setCurrentPageNumber($page);
@@ -102,11 +102,10 @@ class EngineMiddleware
             $view['tag'] = ['tag' => $tag];
         }
 
-        $req->view = (object) [
+        return $next($req->withAttribute('view', (object) [
             'template' => 'blog.list',
             'model'    => $view,
-        ];
-        $next();
+        ]));
     }
 
     private function displayPost($id, $req, $res, $next)
@@ -114,25 +113,22 @@ class EngineMiddleware
         $post = $this->mapper->fetch($id);
         
         if (! $post) {
-            $res->setStatus(404);
-            return $next('Not found');
+            return $next('Not found', $res->withStatus(404));
         }
 
         $post = include $post['path'];
         if (! $post instanceof EntryEntity) {
-            $res->setStatus(404);
-            return $next('Not found');
+            return $next('Not found', $res->withStatus(404));
         }
 
-        $original = parse_url($req->originalUrl, PHP_URL_PATH);
+        $original = $req->getOriginalRequest()->getUri()->getPath();
         $path = substr($original, 0, -(strlen($post->getId() . '.html') + 1));
         $post = $this->prepPost($post->getArrayCopy(), $path);
 
-        $req->view = (object) [
+        return $next($req->withAttribute('view', (object) [
             'template' => 'blog.post',
             'model'    => $post,
-        ];
-        $next();
+        ]));
     }
 
     private function displayFeed($req, $res, $next, $type, $tag = null)
@@ -148,9 +144,10 @@ class EngineMiddleware
             return $next('Not found');
         }
 
-        $res->addHeader('Content-Type', sprintf('application/%s+xml', $type));
-        $res->setBody(new Stream(fopen($path, 'r')));
-        $res->end();
+        return $res
+            ->withHeader('Content-Type', sprintf('application/%s+xml', $type))
+            ->withBody(new Stream(fopen($path, 'r')))
+            ->end();
     }
 
     private function getPageFromRequest($req)
