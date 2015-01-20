@@ -2,8 +2,8 @@
 namespace Mwop;
 
 use Phly\Conduit\Http\Request;
-use Phly\Http\IncomingRequest as PsrRequest;
-use Phly\Http\OutgoingResponse as Response;
+use Phly\Http\ServerRequest as PsrRequest;
+use Phly\Http\Response;
 use Phly\Http\Uri;
 use Zend\Console\ColorInterface as Color;
 
@@ -20,17 +20,17 @@ class CachePosts
     {
         $basePath = $route->getMatchedParam('path');
 
-        $path = realpath($basePath) . '/data/posts';
-        $uri  = Uri::fromArray([
-            'scheme' => 'https',
-            'host'   => 'mwop.net',
-            'path'   => '/blog',
-        ]);
+        $path       = realpath($basePath) . '/data/posts';
+        $baseUri    = new Uri('https://mwop.net/blog');
         $middleware = $this->blogMiddleware;
 
-        $request  = new Request(new PsrRequest('https://mwop.net/blog/', 'GET'));
-        
         $console->writeLine('Generating static cache for blog posts', Color::GREEN);
+
+        // Prepare final handler for middleware
+        $failed = false;
+        $done = function ($err = null) use (&$failed) {
+            $failed = ($err) ? true : false;
+        };
 
         foreach (new Blog\PhpFileFilter($path) as $fileInfo) {
             $entry  = include $fileInfo->getPathname();
@@ -44,17 +44,13 @@ class CachePosts
             $width   = $console->getWidth();
             $console->write($message, Color::BLUE);
 
-            $canonical = $uri->setPath(sprintf('/blog/%s.html', $entry->getId()));
-            $request->originalUrl = (string) $canonical;
+            $canonical = $baseUri->withPath(sprintf('/blog/%s.html', $entry->getId()));
+            $request   = new Request(new PsrRequest($canonical, 'GET'));
 
-            $uri = $uri->setPath(sprintf('/%s.html', $entry->getId()));
-            $request->setUrl($uri);
+            $uri = $canonical->withPath(sprintf('/%s.html', $entry->getId()));
+            $request->setUri($uri);
 
             $failed = false;
-            $done = function ($err = null) use (&$failed) {
-                $failed = ($err) ? true : false;
-            };
-
             $middleware($request, new Response(), $done);
 
             $this->reportComplete($console, $width, $length, ! $failed);

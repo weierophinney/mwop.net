@@ -1,8 +1,6 @@
 <?php
 namespace Mwop;
 
-use Phly\Http\Uri;
-
 class Redirects
 {
     public function __invoke($req, $res, $next)

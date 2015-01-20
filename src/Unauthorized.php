@@ -1,7 +1,6 @@
 <?php
 namespace Mwop;
 
-use Phly\Http\Uri;
 use Phly\Mustache\Mustache;
 
 class Unauthorized
