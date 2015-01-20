@@ -2,7 +2,6 @@
 namespace Mwop\Auth;
 
 use Aura\Session\Session;
-use Phly\Http\Uri;
 
 class Logout
 {

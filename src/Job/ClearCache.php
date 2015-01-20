@@ -1,7 +1,6 @@
 <?php
 namespace Mwop\Job;
 
-use Phly\Http\Uri;
 use ZendJobQueue;
 
 class ClearCache
