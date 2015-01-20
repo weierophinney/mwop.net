@@ -31,15 +31,15 @@ $app->pipe($services->get('Mwop\Site'));
 $app->pipe(new NotFound());
 $app->pipe(function ($err, $req, $res, $next) use ($services) {
     $middleware = $services->get('Mwop\Unauthorized');
-    $middleware($err, $req, $res, $next);
+    return $middleware($err, $req, $res, $next);
 });
 $app->pipe(function ($err, $req, $res, $next) use ($services) {
     $middleware = $services->get('Mwop\NotAllowed');
-    $middleware($err, $req, $res, $next);
+    return $middleware($err, $req, $res, $next);
 });
 $app->pipe(function ($err, $req, $res, $next) use ($services) {
     $middleware = $services->get('Mwop\ErrorHandler');
-    $middleware($err, $req, $res, $next);
+    return $middleware($err, $req, $res, $next);
 });
 
 // Start listening

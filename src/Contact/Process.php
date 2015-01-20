@@ -27,21 +27,24 @@ class Process
     public function __invoke($request, $response, $next)
     {
         if ($request->getMethod() !== 'POST') {
-            $response->setStatus(405);
-            return $next('POST');
+            return $next('POST', $response->withStatus(405));
         }
 
         $this->session->start();
 
-        $data  = $request->body;
+        $data  = $request->getAttribute('body', []);
         $token = $this->session->getCsrfToken();
 
         if (! isset($data['csrf'])
             || ! $token->isValid($data['csrf'])
         ) {
             // re-display form
-            $this->redisplayForm(['csrf' => 'true', 'data' => $data], $token, $request, $response);
-            return $next();
+            return $next($this->redisplayForm(
+                ['csrf' => 'true', 'data' => $data],
+                $token,
+                $request,
+                $response
+            ));
         }
 
         $filter = new InputFilter();
@@ -49,16 +52,21 @@ class Process
 
         if (! $filter->isValid()) {
             // re-display form
-            $this->redisplayForm($filter->getMessages(), $token, $request, $response);
-            return $next();
+            return $next($this->redisplayForm(
+                $filter->getMessages(),
+                $token,
+                $request,
+                $response
+            ));
         }
 
         $this->sendEmail($filter->getValues());
 
         $path = str_replace('/process', '', $request->originalUrl) . '/thank-you';
-        $response->setStatus(302);
-        $response->addHeader('Location', $path);
-        $response->end();
+        return $response
+            ->setStatus(302)
+            ->addHeader('Location', $path)
+            ->end();
     }
 
     private function redisplayForm($error, $csrfToken, $request, $response)
@@ -71,10 +79,10 @@ class Process
             'csrf'   => $csrfToken->getValue(),
         ]);
 
-        $request->view = (object) [
+        return $request->withAttribute('view', (object) [
             'template' => $this->page,
             'model'    => $view,
-        ];
+        ]);
     }
 
     private function sendEmail(array $data)

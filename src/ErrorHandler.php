@@ -19,12 +19,11 @@ class ErrorHandler
     public function __invoke($err, $req, $res, $next)
     {
         if ($res->getStatusCode() === 404) {
-            $res->end($this->renderer->render('error/404', []));
-            return;
+            return $res->end($this->renderer->render('error/404', []));
         }
 
         if ($res->getStatusCode() < 400) {
-            $res->setStatus(500);
+            $res = $res->withStatus(500);
         }
 
         $error = $err;
@@ -41,7 +40,7 @@ class ErrorHandler
             $error = (string) $err;
         }
 
-        $res->end($this->renderer->render('error/500', [
+        return $res->end($this->renderer->render('error/500', [
             'error' => $this->displayErrors ? ['error' => $err] : false,
         ]));
     }

@@ -5,7 +5,6 @@ class NotFound
 {
     public function __invoke($req, $res, $next)
     {
-        $res->setStatus(404);
-        $next('Not Found');
+        return $next('Not Found', $res->withStatus(404));
     }
 }

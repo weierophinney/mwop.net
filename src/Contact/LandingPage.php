@@ -20,26 +20,24 @@ class LandingPage
 
     public function __invoke($request, $response, $next)
     {
-        $path = parse_url($request->getUrl(), PHP_URL_PATH);
+        $path = $request->getUri()->getPath();
         if ($path !== $this->path) {
             return $next();
         }
 
         if ($request->getMethod() !== 'GET') {
-            $response->setStatus(405);
-            return $next('GET');
+            return $next('GET', $response->withStatus(405));
         }
 
+        $basePath = $request->getOriginalRequest()->getUri()->getPath();
         $view = array_merge($this->config, [
-            'action' => rtrim($request->originalUrl, '/') . '/process',
+            'action' => rtrim($basePath, '/') . '/process',
             'csrf'   => $this->session->getCsrfToken()->getValue(),
         ]);
 
-        $request->view = (object) [
+        return $next($request->withAttribute('view', (object) [
             'template' => $this->page,
             'model'    => $view,
-        ];
-
-        $next();
+        ]));
     }
 }

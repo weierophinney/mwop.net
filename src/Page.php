@@ -2,6 +2,7 @@
 namespace Mwop;
 
 use Phly\Mustache\Mustache;
+use stdClass;
 
 class Page
 {
@@ -16,16 +17,16 @@ class Page
 
     public function __invoke($request, $response, $next)
     {
-        if (parse_url($request->originalUrl, PHP_URL_PATH) !== $this->path) {
+        if ($request->getOriginalRequest()->getUri()->getPath() !== $this->path) {
             return $next();
         }
 
         if ($request->getMethod() !== 'GET') {
-            $response->setStatus(405);
-            return $next('GET');
+            return $next('GET', $response->withStatus(405));
         }
 
-        $request->view->template = $this->page;
-        $next();
+        $view = $request->getAttribute('view', new stdClass);
+        $view->template = $this->page;
+        $next($request->withAttribute('view', $view));
     }
 }

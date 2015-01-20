@@ -9,9 +9,9 @@ class Comics
     public function __invoke($req, $res, $next)
     {
         if (! class_exists('ZendJobQueue') || ! ZendJobQueue::getCurrentJobId()) {
-            $res->setStatus(403);
-            $res->end();
-            return;
+            return $res
+                ->wthStatus(403)
+                ->end();
         }
 
         $php     = \Mwop\getPhpExecutable();
@@ -19,23 +19,24 @@ class Comics
         exec($command, $output, $return);
         if ($return != 0) {
             ZendJobQueue::setCurrentJobStatus(ZendJobQueue::FAILED);
-            $res->setStatus(500);
-            $res->addHeader('Content-Type', 'text/plain');
-            $res->end(implode("\n", $output));
-            return;
+            return $res
+                ->withStatus(500)
+                ->withHeader('Content-Type', 'text/plain')
+                ->end(implode("\n", $output));
         }
 
         ZendJobQueue::setCurrentJobStatus(ZendJobQueue::OK);
-        $res->addHeader('Content-Type', 'text/plain');
-        $res->end(implode("\n", $output));
 
         // Clear caches
-        $uri    = new Uri($req->getUrl());
-        $uri    = (string) $uri->setPath('/');
+        $uri    = $req->getUri()->withPath('/');
         $queue  = new ZendJobQueue();
         $queue->createHttpJob($uri . 'jobs/clear-cache', [], [
             'name'       => 'clear-cache',
             'persistent' => false,
         ]);
+
+        return $res
+            ->withHeader('Content-Type', 'text/plain')
+            ->end(implode("\n", $output));
     }
 }

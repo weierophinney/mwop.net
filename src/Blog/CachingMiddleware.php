@@ -21,30 +21,30 @@ class CachingMiddleware
             return $next();
         }
 
-        if (! $req->blog) {
-            $req->blog = (object) [
+        if (! $req->getAttribute('blog', false)) {
+            $req = $req->withAttribute('blog', (object) [
                 'from_cache' => false,
                 'cacheable'  => false,
-            ];
+            ]);
         }
 
-        if (! $res->isComplete() && ! $req->blog->from_cache) {
+        if (! $res->isComplete() && ! $req->getAttribute('blog')->from_cache) {
             return $this->fetchFromCache($req, $res, $next);
         }
 
         if ($res->isComplete()
-            && ! $req->blog->from_cache
-            && $req->blog->cacheable
+            && ! $req->getAttribute('blog')->from_cache
+            && $req->getAttribute('blog')->cacheable
         ) {
             return $this->cache($req, $res, $next);
         }
 
-        return $next();
+        return $next($req);
     }
 
     private function fetchFromCache($req, $res, $next)
     {
-        $path = parse_url($req->getUrl(), PHP_URL_PATH);
+        $path = $req->getUri()->getPath();
         if (! preg_match('#^/(?P<page>[^/]+\.html)$#', $path, $matches)) {
             // Nothing to do; not a blog post
             return $next();
@@ -54,19 +54,18 @@ class CachingMiddleware
 
         if (! file_exists($cachePath)) {
             // Nothing in cache, but should be cached
-            $req->blog->cacheable = $matches['page'];
+            $req->getAttribute('blog')->cacheable = $matches['page'];
             return $next();
         }
 
         // Cache hit!
-        $res->setBody(new Stream(fopen($cachePath, 'r')));
-        $res->end();
-        $req->blog->from_cache = true;
+        $req->getAttribute('blog')->from_cache = true;
+        return $res->withBody(new Stream(fopen($cachePath, 'r')));
     }
 
     private function cache($req, $res, $next)
     {
-        $cachePath = sprintf('%s/%s', $this->cachePath, $req->blog->cacheable);
+        $cachePath = sprintf('%s/%s', $this->cachePath, $req->getAttribute('blog')->cacheable);
         file_put_contents($cachePath, (string) $res->getBody());
     }
 }
