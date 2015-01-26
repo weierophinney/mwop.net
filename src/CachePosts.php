@@ -45,10 +45,10 @@ class CachePosts
             $console->write($message, Color::BLUE);
 
             $canonical = $baseUri->withPath(sprintf('/blog/%s.html', $entry->getId()));
-            $request   = new Request(new PsrRequest($canonical, 'GET'));
+            $request   = new Request(new PsrRequest([], [], $canonical, 'GET'));
 
             $uri = $canonical->withPath(sprintf('/%s.html', $entry->getId()));
-            $request->setUri($uri);
+            $request = $request->withUri($uri);
 
             $failed = false;
             $middleware($request, new Response(), $done);
