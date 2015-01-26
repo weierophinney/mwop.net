@@ -202,7 +202,7 @@ if (! $message-&gt;hasHeader(&#39;Accept&#39;)) {
 
 // If the header has multiple values, fetch them
 // as an array:
-$values = $message-&gt;getHeaderLines(&#39;X-Foo&#39;)/
+$values = $message-&gt;getHeaderLines(&#39;X-Foo&#39;);
 </code></pre>
 
 <p>
