@@ -291,7 +291,7 @@ $message = $message-&gt;withAddedHeader(&#39;X-Foo&#39;, &#39;bar&#39;);
 
 <pre><code class="lang-php">
 $body = new Stream(&#39;php://temp&#39;);
-$body-&gt;write(&#39;Here&#39;s the content for my message!&#39;);
+$body-&gt;write(&#39;Here is the content for my message!&#39;);
 </code></pre>
 
 <blockquote><p>
