@@ -64,8 +64,8 @@ class Process
 
         $path = str_replace('/process', '', $request->originalUrl) . '/thank-you';
         return $response
-            ->setStatus(302)
-            ->addHeader('Location', $path)
+            ->withStatus(302)
+            ->withHeader('Location', $path)
             ->end();
     }
 
