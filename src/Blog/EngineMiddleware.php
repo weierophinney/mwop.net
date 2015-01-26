@@ -140,8 +140,7 @@ class EngineMiddleware
         }
 
         if (! file_exists($path)) {
-            $res->setStatus(404);
-            return $next('Not found');
+            return $next('Not found', $res->withStatus(404));
         }
 
         return $res

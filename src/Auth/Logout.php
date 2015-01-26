@@ -30,7 +30,7 @@ class Logout
         $redirectUri = $originalUri->withPath('/');
 
         return $response
-            ->setStatus(302)
-            ->addHeader('Location', (string) $redirectUri);
+            ->withStatus(302)
+            ->withHeader('Location', (string) $redirectUri);
     }
 }
