@@ -34,12 +34,12 @@ class AuthCallback
                 $authResponse = unserialize(base64_decode($req->getQueryParams()['opauth']));
                 break;
             default:
-                return $next('Invalid request', $res->withStatus(400));
+                return $next($req, $res->withStatus(400), 'Invalid request');
                 break;
         }
 
         if (array_key_exists('error', $authResponse)) {
-            return $next('Error authenticating', $res->withStatus(403));
+            return $next($req, $res->withStatus(403), 'Error authenticating');
         }
 
         if (empty($authResponse['auth'])
@@ -48,7 +48,7 @@ class AuthCallback
             || empty($authResponse['auth']['provider'])
             || empty($authResponse['auth']['uid'])
         ) {
-            return $next('Invalid authentication response', $res->withStatus(403));
+            return $next($req, $res->withStatus(403), 'Invalid authentication response');
         }
         
         if ($auth->env['callback_transport'] !== 'session'
@@ -59,7 +59,7 @@ class AuthCallback
                 $reason
             )
         ) {
-            return $next('Invalid authentication response', $res->withStatus(403));
+            return $next($req, $res->withStatus(403), 'Invalid authentication response');
         }
 
         $auth = $this->session->getSegment('auth');

@@ -8,7 +8,7 @@ class ComicsPage extends Page
         error_log('In ' . get_class($this));
         if (! $request->getAttribute('user', false)) {
             error_log('Returning 401 error');
-            return $next(401, $response->withStatus(401));
+            return $next($request, $response->withStatus(401), 401);
         }
 
         error_log('Rendering page');

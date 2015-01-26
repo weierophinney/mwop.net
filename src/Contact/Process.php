@@ -27,7 +27,7 @@ class Process
     public function __invoke($request, $response, $next)
     {
         if ($request->getMethod() !== 'POST') {
-            return $next('POST', $response->withStatus(405));
+            return $next($request, $response->withStatus(405), 'POST');
         }
 
         $this->session->start();
@@ -44,7 +44,7 @@ class Process
                 $token,
                 $request,
                 $response
-            ));
+            ), $response);
         }
 
         $filter = new InputFilter();
@@ -57,7 +57,7 @@ class Process
                 $token,
                 $request,
                 $response
-            ));
+            ), $response);
         }
 
         $this->sendEmail($filter->getValues());

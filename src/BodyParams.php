@@ -12,7 +12,7 @@ class BodyParams
     public function __invoke($request, $response, $next)
     {
         if (in_array($request->getMethod(), $this->nonBodyRequests)) {
-            return $next();
+            return $next($request, $response);
         }
 
         $header     = $request->getHeader('Content-Type');
@@ -35,17 +35,19 @@ class BodyParams
             case 'form':
                 // $_POST is injected by default into the request body parameters;
                 // re-inject them into the attributes.
-                return $next($request->withAttribute('body', $request->getBodyParams()));
+                return $next($request->withAttribute('body', $request->getBodyParams()), $response);
             case 'json':
                 $rawBody = $request->getBody()->getContents();
-                return $next($request
+                return $next(
+                    $request
                     ->withAttribute('rawBody', $rawBody)
-                    ->withAttribute('body', json_decode($rawBody, true))
+                    ->withAttribute('body', json_decode($rawBody, true)),
+                    $response
                 );
             default:
                 break;
         }
 
-        return $next();
+        return $next($request, $response);
     }
 }

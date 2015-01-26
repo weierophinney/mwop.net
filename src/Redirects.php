@@ -10,7 +10,7 @@ class Redirects
 
         // Ensure php.net is able to retrieve PHP RSS feed without a problem
         if ('/blog/tag/php.xml' === $path) {
-            return $next();
+            return $next($req, $res);
         }
 
         // PhlyBlog style pagination
@@ -83,7 +83,7 @@ class Redirects
             return $this->redirect('/blog', $url, $res);
         }
 
-        return $next();
+        return $next($req, $res);
     }
 
     private function redirect($path, $url, $res, $query = [])

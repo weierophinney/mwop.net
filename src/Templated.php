@@ -42,7 +42,7 @@ class Templated extends Middleware
         $view = $request->getAttribute('view', false);
 
         if (false === $view || ! $view->template) {
-            return $next();
+            return $next($request, $response);
         }
 
         return $response->write($this->renderer->render(

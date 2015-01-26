@@ -22,11 +22,11 @@ class LandingPage
     {
         $path = $request->getUri()->getPath();
         if ($path !== $this->path) {
-            return $next();
+            return $next($request, $response);
         }
 
         if ($request->getMethod() !== 'GET') {
-            return $next('GET', $response->withStatus(405));
+            return $next($request, $response->withStatus(405), 'GET');
         }
 
         $basePath = $request->getOriginalRequest()->getUri()->getPath();
@@ -38,6 +38,6 @@ class LandingPage
         return $next($request->withAttribute('view', (object) [
             'template' => $this->page,
             'model'    => $view,
-        ]));
+        ]), $response);
     }
 }

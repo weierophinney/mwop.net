@@ -19,7 +19,7 @@ class Unauthorized
         error_log('In ' . get_class($this));
         if ($res->getStatusCode() !== 401) {
             error_log('Invalid status code; passing to next handler');
-            return $next($err);
+            return $next($req, $res, $err);
         }
 
         $new = $req->getUri()->withPath('/auth');

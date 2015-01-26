@@ -16,11 +16,11 @@ class ThankYouPage
     {
         $path = $request->getUri()->getPath();
         if ($path !== $this->path) {
-            return $next();
+            return $next($request, $response);
         }
 
         if ($request->getMethod() !== 'GET') {
-            return $next('GET', $response->withStatus(405));
+            return $next($request, $response->withStatus(405), 'GET');
         }
 
         $parentUrl = str_replace('/thank-you', '', $request->originalUrl);
@@ -36,6 +36,6 @@ class ThankYouPage
         return $next($request->withAttribute('view', (object) [
             'template' => $this->page,
             'model'    => [],
-        ]));
+        ]), $response);
     }
 }

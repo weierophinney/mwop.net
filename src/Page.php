@@ -18,15 +18,15 @@ class Page
     public function __invoke($request, $response, $next)
     {
         if ($request->getOriginalRequest()->getUri()->getPath() !== $this->path) {
-            return $next();
+            return $next($request, $response);
         }
 
         if ($request->getMethod() !== 'GET') {
-            return $next('GET', $response->withStatus(405));
+            return $next($request, $response->withStatus(405), 'GET');
         }
 
         $view = $request->getAttribute('view', new stdClass);
         $view->template = $this->page;
-        $next($request->withAttribute('view', $view));
+        $next($request->withAttribute('view', $view), $response);
     }
 }

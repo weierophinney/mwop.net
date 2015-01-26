@@ -23,7 +23,7 @@ class Auth
     public function __invoke($req, $res, $next)
     {
         if ($req->getMethod() !== 'GET') {
-            return $next('GET', $res->withStatus(405));
+            return $next($req, $res->withStatus(405), 'GET');
         }
 
         if (isset($req->getQueryParams()['redirect'])) {
