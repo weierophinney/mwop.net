@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "092774c43348c47abed70a242e3bc52d",
+    "hash": "b11606c2705c1495d19388921c29845f",
     "packages": [
         {
             "name": "aura/session",
@@ -254,20 +254,20 @@
         },
         {
             "name": "phly/conduit",
-            "version": "0.11.0",
+            "version": "0.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phly/conduit.git",
-                "reference": "33b3e0c2a0fbced04268ad8806b6320311f9af45"
+                "reference": "d0973dc2f9b0edf85806f976810175c2298cae41"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phly/conduit/zipball/33b3e0c2a0fbced04268ad8806b6320311f9af45",
-                "reference": "33b3e0c2a0fbced04268ad8806b6320311f9af45",
+                "url": "https://api.github.com/repos/phly/conduit/zipball/d0973dc2f9b0edf85806f976810175c2298cae41",
+                "reference": "d0973dc2f9b0edf85806f976810175c2298cae41",
                 "shasum": ""
             },
             "require": {
-                "phly/http": ">=0.8.4,<0.9.0",
+                "phly/http": "~0.9.0",
                 "php": ">=5.4.8",
                 "psr/http-message": "~0.6.0",
                 "zendframework/zend-escaper": "~2.3@stable"
@@ -305,20 +305,20 @@
                 "http",
                 "middleware"
             ],
-            "time": "2015-01-26 23:20:05"
+            "time": "2015-01-27 15:11:51"
         },
         {
             "name": "phly/http",
-            "version": "0.8.4",
+            "version": "0.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phly/http.git",
-                "reference": "8d687785e215625f2a4388c13f44a39dbd026e7b"
+                "reference": "0beb59ab1cf4e01d2d70b51c2aabf9ef5185911e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phly/http/zipball/8d687785e215625f2a4388c13f44a39dbd026e7b",
-                "reference": "8d687785e215625f2a4388c13f44a39dbd026e7b",
+                "url": "https://api.github.com/repos/phly/http/zipball/0beb59ab1cf4e01d2d70b51c2aabf9ef5185911e",
+                "reference": "0beb59ab1cf4e01d2d70b51c2aabf9ef5185911e",
                 "shasum": ""
             },
             "require": {
@@ -357,7 +357,7 @@
             "keywords": [
                 "http"
             ],
-            "time": "2015-01-26 22:54:22"
+            "time": "2015-01-27 02:00:29"
         },
         {
             "name": "phly/mustache",

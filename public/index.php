@@ -1,7 +1,7 @@
 <?php
 namespace Mwop;
 
-use Phly\Conduit\Middleware;
+use Phly\Conduit\MiddlewarePipe;
 use Phly\Http\Server;
 
 // Decline static file requests back to the PHP built-in webserver
@@ -18,7 +18,7 @@ $config = include 'config/config.php';
 
 $services = createServiceContainer($config);
 
-$app = new Middleware();
+$app = new MiddlewarePipe();
 
 // Basic functionality required everywhere
 $app->pipe($services->get('Mwop\Redirects'));
