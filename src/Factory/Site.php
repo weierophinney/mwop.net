@@ -2,7 +2,7 @@
 namespace Mwop\Factory;
 
 use Mwop\Job\Middleware as Jobs;
-use Phly\Conduit\Middleware;
+use Phly\Conduit\MiddlewarePipe as Middleware;
 
 class Site
 {

@@ -16,10 +16,8 @@ class Unauthorized
 
     public function __invoke($err, $req, $res, $next)
     {
-        error_log('In ' . get_class($this));
         if ($res->getStatusCode() !== 401) {
-            error_log('Invalid status code; passing to next handler');
-            return $next($err);
+            return $next($req, $res, $err);
         }
 
         $new = $req->getUri()->withPath('/auth');
@@ -28,7 +26,6 @@ class Unauthorized
             'redirect'  => (string) $req->getOriginalRequest()->getUri(),
         ];
 
-        error_log('Rendering 401 response');
         return $res->end($this->renderer->render($this->template, $view));
     }
 }

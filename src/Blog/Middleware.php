@@ -1,7 +1,7 @@
 <?php
 namespace Mwop\Blog;
 
-use Phly\Conduit\Middleware as BaseMiddleware;
+use Phly\Conduit\MiddlewarePipe as BaseMiddleware;
 
 class Middleware extends BaseMiddleware
 {

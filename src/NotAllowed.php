@@ -6,7 +6,7 @@ class NotAllowed
     public function __invoke($err, $req, $res, $next)
     {
         if ($res->getStatusCode() !== 405) {
-            return $next($err);
+            return $next($req, $res, $err);
         }
 
         if (is_array($err) || is_string($err)) {

@@ -2,7 +2,7 @@
 namespace Mwop;
 
 use Phly\Conduit\Http\Request as ConduitRequest;
-use Phly\Conduit\Middleware;
+use Phly\Conduit\MiddlewarePipe as Middleware;
 use Phly\Mustache\Mustache;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -42,7 +42,7 @@ class Templated extends Middleware
         $view = $request->getAttribute('view', false);
 
         if (false === $view || ! $view->template) {
-            return $next();
+            return $next($request, $response);
         }
 
         return $response->write($this->renderer->render(

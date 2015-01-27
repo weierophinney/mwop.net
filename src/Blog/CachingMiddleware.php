@@ -18,7 +18,7 @@ class CachingMiddleware
     public function __invoke($req, $res, $next)
     {
         if (! $this->enabled) {
-            return $next();
+            return $next($req, $res);
         }
 
         if (! $req->getAttribute('blog', false)) {
@@ -39,7 +39,7 @@ class CachingMiddleware
             return $this->cache($req, $res, $next);
         }
 
-        return $next($req);
+        return $next($req, $res);
     }
 
     private function fetchFromCache($req, $res, $next)
@@ -47,7 +47,7 @@ class CachingMiddleware
         $path = $req->getUri()->getPath();
         if (! preg_match('#^/(?P<page>[^/]+\.html)$#', $path, $matches)) {
             // Nothing to do; not a blog post
-            return $next();
+            return $next($req, $res);
         }
 
         $cachePath = sprintf('%s/%s', $this->cachePath, $matches['page']);
@@ -55,7 +55,7 @@ class CachingMiddleware
         if (! file_exists($cachePath)) {
             // Nothing in cache, but should be cached
             $req->getAttribute('blog')->cacheable = $matches['page'];
-            return $next();
+            return $next($req, $res);
         }
 
         // Cache hit!
