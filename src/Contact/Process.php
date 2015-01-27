@@ -26,7 +26,9 @@ class Process
 
     public function __invoke($request, $response, $next)
     {
+        error_log(sprintf("In %s\n", __METHOD__));
         if ($request->getMethod() !== 'POST') {
+            error_log(sprintf("DID NOT RECEIVE POST! Returning 405\n"));
             return $next($request, $response->withStatus(405), 'POST');
         }
 
@@ -38,6 +40,7 @@ class Process
         if (! isset($data['csrf'])
             || ! $token->isValid($data['csrf'])
         ) {
+            error_log(sprintf("Invalid CSRF token; redisplaying form\n"));
             // re-display form
             return $next($this->redisplayForm(
                 ['csrf' => 'true', 'data' => $data],
@@ -51,6 +54,7 @@ class Process
         $filter->setData($data);
 
         if (! $filter->isValid()) {
+            error_log(sprintf("Invalid form data; redisplaying form with messages\n"));
             // re-display form
             return $next($this->redisplayForm(
                 $filter->getMessages(),
@@ -60,9 +64,12 @@ class Process
             ), $response);
         }
 
+        error_log(sprintf("Sending email\n"));
         $this->sendEmail($filter->getValues());
 
-        $path = str_replace('/process', '', $request->originalUrl) . '/thank-you';
+        $parent = $request->getOriginalRequest();
+        $path = str_replace('/process', '', (string) $parent->getUri()) . '/thank-you';
+        error_log(sprintf("Returning response with 302 status and location %s\n", $path));
         return $response
             ->withStatus(302)
             ->withHeader('Location', $path)
