@@ -23,7 +23,8 @@ class ThankYouPage
             return $next($request, $response->withStatus(405), 'GET');
         }
 
-        $parentUrl = str_replace('/thank-you', '', $request->originalUrl);
+        $parent = $request->getOriginalRequest();
+        $parentUrl = str_replace('/thank-you', '', (string) $parent->getUri());
         if (! $request->hasHeader('Referer')
             || ! preg_match('#^' . $parentUrl . '#', $request->getHeader('Referer'))
         ) {
