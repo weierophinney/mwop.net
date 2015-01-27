@@ -105,7 +105,7 @@ class EngineMiddleware
         return $next($req->withAttribute('view', (object) [
             'template' => 'blog.list',
             'model'    => $view,
-        ]));
+        ]), $res);
     }
 
     private function displayPost($id, $req, $res, $next)
@@ -113,12 +113,12 @@ class EngineMiddleware
         $post = $this->mapper->fetch($id);
         
         if (! $post) {
-            return $next('Not found', $res->withStatus(404));
+            return $next($req, $res->withStatus(404), 'Not found');
         }
 
         $post = include $post['path'];
         if (! $post instanceof EntryEntity) {
-            return $next('Not found', $res->withStatus(404));
+            return $next($req, $res->withStatus(404), 'Not found');
         }
 
         $original = $req->getOriginalRequest()->getUri()->getPath();
@@ -128,7 +128,7 @@ class EngineMiddleware
         return $next($req->withAttribute('view', (object) [
             'template' => 'blog.post',
             'model'    => $post,
-        ]));
+        ]), $res);
     }
 
     private function displayFeed($req, $res, $next, $type, $tag = null)
@@ -140,7 +140,7 @@ class EngineMiddleware
         }
 
         if (! file_exists($path)) {
-            return $next('Not found', $res->withStatus(404));
+            return $next($req, $res->withStatus(404), 'Not found');
         }
 
         return $res
