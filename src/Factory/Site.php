@@ -23,7 +23,7 @@ class Site
         // Contact form
         $templated->pipe('/contact', function ($req, $res, $next) use ($services) {
             $contact = $services->get('Mwop\Contact\Middleware');
-            $contact($req, $res, $next);
+            return $contact($req, $res, $next);
         });
 
         // Comics
