@@ -16,7 +16,7 @@ $entry->setAuthor($author);
 $entry->setDraft(false);
 $entry->setPublic(true);
 $entry->setCreated(new \DateTime('2015-01-26 09:20', new \DateTimezone('America/Chicago')));
-$entry->setUpdated(new \DateTime('2015-01-26 09:20', new \DateTimezone('America/Chicago')));
+$entry->setUpdated(new \DateTime('2015-01-28 15:40', new \DateTimezone('America/Chicago')));
 $entry->setTimezone('America/Chicago');
 $entry->setTags(array(
   'http',
@@ -381,11 +381,26 @@ $response = $response-&gt;withStatus(418, &quot;I&#39;m a teapot&quot;);
 
 <p>
     The latter provides a bit of a challenge to model. In likely 99% of use 
-    cases, we'll be seeing either an origin-form or an absolute-form 
-    request-target -- in other words, something that looks like a URI. As such, 
-    the request interface uses the verbiage &quot;URI&quot; — but the object it 
-    composes is a <code>UriTargetInterface</code>, and models any 
-    request-target.
+    cases, we'll be seeing an origin-form request-target — in other words,
+    something that looks like a URI. However, we still need to accommodate other
+    request-target types. As such, the request interface does the following:
+</p>
+
+<ul>
+    <li>It composes a <code>UriInterface</code> instance, which models the URI
+        itself</li>
+    <li>It provides two methods around request-targets: <code>getRequestTarget()</code>,
+        which will return the request target, and calculate it if not present
+        (using the composed URI to return an origin-form, or to return a "/" if
+        no URI is composed or it does not have a path); and
+        <code>withRequestTarget()</code>, to create a new instance with a
+        specific request target.</li>
+</ul>
+
+<p>
+    This latter allows you to address the non-origin-form requests targets when
+    needed — while keeping the URI information present in the request, which you
+    may need for establishing HTTP client connections.
 </p>
 
 <p>Let's get the method and URI from the request:</p>
@@ -397,17 +412,11 @@ $uri    = $request-&gt;getUri();
 
 <p>
     <code>$uri</code> in this case will be an instance of the 
-    <code>UriTargetInterface</code>, and allows you to introspect the 
-    request-target:
+    <code>UriInterface</code>, and allows you to introspect the 
+    URI:
 </p>
 
 <pre><code class="lang-php">
-// Tests:
-$uri-&gt;isOrigin();
-$uri-&gt;isAbsolute();
-$uri-&gt;isAuthority();
-$uri-&gt;isAsterisk();
-
 // URI parts:
 $scheme    = $uri-&gt;getScheme();
 $userInfo  = $uri-&gt;getUserInfo();
@@ -855,6 +864,18 @@ $event-&gt;setRequest($request)
 </ul>
 
 <p>I'm looking forward to passage of PSR-7; I think it will enable a whole new breed of PHP applications.</p>
+
+<h4>Updates</h4>
+
+<ul>
+    <li><em>2015-01-28</em>: Updated post to reflect psr/http-message 0.8.0. 
+        That version renamed <code>UriTargetInterface</code> to 
+        <code>UriInterface</code>, and modified it such that it now only models URIs. 
+        <code>RequestInterface</code> was modified to add the methods 
+        <code>getRequestTarget()</code> and <code>withRequestTarget()</code>, which 
+        allow simpler and better flexibility around non-origin-form request-targets. 
+        The post was updated to reflect these changes.</li>
+</ul>
 EOT;
 $entry->setExtended($extended);
 
