@@ -28,7 +28,7 @@ class CachePosts
 
         // Prepare final handler for middleware
         $failed = false;
-        $done = function ($err = null) use (&$failed) {
+        $done = function ($req, $res, $err = null) use (&$failed) {
             $failed = ($err) ? true : false;
         };
 
