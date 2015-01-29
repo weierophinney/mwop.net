@@ -16,7 +16,7 @@ $entry->setAuthor($author);
 $entry->setDraft(false);
 $entry->setPublic(true);
 $entry->setCreated(new \DateTime('2015-01-26 09:20', new \DateTimezone('America/Chicago')));
-$entry->setUpdated(new \DateTime('2015-01-28 15:40', new \DateTimezone('America/Chicago')));
+$entry->setUpdated(new \DateTime('2015-01-29 09:55', new \DateTimezone('America/Chicago')));
 $entry->setTimezone('America/Chicago');
 $entry->setTags(array(
   'http',
@@ -826,7 +826,7 @@ $event-&gt;setRequest($request)
 </p>
 
 <ul>
-    <li><a href="https://github.com/php-fig/fig-standards/blog/master/proposed/http-message.md">https://github.com/php-fig/fig-standards/blog/master/proposed/http-message.md</a></li>
+    <li><a href="https://github.com/php-fig/fig-standards/blob/master/proposed/http-message.md">https://github.com/php-fig/fig-standards/blob/master/proposed/http-message.md</a></li>
 </ul>
 
 <p>
@@ -836,7 +836,7 @@ $event-&gt;setRequest($request)
 </p>
 
 <ul>
-    <li><a href="https://github.com/php-fig/fig-standards/blog/master/proposed/http-message-meta.md">https://github.com/php-fig/fig-standards/blog/master/proposed/http-message-meta.md</a></li>
+    <li><a href="https://github.com/php-fig/fig-standards/blob/master/proposed/http-message-meta.md">https://github.com/php-fig/fig-standards/blob/master/proposed/http-message-meta.md</a></li>
 </ul>
 
 <p>
@@ -875,6 +875,7 @@ $event-&gt;setRequest($request)
         <code>getRequestTarget()</code> and <code>withRequestTarget()</code>, which 
         allow simpler and better flexibility around non-origin-form request-targets. 
         The post was updated to reflect these changes.</li>
+    <li><em>2015-01-29</em>: Fixed links to FIG proposal/meta document.</li>
 </ul>
 EOT;
 $entry->setExtended($extended);
