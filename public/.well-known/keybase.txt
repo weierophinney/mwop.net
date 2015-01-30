@@ -1,9 +1,10 @@
+==================================================================
 https://keybase.io/mwop
 --------------------------------------------------------------------
 
 I hereby claim:
 
-  * I am an admin of http://mwop.net
+  * I am an admin of https://mwop.net
   * I am mwop (https://keybase.io/mwop) on keybase.
   * I have a public key with fingerprint 8D98 47CD E15F 050B 8197  6BA7 B545 7969 23ED 29DA
 
@@ -14,42 +15,52 @@ To claim this, I am signing this object:
         "key": {
             "fingerprint": "8d9847cde15f050b81976ba7b545796923ed29da",
             "host": "keybase.io",
-            "key_id": "B545796923ED29DA",
+            "key_id": "b545796923ed29da",
+            "kid": "011129897c4324a0a7cab1237dd563cd461769d5e848f429ac93ee43f764019f27fc0a",
             "uid": "9a89e5672b134e8905a6ac50c6ed5600",
             "username": "mwop"
         },
+        "revoke": {
+            "sig_ids": [
+                "0b4d4170efa899667aefb614e1a757749a064bbe0b6fd7bdbe2a016946a2b37d0f"
+            ]
+        },
         "service": {
             "hostname": "mwop.net",
-            "protocol": "http:"
+            "protocol": "https:"
         },
         "type": "web_service_binding",
         "version": 1
     },
-    "ctime": 1400855444,
+    "ctime": 1422628823,
     "expire_in": 157680000,
-    "prev": "fa32224d3c33ca37a9695f20f7c4ff61781d3308aec053002de0e343d06314fb",
-    "seqno": 31,
+    "prev": "00aac1b30f571649e1fbda780f157620413855fe295f1e8260c2a148353f073c",
+    "seqno": 55,
     "tag": "signature"
 }
 
-with the aforementioned key, yielding the PGP signature:
+which yields the PGP signature:
 
 -----BEGIN PGP MESSAGE-----
 Version: GnuPG v1
 
-owFNUTtrFUEUXq8PUImYVkwzVuIlzHtnljRKkkaxsVC0WOZx9mbQ7K67e2+8XELQ
-WNgZ0dr8AVtb0U7QX6A/QBCsxc6ZoOI0h/le5xzOwdLxbLT8dmMeLv24/OXYp/ff
-bXZr796rBbKNn6Nige7DUalCPYGu7UI9oAIprxXPnQciKiywVUTn0prcCi5yLTVl
-4Kn2Bo3RVtMnR4yxpofV0EQsfsrgI3rtn35jner1q5GbHhHaKA1C5tQSxkFpLIw0
-TmAnwQuJcRL20NVmG6J6e6dp0e4YRWQWHKR5U9v/2NUahuhpu2ZoXPMgolvD0BbJ
-NMzbpNoBW/7xlzbUPu4bDTPo+tDUqCBR6YaQAgnHWAnBOR8jeNSGDsqQFCKXCseX
-2sAsRlaGUUq5Z44xZ1hu4qaiorjKHa8qSXJFPGNYGXBYMIypBwyMM48lI7yyKG30
-sG5QwUic00xiZh8mtRmmHaDdZ5snsuVRdurkKF0sO3P6/N87Pl7LDm8u3d07W658
-/fBkevHzzxcvf125vpIdbr47WHvzdPxxcefc/o0Lr78937/NfwM=
-=WaYM
+owFtkj2LFEEQhsc7FTwQPRBBzPoicT36+2OjA9FUEEVBZOmP6t1x3ZlxZm7P5djc
+QMTMUCMDAxMRzPwBFxgoCP4A0UARBGO7FwUDO2m6+u2n3qqux8fXi7XN15cW5da3
+c58OHXx1xbWDJ7/2kavDAg330RRWWyyrMbRNW1Y9GiIdjObKByAiYoGdJkZJZ5UT
+XCgjDWUQqAkWDdCk7vKLhHG2g+2yTrF0GJUhRf+jn64uMCGEGm2U54xyi63y1hHK
+VAhCMh+4JEqaIEBzHTk11hsGwFlUkmNiIlXR44zbXeGM1QaEVNQRxkEbLKy0XmAv
+IfEwzsIO2srOIKlne3WDlgPUwryeQq6+K8fJcIeGtxB2PHCiMMTENFIqC9FJwoFY
+JZTixmLJnQPsZAzKBQfUYiINl5a65B9HdDuxU7Z56Vfw3KF/Mm9X0Cc/TVv3ta/v
+puik75tumB31iybL9sCN/gBGrqxC+pv0Yg5tV9YVGpKk9H2ZiYRTKqnWlA0Q3G/K
+FkZlVgglNU4r54F5bji21hPH8I0oFJHcAIkuWKVxzGKKOWFaiAjUiEhAU4k9tYRr
+JljEinmUa7pX1WgoRDJqxwma2lbZfrcFtNx4cPlwsblWHD2yluer2Dh28u/QvX9V
+PJ282Pr88erFOPjy7tSHnR309vmVE8WzR9cvfF+uz26+/PnwDCU/Tt85e/7Nbw==
+=W9S3
 -----END PGP MESSAGE-----
 
 And finally, I am proving ownership of this host by posting or
 appending to this document.
 
 View my publicly-auditable identity here: https://keybase.io/mwop
+
+==================================================================
