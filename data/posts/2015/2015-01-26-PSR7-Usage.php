@@ -16,7 +16,7 @@ $entry->setAuthor($author);
 $entry->setDraft(false);
 $entry->setPublic(true);
 $entry->setCreated(new \DateTime('2015-01-26 09:20', new \DateTimezone('America/Chicago')));
-$entry->setUpdated(new \DateTime('2015-01-29 09:55', new \DateTimezone('America/Chicago')));
+$entry->setUpdated(new \DateTime('2015-02-01 16:35', new \DateTimezone('America/Chicago')));
 $entry->setTimezone('America/Chicago');
 $entry->setTags(array(
   'http',
@@ -690,6 +690,36 @@ function (
 </p>
 
 <pre><code class="lang-php">
+/* response = */ function (ServerRequestInterface $request) {
+    /* ... */
+    return $response;
+}
+</code></pre>
+
+<p>
+    In lambda middleware, you compose one into another:
+</p>
+
+<pre><code class="lang-php">
+$inner = function (ServerRequestInterface $request) {
+    /* ... */
+    return $response;
+};
+$outer = function (ServerRequestInterface $request) use ($inner) {
+    /* ... */
+    $response = $inner($request);
+    /* ... */
+    return $response;
+};
+$response = $outer($request);
+</pre>
+
+<p>
+    And then there's the pattern popularized by Rack and WSGI, in which the
+    each middleware is an object, and is passed to the outer:
+</p>
+
+<pre><code class="lang-php">
 class Command
 {
     private $wrapped;
@@ -876,6 +906,9 @@ $event-&gt;setRequest($request)
         allow simpler and better flexibility around non-origin-form request-targets. 
         The post was updated to reflect these changes.</li>
     <li><em>2015-01-29</em>: Fixed links to FIG proposal/meta document.</li>
+    <li><em>2015-02-01</em>: Corrected description of lambda middleware,
+        and noted the last middleware pattern is that popularized by Rack
+        and WSGI.</li>
 </ul>
 EOT;
 $entry->setExtended($extended);
