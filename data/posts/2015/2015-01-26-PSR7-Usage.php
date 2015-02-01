@@ -712,7 +712,7 @@ $outer = function (ServerRequestInterface $request) use ($inner) {
     return $response;
 };
 $response = $outer($request);
-</pre>
+</code></pre>
 
 <p>
     And then there's the pattern popularized by Rack and WSGI, in which the
