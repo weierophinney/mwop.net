@@ -28,7 +28,7 @@ class AuthCallback
                 unset($_SESSION['opauth']);
                 break;
             case 'post':
-                $authResponse = unserialize(base64_decode($req->getQueryParams()['opauth']));
+                $authResponse = unserialize(base64_decode($req->getParsedBody()['opauth']));
                 break;
             case 'get':
                 $authResponse = unserialize(base64_decode($req->getQueryParams()['opauth']));
