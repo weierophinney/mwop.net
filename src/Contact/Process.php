@@ -34,7 +34,7 @@ class Process
 
         $this->session->start();
 
-        $data  = $request->getAttribute('body', []);
+        $data  = $request->getParsedBody() ?: [];
         $token = $this->session->getCsrfToken();
 
         if (! isset($data['csrf'])
