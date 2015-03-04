@@ -82,7 +82,7 @@ class Process
 
         $view = array_merge($this->config, [
             'error'  => ['message' => json_encode($error)],
-            'action' => $request->originalUrl,
+            'action' => (string) $request->getOriginalRequest()->getUri(),
             'csrf'   => $csrfToken->getValue(),
         ]);
 
