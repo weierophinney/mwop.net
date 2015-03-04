@@ -406,16 +406,16 @@
         },
         {
             "name": "phly/phly-comic",
-            "version": "1.0.8",
+            "version": "1.0.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/weierophinney/PhlyComic.git",
-                "reference": "c1c44cfd2a0c587d08671b1d20b17d6be95dd7de"
+                "reference": "1274ef84c1d7d2750bf5aed021e0453a4ba2de8b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/weierophinney/PhlyComic/zipball/c1c44cfd2a0c587d08671b1d20b17d6be95dd7de",
-                "reference": "c1c44cfd2a0c587d08671b1d20b17d6be95dd7de",
+                "url": "https://api.github.com/repos/weierophinney/PhlyComic/zipball/1274ef84c1d7d2750bf5aed021e0453a4ba2de8b",
+                "reference": "1274ef84c1d7d2750bf5aed021e0453a4ba2de8b",
                 "shasum": ""
             },
             "require": {
@@ -461,7 +461,7 @@
                 "source": "https://github.com/weierophinney/PhlyComic",
                 "issues": "https://github.com/weierophinney/PhlyComic/issues"
             },
-            "time": "2015-01-28 20:47:58"
+            "time": "2015-03-04 21:04:24"
         },
         {
             "name": "psr/http-message",
