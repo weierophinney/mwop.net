@@ -19,7 +19,7 @@ class EntryView
 
     public function __construct(array $entry, $basePath, array $disqus)
     {
-        $this->basePath = $basePath;
+        $this->basePath = rtrim($basePath, '/');
         $this->disqus   = $disqus;
 
         foreach ($entry as $key => $value) {
