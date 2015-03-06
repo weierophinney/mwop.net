@@ -35,7 +35,7 @@ class EngineMiddleware
             return $this->listPosts($req, $res, $next, $tag);
         }
 
-        if (preg_match('#^/(?P<id>[^/]+)\.html$#', $path, $matches)) {
+        if (preg_match('#^/+(?P<id>[^/]+)\.html$#', $path, $matches)) {
             return $this->displayPost($matches['id'], $req, $res, $next);
         }
 
