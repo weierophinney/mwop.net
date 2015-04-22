@@ -20,7 +20,7 @@ class LandingPage
 
     public function __invoke($request, $response, $next)
     {
-        $path = $request->getUri()->getPath();
+        $path = $request->getUri()->getPath() ?: '/';
         if ($path !== $this->path) {
             return $next($request, $response);
         }

@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "35c39f53b9981093b4f490c8f421ecb9",
+    "hash": "382c545fad1755906b9c81dc38c6d778",
     "packages": [
         {
             "name": "aura/session",
@@ -254,22 +254,22 @@
         },
         {
             "name": "phly/conduit",
-            "version": "0.14.0",
+            "version": "0.15.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phly/conduit.git",
-                "reference": "382586cbf79e98b1f21249c76a41647575225edc"
+                "reference": "1ab308fb4af404f629fc0baa728316a9ae10e63f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phly/conduit/zipball/382586cbf79e98b1f21249c76a41647575225edc",
-                "reference": "382586cbf79e98b1f21249c76a41647575225edc",
+                "url": "https://api.github.com/repos/phly/conduit/zipball/1ab308fb4af404f629fc0baa728316a9ae10e63f",
+                "reference": "1ab308fb4af404f629fc0baa728316a9ae10e63f",
                 "shasum": ""
             },
             "require": {
-                "phly/http": "^0.11",
+                "phly/http": "^0.12",
                 "php": ">=5.4.8",
-                "psr/http-message": "^0.9",
+                "psr/http-message": "^0.10",
                 "zendframework/zend-escaper": "~2.3@stable"
             },
             "require-dev": {
@@ -305,25 +305,25 @@
                 "http",
                 "middleware"
             ],
-            "time": "2015-02-17 14:39:41"
+            "time": "2015-04-22 17:22:17"
         },
         {
             "name": "phly/http",
-            "version": "0.11.0",
+            "version": "0.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phly/http.git",
-                "reference": "196f9d0dc11723bbabace8451218c420f90e330f"
+                "reference": "db3de333f75086a9571be7ee1e1d4583df6f0fe5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phly/http/zipball/196f9d0dc11723bbabace8451218c420f90e330f",
-                "reference": "196f9d0dc11723bbabace8451218c420f90e330f",
+                "url": "https://api.github.com/repos/phly/http/zipball/db3de333f75086a9571be7ee1e1d4583df6f0fe5",
+                "reference": "db3de333f75086a9571be7ee1e1d4583df6f0fe5",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.4.8",
-                "psr/http-message": "^0.9"
+                "psr/http-message": "^0.10"
             },
             "require-dev": {
                 "phpunit/phpunit": "3.7.*",
@@ -357,7 +357,7 @@
             "keywords": [
                 "http"
             ],
-            "time": "2015-02-17 14:28:44"
+            "time": "2015-04-14 15:25:10"
         },
         {
             "name": "phly/mustache",
@@ -465,16 +465,16 @@
         },
         {
             "name": "psr/http-message",
-            "version": "0.9.0",
+            "version": "0.10.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/http-message.git",
-                "reference": "4727540cebedd52cfd5dcc98c18fc20a24ba7372"
+                "reference": "9723465b3e7c8ecb0436f066bfb8a13e1bac1789"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/http-message/zipball/4727540cebedd52cfd5dcc98c18fc20a24ba7372",
-                "reference": "4727540cebedd52cfd5dcc98c18fc20a24ba7372",
+                "url": "https://api.github.com/repos/php-fig/http-message/zipball/9723465b3e7c8ecb0436f066bfb8a13e1bac1789",
+                "reference": "9723465b3e7c8ecb0436f066bfb8a13e1bac1789",
                 "shasum": ""
             },
             "type": "library",
@@ -507,7 +507,7 @@
                 "request",
                 "response"
             ],
-            "time": "2015-02-13 01:35:55"
+            "time": "2015-04-13 14:20:01"
         },
         {
             "name": "zendframework/zend-config",
