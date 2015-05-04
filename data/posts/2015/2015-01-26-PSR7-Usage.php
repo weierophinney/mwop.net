@@ -16,7 +16,7 @@ $entry->setAuthor($author);
 $entry->setDraft(false);
 $entry->setPublic(true);
 $entry->setCreated(new \DateTime('2015-01-26 09:20', new \DateTimezone('America/Chicago')));
-$entry->setUpdated(new \DateTime('2015-02-01 16:35', new \DateTimezone('America/Chicago')));
+$entry->setUpdated(new \DateTime('2015-05-04 16:40', new \DateTimezone('America/Chicago')));
 $entry->setTimezone('America/Chicago');
 $entry->setTags(array(
   'http',
@@ -28,8 +28,8 @@ $body =<<<'EOT'
 <p>
     <a href="https://github.com/php-fig/fig-standards/blob/master/proposed/http-message.md">PSR-7</a>
     is shaping up nicely. I pushed some updates earlier this week, and we 
-    tagged 0.6.0 of the <a href="https://github.com/php-fig/http-message">http-message package</a> 
-    last week for implementors and potential users to start coding against.
+    tagged <strike>0.6.0</strike>0.11.0 of the <a href="https://github.com/php-fig/http-message">http-message package</a> 
+    <strike>last week</strike> today for implementors and potential users to start coding against.
 </p>
 
 <p>
@@ -193,8 +193,11 @@ METHOD request-target HTTP/VERSION
 <p>PSR-7 simplifies access to the headers by providing an object-oriented layer on top of them:</p>
 
 <pre><code class="lang-php">
-// Returns null if not found:
+// Returns an empty array if not found:
 $header = $message-&gt;getHeader(&#39;Accept&#39;);
+
+// Returns an empty string if not found:
+$header = $message-&gt;getHeaderLine(&#39;Accept&#39;);
 
 // Test for a header:
 if (! $message-&gt;hasHeader(&#39;Accept&#39;)) {
@@ -202,7 +205,10 @@ if (! $message-&gt;hasHeader(&#39;Accept&#39;)) {
 
 // If the header has multiple values, fetch them
 // as an array:
-$values = $message-&gt;getHeaderLines(&#39;X-Foo&#39;);
+$values = $message-&gt;getHeader(&#39;X-Foo&#39;);
+
+// Or as a comma-separated string:
+$values = $message-&gt;getHeaderLine(&#39;X-Foo&#39;);
 </code></pre>
 
 <p>
@@ -222,7 +228,7 @@ $values = $message-&gt;getHeaderLines(&#39;X-Foo&#39;);
         ]
     ]
  */
-foreach ($message-&gt;getAllHeaders() as $header =&gt; $values) {
+foreach ($message-&gt;getHeaders() as $header =&gt; $values) {
 }
 </code></pre>
 
@@ -280,7 +286,7 @@ $message = $message-&gt;withAddedHeader(&#39;X-Foo&#39;, &#39;bar&#39;);
 
 <p>
     Accordingly, message bodies in PSR-7 are modeled as <a 
-    href="https://github.com/php-fig/http-message/blog/master/src/StreamableInterface.php">streams</a>.
+    href="https://github.com/php-fig/http-message/blog/master/src/StreamInterface.php">streams</a>.
 </p>
 
 <p>
@@ -297,8 +303,8 @@ $body-&gt;write(&#39;Here is the content for my message!&#39;);
 <blockquote><p>
     The above example, and all concrete examples of messages in this post will 
     be using <a href="https://github.com/phly/http">phly/http</a>, a library 
-    I've written that tracks the progress of PSR_7. In this case, 
-    <code>Stream</code> implements <code>StreamableInterface</code>.
+    I've written that tracks the progress of PSR-7. In this case, 
+    <code>Stream</code> implements <code>StreamInterface</code>.
 </p></blockquote>
 
 <p>
@@ -317,7 +323,7 @@ $message = $message-&gt;withBody(new Stream(&#39;php://temp&#39;));
 </p>
 
 <p>
-    One benefit to having the <code>StreamableInterface</code> in PSR-7 is that 
+    One benefit to having the <code>StreamInterface</code> in PSR-7 is that 
     it provides flexibility for a number of different patterns. As an example, 
     you could create a &quot;callback&quot; implementation that on a 
     <code>read()</code> or <code>getContents()</code> operation delegates to a 
@@ -330,7 +336,7 @@ $message = $message-&gt;withBody(new Stream(&#39;php://temp&#39;));
 </p>
 
 <p>
-    The <code>StreamableInterface</code> exposes the subset of stream 
+    The <code>StreamInterface</code> exposes the subset of stream 
     operations that will be of most use with HTTP message bodies; it is by no 
     means comprehensive, but it covers a large set of possible operations.
 </p>
@@ -454,6 +460,15 @@ $request = $request
     -&gt;withUri($uri-&gt;withPath(&#39;/api/user&#39;));
 </code></pre>
 
+<p>
+    Typically for requests, you want the <code>Host</code> header to match the
+    value in the URI. As such, by default, <code>withUri()</code> will also
+    set the <code>Host</code> header on the returned instance based on the
+    value present in the URI. If you want to keep the original value, the method
+    takes an optional second argument, <code>$preserveHost</code>, which, if 
+    set to a boolean <code>true</code> value, will do exactly what it says.
+</p>
+
 <h2>Server-Side requests</h2>
 
 <p>
@@ -494,13 +509,13 @@ $request = $request
 $query   = $request-&gt;getQueryParams();
 $body    = $request-&gt;getBodyParams();
 $cookies = $request-&gt;getCookieParams();
-$files   = $request-&gt;getFileParams();
+$files   = $request-&gt;getUploadedFiles();
 $server  = $request-&gt;getServerParams();
 </code></pre>
 
 <p>
     Let's say you are writing an API, and want to accept JSON requests; doing 
-so might look like the following:
+    so might look like the following:
 </p>
 
 <pre><code class="lang-php">
@@ -535,6 +550,62 @@ $request = $request
     <code>with</code> methods exist for each of the various input types 
     available to <code>ServerRequestInterface</code> instances.
 </p>
+
+<h3>Uploaded Files</h3>
+
+<p>
+    Uploaded files seem like they should be relatively straight-forward: just use
+    <code>$_FILES</code>, right? Wrong.
+</p>
+
+<ul>
+    <li>In cases where you have arrays of uploads (for example, when you're 
+        using JavaScript to allow people to incrementally upload more files), 
+        <code>$_FILES</code> generates a very different structure.</li>
+    <li>In non-SAPI environments (for example, testing, or when using <a 
+        href="http://reactphp.org">ReactPHP</a>), <code>$_FILES</code> is not 
+        populated.</li>
+    <li>Even in SAPI environments, if you're not in a <code>POST</code> 
+        request, <code>$_FILES</code> is not populated</li>
+</ul>
+
+<p>
+    PSR-7 smooths this over by having uploaded files represented as a tree of 
+    <code>UploadedFileInterface</code> instances. This interface defines 
+    methods for introspecting the upload (for example, the filename associated, 
+    the media type, and the size), but also provides some behavior:
+</p>
+
+<ul>
+    <li><code>getStream()</code> will return a <code>StreamInterface</code> 
+        instance, allowing you to manipulate the upload as a stream; this can be 
+        useful to stream it to a CDN, for instance.</li>
+    <li><code>moveTo()</code> allows you to move the upload &mdash; after 
+        validating it, of course! &mdash; to another location; on SAPI 
+        environments, this will use <code>move_uploaded_file()</code>, ensuring 
+        proper garbage cleanup by PHP.</li>
+</ul>
+
+<p>
+    Practically speaking, it means you can interact with file uploads very simply:
+</p>
+
+<pre><code class="lang-php">
+// Single upload:
+$avatar = $request->getFileUploads()['avatar']; // UploadedFileInterface!
+
+// Arrays of uploads:
+$icon1 = $request->getFileUploads()['profile']['icons'][0]; // UploadedFileInterface!
+$icon2 = $request->getFileUploads()['profile']['icons'][1]; // UploadedFileInterface!
+
+// Move an uploaded file:
+$icon1->moveTo('data/uploads/icons/', UUID::idv4() . '.png');
+
+// Stream an uploaded file:
+// Note: StreamRegister is a fictional utility for creating a PHP stream 
+//       wrapper from a StreamInterface instance.
+stream_copy_to_stream(StreamRegister($avatar->getStream()), $s3Stream);
+</code></pre>
 
 <h3>Attributes</h3>
 
@@ -909,6 +980,9 @@ $event-&gt;setRequest($request)
     <li><em>2015-02-01</em>: Corrected description of lambda middleware,
         and noted the last middleware pattern is that popularized by Rack
         and WSGI.</li>
+    <li><em>2015-05-04</em>: Updated to ensure it follows the interfaces as outlined
+        at the end of the second Review period of PSR-7 (psr/http-message 0.11.0);
+        added section on file uploads.</li>
 </ul>
 EOT;
 $entry->setExtended($extended);
