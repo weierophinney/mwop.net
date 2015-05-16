@@ -49,7 +49,7 @@ $extended=<<<'EOT'
   typically when we move to a new minor version of the framework, but
   occasionally even on trivial bugfix releases. We've tried <code>filter-branch</code>
   with <code>subdirectory-filter</code>, we've tried <code>subtree split</code>,
-  and even <a href="https://github.com/dflydev/subsplit">subsplit</a>. We've used
+  and even <a href="https://github.com/dflydev/git-subsplit">subsplit</a>. We've used
   manual scripts that rsync the contents of each commit and create a reference commit.
   Our current version is a combination of several approaches, but we've found we
   must run it manually and verify the results before pushing, as we've had a number
