@@ -15,8 +15,8 @@ $entry->setTitle('Splitting the ZF2 Components');
 $entry->setAuthor($author);
 $entry->setDraft(false);
 $entry->setPublic(true);
-$entry->setCreated(new \DateTime('2015-05-15 11:00', new \DateTimezone('America/Chicago')));
-$entry->setUpdated(new \DateTime('2015-05-15 11:00', new \DateTimezone('America/Chicago')));
+$entry->setCreated(new \DateTime('2015-05-15 19:30', new \DateTimezone('America/Chicago')));
+$entry->setUpdated(new \DateTime('2015-05-15 19:30', new \DateTimezone('America/Chicago')));
 $entry->setTimezone('America/Chicago');
 $entry->setTags(array(
   'git',
@@ -26,12 +26,12 @@ $entry->setTags(array(
 
 $body =<<<'EOT'
 <p>
-  One of the goals for the Zend Framework 3 effort is to split the various
-  components into their own repositories. This proved to be a huge challenge,
-  due to the amount of history in our repository (the git repository has
-  history going back to 2009, around the time ZF 1.8 was released!), and the
-  goals we had for what component repositories should look like. This is the
-  story of how we made it happen.
+  Today we accomplished one of the major goals towards Zend Framework 3: 
+  splitting the various components into their own repositories. This proved to 
+  be a huge challenge, due to the amount of history in our repository (the git 
+  repository has history going back to 2009, around the time ZF 1.8 was 
+  released!), and the goals we had for what component repositories should look 
+  like. This is the story of how we made it happen.
 </p>
 EOT;
 $entry->setBody($body);
@@ -64,13 +64,13 @@ $extended=<<<'EOT'
   they get bumped regardless whenever we do a new release of the framework. When
   we start considering a new major version of the framework, it doesn't necessarily
   make sense to bump such components, as there will be literally zero breaking
-  changes.
+  changes, and, in many cases, no new features.
 </p>
   
 <p>
   In other cases, such as the <code>EventManager</code>, <code>ServiceManager</code>,
-  and a handful of other components, we know that these will need new major versions
-  due to some architectural changes that need to happen. However, as long as we're
+  and a handful of other components, we know that these will require major versions
+  due to necessary architectural changes. However, as long as we're
   still developing minor release branches of the framework, we cannot have meaningful
   development on those features due to the complexities of keeping changes in sync
   between branches.
@@ -93,7 +93,7 @@ $extended=<<<'EOT'
 <p>
   Splitting the components gives us the opportunity to expand the number of contributors
   with commit access. The framework itself can pin to specific versions of components,
-  and those maintainers with commit access to the framework can review and change
+  and maintainers with commit access to the <em>framework</em> can review and change
   those versions based on integration and smoke tests. In the meantime, a larger
   set of contributors can be gradually improving the individual components, and <em>users</em>
   can selectively adopt those new versions into their applications, on their own
@@ -115,7 +115,7 @@ $extended=<<<'EOT'
 <h2>The Goal</h2>
 
 <p>
-  Since we branched ZF2 development our repository has looked something like the following:
+  Since we branched ZF2 development, our repository has looked something like the following:
 </p>
 
 <pre><code>
@@ -200,7 +200,7 @@ test/
   <li>The <code>.travis.yml</code> file can be streamlined, as we're now only
     testing one component.</li>
   <li>Most testing infrastructure can be removed, as it's around simplifying
-    running tests for individual components. The <code>Bootstrap.php</code>
+    running tests for individual components within the larger framework. The <code>Bootstrap.php</code>
     gets renamed to <code>bootstrap.php</code> to avoid being confused with
     unit test files.</li>
   <li><code>README-GIT.md</code> gets replaced with a lengthier
@@ -242,12 +242,13 @@ test/
   a way to merge two different lines of history together, but, for our purposes,
   also allow us to <em>prune</em> history. Why would we do this? Because we
   don't really need history prior to 2.0.0 development at this point. In large
-  part, this is because it's irrelevant; files have been moved around and
-  changed so much that tracing the history is quite difficult.
+  part, this is because it's irrelevant; files were moved around and
+  changed so much between forking from the 1.X tree and 2.0 that tracing the 
+  history is quite difficult.
 </p>
 
 <p>
-  I found a methodology for pruning eventually that looks like this:
+  I eventually found a methodology for pruning that looks like this:
 </p>
 
 <pre><code class="lang-bash">
@@ -284,8 +285,8 @@ $ rm .git/info/grafts
 
 <ul>
   <li>Split each of the <code>library/</code> and <code>tests/</code> component
-    subtrees into their own branches</li>
-  <li>Create a new repostiory, and add each of the above as subtrees.</li>
+    subtrees into their own branches.</li>
+  <li>Create a new repository, and add each of the above as subtrees.</li>
 </ul>
 
 <pre><code class="lang-bash">
@@ -306,7 +307,7 @@ $ git subtree add --prefix=test/ zf2 test
   should! <strong>However</strong>, the history is all wrong; if you check out
   any tags, you get the full ZF2 tree for the tag. As such, subtree fails one of
   the most important criteria right off the bat: that each commit and tag
-  represent the component.
+  represent <em>only</em> the component.
 </p>
 
 <h3>subdirectory-filter</h3>
@@ -422,7 +423,7 @@ git filter-branch -f \
 
 <p>
   We had a few stumbling blocks getting the above to work. The first was that,
-  for purposes of testing, we had to specify a commit range, instead of <code>--
+  for purposes of testing, we had to specify a <em>commit range</em>, instead of <code>--
   --all</code>. This was necessary because of the size of the repo; at ~27k
   commits, running over every single commit can take between 5 and 12 hours,
   depending on git version, HDD vs ramdisk, speed of I/O, etc. For small
@@ -432,8 +433,9 @@ git filter-branch -f \
 
 <p>
   To compound the situation, we also made a last minute change to only do
-  history from the 2.0.0rc7 tag forward, and this is when things fell apart. A
-  large number of tags would not get rewritten, and we couldn't figure out why.
+  history from the 2.0.0rc7 tag forward, and this is when things completely fell apart. A
+  large number of tags would not get rewritten, the set of malformed tags varied 
+  between components, and we couldn't figure out why.
 </p>
 
 <p>
@@ -447,18 +449,18 @@ git filter-branch -f \
 <p>
   This meant that the only way to get consistent results that met our criteria
   was to run a test over the full history. Fortunately, sometime around that
-  point, <a href="http://www.renatomefi.com.br/">Renato Mendes Figueiredo</a>
+  point, a community member, <a href="http://www.renatomefi.com.br/">Renato</a>,
   suggested I try a run using a <a
     href="http://en.wikipedia.org/wiki/Tmpfs">tmpfs filesystem</a> &mdash;
   essentially a ramdisk. This sped up runs by a factor of 2, and I was able to
-  validate my hypothesis.
+  validate my hypothesis within an evening.
 </p>
 
 <p>
   Another stumbling block was empty commits. We originally used
   <code>filter-branch</code>'s <code>--prune-empty</code> switch, but found it
-  was generally unreliable when used with <code>tree-filter</code>. Use the
-  <code>commit-filter</code> as listed above; it did a stellar job.
+  was generally unreliable when used with <code>tree-filter</code>. The solution
+  to this problem is the <code>commit-filter</code> as listed above; it did a stellar job.
 </p>
 
 <h3>Empty merge commits</h3>
@@ -523,9 +525,10 @@ $ ./bin/split.sh -c Authentication 2>&1 | tee authentication.log
 
 <p>
   You're quite astute! And for that, we had a secret weapon: a community
-  contributor, working for an AWS partner, which sponsored splitting all
-  components in parallel at once. That, though, is another story, for another
-  time!
+  contributor, <a href="https://github.com/gianarb">Gianluca Arbezanno</a> 
+  working for an AWS partner, <a href="http://www.corley.it">Corley</a>, which 
+  sponsored splitting all components in parallel at once, allowing us to complete
+  the entire effort in a single day. I'll let others tell that story, though!
 </p>
 
 <h2>The results</h2>
@@ -571,6 +574,15 @@ $ ./bin/split.sh -c Authentication 2>&1 | tee authentication.log
   <em>am</em> quite happy with the results; our components look like they are
   and were always developed as first-class components, and have a rich history
   referencing their original development as part of the encompassing framework.
+</p>
+
+<h2>Kudos!</h2>
+
+<p>
+  I cannot thank Gianluca and Corley enough for their generous efforts! What looked
+  like a task that would take days and/or weeks happened literally overnight, allowing
+  us to complete a major task in Zend Framework 3 development, and setting the stage
+  for a ton of new features. Grazie!
 </p>
 EOT;
 $entry->setExtended($extended);
