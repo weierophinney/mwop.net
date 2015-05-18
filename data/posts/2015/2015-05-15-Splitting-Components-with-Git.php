@@ -525,7 +525,7 @@ $ ./bin/split.sh -c Authentication 2>&1 | tee authentication.log
 
 <p>
   You're quite astute! And for that, we had a secret weapon: a community
-  contributor, <a href="https://github.com/gianarb">Gianluca Arbezanno</a> 
+  contributor, <a href="https://github.com/gianarb">Gianluca Arbezzano</a> 
   working for an AWS partner, <a href="http://www.corley.it">Corley</a>, which 
   sponsored splitting all components in parallel at once, allowing us to complete
   the entire effort in a single day. I'll let others tell that story, though!
