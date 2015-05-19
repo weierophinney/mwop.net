@@ -127,7 +127,7 @@ $extended=<<<'EOT'
 </p>
 
 <p>
-  December 2015 came and went, and Phil resigned from FIG, leaving me in need of an
+  December 2014 came and went, and Phil resigned from FIG, leaving me in need of an
   additional sponsor. <a href="http://paul-m-jones.com">Paul M Jones</a> graciously stepped up.
 </p>
 
