@@ -79,7 +79,7 @@ $extended=<<<'EOT'
 
 <p>
   I decided to port <a href="https://github.com/senchalabs/connect">Connect</a>, the middleware
-  library that gave rise to <a href="http://expressjs.com/">Express/</a>, the arguably dominant
+  library that gave rise to <a href="http://expressjs.com/">Express</a>, the arguably dominant
   node web framework, to PHP. In doing so, I had one huge hurdle to jump
   immediately: HTTP abstraction.
 </p>
@@ -161,8 +161,9 @@ $extended=<<<'EOT'
 
 <p>
   So, we cancelled the vote around 24 hours before acceptance, and went back to draft stage.
-  Bernard Schussek provided some great justifications for an abstraction around file uploads
-  which we ended up incorporating, and we ironed out the URI/host relationships in a much simpler
+  <a href="http://webmozarts.com/">Bernard Schussek</a> provided some great 
+  justifications for an abstraction around file uploads which we ended up 
+  incorporating, and we ironed out the URI/host relationships in a much simpler 
   fashion than we had previously.
 </p>
 
