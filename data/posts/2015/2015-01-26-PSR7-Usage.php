@@ -16,7 +16,7 @@ $entry->setAuthor($author);
 $entry->setDraft(false);
 $entry->setPublic(true);
 $entry->setCreated(new \DateTime('2015-01-26 09:20', new \DateTimezone('America/Chicago')));
-$entry->setUpdated(new \DateTime('2015-05-04 16:40', new \DateTimezone('America/Chicago')));
+$entry->setUpdated(new \DateTime('2015-05-18 22:00', new \DateTimezone('America/Chicago')));
 $entry->setTimezone('America/Chicago');
 $entry->setTags(array(
   'http',
@@ -26,17 +26,14 @@ $entry->setTags(array(
 
 $body =<<<'EOT'
 <p>
-    <a href="https://github.com/php-fig/fig-standards/blob/master/proposed/http-message.md">PSR-7</a>
-    is shaping up nicely. I pushed some updates earlier this week, and we 
-    tagged <strike>0.6.0</strike>0.11.0 of the <a href="https://github.com/php-fig/http-message">http-message package</a> 
-    <strike>last week</strike> today for implementors and potential users to start coding against.
+    <a href="http://www.php-fig.org/psr/psr-7">PSR-7</a> is now accepted!!!
 </p>
 
 <p>
-    I'm still hearing some grumbles both of &quot;simplify!&quot; <em>and</em> 
+    <strike>I'm still hearing some grumbles both of &quot;simplify!&quot; <em>and</em> 
     &quot;not far enough!&quot; so I'm writing this posts to demonstrate usage of 
     the currently published interfaces, and to illustrate both the ease of use and 
-    the completeness and robustness they offer.
+    the completeness and robustness they offer.</strike>
 </p>
 
 <p>First, though I want to clarify what PSR-7 is attempting.</p>
@@ -983,6 +980,7 @@ $event-&gt;setRequest($request)
     <li><em>2015-05-04</em>: Updated to ensure it follows the interfaces as outlined
         at the end of the second Review period of PSR-7 (psr/http-message 0.11.0);
         added section on file uploads.</li>
+    <li><em>2015-05-18</em>: PSR-7 is now accepted!</li>
 </ul>
 EOT;
 $entry->setExtended($extended);
