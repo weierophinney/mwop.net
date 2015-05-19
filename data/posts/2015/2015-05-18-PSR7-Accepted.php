@@ -40,7 +40,7 @@ $extended=<<<'EOT'
   The road to PSR-7 was a long and winding one. It started in summer of 2012 as
   a draft proposal on HTTP clients by <a href="http://www.whitewashing.de/">Benjamin Eberlei</a>,
   during which others proposed that perhaps a smaller standard on the HTTP message
-  interfaces themselves &emdash; which would also allow targeting server-side
+  interfaces themselves &mdash; which would also allow targeting server-side
   applications, as those rely on the messages.
 </p>
 
