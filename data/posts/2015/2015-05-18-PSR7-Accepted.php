@@ -26,7 +26,7 @@ $entry->setTags(array(
 
 $body =<<<'EOT'
 <p>
-  I'm pleased to announce that as of 21:00 CDT on 18 May 2015, <a
+  I'm pleased to announce that as of 22:00 CDT on 18 May 2015, <a
     href="http://www.php-fig.org/psr/psr-7">http://www.php-fig.org/psr/psr-7</a>
   PSR-7 (HTTP Message Interfaces) has been accepted!
 </p>
