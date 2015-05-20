@@ -37,12 +37,11 @@ class Redirects
         }
 
         // Problematic posts due to bad characters
-        if (preg_match(
-            '#^/blog/251-Aspects(\%2C|,)-Filters(\%2C|,)-and-Signals(\%2C|,)-Oh(\%2C|,)-My(\%21|\!)\.html#',
-            $path,
-            $matches
-        )) {
-            return $this->redirect('/blog/251-aspects-filters-and-signals-oh-my.html', $url, $res);
+        if (preg_match('#^/blog/.*?[,;!].*\.html#', $path)) {
+            $newPath = str_replace([',', ';', '!'], '', $path);
+            $newPath = preg_replace('#\.+\.html#', '.html', $newPath);
+            $newPath = strtolower($newPath);
+            return $this->redirect($newPath, $url, $res);
         }
 
         // Former uploads
