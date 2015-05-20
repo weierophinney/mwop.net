@@ -7,6 +7,7 @@ class Redirects
     {
         $url  = $req->getUri();
         $path = $url->getPath();
+        error_log(sprintf("Examining url %s\n", $path));
 
         // Ensure php.net is able to retrieve PHP RSS feed without a problem
         if ('/blog/tag/php.xml' === $path) {
@@ -33,6 +34,14 @@ class Redirects
         // Serendipity style feed URIs
         if (preg_match('#^/blog/tag/(?P<tag>[^/.]+)(?!-(atom|rss))\.xml#', $path, $matches)) {
             return $this->redirect(sprintf('/blog/tag/%s/rss.xml', $matches['tag']), $url, $res);
+        }
+
+        // Problematic posts due to bad characters
+        if (preg_match('#^/blog/.*?[,;!].*\.html#', $path)) {
+            $newPath = str_replace([',', ';', '!'], '', $path);
+            $newPath = preg_replace('#\.+\.html#', '.html', $newPath);
+            $newPath = strtolower($newPath);
+            return $this->redirect($newPath, $url, $res);
         }
 
         // Former uploads
