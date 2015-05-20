@@ -3,7 +3,7 @@ use Mwop\Blog\EntryEntity;
 
 $entry = new EntryEntity();
 
-$entry->setId('251-Aspects,-Filters,-and-Signals,-Oh,-My!');
+$entry->setId('251-aspects-filters-and-signals-oh-my');
 $entry->setTitle('Aspects, Filters, and Signals, Oh, My!');
 $entry->setAuthor('matthew');
 $entry->setDraft(false);
