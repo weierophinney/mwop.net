@@ -3,7 +3,7 @@ namespace Mwop\Auth;
 
 use Aura\Session\Session;
 use Opauth;
-use Phly\Http\Uri;
+use Zend\Diactoros\Uri;
 
 class AuthCallback
 {

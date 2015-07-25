@@ -1,7 +1,7 @@
 <?php
 namespace Mwop\Auth;
 
-use Phly\Conduit\MiddlewarePipe as BaseMiddleware;
+use Zend\Stratigility\MiddlewarePipe as BaseMiddleware;
 
 class Middleware extends BaseMiddleware
 {

@@ -1,7 +1,7 @@
 <?php
 namespace Mwop;
 
-use Phly\Http\Uri;
+use Zend\Diactoros\Uri;
 
 class PrepPageCacheRules
 {

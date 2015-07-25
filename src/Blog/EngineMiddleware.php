@@ -2,7 +2,7 @@
 namespace Mwop\Blog;
 
 use Phly\Mustache\Mustache;
-use Phly\Http\Stream;
+use Zend\Diactoros\Stream;
 
 class EngineMiddleware
 {

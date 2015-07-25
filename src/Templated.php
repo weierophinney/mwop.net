@@ -1,8 +1,8 @@
 <?php
 namespace Mwop;
 
-use Phly\Conduit\Http\Request as ConduitRequest;
-use Phly\Conduit\MiddlewarePipe as Middleware;
+use Zend\Stratigility\Http\Request as ConduitRequest;
+use Zend\Stratigility\MiddlewarePipe as Middleware;
 use Phly\Mustache\Mustache;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -57,7 +57,7 @@ class Templated extends Middleware
             return;
         }
 
-        // Done in a closure due to how Phly\Conduit\Utils::getArity works
+        // Done in a closure due to how Zend\Stratigility\Utils::getArity works
         $this->pipe(function ($req, $res, $next) {
             return $this->render($req, $res, $next);
         });
