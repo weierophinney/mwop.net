@@ -1,10 +1,10 @@
 <?php
 namespace Mwop;
 
-use Phly\Conduit\Http\Request;
-use Phly\Http\ServerRequest as PsrRequest;
-use Phly\Http\Response;
-use Phly\Http\Uri;
+use Zend\Stratigility\Http\Request;
+use Zend\Diactoros\ServerRequest as PsrRequest;
+use Zend\Diactoros\Response;
+use Zend\Diactoros\Uri;
 use Zend\Console\ColorInterface as Color;
 
 class CachePosts

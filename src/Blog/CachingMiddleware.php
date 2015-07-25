@@ -1,7 +1,7 @@
 <?php
 namespace Mwop\Blog;
 
-use Phly\Http\Stream;
+use Zend\Diactoros\Stream;
 
 class CachingMiddleware
 {
