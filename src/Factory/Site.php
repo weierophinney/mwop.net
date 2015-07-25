@@ -2,7 +2,7 @@
 namespace Mwop\Factory;
 
 use Mwop\Job\Middleware as Jobs;
-use Phly\Conduit\MiddlewarePipe as Middleware;
+use Zend\Stratigility\MiddlewarePipe as Middleware;
 
 class Site
 {

@@ -1,8 +1,8 @@
 <?php
 namespace Mwop;
 
-use Phly\Conduit\MiddlewarePipe;
-use Phly\Http\Server;
+use Zend\Stratigility\MiddlewarePipe;
+use Zend\Diactoros\Server;
 
 // Decline static file requests back to the PHP built-in webserver
 if (php_sapi_name() === 'cli-server'

@@ -1,7 +1,7 @@
 <?php
 namespace Mwop\Contact;
 
-use Phly\Conduit\MiddlewarePipe as BaseMiddleware;
+use Zend\Stratigility\MiddlewarePipe as BaseMiddleware;
 
 class Middleware extends BaseMiddleware
 {
