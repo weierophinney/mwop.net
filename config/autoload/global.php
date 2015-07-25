@@ -95,4 +95,6 @@ return [
             'Mwop\Unauthorized'         => 'Mwop\Factory\Unauthorized',
         ],
     ],
+    // Trick zf-deploy into thinking this is a ZF2 app so it can build a package.
+    'modules' => [],
 ];
