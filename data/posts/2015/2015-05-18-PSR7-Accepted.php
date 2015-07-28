@@ -22,6 +22,7 @@ $entry->setTags(array(
   'http',
   'php',
   'programming',
+  'psr-7',
 ));
 
 $body =<<<'EOT'
