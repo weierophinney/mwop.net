@@ -1,4 +1,4 @@
-    <?php
+<?php
 use Mwop\Blog\AuthorEntity;
 use Mwop\Blog\EntryEntity;
 

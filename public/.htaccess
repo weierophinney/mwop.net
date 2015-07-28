@@ -22,6 +22,6 @@ RewriteRule ^(.*)$ %{ENV:BASE}index.php [NC,L]
 
 # Cache other static files for 1 week, but ensure we always check that they are
 # not stale
-#<FilesMatch "\.(ico|jpg|jpeg|png|gif|js|css)$">
-#Header set Cache-Control "max-age=604800, must-revalidate, public"
-#</FilesMatch>
+<FilesMatch "\.(ico|jpg|jpeg|png|gif|js|css)$">
+Header set Cache-Control "max-age=604800, must-revalidate, public"
+</FilesMatch>
