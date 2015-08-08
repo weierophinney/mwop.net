@@ -104,7 +104,6 @@ class Redirects
 
         return $res
             ->withStatus(301)
-            ->withHeader('Location', (string) $url)
-            ->end();
+            ->withHeader('Location', (string) $url);
     }
 }
