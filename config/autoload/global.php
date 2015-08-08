@@ -138,7 +138,7 @@ return [
             'Mwop\Github\AtomReader'    => 'Mwop\Github\AtomReaderFactory',
             'Mwop\Github\Fetch'         => 'Mwop\Github\FetchFactory',
             'Mwop\HomePage'             => 'Mwop\Factory\PageFactory',
-            'Mwop\ResumePage'           => 'Mwop\Factory\ResumePage',
+            'Mwop\ResumePage'           => 'Mwop\Factory\PageFactory',
             'Mwop\Site'                 => 'Zend\Expressive\Container\ApplicationFactory',
             'Mwop\Templated'            => 'Mwop\Factory\Templated',
             'Mwop\Template\TemplateInterface' => 'Mwop\Template\MustacheTemplateFactory',
