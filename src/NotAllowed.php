@@ -13,6 +13,6 @@ class NotAllowed
             $res = $res->withHeader('Allow', $err);
         }
 
-        return $res->end();
+        return $res;
     }
 }

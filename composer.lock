@@ -791,12 +791,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-expressive.git",
-                "reference": "15cbd02d550fe0f7906499f3120ccc62b3b4af39"
+                "reference": "a0bfe59e59e66644b12b435a767f40e2eaed36ae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-expressive/zipball/15cbd02d550fe0f7906499f3120ccc62b3b4af39",
-                "reference": "15cbd02d550fe0f7906499f3120ccc62b3b4af39",
+                "url": "https://api.github.com/repos/zendframework/zend-expressive/zipball/a0bfe59e59e66644b12b435a767f40e2eaed36ae",
+                "reference": "a0bfe59e59e66644b12b435a767f40e2eaed36ae",
                 "shasum": ""
             },
             "require": {
@@ -837,7 +837,7 @@
                 "psr",
                 "psr-7"
             ],
-            "time": "2015-08-08 16:13:41"
+            "time": "2015-08-08 18:30:39"
         },
         {
             "name": "zendframework/zend-feed",

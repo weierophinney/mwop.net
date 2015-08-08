@@ -44,10 +44,10 @@ return [
             ],
         ],
         'post_routing' => [
-            ['middleware' => 'Mwop\NotFound'],
-            ['middleware' => 'Mwop\Unauthorized'],
-            ['middleware' => 'Mwop\NotAllowed'],
-            ['middleware' => 'Mwop\ErrorHandler'],
+            ['middleware' => 'Mwop\Unauthorized', 'error' => true],
+            ['middleware' => 'Mwop\NotAllowed', 'error' => true],
+            ['middleware' => 'Mwop\NotFound', 'error' => true],
+            ['middleware' => 'Mwop\ErrorHandler', 'error' => true],
         ],
     ],
     'opauth' => [
