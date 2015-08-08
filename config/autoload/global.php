@@ -46,6 +46,10 @@ return [
                 'middleware' => 'Mwop\Contact\Middleware',
                 'path'       => '/contact',
             ],
+            [
+                'middleware' => 'Mwop\Job\Middleware',
+                'path'       => '/jobs',
+            ],
         ],
         'post_routing' => [
             ['middleware' => 'Mwop\Unauthorized', 'error' => true],
@@ -97,10 +101,6 @@ return [
             'middleware'      => 'Mwop\ResumePage',
             'allowed_methods' => ['GET'],
         ],
-        [
-            'path'       => '/jobs',
-            'middleware' => 'Mwop\Job\Middleware',
-        ],
     ],
     'services' => [
         'invokables' => [
@@ -136,6 +136,7 @@ return [
             'Mwop\Github\AtomReader'    => 'Mwop\Github\AtomReaderFactory',
             'Mwop\Github\Fetch'         => 'Mwop\Github\FetchFactory',
             'Mwop\HomePage'             => 'Mwop\Factory\PageFactory',
+            'Mwop\Job\Middleware'       => 'Mwop\Job\MiddlewareFactory',
             'Mwop\ResumePage'           => 'Mwop\Factory\PageFactory',
             'Mwop\Site'                 => 'Zend\Expressive\Container\ApplicationFactory',
             'Mwop\Templated'            => 'Mwop\Factory\Templated',

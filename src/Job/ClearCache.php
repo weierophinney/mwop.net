@@ -13,9 +13,7 @@ class ClearCache
     public function __invoke($req, $res, $next)
     {
         if (! class_exists('ZendJobQueue') || ! ZendJobQueue::getCurrentJobId()) {
-            return $res
-                ->withStatus(403)
-                ->end();
+            return $res->withStatus(403);
         }
 
         // Uri removes ports when they are the default for that scheme.
@@ -39,6 +37,8 @@ class ClearCache
         }
 
         ZendJobQueue::setCurrentJobStatus(ZendJobQueue::OK);
-        return $res->end();
+
+        // Ensure FinalHandler sees a new response
+        return clone $res;
     }
 }
