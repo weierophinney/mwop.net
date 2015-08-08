@@ -39,6 +39,10 @@ return [
             ['middleware' => 'Mwop\Redirects'],
             ['middleware' => 'Mwop\BodyParams'],
             [
+                'middleware' => 'Mwop\Auth\Middleware',
+                'path'       => '/auth',
+            ],
+            [
                 'middleware' => 'Mwop\Contact\Middleware',
                 'path'       => '/contact',
             ],
@@ -92,11 +96,6 @@ return [
             'path'            => '/resume',
             'middleware'      => 'Mwop\ResumePage',
             'allowed_methods' => ['GET'],
-        ],
-        [
-            'path'            => '/auth',
-            'middleware'      => 'Mwop\Auth\Middleware',
-            'allowed_methods' => ['GET', 'POST'],
         ],
         [
             'path'       => '/jobs',

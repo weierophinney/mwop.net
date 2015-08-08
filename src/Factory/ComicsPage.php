@@ -2,15 +2,21 @@
 namespace Mwop\Factory;
 
 use Mwop\ComicsPage as Page;
+use Zend\Stratigility\MiddlewarePipe;
 
 class ComicsPage
 {
     public function __invoke($services)
     {
-        return new Page(
+        $pipeline = new MiddlewarePipe();
+
+        $pipeline->pipe($services->get('Mwop\Auth\UserSession'));
+        $pipeline->pipe(new Page(
             'comics.page',
             [],
             $services->get('Mwop\Template\TemplateInterface')
-        );
+        ));
+
+        return $pipeline;
     }
 }
