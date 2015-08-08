@@ -7,7 +7,6 @@ class Redirects
     {
         $url  = $req->getUri();
         $path = $url->getPath();
-        error_log(sprintf("Examining url %s\n", $path));
 
         // Ensure php.net is able to retrieve PHP RSS feed without a problem
         if ('/blog/tag/php.xml' === $path) {
