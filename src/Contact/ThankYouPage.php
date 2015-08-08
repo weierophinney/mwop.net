@@ -1,42 +1,32 @@
 <?php
 namespace Mwop\Contact;
 
+use Mwop\Template\TemplateInterface;
+use Zend\Diactoros\Response\HtmlResponse;
+
 class ThankYouPage
 {
-    private $page;
-    private $path;
+    private $template;
 
-    public function __construct($path, $page)
+    public function __construct(TemplateInterface $template)
     {
-        $this->path     = $path;
-        $this->page     = $page;
+        $this->template = $template;
     }
 
     public function __invoke($request, $response, $next)
     {
-        $path = $request->getUri()->getPath();
-        if ($path !== $this->path) {
-            return $next($request, $response);
-        }
-
-        if ($request->getMethod() !== 'GET') {
-            return $next($request, $response->withStatus(405), 'GET');
-        }
-
-        $parent = $request->getOriginalRequest();
+        $parent    = $request->getOriginalRequest();
         $parentUrl = str_replace('/thank-you', '', (string) $parent->getUri());
         if (! $request->hasHeader('Referer')
-            || ! preg_match('#^' . $parentUrl . '#', $request->getHeader('Referer'))
+            || ! preg_match('#^' . $parentUrl . '#', $request->getHeaderLine('Referer'))
         ) {
             return $response
                 ->withStatus(302)
-                ->withHeader('Location', $parentUrl)
-                ->end();
+                ->withHeader('Location', $parentUrl);
         }
 
-        return $next($request->withAttribute('view', (object) [
-            'template' => $this->page,
-            'model'    => [],
-        ]), $response);
+        return new HtmlResponse(
+            $this->template->render('contact.thankyou')
+        );
     }
 }

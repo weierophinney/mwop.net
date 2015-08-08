@@ -5,8 +5,10 @@ class LandingPageFactory
 {
     public function __invoke($services)
     {
-        $session  = $services->get('session');
-        $config   = $services->get('Config')['contact'];
-        return new LandingPage('/', 'contact.landing', $session, $config);
+        return new LandingPage(
+            $services->get('Mwop\Template\TemplateInterface'),
+            $services->get('session'),
+            $services->get('Config')['contact']
+        );
     }
 }

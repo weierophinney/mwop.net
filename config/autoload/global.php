@@ -38,6 +38,10 @@ return [
         'pre_routing' => [
             ['middleware' => 'Mwop\Redirects'],
             ['middleware' => 'Mwop\BodyParams'],
+            [
+                'middleware' => 'Mwop\Contact\Middleware',
+                'path'       => '/contact',
+            ],
         ],
         'post_routing' => [
             ['middleware' => 'Mwop\NotFound'],
@@ -78,11 +82,6 @@ return [
             'path'            => '/blog',
             'middleware'      => 'Mwop\Blog\Middleware',
             'allowed_methods' => ['GET'],
-        ],
-        [
-            'path'            => '/contact',
-            'middleware'      => 'Mwop\Contact\Middleware',
-            'allowed_methods' => ['GET', 'POST'],
         ],
         [
             'path'            => '/comics',
