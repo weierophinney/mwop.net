@@ -38,6 +38,8 @@ return [
         'pre_routing' => [
             ['middleware' => 'Mwop\Redirects'],
             ['middleware' => 'Mwop\BodyParams'],
+        ],
+        'post_routing' => [
             [
                 'middleware' => 'Mwop\Auth\Middleware',
                 'path'       => '/auth',
@@ -50,8 +52,6 @@ return [
                 'middleware' => 'Mwop\Job\Middleware',
                 'path'       => '/jobs',
             ],
-        ],
-        'post_routing' => [
             ['middleware' => 'Mwop\Unauthorized', 'error' => true],
             ['middleware' => 'Mwop\NotAllowed', 'error' => true],
             ['middleware' => 'Mwop\NotFound', 'error' => true],
