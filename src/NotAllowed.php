@@ -9,7 +9,9 @@ class NotAllowed
             return $next($req, $res, $err);
         }
 
-        if (is_array($err) || is_string($err)) {
+        if (! $res->hasHeader('Allow')
+            && (is_array($err) || is_string($err))
+        ) {
             $res = $res->withHeader('Allow', $err);
         }
 
