@@ -34,6 +34,18 @@ return [
             ],
         ],
     ],
+    'middleware_pipeline' => [
+        'pre_routing' => [
+            ['middleware' => 'Mwop\Redirects'],
+            ['middleware' => 'Mwop\BodyParams'],
+        ],
+        'post_routing' => [
+            ['middleware' => 'Mwop\NotFound'],
+            ['middleware' => 'Mwop\Unauthorized'],
+            ['middleware' => 'Mwop\NotAllowed'],
+            ['middleware' => 'Mwop\ErrorHandler'],
+        ],
+    ],
     'opauth' => [
         'path' => '/auth/',
         'callback_url' => '/auth/callback',
@@ -56,12 +68,49 @@ return [
             ],
         ],
     ],
+    'routes' => [
+        [
+            'path'            => '/',
+            'middleware'      => 'Mwop\HomePage',
+            'allowed_methods' => ['GET'],
+        ],
+        [
+            'path'            => '/blog',
+            'middleware'      => 'Mwop\Blog\Middleware',
+            'allowed_methods' => ['GET'],
+        ],
+        [
+            'path'            => '/contact',
+            'middleware'      => 'Mwop\Contact\Middleware',
+            'allowed_methods' => ['GET', 'POST'],
+        ],
+        [
+            'path'            => '/comics',
+            'middleware'      => 'Mwop\ComicsPage',
+            'allowed_methods' => ['GET'],
+        ],
+        [
+            'path'            => '/resume',
+            'middleware'      => 'Mwop\ResumePage',
+            'allowed_methods' => ['GET'],
+        ],
+        [
+            'path'            => '/auth',
+            'middleware'      => 'Mwop\Auth\Middleware',
+            'allowed_methods' => ['GET', 'POST'],
+        ],
+        [
+            'path'       => '/jobs',
+            'middleware' => 'Mwop\Job\Middleware',
+        ],
+    ],
     'services' => [
         'invokables' => [
-            'Mwop\BodyParams',
-            'Mwop\NotAllowed',
-            'Mwop\Blog\SeedBlogDatabase',
-            'Mwop\Redirects',
+            'Mwop\Blog\SeedBlogDatabase' => 'Mwop\Blog\SeedBlogDatabase',
+            'Mwop\BodyParams'            => 'Mwop\BodyParams',
+            'Mwop\NotAllowed'            => 'Mwop\NotAllowed',
+            'Mwop\NotFound'              => 'Mwop\NotFound',
+            'Mwop\Redirects'             => 'Mwop\Redirects',
         ],
         'factories' => [
             'http'                      => 'Mwop\Factory\HttpClient',
@@ -88,10 +137,11 @@ return [
             'Mwop\ErrorHandler'         => 'Mwop\Factory\ErrorHandler',
             'Mwop\Github\AtomReader'    => 'Mwop\Github\AtomReaderFactory',
             'Mwop\Github\Fetch'         => 'Mwop\Github\FetchFactory',
-            'Mwop\HomePage'             => 'Mwop\Factory\HomePage',
+            'Mwop\HomePage'             => 'Mwop\Factory\PageFactory',
             'Mwop\ResumePage'           => 'Mwop\Factory\ResumePage',
-            'Mwop\Site'                 => 'Mwop\Factory\Site',
+            'Mwop\Site'                 => 'Zend\Expressive\Container\ApplicationFactory',
             'Mwop\Templated'            => 'Mwop\Factory\Templated',
+            'Mwop\Template\TemplateInterface' => 'Mwop\Template\MustacheTemplateFactory',
             'Mwop\Unauthorized'         => 'Mwop\Factory\Unauthorized',
         ],
     ],
