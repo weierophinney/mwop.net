@@ -7,7 +7,9 @@ class ErrorHandler
 {
     public function __invoke($services)
     {
-        $config = $services->get('Config');
-        return new Middleware($services->get('renderer'), $config['debug']);
+        return new Middleware(
+            $services->get('Mwop\Template\TemplateInterface'),
+            $services->get('Config')['debug']
+        );
     }
 }

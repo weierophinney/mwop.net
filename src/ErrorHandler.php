@@ -2,7 +2,7 @@
 namespace Mwop;
 
 use Exception;
-use Phly\Mustache\Mustache;
+use Zend\Diactoros\Response\HtmlResponse;
 
 class ErrorHandler
 {
@@ -10,16 +10,19 @@ class ErrorHandler
 
     private $renderer;
 
-    public function __construct(Mustache $renderer, $displayErrors = false)
+    public function __construct(Template\TemplateInterface $renderer, $displayErrors = false)
     {
-        $this->renderer = $renderer;
+        $this->renderer      = $renderer;
         $this->displayErrors = (bool) $displayErrors;
     }
 
     public function __invoke($err, $req, $res, $next)
     {
         if ($res->getStatusCode() === 404) {
-            return $res->end($this->renderer->render('error/404', []));
+            return new HtmlResponse(
+                $this->renderer->render('error/404'),
+                404
+            );
         }
 
         if ($res->getStatusCode() < 400) {
@@ -40,8 +43,11 @@ class ErrorHandler
             $error = (string) $err;
         }
 
-        return $res->end($this->renderer->render('error/500', [
-            'error' => $this->displayErrors ? ['error' => $err] : false,
-        ]));
+        return new HtmlResponse(
+            $this->renderer->render('error/500', [
+                'error' => $this->displayErrors ? ['error' => $err] : false,
+            ]),
+            $res->getStatusCode()
+        );
     }
 }
