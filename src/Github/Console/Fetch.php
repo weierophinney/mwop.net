@@ -1,7 +1,8 @@
 <?php
-namespace Mwop\Github;
+namespace Mwop\Github\Console;
 
 use Exception;
+use Mwop\Github;
 use Zend\Console\ColorInterface as Color;
 use Zend\Escaper\Escaper;
 
@@ -16,15 +17,15 @@ class Fetch
     private $outputTemplateString = '<li><a href="%s">%s</a></li>';
 
     /**
-     * @var AtomReader
+     * @var Github\AtomReader
      */
     private $reader;
 
     /**
-     * @param AtomReader $reader 
-     * @param mixed $outputTemplateString 
+     * @param Github\AtomReader $reader
+     * @param mixed $outputTemplateString
      */
-    public function __construct(AtomReader $reader = null, $outputTemplateString = null)
+    public function __construct(Github\AtomReader $reader = null, $outputTemplateString = null)
     {
         $this->reader = $reader;
         if (is_string($outputTemplateString) && ! empty($outputTemplateString)) {
@@ -34,9 +35,9 @@ class Fetch
 
     /**
      * Handle the incoming console request
-     * 
-     * @param  \ZF\Console\Route $route 
-     * @param  \Zend\Console\Adapter\AdapterInterface $console 
+     *
+     * @param  \ZF\Console\Route $route
+     * @param  \Zend\Console\Adapter\AdapterInterface $console
      * @return int
      */
     public function __invoke($route, $console)
@@ -74,9 +75,9 @@ class Fetch
      * Create content to write to the output file
      *
      * Uses the passed data and template to generate content.
-     * 
-     * @param array $data 
-     * @param string $template 
+     *
+     * @param array $data
+     * @param string $template
      * @return string
      */
     private function createContentFromData($data, $template)
@@ -94,11 +95,11 @@ class Fetch
 
     /**
      * Report an error
-     * 
-     * @param \Zend\Console\Adapter\AdapterInterface $console 
-     * @param int $width 
-     * @param int $length 
-     * @param string|Exception $e 
+     *
+     * @param \Zend\Console\Adapter\AdapterInterface $console
+     * @param int $width
+     * @param int $length
+     * @param string|Exception $e
      * @return int
      */
     private function reportError($console, $width, $length, $e)
@@ -123,10 +124,10 @@ class Fetch
 
     /**
      * Report success
-     * 
-     * @param \Zend\Console\Adapter\AdapterInterface $console 
-     * @param int $width 
-     * @param int $length 
+     *
+     * @param \Zend\Console\Adapter\AdapterInterface $console
+     * @param int $width
+     * @param int $length
      * @return int
      */
     private function reportSuccess($console, $width, $length)

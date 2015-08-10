@@ -1,5 +1,5 @@
 <?php
-namespace Mwop\Github;
+namespace Mwop\Github\Console;
 
 class FetchFactory
 {

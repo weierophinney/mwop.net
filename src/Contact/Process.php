@@ -2,36 +2,32 @@
 namespace Mwop\Contact;
 
 use Aura\Session\Session;
+use Mwop\Template\TemplateInterface;
+use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Mail\Message;
 use Zend\Mail\Transport\TransportInterface;
 
 class Process
 {
     private $config;
-    private $page;
     private $session;
+    private $template;
     private $transport;
 
     public function __construct(
         Session $session,
         TransportInterface $transport,
-        $page,
+        TemplateInterface $template,
         array $config
     ) {
         $this->session   = $session;
         $this->transport = $transport;
-        $this->page      = $page;
+        $this->template  = $template;
         $this->config    = $config;
     }
 
     public function __invoke($request, $response, $next)
     {
-        error_log(sprintf("In %s\n", __METHOD__));
-        if ($request->getMethod() !== 'POST') {
-            error_log(sprintf("DID NOT RECEIVE POST! Returning 405\n"));
-            return $next($request, $response->withStatus(405), 'POST');
-        }
-
         $this->session->start();
 
         $data  = $request->getParsedBody() ?: [];
@@ -40,43 +36,36 @@ class Process
         if (! isset($data['csrf'])
             || ! $token->isValid($data['csrf'])
         ) {
-            error_log(sprintf("Invalid CSRF token; redisplaying form\n"));
             // re-display form
-            return $next($this->redisplayForm(
+            return $this->redisplayForm(
                 ['csrf' => 'true', 'data' => $data],
                 $token,
-                $request,
-                $response
-            ), $response);
+                $request
+            );
         }
 
         $filter = new InputFilter();
         $filter->setData($data);
 
         if (! $filter->isValid()) {
-            error_log(sprintf("Invalid form data; redisplaying form with messages\n"));
             // re-display form
-            return $next($this->redisplayForm(
+            return $this->redisplayForm(
                 $filter->getMessages(),
                 $token,
-                $request,
-                $response
-            ), $response);
+                $request
+            );
         }
 
-        error_log(sprintf("Sending email\n"));
         $this->sendEmail($filter->getValues());
 
         $parent = $request->getOriginalRequest();
-        $path = str_replace('/process', '', (string) $parent->getUri()) . '/thank-you';
-        error_log(sprintf("Returning response with 302 status and location %s\n", $path));
+        $path   = str_replace('/process', '', (string) $parent->getUri()) . '/thank-you';
         return $response
             ->withStatus(302)
-            ->withHeader('Location', $path)
-            ->end();
+            ->withHeader('Location', $path);
     }
 
-    private function redisplayForm($error, $csrfToken, $request, $response)
+    private function redisplayForm($error, $csrfToken, $request)
     {
         $csrfToken->regenerateValue();
 
@@ -86,10 +75,9 @@ class Process
             'csrf'   => $csrfToken->getValue(),
         ]);
 
-        return $request->withAttribute('view', (object) [
-            'template' => $this->page,
-            'model'    => $view,
-        ]);
+        return new HtmlResponse(
+            $this->template->render('contact.landing', $view)
+        );
     }
 
     private function sendEmail(array $data)

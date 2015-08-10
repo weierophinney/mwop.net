@@ -4,8 +4,62 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "6114aa0808465ce4edb04ec731003aed",
+    "hash": "4db4be43b186b595d2d6f68231f4f224",
     "packages": [
+        {
+            "name": "aura/router",
+            "version": "2.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/auraphp/Aura.Router.git",
+                "reference": "457efd185e4306fa671d659a66a2d9d28bf91a56"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/auraphp/Aura.Router/zipball/457efd185e4306fa671d659a66a2d9d28bf91a56",
+                "reference": "457efd185e4306fa671d659a66a2d9d28bf91a56",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "aura/di": "~2.0"
+            },
+            "type": "library",
+            "extra": {
+                "aura": {
+                    "type": "library",
+                    "config": {
+                        "common": "Aura\\Router\\_Config\\Common"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Aura\\Router\\": "src/",
+                    "Aura\\Router\\_Config\\": "config/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-2-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Aura.Router Contributors",
+                    "homepage": "https://github.com/auraphp/Aura.Router/contributors"
+                }
+            ],
+            "description": "A web router implementation; given a URI path and a copy of $_SERVER, it will extract path-info parameter values for a specific route.",
+            "homepage": "https://github.com/auraphp/Aura.Router",
+            "keywords": [
+                "route",
+                "router",
+                "routing"
+            ],
+            "time": "2015-07-17 15:55:37"
+        },
         {
             "name": "aura/session",
             "version": "2.x-dev",
@@ -730,6 +784,60 @@
                 "zf2"
             ],
             "time": "2015-06-03 14:05:37"
+        },
+        {
+            "name": "zendframework/zend-expressive",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zendframework/zend-expressive.git",
+                "reference": "a0bfe59e59e66644b12b435a767f40e2eaed36ae"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zendframework/zend-expressive/zipball/a0bfe59e59e66644b12b435a767f40e2eaed36ae",
+                "reference": "a0bfe59e59e66644b12b435a767f40e2eaed36ae",
+                "shasum": ""
+            },
+            "require": {
+                "aura/router": "^2.3",
+                "container-interop/container-interop": "^1.1",
+                "php": ">=5.5",
+                "psr/http-message": "^1.0",
+                "zendframework/zend-diactoros": "^1.1",
+                "zendframework/zend-servicemanager": "^2.6",
+                "zendframework/zend-stratigility": "^1.1"
+            },
+            "require-dev": {
+                "nikic/fast-route": "^0.6.0",
+                "phpunit/phpunit": "^4.7",
+                "squizlabs/php_codesniffer": "^2.3",
+                "zendframework/zend-mvc": "^2.5",
+                "zendframework/zend-psr7bridge": "^0.1.0"
+            },
+            "suggest": {
+                "nikic/fast-route": "^0.6.0 to use the FastRoute routing adapter",
+                "zendframework/zend-mvc": "^2.5 to use the zend-mvc TreeRouteStack routing adapter",
+                "zendframework/zend-psr7bridge": "^0.1.0 to use the zend-mvc TreeRouteStack routing adapter"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Zend\\Expressive\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "PSR-7 Middleware Microframework based on Stratigility",
+            "keywords": [
+                "http",
+                "middleware",
+                "psr",
+                "psr-7"
+            ],
+            "time": "2015-08-08 18:30:39"
         },
         {
             "name": "zendframework/zend-feed",
@@ -1981,6 +2089,7 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "aura/session": 20,
+        "zendframework/zend-expressive": 20,
         "zfcampus/zf-deploy": 0
     },
     "prefer-stable": false,

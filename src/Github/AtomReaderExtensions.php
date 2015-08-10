@@ -1,10 +1,9 @@
 <?php
 namespace Mwop\Github;
 
-use Mwop\Services;
 use Zend\Feed\Reader\ExtensionManagerInterface;
 
-class AtomReaderExtensions extends Services implements ExtensionManagerInterface
+class AtomReaderExtensions implements ExtensionManagerInterface
 {
     protected $factories = [
         'atom\entry'            => 'Zend\Feed\Reader\Extension\Atom\Entry',
@@ -21,6 +20,11 @@ class AtomReaderExtensions extends Services implements ExtensionManagerInterface
         'thread\entry'          => 'Zend\Feed\Reader\Extension\Thread\Entry',
         'wellformedweb\entry'   => 'Zend\Feed\Reader\Extension\WellFormedWeb\Entry',
     ];
+
+    public function has($name)
+    {
+        return array_key_exists(strtolower($name), $this->factories);
+    }
 
     public function get($name)
     {

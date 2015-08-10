@@ -1,6 +1,7 @@
 <?php
-namespace Mwop\Blog;
+namespace Mwop\Blog\Console;
 
+use Mwop\Blog;
 use PDO;
 use Zend\Console\ColorInterface as Color;
 
@@ -68,16 +69,16 @@ class SeedBlogDatabase
         $trim = strlen(realpath($basePath)) + 1;
 
         $statements = [];
-        foreach (new PhpFileFilter($path) as $fileInfo) {
+        foreach (new Blog\PhpFileFilter($path) as $fileInfo) {
             $entry  = include $fileInfo->getPathname();
 
-            if (! $entry instanceof EntryEntity) {
+            if (! $entry instanceof Blog\EntryEntity) {
                 continue;
             }
 
             $entry  = $entry->getArrayCopy();
             $author = $entry['author'];
-            if ($author instanceof AuthorEntity) {
+            if ($author instanceof Blog\AuthorEntity) {
                 $author = $author->getArrayCopy();
             }
 
@@ -128,10 +129,10 @@ class SeedBlogDatabase
 
     /**
      * Report success
-     * 
-     * @param \Zend\Console\Adapter\AdapterInterface $console 
-     * @param int $width 
-     * @param int $length 
+     *
+     * @param \Zend\Console\Adapter\AdapterInterface $console
+     * @param int $width
+     * @param int $length
      * @return int
      */
     private function reportSuccess($console, $width, $length)

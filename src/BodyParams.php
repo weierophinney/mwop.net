@@ -15,7 +15,7 @@ class BodyParams
             return $next($request, $response);
         }
 
-        $header     = $request->getHeader('Content-Type');
+        $header     = $request->getHeaderLine('Content-Type');
         $priorities = [
             'form'     => 'application/x-www-form-urlencoded',
             'json'     => '[/+]json',

@@ -5,6 +5,8 @@ class ThankYouPageFactory
 {
     public function __invoke($services)
     {
-        return new ThankYouPage('/', 'contact.thankyou');
+        return new ThankYouPage(
+            $services->get('Mwop\Template\TemplateInterface')
+        );
     }
 }
