@@ -172,7 +172,7 @@ a skeleton application archive and extract it.
 <p>
     You need to inform the application about the module. This is so that we don't
     have to perform expensive file-system scanning operations, but also to make it
-    explicit in your code what modules you're actually using. Enabling a module is
+    explicit in your codeore     what modules you're actually using. Enabling a module is
     usually as easy as adding an entry to <code>config\application.config.php</code>:
 </p>
 
