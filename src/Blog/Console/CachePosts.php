@@ -1,6 +1,7 @@
 <?php
-namespace Mwop;
+namespace Mwop\Blog\Console;
 
+use Mwop\Blog;
 use Zend\Stratigility\Http\Request;
 use Zend\Diactoros\ServerRequest as PsrRequest;
 use Zend\Diactoros\Response;

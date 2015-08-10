@@ -1,6 +1,7 @@
 <?php
-namespace Mwop\Blog;
+namespace Mwop\Blog\Console;
 
+use Mwop\Blog;
 use Zend\Console\ColorInterface as Color;
 use Zend\Feed\Writer\Feed as FeedWriter;
 
@@ -16,7 +17,7 @@ class FeedGenerator
 
     private $mapper;
 
-    public function __construct(MapperInterface $mapper)
+    public function __construct(Blog\MapperInterface $mapper)
     {
         $this->mapper = $mapper;
     }
@@ -79,7 +80,7 @@ class FeedGenerator
         $posts->setCurrentPageNumber(1);
         foreach ($posts as $details) {
             $post = include $details['path'];
-            if (! $post instanceof EntryEntity) {
+            if (! $post instanceof Blog\EntryEntity) {
                 $this->console->write('Invalid post detected: ', Color::RED);
                 $this->console->writeLine($details['path']);
                 continue;
@@ -91,7 +92,7 @@ class FeedGenerator
 
             $authorDetails = $this->defaultAuthor;
             $author        = $post->getAuthor();
-            if ($author instanceof AuthorEntity && $author->isValid()) {
+            if ($author instanceof Blog\AuthorEntity && $author->isValid()) {
                 $authorDetails = array(
                     'name'  => $author->getName(),
                     'email' => $author->getEmail(),

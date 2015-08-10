@@ -8,5 +8,6 @@ data/posts.db
 data/tag-cloud.mustache
 node_modules/
 vendor/
+zpk/scripts/pagecache_rules.xml
 *.log
 *.zpk
