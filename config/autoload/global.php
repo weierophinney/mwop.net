@@ -41,6 +41,10 @@ return [
         ],
         'post_routing' => [
             [
+                'path'            => '/blog',
+                'middleware'      => 'Mwop\Blog\Middleware',
+            ],
+            [
                 'middleware' => 'Mwop\Auth\Middleware',
                 'path'       => '/auth',
             ],
@@ -87,11 +91,6 @@ return [
             'allowed_methods' => ['GET'],
         ],
         [
-            'path'            => '/blog',
-            'middleware'      => 'Mwop\Blog\Middleware',
-            'allowed_methods' => ['GET'],
-        ],
-        [
             'path'            => '/comics',
             'middleware'      => 'Mwop\ComicsPage',
             'allowed_methods' => ['GET'],
@@ -103,7 +102,13 @@ return [
         ],
     ],
     'services' => [
+        'delegator_factories' => [
+            'Mwop\Blog\DisplayPostMiddleware' => [
+                'Mwop\Blog\CachingDelegatorFactory',
+            ],
+        ],
         'invokables' => [
+            'Mwop\Blog\FeedMiddleware'   => 'Mwop\Blog\FeedMiddleware',
             'Mwop\Blog\SeedBlogDatabase' => 'Mwop\Blog\SeedBlogDatabase',
             'Mwop\BodyParams'            => 'Mwop\BodyParams',
             'Mwop\NotAllowed'            => 'Mwop\NotAllowed',
@@ -120,9 +125,9 @@ return [
             'Mwop\Auth\Logout'          => 'Mwop\Auth\LogoutFactory',
             'Mwop\Auth\Middleware'      => 'Mwop\Auth\MiddlewareFactory',
             'Mwop\Auth\UserSession'     => 'Mwop\Auth\UserSessionFactory',
-            'Mwop\Blog\CachingMiddleware'=> 'Mwop\Blog\CachingMiddlewareFactory',
-            'Mwop\Blog\EngineMiddleware'=> 'Mwop\Blog\EngineMiddlewareFactory',
+            'Mwop\Blog\DisplayPostMiddleware' => 'Mwop\Blog\DisplayPostMiddlewareFactory',
             'Mwop\Blog\FeedGenerator'   => 'Mwop\Blog\FeedGeneratorFactory',
+            'Mwop\Blog\ListPostsMiddleware' => 'Mwop\Blog\ListPostsMiddlewareFactory',
             'Mwop\Blog\Mapper'          => 'Mwop\Blog\MapperFactory',
             'Mwop\Blog\Middleware'      => 'Mwop\Blog\MiddlewareFactory',
             'Mwop\Blog\TagCloud'        => 'Mwop\Blog\TagCloudFactory',

@@ -1,71 +1,85 @@
 <?php
 namespace Mwop\Blog;
 
+use Psr\Http\Message\ResponseInterface;
 use Zend\Diactoros\Stream;
 
 class CachingMiddleware
 {
+    /**
+     * @var string
+     */
     private $cachePath;
 
+    /**
+     * @var bool
+     */
     private $enabled;
 
-    public function __construct($cachePath, $enabled = true)
+    /**
+     * @var callable
+     */
+    private $middleware;
+
+    public function __construct(callable $middleware, $cachePath, $enabled = true)
     {
-        $this->cachePath = $cachePath;
-        $this->enabled   = $enabled;
+        $this->middleware = $middleware;
+        $this->cachePath  = $cachePath;
+        $this->enabled    = $enabled;
     }
 
     public function __invoke($req, $res, $next)
     {
-        if (! $this->enabled) {
-            return $next($req, $res);
+        $middleware = $this->middleware;
+        $id         = $req->getAttribute('id', false);
+
+        // Caching is disabled, or no identifier present; invoke the middleware.
+        if (! $this->enabled || ! $id) {
+            return $middleware($req, $res, $next);
         }
 
-        if (! $req->getAttribute('blog', false)) {
-            $req = $req->withAttribute('blog', (object) [
-                'from_cache' => false,
-                'cacheable'  => false,
-            ]);
+        $result = $this->fetchFromCache($id, $res);
+
+        // Hit cache; resturn response.
+        if ($result instanceof ResponseInterface) {
+            return $result;
         }
 
-        if (! $res->isComplete() && ! $req->getAttribute('blog')->from_cache) {
-            return $this->fetchFromCache($req, $res, $next);
+        // Invoke middleware
+        $result = $middleware($req, $res, $next);
+
+        // Result is not a response; cannot cache; error condition.
+        if (! $result instanceof ResponseInterface) {
+            return $next($req, $res, $result);
         }
 
-        if ($res->isComplete()
-            && ! $req->getAttribute('blog')->from_cache
-            && $req->getAttribute('blog')->cacheable
-        ) {
-            return $this->cache($req, $res, $next);
+        // Result represents an error response; cannot cache.
+        if (300 >= $result->getStatusCode()) {
+            return $result;
         }
 
-        return $next($req, $res);
+        // Cache result
+        $this->cache($id, $result);
+
+        return $result;
     }
 
-    private function fetchFromCache($req, $res, $next)
+    private function fetchFromCache($id, $res)
     {
-        $path = $req->getUri()->getPath();
-        if (! preg_match('#^/(?P<page>[^/]+\.html)$#', $path, $matches)) {
-            // Nothing to do; not a blog post
-            return $next($req, $res);
-        }
-
-        $cachePath = sprintf('%s/%s', $this->cachePath, $matches['page']);
+        $cachePath = sprintf('%s/%s', $this->cachePath, $id);
 
         if (! file_exists($cachePath)) {
             // Nothing in cache, but should be cached
-            $req->getAttribute('blog')->cacheable = $matches['page'];
-            return $next($req, $res);
+            return false;
         }
 
         // Cache hit!
-        $req->getAttribute('blog')->from_cache = true;
         return $res->withBody(new Stream(fopen($cachePath, 'r')));
     }
 
-    private function cache($req, $res, $next)
+    private function cache($id, $res)
     {
-        $cachePath = sprintf('%s/%s', $this->cachePath, $req->getAttribute('blog')->cacheable);
+        $cachePath = sprintf('%s/%s', $this->cachePath, $id);
         file_put_contents($cachePath, (string) $res->getBody());
     }
 }
