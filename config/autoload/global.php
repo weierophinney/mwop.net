@@ -119,7 +119,6 @@ return [
         'factories' => [
             'http'                            => 'Mwop\Factory\HttpClient',
             'mail.transport'                  => 'Mwop\Factory\MailTransport',
-            'renderer'                        => 'Mwop\Factory\Renderer',
             'session'                         => 'Mwop\Factory\Session',
             'Mwop\Auth\AuthCallback'          => 'Mwop\Auth\AuthCallbackFactory',
             'Mwop\Auth\Auth'                  => 'Mwop\Auth\AuthFactory',
@@ -145,7 +144,6 @@ return [
             'Mwop\Job\Middleware'             => 'Mwop\Job\MiddlewareFactory',
             'Mwop\ResumePage'                 => 'Mwop\Factory\PageFactory',
             'Mwop\Site'                       => 'Zend\Expressive\Container\ApplicationFactory',
-            'Mwop\Templated'                  => 'Mwop\Factory\Templated',
             'Mwop\Template\TemplateInterface' => 'Mwop\Template\MustacheTemplateFactory',
             'Mwop\Unauthorized'               => 'Mwop\Factory\Unauthorized',
         ],

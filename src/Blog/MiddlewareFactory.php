@@ -9,7 +9,7 @@ class MiddlewareFactory
     {
         $blog = AppFactory::create($services);
 
-        $blog->get('/tag/php.xml', 'Mwop\Blog\FeedMiddleware')
+        $blog->get('/tag/php.xml', FeedMiddleware::class)
             ->setOptions([
                 'values' => [
                     'tag'  => 'php',
@@ -17,7 +17,7 @@ class MiddlewareFactory
                 ],
             ]);
 
-        $blog->get('/tag/{tag}/{type}.xml', 'Mwop\Blog\FeedMiddleware')
+        $blog->get('/tag/{tag}/{type}.xml', FeedMiddleware::class)
             ->setOptions([
                 'tokens' => [
                     'tag'  => '[^/]+',
@@ -25,21 +25,21 @@ class MiddlewareFactory
                 ],
             ]);
 
-        $blog->get('/tag/{tag}', 'Mwop\Blog\ListPostsMiddleware')
+        $blog->get('/tag/{tag}', ListPostsMiddleware::class)
             ->setOptions([
                 'tokens' => [
                     'tag'  => '[^/]+',
                 ],
             ]);
 
-        $blog->get('/{type}.xml', 'Mwop\Blog\FeedMiddleware')
+        $blog->get('/{type}.xml', FeedMiddleware::class)
             ->setOptions([
                 'tokens' => [
                     'type'  => '(atom|rss)',
                 ],
             ]);
 
-        $blog->get('/{id}.html', 'Mwop\Blog\DisplayPostMiddleware')
+        $blog->get('/{id}.html', DisplayPostMiddleware::class)
             ->setOptions([
                 'tokens' => [
                     'id'  => '[^/]',
@@ -54,7 +54,7 @@ class MiddlewareFactory
                 return $next($req, $res, $next, 405);
             }
 
-            $middleware = $services->get('Mwop\Blog\ListPostsMiddleware');
+            $middleware = $services->get(ListPostsMiddleware::class);
             return $middleware($req, $res, $next);
         });
 
