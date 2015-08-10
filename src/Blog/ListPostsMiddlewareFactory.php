@@ -1,13 +1,13 @@
 <?php
 namespace Mwop\Blog;
 
-class TagCloudFactory
+class ListPostsMiddlewareFactory
 {
     public function __invoke($services)
     {
-        return new TagCloud(
+        return new ListPostsMiddleware(
             $services->get('Mwop\Blog\Mapper'),
-            $services->get('renderer')
+            $services->get('Mwop\Template\TemplateInterface')
         );
     }
 }

@@ -1,17 +1,16 @@
 <?php
-namespace Mwop\Blog;
+namespace Mwop\Blog\Console;
 
-use Phly\Mustache\Mustache;
+use Mwop\Blog;
 use Zend\Console\ColorInterface as Color;
 
 class TagCloud
 {
     private $mapper;
 
-    public function __construct(MapperInterface $mapper, Mustache $renderer)
+    public function __construct(Blog\MapperInterface $mapper)
     {
-        $this->mapper  = $mapper;
-        $this->renderer = $renderer;
+        $this->mapper   = $mapper;
     }
 
     public function __invoke($route, $console)
@@ -38,11 +37,11 @@ class TagCloud
 
     /**
      * Report an error
-     * 
-     * @param \Zend\Console\Adapter\AdapterInterface $console 
-     * @param int $width 
-     * @param int $length 
-     * @param string|Exception $e 
+     *
+     * @param \Zend\Console\Adapter\AdapterInterface $console
+     * @param int $width
+     * @param int $length
+     * @param string|Exception $e
      * @return int
      */
     private function reportError($console, $width, $length, $e)
@@ -67,10 +66,10 @@ class TagCloud
 
     /**
      * Report success
-     * 
-     * @param \Zend\Console\Adapter\AdapterInterface $console 
-     * @param int $width 
-     * @param int $length 
+     *
+     * @param \Zend\Console\Adapter\AdapterInterface $console
+     * @param int $width
+     * @param int $length
      * @return int
      */
     private function reportSuccess($console, $width, $length)

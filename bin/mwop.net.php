@@ -5,6 +5,8 @@ namespace Mwop;
 use Zend\Console\Console;
 use Zend\Feed\Reader\Reader as FeedReader;
 use Zend\Http\Client as HttpClient;
+use Zend\ServiceManager\Config;
+use Zend\ServiceManager\ServiceManager;
 use ZF\Console\Application;
 
 chdir(__DIR__ . '/../');
@@ -13,7 +15,8 @@ require_once 'vendor/autoload.php';
 define('VERSION', '0.0.1');
 
 $config   = include 'config/config.php';
-$services = createServiceContainer($config);
+$services = new ServiceManager(new Config($config['services']));
+$services->setService('Config', $config);
 
 $routes = [
     [
@@ -29,7 +32,7 @@ $routes = [
             'output' => 'data/github-links.mustache',
         ],
         'handler' => function ($route, $console) use ($services) {
-            $handler = $services->get('Mwop\Github\Fetch');
+            $handler = $services->get('Mwop\Github\Console\Fetch');
             return $handler($route, $console);
         },
     ],
@@ -45,7 +48,7 @@ $routes = [
             'output' => 'data/tag-cloud.mustache',
         ],
         'handler' => function ($route, $console) use ($services) {
-            $handler = $services->get('Mwop\Blog\TagCloud');
+            $handler = $services->get('Mwop\Blog\Console\TagCloud');
             return $handler($route, $console);
         },
     ],
@@ -63,7 +66,7 @@ $routes = [
             'baseUri'   => 'http://mwop.net/blog',
         ],
         'handler' => function ($route, $console) use ($services) {
-            $handler = $services->get('Mwop\Blog\FeedGenerator');
+            $handler = $services->get('Mwop\Blog\Console\FeedGenerator');
             return $handler($route, $console);
         },
     ],
@@ -81,7 +84,7 @@ $routes = [
             'dbPath' => realpath(getcwd()) . '/data/posts.db',
         ],
         'handler' => function ($route, $console) use ($services) {
-            $handler = $services->get('Mwop\Blog\SeedBlogDatabase');
+            $handler = $services->get('Mwop\Blog\Console\SeedBlogDatabase');
             return $handler($route, $console);
         },
     ],
@@ -97,7 +100,7 @@ $routes = [
             'path'   => realpath(getcwd()),
         ],
         'handler' => function ($route, $console) use ($services) {
-            $handler = $services->get('Mwop\CachePosts');
+            $handler = $services->get('Mwop\Blog\Console\CachePosts');
             return $handler($route, $console);
         },
     ],
@@ -111,7 +114,7 @@ $routes = [
             '--site'  => 'Base URL of site to which to deploy',
         ],
         'handler' => function ($route, $console) use ($services) {
-            $handler = new PrepPageCacheRules();
+            $handler = $services->get('Mwop\Console\PrepPageCacheRules');
             return $handler($route, $console);
         },
     ],

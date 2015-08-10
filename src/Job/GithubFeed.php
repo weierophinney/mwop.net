@@ -8,9 +8,7 @@ class GithubFeed
     public function __invoke($req, $res, $next)
     {
         if (! class_exists('ZendJobQueue') || ! ZendJobQueue::getCurrentJobId()) {
-            return $res
-                ->withStatus(403)
-                ->end();
+            return $res->withStatus(403);
         }
 
         $php     = \Mwop\getPhpExecutable();
@@ -18,10 +16,10 @@ class GithubFeed
         exec($command, $output, $return);
         if ($return != 0) {
             ZendJobQueue::setCurrentJobStatus(ZendJobQueue::FAILED);
+            $res->getBody()->write(implode("\n", $output));
             return $res
                 ->withStatus(500)
-                ->withHeader('Content-Type', 'text/plain')
-                ->end(implode("\n", $output));
+                ->withHeader('Content-Type', 'text/plain');
         }
 
         ZendJobQueue::setCurrentJobStatus(ZendJobQueue::OK);
@@ -34,8 +32,7 @@ class GithubFeed
             'persistent' => false,
         ]);
 
-        return $res
-            ->withHeader('Content-Type', 'text/plain')
-            ->end(implode("\n", $output));
+        $res->getBody()->write(implode("\n", $output));
+        return $res->withHeader('Content-Type', 'text/plain');
     }
 }

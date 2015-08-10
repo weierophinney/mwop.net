@@ -1,6 +1,7 @@
 <?php
-namespace Mwop;
+namespace Mwop\Blog\Console;
 
+use Mwop\Blog;
 use Zend\Stratigility\Http\Request;
 use Zend\Diactoros\ServerRequest as PsrRequest;
 use Zend\Diactoros\Response;
@@ -11,7 +12,7 @@ class CachePosts
 {
     private $blogMiddleware;
 
-    public function __construct(Blog\Middleware $blog)
+    public function __construct(callable $blog)
     {
         $this->blogMiddleware = $blog;
     }
@@ -45,10 +46,9 @@ class CachePosts
             $console->write($message, Color::BLUE);
 
             $canonical = $baseUri->withPath(sprintf('/blog/%s.html', $entry->getId()));
-            $request   = new Request(new PsrRequest([], [], $canonical, 'GET'));
-
-            $uri = $canonical->withPath(sprintf('/%s.html', $entry->getId()));
-            $request = $request->withUri($uri);
+            $request   = (new Request(new PsrRequest([], [], $canonical, 'GET')))
+                ->withUri($canonical)
+                ->withAttribute('id', $entry->getId());
 
             $failed = false;
             $middleware($request, new Response(), $done);

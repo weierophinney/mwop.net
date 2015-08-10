@@ -1,14 +1,14 @@
 <?php
 namespace Mwop;
 
-use Phly\Mustache\Mustache;
+use Zend\Diactoros\Response\HtmlResponse;
 
 class Unauthorized
 {
     private $renderer;
     private $template;
 
-    public function __construct(Mustache $renderer, $template = 'error/401')
+    public function __construct(Template\TemplateInterface $renderer, $template = 'error/401')
     {
         $this->renderer = $renderer;
         $this->template = $template;
@@ -26,6 +26,9 @@ class Unauthorized
             'redirect'  => (string) $req->getOriginalRequest()->getUri(),
         ];
 
-        return $res->end($this->renderer->render($this->template, $view));
+        return new HtmlResponse(
+            $this->renderer->render($this->template, $view),
+            401
+        );
     }
 }

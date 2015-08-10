@@ -1,10 +1,10 @@
 <?php
-namespace Mwop\Factory;
+namespace Mwop\Template;
 
 use Phly\Mustache\Mustache;
 use Phly\Mustache\Pragma\ImplicitIterator;
 
-class Renderer
+class MustacheTemplateFactory
 {
     public function __invoke($services)
     {
@@ -12,6 +12,7 @@ class Renderer
         $mustache->getRenderer()->addPragma(new ImplicitIterator());
         $mustache->setTemplatePath(getcwd() . '/templates');
         $mustache->setTemplatePath(getcwd() . '/data');
-        return $mustache;
+
+        return new MustacheTemplate($mustache);
     }
 }

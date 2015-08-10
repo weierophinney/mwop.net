@@ -1,5 +1,5 @@
 config/autoload/*local.php
-data/cache/posts/*.html
+data/cache/posts/*
 data/comics/*.html
 data/comics.mustache
 data/feeds/*.xml

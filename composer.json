@@ -26,7 +26,9 @@
         "zendframework/zend-paginator": "~2.3",
         "zendframework/zend-stdlib": "~2.3",
         "zendframework/zend-tag": "~2.3",
-        "zfcampus/zf-console": "~1.0"
+        "zfcampus/zf-console": "~1.0",
+        "zendframework/zend-expressive": "*@dev",
+        "zendframework/zend-servicemanager": "^2.6"
     },
     "require-dev": {
         "zfcampus/zf-deploy": "~1.0@stable"
