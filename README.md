@@ -5,7 +5,7 @@ This is the code behind mwop.net.
 
 It is built on:
 
-- [Conduit](https://github.com/phly/conduit) - The entire site consists of
+- [Expressive](https://github.com/zendframework/zend-expressive) - The entire site consists of
   different middleware for accomplishing different tasks. These include a
   contact form, social authentication, a blog, and static pages.
 - [phly/mustache](https://github.com/phly/phly_mustache) for templating.
