@@ -102,7 +102,7 @@ return [
         ],
     ],
     'services' => [
-        'delegator_factories' => [
+        'delegators' => [
             'Mwop\Blog\DisplayPostMiddleware' => [
                 'Mwop\Blog\CachingDelegatorFactory',
             ],

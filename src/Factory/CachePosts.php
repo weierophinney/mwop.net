@@ -7,6 +7,6 @@ class CachePosts
 {
     public function __invoke($services)
     {
-        return new Command($services->get('Mwop\Blog\Middleware'));
+        return new Command($services->get('Mwop\Blog\DisplayPostMiddleware'));
     }
 }

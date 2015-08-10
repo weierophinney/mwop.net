@@ -5,15 +5,20 @@ namespace Mwop;
 use Zend\Console\Console;
 use Zend\Feed\Reader\Reader as FeedReader;
 use Zend\Http\Client as HttpClient;
+use Zend\ServiceManager\Config;
+use Zend\ServiceManager\ServiceManager;
 use ZF\Console\Application;
 
 chdir(__DIR__ . '/../');
+error_reporting(-1);
+ini_set('display_errors', 1);
 require_once 'vendor/autoload.php';
 
 define('VERSION', '0.0.1');
 
 $config   = include 'config/config.php';
-$services = createServiceContainer($config);
+$services = new ServiceManager(new Config($config['services']));
+$services->setService('Config', $config);
 
 $routes = [
     [

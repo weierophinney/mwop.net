@@ -54,7 +54,7 @@ class CachingMiddleware
         }
 
         // Result represents an error response; cannot cache.
-        if (300 >= $result->getStatusCode()) {
+        if (300 <= $result->getStatusCode()) {
             return $result;
         }
 
