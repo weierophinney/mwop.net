@@ -7,6 +7,6 @@ class Unauthorized
 {
     public function __invoke($services)
     {
-        return new Middleware($services->get('renderer'));
+        return new Middleware($services->get('Mwop\Template\TemplateInterface'));
     }
 }

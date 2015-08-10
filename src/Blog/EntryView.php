@@ -17,7 +17,7 @@ class EntryView
     public $tags;
     public $title;
 
-    public function __construct(array $entry, $basePath, array $disqus)
+    public function __construct(array $entry, $basePath, array $disqus = [])
     {
         $this->basePath = rtrim($basePath, '/');
         $this->disqus   = $disqus;

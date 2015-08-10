@@ -1,5 +1,5 @@
 <?php
-namespace Mwop\Blog;
+namespace Mwop\Blog\Console;
 
 class FeedGeneratorFactory
 {

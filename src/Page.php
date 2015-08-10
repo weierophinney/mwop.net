@@ -1,32 +1,25 @@
 <?php
 namespace Mwop;
 
-use Phly\Mustache\Mustache;
-use stdClass;
+use Zend\Diactoros\Response\HtmlResponse;
 
 class Page
 {
     private $page;
-    private $path;
+    private $template;
+    private $viewModel;
 
-    public function __construct($path, $page)
+    public function __construct($page, $viewModel, Template\TemplateInterface $template)
     {
-        $this->path = $path;
-        $this->page = $page;
+        $this->page      = $page;
+        $this->viewModel = is_array($viewModel) ? (object) $viewModel : $viewModel;
+        $this->template  = $template;
     }
 
     public function __invoke($request, $response, $next)
     {
-        if ($request->getOriginalRequest()->getUri()->getPath() !== $this->path) {
-            return $next($request, $response);
-        }
-
-        if ($request->getMethod() !== 'GET') {
-            return $next($request, $response->withStatus(405), 'GET');
-        }
-
-        $view = $request->getAttribute('view', new stdClass);
-        $view->template = $this->page;
-        $next($request->withAttribute('view', $view), $response);
+        return new HtmlResponse(
+            $this->template->render($this->page, $this->viewModel)
+        );
     }
 }

@@ -1,10 +1,12 @@
 <?php
-namespace Mwop;
+namespace Mwop\Console;
 
 use Zend\Diactoros\Uri;
 
 class PrepPageCacheRules
 {
+    private $dist = 'zpk/scripts/pagecache_rules.xml.dist';
+
     private $xml = 'zpk/scripts/pagecache_rules.xml';
 
     public function __invoke($route, $console)
@@ -18,7 +20,7 @@ class PrepPageCacheRules
             $port = ($uri->getScheme() == 'https') ? 443 : 80;
         }
 
-        $rules = file_get_contents($this->xml);
+        $rules = file_get_contents($this->dist);
         $rules = str_replace('%SCHEME%', $uri->getScheme(), $rules);
         $rules = str_replace('%HOST%', $uri->getHost(), $rules);
         $rules = str_replace('%PORT%', $port, $rules);
