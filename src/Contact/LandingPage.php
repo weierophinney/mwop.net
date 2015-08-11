@@ -2,8 +2,8 @@
 namespace Mwop\Contact;
 
 use Aura\Session\Session;
-use Mwop\Template\TemplateInterface;
 use Zend\Diactoros\Response\HtmlResponse;
+use Zend\Expressive\Template\TemplateInterface;
 
 class LandingPage
 {

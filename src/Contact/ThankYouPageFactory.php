@@ -6,7 +6,7 @@ class ThankYouPageFactory
     public function __invoke($services)
     {
         return new ThankYouPage(
-            $services->get('Mwop\Template\TemplateInterface')
+            $services->get('Zend\Expressive\Template\TemplateInterface')
         );
     }
 }

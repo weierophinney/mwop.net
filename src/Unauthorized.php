@@ -2,13 +2,14 @@
 namespace Mwop;
 
 use Zend\Diactoros\Response\HtmlResponse;
+use Zend\Expressive\Template\TemplateInterface;
 
 class Unauthorized
 {
     private $renderer;
     private $template;
 
-    public function __construct(Template\TemplateInterface $renderer, $template = 'error/401')
+    public function __construct(TemplateInterface $renderer, $template = 'error/401')
     {
         $this->renderer = $renderer;
         $this->template = $template;
