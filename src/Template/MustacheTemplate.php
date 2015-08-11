@@ -22,7 +22,7 @@ class MustacheTemplate implements TemplateInterface
     /**
      * {@inheritDoc}
      */
-    public function render($name, array $vars = [])
+    public function render($name, $vars = [])
     {
         return $this->renderer->render($name, $vars);
     }
