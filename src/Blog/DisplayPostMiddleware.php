@@ -1,8 +1,8 @@
 <?php
 namespace Mwop\Blog;
 
-use Mwop\Template\TemplateInterface;
 use Zend\Diactoros\Response\HtmlResponse;
+use Zend\Expressive\Template\TemplateInterface;
 
 class DisplayPostMiddleware
 {

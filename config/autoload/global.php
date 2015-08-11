@@ -144,8 +144,8 @@ return [
             'Mwop\Job\Middleware'             => 'Mwop\Job\MiddlewareFactory',
             'Mwop\ResumePage'                 => 'Mwop\Factory\PageFactory',
             'Mwop\Site'                       => 'Zend\Expressive\Container\ApplicationFactory',
-            'Mwop\Template\TemplateInterface' => 'Mwop\Template\MustacheTemplateFactory',
             'Mwop\Unauthorized'               => 'Mwop\Factory\Unauthorized',
+            'Zend\Expressive\Template\TemplateInterface' => 'Mwop\Template\MustacheTemplateFactory',
         ],
     ],
     // Trick zf-deploy into thinking this is a ZF2 app so it can build a package.

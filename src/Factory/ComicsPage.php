@@ -14,7 +14,7 @@ class ComicsPage
         $pipeline->pipe(new Page(
             'comics.page',
             [],
-            $services->get('Mwop\Template\TemplateInterface')
+            $services->get('Zend\Expressive\Template\TemplateInterface')
         ));
 
         return $pipeline;

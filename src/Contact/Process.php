@@ -2,8 +2,8 @@
 namespace Mwop\Contact;
 
 use Aura\Session\Session;
-use Mwop\Template\TemplateInterface;
 use Zend\Diactoros\Response\HtmlResponse;
+use Zend\Expressive\Template\TemplateInterface;
 use Zend\Mail\Message;
 use Zend\Mail\Transport\TransportInterface;
 

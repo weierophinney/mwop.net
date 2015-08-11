@@ -2,6 +2,7 @@
 namespace Mwop;
 
 use Zend\Diactoros\Response\HtmlResponse;
+use Zend\Expressive\Template\TemplateInterface;
 
 class Page
 {
@@ -9,7 +10,7 @@ class Page
     private $template;
     private $viewModel;
 
-    public function __construct($page, $viewModel, Template\TemplateInterface $template)
+    public function __construct($page, $viewModel, TemplateInterface $template)
     {
         $this->page      = $page;
         $this->viewModel = is_array($viewModel) ? (object) $viewModel : $viewModel;
