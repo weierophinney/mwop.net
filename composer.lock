@@ -791,12 +791,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-expressive.git",
-                "reference": "a0bfe59e59e66644b12b435a767f40e2eaed36ae"
+                "reference": "e411628ef43552d0ca3226c1357e2b13a3cc1c0c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-expressive/zipball/a0bfe59e59e66644b12b435a767f40e2eaed36ae",
-                "reference": "a0bfe59e59e66644b12b435a767f40e2eaed36ae",
+                "url": "https://api.github.com/repos/zendframework/zend-expressive/zipball/e411628ef43552d0ca3226c1357e2b13a3cc1c0c",
+                "reference": "e411628ef43552d0ca3226c1357e2b13a3cc1c0c",
                 "shasum": ""
             },
             "require": {
@@ -809,14 +809,18 @@
                 "zendframework/zend-stratigility": "^1.1"
             },
             "require-dev": {
+                "league/plates": "^3.1",
                 "nikic/fast-route": "^0.6.0",
                 "phpunit/phpunit": "^4.7",
                 "squizlabs/php_codesniffer": "^2.3",
+                "twig/twig": "^1.19",
                 "zendframework/zend-mvc": "^2.5",
                 "zendframework/zend-psr7bridge": "^0.1.0"
             },
             "suggest": {
+                "league/plates": "^3.1 to use the Plates template adapter",
                 "nikic/fast-route": "^0.6.0 to use the FastRoute routing adapter",
+                "twig/twig": "^1.19 to use the Twig template adapter",
                 "zendframework/zend-mvc": "^2.5 to use the zend-mvc TreeRouteStack routing adapter",
                 "zendframework/zend-psr7bridge": "^0.1.0 to use the zend-mvc TreeRouteStack routing adapter"
             },
@@ -837,7 +841,7 @@
                 "psr",
                 "psr-7"
             ],
-            "time": "2015-08-08 18:30:39"
+            "time": "2015-08-11 20:14:59"
         },
         {
             "name": "zendframework/zend-feed",

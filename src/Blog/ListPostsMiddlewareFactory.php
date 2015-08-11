@@ -7,7 +7,7 @@ class ListPostsMiddlewareFactory
     {
         return new ListPostsMiddleware(
             $services->get('Mwop\Blog\Mapper'),
-            $services->get('Mwop\Template\TemplateInterface')
+            $services->get('Zend\Expressive\Template\TemplateInterface')
         );
     }
 }

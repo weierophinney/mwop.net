@@ -7,7 +7,7 @@ class DisplayPostMiddlewareFactory
     {
         return new DisplayPostMiddleware(
             $services->get('Mwop\Blog\Mapper'),
-            $services->get('Mwop\Template\TemplateInterface'),
+            $services->get('Zend\Expressive\Template\TemplateInterface'),
             $services->get('Config')['blog']['disqus']
         );
     }

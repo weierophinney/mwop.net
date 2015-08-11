@@ -13,6 +13,11 @@ class MiddlewareFactory
         $middleware->get('/github', Auth::class);
         $middleware->get('/google', Auth::class);
         $middleware->get('/twitter', Auth::class);
+
+        $middleware->get('/github/oauth2callback', Auth::class);
+        $middleware->get('/google/oauth2callback', Auth::class);
+        $middleware->get('/twitter/oauth2callback', Auth::class);
+
         $middleware->get('/logout', Logout::class);
 
         return $middleware;
