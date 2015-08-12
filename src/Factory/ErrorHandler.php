@@ -8,7 +8,7 @@ class ErrorHandler
     public function __invoke($services)
     {
         return new Middleware(
-            $services->get('Mwop\Template\TemplateInterface'),
+            $services->get('Zend\Expressive\Template\TemplateInterface'),
             $services->get('Config')['debug']
         );
     }

@@ -3,6 +3,7 @@ namespace Mwop;
 
 use Exception;
 use Zend\Diactoros\Response\HtmlResponse;
+use Zend\Expressive\Template\TemplateInterface;
 
 class ErrorHandler
 {
@@ -10,7 +11,7 @@ class ErrorHandler
 
     private $renderer;
 
-    public function __construct(Template\TemplateInterface $renderer, $displayErrors = false)
+    public function __construct(TemplateInterface $renderer, $displayErrors = false)
     {
         $this->renderer      = $renderer;
         $this->displayErrors = (bool) $displayErrors;
