@@ -27,8 +27,9 @@
         "zendframework/zend-stdlib": "~2.3",
         "zendframework/zend-tag": "~2.3",
         "zfcampus/zf-console": "~1.0",
-        "zendframework/zend-expressive": "*@dev",
-        "zendframework/zend-servicemanager": "^2.6"
+        "zendframework/zend-expressive": "^0.1",
+        "zendframework/zend-servicemanager": "^2.6",
+        "aura/router": "^2.3"
     },
     "require-dev": {
         "zfcampus/zf-deploy": "~1.0@stable"

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "4db4be43b186b595d2d6f68231f4f224",
+    "hash": "b88ae22d8a98d9444674b06268c6e271",
     "packages": [
         {
             "name": "aura/router",
@@ -787,42 +787,49 @@
         },
         {
             "name": "zendframework/zend-expressive",
-            "version": "dev-master",
+            "version": "0.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-expressive.git",
-                "reference": "e411628ef43552d0ca3226c1357e2b13a3cc1c0c"
+                "reference": "1094bdaafd43ad2a4d1aeb51a123a0ee59070f2f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-expressive/zipball/e411628ef43552d0ca3226c1357e2b13a3cc1c0c",
-                "reference": "e411628ef43552d0ca3226c1357e2b13a3cc1c0c",
+                "url": "https://api.github.com/repos/zendframework/zend-expressive/zipball/1094bdaafd43ad2a4d1aeb51a123a0ee59070f2f",
+                "reference": "1094bdaafd43ad2a4d1aeb51a123a0ee59070f2f",
                 "shasum": ""
             },
             "require": {
-                "aura/router": "^2.3",
                 "container-interop/container-interop": "^1.1",
                 "php": ">=5.5",
                 "psr/http-message": "^1.0",
                 "zendframework/zend-diactoros": "^1.1",
-                "zendframework/zend-servicemanager": "^2.6",
                 "zendframework/zend-stratigility": "^1.1"
             },
             "require-dev": {
+                "aura/router": "^2.3",
+                "filp/whoops": "^1.1",
                 "league/plates": "^3.1",
                 "nikic/fast-route": "^0.6.0",
                 "phpunit/phpunit": "^4.7",
                 "squizlabs/php_codesniffer": "^2.3",
                 "twig/twig": "^1.19",
                 "zendframework/zend-mvc": "^2.5",
-                "zendframework/zend-psr7bridge": "^0.1.0"
+                "zendframework/zend-psr7bridge": "^0.1.0",
+                "zendframework/zend-servicemanager": "^2.6",
+                "zendframework/zend-view": "^2.5"
             },
             "suggest": {
+                "aura/router": "^2.3 to use the Aura.Router routing adapter",
+                "filp/whoops": "^1.1 to use the Whoops error handler",
                 "league/plates": "^3.1 to use the Plates template adapter",
+                "mouf/pimple-interop": "^1.0 to use Pimple for dependency injection",
                 "nikic/fast-route": "^0.6.0 to use the FastRoute routing adapter",
                 "twig/twig": "^1.19 to use the Twig template adapter",
                 "zendframework/zend-mvc": "^2.5 to use the zend-mvc TreeRouteStack routing adapter",
-                "zendframework/zend-psr7bridge": "^0.1.0 to use the zend-mvc TreeRouteStack routing adapter"
+                "zendframework/zend-psr7bridge": "^0.1.0 to use the zend-mvc TreeRouteStack routing adapter",
+                "zendframework/zend-servicemanager": "^2.5 to use zend-servicemanager for dependency injection",
+                "zendframework/zend-view": "^2.5 to use the zend-view template adapter"
             },
             "type": "library",
             "autoload": {
@@ -841,7 +848,7 @@
                 "psr",
                 "psr-7"
             ],
-            "time": "2015-08-11 20:14:59"
+            "time": "2015-08-26 17:05:09"
         },
         {
             "name": "zendframework/zend-feed",
@@ -1495,16 +1502,16 @@
         },
         {
             "name": "zendframework/zend-stratigility",
-            "version": "1.1.0",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-stratigility.git",
-                "reference": "47a8cd2348b44afa9ec750c678ba4cbf7b07b2b0"
+                "reference": "6a3b7e601dfe7eca0652a8b7f1a469ff4b8f3c28"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-stratigility/zipball/47a8cd2348b44afa9ec750c678ba4cbf7b07b2b0",
-                "reference": "47a8cd2348b44afa9ec750c678ba4cbf7b07b2b0",
+                "url": "https://api.github.com/repos/zendframework/zend-stratigility/zipball/6a3b7e601dfe7eca0652a8b7f1a469ff4b8f3c28",
+                "reference": "6a3b7e601dfe7eca0652a8b7f1a469ff4b8f3c28",
                 "shasum": ""
             },
             "require": {
@@ -1513,7 +1520,7 @@
                 "zendframework/zend-escaper": "~2.3"
             },
             "require-dev": {
-                "phpunit/phpunit": "3.7.*",
+                "phpunit/phpunit": "~4.7",
                 "squizlabs/php_codesniffer": "^2.3.1",
                 "zendframework/zend-diactoros": "~1.0"
             },
@@ -1543,7 +1550,7 @@
                 "middleware",
                 "psr-7"
             ],
-            "time": "2015-06-25 15:07:30"
+            "time": "2015-08-25 18:39:13"
         },
         {
             "name": "zendframework/zend-tag",
@@ -2093,7 +2100,6 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "aura/session": 20,
-        "zendframework/zend-expressive": 20,
         "zfcampus/zf-deploy": 0
     },
     "prefer-stable": false,
