@@ -32,7 +32,8 @@
         "aura/router": "^2.3"
     },
     "require-dev": {
-        "zfcampus/zf-deploy": "~1.0@stable"
+        "zfcampus/zf-deploy": "~1.0@stable",
+        "filp/whoops": "^1.1"
     },
     "autoload": {
         "psr-4": {

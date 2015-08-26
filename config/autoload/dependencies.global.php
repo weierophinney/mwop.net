@@ -10,8 +10,6 @@ return [
         'Mwop\Blog\Console\SeedBlogDatabase' => 'Mwop\Blog\Console\SeedBlogDatabase',
         'Mwop\BodyParams'                    => 'Mwop\BodyParams',
         'Mwop\Console\PrepPageCacheRules'    => 'Mwop\Console\PrepPageCacheRules',
-        'Mwop\NotAllowed'                    => 'Mwop\NotAllowed',
-        'Mwop\NotFound'                      => 'Mwop\NotFound',
         'Mwop\Redirects'                     => 'Mwop\Redirects',
     ],
     'factories' => [
@@ -35,7 +33,6 @@ return [
         'Mwop\Contact\Middleware'         => 'Mwop\Contact\MiddlewareFactory',
         'Mwop\Contact\Process'            => 'Mwop\Contact\ProcessFactory',
         'Mwop\Contact\ThankYouPage'       => 'Mwop\Contact\ThankYouPageFactory',
-        'Mwop\ErrorHandler'               => 'Mwop\Factory\ErrorHandler',
         'Mwop\Github\AtomReader'          => 'Mwop\Github\AtomReaderFactory',
         'Mwop\Github\Console\Fetch'       => 'Mwop\Github\Console\FetchFactory',
         'Mwop\HomePage'                   => 'Mwop\Factory\PageFactory',
@@ -43,6 +40,7 @@ return [
         'Mwop\ResumePage'                 => 'Mwop\Factory\PageFactory',
         'Mwop\Site'                       => 'Zend\Expressive\Container\ApplicationFactory',
         'Mwop\Unauthorized'               => 'Mwop\Factory\Unauthorized',
+        'Zend\Expressive\FinalHandler'    => 'Zend\Expressive\Container\TemplatedErrorHandlerFactory',
         'Zend\Expressive\Template\TemplateInterface' => 'Mwop\Template\MustacheTemplateFactory',
     ],
     'services' => [

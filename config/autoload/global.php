@@ -45,21 +45,18 @@ return [
                 'middleware'      => 'Mwop\Blog\Middleware',
             ],
             [
-                'middleware' => 'Mwop\Auth\Middleware',
                 'path'       => '/auth',
+                'middleware' => 'Mwop\Auth\Middleware',
             ],
             [
-                'middleware' => 'Mwop\Contact\Middleware',
                 'path'       => '/contact',
+                'middleware' => 'Mwop\Contact\Middleware',
             ],
             [
-                'middleware' => 'Mwop\Job\Middleware',
                 'path'       => '/jobs',
+                'middleware' => 'Mwop\Job\Middleware',
             ],
             ['middleware' => 'Mwop\Unauthorized', 'error' => true],
-            ['middleware' => 'Mwop\NotAllowed', 'error' => true],
-            ['middleware' => 'Mwop\NotFound', 'error' => true],
-            ['middleware' => 'Mwop\ErrorHandler', 'error' => true],
         ],
     ],
     'opauth' => [
@@ -101,6 +98,13 @@ return [
             'allowed_methods' => ['GET'],
         ],
     ],
+    'zend-expressive' => [
+        'error_handler' => [
+            'template_404'   => 'error/404',
+            'template_error' => 'error/500',
+        ],
+    ],
+
     // Trick zf-deploy into thinking this is a ZF2 app so it can build a package.
     'modules' => [],
 ];
