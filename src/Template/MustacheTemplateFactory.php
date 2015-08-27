@@ -10,8 +10,17 @@ class MustacheTemplateFactory
     {
         $mustache = new Mustache();
         $mustache->getRenderer()->addPragma(new ImplicitIterator());
-        $mustache->setTemplatePath(getcwd() . '/templates');
-        $mustache->setTemplatePath(getcwd() . '/data');
+
+        $templates = new MustacheTemplate($mustache);
+
+        $templates->addPath(getcwd() . '/templates/blog', 'blog');
+        $templates->addPath(getcwd() . '/templates/contact', 'contact');
+        $templates->addPath(getcwd() . '/templates/error', 'error');
+        $templates->addPath(getcwd() . '/templates/layout', 'layout');
+        $templates->addPath(getcwd() . '/templates/mwop', 'mwop');
+
+        $templates->addPath(getcwd() . '/templates');
+        $templates->addPath(getcwd() . '/data');
 
         return new MustacheTemplate($mustache);
     }

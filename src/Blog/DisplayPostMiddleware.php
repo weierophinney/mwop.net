@@ -37,7 +37,7 @@ class DisplayPostMiddleware
         $post     = new EntryView($post->getArrayCopy(), $path, $this->disqus);
 
         return new HtmlResponse(
-            $this->template->render('blog.post', $post)
+            $this->template->render('blog::post', $post)
         );
     }
 }
