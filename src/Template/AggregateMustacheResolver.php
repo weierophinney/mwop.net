@@ -65,7 +65,7 @@ class AggregateMustacheResolver implements Countable, IteratorAggregate, Resolve
     public function resolve($template)
     {
         foreach ($this->queue as $resolver) {
-            $resource = $resolver->resolve($name);
+            $resource = $resolver->resolve($template);
             if (false !== $resource) {
                 return $resource;
             }

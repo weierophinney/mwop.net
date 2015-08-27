@@ -41,8 +41,8 @@ return [
         ],
         'post_routing' => [
             [
-                'path'            => '/blog',
-                'middleware'      => 'Mwop\Blog\Middleware',
+                'path'       => '/blog',
+                'middleware' => 'Mwop\Blog\Middleware',
             ],
             [
                 'path'       => '/auth',
@@ -56,16 +56,19 @@ return [
                 'path'       => '/jobs',
                 'middleware' => 'Mwop\Job\Middleware',
             ],
-            ['middleware' => 'Mwop\Unauthorized', 'error' => true],
+            [
+                'middleware' => 'Mwop\Unauthorized',
+                'error'      => true,
+            ],
         ],
     ],
     'opauth' => [
-        'path' => '/auth/',
-        'callback_url' => '/auth/callback',
+        'path'               => '/auth/',
+        'callback_url'       => '/auth/callback',
         'callback_transport' => 'session',
-        'debug' => false,
-        'security_salt' => 'PROVIDE A PROPER SALT',
-        'Strategy' => [
+        'debug'              => false,
+        'security_salt'      => 'PROVIDE A PROPER SALT',
+        'Strategy'           => [
             'GitHub' => [
                 'client_id'     => null,
                 'client_secret' => null,
@@ -76,8 +79,8 @@ return [
                 'scope'         => 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email',
             ],
             'Twitter' => [
-                'key'    => null,
-                'secret' => null,
+                'key'           => null,
+                'secret'        => null,
             ],
         ],
     ],
@@ -100,8 +103,8 @@ return [
     ],
     'zend-expressive' => [
         'error_handler' => [
-            'template_404'   => 'error/404',
-            'template_error' => 'error/500',
+            'template_404'   => 'error::404',
+            'template_error' => 'error::500',
         ],
     ],
 

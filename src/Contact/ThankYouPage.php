@@ -26,7 +26,7 @@ class ThankYouPage
         }
 
         return new HtmlResponse(
-            $this->template->render('contact.thankyou')
+            $this->template->render('contact::thankyou')
         );
     }
 }

@@ -12,6 +12,5 @@ chdir(dirname(__DIR__));
 require_once 'vendor/autoload.php';
 
 $container = require 'config/services.php';
-
-$app = $container->get('Mwop\Site');
+$app       = $container->get('Mwop\Site');
 $app->run();

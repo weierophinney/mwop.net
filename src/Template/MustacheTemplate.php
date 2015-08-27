@@ -36,6 +36,7 @@ class MustacheTemplate implements TemplateInterface
         if (! $resolver instanceof AggregateMustacheResolver) {
             $aggregate = $this->createDefaultResolver();
             $aggregate->attach($resolver);
+            $renderer->setResolver($aggregate);
             $resolver = $aggregate;
         }
 

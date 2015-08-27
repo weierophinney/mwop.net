@@ -47,13 +47,13 @@
 </head>
 <body>
 <div class="container">
-{{>header}}
+{{>layout::header}}
 
     <div class="sixteen columns clearfix content">
         {{$content}}{{/content}}
     </div>
 
-{{>footer}}
+{{>layout::footer}}
 {{$scripts}}{{/scripts}}
 <script>
     document.addEventListener('DOMContentLoaded', function () {

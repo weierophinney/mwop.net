@@ -109,8 +109,8 @@ class NamespacedMustacheResolver extends DefaultResolver
             $template  = $matches['template'];
         }
 
-        $segments     = explode($this->getSeparator(), $template);
-        $relativePath = implode('/', $segments) . $this->getSuffix();
+        $segments = explode($this->getSeparator(), $template);
+        $template = implode('/', $segments) . $this->getSuffix();
 
         $path = $this->fetchTemplateForNamespace($template, $namespace);
 
@@ -135,7 +135,7 @@ class NamespacedMustacheResolver extends DefaultResolver
                 $path .= '/';
             }
 
-            $filename = $path . $relativePath;
+            $filename = $path . $template;
             if (file_exists($filename)) {
                 return file_get_contents($filename);
             }

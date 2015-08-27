@@ -38,7 +38,7 @@ class ListPostsMiddleware
         $entries    = $this->prepareEntries($tag, $path, $page, $posts);
 
         return new HtmlResponse($this->template->render(
-            'blog.list',
+            'blog::list',
             $this->prepareView($tag, $entries, $pagination)
         ));
     }

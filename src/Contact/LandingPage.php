@@ -27,7 +27,7 @@ class LandingPage
         ]);
 
         return new HtmlResponse(
-            $this->template->render('contact.landing', $view)
+            $this->template->render('contact::landing', $view)
         );
     }
 }
