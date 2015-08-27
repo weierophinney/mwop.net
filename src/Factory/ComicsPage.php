@@ -12,7 +12,7 @@ class ComicsPage
 
         $pipeline->pipe($services->get('Mwop\Auth\UserSession'));
         $pipeline->pipe(new Page(
-            'comics.page',
+            'mwop::comics.page',
             [],
             $services->get('Zend\Expressive\Template\TemplateInterface')
         ));
