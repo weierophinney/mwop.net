@@ -101,6 +101,23 @@ return [
             'allowed_methods' => ['GET'],
         ],
     ],
+    'phly-mustache' => [
+        'paths' => [
+            'blog'    => getcwd() . '/templates/blog',
+            'contact' => getcwd() . '/templates/contact',
+            'error'   => getcwd() . '/templates/error',
+            'layout'  => getcwd() . '/templates/layout',
+            'mwop'    => getcwd() . '/templates/mwop',
+            [
+                getcwd() . '/templates',
+                getcwd() . '/data',
+            ],
+        ],
+        'pragmas' => [
+            'Phly\Mustache\Pragma\ContextualEscape',
+            'Phly\Mustache\Pragma\ImplicitIterator',
+        ],
+    ],
     'zend-expressive' => [
         'error_handler' => [
             'template_404'   => 'error::404',

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "f727ca4975d89baf0cc0d9f2691b24fe",
+    "hash": "ed31dca2b72796c1f791fb06d59095ec",
     "packages": [
         {
             "name": "aura/router",
@@ -391,6 +391,55 @@
                 "issues": "https://github.com/weierophinney/PhlyComic/issues"
             },
             "time": "2015-09-01 18:54:36"
+        },
+        {
+            "name": "phly/phly-expressive-mustache",
+            "version": "0.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phly/phly-expressive-mustache.git",
+                "reference": "f593f700eaf8e55cf664330c53ebefa2ef8e8c0b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phly/phly-expressive-mustache/zipball/f593f700eaf8e55cf664330c53ebefa2ef8e8c0b",
+                "reference": "f593f700eaf8e55cf664330c53ebefa2ef8e8c0b",
+                "shasum": ""
+            },
+            "require": {
+                "phly/phly-mustache": "^2.0",
+                "php": ">=5.5",
+                "zendframework/zend-expressive": "^0.1"
+            },
+            "require-dev": {
+                "container-interop/container-interop": "^1.1",
+                "phpunit/phpunit": "^4.7",
+                "squizlabs/php_codesniffer": "^2.3.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Phly\\Expressive\\Mustache\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-2-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Matthew Weier O'Phinney",
+                    "email": "matthew@weierophinney.net",
+                    "homepage": "https://mwop.net/"
+                }
+            ],
+            "description": "Mustache TemplateInterface implementation for zend-expressive",
+            "homepage": "https://github.com/phly/phly-expressive-mustache",
+            "keywords": [
+                "expressive",
+                "mustache"
+            ],
+            "time": "2015-09-02 21:00:26"
         },
         {
             "name": "phly/phly-mustache",

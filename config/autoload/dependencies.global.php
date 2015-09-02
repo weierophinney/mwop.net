@@ -41,7 +41,7 @@ return [
         'Mwop\Site'                       => 'Zend\Expressive\Container\ApplicationFactory',
         'Mwop\Unauthorized'               => 'Mwop\Factory\Unauthorized',
         'Zend\Expressive\FinalHandler'    => 'Zend\Expressive\Container\TemplatedErrorHandlerFactory',
-        'Zend\Expressive\Template\TemplateInterface' => 'Mwop\Template\MustacheTemplateFactory',
+        'Zend\Expressive\Template\TemplateInterface' => 'Phly\Expressive\Mustache\MustacheTemplateFactory',
     ],
     'services' => [
         'config' => include 'config/config.php',
