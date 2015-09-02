@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a5a0a6768d02017347c215292ca19a0f",
+    "hash": "f727ca4975d89baf0cc0d9f2691b24fe",
     "packages": [
         {
             "name": "aura/router",
@@ -334,51 +334,6 @@
             "time": "2013-06-12 07:50:11"
         },
         {
-            "name": "phly/mustache",
-            "version": "1.2.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phly/phly_mustache.git",
-                "reference": "8f9f2b6644e1aa8439e195f5169f9435749cc763"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phly/phly_mustache/zipball/8f9f2b6644e1aa8439e195f5169f9435749cc763",
-                "reference": "8f9f2b6644e1aa8439e195f5169f9435749cc763",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "3.7.*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Phly": "library/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Matthew Weier O'Phinney",
-                    "email": "matthew@weierophinney.net",
-                    "homepage": "http://mwop.net/",
-                    "role": "Developer"
-                }
-            ],
-            "description": "PHP 5.3 Mustache Implementation",
-            "homepage": "http://weierophinney.github.com/phly_mustache/",
-            "keywords": [
-                "mustache"
-            ],
-            "time": "2013-10-23 14:16:26"
-        },
-        {
             "name": "phly/phly-comic",
             "version": "1.0.13",
             "source": {
@@ -436,6 +391,53 @@
                 "issues": "https://github.com/weierophinney/PhlyComic/issues"
             },
             "time": "2015-09-01 18:54:36"
+        },
+        {
+            "name": "phly/phly-mustache",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phly/phly-mustache.git",
+                "reference": "d490d676959cdd70cd2c19536d05ec0734b3b11e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phly/phly-mustache/zipball/d490d676959cdd70cd2c19536d05ec0734b3b11e",
+                "reference": "d490d676959cdd70cd2c19536d05ec0734b3b11e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5",
+                "zendframework/zend-escaper": "^2.5",
+                "zendframework/zend-stdlib": "^2.6"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.7",
+                "squizlabs/php_codesniffer": "^2.3.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Phly\\Mustache\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-2-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Matthew Weier O'Phinney",
+                    "email": "matthew@weierophinney.net",
+                    "homepage": "https://mwop.net/"
+                }
+            ],
+            "description": "PHP Mustache implementation supporting inheritance",
+            "homepage": "http://phly-mustache.readthedocs.org",
+            "keywords": [
+                "mustache"
+            ],
+            "time": "2015-09-02 15:45:11"
         },
         {
             "name": "psr/http-message",

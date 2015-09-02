@@ -2,6 +2,7 @@
 namespace Mwop\Template;
 
 use Phly\Mustache\Mustache;
+use Phly\Mustache\Pragma\ContextualEscape;
 use Phly\Mustache\Pragma\ImplicitIterator;
 
 class MustacheTemplateFactory
@@ -9,7 +10,8 @@ class MustacheTemplateFactory
     public function __invoke($services)
     {
         $mustache = new Mustache();
-        $mustache->getRenderer()->addPragma(new ImplicitIterator());
+        $mustache->getPragmas()->add(new ImplicitIterator());
+        $mustache->getPragmas()->add(new ContextualEscape());
 
         $templates = new MustacheTemplate($mustache);
 
