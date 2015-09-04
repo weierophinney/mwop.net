@@ -51,7 +51,6 @@ sitesub :
 
 pagerules :
 	@echo "Configuring page cache rules..."
-	-$(GIT) checkout -- zpk/scripts/pagecache_rules.xml
 	-$(PHP) $(CURDIR)/bin/mwop.net.php prep-page-cache-rules --appId=$(APPID) --site=$(SITE)
 	@echo "[DONE] Configuring page cache rules..."
 
