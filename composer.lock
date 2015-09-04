@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ed31dca2b72796c1f791fb06d59095ec",
+    "hash": "e0a86814f74c05e8735ccf53fd366ab0",
     "packages": [
         {
             "name": "aura/router",
@@ -394,22 +394,22 @@
         },
         {
             "name": "phly/phly-expressive-mustache",
-            "version": "0.1.1",
+            "version": "0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phly/phly-expressive-mustache.git",
-                "reference": "f593f700eaf8e55cf664330c53ebefa2ef8e8c0b"
+                "reference": "c110d6a549e2f5f06696df178eececde2d528080"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phly/phly-expressive-mustache/zipball/f593f700eaf8e55cf664330c53ebefa2ef8e8c0b",
-                "reference": "f593f700eaf8e55cf664330c53ebefa2ef8e8c0b",
+                "url": "https://api.github.com/repos/phly/phly-expressive-mustache/zipball/c110d6a549e2f5f06696df178eececde2d528080",
+                "reference": "c110d6a549e2f5f06696df178eececde2d528080",
                 "shasum": ""
             },
             "require": {
                 "phly/phly-mustache": "^2.0",
                 "php": ">=5.5",
-                "zendframework/zend-expressive": "^0.1"
+                "zendframework/zend-expressive": "^0.2"
             },
             "require-dev": {
                 "container-interop/container-interop": "^1.1",
@@ -439,7 +439,7 @@
                 "expressive",
                 "mustache"
             ],
-            "time": "2015-09-02 21:00:26"
+            "time": "2015-09-04 12:47:13"
         },
         {
             "name": "phly/phly-mustache",
@@ -838,16 +838,16 @@
         },
         {
             "name": "zendframework/zend-expressive",
-            "version": "0.1.0",
+            "version": "0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-expressive.git",
-                "reference": "1094bdaafd43ad2a4d1aeb51a123a0ee59070f2f"
+                "reference": "38124a7834e2200f725c158605763f3d99bc33aa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-expressive/zipball/1094bdaafd43ad2a4d1aeb51a123a0ee59070f2f",
-                "reference": "1094bdaafd43ad2a4d1aeb51a123a0ee59070f2f",
+                "url": "https://api.github.com/repos/zendframework/zend-expressive/zipball/38124a7834e2200f725c158605763f3d99bc33aa",
+                "reference": "38124a7834e2200f725c158605763f3d99bc33aa",
                 "shasum": ""
             },
             "require": {
@@ -871,6 +871,7 @@
                 "zendframework/zend-view": "^2.5"
             },
             "suggest": {
+                "aura/di": "3.0.*@beta to make use of Aura.Di dependency injection container",
                 "aura/router": "^2.3 to use the Aura.Router routing adapter",
                 "filp/whoops": "^1.1 to use the Whoops error handler",
                 "league/plates": "^3.1 to use the Plates template adapter",
@@ -899,7 +900,7 @@
                 "psr",
                 "psr-7"
             ],
-            "time": "2015-08-26 17:05:09"
+            "time": "2015-09-03 22:44:39"
         },
         {
             "name": "zendframework/zend-feed",
@@ -1133,27 +1134,27 @@
         },
         {
             "name": "zendframework/zend-inputfilter",
-            "version": "2.5.4",
+            "version": "2.5.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-inputfilter.git",
-                "reference": "3b9d3efbca7fbb34037bbc41fbf49c0f268554b7"
+                "reference": "3208cddbb92df029230cde676a5c8e5a22b531c6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-inputfilter/zipball/3b9d3efbca7fbb34037bbc41fbf49c0f268554b7",
-                "reference": "3b9d3efbca7fbb34037bbc41fbf49c0f268554b7",
+                "url": "https://api.github.com/repos/zendframework/zend-inputfilter/zipball/3208cddbb92df029230cde676a5c8e5a22b531c6",
+                "reference": "3208cddbb92df029230cde676a5c8e5a22b531c6",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.5",
                 "zendframework/zend-filter": "~2.5",
                 "zendframework/zend-stdlib": "~2.5",
-                "zendframework/zend-validator": "~2.5"
+                "zendframework/zend-validator": "^2.5.3"
             },
             "require-dev": {
                 "fabpot/php-cs-fixer": "1.7.*",
-                "phpunit/phpunit": "~4.0",
+                "phpunit/phpunit": "^4.5",
                 "zendframework/zend-i18n": "~2.5",
                 "zendframework/zend-servicemanager": "~2.5"
             },
@@ -1181,7 +1182,7 @@
                 "inputfilter",
                 "zf2"
             ],
-            "time": "2015-08-11 16:01:27"
+            "time": "2015-09-03 22:31:38"
         },
         {
             "name": "zendframework/zend-loader",
@@ -1704,16 +1705,16 @@
         },
         {
             "name": "zendframework/zend-validator",
-            "version": "2.5.2",
+            "version": "2.5.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-validator.git",
-                "reference": "6b1e4bb249a00603ebbf4023b4b42c867aa79336"
+                "reference": "53e567a58c8952a03da0b8edf0f075303a5ac5d1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-validator/zipball/6b1e4bb249a00603ebbf4023b4b42c867aa79336",
-                "reference": "6b1e4bb249a00603ebbf4023b4b42c867aa79336",
+                "url": "https://api.github.com/repos/zendframework/zend-validator/zipball/53e567a58c8952a03da0b8edf0f075303a5ac5d1",
+                "reference": "53e567a58c8952a03da0b8edf0f075303a5ac5d1",
                 "shasum": ""
             },
             "require": {
@@ -1766,7 +1767,7 @@
                 "validator",
                 "zf2"
             ],
-            "time": "2015-07-16 19:29:35"
+            "time": "2015-09-03 19:06:11"
         },
         {
             "name": "zfcampus/zf-console",

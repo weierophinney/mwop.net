@@ -14,7 +14,7 @@
         "zendframework/zend-stratigility": "~1.1",
         "zendframework/zend-diactoros": "^1.1",
         "phly/phly-comic": "~1.0",
-        "phly/phly-mustache": "^2.0",
+        "phly/phly-expressive-mustache": "^0.2",
         "psr/http-message": "^1.0",
         "zendframework/zend-config": "~2.3",
         "zendframework/zend-escaper": "~2.3",
@@ -27,10 +27,9 @@
         "zendframework/zend-stdlib": "~2.3",
         "zendframework/zend-tag": "~2.3",
         "zfcampus/zf-console": "~1.0",
-        "zendframework/zend-expressive": "^0.1",
+        "zendframework/zend-expressive": "^0.2",
         "zendframework/zend-servicemanager": "^2.6",
-        "aura/router": "^2.3",
-        "phly/phly-expressive-mustache": "^0.1.0"
+        "aura/router": "^2.3"
     },
     "require-dev": {
         "zfcampus/zf-deploy": "~1.0@stable",
