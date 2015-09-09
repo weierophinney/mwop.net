@@ -29,7 +29,8 @@
         "zfcampus/zf-console": "~1.0",
         "zendframework/zend-expressive": "^0.2",
         "zendframework/zend-servicemanager": "^2.6",
-        "aura/router": "^2.3"
+        "aura/router": "^2.3",
+        "league/commonmark": "^0.10.0"
     },
     "require-dev": {
         "zfcampus/zf-deploy": "~1.0@stable",
