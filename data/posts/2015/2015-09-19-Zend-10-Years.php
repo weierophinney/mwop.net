@@ -1,0 +1,88 @@
+<?php // @codingStandardsIgnoreFile
+use League\CommonMark\CommonMarkConverter;
+use Mwop\Blog\AuthorEntity;
+use Mwop\Blog\EntryEntity;
+
+$markdown = new CommonMarkConverter();
+
+$author = new AuthorEntity();
+$author->setId('matthew');
+$author->setName("Matthew Weier O'Phinney");
+$author->setEmail("me@mwop.net");
+$author->setUrl("http://mwop.net");
+
+$entry = new EntryEntity();
+
+$entry->setId('2015-09-19-zend-10-year-anniversary');
+$entry->setTitle('On 10 Years at Zend');
+$entry->setAuthor($author);
+$entry->setDraft(false);
+$entry->setPublic(true);
+$entry->setCreated(new \DateTime('2015-09-18 05:00', new \DateTimezone('America/Chicago')));
+$entry->setUpdated(new \DateTime('2015-09-18 05:00', new \DateTimezone('America/Chicago')));
+$entry->setTimezone('America/Chicago');
+$entry->setTags(array(
+    'personal',
+    'php',
+    'programming',
+));
+
+$body =<<<'EOT'
+10 years ago, as I write this, I was on a plane from Burlington, VT, to San
+Jose, CA, where I'd be starting work at [Zend Technologies](http://www.zend.com)
+the next day as a PHP Developer.
+EOT;
+$entry->setBody($markdown->convertToHtml($body));
+
+$extended=<<<'EOT'
+I started on the eBiz team under Daniel Kushner, and was tasked with moving our
+home-grown, website that was developed originally in PHP 3, and which was
+running on PHP 4, to a dedicated CMS. An additional requirement was to "dogfood"
+code from a new project, Zend Framework, being developed in-house and with
+select industry partners. We would announce the framework publically the
+following month at the very first ZendCon (actually, "Zend PHP Conference and
+Expo", but folks started nicknaming it ZendCon almost immediately), and provide
+an initial public preview the following March.
+
+Of course, all the CMS solutions at the time were still running only on PHP 4,
+and Zend Framework was targeting PHP 5, so we had a fundamental disconnect with
+the requirements. The only reasonable solution was to use web services. As
+such, my first contribution to Zend Framework was `Zend_XmlRpc_Server`, which we
+started using for a middle-tier services architecture with which the front-end
+CMS would communicate.
+
+On top of that, a ZendCon tutorial speaker dropped out, and I was asked, along
+with Mike Naberezny (who was heading the Zend Framework efforts at the time) to
+fill in. This would be my first time speaking at a conference.
+
+It was an amazing trial by fire. I was often unsure during my first six months
+whether or not I was really up to the task, and expected to be let go or to
+resign practically every day. Fortunately, Zend had, and continues to have, an
+incredibly supportive team, and I was able to move into roles with increasing
+responsibilities over the years.
+
+In 2007, between Thanskgiving and Christmas, I moved over full time to the Zend
+Framework team. The following spring, I was promoted to Software Architect. A
+year later, in 2009, I was promoted to Project Lead. In 2013, I was promoted to
+Principal Engineer, the title I hold today.
+
+I have some wonderful colleagues, and have had a number of great
+bosses/supervisors at Zend. In particular, I have to thank
+[Boaz Ziniman](https://twitter.com/ziniman),
+[Andi](http://andigutmans.blogspot.com),
+and [Zeev](http://zsuraski.blogspot.com) (my direct supervisor since 2009) for
+their trust and support over the years.
+
+Since joining Zend, I've written more lines of code than I care to count,
+worked with hundreds of contributors from literally all over the world
+(timezone calculations, something I never cared about before, come naturally
+now), travelled to seven countries on three continents (Europe, Asia — well,
+Israel — and South America), spoken at dozens of conferences, made many
+friends, and watched my children grow into amazing human beings.
+
+Not bad for a liberal arts major from Montana! I'm hoping the next 10 years can
+be as lucrative professionally and personally!
+EOT;
+$entry->setExtended($markdown->convertToHtml($extended));
+
+return $entry;
