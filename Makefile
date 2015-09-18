@@ -33,7 +33,7 @@ GIT ?= $(shell which git)
 NPM ?= $(shell which npm)
 PORT ?= 8080
 
-COMPOSER = $(CURDIR)/composer.phar
+COMPOSER = $(shell which composer)
 
 .PHONY : all composer sitesub pagerules node_modules grunt node_cleanup zpk deploy clean
 
