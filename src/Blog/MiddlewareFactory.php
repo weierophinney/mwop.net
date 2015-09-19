@@ -10,6 +10,14 @@ class MiddlewareFactory
     {
         $blog = AppFactory::create($services);
 
+        $route = new Route('/{id}.html', DisplayPostMiddleware::class, [ 'GET' ]);
+        $route->setOptions([
+            'tokens' => [
+                'id'  => '[^/]+',
+            ],
+        ]);
+        $blog->route($route);
+
         $route = new Route('/tag/php.xml', FeedMiddleware::class, [ 'GET' ]);
         $route->setOptions([
             'values' => [
@@ -40,14 +48,6 @@ class MiddlewareFactory
         $route->setOptions([
             'tokens' => [
                 'type'  => '(atom|rss)',
-            ],
-        ]);
-        $blog->route($route);
-
-        $route = new Route('/{id}.html', DisplayPostMiddleware::class, [ 'GET' ]);
-        $route->setOptions([
-            'tokens' => [
-                'id'  => '[^/]',
             ],
         ]);
         $blog->route($route);
