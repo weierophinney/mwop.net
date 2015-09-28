@@ -398,16 +398,16 @@
         },
         {
             "name": "phly/phly-comic",
-            "version": "1.0.14",
+            "version": "1.0.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/weierophinney/PhlyComic.git",
-                "reference": "3bd0e4f3ff7d9f9ada9b2c011ddfc292f660050d"
+                "reference": "b8fe29dd25d6a72089141abbecce9444cd289648"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/weierophinney/PhlyComic/zipball/3bd0e4f3ff7d9f9ada9b2c011ddfc292f660050d",
-                "reference": "3bd0e4f3ff7d9f9ada9b2c011ddfc292f660050d",
+                "url": "https://api.github.com/repos/weierophinney/PhlyComic/zipball/b8fe29dd25d6a72089141abbecce9444cd289648",
+                "reference": "b8fe29dd25d6a72089141abbecce9444cd289648",
                 "shasum": ""
             },
             "require": {
@@ -453,7 +453,7 @@
                 "source": "https://github.com/weierophinney/PhlyComic",
                 "issues": "https://github.com/weierophinney/PhlyComic/issues"
             },
-            "time": "2015-09-19 12:47:31"
+            "time": "2015-09-28 14:11:36"
         },
         {
             "name": "phly/phly-expressive-mustache",
