@@ -33,6 +33,7 @@
         "league/commonmark": "^0.10.0"
     },
     "require-dev": {
+        "puli/repository": "^1.0@beta",
         "zfcampus/zf-deploy": "~1.0@stable",
         "filp/whoops": "^1.1"
     },

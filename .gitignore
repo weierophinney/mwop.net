@@ -1,3 +1,4 @@
+.puli/
 config/autoload/*local.php
 data/cache/posts/*
 data/comics/*.html

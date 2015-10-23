@@ -1,0 +1,6 @@
+{
+    "version": "1.0",
+    "path-mappings": {
+        "/mwop/mwop-blog": "data/blog"
+    }
+}
