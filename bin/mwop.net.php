@@ -1,5 +1,12 @@
 #!/usr/bin/env php
 <?php
+/**
+ * @todo Rewrite code for generating blog DB to use Puli.
+ * @todo Rewrite tag-cloud, cache-posts, feed-generator to depend on DB population;
+ *     either have them call that task before running, or check for the DB, or look
+ *     for a CLI flag that asks to update first.
+ * @todo Maybe add a "blog-prepare" task that does all of the above at once, in order?
+ */
 namespace Mwop;
 
 use Zend\Console\Console;

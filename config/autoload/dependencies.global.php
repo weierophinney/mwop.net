@@ -36,6 +36,7 @@ return [
         'Mwop\Github\AtomReader'          => 'Mwop\Github\AtomReaderFactory',
         'Mwop\Github\Console\Fetch'       => 'Mwop\Github\Console\FetchFactory',
         'Mwop\HomePage'                   => 'Mwop\Factory\PageFactory',
+        'Mwop\Job\GithubFeed'             => 'Mwop\Job\GithubFeedFactory',
         'Mwop\Job\Middleware'             => 'Mwop\Job\MiddlewareFactory',
         'Mwop\ResumePage'                 => 'Mwop\Factory\PageFactory',
         'Mwop\Site'                       => 'Zend\Expressive\Container\ApplicationFactory',
