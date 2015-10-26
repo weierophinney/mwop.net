@@ -1,13 +1,17 @@
 <?php
 namespace Mwop\Blog\Console;
 
-use Mwop\Blog;
+use DateTime;
+use Mni\FrontYAML\Bridge\CommonMark\CommonMarkParser;
+use Mni\FrontYAML\Parser;
+use Mwop\Blog\MarkdownFileFilter;
 use PDO;
+use Symfony\Component\Yaml\Parser as YamlParser;
 use Zend\Console\ColorInterface as Color;
 
 class SeedBlogDatabase
 {
-    private $delete = 'DELETE FROM posts WHERE 1';
+    private $authors = [];
 
     private $indices = [
         'CREATE INDEX visible ON posts ( created, draft, public )',
@@ -40,6 +44,13 @@ class SeedBlogDatabase
         %s,
         %s';
 
+    /**
+     * Delimiter between post summary and extended body
+     *
+     * @var string
+     */
+    private $postDelimiter = '<!--- EXTENDED -->';
+
     private $table ='CREATE TABLE "posts" (
             id VARCHAR(255) NOT NULL PRIMARY KEY,
             path VARCHAR(255) NOT NULL,
@@ -55,8 +66,10 @@ class SeedBlogDatabase
 
     public function __invoke($route, $console)
     {
-        $basePath = $route->getMatchedParam('path');
-        $dbPath   = $route->getMatchedParam('dbPath');
+        $basePath    = $route->getMatchedParam('path');
+        $postsPath   = $route->getMatchedParam('postsPath');
+        $authorsPath = $route->getMatchedParam('authorsPath');
+        $dbPath      = $route->getMatchedParam('dbPath');
 
         $message = 'Generating blog post database';
         $length  = strlen($message);
@@ -65,37 +78,34 @@ class SeedBlogDatabase
 
         $pdo = $this->createDatabase($dbPath, $console);
 
-        $path = realpath($basePath) . '/data/posts';
+        $path = sprintf('%s/%s', realpath($basePath), ltrim($postsPath));
         $trim = strlen(realpath($basePath)) + 1;
 
         $statements = [];
-        foreach (new Blog\PhpFileFilter($path) as $fileInfo) {
-            $entry  = include $fileInfo->getPathname();
-
-            if (! $entry instanceof Blog\EntryEntity) {
-                continue;
-            }
-
-            $entry  = $entry->getArrayCopy();
-            $author = $entry['author'];
-            if ($author instanceof Blog\AuthorEntity) {
-                $author = $author->getArrayCopy();
-            }
-
+        foreach (new MarkdownFileFilter($path) as $fileInfo) {
+            $path     = $fileInfo->getPathname();
+            $parser   = new Parser(null, new CommonMarkParser());
+            $document = $parser->parse(file_get_contents($path));
+            $metadata = $document->getYAML();
+            $html     = $document->getContent();
+            $parts    = explode($this->postDelimiter, $html, 2);
+            $body     = $parts[0];
+            $extended = isset($parts[1]) ? $parts[1] : '';
+            $author   = $this->getAuthor($metadata['author'], $authorsPath);
             $template = empty($statements) ? $this->initial : $this->item;
 
             $statements[] = sprintf(
                 $template,
-                $pdo->quote($entry['id']),
-                $pdo->quote(substr($fileInfo->getPathname(), $trim)),
-                $entry['created'],
-                $entry['updated'],
-                $pdo->quote($entry['title']),
-                $pdo->quote(is_string($author) ? $author : $author['id']),
-                $entry['is_draft'] ? 1 : 0,
-                $entry['is_public'] ? 1 : 0,
-                $pdo->quote($entry['body']),
-                $pdo->quote(sprintf('|%s|', implode('|', $entry['tags'])))
+                $pdo->quote($metadata['id']),
+                $pdo->quote(substr($path, $trim)),
+                (new DateTime($metadata['created']))->getTimestamp(),
+                (new DateTime($metadata['updated']))->getTimestamp(),
+                $pdo->quote($metadata['title']),
+                $pdo->quote($author['id']),
+                $metadata['draft'] ? 1 : 0,
+                $metadata['public'] ? 1 : 0,
+                $pdo->quote($body),
+                $pdo->quote(sprintf('|%s|', implode('|', $metadata['tags'])))
             );
         }
 
@@ -125,6 +135,29 @@ class SeedBlogDatabase
         $pdo->commit();
 
         return $pdo;
+    }
+
+    /**
+     * Retrieve author metadata.
+     *
+     * @param string $author
+     * @param string $authorsPath
+     * @return string[]
+     */
+    private function getAuthor($author, $authorsPath)
+    {
+        if (isset($this->authors[$author])) {
+            return $this->authors[$author];
+        }
+        
+        $path = sprintf('%s/%s.yml', $authorsPath, $author);
+        if (! file_exists($path)) {
+            $this->authors[$author] = ['id' => $author, 'name' => $author, 'email' => '', 'url' => ''];
+            return $this->authors[$author];
+        }
+
+        $this->authors[$author] = (new YamlParser())->parse(file_get_contents($path));
+        return $this->authors[$author];
     }
 
     /**

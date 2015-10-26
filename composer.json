@@ -30,7 +30,8 @@
         "zendframework/zend-expressive": "^0.2",
         "zendframework/zend-servicemanager": "^2.6",
         "aura/router": "^2.3",
-        "league/commonmark": "^0.10.0"
+        "league/commonmark": "^0.11.3",
+        "mnapoli/front-yaml": "^1.5"
     },
     "require-dev": {
         "puli/repository": "^1.0@beta",

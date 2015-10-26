@@ -11,20 +11,20 @@ use SplFileInfo;
 
 /**
  * Usage:
- * 
+ *
  * <code>
- * $files = new PhpFileFilter($path);
+ * $files = new MarkdownFileFilter($path);
  *
  * // or
  * $dir   = new DirectoryIterator($path);
- * $files = new PhpFileIterator($dir);
+ * $files = new MarkdownFileIterator($dir);
  *
  * // or
  * $dir   = new RecursiveDirectoryIterator($path);
- * $files = new PhpFileIterator($dir);
+ * $files = new MarkdownFileIterator($dir);
  * </code>
  */
-class PhpFileFilter extends FilterIterator
+class MarkdownFileFilter extends FilterIterator
 {
     public function __construct($dirOrIterator = '.')
     {
@@ -61,7 +61,7 @@ class PhpFileFilter extends FilterIterator
         }
 
         $ext = $current->getExtension();
-        if ($ext != 'php') {
+        if ($ext != 'md') {
             return false;
         }
 
