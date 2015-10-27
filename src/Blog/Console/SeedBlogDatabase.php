@@ -152,7 +152,7 @@ class SeedBlogDatabase
         
         $path = sprintf('%s/%s.yml', $authorsPath, $author);
         if (! file_exists($path)) {
-            $this->authors[$author] = ['id' => $author, 'name' => $author, 'email' => '', 'url' => ''];
+            $this->authors[$author] = ['id' => $author, 'name' => $author, 'email' => '', 'uri' => ''];
             return $this->authors[$author];
         }
 

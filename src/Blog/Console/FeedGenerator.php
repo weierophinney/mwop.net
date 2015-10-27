@@ -1,12 +1,20 @@
 <?php
 namespace Mwop\Blog\Console;
 
+use DateTime;
+use Mni\FrontYAML\Bridge\CommonMark\CommonMarkParser;
+use Mni\FrontYAML\Parser;
 use Mwop\Blog;
+use Symfony\Component\Yaml\Parser as YamlParser;
 use Zend\Console\ColorInterface as Color;
 use Zend\Feed\Writer\Feed as FeedWriter;
 
 class FeedGenerator
 {
+    private $authors = [];
+
+    private $authorsPath;
+
     private $console;
 
     private $defaultAuthor = [
@@ -17,9 +25,10 @@ class FeedGenerator
 
     private $mapper;
 
-    public function __construct(Blog\MapperInterface $mapper)
+    public function __construct(Blog\MapperInterface $mapper, $authorsPath)
     {
-        $this->mapper = $mapper;
+        $this->mapper      = $mapper;
+        $this->authorsPath = $authorsPath;
     }
 
     public function __invoke($route, $console)
@@ -79,45 +88,56 @@ class FeedGenerator
         $latest = false;
         $posts->setCurrentPageNumber(1);
         foreach ($posts as $details) {
-            $post = include $details['path'];
-            if (! $post instanceof Blog\EntryEntity) {
-                $this->console->write('Invalid post detected: ', Color::RED);
-                $this->console->writeLine($details['path']);
-                continue;
-            }
+            $parser   = new Parser(null, new CommonMarkParser());
+            $document = $parser->parse(file_get_contents($details['path']));
+            $post     = $document->getYAML();
+            $html     = $document->getContent();
+            $author   = $this->getAuthor($post['author']);
 
             if (! $latest) {
                 $latest = $post;
             }
 
-            $authorDetails = $this->defaultAuthor;
-            $author        = $post->getAuthor();
-            if ($author instanceof Blog\AuthorEntity && $author->isValid()) {
-                $authorDetails = array(
-                    'name'  => $author->getName(),
-                    'email' => $author->getEmail(),
-                    'uri'   => $author->getUrl(),
-                );
-            }
-
             $entry = $feed->createEntry();
-            $entry->setTitle($post->getTitle());
-            $entry->setLink(sprintf('%s/%s.html', $baseUri, $post->getId()));
+            $entry->setTitle($post['title']);
+            $entry->setLink(sprintf('%s/%s.html', $baseUri, $post['id']));
 
-            $entry->addAuthor($authorDetails);
-            $entry->setDateModified($post->getUpdated());
-            $entry->setDateCreated($post->getCreated());
-            $entry->setContent($post->getBody() . $post->getExtended());
+            $entry->addAuthor($author);
+            $entry->setDateModified(new DateTime($post['updated']));
+            $entry->setDateCreated(new DateTime($post['created']));
+            $entry->setContent($html);
 
             $feed->addEntry($entry);
         }
 
         // Set feed date
-        $feed->setDateModified($latest->getUpdated());
+        $feed->setDateModified(new DateTime($latest['updated']));
 
         // Write feed to file
         $file = sprintf('%s%s.xml', $fileBase, $type);
         $file = str_replace(' ', '+', $file);
         file_put_contents($file, $feed->export($type));
+    }
+
+    /**
+     * Retrieve author metadata.
+     *
+     * @param string $author
+     * @return string[]
+     */
+    private function getAuthor($author)
+    {
+        if (isset($this->authors[$author])) {
+            return $this->authors[$author];
+        }
+        
+        $path = sprintf('%s/%s.yml', $this->authorsPath, $author);
+        if (! file_exists($path)) {
+            $this->authors[$author] = $this->defaultAuthor;
+            return $this->authors[$author];
+        }
+
+        $this->authors[$author] = (new YamlParser())->parse(file_get_contents($path));
+        return $this->authors[$author];
     }
 }
