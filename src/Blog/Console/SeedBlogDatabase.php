@@ -81,10 +81,10 @@ class SeedBlogDatabase
         $path = sprintf('%s/%s', realpath($basePath), ltrim($postsPath));
         $trim = strlen(realpath($basePath)) + 1;
 
+        $parser     = new Parser(null, new CommonMarkParser());
         $statements = [];
         foreach (new MarkdownFileFilter($path) as $fileInfo) {
             $path     = $fileInfo->getPathname();
-            $parser   = new Parser(null, new CommonMarkParser());
             $document = $parser->parse(file_get_contents($path));
             $metadata = $document->getYAML();
             $html     = $document->getContent();

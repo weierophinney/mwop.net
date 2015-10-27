@@ -103,7 +103,7 @@ $routes = [
         'description' => 'Generate the static cache of all blog posts.',
         'short_description' => 'Cache blog posts.',
         'options_descriptions' => [
-            '--path'   => 'Base path of the application; posts are expected at $path/data/posts/',
+            '--path'   => 'Base path of the application; posts are expected at $path/data/blog/',
         ],
         'defaults' => [
             'path'   => realpath(getcwd()),

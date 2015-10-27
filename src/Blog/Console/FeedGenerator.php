@@ -85,10 +85,10 @@ class FeedGenerator
             $feed->setDescription($title);
         }
 
+        $parser = new Parser(null, new CommonMarkParser());
         $latest = false;
         $posts->setCurrentPageNumber(1);
         foreach ($posts as $details) {
-            $parser   = new Parser(null, new CommonMarkParser());
             $document = $parser->parse(file_get_contents($details['path']));
             $post     = $document->getYAML();
             $html     = $document->getContent();
