@@ -83,9 +83,13 @@ class EntryView
         }, $tags);
     }
 
-    private function formatDate($timestamp)
+    private function formatDate($dateString)
     {
-        $date = new DateTime('@' . $timestamp, new DateTimezone('America/Chicago'));
+        if (is_numeric($dateString)) {
+            $date = new DateTime('@' . $dateString, new DateTimezone('America/Chicago'));
+        } else {
+            $date = new DateTime($dateString);
+        }
         return $date->format('j F Y');
     }
 }

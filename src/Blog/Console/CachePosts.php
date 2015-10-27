@@ -1,7 +1,9 @@
 <?php
 namespace Mwop\Blog\Console;
 
-use Mwop\Blog;
+use Mni\FrontYAML\Bridge\CommonMark\CommonMarkParser;
+use Mni\FrontYAML\Parser;
+use Mwop\Blog\MarkdownFileFilter;
 use Zend\Stratigility\Http\Request;
 use Zend\Diactoros\ServerRequest as PsrRequest;
 use Zend\Diactoros\Response;
@@ -21,7 +23,7 @@ class CachePosts
     {
         $basePath = $route->getMatchedParam('path');
 
-        $path       = realpath($basePath) . '/data/posts';
+        $path       = realpath($basePath) . '/data/blog';
         $baseUri    = new Uri('https://mwop.net/blog');
         $middleware = $this->blogMiddleware;
 
@@ -33,22 +35,20 @@ class CachePosts
             $failed = ($err) ? true : false;
         };
 
-        foreach (new Blog\PhpFileFilter($path) as $fileInfo) {
-            $entry  = include $fileInfo->getPathname();
+        $parser = new Parser(null, new CommonMarkParser());
+        foreach (new MarkdownFileFilter($path) as $fileInfo) {
+            $document = $parser->parse(file_get_contents($fileInfo->getPathname()));
+            $metadata = $document->getYAML();
 
-            if (! $entry instanceof Blog\EntryEntity) {
-                continue;
-            }
-
-            $message = '    ' . $entry->getId();
+            $message = '    ' . $metadata['id'];
             $length  = strlen($message);
             $width   = $console->getWidth();
             $console->write($message, Color::BLUE);
 
-            $canonical = $baseUri->withPath(sprintf('/blog/%s.html', $entry->getId()));
+            $canonical = $baseUri->withPath(sprintf('/blog/%s.html', $metadata['id']));
             $request   = (new Request(new PsrRequest([], [], $canonical, 'GET')))
                 ->withUri($canonical)
-                ->withAttribute('id', $entry->getId());
+                ->withAttribute('id', $metadata['id']);
 
             $failed = false;
             $middleware($request, new Response(), $done);

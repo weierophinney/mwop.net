@@ -1,5 +1,12 @@
 #!/usr/bin/env php
 <?php
+/**
+ * @todo Rewrite code for generating blog DB to use Puli.
+ * @todo Rewrite tag-cloud, cache-posts, feed-generator to depend on DB population;
+ *     either have them call that task before running, or check for the DB, or look
+ *     for a CLI flag that asks to update first.
+ * @todo Maybe add a "blog-prepare" task that does all of the above at once, in order?
+ */
 namespace Mwop;
 
 use Zend\Console\Console;
@@ -12,7 +19,7 @@ use ZF\Console\Application;
 chdir(__DIR__ . '/../');
 require_once 'vendor/autoload.php';
 
-define('VERSION', '0.0.1');
+define('VERSION', '0.0.2');
 
 $container = require 'config/services.php';
 
@@ -70,16 +77,20 @@ $routes = [
     ],
     [
         'name' => 'seed-blog-db',
-        'route' => '[--path=] [--dbPath=]',
+        'route' => '[--path=] [--dbPath=] [--postsPath=] [--authorsPath=]',
         'description' => 'Re-create the blog post database from the post entities.',
         'short_description' => 'Generate and seed the blog post database.',
         'options_descriptions' => [
-            '--path'   => 'Base path of the application; posts are expected at $path/data/posts/',
-            '--dbPath' => 'Path to the database file (defaults to data/posts.db)',
+            '--path'        => 'Base path of the application; defaults to current working dir',
+            '--dbPath'      => 'Path to the database file, relative to the --path; defaults to data/posts.db',
+            '--postsPath'   => 'Path to the blog posts, relative to the --path; defaults to data/blog',
+            '--authorsPath' => 'Path to the author metadata files, relative to the --path; defaults to data/blog/authors',
         ],
         'defaults' => [
-            'path'   => realpath(getcwd()),
-            'dbPath' => realpath(getcwd()) . '/data/posts.db',
+            'path'        => realpath(getcwd()),
+            'postsPath'   => 'data/blog/',
+            'authorsPath' => 'data/blog/authors',
+            'dbPath'      => 'data/posts.db',
         ],
         'handler' => function ($route, $console) use ($container) {
             $handler = $container->get('Mwop\Blog\Console\SeedBlogDatabase');
@@ -92,7 +103,7 @@ $routes = [
         'description' => 'Generate the static cache of all blog posts.',
         'short_description' => 'Cache blog posts.',
         'options_descriptions' => [
-            '--path'   => 'Base path of the application; posts are expected at $path/data/posts/',
+            '--path'   => 'Base path of the application; posts are expected at $path/data/blog/',
         ],
         'defaults' => [
             'path'   => realpath(getcwd()),
