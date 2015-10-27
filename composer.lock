@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "976100b8a5d835e456189f0d60b64380",
-    "content-hash": "fc618d971f378f3e9a80b63cbe14645a",
+    "hash": "eab3861d914e394a7731011e6c030408",
+    "content-hash": "0876a8e672377f5ecf9414de810b6c7f",
     "packages": [
         {
             "name": "aura/router",
@@ -2354,61 +2354,6 @@
             "time": "2012-08-16 17:13:03"
         },
         {
-            "name": "puli/repository",
-            "version": "1.0.0-beta8",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/puli/repository.git",
-                "reference": "f7c53212d9a9cca75e5fdfcea27e4dfa10b0521f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/puli/repository/zipball/f7c53212d9a9cca75e5fdfcea27e4dfa10b0521f",
-                "reference": "f7c53212d9a9cca75e5fdfcea27e4dfa10b0521f",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.9",
-                "webmozart/assert": "^1.0",
-                "webmozart/glob": "^3.1",
-                "webmozart/path-util": "^2.2"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^4.6",
-                "sebastian/version": "^1.0.1",
-                "symfony/filesystem": "^2.0",
-                "webmozart/key-value-store": "^1.0.0-beta5"
-            },
-            "suggest": {
-                "symfony/filesystem": "to use the FilesystemRepository",
-                "webmozart/key-value-store": "to use the path mapping repositories"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.1-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Puli\\Repository\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Bernhard Schussek",
-                    "email": "bschussek@gmail.com"
-                }
-            ],
-            "description": "A filesystem-like repository for storing arbitrary resources.",
-            "homepage": "http://puli.io",
-            "time": "2015-10-05 10:10:00"
-        },
-        {
             "name": "seld/jsonlint",
             "version": "1.3.1",
             "source": {
@@ -2453,147 +2398,6 @@
                 "validator"
             ],
             "time": "2015-01-04 21:18:15"
-        },
-        {
-            "name": "webmozart/assert",
-            "version": "1.0.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/webmozart/assert.git",
-                "reference": "30eed06dd6bc88410a4ff7f77b6d22f3ce13dbde"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/webmozart/assert/zipball/30eed06dd6bc88410a4ff7f77b6d22f3ce13dbde",
-                "reference": "30eed06dd6bc88410a4ff7f77b6d22f3ce13dbde",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^4.6"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Webmozart\\Assert\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Bernhard Schussek",
-                    "email": "bschussek@gmail.com"
-                }
-            ],
-            "description": "Assertions to validate method input/output with nice error messages.",
-            "keywords": [
-                "assert",
-                "check",
-                "validate"
-            ],
-            "time": "2015-08-24 13:29:44"
-        },
-        {
-            "name": "webmozart/glob",
-            "version": "3.1.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/webmozart/glob.git",
-                "reference": "44fd5671153c550a0b772d8f819bff7d913e646f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/webmozart/glob/zipball/44fd5671153c550a0b772d8f819bff7d913e646f",
-                "reference": "44fd5671153c550a0b772d8f819bff7d913e646f",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3",
-                "webmozart/path-util": "^2.2"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^4.6",
-                "symfony/filesystem": "^2.5"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.2-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Webmozart\\Glob\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Bernhard Schussek",
-                    "email": "bschussek@gmail.com"
-                }
-            ],
-            "description": "A PHP implementation of Ant's glob.",
-            "time": "2015-08-24 13:32:28"
-        },
-        {
-            "name": "webmozart/path-util",
-            "version": "2.2.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/webmozart/path-util.git",
-                "reference": "e5ac8b8a0ceaf7b36bff257be21780332880284d"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/webmozart/path-util/zipball/e5ac8b8a0ceaf7b36bff257be21780332880284d",
-                "reference": "e5ac8b8a0ceaf7b36bff257be21780332880284d",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3",
-                "webmozart/assert": "~1.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^4.6",
-                "sebastian/version": "^1.0.1"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.3-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Webmozart\\PathUtil\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Bernhard Schussek",
-                    "email": "bschussek@gmail.com"
-                }
-            ],
-            "description": "A robust cross-platform utility for normalizing, comparing and modifying file paths.",
-            "time": "2015-10-05 10:49:32"
         },
         {
             "name": "zfcampus/zf-deploy",
@@ -2653,7 +2457,6 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "aura/session": 20,
-        "puli/repository": 10,
         "zfcampus/zf-deploy": 0
     },
     "prefer-stable": false,

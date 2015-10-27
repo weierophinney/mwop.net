@@ -31,7 +31,8 @@
         "zendframework/zend-servicemanager": "^2.6",
         "aura/router": "^2.3",
         "league/commonmark": "^0.11.3",
-        "mnapoli/front-yaml": "^1.5"
+        "mnapoli/front-yaml": "^1.5",
+        "symfony/yaml": "^2.7"
     },
     "require-dev": {
         "zfcampus/zf-deploy": "~1.0@stable",
