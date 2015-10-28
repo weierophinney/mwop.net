@@ -33,7 +33,7 @@ class EntryView
                     $this->{$key} = $value;
                     break;
                 case 'tags':
-                    $this->tags = $this->marshalTags($value);
+                    $this->tags = array_values($this->marshalTags($value));
                     break;
                 default:
                     break;
@@ -78,7 +78,7 @@ class EntryView
         return array_map(function ($tag) use ($basePath) {
             return [
                 'tag'  => $tag,
-                'link' => sprintf('%s/tag/%s', $basePath, $tag),
+                'link' => sprintf('%s/tag/%s', $basePath, urlencode($tag)),
             ];
         }, $tags);
     }
