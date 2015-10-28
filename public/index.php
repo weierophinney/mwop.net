@@ -11,6 +11,6 @@ if (php_sapi_name() === 'cli-server'
 chdir(dirname(__DIR__));
 require_once 'vendor/autoload.php';
 
-$container = require 'config/services.php';
+$container = require 'config/container.php';
 $app       = $container->get('Mwop\Site');
 $app->run();

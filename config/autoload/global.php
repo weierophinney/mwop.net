@@ -34,34 +34,6 @@ return [
             ],
         ],
     ],
-    'middleware_pipeline' => [
-        'pre_routing' => [
-            ['middleware' => 'Mwop\Redirects'],
-            ['middleware' => 'Mwop\BodyParams'],
-        ],
-        'post_routing' => [
-            [
-                'path'       => '/blog',
-                'middleware' => 'Mwop\Blog\Middleware',
-            ],
-            [
-                'path'       => '/auth',
-                'middleware' => 'Mwop\Auth\Middleware',
-            ],
-            [
-                'path'       => '/contact',
-                'middleware' => 'Mwop\Contact\Middleware',
-            ],
-            [
-                'path'       => '/jobs',
-                'middleware' => 'Mwop\Job\Middleware',
-            ],
-            [
-                'middleware' => 'Mwop\Unauthorized',
-                'error'      => true,
-            ],
-        ],
-    ],
     'opauth' => [
         'path'               => '/auth/',
         'callback_url'       => '/auth/callback',
@@ -82,46 +54,6 @@ return [
                 'key'           => null,
                 'secret'        => null,
             ],
-        ],
-    ],
-    'routes' => [
-        [
-            'path'            => '/',
-            'middleware'      => 'Mwop\HomePage',
-            'allowed_methods' => ['GET'],
-        ],
-        [
-            'path'            => '/comics',
-            'middleware'      => 'Mwop\ComicsPage',
-            'allowed_methods' => ['GET'],
-        ],
-        [
-            'path'            => '/resume',
-            'middleware'      => 'Mwop\ResumePage',
-            'allowed_methods' => ['GET'],
-        ],
-    ],
-    'phly-mustache' => [
-        'paths' => [
-            'blog'    => getcwd() . '/templates/blog',
-            'contact' => getcwd() . '/templates/contact',
-            'error'   => getcwd() . '/templates/error',
-            'layout'  => getcwd() . '/templates/layout',
-            'mwop'    => getcwd() . '/templates/mwop',
-            [
-                getcwd() . '/templates',
-                getcwd() . '/data',
-            ],
-        ],
-        'pragmas' => [
-            'Phly\Mustache\Pragma\ContextualEscape',
-            'Phly\Mustache\Pragma\ImplicitIterator',
-        ],
-    ],
-    'zend-expressive' => [
-        'error_handler' => [
-            'template_404'   => 'error::404',
-            'template_error' => 'error::500',
         ],
     ],
 

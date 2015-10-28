@@ -21,7 +21,7 @@ require_once 'vendor/autoload.php';
 
 define('VERSION', '0.0.2');
 
-$container = require 'config/services.php';
+$container = require 'config/container.php';
 
 $routes = [
     [
