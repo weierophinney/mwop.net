@@ -6,7 +6,7 @@
         }
     ],
     "require": {
-        "php": "~5.5|~7.0",
+        "php": "^5.5|~7.0",
         "aura/session": "~2.0-dev@dev",
         "opauth/opauth": ">=0.2.0@dev,<2.0.0",
         "opauth/github": ">=0.1.0@dev,<2.0.0",
