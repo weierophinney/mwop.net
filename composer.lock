@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "eab3861d914e394a7731011e6c030408",
-    "content-hash": "0876a8e672377f5ecf9414de810b6c7f",
+    "hash": "1e2dfb260d48629b3b277786eff87918",
+    "content-hash": "b7b5355ef6ed30221e621ea503e0da0c",
     "packages": [
         {
             "name": "aura/router",
@@ -289,6 +289,49 @@
             "time": "2015-03-09 09:51:07"
         },
         {
+            "name": "nikic/fast-route",
+            "version": "v0.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nikic/FastRoute.git",
+                "reference": "31fa86924556b80735f98b294a7ffdfb26789f22"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nikic/FastRoute/zipball/31fa86924556b80735f98b294a7ffdfb26789f22",
+                "reference": "31fa86924556b80735f98b294a7ffdfb26789f22",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FastRoute\\": "src/"
+                },
+                "files": [
+                    "src/functions.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Nikita Popov",
+                    "email": "nikic@php.net"
+                }
+            ],
+            "description": "Fast request router for PHP",
+            "keywords": [
+                "router",
+                "routing"
+            ],
+            "time": "2015-06-18 19:15:47"
+        },
+        {
             "name": "opauth/github",
             "version": "0.1.0",
             "source": {
@@ -534,22 +577,22 @@
         },
         {
             "name": "phly/phly-expressive-mustache",
-            "version": "0.2.0",
+            "version": "0.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phly/phly-expressive-mustache.git",
-                "reference": "c110d6a549e2f5f06696df178eececde2d528080"
+                "reference": "79c118ce4ef81b0d7e025e2c496da931453f0aca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phly/phly-expressive-mustache/zipball/c110d6a549e2f5f06696df178eececde2d528080",
-                "reference": "c110d6a549e2f5f06696df178eececde2d528080",
+                "url": "https://api.github.com/repos/phly/phly-expressive-mustache/zipball/79c118ce4ef81b0d7e025e2c496da931453f0aca",
+                "reference": "79c118ce4ef81b0d7e025e2c496da931453f0aca",
                 "shasum": ""
             },
             "require": {
                 "phly/phly-mustache": "^2.0",
                 "php": ">=5.5",
-                "zendframework/zend-expressive": "^0.2"
+                "zendframework/zend-expressive": "~1.0.0-dev"
             },
             "require-dev": {
                 "container-interop/container-interop": "^1.1",
@@ -579,7 +622,7 @@
                 "expressive",
                 "mustache"
             ],
-            "time": "2015-09-04 12:47:13"
+            "time": "2015-10-27 15:27:41"
         },
         {
             "name": "phly/phly-mustache",
@@ -679,23 +722,20 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v2.7.5",
+            "version": "v2.7.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "31cb2ad0155c95b88ee55fe12bc7ff92232c1770"
+                "reference": "eca9019c88fbe250164affd107bc8057771f3f4d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/31cb2ad0155c95b88ee55fe12bc7ff92232c1770",
-                "reference": "31cb2ad0155c95b88ee55fe12bc7ff92232c1770",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/eca9019c88fbe250164affd107bc8057771f3f4d",
+                "reference": "eca9019c88fbe250164affd107bc8057771f3f4d",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.9"
-            },
-            "require-dev": {
-                "symfony/phpunit-bridge": "~2.7"
             },
             "type": "library",
             "extra": {
@@ -724,7 +764,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2015-09-14 14:14:09"
+            "time": "2015-10-11 09:39:48"
         },
         {
             "name": "zendframework/zend-config",
@@ -1027,16 +1067,16 @@
         },
         {
             "name": "zendframework/zend-expressive",
-            "version": "0.2.1",
+            "version": "1.0.0rc2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-expressive.git",
-                "reference": "e8a14fafadd7f6a1a71f79a273aa7f31757d798c"
+                "reference": "7ffd74fff146df5d47cf86a61989ad74081a58c4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-expressive/zipball/e8a14fafadd7f6a1a71f79a273aa7f31757d798c",
-                "reference": "e8a14fafadd7f6a1a71f79a273aa7f31757d798c",
+                "url": "https://api.github.com/repos/zendframework/zend-expressive/zipball/7ffd74fff146df5d47cf86a61989ad74081a58c4",
+                "reference": "7ffd74fff146df5d47cf86a61989ad74081a58c4",
                 "shasum": ""
             },
             "require": {
@@ -1044,35 +1084,37 @@
                 "php": ">=5.5",
                 "psr/http-message": "^1.0",
                 "zendframework/zend-diactoros": "^1.1",
+                "zendframework/zend-stdlib": "^2.7",
                 "zendframework/zend-stratigility": "^1.1"
             },
             "require-dev": {
-                "aura/router": "^2.3",
                 "filp/whoops": "^1.1",
-                "league/plates": "^3.1",
-                "nikic/fast-route": "^0.6.0",
                 "phpunit/phpunit": "^4.7",
                 "squizlabs/php_codesniffer": "^2.3",
-                "twig/twig": "^1.19",
-                "zendframework/zend-mvc": "^2.5",
-                "zendframework/zend-psr7bridge": "^0.1.0",
-                "zendframework/zend-servicemanager": "^2.6",
-                "zendframework/zend-view": "^2.5"
+                "zendframework/zend-expressive-aurarouter": "~1.0-dev",
+                "zendframework/zend-expressive-fastroute": "~1.0-dev",
+                "zendframework/zend-expressive-zendrouter": "~1.0-dev",
+                "zendframework/zend-servicemanager": "^2.6"
             },
             "suggest": {
                 "aura/di": "3.0.*@beta to make use of Aura.Di dependency injection container",
-                "aura/router": "^2.3 to use the Aura.Router routing adapter",
                 "filp/whoops": "^1.1 to use the Whoops error handler",
-                "league/plates": "^3.1 to use the Plates template adapter",
                 "mouf/pimple-interop": "^1.0 to use Pimple for dependency injection",
-                "nikic/fast-route": "^0.6.0 to use the FastRoute routing adapter",
-                "twig/twig": "^1.19 to use the Twig template adapter",
-                "zendframework/zend-mvc": "^2.5 to use the zend-mvc TreeRouteStack routing adapter",
-                "zendframework/zend-psr7bridge": "^0.1.0 to use the zend-mvc TreeRouteStack routing adapter",
-                "zendframework/zend-servicemanager": "^2.5 to use zend-servicemanager for dependency injection",
-                "zendframework/zend-view": "^2.5 to use the zend-view template adapter"
+                "zendframework/zend-expressive-aurarouter": "^0.1 to use the Aura.Router routing adapter",
+                "zendframework/zend-expressive-fastroute": "^0.1 to use the FastRoute routing adapter",
+                "zendframework/zend-expressive-platesrenderer": "^0.1 to use the Plates template renderer",
+                "zendframework/zend-expressive-twigrenderer": "^0.1 to use the Twig template renderer",
+                "zendframework/zend-expressive-zendrouter": "^0.1 to use the zend-mvc routing adapter",
+                "zendframework/zend-expressive-zendviewrenderer": "^0.1 to use the zend-view PhpRenderer template renderer",
+                "zendframework/zend-servicemanager": "^2.5 to use zend-servicemanager for dependency injection"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev",
+                    "dev-develop": "1.1-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Zend\\Expressive\\": "src/"
@@ -1089,7 +1131,57 @@
                 "psr",
                 "psr-7"
             ],
-            "time": "2015-09-10 18:59:47"
+            "time": "2015-10-20 18:27:19"
+        },
+        {
+            "name": "zendframework/zend-expressive-fastroute",
+            "version": "0.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zendframework/zend-expressive-fastroute.git",
+                "reference": "40307e9ae4003cc1632b51455ba8cd86bcb0c6b3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zendframework/zend-expressive-fastroute/zipball/40307e9ae4003cc1632b51455ba8cd86bcb0c6b3",
+                "reference": "40307e9ae4003cc1632b51455ba8cd86bcb0c6b3",
+                "shasum": ""
+            },
+            "require": {
+                "nikic/fast-route": "^0.6.0",
+                "php": ">=5.5",
+                "psr/http-message": "^1.0",
+                "zendframework/zend-expressive": "^1.0@rc"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.7",
+                "squizlabs/php_codesniffer": "^2.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Zend\\Expressive\\Router\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "FastRoute integration for Expressive",
+            "keywords": [
+                "FastRoute",
+                "expressive",
+                "http",
+                "middleware",
+                "psr",
+                "psr-7"
+            ],
+            "time": "2015-10-20 18:01:39"
         },
         {
             "name": "zendframework/zend-feed",
@@ -2457,10 +2549,13 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "aura/session": 20,
+        "zendframework/zend-expressive": 5,
         "zfcampus/zf-deploy": 0
     },
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "php": "~5.5|~7.0"
+    },
     "platform-dev": []
 }

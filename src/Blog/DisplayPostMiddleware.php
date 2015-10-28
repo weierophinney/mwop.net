@@ -4,7 +4,7 @@ namespace Mwop\Blog;
 use Mni\FrontYAML\Bridge\CommonMark\CommonMarkParser;
 use Mni\FrontYAML\Parser;
 use Zend\Diactoros\Response\HtmlResponse;
-use Zend\Expressive\Template\TemplateInterface;
+use Zend\Expressive\Template\TemplateRendererInterface;
 
 class DisplayPostMiddleware
 {
@@ -21,7 +21,7 @@ class DisplayPostMiddleware
 
     private $template;
 
-    public function __construct(MapperInterface $mapper, TemplateInterface $template, array $disqus = [])
+    public function __construct(MapperInterface $mapper, TemplateRendererInterface $template, array $disqus = [])
     {
         $this->mapper   = $mapper;
         $this->template = $template;

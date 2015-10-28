@@ -8,7 +8,7 @@ class ProcessFactory
         return new Process(
             $services->get('session'),
             $services->get('mail.transport'),
-            $services->get('Zend\Expressive\Template\TemplateInterface'),
+            $services->get('Zend\Expressive\Template\TemplateRendererInterface'),
             $services->get('Config')['contact']
         );
     }

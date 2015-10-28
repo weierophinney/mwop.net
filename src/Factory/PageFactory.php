@@ -10,7 +10,7 @@ class PageFactory
         return new Page(
             $this->deriveTemplateName($requestedName),
             [],
-            $services->get('Zend\Expressive\Template\TemplateInterface')
+            $services->get('Zend\Expressive\Template\TemplateRendererInterface')
         );
     }
 

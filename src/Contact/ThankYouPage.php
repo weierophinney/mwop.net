@@ -2,13 +2,13 @@
 namespace Mwop\Contact;
 
 use Zend\Diactoros\Response\HtmlResponse;
-use Zend\Expressive\Template\TemplateInterface;
+use Zend\Expressive\Template\TemplateRendererInterface;
 
 class ThankYouPage
 {
     private $template;
 
-    public function __construct(TemplateInterface $template)
+    public function __construct(TemplateRendererInterface $template)
     {
         $this->template = $template;
     }

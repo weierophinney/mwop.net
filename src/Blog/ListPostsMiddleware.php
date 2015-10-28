@@ -2,7 +2,7 @@
 namespace Mwop\Blog;
 
 use Zend\Diactoros\Response\HtmlResponse;
-use Zend\Expressive\Template\TemplateInterface;
+use Zend\Expressive\Template\TemplateRendererInterface;
 
 class ListPostsMiddleware
 {
@@ -10,7 +10,7 @@ class ListPostsMiddleware
 
     private $template;
 
-    public function __construct(MapperInterface $mapper, TemplateInterface $template)
+    public function __construct(MapperInterface $mapper, TemplateRendererInterface $template)
     {
         $this->mapper   = $mapper;
         $this->template = $template;

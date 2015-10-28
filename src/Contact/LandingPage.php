@@ -3,7 +3,7 @@ namespace Mwop\Contact;
 
 use Aura\Session\Session;
 use Zend\Diactoros\Response\HtmlResponse;
-use Zend\Expressive\Template\TemplateInterface;
+use Zend\Expressive\Template\TemplateRendererInterface;
 
 class LandingPage
 {
@@ -11,7 +11,7 @@ class LandingPage
     private $session;
     private $template;
 
-    public function __construct(TemplateInterface $template, Session $session, array $config)
+    public function __construct(TemplateRendererInterface $template, Session $session, array $config)
     {
         $this->template = $template;
         $this->session  = $session;

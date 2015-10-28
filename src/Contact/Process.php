@@ -3,7 +3,7 @@ namespace Mwop\Contact;
 
 use Aura\Session\Session;
 use Zend\Diactoros\Response\HtmlResponse;
-use Zend\Expressive\Template\TemplateInterface;
+use Zend\Expressive\Template\TemplateRendererInterface;
 use Zend\Mail\Message;
 use Zend\Mail\Transport\TransportInterface;
 
@@ -17,7 +17,7 @@ class Process
     public function __construct(
         Session $session,
         TransportInterface $transport,
-        TemplateInterface $template,
+        TemplateRendererInterface $template,
         array $config
     ) {
         $this->session   = $session;

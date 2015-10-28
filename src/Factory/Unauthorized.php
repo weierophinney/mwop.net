@@ -7,6 +7,6 @@ class Unauthorized
 {
     public function __invoke($services)
     {
-        return new Middleware($services->get('Zend\Expressive\Template\TemplateInterface'));
+        return new Middleware($services->get('Zend\Expressive\Template\TemplateRendererInterface'));
     }
 }

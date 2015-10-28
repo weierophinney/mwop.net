@@ -10,47 +10,11 @@ class MiddlewareFactory
     {
         $blog = AppFactory::create($services);
 
-        $route = new Route('/{id}.html', DisplayPostMiddleware::class, [ 'GET' ]);
-        $route->setOptions([
-            'tokens' => [
-                'id'  => '[^/]+',
-            ],
-        ]);
-        $blog->route($route);
-
-        $route = new Route('/tag/php.xml', FeedMiddleware::class, [ 'GET' ]);
-        $route->setOptions([
-            'values' => [
-                'tag'  => 'php',
-                'type' => 'rss',
-            ],
-        ]);
-        $blog->route($route);
-
-        $route = new Route('/tag/{tag}/{type}.xml', FeedMiddleware::class, [ 'GET' ]);
-        $route->setOptions([
-            'tokens' => [
-                'tag'  => '[^/]+',
-                'type' => '(atom|rss)',
-            ],
-        ]);
-        $blog->route($route);
-
-        $route = new Route('/tag/{tag}', ListPostsMiddleware::class, [ 'GET' ]);
-        $route->setOptions([
-            'tokens' => [
-                'tag'  => '[^/]+',
-            ],
-        ]);
-        $blog->route($route);
-
-        $route = new Route('/{type}.xml', FeedMiddleware::class, [ 'GET' ]);
-        $route->setOptions([
-            'tokens' => [
-                'type'  => '(atom|rss)',
-            ],
-        ]);
-        $blog->route($route);
+        $blog->get('/{id:[^/]+}.html', DisplayPostMiddleware::class, 'blog.post');
+        $blog->get('/tag/php.xml', FeedMiddleware::class, 'blog.feed.php');
+        $blog->get('/tag/{tag:[^/]+}/{type:atom|rss}.xml', FeedMiddleware::class, 'blog.feed.tag');
+        $blog->get('/tag/{tag:[^/]+}', ListPostsMiddleware::class, 'blog.tag');
+        $blog->get('/{type:atom|rss}.xml', FeedMiddleware::class, 'blog.feed');
 
         $blog->pipe('/', function ($req, $res, $next) use ($services) {
             if (strtoupper($req->getMethod()) !== 'GET') {
