@@ -23,6 +23,9 @@ define('VERSION', '0.0.2');
 
 $container = require 'config/container.php';
 
+// Hack, to ensure routes are properly injected
+$container->get('Zend\Expressive\Application');
+
 $routes = [
     [
         'name' => 'github-links',
@@ -64,11 +67,11 @@ $routes = [
         'short_description' => 'Generate blog feeds.',
         'options_descriptions' => [
             '--outputDir' => 'Directory to which to write the feeds (defaults to data/feeds)',
-            '--baseUri' => 'Base URI for the blog (defaults to http://mwop.net/blog)',
+            '--baseUri' => 'Base URI for the site (defaults to https://mwop.net)',
         ],
         'defaults' => [
             'outputDir' => 'data/feeds',
-            'baseUri'   => 'http://mwop.net/blog',
+            'baseUri'   => 'https://mwop.net',
         ],
         'handler' => function ($route, $console) use ($container) {
             $handler = $container->get('Mwop\Blog\Console\FeedGenerator');

@@ -2,15 +2,21 @@
 namespace Mwop\Factory;
 
 use Mwop\Page;
+use Mwop\PageView;
+use Zend\Expressive\Router\RouterInterface;
+use Zend\Expressive\Template\TemplateRendererInterface;
 
 class PageFactory
 {
     public function __invoke($services, $canonicalName, $requestedName)
     {
+        $view = new PageView();
+        $view->setRouter($services->get(RouterInterface::class));
+
         return new Page(
             $this->deriveTemplateName($requestedName),
-            [],
-            $services->get('Zend\Expressive\Template\TemplateRendererInterface')
+            $view,
+            $services->get(TemplateRendererInterface::class)
         );
     }
 

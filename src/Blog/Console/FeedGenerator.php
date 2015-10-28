@@ -7,6 +7,7 @@ use Mni\FrontYAML\Parser;
 use Mwop\Blog;
 use Symfony\Component\Yaml\Parser as YamlParser;
 use Zend\Console\ColorInterface as Color;
+use Zend\Expressive\Router\RouterInterface;
 use Zend\Feed\Writer\Feed as FeedWriter;
 
 class FeedGenerator
@@ -25,9 +26,12 @@ class FeedGenerator
 
     private $mapper;
 
-    public function __construct(Blog\MapperInterface $mapper, $authorsPath)
+    private $router;
+
+    public function __construct(Blog\MapperInterface $mapper, RouterInterface $router, $authorsPath)
     {
         $this->mapper      = $mapper;
+        $this->router      = $router;
         $this->authorsPath = $authorsPath;
     }
 
@@ -40,9 +44,11 @@ class FeedGenerator
         $this->console->writeLine('Generating base feeds');
         $this->generateFeeds(
             $outputDir . '/',
+            $baseUri,
             'Blog entries :: phly, boy, phly',
-            $baseUri,
-            $baseUri,
+            'blog',
+            'blog.feed',
+            [],
             $this->mapper->fetchAll()
         );
 
@@ -59,27 +65,34 @@ class FeedGenerator
             $this->console->writeLine('Generating feeds for tag ' . $tag);
             $this->generateFeeds(
                 sprintf('%s/%s.', $outputDir, $tag),
-                sprintf('Tag: %s :: phly, boy, phly', $tag),
                 $baseUri,
-                sprintf('%s/tag/%s', $baseUri, str_replace(' ', '+', $tag)),
+                sprintf('Tag: %s :: phly, boy, phly', $tag),
+                'blog.tag',
+                'blog.tag.feed',
+                ['tag' => $tag],
                 $this->mapper->fetchAllByTag($tag)
             );
         }
     }
 
-    private function generateFeeds($fileBase, $title, $baseUri, $feedUri, $posts)
+    private function generateFeeds($fileBase, $baseUri, $title, $landingRoute, $feedRoute, array $routeOptions, $posts)
     {
         foreach (['atom', 'rss'] as $type) {
-            $this->generateFeed($type, $fileBase, $title, $baseUri, $feedUri, $posts);
+            $this->generateFeed($type, $fileBase, $baseUri, $title, $landingRoute, $feedRoute, $routeOptions, $posts);
         }
     }
 
-    private function generateFeed($type, $fileBase, $title, $baseUri, $feedUri, $posts)
+    private function generateFeed($type, $fileBase, $baseUri, $title, $landingRoute, $feedRoute, array $routeOptions, $posts)
     {
+        $routeOptions['type'] = $type;
+
+        $landingUri = $baseUri . $this->generateUri($landingRoute, $routeOptions);
+        $feedUri    = $baseUri . $this->generateUri($feedRoute, $routeOptions);
+
         $feed = new FeedWriter();
         $feed->setTitle($title);
-        $feed->setLink($feedUri);
-        $feed->setFeedLink(sprintf('%s/%s.xml', $feedUri, $type), $type);
+        $feed->setLink($landingUri);
+        $feed->setFeedLink($feedUri, $type);
 
         if ($type === 'rss') {
             $feed->setDescription($title);
@@ -100,7 +113,7 @@ class FeedGenerator
 
             $entry = $feed->createEntry();
             $entry->setTitle($post['title']);
-            $entry->setLink(sprintf('%s/%s.html', $baseUri, $post['id']));
+            $entry->setLink($baseUri . $this->generateUri('blog.post', ['id' => $post['id']]));
 
             $entry->addAuthor($author);
             $entry->setDateModified(new DateTime($post['updated']));
@@ -139,5 +152,18 @@ class FeedGenerator
 
         $this->authors[$author] = (new YamlParser())->parse(file_get_contents($path));
         return $this->authors[$author];
+    }
+
+    /**
+     * Normalize generated URIs.
+     *
+     * @param string $route
+     * @param array $options
+     * @return string
+     */
+    private function generateUri($route, array $options)
+    {
+        $uri = $this->router->generateUri($route, $options);
+        return str_replace('[/]', '', $uri);
     }
 }

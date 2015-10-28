@@ -4,19 +4,23 @@ namespace Mwop\Blog\Console;
 use Mni\FrontYAML\Bridge\CommonMark\CommonMarkParser;
 use Mni\FrontYAML\Parser;
 use Mwop\Blog\MarkdownFileFilter;
-use Zend\Stratigility\Http\Request;
+use Zend\Console\ColorInterface as Color;
 use Zend\Diactoros\ServerRequest as PsrRequest;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\Uri;
-use Zend\Console\ColorInterface as Color;
+use Zend\Expressive\Router\RouterInterface;
+use Zend\Stratigility\Http\Request;
 
 class CachePosts
 {
     private $blogMiddleware;
 
-    public function __construct(callable $blog)
+    private $router;
+
+    public function __construct(callable $blog, RouterInterface $router)
     {
         $this->blogMiddleware = $blog;
+        $this->router         = $router;
     }
 
     public function __invoke($route, $console)
@@ -24,7 +28,7 @@ class CachePosts
         $basePath = $route->getMatchedParam('path');
 
         $path       = realpath($basePath) . '/data/blog';
-        $baseUri    = new Uri('https://mwop.net/blog');
+        $baseUri    = new Uri('https://mwop.net');
         $middleware = $this->blogMiddleware;
 
         $console->writeLine('Generating static cache for blog posts', Color::GREEN);
@@ -45,7 +49,7 @@ class CachePosts
             $width   = $console->getWidth();
             $console->write($message, Color::BLUE);
 
-            $canonical = $baseUri->withPath(sprintf('/blog/%s.html', $metadata['id']));
+            $canonical = $baseUri->withPath($this->router->generateUri('blog.post', ['id' => $metadata['id']]));
             $request   = (new Request(new PsrRequest([], [], $canonical, 'GET')))
                 ->withUri($canonical)
                 ->withAttribute('id', $metadata['id']);

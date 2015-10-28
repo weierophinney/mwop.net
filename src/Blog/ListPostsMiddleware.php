@@ -1,19 +1,27 @@
 <?php
 namespace Mwop\Blog;
 
+use Mwop\PageView;
 use Zend\Diactoros\Response\HtmlResponse;
+use Zend\Expressive\Router\RouterInterface;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
 class ListPostsMiddleware
 {
     private $mapper;
 
+    private $router;
+
     private $template;
 
-    public function __construct(MapperInterface $mapper, TemplateRendererInterface $template)
-    {
+    public function __construct(
+        MapperInterface $mapper,
+        TemplateRendererInterface $template,
+        RouterInterface $router
+    ) {
         $this->mapper   = $mapper;
         $this->template = $template;
+        $this->router   = $router;
     }
 
     public function __invoke($req, $res, $next)
@@ -35,7 +43,7 @@ class ListPostsMiddleware
         $posts->setCurrentPageNumber($page);
 
         $pagination = $this->preparePagination($path, $page, $posts->getPages());
-        $entries    = $this->prepareEntries($tag, $path, $page, $posts);
+        $entries    = $this->prepareEntries($page, $posts);
 
         return new HtmlResponse($this->template->render(
             'blog::list',
@@ -80,18 +88,16 @@ class ListPostsMiddleware
     }
 
     /**
-     * @param string $tag
-     * @param string path
      * @param int $page
      * @param object $posts
      * @return object Entries
      */
-    private function prepareEntries($tag, $path, $page, $posts)
+    private function prepareEntries($page, $posts)
     {
-        // Strip "/tag/<tag>" from base path in order to create paths to posts
-        $postPath = $tag ? substr($path, 0, - (strlen($tag) + 5)) : $path;
-        return array_map(function ($post) use ($postPath) {
-            return new EntryView($post, $postPath);
+        return array_map(function ($post) {
+            $view = new EntryView($post);
+            $view->setRouter($this->router);
+            return $view;
         }, iterator_to_array($posts->getItemsByPage($page)));
     }
 
@@ -99,15 +105,22 @@ class ListPostsMiddleware
      * @param string $tag
      * @param object $entries
      * @param object $pagination
-     * @return array
+     * @return PageView
      */
     private function prepareView($tag, $entries, $pagination)
     {
         $view = $tag ? ['tag' => $tag] : [];
-        return array_merge($view, [
+        if ($tag) {
+            $view['atom'] = $this->router->generateUri('blog.tag.feed', ['tag' => $tag, 'type' => 'atom']);
+            $view['rss']  = $this->router->generateUri('blog.tag.feed', ['tag' => $tag, 'type' => 'rss']);
+        }
+        $view = array_merge($view, [
             'title'      => $tag ? 'Tag: ' . $tag  : 'Blog Posts',
             'posts'      => $entries,
             'pagination' => $pagination,
         ]);
+        $view = new PageView($view);
+        $view->setRouter($this->router);
+        return $view;
     }
 }
