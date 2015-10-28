@@ -19,7 +19,7 @@ return [
         'invokables' => [
             Blog\FeedMiddleware::class           => Blog\FeedMiddleware::class,
             Blog\Console\SeedBlogDatabase::class => Blog\Console\SeedBlogDatabase::class,
-            RouterInterface::class => FastRouteRouter::class,
+            RouterInterface::class               => FastRouteRouter::class,
         ],
         'factories' => [
             Blog\DisplayPostMiddleware::class => Blog\DisplayPostMiddlewareFactory::class,
