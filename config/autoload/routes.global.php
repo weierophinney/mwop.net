@@ -39,16 +39,19 @@ return [
             'path'            => '/',
             'middleware'      => HomePage::class,
             'allowed_methods' => ['GET'],
+            'name'            => 'home',
         ],
         [
             'path'            => '/comics',
             'middleware'      => ComicsPage::class,
             'allowed_methods' => ['GET'],
+            'name'            => 'comics',
         ],
         [
             'path'            => '/resume',
             'middleware'      => ResumePage::class,
             'allowed_methods' => ['GET'],
+            'name'            => 'resume',
         ],
 
         // BLOG
