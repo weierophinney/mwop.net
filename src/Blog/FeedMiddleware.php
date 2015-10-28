@@ -14,7 +14,7 @@ class FeedMiddleware
 
     public function __invoke($req, $res, $next)
     {
-        $tag  = $req->getAttribute('tag', 'php');
+        $tag  = $req->getAttribute('tag');
         $type = $req->getAttribute('type', 'rss');
         $path = $tag
             ? $this->getTagFeedPath($tag, $type)

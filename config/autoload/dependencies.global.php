@@ -1,36 +1,32 @@
 <?php
+use Mwop\Auth;
+use Mwop\Blog;
+use Mwop\Console;
+use Mwop\Factory;
+use Mwop\Github;
+use Zend\Expressive\Application;
+use Zend\Expressive\Container\ApplicationFactory;
+use Zend\Expressive\Container\TemplatedErrorHandlerFactory;
+
 return ['dependencies' => [
-    'delegators' => [
-        'Mwop\Blog\DisplayPostMiddleware' => [
-            'Mwop\Blog\CachingDelegatorFactory',
-        ],
-    ],
     'invokables' => [
-        'Mwop\Blog\FeedMiddleware'           => 'Mwop\Blog\FeedMiddleware',
-        'Mwop\Blog\Console\SeedBlogDatabase' => 'Mwop\Blog\Console\SeedBlogDatabase',
-        'Mwop\Console\PrepPageCacheRules'    => 'Mwop\Console\PrepPageCacheRules',
+        Console\PrepPageCacheRules::class => Console\PrepPageCacheRules::class,
     ],
     'factories' => [
-        'http'                            => 'Mwop\Factory\HttpClient',
-        'mail.transport'                  => 'Mwop\Factory\MailTransport',
-        'session'                         => 'Mwop\Factory\Session',
-        'Mwop\Auth\AuthCallback'          => 'Mwop\Auth\AuthCallbackFactory',
-        'Mwop\Auth\Auth'                  => 'Mwop\Auth\AuthFactory',
-        'Mwop\Auth\Logout'                => 'Mwop\Auth\LogoutFactory',
-        'Mwop\Auth\UserSession'           => 'Mwop\Auth\UserSessionFactory',
-        'Mwop\Blog\Console\CachePosts'    => 'Mwop\Blog\Console\CachePostsFactory',
-        'Mwop\Blog\Console\FeedGenerator' => 'Mwop\Blog\Console\FeedGeneratorFactory',
-        'Mwop\Blog\Console\TagCloud'      => 'Mwop\Blog\Console\TagCloudFactory',
-        'Mwop\Blog\DisplayPostMiddleware' => 'Mwop\Blog\DisplayPostMiddlewareFactory',
-        'Mwop\Blog\ListPostsMiddleware'   => 'Mwop\Blog\ListPostsMiddlewareFactory',
-        'Mwop\Blog\Mapper'                => 'Mwop\Blog\MapperFactory',
-        'Mwop\Contact\LandingPage'        => 'Mwop\Contact\LandingPageFactory',
-        'Mwop\Contact\Process'            => 'Mwop\Contact\ProcessFactory',
-        'Mwop\Contact\ThankYouPage'       => 'Mwop\Contact\ThankYouPageFactory',
-        'Mwop\Github\AtomReader'          => 'Mwop\Github\AtomReaderFactory',
-        'Mwop\Github\Console\Fetch'       => 'Mwop\Github\Console\FetchFactory',
-        'Mwop\Job\GithubFeed'             => 'Mwop\Job\GithubFeedFactory',
-        'Mwop\Site'                       => 'Zend\Expressive\Container\ApplicationFactory',
-        'Zend\Expressive\FinalHandler'    => 'Zend\Expressive\Container\TemplatedErrorHandlerFactory',
+        'http'                            => Factory\HttpClient::class,
+        'mail.transport'                  => Factory\MailTransport::class,
+        'session'                         => Factory\Session::class,
+        Auth\AuthCallback::class          => Auth\AuthCallbackFactory::class,
+        Auth\Auth::class                  => Auth\AuthFactory::class,
+        Auth\Logout::class                => Auth\LogoutFactory::class,
+        Auth\UserSession::class           => Auth\UserSessionFactory::class,
+        Blog\Console\CachePosts::class    => Blog\Console\CachePostsFactory::class,
+        Blog\Console\FeedGenerator::class => Blog\Console\FeedGeneratorFactory::class,
+        Blog\Console\TagCloud::class      => Blog\Console\TagCloudFactory::class,
+        Blog\Mapper::class                => Blog\MapperFactory::class,
+        Github\AtomReader::class          => Github\AtomReaderFactory::class,
+        Github\Console\Fetch::class       => Github\Console\FetchFactory::class,
+        Application::class                => ApplicationFactory::class,
+        'Zend\Expressive\FinalHandler'    => TemplatedErrorHandlerFactory::class,
     ],
 ]];

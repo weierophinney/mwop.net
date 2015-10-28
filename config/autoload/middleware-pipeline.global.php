@@ -1,44 +1,35 @@
 <?php
+use Mwop\Auth\Middleware as AuthMiddleware;
+use Mwop\Auth\MiddlewareFactory as AuthMiddlewareFactory;
+use Mwop\BodyParams;
+use Mwop\Factory\Unauthorized as UnauthorizedFactory;
+use Mwop\Redirects;
+use Mwop\Unauthorized;
 
 return [
     'dependencies' => [
         'invokables' => [
-            'Mwop\BodyParams' => 'Mwop\BodyParams',
-            'Mwop\Redirects'  => 'Mwop\Redirects',
+            BodyParams::class => BodyParams::class,
+            Redirects::class  => Redirects::class,
         ],
         'factories' => [
-            'Mwop\Auth\Middleware'    => 'Mwop\Auth\MiddlewareFactory',
-            'Mwop\Blog\Middleware'    => 'Mwop\Blog\MiddlewareFactory',
-            'Mwop\Contact\Middleware' => 'Mwop\Contact\MiddlewareFactory',
-            'Mwop\Job\Middleware'     => 'Mwop\Job\MiddlewareFactory',
-            'Mwop\Unauthorized'       => 'Mwop\Factory\Unauthorized',
+            AuthMiddleware::class => AuthMiddlewareFactory::class,
+            Unauthorized::class   => UnauthorizedFactory::class,
         ],
     ],
     'middleware_pipeline' => [
         'pre_routing' => [
-            ['middleware' => 'Mwop\Redirects'],
-            ['middleware' => 'Mwop\BodyParams'],
+            ['middleware' => Redirects::class],
+            ['middleware' => BodyParams::class],
         ],
 
         'post_routing' => [
             [
-                'path'       => '/blog',
-                'middleware' => 'Mwop\Blog\Middleware',
-            ],
-            [
                 'path'       => '/auth',
-                'middleware' => 'Mwop\Auth\Middleware',
+                'middleware' => AuthMiddleware::class,
             ],
             [
-                'path'       => '/contact',
-                'middleware' => 'Mwop\Contact\Middleware',
-            ],
-            [
-                'path'       => '/jobs',
-                'middleware' => 'Mwop\Job\Middleware',
-            ],
-            [
-                'middleware' => 'Mwop\Unauthorized',
+                'middleware' => Unauthorized::class,
                 'error'      => true,
             ],
         ],
