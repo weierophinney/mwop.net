@@ -125,19 +125,19 @@ return [
         // CONTACT
 
         [
-            'path'            => '/job/clear-cache',
+            'path'            => '/jobs/clear-cache',
             'middleware'      => Job\ClearCache::class,
             'allowed_methods' => ['POST'],
             'name'            => 'job.clear-cache',
         ],
         [
-            'path'            => '/job/comics',
+            'path'            => '/jobs/comics',
             'middleware'      => Job\Comics::class,
             'allowed_methods' => ['POST'],
             'name'            => 'job.comics',
         ],
         [
-            'path'            => '/job/github-feed',
+            'path'            => '/jobs/github-feed',
             'middleware'      => Job\GithubFeed::class,
             'allowed_methods' => ['POST'],
             'name'            => 'job.github-feed',
