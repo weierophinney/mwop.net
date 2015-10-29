@@ -2,7 +2,7 @@
 namespace Mwop\Auth;
 
 use Aura\Session\Session;
-use Opauth;
+use Opauth\Opauth\Opauth;
 
 class Auth
 {
