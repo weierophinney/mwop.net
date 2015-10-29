@@ -52,7 +52,6 @@ trait UriTrait
         }
 
         return function ($text, $renderer) {
-            error_log("In URI callable\n");
             // Decode the text .
             $data = json_decode($text, true);
 
@@ -60,16 +59,13 @@ trait UriTrait
             if (! is_array($data)
                 || ! isset($data['name'])
             ) {
-                error_log(sprintf("    Invalid data; returning text verbatim: %s\n", $text));
                 return $text;
             }
 
             $route   = $data['name'];
             $options = $this->parseOptions($data, $renderer);
-            error_log(sprintf("    Generating URI for route '%s' using options: %s\n", $route, var_export($options, 1)));
             $uri     = $this->router->generateUri($route, $options);
 
-            error_log(sprintf("    Generated URI: %s\n", $uri));
             // Bug in URI generation; optional segments are not being stripped
             // in FastRoute.
             return str_replace('[/]', '', $uri);
