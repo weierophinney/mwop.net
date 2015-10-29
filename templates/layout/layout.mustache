@@ -31,8 +31,8 @@
   <link rel="icon" type="image/png" href="/images/favicon/favicon-16x16.png" sizes="16x16">
   
   <link href="/css/site.min.css" media="screen" rel="stylesheet" type="text/css">
-  <link href="/blog/atom.xml" rel="alternate" type="application/atom+xml" title="phly, boy, phly Atom Feed">
-  <link href="/blog/rss.xml" rel="alternate" type="application/rss+xml" title="phly, boy, phly RSS Feed">
+  <link href="{{#uri}}{"name": "blog.feed", "options": {"type": "atom"}}{{/uri}}" rel="alternate" type="application/atom+xml" title="phly, boy, phly Atom Feed">
+  <link href="{{#uri}}{"name": "blog.feed", "options": {"type": "rss"}}{{/uri}}" rel="alternate" type="application/rss+xml" title="phly, boy, phly RSS Feed">
   {{$links}}{{/links}}
 
   <script src="//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>

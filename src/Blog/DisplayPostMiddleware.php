@@ -4,7 +4,8 @@ namespace Mwop\Blog;
 use Mni\FrontYAML\Bridge\CommonMark\CommonMarkParser;
 use Mni\FrontYAML\Parser;
 use Zend\Diactoros\Response\HtmlResponse;
-use Zend\Expressive\Template\TemplateInterface;
+use Zend\Expressive\Router\RouterInterface;
+use Zend\Expressive\Template\TemplateRendererInterface;
 
 class DisplayPostMiddleware
 {
@@ -19,12 +20,19 @@ class DisplayPostMiddleware
      */
     private $postDelimiter = '<!--- EXTENDED -->';
 
+    private $router;
+
     private $template;
 
-    public function __construct(MapperInterface $mapper, TemplateInterface $template, array $disqus = [])
-    {
+    public function __construct(
+        MapperInterface $mapper,
+        TemplateRendererInterface $template,
+        RouterInterface $router,
+        array $disqus = []
+    ) {
         $this->mapper   = $mapper;
         $this->template = $template;
+        $this->router   = $router;
         $this->disqus   = $disqus;
     }
 
@@ -47,7 +55,8 @@ class DisplayPostMiddleware
 
         $original = $req->getOriginalRequest()->getUri()->getPath();
         $path     = substr($original, 0, -(strlen($post['id'] . '.html') + 1));
-        $post     = new EntryView($post, $path, $this->disqus);
+        $post     = new EntryView($post, $this->disqus);
+        $post->setRouter($this->router);
 
         return new HtmlResponse(
             $this->template->render('blog::post', $post)
