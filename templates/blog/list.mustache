@@ -3,8 +3,8 @@
 {{$links}}
     <link href="/css/blog.min.css" media="screen" rel="stylesheet" type="text/css">
     {{#tag}}
-    <link href="/blog/tag/{{tag}}/atom.xml" rel="alternate" type="application/atom+xml" title="phly, boy, phly Atom Feed for {{tag}}">
-    <link href="/blog/tag/{{tag}}/rss.xml" rel="alternate" type="application/rss+xml" title="phly, boy, phly RSS Feed for {{tag}}">
+    <link href="{{atom}}" rel="alternate" type="application/atom+xml" title="phly, boy, phly Atom Feed for {{tag}}">
+    <link href="{{rss}}" rel="alternate" type="application/rss+xml" title="phly, boy, phly RSS Feed for {{tag}}">
     {{/tag}}
 {{/links}}
 {{$scripts}}
@@ -32,17 +32,17 @@
 
                 <ul class="tags">
                 {{#tags}}
-                    <li><a href="{{link}}">{{tag}}</a>
+                  <li><a href="{{link}}">{{tag}}</a>
                 {{/tags}}
                 </ul>
             </aside>
 
             <section class="eleven columns omega">
-                <h4 class="entry"><a href="{{path}}">{{title}}</a></h4>
+                <h4 class="entry"><a href="{{#uri}}{"name": "blog.post", "options": {"id": "{{id}}"}}{{/uri}}">{{title}}</a></h4>
 
                 <div class="entry body">{{{body}}}</div>
 
-                <p><a href="{{path}}">Continue reading...</a></p>
+                <p><a href="{{#uri}}{"name": "blog.post", "options": {"id": "{{id}}"}}{{/uri}}">Continue reading...</a></p>
             </section>
         </div>
         {{/posts}}

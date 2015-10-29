@@ -1,16 +1,20 @@
 <?php
 namespace Mwop\Contact;
 
+use Mwop\PageView;
 use Zend\Diactoros\Response\HtmlResponse;
-use Zend\Expressive\Template\TemplateInterface;
+use Zend\Expressive\Router\RouterInterface;
+use Zend\Expressive\Template\TemplateRendererInterface;
 
 class ThankYouPage
 {
+    private $router;
     private $template;
 
-    public function __construct(TemplateInterface $template)
+    public function __construct(TemplateRendererInterface $template, RouterInterface $router)
     {
         $this->template = $template;
+        $this->router   = $router;
     }
 
     public function __invoke($request, $response, $next)
@@ -25,8 +29,11 @@ class ThankYouPage
                 ->withHeader('Location', $parentUrl);
         }
 
+        $view = new PageView();
+        $view->setRouter($this->router);
+
         return new HtmlResponse(
-            $this->template->render('contact::thankyou')
+            $this->template->render('contact::thankyou', $view)
         );
     }
 }

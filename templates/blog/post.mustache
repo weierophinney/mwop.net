@@ -2,6 +2,10 @@
 {{$title}}{{title}}{{/title}}}
 {{$links}}
     <link href="/css/blog.min.css" media="screen" rel="stylesheet" type="text/css">
+{{#tags}}
+    <link href="{{atom}}" rel="alternate" type="application/atom+xml" title="phly, boy, phly Atom Feed for {{tag}}">
+    <link href="{{rss}}" rel="alternate" type="application/rss+xml" title="phly, boy, phly RSS Feed for {{tag}}">
+{{/tags}}
 {{/links}}
 {{$scripts}}
 <script language="JavaScript" src="/js/prism.js"></script>
@@ -19,7 +23,7 @@
 
         <ul class="tags">
         {{#tags}}
-            <li><a href="{{link}}">{{tag}}</a>
+          <li><a href="{{link}}">{{tag}}</a>
         {{/tags}}
         </ul>
     </aside>

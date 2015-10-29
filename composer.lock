@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "cb67c04e896ae257f85a1bb3e6b92b6e",
-    "content-hash": "1025e3df2d2e3bdf390229d2c1b4b3d7",
+    "hash": "a04a3937db7624d68f521b5e21d803b2",
+    "content-hash": "49208ed5f55c7e3e0315c172795df930",
     "packages": [
         {
             "name": "aura/router",
@@ -150,17 +150,56 @@
             "time": "2014-12-30 15:22:37"
         },
         {
-            "name": "league/commonmark",
-            "version": "0.10.0",
+            "name": "erusev/parsedown",
+            "version": "1.6.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/thephpleague/commonmark.git",
-                "reference": "984455f72d4f07669c1f5c545768f60c4e871585"
+                "url": "https://github.com/erusev/parsedown.git",
+                "reference": "3ebbd730b5c2cf5ce78bc1bf64071407fc6674b7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/984455f72d4f07669c1f5c545768f60c4e871585",
-                "reference": "984455f72d4f07669c1f5c545768f60c4e871585",
+                "url": "https://api.github.com/repos/erusev/parsedown/zipball/3ebbd730b5c2cf5ce78bc1bf64071407fc6674b7",
+                "reference": "3ebbd730b5c2cf5ce78bc1bf64071407fc6674b7",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Parsedown": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Emanuil Rusev",
+                    "email": "hello@erusev.com",
+                    "homepage": "http://erusev.com"
+                }
+            ],
+            "description": "Parser for Markdown.",
+            "homepage": "http://parsedown.org",
+            "keywords": [
+                "markdown",
+                "parser"
+            ],
+            "time": "2015-10-04 16:44:32"
+        },
+        {
+            "name": "league/commonmark",
+            "version": "0.11.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/commonmark.git",
+                "reference": "d22d6a6a4b049faccc2f8e491cce6076eeb165c7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/d22d6a6a4b049faccc2f8e491cce6076eeb165c7",
+                "reference": "d22d6a6a4b049faccc2f8e491cce6076eeb165c7",
                 "shasum": ""
             },
             "require": {
@@ -172,17 +211,21 @@
             },
             "require-dev": {
                 "erusev/parsedown": "~1.0",
-                "jgm/commonmark": "0.21",
-                "jgm/smartpunct": "0.21",
+                "jgm/commonmark": "0.22",
+                "jgm/smartpunct": "0.22",
                 "michelf/php-markdown": "~1.4",
+                "mikehaertl/php-shellcommand": "~1.1.0",
                 "phpunit/phpunit": "~4.3",
                 "phpunit/phpunit-mock-objects": "2.3.0",
                 "symfony/finder": "~2.3"
             },
+            "bin": [
+                "bin/commonmark"
+            ],
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.11-dev"
+                    "dev-master": "0.12-dev"
                 }
             },
             "autoload": {
@@ -209,7 +252,84 @@
                 "markdown",
                 "parser"
             ],
-            "time": "2015-07-25 14:37:05"
+            "time": "2015-09-25 12:40:32"
+        },
+        {
+            "name": "mnapoli/front-yaml",
+            "version": "1.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mnapoli/FrontYAML.git",
+                "reference": "642ac04ed7f3ef7d0d61ffb66bb48aa25d1050fa"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mnapoli/FrontYAML/zipball/642ac04ed7f3ef7d0d61ffb66bb48aa25d1050fa",
+                "reference": "642ac04ed7f3ef7d0d61ffb66bb48aa25d1050fa",
+                "shasum": ""
+            },
+            "require": {
+                "erusev/parsedown": "~1.0",
+                "symfony/yaml": "~2.1"
+            },
+            "require-dev": {
+                "league/commonmark": "~0.7",
+                "phpunit/phpunit": "~4.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Mni\\FrontYAML\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "time": "2015-03-09 09:51:07"
+        },
+        {
+            "name": "nikic/fast-route",
+            "version": "v0.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nikic/FastRoute.git",
+                "reference": "31fa86924556b80735f98b294a7ffdfb26789f22"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nikic/FastRoute/zipball/31fa86924556b80735f98b294a7ffdfb26789f22",
+                "reference": "31fa86924556b80735f98b294a7ffdfb26789f22",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FastRoute\\": "src/"
+                },
+                "files": [
+                    "src/functions.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Nikita Popov",
+                    "email": "nikic@php.net"
+                }
+            ],
+            "description": "Fast request router for PHP",
+            "keywords": [
+                "router",
+                "routing"
+            ],
+            "time": "2015-06-18 19:15:47"
         },
         {
             "name": "opauth/github",
@@ -457,22 +577,22 @@
         },
         {
             "name": "phly/phly-expressive-mustache",
-            "version": "0.2.0",
+            "version": "0.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phly/phly-expressive-mustache.git",
-                "reference": "c110d6a549e2f5f06696df178eececde2d528080"
+                "reference": "79c118ce4ef81b0d7e025e2c496da931453f0aca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phly/phly-expressive-mustache/zipball/c110d6a549e2f5f06696df178eececde2d528080",
-                "reference": "c110d6a549e2f5f06696df178eececde2d528080",
+                "url": "https://api.github.com/repos/phly/phly-expressive-mustache/zipball/79c118ce4ef81b0d7e025e2c496da931453f0aca",
+                "reference": "79c118ce4ef81b0d7e025e2c496da931453f0aca",
                 "shasum": ""
             },
             "require": {
                 "phly/phly-mustache": "^2.0",
                 "php": ">=5.5",
-                "zendframework/zend-expressive": "^0.2"
+                "zendframework/zend-expressive": "~1.0.0-dev"
             },
             "require-dev": {
                 "container-interop/container-interop": "^1.1",
@@ -502,7 +622,7 @@
                 "expressive",
                 "mustache"
             ],
-            "time": "2015-09-04 12:47:13"
+            "time": "2015-10-27 15:27:41"
         },
         {
             "name": "phly/phly-mustache",
@@ -599,6 +719,52 @@
                 "response"
             ],
             "time": "2015-05-04 20:22:00"
+        },
+        {
+            "name": "symfony/yaml",
+            "version": "v2.7.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/yaml.git",
+                "reference": "eca9019c88fbe250164affd107bc8057771f3f4d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/eca9019c88fbe250164affd107bc8057771f3f4d",
+                "reference": "eca9019c88fbe250164affd107bc8057771f3f4d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.9"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.7-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Yaml\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Yaml Component",
+            "homepage": "https://symfony.com",
+            "time": "2015-10-11 09:39:48"
         },
         {
             "name": "zendframework/zend-config",
@@ -762,16 +928,16 @@
         },
         {
             "name": "zendframework/zend-diactoros",
-            "version": "1.1.3",
+            "version": "1.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-diactoros.git",
-                "reference": "e2f5c12916c74da384058d0dfbc7fbc0b03d1181"
+                "reference": "3f0ce6c0ba2106e018fb514a9f09dbb91eb6bfd0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-diactoros/zipball/e2f5c12916c74da384058d0dfbc7fbc0b03d1181",
-                "reference": "e2f5c12916c74da384058d0dfbc7fbc0b03d1181",
+                "url": "https://api.github.com/repos/zendframework/zend-diactoros/zipball/3f0ce6c0ba2106e018fb514a9f09dbb91eb6bfd0",
+                "reference": "3f0ce6c0ba2106e018fb514a9f09dbb91eb6bfd0",
                 "shasum": ""
             },
             "require": {
@@ -808,24 +974,24 @@
                 "psr",
                 "psr-7"
             ],
-            "time": "2015-08-10 20:04:20"
+            "time": "2015-10-16 15:24:05"
         },
         {
             "name": "zendframework/zend-dom",
-            "version": "2.5.1",
+            "version": "2.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-dom.git",
-                "reference": "181d512f1101fef4534fcf57e1ac7bfba8a2e523"
+                "reference": "a9e145b2b52fe6de5a7a6b0ddb5c773c2c72d59e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-dom/zipball/181d512f1101fef4534fcf57e1ac7bfba8a2e523",
-                "reference": "181d512f1101fef4534fcf57e1ac7bfba8a2e523",
+                "url": "https://api.github.com/repos/zendframework/zend-dom/zipball/a9e145b2b52fe6de5a7a6b0ddb5c773c2c72d59e",
+                "reference": "a9e145b2b52fe6de5a7a6b0ddb5c773c2c72d59e",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.23"
+                "php": ">=5.5"
             },
             "require-dev": {
                 "fabpot/php-cs-fixer": "1.7.*",
@@ -853,7 +1019,7 @@
                 "dom",
                 "zf2"
             ],
-            "time": "2015-06-03 14:05:36"
+            "time": "2015-10-14 03:37:48"
         },
         {
             "name": "zendframework/zend-escaper",
@@ -901,16 +1067,16 @@
         },
         {
             "name": "zendframework/zend-expressive",
-            "version": "0.2.0",
+            "version": "1.0.0rc2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-expressive.git",
-                "reference": "38124a7834e2200f725c158605763f3d99bc33aa"
+                "reference": "7ffd74fff146df5d47cf86a61989ad74081a58c4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-expressive/zipball/38124a7834e2200f725c158605763f3d99bc33aa",
-                "reference": "38124a7834e2200f725c158605763f3d99bc33aa",
+                "url": "https://api.github.com/repos/zendframework/zend-expressive/zipball/7ffd74fff146df5d47cf86a61989ad74081a58c4",
+                "reference": "7ffd74fff146df5d47cf86a61989ad74081a58c4",
                 "shasum": ""
             },
             "require": {
@@ -918,35 +1084,37 @@
                 "php": ">=5.5",
                 "psr/http-message": "^1.0",
                 "zendframework/zend-diactoros": "^1.1",
+                "zendframework/zend-stdlib": "^2.7",
                 "zendframework/zend-stratigility": "^1.1"
             },
             "require-dev": {
-                "aura/router": "^2.3",
                 "filp/whoops": "^1.1",
-                "league/plates": "^3.1",
-                "nikic/fast-route": "^0.6.0",
                 "phpunit/phpunit": "^4.7",
                 "squizlabs/php_codesniffer": "^2.3",
-                "twig/twig": "^1.19",
-                "zendframework/zend-mvc": "^2.5",
-                "zendframework/zend-psr7bridge": "^0.1.0",
-                "zendframework/zend-servicemanager": "^2.6",
-                "zendframework/zend-view": "^2.5"
+                "zendframework/zend-expressive-aurarouter": "~1.0-dev",
+                "zendframework/zend-expressive-fastroute": "~1.0-dev",
+                "zendframework/zend-expressive-zendrouter": "~1.0-dev",
+                "zendframework/zend-servicemanager": "^2.6"
             },
             "suggest": {
                 "aura/di": "3.0.*@beta to make use of Aura.Di dependency injection container",
-                "aura/router": "^2.3 to use the Aura.Router routing adapter",
                 "filp/whoops": "^1.1 to use the Whoops error handler",
-                "league/plates": "^3.1 to use the Plates template adapter",
                 "mouf/pimple-interop": "^1.0 to use Pimple for dependency injection",
-                "nikic/fast-route": "^0.6.0 to use the FastRoute routing adapter",
-                "twig/twig": "^1.19 to use the Twig template adapter",
-                "zendframework/zend-mvc": "^2.5 to use the zend-mvc TreeRouteStack routing adapter",
-                "zendframework/zend-psr7bridge": "^0.1.0 to use the zend-mvc TreeRouteStack routing adapter",
-                "zendframework/zend-servicemanager": "^2.5 to use zend-servicemanager for dependency injection",
-                "zendframework/zend-view": "^2.5 to use the zend-view template adapter"
+                "zendframework/zend-expressive-aurarouter": "^0.1 to use the Aura.Router routing adapter",
+                "zendframework/zend-expressive-fastroute": "^0.1 to use the FastRoute routing adapter",
+                "zendframework/zend-expressive-platesrenderer": "^0.1 to use the Plates template renderer",
+                "zendframework/zend-expressive-twigrenderer": "^0.1 to use the Twig template renderer",
+                "zendframework/zend-expressive-zendrouter": "^0.1 to use the zend-mvc routing adapter",
+                "zendframework/zend-expressive-zendviewrenderer": "^0.1 to use the zend-view PhpRenderer template renderer",
+                "zendframework/zend-servicemanager": "^2.5 to use zend-servicemanager for dependency injection"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev",
+                    "dev-develop": "1.1-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Zend\\Expressive\\": "src/"
@@ -963,7 +1131,57 @@
                 "psr",
                 "psr-7"
             ],
-            "time": "2015-09-03 22:44:39"
+            "time": "2015-10-20 18:27:19"
+        },
+        {
+            "name": "zendframework/zend-expressive-fastroute",
+            "version": "0.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zendframework/zend-expressive-fastroute.git",
+                "reference": "40307e9ae4003cc1632b51455ba8cd86bcb0c6b3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zendframework/zend-expressive-fastroute/zipball/40307e9ae4003cc1632b51455ba8cd86bcb0c6b3",
+                "reference": "40307e9ae4003cc1632b51455ba8cd86bcb0c6b3",
+                "shasum": ""
+            },
+            "require": {
+                "nikic/fast-route": "^0.6.0",
+                "php": ">=5.5",
+                "psr/http-message": "^1.0",
+                "zendframework/zend-expressive": "^1.0@rc"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.7",
+                "squizlabs/php_codesniffer": "^2.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Zend\\Expressive\\Router\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "FastRoute integration for Expressive",
+            "keywords": [
+                "FastRoute",
+                "expressive",
+                "http",
+                "middleware",
+                "psr",
+                "psr-7"
+            ],
+            "time": "2015-10-20 18:01:39"
         },
         {
             "name": "zendframework/zend-feed",
@@ -1084,16 +1302,16 @@
         },
         {
             "name": "zendframework/zend-http",
-            "version": "2.5.2",
+            "version": "2.5.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-http.git",
-                "reference": "abe2e56464cd467214489672f103669957047548"
+                "reference": "21174ba162cfda8d0b1d172d9f80a8bea0b767be"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-http/zipball/abe2e56464cd467214489672f103669957047548",
-                "reference": "abe2e56464cd467214489672f103669957047548",
+                "url": "https://api.github.com/repos/zendframework/zend-http/zipball/21174ba162cfda8d0b1d172d9f80a8bea0b767be",
+                "reference": "21174ba162cfda8d0b1d172d9f80a8bea0b767be",
                 "shasum": ""
             },
             "require": {
@@ -1130,7 +1348,63 @@
                 "http",
                 "zf2"
             ],
-            "time": "2015-08-05 15:47:13"
+            "time": "2015-09-14 15:58:07"
+        },
+        {
+            "name": "zendframework/zend-hydrator",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zendframework/zend-hydrator.git",
+                "reference": "f3ed8b833355140350bbed98d8a7b8b66875903f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zendframework/zend-hydrator/zipball/f3ed8b833355140350bbed98d8a7b8b66875903f",
+                "reference": "f3ed8b833355140350bbed98d8a7b8b66875903f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5",
+                "zendframework/zend-stdlib": "^2.5.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0",
+                "squizlabs/php_codesniffer": "^2.0@dev",
+                "zendframework/zend-eventmanager": "^2.5.1",
+                "zendframework/zend-filter": "^2.5.1",
+                "zendframework/zend-inputfilter": "^2.5.1",
+                "zendframework/zend-serializer": "^2.5.1",
+                "zendframework/zend-servicemanager": "^2.5.1"
+            },
+            "suggest": {
+                "zendframework/zend-eventmanager": "^2.5.1, to support aggregate hydrator usage",
+                "zendframework/zend-filter": "^2.5.1, to support naming strategy hydrator usage",
+                "zendframework/zend-serializer": "^2.5.1, to use the SerializableStrategy",
+                "zendframework/zend-servicemanager": "^2.5.1, to support hydrator plugin manager usage"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev",
+                    "dev-develop": "1.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Zend\\Hydrator\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "homepage": "https://github.com/zendframework/zend-hydrator",
+            "keywords": [
+                "hydrator",
+                "zf2"
+            ],
+            "time": "2015-09-17 14:06:43"
         },
         {
             "name": "zendframework/zend-i18n",
@@ -1293,20 +1567,20 @@
         },
         {
             "name": "zendframework/zend-mail",
-            "version": "2.5.1",
+            "version": "2.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-mail.git",
-                "reference": "684ca1af4b3ae75be52dff4857d98366c1293e0b"
+                "reference": "68b1357c6389d476d80c050a75bf3091e873202c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-mail/zipball/684ca1af4b3ae75be52dff4857d98366c1293e0b",
-                "reference": "684ca1af4b3ae75be52dff4857d98366c1293e0b",
+                "url": "https://api.github.com/repos/zendframework/zend-mail/zipball/68b1357c6389d476d80c050a75bf3091e873202c",
+                "reference": "68b1357c6389d476d80c050a75bf3091e873202c",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.23",
+                "php": ">=5.5",
                 "zendframework/zend-crypt": "~2.5",
                 "zendframework/zend-loader": "~2.5",
                 "zendframework/zend-mime": "~2.5",
@@ -1344,7 +1618,7 @@
                 "mail",
                 "zf2"
             ],
-            "time": "2015-06-03 15:32:02"
+            "time": "2015-09-10 18:21:00"
         },
         {
             "name": "zendframework/zend-math",
@@ -1561,22 +1835,24 @@
         },
         {
             "name": "zendframework/zend-stdlib",
-            "version": "2.6.0",
+            "version": "2.7.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-stdlib.git",
-                "reference": "a35758803fc9051ec1aff43989e679b6b451b1b4"
+                "reference": "cae029346a33663b998507f94962eb27de060683"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-stdlib/zipball/a35758803fc9051ec1aff43989e679b6b451b1b4",
-                "reference": "a35758803fc9051ec1aff43989e679b6b451b1b4",
+                "url": "https://api.github.com/repos/zendframework/zend-stdlib/zipball/cae029346a33663b998507f94962eb27de060683",
+                "reference": "cae029346a33663b998507f94962eb27de060683",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.5"
+                "php": ">=5.5",
+                "zendframework/zend-hydrator": "~1.0"
             },
             "require-dev": {
+                "athletic/athletic": "~0.1",
                 "fabpot/php-cs-fixer": "1.7.*",
                 "phpunit/phpunit": "~4.0",
                 "zendframework/zend-config": "~2.5",
@@ -1595,8 +1871,8 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.6-dev",
-                    "dev-develop": "2.7-dev"
+                    "dev-master": "2.7-dev",
+                    "dev-develop": "2.8-dev"
                 }
             },
             "autoload": {
@@ -1613,20 +1889,20 @@
                 "stdlib",
                 "zf2"
             ],
-            "time": "2015-07-21 17:08:05"
+            "time": "2015-10-15 15:57:32"
         },
         {
             "name": "zendframework/zend-stratigility",
-            "version": "1.1.1",
+            "version": "1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-stratigility.git",
-                "reference": "6a3b7e601dfe7eca0652a8b7f1a469ff4b8f3c28"
+                "reference": "8c01ddf62131f67c51f51dad7fa433374aa68a27"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-stratigility/zipball/6a3b7e601dfe7eca0652a8b7f1a469ff4b8f3c28",
-                "reference": "6a3b7e601dfe7eca0652a8b7f1a469ff4b8f3c28",
+                "url": "https://api.github.com/repos/zendframework/zend-stratigility/zipball/8c01ddf62131f67c51f51dad7fa433374aa68a27",
+                "reference": "8c01ddf62131f67c51f51dad7fa433374aa68a27",
                 "shasum": ""
             },
             "require": {
@@ -1665,7 +1941,7 @@
                 "middleware",
                 "psr-7"
             ],
-            "time": "2015-08-25 18:39:13"
+            "time": "2015-10-09 20:16:34"
         },
         {
             "name": "zendframework/zend-tag",
@@ -2063,16 +2339,16 @@
         },
         {
             "name": "justinrainbow/json-schema",
-            "version": "1.4.4",
+            "version": "1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/justinrainbow/json-schema.git",
-                "reference": "8dc9b9d85ab639ca60ab4608b34c1279d6ae7bce"
+                "reference": "a4bee9f4b344b66e0a0d96c7afae1e92edf385fe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/justinrainbow/json-schema/zipball/8dc9b9d85ab639ca60ab4608b34c1279d6ae7bce",
-                "reference": "8dc9b9d85ab639ca60ab4608b34c1279d6ae7bce",
+                "url": "https://api.github.com/repos/justinrainbow/json-schema/zipball/a4bee9f4b344b66e0a0d96c7afae1e92edf385fe",
+                "reference": "a4bee9f4b344b66e0a0d96c7afae1e92edf385fe",
                 "shasum": ""
             },
             "require": {
@@ -2093,8 +2369,8 @@
                 }
             },
             "autoload": {
-                "psr-0": {
-                    "JsonSchema": "src/"
+                "psr-4": {
+                    "JsonSchema\\": "src/JsonSchema/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -2125,7 +2401,7 @@
                 "json",
                 "schema"
             ],
-            "time": "2015-07-14 16:29:50"
+            "time": "2015-09-08 22:28:04"
         },
         {
             "name": "kherge/version",
@@ -2273,10 +2549,13 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "aura/session": 20,
+        "zendframework/zend-expressive": 5,
         "zfcampus/zf-deploy": 0
     },
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "php": "^5.5|~7.0"
+    },
     "platform-dev": []
 }

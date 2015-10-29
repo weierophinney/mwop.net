@@ -1,14 +1,18 @@
 <?php
 namespace Mwop\Contact;
 
+use Zend\Expressive\Router\RouterInterface;
+use Zend\Expressive\Template\TemplateRendererInterface;
+
 class LandingPageFactory
 {
     public function __invoke($services)
     {
         return new LandingPage(
-            $services->get('Zend\Expressive\Template\TemplateInterface'),
+            $services->get(TemplateRendererInterface::class),
+            $services->get(RouterInterface::class),
             $services->get('session'),
-            $services->get('Config')['contact']
+            $services->get('config')['contact']
         );
     }
 }
