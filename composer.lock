@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a04a3937db7624d68f521b5e21d803b2",
-    "content-hash": "49208ed5f55c7e3e0315c172795df930",
+    "hash": "97cc9e4261b2210cb22111b89575ee9b",
+    "content-hash": "64db5fef06db2a68bc9342ee9a29003c",
     "packages": [
         {
             "name": "aura/router",
@@ -333,26 +333,26 @@
         },
         {
             "name": "opauth/github",
-            "version": "1.0.x-dev",
+            "version": "0.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/opauth/github.git",
-                "reference": "568142128ab49e1fbe700fb6ba3e14c99d205c8c"
+                "reference": "9c4fe16dc6498b2c94f4c2a41ab93b0fe4b7fa73"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/opauth/github/zipball/568142128ab49e1fbe700fb6ba3e14c99d205c8c",
-                "reference": "568142128ab49e1fbe700fb6ba3e14c99d205c8c",
+                "url": "https://api.github.com/repos/opauth/github/zipball/9c4fe16dc6498b2c94f4c2a41ab93b0fe4b7fa73",
+                "reference": "9c4fe16dc6498b2c94f4c2a41ab93b0fe4b7fa73",
                 "shasum": ""
             },
             "require": {
-                "opauth/opauth": "~1.0",
-                "php": ">=5.3.0"
+                "opauth/opauth": ">=0.4.0",
+                "php": ">=5.2.0"
             },
             "type": "library",
             "autoload": {
-                "psr-4": {
-                    "Opauth\\GitHub\\Strategy\\": "src"
+                "psr-0": {
+                    "": "."
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -364,10 +364,6 @@
                     "name": "U-Zyn Chua",
                     "email": "chua@uzyn.com",
                     "homepage": "http://uzyn.com"
-                },
-                {
-                    "name": "Ceeram",
-                    "email": "c33ram@gmail.com"
                 }
             ],
             "description": "GitHub authentication strategy for Opauth",
@@ -377,30 +373,30 @@
                 "auth",
                 "github"
             ],
-            "time": "2014-04-07 16:50:25"
+            "time": "2012-07-23 06:13:59"
         },
         {
             "name": "opauth/google",
-            "version": "1.0.x-dev",
+            "version": "0.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/opauth/google.git",
-                "reference": "5605bf80b47213a620cc0d2dfb0e8212a316ceba"
+                "reference": "35df77684c14acb346a8c3753ae3809852d1a47e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/opauth/google/zipball/5605bf80b47213a620cc0d2dfb0e8212a316ceba",
-                "reference": "5605bf80b47213a620cc0d2dfb0e8212a316ceba",
+                "url": "https://api.github.com/repos/opauth/google/zipball/35df77684c14acb346a8c3753ae3809852d1a47e",
+                "reference": "35df77684c14acb346a8c3753ae3809852d1a47e",
                 "shasum": ""
             },
             "require": {
-                "opauth/opauth": "~1.0",
-                "php": ">=5.3.0"
+                "opauth/opauth": ">=0.2.0",
+                "php": ">=5.2.0"
             },
             "type": "library",
             "autoload": {
-                "psr-4": {
-                    "Opauth\\Google\\Strategy\\": "src"
+                "psr-0": {
+                    "": "."
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -412,10 +408,6 @@
                     "name": "U-Zyn Chua",
                     "email": "chua@uzyn.com",
                     "homepage": "http://uzyn.com"
-                },
-                {
-                    "name": "Ceeram",
-                    "email": "c33ram@gmail.com"
                 }
             ],
             "description": "Google strategy for Opauth",
@@ -425,24 +417,24 @@
                 "auth",
                 "google"
             ],
-            "time": "2014-04-07 16:49:05"
+            "time": "2012-10-18 14:39:52"
         },
         {
             "name": "opauth/opauth",
-            "version": "1.0.x-dev",
+            "version": "0.4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/opauth/opauth.git",
-                "reference": "00c993c9da27a612dd973c69a32c97fe8da6b2f7"
+                "reference": "436fb98c2374c9e8ae4d8adddf83214bee4d9c72"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/opauth/opauth/zipball/00c993c9da27a612dd973c69a32c97fe8da6b2f7",
-                "reference": "00c993c9da27a612dd973c69a32c97fe8da6b2f7",
+                "url": "https://api.github.com/repos/opauth/opauth/zipball/436fb98c2374c9e8ae4d8adddf83214bee4d9c72",
+                "reference": "436fb98c2374c9e8ae4d8adddf83214bee4d9c72",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.0"
+                "php": ">=5.2.0"
             },
             "suggest": {
                 "opauth/facebook": "Allows Facebook authentication",
@@ -451,9 +443,9 @@
             },
             "type": "library",
             "autoload": {
-                "psr-4": {
-                    "Opauth\\Opauth\\": "src"
-                }
+                "classmap": [
+                    "lib/Opauth/"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -464,10 +456,6 @@
                     "name": "U-Zyn Chua",
                     "email": "chua@uzyn.com",
                     "homepage": "http://uzyn.com"
-                },
-                {
-                    "name": "Ceeram",
-                    "email": "c33ram@gmail.com"
                 }
             ],
             "description": "Multi-provider authentication framework for PHP",
@@ -482,31 +470,30 @@
                 "omniauth",
                 "twitter"
             ],
-            "time": "2014-04-16 17:28:13"
+            "time": "2013-05-10 09:01:52"
         },
         {
             "name": "opauth/twitter",
-            "version": "1.0.x-dev",
+            "version": "0.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/opauth/twitter.git",
-                "reference": "2a7cde7e188a4687c7a0a98535fadee13b8c75fb"
+                "reference": "24792d512ccc67e7d11e9249737616f039551c11"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/opauth/twitter/zipball/2a7cde7e188a4687c7a0a98535fadee13b8c75fb",
-                "reference": "2a7cde7e188a4687c7a0a98535fadee13b8c75fb",
+                "url": "https://api.github.com/repos/opauth/twitter/zipball/24792d512ccc67e7d11e9249737616f039551c11",
+                "reference": "24792d512ccc67e7d11e9249737616f039551c11",
                 "shasum": ""
             },
             "require": {
-                "opauth/opauth": "~1.0",
-                "php": ">=5.3.0",
-                "themattharris/tmhoauth": "0.7.*"
+                "opauth/opauth": ">=0.2.0",
+                "php": ">=5.2.0"
             },
             "type": "library",
             "autoload": {
-                "psr-4": {
-                    "Opauth\\Twitter\\Strategy\\": "src"
+                "psr-0": {
+                    "": "."
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -518,10 +505,6 @@
                     "name": "U-Zyn Chua",
                     "email": "chua@uzyn.com",
                     "homepage": "http://uzyn.com"
-                },
-                {
-                    "name": "Ceeram",
-                    "email": "c33ram@gmail.com"
                 }
             ],
             "description": "Twitter strategy for Opauth",
@@ -531,7 +514,7 @@
                 "auth",
                 "twitter"
             ],
-            "time": "2014-04-07 17:26:14"
+            "time": "2013-06-12 07:50:11"
         },
         {
             "name": "phly/phly-comic",
@@ -782,48 +765,6 @@
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
             "time": "2015-10-11 09:39:48"
-        },
-        {
-            "name": "themattharris/tmhoauth",
-            "version": "0.7.5",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/themattharris/tmhOAuth.git",
-                "reference": "71e2594f5a6b720a309c627bd457926e1287c1c2"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/themattharris/tmhOAuth/zipball/71e2594f5a6b720a309c627bd457926e1287c1c2",
-                "reference": "71e2594f5a6b720a309c627bd457926e1287c1c2",
-                "shasum": ""
-            },
-            "require": {
-                "ext-curl": "*",
-                "php": ">=5.3.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "tmhOAuth": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "Apache-2.0"
-            ],
-            "authors": [
-                {
-                    "name": "themattharris",
-                    "email": "matt@themattharris.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "An OAuth 1.0A library written in PHP by @themattharris, specifically for use with the Twitter API",
-            "keywords": [
-                "oauth",
-                "twitter"
-            ],
-            "time": "2013-02-20 15:57:52"
         },
         {
             "name": "zendframework/zend-config",
@@ -2608,10 +2549,6 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "aura/session": 20,
-        "opauth/opauth": 20,
-        "opauth/github": 20,
-        "opauth/google": 20,
-        "opauth/twitter": 20,
         "zendframework/zend-expressive": 5,
         "zfcampus/zf-deploy": 0
     },
