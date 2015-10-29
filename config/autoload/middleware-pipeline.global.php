@@ -5,12 +5,14 @@ use Mwop\BodyParams;
 use Mwop\Factory\Unauthorized as UnauthorizedFactory;
 use Mwop\Redirects;
 use Mwop\Unauthorized;
+use Mwop\XClacksOverhead;
 
 return [
     'dependencies' => [
         'invokables' => [
-            BodyParams::class => BodyParams::class,
-            Redirects::class  => Redirects::class,
+            BodyParams::class      => BodyParams::class,
+            Redirects::class       => Redirects::class,
+            XClacksOverhead::class => XClacksOverhead::class,
         ],
         'factories' => [
             AuthMiddleware::class => AuthMiddlewareFactory::class,
@@ -19,6 +21,7 @@ return [
     ],
     'middleware_pipeline' => [
         'pre_routing' => [
+            ['middleware' => XClacksOverhead::class],
             ['middleware' => Redirects::class],
             ['middleware' => BodyParams::class],
         ],
