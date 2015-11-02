@@ -69,11 +69,11 @@ node_cleanup : grunt
 	-rm -Rf $(CURDIR)/node_modules
 	@echo "[DONE] Removing node modules..."
 
-zpk : composer sitesub pagerules node_cleanup
+zpk : composer sitesub node_cleanup
 	@echo "Creating zpk..."
 	-$(CURDIR)/vendor/zfcampus/zf-deploy/bin/zfdeploy.php build mwop-$(VERSION).zpk --configs=$(CONFIGS) --zpkdata=$(CURDIR)/zpk --version=$(VERSION)
-	@echo "    cleaning up..."
-	-rm $(CURDIR)/zpk/scripts/pagecache_rules.xml
+	# @echo "    cleaning up..."
+	# -rm $(CURDIR)/zpk/scripts/pagecache_rules.xml
 	@echo "[DONE] Creating zpk."
 
 deploy : zpk
