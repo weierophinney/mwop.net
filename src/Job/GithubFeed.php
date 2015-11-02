@@ -44,7 +44,7 @@ class GithubFeed
             return $res->withStatus(403);
         }
 
-        printf("Retrieving Github activity links\n");
+        printf("Retrieving GitHub activity links\n");
 
         try {
             $data = $this->reader->read();
@@ -74,7 +74,7 @@ class GithubFeed
             'persistent' => false,
         ]);
 
-        $res->getBody()->write(implode("\n", $output));
+        $res->getBody()->write("[DONE] Retrieving GitHub activity links\n");
         return $res->withHeader('Content-Type', 'text/plain');
     }
 
