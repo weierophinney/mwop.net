@@ -61,6 +61,10 @@ article li {
     padding-bottom: 2em;
 }
 
+a.u-url {
+  text-decoration: none;
+}
+
 .social-media {
     padding-bottom: 1em;
 }
