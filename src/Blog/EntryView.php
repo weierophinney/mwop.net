@@ -47,6 +47,13 @@ class EntryView
         return $this->formatDate($this->created);
     }
 
+    // @codingStandardsIgnoreStart
+    public function created_rfc()
+    {
+        return $this->formatDateRfc($this->created);
+    }
+    // @codingStandardsIgnoreEnd
+
     public function updated()
     {
         if (! $this->updated || $this->updated === $this->created) {
@@ -54,6 +61,7 @@ class EntryView
         }
 
         return [
+            'rfc'  => $this->formatDateRfc($this->updated),
             'when' => $this->formatDate($this->updated),
         ];
     }
@@ -127,5 +135,15 @@ class EntryView
             $date = new DateTime($dateString);
         }
         return $date->format('j F Y');
+    }
+
+    private function formatDateRfc($dateString)
+    {
+        if (is_numeric($dateString)) {
+            $date = new DateTime('@' . $dateString, new DateTimezone('America/Chicago'));
+        } else {
+            $date = new DateTime($dateString);
+        }
+        return $date->format('c');
     }
 }
