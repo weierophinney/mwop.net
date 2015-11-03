@@ -21,26 +21,26 @@
         {{/posts}}
 
         {{#posts}}
-        <div class="row clearfix">
+        <div class="row clearfix h-entry">
             <aside class="four columns offset-by-one alpha sidebar blog">
                 <p>
-                    Written on {{created}}.
+                    Written on <time class="dt-published" datetime="{{created_rfc}}">{{created}}</time>.
                     {{#updated}}
-                    <br />Last updated on {{when}}.
+                    <br />Last updated on <time class="dt-updated" datetime="{{rfc}}">{{when}}</time>.
                     {{/updated}}
                 </p>
 
                 <ul class="tags">
                 {{#tags}}
-                  <li><a href="{{link}}">{{tag}}</a>
+                  <li><a class="p-category" href="{{link}}">{{tag}}</a>
                 {{/tags}}
                 </ul>
             </aside>
 
             <section class="eleven columns omega">
-                <h4 class="entry"><a href="{{#uri}}{"name": "blog.post", "options": {"id": "{{id}}"}}{{/uri}}">{{title}}</a></h4>
+                <h4 class="entry"><a class="u-url u-uid" href="{{#uri}}{"name": "blog.post", "options": {"id": "{{id}}"}}{{/uri}}">{{title}}</a></h4>
 
-                <div class="entry body">{{{body}}}</div>
+                <div class="entry body p-summary">{{{body}}}</div>
 
                 <p><a href="{{#uri}}{"name": "blog.post", "options": {"id": "{{id}}"}}{{/uri}}">Continue reading...</a></p>
             </section>

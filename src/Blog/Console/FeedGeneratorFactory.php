@@ -3,6 +3,7 @@ namespace Mwop\Blog\Console;
 
 use Mwop\Blog\Mapper;
 use Zend\Expressive\Router\RouterInterface;
+use Zend\Expressive\Template\TemplateRendererInterface;
 
 class FeedGeneratorFactory
 {
@@ -11,6 +12,7 @@ class FeedGeneratorFactory
         return new FeedGenerator(
             $services->get(Mapper::class),
             $services->get(RouterInterface::class),
+            $services->get(TemplateRendererInterface::class),
             realpath(getcwd()) . '/data/blog/authors/'
         );
     }
