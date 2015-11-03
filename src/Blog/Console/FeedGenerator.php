@@ -8,6 +8,7 @@ use Mwop\Blog;
 use Symfony\Component\Yaml\Parser as YamlParser;
 use Zend\Console\ColorInterface as Color;
 use Zend\Expressive\Router\RouterInterface;
+use Zend\Expressive\Template\TemplateRendererInterface;
 use Zend\Feed\Writer\Feed as FeedWriter;
 
 class FeedGenerator
@@ -26,12 +27,15 @@ class FeedGenerator
 
     private $mapper;
 
+    private $renderer;
+
     private $router;
 
-    public function __construct(Blog\MapperInterface $mapper, RouterInterface $router, $authorsPath)
+    public function __construct(Blog\MapperInterface $mapper, RouterInterface $router, TemplateRendererInterface $renderer, $authorsPath)
     {
         $this->mapper      = $mapper;
         $this->router      = $router;
+        $this->renderer    = $renderer;
         $this->authorsPath = $authorsPath;
     }
 
@@ -118,7 +122,7 @@ class FeedGenerator
             $entry->addAuthor($author);
             $entry->setDateModified(new DateTime($post['updated']));
             $entry->setDateCreated(new DateTime($post['created']));
-            $entry->setContent($html);
+            $entry->setContent($this->createContent($html, $post));
 
             $feed->addEntry($entry);
         }
@@ -165,5 +169,22 @@ class FeedGenerator
     {
         $uri = $this->router->generateUri($route, $options);
         return str_replace('[/]', '', $uri);
+    }
+
+    /**
+     * Create feed content.
+     *
+     * Renders h-entry data for the feed and appends it to the HTML markup content.
+     *
+     * @param string $content
+     * @param array $post
+     * @return string
+     */
+    private function createContent($content, $post)
+    {
+        $view   = new Blog\EntryView($post);
+        $view->setRouter($this->router);
+        $hEntry = $this->renderer->render('blog::hcard', $view);
+        return sprintf("%s\n\n%s", $content, $hEntry);
     }
 }
