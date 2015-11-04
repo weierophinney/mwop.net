@@ -30,15 +30,18 @@ header {
 }
 
 header .logo {
-    vertical-align: middle;
     margin-top: 16px;
+}
+
+header .logo img {
+    vertical-align: middle;
 }
 
 header .main_title {
     font-family: Cardo;
     font-size: 1.8em;
     font-style: oblique;
-    vertical-align: top;
+    vertical-align: middle;
 }
 
 nav#menu {
