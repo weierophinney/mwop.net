@@ -48,7 +48,7 @@ class Process
             );
         }
 
-        $filter = new InputFilter();
+        $filter = new InputFilter($this->config['recaptcha_priv_key']);
         $filter->setData($data);
 
         if (! $filter->isValid()) {
