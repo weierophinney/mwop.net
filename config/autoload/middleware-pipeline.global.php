@@ -3,6 +3,8 @@ use Mwop\Auth\Middleware as AuthMiddleware;
 use Mwop\Auth\MiddlewareFactory as AuthMiddlewareFactory;
 use Mwop\BodyParams;
 use Mwop\Factory\Unauthorized as UnauthorizedFactory;
+use Mwop\Factory\NotFoundFactory;
+use Mwop\NotFound;
 use Mwop\Redirects;
 use Mwop\Unauthorized;
 use Mwop\XClacksOverhead;
@@ -16,6 +18,7 @@ return [
         ],
         'factories' => [
             AuthMiddleware::class => AuthMiddlewareFactory::class,
+            NotFound::class       => NotFoundFactory::class,
             Unauthorized::class   => UnauthorizedFactory::class,
         ],
     ],
@@ -34,6 +37,9 @@ return [
             [
                 'middleware' => Unauthorized::class,
                 'error'      => true,
+            ],
+            [
+                'middleware' => NotFound::class,
             ],
         ],
     ],

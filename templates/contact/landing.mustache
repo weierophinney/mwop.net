@@ -1,95 +1,54 @@
 {{<layout::layout}}
 {{$title}}Contact{{/title}}}
 {{$content}}
-<section class="contact">
-    <h2>Contact Me</h2>
+<section class="col-md-12 center-block contact">
+  <h2>Contact Me</h2>
 
-    <p>
-        Feel free to contact me. Please note, however, that I likely will not 
-        respond to recruiters, nor to questions that could be asked in public
-        forums.
-    </p>
+  <p>
+    Feel free to contact me. Please note, however, that I likely will not 
+    respond to recruiters, nor to questions that could be asked in public
+    forums.
+  </p>
 
-    {{#error}}
-    <p class="error">
-        There were one or more isues with your submission. Please correct them as 
-        indicated below.
-    </p>
+  {{#error}}
+  <p class="error">
+    There were one or more isues with your submission. Please correct them as 
+    indicated below.
+  </p>
 
-    <pre>
-        {{message}}
-    </pre>
+  <pre>
+      {{message}}
+  </pre>
 
-    {{/error}}
+  {{/error}}
 
-    <form method="post" name="contact" action="{{action}}" id="contact">
-        <dl class="zend_form">
-            <dt><label for="from">From (email):</label></dt>
-            <dd><input type="text" name="from" value=""></dd>
+  <form method="post" name="contact" action="{{action}}" id="contact">
+    <div class="form-group">
+      <label for="from">From (email):</label>
+      <input class="form-control" type="text" name="from" value="">
+    </div>
 
-            <dt><label for="subject">Subject:</label></dt>
-            <dd><input type="text" name="subject" value=""></dd>
+    <div class="form-group">
+      <label for="subject">Subject:</label>
+      <input class="form-control" type="text" name="subject" value="">
+    </div>
 
-            <dt><label for="body">Your message:</label></dt>
-            <dd><textarea name="body"></textarea></dd>
+    <div class="form-group">
+      <label for="body">Your message:</label>
+      <textarea class="form-control" rows="10" name="body"></textarea>
+    </div>
 
-            <dt><label for="captcha">Please verify you are human.</label></dt>
-            <dd><input type="hidden" name="captcha[recaptcha_challenge_field]" id="captcha-challenge">
-                <input type="hidden" name="captcha[recaptcha_response_field]" id="captcha-response">
-                <script type="text/javascript">
-                    var RecaptchaOptions = {"theme":"clean","lang":"en"};
-                </script>
-                <script type="text/javascript"
-                    src="https://www.google.com/recaptcha/api/challenge?k={{recaptcha_pub_key}}">
-                </script>
-                <noscript>
-                    <iframe src="https://www.google.com/recaptcha/api/noscript?k={{recaptcha_priv_key}}"
-                        height="300" width="500" frameborder="0"></iframe>
-                    <br>
-                    <textarea name="captcha[recaptcha_challenge_field]" rows="3" cols="40">
-                    </textarea>
-                    <input type="hidden" name="captcha[recaptcha_response_field]"
-                        value="manual_challenge">
-                </noscript>
-                <script type="text/javascript" language="JavaScript">
-                    function windowOnLoad(fn)
-                    {
-                        var old = window.onload;
-                        window.onload = function () {
-                            if (old) {
-                                old();
-                            }
-                            fn();
-                        };
-                    }
-                    function formBind(el, eventName, eventHandler)
-                    {
-                        if (el.addEventListener) {
-                            el.addEventListener(eventName, eventHandler, false);
-                        } else if (el.attachEvent) {
-                            el.attachEvent('on'+eventName, eventHandler);
-                        }
-                    }
-                    windowOnLoad(function () {
-                        formBind(
-                            document.getElementById("captcha-challenge").form,
-                            'submit',
-                            function (e) {
-                                document.getElementById("captcha-challenge").value = document.getElementById("recaptcha_challenge_field").value;
-                                document.getElementById("captcha-response").value = document.getElementById("recaptcha_response_field").value;
-                            }
-                        );
-                    });
-                </script>
-            </dd>
+    <div
+      class="form-group g-recaptcha"
+      data-sitekey="{{recaptcha_pub_key}}"
+      data-theme="light"></div>
 
-            <dd>
-                <input type="hidden" name="csrf" value="{{csrf}}">
-                <input type="submit" name="Send" value="Send">
-            </dd>
-
-        </dl>
-    </form>
+    <input type="hidden" name="csrf" value="{{csrf}}">
+    <button type="submit" class="btn btn-default" name="Send">Send</button>
+  </form>
 </section>
 {{/content}}
+{{$scripts}}
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+{{/scripts}}
 {{/layout::layout}}

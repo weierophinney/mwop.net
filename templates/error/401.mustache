@@ -1,22 +1,22 @@
 {{<layout::layout}}
 {{$title}}Unauthorized{{/title}}
 {{$content}}
-<section class="code_401">
-    <h2>Unauthorized</h2>
+<section class="col-md-8 col-md-offset-2 code_401">
+  <h2>Unauthorized</h2>
 
-    <p>
-        You are not logged in, and therefore cannot perform this action.
-    </p>
+  <p>
+    You are not logged in, and therefore cannot perform this action.
+  </p>
 
-    <p>
-        Login to continue:
-    <p>
+  <p>
+    Login to continue:
+  <p>
 
-    <ul>
-        <li><a class="btn" href="{{auth_path}}/github?redirect={{redirect}}">GitHub</a></li>
-        <li><a class="btn" href="{{auth_path}}/google?redirect={{redirect}}">Google</a></li>
-        <li><a class="btn" href="{{auth_path}}/twitter?redirect={{redirect}}">Twitter</a></li>
-    </ul>
+  <div class="btn-group-vertical" role="group">
+    <a class="btn btn-default" href="{{auth_path}}/github?redirect={{redirect}}">GitHub</a>
+    <a class="btn btn-default" href="{{auth_path}}/google?redirect={{redirect}}">Google</a>
+    <a class="btn btn-default" href="{{auth_path}}/twitter?redirect={{redirect}}">Twitter</a>
+  </div>
 </section>
 {{/content}}
 {{/layout::layout}}
