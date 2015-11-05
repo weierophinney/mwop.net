@@ -1,22 +1,23 @@
-    <footer class="sixteen columns footer">
-        <div class="column one-third alpha about">
-            <h4>About</h4>
-            {{>layout::about}}
-        </div>
+<footer class="navbar navbar-inverse"><div class="container-fluid">
+  <div class="row">
+    <div class="col-md-4 alpha about">
+      <h4>About</h4>
+      {{>layout::about}}
+    </div>
 
-        <div class="column one-third projects">
-            <h4>Projects</h4>
-            {{>layout::projects}}
-        </div>
+    <div class="col-md-4 projects">
+      <h4>Projects</h4>
+      {{>layout::projects}}
+    </div>
 
-        <div class="column one-third omega tags">
-            {{>layout::searchbox}}
-            {{$footer}}{{/footer}}
-        </div>
+    <div class="col-md-4 omega tags">
+      {{$footer}}{{/footer}}
+    </div>
+  </div>
 
-        <br class="clear"/>
+  <br />
 
-        <div class="copyright">
-            Unless otherwise noted, &#169; 2004 - 2015, Matthew Weier O'Phinney
-        </div>
-    </footer>
+  <div class="copyright">
+    Unless otherwise noted, &#169; 2004 - 2015, Matthew Weier O'Phinney
+  </div>
+</div></footer>

@@ -1,7 +1,7 @@
 {{<layout::layout}}
 {{$title}}Welcome{{/title}}
 {{$content}}
-<article class="five columns alpha home">
+<article class="col-md-4 alpha home">
     <h2>Welcome!</h2>
 
     <p>
@@ -24,12 +24,12 @@
     </p>
 </article>
 
-<aside class="four columns middle home">
+<aside class="col-md-4 middle home">
     <img src="https://farm4.staticflickr.com/3315/3625794227_8d038eac5e_n.jpg" alt="Portrait by Rob Allen" /><br />
     <em>Photo &copy; All rights reserved by <a href="https://www.flickr.com/photos/akrabat/">Rob Allen</a></em>
 </aside>
 
-<aside class="six columns omega home">
+<aside class="col-md-4 omega home">
     <h3>Recent Github Activity</h3>
     <ul id="github">
         {{>github-links}}
@@ -40,7 +40,7 @@
     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 </aside>
 
-<div class="h-card vcard">
+<div class="h-card vcard hidden">
   <img class="u-photo photo" width="50" src="https://avatars0.githubusercontent.com/u/25943?v=3&u=79dd2ea1d4d8855944715d09ee4c86215027fa80&s=140" alt="mwop">,
   <a class="p-name fn u-url url" href="https://mwop.net/" rel="me">Matthew Weier O'Phinney</a>,
   <a class="u-email email" href="mailto:matthew@weierophinney.net">matthew@weierophinney.net</a>,

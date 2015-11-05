@@ -1,29 +1,31 @@
 {{#pagination}}
-<div class="paginationControl">
+<div class="col-md-8 col-md-offset-2 text-center">
+  <ul class="pagination pagination-sm">
     {{^is_first}}
-    <a href="{{base_path}}" class="first">&lt;&lt; First</a> |
+    <li><a href="{{base_path}}" class="first">&lt;&lt;<span class="sr-only">First</span></a></li>
     {{/is_first}}
 
     {{#previous}}
-    <a href="{{base_path}}?page={{previous}}"> &lt; Previous </a> |
+    <li><a href="{{base_path}}?page={{previous}}">&lt;<span class="sr-only">Previous</span></a></li>
     {{/previous}}
 
     {{#pages}}
         {{#current}}
-    <span class="current">{{number}}</span> |
+    <li class="active"><a href="#">{{number}}</a></li>
         {{/current}}
 
         {{^current}}
-    <a href="{{base_path}}?page={{number}}">{{number}}</a> |
+    <li><a href="{{base_path}}?page={{number}}">{{number}}</a></li>
         {{/current}}
     {{/pages}}
 
     {{#next}}
-    <a href="{{base_path}}?page={{next}}"> Next &gt;</a> |
+    <li><a href="{{base_path}}?page={{next}}"><span class="sr-only">Next</span>&gt;</a></li>
     {{/next}}
 
     {{^is_last}}
-    <a href="{{base_path}}?page={{last}}" class="last"> Last &gt;&gt</a>
+    <li><a href="{{base_path}}?page={{last}}" class="last"><span class="sr-only">Last</span>&gt;&gt</a></li>
     {{/is_last}}
+  </ul>
 </div>
 {{/pagination}}
