@@ -12,8 +12,8 @@
 {{/scripts}}
 {{$footer}}{{>tag-cloud}}{{/footer}}
 {{$content}}
-<div class="row h-entry">
-    <aside class="four columns offset-by-one alpha sidebar blog">
+<div class="single-entry h-entry">
+    <aside class="col-md-2 col-md-offset-2 hidden-xs sidebar blog">
         <p>
             Written on <time class="dt-published" datetime="{{created_rfc}}">{{created}}</time>.
             {{#updated}}
@@ -28,7 +28,7 @@
         </ul>
     </aside>
 
-    <article class="eleven columns omega blog">
+    <article class="col-md-6 blog">
         <h2 class="p-name"><a class="u-url u-uid" href="{{url}}">{{title}}</a></h2>
 
         <div class="e-content">
@@ -37,10 +37,12 @@
         {{{extended}}}
         </div>
 
-        <div class="p-author h-card">
+        <div class="p-author h-card hidden">
           Posted by <a class="p-name u-url" href="https://mwop.net/">Matthew Weier O'Phinney</a>,
           <img class="u-photo photo" width="50" src="https://avatars0.githubusercontent.com/u/25943?v=3&u=79dd2ea1d4d8855944715d09ee4c86215027fa80&s=140" alt="mwop">
         </div>
+
+        <div class="divider"></div>
 
         <div id="disqus_thread"></div>
         <script type="text/javascript">

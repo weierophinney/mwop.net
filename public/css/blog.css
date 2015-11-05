@@ -7,22 +7,25 @@
     display: inline;
     list-style: none;
     padding: 0;
-    margin: 0;
-}
-
-article li {
-    font-family: 'Libre Baskerville', serif;
 }
 
 .blog.sidebar {
     padding: 3px 3px 3px 0;
-    margin: 1em 1em 1em 0;
     color: #A8A8A8;
     font-style: italic;
 }
 
+.single-entry .sidebar {
+  padding-top: 3.5em;
+}
+
 .blog.sidebar:hover {
     color: #000;
+}
+
+.e-content {
+  font-size: 1.4em;
+  line-height: 1.6em;
 }
 
 .blog.sidebar li:before {
@@ -48,13 +51,22 @@ article li {
     color: #000;
 }
 
+h2.p-name {
+    margin-top: 0;
+}
+
 .blog h4.entry {
     font-size: 2em;
-    padding-top: 0.5em;
+    margin-top: 0;
 }
 
 .blog .entry.body {
     padding-left: 2em;
+}
+
+.post-list {
+  border-bottom: 1px dotted #676767;
+  margin-bottom: 1em;
 }
 
 .blog section {
@@ -67,40 +79,4 @@ a.u-url {
 
 .social-media {
     padding-bottom: 1em;
-}
-
-/* ensure we don't mess with disqus styles */
-
-#dsq-content #dsq-global-toolbar { clear: both !important; }
-
-.dsq-append-post {zoom: 1;}
-
-div#disqus_thread li, div#disqus_thread span {
-    list-style-type: none !important;
-}
-
-.dsq-comment, .dsq-comment-header, .dsq-comment-message, .dsq-comment-meta {
-    text-indent: 0;
-    padding-left: 0;
-}
-
-.dsq-comment-meta li, .dsq-comment-actions li {
-    text-indent: 0;
-}
-
-ul.dsq-comment-actions li {
-    display: inline;
-}
-
-.dsq-like-activity {
-    padding-left: 1em !important;
-}
-
-.dsq-toolbar-label {
-    padding-left: 1em !important;
-}
-
-#dsq-subscribe .dsq-font {
-    margin-left: 0.5em !important;
-    padding-left: 0.5em !important;
 }
