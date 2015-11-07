@@ -6,15 +6,15 @@
         }
     ],
     "require": {
+        "php": "^5.5|~7.0",
         "aura/session": "~2.0-dev@dev",
-        "opauth/opauth": ">=0.2.0@dev,<2.0.0",
-        "opauth/github": ">=0.1.0@dev,<2.0.0",
-        "opauth/google": ">=0.2.2@dev,<2.0.0",
-        "opauth/twitter": ">=0.3.1@dev,<2.0.0",
-        "zendframework/zend-stratigility": "~1.1",
+        "opauth/opauth": "^0.4",
+        "opauth/github": "^0.1",
+        "opauth/google": "^0.2.2",
+        "opauth/twitter": "^0.3.1",
         "zendframework/zend-diactoros": "^1.1",
         "phly/phly-comic": "~1.0",
-        "phly/phly-expressive-mustache": "^0.2",
+        "phly/phly-expressive-mustache": "^0.3",
         "psr/http-message": "^1.0",
         "zendframework/zend-config": "~2.3",
         "zendframework/zend-escaper": "~2.3",
@@ -27,10 +27,13 @@
         "zendframework/zend-stdlib": "~2.3",
         "zendframework/zend-tag": "~2.3",
         "zfcampus/zf-console": "~1.0",
-        "zendframework/zend-expressive": "^0.2",
+        "zendframework/zend-expressive": "~1.0@rc",
+        "zendframework/zend-expressive-fastroute": "^0.2",
         "zendframework/zend-servicemanager": "^2.6",
         "aura/router": "^2.3",
-        "league/commonmark": "^0.10.0"
+        "league/commonmark": "^0.11.3",
+        "mnapoli/front-yaml": "^1.5",
+        "symfony/yaml": "^2.7"
     },
     "require-dev": {
         "zfcampus/zf-deploy": "~1.0@stable",

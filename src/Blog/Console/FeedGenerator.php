@@ -1,12 +1,22 @@
 <?php
 namespace Mwop\Blog\Console;
 
+use DateTime;
+use Mni\FrontYAML\Bridge\CommonMark\CommonMarkParser;
+use Mni\FrontYAML\Parser;
 use Mwop\Blog;
+use Symfony\Component\Yaml\Parser as YamlParser;
 use Zend\Console\ColorInterface as Color;
+use Zend\Expressive\Router\RouterInterface;
+use Zend\Expressive\Template\TemplateRendererInterface;
 use Zend\Feed\Writer\Feed as FeedWriter;
 
 class FeedGenerator
 {
+    private $authors = [];
+
+    private $authorsPath;
+
     private $console;
 
     private $defaultAuthor = [
@@ -17,9 +27,16 @@ class FeedGenerator
 
     private $mapper;
 
-    public function __construct(Blog\MapperInterface $mapper)
+    private $renderer;
+
+    private $router;
+
+    public function __construct(Blog\MapperInterface $mapper, RouterInterface $router, TemplateRendererInterface $renderer, $authorsPath)
     {
-        $this->mapper = $mapper;
+        $this->mapper      = $mapper;
+        $this->router      = $router;
+        $this->renderer    = $renderer;
+        $this->authorsPath = $authorsPath;
     }
 
     public function __invoke($route, $console)
@@ -31,9 +48,11 @@ class FeedGenerator
         $this->console->writeLine('Generating base feeds');
         $this->generateFeeds(
             $outputDir . '/',
+            $baseUri,
             'Blog entries :: phly, boy, phly',
-            $baseUri,
-            $baseUri,
+            'blog',
+            'blog.feed',
+            [],
             $this->mapper->fetchAll()
         );
 
@@ -50,74 +69,122 @@ class FeedGenerator
             $this->console->writeLine('Generating feeds for tag ' . $tag);
             $this->generateFeeds(
                 sprintf('%s/%s.', $outputDir, $tag),
-                sprintf('Tag: %s :: phly, boy, phly', $tag),
                 $baseUri,
-                sprintf('%s/tag/%s', $baseUri, str_replace(' ', '+', $tag)),
+                sprintf('Tag: %s :: phly, boy, phly', $tag),
+                'blog.tag',
+                'blog.tag.feed',
+                ['tag' => $tag],
                 $this->mapper->fetchAllByTag($tag)
             );
         }
     }
 
-    private function generateFeeds($fileBase, $title, $baseUri, $feedUri, $posts)
+    private function generateFeeds($fileBase, $baseUri, $title, $landingRoute, $feedRoute, array $routeOptions, $posts)
     {
         foreach (['atom', 'rss'] as $type) {
-            $this->generateFeed($type, $fileBase, $title, $baseUri, $feedUri, $posts);
+            $this->generateFeed($type, $fileBase, $baseUri, $title, $landingRoute, $feedRoute, $routeOptions, $posts);
         }
     }
 
-    private function generateFeed($type, $fileBase, $title, $baseUri, $feedUri, $posts)
+    private function generateFeed($type, $fileBase, $baseUri, $title, $landingRoute, $feedRoute, array $routeOptions, $posts)
     {
+        $routeOptions['type'] = $type;
+
+        $landingUri = $baseUri . $this->generateUri($landingRoute, $routeOptions);
+        $feedUri    = $baseUri . $this->generateUri($feedRoute, $routeOptions);
+
         $feed = new FeedWriter();
         $feed->setTitle($title);
-        $feed->setLink($feedUri);
-        $feed->setFeedLink(sprintf('%s/%s.xml', $feedUri, $type), $type);
+        $feed->setLink($landingUri);
+        $feed->setFeedLink($feedUri, $type);
 
         if ($type === 'rss') {
             $feed->setDescription($title);
         }
 
+        $parser = new Parser(null, new CommonMarkParser());
         $latest = false;
         $posts->setCurrentPageNumber(1);
         foreach ($posts as $details) {
-            $post = include $details['path'];
-            if (! $post instanceof Blog\EntryEntity) {
-                $this->console->write('Invalid post detected: ', Color::RED);
-                $this->console->writeLine($details['path']);
-                continue;
-            }
+            $document = $parser->parse(file_get_contents($details['path']));
+            $post     = $document->getYAML();
+            $html     = $document->getContent();
+            $author   = $this->getAuthor($post['author']);
 
             if (! $latest) {
                 $latest = $post;
             }
 
-            $authorDetails = $this->defaultAuthor;
-            $author        = $post->getAuthor();
-            if ($author instanceof Blog\AuthorEntity && $author->isValid()) {
-                $authorDetails = array(
-                    'name'  => $author->getName(),
-                    'email' => $author->getEmail(),
-                    'uri'   => $author->getUrl(),
-                );
-            }
-
             $entry = $feed->createEntry();
-            $entry->setTitle($post->getTitle());
-            $entry->setLink(sprintf('%s/%s.html', $baseUri, $post->getId()));
+            $entry->setTitle($post['title']);
+            $entry->setLink($baseUri . $this->generateUri('blog.post', ['id' => $post['id']]));
 
-            $entry->addAuthor($authorDetails);
-            $entry->setDateModified($post->getUpdated());
-            $entry->setDateCreated($post->getCreated());
-            $entry->setContent($post->getBody() . $post->getExtended());
+            $entry->addAuthor($author);
+            $entry->setDateModified(new DateTime($post['updated']));
+            $entry->setDateCreated(new DateTime($post['created']));
+            $entry->setContent($this->createContent($html, $post));
 
             $feed->addEntry($entry);
         }
 
         // Set feed date
-        $feed->setDateModified($latest->getUpdated());
+        $feed->setDateModified(new DateTime($latest['updated']));
 
         // Write feed to file
         $file = sprintf('%s%s.xml', $fileBase, $type);
         $file = str_replace(' ', '+', $file);
         file_put_contents($file, $feed->export($type));
+    }
+
+    /**
+     * Retrieve author metadata.
+     *
+     * @param string $author
+     * @return string[]
+     */
+    private function getAuthor($author)
+    {
+        if (isset($this->authors[$author])) {
+            return $this->authors[$author];
+        }
+        
+        $path = sprintf('%s/%s.yml', $this->authorsPath, $author);
+        if (! file_exists($path)) {
+            $this->authors[$author] = $this->defaultAuthor;
+            return $this->authors[$author];
+        }
+
+        $this->authors[$author] = (new YamlParser())->parse(file_get_contents($path));
+        return $this->authors[$author];
+    }
+
+    /**
+     * Normalize generated URIs.
+     *
+     * @param string $route
+     * @param array $options
+     * @return string
+     */
+    private function generateUri($route, array $options)
+    {
+        $uri = $this->router->generateUri($route, $options);
+        return str_replace('[/]', '', $uri);
+    }
+
+    /**
+     * Create feed content.
+     *
+     * Renders h-entry data for the feed and appends it to the HTML markup content.
+     *
+     * @param string $content
+     * @param array $post
+     * @return string
+     */
+    private function createContent($content, $post)
+    {
+        $view   = new Blog\EntryView($post);
+        $view->setRouter($this->router);
+        $hEntry = $this->renderer->render('blog::hcard', $view);
+        return sprintf("%s\n\n%s", $content, $hEntry);
     }
 }

@@ -1,13 +1,31 @@
-    <header class="sixteen columns">
-        <div class="one-half column logo">
-            <a href="/"><img src="/images/logo.gif" height="37" width="37" alt="Celtic Knot" /></a>
-            <span class="main_title">phly, boy, phly: matthew weier o'phinney</span>
-        </div>
+<header class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".header-navbar-collapse" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <span class="navbar-brand">
+        <a href="{{#uri}}{"name": "home"}{{/uri}}"><img src="/images/logo.gif" height="37" width="37" alt="Celtic Knot - Matthew Weier O'Phinney" />
+        <span class="main_title hidden-xs">phly, boy, phly: matthew weier o'phinney</span></a>
+      </span>
+    </div>
+    
+    <div class="collapse navbar-collapse header-navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="{{#uri}}{"name": "blog"}{{/uri}}">Blog</a></li>
+        <li><a href="{{#uri}}{"name": "resume"}{{/uri}}">R&eacute;sum&eacute;</a></li>
+        <li><a href="{{#uri}}{"name": "contact"}{{/uri}}">Contact</a></li>
+      </ul>
 
-        <nav class="one-half column" id="menu"><ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/blog">Blog</a></li>
-            <li><a href="/resume">R&eacute;sum&eacute;</a></li>
-            <li><a href="/contact">Contact</a></li>
-        </ul></nav>
-    </header>
+      <form class="navbar-form navbar-right" role="search" id="site-search">
+        <div class="form-group col-xs-2">
+          <input type="text" name="q" class="form-control input-sm search" placeholder="Search">
+        </div>
+      </form>
+    </div>
+  </div>
+</header>
