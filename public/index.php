@@ -1,6 +1,10 @@
 <?php
 namespace Mwop;
 
+
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
 // Delegate static file requests back to the PHP built-in webserver
 if (php_sapi_name() === 'cli-server'
     && is_file(__DIR__ . parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH))
@@ -12,5 +16,5 @@ chdir(dirname(__DIR__));
 require_once 'vendor/autoload.php';
 
 $container = require 'config/services.php';
-$app       = $container->get('Mwop\Site');
+$app = $container->get('Mwop\Site');
 $app->run();
