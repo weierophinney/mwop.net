@@ -8,7 +8,6 @@ use Zend\Expressive\Template\TemplateRendererInterface;
 return [
     'dependencies' => [
         'factories' => [
-            'Zend\Expressive\FinalHandler'   => TemplatedErrorHandlerFactory::class,
             TemplateRendererInterface::class => MustacheTemplateFactory::class,
         ],
     ],
