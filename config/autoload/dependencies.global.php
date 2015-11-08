@@ -6,7 +6,6 @@ use Mwop\Factory;
 use Mwop\Github;
 use Zend\Expressive\Application;
 use Zend\Expressive\Container\ApplicationFactory;
-use Zend\Expressive\Container\TemplatedErrorHandlerFactory;
 
 return ['dependencies' => [
     'invokables' => [
@@ -27,6 +26,6 @@ return ['dependencies' => [
         Github\AtomReader::class          => Github\AtomReaderFactory::class,
         Github\Console\Fetch::class       => Github\Console\FetchFactory::class,
         Application::class                => ApplicationFactory::class,
-        'Zend\Expressive\FinalHandler'    => TemplatedErrorHandlerFactory::class,
+        'Zend\Expressive\FinalHandler'    => Factory\ErrorHandlerFactory::class,
     ],
 ]];
