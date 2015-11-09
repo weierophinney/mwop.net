@@ -20,7 +20,7 @@ summarize, the movement is about:
 - Using small things that work together to solve larger problems.
 
 I think there are some really good ideas that have come out of this, and also a
-number of questionable practices<sup>[1](#f1)</sup>.
+number of questionable practices<sup id="t1">[1](#f1)</sup>.
 
 One piece in particular I've focussed on is the concept of so-called
 “microframeworks”.
@@ -30,7 +30,7 @@ One piece in particular I've focussed on is the concept of so-called
 What is a microframework?
 -------------------------
 
-PHP has had microframeworks for quite some time<sup>[2](#f2)</sup>, though I
+PHP has had microframeworks for quite some time<sup id="t2">[2](#f2)</sup>, though I
 only really first saw the term being used around 3 years ago. The “grand-daddy”
 of modern-day microframeworks can actually be traced to Ruby, however, and
 specifically [Sinatra](http://www.sinatrarb.com).
@@ -76,7 +76,7 @@ PHP implementations
 -------------------
 
 I'd argue one of the earliest microframework implementations, though it wasn't
-termed as such, was [Horde Routes](http://dev.horde.org/routes/)<sup>[3](#f3)</sup>
+termed as such, was [Horde Routes](http://dev.horde.org/routes/)<sup id="t3">[3](#f3)</sup>
 (which was itself inspired by [Python Routes](http://routes.readthedocs.org/en/latest/index.html),
 in turn inspired by the Rails routing system, like Sinatra). It follows the two
 principles I outlined above: it allows defining routes (entry points), and
@@ -85,7 +85,7 @@ route must provide both a controller and an action in the match, with the
 latter corresponding to a method on the controller class.
 
 Since around 2009, I've seen an increasing number of new PHP
-microframeworks<sup>[4](#f4)</sup> that follow in the steps of Sinatra and
+microframeworks<sup id="t4">[4](#f4)</sup> that follow in the steps of Sinatra and
 Horde. In the various implementations I've looked at, instead of using a DSL,
 the authors have all opted for either a procedural or OOP interface. Starting
 with PHP 5.3, most authors have also primarily targetted any PHP callable as a
@@ -213,7 +213,7 @@ whenever you need to add new routes and controllers (do they go at the top, or
 bottom? are there other routes that could potentially match as well? etc.).
 
 Additionally, though many frameworks offer ways to alter the workflow of the
-application either via hooks, events, or “middleware”<sup>[5](#f5)</sup>, most
+application either via hooks, events, or “middleware”<sup id="t5">[5](#f5)</sup>, most
 of these are limited in scope, often non-reusable, and often non-stackable. As
 such, comprehensive manipulation of the application workflow is out of reach.
 
@@ -227,7 +227,7 @@ basically the same, yet every microframework re-implements it. Specifically:
 - Request and Response object abstraction is largely the same as well,
   providing access to query/post/cookie/session/etc. parameters through roughly
   equivalent APIs.
-- Many implement their own view layers.<sup>[6](#f6)</sup>
+- Many implement their own view layers.<sup id="t6">[6](#f6)</sup>
 
 Most of this code should be considered commodity code at this point. There are
 several outstanding view layers and templating engines available (Smarty, Twig,
@@ -249,7 +249,7 @@ existing components in [ZF2](http://packages.zendframework.com/), and started
 building.
 
 In a matter of a few hours, I had written up a complete test
-suite<sup>[7](#f7)</sup> and all code for a microframework, featuring the
+suite<sup id="t7">[7](#f7)</sup> and all code for a microframework, featuring the
 following (this is basically the testdox output from the unit test suite):
 
 - Lazy loads request
@@ -314,7 +314,7 @@ microframework contains only the code it needs to get its work done, leveraging
 the work of others whenever possible.
 
 This post is not meant as a way to announce a new microframework,
-however.<sup>[8](#f8)</sup> The point of the experiment was to prove something:
+however.<sup id="t8">[8](#f8)</sup> The point of the experiment was to prove something:
 microframeworks are trivially easy to write, *particularly if you follow the
 principals of MicroPHP, and re-use existing code*. Just because code comes from
 a framework or a third-party library does not make it suspect or inferior; in
@@ -340,7 +340,7 @@ and the problems you anticipate.
 
 In sum: *Use the right tool for the job*. If you foresee expanding requirements
 in your project's future, you may want to evaluate a full-stack
-framework,<sup>[9](#f9)</sup> or consider building something robust that suits
+framework,<sup id="t9">[9](#f9)</sup> or consider building something robust that suits
 your specific project's needs. Use microframeworks where and when they make
 sense.
 
@@ -355,32 +355,32 @@ click the link and see for yourself.
 
 #### Footnotes
 
-- <sup>[1](#t1)</sup> In particular, I feel that the movement (a) disparages
+- <sup id="f1">[1](#t1)</sup> In particular, I feel that the movement (a) disparages
   components from larger libraries simply because they originate from a larger
   library, and (b) distrust any code that has additional dependencies. This
   latter I find truly puzzling, as I'd think it fits the idea of “use small
   things that work together to solve larger problems.” If the code solves a
   particular problem and allows you to focus on a larger problem, where it
   originates and the number of dependencies should not be an issue.
-- <sup>[2](#t2)</sup> In fact, my first foray into MVC in PHP was writing a
+- <sup id="f2">[2](#t2)</sup> In fact, my first foray into MVC in PHP was writing a
   clone of Perl's [CGI::Application](http://cgi-app.org/), which in many ways
   is also a microframework.
-- <sup>[3](#t3)</sup> Trivia: Both authors of Horde Routes worked at Zend when
+- <sup id="f3">[3](#t3)</sup> Trivia: Both authors of Horde Routes worked at Zend when
   I first started at the company, and Mike Naberezny wrote the very first lines
   of code for Zend Framework.
-- <sup>[4](#t4)</sup> I swear, you see new ones on Github daily, and on
+- <sup id="f4">[4](#t4)</sup> I swear, you see new ones on Github daily, and on
   [PHP Developer](http://phpdeveloper.org/) at least once a week.
-- <sup>[5](#t5)</sup> [Slim](http://www.slimframework.com) has this concept.
+- <sup id="f5">[5](#t5)</sup> [Slim](http://www.slimframework.com) has this concept.
   Basically, any callables placed between the route string and the last
   callable when defining a route — i.e., the “middle” arguments, and thus
   middleware — will be executed in order prior to attempting to execute the
   controller.
-- <sup>[6](#t6)</sup> [Slim](http://www.slimframework.com) is an outlier here,
+- <sup id="f6">[6](#t6)</sup> [Slim](http://www.slimframework.com) is an outlier here,
   as it utilizes [Twig](http://twig.sensiolabs.org/) by default.
-- <sup>[7](#t7)</sup> I'm sure that my TDD experiment will warm the soul of
+- <sup id="f7">[7](#t7)</sup> I'm sure that my TDD experiment will warm the soul of
   [the Grumpy Programmer](http://www.littlehart.net/atthekeyboard/).
-- <sup>[8](#t8)</sup> That said, if you want to look at the results, you can
+- <sup id="f8">[8](#t8)</sup> That said, if you want to look at the results, you can
   [find Phlyty on Github](http://github.com/weierophinney/phlyty).
-- <sup>[9](#t9)</sup> As you may guess, I'm biased towards [Zend Framework](http://framework.zend.com/).
+- <sup id="f9">[9](#t9)</sup> As you may guess, I'm biased towards [Zend Framework](http://framework.zend.com/).
   However, you should always carefully evaluate a framework against your
   project's needs.
