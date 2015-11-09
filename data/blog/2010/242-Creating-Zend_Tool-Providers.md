@@ -204,14 +204,14 @@ Closing notes
 One "gotcha" you may experience is that there is currently no support for
 specifying project-specific providers within applications created with
 `Zend_Tool` — a feature that would be quite useful for creating project-specific
-tasks.<sup>\*</sup>
+tasks.<sup id="ref-1">[*](#fn1)</sup>
 
 That said, `Zend_Tool` providers are an incredibly useful and easy way to write
 CLI tools based on Zend Framework. Hopefully this post will help demystify the
 component and its usage, and get you thinking about what tasks *you* would like
 to write.
 
-<sup>\*</sup> You *can* fake it by creating an alternate configuration file in
+<sup id="fn1">[*](#ref-1)</sup> You *can* fake it by creating an alternate configuration file in
 your project, informing the environment of it, and calling the `zf` commandline
 tool — something that can be done in a single line:
 

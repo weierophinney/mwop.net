@@ -34,7 +34,7 @@ from, say, your phone, but not terribly useful if any of those are not true.
 
 With a little help from [Shahar](http://prematureoptimization.org/), I figured
 out what to do, however. I added this clause to my
-`lighttpd.conf`[<sup>[1]</sup>](#f1) file:
+`lighttpd.conf`<sup id="ref-1">[[1]](#f1)</sup> file:
 
 ```perl
 # Disable access via http (i.e., make admin https-only)
@@ -55,11 +55,11 @@ The above basically reads as follows:
 
 - Deny access to any URL starting with "/ZendServer/"
 
-Once you add the stanza, restart lighttpd[<sup>[2]</sup>](#f2) for the changes
+Once you add the stanza, restart lighttpd<sup id="ref-2">[[2]](#f2)</sup> for the changes
 to take effect. When accessing the site via
 `http://servername:10081/ZendServer`, you should now receive a "403 -
 Forbidden" page, while access via `https://servername:10082/ZendServer` remains
 open.
 
-- <sup>[1]</sup>In linux versions of Zend Server, `/usr/local/zend/gui/lighttpd/etc/lighttpd.conf`
-- <sup>[2]</sup> In linux versions of Zend Server, `/usr/local/zend/bin/zendctl.sh restart-lighttpd`
+- <sup id="f1">[1](#ref-1)</sup>In linux versions of Zend Server, `/usr/local/zend/gui/lighttpd/etc/lighttpd.conf`
+- <sup id="f2">[2](#ref-2)</sup> In linux versions of Zend Server, `/usr/local/zend/bin/zendctl.sh restart-lighttpd`
