@@ -2,6 +2,7 @@
 namespace Mwop\Blog;
 
 use Mwop\Blog\Mapper;
+use Mwop\UriHelper;
 use Zend\Expressive\Router\RouterInterface;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
@@ -12,7 +13,8 @@ class ListPostsMiddlewareFactory
         return new ListPostsMiddleware(
             $services->get(Mapper::class),
             $services->get(TemplateRendererInterface::class),
-            $services->get(RouterInterface::class)
+            $services->get(RouterInterface::class),
+            $services->get(UriHelper::class)
         );
     }
 }

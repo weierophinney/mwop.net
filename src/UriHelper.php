@@ -5,9 +5,11 @@ use RuntimeException;
 use Zend\Expressive\Router\RouterInterface;
 
 /**
- * Trait to compose in views that require URI generation.
+ * Helper to compose in views that require URI generation.
+ *
+ * Typically, compose this as the "uri" variable.
  */
-trait UriTrait
+class UriHelper
 {
     private $router;
 
@@ -16,7 +18,7 @@ trait UriTrait
      *
      * @param RouterInterface $router
      */
-    public function setRouter(RouterInterface $router)
+    public function __construct(RouterInterface $router)
     {
         $this->router = $router;
     }
@@ -42,15 +44,8 @@ trait UriTrait
      *
      * @return callable
      */
-    public function uri()
+    public function __invoke()
     {
-        if (! $this->router instanceof RouterInterface) {
-            throw new RuntimeException(sprintf(
-                '%s requires injection of a router in order to generate URIs',
-                get_class($this)
-            ));
-        }
-
         return function ($text, $renderer) {
             // Decode the text .
             $data = json_decode($text, true);
