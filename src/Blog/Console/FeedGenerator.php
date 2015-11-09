@@ -31,8 +31,12 @@ class FeedGenerator
 
     private $router;
 
-    public function __construct(Blog\MapperInterface $mapper, RouterInterface $router, TemplateRendererInterface $renderer, $authorsPath)
-    {
+    public function __construct(
+        Blog\MapperInterface $mapper,
+        RouterInterface $router,
+        TemplateRendererInterface $renderer,
+        $authorsPath
+    ) {
         $this->mapper      = $mapper;
         $this->router      = $router;
         $this->renderer    = $renderer;
@@ -183,7 +187,6 @@ class FeedGenerator
     private function createContent($content, $post)
     {
         $view   = new Blog\EntryView($post);
-        $view->setRouter($this->router);
         $hEntry = $this->renderer->render('blog::hcard', $view);
         return sprintf("%s\n\n%s", $content, $hEntry);
     }

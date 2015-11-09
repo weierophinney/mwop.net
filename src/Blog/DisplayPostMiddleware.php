@@ -49,14 +49,13 @@ class DisplayPostMiddleware
         $post     = $document->getYAML();
         $parts    = explode($this->postDelimiter, $document->getContent(), 2);
         $post     = array_merge($post, [
-            'body'     => $parts[0],
-            'extended' => isset($parts[1]) ? $parts[1] : '',
+            'body'      => $parts[0],
+            'extended'  => isset($parts[1]) ? $parts[1] : '',
         ]);
 
         $original = $req->getOriginalRequest()->getUri()->getPath();
         $path     = substr($original, 0, -(strlen($post['id'] . '.html') + 1));
         $post     = new EntryView($post, $this->disqus);
-        $post->setRouter($this->router);
 
         return new HtmlResponse(
             $this->template->render('blog::post', $post)
