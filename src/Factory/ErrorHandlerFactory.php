@@ -2,7 +2,6 @@
 namespace Mwop\Factory;
 
 use Mwop\ErrorHandler;
-use Zend\Expressive\Router\RouterInterface;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
 class ErrorHandlerFactory
@@ -15,7 +14,6 @@ class ErrorHandlerFactory
             : false;
         return new ErrorHandler(
             $services->get(TemplateRendererInterface::class),
-            $services->get(RouterInterface::class),
             $displayErrors
         );
     }

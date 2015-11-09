@@ -4,7 +4,6 @@ namespace Mwop;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Zend\Diactoros\Response\HtmlResponse;
-use Zend\Expressive\Router\RouterInterface;
 use Zend\Expressive\Template\TemplateRendererInterface;
 use Zend\Expressive\TemplatedErrorHandler;
 use Zend\Stratigility\Http\Response as StratigilityResponse;
@@ -14,20 +13,17 @@ class ErrorHandler
     private $displayErrors;
     private $originalResponse;
     private $renderer;
-    private $router;
     private $template404;
     private $templateError;
 
     public function __construct(
         TemplateRendererInterface $renderer,
-        RouterInterface $router,
         $displayErrors = false,
         $template404 = 'error::404',
         $templateError = 'error::500',
         ResponseInterface $originalResponse = null
     ) {
         $this->renderer      = $renderer;
-        $this->router        = $router;
         $this->displayErrors = $displayErrors;
         $this->template404   = $template404;
         $this->templateError = $templateError;
@@ -94,10 +90,8 @@ class ErrorHandler
 
     private function create404($request, $response)
     {
-        $viewModel = new PageView();
-        $viewModel->setRouter($this->router);
         return new HtmlResponse(
-            $this->renderer->render($this->template404, $viewModel),
+            $this->renderer->render($this->template404, []),
             404
         );
     }
@@ -107,10 +101,8 @@ class ErrorHandler
         $error = $this->displayErrors
             ? $this->prepareError($error)
             : [];
-        $viewModel = new PageView(['error' => $error]);
-        $viewModel->setRouter($this->router);
         return new HtmlResponse(
-            $this->renderer->render($this->templateError, $viewModel),
+            $this->renderer->render($this->templateError, ['error' => $error]),
             500
         );
     }

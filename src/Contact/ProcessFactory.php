@@ -1,7 +1,6 @@
 <?php
 namespace Mwop\Contact;
 
-use Zend\Expressive\Router\RouterInterface;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
 class ProcessFactory
@@ -12,7 +11,6 @@ class ProcessFactory
             $services->get('session'),
             $services->get('mail.transport'),
             $services->get(TemplateRendererInterface::class),
-            $services->get(RouterInterface::class),
             $services->get('config')['contact']
         );
     }
