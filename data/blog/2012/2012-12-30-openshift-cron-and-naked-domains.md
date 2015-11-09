@@ -26,7 +26,7 @@ Cron
 ----
 
 OpenShift offers a [Cron](http://en.wikipedia.org/wiki/Cron) cartridge, which I
-was excited to try out.<sup>[1](#f1)</sup>
+was excited to try out.<sup id="ref-1">[1](#f1)</sup>
 
 The basics are quite easy. In your repository's `.openshift` directory is a
 `cron` subdirectory, further divided into `minutely`, `hourly`, `daily`,
@@ -151,5 +151,5 @@ moment, I'm quite happy with the functionality and flexibility of OpenShift.
 
 #### Footnotes
 
-- Zend Server's JobQueue can also be used as a cron replacement, but I was not
-  keen on exposing the job functionality via HTTP.
+- <sup id="f1">[1](#1)</sup> Zend Server's JobQueue can also be used as a
+  cron replacement, but I was not keen on exposing the job functionality via HTTP.
