@@ -19,7 +19,7 @@ use ZF\Console\Application;
 chdir(__DIR__ . '/../');
 require_once 'vendor/autoload.php';
 
-define('VERSION', '0.0.2');
+define('VERSION', '0.0.3');
 
 $container = require 'config/container.php';
 
@@ -127,6 +127,22 @@ $routes = [
         ],
         'handler' => function ($route, $console) use ($container) {
             $handler = $container->get('Mwop\Console\PrepPageCacheRules');
+            return $handler($route, $console);
+        },
+    ],
+    [
+        'name' => 'prep-offline-pages',
+        'route' => '[--serviceWorker=]',
+        'description' => 'Prepare the offline pages list for the service-worker.js file.',
+        'short_description' => 'Prep offline page cache list',
+        'options_descriptions' => [
+            '--serviceWorker' => 'Path to the service-worker.js file',
+        ],
+        'defaults' => [
+            'serviceWorker'   => realpath(getcwd()) . '/public/service-worker.js',
+        ],
+        'handler' => function ($route, $console) use ($container) {
+            $handler = $container->get('Mwop\Console\PrepOfflinePages');
             return $handler($route, $console);
         },
     ],

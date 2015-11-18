@@ -37,7 +37,8 @@
     },
     "require-dev": {
         "zfcampus/zf-deploy": "~1.0@stable",
-        "filp/whoops": "^1.1"
+        "filp/whoops": "^1.1",
+        "herrera-io/version": "^1.1"
     },
     "autoload": {
         "psr-4": {
