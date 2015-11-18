@@ -1,11 +1,22 @@
 /* Ends with ':' so it can be used with cache identifiers */
-var version = 'v0.0.2:';
+var version = 'v0.0.3:'
 
 /* Pages to cache by default */
 var offline = [
-  '/',
-  '/offline',
-  '/resume'
+    "/",
+    "/blog",
+    "/offline",
+    "/resume",
+    "/blog/2015-09-19-zend-10-year-anniversary.html",
+    "/blog/2015-09-09-composer-root.html",
+    "/blog/2015-07-28-on-psr7-headers.html",
+    "/blog/2015-06-08-php-is-20.html",
+    "/blog/2015-05-18-psr-7-accepted.html",
+    "/blog/2015-05-15-splitting-components-with-git.html",
+    "/blog/2015-01-26-psr-7-by-example.html",
+    "/blog/2015-01-08-on-http-middleware-and-psr-7.html",
+    "/blog/2014-11-03-utopic-and-amd.html",
+    "/blog/2014-09-18-zend-server-deployment-part-8.html"
 ];
 
 /* Cache up to 25 pages locally */
