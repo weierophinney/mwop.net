@@ -130,6 +130,22 @@ $routes = [
             return $handler($route, $console);
         },
     ],
+    [
+        'name' => 'prep-offline-pages',
+        'route' => '[--serviceWorker=]',
+        'description' => 'Prepare the offline pages list for the service-worker.js file.',
+        'short_description' => 'Prep offline page cache list',
+        'options_descriptions' => [
+            '--serviceWorker' => 'Path to the service-worker.js file',
+        ],
+        'defaults' => [
+            'serviceWorker'   => realpath(getcwd()) . '/public/service-worker.js',
+        ],
+        'handler' => function ($route, $console) use ($container) {
+            $handler = $container->get('Mwop\Console\PrepOfflinePages');
+            return $handler($route, $console);
+        },
+    ],
 ];
 
 $app = new Application(
