@@ -2,13 +2,11 @@
 var version = 'v0.0.2:';
 
 /* Pages to cache by default */
-/* @generator-marker@ */
 var offline = [
   '/',
   '/offline',
   '/resume'
 ];
-/* @/generator-marker@ */
 
 /* Cache up to 25 pages locally */
 var pageCacheLimit = 25;

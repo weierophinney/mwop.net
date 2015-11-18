@@ -7,10 +7,8 @@ use Zend\Expressive\Router\RouterInterface;
 
 class PrepOfflinePages
 {
-    const MARKER_START    = '/* @generator-marker@ */';
-    const MARKER_END      = '/* @generator-marker@ */';
-    const VERSION_REGEX   = "/^var version \= 'v(?P<version>[^:']+):';/s";
-    const VERSION_REPLACE = "/^(var version \= 'v)[^:']+(:';)/s";
+    const OFFLINE_REGEX   = "/\nvar offline \= \[.*?\];/s";
+    const VERSION_REGEX   = "/^var version \= 'v(?P<version>[^:']+)\:';/m";
 
     /**
      * @var array Default paths to always include in the service-worker
@@ -35,7 +33,7 @@ class PrepOfflinePages
     {
         $serviceWorker = $route->getMatchedParam('serviceWorker');
 
-        $this->console->writeLine('Updating service worker default offline pages');
+        $console->writeLine('Updating service worker default offline pages');
 
         $paths = $this->defaultPaths;
         foreach ($this->generatePaths() as $path) {
@@ -44,7 +42,7 @@ class PrepOfflinePages
 
         $this->updateServiceWorker($serviceWorker, $paths);
 
-        $this->console->writeLine('[DONE]');
+        $console->writeLine('[DONE]');
     }
 
     /**
@@ -92,7 +90,10 @@ class PrepOfflinePages
 
         $contents = file_get_contents($serviceWorker);
         $contents = $this->bumpServiceWorkerVersion($contents);
-        $contents = $this->replaceOfflinePaths(json_encode($paths), $contents);
+        $contents = $this->replaceOfflinePaths(
+            json_encode($paths, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES),
+            $contents
+        );
         file_put_contents($serviceWorker, $contents);
     }
 
@@ -105,15 +106,30 @@ class PrepOfflinePages
     private function bumpServiceWorkerVersion($serviceWorker)
     {
         if (! preg_match(self::VERSION_REGEX, $serviceWorker, $matches)) {
+            printf("Did not match version regex!\n");
+            printf("    Version regex: %s\n", self::VERSION_REGEX);
             return $serviceWorker;
         }
 
-        $version = $matches['version'];
+        $replacement = sprintf(
+            'var version = \'v%s:\'',
+            $this->incrementVersion($matches['version'])
+        );
+
+        return preg_replace(self::VERSION_REGEX, $replacement, $serviceWorker);
+    }
+
+    /**
+     * Increment the patch version
+     *
+     * @param string $version
+     * @return string
+     */
+    private function incrementVersion($version)
+    {
         $builder = Version\Parser::toBuilder($version);
         $builder->incrementPatch();
-        $version = Version\Dumper::toString($builder->getVersion());
-
-        return preg_replace(self::VERSION_REPLACE, '$1' . $version . '$2', $serviceWorker);
+        return Version\Dumper::toString($builder->getVersion());
     }
 
     /**
@@ -125,18 +141,17 @@ class PrepOfflinePages
      */
     private function replaceOfflinePaths($paths, $serviceWorker)
     {
-        $pattern  = sprintf(
-            "/^(%s[\r\n]+).*?([\r\n]+%s)$/s",
-            preg_quote(self::MARKER_START),
-            preg_quote(self::MARKER_END)
-        );
         $replacement = sprintf(
-            "%s\nvar offline = %s;\n%s",
-            self::MARKER_START,
-            $paths,
-            self::MARKER_END
+            "\nvar offline = %s;",
+            $paths
         );
 
-        return preg_replace($pattern, $replacement, $serviceWorker);
+        if (! preg_match(self::OFFLINE_REGEX, $serviceWorker)) {
+            printf("Did not match offline-path regex!\n");
+            printf("    Pattern: %s\n", self::OFFLINE_REGEX);
+            return $serviceWorker;
+        }
+
+        return preg_replace(self::OFFLINE_REGEX, $replacement, $serviceWorker);
     }
 }
