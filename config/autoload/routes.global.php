@@ -31,6 +31,7 @@ return [
             HomePage::class                   => Factory\PageFactory::class,
             Job\GithubFeed::class             => Job\GithubFeedFactory::class,
             ResumePage::class                 => Factory\PageFactory::class,
+            'Mwop\OfflinePage'                => Factory\PageFactory::class,
         ],
     ],
 
@@ -46,6 +47,12 @@ return [
             'middleware'      => ComicsPage::class,
             'allowed_methods' => ['GET'],
             'name'            => 'comics',
+        ],
+        [
+            'path'            => '/offline',
+            'middleware'      => 'Mwop\OfflinePage',
+            'allowed_methods' => ['GET'],
+            'name'            => 'offline',
         ],
         [
             'path'            => '/resume',
