@@ -15,6 +15,7 @@ class PrepOfflinePages
      */
     private $defaultPaths = [
         '/',
+        '/blog',
         '/offline',
         '/resume',
     ];
