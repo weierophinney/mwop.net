@@ -1,13 +1,16 @@
 <?php
 namespace Mwop\Console;
 
+use Herrera\Version;
 use Mwop\Blog\MapperInterface;
 use Zend\Expressive\Router\RouterInterface;
 
 class PrepOfflinePages
 {
-    const MARKER_START = '/* @generator-marker@ */';
-    const MARKER_END   = '/* @generator-marker@ */';
+    const MARKER_START    = '/* @generator-marker@ */';
+    const MARKER_END      = '/* @generator-marker@ */';
+    const VERSION_REGEX   = "/^var version \= 'v(?P<version>[^:']+):';/s";
+    const VERSION_REPLACE = "/^(var version \= 'v)[^:']+(:';)/s";
 
     /**
      * @var array Default paths to always include in the service-worker
@@ -88,8 +91,29 @@ class PrepOfflinePages
         }
 
         $contents = file_get_contents($serviceWorker);
+        $contents = $this->bumpServiceWorkerVersion($contents);
         $contents = $this->replaceOfflinePaths(json_encode($paths), $contents);
         file_put_contents($serviceWorker, $contents);
+    }
+
+    /**
+     * Bump the service-worker patch version
+     *
+     * @param string $serviceWorker
+     * @return string
+     */
+    private function bumpServiceWorkerVersion($serviceWorker)
+    {
+        if (! preg_match(self::VERSION_REGEX, $serviceWorker, $matches)) {
+            return $serviceWorker;
+        }
+
+        $version = $matches['version'];
+        $builder = Version\Parser::toBuilder($version);
+        $builder->incrementPatch();
+        $version = Version\Dumper::toString($builder->getVersion());
+
+        return preg_replace(self::VERSION_REPLACE, '$1' . $version . '$2', $serviceWorker);
     }
 
     /**
