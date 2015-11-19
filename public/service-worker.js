@@ -1,5 +1,5 @@
 /* Ends with ':' so it can be used with cache identifiers */
-var version = 'v0.3.3:';
+var version = 'v0.3.4:';
 
 /* Pages to cache by default */
 var offline = [
@@ -198,12 +198,9 @@ self.addEventListener('fetch', function(event) {
 
   /* HTML requests: attempt to fetch from network first, falling back to cache */
   if (event.request.headers.get('Accept').indexOf('text/html') != -1) {
-    /* Is the page in our "do not cache list"? If so, attempt to fetch from the
-     * network, falling back to the offline page.
-     */
+    /* Is the page in our "do not cache list"? If so, don't attempt to fetch it!  */
     url = new URL(event.request.url);
     if (neverCache.indexOf(url.pathname) != -1) {
-      event.respondWith(fetch(event.request).then(passthrough, fallback));
       return;
     }
 
