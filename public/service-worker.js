@@ -1,5 +1,5 @@
 /* Ends with ':' so it can be used with cache identifiers */
-var version = 'v0.3.2:';
+var version = 'v0.3.3:';
 
 /* Pages to cache by default */
 var offline = [
@@ -188,6 +188,11 @@ self.addEventListener('fetch', function(event) {
 
   /* If a data: request, we're done. */
   if (event.request.url.indexOf('data:') === 0) {
+    return;
+  }
+
+  /* If this is a non-ssl request, we're done. */
+  if (event.request.url.indexOf('http://') === 0) {
     return;
   }
 
