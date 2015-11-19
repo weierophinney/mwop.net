@@ -1,5 +1,5 @@
 /* Ends with ':' so it can be used with cache identifiers */
-var version = 'v0.1.0:';
+var version = 'v0.3.0:';
 
 /* Pages to cache by default */
 var offline = [
@@ -50,8 +50,19 @@ var imageCacheLimit = 10;
 
 /* Update/install the static cache */
 var updateStaticCache = function() {
-  return caches.open(version + 'offline').then(function(cache) {
-    return Promise.all(offline.map(function(value) {
+  return Promise.all(offline.map(function(value) {
+    var cacheName = version;
+
+    if (value.indexOf('?') == -1 &&
+        (value.indexOf('.') == -1 || value.match(/\.html$/))) {
+      cacheName += 'pages';
+    } else if (value.match(/\.(png|jpg|gif)$/)) {
+      cacheName += 'images';
+    } else {
+      cacheName += 'assets';
+    }
+
+    return caches.open(cacheName).then(function(cache) {
       var request = new Request(value);
       var url = new URL(request.url);
       if (url.origin != location.origin) {
@@ -61,8 +72,8 @@ var updateStaticCache = function() {
         var cachedCopy = response.clone();
         return cache.put(request, cachedCopy);
       });
-    }));
-  });
+    });
+  }));
 };
 
 /* Invalidate obsolete cache entries */
