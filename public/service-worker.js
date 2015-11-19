@@ -1,5 +1,5 @@
 /* Ends with ':' so it can be used with cache identifiers */
-var version = 'v0.0.3:'
+var version = 'v0.1.0:';
 
 /* Pages to cache by default */
 var offline = [
@@ -7,6 +7,18 @@ var offline = [
     "/blog",
     "/offline",
     "/resume",
+    "/css/site.min.css",
+    "/images/favicon/apple-touch-icon-57x57.png",
+    "/images/favicon/apple-touch-icon-60x60.png",
+    "/images/favicon/apple-touch-icon-72x72.png",
+    "/images/favicon/favicon-32x32.png",
+    "/images/favicon/favicon-16x16.png",
+    "/images/logo.gif",
+    "/manifest.json",
+    "/js/bootstrap.min.js",
+    "https://www.google.com/jsapi?ABQIAAAAGybdRRvLZwVUcF0dE3oVdBTO-MlgA7VGJpGqyqTOeDXlNzyZQxTGq17s-iAB0m0vwqLQ_A2dHhTg2Q",
+    "https://code.jquery.com/jquery-1.10.2.min.js",
+    "https://farm4.staticflickr.com/3315/3625794227_8d038eac5e_n.jpg",
     "/blog/2015-09-19-zend-10-year-anniversary.html",
     "/blog/2015-09-09-composer-root.html",
     "/blog/2015-07-28-on-psr7-headers.html",
@@ -17,6 +29,17 @@ var offline = [
     "/blog/2015-01-08-on-http-middleware-and-psr-7.html",
     "/blog/2014-11-03-utopic-and-amd.html",
     "/blog/2014-09-18-zend-server-deployment-part-8.html"
+];
+
+/* Pages to NEVER cache */
+var neverCache = [
+  '/comics',
+  '/contact',
+  '/contact/thank-you'
+];
+
+var offsiteImageWhitelist = [
+  'https://farm4.staticflickr.com/3315/3625794227_8d038eac5e_n.jpg'
 ];
 
 /* Cache up to 25 pages locally */
@@ -48,7 +71,7 @@ var clearOldCache = function() {
     return Promise.all(
       keys
         .filter(function(key) {
-          return key.indexOf(version);
+          return key.indexOf(version) == -1;
         })
         .map(function(key) {
           return caches.delete(key);
@@ -78,6 +101,13 @@ self.addEventListener('activate', function(event) {
 
 /* Handle fetch events, but only from GET */
 self.addEventListener('fetch', function(event) {
+  var url;
+
+  /* Passthrough; for assets that will never be cached */
+  var passthrough = function(response) {
+    return response;
+  };
+
   /* Fetch from site and cache on completion */
   var fetchFromNetwork = function(response) {
     var cacheCopy = response.clone();
@@ -136,8 +166,22 @@ self.addEventListener('fetch', function(event) {
     return;
   }
 
+  /* If a data: request, we're done. */
+  if (event.request.url.indexOf('data:') === 0) {
+    return;
+  }
+
   /* HTML requests: attempt to fetch from network first, falling back to cache */
   if (event.request.headers.get('Accept').indexOf('text/html') != -1) {
+    /* Is the page in our "do not cache list"? If so, attempt to fetch from the
+     * network, falling back to the offline page.
+     */
+    url = new URL(event.request.url);
+    if (neverCache.indexOf(url.pathname) != -1) {
+      event.respondWith(fetch(event.request).then(passthrough, fallback));
+      return;
+    }
+
     /* Attempt to fetch from the network; fallback if it cannot be done.
      *
      * Essentially, fetch() returns a promise, and we're using fetchFromNetwork
@@ -147,7 +191,28 @@ self.addEventListener('fetch', function(event) {
     return;
   }
 
-  /* Non-HTML requests: look for file in cache first */
+  /* Image requests */
+  if (event.request.headers.get('Accept').indexOf('image/') != -1) {
+    /* If it's from the same origin, or in the offsite image whitelist, attempt
+     * to fetch from the cache first, then the network.
+     */
+    url = new URL(event.request.url);
+    if (url.origin == location.origin ||
+        offsiteImageWhitelist.indexOf(event.request.url) != -1) {
+      event.respondWith(
+          caches.match(event.request).then(function(cached) {
+            return cached || fetch(event.request).then(fetchFromNetwork, fallback);
+          })
+      );
+      return;
+    }
+
+    /* Otherwise, network, or offline fallback */
+    event.respondWith(fetch(event.request).then(passthrough, fallback));
+    return;
+  }
+
+  /* Non-HTML/image requests: look for file in cache first */
   event.respondWith(
       caches.match(event.request).then(function(cached) {
         return cached || fetch(event.request).then(fetchFromNetwork, fallback);

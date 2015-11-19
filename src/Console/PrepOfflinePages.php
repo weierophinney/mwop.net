@@ -14,10 +14,25 @@ class PrepOfflinePages
      * @var array Default paths to always include in the service-worker
      */
     private $defaultPaths = [
+        // Pages
         '/',
         '/blog',
         '/offline',
         '/resume',
+
+        // Assets
+        '/css/site.min.css',
+        '/images/favicon/apple-touch-icon-57x57.png',
+        '/images/favicon/apple-touch-icon-60x60.png',
+        '/images/favicon/apple-touch-icon-72x72.png',
+        '/images/favicon/favicon-32x32.png',
+        '/images/favicon/favicon-16x16.png',
+        '/images/logo.gif',
+        '/manifest.json',
+        '/js/bootstrap.min.js',
+        'https://www.google.com/jsapi?ABQIAAAAGybdRRvLZwVUcF0dE3oVdBTO-MlgA7VGJpGqyqTOeDXlNzyZQxTGq17s-iAB0m0vwqLQ_A2dHhTg2Q',
+        'https://code.jquery.com/jquery-1.10.2.min.js',
+        'https://farm4.staticflickr.com/3315/3625794227_8d038eac5e_n.jpg',
     ];
 
     private $mapper;
@@ -113,7 +128,7 @@ class PrepOfflinePages
         }
 
         $replacement = sprintf(
-            'var version = \'v%s:\'',
+            'var version = \'v%s:\';',
             $this->incrementVersion($matches['version'])
         );
 
