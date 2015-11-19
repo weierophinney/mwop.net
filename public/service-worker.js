@@ -1,5 +1,5 @@
 /* Ends with ':' so it can be used with cache identifiers */
-var version = 'v0.3.0:';
+var version = 'v0.3.1:';
 
 /* Pages to cache by default */
 var offline = [
@@ -33,6 +33,15 @@ var offline = [
 
 /* Pages to NEVER cache */
 var neverCache = [
+  '/auth',
+  '/auth/callback',
+  '/auth/github',
+  '/auth/github/oauth2callback',
+  '/auth/google',
+  '/auth/google/oauth2callback',
+  '/auth/logout',
+  '/auth/twitter',
+  '/auth/twitter/oauth2callback',
   '/comics',
   '/contact',
   '/contact/thank-you'
