@@ -121,7 +121,7 @@ self.addEventListener('activate', function(event) {
 
 /* Handle fetch events, but only from GET */
 self.addEventListener('fetch', function(event) {
-  var url;
+  var url = new URL(event.request.url);
 
   /* Passthrough; for assets that will never be cached */
   var passthrough = function(response) {
@@ -186,20 +186,14 @@ self.addEventListener('fetch', function(event) {
     return;
   }
 
-  /* If a data: request, we're done. */
-  if (event.request.url.indexOf('data:') === 0) {
-    return;
-  }
-
-  /* If this is a non-ssl request, we're done. */
-  if (event.request.url.indexOf('http://') === 0) {
+  /* If not an HTTPS request, we're done. */
+  if (url.protocol != 'https:') {
     return;
   }
 
   /* HTML requests: attempt to fetch from network first, falling back to cache */
   if (event.request.headers.get('Accept').indexOf('text/html') != -1) {
     /* Is the page in our "do not cache list"? If so, don't attempt to fetch it!  */
-    url = new URL(event.request.url);
     if (neverCache.indexOf(url.pathname) != -1) {
       return;
     }
@@ -218,9 +212,8 @@ self.addEventListener('fetch', function(event) {
     /* If it's from the same origin, or in the offsite image whitelist, attempt
      * to fetch from the cache first, then the network.
      */
-    url = new URL(event.request.url);
     if (url.origin == location.origin ||
-        offsiteImageWhitelist.indexOf(event.request.url) != -1) {
+        offsiteImageWhitelist.indexOf(url.toString()) != -1) {
       event.respondWith(
           caches.match(event.request).then(function(cached) {
             return cached || fetch(event.request).then(fetchFromNetwork, fallback);
