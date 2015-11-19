@@ -1,5 +1,5 @@
 /* Ends with ':' so it can be used with cache identifiers */
-var version = 'v0.3.1:';
+var version = 'v0.3.2:';
 
 /* Pages to cache by default */
 var offline = [
