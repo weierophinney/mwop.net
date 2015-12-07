@@ -1,11 +1,8 @@
 <?php
 
-use Mwop\Factory\UriHelperFactory;
 use Mwop\Factory\UriTemplateDelegatorFactory;
-use Mwop\UriHelper;
 use Phly\Expressive\Mustache\MustacheTemplateFactory;
 use Phly\Mustache\Pragma;
-use Zend\Expressive\Container\TemplatedErrorHandlerFactory;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
 return [
@@ -17,7 +14,6 @@ return [
         ],
         'factories' => [
             TemplateRendererInterface::class => MustacheTemplateFactory::class,
-            UriHelper::class => UriHelperFactory::class,
         ],
     ],
 

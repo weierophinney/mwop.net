@@ -2,9 +2,7 @@
 namespace Mwop\Factory;
 
 use Mwop\Blog\EntryView;
-use Mwop\UriHelper;
 use Phly\Expressive\Mustache\MustacheTemplate;
-use Zend\Expressive\Template\TemplateRendererInterface;
 use Zend\ServiceManager\DelegatorFactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
@@ -17,12 +15,6 @@ class UriTemplateDelegatorFactory implements DelegatorFactoryInterface
         if (! $renderer instanceof MustacheTemplate) {
             return $renderer;
         }
-
-        $renderer->addDefaultParam(
-            TemplateRendererInterface::TEMPLATE_ALL,
-            'uri',
-            $services->get(UriHelper::class)
-        );
 
         $renderer->attachParamListener(function ($vars, array $defaults) {
             if (! $vars instanceof EntryView) {

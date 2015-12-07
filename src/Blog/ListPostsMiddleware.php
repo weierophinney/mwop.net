@@ -1,7 +1,8 @@
 <?php
 namespace Mwop\Blog;
 
-use Mwop\UriHelper;
+use Phly\Expressive\Mustache\UriHelper;
+use Zend\Expressive\Helper\UrlHelper;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Expressive\Router\RouterInterface;
 use Zend\Expressive\Template\TemplateRendererInterface;
@@ -20,12 +21,12 @@ class ListPostsMiddleware
         MapperInterface $mapper,
         TemplateRendererInterface $template,
         RouterInterface $router,
-        UriHelper $uriHelper
+        UrlHelper $urlHelper
     ) {
         $this->mapper    = $mapper;
         $this->template  = $template;
         $this->router    = $router;
-        $this->uriHelper = $uriHelper;
+        $this->uriHelper = new UriHelper($urlHelper);
     }
 
     public function __invoke($req, $res, $next)
