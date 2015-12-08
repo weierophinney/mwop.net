@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "46e626d26f3d5d8b0581d1fe37e819e9",
-    "content-hash": "dcaec718c93b81c2454554355ca17d1c",
+    "hash": "a39b3df1371eaa9b275f70a403ad68ab",
+    "content-hash": "e37059a13e5037b3f4799a6bfaf159f3",
     "packages": [
         {
             "name": "aura/session",
@@ -523,22 +523,22 @@
         },
         {
             "name": "phly/phly-expressive-mustache",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phly/phly-expressive-mustache.git",
-                "reference": "ae4d8219d6cc776f83618005534557b6fff95c0d"
+                "reference": "1e9891a61e61597e43874035700198e8eb14102c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phly/phly-expressive-mustache/zipball/ae4d8219d6cc776f83618005534557b6fff95c0d",
-                "reference": "ae4d8219d6cc776f83618005534557b6fff95c0d",
+                "url": "https://api.github.com/repos/phly/phly-expressive-mustache/zipball/1e9891a61e61597e43874035700198e8eb14102c",
+                "reference": "1e9891a61e61597e43874035700198e8eb14102c",
                 "shasum": ""
             },
             "require": {
                 "phly/phly-mustache": "^2.0",
                 "php": "^5.5 || ^7.0",
-                "zendframework/zend-expressive-helpers": "^1.1",
+                "zendframework/zend-expressive-helpers": "^1.2",
                 "zendframework/zend-expressive-template": "^1.0"
             },
             "require-dev": {
@@ -569,7 +569,7 @@
                 "expressive",
                 "mustache"
             ],
-            "time": "2015-12-07 21:49:30"
+            "time": "2015-12-08 22:05:49"
         },
         {
             "name": "phly/phly-mustache",
@@ -1137,16 +1137,16 @@
         },
         {
             "name": "zendframework/zend-expressive-helpers",
-            "version": "1.1.0",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-expressive-helpers.git",
-                "reference": "fba42d1006fa2a43f000a72340723b3512d74fae"
+                "reference": "2cbb515874ec06a2b367e4a47040c3e7cc250378"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-expressive-helpers/zipball/fba42d1006fa2a43f000a72340723b3512d74fae",
-                "reference": "fba42d1006fa2a43f000a72340723b3512d74fae",
+                "url": "https://api.github.com/repos/zendframework/zend-expressive-helpers/zipball/2cbb515874ec06a2b367e4a47040c3e7cc250378",
+                "reference": "2cbb515874ec06a2b367e4a47040c3e7cc250378",
                 "shasum": ""
             },
             "require": {
@@ -1168,7 +1168,8 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.1-dev"
+                    "dev-master": "1.2-dev",
+                    "dev-develop": "1.3-dev"
                 }
             },
             "autoload": {
@@ -1188,7 +1189,7 @@
                 "psr",
                 "psr-7"
             ],
-            "time": "2015-12-06 21:20:40"
+            "time": "2015-12-08 21:14:56"
         },
         {
             "name": "zendframework/zend-expressive-router",

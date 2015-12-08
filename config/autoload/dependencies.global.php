@@ -9,11 +9,6 @@ use Zend\Expressive\Container\ApplicationFactory;
 use Zend\Expressive\Helper;
 
 return ['dependencies' => [
-    'delegator_factories' => [
-        Application::class => [
-            Factory\UrlHelperDelegatorFactory::class,
-        ],
-    ],
     'invokables' => [
         Console\PrepPageCacheRules::class => Console\PrepPageCacheRules::class,
     ],
@@ -32,7 +27,7 @@ return ['dependencies' => [
         Console\PrepOfflinePages::class   => Factory\PrepOfflinePagesFactory::class,
         Github\AtomReader::class          => Github\AtomReaderFactory::class,
         Github\Console\Fetch::class       => Github\Console\FetchFactory::class,
-        Helper\UrlHelper::class           => Factory\UrlHelperFactory::class,
+        Helper\UrlHelper::class           => Helper\UrlHelperFactory::class,
         Application::class                => ApplicationFactory::class,
         'Zend\Expressive\FinalHandler'    => Factory\ErrorHandlerFactory::class,
     ],
