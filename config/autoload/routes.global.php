@@ -6,7 +6,6 @@ use Mwop\Factory;
 use Mwop\HomePage;
 use Mwop\Job;
 use Mwop\ResumePage;
-use Mwop\TestPage;
 use Zend\Expressive\Router\RouterInterface;
 use Zend\Expressive\Router\FastRouteRouter;
 
@@ -32,17 +31,11 @@ return [
             HomePage::class                   => Factory\PageFactory::class,
             Job\GithubFeed::class             => Job\GithubFeedFactory::class,
             ResumePage::class                 => Factory\PageFactory::class,
-            TestPage::class                   => Factory\TestPageFactory::class,
+            'Mwop\OfflinePage'                => Factory\PageFactory::class,
         ],
     ],
 
     'routes' => [
-        [
-            'path'            => '/test',
-            'middleware'      => TestPage::class,
-            'allowed_methods' => ['GET'],
-            'name'            => 'test',
-        ],
         [
             'path'            => '/',
             'middleware'      => HomePage::class,
@@ -54,6 +47,12 @@ return [
             'middleware'      => ComicsPage::class,
             'allowed_methods' => ['GET'],
             'name'            => 'comics',
+        ],
+        [
+            'path'            => '/offline',
+            'middleware'      => 'Mwop\OfflinePage',
+            'allowed_methods' => ['GET'],
+            'name'            => 'offline',
         ],
         [
             'path'            => '/resume',

@@ -41,8 +41,8 @@
   
   <link href="/css/site.min.css" media="screen" rel="stylesheet" type="text/css">
 
-  <link href="{{#uri}}{"name": "blog.feed", "options": {"type": "atom"}}{{/uri}}" rel="alternate" type="application/atom+xml" title="phly, boy, phly Atom Feed">
   <link href="{{#uri}}{"name": "blog.feed", "options": {"type": "rss"}}{{/uri}}" rel="alternate" type="application/rss+xml" title="phly, boy, phly RSS Feed">
+  <link href="{{#uri}}{"name": "blog.feed", "options": {"type": "atom"}}{{/uri}}" rel="alternate" type="application/atom+xml" title="phly, boy, phly Atom Feed">
   {{$links}}{{/links}}
 
   <script src="https://www.google.com/jsapi?ABQIAAAAGybdRRvLZwVUcF0dE3oVdBTO-MlgA7VGJpGqyqTOeDXlNzyZQxTGq17s-iAB0m0vwqLQ_A2dHhTg2Q"></script>
@@ -65,6 +65,7 @@
 {{$scripts}}{{/scripts}}
 <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
+<script src="/js/site.js"></script>
 <script type="text/javascript">
   $(document).ready(function() {
     $('#site-search').submit(function (event) {

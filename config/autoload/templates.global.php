@@ -1,14 +1,18 @@
 <?php
 
+use Mwop\Factory\UriTemplateDelegatorFactory;
 use Phly\Expressive\Mustache\MustacheTemplateFactory;
 use Phly\Mustache\Pragma;
-use Zend\Expressive\Container\TemplatedErrorHandlerFactory;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
 return [
     'dependencies' => [
+        'delegators' => [
+            TemplateRendererInterface::class => [
+                UriTemplateDelegatorFactory::class,
+            ],
+        ],
         'factories' => [
-            'Zend\Expressive\FinalHandler'   => TemplatedErrorHandlerFactory::class,
             TemplateRendererInterface::class => MustacheTemplateFactory::class,
         ],
     ],

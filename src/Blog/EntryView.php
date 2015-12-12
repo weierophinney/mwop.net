@@ -3,12 +3,9 @@ namespace Mwop\Blog;
 
 use DateTime;
 use DateTimezone;
-use Mwop\UriTrait;
 
 class EntryView
 {
-    use UriTrait;
-
     private $created;
     private $updated;
     private $tags = [];
@@ -19,7 +16,7 @@ class EntryView
     public $extended;
     public $id;
     public $title;
-
+    public $uriHelper;
 
     public function __construct(array $entry, array $disqus = [])
     {
@@ -34,6 +31,7 @@ class EntryView
                 case 'tags':
                 case 'title':
                 case 'updated':
+                case 'uriHelper':
                     $this->{$key} = $value;
                     break;
                 default:
@@ -64,6 +62,12 @@ class EntryView
             'rfc'  => $this->formatDateRfc($this->updated),
             'when' => $this->formatDate($this->updated),
         ];
+    }
+
+    public function uri()
+    {
+        $factory = $this->uriHelper;
+        return $factory();
     }
 
     public function url()

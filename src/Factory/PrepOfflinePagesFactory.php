@@ -1,16 +1,16 @@
 <?php
 namespace Mwop\Factory;
 
-use Mwop\NotFound;
+use Mwop\Blog\Mapper;
+use Mwop\Console\PrepOfflinePages;
 use Zend\Expressive\Router\RouterInterface;
-use Zend\Expressive\Template\TemplateRendererInterface;
 
-class NotFoundFactory
+class PrepOfflinePagesFactory
 {
     public function __invoke($services, $canonicalName, $requestedName)
     {
-        return new NotFound(
-            $services->get(TemplateRendererInterface::class),
+        return new PrepOfflinePages(
+            $services->get(Mapper::class),
             $services->get(RouterInterface::class)
         );
     }

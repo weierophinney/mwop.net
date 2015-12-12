@@ -6,7 +6,7 @@ use Mwop\Factory;
 use Mwop\Github;
 use Zend\Expressive\Application;
 use Zend\Expressive\Container\ApplicationFactory;
-use Zend\Expressive\Container\TemplatedErrorHandlerFactory;
+use Zend\Expressive\Helper;
 
 return ['dependencies' => [
     'invokables' => [
@@ -24,9 +24,11 @@ return ['dependencies' => [
         Blog\Console\FeedGenerator::class => Blog\Console\FeedGeneratorFactory::class,
         Blog\Console\TagCloud::class      => Blog\Console\TagCloudFactory::class,
         Blog\Mapper::class                => Blog\MapperFactory::class,
+        Console\PrepOfflinePages::class   => Factory\PrepOfflinePagesFactory::class,
         Github\AtomReader::class          => Github\AtomReaderFactory::class,
         Github\Console\Fetch::class       => Github\Console\FetchFactory::class,
+        Helper\UrlHelper::class           => Helper\UrlHelperFactory::class,
         Application::class                => ApplicationFactory::class,
-        'Zend\Expressive\FinalHandler'    => TemplatedErrorHandlerFactory::class,
+        'Zend\Expressive\FinalHandler'    => Factory\ErrorHandlerFactory::class,
     ],
 ]];

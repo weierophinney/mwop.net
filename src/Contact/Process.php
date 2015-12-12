@@ -4,7 +4,6 @@ namespace Mwop\Contact;
 use Aura\Session\Session;
 use Mwop\PageView;
 use Zend\Diactoros\Response\HtmlResponse;
-use Zend\Expressive\Router\RouterInterface;
 use Zend\Expressive\Template\TemplateRendererInterface;
 use Zend\Mail\Message;
 use Zend\Mail\Transport\TransportInterface;
@@ -20,13 +19,11 @@ class Process
         Session $session,
         TransportInterface $transport,
         TemplateRendererInterface $template,
-        RouterInterface $router,
         array $config
     ) {
         $this->session   = $session;
         $this->transport = $transport;
         $this->template  = $template;
-        $this->router    = $router;
         $this->config    = $config;
     }
 
@@ -73,12 +70,11 @@ class Process
     {
         $csrfToken->regenerateValue();
 
-        $view = new PageView(array_merge($this->config, [
+        $view = array_merge($this->config, [
             'error'  => ['message' => json_encode($error)],
             'action' => (string) $request->getOriginalRequest()->getUri(),
             'csrf'   => $csrfToken->getValue(),
-        ]));
-        $view->setRouter($this->router);
+        ]);
 
         return new HtmlResponse(
             $this->template->render('contact.landing', $view)

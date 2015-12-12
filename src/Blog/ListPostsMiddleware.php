@@ -1,7 +1,8 @@
 <?php
 namespace Mwop\Blog;
 
-use Mwop\PageView;
+use Phly\Expressive\Mustache\UriHelper;
+use Zend\Expressive\Helper\UrlHelper;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Expressive\Router\RouterInterface;
 use Zend\Expressive\Template\TemplateRendererInterface;
@@ -14,14 +15,18 @@ class ListPostsMiddleware
 
     private $template;
 
+    private $uriHelper;
+
     public function __construct(
         MapperInterface $mapper,
         TemplateRendererInterface $template,
-        RouterInterface $router
+        RouterInterface $router,
+        UrlHelper $urlHelper
     ) {
-        $this->mapper   = $mapper;
-        $this->template = $template;
-        $this->router   = $router;
+        $this->mapper    = $mapper;
+        $this->template  = $template;
+        $this->router    = $router;
+        $this->uriHelper = new UriHelper($urlHelper);
     }
 
     public function __invoke($req, $res, $next)
@@ -95,9 +100,8 @@ class ListPostsMiddleware
     private function prepareEntries($page, $posts)
     {
         return array_map(function ($post) {
-            $view = new EntryView($post);
-            $view->setRouter($this->router);
-            return $view;
+            $post['uriHelper'] = $this->uriHelper;
+            return new EntryView($post);
         }, iterator_to_array($posts->getItemsByPage($page)));
     }
 
@@ -105,7 +109,7 @@ class ListPostsMiddleware
      * @param string $tag
      * @param object $entries
      * @param object $pagination
-     * @return PageView
+     * @return array
      */
     private function prepareView($tag, $entries, $pagination)
     {
@@ -114,13 +118,11 @@ class ListPostsMiddleware
             $view['atom'] = $this->router->generateUri('blog.tag.feed', ['tag' => $tag, 'type' => 'atom']);
             $view['rss']  = $this->router->generateUri('blog.tag.feed', ['tag' => $tag, 'type' => 'rss']);
         }
-        $view = array_merge($view, [
+
+        return array_merge($view, [
             'title'      => $tag ? 'Tag: ' . $tag  : 'Blog Posts',
             'posts'      => $entries,
             'pagination' => $pagination,
         ]);
-        $view = new PageView($view);
-        $view->setRouter($this->router);
-        return $view;
     }
 }

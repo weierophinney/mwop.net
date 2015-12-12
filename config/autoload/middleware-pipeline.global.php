@@ -2,12 +2,13 @@
 use Mwop\Auth\Middleware as AuthMiddleware;
 use Mwop\Auth\MiddlewareFactory as AuthMiddlewareFactory;
 use Mwop\BodyParams;
+use Mwop\ErrorHandler;
 use Mwop\Factory\Unauthorized as UnauthorizedFactory;
-use Mwop\Factory\NotFoundFactory;
 use Mwop\NotFound;
 use Mwop\Redirects;
 use Mwop\Unauthorized;
 use Mwop\XClacksOverhead;
+use Zend\Expressive\Helper;
 
 return [
     'dependencies' => [
@@ -18,14 +19,15 @@ return [
         ],
         'factories' => [
             AuthMiddleware::class => AuthMiddlewareFactory::class,
-            NotFound::class       => NotFoundFactory::class,
-            Unauthorized::class   => UnauthorizedFactory::class,
+            Helper\UrlHelperMiddleware::class => Helper\UrlHelperMiddlewareFactory::class,
+            Unauthorized::class => UnauthorizedFactory::class,
         ],
     ],
     'middleware_pipeline' => [
         'pre_routing' => [
             ['middleware' => XClacksOverhead::class],
             ['middleware' => Redirects::class],
+            ['middleware' => Helper\UrlHelperMiddleware::class],
             ['middleware' => BodyParams::class],
         ],
 
@@ -37,9 +39,6 @@ return [
             [
                 'middleware' => Unauthorized::class,
                 'error'      => true,
-            ],
-            [
-                'middleware' => NotFound::class,
             ],
         ],
     ],
