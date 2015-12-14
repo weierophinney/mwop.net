@@ -351,7 +351,7 @@ typically occur for things like:
 
 Regarding this latter, padraic/phar-updater includes
 padraic/humbug_get_contents, which is supposed to iron out TLS issues on PHP
-versions &lt 5.6. I found in practice, however, that when performing the update,
+versions &lt; 5.6. I found in practice, however, that when performing the update,
 if I didn't use a PHP 5.6 version, it consistently failed, indicating TLS
 negotiation issues. Supposedly you can fix these by downloading
 http://curl.haxx.se/ca/cacert.pem and setting
