@@ -73,7 +73,11 @@ h2.p-name {
     padding-bottom: 2em;
 }
 
-a.u-url {
+.blog a {
+  text-decoration: underline;
+}
+
+.blog a.u-url {
   text-decoration: none;
 }
 
