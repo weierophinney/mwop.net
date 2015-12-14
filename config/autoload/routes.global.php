@@ -76,10 +76,16 @@ return [
             'name'            => 'blog.post',
         ],
         [
-            'path'            => '/blog/{tag:php}.xml',
+            'path'            => '/blog/tag/{tag:php}.xml',
             'middleware'      => Blog\FeedMiddleware::class,
             'allowed_methods' => ['GET'],
             'name'            => 'blog.feed.php',
+        ],
+        [
+            'path'            => '/blog/{tag:php}.xml',
+            'middleware'      => Blog\FeedMiddleware::class,
+            'allowed_methods' => ['GET'],
+            'name'            => 'blog.feed.php.also',
         ],
         [
             'path'            => '/blog/tag/{tag:[^/]+}/{type:atom|rss}.xml',
