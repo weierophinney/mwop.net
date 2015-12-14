@@ -317,7 +317,7 @@ $ composer require padraic/phar-updater
 Regardless of how you write your console commands in PHP, your self-update
 command will execute something like the following:
 
-```
+```php
 use Humbug\SelfUpdate\Updater;
 
 $updater = new Updater();
