@@ -45,7 +45,7 @@ class Redirects
 
         // Redirect blog posts not ending in .html to .html version
         if (preg_match('#^/blog/(?<!tag/)(?P<post>[^/]+)$#', $path, $matches)
-            && '.html' !== substr($path, -5)
+            && ! preg_match('#\.(html|xml)$#', $path)
         ) {
             $newPath = sprintf('/blog/%s.html', $matches['post']);
             return $this->redirect($newPath, $url, $res);
