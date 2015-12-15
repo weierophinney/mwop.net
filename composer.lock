@@ -4,21 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a39b3df1371eaa9b275f70a403ad68ab",
-    "content-hash": "e37059a13e5037b3f4799a6bfaf159f3",
+    "hash": "7cde580603e3ff15432edb7d2c592c47",
+    "content-hash": "026b787667aaf8387617a498c8f8c769",
     "packages": [
         {
             "name": "aura/session",
-            "version": "2.x-dev",
+            "version": "2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/auraphp/Aura.Session.git",
-                "reference": "b24aed6e4ba116cd389c7306a60a42ae9d1979d0"
+                "reference": "9e018278794228e40c7695b699c848bea2355a12"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/auraphp/Aura.Session/zipball/b24aed6e4ba116cd389c7306a60a42ae9d1979d0",
-                "reference": "b24aed6e4ba116cd389c7306a60a42ae9d1979d0",
+                "url": "https://api.github.com/repos/auraphp/Aura.Session/zipball/9e018278794228e40c7695b699c848bea2355a12",
+                "reference": "9e018278794228e40c7695b699c848bea2355a12",
                 "shasum": ""
             },
             "require": {
@@ -39,6 +39,9 @@
                     "config": {
                         "common": "Aura\\Session\\_Config\\Common"
                     }
+                },
+                "branch-alias": {
+                    "dev-develop-2": "2.0.x-dev"
                 }
             },
             "autoload": {
@@ -66,7 +69,7 @@
                 "session",
                 "sessions"
             ],
-            "time": "2015-07-09 01:21:08"
+            "time": "2015-03-27 18:33:22"
         },
         {
             "name": "container-interop/container-interop",
@@ -2711,7 +2714,6 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "aura/session": 20,
         "zendframework/zend-expressive": 5,
         "zfcampus/zf-deploy": 0
     },
