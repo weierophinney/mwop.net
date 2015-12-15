@@ -5,7 +5,7 @@ title: 'Secure PHAR Automation'
 draft: false
 public: true
 created: '2015-12-14T11:45:00-05:00'
-updated: '2015-12-14T11:45:00-05:00'
+updated: '2015-12-15T08:20:00-05:00'
 tags:
     - composer
     - php
@@ -55,7 +55,7 @@ The first step is to create an OpenSSL private key. This will be used to sign
 the packages.
 
 ```bash
-$ openssl genrsa -des3 -out phar-private.pem 2048
+$ openssl genrsa -des3 -out phar-private.pem 4096
 ```
 
 The above will prompt you for a passphrase, which is used to encrypt the key.
@@ -196,7 +196,7 @@ $ box build -vv
 > dependencies prior to running a build:
 > 
 > ```bash
-> $ composer update --no-dev
+> $ composer install --no-dev
 > ```
 > 
 > I find this results in a far faster build, with a much smaller file size.
@@ -645,7 +645,7 @@ file:
 
 ```yaml
 after_success:
-- if [[ $EXECUTE_DEPLOYMENT == 'true' && $TRAVIS_BRANCH == 'master' && $TRAVIS_PULL_REQUEST == 'false' ]]; then composer update --no-dev ; fi
+- if [[ $EXECUTE_DEPLOYMENT == 'true' && $TRAVIS_BRANCH == 'master' && $TRAVIS_PULL_REQUEST == 'false' ]]; then composer install --no-dev ; fi
 - if [[ $EXECUTE_DEPLOYMENT == 'true' && $TRAVIS_BRANCH == 'master' && $TRAVIS_PULL_REQUEST == 'false' ]]; then ./bin/deploy.sh ; fi
 ```
 
@@ -705,3 +705,12 @@ While the above workflow is tested and works, I have one item I'm still unhappy
 with: I'd really like it if the deployment could be delayed until I know *all*
 environments have completed successfully. If anybody could assist me with that,
 I'd love to hear from you!
+
+## Updates
+
+Below is a list of updates made to this post since the time of writing:
+
+- 2015-12-15: Changed references to `composer update` to read `composer
+  install`, per a comment from Christophe Coevoet.
+- 2015-12-15: Changed OpenSSL key generation example to use 4096 bits instead of
+  2048, per a comment from sf_tristanb.
