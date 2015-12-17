@@ -5,7 +5,7 @@ title: 'Secure PHAR Automation'
 draft: false
 public: true
 created: '2015-12-14T11:45:00-05:00'
-updated: '2015-12-15T08:20:00-05:00'
+updated: '2015-12-17T09:00:00-05:00'
 tags:
     - composer
     - php
@@ -594,8 +594,12 @@ git remote add deploy git@github.com:weierophinney/component-installer.git
 git fetch deploy
 
 # Get box and build PHAR
-curl -LSs https://box-project.github.io/box2/installer.php | php
-php box.phar build -vv
+wget https://box-project.github.io/box2/manifest.json
+BOX_URL=$(php bin/parse-manifest.php manifest.json)
+rm manifest.json
+wget -O box.phar ${BOX_URL}
+chmod 755 box.phar
+./box.phar build -vv
 # Without the following step, we cannot checkout the gh-pages branch due to
 # file conflicts:
 mv component-installer.phar component-installer.phar.tmp
@@ -611,7 +615,58 @@ git commit -m 'Rebuilt phar'
 git push deploy gh-pages:gh-pages
 ```
 
-Make the deployment script executable, add it to your repository, and commit!
+You'll note that this script makes reference to `bin/parse-manifest.php`; this
+is a PHP script that parses the version manifest file for Box to find the
+download URL of the latest `box.phar`. It looks like this:
+
+```php
+<?php
+chdir(__DIR__ . '/../');
+$fallbackUrl = 'https://github.com/box-project/box2/releases/download/2.6.0/box-2.6.0.phar';
+
+if (! isset($argv[1]) || ! is_file($argv[1])) {
+    return $fallbackUrl;
+}
+
+$manifestJson = file_get_contents($argv[1]);
+$files = json_decode($manifestJson, true);
+
+if (! is_array($files)) {
+    echo $fallbackUrl;
+    exit(0);
+}
+
+foreach ($files as $file) {
+    if (! is_array($file) || ! isset($file['version'])) {
+        continue;
+    }
+
+    if (version_compare($file['version'], '2.6.0', '>=')) {
+        echo $file['url'];
+        exit(0);
+    }
+}
+
+echo $fallbackUrl;
+exit(0);
+```
+
+Essentially, it attempts to parse the manifest, and, on any failure, uses a
+known-good URI. You could, of course, just use the known-good URI always.
+
+> ### Why not use the Box installer?
+>
+> I'm trying to demonstrate a secure toolchain. As [Pádraic outlines in his
+> post](https://archive.is/hDwaA), installer scripts can introduce remote code
+> execution vulnerabilities, particularly if directly piped to the PHP
+> executable. In this particular case, the Box `installer.php` is using an
+> insecure URI for downloading the `manifest.json` (I've proposed [a
+> patch](https://github.com/box-project/box2/pull/122) for this). As such, I'm
+> downloading the manifest over SSL, manually parsing it, and then downloading
+> the PHAR file from the parsed results.
+
+Make the deployment script executable, add both scripts to your repository, and
+commit!
 
 ## Add the script to travis
 
@@ -714,3 +769,5 @@ Below is a list of updates made to this post since the time of writing:
   install`, per a comment from Christophe Coevoet.
 - 2015-12-15: Changed OpenSSL key generation example to use 4096 bits instead of
   2048, per a comment from sf_tristanb.
+- 2015-12-17: Updated the `bin/deploy.sh` script to download the `box.phar`
+  securely, instead of using their installer script.
