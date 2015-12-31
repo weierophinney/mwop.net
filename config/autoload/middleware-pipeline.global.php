@@ -8,12 +8,10 @@ use Mwop\Redirects;
 use Mwop\Unauthorized;
 use Mwop\XClacksOverhead;
 use Zend\Expressive\Helper;
-use Zend\Expressive\Helper\BodyParams\BodyParamsMiddleware;
 
 return [
     'dependencies' => [
         'invokables' => [
-            BodyParamsMiddleware::class => BodyParamsMiddleware::class,
             Redirects::class       => Redirects::class,
             XClacksOverhead::class => XClacksOverhead::class,
         ],
@@ -28,7 +26,6 @@ return [
             ['middleware' => XClacksOverhead::class],
             ['middleware' => Redirects::class],
             ['middleware' => Helper\UrlHelperMiddleware::class],
-            ['middleware' => BodyParamsMiddleware::class],
         ],
 
         'post_routing' => [
