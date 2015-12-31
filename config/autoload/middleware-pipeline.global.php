@@ -1,7 +1,6 @@
 <?php
 use Mwop\Auth\Middleware as AuthMiddleware;
 use Mwop\Auth\MiddlewareFactory as AuthMiddlewareFactory;
-use Mwop\BodyParams;
 use Mwop\ErrorHandler;
 use Mwop\Factory\Unauthorized as UnauthorizedFactory;
 use Mwop\NotFound;
@@ -13,7 +12,6 @@ use Zend\Expressive\Helper;
 return [
     'dependencies' => [
         'invokables' => [
-            BodyParams::class      => BodyParams::class,
             Redirects::class       => Redirects::class,
             XClacksOverhead::class => XClacksOverhead::class,
         ],
@@ -28,7 +26,6 @@ return [
             ['middleware' => XClacksOverhead::class],
             ['middleware' => Redirects::class],
             ['middleware' => Helper\UrlHelperMiddleware::class],
-            ['middleware' => BodyParams::class],
         ],
 
         'post_routing' => [
