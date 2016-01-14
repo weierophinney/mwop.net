@@ -327,15 +327,15 @@ try {
     $result = $updater->update();
     if (! $result) {
         // No update needed!
-        exit 0;
+        exit(0);
     }
     $new = $updater->getNewVersion();
     $old = $updater->getOldVersion();
     printf('Updated from %s to %s', $old, $new);
-    exit 0;
+    exit(0);
 } catch (\Exception $e) {
     // Report an error!
-    exit 1;
+    exit(1);
 }
 ```
 
@@ -372,12 +372,12 @@ try {
     $result = $updater->rollback();
     if (! $result) {
         // report failure!
-        exit 1;
+        exit(1);
     }
-    exit 0;
+    exit(0);
 } catch (\Exception $e) {
     // Report an error!
-    exit 1;
+    exit(1);
 }
 ```
 
