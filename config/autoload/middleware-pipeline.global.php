@@ -31,12 +31,6 @@ return [
             'priority' => 10000,
         ],
 
-        'auth' => [
-            'path'       => '/auth',
-            'middleware' => AuthMiddleware::class,
-            'priority'   => 10,
-        ],
-
         'routing' => [
             'middleware' => [
                 ApplicationFactory::ROUTING_MIDDLEWARE,
@@ -44,6 +38,12 @@ return [
                 ApplicationFactory::DISPATCH_MIDDLEWARE,
             ],
             'priority' => 1,
+        ],
+
+        'auth' => [
+            'path'       => '/auth',
+            'middleware' => AuthMiddleware::class,
+            'priority'   => -10,
         ],
 
         'error' => [
