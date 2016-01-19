@@ -7,6 +7,7 @@ use Mwop\NotFound;
 use Mwop\Redirects;
 use Mwop\Unauthorized;
 use Mwop\XClacksOverhead;
+use Zend\Expressive\Container\ApplicationFactory;
 use Zend\Expressive\Helper;
 
 return [
@@ -22,21 +23,33 @@ return [
         ],
     ],
     'middleware_pipeline' => [
-        'pre_routing' => [
-            ['middleware' => XClacksOverhead::class],
-            ['middleware' => Redirects::class],
-            ['middleware' => Helper\UrlHelperMiddleware::class],
+        'always' => [
+            'middleware' => [
+                XClacksOverhead::class,
+                Redirects::class,
+            ],
+            'priority' => 10000,
         ],
 
-        'post_routing' => [
-            [
-                'path'       => '/auth',
-                'middleware' => AuthMiddleware::class,
+        'auth' => [
+            'path'       => '/auth',
+            'middleware' => AuthMiddleware::class,
+            'priority'   => 10,
+        ],
+
+        ApplicationFactory::ROUTING_MIDDLEWARE,
+        'post-routing' => [
+            'middleware' => [
+                Helper\UrlHelperMiddleware::class,
             ],
-            [
-                'middleware' => Unauthorized::class,
-                'error'      => true,
-            ],
+            'priority' => 1,
+        ],
+        ApplicationFactory::DISPATCH_MIDDLEWARE,
+
+        'error' => [
+            'middleware' => Unauthorized::class,
+            'error' => true,
+            'priority' => -10000,
         ],
     ],
 ];
