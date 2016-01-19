@@ -37,14 +37,14 @@ return [
             'priority'   => 10,
         ],
 
-        ApplicationFactory::ROUTING_MIDDLEWARE,
-        'post-routing' => [
+        'routing' => [
             'middleware' => [
+                ApplicationFactory::ROUTING_MIDDLEWARE,
                 Helper\UrlHelperMiddleware::class,
+                ApplicationFactory::DISPATCH_MIDDLEWARE,
             ],
             'priority' => 1,
         ],
-        ApplicationFactory::DISPATCH_MIDDLEWARE,
 
         'error' => [
             'middleware' => Unauthorized::class,
