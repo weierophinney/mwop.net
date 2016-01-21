@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "9731d2cf79810ca3f78b1a3f2b8a36c7",
-    "content-hash": "e61f708753cd31a034874ff0a880b80f",
+    "hash": "180744cafb57fd0346e3397c6c727110",
+    "content-hash": "981256ba2e267caf0f505ff03caba723",
     "packages": [
         {
             "name": "aura/session",
@@ -1020,16 +1020,16 @@
         },
         {
             "name": "zendframework/zend-expressive",
-            "version": "dev-master",
+            "version": "1.0.0rc7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-expressive.git",
-                "reference": "a656721103be941d2fd7c1d1df4a5efdc5371214"
+                "reference": "f66f533a3bf2d09561882ece8be0cd7c21ae2fdb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-expressive/zipball/a656721103be941d2fd7c1d1df4a5efdc5371214",
-                "reference": "a656721103be941d2fd7c1d1df4a5efdc5371214",
+                "url": "https://api.github.com/repos/zendframework/zend-expressive/zipball/f66f533a3bf2d09561882ece8be0cd7c21ae2fdb",
+                "reference": "f66f533a3bf2d09561882ece8be0cd7c21ae2fdb",
                 "shasum": ""
             },
             "require": {
@@ -1086,7 +1086,7 @@
                 "psr",
                 "psr-7"
             ],
-            "time": "2016-01-20 18:04:30"
+            "time": "2016-01-21 15:26:30"
         },
         {
             "name": "zendframework/zend-expressive-fastroute",
@@ -2716,13 +2716,13 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "zendframework/zend-expressive": 20,
+        "zendframework/zend-expressive": 5,
         "zfcampus/zf-deploy": 0
     },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "^5.5|~7.0"
+        "php": "^5.5 || ^7.0"
     },
     "platform-dev": []
 }
