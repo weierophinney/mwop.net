@@ -24,6 +24,9 @@ class MiddlewareFactory
 
         $middleware->get('/logout', Logout::class);
 
+        $middleware->pipeRoutingMiddleware();
+        $middleware->pipeDispatchMiddleware();
+
         return $middleware;
     }
 }
