@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "180744cafb57fd0346e3397c6c727110",
-    "content-hash": "981256ba2e267caf0f505ff03caba723",
+    "hash": "1b2b8b63bb3dde9425e32f223ed575da",
+    "content-hash": "d509af1d289ce8335c888cad56e7c3ee",
     "packages": [
         {
             "name": "aura/session",
@@ -1020,16 +1020,16 @@
         },
         {
             "name": "zendframework/zend-expressive",
-            "version": "1.0.0rc7",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-expressive.git",
-                "reference": "f66f533a3bf2d09561882ece8be0cd7c21ae2fdb"
+                "reference": "4e6b1821e116425c76a515cae9b78141f17b2e1a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-expressive/zipball/f66f533a3bf2d09561882ece8be0cd7c21ae2fdb",
-                "reference": "f66f533a3bf2d09561882ece8be0cd7c21ae2fdb",
+                "url": "https://api.github.com/repos/zendframework/zend-expressive/zipball/4e6b1821e116425c76a515cae9b78141f17b2e1a",
+                "reference": "4e6b1821e116425c76a515cae9b78141f17b2e1a",
                 "shasum": ""
             },
             "require": {
@@ -1086,7 +1086,7 @@
                 "psr",
                 "psr-7"
             ],
-            "time": "2016-01-21 15:26:30"
+            "time": "2016-01-28 15:49:52"
         },
         {
             "name": "zendframework/zend-expressive-fastroute",
@@ -2716,7 +2716,6 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "zendframework/zend-expressive": 5,
         "zfcampus/zf-deploy": 0
     },
     "prefer-stable": false,
