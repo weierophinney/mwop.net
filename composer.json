@@ -27,7 +27,7 @@
         "zendframework/zend-stdlib": "~2.3",
         "zendframework/zend-tag": "~2.3",
         "zfcampus/zf-console": "~1.0",
-        "zendframework/zend-expressive": "^1.0.0@rc || ^1.0",
+        "zendframework/zend-expressive": "^1.0",
         "zendframework/zend-expressive-fastroute": "^1.0",
         "zendframework/zend-servicemanager": "^2.6",
         "league/commonmark": "^0.11.3",
