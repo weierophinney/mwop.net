@@ -13,7 +13,7 @@ tags:
     - programming
     - psr-7
 ---
-A few hours ago, we pushed [Expressive 1.0](https://github.com/zendframework/zend-expressive/releases/tags/1.0.0).
+A few hours ago, we pushed [Expressive 1.0](https://github.com/zendframework/zend-expressive/releases/tag/1.0.0).
 
 This is a huge milestone for the ZF3 initiative; I've even called it the
 cornerstone. It signals a huge shift in direction for the project, returning to
