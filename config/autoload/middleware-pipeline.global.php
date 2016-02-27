@@ -1,19 +1,18 @@
 <?php
 use Mwop\Auth\Middleware as AuthMiddleware;
 use Mwop\Auth\MiddlewareFactory as AuthMiddlewareFactory;
-use Mwop\BodyParams;
 use Mwop\ErrorHandler;
 use Mwop\Factory\Unauthorized as UnauthorizedFactory;
 use Mwop\NotFound;
 use Mwop\Redirects;
 use Mwop\Unauthorized;
 use Mwop\XClacksOverhead;
+use Zend\Expressive\Container\ApplicationFactory;
 use Zend\Expressive\Helper;
 
 return [
     'dependencies' => [
         'invokables' => [
-            BodyParams::class      => BodyParams::class,
             Redirects::class       => Redirects::class,
             XClacksOverhead::class => XClacksOverhead::class,
         ],
@@ -24,22 +23,35 @@ return [
         ],
     ],
     'middleware_pipeline' => [
-        'pre_routing' => [
-            ['middleware' => XClacksOverhead::class],
-            ['middleware' => Redirects::class],
-            ['middleware' => Helper\UrlHelperMiddleware::class],
-            ['middleware' => BodyParams::class],
+        'always' => [
+            'middleware' => [
+                XClacksOverhead::class,
+                Redirects::class,
+            ],
+            'priority' => 10000,
         ],
 
-        'post_routing' => [
-            [
-                'path'       => '/auth',
-                'middleware' => AuthMiddleware::class,
+        'auth' => [
+            'path'       => '/auth',
+            'middleware' => AuthMiddleware::class,
+            'priority'   => 10,
+        ],
+
+        'routing' => [
+            'middleware' => [
+                ApplicationFactory::ROUTING_MIDDLEWARE,
+                Helper\UrlHelperMiddleware::class,
+                ApplicationFactory::DISPATCH_MIDDLEWARE,
             ],
-            [
-                'middleware' => Unauthorized::class,
-                'error'      => true,
+            'priority' => 1,
+        ],
+
+        'error' => [
+            'middleware' => [
+                Unauthorized::class,
             ],
+            'error' => true,
+            'priority' => -10000,
         ],
     ],
 ];

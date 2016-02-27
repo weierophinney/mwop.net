@@ -6,6 +6,7 @@ use Mwop\Factory;
 use Mwop\HomePage;
 use Mwop\Job;
 use Mwop\ResumePage;
+use Zend\Expressive\Helper\BodyParams\BodyParamsMiddleware;
 use Zend\Expressive\Router\RouterInterface;
 use Zend\Expressive\Router\FastRouteRouter;
 
@@ -19,6 +20,7 @@ return [
         'invokables' => [
             Blog\FeedMiddleware::class           => Blog\FeedMiddleware::class,
             Blog\Console\SeedBlogDatabase::class => Blog\Console\SeedBlogDatabase::class,
+            BodyParamsMiddleware::class          => BodyParamsMiddleware::class,
             RouterInterface::class               => FastRouteRouter::class,
         ],
         'factories' => [
@@ -76,10 +78,16 @@ return [
             'name'            => 'blog.post',
         ],
         [
-            'path'            => '/blog/{tag:php}.xml',
+            'path'            => '/blog/tag/{tag:php}.xml',
             'middleware'      => Blog\FeedMiddleware::class,
             'allowed_methods' => ['GET'],
             'name'            => 'blog.feed.php',
+        ],
+        [
+            'path'            => '/blog/{tag:php}.xml',
+            'middleware'      => Blog\FeedMiddleware::class,
+            'allowed_methods' => ['GET'],
+            'name'            => 'blog.feed.php.also',
         ],
         [
             'path'            => '/blog/tag/{tag:[^/]+}/{type:atom|rss}.xml',
@@ -110,7 +118,10 @@ return [
         ],
         [
             'path'            => '/contact/process',
-            'middleware'      => Contact\Process::class,
+            'middleware'      => [
+                BodyParamsMiddleware::class,
+                Contact\Process::class,
+            ],
             'allowed_methods' => ['POST'],
             'name'            => 'contact.process',
         ],
