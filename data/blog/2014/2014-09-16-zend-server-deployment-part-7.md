@@ -51,7 +51,7 @@ The `zsurl` is the scheme, host, and port only; don't include the path. You can
 find keys and tokens on the "Administration > Web API" page of your Zend
 Server UI, and can even generate new ones there.
 
-![](http://uploads.mwop.net/2014-09-16-WebApiKeys.png)
+![](//uploads.mwop.net/2014-09-16-WebApiKeys.png)
 
 Note the last line; Zend Server uses self-signed SSL certificates, which can
 raise issues with cURL in particular — which the SDK uses under the hood.
