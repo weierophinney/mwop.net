@@ -301,7 +301,7 @@ So, what we ended up with was something like the following:
 ```bash
 git filter-branch -f \
     --tree-filter "php /path/to/tree-filter.php" \
-    --msg-filter "sed -re 's/(^|[^a-zA-Z])(\#[1-9][0-9]*)/zendframework\/zf2/g'" \
+    --msg-filter "sed -re 's/(^|[^a-zA-Z])(\#[1-9][0-9]*)/zendframework\/zf2/g'" \
     --commit-filter 'git_commit_non_empty_tree "$@"' \
     --tag-name-filter cat \
     -- --all
