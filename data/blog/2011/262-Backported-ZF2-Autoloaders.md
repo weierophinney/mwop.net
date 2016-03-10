@@ -30,7 +30,7 @@ I've recently backported the ZF2 autoloaders to PHP 5.2, and posted them on GitH
 
 I'm also posting a tarball here:
 
-- [http://uploads.mwop.net/zf1-classmap.tgz](http://uploads.mwop.net/zf1-classmap.tgz)
+- [https://uploads.mwop.net/zf1-classmap.tgz](//uploads.mwop.net/zf1-classmap.tgz)
 
 The functionality includes:
 

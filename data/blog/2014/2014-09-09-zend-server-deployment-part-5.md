@@ -62,7 +62,7 @@ exit(0);
 
 Here's sample output:
 
-![](http://uploads.mwop.net/2014-09-09-ZendServer-JobStatus.png)
+![](//uploads.mwop.net/2014-09-09-ZendServer-JobStatus.png)
 
 (The `[0;34m]`-style codes are colorization codes; terminals capable of color
 would display the output in color, but Zend Server, of course, is seeing plain
