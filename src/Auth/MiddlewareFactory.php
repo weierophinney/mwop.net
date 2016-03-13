@@ -2,6 +2,7 @@
 namespace Mwop\Auth;
 
 use Zend\Expressive\AppFactory;
+use Zend\Expressive\Helper\BodyParams\BodyParamsMiddleware;
 
 class MiddlewareFactory
 {
@@ -9,7 +10,10 @@ class MiddlewareFactory
     {
         $middleware = AppFactory::create($services);
 
-        $middleware->route('/callback', AuthCallback::class, ['GET', 'POST']);
+        $middleware->route('/callback', [
+            BodyParamsMiddleware::class,
+            AuthCallback::class,
+        ], ['GET', 'POST']);
         $middleware->get('/github', Auth::class);
         $middleware->get('/google', Auth::class);
         $middleware->get('/twitter', Auth::class);
@@ -19,6 +23,9 @@ class MiddlewareFactory
         $middleware->get('/twitter/oauth2callback', Auth::class);
 
         $middleware->get('/logout', Logout::class);
+
+        $middleware->pipeRoutingMiddleware();
+        $middleware->pipeDispatchMiddleware();
 
         return $middleware;
     }

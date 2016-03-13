@@ -6,20 +6,20 @@ use DateTimezone;
 
 class EntryView
 {
-    private $basePath;
     private $created;
     private $updated;
+    private $tags = [];
+    private $tagsProcessed = false;
 
     public $body;
     public $disqus;
     public $extended;
     public $id;
-    public $tags;
     public $title;
+    public $uriHelper;
 
-    public function __construct(array $entry, $basePath, array $disqus = [])
+    public function __construct(array $entry, array $disqus = [])
     {
-        $this->basePath = rtrim($basePath, '/');
         $this->disqus   = $disqus;
 
         foreach ($entry as $key => $value) {
@@ -28,12 +28,11 @@ class EntryView
                 case 'created':
                 case 'extended':
                 case 'id':
+                case 'tags':
                 case 'title':
                 case 'updated':
+                case 'uriHelper':
                     $this->{$key} = $value;
-                    break;
-                case 'tags':
-                    $this->tags = $this->marshalTags($value);
                     break;
                 default:
                     break;
@@ -46,6 +45,13 @@ class EntryView
         return $this->formatDate($this->created);
     }
 
+    // @codingStandardsIgnoreStart
+    public function created_rfc()
+    {
+        return $this->formatDateRfc($this->created);
+    }
+    // @codingStandardsIgnoreEnd
+
     public function updated()
     {
         if (! $this->updated || $this->updated === $this->created) {
@@ -53,39 +59,95 @@ class EntryView
         }
 
         return [
+            'rfc'  => $this->formatDateRfc($this->updated),
             'when' => $this->formatDate($this->updated),
         ];
     }
 
-    public function path()
+    public function uri()
     {
-        return sprintf('%s/%s.html', $this->basePath, $this->id);
+        $factory = $this->uriHelper;
+        return $factory();
     }
 
     public function url()
     {
-        return sprintf('https://mwop.net/blog/%s.html', $this->id);
+        $uriMetadata = json_encode([
+            'name'    => 'blog.post',
+            'options' => ['id' => $this->id],
+        ]);
+        $generator = $this->uri();
+        $path      = $generator($uriMetadata, function ($text) {
+            return $text;
+        });
+
+        return sprintf('https://mwop.net%s', $path);
     }
 
-    private function marshalTags($tags)
+    public function tags()
     {
-        $basePath = $this->basePath;
+        if (! $this->tagsProcessed) {
+            $this->marshalTags();
+        }
+
+        return $this->tags;
+    }
+
+    public function marshalTags()
+    {
+        $this->tagsProcessed = true;
+        $generator = $this->uri();
+        $tags      = $this->tags;
+        $renderer  = function ($text) {
+            return $text;
+        };
 
         if (! is_array($tags)) {
             $tags = explode('|', trim((string) $tags, '|'));
         }
 
-        return array_map(function ($tag) use ($basePath) {
+        $tags = array_map(function ($tag) use ($generator, $renderer) {
+            $linkData = json_encode([
+                'name'    => 'blog.tag',
+                'options' => ['tag' => $tag],
+            ]);
+            $atomData = json_encode([
+                'name'    => 'blog.tag.feed',
+                'options' => ['tag' => $tag, 'type' => 'atom'],
+            ]);
+            $rssData = json_encode([
+                'name'    => 'blog.tag.feed',
+                'options' => ['tag' => $tag, 'type' => 'rss'],
+            ]);
+
             return [
                 'tag'  => $tag,
-                'link' => sprintf('%s/tag/%s', $basePath, $tag),
+                'link' => $generator($linkData, $renderer),
+                'atom' => $generator($atomData, $renderer),
+                'rss'  => $generator($rssData, $renderer),
             ];
         }, $tags);
+
+        $this->tags = array_values($tags);
     }
 
-    private function formatDate($timestamp)
+    private function formatDate($dateString)
     {
-        $date = new DateTime('@' . $timestamp, new DateTimezone('America/Chicago'));
+        if (is_numeric($dateString)) {
+            $date = new DateTime('@' . $dateString, new DateTimezone('America/Chicago'));
+        } else {
+            $date = new DateTime($dateString);
+        }
         return $date->format('j F Y');
+    }
+
+    private function formatDateRfc($dateString)
+    {
+        if (is_numeric($dateString)) {
+            $date = new DateTime('@' . $dateString, new DateTimezone('America/Chicago'));
+        } else {
+            $date = new DateTime($dateString);
+        }
+        return $date->format('c');
     }
 }

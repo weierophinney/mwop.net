@@ -1,28 +1,34 @@
 <?php
 namespace Mwop\Blog\Console;
 
-use Mwop\Blog;
-use Zend\Stratigility\Http\Request;
+use Mni\FrontYAML\Bridge\CommonMark\CommonMarkParser;
+use Mni\FrontYAML\Parser;
+use Mwop\Blog\MarkdownFileFilter;
+use Zend\Console\ColorInterface as Color;
 use Zend\Diactoros\ServerRequest as PsrRequest;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\Uri;
-use Zend\Console\ColorInterface as Color;
+use Zend\Expressive\Router\RouterInterface;
+use Zend\Stratigility\Http\Request;
 
 class CachePosts
 {
     private $blogMiddleware;
 
-    public function __construct(callable $blog)
+    private $router;
+
+    public function __construct(callable $blog, RouterInterface $router)
     {
         $this->blogMiddleware = $blog;
+        $this->router         = $router;
     }
 
     public function __invoke($route, $console)
     {
         $basePath = $route->getMatchedParam('path');
 
-        $path       = realpath($basePath) . '/data/posts';
-        $baseUri    = new Uri('https://mwop.net/blog');
+        $path       = realpath($basePath) . '/data/blog';
+        $baseUri    = new Uri('https://mwop.net');
         $middleware = $this->blogMiddleware;
 
         $console->writeLine('Generating static cache for blog posts', Color::GREEN);
@@ -33,22 +39,20 @@ class CachePosts
             $failed = ($err) ? true : false;
         };
 
-        foreach (new Blog\PhpFileFilter($path) as $fileInfo) {
-            $entry  = include $fileInfo->getPathname();
+        $parser = new Parser(null, new CommonMarkParser());
+        foreach (new MarkdownFileFilter($path) as $fileInfo) {
+            $document = $parser->parse(file_get_contents($fileInfo->getPathname()));
+            $metadata = $document->getYAML();
 
-            if (! $entry instanceof Blog\EntryEntity) {
-                continue;
-            }
-
-            $message = '    ' . $entry->getId();
+            $message = '    ' . $metadata['id'];
             $length  = strlen($message);
             $width   = $console->getWidth();
             $console->write($message, Color::BLUE);
 
-            $canonical = $baseUri->withPath(sprintf('/blog/%s.html', $entry->getId()));
+            $canonical = $baseUri->withPath($this->router->generateUri('blog.post', ['id' => $metadata['id']]));
             $request   = (new Request(new PsrRequest([], [], $canonical, 'GET')))
                 ->withUri($canonical)
-                ->withAttribute('id', $entry->getId());
+                ->withAttribute('id', $metadata['id']);
 
             $failed = false;
             $middleware($request, new Response(), $done);

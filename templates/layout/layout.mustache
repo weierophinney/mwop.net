@@ -7,6 +7,8 @@
 <head>
 	<meta charset="utf-8">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="copyright" content="Matthew Weier O'Phinney" />
+  <meta name="author" content="Matthew Weier O'Phinney" />
 
   <title>phly, boy, phly :: {{$title}}home{{/title}}</title>
 
@@ -29,13 +31,20 @@
   <link rel="apple-touch-icon" sizes="72x72" href="/images/favicon/apple-touch-icon-72x72.png">
   <link rel="icon" type="image/png" href="/images/favicon/favicon-32x32.png" sizes="32x32">
   <link rel="icon" type="image/png" href="/images/favicon/favicon-16x16.png" sizes="16x16">
+
+  {{! semantic web }}
+  <link rel="canonical" href="https://mwop.net/">
+  <link rel="me" href="https://plus.google.com/+MatthewWeierOPhinneyAtHome/about">
+  <link rel="me" href="https://twitter.com/mwop">
+  <link rel="me" href="https://github.com/weierophinney">
+  <link rel="me" href="https://keybase.io/mwop">
   
   <link href="/css/site.min.css" media="screen" rel="stylesheet" type="text/css">
-  <link href="/blog/atom.xml" rel="alternate" type="application/atom+xml" title="phly, boy, phly Atom Feed">
-  <link href="/blog/rss.xml" rel="alternate" type="application/rss+xml" title="phly, boy, phly RSS Feed">
+
+  <link href="{{#uri}}{"name": "blog.feed", "options": {"type": "rss"}}{{/uri}}" rel="alternate" type="application/rss+xml" title="phly, boy, phly RSS Feed">
+  <link href="{{#uri}}{"name": "blog.feed", "options": {"type": "atom"}}{{/uri}}" rel="alternate" type="application/atom+xml" title="phly, boy, phly Atom Feed">
   {{$links}}{{/links}}
 
-  <script src="//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
   <script src="https://www.google.com/jsapi?ABQIAAAAGybdRRvLZwVUcF0dE3oVdBTO-MlgA7VGJpGqyqTOeDXlNzyZQxTGq17s-iAB0m0vwqLQ_A2dHhTg2Q"></script>
 
   <script type="text/javascript">
@@ -46,32 +55,28 @@
   </script>
 </head>
 <body>
-<div class="container">
 {{>layout::header}}
-
-    <div class="sixteen columns clearfix content">
-        {{$content}}{{/content}}
-    </div>
-
+<div class="container-fluid content-window">
+  <div class="row content">
+      {{$content}}{{/content}}
+  </div>
+</div>
 {{>layout::footer}}
 {{$scripts}}{{/scripts}}
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        WebFont.load({
-            custom: {
-                families: [
-                    'Cardo',
-                    'Lato',
-                    'Droid Sans Mono',
-                    'Libre Baskerville:n4,i4,n7'
-                ],
-                urls: [
-                    '/css/fonts.min.css'
-                ],
-            }
-        });
+<script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/site.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#site-search').submit(function (event) {
+      event.preventDefault();
+      var terms = $('#site-search .search').val();
+      var query = {
+        q: 'site:mwop.net ' + terms
+      };
+      window.location.href = 'https://www.google.com/#' + $.param(query);
     });
+  });
 </script>
-</div>
 </body>
 </html>

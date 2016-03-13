@@ -6,7 +6,7 @@ use Zend\Validator\Hostname as HostnameValidator;
 
 class InputFilter extends BaseInputFilter
 {
-    public function __construct()
+    public function __construct($reCaptchaKey)
     {
         $this->add(array(
             'name'       => 'from',
@@ -39,6 +39,14 @@ class InputFilter extends BaseInputFilter
                         'max'      => 140,
                     ),
                 ),
+            ),
+        ));
+
+        $this->add(array(
+            'name'       => 'g-recaptcha-response',
+            'required'   => true,
+            'validators' => array(
+                new RecaptchaValidator($reCaptchaKey),
             ),
         ));
 

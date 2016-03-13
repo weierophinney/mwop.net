@@ -1,49 +1,34 @@
 <?php
-return [
-    'delegators' => [
-        'Mwop\Blog\DisplayPostMiddleware' => [
-            'Mwop\Blog\CachingDelegatorFactory',
-        ],
-    ],
+use Mwop\Auth;
+use Mwop\Blog;
+use Mwop\Console;
+use Mwop\Factory;
+use Mwop\Github;
+use Zend\Expressive\Application;
+use Zend\Expressive\Container\ApplicationFactory;
+use Zend\Expressive\Helper;
+
+return ['dependencies' => [
     'invokables' => [
-        'Mwop\Blog\FeedMiddleware'           => 'Mwop\Blog\FeedMiddleware',
-        'Mwop\Blog\Console\SeedBlogDatabase' => 'Mwop\Blog\Console\SeedBlogDatabase',
-        'Mwop\BodyParams'                    => 'Mwop\BodyParams',
-        'Mwop\Console\PrepPageCacheRules'    => 'Mwop\Console\PrepPageCacheRules',
-        'Mwop\Redirects'                     => 'Mwop\Redirects',
+        Console\PrepPageCacheRules::class => Console\PrepPageCacheRules::class,
     ],
     'factories' => [
-        'http'                            => 'Mwop\Factory\HttpClient',
-        'mail.transport'                  => 'Mwop\Factory\MailTransport',
-        'session'                         => 'Mwop\Factory\Session',
-        'Mwop\Auth\AuthCallback'          => 'Mwop\Auth\AuthCallbackFactory',
-        'Mwop\Auth\Auth'                  => 'Mwop\Auth\AuthFactory',
-        'Mwop\Auth\Logout'                => 'Mwop\Auth\LogoutFactory',
-        'Mwop\Auth\Middleware'            => 'Mwop\Auth\MiddlewareFactory',
-        'Mwop\Auth\UserSession'           => 'Mwop\Auth\UserSessionFactory',
-        'Mwop\Blog\Console\CachePosts'    => 'Mwop\Blog\Console\CachePostsFactory',
-        'Mwop\Blog\Console\FeedGenerator' => 'Mwop\Blog\Console\FeedGeneratorFactory',
-        'Mwop\Blog\Console\TagCloud'      => 'Mwop\Blog\Console\TagCloudFactory',
-        'Mwop\Blog\DisplayPostMiddleware' => 'Mwop\Blog\DisplayPostMiddlewareFactory',
-        'Mwop\Blog\ListPostsMiddleware'   => 'Mwop\Blog\ListPostsMiddlewareFactory',
-        'Mwop\Blog\Mapper'                => 'Mwop\Blog\MapperFactory',
-        'Mwop\Blog\Middleware'            => 'Mwop\Blog\MiddlewareFactory',
-        'Mwop\ComicsPage'                 => 'Mwop\Factory\ComicsPage',
-        'Mwop\Contact\LandingPage'        => 'Mwop\Contact\LandingPageFactory',
-        'Mwop\Contact\Middleware'         => 'Mwop\Contact\MiddlewareFactory',
-        'Mwop\Contact\Process'            => 'Mwop\Contact\ProcessFactory',
-        'Mwop\Contact\ThankYouPage'       => 'Mwop\Contact\ThankYouPageFactory',
-        'Mwop\Github\AtomReader'          => 'Mwop\Github\AtomReaderFactory',
-        'Mwop\Github\Console\Fetch'       => 'Mwop\Github\Console\FetchFactory',
-        'Mwop\HomePage'                   => 'Mwop\Factory\PageFactory',
-        'Mwop\Job\Middleware'             => 'Mwop\Job\MiddlewareFactory',
-        'Mwop\ResumePage'                 => 'Mwop\Factory\PageFactory',
-        'Mwop\Site'                       => 'Zend\Expressive\Container\ApplicationFactory',
-        'Mwop\Unauthorized'               => 'Mwop\Factory\Unauthorized',
-        'Zend\Expressive\FinalHandler'    => 'Zend\Expressive\Container\TemplatedErrorHandlerFactory',
-        'Zend\Expressive\Template\TemplateInterface' => 'Phly\Expressive\Mustache\MustacheTemplateFactory',
+        'http'                            => Factory\HttpClient::class,
+        'mail.transport'                  => Factory\MailTransport::class,
+        'session'                         => Factory\Session::class,
+        Auth\AuthCallback::class          => Auth\AuthCallbackFactory::class,
+        Auth\Auth::class                  => Auth\AuthFactory::class,
+        Auth\Logout::class                => Auth\LogoutFactory::class,
+        Auth\UserSession::class           => Auth\UserSessionFactory::class,
+        Blog\Console\CachePosts::class    => Blog\Console\CachePostsFactory::class,
+        Blog\Console\FeedGenerator::class => Blog\Console\FeedGeneratorFactory::class,
+        Blog\Console\TagCloud::class      => Blog\Console\TagCloudFactory::class,
+        Blog\Mapper::class                => Blog\MapperFactory::class,
+        Console\PrepOfflinePages::class   => Factory\PrepOfflinePagesFactory::class,
+        Github\AtomReader::class          => Github\AtomReaderFactory::class,
+        Github\Console\Fetch::class       => Github\Console\FetchFactory::class,
+        Helper\UrlHelper::class           => Helper\UrlHelperFactory::class,
+        Application::class                => ApplicationFactory::class,
+        'Zend\Expressive\FinalHandler'    => Factory\ErrorHandlerFactory::class,
     ],
-    'services' => [
-        'config' => include 'config/config.php',
-    ],
-];
+]];

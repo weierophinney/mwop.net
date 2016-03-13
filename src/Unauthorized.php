@@ -2,15 +2,17 @@
 namespace Mwop;
 
 use Zend\Diactoros\Response\HtmlResponse;
-use Zend\Expressive\Template\TemplateInterface;
+use Zend\Expressive\Template\TemplateRendererInterface;
 
 class Unauthorized
 {
     private $renderer;
     private $template;
 
-    public function __construct(TemplateInterface $renderer, $template = 'error::401')
-    {
+    public function __construct(
+        TemplateRendererInterface $renderer,
+        $template = 'error::401'
+    ) {
         $this->renderer = $renderer;
         $this->template = $template;
     }
@@ -21,7 +23,7 @@ class Unauthorized
             return $next($req, $res, $err);
         }
 
-        $new = $req->getUri()->withPath('/auth');
+        $new  = $req->getUri()->withPath('/auth');
         $view = [
             'auth_path' => (string) $new,
             'redirect'  => (string) $req->getOriginalRequest()->getUri(),

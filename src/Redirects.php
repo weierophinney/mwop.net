@@ -43,6 +43,14 @@ class Redirects
             return $this->redirect($newPath, $url, $res);
         }
 
+        // Redirect blog posts not ending in .html to .html version
+        if (preg_match('#^/blog/(?<!tag/)(?P<post>[^/]+)$#', $path, $matches)
+            && ! preg_match('#\.(html|xml)$#', $path)
+        ) {
+            $newPath = sprintf('/blog/%s.html', $matches['post']);
+            return $this->redirect($newPath, $url, $res);
+        }
+
         // Former uploads
         if (preg_match('#^/uploads/#', $path)) {
             return $this->redirect(sprintf('http://uploads.mwop.net/%s', substr($path, 9)), $url, $res);

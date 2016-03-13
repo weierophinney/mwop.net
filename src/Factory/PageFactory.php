@@ -2,6 +2,7 @@
 namespace Mwop\Factory;
 
 use Mwop\Page;
+use Zend\Expressive\Template\TemplateRendererInterface;
 
 class PageFactory
 {
@@ -9,8 +10,7 @@ class PageFactory
     {
         return new Page(
             $this->deriveTemplateName($requestedName),
-            [],
-            $services->get('Zend\Expressive\Template\TemplateInterface')
+            $services->get(TemplateRendererInterface::class)
         );
     }
 

@@ -3,6 +3,7 @@ namespace Mwop\Factory;
 
 use Mwop\ComicsPage as Page;
 use Zend\Stratigility\MiddlewarePipe;
+use Zend\Expressive\Template\TemplateRendererInterface;
 
 class ComicsPage
 {
@@ -13,8 +14,7 @@ class ComicsPage
         $pipeline->pipe($services->get('Mwop\Auth\UserSession'));
         $pipeline->pipe(new Page(
             'mwop::comics.page',
-            [],
-            $services->get('Zend\Expressive\Template\TemplateInterface')
+            $services->get(TemplateRendererInterface::class)
         ));
 
         return $pipeline;

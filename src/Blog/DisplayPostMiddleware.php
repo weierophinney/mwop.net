@@ -1,8 +1,11 @@
 <?php
 namespace Mwop\Blog;
 
+use Mni\FrontYAML\Bridge\CommonMark\CommonMarkParser;
+use Mni\FrontYAML\Parser;
 use Zend\Diactoros\Response\HtmlResponse;
-use Zend\Expressive\Template\TemplateInterface;
+use Zend\Expressive\Router\RouterInterface;
+use Zend\Expressive\Template\TemplateRendererInterface;
 
 class DisplayPostMiddleware
 {
@@ -10,12 +13,26 @@ class DisplayPostMiddleware
 
     private $mapper;
 
+    /**
+     * Delimiter between post summary and extended body
+     *
+     * @var string
+     */
+    private $postDelimiter = '<!--- EXTENDED -->';
+
+    private $router;
+
     private $template;
 
-    public function __construct(MapperInterface $mapper, TemplateInterface $template, array $disqus = [])
-    {
+    public function __construct(
+        MapperInterface $mapper,
+        TemplateRendererInterface $template,
+        RouterInterface $router,
+        array $disqus = []
+    ) {
         $this->mapper   = $mapper;
         $this->template = $template;
+        $this->router   = $router;
         $this->disqus   = $disqus;
     }
 
@@ -27,14 +44,18 @@ class DisplayPostMiddleware
             return $next($req, $res->withStatus(404), 'Not found');
         }
 
-        $post = include $post['path'];
-        if (! $post instanceof EntryEntity) {
-            return $next($req, $res->withStatus(404), 'Not found');
-        }
+        $parser   = new Parser(null, new CommonMarkParser());
+        $document = $parser->parse(file_get_contents($post['path']));
+        $post     = $document->getYAML();
+        $parts    = explode($this->postDelimiter, $document->getContent(), 2);
+        $post     = array_merge($post, [
+            'body'      => $parts[0],
+            'extended'  => isset($parts[1]) ? $parts[1] : '',
+        ]);
 
         $original = $req->getOriginalRequest()->getUri()->getPath();
-        $path     = substr($original, 0, -(strlen($post->getId() . '.html') + 1));
-        $post     = new EntryView($post->getArrayCopy(), $path, $this->disqus);
+        $path     = substr($original, 0, -(strlen($post['id'] . '.html') + 1));
+        $post     = new EntryView($post, $this->disqus);
 
         return new HtmlResponse(
             $this->template->render('blog::post', $post)
