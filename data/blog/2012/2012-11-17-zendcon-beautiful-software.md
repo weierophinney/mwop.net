@@ -28,4 +28,4 @@ I discovered today that not only was it recorded, but it's been
 
 <!--- EXTENDED -->
 
-I've also [posted the slides](http://slides.mwop.net/2012-10-25-BeautifulSoftware/BeautifulSoftware.html).
+I've also [posted the slides](//slides.mwop.net/2012-10-25-BeautifulSoftware/BeautifulSoftware.html).

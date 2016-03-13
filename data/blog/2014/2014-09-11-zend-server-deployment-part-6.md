@@ -39,13 +39,13 @@ instance, for my current site, I have this for the host:
 
 This allows me to match with or without the `www.` prefix.
 
-![](http://uploads.mwop.net/2014-09-11-ZendServer-PageCacheRule.png)
+![](//uploads.mwop.net/2014-09-11-ZendServer-PageCacheRule.png)
 
 After that, I define regular expressions for the paths, and ensure that matches
 take into account the `REQUEST_URI` (failure to do this will cache the same page
 for any page matching the regex!).
 
-![](http://uploads.mwop.net/2014-09-11-ZendServer-PageCacheRule-ByUri.png)
+![](//uploads.mwop.net/2014-09-11-ZendServer-PageCacheRule-ByUri.png)
 
 When I deploy, or when I run specific jobs, I typically want to clear my cache.
 To do that, I have a Job Queue job, and in that script, I use the
