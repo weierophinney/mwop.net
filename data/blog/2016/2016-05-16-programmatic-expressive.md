@@ -177,9 +177,9 @@ $app->post('/contact/process', Contact\Process::class, 'contact.process');
 $app->get('/contact/thank-you', Contact\ThankYouPage::class, 'contact.thank-your');
 
 // Zend Server jobs
-$app->post('/jobs/clear-cache', 'Job\ClearCache::class', 'job.clear-cache');
-$app->post('/jobs/comics', 'Job\Comics::class', 'job.comics');
-$app->post('/jobs/github-feed', 'Job\GithubFeed::class', 'job.github-feed');
+$app->post('/jobs/clear-cache', Job\ClearCache::class, 'job.clear-cache');
+$app->post('/jobs/comics', Job\Comics::class, 'job.comics');
+$app->post('/jobs/github-feed', Job\GithubFeed::class, 'job.github-feed');
 
 $app->run();
 ```
