@@ -22,36 +22,4 @@ return [
             Unauthorized::class => UnauthorizedFactory::class,
         ],
     ],
-    'middleware_pipeline' => [
-        'always' => [
-            'middleware' => [
-                XClacksOverhead::class,
-                Redirects::class,
-            ],
-            'priority' => 10000,
-        ],
-
-        'auth' => [
-            'path'       => '/auth',
-            'middleware' => AuthMiddleware::class,
-            'priority'   => 10,
-        ],
-
-        'routing' => [
-            'middleware' => [
-                ApplicationFactory::ROUTING_MIDDLEWARE,
-                Helper\UrlHelperMiddleware::class,
-                ApplicationFactory::DISPATCH_MIDDLEWARE,
-            ],
-            'priority' => 1,
-        ],
-
-        'error' => [
-            'middleware' => [
-                Unauthorized::class,
-            ],
-            'error' => true,
-            'priority' => -10000,
-        ],
-    ],
 ];
