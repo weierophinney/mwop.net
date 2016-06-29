@@ -18,20 +18,11 @@ permissions:
       mode: 600
 hooks:
   ApplicationStop:
-    - location: /usr/sbin/service nginx stop
-      timeout: 300
-      runas: root
-    - location: /usr/sbin/service php7.0-fpm stop
+    - location: .aws/application-stop.sh
       timeout: 300
       runas: root
   ApplicationStart:
-    - location: /usr/sbin/service php7.0-fpm start
-      timeout: 300
-      runas: root
-    - location: /usr/sbin/service nginx start
-      timeout: 300
-      runas: root
-    - location: /usr/sbin/service cron restart
+    - location: .aws/application-start.sh
       timeout: 300
       runas: root
   BeforeInstall:
