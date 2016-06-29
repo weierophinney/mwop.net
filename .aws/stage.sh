@@ -12,5 +12,4 @@
     npm install ;
     grunt ;
     rm -Rf node_modules ;
-    chmod -R ug+rwX data ;
 )
