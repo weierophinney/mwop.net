@@ -24,3 +24,10 @@ hooks:
     - location: .aws/before-install.sh
       timeout: 600
       runas: root
+  AfterInstall:
+    - location: .aws/after-install-www-data.sh
+      timeout: 600
+      runas: www-data
+    - location: .aws/after-install-root.sh
+      timeout: 30
+      runas: root
