@@ -1,4 +1,5 @@
 #!/bin/bash
+cp /var/www/config/php/*.* config/autoload/
 composer install --no-ansi --no-dev --no-interaction --no-progress --no-scripts --optimize-autoloader
 php bin/mwop.net.php seed-blog-db
 php bin/mwop.net.php tag-cloud
