@@ -1,0 +1,42 @@
+version: 0.0
+os: linux
+files:
+  - source: /
+    destination: /var/www/mwop.net
+  - source: .aws/crontab
+    destination: /var/spool/cron/crontabs/www-data
+permissions:
+    - object: /var/www/mwop.net
+      pattern: "**"
+      owner: www-data
+      group: www-data
+      type:
+        - directory
+    - object: /var/spool/cron/crontabs/www-data
+      owner: www-data
+      group: crontab
+      mode: 600
+hooks:
+  ApplicationStop:
+    - location: service nginx stop
+      timeout: 300
+      runas: root
+    - location: service php7.0-fpm stop
+      timeout: 300
+      runas: root
+  ApplicationStart:
+    - location: service php7.0-fpm start
+      timeout: 300
+      runas: root
+    - location: service nginx start
+      timeout: 300
+      runas: root
+    - location: service cron restart
+      timeout: 300
+      runas: root
+  BeforeInstall:
+    - location: .aws/install_dependencies.sh
+      timeout: 600
+      runas: root
+  AfterInstall:
+    - location: .aws/stage.sh
