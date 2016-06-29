@@ -18,6 +18,11 @@ else
     /usr/local/bin/composer self-update --stable --no-ansi --no-interaction
 fi
 
+# Create a COMPOSER_HOME directory for the application
+if [ ! -d "/var/cache/composer" ];then
+    mkdir -p /var/cache/composer
+    chown www-data.www-data /var/cache/composer
+fi
 
 # Get private configuration
 if [ ! -d "/var/www/config" ];then
