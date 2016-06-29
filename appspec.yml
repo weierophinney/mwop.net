@@ -40,3 +40,5 @@ hooks:
       runas: root
   AfterInstall:
     - location: .aws/stage.sh
+      timeout: 600
+      runas: www-data
