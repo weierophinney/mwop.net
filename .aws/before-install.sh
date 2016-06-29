@@ -54,3 +54,11 @@ chmod -R ug+rwX /var/log/php
 
 # Install grunt globally
 npm install -g grunt-cli
+
+# Ensure we can run npm as www-data
+if [ ! -d "/var/www/.npm" ];then
+    mkdir -p /var/www/.npm
+    chown www-data.www-data /var/www/.npm
+    chmod o-X /var/www/.npm
+    chmod ug+rwX /var/www/.npm
+fi
