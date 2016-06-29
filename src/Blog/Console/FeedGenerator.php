@@ -8,11 +8,14 @@ use Mwop\Blog;
 use Symfony\Component\Yaml\Parser as YamlParser;
 use Zend\Console\ColorInterface as Color;
 use Zend\Expressive\Router\RouterInterface;
+use Zend\Expressive\Router\FastRouteRouter;
 use Zend\Expressive\Template\TemplateRendererInterface;
 use Zend\Feed\Writer\Feed as FeedWriter;
 
 class FeedGenerator
 {
+    use RoutesTrait;
+
     private $authors = [];
 
     private $authorsPath;
@@ -38,7 +41,7 @@ class FeedGenerator
         $authorsPath
     ) {
         $this->mapper      = $mapper;
-        $this->router      = $router;
+        $this->router      = $this->seedRoutes($router);
         $this->renderer    = $renderer;
         $this->authorsPath = $authorsPath;
     }
@@ -121,7 +124,8 @@ class FeedGenerator
 
             $entry = $feed->createEntry();
             $entry->setTitle($post['title']);
-            $entry->setLink($baseUri . $this->generateUri('blog.post', ['id' => $post['id']]));
+            // $entry->setLink($baseUri . $this->generateUri('blog.post', ['id' => $post['id']]));
+            $entry->setLink($baseUri . sprintf('/blog/%s.html', $post['id']));
 
             $entry->addAuthor($author);
             $entry->setDateModified(new DateTime($post['updated']));

@@ -8,19 +8,15 @@ use Zend\Console\ColorInterface as Color;
 use Zend\Diactoros\ServerRequest as PsrRequest;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\Uri;
-use Zend\Expressive\Router\RouterInterface;
 use Zend\Stratigility\Http\Request;
 
 class CachePosts
 {
     private $blogMiddleware;
 
-    private $router;
-
-    public function __construct(callable $blog, RouterInterface $router)
+    public function __construct(callable $blog)
     {
         $this->blogMiddleware = $blog;
-        $this->router         = $router;
     }
 
     public function __invoke($route, $console)
@@ -49,7 +45,7 @@ class CachePosts
             $width   = $console->getWidth();
             $console->write($message, Color::BLUE);
 
-            $canonical = $baseUri->withPath($this->router->generateUri('blog.post', ['id' => $metadata['id']]));
+            $canonical = $baseUri->withPath(sprintf('/blog/%s.html', $metadata['id']));
             $request   = (new Request(new PsrRequest([], [], $canonical, 'GET')))
                 ->withUri($canonical)
                 ->withAttribute('id', $metadata['id']);
