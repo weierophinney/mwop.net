@@ -3,8 +3,6 @@ os: linux
 files:
   - source: /
     destination: /var/www/mwop.net
-  - source: .aws/crontab
-    destination: /var/spool/cron/crontabs/www-data
 permissions:
     - object: /var/www/mwop.net
       pattern: "**"
@@ -12,10 +10,7 @@ permissions:
       group: www-data
       type:
         - directory
-    - object: /var/spool/cron/crontabs/www-data
-      owner: www-data
-      group: crontab
-      mode: 600
+        - file
 hooks:
   ApplicationStop:
     - location: .aws/application-stop.sh
@@ -26,10 +21,13 @@ hooks:
       timeout: 300
       runas: root
   BeforeInstall:
-    - location: .aws/install_dependencies.sh
+    - location: .aws/before-install.sh
       timeout: 600
       runas: root
   AfterInstall:
-    - location: .aws/stage.sh
+    - location: .aws/after-install-www-data.sh
       timeout: 600
       runas: www-data
+    - location: .aws/after-install-root.sh
+      timeout: 30
+      runas: root
