@@ -28,21 +28,18 @@ class PrepOfflinePages
         '/images/favicon/favicon-32x32.png',
         '/images/favicon/favicon-16x16.png',
         '/images/logo.gif',
+        '/images/mwop-coffee-dpc09.jpg',
         '/manifest.json',
         '/js/bootstrap.min.js',
         'https://www.google.com/jsapi?ABQIAAAAGybdRRvLZwVUcF0dE3oVdBTO-MlgA7VGJpGqyqTOeDXlNzyZQxTGq17s-iAB0m0vwqLQ_A2dHhTg2Q',
         'https://code.jquery.com/jquery-1.10.2.min.js',
-        'https://farm4.staticflickr.com/3315/3625794227_8d038eac5e_n.jpg',
     ];
 
     private $mapper;
 
-    private $router;
-
-    public function __construct(MapperInterface $mapper, RouterInterface $router)
+    public function __construct(MapperInterface $mapper)
     {
         $this->mapper = $mapper;
-        $this->router = $router;
     }
 
     public function __invoke($route, $console)
@@ -72,21 +69,8 @@ class PrepOfflinePages
         $posts->setCurrentPageNumber(1);
 
         foreach ($posts as $post) {
-            yield $this->generateUri('blog.post', $post['id']);
+            yield sprintf('/blog/%s.html', $post['id']);
         }
-    }
-
-    /**
-     * Normalize generated URIs.
-     *
-     * @param string $route
-     * @param string $id
-     * @return string
-     */
-    private function generateUri($route, $id)
-    {
-        $uri = $this->router->generateUri($route, ['id' => $id]);
-        return str_replace('[/]', '', $uri);
     }
 
     /**

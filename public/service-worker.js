@@ -1,5 +1,5 @@
 /* Ends with ':' so it can be used with cache identifiers */
-var version = 'v0.3.4:';
+var version = 'v0.3.6:';
 
 /* Pages to cache by default */
 var offline = [
@@ -8,39 +8,27 @@ var offline = [
     "/offline",
     "/resume",
     "/css/site.min.css",
-    "/images/favicon/android-chrome-144x144.png",
-    "/images/favicon/android-chrome-36x36.png",
-    "/images/favicon/android-chrome-48x48.png",
-    "/images/favicon/android-chrome-72x72.png",
-    "/images/favicon/android-chrome-manifest.json",
     "/images/favicon/apple-touch-icon-57x57.png",
     "/images/favicon/apple-touch-icon-60x60.png",
     "/images/favicon/apple-touch-icon-72x72.png",
-    "/images/favicon/apple-touch-icon-precomposed.png",
-    "/images/favicon/apple-touch-icon.png",
-    "/images/favicon/browserconfig.xml",
-    "/images/favicon/favicon-16x16.png",
     "/images/favicon/favicon-32x32.png",
-    "/images/favicon/favicon.ico",
-    "/images/favicon/mstile-150x150.png",
-    "/images/favicon/mstile-310x150.png",
-    "/images/favicon/mstile-70x70.png",
+    "/images/favicon/favicon-16x16.png",
     "/images/logo.gif",
+    "/images/mwop-coffee-dpc09.jpg",
     "/manifest.json",
     "/js/bootstrap.min.js",
     "https://www.google.com/jsapi?ABQIAAAAGybdRRvLZwVUcF0dE3oVdBTO-MlgA7VGJpGqyqTOeDXlNzyZQxTGq17s-iAB0m0vwqLQ_A2dHhTg2Q",
     "https://code.jquery.com/jquery-1.10.2.min.js",
-    "https://farm4.staticflickr.com/3315/3625794227_8d038eac5e_n.jpg",
+    "/blog/2016-05-16-programmatic-expressive.html",
+    "/blog/2016-04-26-on-locators.html",
+    "/blog/2016-04-17-react2psr7.html",
+    "/blog/2016-01-29-automating-gh-pages.html",
+    "/blog/2016-01-28-expressive-stable.html",
+    "/blog/2015-12-14-secure-phar-automation.html",
     "/blog/2015-09-19-zend-10-year-anniversary.html",
     "/blog/2015-09-09-composer-root.html",
     "/blog/2015-07-28-on-psr7-headers.html",
-    "/blog/2015-06-08-php-is-20.html",
-    "/blog/2015-05-18-psr-7-accepted.html",
-    "/blog/2015-05-15-splitting-components-with-git.html",
-    "/blog/2015-01-26-psr-7-by-example.html",
-    "/blog/2015-01-08-on-http-middleware-and-psr-7.html",
-    "/blog/2014-11-03-utopic-and-amd.html",
-    "/blog/2014-09-18-zend-server-deployment-part-8.html"
+    "/blog/2015-06-08-php-is-20.html"
 ];
 
 /* Pages to NEVER cache */
@@ -59,9 +47,7 @@ var neverCache = [
   '/contact/thank-you'
 ];
 
-var offsiteImageWhitelist = [
-  'https://farm4.staticflickr.com/3315/3625794227_8d038eac5e_n.jpg'
-];
+var offsiteImageWhitelist = [];
 
 /* Cache up to 25 pages locally */
 var pageCacheLimit = 25;
