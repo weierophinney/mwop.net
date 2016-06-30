@@ -37,12 +37,9 @@ class PrepOfflinePages
 
     private $mapper;
 
-    private $router;
-
-    public function __construct(MapperInterface $mapper, RouterInterface $router)
+    public function __construct(MapperInterface $mapper)
     {
         $this->mapper = $mapper;
-        $this->router = $router;
     }
 
     public function __invoke($route, $console)
@@ -72,21 +69,8 @@ class PrepOfflinePages
         $posts->setCurrentPageNumber(1);
 
         foreach ($posts as $post) {
-            yield $this->generateUri('blog.post', $post['id']);
+            yield sprintf('/blog/%s.html', $post['id']);
         }
-    }
-
-    /**
-     * Normalize generated URIs.
-     *
-     * @param string $route
-     * @param string $id
-     * @return string
-     */
-    private function generateUri($route, $id)
-    {
-        $uri = $this->router->generateUri($route, ['id' => $id]);
-        return str_replace('[/]', '', $uri);
     }
 
     /**
