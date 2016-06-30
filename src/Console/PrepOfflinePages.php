@@ -28,11 +28,11 @@ class PrepOfflinePages
         '/images/favicon/favicon-32x32.png',
         '/images/favicon/favicon-16x16.png',
         '/images/logo.gif',
+        '/images/mwop-coffee-dpc09.jpg',
         '/manifest.json',
         '/js/bootstrap.min.js',
         'https://www.google.com/jsapi?ABQIAAAAGybdRRvLZwVUcF0dE3oVdBTO-MlgA7VGJpGqyqTOeDXlNzyZQxTGq17s-iAB0m0vwqLQ_A2dHhTg2Q',
         'https://code.jquery.com/jquery-1.10.2.min.js',
-        'https://farm4.staticflickr.com/3315/3625794227_8d038eac5e_n.jpg',
     ];
 
     private $mapper;
