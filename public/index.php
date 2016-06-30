@@ -24,7 +24,7 @@ $app->pipe('/auth', Auth\Middleware::class);
 $app->pipeRoutingMiddleware();
 $app->pipe(Helper\UrlHelperMiddleware::class);
 $app->pipeDispatchMiddleware();
-$app->pipe(Unauthorized::class);
+$app->pipeErrorHandler(Unauthorized::class);
 
 // Routed middleware
 
