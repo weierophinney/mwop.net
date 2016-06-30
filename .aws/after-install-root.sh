@@ -20,5 +20,5 @@ if [ ! -e "/etc/nginx/sites-enabled/mwop.net.conf" ];then
 fi
 
 # Copy php configuration for php-fpm process
-cp ${SCRIPT_PATH}/php.ini /etc/php/7.0/fpm/conf.d/mwop.ini
+cp ${SCRIPT_PATH}/php.ini /etc/php/7.0/fpm/php.ini
 cp ${SCRIPT_PATH}/php-fpm.conf /etc/php/7.0/fpm/pool.d/www.conf
