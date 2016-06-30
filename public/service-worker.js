@@ -1,5 +1,5 @@
 /* Ends with ':' so it can be used with cache identifiers */
-var version = 'v0.3.4:';
+var version = 'v0.3.5:';
 
 /* Pages to cache by default */
 var offline = [
@@ -26,11 +26,11 @@ var offline = [
     "/images/favicon/mstile-310x150.png",
     "/images/favicon/mstile-70x70.png",
     "/images/logo.gif",
+    "/images/mwop-coffee-dpc09.jpg",
     "/manifest.json",
     "/js/bootstrap.min.js",
     "https://www.google.com/jsapi?ABQIAAAAGybdRRvLZwVUcF0dE3oVdBTO-MlgA7VGJpGqyqTOeDXlNzyZQxTGq17s-iAB0m0vwqLQ_A2dHhTg2Q",
     "https://code.jquery.com/jquery-1.10.2.min.js",
-    "https://farm4.staticflickr.com/3315/3625794227_8d038eac5e_n.jpg",
     "/blog/2015-09-19-zend-10-year-anniversary.html",
     "/blog/2015-09-09-composer-root.html",
     "/blog/2015-07-28-on-psr7-headers.html",
@@ -59,9 +59,7 @@ var neverCache = [
   '/contact/thank-you'
 ];
 
-var offsiteImageWhitelist = [
-  'https://farm4.staticflickr.com/3315/3625794227_8d038eac5e_n.jpg'
-];
+var offsiteImageWhitelist = [];
 
 /* Cache up to 25 pages locally */
 var pageCacheLimit = 25;
