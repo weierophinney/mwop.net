@@ -1,12 +1,10 @@
 #!/bin/bash
 #######################################################################
-# System preparation
+# System dependencies
 #######################################################################
 
-SCRIPT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-
 # Install needed dependencies
-apt-get install -y nginx php7.0 php7.0-bcmath php7.0-bz2 php7.0-cli php7.0-ctype php7.0-curl php7.0-dom php7.0-fileinfo php7.0-fpm php7.0-gd php7.0-iconv php7.0-intl php7.0-json php7.0-mbstring php7.0-pdo php7.0-pdo-sqlite php7.0-phar php7.0-readline php7.0-simplexml php7.0-sockets php7.0-sqlite3 php7.0-tidy php7.0-tokenizer php7.0-xml php7.0-xsl php7.0-xmlreader php7.0-xmlwriter php7.0-zip npm
+apt-get install -y nginx php7.0 php7.0-bcmath php7.0-bz2 php7.0-cli php7.0-ctype php7.0-curl php7.0-dom php7.0-fileinfo php7.0-fpm php7.0-gd php7.0-iconv php7.0-intl php7.0-json php7.0-mbstring php7.0-pdo php7.0-pdo-sqlite php7.0-phar php7.0-readline php7.0-simplexml php7.0-sockets php7.0-sqlite3 php7.0-tidy php7.0-tokenizer php7.0-xml php7.0-xsl php7.0-xmlreader php7.0-xmlwriter php7.0-zip npm python3-pip
 
 # aws cli
 pip3 install awscli
@@ -32,18 +30,6 @@ if [ ! -d "/var/www/config" ];then
     mkdir -p /var/www/config
 fi
 (cd /var/www/config && aws s3 sync s3://config.mwop.net .)
-mv /var/www/config/ssl/*.* /etc/ssl/
-(cd /etc/ssl && cat mwop.net.crt mwop.net.ca-bundle > mwop.net.chained.crt)
-
-# Copy nginx configuration
-cp ${SCRIPT_PATH}/mwop.net.conf /etc/nginx/sites-available/
-if [ ! -e "/etc/nginx/sites-enabled/mwop.net.conf" ];then
-    (cd /etc/nginx/sites-enabled && ln -s ../sites-available/mwop.net.conf .)
-fi
-
-# Copy php configuration
-cp ${SCRIPT_PATH}/php.ini /etc/php/7.0/fpm/conf.d/mwop.ini
-cp ${SCRIPT_PATH}/php-fpm.conf /etc/php/7.0/fpm/pool.d/www.conf
 
 # Make a log directory for php-fpm
 if [ ! -d "/var/log/php" ];then
