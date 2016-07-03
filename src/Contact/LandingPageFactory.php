@@ -5,12 +5,12 @@ use Zend\Expressive\Template\TemplateRendererInterface;
 
 class LandingPageFactory
 {
-    public function __invoke($services)
+    public function __invoke($container)
     {
         return new LandingPage(
-            $services->get(TemplateRendererInterface::class),
-            $services->get('session'),
-            $services->get('config')['contact']
+            $container->get(TemplateRendererInterface::class),
+            $container->get('session'),
+            $container->get('config')['contact']
         );
     }
 }

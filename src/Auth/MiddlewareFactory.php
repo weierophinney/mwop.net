@@ -6,9 +6,9 @@ use Zend\Expressive\Helper\BodyParams\BodyParamsMiddleware;
 
 class MiddlewareFactory
 {
-    public function __invoke($services)
+    public function __invoke($container)
     {
-        $middleware = AppFactory::create($services);
+        $middleware = AppFactory::create($container);
 
         $middleware->route('/callback', [
             BodyParamsMiddleware::class,

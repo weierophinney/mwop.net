@@ -3,10 +3,10 @@ namespace Mwop\Auth;
 
 class LogoutFactory
 {
-    public function __invoke($services)
+    public function __invoke($container)
     {
         return new Logout(
-            $services->get('session')
+            $container->get('session')
         );
     }
 }

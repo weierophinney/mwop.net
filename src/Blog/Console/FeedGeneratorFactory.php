@@ -7,12 +7,12 @@ use Zend\Expressive\Template\TemplateRendererInterface;
 
 class FeedGeneratorFactory
 {
-    public function __invoke($services)
+    public function __invoke($container)
     {
         return new FeedGenerator(
-            $services->get(Mapper::class),
-            $services->get(RouterInterface::class),
-            $services->get(TemplateRendererInterface::class),
+            $container->get(Mapper::class),
+            $container->get(RouterInterface::class),
+            $container->get(TemplateRendererInterface::class),
             realpath(getcwd()) . '/data/blog/authors/'
         );
     }

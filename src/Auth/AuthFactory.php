@@ -3,10 +3,10 @@ namespace Mwop\Auth;
 
 class AuthFactory
 {
-    public function __invoke($services)
+    public function __invoke($container)
     {
-        $config = $services->get('Config');
+        $config = $container->get('config');
         $config = $config['opauth'];
-        return new Auth($config, $services->get('session'));
+        return new Auth($config, $container->get('session'));
     }
 }

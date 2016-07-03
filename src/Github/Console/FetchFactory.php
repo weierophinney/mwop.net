@@ -3,8 +3,8 @@ namespace Mwop\Github\Console;
 
 class FetchFactory
 {
-    public function __invoke($services)
+    public function __invoke($container)
     {
-        return new Fetch($services->get('Mwop\Github\AtomReader'));
+        return new Fetch($container->get('Mwop\Github\AtomReader'));
     }
 }

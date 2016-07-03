@@ -6,8 +6,8 @@ use Mwop\Console\PrepOfflinePages;
 
 class PrepOfflinePagesFactory
 {
-    public function __invoke($services, $canonicalName, $requestedName)
+    public function __invoke($container, $canonicalName, $requestedName)
     {
-        return new PrepOfflinePages($services->get(Mapper::class));
+        return new PrepOfflinePages($container->get(Mapper::class));
     }
 }

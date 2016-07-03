@@ -5,9 +5,9 @@ use Zend\Mail\Transport;
 
 class MailTransport
 {
-    public function __invoke($services)
+    public function __invoke($container)
     {
-        $config  = $services->get('Config');
+        $config  = $container->get('config');
         $config  = $config['mail']['transport'];
         $class   = $config['class'];
         $options = $config['options'];

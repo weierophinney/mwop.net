@@ -7,13 +7,13 @@ use Mwop\Github;
 use Zend\Expressive\Application;
 use Zend\Expressive\Container\ApplicationFactory;
 use Zend\Expressive\Helper;
+use Zend\Feed\Reader\Http\ClientInterface as FeedReaderHttpClientInterface;
 
 return ['dependencies' => [
     'invokables' => [
         Console\PrepPageCacheRules::class => Console\PrepPageCacheRules::class,
     ],
     'factories' => [
-        'http'                            => Factory\HttpClient::class,
         'mail.transport'                  => Factory\MailTransport::class,
         'session'                         => Factory\Session::class,
         Auth\AuthCallback::class          => Auth\AuthCallbackFactory::class,
@@ -25,6 +25,7 @@ return ['dependencies' => [
         Blog\Console\TagCloud::class      => Blog\Console\TagCloudFactory::class,
         Blog\Mapper::class                => Blog\MapperFactory::class,
         Console\PrepOfflinePages::class   => Factory\PrepOfflinePagesFactory::class,
+        FeedReaderHttpClientInterface::class => Github\HttpPlugClientFactory::class,
         Github\AtomReader::class          => Github\AtomReaderFactory::class,
         Github\Console\Fetch::class       => Github\Console\FetchFactory::class,
         Helper\UrlHelper::class           => Helper\UrlHelperFactory::class,

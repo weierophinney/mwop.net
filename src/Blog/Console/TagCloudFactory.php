@@ -3,8 +3,8 @@ namespace Mwop\Blog\Console;
 
 class TagCloudFactory
 {
-    public function __invoke($services)
+    public function __invoke($container)
     {
-        return new TagCloud($services->get('Mwop\Blog\Mapper'));
+        return new TagCloud($container->get('Mwop\Blog\Mapper'));
     }
 }

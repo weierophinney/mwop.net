@@ -1,14 +1,14 @@
 <?php
 namespace Mwop\Factory;
 
+use Interop\Container\ContainerInterface;
 use Mwop\Blog\EntryView;
 use Phly\Expressive\Mustache\MustacheTemplate;
-use Zend\ServiceManager\DelegatorFactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\ServiceManager\Factory\DelegatorFactoryInterface;
 
 class UriTemplateDelegatorFactory implements DelegatorFactoryInterface
 {
-    public function createDelegatorWithName(ServiceLocatorInterface $services, $name, $requestedName, $callback)
+    public function __invoke(ContainerInterface $contaier, $requestedName, callable $callback, array $options = null)
     {
         $renderer = $callback();
 

@@ -3,8 +3,8 @@ namespace Mwop\Auth;
 
 class UserSessionFactory
 {
-    public function __invoke($services)
+    public function __invoke($container)
     {
-        return new UserSession($services->get('session'));
+        return new UserSession($container->get('session'));
     }
 }

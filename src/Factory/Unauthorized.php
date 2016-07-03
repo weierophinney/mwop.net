@@ -6,10 +6,10 @@ use Zend\Expressive\Template\TemplateRendererInterface;
 
 class Unauthorized
 {
-    public function __invoke($services)
+    public function __invoke($container)
     {
         return new Middleware(
-            $services->get(TemplateRendererInterface::class)
+            $container->get(TemplateRendererInterface::class)
         );
     }
 }
