@@ -6,14 +6,14 @@ use Zend\Expressive\Template\TemplateRendererInterface;
 
 class ErrorHandlerFactory
 {
-    public function __invoke($services, $canonicalName, $requestedName)
+    public function __invoke($container, $canonicalName, $requestedName)
     {
-        $config = $services->get('config');
+        $config = $container->get('config');
         $displayErrors = array_key_exists('debug', $config)
             ? (bool) $config['debug']
             : false;
         return new ErrorHandler(
-            $services->get(TemplateRendererInterface::class),
+            $container->get(TemplateRendererInterface::class),
             $displayErrors
         );
     }

@@ -7,13 +7,13 @@ use Zend\Expressive\Router\RouterInterface;
 
 class DisplayPostMiddlewareFactory
 {
-    public function __invoke($services)
+    public function __invoke($container)
     {
         return new DisplayPostMiddleware(
-            $services->get(Mapper::class),
-            $services->get(TemplateRendererInterface::class),
-            $services->get(RouterInterface::class),
-            $services->get('config')['blog']['disqus']
+            $container->get(Mapper::class),
+            $container->get(TemplateRendererInterface::class),
+            $container->get(RouterInterface::class),
+            $container->get('config')['blog']['disqus']
         );
     }
 }

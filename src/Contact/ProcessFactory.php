@@ -5,13 +5,13 @@ use Zend\Expressive\Template\TemplateRendererInterface;
 
 class ProcessFactory
 {
-    public function __invoke($services)
+    public function __invoke($container)
     {
         return new Process(
-            $services->get('session'),
-            $services->get('mail.transport'),
-            $services->get(TemplateRendererInterface::class),
-            $services->get('config')['contact']
+            $container->get('session'),
+            $container->get('mail.transport'),
+            $container->get(TemplateRendererInterface::class),
+            $container->get('config')['contact']
         );
     }
 }

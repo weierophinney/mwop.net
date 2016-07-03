@@ -8,13 +8,13 @@ use Zend\Expressive\Template\TemplateRendererInterface;
 
 class ListPostsMiddlewareFactory
 {
-    public function __invoke($services)
+    public function __invoke($container)
     {
         return new ListPostsMiddleware(
-            $services->get(Mapper::class),
-            $services->get(TemplateRendererInterface::class),
-            $services->get(RouterInterface::class),
-            $services->get(UrlHelper::class)
+            $container->get(Mapper::class),
+            $container->get(TemplateRendererInterface::class),
+            $container->get(RouterInterface::class),
+            $container->get(UrlHelper::class)
         );
     }
 }

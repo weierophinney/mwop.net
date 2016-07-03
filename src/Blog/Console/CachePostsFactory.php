@@ -8,11 +8,11 @@ class CachePostsFactory
 {
     use RoutesTrait;
 
-    public function __invoke($services)
+    public function __invoke($container)
     {
         return new CachePosts(
-            $services->get(DisplayPostMiddleware::class),
-            $this->seedRoutes($services->get(RouterInterface::class))
+            $container->get(DisplayPostMiddleware::class),
+            $this->seedRoutes($container->get(RouterInterface::class))
         );
     }
 }

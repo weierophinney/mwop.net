@@ -6,11 +6,11 @@ use Zend\Expressive\Template\TemplateRendererInterface;
 
 class ThankYouPageFactory
 {
-    public function __invoke($services)
+    public function __invoke($container)
     {
         return new ThankYouPage(
-            $services->get(TemplateRendererInterface::class),
-            $services->get(RouterInterface::class)
+            $container->get(TemplateRendererInterface::class),
+            $container->get(RouterInterface::class)
         );
     }
 }

@@ -6,11 +6,11 @@ use Zend\Expressive\Template\TemplateRendererInterface;
 
 class PageFactory
 {
-    public function __invoke($services, $canonicalName, $requestedName)
+    public function __invoke($container, $requestedName)
     {
         return new Page(
             $this->deriveTemplateName($requestedName),
-            $services->get(TemplateRendererInterface::class)
+            $container->get(TemplateRendererInterface::class)
         );
     }
 

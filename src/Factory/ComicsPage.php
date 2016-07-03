@@ -7,14 +7,14 @@ use Zend\Expressive\Template\TemplateRendererInterface;
 
 class ComicsPage
 {
-    public function __invoke($services)
+    public function __invoke($container)
     {
         $pipeline = new MiddlewarePipe();
 
-        $pipeline->pipe($services->get('Mwop\Auth\UserSession'));
+        $pipeline->pipe($container->get('Mwop\Auth\UserSession'));
         $pipeline->pipe(new Page(
             'mwop::comics.page',
-            $services->get(TemplateRendererInterface::class)
+            $container->get(TemplateRendererInterface::class)
         ));
 
         return $pipeline;

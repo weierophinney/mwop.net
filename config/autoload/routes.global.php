@@ -4,7 +4,6 @@ use Mwop\ComicsPage;
 use Mwop\Contact;
 use Mwop\Factory;
 use Mwop\HomePage;
-use Mwop\Job;
 use Mwop\ResumePage;
 use Zend\Expressive\Helper\BodyParams\BodyParamsMiddleware;
 use Zend\Expressive\Router\RouterInterface;
@@ -31,7 +30,6 @@ return [
             Contact\ThankYouPage::class       => Contact\ThankYouPageFactory::class,
             ComicsPage::class                 => Factory\ComicsPage::class,
             HomePage::class                   => Factory\PageFactory::class,
-            Job\GithubFeed::class             => Job\GithubFeedFactory::class,
             ResumePage::class                 => Factory\PageFactory::class,
             'Mwop\OfflinePage'                => Factory\PageFactory::class,
         ],

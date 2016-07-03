@@ -7,7 +7,7 @@ use Zend\ServiceManager\ServiceManager;
 $config = require 'config.php';
 
 // Build container
-$container = new ServiceManager(new Config($config['dependencies']));
+$container = new ServiceManager($config['dependencies']);
 
 // Inject config
 $container->setService('config', $config);

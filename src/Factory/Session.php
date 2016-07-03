@@ -5,7 +5,7 @@ use Aura\Session\SessionFactory;
 
 class Session
 {
-    public function __invoke($services)
+    public function __invoke()
     {
         $factory = new SessionFactory;
         return $factory->newInstance($_COOKIE);
