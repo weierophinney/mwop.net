@@ -14,8 +14,9 @@
         <li>A <a href="http://php.net">PHP</a> developer and framework architect.</li>
         <li>A frequent PHP conference speaker.</li>
         <li>An open source software developer and advocate.</li>
-        <li>A (sometimes) brewer of beer.</li>
-        <li>A (budding) fitness junkie.</li>
+        <li>A brewer of beer.</li>
+        <li>A cyclist.</li>
+        <li>A martial arts practitioner.</li>
     </ul>
 
     <p>
@@ -30,10 +31,20 @@
 </aside>
 
 <aside class="col-md-4 omega home">
+    <h3>Recent Blog Posts</h3>
+
+    <ul>
+    {{#posts}}
+        <li><a href="{{url}}">{{title}}</a></li>
+    {{/posts}}
+    </ul>
+
     <h3>Recent Github Activity</h3>
+
     <ul id="github">
         {{>github-links}}
     </ul>
+
     <p><em><a href="https://github.com/weierophinney?tab=activity">Read more</a></em></p>
 
     <a class="twitter-timeline" href="https://twitter.com/mwop" data-widget-id="269876420560420864">Tweets by @mwop</a>
@@ -50,7 +61,8 @@
       <a href="https://mwop.net/" rel="author">Matthew Weier O'Phinney</a> is a
       web professional and architect, technical writer, and speaker. Matthew
       works as a Principal Engineer at <a href="http://www.zend.com">Zend
-        Technologies</a>, where he leads the Zend Framework and Apigility
+        Technologies</a> (a <a href="http://www.roguewave.com">RogueWave
+        company</a>, where he leads the Zend Framework and Apigility
       projects, providing open source tools for building web applications and
       APIs in PHP. He blogs at <a href="https://mwop.net/blog">https://mwop.net/blog</a>
       and is <a href="https://twitter.com/mwop">@mwop</a> on Twitter.

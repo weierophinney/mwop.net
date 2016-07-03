@@ -29,7 +29,7 @@ return [
             Contact\Process::class            => Contact\ProcessFactory::class,
             Contact\ThankYouPage::class       => Contact\ThankYouPageFactory::class,
             ComicsPage::class                 => Factory\ComicsPage::class,
-            HomePage::class                   => Factory\PageFactory::class,
+            HomePage::class                   => Factory\HomePageFactory::class,
             ResumePage::class                 => Factory\PageFactory::class,
             'Mwop\OfflinePage'                => Factory\PageFactory::class,
         ],
