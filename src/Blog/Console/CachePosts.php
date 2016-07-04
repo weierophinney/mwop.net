@@ -24,6 +24,7 @@ class CachePosts
         $basePath = $route->getMatchedParam('path');
 
         $path       = realpath($basePath) . '/data/blog';
+        $cache      = realpath($basePath) . '/data/cache/posts';
         $baseUri    = new Uri('https://mwop.net');
         $middleware = $this->blogMiddleware;
 
@@ -51,7 +52,11 @@ class CachePosts
                 ->withAttribute('id', $metadata['id']);
 
             $failed = false;
-            $middleware($request, new Response(), $done);
+            $response = $middleware($request, new Response(), $done);
+
+            if (! $failed) {
+                $this->cacheResponse($metadata['id'], $cache, $response->getBody());
+            }
 
             $this->reportComplete($console, $width, $length, ! $failed);
         }
@@ -80,5 +85,18 @@ class CachePosts
         $spaces  = ($spaces > 0) ? $spaces : 0;
         $color   = $success ? Color::GREEN : Color::RED;
         $console->writeLine(str_repeat('.', $spaces) . $message, $color);
+    }
+
+    /**
+     * Cache the response content.
+     *
+     * @param string $id Post identifier.
+     * @param string $cache Path to cache files.
+     * @param \Psr\Http\Message\StreamInterface $content Content to cache.
+     */
+    private function cacheResponse($id, $cache, $content)
+    {
+        $filename = sprintf('%s/%s', $cache, $id);
+        file_put_contents($filename, (string) $content);
     }
 }

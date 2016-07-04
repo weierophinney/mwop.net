@@ -12,6 +12,9 @@
     # Execute a composer installation
     COMPOSER_HOME=/var/cache/composer composer install --quiet --no-ansi --no-dev --no-interaction --no-progress --no-scripts --no-plugins --optimize-autoloader ;
 
+    # Clear existing cache files
+    php bin/mwop.net.php clear-cache ;
+
     # Seed the blog posts database
     php bin/mwop.net.php seed-blog-db ;
 

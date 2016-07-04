@@ -10,9 +10,6 @@ use Zend\Expressive\Helper;
 use Zend\Feed\Reader\Http\ClientInterface as FeedReaderHttpClientInterface;
 
 return ['dependencies' => [
-    'invokables' => [
-        Console\PrepPageCacheRules::class => Console\PrepPageCacheRules::class,
-    ],
     'factories' => [
         'mail.transport'                  => Factory\MailTransport::class,
         'session'                         => Factory\Session::class,
