@@ -9,6 +9,7 @@
  */
 namespace Mwop;
 
+use Mwop\Console as MwopConsole;
 use Zend\Console\Console;
 use Zend\Feed\Reader\Reader as FeedReader;
 use Zend\Http\Client as HttpClient;
@@ -28,35 +29,31 @@ $container->get('Zend\Expressive\Application');
 
 $routes = [
     [
-        'name' => 'github-links',
-        'route' => '[--output=] [--template=]',
-        'description' => 'Fetch GitHub activity stream and generate links for the home page.',
-        'short_description' => 'Fetch GitHub activity stream.',
+        'name' => 'cache-posts',
+        'route' => '[--path=]',
+        'description' => 'Generate the static cache of all blog posts.',
+        'short_description' => 'Cache blog posts.',
         'options_descriptions' => [
-            '--output'   => 'Output file to which to write links',
-            '--template' => 'Template string to use when generating link output',
+            '--path'   => 'Base path of the application; posts are expected at $path/data/blog/',
         ],
         'defaults' => [
-            'output' => 'data/github-links.mustache',
+            'path'   => realpath(getcwd()),
         ],
         'handler' => function ($route, $console) use ($container) {
-            $handler = $container->get('Mwop\Github\Console\Fetch');
+            $handler = $container->get(Blog\Console\CachePosts::class);
             return $handler($route, $console);
         },
     ],
     [
-        'name' => 'tag-cloud',
-        'route' => '[--output=]',
-        'description' => 'Generate a Mustache template containing the tag cloud for the blog.',
-        'short_description' => 'Generate tag cloud.',
-        'options_descriptions' => [
-            '--output'   => 'Output file to which to write the tag cloud',
-        ],
+        'name' => 'clear-cache',
+        'route' => '',
+        'description' => 'Clear any cached content.',
+        'short_description' => 'Clear the static cache.',
         'defaults' => [
-            'output' => 'data/tag-cloud.mustache',
+            'path' => realpath(getcwd()),
         ],
-        'handler' => function ($route, $console) use ($container) {
-            $handler = $container->get('Mwop\Blog\Console\TagCloud');
+        'handler' => function ($route, $console) {
+            $handler = new MwopConsole\ClearCache();
             return $handler($route, $console);
         },
     ],
@@ -74,7 +71,40 @@ $routes = [
             'baseUri'   => 'https://mwop.net',
         ],
         'handler' => function ($route, $console) use ($container) {
-            $handler = $container->get('Mwop\Blog\Console\FeedGenerator');
+            $handler = $container->get(Blog\Console\FeedGenerator::class);
+            return $handler($route, $console);
+        },
+    ],
+    [
+        'name' => 'github-links',
+        'route' => '[--output=] [--template=]',
+        'description' => 'Fetch GitHub activity stream and generate links for the home page.',
+        'short_description' => 'Fetch GitHub activity stream.',
+        'options_descriptions' => [
+            '--output'   => 'Output file to which to write links',
+            '--template' => 'Template string to use when generating link output',
+        ],
+        'defaults' => [
+            'output' => 'data/github-links.mustache',
+        ],
+        'handler' => function ($route, $console) use ($container) {
+            $handler = $container->get(Github\Console\Fetch::class);
+            return $handler($route, $console);
+        },
+    ],
+    [
+        'name' => 'prep-offline-pages',
+        'route' => '[--serviceWorker=]',
+        'description' => 'Prepare the offline pages list for the service-worker.js file.',
+        'short_description' => 'Prep offline page cache list',
+        'options_descriptions' => [
+            '--serviceWorker' => 'Path to the service-worker.js file',
+        ],
+        'defaults' => [
+            'serviceWorker'   => realpath(getcwd()) . '/public/service-worker.js',
+        ],
+        'handler' => function ($route, $console) use ($container) {
+            $handler = $container->get(MwopConsole\PrepOfflinePages::class);
             return $handler($route, $console);
         },
     ],
@@ -96,53 +126,23 @@ $routes = [
             'dbPath'      => 'data/posts.db',
         ],
         'handler' => function ($route, $console) use ($container) {
-            $handler = $container->get('Mwop\Blog\Console\SeedBlogDatabase');
+            $handler = $container->get(Blog\Console\SeedBlogDatabase::class);
             return $handler($route, $console);
         },
     ],
     [
-        'name' => 'cache-posts',
-        'route' => '[--path=]',
-        'description' => 'Generate the static cache of all blog posts.',
-        'short_description' => 'Cache blog posts.',
+        'name' => 'tag-cloud',
+        'route' => '[--output=]',
+        'description' => 'Generate a Mustache template containing the tag cloud for the blog.',
+        'short_description' => 'Generate tag cloud.',
         'options_descriptions' => [
-            '--path'   => 'Base path of the application; posts are expected at $path/data/blog/',
+            '--output'   => 'Output file to which to write the tag cloud',
         ],
         'defaults' => [
-            'path'   => realpath(getcwd()),
+            'output' => 'data/tag-cloud.mustache',
         ],
         'handler' => function ($route, $console) use ($container) {
-            $handler = $container->get('Mwop\Blog\Console\CachePosts');
-            return $handler($route, $console);
-        },
-    ],
-    [
-        'name' => 'prep-page-cache-rules',
-        'route' => '--appId= --site=',
-        'description' => 'Prepare pagecache_rules.xml for deployment packaging.',
-        'short_description' => 'Prep page cache rules',
-        'options_descriptions' => [
-            '--appId' => 'Zend Server application ID',
-            '--site'  => 'Base URL of site to which to deploy',
-        ],
-        'handler' => function ($route, $console) use ($container) {
-            $handler = $container->get('Mwop\Console\PrepPageCacheRules');
-            return $handler($route, $console);
-        },
-    ],
-    [
-        'name' => 'prep-offline-pages',
-        'route' => '[--serviceWorker=]',
-        'description' => 'Prepare the offline pages list for the service-worker.js file.',
-        'short_description' => 'Prep offline page cache list',
-        'options_descriptions' => [
-            '--serviceWorker' => 'Path to the service-worker.js file',
-        ],
-        'defaults' => [
-            'serviceWorker'   => realpath(getcwd()) . '/public/service-worker.js',
-        ],
-        'handler' => function ($route, $console) use ($container) {
-            $handler = $container->get('Mwop\Console\PrepOfflinePages');
+            $handler = $container->get(Blog\Console\TagCloud::class);
             return $handler($route, $console);
         },
     ],
