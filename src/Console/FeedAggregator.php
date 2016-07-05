@@ -7,17 +7,28 @@ use Zend\Feed\Reader\Reader as FeedReader;
 
 class FeedAggregator
 {
-    const CACHE_FILE = '%s/data/cache/homepage-feed-items.php';
+    const CACHE_FILE = '%s/config/autoload/homepage.local.php';
+
+    private $configFormat = <<< EOC
+<?php
+return [
+    'homepage' => [
+        'posts' => [
+%s        ],
+    ],
+];
+EOC;
 
     private $feeds;
 
     private $itemFormat = <<< EOF
-    [
-        'title'   => '%s',
-        'link'    => '%s',
-        'favicon' => '%s',
-        'feed'    => '%s',
-    ],
+            [
+                'title'    => '%s',
+                'link'     => '%s',
+                'favicon'  => '%s',
+                'sitename' => '%s',
+                'siteurl'  => '%s',
+            ],
 
 EOF;
 
@@ -59,14 +70,15 @@ EOF;
     private function generateContent(Collection $entries)
     {
         return sprintf(
-            '<' . "?php\nreturn [\n%s];",
+            $this->configFormat,
             $entries->reduce(function ($string, $entry) {
                 return $string . sprintf(
                     $this->itemFormat,
                     $entry['title'],
                     $entry['link'],
                     $entry['favicon'],
-                    $entry['feed']
+                    $entry['sitename'],
+                    $entry['siteurl']
                 );
             }, '')
         );
@@ -74,10 +86,12 @@ EOF;
 
     private function marshalEntries(array $feedInfo, $console)
     {
-        $feedUrl = $feedInfo['url'];
-        $logo    = $feedInfo['favicon'] ?? 'https://mwop.net/images/favicon/favicon-16x16.png';
-        $filters = $feedInfo['filters'] ?? [];
-        $each    = $feedInfo['each']    ?? function ($item) {
+        $feedUrl  = $feedInfo['url'];
+        $logo     = $feedInfo['favicon'] ?? 'https://mwop.net/images/favicon/favicon-16x16.png';
+        $siteName = $feedInfo['sitename'] ?? '';
+        $siteUrl  = $feedInfo['siteurl'] ?? '#';
+        $filters  = $feedInfo['filters'] ?? [];
+        $each     = $feedInfo['each']    ?? function ($item) {
         };
 
         $message = sprintf('    Retrieving %s... ', $feedUrl);
@@ -98,13 +112,14 @@ EOF;
             ->filterChain($filters)
             ->slice(5)
             ->each($each)
-            ->map(function ($entry) use ($logo, $feedUrl) {
+            ->map(function ($entry) use ($logo, $siteName, $siteUrl) {
                 return [
                     'title'        => $entry->getTitle(),
                     'link'         => $entry->getLink(),
                     'date-created' => $entry->getDateCreated(),
                     'favicon'      => $logo,
-                    'feed'         => $feedUrl,
+                    'sitename'     => $siteName,
+                    'siteurl'      => $siteUrl,
                 ];
             });
 
