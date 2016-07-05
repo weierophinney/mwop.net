@@ -20,7 +20,7 @@ use ZF\Console\Application;
 chdir(__DIR__ . '/../');
 require_once 'vendor/autoload.php';
 
-define('VERSION', '0.0.3');
+define('VERSION', '0.0.4');
 
 $container = require 'config/container.php';
 
