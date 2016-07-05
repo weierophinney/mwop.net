@@ -11,6 +11,7 @@
     <ul>
         <li>A husband.</li>
         <li>A father of two wonderful children.</li>
+        <li>A serial Basset Hound owner.</li>
         <li>A <a href="http://php.net">PHP</a> developer and framework architect.</li>
         <li>A frequent PHP conference speaker.</li>
         <li>An open source software developer and advocate.</li>
@@ -20,7 +21,8 @@
     </ul>
 
     <p>
-        I <a href="/blog">blog</a> reasonably regularly, typically on topics related
+        I blog <a href="/blog">on this site</a>, as well as elsewhere (see the
+        icons next to the "Recent Blog Posts"), typically on topics related
         to open source development. Feel free to <a href="/contact">contact me</a>.
     </p>
 </article>
@@ -35,9 +37,11 @@
 
     <ul>
     {{#posts}}
-        <li><a href="{{url}}">{{title}}</a></li>
+        <li><a href="{{{siteurl}}}"><img src="{{{favicon}}}" alt="{{sitename}}" title="{{sitename}}" width="16"></a>&nbsp;<a href="{{link}}">{{title}}</a></li>
     {{/posts}}
     </ul>
+
+    <p><em><a href="/blog">Read more</a></em></p>
 
     <h3>Recent Github Activity</h3>
 

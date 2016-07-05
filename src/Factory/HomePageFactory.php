@@ -11,8 +11,7 @@ class HomePageFactory
     public function __invoke($container)
     {
         return new HomePage(
-            $container->get(Mapper::class),
-            $container->get(RouterInterface::class),
+            $container->get('config')['homepage']['posts'] ?? [],
             $container->get(TemplateRendererInterface::class)
         );
     }

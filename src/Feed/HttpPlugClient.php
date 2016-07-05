@@ -1,5 +1,5 @@
 <?php
-namespace Mwop\Github;
+namespace Mwop\Feed;
 
 use Http\Client\HttpClient;
 use Zend\Diactoros\Request;
@@ -26,8 +26,8 @@ class HttpPlugClient implements FeedReaderHttpClientInterface
      */
     public function get($uri)
     {
-        return new Psr7ResponseDecorator(
-            $this->client->sendRequest(new Request($uri, 'GET'))
-        );
+        $request = (new Request($uri, 'GET'))
+            ->withHeader('User-Agent', 'HTTPie/0.9.2');
+        return new Psr7ResponseDecorator($this->client->sendRequest($request));
     }
 }

@@ -30,6 +30,9 @@
     # Create the initial set of github links for the front page
     php bin/mwop.net.php github-links ;
 
+    # Create the initial set of recent blog posts for the front page
+    php bin/mwop.net.php homepage-feeds ;
+
     # Create the initial set of comics
     php vendor/bin/phly-comic.php fetch-all --output=data/comics.mustache ;
 

@@ -20,7 +20,7 @@ use ZF\Console\Application;
 chdir(__DIR__ . '/../');
 require_once 'vendor/autoload.php';
 
-define('VERSION', '0.0.3');
+define('VERSION', '0.0.4');
 
 $container = require 'config/container.php';
 
@@ -89,6 +89,19 @@ $routes = [
         ],
         'handler' => function ($route, $console) use ($container) {
             $handler = $container->get(Github\Console\Fetch::class);
+            return $handler($route, $console);
+        },
+    ],
+    [
+        'name' => 'homepage-feeds',
+        'route' => '',
+        'description' => 'Fetch feed data for homepage activity stream.',
+        'short_description' => 'Fetch homepage feed data.',
+        'defaults' => [
+            'path' => realpath(getcwd()),
+        ],
+        'handler' => function ($route, $console) use ($container) {
+            $handler = $container->get(MwopConsole\FeedAggregator::class);
             return $handler($route, $console);
         },
     ],
