@@ -178,6 +178,30 @@ class Collection implements
     }
 
     /**
+     * Return a collection of items sorted based on the callback provided.
+     *
+     * @param callable $sorter
+     * @return static
+     */
+    public function sort(callable $sorter)
+    {
+        $items = $this->items;
+        usort($items, $sorter);
+        return static::create($items);
+    }
+
+    /**
+     * Append this collection with another.
+     *
+     * @param Collection $items
+     * @return static
+     */
+    public function append(Collection $items)
+    {
+        return Collection::create(array_merge($this->items, $items->toArray()));
+    }
+
+    /**
      * ArrayAccess: isset()
      *
      * @param string|int $offset

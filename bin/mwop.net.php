@@ -93,6 +93,19 @@ $routes = [
         },
     ],
     [
+        'name' => 'homepage-feeds',
+        'route' => '',
+        'description' => 'Fetch feed data for homepage activity stream.',
+        'short_description' => 'Fetch homepage feed data.',
+        'defaults' => [
+            'path' => realpath(getcwd()),
+        ],
+        'handler' => function ($route, $console) use ($container) {
+            $handler = $container->get(MwopConsole\FeedAggregator::class);
+            return $handler($route, $console);
+        },
+    ],
+    [
         'name' => 'prep-offline-pages',
         'route' => '[--serviceWorker=]',
         'description' => 'Prepare the offline pages list for the service-worker.js file.',

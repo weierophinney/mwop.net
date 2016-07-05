@@ -22,6 +22,7 @@ return ['dependencies' => [
         Blog\Console\FeedGenerator::class => Blog\Console\FeedGeneratorFactory::class,
         Blog\Console\TagCloud::class      => Blog\Console\TagCloudFactory::class,
         Blog\Mapper::class                => Blog\MapperFactory::class,
+        Console\FeedAggregator::class     => Console\FeedAggregatorFactory::class,
         Console\PrepOfflinePages::class   => Factory\PrepOfflinePagesFactory::class,
         FeedReaderHttpClientInterface::class => Feed\HttpPlugClientFactory::class,
         Github\AtomReader::class          => Github\AtomReaderFactory::class,
