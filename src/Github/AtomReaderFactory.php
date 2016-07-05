@@ -17,6 +17,13 @@ class AtomReaderFactory
 
         $reader = new AtomReader($config['user']);
         $reader->setLimit($config['limit']);
+        $reader->addFilter(function ($entry) {
+            if (false !== strpos($entry->getLink(), 'weierophinney/mwop.net')) {
+                return false;
+            }
+            return true;
+        });
+
         return $reader;
     }
 

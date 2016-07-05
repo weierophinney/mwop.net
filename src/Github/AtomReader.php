@@ -1,13 +1,14 @@
 <?php
 namespace Mwop\Github;
 
+use Mwop\Collection;
 use Zend\Feed\Reader\Reader as FeedReader;
 
 class AtomReader
 {
     const ATOM_FORMAT = 'https://github.com/%s.atom';
 
-    protected $filters = array();
+    protected $filters = [];
     protected $limit = 5;
     protected $user;
 
@@ -22,15 +23,8 @@ class AtomReader
         return $this;
     }
 
-    public function addFilter($filter)
+    public function addFilter(callable $filter)
     {
-        if (!is_callable($filter)) {
-            throw new \InvalidArgumentException(sprintf(
-                '%s: expected a PHP callback; received "%s"',
-                __METHOD__,
-                (is_object($filter) ? get_class($filter) : gettype($filter))
-            ));
-        }
         $this->filters[] = $filter;
     }
 
@@ -39,53 +33,20 @@ class AtomReader
         $url  = sprintf(self::ATOM_FORMAT, $this->user);
         $feed = FeedReader::import($url);
 
-        $lastModified = $feed->getDateModified();
-        $altLink      = $feed->getLink();
-        $entries      = array();
-        $i            = 0;
+        $entries = Collection::create($feed)
+            ->filterChain($this->filters)
+            ->slice($this->limit)
+            ->map(function ($entry) {
+                return [
+                    'title' => $entry->getTitle(),
+                    'link'  => $entry->getLink(),
+                ];
+            });
 
-        foreach ($feed as $entry) {
-            if (!$this->filter($entry)) {
-                continue;
-            }
-
-            $data = array(
-                'title'        => $entry->getTitle(),
-                'link'         => $entry->getLink(),
-            );
-
-            $entries[] = $data;
-            $i++;
-            if ($i > $this->limit) {
-                break;
-            }
-        }
-
-        return array(
-            'last_modified' => $lastModified,
-            'link'          => $altLink,
-            'links'         => $entries,
-        );
-    }
-
-    /**
-     * Filter an entry
-     *
-     * If a filter returns a boolean false, this method will
-     * return boolean false, indicating not to include the
-     * entry in the resultset, nor count it against the limit.
-     * 
-     * @param  \Zend\Feed\Reader\Entry $entry 
-     * @return bool
-     */
-    protected function filter($entry)
-    {
-        foreach ($this->filters as $filter) {
-            $result = call_user_func($filter, $entry);
-            if (!$result) {
-                return false;
-            }
-        }
-        return true;
+        return [
+            'last_modified' => $feed->getDateModified(),
+            'link'          => $feed->getLink(),
+            'links'         => $entries->toArray(),
+        ];
     }
 }
