@@ -27,12 +27,22 @@ return [
         'limit' => 4,
     ],
     'homepage' => [
+        'feed-count' => 10,
         'feeds' => [
-            realpath(getcwd()) . '/data/feeds/rss.xml',
-            'http://blog.zend.com/author/matthew-wop/feed/',
-            'https://devzone.zend.com/author/mwop/feed/',
+            [
+                'url' => realpath(getcwd()) . '/data/feeds/rss.xml',
+            ],
+            [
+                'url' => 'http://blog.zend.com/author/matthew-wop/feed/',
+                'favicon' => 'https://pbs.twimg.com/profile_images/603690040602927104/0bp-4InR_bigger.jpg',
+            ],
+            [
+                'url' => 'https://devzone.zend.com/author/mwop/feed/',
+                'favicon' => 'https://pbs.twimg.com/profile_images/603690040602927104/0bp-4InR_bigger.jpg',
+            ],
             [
                 'url' => 'https://framework.zend.com/blog/feed-rss.xml',
+                'favicon' => 'https://framework.zend.com/ico/favicon.ico',
                 'each' => function ($entry) {
                     $link = $entry->getLink();
                     $r = new ReflectionProperty($entry, 'data');

@@ -11,9 +11,22 @@ class FeedAggregator
 
     private $feeds;
 
-    public function __construct(array $feeds)
+    private $itemFormat = <<< EOF
+    [
+        'title'   => '%s',
+        'link'    => '%s',
+        'favicon' => '%s',
+        'feed'    => '%s',
+    ],
+
+EOF;
+
+    private $toRetrieve;
+
+    public function __construct(array $feeds, $toRetrieve)
     {
         $this->feeds = Collection::create($feeds);
+        $this->toRetrieve = (int) $toRetrieve;
     }
 
     public function __invoke($route, $console)
@@ -29,13 +42,13 @@ class FeedAggregator
     private function getEntries($console)
     {
         return $this->feeds
-            ->reduce(function ($entries, $feedUrl) use ($console) {
-                return $entries->append($this->marshalEntries($feedUrl, $console));
+            ->reduce(function ($entries, $feedInfo) use ($console) {
+                return $entries->append($this->marshalEntries($feedInfo, $console));
             }, Collection::create([]))
             ->sort(function ($a, $b) {
-                return ($b->getDateCreated() <=> $a->getDateCreated());
+                return ($b['date-created'] <=> $a['date-created']);
             })
-            ->slice(5);
+            ->slice($this->toRetrieve);
     }
 
     private function generateFilename($path)
@@ -49,28 +62,23 @@ class FeedAggregator
             '<' . "?php\nreturn [\n%s];",
             $entries->reduce(function ($string, $entry) {
                 return $string . sprintf(
-                    "    [\n        'title' => '%s',\n        'link' => '%s',\n    ],\n",
-                    $entry->getTitle(),
-                    $entry->getLink()
+                    $this->itemFormat,
+                    $entry['title'],
+                    $entry['link'],
+                    $entry['favicon'],
+                    $entry['feed']
                 );
             }, '')
         );
     }
 
-    private function marshalEntries($feedUrl, $console)
+    private function marshalEntries(array $feedInfo, $console)
     {
-        $filters = (is_array($feedUrl) && isset($feedUrl['filters']))
-            ? $feedUrl['filters']
-            : [];
-
-        $each = (is_array($feedUrl) && isset($feedUrl['each']))
-            ? $feedUrl['each']
-            : function ($item) {
-            };
-
-        $feedUrl = is_array($feedUrl)
-            ? $feedUrl['url']
-            : $feedUrl;
+        $feedUrl = $feedInfo['url'];
+        $logo    = $feedInfo['favicon'] ?? 'https://mwop.net/images/favicon/favicon-16x16.png';
+        $filters = $feedInfo['filters'] ?? [];
+        $each    = $feedInfo['each']    ?? function ($item) {
+        };
 
         $message = sprintf('    Retrieving %s... ', $feedUrl);
         $length  = strlen($message);
@@ -89,7 +97,16 @@ class FeedAggregator
         $entries = Collection::create($feed)
             ->filterChain($filters)
             ->slice(5)
-            ->each($each);
+            ->each($each)
+            ->map(function ($entry) use ($logo, $feedUrl) {
+                return [
+                    'title'        => $entry->getTitle(),
+                    'link'         => $entry->getLink(),
+                    'date-created' => $entry->getDateCreated(),
+                    'favicon'      => $logo,
+                    'feed'         => $feedUrl,
+                ];
+            });
 
         $this->reportComplete($console, $length);
         return $entries;

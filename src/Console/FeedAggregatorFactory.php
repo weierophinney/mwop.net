@@ -15,6 +15,9 @@ class FeedAggregatorFactory
 
         $config = $container->get('config');
 
-        return new FeedAggregator($config['homepage']['feeds']);
+        return new FeedAggregator(
+            $config['homepage']['feeds'] ?? [],
+            $config['homepage']['feed-count'] ?? 10
+        );
     }
 }
