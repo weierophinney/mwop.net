@@ -3,6 +3,7 @@ namespace Mwop\Github;
 
 use Zend\Feed\Reader\Http\ClientInterface as FeedReaderHttpClientInterface;
 use Zend\Feed\Reader\Reader as FeedReader;
+use Zend\Feed\Reader\StandaloneExtensionManager;
 
 class AtomReaderFactory
 {
@@ -10,7 +11,7 @@ class AtomReaderFactory
     {
         $http   = $container->get(FeedReaderHttpClientInterface::class);
         FeedReader::setHttpClient($http);
-        FeedReader::setExtensionManager($this->createExtensionManager());
+        FeedReader::setExtensionManager(new StandaloneExtensionManager());
 
         $config = $container->get('config');
         $config = $config['github'];
@@ -25,10 +26,5 @@ class AtomReaderFactory
         });
 
         return $reader;
-    }
-
-    private function createExtensionManager()
-    {
-        return new AtomReaderExtensions();
     }
 }
