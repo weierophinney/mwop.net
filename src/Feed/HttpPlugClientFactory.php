@@ -1,5 +1,5 @@
 <?php
-namespace Mwop\Github;
+namespace Mwop\Feed;
 
 use Http\Client\Curl\Client;
 use Http\Message\MessageFactory\DiactorosMessageFactory;

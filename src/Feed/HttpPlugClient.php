@@ -1,5 +1,5 @@
 <?php
-namespace Mwop\Github;
+namespace Mwop\Feed;
 
 use Http\Client\HttpClient;
 use Zend\Diactoros\Request;

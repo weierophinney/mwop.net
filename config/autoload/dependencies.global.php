@@ -3,6 +3,7 @@ use Mwop\Auth;
 use Mwop\Blog;
 use Mwop\Console;
 use Mwop\Factory;
+use Mwop\Feed;
 use Mwop\Github;
 use Zend\Expressive\Application;
 use Zend\Expressive\Container\ApplicationFactory;
@@ -22,7 +23,7 @@ return ['dependencies' => [
         Blog\Console\TagCloud::class      => Blog\Console\TagCloudFactory::class,
         Blog\Mapper::class                => Blog\MapperFactory::class,
         Console\PrepOfflinePages::class   => Factory\PrepOfflinePagesFactory::class,
-        FeedReaderHttpClientInterface::class => Github\HttpPlugClientFactory::class,
+        FeedReaderHttpClientInterface::class => Feed\HttpPlugClientFactory::class,
         Github\AtomReader::class          => Github\AtomReaderFactory::class,
         Github\Console\Fetch::class       => Github\Console\FetchFactory::class,
         Helper\UrlHelper::class           => Helper\UrlHelperFactory::class,
