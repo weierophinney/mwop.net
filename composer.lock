@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "e4d805d532c30b1fe0058dc1a193d016",
-    "content-hash": "a511538dfd8b452bd90499cd6b4301b3",
+    "hash": "313a28e9ae887c0689c8b9ebb3be8def",
+    "content-hash": "44c8e0d80bfd116e35bbca08f24b1de2",
     "packages": [
         {
             "name": "aura/session",
@@ -516,16 +516,16 @@
         },
         {
             "name": "phly/phly-comic",
-            "version": "1.0.18",
+            "version": "1.0.19",
             "source": {
                 "type": "git",
                 "url": "https://github.com/weierophinney/PhlyComic.git",
-                "reference": "5a78c4dd64763536e2c369cd25623cd01dac8bec"
+                "reference": "e177d2f67d7ecc4575842f053f24797be1dc3be0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/weierophinney/PhlyComic/zipball/5a78c4dd64763536e2c369cd25623cd01dac8bec",
-                "reference": "5a78c4dd64763536e2c369cd25623cd01dac8bec",
+                "url": "https://api.github.com/repos/weierophinney/PhlyComic/zipball/e177d2f67d7ecc4575842f053f24797be1dc3be0",
+                "reference": "e177d2f67d7ecc4575842f053f24797be1dc3be0",
                 "shasum": ""
             },
             "require": {
@@ -571,7 +571,7 @@
                 "source": "https://github.com/weierophinney/PhlyComic",
                 "issues": "https://github.com/weierophinney/PhlyComic/issues"
             },
-            "time": "2015-11-19 15:05:20"
+            "time": "2016-07-27 13:24:58"
         },
         {
             "name": "phly/phly-expressive-mustache",
