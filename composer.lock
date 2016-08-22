@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "60ed92b21e0a70829a13f8c4a28f1c1a",
-    "content-hash": "c03dab49ee36e2620d049e8cb9d620a8",
+    "hash": "6e260cbffafc03304735ca1d49a48914",
+    "content-hash": "7466cbad399d2cebdbee9d48c2765cb1",
     "packages": [
         {
             "name": "aura/session",
@@ -188,16 +188,16 @@
         },
         {
             "name": "league/commonmark",
-            "version": "0.11.3",
+            "version": "0.14.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/commonmark.git",
-                "reference": "d22d6a6a4b049faccc2f8e491cce6076eeb165c7"
+                "reference": "b73c0b7288bd0e6f9f56bd0b20d0657214b91838"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/d22d6a6a4b049faccc2f8e491cce6076eeb165c7",
-                "reference": "d22d6a6a4b049faccc2f8e491cce6076eeb165c7",
+                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/b73c0b7288bd0e6f9f56bd0b20d0657214b91838",
+                "reference": "b73c0b7288bd0e6f9f56bd0b20d0657214b91838",
                 "shasum": ""
             },
             "require": {
@@ -208,14 +208,17 @@
                 "colinodell/commonmark-php": "*"
             },
             "require-dev": {
+                "cebe/markdown": "~1.0",
                 "erusev/parsedown": "~1.0",
-                "jgm/commonmark": "0.22",
-                "jgm/smartpunct": "0.22",
+                "jgm/commonmark": "0.25",
                 "michelf/php-markdown": "~1.4",
-                "mikehaertl/php-shellcommand": "~1.1.0",
-                "phpunit/phpunit": "~4.3",
-                "phpunit/phpunit-mock-objects": "2.3.0",
-                "symfony/finder": "~2.3"
+                "mikehaertl/php-shellcommand": "~1.2.0",
+                "phpunit/phpunit": "~4.3|~5.0",
+                "scrutinizer/ocular": "~1.1",
+                "symfony/finder": "~2.3|~3.0"
+            },
+            "suggest": {
+                "league/commonmark-extras": "Library of useful extensions including smart punctuation"
             },
             "bin": [
                 "bin/commonmark"
@@ -223,7 +226,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.12-dev"
+                    "dev-master": "0.15-dev"
                 }
             },
             "autoload": {
@@ -239,7 +242,7 @@
                 {
                     "name": "Colin O'Dell",
                     "email": "colinodell@gmail.com",
-                    "homepage": "http://www.colinodell.com",
+                    "homepage": "https://www.colinodell.com",
                     "role": "Lead Developer"
                 }
             ],
@@ -250,7 +253,7 @@
                 "markdown",
                 "parser"
             ],
-            "time": "2015-09-25 12:40:32"
+            "time": "2016-07-02 18:48:39"
         },
         {
             "name": "mnapoli/front-yaml",
@@ -672,23 +675,25 @@
         },
         {
             "name": "php-http/curl-client",
-            "version": "v1.4.2",
+            "version": "v1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-http/curl-client.git",
-                "reference": "6d319ff8364b6edc3b40570f5e93f6ac23409b66"
+                "reference": "fc7209fd29858718d444d41eb88f42188aeb7af4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-http/curl-client/zipball/6d319ff8364b6edc3b40570f5e93f6ac23409b66",
-                "reference": "6d319ff8364b6edc3b40570f5e93f6ac23409b66",
+                "url": "https://api.github.com/repos/php-http/curl-client/zipball/fc7209fd29858718d444d41eb88f42188aeb7af4",
+                "reference": "fc7209fd29858718d444d41eb88f42188aeb7af4",
                 "shasum": ""
             },
             "require": {
                 "ext-curl": "*",
-                "php": ">=5.5",
+                "php": "^5.5 || ^7.0",
+                "php-http/discovery": "^1.0",
                 "php-http/httplug": "^1.0",
-                "php-http/message-factory": "^1.0"
+                "php-http/message": "^1.2",
+                "php-http/message-factory": "^1.0.2"
             },
             "provide": {
                 "php-http/async-client-implementation": "1.0",
@@ -696,15 +701,9 @@
             },
             "require-dev": {
                 "guzzlehttp/psr7": "^1.0",
-                "php-http/adapter-integration-tests": "0.4.*",
-                "php-http/discovery": "~0.8.0",
-                "php-http/message": "^1.2",
+                "php-http/client-integration-tests": "^0.5.1",
                 "phpunit/phpunit": "^4.8",
-                "puli/composer-plugin": "^1.0@beta,>=1.0.0-beta9",
                 "zendframework/zend-diactoros": "^1.0"
-            },
-            "suggest": {
-                "php-http/discovery": "Allow automatically discover needed HTTPlug implementations"
             },
             "type": "library",
             "autoload": {
@@ -728,7 +727,69 @@
                 "curl",
                 "http"
             ],
-            "time": "2016-06-14 07:43:37"
+            "time": "2016-08-03 08:46:57"
+        },
+        {
+            "name": "php-http/discovery",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-http/discovery.git",
+                "reference": "4ff7e1ac2a7fa46eb4390691f02f9b60dd97e1f6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-http/discovery/zipball/4ff7e1ac2a7fa46eb4390691f02f9b60dd97e1f6",
+                "reference": "4ff7e1ac2a7fa46eb4390691f02f9b60dd97e1f6",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.5 || ^7.0"
+            },
+            "require-dev": {
+                "henrikbjorn/phpspec-code-coverage": "^2.0.2",
+                "php-http/httplug": "^1.0",
+                "php-http/message-factory": "^1.0",
+                "phpspec/phpspec": "^2.4",
+                "puli/composer-plugin": "1.0.0-beta10"
+            },
+            "suggest": {
+                "php-http/message": "Allow to use Guzzle or Diactoros factories",
+                "puli/composer-plugin": "Sets up Puli which is recommended for Discovery to work. Check http://docs.php-http.org/en/latest/discovery.html for more details."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Http\\Discovery\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Márk Sági-Kazár",
+                    "email": "mark.sagikazar@gmail.com"
+                }
+            ],
+            "description": "Finds installed HTTPlug implementations and PSR-7 message factories",
+            "homepage": "http://php-http.org",
+            "keywords": [
+                "adapter",
+                "client",
+                "discovery",
+                "factory",
+                "http",
+                "message",
+                "psr7"
+            ],
+            "time": "2016-07-18 09:37:58"
         },
         {
             "name": "php-http/httplug",
@@ -788,16 +849,16 @@
         },
         {
             "name": "php-http/message",
-            "version": "v1.2.0",
+            "version": "v1.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-http/message.git",
-                "reference": "c8fadec9533f5e34a8a730a947fa76363f3aa620"
+                "reference": "6d9c2d682dcf80cb2cc641eebc5693eacee95fa4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-http/message/zipball/c8fadec9533f5e34a8a730a947fa76363f3aa620",
-                "reference": "c8fadec9533f5e34a8a730a947fa76363f3aa620",
+                "url": "https://api.github.com/repos/php-http/message/zipball/6d9c2d682dcf80cb2cc641eebc5693eacee95fa4",
+                "reference": "6d9c2d682dcf80cb2cc641eebc5693eacee95fa4",
                 "shasum": ""
             },
             "require": {
@@ -822,7 +883,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.3-dev"
+                    "dev-master": "1.4-dev"
                 }
             },
             "autoload": {
@@ -850,7 +911,7 @@
                 "message",
                 "psr-7"
             ],
-            "time": "2016-03-29 20:44:24"
+            "time": "2016-07-15 14:48:03"
         },
         {
             "name": "php-http/message-factory",
@@ -954,16 +1015,16 @@
         },
         {
             "name": "psr/http-message",
-            "version": "1.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/http-message.git",
-                "reference": "85d63699f0dbedb190bbd4b0d2b9dc707ea4c298"
+                "reference": "f6561bf28d520154e4b0ec72be95418abe6d9363"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/http-message/zipball/85d63699f0dbedb190bbd4b0d2b9dc707ea4c298",
-                "reference": "85d63699f0dbedb190bbd4b0d2b9dc707ea4c298",
+                "url": "https://api.github.com/repos/php-fig/http-message/zipball/f6561bf28d520154e4b0ec72be95418abe6d9363",
+                "reference": "f6561bf28d520154e4b0ec72be95418abe6d9363",
                 "shasum": ""
             },
             "require": {
@@ -991,6 +1052,7 @@
                 }
             ],
             "description": "Common interface for HTTP messages",
+            "homepage": "https://github.com/php-fig/http-message",
             "keywords": [
                 "http",
                 "http-message",
@@ -999,20 +1061,20 @@
                 "request",
                 "response"
             ],
-            "time": "2015-05-04 20:22:00"
+            "time": "2016-08-06 14:39:51"
         },
         {
             "name": "symfony/yaml",
-            "version": "v2.8.8",
+            "version": "v2.8.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "dba4bb5846798cd12f32e2d8f3f35d77045773c8"
+                "reference": "0ceab136f43ed9d3e97b3eea32a7855dc50c121d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/dba4bb5846798cd12f32e2d8f3f35d77045773c8",
-                "reference": "dba4bb5846798cd12f32e2d8f3f35d77045773c8",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/0ceab136f43ed9d3e97b3eea32a7855dc50c121d",
+                "reference": "0ceab136f43ed9d3e97b3eea32a7855dc50c121d",
                 "shasum": ""
             },
             "require": {
@@ -1048,7 +1110,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2016-06-29 05:29:29"
+            "time": "2016-07-17 09:06:15"
         },
         {
             "name": "zendframework/zend-console",
@@ -1364,16 +1426,16 @@
         },
         {
             "name": "zendframework/zend-expressive-helpers",
-            "version": "2.0.0",
+            "version": "2.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-expressive-helpers.git",
-                "reference": "7d7cf9573638448acdde5b2ee4a30ebd33401fb7"
+                "reference": "6c9868ee55934ea79dbfd85721a916c44f658e09"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-expressive-helpers/zipball/7d7cf9573638448acdde5b2ee4a30ebd33401fb7",
-                "reference": "7d7cf9573638448acdde5b2ee4a30ebd33401fb7",
+                "url": "https://api.github.com/repos/zendframework/zend-expressive-helpers/zipball/6c9868ee55934ea79dbfd85721a916c44f658e09",
+                "reference": "6c9868ee55934ea79dbfd85721a916c44f658e09",
                 "shasum": ""
             },
             "require": {
@@ -1416,7 +1478,7 @@
                 "psr",
                 "psr-7"
             ],
-            "time": "2016-01-18 19:53:28"
+            "time": "2016-08-20 19:54:29"
         },
         {
             "name": "zendframework/zend-expressive-router",
@@ -1643,16 +1705,16 @@
         },
         {
             "name": "zendframework/zend-inputfilter",
-            "version": "2.7.2",
+            "version": "2.7.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-inputfilter.git",
-                "reference": "5630ef49e8c16a6fe0c2bd0d2a519869b14d5b12"
+                "reference": "0cf1bdcd8858a8583965310a7dae63ad75bd1237"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-inputfilter/zipball/5630ef49e8c16a6fe0c2bd0d2a519869b14d5b12",
-                "reference": "5630ef49e8c16a6fe0c2bd0d2a519869b14d5b12",
+                "url": "https://api.github.com/repos/zendframework/zend-inputfilter/zipball/0cf1bdcd8858a8583965310a7dae63ad75bd1237",
+                "reference": "0cf1bdcd8858a8583965310a7dae63ad75bd1237",
                 "shasum": ""
             },
             "require": {
@@ -1662,8 +1724,8 @@
                 "zendframework/zend-validator": "^2.6"
             },
             "require-dev": {
-                "fabpot/php-cs-fixer": "1.7.*",
-                "phpunit/phpunit": "^4.5",
+                "phpunit/phpunit": "^4.8",
+                "squizlabs/php_codesniffer": "^2.6.2",
                 "zendframework/zend-servicemanager": "^2.7.5 || ^3.0.3"
             },
             "suggest": {
@@ -1694,7 +1756,7 @@
                 "inputfilter",
                 "zf2"
             ],
-            "time": "2016-06-11 19:35:33"
+            "time": "2016-08-18 18:40:34"
         },
         {
             "name": "zendframework/zend-loader",
@@ -1915,16 +1977,16 @@
         },
         {
             "name": "zendframework/zend-servicemanager",
-            "version": "3.1.0",
+            "version": "3.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-servicemanager.git",
-                "reference": "90b88339a4b937c6bb0055ee04b2567e7e628f25"
+                "reference": "f701b0d322741b0c8d8ca1288f249a49438029cd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-servicemanager/zipball/90b88339a4b937c6bb0055ee04b2567e7e628f25",
-                "reference": "90b88339a4b937c6bb0055ee04b2567e7e628f25",
+                "url": "https://api.github.com/repos/zendframework/zend-servicemanager/zipball/f701b0d322741b0c8d8ca1288f249a49438029cd",
+                "reference": "f701b0d322741b0c8d8ca1288f249a49438029cd",
                 "shasum": ""
             },
             "require": {
@@ -1947,8 +2009,8 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.0-dev",
-                    "dev-develop": "3.1-dev"
+                    "dev-master": "3.1-dev",
+                    "dev-develop": "3.2-dev"
                 }
             },
             "autoload": {
@@ -1966,7 +2028,7 @@
                 "servicemanager",
                 "zf"
             ],
-            "time": "2016-06-01 16:50:58"
+            "time": "2016-07-15 14:59:51"
         },
         {
             "name": "zendframework/zend-stdlib",
@@ -2439,7 +2501,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "^5.5 || ^7.0"
+        "php": "^7.0"
     },
     "platform-dev": []
 }
