@@ -8,7 +8,7 @@ apt-get update
 apt-get install -y nginx php7.0 php7.0-bcmath php7.0-bz2 php7.0-cli php7.0-ctype php7.0-curl php7.0-dom php7.0-fileinfo php7.0-fpm php7.0-gd php7.0-iconv php7.0-intl php7.0-json php7.0-mbstring php7.0-pdo php7.0-pdo-sqlite php7.0-phar php7.0-readline php7.0-simplexml php7.0-sockets php7.0-sqlite3 php7.0-tidy php7.0-tokenizer php7.0-xml php7.0-xsl php7.0-xmlreader php7.0-xmlwriter php7.0-zip npm python3-pip
 
 # aws cli
-pip3 install awscli
+pip3 -q install awscli
 
 # Get Composer, and install to /usr/local/bin
 if [ ! -f "/usr/local/bin/composer" ];then
