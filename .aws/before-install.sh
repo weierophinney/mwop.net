@@ -65,3 +65,6 @@ if [ ! -d "/var/www/.npm" ];then
     chmod o-X /var/www/.npm
     chmod ug+rwX /var/www/.npm
 fi
+
+echo "[DONE] before-install.sh"
+exit 0

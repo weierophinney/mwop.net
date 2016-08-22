@@ -52,3 +52,6 @@
     grunt ;
     rm -Rf node_modules ;
 )
+
+echo "[DONE] after-install-www-data.sh"
+exit 0
