@@ -14,6 +14,10 @@
     echo "Executing composer" ;
     COMPOSER_HOME=/var/cache/composer composer install --quiet --no-ansi --no-dev --no-interaction --no-progress --no-scripts --no-plugins --optimize-autoloader ;
 
+    # Setting mwop.net.php permissions
+    echo "Setting mwop.net.php permissions" ;
+    chmod 750 bin/mwop.net.php ;
+
     # Clear existing cache files
     echo "Clearing cache files" ;
     php bin/mwop.net.php clear-cache ;

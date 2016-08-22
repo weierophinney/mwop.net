@@ -18,12 +18,6 @@ permissions:
       mode: 640
       type:
         - file
-    - object: /var/www/mwop.net/bin/mwop.net.php
-      owner: www-data
-      group: www-data
-      mode: 750
-      type:
-        - file
 hooks:
   ApplicationStop:
     - location: .aws/application-stop.sh
