@@ -5,6 +5,7 @@
  */
 
 return [
+    'config_cache_enabled' => true,
     'blog' => [
         'db'            => 'sqlite:' . realpath(getcwd()) . '/data/posts.db',
         'cache_path'    => 'data/cache/posts',
