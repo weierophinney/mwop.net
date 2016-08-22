@@ -19,7 +19,5 @@ It is built on:
   for implementing my blog.
 - [zf-console](https://github.com/zfcampus/zf-console) for implementing console
   commands for the site.
-- [zf-deploy](https://github.com/zfcampus/zf-deploy) for automating creation of
-  deployment packages.
 
 If you see bugs in the website, please feel free to provide a pull request!
