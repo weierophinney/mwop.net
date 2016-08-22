@@ -47,7 +47,7 @@ class CachingMiddleware
         $result = $this->fetchFromCache($id, $res);
 
         // Hit cache; resturn response.
-        if ($result instanceof ResponseInterface) {
+        if ($result instanceof Response) {
             return $result;
         }
 
@@ -55,7 +55,7 @@ class CachingMiddleware
         $result = $middleware($req, $res, $next);
 
         // Result is not a response; cannot cache; error condition.
-        if (! $result instanceof ResponseInterface) {
+        if (! $result instanceof Response) {
             return $next($req, $res, $result);
         }
 
