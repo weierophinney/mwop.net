@@ -1,4 +1,9 @@
 <?php
+/**
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
+ * @copyright Copyright (c) Matthew Weier O'Phinney
+ */
+
 namespace Mwop\Contact;
 
 use Zend\Validator\ValidatorInterface;
@@ -12,12 +17,12 @@ class RecaptchaValidator implements ValidatorInterface
 
     private $messages = [];
 
-    public function __construct($key)
+    public function __construct(string $key)
     {
         $this->key = $key;
     }
 
-    public function isValid($value)
+    public function isValid($value) : bool
     {
         $uri  = sprintf(self::RECAPTCHA_VERIFICATION_URI_PATTERN, $this->key, $value);
         $json = file_get_contents($uri);
@@ -29,7 +34,7 @@ class RecaptchaValidator implements ValidatorInterface
         return true;
     }
 
-    public function getMessages()
+    public function getMessages() : array
     {
         return $this->messages;
     }

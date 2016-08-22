@@ -1,11 +1,20 @@
 <?php
+/**
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
+ * @copyright Copyright (c) Matthew Weier O'Phinney
+ */
+
 namespace Mwop\Blog;
 
 use Phly\Expressive\Mustache\UriHelper;
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
+use stdClass;
 use Zend\Expressive\Helper\UrlHelper;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Expressive\Router\RouterInterface;
 use Zend\Expressive\Template\TemplateRendererInterface;
+use Zend\Paginator\Paginator;
 
 class ListPostsMiddleware
 {
@@ -29,9 +38,9 @@ class ListPostsMiddleware
         $this->uriHelper = new UriHelper($urlHelper);
     }
 
-    public function __invoke($req, $res, $next)
+    public function __invoke(Request $req, Response $res, callable $next) : Response
     {
-        $tag   = str_replace(array('+', '%20'), ' ', $req->getAttribute('tag', ''));
+        $tag   = str_replace(['+', '%20'], ' ', $req->getAttribute('tag', ''));
         $path  = $req->getOriginalRequest()->getUri()->getPath();
         $page  = $this->getPageFromRequest($req);
         $posts = $tag ? $this->mapper->fetchAllByTag($tag) : $this->mapper->fetchAll();
@@ -56,11 +65,7 @@ class ListPostsMiddleware
         ));
     }
 
-    /**
-     * @param \Psr\Http\Message\RequestInterface $req
-     * @return int
-     */
-    private function getPageFromRequest($req)
+    private function getPageFromRequest(Request $req) : int
     {
         $page = isset($req->getQueryParams()['page']) ? $req->getQueryParams()['page'] : 1;
         $page = (int) $page;
@@ -73,13 +78,13 @@ class ListPostsMiddleware
      * @var object $pagination
      * @return object $pagination
      */
-    private function preparePagination($path, $page, $pagination)
+    private function preparePagination(string $path, int $page, stdClass $pagination) : stdClass
     {
         $pagination->base_path = $path;
         $pagination->is_first  = ($page === $pagination->first);
         $pagination->is_last   = ($page === $pagination->last);
 
-        $pages = array();
+        $pages = [];
         for ($i = $pagination->firstPageInRange; $i <= $pagination->lastPageInRange; $i += 1) {
             $pages[] = [
                 'base_path' => $path,
@@ -93,11 +98,9 @@ class ListPostsMiddleware
     }
 
     /**
-     * @param int $page
-     * @param object $posts
-     * @return object Entries
+     * @return EntryView[]
      */
-    private function prepareEntries($page, $posts)
+    private function prepareEntries(int $page, Paginator $posts) : array
     {
         return array_map(function ($post) {
             $post['uriHelper'] = $this->uriHelper;
@@ -111,7 +114,7 @@ class ListPostsMiddleware
      * @param object $pagination
      * @return array
      */
-    private function prepareView($tag, $entries, $pagination)
+    private function prepareView(string $tag, array $entries, stdClass $pagination) : array
     {
         $view = $tag ? ['tag' => $tag] : [];
         if ($tag) {
@@ -120,7 +123,7 @@ class ListPostsMiddleware
         }
 
         return array_merge($view, [
-            'title'      => $tag ? 'Tag: ' . $tag  : 'Blog Posts',
+            'title'      => $tag ? 'Tag: ' . $tag : 'Blog Posts',
             'posts'      => $entries,
             'pagination' => $pagination,
         ]);

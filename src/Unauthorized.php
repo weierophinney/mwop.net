@@ -1,6 +1,13 @@
 <?php
+/**
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
+ * @copyright Copyright (c) Matthew Weier O'Phinney
+ */
+
 namespace Mwop;
 
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
@@ -11,13 +18,13 @@ class Unauthorized
 
     public function __construct(
         TemplateRendererInterface $renderer,
-        $template = 'error::401'
+        string $template = 'error::401'
     ) {
         $this->renderer = $renderer;
         $this->template = $template;
     }
 
-    public function __invoke($err, $req, $res, $next)
+    public function __invoke($err, Request $req, Response $res, callable $next) : Response
     {
         if ($res->getStatusCode() !== 401) {
             return $next($req, $res, $err);

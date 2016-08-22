@@ -1,8 +1,14 @@
 <?php
+/**
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
+ * @copyright Copyright (c) Matthew Weier O'Phinney
+ */
+
 namespace Mwop;
 
-use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
+use Throwable;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Expressive\Template\TemplateRendererInterface;
 use Zend\Expressive\TemplatedErrorHandler;
@@ -18,10 +24,10 @@ class ErrorHandler
 
     public function __construct(
         TemplateRendererInterface $renderer,
-        $displayErrors = false,
-        $template404 = 'error::404',
-        $templateError = 'error::500',
-        ResponseInterface $originalResponse = null
+        bool $displayErrors = false,
+        string $template404 = 'error::404',
+        string $templateError = 'error::500',
+        Response $originalResponse = null
     ) {
         $this->renderer      = $renderer;
         $this->displayErrors = $displayErrors;
@@ -32,12 +38,12 @@ class ErrorHandler
         }
     }
 
-    public function setOriginalResponse(ResponseInterface $response)
+    public function setOriginalResponse(Response $response)
     {
         $this->originalResponse = $response;
     }
 
-    public function __invoke($request, $response, $err = null)
+    public function __invoke(Request $request, Response $response, $err = null) : Response
     {
         if (! $err) {
             return $this->marshalNonErrorResponse($request, $response);
@@ -46,7 +52,7 @@ class ErrorHandler
         return $this->handleErrorResponse($err, $request, $response);
     }
 
-    private function marshalNonErrorResponse($request, $response)
+    private function marshalNonErrorResponse(Request $request, Response $response) : Response
     {
         if (! $this->originalResponse) {
             return $this->marshalReceivedResponse($request, $response);
@@ -77,7 +83,7 @@ class ErrorHandler
         return $this->create404($request, $response);
     }
 
-    private function marshalReceivedResponse($request, $response)
+    private function marshalReceivedResponse(Request $request, Response $response) : Response
     {
         if ($response->getStatusCode() === 200
             && $response->getBody()->getSize() === 0
@@ -88,7 +94,7 @@ class ErrorHandler
         return $response;
     }
 
-    private function create404($request, $response)
+    private function create404(Request $request, Response $response) : Response
     {
         return new HtmlResponse(
             $this->renderer->render($this->template404, []),
@@ -96,7 +102,7 @@ class ErrorHandler
         );
     }
 
-    private function handleErrorResponse($error, $request, $response)
+    private function handleErrorResponse($error, Request $request, Response $response) : Response
     {
         $error = $this->displayErrors
             ? $this->prepareError($error)
@@ -107,20 +113,20 @@ class ErrorHandler
         );
     }
 
-    private function prepareError($error)
+    private function prepareError($error) : string
     {
         if (is_scalar($error)) {
-            return $error;
+            return (string) $error;
         }
 
-        if ($error instanceof \Exception) {
+        if ($error instanceof Throwable) {
             return $this->prepareException($error);
         }
 
         return json_encode($error, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
     }
 
-    private function prepareException(\Exception $e)
+    private function prepareException(Throwable $e) : string
     {
         $message = '';
         do {

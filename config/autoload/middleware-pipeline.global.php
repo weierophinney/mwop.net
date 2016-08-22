@@ -1,4 +1,9 @@
 <?php
+/**
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
+ * @copyright Copyright (c) Matthew Weier O'Phinney
+ */
+
 use Mwop\Auth\Middleware as AuthMiddleware;
 use Mwop\Auth\MiddlewareFactory as AuthMiddlewareFactory;
 use Mwop\ErrorHandler;

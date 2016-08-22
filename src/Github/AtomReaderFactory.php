@@ -1,13 +1,19 @@
 <?php
+/**
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
+ * @copyright Copyright (c) Matthew Weier O'Phinney
+ */
+
 namespace Mwop\Github;
 
+use Interop\Container\ContainerInterface;
 use Zend\Feed\Reader\Http\ClientInterface as FeedReaderHttpClientInterface;
 use Zend\Feed\Reader\Reader as FeedReader;
 use Zend\Feed\Reader\StandaloneExtensionManager;
 
 class AtomReaderFactory
 {
-    public function __invoke($container)
+    public function __invoke(ContainerInterface $container) : AtomReader
     {
         $http   = $container->get(FeedReaderHttpClientInterface::class);
         FeedReader::setHttpClient($http);

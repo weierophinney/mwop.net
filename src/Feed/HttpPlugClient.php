@@ -1,10 +1,16 @@
 <?php
+/**
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
+ * @copyright Copyright (c) Matthew Weier O'Phinney
+ */
+
 namespace Mwop\Feed;
 
 use Http\Client\HttpClient;
 use Zend\Diactoros\Request;
 use Zend\Feed\Reader\Http\ClientInterface as FeedReaderHttpClientInterface;
 use Zend\Feed\Reader\Http\Psr7ResponseDecorator;
+use Zend\Feed\Reader\Http\ResponseInterface;
 
 class HttpPlugClient implements FeedReaderHttpClientInterface
 {
@@ -24,7 +30,7 @@ class HttpPlugClient implements FeedReaderHttpClientInterface
     /**
      * {@inheritdoc}
      */
-    public function get($uri)
+    public function get($uri) : ResponseInterface
     {
         $request = (new Request($uri, 'GET'))
             ->withHeader('User-Agent', 'HTTPie/0.9.2');

@@ -1,14 +1,22 @@
 <?php
+/**
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
+ * @copyright Copyright (c) Matthew Weier O'Phinney
+ */
+
 namespace Mwop\Blog\Console;
 
 use Mni\FrontYAML\Bridge\CommonMark\CommonMarkParser;
 use Mni\FrontYAML\Parser;
 use Mwop\Blog\MarkdownFileFilter;
+use Psr\Http\Message\StreamInterface;
+use Zend\Console\Adapter\AdapterInterface as Console;
 use Zend\Console\ColorInterface as Color;
 use Zend\Diactoros\ServerRequest as PsrRequest;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\Uri;
 use Zend\Stratigility\Http\Request;
+use ZF\Console\Route;
 
 class CachePosts
 {
@@ -19,7 +27,7 @@ class CachePosts
         $this->blogMiddleware = $blog;
     }
 
-    public function __invoke($route, $console)
+    public function __invoke(Route $route, Console $console) : int
     {
         $basePath = $route->getMatchedParam('path');
 
@@ -67,14 +75,8 @@ class CachePosts
 
     /**
      * Report success
-     *
-     * @param \Zend\Console\Adapter\AdapterInterface $console
-     * @param int $width
-     * @param int $length
-     * @param bool $success
-     * @return int
      */
-    private function reportComplete($console, $width, $length, $success = true)
+    private function reportComplete(Console $console, int $width, int $length, bool $success = true)
     {
         if (($length + 8) > $width) {
             $console->writeLine('');
@@ -92,9 +94,9 @@ class CachePosts
      *
      * @param string $id Post identifier.
      * @param string $cache Path to cache files.
-     * @param \Psr\Http\Message\StreamInterface $content Content to cache.
+     * @param StreamInterface $content Content to cache.
      */
-    private function cacheResponse($id, $cache, $content)
+    private function cacheResponse(string $id, string $cache, StreamInterface $content)
     {
         $filename = sprintf('%s/%s', $cache, $id);
         file_put_contents($filename, (string) $content);

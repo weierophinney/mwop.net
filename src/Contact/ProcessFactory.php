@@ -1,11 +1,17 @@
 <?php
+/**
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
+ * @copyright Copyright (c) Matthew Weier O'Phinney
+ */
+
 namespace Mwop\Contact;
 
+use Interop\Container\ContainerInterface;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
 class ProcessFactory
 {
-    public function __invoke($container)
+    public function __invoke(ContainerInterface $container) : Process
     {
         return new Process(
             $container->get('session'),

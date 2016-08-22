@@ -1,4 +1,9 @@
 <?php
+/**
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
+ * @copyright Copyright (c) Matthew Weier O'Phinney
+ */
+
 namespace Mwop\Blog;
 
 use Interop\Container\ContainerInterface;
@@ -12,7 +17,7 @@ class CachingDelegatorFactory implements DelegatorFactoryInterface
         $requestedName,
         callable $callback,
         array $options = null
-    ) {
+    ) : CachingMiddleware {
         $config = $container->get('config')['blog'];
 
         return new CachingMiddleware(

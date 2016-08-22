@@ -1,8 +1,15 @@
 <?php
+/**
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
+ * @copyright Copyright (c) Matthew Weier O'Phinney
+ */
+
 namespace Mwop\Blog;
 
 use Mni\FrontYAML\Bridge\CommonMark\CommonMarkParser;
 use Mni\FrontYAML\Parser;
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Expressive\Router\RouterInterface;
 use Zend\Expressive\Template\TemplateRendererInterface;
@@ -36,10 +43,10 @@ class DisplayPostMiddleware
         $this->disqus   = $disqus;
     }
 
-    public function __invoke($req, $res, $next)
+    public function __invoke(Request $req, Response $res, callable $next) : Response
     {
         $post = $this->mapper->fetch($req->getAttribute('id', false));
-        
+
         if (! $post) {
             return $next($req, $res->withStatus(404), 'Not found');
         }

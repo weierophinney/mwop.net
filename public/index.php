@@ -1,4 +1,9 @@
 <?php
+/**
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
+ * @copyright Copyright (c) Matthew Weier O'Phinney
+ */
+
 namespace Mwop;
 
 use Zend\Expressive\Application;
@@ -17,7 +22,8 @@ require_once 'vendor/autoload.php';
 $container = require 'config/container.php';
 $app       = $container->get(Application::class);
 
-// Piped middleware
+/* Piped middleware */
+
 $app->pipe(XClacksOverhead::class);
 $app->pipe(Redirects::class);
 $app->pipe('/auth', Auth\Middleware::class);
@@ -26,7 +32,7 @@ $app->pipe(Helper\UrlHelperMiddleware::class);
 $app->pipeDispatchMiddleware();
 $app->pipeErrorHandler(Unauthorized::class);
 
-// Routed middleware
+/* Routed middleware */
 
 // General pages
 $app->get('/', HomePage::class, 'home');

@@ -6,6 +6,8 @@
  *     either have them call that task before running, or check for the DB, or look
  *     for a CLI flag that asks to update first.
  * @todo Maybe add a "blog-prepare" task that does all of the above at once, in order?
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
+ * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 namespace Mwop;
 
@@ -130,7 +132,8 @@ $routes = [
             '--path'        => 'Base path of the application; defaults to current working dir',
             '--dbPath'      => 'Path to the database file, relative to the --path; defaults to data/posts.db',
             '--postsPath'   => 'Path to the blog posts, relative to the --path; defaults to data/blog',
-            '--authorsPath' => 'Path to the author metadata files, relative to the --path; defaults to data/blog/authors',
+            '--authorsPath' => 'Path to the author metadata files, relative to the --path; '
+            . 'defaults to data/blog/authors',
         ],
         'defaults' => [
             'path'        => realpath(getcwd()),

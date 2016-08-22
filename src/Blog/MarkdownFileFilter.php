@@ -1,4 +1,9 @@
 <?php
+/**
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
+ * @copyright Copyright (c) Matthew Weier O'Phinney
+ */
+
 namespace Mwop\Blog;
 
 use DirectoryIterator;
@@ -26,7 +31,7 @@ use SplFileInfo;
  */
 class MarkdownFileFilter extends FilterIterator
 {
-    public function __construct($dirOrIterator = '.')
+    public function __construct(string $dirOrIterator = '.')
     {
         if (is_string($dirOrIterator)) {
             if (! is_dir($dirOrIterator)) {
@@ -49,14 +54,14 @@ class MarkdownFileFilter extends FilterIterator
         $this->rewind();
     }
 
-    public function accept()
+    public function accept() : bool
     {
         $current = $this->getInnerIterator()->current();
-        if (!$current instanceof SplFileInfo) {
+        if (! $current instanceof SplFileInfo) {
             return false;
         }
 
-        if (!$current->isFile()) {
+        if (! $current->isFile()) {
             return false;
         }
 

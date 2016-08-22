@@ -6,7 +6,7 @@
         }
     ],
     "require": {
-        "php": "^5.5 || ^7.0",
+        "php": "^7.0",
         "aura/session": "^2.0",
         "opauth/opauth": "^0.4",
         "opauth/github": "^0.1",
@@ -27,22 +27,20 @@
         "zendframework/zend-expressive": "^1.0",
         "zendframework/zend-expressive-fastroute": "^1.0",
         "zendframework/zend-servicemanager": "^3.1",
-        "league/commonmark": "^0.11.3",
+        "league/commonmark": "^0.14",
         "mnapoli/front-yaml": "^1.5",
         "symfony/yaml": "^2.7",
         "php-http/curl-client": "^1.4",
         "php-http/message": "^1.2"
     },
     "require-dev": {
-        "filp/whoops": "^1.1",
-        "herrera-io/version": "^1.1"
+        "filp/whoops": "^2.1.3",
+        "herrera-io/version": "^1.1",
+        "squizlabs/php_codesniffer": "^2.6.2"
     },
     "autoload": {
         "psr-4": {
             "Mwop\\": "src/"
-        },
-        "files": [
-            "src/functions.php"
-        ]
+        }
     }
 }

@@ -1,4 +1,9 @@
 <?php
+/**
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
+ * @copyright Copyright (c) Matthew Weier O'Phinney
+ */
+
 namespace Mwop\Github;
 
 use Mwop\Collection;
@@ -12,14 +17,14 @@ class AtomReader
     protected $limit = 5;
     protected $user;
 
-    public function __construct($user)
+    public function __construct(string $user)
     {
         $this->user  = $user;
     }
 
-    public function setLimit($limit)
+    public function setLimit(int $limit) : self
     {
-        $this->limit = (int) $limit;
+        $this->limit = $limit;
         return $this;
     }
 
@@ -28,7 +33,7 @@ class AtomReader
         $this->filters[] = $filter;
     }
 
-    public function read()
+    public function read() : array
     {
         $url  = sprintf(self::ATOM_FORMAT, $this->user);
         $feed = FeedReader::import($url);

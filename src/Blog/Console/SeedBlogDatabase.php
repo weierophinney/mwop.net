@@ -1,4 +1,9 @@
 <?php
+/**
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
+ * @copyright Copyright (c) Matthew Weier O'Phinney
+ */
+
 namespace Mwop\Blog\Console;
 
 use DateTime;
@@ -7,7 +12,9 @@ use Mni\FrontYAML\Parser;
 use Mwop\Blog\MarkdownFileFilter;
 use PDO;
 use Symfony\Component\Yaml\Parser as YamlParser;
+use Zend\Console\Adapter\AdapterInterface as Console;
 use Zend\Console\ColorInterface as Color;
+use ZF\Console\Route;
 
 class SeedBlogDatabase
 {
@@ -51,7 +58,7 @@ class SeedBlogDatabase
      */
     private $postDelimiter = '<!--- EXTENDED -->';
 
-    private $table ='CREATE TABLE "posts" (
+    private $table = 'CREATE TABLE "posts" (
             id VARCHAR(255) NOT NULL PRIMARY KEY,
             path VARCHAR(255) NOT NULL,
             created UNSIGNED INTEGER NOT NULL,
@@ -64,7 +71,7 @@ class SeedBlogDatabase
             tags VARCHAR(255)
         )';
 
-    public function __invoke($route, $console)
+    public function __invoke(Route $route, Console $console) : int
     {
         $basePath    = $route->getMatchedParam('path');
         $postsPath   = $route->getMatchedParam('postsPath');
@@ -114,7 +121,7 @@ class SeedBlogDatabase
         return $this->reportSuccess($console, $width, $length);
     }
 
-    private function createDatabase($path, $console)
+    private function createDatabase(string $path, Console $console) : PDO
     {
         if (file_exists($path)) {
             $path = realpath($path);
@@ -144,12 +151,12 @@ class SeedBlogDatabase
      * @param string $authorsPath
      * @return string[]
      */
-    private function getAuthor($author, $authorsPath)
+    private function getAuthor(string $author, string $authorsPath) : array
     {
         if (isset($this->authors[$author])) {
             return $this->authors[$author];
         }
-        
+
         $path = sprintf('%s/%s.yml', $authorsPath, $author);
         if (! file_exists($path)) {
             $this->authors[$author] = ['id' => $author, 'name' => $author, 'email' => '', 'uri' => ''];
@@ -162,13 +169,8 @@ class SeedBlogDatabase
 
     /**
      * Report success
-     *
-     * @param \Zend\Console\Adapter\AdapterInterface $console
-     * @param int $width
-     * @param int $length
-     * @return int
      */
-    private function reportSuccess($console, $width, $length)
+    private function reportSuccess(Console $console, int $width, int $length) : int
     {
         if (($length + 8) > $width) {
             $console->writeLine('');

@@ -1,12 +1,18 @@
 <?php
+/**
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
+ * @copyright Copyright (c) Matthew Weier O'Phinney
+ */
+
 namespace Mwop\Factory;
 
+use Interop\Container\ContainerInterface;
 use Mwop\Page;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
 class PageFactory
 {
-    public function __invoke($container, $requestedName)
+    public function __invoke(ContainerInterface $container, string $requestedName) : Page
     {
         return new Page(
             $this->deriveTemplateName($requestedName),
@@ -14,7 +20,7 @@ class PageFactory
         );
     }
 
-    private function deriveTemplateName($service)
+    private function deriveTemplateName(string $service) : string
     {
         // Separate the first namespace out as the template namespace
         $ns       = preg_quote('\\');
@@ -33,7 +39,7 @@ class PageFactory
         return $this->camelCaseToDotSeparated($template);
     }
 
-    private function camelCaseToDotSeparated($string)
+    private function camelCaseToDotSeparated(string $string) : string
     {
         return preg_replace_callback('/(^|[a-z])([A-Z])/', function ($matches) {
             $string = strlen($matches[1]) ? sprintf('%s.%s', $matches[1], $matches[2]) : $matches[2];
