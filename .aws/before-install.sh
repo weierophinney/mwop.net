@@ -40,7 +40,11 @@ chown -R www-data.www-data /var/log/php
 chmod -R ug+rwX /var/log/php
 
 # Install grunt globally
-npm install -g grunt-cli
+if [ ! -f "/usr/local/bin/grunt" ];then
+    npm install -g grunt-cli
+else
+    npm update -g grunt-cli
+fi
 
 # Ensure we can run npm as www-data
 if [ ! -d "/var/www/.npm" ];then
