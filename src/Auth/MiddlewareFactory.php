@@ -1,12 +1,13 @@
 <?php
 namespace Mwop\Auth;
 
+use Interop\Container\ContainerInterface;
 use Zend\Expressive\AppFactory;
 use Zend\Expressive\Helper\BodyParams\BodyParamsMiddleware;
 
 class MiddlewareFactory
 {
-    public function __invoke($container)
+    public function __invoke(ContainerInterface $container)  : callable
     {
         $middleware = AppFactory::create($container);
 

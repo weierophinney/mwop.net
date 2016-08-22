@@ -4,12 +4,14 @@ namespace Mwop\Console;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use SplFileInfo;
+use Zend\Console\Adapter\AdapterInterface as Console;
+use ZF\Console\Route;
 
 class ClearCache
 {
     const PATH_TEMPLATE = '%s/data/cache';
 
-    public function __invoke($route, $console)
+    public function __invoke(Route $route, Console $console) : int
     {
         $console->write('Clearing static cache... ');
 
@@ -30,5 +32,7 @@ class ClearCache
         }
 
         $console->writeLine('[DONE]');
+
+        return 0;
     }
 }

@@ -130,7 +130,8 @@ $routes = [
             '--path'        => 'Base path of the application; defaults to current working dir',
             '--dbPath'      => 'Path to the database file, relative to the --path; defaults to data/posts.db',
             '--postsPath'   => 'Path to the blog posts, relative to the --path; defaults to data/blog',
-            '--authorsPath' => 'Path to the author metadata files, relative to the --path; defaults to data/blog/authors',
+            '--authorsPath' => 'Path to the author metadata files, relative to the --path; '
+            . 'defaults to data/blog/authors',
         ],
         'defaults' => [
             'path'        => realpath(getcwd()),

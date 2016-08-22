@@ -12,7 +12,7 @@ class CachingDelegatorFactory implements DelegatorFactoryInterface
         $requestedName,
         callable $callback,
         array $options = null
-    ) {
+    ) : CachingMiddleware {
         $config = $container->get('config')['blog'];
 
         return new CachingMiddleware(

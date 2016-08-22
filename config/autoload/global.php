@@ -82,6 +82,7 @@ return [
         'debug'              => false,
         'security_salt'      => 'PROVIDE A PROPER SALT',
         'Strategy'           => [
+            // @codingStandardsIgnoreStart
             'GitHub' => [
                 'client_id'     => null,
                 'client_secret' => null,
@@ -95,6 +96,7 @@ return [
                 'key'           => null,
                 'secret'        => null,
             ],
+            // @codingStandardsIgnoreEnd
         ],
     ],
 

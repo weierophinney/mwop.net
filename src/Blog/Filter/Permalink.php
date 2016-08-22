@@ -1,12 +1,11 @@
 <?php
-
 namespace Mwop\Blog\Filter;
 
 use Zend\Filter\FilterInterface;
 
 class Permalink implements FilterInterface
 {
-    public function filter($value)
+    public function filter(string $value) : string
     {
         $str = strtolower(trim($value));
 

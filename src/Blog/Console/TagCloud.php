@@ -2,7 +2,10 @@
 namespace Mwop\Blog\Console;
 
 use Mwop\Blog;
+use Throwable;
+use Zend\Console\Adapter\AdapterInterface as Console;
 use Zend\Console\ColorInterface as Color;
+use ZF\Console\Route;
 
 class TagCloud
 {
@@ -13,7 +16,7 @@ class TagCloud
         $this->mapper   = $mapper;
     }
 
-    public function __invoke($route, $console)
+    public function __invoke(Route $route, Console $console) : int
     {
         $message = 'Creating tag cloud';
         $length  = strlen($message);
@@ -38,13 +41,13 @@ class TagCloud
     /**
      * Report an error
      *
-     * @param \Zend\Console\Adapter\AdapterInterface $console
+     * @param Console $console
      * @param int $width
      * @param int $length
-     * @param string|Exception $e
+     * @param string|Throwable $e
      * @return int
      */
-    private function reportError($console, $width, $length, $e)
+    private function reportError(Console $console, int $width, int $length, $e) : int
     {
         if (($length + 9) > $width) {
             $console->writeLine('');
@@ -57,7 +60,7 @@ class TagCloud
             $console->writeLine($e);
         }
 
-        if ($e instanceof Exception) {
+        if ($e instanceof Throwable) {
             $console->writeLine($e->getTraceAsString());
         }
 
@@ -66,13 +69,8 @@ class TagCloud
 
     /**
      * Report success
-     *
-     * @param \Zend\Console\Adapter\AdapterInterface $console
-     * @param int $width
-     * @param int $length
-     * @return int
      */
-    private function reportSuccess($console, $width, $length)
+    private function reportSuccess(Console $console, int $width, int $length) : int
     {
         if (($length + 8) > $width) {
             $console->writeLine('');

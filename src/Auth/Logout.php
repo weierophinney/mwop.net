@@ -2,6 +2,8 @@
 namespace Mwop\Auth;
 
 use Aura\Session\Session;
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
 
 class Logout
 {
@@ -12,7 +14,7 @@ class Logout
         $this->session = $session;
     }
 
-    public function __invoke($request, $response, $next)
+    public function __invoke(Request $request, Response $response, callable $next) : Response
     {
         $auth = $this->session->getSegment('auth');
         $user = $auth->get('user');
@@ -24,7 +26,7 @@ class Logout
         return $this->redirect($request, $response);
     }
 
-    private function redirect($request, $response)
+    private function redirect(Request $request, Response $response) : Response
     {
         $originalUri = $request->getOriginalRequest()->getUri();
         $redirectUri = $originalUri->withPath('/');

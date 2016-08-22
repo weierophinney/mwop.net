@@ -6,11 +6,14 @@ use Mni\FrontYAML\Bridge\CommonMark\CommonMarkParser;
 use Mni\FrontYAML\Parser;
 use Mwop\Blog;
 use Symfony\Component\Yaml\Parser as YamlParser;
+use Traversable;
+use Zend\Console\Adapter\AdapterInterface as Console;
 use Zend\Console\ColorInterface as Color;
 use Zend\Expressive\Router\RouterInterface;
 use Zend\Expressive\Router\FastRouteRouter;
 use Zend\Expressive\Template\TemplateRendererInterface;
 use Zend\Feed\Writer\Feed as FeedWriter;
+use ZF\Console\Route;
 
 class FeedGenerator
 {
@@ -38,7 +41,7 @@ class FeedGenerator
         Blog\MapperInterface $mapper,
         RouterInterface $router,
         TemplateRendererInterface $renderer,
-        $authorsPath
+        string $authorsPath
     ) {
         $this->mapper      = $mapper;
         $this->router      = $this->seedRoutes($router);
@@ -46,7 +49,7 @@ class FeedGenerator
         $this->authorsPath = $authorsPath;
     }
 
-    public function __invoke($route, $console)
+    public function __invoke(Route $route, Console $console) : int
     {
         $this->console = $console;
         $outputDir = $route->getMatchedParam('outputDir');
@@ -84,17 +87,34 @@ class FeedGenerator
                 $this->mapper->fetchAllByTag($tag)
             );
         }
+
+        return 0;
     }
 
-    private function generateFeeds($fileBase, $baseUri, $title, $landingRoute, $feedRoute, array $routeOptions, $posts)
-    {
+    private function generateFeeds(
+        string $fileBase,
+        string $baseUri,
+        string $title,
+        string $landingRoute,
+        string $feedRoute,
+        array $routeOptions,
+        Traversable $posts
+    ) {
         foreach (['atom', 'rss'] as $type) {
             $this->generateFeed($type, $fileBase, $baseUri, $title, $landingRoute, $feedRoute, $routeOptions, $posts);
         }
     }
 
-    private function generateFeed($type, $fileBase, $baseUri, $title, $landingRoute, $feedRoute, array $routeOptions, $posts)
-    {
+    private function generateFeed(
+        string $type,
+        string $fileBase,
+        string $baseUri,
+        string $title,
+        string $landingRoute,
+        string $feedRoute,
+        array $routeOptions,
+        Traversable $posts
+    ) {
         $routeOptions['type'] = $type;
 
         $landingUri = $baseUri . $this->generateUri($landingRoute, $routeOptions);
@@ -150,12 +170,12 @@ class FeedGenerator
      * @param string $author
      * @return string[]
      */
-    private function getAuthor($author)
+    private function getAuthor(string $author) : array
     {
         if (isset($this->authors[$author])) {
             return $this->authors[$author];
         }
-        
+
         $path = sprintf('%s/%s.yml', $this->authorsPath, $author);
         if (! file_exists($path)) {
             $this->authors[$author] = $this->defaultAuthor;
@@ -173,7 +193,7 @@ class FeedGenerator
      * @param array $options
      * @return string
      */
-    private function generateUri($route, array $options)
+    private function generateUri(string $route, array $options) : string
     {
         $uri = $this->router->generateUri($route, $options);
         return str_replace('[/]', '', $uri);
@@ -188,7 +208,7 @@ class FeedGenerator
      * @param array $post
      * @return string
      */
-    private function createContent($content, $post)
+    private function createContent(string $content, array $post) : string
     {
         $view   = new Blog\EntryView($post);
         $hEntry = $this->renderer->render('blog::hcard', $view);

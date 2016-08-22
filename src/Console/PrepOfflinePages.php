@@ -3,13 +3,17 @@ namespace Mwop\Console;
 
 use Herrera\Version;
 use Mwop\Blog\MapperInterface;
+use Traversable;
+use Zend\Console\Adapter\AdapterInterface as Console;
 use Zend\Expressive\Router\RouterInterface;
+use ZF\Console\Route;
 
 class PrepOfflinePages
 {
     const OFFLINE_REGEX   = "/\nvar offline \= \[.*?\];/s";
     const VERSION_REGEX   = "/^var version \= 'v(?P<version>[^:']+)\:';/m";
 
+    // @codingStandardsIgnoreStart
     /**
      * @var array Default paths to always include in the service-worker
      */
@@ -34,6 +38,7 @@ class PrepOfflinePages
         'https://www.google.com/jsapi?ABQIAAAAGybdRRvLZwVUcF0dE3oVdBTO-MlgA7VGJpGqyqTOeDXlNzyZQxTGq17s-iAB0m0vwqLQ_A2dHhTg2Q',
         'https://code.jquery.com/jquery-1.10.2.min.js',
     ];
+    // @codingStandardsIgnoreEnd
 
     private $mapper;
 
@@ -42,7 +47,7 @@ class PrepOfflinePages
         $this->mapper = $mapper;
     }
 
-    public function __invoke($route, $console)
+    public function __invoke(Route $route, Console $console) : int
     {
         $serviceWorker = $route->getMatchedParam('serviceWorker');
 
@@ -56,6 +61,8 @@ class PrepOfflinePages
         $this->updateServiceWorker($serviceWorker, $paths);
 
         $console->writeLine('[DONE]');
+
+        return 0;
     }
 
     /**
@@ -63,7 +70,7 @@ class PrepOfflinePages
      *
      * @return string[]
      */
-    private function generatePaths()
+    private function generatePaths() : Traversable
     {
         $posts = $this->mapper->fetchAll();
         $posts->setCurrentPageNumber(1);
@@ -79,7 +86,7 @@ class PrepOfflinePages
      * @param string $serviceWorker Path to the service-worker.js script
      * @param array $paths Default offline paths
      */
-    private function updateServiceWorker($serviceWorker, array $paths)
+    private function updateServiceWorker(string $serviceWorker, array $paths)
     {
         if (! file_exists($serviceWorker)) {
             throw new InvalidArgumentException(sprintf(
@@ -99,11 +106,8 @@ class PrepOfflinePages
 
     /**
      * Bump the service-worker patch version
-     *
-     * @param string $serviceWorker
-     * @return string
      */
-    private function bumpServiceWorkerVersion($serviceWorker)
+    private function bumpServiceWorkerVersion(string $serviceWorker) : string
     {
         if (! preg_match(self::VERSION_REGEX, $serviceWorker, $matches)) {
             printf("Did not match version regex!\n");
@@ -121,11 +125,8 @@ class PrepOfflinePages
 
     /**
      * Increment the patch version
-     *
-     * @param string $version
-     * @return string
      */
-    private function incrementVersion($version)
+    private function incrementVersion(string $version) : string
     {
         $builder = Version\Parser::toBuilder($version);
         $builder->incrementPatch();
@@ -137,9 +138,8 @@ class PrepOfflinePages
      *
      * @param string $paths JSON-encoded array of offline paths
      * @param string $serviceWorker Contents of the service-worker.js file
-     * @return string
      */
-    private function replaceOfflinePaths($paths, $serviceWorker)
+    private function replaceOfflinePaths(string $paths, string $serviceWorker) : string
     {
         $replacement = sprintf(
             "\nvar offline = %s;",

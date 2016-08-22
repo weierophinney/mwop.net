@@ -7,54 +7,54 @@ class AuthorFilter extends InputFilter
 {
     public function __construct()
     {
-        $this->add(array(
+        $this->add([
             'name' => 'id',
-            'filters' => array(
-                array('name' => 'string_trim'),
-            ),
-            'validators' => array(
+            'filters' => [
+                ['name' => 'string_trim'],
+            ],
+            'validators' => [
                 new AuthorIsValid(),
-            ),
+            ],
             'required' => true,
-        ));
+        ]);
 
-        $this->add(array(
+        $this->add([
             'name' => 'name',
-            'filters' => array(
-                array('name' => 'string_trim'),
-                array('name' => 'strip_tags'),
-            ),
-            'validators' => array(
-                array(
+            'filters' => [
+                ['name' => 'string_trim'],
+                ['name' => 'strip_tags'],
+            ],
+            'validators' => [
+                [
                     'name' => 'string_length',
-                    'options' => array(
+                    'options' => [
                         'min' => 1,
-                    ),
-                ),
-            ),
+                    ],
+                ],
+            ],
             'required' => true,
-        ));
+        ]);
 
-        $this->add(array(
+        $this->add([
             'name' => 'email',
-            'filters' => array(
-                array('name' => 'string_trim'),
-            ),
-            'validators' => array(
-                array('name' => 'emailaddress'),
-            ),
+            'filters' => [
+                ['name' => 'string_trim'],
+            ],
+            'validators' => [
+                ['name' => 'emailaddress'],
+            ],
             'allow_empty' => true,
-        ));
+        ]);
 
-        $this->add(array(
+        $this->add([
             'name' => 'url',
-            'filters' => array(
-                array('name' => 'string_trim'),
-            ),
-            'validators' => array(
+            'filters' => [
+                ['name' => 'string_trim'],
+            ],
+            'validators' => [
                 new Url(),
-            ),
+            ],
             'allow_empty' => true,
-        ));
+        ]);
     }
 }

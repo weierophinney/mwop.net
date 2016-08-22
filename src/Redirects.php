@@ -1,9 +1,13 @@
 <?php
 namespace Mwop;
 
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Message\UriInterface as Uri;
+
 class Redirects
 {
-    public function __invoke($req, $res, $next)
+    public function __invoke(Request $req, Response $res, callable $next) : Response
     {
         $url  = $req->getUri();
         $path = $url->getPath();
@@ -68,7 +72,7 @@ class Redirects
 
         // Serendipity
         if (preg_match('#^/matthew#', $path)) {
-            $regexes = array(
+            $regexes = [
                 '^/matthew/feeds/index.rss2'                          => '/blog/rss.xml',
                 '^/matthew/feeds/atom.xml'                            => '/blog/atom.xml',
                 '^/matthew/archives/(\d{4}).html'                     => '/blog', // no longer supporting by year
@@ -79,7 +83,7 @@ class Redirects
                 '^/matthew/categories/\d+-([^/]+).rss'                => '/blog/tag/$1/rss.xml',
                 '^/matthew/categories/\d+-([^/]+)'                    => '/blog/tag/$1',
                 '^/matthew/rss\.php\?.*serendipity\[tag\]\=([^&=]+)$' => '/blog/tag/$1/rss.xml',
-            );
+            ];
             foreach ($regexes as $regex => $replacement) {
                 $regex = '#' . $regex . '#';
                 if (preg_match($regex, $path)) {
@@ -102,7 +106,7 @@ class Redirects
         return $next($req, $res);
     }
 
-    private function redirect($path, $url, $res, $query = [])
+    private function redirect(string $path, Uri $url, Response $res, array $query = []) : Response
     {
         $url = $url->withPath($path);
 

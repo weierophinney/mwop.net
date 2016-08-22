@@ -19,7 +19,7 @@ trait RoutesTrait
         'resume'             => '/resume',
     ];
 
-    private function seedRoutes(RouterInterface $router)
+    private function seedRoutes(RouterInterface $router) : RouterInterface
     {
         $middleware = function () {
         };

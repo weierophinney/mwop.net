@@ -1,9 +1,11 @@
 <?php
 namespace Mwop\Auth;
 
+use Interop\Container\ContainerInterface;
+
 class AuthFactory
 {
-    public function __invoke($container)
+    public function __invoke(ContainerInterface $container) : Auth
     {
         $config = $container->get('config');
         $config = $config['opauth'];

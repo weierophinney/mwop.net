@@ -1,18 +1,20 @@
 <?php
 namespace Mwop\Blog;
 
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
 use Zend\Diactoros\Stream;
 
 class FeedMiddleware
 {
     private $feedPath;
 
-    public function __construct($feedPath = 'data/feeds')
+    public function __construct(string $feedPath = 'data/feeds')
     {
         $this->feedPath = $feedPath;
     }
 
-    public function __invoke($req, $res, $next)
+    public function __invoke(Request $req, Response $res, callable $next) : Response
     {
         $tag  = $req->getAttribute('tag');
         $type = $req->getAttribute('type', 'rss');
@@ -29,7 +31,7 @@ class FeedMiddleware
             ->withBody(new Stream(fopen($path, 'r')));
     }
 
-    private function getTagFeedPath($tag, $type)
+    private function getTagFeedPath(string $tag, string $type) : string
     {
         return sprintf(
             '%s/%s.%s.xml',
@@ -39,7 +41,7 @@ class FeedMiddleware
         );
     }
 
-    private function getFeedPath($type)
+    private function getFeedPath(string $type) : string
     {
         return sprintf('%s/%s.xml', $this->feedPath, $type);
     }

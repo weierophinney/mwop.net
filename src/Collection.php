@@ -42,7 +42,7 @@ class Collection implements
      * @param array|Traversable
      * @return static
      */
-    public static function create($items)
+    public static function create($items) : self
     {
         return new static($items);
     }
@@ -52,7 +52,7 @@ class Collection implements
      *
      * @return array
      */
-    public function toArray()
+    public function toArray() : array
     {
         return $this->items;
     }
@@ -63,7 +63,7 @@ class Collection implements
      * @param callable $callback
      * @return self
      */
-    public function each(callable $callback)
+    public function each(callable $callback) : self
     {
         foreach ($this->items as $item) {
             $callback($item);
@@ -97,7 +97,7 @@ class Collection implements
      * @param callable $callback
      * @return static
      */
-    public function filter(callable $callback)
+    public function filter(callable $callback) : self
     {
         return $this->reduce(function ($filtered, $item) use ($callback) {
             if ($callback($item)) {
@@ -116,7 +116,7 @@ class Collection implements
      * @param array $filters
      * @return static
      */
-    public function filterChain(array $filters)
+    public function filterChain(array $filters) : self
     {
         $filters = static::create($filters);
         return $this->filter(function ($item) use ($filters) {
@@ -139,7 +139,7 @@ class Collection implements
      * @param callable $callback
      * @return static
      */
-    public function reject(callable $callback)
+    public function reject(callable $callback) : self
     {
         return $this->reduce(function ($filtered, $item) use ($callback) {
             if (! $callback($item)) {
@@ -157,7 +157,7 @@ class Collection implements
      * @param callable $callback
      * @return static
      */
-    public function map(callable $callback)
+    public function map(callable $callback) : self
     {
         return $this->reduce(function ($results, $item) use ($callback) {
             $results[] = $callback($item);
@@ -172,7 +172,7 @@ class Collection implements
      * @param int $offset
      * @return static
      */
-    public function slice($length, $offset = 0)
+    public function slice(int $length, int $offset = 0) : self
     {
         return new static(array_slice($this->items, $offset, $length, true));
     }
@@ -183,7 +183,7 @@ class Collection implements
      * @param callable $sorter
      * @return static
      */
-    public function sort(callable $sorter)
+    public function sort(callable $sorter) : self
     {
         $items = $this->items;
         usort($items, $sorter);
@@ -196,7 +196,7 @@ class Collection implements
      * @param Collection $items
      * @return static
      */
-    public function append(Collection $items)
+    public function append(Collection $items) : self
     {
         return Collection::create(array_merge($this->items, $items->toArray()));
     }
@@ -207,7 +207,7 @@ class Collection implements
      * @param string|int $offset
      * @return bool
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset) : bool
     {
         return array_key_exists($offset, $this->items);
     }
@@ -267,7 +267,7 @@ class Collection implements
      *
      * @return int
      */
-    public function count()
+    public function count() : int
     {
         return count($this->items);
     }
@@ -277,7 +277,7 @@ class Collection implements
      *
      * @return bool
      */
-    public function isEmpty()
+    public function isEmpty() : bool
     {
         return 0 === $this->count();
     }
@@ -287,7 +287,7 @@ class Collection implements
      *
      * @return ArrayIterator
      */
-    public function getIterator()
+    public function getIterator() : ArrayIterator
     {
         return new ArrayIterator($this->items);
     }

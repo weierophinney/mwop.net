@@ -1,11 +1,12 @@
 <?php
 namespace Mwop\Contact;
 
+use Interop\Container\ContainerInterface;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
 class ProcessFactory
 {
-    public function __invoke($container)
+    public function __invoke(ContainerInterface $container) : Process
     {
         return new Process(
             $container->get('session'),

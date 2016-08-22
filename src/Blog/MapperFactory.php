@@ -1,11 +1,12 @@
 <?php
 namespace Mwop\Blog;
 
+use Interop\Container\ContainerInterface;
 use PDO;
 
 class MapperFactory
 {
-    public function __invoke($container)
+    public function __invoke(ContainerInterface $container) : PdoMapper
     {
         $config = $container->get('config');
         $config = $config['blog'];

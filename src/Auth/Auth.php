@@ -2,6 +2,8 @@
 namespace Mwop\Auth;
 
 use Aura\Session\Session;
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
 use Opauth;
 
 class Auth
@@ -20,7 +22,7 @@ class Auth
         $this->session  = $session;
     }
 
-    public function __invoke($req, $res, $next)
+    public function __invoke(Request $req, Response $res, callable $next) : Response
     {
         if (isset($req->getQueryParams()['redirect'])) {
             $redirect = $this->session->getSegment('redirect');

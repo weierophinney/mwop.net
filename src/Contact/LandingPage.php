@@ -3,6 +3,8 @@ namespace Mwop\Contact;
 
 use Aura\Session\Session;
 use Mwop\PageView;
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
@@ -22,7 +24,7 @@ class LandingPage
         $this->config   = $config;
     }
 
-    public function __invoke($request, $response, $next)
+    public function __invoke(Request $request, Response $response, callable $next) : Response
     {
         $basePath = $request->getOriginalRequest()->getUri()->getPath();
         $view = array_merge($this->config, [

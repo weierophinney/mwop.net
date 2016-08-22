@@ -9,19 +9,19 @@ class Url extends AbstractValidator
 {
     const INVALID_URL  = 'urlInvalid';
 
-    protected $messageTemplates = array(
+    protected $messageTemplates = [
         self::INVALID_URL  => 'Invalid url provided; received "%value%".',
-    );
+    ];
 
-    public function isValid($value)
+    public function isValid($value) : bool
     {
         $this->setValue($value);
 
-        if (!$value instanceof Uri) {
+        if (! $value instanceof Uri) {
             $value = UriFactory::factory($value);
         }
 
-        if (!$value->isValid()) {
+        if (! $value->isValid()) {
             $this->error(self::INVALID_URL);
             return false;
         }

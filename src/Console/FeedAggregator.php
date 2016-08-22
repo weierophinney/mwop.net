@@ -1,9 +1,13 @@
 <?php
 namespace Mwop\Console;
 
+use Exception;
 use Mwop\Collection;
+use Zend\Console\Adapter\AdapterInterface as Console;
 use Zend\Console\ColorInterface as Color;
 use Zend\Feed\Reader\Reader as FeedReader;
+use Zend\Feed\Reader\Feed\FeedInterface;
+use ZF\Console\Route;
 
 class FeedAggregator
 {
@@ -34,13 +38,13 @@ EOF;
 
     private $toRetrieve;
 
-    public function __construct(array $feeds, $toRetrieve)
+    public function __construct(array $feeds, int $toRetrieve)
     {
         $this->feeds = Collection::create($feeds);
-        $this->toRetrieve = (int) $toRetrieve;
+        $this->toRetrieve = $toRetrieve;
     }
 
-    public function __invoke($route, $console)
+    public function __invoke(Route $route, Console $console) : int
     {
         $console->writeLine('Aggregating feed data...', Color::GREEN);
         file_put_contents(
@@ -48,9 +52,10 @@ EOF;
             $this->generateContent($this->getEntries($console))
         );
         $console->writeLine('[DONE]', Color::GREEN);
+        return 0;
     }
 
-    private function getEntries($console)
+    private function getEntries(Console $console) : Collection
     {
         return $this->feeds
             ->reduce(function ($entries, $feedInfo) use ($console) {
@@ -62,12 +67,12 @@ EOF;
             ->slice($this->toRetrieve);
     }
 
-    private function generateFilename($path)
+    private function generateFilename(string $path) : string
     {
         return sprintf(self::CACHE_FILE, $path);
     }
 
-    private function generateContent(Collection $entries)
+    private function generateContent(Collection $entries) : string
     {
         return sprintf(
             $this->configFormat,
@@ -84,14 +89,14 @@ EOF;
         );
     }
 
-    private function marshalEntries(array $feedInfo, $console)
+    private function marshalEntries(array $feedInfo, Console $console) : Collection
     {
         $feedUrl  = $feedInfo['url'];
         $logo     = $feedInfo['favicon'] ?? 'https://mwop.net/images/favicon/favicon-16x16.png';
         $siteName = $feedInfo['sitename'] ?? '';
         $siteUrl  = $feedInfo['siteurl'] ?? '#';
         $filters  = $feedInfo['filters'] ?? [];
-        $each     = $feedInfo['each']    ?? function ($item) {
+        $each     = $feedInfo['each'] ?? function ($item) {
         };
 
         $message = sprintf('    Retrieving %s... ', $feedUrl);
@@ -127,17 +132,17 @@ EOF;
         return $entries;
     }
 
-    private function getFeedFromLocalFile($file)
+    private function getFeedFromLocalFile(string $file) : FeedInterface
     {
         return FeedReader::importString(file_get_contents($file));
     }
 
-    private function getFeedFromRemoteUrl($url)
+    private function getFeedFromRemoteUrl(string $url) : FeedInterface
     {
         return FeedReader::import($url);
     }
 
-    private function reportException($e, $console)
+    private function reportException(Exception $e, Console $console)
     {
         $console->writeLine('An exception occurred:', Color::RED);
 
@@ -155,7 +160,7 @@ EOF;
         } while ($e);
     }
 
-    private function reportComplete($console, $length)
+    private function reportComplete(Console $console, int $length)
     {
         $width = $console->getWidth();
         if (($length + 8) > $width) {

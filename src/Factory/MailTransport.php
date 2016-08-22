@@ -1,11 +1,12 @@
 <?php
 namespace Mwop\Factory;
 
+use Interop\Container\ContainerInterface;
 use Zend\Mail\Transport;
 
 class MailTransport
 {
-    public function __invoke($container)
+    public function __invoke(ContainerInterface $container) : Transport\TransportInterface
     {
         $config  = $container->get('config');
         $config  = $config['mail']['transport'];

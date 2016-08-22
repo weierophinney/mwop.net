@@ -7,7 +7,7 @@ use Http\Message\StreamFactory\DiactorosStreamFactory;
 
 class HttpPlugClientFactory
 {
-    public function __invoke()
+    public function __invoke() : HttpPlugClient
     {
         return new HttpPlugClient(
             new Client(

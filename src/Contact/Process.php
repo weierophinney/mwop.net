@@ -1,8 +1,11 @@
 <?php
 namespace Mwop\Contact;
 
+use Aura\Session\CsrfToken;
 use Aura\Session\Session;
 use Mwop\PageView;
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Expressive\Template\TemplateRendererInterface;
 use Zend\Mail\Message;
@@ -27,7 +30,7 @@ class Process
         $this->config    = $config;
     }
 
-    public function __invoke($request, $response, $next)
+    public function __invoke(Request $request, Response $response, callable $next) : Response
     {
         $this->session->start();
 
@@ -66,7 +69,7 @@ class Process
             ->withHeader('Location', $path);
     }
 
-    private function redisplayForm($error, $csrfToken, $request)
+    private function redisplayForm(array $error, CsrfToken $csrfToken, Request $request) : Response
     {
         $csrfToken->regenerateValue();
 
@@ -95,7 +98,7 @@ class Process
         $this->transport->send($message);
     }
 
-    private function createMessage()
+    private function createMessage() : Message
     {
         $message = new Message();
         $config  = $this->config['message'];
