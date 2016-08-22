@@ -6,6 +6,8 @@
  *     either have them call that task before running, or check for the DB, or look
  *     for a CLI flag that asks to update first.
  * @todo Maybe add a "blog-prepare" task that does all of the above at once, in order?
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
+ * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 namespace Mwop;
 

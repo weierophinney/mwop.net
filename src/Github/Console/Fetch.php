@@ -1,8 +1,13 @@
 <?php
+/**
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
+ * @copyright Copyright (c) Matthew Weier O'Phinney
+ */
+
 namespace Mwop\Github\Console;
 
-use Exception;
 use Mwop\Github;
+use Throwable;
 use Zend\Console\Adapter\AdapterInterface as Console;
 use Zend\Console\ColorInterface as Color;
 use Zend\Escaper\Escaper;
@@ -47,7 +52,7 @@ class Fetch
 
         try {
             $data = $this->reader->read();
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             return $this->reportError($console, $width, $length, $e);
         }
 
@@ -89,7 +94,7 @@ class Fetch
      * @param Console $console
      * @param int $width
      * @param int $length
-     * @param string|Exception $e
+     * @param string|Throwable $e
      * @return int
      */
     private function reportError(Console $console, int $width, int $length, $e) : int
@@ -105,7 +110,7 @@ class Fetch
             $console->writeLine($e);
         }
 
-        if ($e instanceof Exception) {
+        if ($e instanceof Throwable) {
             $console->writeLine($e->getTraceAsString());
         }
 

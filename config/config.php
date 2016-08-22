@@ -1,9 +1,13 @@
 <?php
+/**
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
+ * @copyright Copyright (c) Matthew Weier O'Phinney
+ */
 
 use Zend\Stdlib\ArrayUtils;
 use Zend\Stdlib\Glob;
 
-/**
+/*
  * Configuration files are loaded in a specific order. First ``global.php`` and afterwards ``local.php``. This way
  * local settings overwrite global settings.
  *
