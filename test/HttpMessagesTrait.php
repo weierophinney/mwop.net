@@ -8,12 +8,16 @@ namespace MwopTest;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Message\UriInterface as Uri;
+use Zend\Stratigility\Http\Request as StratigilityRequest;
 
 trait HttpMessagesTrait
 {
     public function createRequestMock()
     {
-        return $this->prophesize(Request::class);
+        $request = $this->prophesize(StratigilityRequest::class);
+        $request->willImplement(Request::class);
+        return $request;
     }
 
     public function createResponseMock()
@@ -21,8 +25,26 @@ trait HttpMessagesTrait
         return $this->prophesize(Response::class);
     }
 
-    public function createNextMock()
+    public function nextShouldNotBeCalled()
     {
-        return $this->prophesize(MockNext::class);
+        return function ($request, $response, $error = null) {
+            $this->fail('Next called when it should not be');
+        };
+    }
+
+    public function nextShouldExpectAndReturn($return, $request, $response, $error = null)
+    {
+        return function ($req, $res, $err = null) use ($request, $response, $error, $return) {
+            $this->assertSame($request, $req);
+            $this->assertSame($response, $res);
+            $this->assertSame($error, $err);
+
+            return $return;
+        };
+    }
+
+    public function createUriMock()
+    {
+        return $this->prophesize(Uri::class);
     }
 }

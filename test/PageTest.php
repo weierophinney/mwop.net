@@ -24,7 +24,7 @@ class PageTest extends TestCase
         $response = $middleware(
             $this->createRequestMock()->reveal(),
             $this->createResponseMock()->reveal(),
-            $this->createNextMock()->reveal()
+            $this->nextShouldNotBeCalled()
         );
 
         $this->assertInstanceOf(HtmlResponse::class, $response);
