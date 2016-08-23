@@ -43,5 +43,10 @@
         "psr-4": {
             "Mwop\\": "src/"
         }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "MwopTest\\": "test/"
+        }
     }
 }
