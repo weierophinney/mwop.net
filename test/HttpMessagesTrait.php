@@ -35,9 +35,9 @@ trait HttpMessagesTrait
     public function nextShouldExpectAndReturn($return, $request, $response, $error = null)
     {
         return function ($req, $res, $err = null) use ($request, $response, $error, $return) {
-            $this->assertSame($request, $req);
-            $this->assertSame($response, $res);
-            $this->assertSame($error, $err);
+            $this->assertSame($request, $req, 'Request passed to next does not match expectation');
+            $this->assertSame($response, $res, 'Response passed to next does not match expectation');
+            $this->assertSame($error, $err, 'Error passed to next does not match expectation');
 
             return $return;
         };
