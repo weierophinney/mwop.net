@@ -6,55 +6,39 @@
 
 namespace MwopTest;
 
-use Mwop\Unauthorized;
+use Interop\Container\ContainerInterface;
+use Mwop\UnauthorizedResponseFactoryFactory;
 use PHPUnit_Framework_TestCase as TestCase;
 use Prophecy\Argument;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
-class UnauthorizedTest extends TestCase
+class UnauthorizedResponseFactoryTest extends TestCase
 {
     use HttpMessagesTrait;
 
     public function setUp()
     {
         $this->renderer = $this->prophesize(TemplateRendererInterface::class);
-        $this->middleware = new Unauthorized($this->renderer->reveal());
+        $this->container = $this->prophesize(ContainerInterface::class);
+        $this->container->get(TemplateRendererInterface::class)->will([$this->renderer, 'reveal']);
+
+        $factory = new UnauthorizedResponseFactoryFactory();
+        $this->factory = $factory($this->container->reveal());
     }
 
-    public function testReturnsNextMiddlewareWhenStatusCodeIsNot401()
+    public function testReturnsHtmlResponseInjectedWithResultsOfRendereringTemplat()
     {
-        $middleware = $this->middleware;
-        $request = $this->createRequestMock();
-        $response = $this->createResponseMock();
-        $error = 'error';
-        $expected = $this->createResponseMock()->reveal();
-
-        $response->getStatusCode()->willReturn(200);
-        $request->getUri()->shouldNotBeCalled();
-        $this->renderer->render(Argument::any(), Argument::any())->shouldNotBeCalled();
-
-        $next = $this->nextShouldExpectAndReturn($expected, $request->reveal(), $response->reveal(), $error);
-
-        $result = $middleware($error, $request->reveal(), $response->reveal(), $next);
-        $this->assertSame($expected, $result);
-    }
-
-    public function testMiddlewareReturnsHtmlResponseInjectedWithResultsOfRendereringTemplat()
-    {
-        $middleware = $this->middleware;
+        $factory = $this->factory;
         $request = $this->createRequestMock();
         $originalRequest = $this->createRequestMock();
         $uri = $this->createUriMock();
-        $response = $this->createResponseMock();
-        $next = $this->nextShouldNotBeCalled();
         $error = 'error';
         $view = [
             'auth_path' => '/auth',
             'redirect' => '/foo',
         ];
 
-        $response->getStatusCode()->willReturn(401);
         $request->getUri()->will([$uri, 'reveal']);
         $request->getOriginalRequest()->will([$originalRequest, 'reveal']);
         $uri->withPath('/auth')->will([$uri, 'reveal']);
@@ -62,7 +46,7 @@ class UnauthorizedTest extends TestCase
         $originalRequest->getUri()->willReturn('/foo');
         $this->renderer->render('error::401', $view)->willReturn('unauthorized');
 
-        $result = $middleware($error, $request->reveal(), $response->reveal(), $next);
+        $result = $factory($request->reveal());
 
         $this->assertInstanceOf(HtmlResponse::class, $result);
         $this->assertEquals('unauthorized', (string) $result->getBody());

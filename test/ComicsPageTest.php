@@ -9,6 +9,7 @@ namespace MwopTest;
 use Mwop\ComicsPage;
 use PHPUnit_Framework_TestCase as TestCase;
 use Prophecy\Argument;
+use Psr\Http\Message\ServerRequestInterface as Request;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
@@ -19,39 +20,45 @@ class ComicsPageTest extends TestCase
     public function setUp()
     {
         $this->renderer = $this->prophesize(TemplateRendererInterface::class);
-        $this->middleware = new ComicsPage('comics', $this->renderer->reveal());
     }
 
-    public function testMiddlewareInvokesNextErrorMiddlewareWith401StatusIfUserAttributeIsMissing()
+    public function testMiddlewareReturnsInvokes401HandlerIfUserAttributeIsMissing()
     {
-        $middleware = $this->middleware;
+        $expectedResponse = $this->createResponseMock()->reveal();
+        $unauthFactory = function (Request $request) use ($expectedResponse) {
+            return $expectedResponse;
+        };
+
+        $middleware = new ComicsPage($this->renderer->reveal(), $unauthFactory);
+
         $request = $this->createRequestMock();
-        $response = $this->createResponseMock();
-        $finalResponse = $this->createResponseMock()->reveal();
+        $response = $this->createResponseMock()->reveal();
 
         $request->getAttribute('user', false)->willReturn(false);
-        $response->withStatus(401)->willReturn($finalResponse);
         $next = $this->nextShouldExpectAndReturn(
-            $finalResponse,
+            $expectedResponse,
             $request->reveal(),
-            $finalResponse,
-            401
+            $response
         );
-        $this->renderer->render(Argument::any(), Argument::any())->shouldNotBeCalled();
+        $this->renderer->render(Argument::any())->shouldNotBeCalled();
 
         $this->assertSame(
-            $finalResponse,
-            $middleware($request->reveal(), $response->reveal(), $next)
+            $expectedResponse,
+            $middleware($request->reveal(), $response, $next)
         );
     }
 
     public function testMiddlewareReturnsHtmlResponseInjectedWithResultsOfRendereringPage()
     {
-        $middleware = $this->middleware;
+        $unauthFactory = function (Request $request) {
+            $this->fail('Factory for generating unauthorized response was invoked when it should not be');
+        };
+
+        $middleware = new ComicsPage($this->renderer->reveal(), $unauthFactory);
         $request = $this->createRequestMock();
 
         $request->getAttribute('user', false)->willReturn('mwop');
-        $this->renderer->render('comics', [])->willReturn('content')->shouldBeCalled();
+        $this->renderer->render('mwop::comics.page')->willReturn('content')->shouldBeCalled();
         $response = $middleware(
             $request->reveal(),
             $this->createResponseMock()->reveal(),

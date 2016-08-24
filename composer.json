@@ -55,6 +55,6 @@
     "scripts": {
         "cs-check": "phpcs",
         "cs-fix": "phpcbf",
-        "test": "phpunit"
+        "test": "phpunit --colors=always"
     }
 }
