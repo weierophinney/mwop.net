@@ -1,4 +1,7 @@
 {
+    "name": "weierophinney/mwop.net",
+    "license": "BSD-2-Clause",
+    "description": "Source code for mwop.net",
     "repositories": [
         {
             "type": "vcs",
@@ -48,5 +51,10 @@
         "psr-4": {
             "MwopTest\\": "test/"
         }
+    },
+    "scripts": {
+        "cs-check": "phpcs",
+        "cs-fix": "phpcbf",
+        "test": "phpunit"
     }
 }
