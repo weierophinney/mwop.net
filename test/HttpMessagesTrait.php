@@ -6,10 +6,13 @@
 
 namespace MwopTest;
 
+use PHPUnit_Framework_Assert as Assert;
+use Prophecy\Argument;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\UriInterface as Uri;
 use Zend\Stratigility\Http\Request as StratigilityRequest;
+use Zend\Stratigility\Next;
 
 trait HttpMessagesTrait
 {
@@ -27,20 +30,26 @@ trait HttpMessagesTrait
 
     public function nextShouldNotBeCalled()
     {
-        return function ($request, $response, $error = null) {
-            $this->fail('Next called when it should not be');
-        };
+        $next = $this->prophesize(Next::class);
+        $next->__invoke(Argument::any(), Argument::any())->shouldNotBeCalled();
+        return $next->reveal();
     }
 
-    public function nextShouldExpectAndReturn($return, $request, $response, $error = null)
+    public function nextShouldExpectAndReturn($return, $request, $response)
     {
-        return function ($req, $res, $err = null) use ($request, $response, $error, $return) {
-            $this->assertSame($request, $req, 'Request passed to next does not match expectation');
-            $this->assertSame($response, $res, 'Response passed to next does not match expectation');
-            $this->assertSame($error, $err, 'Error passed to next does not match expectation');
+        $requestExpectation = Argument::that(function ($argument) use ($request) {
+            Assert::assertSame($request, $argument, 'Request passed to next does not match expectation');
+            return true;
+        });
+        $responseExpectation = Argument::that(function ($argument) use ($response) {
+            Assert::assertSame($response, $argument, 'Response passed to next does not match expectation');
+            return true;
+        });
+        $next = $this->prophesize(Next::class);
+        $next->__invoke($requestExpectation, $responseExpectation)
+            ->willReturn($return);
 
-            return $return;
-        };
+        return $next->reveal();
     }
 
     public function createUriMock()
