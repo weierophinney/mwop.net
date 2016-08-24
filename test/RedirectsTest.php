@@ -100,8 +100,13 @@ class RedirectsTest extends TestCase
     /**
      * @dataProvider expectedAlternateHostRedirects
      */
-    public function testMiddlewareRedirectsToAlternateHostsWhenExpected($incomingUri, $hostTo, $schemeTo, $pathTo, $location)
-    {
+    public function testMiddlewareRedirectsToAlternateHostsWhenExpected(
+        $incomingUri,
+        $hostTo,
+        $schemeTo,
+        $pathTo,
+        $location
+    ) {
         $middleware = new Redirects();
         $uri = $this->createUriMock();
         $request = $this->createRequestMock();
