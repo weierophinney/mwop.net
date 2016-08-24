@@ -27,6 +27,7 @@
     <!-- Paths to check -->
     <file>bin</file>
     <file>config</file>
+    <file>config/autoload/local.php.dist</file>
     <file>public/index.php</file>
     <file>src</file>
     <file>test</file>

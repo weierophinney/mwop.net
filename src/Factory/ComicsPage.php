@@ -8,6 +8,7 @@ namespace Mwop\Factory;
 
 use Interop\Container\ContainerInterface;
 use Mwop\ComicsPage as Page;
+use Mwop\UnauthorizedResponseFactory;
 use Zend\Stratigility\MiddlewarePipe;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
@@ -19,8 +20,8 @@ class ComicsPage
 
         $pipeline->pipe($container->get('Mwop\Auth\UserSession'));
         $pipeline->pipe(new Page(
-            'mwop::comics.page',
-            $container->get(TemplateRendererInterface::class)
+            $container->get(TemplateRendererInterface::class),
+            $container->get(UnauthorizedResponseFactory::class)
         ));
 
         return $pipeline;

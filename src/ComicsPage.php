@@ -8,15 +8,32 @@ namespace Mwop;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Zend\Diactoros\Response\HtmlResponse;
+use Zend\Expressive\Template\TemplateRendererInterface;
 
-class ComicsPage extends Page
+class ComicsPage
 {
+    const TEMPLATE = 'mwop::comics.page';
+
+    private $renderer;
+
+    private $unauthorizedResponseFactory;
+
+    public function __construct(TemplateRendererInterface $renderer, callable $unauthorizedResponseFactory)
+    {
+        $this->renderer = $renderer;
+        $this->unauthorizedResponseFactory = $unauthorizedResponseFactory;
+    }
+
     public function __invoke(Request $request, Response $response, callable $next) : Response
     {
         if (! $request->getAttribute('user', false)) {
-            return $next($request, $response->withStatus(401), 401);
+            $factory = $this->unauthorizedResponseFactory;
+            return $factory($request);
         }
 
-        return parent::__invoke($request, $response, $next);
+        return new HtmlResponse(
+            $this->renderer->render(self::TEMPLATE)
+        );
     }
 }

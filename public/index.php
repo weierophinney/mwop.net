@@ -24,13 +24,14 @@ $app       = $container->get(Application::class);
 
 /* Piped middleware */
 
+$app->pipe(ErrorHandler::class);
 $app->pipe(XClacksOverhead::class);
 $app->pipe(Redirects::class);
 $app->pipe('/auth', Auth\Middleware::class);
 $app->pipeRoutingMiddleware();
 $app->pipe(Helper\UrlHelperMiddleware::class);
 $app->pipeDispatchMiddleware();
-$app->pipeErrorHandler(Unauthorized::class);
+$app->pipe(NotFound::class);
 
 /* Routed middleware */
 

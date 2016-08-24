@@ -4,27 +4,20 @@
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
-use Mwop\Auth\Middleware as AuthMiddleware;
-use Mwop\Auth\MiddlewareFactory as AuthMiddlewareFactory;
-use Mwop\ErrorHandler;
-use Mwop\Factory\Unauthorized as UnauthorizedFactory;
-use Mwop\NotFound;
-use Mwop\Redirects;
-use Mwop\Unauthorized;
-use Mwop\XClacksOverhead;
-use Zend\Expressive\Container\ApplicationFactory;
+namespace Mwop;
+
 use Zend\Expressive\Helper;
+use Zend\ServiceManager\Factory\InvokableFactory;
 
 return [
     'dependencies' => [
-        'invokables' => [
-            Redirects::class       => Redirects::class,
-            XClacksOverhead::class => XClacksOverhead::class,
-        ],
         'factories' => [
-            AuthMiddleware::class => AuthMiddlewareFactory::class,
+            Auth\Middleware::class => Auth\MiddlewareFactory::class,
+            ErrorHandler::class => Factory\ErrorHandlerFactory::class,
             Helper\UrlHelperMiddleware::class => Helper\UrlHelperMiddlewareFactory::class,
-            Unauthorized::class => UnauthorizedFactory::class,
+            Redirects::class => InvokableFactory::class,
+            NotFound::class => Factory\NotFoundFactory::class,
+            XClacksOverhead::class => InvokableFactory::class,
         ],
     ],
 ];

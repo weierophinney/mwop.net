@@ -7,14 +7,15 @@
 namespace Mwop\Factory;
 
 use Interop\Container\ContainerInterface;
-use Mwop\Unauthorized as Middleware;
+use Mwop\NotFound;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
-class Unauthorized
+class NotFoundFactory
 {
-    public function __invoke(ContainerInterface $container) : Middleware
+    public function __invoke(ContainerInterface $container) : NotFound
     {
-        return new Middleware(
+        return new NotFound(
+            $container->get('config')['debug'] ?? false,
             $container->get(TemplateRendererInterface::class)
         );
     }
