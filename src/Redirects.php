@@ -62,17 +62,26 @@ class Redirects
 
         // Former uploads
         if (preg_match('#^/uploads/#', $path)) {
-            return $this->redirect(sprintf('http://uploads.mwop.net/%s', substr($path, 9)), $url, $res);
+            $uri = $url
+                ->withHost('uploads.mwop.net')
+                ->withScheme('https');
+            return $this->redirect(substr($path, 8), $uri, $res);
         }
 
         // Former screencasts
         if (preg_match('#^/screencasts/#', $path)) {
-            return $this->redirect(sprintf('http://screencasts.mwop.net/%s', substr($path, 13)), $url, $res);
+            $uri = $url
+                ->withHost('screencasts.mwop.net')
+                ->withScheme('https');
+            return $this->redirect(substr($path, 12), $uri, $res);
         }
 
         // Former slides
         if (preg_match('#^/slides/#', $path)) {
-            return $this->redirect(sprintf('http://slides.mwop.net/%s', substr($path, 8)), $url, $res);
+            $uri = $url
+                ->withHost('slides.mwop.net')
+                ->withScheme('https');
+            return $this->redirect(substr($path, 7), $uri, $res);
         }
 
         // Serendipity
@@ -87,7 +96,6 @@ class Redirects
                 '^/matthew/plugin/tag/([^/]+)'                        => '/blog/tag/$1',
                 '^/matthew/categories/\d+-([^/]+).rss'                => '/blog/tag/$1/rss.xml',
                 '^/matthew/categories/\d+-([^/]+)'                    => '/blog/tag/$1',
-                '^/matthew/rss\.php\?.*serendipity\[tag\]\=([^&=]+)$' => '/blog/tag/$1/rss.xml',
             ];
             foreach ($regexes as $regex => $replacement) {
                 $regex = '#' . $regex . '#';
@@ -98,7 +106,7 @@ class Redirects
             }
             if (preg_match('#^/matthew/rss\.php$#', $path)) {
                 if (! isset($req->getQueryParams()['serendipity']['tag'])) {
-                    return $this->redirect('/blog', $url, $res);
+                    return $this->redirect('/blog/rss.xml', $url, $res);
                 }
                 return $this->redirect(sprintf(
                     '/blog/tag/%s/rss.xml',
