@@ -33,6 +33,10 @@ class ClearCache
                 continue;
             }
 
+            if ($file->getFilename() === '.placeholder') {
+                continue;
+            }
+
             unlink($file->getRealPath());
         }
 

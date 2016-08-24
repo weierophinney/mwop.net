@@ -53,6 +53,23 @@
         }
     },
     "scripts": {
+        "build": [
+            "bin/mwop.net.php clear-cache",
+            "bin/mwop.net.php seed-blog-db",
+            "bin/mwop.net.php tag-cloud",
+            "bin/mwop.net.php feed-generator",
+            "bin/mwop.net.php cache-posts",
+            "bin/mwop.net.php github-links",
+            "bin/mwop.net.php homepage-feeds",
+            "bin/mwop.net.php prep-offline-pages",
+            "phly-comic.php fetch-all --output=data/comics.mustache",
+            "@build-assets"
+        ],
+        "build-assets": [
+            "npm install",
+            "grunt",
+            "rm -Rf node_modules"
+        ],
         "cs-check": "phpcs",
         "cs-fix": "phpcbf",
         "test": "phpunit --colors=always"
