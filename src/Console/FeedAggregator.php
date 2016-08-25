@@ -26,6 +26,7 @@ return [
 %s        ],
     ],
 ];
+
 EOC;
 
     private $feeds;

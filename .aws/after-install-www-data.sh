@@ -18,43 +18,9 @@
     echo "Setting mwop.net.php permissions" ;
     chmod 750 bin/mwop.net.php ;
 
-    # Clear existing cache files
-    echo "Clearing cache files" ;
-    php bin/mwop.net.php clear-cache ;
-
-    # Seed the blog posts database
-    echo "Seeding the blog database" ;
-    php bin/mwop.net.php seed-blog-db ;
-
-    # Create the tag cloud
-    echo "Creating the tag cloud" ;
-    php bin/mwop.net.php tag-cloud ;
-
-    # Create the feeds
-    echo "Creating feeds" ;
-    php bin/mwop.net.php feed-generator ;
-
-    # Cache the blog posts
-    echo "Caching posts" ;
-    php bin/mwop.net.php cache-posts ;
-
-    # Create the initial set of github links for the front page
-    echo "Fetching GitHub activity" ;
-    php bin/mwop.net.php github-links ;
-
-    # Create the initial set of recent blog posts for the front page
-    echo "Fetching feeds for the homepage" ;
-    php bin/mwop.net.php homepage-feeds ;
-
-    # Create the initial set of comics
-    echo "Fetching comics" ;
-    php vendor/bin/phly-comic.php fetch-all --output=data/comics.mustache ;
-
-    # Compile CSS and JS
-    echo "Compiling assets" ;
-    npm install ;
-    grunt ;
-    rm -Rf node_modules ;
+    # Running build process
+    echo "Running build process" ;
+    composer build ;
 )
 
 echo "[DONE] after-install-www-data.sh"
