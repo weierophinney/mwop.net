@@ -12,7 +12,7 @@
 
     # Execute a composer installation ; do a full install at first
     echo "Executing composer (dev)" ;
-    if ! $(env COMPOSER_HOME=/var/cache/composer composer install --quiet --no-ansi --no-interaction --no-progress --no-scripts --no-plugins); then
+    if ! $(composer install --quiet --no-ansi --no-interaction --no-progress --no-scripts --no-plugins); then
         echo "[FAILED] Failed performing composer dev install" ;
         exit 1 ;
     fi
@@ -23,14 +23,15 @@
 
     # Running build process
     echo "Running build process" ;
-    if ! $(composer build); then
+    composer build ;
+    if [ $? -ne 0 ]; then
         echo "[FAILED] Failed building application" ;
         exit 1 ;
     fi
 
     # After the build, we optimize the installation
     echo "Executing composer (prod)" ;
-    if ! $(env COMPOSER_HOME=/var/cache/composer composer install --quiet --no-ansi --no-dev --no-interaction --no-progress --no-scripts --no-plugins --optimize-autoloader); then
+    if ! $(composer install --quiet --no-ansi --no-dev --no-interaction --no-progress --no-scripts --no-plugins --optimize-autoloader); then
         echo "[FAILED] Failed performing composer production install" ;
         exit 1 ;
     fi
