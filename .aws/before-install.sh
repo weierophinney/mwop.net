@@ -26,9 +26,14 @@ fi
 
 # Create a COMPOSER_HOME directory for the application
 if [ ! -d "/var/www/.cache/composer" ];then
-    echo "Creating composer cache directory"
+    echo "Creating user .cache directory for composer"
     mkdir -p /var/www/.cache/composer
     chown www-data.www-data /var/www/.cache/composer
+fi
+if [ ! -d "/var/www/.composer" ];then
+    echo "Creating user .composer directory"
+    mkdir -p /var/www/.composer
+    chown www-data.www-data /var/www/.composer
 fi
 
 # Get private configuration
