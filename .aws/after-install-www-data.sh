@@ -12,7 +12,7 @@
 
     # Execute a composer installation
     echo "Executing composer" ;
-    COMPOSER_HOME=/var/cache/composer composer install --quiet --no-ansi --no-dev --no-interaction --no-progress --no-scripts --no-plugins --optimize-autoloader ;
+    COMPOSER_HOME=/var/cache/composer && composer install --quiet --no-ansi --no-dev --no-interaction --no-progress --no-scripts --no-plugins --optimize-autoloader ;
 
     # Setting mwop.net.php permissions
     echo "Setting mwop.net.php permissions" ;
