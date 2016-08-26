@@ -48,6 +48,11 @@ echo "Ensuring PHP log directory is writable by www-data user"
 chown -R www-data.www-data /var/log/php
 chmod -R ug+rwX /var/log/php
 
+# Ensure node is symlinked
+if [ ! -L /usr/local/bin/node ];then
+    ln -s /usr/bin/nodejs /usr/local/bin/node
+fi
+
 # Install grunt globally
 if [ ! -f "/usr/local/bin/grunt" ];then
     echo "Installing grunt"
