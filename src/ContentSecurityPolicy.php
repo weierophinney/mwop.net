@@ -34,8 +34,6 @@ class ContentSecurityPolicy
                 'https://screencasts.mwop.net',
                 'https://vimeo.com',
                 'https://youtube.com',
-                'speakerdeck.com',
-                'www.slideshare.net',
                 'disqus.com',
             ],
             'font-src' => [
@@ -50,7 +48,6 @@ class ContentSecurityPolicy
             ],
             'script-src' => [
                 "'self'",
-                "'unsafe-inline'",
                 'data:',
                 'https://www.google.com',
                 'https://www.google-analytics.com',
@@ -58,8 +55,6 @@ class ContentSecurityPolicy
                 'https://code.jquery.com',
                 '*.disqus.com',
                 '*.disquscdn.com',
-                'https://speakerdeck.com',
-                'http://www.slideshare.net',
                 'https://platform.twitter.com',
                 'https://*.twimg.com',
             ],
@@ -67,8 +62,9 @@ class ContentSecurityPolicy
                 "'self'",
                 "'unsafe-inline'",
                 'https://fonts.googleapis.com',
-                'https://platform.twitter.com',
+                'platform.twitter.com',
                 '*.disqus.com',
+                '*.disquscdn.com',
             ],
         ];
 
