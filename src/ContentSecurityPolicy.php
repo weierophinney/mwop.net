@@ -60,7 +60,6 @@ class ContentSecurityPolicy
             ],
             'style-src' => [
                 "'self'",
-                "'unsafe-inline'",
                 'https://fonts.googleapis.com',
                 'platform.twitter.com',
                 '*.disqus.com',
