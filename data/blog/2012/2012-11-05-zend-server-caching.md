@@ -9,7 +9,7 @@ updated: '2012-11-05T15:25:00-06:00'
 tags:
     - zf2
 ---
-Zend Server has a very cool [Page Caching feature](http://www.youtube.com/watch_v=i2XXn2SA5zM.html).
+Zend Server has a very cool [Page Caching feature](https://www.youtube.com/watch_v=i2XXn2SA5zM.html).
 Basically, you can provide URLs or URL regular expressions, and tell Zend
 Server to provide full-page caching of those pages. This can provide a
 tremendous performance boost, without needing to change anything in your
