@@ -28,6 +28,9 @@ class ContentSecurityPolicy
     private function createContentSecurityPolicy() : string
     {
         $policies = [
+            'default-src' => [
+                "'self'",
+            ],
             'child-src' => [
                 "'self'",
                 'https://www.google.com',
