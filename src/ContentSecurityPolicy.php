@@ -72,6 +72,6 @@ class ContentSecurityPolicy
             $value = sprintf('%s %s', $key, implode(' ', $value));
         });
 
-        return implode('; ', $policies);
+        return implode(' ; ', $policies);
     }
 }
