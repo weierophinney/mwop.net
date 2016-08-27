@@ -65,6 +65,7 @@ class ContentSecurityPolicy
                 "'self'",
                 "'unsafe-inline'",
                 'https://fonts.googleapis.com',
+                'https://platform.twitter.com',
             ],
         ];
 
