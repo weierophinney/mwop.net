@@ -55,7 +55,7 @@ class ContentSecurityPolicy
                 'https://www.google-analytics.com',
                 'https://www.gstatic.com',
                 'https://code.jquery.com',
-                'https://*.disqus.com',
+                '*.disqus.com',
                 'https://speakerdeck.com',
                 'http://www.slideshare.net',
                 'https://platform.twitter.com',
@@ -66,6 +66,7 @@ class ContentSecurityPolicy
                 "'unsafe-inline'",
                 'https://fonts.googleapis.com',
                 'https://platform.twitter.com',
+                '*.disqus.com',
             ],
         ];
 
