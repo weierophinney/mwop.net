@@ -36,6 +36,7 @@ class ContentSecurityPolicy
                 'https://youtube.com',
                 'speakerdeck.com',
                 'www.slideshare.net',
+                'disqus.com',
             ],
             'font-src' => [
                 "'self'",
@@ -56,6 +57,7 @@ class ContentSecurityPolicy
                 'https://www.gstatic.com',
                 'https://code.jquery.com',
                 '*.disqus.com',
+                '*.disquscdn.com',
                 'https://speakerdeck.com',
                 'http://www.slideshare.net',
                 'https://platform.twitter.com',
