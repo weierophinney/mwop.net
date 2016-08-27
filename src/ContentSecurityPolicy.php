@@ -59,6 +59,7 @@ class ContentSecurityPolicy
                 'https://speakerdeck.com',
                 'http://www.slideshare.net',
                 'https://platform.twitter.com',
+                'https://*.twimg.com',
             ],
             'style-src' => [
                 "'self'",
