@@ -13,6 +13,7 @@ return [
     'dependencies' => [
         'factories' => [
             Auth\Middleware::class => Auth\MiddlewareFactory::class,
+            ContentSecurityPolicy::class => InvokableFactory::class,
             ErrorHandler::class => Factory\ErrorHandlerFactory::class,
             Helper\UrlHelperMiddleware::class => Helper\UrlHelperMiddlewareFactory::class,
             Redirects::class => InvokableFactory::class,

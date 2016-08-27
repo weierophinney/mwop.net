@@ -35,7 +35,7 @@ To keep things simple, I'm using a unix-like environment. As such, if you are
 on Windows, you may not have the same command-line tools available. If you are
 in such a situation, perhaps try this inside a Linux virtual machine.
 
-[Zend Framework 2 Module Quickstart](http://vimeo.com/49775540)
+[Zend Framework 2 Module Quickstart](https://vimeo.com/49775540)
 
 Let's start by creating a new project. We'll execute a few commands to download
 a skeleton application archive and extract it.

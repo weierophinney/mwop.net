@@ -25,6 +25,7 @@ $app       = $container->get(Application::class);
 /* Piped middleware */
 
 $app->pipe(ErrorHandler::class);
+$app->pipe(ContentSecurityPolicy::class);
 $app->pipe(XClacksOverhead::class);
 $app->pipe(Redirects::class);
 $app->pipe('/auth', Auth\Middleware::class);
