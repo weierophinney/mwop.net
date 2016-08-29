@@ -38,3 +38,20 @@ but return the response provided to it.
 - Determine how to add secret files, such as SSL config, for the nginx
   configuration during deployment.
 
+## AMP (Accelerated Mobile Pages)
+
+www.ampproject.org
+
+- Need custom layout
+- All embedded `<img>` tags need to be rewritten as `<amp-img src="" alt="" height="" width=""></amp-img>`
+- Needs a `<style amp-custom>` head section with custom styles for the page.
+  This will contain ALL styles for the page! You can include fonts via either
+  `<link rel="stylesheet">` or `@font-face`, but only from fonts.googleapis.com
+  or fast.fonts.net.
+- Use the `layout` attribute on elements to determine how to display them.
+  - `="responsive"` - sized to the parent container
+  - `="none"` - hides the element
+- Validate page by adding `#development=1` fragment to URL, and checking chrome
+    dev console.
+- Original pages should have: `<link rel="amphtml" href="...">` in head
+- AMP pages should have `<link rel="canonical" href="...">` in head
