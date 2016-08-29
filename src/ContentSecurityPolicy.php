@@ -63,6 +63,7 @@ class ContentSecurityPolicy
             ],
             'style-src' => [
                 "'self'",
+                "'unsafe-inline'", // allow inlined styles; mostly for widgets
                 'https://fonts.googleapis.com',
                 'platform.twitter.com',
                 '*.disqus.com',
