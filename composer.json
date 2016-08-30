@@ -54,14 +54,14 @@
     },
     "scripts": {
         "build": [
-            "@build-blog",
-            "@build-homepage",
-            "bin/mwop.net.php prep-offline-pages",
-            "phly-comic.php fetch-all --output=data/comics.mustache",
-            "@build-search",
             "@symlink-assets",
             "@build-assets",
             "bin/mwop.net.php use-dist-templates",
+            "@build-blog",
+            "@build-homepage",
+            "@build-search",
+            "bin/mwop.net.php prep-offline-pages",
+            "phly-comic.php fetch-all --output=data/comics.mustache",
             "@clean"
         ],
         "build-assets": [
