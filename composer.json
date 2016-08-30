@@ -58,6 +58,7 @@
             "@build-homepage",
             "bin/mwop.net.php prep-offline-pages",
             "phly-comic.php fetch-all --output=data/comics.mustache",
+            "@build-search",
             "@symlink-assets",
             "@build-assets",
             "bin/mwop.net.php use-dist-templates",
