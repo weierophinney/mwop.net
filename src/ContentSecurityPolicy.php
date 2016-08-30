@@ -52,6 +52,7 @@ class ContentSecurityPolicy
             'script-src' => [
                 "'self'",
                 'data:',
+                'https://cdn.ampproject.org',
                 'https://www.google.com',
                 'https://www.google-analytics.com',
                 'https://www.gstatic.com',
@@ -66,6 +67,7 @@ class ContentSecurityPolicy
                 "'unsafe-inline'", // allow inlined styles; mostly for widgets
                 'https://fonts.googleapis.com',
                 'platform.twitter.com',
+                'https://*.twimg.com',
                 '*.disqus.com',
                 '*.disquscdn.com',
             ],

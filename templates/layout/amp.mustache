@@ -1,0 +1,102 @@
+<!doctype html>
+<html amp lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>{{$title}}{{/title}}</title>
+  <link rel="canonical" href="{{$canonical}}{{/canonical}}" />
+  <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+  <script type="application/ld+json">{{$metadata}}{{/metadata}}</script>
+  <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,700">
+  <style amp-custom>
+    body {
+      padding-top: 44px;
+    }
+
+    amp-img {
+      background-color: black;
+    }
+
+    header {
+      position: fixed;
+      top: 0px;
+      height: 40px;
+      width: 100%;
+      margin: 0px auto;
+      background-color: #000;
+      color: #FFF;
+      text-align: center;
+      font-size: 28px;
+    }
+
+    header amp-img {
+      vertical-align: middle;
+    }
+
+    header a {
+      color: #FFF;
+      text-decoration: none;
+    }
+
+    footer {
+      background-color: #000;
+      color: #FFF;
+      margin-top: 1em;
+      border-top: 1px dotted #676767;
+      padding-top: 1em;
+      text-align: center;
+    }
+
+    article {
+      background-color: #FFF;
+      color: #000;
+    }
+
+    article {
+      font-size: 1.4em;
+      line-height: 1.6em;
+      padding-left: 0.5em;
+      padding-right: 1em;
+    }
+
+    article a {
+      text-decoration: underline;
+    }
+
+    article a.u-url {
+      text-decoration: none;
+    }
+
+    article img {
+      object-fit: contain;
+    }
+
+    pre {
+      background-color: black;
+      color: white;
+      border-radius: 0.5em;
+      box-shadow: 5px 5px 5px gray;
+      padding-left: 0.5em;
+      padding-right: 0.5em;
+      overflow: scroll;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+  <script async src="https://cdn.ampproject.org/v0.js"></script>
+</head>
+<body>
+  <header>
+    <amp-img src="/images/logo.gif" alt="mwop.net" height="32" width="32"></amp-img>
+    <a href="/">phly, boy, phly</a>
+  </header>
+
+  {{$content}}{{/content}}
+
+  <footer>
+    Unless otherwise noted <br /> &#169; 2004 - 2016, Matthew Weier O'Phinney
+  </footer>
+</body>
+</html>

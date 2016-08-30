@@ -12,28 +12,39 @@ use DateTimezone;
 class EntryView
 {
     private $created;
-    private $updated;
     private $tags = [];
     private $tagsProcessed = false;
+    private $updated;
 
     public $body;
     public $disqus;
     public $extended;
     public $id;
+    public $keywords;
     public $title;
     public $uriHelper;
 
-    public function __construct(array $entry, array $disqus = [])
+    public function __construct(array $entry, bool $isAmp = false, array $disqus = [])
     {
         $this->disqus   = $disqus;
 
         foreach ($entry as $key => $value) {
             switch ($key) {
                 case 'body':
-                case 'created':
                 case 'extended':
-                case 'id':
+                    if ($isAmp) {
+                        $value = $this->ampifyImages($value);
+                    }
+                    $this->{$key} = $value;
+                    break;
                 case 'tags':
+                    $this->keywords = is_array($value)
+                        ? implode(', ', $value)
+                        : $value;
+                    $this->tags = $value;
+                    break;
+                case 'created':
+                case 'id':
                 case 'title':
                 case 'updated':
                 case 'uriHelper':
@@ -154,5 +165,19 @@ class EntryView
             $date = new DateTime($dateString);
         }
         return $date->format('c');
+    }
+
+    private function ampifyImages(string $markup) : string
+    {
+        return preg_replace_callback('#(<img)([^>]+>)#', function (array $matches) {
+            $attributes = preg_replace('#\s*/>$#', '>', $matches[2]);
+            if (false === strstr($attributes, 'width=')) {
+                $attributes = ' width="400" ' . $attributes;
+            }
+            if (false === strstr($attributes, 'height=')) {
+                $attributes = ' height="600" ' . $attributes;
+            }
+            return sprintf('<amp-img layout="responsive"%s</amp-img>', $attributes);
+        }, $markup);
     }
 }

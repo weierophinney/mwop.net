@@ -51,6 +51,8 @@ class DisplayPostMiddleware
             return $next($req, $res->withStatus(404), 'Not found');
         }
 
+        $isAmp = (bool) ($req->getQueryParams()['amp'] ?? false);
+
         $parser   = new Parser(null, new CommonMarkParser());
         $document = $parser->parse(file_get_contents($post['path']));
         $post     = $document->getYAML();
@@ -62,10 +64,11 @@ class DisplayPostMiddleware
 
         $original = $req->getOriginalRequest()->getUri()->getPath();
         $path     = substr($original, 0, -(strlen($post['id'] . '.html') + 1));
-        $post     = new EntryView($post, $this->disqus);
+        $post     = new EntryView($post, $isAmp, $this->disqus);
 
-        return new HtmlResponse(
-            $this->template->render('blog::post', $post)
-        );
+        return new HtmlResponse($this->template->render(
+            $isAmp ? 'blog::post.amp' : 'blog::post',
+            $post
+        ));
     }
 }
