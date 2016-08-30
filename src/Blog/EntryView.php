@@ -20,6 +20,7 @@ class EntryView
     public $disqus;
     public $extended;
     public $id;
+    public $keywords;
     public $title;
     public $uriHelper;
 
@@ -36,9 +37,14 @@ class EntryView
                     }
                     $this->{$key} = $value;
                     break;
+                case 'tags':
+                    $this->keywords = is_array($value)
+                        ? implode(', ', $value)
+                        : $value;
+                    $this->tags = $value;
+                    break;
                 case 'created':
                 case 'id':
-                case 'tags':
                 case 'title':
                 case 'updated':
                 case 'uriHelper':
