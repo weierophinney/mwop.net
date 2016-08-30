@@ -30,6 +30,7 @@ class PrepOfflinePages
         '/resume',
 
         // Assets
+        '/css/blog.min.css',
         '/css/site.min.css',
         '/images/favicon/apple-touch-icon-57x57.png',
         '/images/favicon/apple-touch-icon-60x60.png',
@@ -39,9 +40,11 @@ class PrepOfflinePages
         '/images/logo.gif',
         '/images/mwop-coffee-dpc09.jpg',
         '/manifest.json',
-        '/js/bootstrap.min.js',
-        'https://www.google.com/jsapi?ABQIAAAAGybdRRvLZwVUcF0dE3oVdBTO-MlgA7VGJpGqyqTOeDXlNzyZQxTGq17s-iAB0m0vwqLQ_A2dHhTg2Q',
-        'https://code.jquery.com/jquery-1.10.2.min.js',
+        '/js/ga.js',
+        '/js/blog.min.js',
+        '/js/search_terms.json',
+        '/js/site.min.js',
+        '/js/twitter.js',
     ];
     // @codingStandardsIgnoreEnd
 
