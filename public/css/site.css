@@ -46,6 +46,25 @@ footer .copyright {
   font-size: 80%;
 }
 
+footer h4,
+footer p,
+footer ul li,
+footer ul li a {
+  color: #FFF;
+}
+
+footer a {
+  text-decoration: none;
+  border-bottom: 1px dotted #676767;
+}
+
+footer a:hover {
+  color: #FFF;
+  font-weight: bold;
+  text-decoration: none;
+  border-bottom: 1px solid #FFF;
+}
+
 .content, .sidebar {
   background-color: #FFFFFF;
   padding: 1em 0;

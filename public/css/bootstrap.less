@@ -1,0 +1,22 @@
+@import "../../node_modules/bootstrap/less/bootstrap.less";
+@import "../../node_modules/bootswatch/readable/variables.less";
+@screen-sm: 992px;
+@navbar-inverse-color: #fff;
+@navbar-inverse-bg: #000;
+@navbar-inverse-border: none;
+@navbar-inverse-link-color:                 #fff;
+@navbar-inverse-link-hover-color:           #fff;
+@navbar-inverse-link-active-color:          #fff;
+@import "../../node_modules/bootswatch/readable/bootswatch.less";
+.navbar {
+    font-family: @font-family-serif;
+}
+
+.navbar a:hover {
+    text-decoration: none;
+    border-bottom: 1px solid @gray-light;
+}
+
+.navbar-brand {
+    font-size: ceil(@font-size-base * 1.5);
+}
