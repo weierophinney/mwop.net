@@ -58,6 +58,7 @@
             "@build-homepage",
             "bin/mwop.net.php prep-offline-pages",
             "phly-comic.php fetch-all --output=data/comics.mustache",
+            "@symlink-assets",
             "@build-assets",
             "bin/mwop.net.php use-dist-templates",
             "@clean"
@@ -90,6 +91,10 @@
         "cs-fix": "phpcbf",
         "npm": "npm install",
         "serve": "php -S 0.0.0.0:8080 -t public/ public/index.php",
+        "symlink-assets": [
+            "@npm",
+            "bin/mwop.net.php create-asset-symlinks"
+        ],
         "test": "phpunit --colors=always"
     }
 }

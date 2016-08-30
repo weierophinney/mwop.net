@@ -60,6 +60,15 @@ $routes = [
         },
     ],
     [
+        'name' => 'create-asset-symlinks',
+        'description' => 'Symlink assets installed by npm into the public tree.',
+        'short_description' => 'Symlink assets.',
+        'handler' => function ($route, $console) use ($container) {
+            $handler = $container->get(MwopConsole\CreateAssetSymlinks::class);
+            return $handler($route, $console);
+        },
+    ],
+    [
         'name' => 'feed-generator',
         'route' => '[--outputDir=] [--baseUri=]',
         'description' => 'Generate feeds (RSS and Atom) for the blog, including all tags.',
