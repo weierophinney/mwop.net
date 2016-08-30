@@ -7,6 +7,14 @@ module.exports = function (grunt) {
   require('load-grunt-tasks')(grunt);
 
   grunt.initConfig({
+    less: {
+      bootstrap: {
+        files: {
+          'public/css/bootstrap.css': 'public/css/bootstrap.less'
+        }
+      }
+    },
+
     useminPrepare: {
       options: {
         root: 'public',
@@ -32,6 +40,7 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask('default', [
+    'less',
     'useminPrepare',
     'concat:generated',
     'cssmin:generated',
