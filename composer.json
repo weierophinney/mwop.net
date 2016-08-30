@@ -58,12 +58,13 @@
             "@build-homepage",
             "bin/mwop.net.php prep-offline-pages",
             "phly-comic.php fetch-all --output=data/comics.mustache",
-            "@build-assets"
+            "@build-assets",
+            "bin/mwop.net.php use-dist-templates",
+            "@clean"
         ],
         "build-assets": [
-            "npm install",
-            "grunt",
-            "rm -Rf node_modules"
+            "@npm",
+            "grunt"
         ],
         "build-blog": [
             "bin/mwop.net.php clear-cache",
@@ -76,8 +77,18 @@
             "bin/mwop.net.php github-links",
             "bin/mwop.net.php homepage-feeds"
         ],
+        "build-search": [
+            "@npm",
+            "bin/mwop.net.php generate-search-data",
+            "node bin/generate-index.js"
+        ],
+        "clean": [
+            "rm -Rf node_modules",
+            "rm -Rf .tmp"
+        ],
         "cs-check": "phpcs",
         "cs-fix": "phpcbf",
+        "npm": "npm install",
         "serve": "php -S 0.0.0.0:8080 -t public/ public/index.php",
         "test": "phpunit --colors=always"
     }

@@ -1,0 +1,2 @@
+<link href="/css/site.min.css" media="screen" rel="stylesheet" type="text/css">
+{{$styles}}{{/styles}}

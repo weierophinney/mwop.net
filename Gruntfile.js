@@ -7,23 +7,34 @@ module.exports = function (grunt) {
   require('load-grunt-tasks')(grunt);
 
   grunt.initConfig({
-    cssmin: {
-      dist: {
-        files: {
-          'public/css/site.min.css': [
-            'public/css/bootstrap.css',
-            'public/css/site.css'
-          ],
-          'public/css/blog.min.css': [
-            'public/css/blog.css',
-            'public/css/prism.css'
-          ],
-        }
+    useminPrepare: {
+      options: {
+        root: 'public',
+        dest: '.'
+      },
+      'site-styles': {
+        src: 'templates/layout/styles.mustache',
+      },
+      'site-scripts': {
+        src: 'templates/layout/scripts.mustache',
+      },
+      'blog-styles': {
+        src: 'templates/blog/styles.mustache',
+      },
+      'blog-scripts': {
+        src: 'templates/blog/scripts.mustache',
       }
+    },
+
+    usemin: {
+      html: ['build/**/*.mustache']
     }
   });
 
   grunt.registerTask('default', [
-    'cssmin'
+    'useminPrepare',
+    'concat:generated',
+    'cssmin:generated',
+    'uglify:generated'
   ]);
 };

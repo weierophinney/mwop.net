@@ -1,14 +1,16 @@
 {{<layout::layout}}
 {{$title}}{{title}}{{/title}}
+{{$styles}}
+  {{>blog::styles}}
+{{/styles}}
 {{$links}}
-    <link href="/css/blog.min.css" media="screen" rel="stylesheet" type="text/css">
     {{#tag}}
     <link href="{{rss}}" rel="alternate" type="application/rss+xml" title="phly, boy, phly RSS Feed for {{tag}}">
     <link href="{{atom}}" rel="alternate" type="application/atom+xml" title="phly, boy, phly Atom Feed for {{tag}}">
     {{/tag}}
 {{/links}}
 {{$scripts}}
-<script language="JavaScript" src="/js/prism.js"></script>
+  {{>blog::scripts}}
 {{/scripts}}
 {{$footer}}{{>tag-cloud}}{{/footer}}
 {{$content}}
