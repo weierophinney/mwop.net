@@ -52,6 +52,7 @@ class ContentSecurityPolicy
             'script-src' => [
                 "'self'",
                 'data:',
+                'https://cdn.ampproject.org',
                 'https://www.google.com',
                 'https://www.google-analytics.com',
                 'https://www.gstatic.com',

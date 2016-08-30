@@ -1,0 +1,21 @@
+{{<layout::amp}}
+{{$title}}{{title}}{{/title}}}
+{{$canonical}}{{{url}}}{{/canonical}}
+{{$datePublished}}{{created_rfc}}{{/datePublished}}
+{{$content}}
+<article class="single-entry h-entry col-md-6 blog">
+    <h2 class="p-name"><a class="u-url u-uid" href="{{url}}">{{title}}</a></h2>
+
+    <div class="e-content">
+    {{{body}}}
+
+    {{{extended}}}
+    </div>
+
+    <div class="p-author h-card hidden">
+      Posted by <a class="p-name u-url" href="https://mwop.net/">Matthew Weier O'Phinney</a>,
+      <amp-img class="u-photo photo" width="50" height="50" src="https://avatars0.githubusercontent.com/u/25943?v=3&u=79dd2ea1d4d8855944715d09ee4c86215027fa80&s=140" alt="mwop"></amp-img>
+    </div>
+</article>
+{{/content}}
+{{/layout::amp}}
