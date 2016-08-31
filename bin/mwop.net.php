@@ -93,7 +93,7 @@ $routes = [
         'short_description' => 'Generate site search data.',
         'options_descriptions' => [
             '--path'   => 'Base path of the application; posts are expected at $path/data/blog/ '
-            . 'and search terms will be written to $path/data/search_terms.json',
+            . 'and search terms will be written to $path/public/js/search_terms.json',
         ],
         'defaults' => [
             'path'   => realpath(getcwd()),
