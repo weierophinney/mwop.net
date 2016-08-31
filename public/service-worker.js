@@ -1,5 +1,5 @@
 /* Ends with ':' so it can be used with cache identifiers */
-var version = 'v0.3.7:';
+var version = 'v0.4.0:';
 
 /* Pages to cache by default */
 var offline = [
@@ -7,6 +7,7 @@ var offline = [
     "/blog",
     "/offline",
     "/resume",
+    "/css/blog.min.css",
     "/css/site.min.css",
     "/images/favicon/apple-touch-icon-57x57.png",
     "/images/favicon/apple-touch-icon-60x60.png",
@@ -16,9 +17,12 @@ var offline = [
     "/images/logo.gif",
     "/images/mwop-coffee-dpc09.jpg",
     "/manifest.json",
-    "/js/bootstrap.min.js",
-    "https://www.google.com/jsapi?ABQIAAAAGybdRRvLZwVUcF0dE3oVdBTO-MlgA7VGJpGqyqTOeDXlNzyZQxTGq17s-iAB0m0vwqLQ_A2dHhTg2Q",
-    "https://code.jquery.com/jquery-1.10.2.min.js",
+    "/js/ga.js",
+    "/js/blog.min.js",
+    "/js/search_terms.json",
+    "/js/site.min.js",
+    "/js/twitter.js",
+    "/blog/2016-08-17-zf-composer-autoloading.html",
     "/blog/2016-06-30-aws-codedeploy.html",
     "/blog/2016-05-16-programmatic-expressive.html",
     "/blog/2016-04-26-on-locators.html",
@@ -27,8 +31,7 @@ var offline = [
     "/blog/2016-01-28-expressive-stable.html",
     "/blog/2015-12-14-secure-phar-automation.html",
     "/blog/2015-09-19-zend-10-year-anniversary.html",
-    "/blog/2015-09-09-composer-root.html",
-    "/blog/2015-07-28-on-psr7-headers.html"
+    "/blog/2015-09-09-composer-root.html"
 ];
 
 /* Pages to NEVER cache */
