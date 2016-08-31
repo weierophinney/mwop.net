@@ -79,11 +79,7 @@
             "bin/mwop.net.php github-links",
             "bin/mwop.net.php homepage-feeds"
         ],
-        "build-search": [
-            "@npm",
-            "bin/mwop.net.php generate-search-data",
-            "node bin/generate-index.js"
-        ],
+        "build-search": "bin/mwop.net.php generate-search-data",
         "clean": [
             "rm -Rf node_modules",
             "rm -Rf .tmp"

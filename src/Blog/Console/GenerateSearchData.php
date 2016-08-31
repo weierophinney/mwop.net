@@ -37,7 +37,7 @@ class GenerateSearchData
         }
 
         file_put_contents(
-            realpath($basePath) . '/data/search_terms.json',
+            realpath($basePath) . '/public/js/search_terms.json',
             json_encode(['docs' => $documents], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)
         );
         $console->write('[DONE]', Color::GREEN);
