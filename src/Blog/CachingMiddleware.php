@@ -39,6 +39,10 @@ class CachingMiddleware
         $middleware = $this->middleware;
         $id         = $req->getAttribute('id', false);
 
+        if (! empty($req->getQueryParams()['amp'])) {
+            $id .= '-amp';
+        }
+
         // Caching is disabled, or no identifier present; invoke the middleware.
         if (! $this->enabled || ! $id) {
             return $middleware($req, $res, $next);

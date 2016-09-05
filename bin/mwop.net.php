@@ -22,7 +22,7 @@ use ZF\Console\Application;
 chdir(__DIR__ . '/../');
 require_once 'vendor/autoload.php';
 
-define('VERSION', '0.0.4');
+define('VERSION', '0.0.5');
 
 $container = require 'config/container.php';
 
@@ -60,6 +60,15 @@ $routes = [
         },
     ],
     [
+        'name' => 'create-asset-symlinks',
+        'description' => 'Symlink assets installed by npm into the public tree.',
+        'short_description' => 'Symlink assets.',
+        'handler' => function ($route, $console) use ($container) {
+            $handler = $container->get(MwopConsole\CreateAssetSymlinks::class);
+            return $handler($route, $console);
+        },
+    ],
+    [
         'name' => 'feed-generator',
         'route' => '[--outputDir=] [--baseUri=]',
         'description' => 'Generate feeds (RSS and Atom) for the blog, including all tags.',
@@ -74,6 +83,23 @@ $routes = [
         ],
         'handler' => function ($route, $console) use ($container) {
             $handler = $container->get(Blog\Console\FeedGenerator::class);
+            return $handler($route, $console);
+        },
+    ],
+    [
+        'name' => 'generate-search-data',
+        'route' => '[--path=]',
+        'description' => 'Generate site search data based on blog posts.',
+        'short_description' => 'Generate site search data.',
+        'options_descriptions' => [
+            '--path'   => 'Base path of the application; posts are expected at $path/data/blog/ '
+            . 'and search terms will be written to $path/public/js/search_terms.json',
+        ],
+        'defaults' => [
+            'path'   => realpath(getcwd()),
+        ],
+        'handler' => function ($route, $console) use ($container) {
+            $handler = $container->get(Blog\Console\GenerateSearchData::class);
             return $handler($route, $console);
         },
     ],
@@ -159,6 +185,22 @@ $routes = [
         ],
         'handler' => function ($route, $console) use ($container) {
             $handler = $container->get(Blog\Console\TagCloud::class);
+            return $handler($route, $console);
+        },
+    ],
+    [
+        'name' => 'use-dist-templates',
+        'route' => '[--path=]',
+        'description' => 'Enable usage of distribution templates (optimizing CSS and JS).',
+        'short_description' => 'Use dist templates.',
+        'options_descriptions' => [
+            '--path'   => 'Base path of the application; templates are expected at $path/templates/',
+        ],
+        'defaults' => [
+            'path'   => realpath(getcwd()),
+        ],
+        'handler' => function ($route, $console) use ($container) {
+            $handler = $container->get(MwopConsole\UseDistTemplates::class);
             return $handler($route, $console);
         },
     ],
