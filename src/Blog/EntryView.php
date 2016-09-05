@@ -1,4 +1,9 @@
 <?php
+/**
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
+ * @copyright Copyright (c) Matthew Weier O'Phinney
+ */
+
 namespace Mwop\Blog;
 
 use DateTime;
@@ -40,13 +45,13 @@ class EntryView
         }
     }
 
-    public function created()
+    public function created() : string
     {
         return $this->formatDate($this->created);
     }
 
     // @codingStandardsIgnoreStart
-    public function created_rfc()
+    public function created_rfc() : string
     {
         return $this->formatDateRfc($this->created);
     }
@@ -64,13 +69,13 @@ class EntryView
         ];
     }
 
-    public function uri()
+    public function uri() : callable
     {
         $factory = $this->uriHelper;
         return $factory();
     }
 
-    public function url()
+    public function url() : string
     {
         $uriMetadata = json_encode([
             'name'    => 'blog.post',
@@ -84,7 +89,7 @@ class EntryView
         return sprintf('https://mwop.net%s', $path);
     }
 
-    public function tags()
+    public function tags() : array
     {
         if (! $this->tagsProcessed) {
             $this->marshalTags();
@@ -131,7 +136,7 @@ class EntryView
         $this->tags = array_values($tags);
     }
 
-    private function formatDate($dateString)
+    private function formatDate($dateString) : string
     {
         if (is_numeric($dateString)) {
             $date = new DateTime('@' . $dateString, new DateTimezone('America/Chicago'));
@@ -141,7 +146,7 @@ class EntryView
         return $date->format('j F Y');
     }
 
-    private function formatDateRfc($dateString)
+    private function formatDateRfc($dateString) : string
     {
         if (is_numeric($dateString)) {
             $date = new DateTime('@' . $dateString, new DateTimezone('America/Chicago'));

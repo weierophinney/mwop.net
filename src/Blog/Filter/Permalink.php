@@ -1,4 +1,8 @@
 <?php
+/**
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
+ * @copyright Copyright (c) Matthew Weier O'Phinney
+ */
 
 namespace Mwop\Blog\Filter;
 
@@ -6,7 +10,7 @@ use Zend\Filter\FilterInterface;
 
 class Permalink implements FilterInterface
 {
-    public function filter($value)
+    public function filter(string $value) : string
     {
         $str = strtolower(trim($value));
 

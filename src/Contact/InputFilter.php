@@ -1,4 +1,9 @@
 <?php
+/**
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
+ * @copyright Copyright (c) Matthew Weier O'Phinney
+ */
+
 namespace Mwop\Contact;
 
 use Zend\InputFilter\InputFilter as BaseInputFilter;
@@ -6,53 +11,53 @@ use Zend\Validator\Hostname as HostnameValidator;
 
 class InputFilter extends BaseInputFilter
 {
-    public function __construct($reCaptchaKey)
+    public function __construct(string $reCaptchaKey)
     {
-        $this->add(array(
+        $this->add([
             'name'       => 'from',
             'required'   => true,
-            'validators' => array(
-                array(
+            'validators' => [
+                [
                     'name'    => 'Zend\Validator\EmailAddress',
-                    'options' => array(
+                    'options' => [
                         'allow'  => HostnameValidator::ALLOW_DNS,
                         'domain' => true,
-                    ),
-                ),
-            ),
-        ));
+                    ],
+                ],
+            ],
+        ]);
 
-        $this->add(array(
+        $this->add([
             'name'       => 'subject',
             'required'   => true,
-            'filters'    => array(
-                array(
+            'filters'    => [
+                [
                     'name'    => 'Zend\Filter\StripTags',
-                ),
-            ),
-            'validators' => array(
-                array(
+                ],
+            ],
+            'validators' => [
+                [
                     'name'    => 'Zend\Validator\StringLength',
-                    'options' => array(
+                    'options' => [
                         'encoding' => 'UTF-8',
                         'min'      => 2,
                         'max'      => 140,
-                    ),
-                ),
-            ),
-        ));
+                    ],
+                ],
+            ],
+        ]);
 
-        $this->add(array(
+        $this->add([
             'name'       => 'g-recaptcha-response',
             'required'   => true,
-            'validators' => array(
+            'validators' => [
                 new RecaptchaValidator($reCaptchaKey),
-            ),
-        ));
+            ],
+        ]);
 
-        $this->add(array(
+        $this->add([
             'name'       => 'body',
             'required'   => true,
-        ));
+        ]);
     }
 }

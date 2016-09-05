@@ -199,7 +199,7 @@ I've seen two compelling approaches to this problem. The first builds on the
 point to documentation.
 
 The `OPTIONS` solution is this: [use the body of an `OPTIONS` response to provide documentation](http://zacstewart.com/2012/04/14/http-options-method.html).
-(Keith Casey [gave an excellent short presentation about this at REST Fest 2012](http://vimeo.com/49613738)).
+(Keith Casey [gave an excellent short presentation about this at REST Fest 2012](https://vimeo.com/49613738)).
 
 The `OPTIONS` method allows for you to return a body in the response, and also
 allows for content negotiation. The theory, then, is that you return

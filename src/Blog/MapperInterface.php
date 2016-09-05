@@ -1,15 +1,23 @@
 <?php
+/**
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
+ * @copyright Copyright (c) Matthew Weier O'Phinney
+ */
+
 namespace Mwop\Blog;
+
+use Zend\Paginator\Paginator;
+use Zend\Tag\Cloud;
 
 interface MapperInterface
 {
-    public function fetch($id);
+    public function fetch(string $id) : array;
 
-    public function fetchAll();
+    public function fetchAll() : Paginator;
 
-    public function fetchAllByAuthor($author);
+    public function fetchAllByAuthor(string $author) : Paginator;
 
-    public function fetchAllByTag($tag);
+    public function fetchAllByTag(string $tag) : Paginator;
 
-    public function fetchTagCloud();
+    public function fetchTagCloud() : Cloud;
 }

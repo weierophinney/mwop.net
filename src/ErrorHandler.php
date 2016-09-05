@@ -1,136 +1,93 @@
 <?php
+/**
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
+ * @copyright Copyright (c) Matthew Weier O'Phinney
+ */
+
 namespace Mwop;
 
-use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Message\ResponseInterface;
+use DomainException;
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
+use Throwable;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Expressive\Template\TemplateRendererInterface;
-use Zend\Expressive\TemplatedErrorHandler;
-use Zend\Stratigility\Http\Response as StratigilityResponse;
 
 class ErrorHandler
 {
+    const TEMPLATE_ERROR = 'error::500';
+
     private $displayErrors;
-    private $originalResponse;
+
+    private $errorFormatter;
+
     private $renderer;
-    private $template404;
-    private $templateError;
 
     public function __construct(
         TemplateRendererInterface $renderer,
-        $displayErrors = false,
-        $template404 = 'error::404',
-        $templateError = 'error::500',
-        ResponseInterface $originalResponse = null
+        bool $displayErrors = false
     ) {
         $this->renderer      = $renderer;
         $this->displayErrors = $displayErrors;
-        $this->template404   = $template404;
-        $this->templateError = $templateError;
-        if ($originalResponse) {
-            $this->setOriginalResponse($originalResponse);
-        }
     }
 
-    public function setOriginalResponse(ResponseInterface $response)
+    public function setErrorFormatter(callable $formatter)
     {
-        $this->originalResponse = $response;
+        $this->errorFormatter = $formatter;
     }
 
-    public function __invoke($request, $response, $err = null)
+    public function getErrorFormatter() : callable
     {
-        if (! $err) {
-            return $this->marshalNonErrorResponse($request, $response);
+        if (! $this->errorFormatter) {
+            return $this->getDefaultErrorFormatter();
         }
 
-        return $this->handleErrorResponse($err, $request, $response);
+        return $this->errorFormatter;
     }
 
-    private function marshalNonErrorResponse($request, $response)
+    public function __invoke(Request $request, Response $response, callable $next) : Response
     {
-        if (! $this->originalResponse) {
-            return $this->marshalReceivedResponse($request, $response);
+        try {
+            $result = $next($request, $response);
+            if ($result instanceof Response) {
+                return $result;
+            }
+
+            throw new DomainException('No middleware returned a response.');
+        } catch (Throwable $e) {
+            return $this->createErrorResponse($e, $request);
         }
-
-        $originalResponse  = $this->originalResponse;
-        $decoratedResponse = $response instanceof StratigilityResponse
-            ? $response->getOriginalResponse()
-            : $response;
-
-        if ($originalResponse !== $response
-            && $originalResponse !== $decoratedResponse
-        ) {
-            // Response does not match either the original response or the
-            // decorated response; return it verbatim.
-            return $response;
-        }
-
-        if (($originalResponse === $response || $decoratedResponse === $response)
-            && $this->bodySize !== $response->getBody()->getSize()
-        ) {
-            // Response matches either the original response or the
-            // decorated response; but the body size has changed; return it
-            // verbatim.
-            return $response;
-        }
-
-        return $this->create404($request, $response);
     }
 
-    private function marshalReceivedResponse($request, $response)
-    {
-        if ($response->getStatusCode() === 200
-            && $response->getBody()->getSize() === 0
-        ) {
-            return $this->create404($request, $response);
-        }
-
-        return $response;
-    }
-
-    private function create404($request, $response)
-    {
-        return new HtmlResponse(
-            $this->renderer->render($this->template404, []),
-            404
-        );
-    }
-
-    private function handleErrorResponse($error, $request, $response)
+    public function createErrorResponse(Throwable $e, Request $request) : Response
     {
         $error = $this->displayErrors
-            ? $this->prepareError($error)
-            : [];
-        return new HtmlResponse(
-            $this->renderer->render($this->templateError, ['error' => $error]),
-            500
-        );
+            ? $this->prepareError($e, $request)
+            : $this->renderer->render(self::TEMPLATE_ERROR);
+
+        return new HtmlResponse($error, 500);
     }
 
-    private function prepareError($error)
+    private function getDefaultErrorFormatter() : callable
     {
-        if (is_scalar($error)) {
-            return $error;
-        }
+        return function (Throwable $e) : string {
+            $message = '';
+            do {
+                $message .= sprintf(
+                    "Exception: %s (%d)\nTrace:\n%s\n",
+                    $e->getMessage(),
+                    $e->getCode(),
+                    $e->getTraceAsString()
+                );
+            } while ($e = $e->getPrevious());
 
-        if ($error instanceof \Exception) {
-            return $this->prepareException($error);
-        }
-
-        return json_encode($error, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+            return $this->renderer->render(self::TEMPLATE_ERROR, ['error' => $message]);
+        };
     }
 
-    private function prepareException(\Exception $e)
+    private function prepareError(Throwable $error, Request $request) : string
     {
-        $message = '';
-        do {
-            $message .= sprintf(
-                "Exception: %s (%d)\nTrace:\n%s\n",
-                $e->getMessage(),
-                $e->getCode(),
-                $e->getTraceAsString()
-            );
-        } while ($e = $e->getPrevious());
-        return $message;
+        $formatter = $this->getErrorFormatter();
+        return $formatter($error, $request);
     }
 }

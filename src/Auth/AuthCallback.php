@@ -1,8 +1,15 @@
 <?php
+/**
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
+ * @copyright Copyright (c) Matthew Weier O'Phinney
+ */
+
 namespace Mwop\Auth;
 
 use Aura\Session\Session;
 use Opauth;
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
 use Zend\Diactoros\Uri;
 
 class AuthCallback
@@ -16,13 +23,13 @@ class AuthCallback
         $this->session = $session;
     }
 
-    public function __invoke($req, $res, $next)
+    public function __invoke(Request $req, Response $res, callable $next) : Response
     {
         $auth         = new Opauth($this->config, false);
         $authResponse = null;
 
         $this->session->start();
-        switch($auth->env['callback_transport']) {
+        switch ($auth->env['callback_transport']) {
             case 'session':
                 $authResponse = $_SESSION['opauth'];
                 unset($_SESSION['opauth']);
@@ -50,7 +57,7 @@ class AuthCallback
         ) {
             return $next($req, $res->withStatus(403), 'Invalid authentication response');
         }
-        
+
         if ($auth->env['callback_transport'] !== 'session'
             && ! $auth->validate(
                 sha1(print_r($authResponse['auth'], true)),

@@ -101,6 +101,19 @@ dl.resume dd p.metadata {
   font-style: oblique;
 }
 
+#__ss_4480868 {
+  width: 425px;
+}
+
+#__ss_4480868 span.talk-title {
+  display: block;
+  margin: 12px 0 4px;
+}
+
+#__ss_4480868 div.view-more {
+  padding: 5px 0 12px;
+}
+
 .mobile {
   text-align: center;
 }

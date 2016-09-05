@@ -1,4 +1,9 @@
 <?php
+/**
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
+ * @copyright Copyright (c) Matthew Weier O'Phinney
+ */
+
 namespace Mwop\Blog\Console;
 
 use Zend\Expressive\Router\Route;
@@ -19,7 +24,7 @@ trait RoutesTrait
         'resume'             => '/resume',
     ];
 
-    private function seedRoutes(RouterInterface $router)
+    private function seedRoutes(RouterInterface $router) : RouterInterface
     {
         $middleware = function () {
         };

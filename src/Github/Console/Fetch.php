@@ -1,10 +1,17 @@
 <?php
+/**
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
+ * @copyright Copyright (c) Matthew Weier O'Phinney
+ */
+
 namespace Mwop\Github\Console;
 
-use Exception;
 use Mwop\Github;
+use Throwable;
+use Zend\Console\Adapter\AdapterInterface as Console;
 use Zend\Console\ColorInterface as Color;
 use Zend\Escaper\Escaper;
+use ZF\Console\Route;
 
 /**
  * Fetch github user activity links
@@ -21,26 +28,18 @@ class Fetch
      */
     private $reader;
 
-    /**
-     * @param Github\AtomReader $reader
-     * @param mixed $outputTemplateString
-     */
-    public function __construct(Github\AtomReader $reader = null, $outputTemplateString = null)
+    public function __construct(Github\AtomReader $reader = null, string $outputTemplateString = '')
     {
         $this->reader = $reader;
-        if (is_string($outputTemplateString) && ! empty($outputTemplateString)) {
+        if (! empty($outputTemplateString)) {
             $this->outputTemplateString = $outputTemplateString;
         }
     }
 
     /**
      * Handle the incoming console request
-     *
-     * @param  \ZF\Console\Route $route
-     * @param  \Zend\Console\Adapter\AdapterInterface $console
-     * @return int
      */
-    public function __invoke($route, $console)
+    public function __invoke(Route $route, Console $console) : int
     {
         if (! $route->matchedParam('output')) {
             return $this->reportError($console, $width, $length, 'Missing output file');
@@ -53,7 +52,7 @@ class Fetch
 
         try {
             $data = $this->reader->read();
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             return $this->reportError($console, $width, $length, $e);
         }
 
@@ -75,12 +74,8 @@ class Fetch
      * Create content to write to the output file
      *
      * Uses the passed data and template to generate content.
-     *
-     * @param array $data
-     * @param string $template
-     * @return string
      */
-    private function createContentFromData($data, $template)
+    private function createContentFromData(array $data, string $template) : string
     {
         $escaper = new Escaper();
         $strings = array_map(function ($link) use ($template, $escaper) {
@@ -96,13 +91,13 @@ class Fetch
     /**
      * Report an error
      *
-     * @param \Zend\Console\Adapter\AdapterInterface $console
+     * @param Console $console
      * @param int $width
      * @param int $length
-     * @param string|Exception $e
+     * @param string|Throwable $e
      * @return int
      */
-    private function reportError($console, $width, $length, $e)
+    private function reportError(Console $console, int $width, int $length, $e) : int
     {
         if (($length + 9) > $width) {
             $console->writeLine('');
@@ -115,7 +110,7 @@ class Fetch
             $console->writeLine($e);
         }
 
-        if ($e instanceof Exception) {
+        if ($e instanceof Throwable) {
             $console->writeLine($e->getTraceAsString());
         }
 
@@ -124,13 +119,8 @@ class Fetch
 
     /**
      * Report success
-     *
-     * @param \Zend\Console\Adapter\AdapterInterface $console
-     * @param int $width
-     * @param int $length
-     * @return int
      */
-    private function reportSuccess($console, $width, $length)
+    private function reportSuccess(Console $console, int $width, int $length) : int
     {
         if (($length + 8) > $width) {
             $console->writeLine('');

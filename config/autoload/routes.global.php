@@ -1,10 +1,14 @@
 <?php
+/**
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
+ * @copyright Copyright (c) Matthew Weier O'Phinney
+ */
+
 use Mwop\Blog;
 use Mwop\ComicsPage;
 use Mwop\Contact;
 use Mwop\Factory;
 use Mwop\HomePage;
-use Mwop\Job;
 use Mwop\ResumePage;
 use Zend\Expressive\Helper\BodyParams\BodyParamsMiddleware;
 use Zend\Expressive\Router\RouterInterface;
@@ -30,8 +34,7 @@ return [
             Contact\Process::class            => Contact\ProcessFactory::class,
             Contact\ThankYouPage::class       => Contact\ThankYouPageFactory::class,
             ComicsPage::class                 => Factory\ComicsPage::class,
-            HomePage::class                   => Factory\PageFactory::class,
-            Job\GithubFeed::class             => Job\GithubFeedFactory::class,
+            HomePage::class                   => Factory\HomePageFactory::class,
             ResumePage::class                 => Factory\PageFactory::class,
             'Mwop\OfflinePage'                => Factory\PageFactory::class,
         ],

@@ -1,4 +1,7 @@
 {
+    "name": "weierophinney/mwop.net",
+    "license": "BSD-2-Clause",
+    "description": "Source code for mwop.net",
     "repositories": [
         {
             "type": "vcs",
@@ -6,45 +9,76 @@
         }
     ],
     "require": {
-        "php": "^5.5 || ^7.0",
-        "aura/session": "~2.0",
+        "php": "^7.0",
+        "aura/session": "^2.0",
         "opauth/opauth": "^0.4",
         "opauth/github": "^0.1",
         "opauth/google": "^0.2.2",
         "opauth/twitter": "^0.3.1",
         "zendframework/zend-diactoros": "^1.1",
-        "phly/phly-comic": "^1.0.18",
+        "phly/phly-comic": "^1.0.20",
         "phly/phly-expressive-mustache": "^1.0.2",
         "psr/http-message": "^1.0",
-        "zendframework/zend-config": "~2.3",
-        "zendframework/zend-escaper": "~2.3",
-        "zendframework/zend-feed": "~2.3",
-        "zendframework/zend-http": "~2.3",
-        "zendframework/zend-i18n": "~2.3",
-        "zendframework/zend-inputfilter": "~2.3",
-        "zendframework/zend-mail": "~2.3",
-        "zendframework/zend-paginator": "~2.3",
-        "zendframework/zend-stdlib": "~2.3",
-        "zendframework/zend-tag": "~2.3",
-        "zfcampus/zf-console": "~1.0",
+        "zendframework/zend-escaper": "^2.5.2",
+        "zendframework/zend-feed": "^2.7",
+        "zendframework/zend-inputfilter": "^2.7.2",
+        "zendframework/zend-mail": "^2.7.1",
+        "zendframework/zend-paginator": "^2.7",
+        "zendframework/zend-stdlib": "^3.0.1",
+        "zendframework/zend-tag": "^2.6.1",
+        "zfcampus/zf-console": "^1.2",
         "zendframework/zend-expressive": "^1.0",
         "zendframework/zend-expressive-fastroute": "^1.0",
-        "zendframework/zend-servicemanager": "^2.6",
-        "league/commonmark": "^0.11.3",
+        "zendframework/zend-servicemanager": "^3.1",
+        "league/commonmark": "^0.14",
         "mnapoli/front-yaml": "^1.5",
-        "symfony/yaml": "^2.7"
+        "symfony/yaml": "^2.7",
+        "php-http/curl-client": "^1.4",
+        "php-http/message": "^1.2"
     },
     "require-dev": {
-        "zfcampus/zf-deploy": "~1.0@stable",
-        "filp/whoops": "^1.1",
-        "herrera-io/version": "^1.1"
+        "filp/whoops": "^2.1.3",
+        "herrera-io/version": "^1.1",
+        "squizlabs/php_codesniffer": "^2.6.2",
+        "phpunit/phpunit": "^5.5"
     },
     "autoload": {
         "psr-4": {
             "Mwop\\": "src/"
-        },
-        "files": [
-            "src/functions.php"
-        ]
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "MwopTest\\": "test/"
+        }
+    },
+    "scripts": {
+        "build": [
+            "@build-blog",
+            "@build-homepage",
+            "bin/mwop.net.php prep-offline-pages",
+            "phly-comic.php fetch-all --output=data/comics.mustache",
+            "@build-assets"
+        ],
+        "build-assets": [
+            "npm install",
+            "grunt",
+            "rm -Rf node_modules"
+        ],
+        "build-blog": [
+            "bin/mwop.net.php clear-cache",
+            "bin/mwop.net.php seed-blog-db",
+            "bin/mwop.net.php tag-cloud",
+            "bin/mwop.net.php feed-generator",
+            "bin/mwop.net.php cache-posts"
+        ],
+        "build-homepage": [
+            "bin/mwop.net.php github-links",
+            "bin/mwop.net.php homepage-feeds"
+        ],
+        "cs-check": "phpcs",
+        "cs-fix": "phpcbf",
+        "serve": "php -S 0.0.0.0:8080 -t public/ public/index.php",
+        "test": "phpunit --colors=always"
     }
 }

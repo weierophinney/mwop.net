@@ -1,18 +1,24 @@
 <?php
+/**
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
+ * @copyright Copyright (c) Matthew Weier O'Phinney
+ */
+
 namespace Mwop\Blog;
 
-use Zend\ServiceManager\DelegatorFactoryInterface;
+use Interop\Container\ContainerInterface;
+use Zend\ServiceManager\Factory\DelegatorFactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 class CachingDelegatorFactory implements DelegatorFactoryInterface
 {
-    public function createDelegatorWithName(
-        ServiceLocatorInterface $services,
-        $name,
+    public function __invoke(
+        ContainerInterface $container,
         $requestedName,
-        $callback
-    ) {
-        $config = $services->get('Config')['blog'];
+        callable $callback,
+        array $options = null
+    ) : CachingMiddleware {
+        $config = $container->get('config')['blog'];
 
         return new CachingMiddleware(
             $callback(),

@@ -1,4 +1,9 @@
 <?php
+/**
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
+ * @copyright Copyright (c) Matthew Weier O'Phinney
+ */
+
 namespace Mwop\Blog\Filter;
 
 use Mwop\Blog\AuthorEntity;
@@ -11,14 +16,15 @@ class AuthorIsValid extends AbstractValidator
     const INVALID_NAME_TOO_SHORT = 'authorNameTooShort';
     const INVALID_TYPE           = 'authorTypeInvalid';
 
-    protected $messageTemplates = array(
+    protected $messageTemplates = [
         self::INVALID_AUTHOR         => 'Invalid author provided',
-        self::INVALID_NAME           => 'Author name must be 1 alphabetic character followed by 0 or more alphanumeric, dash, or underscore characters',
+        self::INVALID_NAME           => 'Author name must be 1 alphabetic character followed by 0 or more '
+        . 'alphanumeric, dash, or underscore characters',
         self::INVALID_NAME_TOO_SHORT => 'Author name must be at least 1 character',
         self::INVALID_TYPE           => 'Invalid author type provided',
-    );
+    ];
 
-    public function isValid($value)
+    public function isValid($value) : bool
     {
         $this->setValue($value);
 
@@ -27,7 +33,7 @@ class AuthorIsValid extends AbstractValidator
                 $this->error(self::INVALID_NAME_TOO_SHORT);
                 return false;
             }
-            if (!preg_match('/[a-z][a-z0-9_-]*/i', $value)) {
+            if (! preg_match('/[a-z][a-z0-9_-]*/i', $value)) {
                 $this->error(self::INVALID_NAME);
                 return false;
             }
@@ -41,12 +47,12 @@ class AuthorIsValid extends AbstractValidator
             unset($author);
         }
 
-        if (!$value instanceof AuthorEntity) {
+        if (! $value instanceof AuthorEntity) {
             $this->error(self::INVALID_TYPE);
             return false;
         }
 
-        if (!$value->isValid()) {
+        if (! $value->isValid()) {
             $this->error(self::INVALID_AUTHOR);
             return false;
         }

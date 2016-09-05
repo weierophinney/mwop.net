@@ -7,31 +7,40 @@
     cd /var/www/mwop.net ;
 
     # Copy in the production local configuration
+    echo "Syncing production configuration" ;
     cp /var/www/config/php/*.* config/autoload/ ;
 
-    # Execute a composer installation
-    COMPOSER_HOME=/var/cache/composer composer install --quiet --no-ansi --no-dev --no-interaction --no-progress --no-scripts --no-plugins --optimize-autoloader ;
+    # Execute a composer installation ; do a full install at first
+    echo "Executing composer (dev)" ;
+    if ! $(composer install --quiet --no-ansi --no-interaction --no-progress --no-scripts --no-plugins); then
+        echo "[FAILED] Failed performing composer dev install" ;
+        exit 1 ;
+    fi
 
-    # Seed the blog posts database
-    php bin/mwop.net.php seed-blog-db ;
+    # Setting mwop.net.php permissions
+    echo "Setting mwop.net.php permissions" ;
+    chmod 750 bin/mwop.net.php ;
 
-    # Create the tag cloud
-    php bin/mwop.net.php tag-cloud ;
+    # Running build process
+    echo "Running build process" ;
+    composer build ;
+    if [ $? -ne 0 ]; then
+        echo "[FAILED] Failed building application" ;
+        exit 1 ;
+    fi
 
-    # Create the feeds
-    php bin/mwop.net.php feed-generator ;
-
-    # Cache the blog posts
-    php bin/mwop.net.php cache-posts ;
-
-    # Create the initial set of github links for the front page
-    php bin/mwop.net.php github-links ;
-
-    # Create the initial set of comics
-    php vendor/bin/phly-comic.php fetch-all --output=data/comics.mustache ;
-
-    # Compile CSS and JS
-    npm install ;
-    grunt ;
-    rm -Rf node_modules ;
+    # After the build, we optimize the installation
+    echo "Executing composer (prod)" ;
+    if ! $(composer install --quiet --no-ansi --no-dev --no-interaction --no-progress --no-scripts --no-plugins --optimize-autoloader); then
+        echo "[FAILED] Failed performing composer production install" ;
+        exit 1 ;
+    fi
 )
+
+if [ $? -ne 0 ] ; then
+    echo "[FAILED] One or more build tasks failed" ;
+    exit 1 ;
+fi
+
+echo "[DONE] after-install-www-data.sh"
+exit 0

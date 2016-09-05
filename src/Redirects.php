@@ -1,9 +1,18 @@
 <?php
+/**
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
+ * @copyright Copyright (c) Matthew Weier O'Phinney
+ */
+
 namespace Mwop;
+
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Message\UriInterface as Uri;
 
 class Redirects
 {
-    public function __invoke($req, $res, $next)
+    public function __invoke(Request $req, Response $res, callable $next) : Response
     {
         $url  = $req->getUri();
         $path = $url->getPath();
@@ -53,22 +62,31 @@ class Redirects
 
         // Former uploads
         if (preg_match('#^/uploads/#', $path)) {
-            return $this->redirect(sprintf('http://uploads.mwop.net/%s', substr($path, 9)), $url, $res);
+            $uri = $url
+                ->withHost('uploads.mwop.net')
+                ->withScheme('https');
+            return $this->redirect(substr($path, 8), $uri, $res);
         }
 
         // Former screencasts
         if (preg_match('#^/screencasts/#', $path)) {
-            return $this->redirect(sprintf('http://screencasts.mwop.net/%s', substr($path, 13)), $url, $res);
+            $uri = $url
+                ->withHost('screencasts.mwop.net')
+                ->withScheme('https');
+            return $this->redirect(substr($path, 12), $uri, $res);
         }
 
         // Former slides
         if (preg_match('#^/slides/#', $path)) {
-            return $this->redirect(sprintf('http://slides.mwop.net/%s', substr($path, 8)), $url, $res);
+            $uri = $url
+                ->withHost('slides.mwop.net')
+                ->withScheme('https');
+            return $this->redirect(substr($path, 7), $uri, $res);
         }
 
         // Serendipity
         if (preg_match('#^/matthew#', $path)) {
-            $regexes = array(
+            $regexes = [
                 '^/matthew/feeds/index.rss2'                          => '/blog/rss.xml',
                 '^/matthew/feeds/atom.xml'                            => '/blog/atom.xml',
                 '^/matthew/archives/(\d{4}).html'                     => '/blog', // no longer supporting by year
@@ -78,8 +96,7 @@ class Redirects
                 '^/matthew/plugin/tag/([^/]+)'                        => '/blog/tag/$1',
                 '^/matthew/categories/\d+-([^/]+).rss'                => '/blog/tag/$1/rss.xml',
                 '^/matthew/categories/\d+-([^/]+)'                    => '/blog/tag/$1',
-                '^/matthew/rss\.php\?.*serendipity\[tag\]\=([^&=]+)$' => '/blog/tag/$1/rss.xml',
-            );
+            ];
             foreach ($regexes as $regex => $replacement) {
                 $regex = '#' . $regex . '#';
                 if (preg_match($regex, $path)) {
@@ -89,7 +106,7 @@ class Redirects
             }
             if (preg_match('#^/matthew/rss\.php$#', $path)) {
                 if (! isset($req->getQueryParams()['serendipity']['tag'])) {
-                    return $this->redirect('/blog', $url, $res);
+                    return $this->redirect('/blog/rss.xml', $url, $res);
                 }
                 return $this->redirect(sprintf(
                     '/blog/tag/%s/rss.xml',
@@ -102,7 +119,7 @@ class Redirects
         return $next($req, $res);
     }
 
-    private function redirect($path, $url, $res, $query = [])
+    private function redirect(string $path, Uri $url, Response $res, array $query = []) : Response
     {
         $url = $url->withPath($path);
 

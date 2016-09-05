@@ -1,4 +1,9 @@
 <?php
+/**
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
+ * @copyright Copyright (c) Matthew Weier O'Phinney
+ */
+
 namespace Mwop;
 
 use Zend\Expressive\Application;
@@ -17,16 +22,19 @@ require_once 'vendor/autoload.php';
 $container = require 'config/container.php';
 $app       = $container->get(Application::class);
 
-// Piped middleware
+/* Piped middleware */
+
+$app->pipe(ErrorHandler::class);
+$app->pipe(ContentSecurityPolicy::class);
 $app->pipe(XClacksOverhead::class);
 $app->pipe(Redirects::class);
 $app->pipe('/auth', Auth\Middleware::class);
 $app->pipeRoutingMiddleware();
 $app->pipe(Helper\UrlHelperMiddleware::class);
 $app->pipeDispatchMiddleware();
-$app->pipeErrorHandler(Unauthorized::class);
+$app->pipe(NotFound::class);
 
-// Routed middleware
+/* Routed middleware */
 
 // General pages
 $app->get('/', HomePage::class, 'home');
@@ -47,10 +55,5 @@ $app->get('/blog/{type:atom|rss}.xml', Blog\FeedMiddleware::class, 'blog.feed');
 $app->get('/contact[/]', Contact\LandingPage::class, 'contact');
 $app->post('/contact/process', Contact\Process::class, 'contact.process');
 $app->get('/contact/thank-you', Contact\ThankYouPage::class, 'contact.thank-your');
-
-// Zend Server jobs
-$app->post('/jobs/clear-cache', 'Job\ClearCache::class', 'job.clear-cache');
-$app->post('/jobs/comics', 'Job\Comics::class', 'job.comics');
-$app->post('/jobs/github-feed', 'Job\GithubFeed::class', 'job.github-feed');
 
 $app->run();
