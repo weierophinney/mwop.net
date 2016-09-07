@@ -11,7 +11,19 @@
       {{#updated}}
       "dateModified": "{{rfc}}",
       {{/updated}}
-      "image": {{#image}}"{{url}}"{{/image}}{{^image}}"/images/favicon/favicon-32x32.png"{{/image}},
+      "image": {
+        "@type": "ImageObject",
+        {{#image}}
+        "url": "{{url}}",
+        "height": {{height}},
+        "width": {{width}}
+        {{/image}}
+        {{^image}}
+        "url": "https://mwop.net/images/mwop-hard-rock-stack-2015.jpg",
+        height: 576,
+        width: 1023
+        {{/image}}
+      },
       "author": {
         "@type": "Person",
         "name": "Matthew Weier O'Phinney",
@@ -22,13 +34,16 @@
         "@type": "Person",
         "name": "Matthew Weier O'Phinney",
         "image": "https://avatars0.githubusercontent.com/u/25943?v=3&u=79dd2ea1d4d8855944715d09ee4c86215027fa80&s=140",
-        "url": "https://mwop.net"
+        "url": "https://mwop.net",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://mwop.net/images/favicon/favicon-32x32.png",
+            "height": 32,
+            "width": 32
+        }
       },
       "keywords": "{{keywords}}",
-      "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": "{{url}}"
-      }
+      "mainEntityOfPage": "{{url}}"
     }
 {{/metadata}}
 {{$content}}
