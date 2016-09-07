@@ -5,26 +5,30 @@
     {
       "@context": "http://schema.org",
       "@type": "BlogPosting",
+      "@id": "{{url}}",
       "headline": "{{title}}",
       "datePublished": "{{created_rfc}}",
       {{#updated}}
       "dateModified": "{{rfc}}",
       {{/updated}}
-      "image": [
-        {{#image}}
-        "{{url}}"
-        {{/image}}
-        {{^image}}
-        "/images/favicon/favicon-32x32.png"
-        {{/image}}
-      ],
+      "image": {{#image}}"{{url}}"{{/image}}{{^image}}"/images/favicon/favicon-32x32.png"{{/image}},
       "author": {
         "@type": "Person",
         "name": "Matthew Weier O'Phinney",
         "image": "https://avatars0.githubusercontent.com/u/25943?v=3&u=79dd2ea1d4d8855944715d09ee4c86215027fa80&s=140",
         "url": "https://mwop.net"
       },
-      "keywords": "{{keywords}}"
+      "publisher": {
+        "@type": "Person",
+        "name": "Matthew Weier O'Phinney",
+        "image": "https://avatars0.githubusercontent.com/u/25943?v=3&u=79dd2ea1d4d8855944715d09ee4c86215027fa80&s=140",
+        "url": "https://mwop.net"
+      },
+      "keywords": "{{keywords}}",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "{{url}}"
+      }
     }
 {{/metadata}}
 {{$content}}
