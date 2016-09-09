@@ -1,9 +1,11 @@
 {
+  "name": "mwop.net",
   "main": "Gruntfile.js",
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-cssmin": "~0.7.0",
-    "load-grunt-tasks": "~0.2.0"
+    "load-grunt-tasks": "~0.2.0",
+    "sw-precache": "^4.0.0"
   },
   "dependencies": {
     "bootstrap": "^3.3.7",

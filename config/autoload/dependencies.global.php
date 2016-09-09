@@ -29,7 +29,6 @@ return ['dependencies' => [
         Blog\Mapper::class                => Blog\MapperFactory::class,
         Console\CreateAssetSymlinks::class => InvokableFactory::class,
         Console\FeedAggregator::class     => Console\FeedAggregatorFactory::class,
-        Console\PrepOfflinePages::class   => Factory\PrepOfflinePagesFactory::class,
         Console\UseDistTemplates::class   => InvokableFactory::class,
         FeedReaderHttpClientInterface::class => Feed\HttpPlugClientFactory::class,
         FinalHandler::class               => Factory\FinalHandlerFactory::class,
