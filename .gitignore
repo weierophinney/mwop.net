@@ -11,7 +11,7 @@ data/search_terms.json
 data/tag-cloud.mustache
 log/
 node_modules/
-public/offline.html
+public/service-worker.js
 vendor/
 *.log
 *.zpk
