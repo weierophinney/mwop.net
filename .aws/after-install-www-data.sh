@@ -11,9 +11,9 @@
     cp /var/www/config/php/*.* config/autoload/ ;
 
     # Execute a composer installation ; do a full install at first
-    echo "Executing composer (dev)" ;
-    if ! $(composer install --quiet --no-ansi --no-interaction --no-progress --no-scripts --no-plugins); then
-        echo "[FAILED] Failed performing composer dev install" ;
+    echo "Executing composer" ;
+    if ! $(composer install --quiet --no-ansi --no-dev --no-interaction --no-progress --no-scripts --no-plugins --optimize-autoloader); then
+        echo "[FAILED] Failed performing composer install" ;
         exit 1 ;
     fi
 
@@ -26,13 +26,6 @@
     composer build ;
     if [ $? -ne 0 ]; then
         echo "[FAILED] Failed building application" ;
-        exit 1 ;
-    fi
-
-    # After the build, we optimize the installation
-    echo "Executing composer (prod)" ;
-    if ! $(composer install --quiet --no-ansi --no-dev --no-interaction --no-progress --no-scripts --no-plugins --optimize-autoloader); then
-        echo "[FAILED] Failed performing composer production install" ;
         exit 1 ;
     fi
 )
