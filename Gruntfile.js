@@ -2,7 +2,7 @@
 /*jshint strict:false */
 'use strict';
 
-var packageJson= require('package.json');
+var packageJson= require('./package.json');
 var path = require('path');
 var swPrecache = require('sw-precache');
 
