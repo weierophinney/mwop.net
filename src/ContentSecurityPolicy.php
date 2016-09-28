@@ -39,6 +39,10 @@ class ContentSecurityPolicy
                 'https://youtube.com',
                 'disqus.com',
             ],
+            'connect-src' => [
+                "'self'",
+                'https:',
+            ],
             'font-src' => [
                 "'self'",
                 'https:',
