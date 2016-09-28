@@ -1,12 +1,14 @@
 #!/usr/bin/zsh
-DEPLOY_ID=$(aws deploy list-deployments --application-name mwop.net --deployment-group-name mwop.net --include-only-statuses Queued InProgress --query "deployments[0]")
 
-if [[ 'null' == "$DEPLOY_ID" ]]; then
-    echo "No current deployments in progress"
-    exit 0;
+DEPLOY_ID=$1
+
+if ! [[ "${DEPLOY_ID}" =~ '^d-[A-Z0-9]{8}$' ]];then
+    SCRIPT_PATH=$(readlink -f $(dirname $0))
+    DEPLOY_ID=$(${SCRIPT_PATH}/get-deploy-id.sh)
+    if [[ "${DEPLOY_ID}" =~ "No current deployments in progress" ]];then
+        echo ${DEPLOY_ID}
+        exit 0
+    fi
 fi
-
-DEPLOY_ID="${DEPLOY_ID%\"}"
-DEPLOY_ID="${DEPLOY_ID#\"}"
 
 aws deploy get-deployment --deployment-id ${DEPLOY_ID} --query "deploymentInfo.status"
