@@ -1,11 +1,17 @@
 (function ($, lunr) {
   'use strict';
   var index, 
+    loaded = false,
     links = {},
     resultdiv;
 
   $(document).ready(function () {
-    $.getJSON('/js/search_terms.json', prepare);
+    $('input.search').focus(function () {
+      if (loaded) {
+        return;
+      }
+      $.getJSON('/js/search_terms.json', prepare);
+    });
   });
 
   function prepare (response) {
