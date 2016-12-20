@@ -19,6 +19,7 @@ return [
             Redirects::class => InvokableFactory::class,
             NotFound::class => Factory\NotFoundFactory::class,
             XClacksOverhead::class => InvokableFactory::class,
+            XPoweredBy::class => InvokableFactory::class,
         ],
     ],
 ];
