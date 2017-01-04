@@ -57,14 +57,6 @@ return [
                 'favicon' => 'https://framework.zend.com/ico/favicon.ico',
                 'sitename' => 'Zend Framework Blog',
                 'siteurl' => 'https://framework.zend.com/blog/',
-                'each' => function ($entry) {
-                    $link = $entry->getLink();
-                    $r = new ReflectionProperty($entry, 'data');
-                    $r->setAccessible(true);
-                    $data = $r->getValue($entry);
-                    $data['links'][0] = 'https://framework.zend.com' . $link;
-                    $r->setValue($entry, $data);
-                },
                 'filters' => [
                     function ($entry) {
                         return (false !== strpos($entry->getAuthor()['name'], 'Phinney'));
