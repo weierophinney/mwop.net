@@ -8,6 +8,9 @@ namespace Mwop;
 
 use Zend\Expressive\Application;
 use Zend\Expressive\Helper;
+use Zend\Stratigility\Middleware\OriginalMessages;
+
+error_reporting(E_ALL & ~E_USER_DEPRECATED);
 
 // Delegate static file requests back to the PHP built-in webserver
 if (php_sapi_name() === 'cli-server'
@@ -24,6 +27,7 @@ $app       = $container->get(Application::class);
 
 /* Piped middleware */
 
+$app->pipe(OriginalMessages::class);
 $app->pipe(ErrorHandler::class);
 $app->pipe(ContentSecurityPolicy::class);
 $app->pipe(XClacksOverhead::class);
