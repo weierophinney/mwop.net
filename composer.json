@@ -11,10 +11,6 @@
     "require": {
         "php": "^7.0",
         "aura/session": "^2.0",
-        "opauth/opauth": "^0.4",
-        "opauth/github": "^0.1",
-        "opauth/google": "^0.2.2",
-        "opauth/twitter": "^0.3.1",
         "zendframework/zend-diactoros": "^1.1",
         "phly/phly-comic": "^1.0.20",
         "phly/phly-expressive-mustache": "^1.0.2",
@@ -34,7 +30,10 @@
         "mnapoli/front-yaml": "^1.5",
         "symfony/yaml": "^2.7",
         "php-http/curl-client": "^1.4",
-        "php-http/message": "^1.2"
+        "php-http/message": "^1.2",
+        "league/oauth2-client": "^2.2",
+        "league/oauth2-github": "^2.0",
+        "league/oauth2-google": "^2.0"
     },
     "require-dev": {
         "filp/whoops": "^2.1.3",
