@@ -46,12 +46,10 @@ class Auth
         $oauth2Session = $this->session->getSegment('auth');
 
         if (! empty($params['error'])) {
-            error_log('Parameters include an error: ' . $params['error']);
             return $this->processError($params['error']);
         }
 
         if (empty($params['code'])) {
-            error_log('No code in query params; requesting authorization');
             return $this->requestAuthorization(
                 $provider,
                 $req->getUri(),
@@ -63,11 +61,6 @@ class Auth
         if (empty($params['state'])
             || $params['state'] !== $oauth2Session->get('state')
         ) {
-            error_log(sprintf(
-                'Code provided, but query state ("%s") does not match session state ("%s")',
-                $params['state'],
-                $oauth2Session->get('state')
-            ));
             return $this->displayUnauthorizedPage($oauth2Session, $req, $params['redirect'] ?? '');
         }
 
@@ -79,19 +72,11 @@ class Auth
 
             $user = $provider->getResourceOwner($token);
         } catch (Exception $e) {
-            error_log(sprintf(
-                'Exception occurred fetching access token and/or resource owner: %s',
-                $e->getMessage()
-            ));
             return $this->processError($e);
         }
 
         $oauth2Session->set('user', $user->toArray());
-
-        error_log(sprintf(
-            'Setting user in session: %s',
-            var_export($user->toArray(), true)
-        ));
+        $this->session->commit();
 
         return new RedirectResponse($oauth2Session->get('redirect') ?: '/');
     }
@@ -114,7 +99,7 @@ class Auth
         Segment $session,
         string $redirect
     ) : Response {
-        // Authorization URL must be generated BEFORE we retrieve the state,
+        // Authorization URL MUST be generated BEFORE we retrieve the state,
         // as it is responsible for generating the state in the first place!
         $authorizationUrl = $provider->getAuthorizationUrl();
 

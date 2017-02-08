@@ -22,8 +22,6 @@ class UserSession
     public function __invoke(Request $request, Response $response, callable $next) : Response
     {
         $auth = $this->session->getSegment('auth');
-        $user = $auth->get('user');
-        error_log(sprintf('User discovered in session: %s', var_export($user, true)));
         return $next($request->withAttribute('user', $auth->get('user')), $response);
     }
 }
