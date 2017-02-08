@@ -22,9 +22,13 @@ class UnauthorizedResponseFactoryFactory
                 ? $request->getOriginalRequest()
                 : $request;
 
+            $config = $container->get('config');
+            $debug  = $config['debug'] ?? false;
+
             $view = [
                 'auth_path' => (string) $request->getUri()->withPath('/auth'),
                 'redirect'  => (string) $originalRequest->getUri(),
+                'debug'     => (bool) $debug,
             ];
 
             $renderer = $container->get(TemplateRendererInterface::class);

@@ -13,6 +13,7 @@ use RuntimeException;
 class OAuth2ProviderFactory
 {
     const PROVIDER_MAP = [
+        'debug'  => DebugProvider::class,
         'github' => Provider\Github::class,
         'google' => Provider\Google::class,
     ];
