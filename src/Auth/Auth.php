@@ -68,7 +68,6 @@ class Auth
                 $params['state'],
                 $oauth2Session->get('state')
             ));
-            $oauth2Session->set('state', null);
             return $this->displayUnauthorizedPage($oauth2Session, $req, $params['redirect'] ?? '');
         }
 
@@ -127,8 +126,6 @@ class Auth
 
     private function displayUnauthorizedPage(Segment $session, Request $request, string $redirect) : Response
     {
-        $session->set('state', null);
-
         $uri     = $request->getUri();
         $factory = $this->unauthorizedResponseFactory;
 
