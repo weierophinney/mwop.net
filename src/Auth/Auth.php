@@ -114,14 +114,18 @@ class Auth
         Segment $session,
         string $redirect
     ) : Response {
-        $session->set('state', $provider->getState());
+        // Authorization URL must be generated BEFORE we retrieve the state,
+        // as it is responsible for generating the state in the first place!
+        $authorizationUrl = $provider->getAuthorizationUrl();
+
         if (! empty($redirect)) {
             $session->set('redirect', $redirect);
         }
 
+        $session->set('state', $provider->getState());
         $this->session->commit();
 
-        return new RedirectResponse($provider->getAuthorizationUrl());
+        return new RedirectResponse($authorizationUrl);
     }
 
     private function displayUnauthorizedPage(Segment $session, Request $request, string $redirect) : Response
