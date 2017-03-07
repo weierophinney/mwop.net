@@ -6,13 +6,14 @@
 
 namespace Mwop;
 
-use Psr\Http\Message\ResponseInterface as Response;
+use Interop\Http\ServerMiddleware\DelegateInterface;
+use Interop\Http\ServerMiddleware\MiddlewareInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Expressive\Router\RouteResult;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
-class NotFound
+class NotFound implements MiddlewareInterface
 {
     const TEMPLATE_NOTFOUND = 'error::404';
     const TEMPLATE_ERROR = 'error::500';
@@ -29,7 +30,10 @@ class NotFound
         $this->renderer = $renderer;
     }
 
-    public function __invoke(Request $request, Response $response, callable $next) : Response
+    /**
+     * @return HtmlResponse
+     */
+    public function process(Request $request, DelegateInterface $delegate)
     {
         if (false !== $request->getAttribute(RouteResult::class, false)) {
             $view = $this->debug ? ['error' => 'An inner middleware did not return a response'] : [];

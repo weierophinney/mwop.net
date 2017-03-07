@@ -7,13 +7,14 @@
 namespace Mwop\Contact;
 
 use Aura\Session\Session;
+use Interop\Http\ServerMiddleware\DelegateInterface;
+use Interop\Http\ServerMiddleware\MiddlewareInterface;
 use Mwop\PageView;
-use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
-class LandingPage
+class LandingPage implements MiddlewareInterface
 {
     private $config;
     private $session;
@@ -29,7 +30,10 @@ class LandingPage
         $this->config   = $config;
     }
 
-    public function __invoke(Request $request, Response $response, callable $next) : Response
+    /**
+     * @return HtmlResponse
+     */
+    public function process(Request $request, DelegateInterface $delegate)
     {
         $basePath = $request->getAttribute('originalRequest', $request)->getUri()->getPath();
         $view = array_merge($this->config, [

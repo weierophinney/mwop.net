@@ -6,12 +6,13 @@
 
 namespace Mwop;
 
-use Psr\Http\Message\ResponseInterface as Response;
+use Interop\Http\ServerMiddleware\DelegateInterface;
+use Interop\Http\ServerMiddleware\MiddlewareInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
-class Page
+class Page implements MiddlewareInterface
 {
     private $page;
     private $template;
@@ -22,7 +23,10 @@ class Page
         $this->template  = $template;
     }
 
-    public function __invoke(Request $request, Response $response, callable $next) : Response
+    /**
+     * @return HtmlResponse
+     */
+    public function process(Request $request, DelegateInterface $delegate)
     {
         return new HtmlResponse(
             $this->template->render($this->page, [])

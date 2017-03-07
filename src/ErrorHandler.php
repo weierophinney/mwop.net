@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
@@ -7,13 +8,15 @@
 namespace Mwop;
 
 use DomainException;
+use Interop\Http\ServerMiddleware\DelegateInterface;
+use Interop\Http\ServerMiddleware\MiddlewareInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Throwable;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
-class ErrorHandler
+class ErrorHandler implements MiddlewareInterface
 {
     const TEMPLATE_ERROR = 'error::500';
 
@@ -45,10 +48,13 @@ class ErrorHandler
         return $this->errorFormatter;
     }
 
-    public function __invoke(Request $request, Response $response, callable $next) : Response
+    /**
+     * @return Response
+     */
+    public function process(Request $request, DelegateInterface $delegate)
     {
         try {
-            $result = $next($request, $response);
+            $result = $delegate->process($request);
             if ($result instanceof Response) {
                 return $result;
             }
@@ -59,7 +65,7 @@ class ErrorHandler
         }
     }
 
-    public function createErrorResponse(Throwable $e, Request $request) : Response
+    public function createErrorResponse(Throwable $e, Request $request) : HtmlResponse
     {
         $error = $this->displayErrors
             ? $this->prepareError($e, $request)

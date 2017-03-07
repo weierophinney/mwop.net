@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
@@ -6,42 +7,48 @@
 
 namespace Mwop;
 
+use Interop\Http\ServerMiddleware\DelegateInterface;
+use Interop\Http\ServerMiddleware\MiddlewareInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\UriInterface as Uri;
+use Zend\Diactoros\Response\RedirectResponse;
 
-class Redirects
+class Redirects implements MiddlewareInterface
 {
-    public function __invoke(Request $req, Response $res, callable $next) : Response
+    /**
+     * @return Response
+     */
+    public function process(Request $request, DelegateInterface $delegate)
     {
-        $url  = $req->getUri();
+        $url  = $request->getUri();
         $path = $url->getPath();
 
         // Ensure php.net is able to retrieve PHP RSS feed without a problem
         if ('/blog/tag/php.xml' === $path) {
-            return $next($req, $res);
+            return $delegate->process($request);
         }
 
         // PhlyBlog style pagination
         if (preg_match('#^/blog-p(?P<page>\d+)\.html$#', $path, $matches)) {
-            return $this->redirect('/blog', $url, $res, ['page' => $matches['page']]);
+            return $this->redirect('/blog', $url, ['page' => $matches['page']]);
         }
         if (preg_match('#^/blog/tag/(?P<tag>.*?)-p(?P<page>\d+)\.html$#', $path, $matches)) {
-            return $this->redirect(sprintf('/blog/tag/%s', $matches['tag']), $url, $res, ['page' => $matches['page']]);
+            return $this->redirect(sprintf('/blog/tag/%s', $matches['tag']), $url, ['page' => $matches['page']]);
         }
         if (preg_match('#^/blog\.html(?P<path>/.*)?$#', $path, $matches)) {
             $blogPath = isset($matches['path']) ? $matches['path'] : '';
-            return $this->redirect('/blog' . $blogPath, $url, $res);
+            return $this->redirect('/blog' . $blogPath, $url);
         }
 
         // PhlyBlog style feed URIs
         if (preg_match('#^/blog/tag/(?P<tag>.*?)-(?P<type>atom|rss)\.xml#', $path, $matches)) {
-            return $this->redirect(sprintf('/blog/tag/%s/%s.xml', $matches['tag'], $matches['type']), $url, $res);
+            return $this->redirect(sprintf('/blog/tag/%s/%s.xml', $matches['tag'], $matches['type']), $url);
         }
 
         // Serendipity style feed URIs
         if (preg_match('#^/blog/tag/(?P<tag>[^/.]+)(?!-(atom|rss))\.xml#', $path, $matches)) {
-            return $this->redirect(sprintf('/blog/tag/%s/rss.xml', $matches['tag']), $url, $res);
+            return $this->redirect(sprintf('/blog/tag/%s/rss.xml', $matches['tag']), $url);
         }
 
         // Problematic posts due to bad characters
@@ -49,7 +56,7 @@ class Redirects
             $newPath = str_replace([',', ';', '!'], '', $path);
             $newPath = preg_replace('#\.+\.html#', '.html', $newPath);
             $newPath = strtolower($newPath);
-            return $this->redirect($newPath, $url, $res);
+            return $this->redirect($newPath, $url);
         }
 
         // Redirect blog posts not ending in .html to .html version
@@ -57,7 +64,7 @@ class Redirects
             && ! preg_match('#\.(html|xml)$#', $path)
         ) {
             $newPath = sprintf('/blog/%s.html', $matches['post']);
-            return $this->redirect($newPath, $url, $res);
+            return $this->redirect($newPath, $url);
         }
 
         // Former uploads
@@ -65,7 +72,7 @@ class Redirects
             $uri = $url
                 ->withHost('uploads.mwop.net')
                 ->withScheme('https');
-            return $this->redirect(substr($path, 8), $uri, $res);
+            return $this->redirect(substr($path, 8), $uri);
         }
 
         // Former screencasts
@@ -73,7 +80,7 @@ class Redirects
             $uri = $url
                 ->withHost('screencasts.mwop.net')
                 ->withScheme('https');
-            return $this->redirect(substr($path, 12), $uri, $res);
+            return $this->redirect(substr($path, 12), $uri);
         }
 
         // Former slides
@@ -81,7 +88,7 @@ class Redirects
             $uri = $url
                 ->withHost('slides.mwop.net')
                 ->withScheme('https');
-            return $this->redirect(substr($path, 7), $uri, $res);
+            return $this->redirect(substr($path, 7), $uri);
         }
 
         // Serendipity
@@ -101,25 +108,25 @@ class Redirects
                 $regex = '#' . $regex . '#';
                 if (preg_match($regex, $path)) {
                     $path = preg_replace($regex, $replacement, $path);
-                    return $this->redirect($path, $url, $res);
+                    return $this->redirect($path, $url);
                 }
             }
             if (preg_match('#^/matthew/rss\.php$#', $path)) {
                 if (! isset($req->getQueryParams()['serendipity']['tag'])) {
-                    return $this->redirect('/blog/rss.xml', $url, $res);
+                    return $this->redirect('/blog/rss.xml', $url);
                 }
                 return $this->redirect(sprintf(
                     '/blog/tag/%s/rss.xml',
                     $req->getQueryParams()['serendipity']['tag']
-                ), $url, $res);
+                ), $url);
             }
-            return $this->redirect('/blog', $url, $res);
+            return $this->redirect('/blog', $url);
         }
 
-        return $next($req, $res);
+        return $delegate->process($request);
     }
 
-    private function redirect(string $path, Uri $url, Response $res, array $query = []) : Response
+    private function redirect(string $path, Uri $url, array $query = []) : RedirectResponse
     {
         $url = $url->withPath($path);
 
@@ -127,8 +134,6 @@ class Redirects
             $url = $url->withQuery(http_build_query($query));
         }
 
-        return $res
-            ->withStatus(301)
-            ->withHeader('Location', (string) $url);
+        return new RedirectResponse((string) $url, 301);
     }
 }

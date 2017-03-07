@@ -6,19 +6,24 @@
 
 namespace Mwop;
 
+use Interop\Http\ServerMiddleware\DelegateInterface;
+use Interop\Http\ServerMiddleware\MiddlewareInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 /**
  * Implements Content-Security-Policy header for site.
  */
-class ContentSecurityPolicy
+class ContentSecurityPolicy implements MiddlewareInterface
 {
-    public function __invoke(Request $req, Response $res, callable $next) : Response
+    /**
+     * @return Response
+     */
+    public function process(Request $request, DelegateInterface $delegate)
     {
-        $res = $next($req, $res);
+        $response = $delegate->process($request);
 
-        return $res
+        return $response
             ->withHeader('Content-Security-Policy', $this->createContentSecurityPolicy())
             ->withHeader('X-Content-Type-Options', 'nosniff')
             ->withHeader('X-Frame-Options', 'DENY')

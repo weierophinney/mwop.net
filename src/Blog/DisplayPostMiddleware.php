@@ -6,15 +6,18 @@
 
 namespace Mwop\Blog;
 
+use Interop\Http\ServerMiddleware\DelegateInterface;
+use Interop\Http\ServerMiddleware\MiddlewareInterface;
 use Mni\FrontYAML\Bridge\CommonMark\CommonMarkParser;
 use Mni\FrontYAML\Parser;
-use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use RuntimeException;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Expressive\Router\RouterInterface;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
-class DisplayPostMiddleware
+class DisplayPostMiddleware implements MiddlewareInterface
 {
     private $disqus;
 
@@ -43,15 +46,18 @@ class DisplayPostMiddleware
         $this->disqus   = $disqus;
     }
 
-    public function __invoke(Request $req, Response $res, callable $next) : Response
+    /**
+     * @return ResponseInterface
+     */
+    public function process(ServerRequestInterface $request, DelegateInterface $delegate)
     {
-        $post = $this->mapper->fetch($req->getAttribute('id', false));
+        $post = $this->mapper->fetch($request->getAttribute('id', false));
 
         if (! $post) {
-            return $next($req, $res->withStatus(404), 'Not found');
+            throw new RuntimeException('Not found', 404);
         }
 
-        $isAmp = (bool) ($req->getQueryParams()['amp'] ?? false);
+        $isAmp = (bool) ($request->getQueryParams()['amp'] ?? false);
 
         $parser   = new Parser(null, new CommonMarkParser());
         $document = $parser->parse(file_get_contents($post['path']));
@@ -62,7 +68,7 @@ class DisplayPostMiddleware
             'extended'  => isset($parts[1]) ? $parts[1] : '',
         ]);
 
-        $original = $req->getAttribute('originalRequest', $req)->getUri()->getPath();
+        $original = $request->getAttribute('originalRequest', $request)->getUri()->getPath();
         $path     = substr($original, 0, -(strlen($post['id'] . '.html') + 1));
         $post     = new EntryView($post, $isAmp, $this->disqus);
 

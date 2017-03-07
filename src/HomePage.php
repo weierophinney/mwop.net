@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
@@ -6,13 +7,14 @@
 
 namespace Mwop;
 
-use Psr\Http\Message\ResponseInterface as Response;
+use Interop\Http\ServerMiddleware\DelegateInterface;
+use Interop\Http\ServerMiddleware\MiddlewareInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Expressive\Router\RouterInterface;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
-class HomePage
+class HomePage implements MiddlewareInterface
 {
     const TEMPLATE = 'mwop::home.page';
 
@@ -27,7 +29,10 @@ class HomePage
         $this->renderer = $renderer;
     }
 
-    public function __invoke(Request $request, Response $response, callable $next) : Response
+    /**
+     * @return HtmlResponse
+     */
+    public function process(Request $request, DelegateInterface $delegate)
     {
         return new HtmlResponse(
             $this->renderer->render(self::TEMPLATE, [
