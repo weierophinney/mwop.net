@@ -62,7 +62,7 @@ class DisplayPostMiddleware
             'extended'  => isset($parts[1]) ? $parts[1] : '',
         ]);
 
-        $original = $req->getOriginalRequest()->getUri()->getPath();
+        $original = $req->getAttribute('originalRequest', $req)->getUri()->getPath();
         $path     = substr($original, 0, -(strlen($post['id'] . '.html') + 1));
         $post     = new EntryView($post, $isAmp, $this->disqus);
 

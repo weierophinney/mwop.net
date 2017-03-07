@@ -33,7 +33,7 @@ class Logout
 
     private function redirect(Request $request, Response $response) : Response
     {
-        $originalUri = $request->getOriginalRequest()->getUri();
+        $originalUri = $request->getAttribute('originalRequest', $request)->getUri();
         $redirectUri = $originalUri->withPath('/');
 
         return $response

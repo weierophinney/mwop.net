@@ -38,7 +38,7 @@ class WhoopsFormatter
     private function prepareWhoopsHandler(Request $request)
     {
         if ($request instanceof StratigilityRequest) {
-            $request = $request->getOriginalRequest();
+            $request = $request->getAttribute('originalRequest', $request);
         }
 
         $uri = $request->getUri();

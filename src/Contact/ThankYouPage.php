@@ -22,7 +22,7 @@ class ThankYouPage
 
     public function __invoke(Request $request, Response $response, callable $next) : Response
     {
-        $parent    = $request->getOriginalRequest();
+        $parent    = $request->getAttribute('originalRequest', $request);
         $parentUrl = str_replace('/thank-you', '', (string) $parent->getUri());
         if (! $request->hasHeader('Referer')
             || ! preg_match('#^' . $parentUrl . '#', $request->getHeaderLine('Referer'))

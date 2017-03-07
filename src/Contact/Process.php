@@ -67,7 +67,7 @@ class Process
 
         $this->sendEmail($filter->getValues());
 
-        $parent = $request->getOriginalRequest();
+        $parent = $request->getAttribute('originalRequest', $request);
         $path   = str_replace('/process', '', (string) $parent->getUri()) . '/thank-you';
         return $response
             ->withStatus(302)
@@ -80,7 +80,7 @@ class Process
 
         $view = array_merge($this->config, [
             'error'  => ['message' => json_encode($error)],
-            'action' => (string) $request->getOriginalRequest()->getUri(),
+            'action' => (string) $request->getAttribute('originalRequest', $request)->getUri(),
             'csrf'   => $csrfToken->getValue(),
         ]);
 

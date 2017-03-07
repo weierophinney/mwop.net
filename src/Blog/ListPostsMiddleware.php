@@ -41,7 +41,7 @@ class ListPostsMiddleware
     public function __invoke(Request $req, Response $res, callable $next) : Response
     {
         $tag   = str_replace(['+', '%20'], ' ', $req->getAttribute('tag', ''));
-        $path  = $req->getOriginalRequest()->getUri()->getPath();
+        $path  = $req->getAttribute('originalRequest', $req)->getUri()->getPath();
         $page  = $this->getPageFromRequest($req);
         $posts = $tag ? $this->mapper->fetchAllByTag($tag) : $this->mapper->fetchAll();
 

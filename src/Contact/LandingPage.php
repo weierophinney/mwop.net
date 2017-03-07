@@ -31,7 +31,7 @@ class LandingPage
 
     public function __invoke(Request $request, Response $response, callable $next) : Response
     {
-        $basePath = $request->getOriginalRequest()->getUri()->getPath();
+        $basePath = $request->getAttribute('originalRequest', $request)->getUri()->getPath();
         $view = array_merge($this->config, [
             'action' => rtrim($basePath, '/') . '/process',
             'csrf'   => $this->session->getCsrfToken()->getValue(),
