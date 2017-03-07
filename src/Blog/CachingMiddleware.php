@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
@@ -6,11 +7,15 @@
 
 namespace Mwop\Blog;
 
+use Interop\Http\ServerMiddleware\DelegateInterface;
+use Interop\Http\ServerMiddleware\MiddlewareInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use RuntimeException;
+use Throwable;
 use Zend\Diactoros\Stream;
 
-class CachingMiddleware
+class CachingMiddleware implements MiddlewareInterface
 {
     /**
      * @var string
@@ -23,29 +28,32 @@ class CachingMiddleware
     private $enabled;
 
     /**
-     * @var callable
+     * @var MiddlewareInterface
      */
     private $middleware;
 
-    public function __construct(callable $middleware, string $cachePath, bool $enabled = true)
+    public function __construct(MiddlewareInterface $middleware, string $cachePath, bool $enabled = true)
     {
         $this->middleware = $middleware;
         $this->cachePath  = $cachePath;
         $this->enabled    = $enabled;
     }
 
-    public function __invoke(Request $req, Response $res, callable $next) : Response
+    /**
+     * @return Response
+     */
+    public function process(Request $request, DelegateInterface $delegate)
     {
         $middleware = $this->middleware;
-        $id         = $req->getAttribute('id', false);
+        $id         = $request->getAttribute('id', false);
 
-        if (! empty($req->getQueryParams()['amp'])) {
+        if (! empty($request->getQueryParams()['amp'])) {
             $id .= '-amp';
         }
 
         // Caching is disabled, or no identifier present; invoke the middleware.
         if (! $this->enabled || ! $id) {
-            return $middleware($req, $res, $next);
+            return $middleware->process($request, $delegate);
         }
 
         $result = $this->fetchFromCache($id, $res);
@@ -56,11 +64,12 @@ class CachingMiddleware
         }
 
         // Invoke middleware
-        $result = $middleware($req, $res, $next);
+        $result = $middleware->process($request, $delegate);
 
         // Result is not a response; cannot cache; error condition.
         if (! $result instanceof Response) {
-            return $next($req, $res, $result);
+            $error = $this->prepareExceptionFromMiddlewareResult($result);
+            throw $error;
         }
 
         // Result represents an error response; cannot cache.
@@ -91,5 +100,22 @@ class CachingMiddleware
     {
         $cachePath = sprintf('%s/%s', $this->cachePath, $id);
         file_put_contents($cachePath, (string) $res->getBody());
+    }
+
+    private function prepareExceptionFromMiddlewareResult($result) : Throwable
+    {
+        if ($result instanceof Throwable) {
+            return $result;
+        }
+
+        if (is_string($result)) {
+            return new RuntimeException($result);
+        }
+
+        if (is_scalar($result) || is_array($result)) {
+            return new RuntimeException(var_export($result, true));
+        }
+
+        return new RuntimeException((string) $result);
     }
 }

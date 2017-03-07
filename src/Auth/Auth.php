@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
@@ -9,6 +10,8 @@ namespace Mwop\Auth;
 use Aura\Session\Segment;
 use Aura\Session\Session;
 use Exception;
+use Interop\Http\ServerMiddleware\DelegateInterface;
+use Interop\Http\ServerMiddleware\MiddlewareInterface;
 use League\OAuth2\Client\Provider\AbstractProvider;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -16,7 +19,7 @@ use Psr\Http\Message\UriInterface as Uri;
 use RuntimeException;
 use Zend\Diactoros\Response\RedirectResponse;
 
-class Auth
+class Auth implements MiddlewareInterface
 {
     private $providerFactory;
     private $session;
@@ -37,12 +40,15 @@ class Auth
         $this->unauthorizedResponseFactory = $unauthorizedResponseFactory;
     }
 
-    public function __invoke(Request $req, Response $res, callable $next) : Response
+    /**
+     * @return Response
+     */
+    public function process(Request $request, DelegateInterface $delegate)
     {
         $provider = $this->providerFactory->createProvider(
-            $req->getAttribute('provider')
+            $request->getAttribute('provider')
         );
-        $params = $req->getQueryParams();
+        $params = $request->getQueryParams();
         $oauth2Session = $this->session->getSegment('auth');
 
         if (! empty($params['error'])) {
@@ -52,7 +58,7 @@ class Auth
         if (empty($params['code'])) {
             return $this->requestAuthorization(
                 $provider,
-                $req->getUri(),
+                $request->getUri(),
                 $oauth2Session,
                 $params['redirect'] ?? ''
             );
@@ -61,7 +67,7 @@ class Auth
         if (empty($params['state'])
             || $params['state'] !== $oauth2Session->get('state')
         ) {
-            return $this->displayUnauthorizedPage($oauth2Session, $req, $params['redirect'] ?? '');
+            return $this->displayUnauthorizedPage($oauth2Session, $request, $params['redirect'] ?? '');
         }
 
 

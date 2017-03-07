@@ -6,23 +6,24 @@
 
 namespace Mwop\Blog\Console;
 
+use Interop\Http\ServerMiddleware\MiddlewareInterface;
 use Mni\FrontYAML\Bridge\CommonMark\CommonMarkParser;
 use Mni\FrontYAML\Parser;
 use Mwop\Blog\MarkdownFileFilter;
 use Psr\Http\Message\StreamInterface;
 use Zend\Console\Adapter\AdapterInterface as Console;
 use Zend\Console\ColorInterface as Color;
-use Zend\Diactoros\ServerRequest as PsrRequest;
+use Zend\Diactoros\ServerRequest as Request;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\Uri;
-use Zend\Stratigility\Http\Request;
+use Zend\Expressive\Delegate\NotFoundDelegate;
 use ZF\Console\Route;
 
 class CachePosts
 {
     private $blogMiddleware;
 
-    public function __construct(callable $blog)
+    public function __construct(MiddlewareInterface $blog)
     {
         $this->blogMiddleware = $blog;
     }
@@ -38,11 +39,8 @@ class CachePosts
 
         $console->writeLine('Generating static cache for blog posts', Color::GREEN);
 
-        // Prepare final handler for middleware
-        $failed = false;
-        $done = function ($req, $res, $err = null) use (&$failed) {
-            $failed = ($err) ? true : false;
-        };
+        // Prepare default delegate for middleware
+        $delegate = new NotFoundDelegate(new Response());
 
         $parser = new Parser(null, new CommonMarkParser());
         foreach (new MarkdownFileFilter($path) as $fileInfo) {
@@ -55,12 +53,13 @@ class CachePosts
             $console->write($message, Color::BLUE);
 
             $canonical = $baseUri->withPath(sprintf('/blog/%s.html', $metadata['id']));
-            $request   = (new Request(new PsrRequest([], [], $canonical, 'GET')))
+            $request   = (new Request([], [], $canonical, 'GET'))
                 ->withUri($canonical)
                 ->withAttribute('id', $metadata['id']);
 
-            $failed = false;
-            $response = $middleware($request, new Response(), $done);
+            $response = $middleware->process($request, $delegate);
+
+            $failed = (200 !== $response->getStatusCode());
 
             if (! $failed) {
                 $this->cacheResponse($metadata['id'], $cache, $response->getBody());

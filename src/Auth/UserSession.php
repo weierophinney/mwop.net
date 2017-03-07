@@ -7,10 +7,12 @@
 namespace Mwop\Auth;
 
 use Aura\Session\Session;
+use Interop\Http\ServerMiddleware\DelegateInterface;
+use Interop\Http\ServerMiddleware\MiddlewareInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-class UserSession
+class UserSession implements MiddlewareInterface
 {
     private $session;
 
@@ -19,9 +21,12 @@ class UserSession
         $this->session = $session;
     }
 
-    public function __invoke(Request $request, Response $response, callable $next) : Response
+    /**
+     * @return Response
+     */
+    public function process(Request $request, DelegateInterface $delegate)
     {
         $auth = $this->session->getSegment('auth');
-        return $next($request->withAttribute('user', $auth->get('user')), $response);
+        return $delegate->process($request->withAttribute('user', $auth->get('user')));
     }
 }

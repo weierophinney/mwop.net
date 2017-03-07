@@ -19,7 +19,7 @@ class UnauthorizedResponseFactoryFactory
     {
         return function (Request $request) use ($container) {
             $originalRequest = method_exists($request, 'getOriginalRequest')
-                ? $request->getOriginalRequest()
+                ? $request->getAttribute('originalRequest', $request)
                 : $request;
 
             $config = $container->get('config');

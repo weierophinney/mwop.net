@@ -7,10 +7,12 @@
 namespace Mwop\Auth;
 
 use Aura\Session\Session;
-use Psr\Http\Message\ResponseInterface as Response;
+use Interop\Http\ServerMiddleware\DelegateInterface;
+use Interop\Http\ServerMiddleware\MiddlewareInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Zend\Diactoros\Response\RedirectResponse;
 
-class Logout
+class Logout implements MiddlewareInterface
 {
     private $session;
 
@@ -19,25 +21,26 @@ class Logout
         $this->session = $session;
     }
 
-    public function __invoke(Request $request, Response $response, callable $next) : Response
+    /**
+     * @return RedirectResponse
+     */
+    public function process(Request $request, DelegateInterface $delegate)
     {
         $auth = $this->session->getSegment('auth');
         $user = $auth->get('user');
         if (! $user) {
-            return $this->redirect($request, $response);
+            return $this->redirect($request);
         }
 
         $auth->clear();
-        return $this->redirect($request, $response);
+        return $this->redirect($request);
     }
 
-    private function redirect(Request $request, Response $response) : Response
+    private function redirect(Request $request) : RedirectResponse
     {
-        $originalUri = $request->getOriginalRequest()->getUri();
+        $originalUri = $request->getAttribute('originalRequest', $request)->getUri();
         $redirectUri = $originalUri->withPath('/');
 
-        return $response
-            ->withStatus(302)
-            ->withHeader('Location', (string) $redirectUri);
+        return new RedirectResponse((string) $redirectUri);
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
@@ -8,15 +9,18 @@ namespace Mwop\Contact;
 
 use Aura\Session\CsrfToken;
 use Aura\Session\Session;
+use Interop\Http\ServerMiddleware\DelegateInterface;
+use Interop\Http\ServerMiddleware\MiddlewareInterface;
 use Mwop\PageView;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Zend\Diactoros\Response\HtmlResponse;
+use Zend\Diactoros\Response\RedirectResponse;
 use Zend\Expressive\Template\TemplateRendererInterface;
 use Zend\Mail\Message;
 use Zend\Mail\Transport\TransportInterface;
 
-class Process
+class Process implements MiddlewareInterface
 {
     private $config;
     private $session;
@@ -35,7 +39,10 @@ class Process
         $this->config    = $config;
     }
 
-    public function __invoke(Request $request, Response $response, callable $next) : Response
+    /**
+     * @return Response
+     */
+    public function process(Request $request, DelegateInterface $delegate)
     {
         $this->session->start();
 
@@ -67,11 +74,9 @@ class Process
 
         $this->sendEmail($filter->getValues());
 
-        $parent = $request->getOriginalRequest();
+        $parent = $request->getAttribute('originalRequest', $request);
         $path   = str_replace('/process', '', (string) $parent->getUri()) . '/thank-you';
-        return $response
-            ->withStatus(302)
-            ->withHeader('Location', $path);
+        return new RedirectResponse($path);
     }
 
     private function redisplayForm(array $error, CsrfToken $csrfToken, Request $request) : Response
@@ -80,7 +85,7 @@ class Process
 
         $view = array_merge($this->config, [
             'error'  => ['message' => json_encode($error)],
-            'action' => (string) $request->getOriginalRequest()->getUri(),
+            'action' => (string) $request->getAttribute('originalRequest', $request)->getUri(),
             'csrf'   => $csrfToken->getValue(),
         ]);
 

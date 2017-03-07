@@ -2,6 +2,9 @@
     "name": "weierophinney/mwop.net",
     "license": "BSD-2-Clause",
     "description": "Source code for mwop.net",
+    "config": {
+        "sort-packages": true
+    },
     "repositories": [
         {
             "type": "vcs",
@@ -11,34 +14,37 @@
     "require": {
         "php": "^7.0",
         "aura/session": "^2.0",
-        "zendframework/zend-diactoros": "^1.1",
-        "phly/phly-comic": "^1.0.20",
-        "phly/phly-expressive-mustache": "^1.0.2",
-        "psr/http-message": "^1.0",
-        "zendframework/zend-escaper": "^2.5.2",
-        "zendframework/zend-feed": "^2.7",
-        "zendframework/zend-inputfilter": "^2.7.2",
-        "zendframework/zend-mail": "^2.7.1",
-        "zendframework/zend-paginator": "^2.7",
-        "zendframework/zend-stdlib": "^3.0.1",
-        "zendframework/zend-tag": "^2.6.1",
-        "zfcampus/zf-console": "^1.2",
-        "zendframework/zend-expressive": "^1.0",
-        "zendframework/zend-expressive-fastroute": "^1.0",
-        "zendframework/zend-servicemanager": "^3.1",
         "league/commonmark": "^0.14",
-        "mnapoli/front-yaml": "^1.5",
-        "symfony/yaml": "^2.7",
-        "php-http/curl-client": "^1.4",
-        "php-http/message": "^1.2",
         "league/oauth2-client": "^2.2",
         "league/oauth2-github": "^2.0",
-        "league/oauth2-google": "^2.0"
+        "league/oauth2-google": "^2.0",
+        "mnapoli/front-yaml": "^1.5",
+        "phly/phly-comic": "^1.0.20",
+        "phly/phly-expressive-mustache": "^1.1",
+        "php-http/curl-client": "^1.4",
+        "php-http/message": "^1.2",
+        "psr/http-message": "^1.0",
+        "symfony/yaml": "^2.7",
+        "zendframework/zend-config-aggregator": "^0.2.0",
+        "zendframework/zend-diactoros": "^1.3.8",
+        "zendframework/zend-escaper": "^2.5.2",
+        "zendframework/zend-expressive": "^2.0",
+        "zendframework/zend-expressive-fastroute": "^2.0",
+        "zendframework/zend-feed": "^2.7",
+        "zendframework/zend-inputfilter": "^2.7.3",
+        "zendframework/zend-mail": "^2.7.3",
+        "zendframework/zend-paginator": "^2.7",
+        "zendframework/zend-servicemanager": "^3.1",
+        "zendframework/zend-stdlib": "^3.1",
+        "zendframework/zend-tag": "^2.6.1",
+        "zfcampus/zf-console": "^1.3"
     },
     "require-dev": {
         "filp/whoops": "^2.1.3",
-        "squizlabs/php_codesniffer": "^2.6.2",
-        "phpunit/phpunit": "^5.5"
+        "phpunit/phpunit": "^5.7 || ^6.0",
+        "zendframework/zend-coding-standard": "~1.0.0",
+        "zendframework/zend-expressive-tooling": "^0.3.1",
+        "zfcampus/zf-development-mode": "^3.1"
     },
     "autoload": {
         "psr-4": {
@@ -83,6 +89,9 @@
         ],
         "cs-check": "phpcs",
         "cs-fix": "phpcbf",
+        "development-disable": "zf-development-mode disable",
+        "development-enable": "zf-development-mode enable",
+        "development-status": "zf-development-mode status",
         "npm": "npm install",
         "serve": "php -S 0.0.0.0:8080 -t public/ public/index.php",
         "symlink-assets": [

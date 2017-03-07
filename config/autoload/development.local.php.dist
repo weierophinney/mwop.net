@@ -1,0 +1,39 @@
+<?php
+
+/**
+ * Development-only configuration.
+ *
+ * Put settings you want enabled when under development mode in this file, and
+ * check it into your repository.
+ *
+ * Developers on your team will then automatically enable them by calling on
+ * `composer development-enable`.
+ */
+
+namespace Mwop;
+
+use Whoops\Handler\PrettyPageHandler;
+use Zend\Expressive\Container;
+use Zend\Expressive\Middleware\ErrorResponseGenerator;
+use Zend\Expressive\Whoops;
+use Zend\Expressive\WhoopsPageHandler;
+
+return [
+    'dependencies' => [
+        'invokables' => [
+            WhoopsPageHandler::class => PrettyPageHandler::class,
+        ],
+        'factories' => [
+            ErrorResponseGenerator::class => Container\WhoopsErrorResponseGeneratorFactory::class,
+            Whoops::class => Container\WhoopsFactory::class,
+        ],
+    ],
+
+    'whoops' => [
+        'json_exceptions' => [
+            'display'    => true,
+            'show_trace' => true,
+            'ajax_only'  => true,
+        ],
+    ],
+];
