@@ -1,6 +1,7 @@
 .puli/
 .tmp/
 config/autoload/*local.php
+config/development.config.php
 data/cache/posts/*
 data/comics/*.html
 data/comics.mustache

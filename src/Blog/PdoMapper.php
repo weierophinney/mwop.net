@@ -19,7 +19,10 @@ class PdoMapper implements MapperInterface
         $this->pdo = $pdo;
     }
 
-    public function fetch(string $id) : array
+    /**
+     * @return false|array
+     */
+    public function fetch(string $id)
     {
         $select = $this->pdo->prepare('SELECT * from posts WHERE id = :id');
         if (! $select->execute([':id' => $id])) {

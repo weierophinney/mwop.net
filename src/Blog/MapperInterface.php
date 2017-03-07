@@ -11,7 +11,10 @@ use Zend\Tag\Cloud;
 
 interface MapperInterface
 {
-    public function fetch(string $id) : array;
+    /**
+     * @return false|array
+     */
+    public function fetch(string $id);
 
     public function fetchAll() : Paginator;
 
