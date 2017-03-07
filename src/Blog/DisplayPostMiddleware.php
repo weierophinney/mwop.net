@@ -54,7 +54,7 @@ class DisplayPostMiddleware implements MiddlewareInterface
         $post = $this->mapper->fetch($request->getAttribute('id', false));
 
         if (! $post) {
-            throw new RuntimeException('Not found', 404);
+            return $delegate->process($request);
         }
 
         $isAmp = (bool) ($request->getQueryParams()['amp'] ?? false);

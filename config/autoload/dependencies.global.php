@@ -7,18 +7,16 @@
 namespace Mwop;
 
 use Zend\Expressive\Application;
-use Zend\Expressive\Container\ApplicationFactory;
-use Zend\Expressive\FinalHandler;
+use Zend\Expressive\Container;
 use Zend\Expressive\Helper;
 use Zend\Feed\Reader\Http\ClientInterface as FeedReaderHttpClientInterface;
 use Zend\ServiceManager\Factory\InvokableFactory;
-use Zend\Stratigility\Middleware\OriginalMessages;
 
 return ['dependencies' => [
     'factories' => [
         'mail.transport'                  => Factory\MailTransport::class,
         'session'                         => Factory\Session::class,
-        Application::class                => ApplicationFactory::class,
+        Application::class                => Container\ApplicationFactory::class,
         Auth\Auth::class                  => Auth\AuthFactory::class,
         Auth\OAuth2ProviderFactory::class => Auth\OAuth2ProviderFactoryFactory::class,
         Auth\Logout::class                => Auth\LogoutFactory::class,
@@ -32,11 +30,8 @@ return ['dependencies' => [
         Console\FeedAggregator::class     => Console\FeedAggregatorFactory::class,
         Console\UseDistTemplates::class   => InvokableFactory::class,
         FeedReaderHttpClientInterface::class => Feed\HttpPlugClientFactory::class,
-        FinalHandler::class               => Factory\FinalHandlerFactory::class,
         Github\AtomReader::class          => Github\AtomReaderFactory::class,
         Github\Console\Fetch::class       => Github\Console\FetchFactory::class,
-        Helper\UrlHelper::class           => Helper\UrlHelperFactory::class,
-        OriginalMessages::class           => InvokableFactory::class,
         UnauthorizedResponseFactory::class => UnauthorizedResponseFactoryFactory::class,
     ],
 ]];

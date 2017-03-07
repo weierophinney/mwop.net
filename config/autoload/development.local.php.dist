@@ -23,11 +23,6 @@ return [
         'invokables' => [
             WhoopsPageHandler::class => PrettyPageHandler::class,
         ],
-        'delegators' => [
-            ErrorHandler::class => [
-                ErrorHandler\WhoopsFormatterFactory::class,
-            ],
-        ],
         'factories' => [
             ErrorResponseGenerator::class => Container\WhoopsErrorResponseGeneratorFactory::class,
             Whoops::class => Container\WhoopsFactory::class,

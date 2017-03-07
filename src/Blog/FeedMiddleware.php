@@ -36,7 +36,7 @@ class FeedMiddleware implements MiddlewareInterface
             : $this->getFeedPath($type);
 
         if (! file_exists($path)) {
-            throw new RuntimeException('Not Found', 404);
+            return $delegate->process($request);
         }
 
         return (new Response())
