@@ -13,6 +13,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use RuntimeException;
 use Throwable;
+use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Diactoros\Stream;
 
 class CachingMiddleware implements MiddlewareInterface
@@ -56,7 +57,7 @@ class CachingMiddleware implements MiddlewareInterface
             return $middleware->process($request, $delegate);
         }
 
-        $result = $this->fetchFromCache($id, $res);
+        $result = $this->fetchFromCache($id);
 
         // Hit cache; resturn response.
         if ($result instanceof Response) {
@@ -83,7 +84,10 @@ class CachingMiddleware implements MiddlewareInterface
         return $result;
     }
 
-    private function fetchFromCache(string $id, Response $res)
+    /**
+     * @return false|HtmlResponse
+     */
+    private function fetchFromCache(string $id)
     {
         $cachePath = sprintf('%s/%s', $this->cachePath, $id);
 
@@ -93,7 +97,8 @@ class CachingMiddleware implements MiddlewareInterface
         }
 
         // Cache hit!
-        return $res->withBody(new Stream(fopen($cachePath, 'r')));
+        return (new HtmlResponse())
+            ->withBody(new Stream(fopen($cachePath, 'r')));
     }
 
     private function cache(string $id, Response $res)
