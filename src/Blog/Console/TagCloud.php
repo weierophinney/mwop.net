@@ -18,7 +18,7 @@ class TagCloud
 
     public function __construct(Blog\MapperInterface $mapper)
     {
-        $this->mapper   = $mapper;
+        $this->mapper = $mapper;
     }
 
     public function __invoke(Route $route, Console $console) : int
