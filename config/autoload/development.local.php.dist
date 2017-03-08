@@ -19,6 +19,14 @@ use Zend\Expressive\Whoops;
 use Zend\Expressive\WhoopsPageHandler;
 
 return [
+    'blog' => [
+        'cache_enabled' => false,
+        'disqus'        => [
+            'developer' => 0,
+            'key'       => 'phlyboyphly',
+        ],
+    ],
+
     'dependencies' => [
         'invokables' => [
             WhoopsPageHandler::class => PrettyPageHandler::class,

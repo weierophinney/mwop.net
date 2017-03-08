@@ -57,7 +57,11 @@ class CachingMiddleware implements MiddlewareInterface
             return $middleware->process($request, $delegate);
         }
 
-        $result = $this->fetchFromCache($id);
+        try {
+            $result = $this->fetchFromCache($id);
+        } catch (\Throwable $e) {
+            throw $e;
+        }
 
         // Hit cache; resturn response.
         if ($result instanceof Response) {
@@ -97,7 +101,7 @@ class CachingMiddleware implements MiddlewareInterface
         }
 
         // Cache hit!
-        return (new HtmlResponse())
+        return (new HtmlResponse(''))
             ->withBody(new Stream(fopen($cachePath, 'r')));
     }
 

@@ -5,7 +5,6 @@
  */
 
 return [
-    'config_cache_enabled' => true,
     'blog' => [
         'db'            => 'sqlite:' . realpath(getcwd()) . '/data/posts.db',
         'cache_path'    => 'data/cache/posts',
@@ -73,31 +72,17 @@ return [
             ],
         ],
     ],
-    'opauth' => [
-        'path'               => '/auth/',
-        'callback_url'       => '/auth/callback',
-        'callback_transport' => 'session',
-        'debug'              => false,
-        'security_salt'      => 'PROVIDE A PROPER SALT',
-        'Strategy'           => [
-            // @codingStandardsIgnoreStart
-            'GitHub' => [
-                'client_id'     => null,
-                'client_secret' => null,
-            ],
-            'Google' => [
-                'client_id'     => null,
-                'client_secret' => null,
-                'scope'         => 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email',
-            ],
-            'Twitter' => [
-                'key'           => null,
-                'secret'        => null,
-            ],
-            // @codingStandardsIgnoreEnd
+    'oauth2' => [
+        'github' => [
+            'clientId'     => null,
+            'clientSecret' => null,
+            'redirectUri'  => 'https://mwop.net/auth/github/oauth2callback'
+        ],
+        'google' => [
+            'clientId'     => null,
+            'clientSecret' => null,
+            'redirectUri'  => 'https://mwop.net/auth/google/oauth2callback',
+            'hostedDomain' => 'https://mwop.net',
         ],
     ],
-
-    // Trick zf-deploy into thinking this is a ZF2 app so it can build a package.
-    'modules' => [],
 ];
