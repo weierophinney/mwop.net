@@ -20,4 +20,4 @@ $app->get('/blog/{type:atom|rss}.xml', Blog\FeedMiddleware::class, 'blog.feed');
 // Contact form
 $app->get('/contact[/]', Contact\LandingPage::class, 'contact');
 $app->post('/contact/process', Contact\Process::class, 'contact.process');
-$app->get('/contact/thank-you', Contact\ThankYouPage::class, 'contact.thank-your');
+$app->get('/contact/thank-you', Contact\ThankYouPage::class, 'contact.thank-you');

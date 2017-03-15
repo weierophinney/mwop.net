@@ -16,6 +16,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Diactoros\Response\RedirectResponse;
+use Zend\Expressive\Helper\UrlHelper;
 use Zend\Expressive\Template\TemplateRendererInterface;
 use Zend\Mail\Message;
 use Zend\Mail\Transport\TransportInterface;
@@ -26,16 +27,19 @@ class Process implements MiddlewareInterface
     private $session;
     private $template;
     private $transport;
+    private $urlHelper;
 
     public function __construct(
         Session $session,
         TransportInterface $transport,
         TemplateRendererInterface $template,
+        UrlHelper $urlHelper,
         array $config
     ) {
         $this->session   = $session;
         $this->transport = $transport;
         $this->template  = $template;
+        $this->urlHelper = $urlHelper;
         $this->config    = $config;
     }
 
@@ -74,8 +78,7 @@ class Process implements MiddlewareInterface
 
         $this->sendEmail($filter->getValues());
 
-        $parent = $request->getAttribute('originalRequest', $request);
-        $path   = str_replace('/process', '', (string) $parent->getUri()) . '/thank-you';
+        $path = ($this->urlHelper)('contact.thank-you');
         return new RedirectResponse($path);
     }
 

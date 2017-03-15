@@ -7,6 +7,7 @@
 namespace Mwop\Contact;
 
 use Interop\Container\ContainerInterface;
+use Zend\Expressive\Helper\UrlHelper;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
 class ProcessFactory
@@ -17,6 +18,7 @@ class ProcessFactory
             $container->get('session'),
             $container->get('mail.transport'),
             $container->get(TemplateRendererInterface::class),
+            $container->get(UrlHelper::class),
             $container->get('config')['contact']
         );
     }
