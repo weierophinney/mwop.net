@@ -7,7 +7,7 @@
 namespace MwopTest;
 
 use Mwop\Page;
-use PHPUnit_Framework_TestCase as TestCase;
+use PHPUnit\Framework\TestCase;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
@@ -21,10 +21,9 @@ class PageTest extends TestCase
         $middleware = new Page('foo', $renderer->reveal());
 
         $renderer->render('foo', [])->willReturn('content')->shouldBeCalled();
-        $response = $middleware(
+        $response = $middleware->process(
             $this->createRequestMock()->reveal(),
-            $this->createResponseMock()->reveal(),
-            $this->nextShouldNotBeCalled()
+            $this->delegateShouldNotBeCalled()
         );
 
         $this->assertInstanceOf(HtmlResponse::class, $response);

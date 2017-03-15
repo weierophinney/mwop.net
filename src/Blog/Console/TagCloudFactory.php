@@ -7,12 +7,11 @@
 namespace Mwop\Blog\Console;
 
 use Interop\Container\ContainerInterface;
-use Mwop\Blog\Mapper;
 
 class TagCloudFactory
 {
     public function __invoke(ContainerInterface $container) : TagCloud
     {
-        return new TagCloud($container->get(Mapper::class));
+        return new TagCloud($container->get('Mwop\Blog\Mapper'));
     }
 }

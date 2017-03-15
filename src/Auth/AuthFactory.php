@@ -8,8 +8,6 @@ namespace Mwop\Auth;
 
 use Interop\Container\ContainerInterface;
 
-use Mwop\UnauthorizedResponseFactory;
-
 class AuthFactory
 {
     public function __invoke(ContainerInterface $container) : Auth
@@ -17,7 +15,7 @@ class AuthFactory
         return new Auth(
             $container->get(OAuth2ProviderFactory::class),
             $container->get('session'),
-            $container->get(UnauthorizedResponseFactory::class)
+            $container->get('Mwop\UnauthorizedResponseFactory')
         );
     }
 }

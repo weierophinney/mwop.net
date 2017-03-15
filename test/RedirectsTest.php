@@ -8,13 +8,14 @@ namespace MwopTest;
 
 use Mwop\Redirects;
 use Prophecy\Argument;
-use PHPUnit_Framework_TestCase as TestCase;
+use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\ResponseInterface;
 
 class RedirectsTest extends TestCase
 {
     use HttpMessagesTrait;
 
-    public function testMiddlewarePassesPhpNetUrlToNext()
+    public function testMiddlewarePassesPhpNetUrlToDelegate()
     {
         $middleware = new Redirects();
         $uri = $this->createUriMock();
@@ -24,9 +25,9 @@ class RedirectsTest extends TestCase
 
         $uri->getPath()->willReturn('/blog/tag/php.xml');
 
-        $next = $this->nextShouldExpectAndReturn($response, $request->reveal(), $response);
+        $delegate = $this->delegateShouldExpectAndReturn($response, $request->reveal());
 
-        $this->assertSame($response, $middleware($request->reveal(), $response, $next));
+        $this->assertSame($response, $middleware->process($request->reveal(), $delegate));
     }
 
     public function expectedRedirects()
@@ -66,7 +67,6 @@ class RedirectsTest extends TestCase
         $uri = $this->createUriMock();
         $request = $this->createRequestMock();
         $request->getUri()->will([$uri, 'reveal']);
-        $response = $this->createResponseMock();
 
         $uri->getPath()->willReturn($incomingUri);
         $uri->withPath($path)->will([$uri, 'reveal']);
@@ -77,12 +77,15 @@ class RedirectsTest extends TestCase
         }
         $uri->__toString()->willReturn($redirect);
 
-        $response->withStatus(301)->will([$response, 'reveal']);
-        $response->withHeader('Location', $redirect)->will([$response, 'reveal']);
+        $response = $middleware->process(
+            $request->reveal(),
+            $this->delegateShouldNotBeCalled()
+        );
 
-        $next = $this->nextShouldNotBeCalled();
-
-        $this->assertSame($response->reveal(), $middleware($request->reveal(), $response->reveal(), $next));
+        $this->assertInstanceOf(ResponseInterface::class, $response);
+        $this->assertEquals(301, $response->getStatusCode());
+        $this->assertTrue($response->hasHeader('Location'));
+        $this->assertEquals($redirect, $response->getHeaderLine('Location'));
     }
 
     public function expectedAlternateHostRedirects()
@@ -111,7 +114,6 @@ class RedirectsTest extends TestCase
         $uri = $this->createUriMock();
         $request = $this->createRequestMock();
         $request->getUri()->will([$uri, 'reveal']);
-        $response = $this->createResponseMock();
 
         $uri->getPath()->willReturn($incomingUri);
         $uri->withHost($hostTo)->will([$uri, 'reveal']);
@@ -120,12 +122,15 @@ class RedirectsTest extends TestCase
         $uri->withQuery(Argument::any())->shouldNotBeCalled();
         $uri->__toString()->willReturn($location);
 
-        $response->withStatus(301)->will([$response, 'reveal']);
-        $response->withHeader('Location', $location)->will([$response, 'reveal']);
+        $response = $middleware->process(
+            $request->reveal(),
+            $this->delegateShouldNotBeCalled()
+        );
 
-        $next = $this->nextShouldNotBeCalled();
-
-        $this->assertSame($response->reveal(), $middleware($request->reveal(), $response->reveal(), $next));
+        $this->assertInstanceOf(ResponseInterface::class, $response);
+        $this->assertEquals(301, $response->getStatusCode());
+        $this->assertTrue($response->hasHeader('Location'));
+        $this->assertEquals($location, $response->getHeaderLine('Location'));
     }
 
     public function testS9yTagFeedsRedirectToBlogTagFeeds()
@@ -134,7 +139,6 @@ class RedirectsTest extends TestCase
         $uri = $this->createUriMock();
         $request = $this->createRequestMock();
         $request->getUri()->will([$uri, 'reveal']);
-        $response = $this->createResponseMock();
 
         $uri->getPath()->willReturn('/matthew/rss.php');
         $request->getQueryParams()->willReturn(['serendipity' => ['tag' => 'foo']]);
@@ -142,12 +146,15 @@ class RedirectsTest extends TestCase
         $uri->withQuery(Argument::any())->shouldNotBeCalled();
         $uri->__toString()->willReturn('/blog/tag/foo/rss.xml');
 
-        $response->withStatus(301)->will([$response, 'reveal']);
-        $response->withHeader('Location', '/blog/tag/foo/rss.xml')->will([$response, 'reveal']);
+        $response = $middleware->process(
+            $request->reveal(),
+            $this->delegateShouldNotBeCalled()
+        );
 
-        $next = $this->nextShouldNotBeCalled();
-
-        $this->assertSame($response->reveal(), $middleware($request->reveal(), $response->reveal(), $next));
+        $this->assertInstanceOf(ResponseInterface::class, $response);
+        $this->assertEquals(301, $response->getStatusCode());
+        $this->assertTrue($response->hasHeader('Location'));
+        $this->assertEquals('/blog/tag/foo/rss.xml', $response->getHeaderLine('Location'));
     }
 
     public function testS9yFeedRedirectsToBlogFeed()
@@ -156,7 +163,6 @@ class RedirectsTest extends TestCase
         $uri = $this->createUriMock();
         $request = $this->createRequestMock();
         $request->getUri()->will([$uri, 'reveal']);
-        $response = $this->createResponseMock();
 
         $uri->getPath()->willReturn('/matthew/rss.php');
         $request->getQueryParams()->willReturn([]);
@@ -164,12 +170,15 @@ class RedirectsTest extends TestCase
         $uri->withQuery(Argument::any())->shouldNotBeCalled();
         $uri->__toString()->willReturn('/blog/rss.xml');
 
-        $response->withStatus(301)->will([$response, 'reveal']);
-        $response->withHeader('Location', '/blog/rss.xml')->will([$response, 'reveal']);
+        $response = $middleware->process(
+            $request->reveal(),
+            $this->delegateShouldNotBeCalled()
+        );
 
-        $next = $this->nextShouldNotBeCalled();
-
-        $this->assertSame($response->reveal(), $middleware($request->reveal(), $response->reveal(), $next));
+        $this->assertInstanceOf(ResponseInterface::class, $response);
+        $this->assertEquals(301, $response->getStatusCode());
+        $this->assertTrue($response->hasHeader('Location'));
+        $this->assertEquals('/blog/rss.xml', $response->getHeaderLine('Location'));
     }
 
     public function testS9yBaseRedirectsToBlog()
@@ -178,7 +187,6 @@ class RedirectsTest extends TestCase
         $uri = $this->createUriMock();
         $request = $this->createRequestMock();
         $request->getUri()->will([$uri, 'reveal']);
-        $response = $this->createResponseMock();
 
         $uri->getPath()->willReturn('/matthew');
         $request->getQueryParams()->willReturn([]);
@@ -186,12 +194,15 @@ class RedirectsTest extends TestCase
         $uri->withQuery(Argument::any())->shouldNotBeCalled();
         $uri->__toString()->willReturn('/blog');
 
-        $response->withStatus(301)->will([$response, 'reveal']);
-        $response->withHeader('Location', '/blog')->will([$response, 'reveal']);
+        $response = $middleware->process(
+            $request->reveal(),
+            $this->delegateShouldNotBeCalled()
+        );
 
-        $next = $this->nextShouldNotBeCalled();
-
-        $this->assertSame($response->reveal(), $middleware($request->reveal(), $response->reveal(), $next));
+        $this->assertInstanceOf(ResponseInterface::class, $response);
+        $this->assertEquals(301, $response->getStatusCode());
+        $this->assertTrue($response->hasHeader('Location'));
+        $this->assertEquals('/blog', $response->getHeaderLine('Location'));
     }
 
     public function testInvokesNextIfPathDoesNotMatchARedirect()
@@ -204,12 +215,11 @@ class RedirectsTest extends TestCase
 
         $uri->getPath()->willReturn('/comics');
 
-        $next = $this->nextShouldExpectAndReturn(
+        $delegate = $this->delegateShouldExpectAndReturn(
             $response,
-            $request->reveal(),
-            $response
+            $request->reveal()
         );
 
-        $this->assertSame($response, $middleware($request->reveal(), $response, $next));
+        $this->assertSame($response, $middleware->process($request->reveal(), $delegate));
     }
 }

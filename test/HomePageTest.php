@@ -7,7 +7,7 @@
 namespace MwopTest;
 
 use Mwop\HomePage;
-use PHPUnit_Framework_TestCase as TestCase;
+use PHPUnit\Framework\TestCase;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
@@ -24,10 +24,9 @@ class HomePageTest extends TestCase
         $renderer->render(HomePage::TEMPLATE, [
             'posts' => $posts,
         ])->willReturn('content')->shouldBeCalled();
-        $response = $middleware(
+        $response = $middleware->process(
             $this->createRequestMock()->reveal(),
-            $this->createResponseMock()->reveal(),
-            $this->nextShouldNotBeCalled()
+            $this->delegateShouldNotBeCalled()
         );
 
         $this->assertInstanceOf(HtmlResponse::class, $response);

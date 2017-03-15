@@ -7,7 +7,7 @@
 namespace MwopTest;
 
 use Mwop\ComicsPage;
-use PHPUnit_Framework_TestCase as TestCase;
+use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Zend\Diactoros\Response\HtmlResponse;
@@ -32,19 +32,17 @@ class ComicsPageTest extends TestCase
         $middleware = new ComicsPage($this->renderer->reveal(), $unauthFactory);
 
         $request = $this->createRequestMock();
-        $response = $this->createResponseMock()->reveal();
 
         $request->getAttribute('user', false)->willReturn(false);
-        $next = $this->nextShouldExpectAndReturn(
+        $delegate = $this->delegateShouldExpectAndReturn(
             $expectedResponse,
-            $request->reveal(),
-            $response
+            $request->reveal()
         );
         $this->renderer->render(Argument::any())->shouldNotBeCalled();
 
         $this->assertSame(
             $expectedResponse,
-            $middleware($request->reveal(), $response, $next)
+            $middleware->process($request->reveal(), $delegate)
         );
     }
 
@@ -59,10 +57,9 @@ class ComicsPageTest extends TestCase
 
         $request->getAttribute('user', false)->willReturn('mwop');
         $this->renderer->render('mwop::comics.page')->willReturn('content')->shouldBeCalled();
-        $response = $middleware(
+        $response = $middleware->process(
             $request->reveal(),
-            $this->createResponseMock()->reveal(),
-            $this->nextShouldNotBeCalled()
+            $this->delegateShouldNotBeCalled()
         );
 
         $this->assertInstanceOf(HtmlResponse::class, $response);

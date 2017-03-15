@@ -6,21 +6,19 @@
 
 namespace MwopTest;
 
-use PHPUnit_Framework_Assert as Assert;
+use Interop\Http\ServerMiddleware\DelegateInterface;
+use PHPUnit\Framework\Assert;
 use Prophecy\Argument;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\UriInterface as Uri;
 use Zend\Stratigility\Http\Request as StratigilityRequest;
-use Zend\Stratigility\Next;
 
 trait HttpMessagesTrait
 {
     public function createRequestMock()
     {
-        $request = $this->prophesize(StratigilityRequest::class);
-        $request->willImplement(Request::class);
-        return $request;
+        return $this->prophesize(Request::class);
     }
 
     public function createResponseMock()
@@ -28,28 +26,24 @@ trait HttpMessagesTrait
         return $this->prophesize(Response::class);
     }
 
-    public function nextShouldNotBeCalled()
+    public function delegateShouldNotBeCalled()
     {
-        $next = $this->prophesize(Next::class);
-        $next->__invoke(Argument::any(), Argument::any())->shouldNotBeCalled();
-        return $next->reveal();
+        $delegate = $this->prophesize(DelegateInterface::class);
+        $delegate->process(Argument::any())->shouldNotBeCalled();
+        return $delegate->reveal();
     }
 
-    public function nextShouldExpectAndReturn($return, $request, $response)
+    public function delegateShouldExpectAndReturn($return, $request)
     {
         $requestExpectation = Argument::that(function ($argument) use ($request) {
-            Assert::assertSame($request, $argument, 'Request passed to next does not match expectation');
+            Assert::assertSame($request, $argument, 'Request passed to delegate does not match expectation');
             return true;
         });
-        $responseExpectation = Argument::that(function ($argument) use ($response) {
-            Assert::assertSame($response, $argument, 'Response passed to next does not match expectation');
-            return true;
-        });
-        $next = $this->prophesize(Next::class);
-        $next->__invoke($requestExpectation, $responseExpectation)
+        $delegate = $this->prophesize(DelegateInterface::class);
+        $delegate->process($requestExpectation)
             ->willReturn($return);
 
-        return $next->reveal();
+        return $delegate->reveal();
     }
 
     public function createUriMock()

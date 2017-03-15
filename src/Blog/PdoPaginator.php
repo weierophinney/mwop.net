@@ -8,6 +8,7 @@ namespace Mwop\Blog;
 
 use PDO;
 use PDOStatement;
+use RuntimeException;
 use Zend\Paginator\Adapter\AdapterInterface;
 
 class PdoPaginator implements AdapterInterface

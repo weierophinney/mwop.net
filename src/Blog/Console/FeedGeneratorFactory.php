@@ -16,7 +16,7 @@ class FeedGeneratorFactory
     public function __invoke(ContainerInterface $container) : FeedGenerator
     {
         return new FeedGenerator(
-            $container->get(Mapper::class),
+            $container->get('Mwop\Blog\Mapper'),
             $container->get(RouterInterface::class),
             $container->get(TemplateRendererInterface::class),
             realpath(getcwd()) . '/data/blog/authors/'

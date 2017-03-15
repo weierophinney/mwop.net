@@ -7,6 +7,7 @@
 namespace Mwop\Factory;
 
 use Interop\Container\ContainerInterface;
+use RuntimeException;
 use Zend\Mail\Transport;
 
 class MailTransport

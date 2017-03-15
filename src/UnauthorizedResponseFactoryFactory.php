@@ -18,9 +18,7 @@ class UnauthorizedResponseFactoryFactory
     public function __invoke(ContainerInterface $container) : callable
     {
         return function (Request $request) use ($container) {
-            $originalRequest = method_exists($request, 'getOriginalRequest')
-                ? $request->getAttribute('originalRequest', $request)
-                : $request;
+            $originalRequest = $request->getAttribute('originalRequest', $request);
 
             $config = $container->get('config');
             $debug  = $config['debug'] ?? false;

@@ -136,7 +136,11 @@ class FeedGenerator
 
         $parser = new Parser(null, new CommonMarkParser());
         $latest = false;
-        $posts->setCurrentPageNumber(1);
+
+        if (method_exists($posts, 'setCurrentPageNumber')) {
+            $posts->setCurrentPageNumber(1);
+        }
+
         foreach ($posts as $details) {
             $document = $parser->parse(file_get_contents($details['path']));
             $post     = $document->getYAML();

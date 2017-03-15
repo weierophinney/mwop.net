@@ -7,7 +7,7 @@
 namespace MwopTest;
 
 use Mwop\XClacksOverhead;
-use PHPUnit_Framework_TestCase as TestCase;
+use PHPUnit\Framework\TestCase;
 
 class XClacksOverheadTest extends TestCase
 {
@@ -22,12 +22,14 @@ class XClacksOverheadTest extends TestCase
             ->withHeader('X-Clacks-Overhead', 'GNU Terry Pratchett')
             ->will([$response, 'reveal'])
             ->shouldBeCalled();
-        $next = $this->nextShouldExpectAndReturn(
+        $delegate = $this->delegateShouldExpectAndReturn(
             $response->reveal(),
-            $request,
-            $response->reveal()
+            $request
         );
 
-        $this->assertSame($response->reveal(), $middleware($request, $response->reveal(), $next));
+        $this->assertSame(
+            $response->reveal(),
+            $middleware->process($request, $delegate)
+        );
     }
 }

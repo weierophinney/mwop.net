@@ -112,12 +112,12 @@ class Redirects implements MiddlewareInterface
                 }
             }
             if (preg_match('#^/matthew/rss\.php$#', $path)) {
-                if (! isset($req->getQueryParams()['serendipity']['tag'])) {
+                if (! isset($request->getQueryParams()['serendipity']['tag'])) {
                     return $this->redirect('/blog/rss.xml', $url);
                 }
                 return $this->redirect(sprintf(
                     '/blog/tag/%s/rss.xml',
-                    $req->getQueryParams()['serendipity']['tag']
+                    $request->getQueryParams()['serendipity']['tag']
                 ), $url);
             }
             return $this->redirect('/blog', $url);

@@ -15,8 +15,7 @@ class ThankYouPageFactory
     public function __invoke(ContainerInterface $container) : ThankYouPage
     {
         return new ThankYouPage(
-            $container->get(TemplateRendererInterface::class),
-            $container->get(RouterInterface::class)
+            $container->get(TemplateRendererInterface::class)
         );
     }
 }

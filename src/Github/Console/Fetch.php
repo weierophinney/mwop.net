@@ -42,18 +42,16 @@ class Fetch
     public function __invoke(Route $route, Console $console) : int
     {
         if (! $route->matchedParam('output')) {
-            return $this->reportError($console, $width, $length, 'Missing output file');
+            return $this->reportError($console, 'Missing output file');
         }
 
         $message = 'Retrieving Github activity links';
-        $length  = strlen($message);
-        $width   = $console->getWidth();
         $console->write($message, Color::BLUE);
 
         try {
             $data = $this->reader->read();
         } catch (Throwable $e) {
-            return $this->reportError($console, $width, $length, $e);
+            return $this->reportError($console, $e, strlen($message));
         }
 
         file_put_contents(
@@ -67,7 +65,7 @@ class Fetch
             )
         );
 
-        return $this->reportSuccess($console, $width, $length);
+        return $this->reportSuccess($console, strlen($message));
     }
 
     /**
@@ -92,13 +90,15 @@ class Fetch
      * Report an error
      *
      * @param Console $console
-     * @param int $width
-     * @param int $length
      * @param string|Throwable $e
+     * @param int $length
      * @return int
      */
-    private function reportError(Console $console, int $width, int $length, $e) : int
+    private function reportError(Console $console, $e, int $length = 0) : int
     {
+        $width  = $console->getWidth();
+        $length = is_string($e) ? strlen($e) : $length;
+
         if (($length + 9) > $width) {
             $console->writeLine('');
             $length = 0;
@@ -120,8 +120,9 @@ class Fetch
     /**
      * Report success
      */
-    private function reportSuccess(Console $console, int $width, int $length) : int
+    private function reportSuccess(Console $console, int $length = 0) : int
     {
+        $width = $console->getWidth();
         if (($length + 8) > $width) {
             $console->writeLine('');
             $length = 0;

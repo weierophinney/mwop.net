@@ -115,7 +115,7 @@ EOF;
                 : $this->getFeedFromLocalFile($feedUrl);
         } catch (\Throwable $e) {
             $this->reportException($e, $console);
-            $this->writeLine('[ FAIL ]', Color::RED);
+            $console->writeLine('[ FAIL ]', Color::RED);
             return new Collection([]);
         }
 
