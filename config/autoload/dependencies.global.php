@@ -13,6 +13,11 @@ use Zend\Feed\Reader\Http\ClientInterface as FeedReaderHttpClientInterface;
 use Zend\ServiceManager\Factory\InvokableFactory;
 
 return ['dependencies' => [
+    'delegators' => [
+        Application::class => [
+            Github\PuSH\RoutesDelegator::class,
+        ],
+    ],
     'factories' => [
         'mail.transport'                  => Factory\MailTransport::class,
         'session'                         => Factory\Session::class,
@@ -32,6 +37,8 @@ return ['dependencies' => [
         FeedReaderHttpClientInterface::class => Feed\HttpPlugClientFactory::class,
         Github\AtomReader::class          => Github\AtomReaderFactory::class,
         Github\Console\Fetch::class       => Github\Console\FetchFactory::class,
+        Github\PuSH\Logger::class         => Github\PuSH\LoggerFactory::class,
+        Github\PuSH\LoggerAction::class   => Github\PuSH\LoggerActionFactory::class,
         UnauthorizedResponseFactory::class => UnauthorizedResponseFactoryFactory::class,
     ],
 ]];
