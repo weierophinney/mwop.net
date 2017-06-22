@@ -22,7 +22,7 @@ class RoutesDelegator
         $app = $callback();
         foreach ($this->events as $event) {
             $app->post(
-                sprintf('/github/%s', $event),
+                sprintf('/github/{room}/%s', $event),
                 LoggerAction::class,
                 sprintf('github.%s', $event)
             );
