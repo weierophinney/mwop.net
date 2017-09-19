@@ -70,7 +70,7 @@
             "@clean"
         ],
         "build-assets": [
-            "@npm",
+            "@yarn",
             "grunt"
         ],
         "build-blog": [
@@ -94,10 +94,10 @@
         "development-disable": "zf-development-mode disable",
         "development-enable": "zf-development-mode enable",
         "development-status": "zf-development-mode status",
-        "npm": "npm install",
+        "yarn": "yarn install",
         "serve": "php -S 0.0.0.0:8080 -t public/ public/index.php",
         "symlink-assets": [
-            "@npm",
+            "@yarn",
             "bin/mwop.net.php create-asset-symlinks"
         ],
         "test": "phpunit --colors=always"
