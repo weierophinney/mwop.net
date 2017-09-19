@@ -1,0 +1,3 @@
+#!/bin/sh
+service cron start
+/usr/local/sbin/php-fpm

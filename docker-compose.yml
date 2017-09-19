@@ -1,11 +1,15 @@
-version: "2"
+version: '3.3'
 
 services:
-  mwop:
+  php-fpm:
     build: 
       context: .
-      dockerfile: Dockerfile
+      dockerfile: etc/docker/php-fpm.Dockerfile
+    env_file:
+      - .env
     ports:
-     - "8080:80"
+     - "9000:9000"
     volumes:
-     - .:/var/www
+      - type: volume
+        source: .
+        target: /var/www/mwop.net
