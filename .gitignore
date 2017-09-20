@@ -1,3 +1,5 @@
+.acme.env
+.env
 .puli/
 .tmp/
 config/autoload/*local.php
@@ -10,7 +12,6 @@ data/github-links.mustache
 data/posts.db
 data/search_terms.json
 data/tag-cloud.mustache
-.env
 log/
 node_modules/
 public/service-worker.js
