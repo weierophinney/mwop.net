@@ -3,11 +3,8 @@
 FROM php:7.1-fpm
 
 # System dependencies
-# RUN apt-get -y install apt-utils apt-transport-https build-essential
-RUN curl -sL https://deb.nodesource.com/setup_7.x | bash -
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
-RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" > /etc/apt/sources.list.d/yarn.list
-RUN apt-get update && apt-get install -y cron nodejs git yarn libbz2-dev libicu-dev libtidy-dev libxslt1-dev zlib1g-dev
+RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
+RUN apt-get install -y cron nodejs git libbz2-dev libicu-dev libtidy-dev libxslt1-dev zlib1g-dev
 
 # PHP Extensions
 RUN docker-php-ext-install -j$(nproc) bcmath bz2 intl opcache pcntl sockets tidy xsl zip
@@ -22,7 +19,7 @@ COPY etc/bin/getcomposer.sh /usr/local/bin/
 RUN /usr/local/bin/getcomposer.sh
 
 # Install Grunt
-RUN yarn global add grunt
+RUN npm install --global grunt
 
 # Crontab
 COPY etc/cron.d/www-data /var/spool/cron/crontabs/
@@ -40,7 +37,7 @@ COPY Gruntfile.js /var/www/mwop.net/
 COPY composer.json /var/www/mwop.net/
 COPY composer.lock /var/www/mwop.net/
 COPY package.json /var/www/mwop.net/
-COPY yarn.lock /var/www/mwop.net/
+COPY package-lock.json /var/www/mwop.net/
 
 # Reset "local"/development config files
 RUN rm -f /var/www/mwop.net/config/development.config.php
