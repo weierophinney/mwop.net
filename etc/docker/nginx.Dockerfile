@@ -8,7 +8,7 @@ RUN mkdir -p /var/www/mwop.net
 # System dependencies
 RUN apk --no-cache add openssl curl
 RUN curl https://get.acme.sh | sh
-RUN ln -s /root/.acme.sh/achme.sh /usr/local/bin/acme.sh
+RUN ln -s /root/.acme.sh/acme.sh /usr/local/bin/acme.sh
 
 # nginx config
 COPY etc/bin/nginx-entrypoint /usr/local/bin/

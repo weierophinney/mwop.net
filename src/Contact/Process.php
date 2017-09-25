@@ -58,7 +58,13 @@ class Process implements MiddlewareInterface
         ) {
             // re-display form
             return $this->redisplayForm(
-                ['csrf' => 'true', 'data' => $data],
+                [
+                    'csrf' => [
+                        'isset' => isset($data['csrf']),
+                        'valid' => $token->isValid($data['csrf'] ?? ''),
+                    ],
+                    'data' => $data
+                ],
                 $token,
                 $request
             );
@@ -87,13 +93,16 @@ class Process implements MiddlewareInterface
         $csrfToken->regenerateValue();
 
         $view = array_merge($this->config, [
-            'error'  => ['message' => json_encode($error)],
+            'error'  => ['message' => json_encode(
+                $error,
+                JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_PRESERVE_ZERO_FRACTION | JSON_NUMERIC_CHECK
+            )],
             'action' => (string) $request->getAttribute('originalRequest', $request)->getUri(),
             'csrf'   => $csrfToken->getValue(),
         ]);
 
         return new HtmlResponse(
-            $this->template->render('contact.landing', $view)
+            $this->template->render('contact::landing', $view)
         );
     }
 

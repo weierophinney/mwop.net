@@ -9,11 +9,6 @@ RUN apt-get install -y cron nodejs git libbz2-dev libicu-dev libtidy-dev libxslt
 # PHP Extensions
 RUN docker-php-ext-install -j$(nproc) bcmath bz2 intl opcache pcntl sockets tidy xsl zip
 
-# PHP config
-COPY etc/php/mwop.ini /usr/local/etc/php/conf.d/
-COPY etc/php/www.conf /usr/local/etc/php-fpm.d/
-COPY etc/bin/php-fpm-entrypoint /usr/local/bin/
-
 # Install composer
 COPY etc/bin/getcomposer.sh /usr/local/bin/
 RUN /usr/local/bin/getcomposer.sh
@@ -26,6 +21,7 @@ COPY etc/cron.d/www-data /var/spool/cron/crontabs/
 RUN chown www-data.crontab /var/spool/cron/crontabs/www-data && chmod 600 /var/spool/cron/crontabs/www-data
 
 # Project files
+COPY etc/bin/php-fpm-entrypoint /usr/local/bin/
 RUN mkdir /var/www/mwop.net
 ADD bin /var/www/mwop.net/bin
 ADD config /var/www/mwop.net/config
@@ -48,6 +44,13 @@ RUN mv /var/www/mwop.net/config/autoload/local.php.dist /var/www/mwop.net/config
 WORKDIR /var/www/mwop.net
 RUN composer install --quiet --no-ansi --no-dev --no-interaction --no-progress --no-scripts --no-plugins --optimize-autoloader
 RUN composer build
+
+# PHP config (performed late so as not to affect earlier layers)
+COPY etc/php/mwop.ini /usr/local/etc/php/conf.d/
+COPY etc/php/www.conf /usr/local/etc/php-fpm.d/
+
+# Entry point script (does not change often)
+COPY etc/bin/php-fpm-entrypoint /usr/local/bin/
 
 EXPOSE 9000
 CMD ["php-fpm-entrypoint"]

@@ -12,12 +12,14 @@ else
             exit 1
         fi
 
-        acme.sh --install-cert --dns ${ACME_DNS_TYPE} -d mwop.net --key-file /etc/nginx/ssl/mwop.net.key.pem --fullchain-file /etc/nginx/ssl/mwop.net.cert.pem
+        acme.sh --issue --dns ${ACME_DNS_TYPE} -d mwop.net
 
         if [ "$?" != "0" ]; then
             echo "Error generating initial SSL certificate"
             exit 1
         fi
+
+        acme.sh --install-cert -d mwop.net --key-file /etc/nginx/ssl/mwop.net.key.pem --fullchain-file /etc/nginx/ssl/mwop.net.cert.pem
     fi
 fi
 
