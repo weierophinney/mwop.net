@@ -44,6 +44,7 @@ RUN mv /var/www/mwop.net/config/autoload/local.php.dist /var/www/mwop.net/config
 WORKDIR /var/www/mwop.net
 RUN composer install --quiet --no-ansi --no-dev --no-interaction --no-progress --no-scripts --no-plugins --optimize-autoloader
 RUN composer build
+RUN chown -R www-data.www-data /var/www/mwop.net/data
 
 # PHP config (performed late so as not to affect earlier layers)
 COPY etc/php/mwop.ini /usr/local/etc/php/conf.d/

@@ -1,0 +1,30 @@
+version: '3.2'
+
+services:
+  php-fpm:
+    image: "mwop/mwopphp:{mwopphp}"
+    env_file:
+      - .env
+    networks:
+      - server
+
+  nginx:
+    image: "mwop/mwopnginx:{mwopnginx}"
+    env_file:
+      - .acme.env
+    depends_on:
+      - php-fpm
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /data/acme.sh:/root/.acme.sh/mwop.net
+      - /data/ssl:/etc/nginx/ssl
+    networks:
+      - public
+      - server
+
+networks:
+  public:
+    external: true
+  server:
