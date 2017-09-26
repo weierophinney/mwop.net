@@ -82,6 +82,8 @@ class Process implements MiddlewareInterface
             );
         }
 
+        $this->session->clear();
+
         $this->sendEmail($filter->getValues());
 
         $path = ($this->urlHelper)('contact.thank-you');
@@ -100,6 +102,8 @@ class Process implements MiddlewareInterface
             'action' => (string) $request->getAttribute('originalRequest', $request)->getUri(),
             'csrf'   => $csrfToken->getValue(),
         ]);
+
+        $this->session->commit();
 
         return new HtmlResponse(
             $this->template->render('contact::landing', $view)
