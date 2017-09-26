@@ -6844,13 +6844,6 @@ legend {
   text-decoration: none;
   border-bottom: 1px solid #b3b3b3;
 }
-.navbar-av > li > a:hover {
-  text-decoration: none;
-  border-top: none;
-  border-right: none;
-  border-bottom: 1px solid #b3b3b3;
-  border-left: none;
-}
 .navbar-brand {
   font-size: 24px;
 }

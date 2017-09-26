@@ -12,7 +12,7 @@ use ZF\Console\Route;
 
 class CreateAssetSymlinks
 {
-    private $symlinkMap = [
+    const ASSET_MAP = [
         '../../node_modules/bootstrap/dist/js/bootstrap.js' => 'public/js/bootstrap.js',
         '../../node_modules/jquery/dist/jquery.js'          => 'public/js/jquery.js',
         '../../node_modules/lunr/lunr.js'                   => 'public/js/lunr.js',
@@ -22,7 +22,7 @@ class CreateAssetSymlinks
     {
         $console->writeLine('Creating asset symlinks... ', Color::BLUE);
 
-        foreach ($this->symlinkMap as $target => $link) {
+        foreach (self::ASSET_MAP as $target => $link) {
             if (! file_exists($link)) {
                 symlink($target, $link);
             }

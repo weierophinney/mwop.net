@@ -12,6 +12,7 @@ data/github-links.mustache
 data/posts.db
 data/search_terms.json
 data/tag-cloud.mustache
+docker-stack.yml
 log/
 node_modules/
 public/service-worker.js

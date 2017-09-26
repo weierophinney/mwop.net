@@ -84,10 +84,27 @@
             "bin/mwop.net.php github-links",
             "bin/mwop.net.php homepage-feeds"
         ],
+        "build-nginx": [
+            "@copy-assets",
+            "@build-assets",
+            "@build-blog",
+            "@build-search",
+            "@clean"
+        ],
+        "build-php-fpm": [
+            "bin/mwop.net.php use-dist-templates",
+            "@build-blog",
+            "@build-homepage",
+            "phly-comic.php fetch-all --output=data/comics.mustache --exclude=dilbert,reptilis-rex,nih"
+        ],
         "build-search": "bin/mwop.net.php generate-search-data",
         "clean": [
             "rm -Rf node_modules",
             "rm -Rf .tmp"
+        ],
+        "copy-assets": [
+            "@npm",
+            "bin/mwop.net.php copy-asset-symlinks"
         ],
         "cs-check": "phpcs",
         "cs-fix": "phpcbf",
