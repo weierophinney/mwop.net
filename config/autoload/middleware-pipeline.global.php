@@ -19,6 +19,11 @@ return ['dependencies' => [
     'aliases' => [
         Delegate\DefaultDelegate::class   => Delegate\NotFoundDelegate::class,
     ],
+    'delegators' => [
+        ErrorHandler::class => [
+            Factory\LoggingErrorListenerDelegator::class,
+        ],
+    ],
     'factories' => [
         Auth\Middleware::class            => Auth\MiddlewareFactory::class,
         Delegate\NotFoundDelegate::class  => Container\NotFoundDelegateFactory::class,

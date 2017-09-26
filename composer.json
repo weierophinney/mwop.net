@@ -19,7 +19,7 @@
         "league/oauth2-github": "^2.0",
         "league/oauth2-google": "^2.0",
         "mnapoli/front-yaml": "^1.5",
-        "monolog/monolog": "^1.22",
+        "monolog/monolog": "^1.23",
         "phly/phly-comic": "^1.1",
         "phly/phly-expressive-mustache": "^1.1",
         "php-http/curl-client": "^1.4",
