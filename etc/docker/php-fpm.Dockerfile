@@ -14,8 +14,7 @@ COPY etc/bin/getcomposer.sh /usr/local/bin/
 RUN /usr/local/bin/getcomposer.sh
 
 # Crontab
-COPY etc/cron.d/www-data /var/spool/cron/crontabs/
-RUN chown www-data.crontab /var/spool/cron/crontabs/www-data && chmod 600 /var/spool/cron/crontabs/www-data
+COPY etc/cron.d/www-data /etc/cron.d/
 
 # Project files
 COPY etc/bin/php-fpm-entrypoint /usr/local/bin/

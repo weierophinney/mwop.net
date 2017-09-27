@@ -11,13 +11,16 @@ services:
       - "9000:9000"
     volumes:
       - .:/var/www/mwop.net
-      - ./etc/php/mwop.ini:/usr/local/etc/php/conf.d/mwop.ini:ro
-      - ./etc/php/www.conf:/usr/local/etc/php-fpm.d/www.conf:ro
+      - ./etc/cron.d/www-data:/etc/cron.d/www-data
+      - ./etc/php/mwop.ini:/usr/local/etc/php/conf.d/mwop.ini
+      - ./etc/php/www.conf:/usr/local/etc/php-fpm.d/www.conf
 
   nginx:
-    image: "mwop/mwopnginx:201709211658"
+    build: 
+      context: .
+      dockerfile: etc/docker/nginx.Dockerfile
     ports:
       - "8080:80"
     volumes:
-      - ./etc/nginx/nginx.dev.conf:/etc/nginx/conf.d/default.conf
       - ./:/var/www/mwop.net
+      - ./etc/nginx/nginx.dev.conf:/etc/nginx/conf.d/default.conf
