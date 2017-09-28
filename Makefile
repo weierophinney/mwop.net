@@ -2,8 +2,19 @@
 #
 # Create a docker-stack.yml based on latest tags of required containers, and
 # deploy to swarm.
+#
+# Allowed/expected variables:
+#
+# - NGINX_VERSION: specific nginx container version to use
+# - PHP_FPM_VERSION: specific php-fpm container version to use
+#
+# If not specified, each defaults to "latest", which forces a lookup of the
+# latest tagged version.
 
 VERSION := $(shell date +%Y%m%d%H%M)
+
+NGINX_VERSION?=latest
+PHP_FPM_VERSION?=latest
 
 .PHONY : all deploy nginx php-fpm
 
@@ -19,7 +30,9 @@ endif
 
 docker-stack.yml:
 	@echo "Creating docker-stack.yml"
-	- $(CURDIR)/bin/create-docker-stack.php
+	@echo "- nginx container version: $(NGINX_VERSION)"
+	@echo "- php-fpm container version: $(PHP_FPM_VERSION)"
+	- $(CURDIR)/bin/create-docker-stack.php -n $(NGINX_VERSION) -p $(PHP_FPM_VERSION)
 
 deploy: check-env docker-stack.yml
 	@echo "Deploying to swarm"
