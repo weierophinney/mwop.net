@@ -14,7 +14,6 @@ class AuthFactory
     {
         return new Auth(
             $container->get(OAuth2ProviderFactory::class),
-            $container->get('session'),
             $container->get('Mwop\UnauthorizedResponseFactory')
         );
     }

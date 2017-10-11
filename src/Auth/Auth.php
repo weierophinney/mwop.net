@@ -7,8 +7,6 @@
 
 namespace Mwop\Auth;
 
-use Aura\Session\Segment;
-use Aura\Session\Session;
 use Exception;
 use Interop\Http\ServerMiddleware\DelegateInterface;
 use Interop\Http\ServerMiddleware\MiddlewareInterface;
@@ -18,11 +16,12 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\UriInterface as Uri;
 use RuntimeException;
 use Zend\Diactoros\Response\RedirectResponse;
+use Zend\Expressive\Session\SessionInterface;
+use Zend\Expressive\Session\SessionMiddleware;
 
 class Auth implements MiddlewareInterface
 {
     private $providerFactory;
-    private $session;
     private $unauthorizedResponseFactory;
 
     /**
@@ -32,11 +31,9 @@ class Auth implements MiddlewareInterface
      */
     public function __construct(
         OAuth2ProviderFactory $providerFactory,
-        Session $session,
         callable $unauthorizedResponseFactory
     ) {
         $this->providerFactory             = $providerFactory;
-        $this->session                     = $session;
         $this->unauthorizedResponseFactory = $unauthorizedResponseFactory;
     }
 
@@ -45,11 +42,13 @@ class Auth implements MiddlewareInterface
      */
     public function process(Request $request, DelegateInterface $delegate)
     {
+        $session = $request->getAttribute(SessionMiddleware::SESSION_ATTRIBUTE);
+
         $provider = $this->providerFactory->createProvider(
             $request->getAttribute('provider')
         );
         $params = $request->getQueryParams();
-        $oauth2Session = $this->session->getSegment('auth');
+        $oauth2Session = $this->getOAuth2SessionData($session);
 
         if (! empty($params['error'])) {
             return $this->processError($params['error']);
@@ -59,15 +58,16 @@ class Auth implements MiddlewareInterface
             return $this->requestAuthorization(
                 $provider,
                 $request->getUri(),
+                $session,
                 $oauth2Session,
                 $params['redirect'] ?? ''
             );
         }
 
         if (empty($params['state'])
-            || $params['state'] !== $oauth2Session->get('state')
+            || $params['state'] !== $oauth2Session['state']
         ) {
-            return $this->displayUnauthorizedPage($oauth2Session, $request, $params['redirect'] ?? '');
+            return $this->displayUnauthorizedPage($request, $params['redirect'] ?? '');
         }
 
 
@@ -81,10 +81,10 @@ class Auth implements MiddlewareInterface
             return $this->processError($e);
         }
 
-        $oauth2Session->set('user', $user->toArray());
-        $this->session->commit();
+        $oauth2Session['user'] = $user->toArray();
+        $session->set('auth', $oauth2Session);
 
-        return new RedirectResponse($oauth2Session->get('redirect') ?: '/');
+        return new RedirectResponse($oauth2Session['redirect'] ?? '/');
     }
 
     /**
@@ -102,7 +102,8 @@ class Auth implements MiddlewareInterface
     private function requestAuthorization(
         AbstractProvider $provider,
         Uri $uri,
-        Segment $session,
+        SessionInterface $session,
+        array $sessionData,
         string $redirect
     ) : Response {
         // Authorization URL MUST be generated BEFORE we retrieve the state,
@@ -110,16 +111,16 @@ class Auth implements MiddlewareInterface
         $authorizationUrl = $provider->getAuthorizationUrl();
 
         if (! empty($redirect)) {
-            $session->set('redirect', $redirect);
+            $sessionData['redirect'] = $redirect;
         }
 
-        $session->set('state', $provider->getState());
-        $this->session->commit();
+        $sessionData['state'] = $provider->getState();
+        $session->set('auth', $sessionData);
 
         return new RedirectResponse($authorizationUrl);
     }
 
-    private function displayUnauthorizedPage(Segment $session, Request $request, string $redirect) : Response
+    private function displayUnauthorizedPage(Request $request, string $redirect) : Response
     {
         $uri     = $request->getUri();
         $factory = $this->unauthorizedResponseFactory;
@@ -127,5 +128,14 @@ class Auth implements MiddlewareInterface
         return $factory($request->withUri(
             $redirect ? $uri->withPath($redirect) : $uri
         ));
+    }
+
+    private function getOAuth2SessionData(SessionInterface $session)
+    {
+        $data = $session->get('auth');
+        if (! is_array($data)) {
+            $data = [];
+        }
+        return $data;
     }
 }

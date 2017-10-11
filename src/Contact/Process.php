@@ -7,8 +7,6 @@
 
 namespace Mwop\Contact;
 
-use Aura\Session\CsrfToken;
-use Aura\Session\Session;
 use Interop\Http\ServerMiddleware\DelegateInterface;
 use Interop\Http\ServerMiddleware\MiddlewareInterface;
 use Mwop\PageView;
@@ -16,6 +14,8 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Diactoros\Response\RedirectResponse;
+use Zend\Expressive\Csrf\CsrfGuardInterface;
+use Zend\Expressive\Csrf\CsrfMiddleware;
 use Zend\Expressive\Helper\UrlHelper;
 use Zend\Expressive\Template\TemplateRendererInterface;
 use Zend\Mail\Message;
@@ -24,19 +24,16 @@ use Zend\Mail\Transport\TransportInterface;
 class Process implements MiddlewareInterface
 {
     private $config;
-    private $session;
     private $template;
     private $transport;
     private $urlHelper;
 
     public function __construct(
-        Session $session,
         TransportInterface $transport,
         TemplateRendererInterface $template,
         UrlHelper $urlHelper,
         array $config
     ) {
-        $this->session   = $session;
         $this->transport = $transport;
         $this->template  = $template;
         $this->urlHelper = $urlHelper;
@@ -48,24 +45,22 @@ class Process implements MiddlewareInterface
      */
     public function process(Request $request, DelegateInterface $delegate)
     {
-        $this->session->start();
+        $guard = $request->getAttribute(CsrfMiddleware::GUARD_ATTRIBUTE);
 
         $data  = $request->getParsedBody() ?: [];
-        $token = $this->session->getCsrfToken();
+        $token = $data['csrf'] ?? '';
 
-        if (! isset($data['csrf'])
-            || ! $token->isValid($data['csrf'])
-        ) {
+        if (! $guard->validateToken($token)) {
             // re-display form
             return $this->redisplayForm(
                 [
                     'csrf' => [
-                        'isset' => isset($data['csrf']),
-                        'valid' => $token->isValid($data['csrf'] ?? ''),
+                        'isset' => ! empty($token),
+                        'valid' => false,
                     ],
                     'data' => $data
                 ],
-                $token,
+                $guard,
                 $request
             );
         }
@@ -77,12 +72,10 @@ class Process implements MiddlewareInterface
             // re-display form
             return $this->redisplayForm(
                 $filter->getMessages(),
-                $token,
+                $guard,
                 $request
             );
         }
-
-        $this->session->clear();
 
         $this->sendEmail($filter->getValues());
 
@@ -90,20 +83,16 @@ class Process implements MiddlewareInterface
         return new RedirectResponse($path);
     }
 
-    private function redisplayForm(array $error, CsrfToken $csrfToken, Request $request) : Response
+    private function redisplayForm(array $error, CsrfGuardInterface $guard, Request $request) : Response
     {
-        $csrfToken->regenerateValue();
-
         $view = array_merge($this->config, [
             'error'  => ['message' => json_encode(
                 $error,
                 JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_PRESERVE_ZERO_FRACTION | JSON_NUMERIC_CHECK
             )],
             'action' => (string) $request->getAttribute('originalRequest', $request)->getUri(),
-            'csrf'   => $csrfToken->getValue(),
+            'csrf'   => $guard->generateToken(),
         ]);
-
-        $this->session->commit();
 
         return new HtmlResponse(
             $this->template->render('contact::landing', $view)

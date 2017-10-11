@@ -2,6 +2,9 @@
 
 namespace Mwop;
 
+use Zend\Expressive\Csrf\CsrfMiddleware;
+use Zend\Expressive\Session\SessionMiddleware;
+
 // General pages
 $app->get('/', HomePage::class, 'home');
 $app->get('/comics', ComicsPage::class, 'comics');
@@ -18,6 +21,14 @@ $app->get('/blog/tag/{tag:[^/]+}', Blog\ListPostsMiddleware::class, 'blog.tag');
 $app->get('/blog/{type:atom|rss}.xml', Blog\FeedMiddleware::class, 'blog.feed');
 
 // Contact form
-$app->get('/contact[/]', Contact\LandingPage::class, 'contact');
-$app->post('/contact/process', Contact\Process::class, 'contact.process');
+$app->get('/contact[/]', [
+    SessionMiddleware::class,
+    CsrfMiddleware::class,
+    Contact\LandingPage::class,
+], 'contact');
+$app->post('/contact/process', [
+    SessionMiddleware::class,
+    CsrfMiddleware::class,
+    Contact\Process::class,
+], 'contact.process');
 $app->get('/contact/thank-you', Contact\ThankYouPage::class, 'contact.thank-you');
