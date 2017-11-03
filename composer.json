@@ -19,7 +19,7 @@
         "league/oauth2-github": "^2.0",
         "league/oauth2-google": "^2.0",
         "mnapoli/front-yaml": "^1.5",
-        "monolog/monolog": "^1.22",
+        "monolog/monolog": "^1.23",
         "phly/phly-comic": "^1.1",
         "phly/phly-expressive-mustache": "^1.1",
         "php-http/curl-client": "^1.4",
@@ -84,17 +84,34 @@
             "bin/mwop.net.php github-links",
             "bin/mwop.net.php homepage-feeds"
         ],
+        "build-nginx": [
+            "@copy-assets",
+            "@build-assets",
+            "@build-blog",
+            "@build-search",
+            "@clean"
+        ],
+        "build-php-fpm": [
+            "bin/mwop.net.php use-dist-templates",
+            "@build-blog",
+            "@build-homepage",
+            "phly-comic.php fetch-all --output=data/comics.mustache --exclude=dilbert,reptilis-rex,nih"
+        ],
         "build-search": "bin/mwop.net.php generate-search-data",
         "clean": [
             "rm -Rf node_modules",
             "rm -Rf .tmp"
+        ],
+        "copy-assets": [
+            "@npm",
+            "bin/mwop.net.php copy-asset-symlinks"
         ],
         "cs-check": "phpcs",
         "cs-fix": "phpcbf",
         "development-disable": "zf-development-mode disable",
         "development-enable": "zf-development-mode enable",
         "development-status": "zf-development-mode status",
-        "npm": "npm install",
+        "npm": "npm install --no-save",
         "serve": "php -S 0.0.0.0:8080 -t public/ public/index.php",
         "symlink-assets": [
             "@npm",

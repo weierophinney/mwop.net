@@ -146,7 +146,7 @@ module.exports = function (grunt) {
     'useminPrepare',
     'concat:generated',
     'cssmin:generated',
-    'uglify:generated',
-    'swPrecache:prod'
+    'uglify:generated' /*,
+    'swPrecache:prod' */
   ]);
 };

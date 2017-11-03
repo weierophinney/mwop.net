@@ -60,6 +60,15 @@ $routes = [
         },
     ],
     [
+        'name' => 'copy-asset-symlinks',
+        'description' => 'Copy assets installed by npm into the public tree.',
+        'short_description' => 'Copy assets.',
+        'handler' => function ($route, $console) use ($container) {
+            $handler = $container->get(MwopConsole\CopyAssetSymlinks::class);
+            return $handler($route, $console);
+        },
+    ],
+    [
         'name' => 'create-asset-symlinks',
         'description' => 'Symlink assets installed by npm into the public tree.',
         'short_description' => 'Symlink assets.',
