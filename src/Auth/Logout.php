@@ -6,33 +6,27 @@
 
 namespace Mwop\Auth;
 
-use Aura\Session\Session;
 use Interop\Http\ServerMiddleware\DelegateInterface;
 use Interop\Http\ServerMiddleware\MiddlewareInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Zend\Diactoros\Response\RedirectResponse;
+use Zend\Expressive\Session\SessionMiddleware;
 
 class Logout implements MiddlewareInterface
 {
-    private $session;
-
-    public function __construct(Session $session)
-    {
-        $this->session = $session;
-    }
-
     /**
      * @return RedirectResponse
      */
     public function process(Request $request, DelegateInterface $delegate)
     {
-        $auth = $this->session->getSegment('auth');
-        $user = $auth->get('user');
+        $session = $request->getAttribute(SessionMiddleware::SESSION_ATTRIBUTE);
+        $auth = $session->get('auth') ?? [];
+        $user = $auth['user'] ?? false;
         if (! $user) {
             return $this->redirect($request);
         }
 
-        $auth->clear();
+        $session->clear();
         return $this->redirect($request);
     }
 

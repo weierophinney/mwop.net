@@ -15,7 +15,6 @@ class LandingPageFactory
     {
         return new LandingPage(
             $container->get(TemplateRendererInterface::class),
-            $container->get('session'),
             $container->get('config')['contact']
         );
     }

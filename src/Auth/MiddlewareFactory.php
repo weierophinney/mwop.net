@@ -8,6 +8,7 @@ namespace Mwop\Auth;
 
 use Interop\Container\ContainerInterface;
 use Zend\Expressive\AppFactory;
+use Zend\Expressive\Session\SessionMiddleware;
 
 class MiddlewareFactory
 {
@@ -21,6 +22,8 @@ class MiddlewareFactory
         $config = $container->get('config');
         $debug  = $config['debug'] ?? false;
         $route  = $debug ? self::ROUTE_DEBUG : self::ROUTE_PROD;
+
+        $middleware->pipe(SessionMiddleware::class);
 
         $middleware->get($route, Auth::class);
         $middleware->get('/logout', Logout::class);

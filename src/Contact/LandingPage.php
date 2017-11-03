@@ -6,27 +6,24 @@
 
 namespace Mwop\Contact;
 
-use Aura\Session\Session;
 use Interop\Http\ServerMiddleware\DelegateInterface;
 use Interop\Http\ServerMiddleware\MiddlewareInterface;
 use Mwop\PageView;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Zend\Diactoros\Response\HtmlResponse;
+use Zend\Expressive\Csrf\CsrfMiddleware;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
 class LandingPage implements MiddlewareInterface
 {
     private $config;
-    private $session;
     private $template;
 
     public function __construct(
         TemplateRendererInterface $template,
-        Session $session,
         array $config
     ) {
         $this->template = $template;
-        $this->session  = $session;
         $this->config   = $config;
     }
 
@@ -35,10 +32,12 @@ class LandingPage implements MiddlewareInterface
      */
     public function process(Request $request, DelegateInterface $delegate)
     {
+        $guard = $request->getAttribute(CsrfMiddleware::GUARD_ATTRIBUTE);
+
         $basePath = $request->getAttribute('originalRequest', $request)->getUri()->getPath();
         $view = array_merge($this->config, [
             'action' => rtrim($basePath, '/') . '/process',
-            'csrf'   => $this->session->getCsrfToken()->getValue(),
+            'csrf'   => $guard->generateToken(),
         ]);
 
         return new HtmlResponse(
