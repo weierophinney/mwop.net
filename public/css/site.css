@@ -177,3 +177,7 @@ sup {
   overflow: auto;
   z-index: 100;
 }
+
+div.comic img {
+  max-width: 100%;
+}
