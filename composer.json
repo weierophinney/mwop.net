@@ -13,6 +13,7 @@
     ],
     "require": {
         "php": "^7.0",
+        "http-interop/http-middleware": "^0.4.1",
         "league/commonmark": "^0.14",
         "league/oauth2-client": "^2.2",
         "league/oauth2-github": "^2.0",
