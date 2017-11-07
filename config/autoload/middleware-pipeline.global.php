@@ -6,6 +6,7 @@
 
 namespace Mwop;
 
+use Middlewares\Csp;
 use Zend\Expressive\Container;
 use Zend\Expressive\Delegate;
 use Zend\Expressive\Helper;
@@ -26,8 +27,8 @@ return ['dependencies' => [
     ],
     'factories' => [
         Auth\Middleware::class            => Auth\MiddlewareFactory::class,
+        Csp::class                        => Factory\ContentSecurityPolicyFactory::class,
         Delegate\NotFoundDelegate::class  => Container\NotFoundDelegateFactory::class,
-        ContentSecurityPolicy::class      => InvokableFactory::class,
         ErrorHandler::class               => Container\ErrorHandlerFactory::class,
         ErrorResponseGenerator::class     => Container\ErrorResponseGeneratorFactory::class,
         Helper\UrlHelper::class           => Helper\UrlHelperFactory::class,
