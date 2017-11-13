@@ -6,6 +6,7 @@
 
 namespace Mwop;
 
+use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
 use Zend\Expressive\Application;
 use Zend\Expressive\Container;
@@ -44,6 +45,10 @@ return ['dependencies' => [
         Github\PuSH\Logger::class         => Github\PuSH\LoggerFactory::class,
         Github\PuSH\LoggerAction::class   => Github\PuSH\LoggerActionFactory::class,
         LoggerInterface::class            => Factory\LoggerFactory::class,
+        ResponseInterface::class          => Factory\ResponseFactory::class,
         UnauthorizedResponseFactory::class => UnauthorizedResponseFactoryFactory::class,
+    ],
+    'shared' => [
+        ResponseInterface::class => false,
     ],
 ]];

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "bb931d7a758c14d3aecd93e5424c9bf6",
+    "content-hash": "9824ff4d6242cdeae87e3af2416569c3",
     "packages": [
         {
             "name": "clue/stream-filter",
@@ -516,6 +516,7 @@
                 "request",
                 "response"
             ],
+            "abandoned": "http-interop/http-server-middleware",
             "time": "2017-01-14T15:23:42+00:00"
         },
         {
@@ -2240,6 +2241,58 @@
                 "psr-7"
             ],
             "time": "2017-10-09T21:30:44+00:00"
+        },
+        {
+            "name": "zendframework/zend-expressive-authentication",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zendframework/zend-expressive-authentication.git",
+                "reference": "b09459a479741c3d7a295eb0028998e2f368ae7b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zendframework/zend-expressive-authentication/zipball/b09459a479741c3d7a295eb0028998e2f368ae7b",
+                "reference": "b09459a479741c3d7a295eb0028998e2f368ae7b",
+                "shasum": ""
+            },
+            "require": {
+                "http-interop/http-middleware": "^0.4.1",
+                "php": "^7.1",
+                "psr/container": "^1.0",
+                "psr/http-message": "^1.0.1"
+            },
+            "conflict": {
+                "container-interop/container-interop": "<1.2.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.3",
+                "roave/security-advisories": "dev-master",
+                "zendframework/zend-coding-standard": "~1.0.0"
+            },
+            "suggest": {
+                "ext-pdo": "*: for use with the PDO-backed UserRepositoryInterface implementation"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Zend\\Expressive\\Authentication\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Authentication middleware for Expressive and PSR-7 applications",
+            "homepage": "https://docs.zendframework.com/zend-expressive-authentication/",
+            "keywords": [
+                "Authentication",
+                "http",
+                "middleware",
+                "psr-7",
+                "zend-expressive"
+            ],
+            "time": "2017-11-08T22:49:29+00:00"
         },
         {
             "name": "zendframework/zend-expressive-csrf",

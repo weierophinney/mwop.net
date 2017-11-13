@@ -12,6 +12,7 @@
 
 namespace Mwop;
 
+use OAuth2Authentication\Debug;
 use Whoops\Handler\PrettyPageHandler;
 use Zend\Expressive\Container;
 use Zend\Expressive\Middleware\ErrorResponseGenerator;
@@ -29,12 +30,18 @@ return [
 
     'dependencies' => [
         'invokables' => [
+            Debug\DebugProvider::class => Debug\DebugProvider::class,
             WhoopsPageHandler::class => PrettyPageHandler::class,
         ],
         'factories' => [
+            Debug\DebugProviderMiddleware::class => Debug\DebugProviderMiddlewareFactory::class,
             ErrorResponseGenerator::class => Container\WhoopsErrorResponseGeneratorFactory::class,
             Whoops::class => Container\WhoopsFactory::class,
         ],
+    ],
+
+    'oauth2' => [
+        'debug' => [],
     ],
 
     'whoops' => [

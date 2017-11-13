@@ -27,6 +27,7 @@ return [
             'contact' => getcwd() . '/templates/contact',
             'error'   => getcwd() . '/templates/error',
             'layout'  => getcwd() . '/templates/layout',
+            'oauth2authentication' => getcwd() . '/src/OAuth2Authentication/templates',
             'mwop'    => getcwd() . '/templates/mwop',
             [
                 getcwd() . '/templates',

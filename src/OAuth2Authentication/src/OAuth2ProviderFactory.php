@@ -4,16 +4,16 @@
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
-namespace Mwop\Auth;
+namespace OAuth2Authentication;
 
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use League\OAuth2\Client\Provider;
 use RuntimeException;
 
 class OAuth2ProviderFactory
 {
     const PROVIDER_MAP = [
-        'debug'  => DebugProvider::class,
+        'debug'  => Debug\DebugProvider::class,
         'github' => Provider\Github::class,
         'google' => Provider\Google::class,
     ];

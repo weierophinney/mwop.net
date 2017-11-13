@@ -1,23 +1,24 @@
 <?php
+
 /**
  * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
-namespace Mwop;
+namespace OAuth2Authentication;
 
 use Interop\Container\ContainerInterface;
+use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
 class UnauthorizedResponseFactoryFactory
 {
-    const TEMPLATE = 'error::401';
+    const TEMPLATE = 'oauth2authentication::401';
 
     public function __invoke(ContainerInterface $container) : callable
     {
-        return function (Request $request) use ($container) {
+        return function (Request $request) use ($container) : Response {
             $originalRequest = $request->getAttribute('originalRequest', $request);
 
             $config = $container->get('config');
@@ -29,11 +30,13 @@ class UnauthorizedResponseFactoryFactory
                 'debug'     => (bool) $debug,
             ];
 
+            $response = $container->get(Response::class);
             $renderer = $container->get(TemplateRendererInterface::class);
-            return new HtmlResponse(
-                $renderer->render(self::TEMPLATE, $view),
-                401
+
+            $response->getBody()->write(
+                $renderer->render(self::TEMPLATE, $view)
             );
+            return $response->withStatus(401);
         };
     }
 }
