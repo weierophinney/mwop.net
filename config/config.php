@@ -15,7 +15,7 @@ $cacheConfig = [
 ];
 
 $aggregator = new ConfigAggregator([
-    \OAuth2Authentication\ConfigProvider::class,
+    \Phly\OAuth2ClientAuthentication\ConfigProvider::class,
     \Zend\Expressive\Authentication\ConfigProvider::class,
     \Zend\Expressive\Session\Ext\ConfigProvider::class,
     \Zend\Expressive\Csrf\ConfigProvider::class,

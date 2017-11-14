@@ -5,7 +5,7 @@
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
-namespace OAuth2Authentication;
+namespace Phly\OAuth2ClientAuthentication;
 
 use Interop\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -14,7 +14,7 @@ use Zend\Expressive\Template\TemplateRendererInterface;
 
 class UnauthorizedResponseFactoryFactory
 {
-    const TEMPLATE = 'oauth2authentication::401';
+    const TEMPLATE = 'oauth2clientauthentication::401';
 
     public function __invoke(ContainerInterface $container) : callable
     {

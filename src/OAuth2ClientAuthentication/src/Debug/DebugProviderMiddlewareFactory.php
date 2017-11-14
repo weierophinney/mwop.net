@@ -5,9 +5,9 @@
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
-namespace OAuth2Authentication\Debug;
+namespace Phly\OAuth2ClientAuthentication\Debug;
 
-use OAuth2Authentication\RedirectResponseFactory;
+use Phly\OAuth2ClientAuthentication\RedirectResponseFactory;
 use Psr\Container\ContainerInterface;
 
 class DebugProviderMiddlewareFactory

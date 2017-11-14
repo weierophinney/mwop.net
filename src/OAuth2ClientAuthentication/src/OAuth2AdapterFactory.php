@@ -5,7 +5,7 @@
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
-namespace OAuth2Authentication;
+namespace Phly\OAuth2ClientAuthentication;
 
 use Psr\Container\ContainerInterface;
 

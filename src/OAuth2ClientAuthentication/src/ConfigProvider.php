@@ -1,11 +1,11 @@
 <?php
 
-namespace OAuth2Authentication;
+namespace Phly\OAuth2ClientAuthentication;
 
 use Zend\Expressive\Authentication\AuthenticationInterface;
 
 /**
- * The configuration provider for the OAuth2Authentication module
+ * The configuration provider for the OAuth2ClientAuthentication module
  *
  * @see https://docs.zendframework.com/zend-component-installer/
  */
@@ -57,7 +57,7 @@ class ConfigProvider
     {
         return [
             'paths' => [
-                'oauth2authentication' => [__DIR__ . '/../templates'],
+                'oauth2clientauthentication' => [__DIR__ . '/../templates'],
             ],
         ];
     }

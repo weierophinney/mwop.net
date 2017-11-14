@@ -12,7 +12,7 @@
 
 namespace Mwop;
 
-use OAuth2Authentication\Debug;
+use Phly\OAuth2ClientAuthentication\Debug;
 use Whoops\Handler\PrettyPageHandler;
 use Zend\Expressive\Container;
 use Zend\Expressive\Middleware\ErrorResponseGenerator;

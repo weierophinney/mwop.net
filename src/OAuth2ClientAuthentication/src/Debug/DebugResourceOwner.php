@@ -5,7 +5,7 @@
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
-namespace OAuth2Authentication\Debug;
+namespace Phly\OAuth2ClientAuthentication\Debug;
 
 use League\OAuth2\Client\Provider\ResourceOwnerInterface;
 

@@ -56,7 +56,7 @@
     "autoload": {
         "psr-4": {
             "Mwop\\": "src/",
-            "OAuth2Authentication\\": "src/OAuth2Authentication/src/"
+            "Phly\\OAuth2ClientAuthentication\\": "src/OAuth2ClientAuthentication/src/"
         }
     },
     "autoload-dev": {
