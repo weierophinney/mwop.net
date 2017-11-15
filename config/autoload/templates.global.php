@@ -27,7 +27,7 @@ return [
             'contact' => getcwd() . '/templates/contact',
             'error'   => getcwd() . '/templates/error',
             'layout'  => getcwd() . '/templates/layout',
-            'oauth2clientauthentication' => getcwd() . '/src/OAuth2ClientAuthentication/templates',
+            'oauth2clientauthentication' => getcwd() . '/vendor/phly/phly-expressive-oauth2clientauthentication/templates',
             'mwop'    => getcwd() . '/templates/mwop',
             [
                 getcwd() . '/templates',

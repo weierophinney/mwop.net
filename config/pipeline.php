@@ -3,7 +3,7 @@
 namespace Mwop;
 
 use Middlewares\Csp;
-use Phly\OAuth2ClientAuthentication\OAuth2CallbackMiddleware;
+use Phly\Expressive\OAuth2ClientAuthentication\OAuth2CallbackMiddleware;
 use Zend\Expressive\Helper;
 use Zend\Expressive\Middleware\NotFoundHandler;
 use Zend\Stratigility\Middleware\ErrorHandler;
