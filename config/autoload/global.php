@@ -72,7 +72,7 @@ return [
             ],
         ],
     ],
-    'oauth2' => [
+    'oauth2clientauthentication' => [
         'github' => [
             'clientId'     => null,
             'clientSecret' => null,

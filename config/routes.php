@@ -20,6 +20,13 @@ $app->get('/blog/tag/{tag:[^/]+}/{type:atom|rss}.xml', Blog\FeedMiddleware::clas
 $app->get('/blog/tag/{tag:[^/]+}', Blog\ListPostsMiddleware::class, 'blog.tag');
 $app->get('/blog/{type:atom|rss}.xml', Blog\FeedMiddleware::class, 'blog.feed');
 
+// Logout
+$app->get('/auth/logout', [
+    SessionMiddleware::class,
+    LogoutHandler::class,
+], 'logout');
+
+
 // Contact form
 $app->get('/contact[/]', [
     SessionMiddleware::class,

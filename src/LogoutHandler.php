@@ -1,10 +1,11 @@
 <?php
+
 /**
  * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
-namespace Mwop\Auth;
+namespace Mwop;
 
 use Interop\Http\ServerMiddleware\DelegateInterface;
 use Interop\Http\ServerMiddleware\MiddlewareInterface;
@@ -12,12 +13,9 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Zend\Diactoros\Response\RedirectResponse;
 use Zend\Expressive\Session\SessionMiddleware;
 
-class Logout implements MiddlewareInterface
+class LogoutHandler implements MiddlewareInterface
 {
-    /**
-     * @return RedirectResponse
-     */
-    public function process(Request $request, DelegateInterface $delegate)
+    public function process(Request $request, DelegateInterface $delegate) : RedirectResponse
     {
         $session = $request->getAttribute(SessionMiddleware::SESSION_ATTRIBUTE);
         $auth = $session->get('auth') ?? [];
