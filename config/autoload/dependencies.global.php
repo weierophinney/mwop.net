@@ -17,7 +17,6 @@ use Zend\ServiceManager\Factory\InvokableFactory;
 return ['dependencies' => [
     'delegators' => [
         Application::class => [
-            Discourse\RoutesDelegator::class,
             Github\PuSH\RoutesDelegator::class,
         ],
     ],
@@ -33,8 +32,6 @@ return ['dependencies' => [
         Console\CreateAssetSymlinks::class => InvokableFactory::class,
         Console\FeedAggregator::class     => Console\FeedAggregatorFactory::class,
         Console\UseDistTemplates::class   => InvokableFactory::class,
-        Discourse\Logger::class           => Discourse\LoggerFactory::class,
-        Discourse\LoggerAction::class     => Discourse\LoggerActionFactory::class,
         FeedReaderHttpClientInterface::class => Feed\HttpPlugClientFactory::class,
         Github\AtomReader::class          => Github\AtomReaderFactory::class,
         Github\Console\Fetch::class       => Github\Console\FetchFactory::class,
