@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "aed727a26d0e3fc5462396dd0cd25020",
+    "content-hash": "0fba650f3fe4979098558335231cb10c",
     "packages": [
         {
             "name": "clue/stream-filter",
@@ -1304,16 +1304,16 @@
         },
         {
             "name": "phly/phly-comic",
-            "version": "1.1.1",
+            "version": "1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/weierophinney/PhlyComic.git",
-                "reference": "f8dce5e3db62c4e2ca6f037dfdeec768634ac9fe"
+                "reference": "fcf4a7263679ae73b7292a3cc622e138d78e682b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/weierophinney/PhlyComic/zipball/f8dce5e3db62c4e2ca6f037dfdeec768634ac9fe",
-                "reference": "f8dce5e3db62c4e2ca6f037dfdeec768634ac9fe",
+                "url": "https://api.github.com/repos/weierophinney/PhlyComic/zipball/fcf4a7263679ae73b7292a3cc622e138d78e682b",
+                "reference": "fcf4a7263679ae73b7292a3cc622e138d78e682b",
                 "shasum": ""
             },
             "require": {
@@ -1359,7 +1359,7 @@
                 "source": "https://github.com/weierophinney/PhlyComic",
                 "issues": "https://github.com/weierophinney/PhlyComic/issues"
             },
-            "time": "2017-08-18T15:48:09+00:00"
+            "time": "2017-12-14T20:41:10+00:00"
         },
         {
             "name": "phly/phly-expressive-mustache",

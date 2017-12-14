@@ -20,7 +20,7 @@
         "middlewares/csp": "^0.4.1",
         "mnapoli/front-yaml": "^1.5",
         "monolog/monolog": "^1.23",
-        "phly/phly-comic": "^1.1",
+        "phly/phly-comic": "^1.1.2",
         "phly/phly-expressive-mustache": "^1.1",
         "phly/phly-expressive-oauth2clientauthentication": "^0.1.2",
         "php-http/curl-client": "^1.4",
