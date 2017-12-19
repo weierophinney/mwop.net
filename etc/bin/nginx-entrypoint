@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Generate initial SSL certificates, if necessary
-if [ -f /etc/nginx/ssl/mwop.net.key.pem ] && [ -f /etc/nginx/ssl/mwop.net.cert.pem ]; then
+if [ -f /etc/nginx/ssl/mwop.net.key.pem ] && [ -f /etc/nginx/ssl/mwop.net.cert.pem ] && [ -f /etc/nginx/ssl/www.mwop.net.key.pem ] && [ -f /etc/nginx/ssl/www.mwop.net.cert.pem ]; then
     echo "Previous SSL certificate and key detected; skipping generation"
 else
     if [ "${ENABLE_ACME}" == "" ]; then
@@ -12,7 +12,7 @@ else
             exit 1
         fi
 
-        acme.sh --issue --dns ${ACME_DNS_TYPE} -d mwop.net
+        acme.sh --issue --dns ${ACME_DNS_TYPE} -d mwop.net -d www.mwop.net
 
         if [ "$?" != "0" ]; then
             echo "Error generating initial SSL certificate"
@@ -20,6 +20,7 @@ else
         fi
 
         acme.sh --install-cert -d mwop.net --key-file /etc/nginx/ssl/mwop.net.key.pem --fullchain-file /etc/nginx/ssl/mwop.net.cert.pem
+        acme.sh --install-cert -d www.mwop.net --key-file /etc/nginx/ssl/www.mwop.net.key.pem --fullchain-file /etc/nginx/ssl/www.mwop.net.cert.pem
     fi
 fi
 
