@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "217b87cf7d2ad5c38ca83dce443ea081",
+    "content-hash": "fa5d8cfdfa9ab2b191dcfe665620ab48",
     "packages": [
         {
             "name": "clue/stream-filter",
@@ -1194,16 +1194,16 @@
         },
         {
             "name": "phly/phly-comic",
-            "version": "1.1.2",
+            "version": "1.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/weierophinney/PhlyComic.git",
-                "reference": "fcf4a7263679ae73b7292a3cc622e138d78e682b"
+                "reference": "af92e14f36ad0daef47e7018924cf406c83591ca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/weierophinney/PhlyComic/zipball/fcf4a7263679ae73b7292a3cc622e138d78e682b",
-                "reference": "fcf4a7263679ae73b7292a3cc622e138d78e682b",
+                "url": "https://api.github.com/repos/weierophinney/PhlyComic/zipball/af92e14f36ad0daef47e7018924cf406c83591ca",
+                "reference": "af92e14f36ad0daef47e7018924cf406c83591ca",
                 "shasum": ""
             },
             "require": {
@@ -1249,7 +1249,7 @@
                 "source": "https://github.com/weierophinney/PhlyComic",
                 "issues": "https://github.com/weierophinney/PhlyComic/issues"
             },
-            "time": "2017-12-14T20:41:10+00:00"
+            "time": "2017-12-30T17:04:24+00:00"
         },
         {
             "name": "phly/phly-expressive-mustache",
@@ -1303,16 +1303,16 @@
         },
         {
             "name": "phly/phly-expressive-oauth2clientauthentication",
-            "version": "0.1.2",
+            "version": "0.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phly/phly-expressive-oauth2clientauthentication.git",
-                "reference": "388d1e829cc6f00a511ea8315f8a0911d3dab26a"
+                "reference": "9e580f100aa098079168c86c377865ecf273fb0e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phly/phly-expressive-oauth2clientauthentication/zipball/388d1e829cc6f00a511ea8315f8a0911d3dab26a",
-                "reference": "388d1e829cc6f00a511ea8315f8a0911d3dab26a",
+                "url": "https://api.github.com/repos/phly/phly-expressive-oauth2clientauthentication/zipball/9e580f100aa098079168c86c377865ecf273fb0e",
+                "reference": "9e580f100aa098079168c86c377865ecf273fb0e",
                 "shasum": ""
             },
             "require": {
@@ -1346,7 +1346,7 @@
                     "dev-master": "1.0-dev"
                 },
                 "zf": {
-                    "config-provider": "Phly\\OAuth2ClientAuthentication\\ConfigProvider"
+                    "config-provider": "Phly\\Expressive\\OAuth2ClientAuthentication\\ConfigProvider"
                 }
             },
             "autoload": {
@@ -1366,7 +1366,7 @@
                 "psr-15",
                 "psr-7"
             ],
-            "time": "2017-11-16T21:27:45+00:00"
+            "time": "2017-12-23T15:05:11+00:00"
         },
         {
             "name": "phly/phly-mustache",
@@ -4475,16 +4475,16 @@
         },
         {
             "name": "sebastian/comparator",
-            "version": "2.1.0",
+            "version": "2.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/comparator.git",
-                "reference": "1174d9018191e93cb9d719edec01257fc05f8158"
+                "reference": "b11c729f95109b56a0fe9650c6a63a0fcd8c439f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/comparator/zipball/1174d9018191e93cb9d719edec01257fc05f8158",
-                "reference": "1174d9018191e93cb9d719edec01257fc05f8158",
+                "url": "https://api.github.com/repos/sebastianbergmann/comparator/zipball/b11c729f95109b56a0fe9650c6a63a0fcd8c439f",
+                "reference": "b11c729f95109b56a0fe9650c6a63a0fcd8c439f",
                 "shasum": ""
             },
             "require": {
@@ -4535,7 +4535,7 @@
                 "compare",
                 "equality"
             ],
-            "time": "2017-11-03T07:16:52+00:00"
+            "time": "2017-12-22T14:50:35+00:00"
         },
         {
             "name": "sebastian/diff",
