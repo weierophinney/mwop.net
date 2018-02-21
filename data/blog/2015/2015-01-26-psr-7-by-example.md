@@ -5,7 +5,7 @@ title: 'PSR-7 By Example'
 draft: false
 public: true
 created: '2015-01-26T09:20:00-06:00'
-updated: '2015-05-18T22:00:00-05:00'
+updated: '2017-02-21T08:50:00-06:00'
 tags:
     - http
     - php
@@ -431,11 +431,11 @@ might look like the following:
 $accept = $request->getHeader('Accept');
 if (! $accept || ! preg_match('#^application/([^+\s]+\+)?json#', $accept)) {
     $response->getBody()->write(json_encode([
-        'status' => 405,
+        'status' => 406,
         'detail' => 'This API can only provide JSON representations',
     ]));
     emit($response
-        ->withStatus(405, 'Not Acceptable')
+        ->withStatus(406, 'Not Acceptable')
         ->withHeader('Content-Type', 'application/problem+json')
     );
     exit();
@@ -798,3 +798,4 @@ breed of PHP applications.
 - *2015-02-01*: Corrected description of lambda middleware, and noted the last middleware pattern is that popularized by Rack and WSGI.
 - *2015-05-04*: Updated to ensure it follows the interfaces as outlined at the end of the second Review period of PSR-7 (psr/http-message 0.11.0); added section on file uploads.
 - *2015-05-18*: PSR-7 is now accepted!
+- *2017-02-21*: Corrected examples to use status 406 for "Not Acceptable" (instead of 405, which is actually "Method Not Allowed").
