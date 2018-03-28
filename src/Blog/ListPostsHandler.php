@@ -7,11 +7,10 @@
 
 namespace Mwop\Blog;
 
-use Interop\Http\ServerMiddleware\DelegateInterface;
-use Interop\Http\ServerMiddleware\MiddlewareInterface;
 use Phly\Expressive\Mustache\UriHelper;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use stdClass;
 use Zend\Expressive\Helper\UrlHelper;
 use Zend\Diactoros\Response\HtmlResponse;
@@ -20,7 +19,7 @@ use Zend\Expressive\Router\RouterInterface;
 use Zend\Expressive\Template\TemplateRendererInterface;
 use Zend\Paginator\Paginator;
 
-class ListPostsMiddleware implements MiddlewareInterface
+class ListPostsHandler implements RequestHandlerInterface
 {
     private $mapper;
 
@@ -42,10 +41,7 @@ class ListPostsMiddleware implements MiddlewareInterface
         $this->uriHelper = new UriHelper($urlHelper);
     }
 
-    /**
-     * @return ResponseInterface
-     */
-    public function process(ServerRequestInterface $request, DelegateInterface $delegate)
+    public function handle(ServerRequestInterface $request) : ResponseInterface
     {
         $tag   = str_replace(['+', '%20'], ' ', $request->getAttribute('tag', ''));
         $path  = $request->getAttribute('originalRequest', $request)->getUri()->getPath();

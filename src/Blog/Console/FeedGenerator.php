@@ -9,13 +9,12 @@ namespace Mwop\Blog\Console;
 use DateTime;
 use Mni\FrontYAML\Bridge\CommonMark\CommonMarkParser;
 use Mni\FrontYAML\Parser;
-use Mwop\Blog;
+use Mwop\Blog\EntryView;
+use Mwop\Blog\MapperInterface;
 use Symfony\Component\Yaml\Parser as YamlParser;
 use Traversable;
 use Zend\Console\Adapter\AdapterInterface as Console;
-use Zend\Console\ColorInterface as Color;
 use Zend\Expressive\Router\RouterInterface;
-use Zend\Expressive\Router\FastRouteRouter;
 use Zend\Expressive\Template\TemplateRendererInterface;
 use Zend\Feed\Writer\Feed as FeedWriter;
 use ZF\Console\Route;
@@ -43,7 +42,7 @@ class FeedGenerator
     private $router;
 
     public function __construct(
-        Blog\MapperInterface $mapper,
+        MapperInterface $mapper,
         RouterInterface $router,
         TemplateRendererInterface $renderer,
         string $authorsPath
@@ -61,6 +60,7 @@ class FeedGenerator
         $baseUri   = $route->getMatchedParam('baseUri');
 
         $this->console->writeLine('Generating base feeds');
+
         $this->generateFeeds(
             $outputDir . '/',
             $baseUri,
@@ -219,7 +219,7 @@ class FeedGenerator
      */
     private function createContent(string $content, array $post) : string
     {
-        $view   = new Blog\EntryView($post);
+        $view   = new EntryView($post);
         $hEntry = $this->renderer->render('blog::hcard', $view);
         return sprintf("%s\n\n%s", $content, $hEntry);
     }

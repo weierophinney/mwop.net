@@ -7,15 +7,15 @@
 
 namespace Mwop;
 
-use Interop\Http\ServerMiddleware\DelegateInterface;
-use Interop\Http\ServerMiddleware\MiddlewareInterface;
+use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Server\RequestHandlerInterface;
 use Zend\Diactoros\Response\RedirectResponse;
 use Zend\Expressive\Session\SessionMiddleware;
 
-class LogoutHandler implements MiddlewareInterface
+class LogoutHandler implements RequestHandlerInterface
 {
-    public function process(Request $request, DelegateInterface $delegate) : RedirectResponse
+    public function handle(Request $request) : Response
     {
         $session = $request->getAttribute(SessionMiddleware::SESSION_ATTRIBUTE);
         $auth = $session->get('auth') ?? [];

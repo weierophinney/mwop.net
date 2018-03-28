@@ -19,14 +19,14 @@ class HomePageTest extends TestCase
     {
         $posts = ['foo', 'bar'];
         $renderer = $this->prophesize(TemplateRendererInterface::class);
-        $middleware = new HomePage($posts, $renderer->reveal());
+        $handler = new HomePage($posts, $renderer->reveal());
 
         $renderer->render(HomePage::TEMPLATE, [
             'posts' => $posts,
         ])->willReturn('content')->shouldBeCalled();
-        $response = $middleware->process(
-            $this->createRequestMock()->reveal(),
-            $this->delegateShouldNotBeCalled()
+
+        $response = $handler->handle(
+            $this->createRequestMock()->reveal()
         );
 
         $this->assertInstanceOf(HtmlResponse::class, $response);

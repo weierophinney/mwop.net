@@ -6,8 +6,7 @@
 
 namespace Mwop\Contact;
 
-use Interop\Container\ContainerInterface;
-use Zend\Expressive\Router\RouterInterface;
+use Psr\Container\ContainerInterface;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
 class ThankYouPageFactory
