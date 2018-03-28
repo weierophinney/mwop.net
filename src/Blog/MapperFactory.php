@@ -6,8 +6,8 @@
 
 namespace Mwop\Blog;
 
-use Interop\Container\ContainerInterface;
 use PDO;
+use Psr\Container\ContainerInterface;
 
 class MapperFactory
 {

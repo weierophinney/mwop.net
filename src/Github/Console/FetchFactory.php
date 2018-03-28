@@ -6,8 +6,8 @@
 
 namespace Mwop\Github\Console;
 
-use Interop\Container\ContainerInterface;
 use Mwop\Github\AtomReader;
+use Psr\Container\ContainerInterface;
 
 class FetchFactory
 {

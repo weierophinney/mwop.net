@@ -6,8 +6,8 @@
 
 namespace Mwop\Blog\Console;
 
-use Interop\Container\ContainerInterface;
 use Mwop\Blog\DisplayPostMiddleware;
+use Psr\Container\ContainerInterface;
 use Zend\Expressive\Handler\NotFoundHandler;
 use Zend\Expressive\Router\RouterInterface;
 

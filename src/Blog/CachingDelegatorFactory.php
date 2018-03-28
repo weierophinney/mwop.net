@@ -6,11 +6,9 @@
 
 namespace Mwop\Blog;
 
-use Interop\Container\ContainerInterface;
-use Zend\ServiceManager\Factory\DelegatorFactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Psr\Container\ContainerInterface;
 
-class CachingDelegatorFactory implements DelegatorFactoryInterface
+class CachingDelegatorFactory
 {
     public function __invoke(
         ContainerInterface $container,

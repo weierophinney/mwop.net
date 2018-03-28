@@ -6,13 +6,12 @@
 
 namespace Mwop\Factory;
 
-use Interop\Container\ContainerInterface;
 use Mwop\Blog\EntryView;
 use Phly\Expressive\Mustache\MustacheTemplate;
+use Psr\Container\ContainerInterface;
 use Zend\Expressive\Template\TemplateRendererInterface;
-use Zend\ServiceManager\Factory\DelegatorFactoryInterface;
 
-class UriTemplateDelegatorFactory implements DelegatorFactoryInterface
+class UriTemplateDelegatorFactory
 {
     public function __invoke(
         ContainerInterface $contaier,

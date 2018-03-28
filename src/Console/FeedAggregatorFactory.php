@@ -6,7 +6,7 @@
 
 namespace Mwop\Console;
 
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Zend\Feed\Reader\Http\ClientInterface as FeedReaderHttpClientInterface;
 use Zend\Feed\Reader\Reader as FeedReader;
 use Zend\Feed\Reader\StandaloneExtensionManager;

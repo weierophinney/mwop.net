@@ -6,8 +6,8 @@
 
 namespace Mwop\Factory;
 
-use Interop\Container\ContainerInterface;
 use Mwop\Page;
+use Psr\Container\ContainerInterface;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
 class PageFactory

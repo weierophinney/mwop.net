@@ -6,10 +6,8 @@
 
 namespace Mwop\Factory;
 
-use Interop\Container\ContainerInterface;
-use Mwop\Blog\Mapper;
 use Mwop\HomePage;
-use Zend\Expressive\Router\RouterInterface;
+use Psr\Container\ContainerInterface;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
 class HomePageFactory
