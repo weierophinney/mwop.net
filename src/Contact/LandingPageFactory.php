@@ -6,7 +6,7 @@
 
 namespace Mwop\Contact;
 
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
 class LandingPageFactory

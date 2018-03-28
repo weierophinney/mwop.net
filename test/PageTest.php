@@ -18,12 +18,11 @@ class PageTest extends TestCase
     public function testMiddlewareReturnsHtmlResponseInjectedWithResultsOfRendereringPage()
     {
         $renderer = $this->prophesize(TemplateRendererInterface::class);
-        $middleware = new Page('foo', $renderer->reveal());
+        $page = new Page('foo', $renderer->reveal());
 
         $renderer->render('foo', [])->willReturn('content')->shouldBeCalled();
-        $response = $middleware->process(
-            $this->createRequestMock()->reveal(),
-            $this->delegateShouldNotBeCalled()
+        $response = $page->handle(
+            $this->createRequestMock()->reveal()
         );
 
         $this->assertInstanceOf(HtmlResponse::class, $response);

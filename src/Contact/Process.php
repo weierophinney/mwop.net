@@ -7,11 +7,9 @@
 
 namespace Mwop\Contact;
 
-use Interop\Http\ServerMiddleware\DelegateInterface;
-use Interop\Http\ServerMiddleware\MiddlewareInterface;
-use Mwop\PageView;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Server\RequestHandlerInterface;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Diactoros\Response\RedirectResponse;
 use Zend\Expressive\Csrf\CsrfGuardInterface;
@@ -21,7 +19,7 @@ use Zend\Expressive\Template\TemplateRendererInterface;
 use Zend\Mail\Message;
 use Zend\Mail\Transport\TransportInterface;
 
-class Process implements MiddlewareInterface
+class Process implements RequestHandlerInterface
 {
     private $config;
     private $template;
@@ -40,10 +38,7 @@ class Process implements MiddlewareInterface
         $this->config    = $config;
     }
 
-    /**
-     * @return Response
-     */
-    public function process(Request $request, DelegateInterface $delegate)
+    public function handle(Request $request) : Response
     {
         $guard = $request->getAttribute(CsrfMiddleware::GUARD_ATTRIBUTE);
 

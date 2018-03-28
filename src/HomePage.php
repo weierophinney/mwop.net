@@ -7,14 +7,14 @@
 
 namespace Mwop;
 
-use Interop\Http\ServerMiddleware\DelegateInterface;
-use Interop\Http\ServerMiddleware\MiddlewareInterface;
+use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Server\RequestHandlerInterface;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Expressive\Router\RouterInterface;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
-class HomePage implements MiddlewareInterface
+class HomePage implements RequestHandlerInterface
 {
     const TEMPLATE = 'mwop::home.page';
 
@@ -29,10 +29,7 @@ class HomePage implements MiddlewareInterface
         $this->renderer = $renderer;
     }
 
-    /**
-     * @return HtmlResponse
-     */
-    public function process(Request $request, DelegateInterface $delegate)
+    public function handle(Request $request) : Response
     {
         return new HtmlResponse(
             $this->renderer->render(self::TEMPLATE, [

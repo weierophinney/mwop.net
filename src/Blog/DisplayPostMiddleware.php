@@ -6,12 +6,12 @@
 
 namespace Mwop\Blog;
 
-use Interop\Http\ServerMiddleware\DelegateInterface;
-use Interop\Http\ServerMiddleware\MiddlewareInterface;
 use Mni\FrontYAML\Bridge\CommonMark\CommonMarkParser;
 use Mni\FrontYAML\Parser;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use RuntimeException;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Expressive\Router\RouterInterface;
@@ -49,12 +49,12 @@ class DisplayPostMiddleware implements MiddlewareInterface
     /**
      * @return ResponseInterface
      */
-    public function process(ServerRequestInterface $request, DelegateInterface $delegate)
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler) : ResponseInterface
     {
         $post = $this->mapper->fetch($request->getAttribute('id', false));
 
         if (! $post) {
-            return $delegate->process($request);
+            return $handler->handle($request);
         }
 
         $isAmp = (bool) ($request->getQueryParams()['amp'] ?? false);

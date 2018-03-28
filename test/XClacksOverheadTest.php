@@ -22,14 +22,14 @@ class XClacksOverheadTest extends TestCase
             ->withHeader('X-Clacks-Overhead', 'GNU Terry Pratchett')
             ->will([$response, 'reveal'])
             ->shouldBeCalled();
-        $delegate = $this->delegateShouldExpectAndReturn(
+        $handler = $this->handlerShouldExpectAndReturn(
             $response->reveal(),
             $request
         );
 
         $this->assertSame(
             $response->reveal(),
-            $middleware->process($request, $delegate)
+            $middleware->process($request, $handler)
         );
     }
 }

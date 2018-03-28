@@ -25,9 +25,9 @@ class RedirectsTest extends TestCase
 
         $uri->getPath()->willReturn('/blog/tag/php.xml');
 
-        $delegate = $this->delegateShouldExpectAndReturn($response, $request->reveal());
+        $handler = $this->handlerShouldExpectAndReturn($response, $request->reveal());
 
-        $this->assertSame($response, $middleware->process($request->reveal(), $delegate));
+        $this->assertSame($response, $middleware->process($request->reveal(), $handler));
     }
 
     public function expectedRedirects()
@@ -79,7 +79,7 @@ class RedirectsTest extends TestCase
 
         $response = $middleware->process(
             $request->reveal(),
-            $this->delegateShouldNotBeCalled()
+            $this->handlerShouldNotBeCalled()
         );
 
         $this->assertInstanceOf(ResponseInterface::class, $response);
@@ -124,7 +124,7 @@ class RedirectsTest extends TestCase
 
         $response = $middleware->process(
             $request->reveal(),
-            $this->delegateShouldNotBeCalled()
+            $this->handlerShouldNotBeCalled()
         );
 
         $this->assertInstanceOf(ResponseInterface::class, $response);
@@ -148,7 +148,7 @@ class RedirectsTest extends TestCase
 
         $response = $middleware->process(
             $request->reveal(),
-            $this->delegateShouldNotBeCalled()
+            $this->handlerShouldNotBeCalled()
         );
 
         $this->assertInstanceOf(ResponseInterface::class, $response);
@@ -172,7 +172,7 @@ class RedirectsTest extends TestCase
 
         $response = $middleware->process(
             $request->reveal(),
-            $this->delegateShouldNotBeCalled()
+            $this->handlerShouldNotBeCalled()
         );
 
         $this->assertInstanceOf(ResponseInterface::class, $response);
@@ -196,7 +196,7 @@ class RedirectsTest extends TestCase
 
         $response = $middleware->process(
             $request->reveal(),
-            $this->delegateShouldNotBeCalled()
+            $this->handlerShouldNotBeCalled()
         );
 
         $this->assertInstanceOf(ResponseInterface::class, $response);
@@ -215,11 +215,11 @@ class RedirectsTest extends TestCase
 
         $uri->getPath()->willReturn('/comics');
 
-        $delegate = $this->delegateShouldExpectAndReturn(
+        $handler = $this->handlerShouldExpectAndReturn(
             $response,
             $request->reveal()
         );
 
-        $this->assertSame($response, $middleware->process($request->reveal(), $delegate));
+        $this->assertSame($response, $middleware->process($request->reveal(), $handler));
     }
 }

@@ -8,6 +8,7 @@ namespace Mwop\Blog\Console;
 
 use Interop\Container\ContainerInterface;
 use Mwop\Blog\DisplayPostMiddleware;
+use Zend\Expressive\Handler\NotFoundHandler;
 use Zend\Expressive\Router\RouterInterface;
 
 class CachePostsFactory
@@ -22,7 +23,8 @@ class CachePostsFactory
 
         // Create and return the cache posts middleware.
         return new CachePosts(
-            $container->get(DisplayPostMiddleware::class)
+            $container->get(DisplayPostMiddleware::class),
+            $container->get(NotFoundHandler::class)
         );
     }
 }

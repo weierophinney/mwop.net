@@ -6,7 +6,7 @@
 
 namespace Mwop\Blog\Console;
 
-use Interop\Http\ServerMiddleware\MiddlewareInterface;
+use Psr\Http\Server\MiddlewareInterface;
 use Mni\FrontYAML\Bridge\CommonMark\CommonMarkParser;
 use Mni\FrontYAML\Parser;
 use Mwop\Blog\MarkdownFileFilter;
@@ -16,16 +16,19 @@ use Zend\Console\ColorInterface as Color;
 use Zend\Diactoros\ServerRequest as Request;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\Uri;
-use Zend\Expressive\Delegate\NotFoundDelegate;
+use Zend\Expressive\Handler\NotFoundHandler;
 use ZF\Console\Route;
 
 class CachePosts
 {
+    private $defaultHandler;
+
     private $blogMiddleware;
 
-    public function __construct(MiddlewareInterface $blog)
+    public function __construct(MiddlewareInterface $blog, NotFoundHandler $defaultHandler)
     {
         $this->blogMiddleware = $blog;
+        $this->defaultHandler = $defaultHandler;
     }
 
     public function __invoke(Route $route, Console $console) : int
@@ -38,9 +41,6 @@ class CachePosts
         $middleware = $this->blogMiddleware;
 
         $console->writeLine('Generating static cache for blog posts', Color::GREEN);
-
-        // Prepare default delegate for middleware
-        $delegate = new NotFoundDelegate(new Response());
 
         $parser = new Parser(null, new CommonMarkParser());
         foreach (new MarkdownFileFilter($path) as $fileInfo) {
@@ -57,7 +57,7 @@ class CachePosts
                 ->withUri($canonical)
                 ->withAttribute('id', $metadata['id']);
 
-            $response = $middleware->process($request, $delegate);
+            $response = $middleware->process($request, $this->defaultHandler);
 
             $failed = (200 !== $response->getStatusCode());
 

@@ -7,15 +7,14 @@
 
 namespace Mwop\Contact;
 
-use Interop\Http\ServerMiddleware\DelegateInterface;
-use Interop\Http\ServerMiddleware\MiddlewareInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Server\RequestHandlerInterface;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Diactoros\Response\RedirectResponse;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
-class ThankYouPage implements MiddlewareInterface
+class ThankYouPage implements RequestHandlerInterface
 {
     private $template;
 
@@ -24,10 +23,7 @@ class ThankYouPage implements MiddlewareInterface
         $this->template = $template;
     }
 
-    /**
-     * @return Response
-     */
-    public function process(Request $request, DelegateInterface $delegate)
+    public function handle(Request $request) : Response
     {
         $parent    = $request->getAttribute('originalRequest', $request);
         $parentUrl = str_replace('/thank-you', '', (string) $parent->getUri());

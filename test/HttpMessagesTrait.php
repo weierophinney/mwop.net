@@ -6,13 +6,12 @@
 
 namespace MwopTest;
 
-use Interop\Http\ServerMiddleware\DelegateInterface;
 use PHPUnit\Framework\Assert;
 use Prophecy\Argument;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\UriInterface as Uri;
-use Zend\Stratigility\Http\Request as StratigilityRequest;
+use Psr\Http\Server\RequestHandlerInterface;
 
 trait HttpMessagesTrait
 {
@@ -26,24 +25,25 @@ trait HttpMessagesTrait
         return $this->prophesize(Response::class);
     }
 
-    public function delegateShouldNotBeCalled()
+    public function handlerShouldNotBeCalled()
     {
-        $delegate = $this->prophesize(DelegateInterface::class);
-        $delegate->process(Argument::any())->shouldNotBeCalled();
-        return $delegate->reveal();
+        $handler = $this->prophesize(RequestHandlerInterface::class);
+        $handler->handle(Argument::any())->shouldNotBeCalled();
+        return $handler->reveal();
     }
 
-    public function delegateShouldExpectAndReturn($return, $request)
+    public function handlerShouldExpectAndReturn($return, $request)
     {
         $requestExpectation = Argument::that(function ($argument) use ($request) {
-            Assert::assertSame($request, $argument, 'Request passed to delegate does not match expectation');
+            Assert::assertSame($request, $argument, 'Request passed to handler does not match expectation');
             return true;
         });
-        $delegate = $this->prophesize(DelegateInterface::class);
-        $delegate->process($requestExpectation)
+        $handler = $this->prophesize(RequestHandlerInterface::class);
+        $handler
+            ->handle($requestExpectation)
             ->willReturn($return);
 
-        return $delegate->reveal();
+        return $handler->reveal();
     }
 
     public function createUriMock()

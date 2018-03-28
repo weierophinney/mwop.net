@@ -2,13 +2,13 @@
 
 namespace Mwop\Github\PuSH;
 
-use Interop\Http\ServerMiddleware\DelegateInterface;
-use Interop\Http\ServerMiddleware\MiddlewareInterface;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use Psr\Log\LoggerInterface;
 use Zend\Diactoros\Response\EmptyResponse;
 
-class LoggerAction implements MiddlewareInterface
+class LoggerAction implements RequestHandlerInterface
 {
     /**
      * @var LoggerInterface
@@ -20,10 +20,7 @@ class LoggerAction implements MiddlewareInterface
         $this->log = $log;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function process(ServerRequestInterface $request, DelegateInterface $delegate)
+    public function handle(ServerRequestInterface $request) : ResponseInterface
     {
         $path = $request->getUri()->getPath();
         $contentType = $request->getHeaderLine('Content-Type') ?: 'application/x-www-form-urlencoded';

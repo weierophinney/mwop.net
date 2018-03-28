@@ -7,10 +7,10 @@
 
 namespace Mwop\Blog;
 
-use Interop\Http\ServerMiddleware\DelegateInterface;
-use Interop\Http\ServerMiddleware\MiddlewareInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use RuntimeException;
 use Throwable;
 use Zend\Diactoros\Response\HtmlResponse;
@@ -43,7 +43,7 @@ class CachingMiddleware implements MiddlewareInterface
     /**
      * @return Response
      */
-    public function process(Request $request, DelegateInterface $delegate)
+    public function process(Request $request, RequestHandlerInterface $handler) : Response
     {
         $middleware = $this->middleware;
         $id         = $request->getAttribute('id', false);
@@ -54,7 +54,7 @@ class CachingMiddleware implements MiddlewareInterface
 
         // Caching is disabled, or no identifier present; invoke the middleware.
         if (! $this->enabled || ! $id) {
-            return $middleware->process($request, $delegate);
+            return $middleware->process($request, $handler);
         }
 
         try {
@@ -69,7 +69,7 @@ class CachingMiddleware implements MiddlewareInterface
         }
 
         // Invoke middleware
-        $result = $middleware->process($request, $delegate);
+        $result = $middleware->process($request, $handler);
 
         // Result is not a response; cannot cache; error condition.
         if (! $result instanceof Response) {

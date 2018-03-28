@@ -29,7 +29,7 @@ return [
         ],
         'factories' => [
             Blog\DisplayPostMiddleware::class => Blog\DisplayPostMiddlewareFactory::class,
-            Blog\ListPostsMiddleware::class   => Blog\ListPostsMiddlewareFactory::class,
+            Blog\ListPostsHandler::class      => Blog\ListPostsHandlerFactory::class,
             Contact\LandingPage::class        => Contact\LandingPageFactory::class,
             Contact\Process::class            => Contact\ProcessFactory::class,
             Contact\ThankYouPage::class       => Contact\ThankYouPageFactory::class,

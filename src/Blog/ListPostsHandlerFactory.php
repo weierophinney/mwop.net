@@ -11,11 +11,11 @@ use Zend\Expressive\Helper\UrlHelper;
 use Zend\Expressive\Router\RouterInterface;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
-class ListPostsMiddlewareFactory
+class ListPostsHandlerFactory
 {
-    public function __invoke(ContainerInterface $container) : ListPostsMiddleware
+    public function __invoke(ContainerInterface $container) : ListPostsHandler
     {
-        return new ListPostsMiddleware(
+        return new ListPostsHandler(
             $container->get(__NAMESPACE__ . '\Mapper'),
             $container->get(TemplateRendererInterface::class),
             $container->get(RouterInterface::class),

@@ -7,10 +7,10 @@
 
 namespace Mwop\Blog;
 
-use Interop\Http\ServerMiddleware\DelegateInterface;
-use Interop\Http\ServerMiddleware\MiddlewareInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use RuntimeException;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\Stream;
@@ -24,10 +24,7 @@ class FeedMiddleware implements MiddlewareInterface
         $this->feedPath = $feedPath;
     }
 
-    /**
-     * @return ResponseInterface
-     */
-    public function process(ServerRequestInterface $request, DelegateInterface $delegate)
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler) : ResponseInterface
     {
         $tag  = $request->getAttribute('tag');
         $type = $request->getAttribute('type', 'rss');
@@ -36,7 +33,7 @@ class FeedMiddleware implements MiddlewareInterface
             : $this->getFeedPath($type);
 
         if (! file_exists($path)) {
-            return $delegate->process($request);
+            return $handler->handle($request);
         }
 
         return (new Response())
