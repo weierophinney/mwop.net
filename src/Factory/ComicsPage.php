@@ -6,25 +6,28 @@
 
 namespace Mwop\Factory;
 
-use Interop\Container\ContainerInterface;
 use Mwop\Page;
-use Zend\Stratigility\MiddlewarePipe;
+use Psr\Container\ContainerInterface;
+use Psr\Http\Server\MiddlewareInterface;
 use Zend\Expressive\Authentication\AuthenticationMiddleware;
+use Zend\Expressive\MiddlewareFactory;
 use Zend\Expressive\Session\SessionMiddleware;
 use Zend\Expressive\Template\TemplateRendererInterface;
+use Zend\Stratigility\MiddlewarePipe;
 
 class ComicsPage
 {
-    public function __invoke(ContainerInterface $container) : callable
+    public function __invoke(ContainerInterface $container) : MiddlewareInterface
     {
+        $factory = $container->get(MiddlewareFactory::class);
         $pipeline = new MiddlewarePipe();
 
-        $pipeline->pipe($container->get(SessionMiddleware::class));
-        $pipeline->pipe($container->get(AuthenticationMiddleware::class));
-        $pipeline->pipe(new Page(
+        $pipeline->pipe($factory->prepare(SessionMiddleware::class));
+        $pipeline->pipe($factory->prepare(AuthenticationMiddleware::class));
+        $pipeline->pipe($factory->prepare(new Page(
             'mwop::comics.page',
             $container->get(TemplateRendererInterface::class)
-        ));
+        )));
 
         return $pipeline;
     }

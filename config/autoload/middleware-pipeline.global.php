@@ -26,7 +26,6 @@ return ['dependencies' => [
         ],
     ],
     'factories' => [
-        Auth\Middleware::class            => Auth\MiddlewareFactory::class,
         Csp::class                        => Factory\ContentSecurityPolicyFactory::class,
         Delegate\NotFoundDelegate::class  => Container\NotFoundDelegateFactory::class,
         ErrorHandler::class               => Container\ErrorHandlerFactory::class,
