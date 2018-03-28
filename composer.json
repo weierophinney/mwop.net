@@ -13,7 +13,6 @@
     ],
     "require": {
         "php": "^7.0",
-        "http-interop/http-middleware": "^0.4.1",
         "league/commonmark": "^0.14",
         "league/oauth2-github": "^2.0",
         "league/oauth2-google": "^2.0",
@@ -22,7 +21,7 @@
         "monolog/monolog": "^1.23",
         "phly/phly-comic": "^1.1.3",
         "phly/phly-expressive-mustache": "^2.0",
-        "phly/phly-expressive-oauth2clientauthentication": "^0.2.0",
+        "phly/phly-expressive-oauth2clientauthentication": "^0.2.1",
         "php-http/curl-client": "^1.4",
         "php-http/message": "^1.2",
         "psr/http-message": "^1.0",

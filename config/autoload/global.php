@@ -82,7 +82,8 @@ return [
             'clientId'     => null,
             'clientSecret' => null,
             'redirectUri'  => 'https://mwop.net/auth/google/oauth2callback',
-            'hostedDomain' => 'https://mwop.net',
+            // Enable this to restrict authentication to users at the listed domain:
+            // 'hostedDomain' => 'https://mwop.net',
         ],
     ],
 ];

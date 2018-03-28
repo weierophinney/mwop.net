@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "9470f52e58808721b2d755d30221530e",
+    "content-hash": "b2b2fc1d7ec4ad3299f5de4d8489b63b",
     "packages": [
         {
             "name": "clue/stream-filter",
@@ -469,59 +469,6 @@
                 "response"
             ],
             "time": "2017-03-24T14:48:51+00:00"
-        },
-        {
-            "name": "http-interop/http-middleware",
-            "version": "0.4.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/http-interop/http-middleware.git",
-                "reference": "9a801fe60e70d5d608b61d56b2dcde29516c81b9"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/http-interop/http-middleware/zipball/9a801fe60e70d5d608b61d56b2dcde29516c81b9",
-                "reference": "9a801fe60e70d5d608b61d56b2dcde29516c81b9",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0",
-                "psr/http-message": "^1.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Interop\\Http\\ServerMiddleware\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "PHP-FIG",
-                    "homepage": "http://www.php-fig.org/"
-                }
-            ],
-            "description": "Common interface for HTTP server-side middleware",
-            "keywords": [
-                "factory",
-                "http",
-                "middleware",
-                "psr",
-                "psr-17",
-                "psr-7",
-                "request",
-                "response"
-            ],
-            "abandoned": "http-interop/http-server-middleware",
-            "time": "2017-01-14T15:23:42+00:00"
         },
         {
             "name": "league/commonmark",
@@ -1304,16 +1251,16 @@
         },
         {
             "name": "phly/phly-expressive-oauth2clientauthentication",
-            "version": "0.2.0",
+            "version": "0.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phly/phly-expressive-oauth2clientauthentication.git",
-                "reference": "be377b7880cbf5cc9cfe69c2c957130d7252c4dc"
+                "reference": "fc86b2a1264860fa5e503864028cae3ef586b8ff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phly/phly-expressive-oauth2clientauthentication/zipball/be377b7880cbf5cc9cfe69c2c957130d7252c4dc",
-                "reference": "be377b7880cbf5cc9cfe69c2c957130d7252c4dc",
+                "url": "https://api.github.com/repos/phly/phly-expressive-oauth2clientauthentication/zipball/fc86b2a1264860fa5e503864028cae3ef586b8ff",
+                "reference": "fc86b2a1264860fa5e503864028cae3ef586b8ff",
                 "shasum": ""
             },
             "require": {
@@ -1329,6 +1276,7 @@
                 "league/oauth2-instagram": "^2.0",
                 "phpunit/phpunit": "^7.0.2",
                 "zendframework/zend-coding-standard": "~1.0.0",
+                "zendframework/zend-expressive-fastroute": "^3.0",
                 "zendframework/zend-expressive-template": "^2.0"
             },
             "suggest": {
@@ -1365,7 +1313,7 @@
                 "psr-15",
                 "psr-7"
             ],
-            "time": "2018-03-27T21:57:52+00:00"
+            "time": "2018-03-28T21:58:00+00:00"
         },
         {
             "name": "phly/phly-mustache",

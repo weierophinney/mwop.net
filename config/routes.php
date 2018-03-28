@@ -18,7 +18,7 @@ return function (
     $app->get('/offline', OfflinePage::class, 'offline');
     $app->get('/resume', ResumePage::class, 'resume');
 
-// Blog
+    // Blog
     $app->get('/blog[/]', Blog\ListPostsHandler::class, 'blog');
     $app->get('/blog/{id:[^/]+}.html', Blog\DisplayPostMiddleware::class, 'blog.post');
     $app->get('/blog/tag/{tag:php}.xml', Blog\FeedMiddleware::class, 'blog.feed.php');
@@ -27,23 +27,23 @@ return function (
     $app->get('/blog/tag/{tag:[^/]+}', Blog\ListPostsHandler::class, 'blog.tag');
     $app->get('/blog/{type:atom|rss}.xml', Blog\FeedMiddleware::class, 'blog.feed');
 
-// Logout
-    $app->get('/auth/logout', [
-    SessionMiddleware::class,
-    LogoutHandler::class,
+    // Logout
+    // Session middleware is already registered in the pipeline for all /auth routes
+    $app->get('/logout', [
+        SessionMiddleware::class,
+        LogoutHandler::class
     ], 'logout');
 
-
-// Contact form
+    // Contact form
     $app->get('/contact[/]', [
-    SessionMiddleware::class,
-    CsrfMiddleware::class,
-    Contact\LandingPage::class,
+        SessionMiddleware::class,
+        CsrfMiddleware::class,
+        Contact\LandingPage::class,
     ], 'contact');
     $app->post('/contact/process', [
-    SessionMiddleware::class,
-    CsrfMiddleware::class,
-    Contact\Process::class,
+        SessionMiddleware::class,
+        CsrfMiddleware::class,
+        Contact\Process::class,
     ], 'contact.process');
     $app->get('/contact/thank-you', Contact\ThankYouPage::class, 'contact.thank-you');
 };

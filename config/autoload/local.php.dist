@@ -47,7 +47,8 @@ return [
             'clientId'     => getenv('OAUTH2_GOOGLE_CLIENTID'),
             'clientSecret' => getenv('OAUTH2_GOOGLE_CLIENTSECRET'),
             'redirectUri'  => getenv('OAUTH2_GOOGLE_REDIRECTURI'),
-            'hostedDomain' => getenv('OAUTH2_GOOGLE_HOSTEDDOMAIN'),
+            // Enable this to restrict authentication to users at the listed domain:
+            // 'hostedDomain' => getenv('OAUTH2_GOOGLE_HOSTEDDOMAIN'),
         ],
     ],
 ];
