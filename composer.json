@@ -69,7 +69,6 @@
             "bin/mwop.net.php use-dist-templates",
             "@build-blog",
             "@build-homepage",
-            "@build-search",
             "phly-comic.php fetch-all --output=data/comics.mustache --exclude=dilbert,reptilis-rex,nih",
             "@clean"
         ],
@@ -92,7 +91,6 @@
             "@copy-assets",
             "@build-assets",
             "@build-blog",
-            "@build-search",
             "@clean"
         ],
         "build-php-fpm": [

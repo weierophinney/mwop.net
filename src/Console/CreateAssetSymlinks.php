@@ -15,7 +15,6 @@ class CreateAssetSymlinks
     const ASSET_MAP = [
         '../../node_modules/bootstrap/dist/js/bootstrap.js' => 'public/js/bootstrap.js',
         '../../node_modules/jquery/dist/jquery.js'          => 'public/js/jquery.js',
-        '../../node_modules/lunr/lunr.js'                   => 'public/js/lunr.js',
     ];
 
     public function __invoke(Route $route, Console $console) : int
