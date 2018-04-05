@@ -58,6 +58,34 @@ class SeedBlogDatabase
      */
     private $postDelimiter = '<!--- EXTENDED -->';
 
+    private $searchTable = 'CREATE VIRTUAL TABLE search USING FTS4(
+            id,
+            created,
+            title,
+            body,
+            tags
+        )';
+
+    private $searchTrigger = 'CREATE TRIGGER after_posts_insert
+            AFTER INSERT ON posts
+            BEGIN
+                INSERT INTO search (
+                    id,
+                    created,
+                    title,
+                    body,
+                    tags
+                )
+                VALUES (
+                    new.id,
+                    new.created,
+                    new.title,
+                    new.body,
+                    new.tags
+                );
+            END
+        ';
+
     private $table = 'CREATE TABLE "posts" (
             id VARCHAR(255) NOT NULL PRIMARY KEY,
             path VARCHAR(255) NOT NULL,
@@ -139,6 +167,8 @@ class SeedBlogDatabase
         foreach ($this->indices as $index) {
             $pdo->exec($index);
         }
+        $pdo->exec($this->searchTable);
+        $pdo->exec($this->searchTrigger);
         $pdo->commit();
 
         return $pdo;
