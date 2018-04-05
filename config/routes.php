@@ -26,6 +26,7 @@ return function (
     $app->get('/blog/tag/{tag:[^/]+}/{type:atom|rss}.xml', Blog\FeedMiddleware::class, 'blog.tag.feed');
     $app->get('/blog/tag/{tag:[^/]+}', Blog\ListPostsHandler::class, 'blog.tag');
     $app->get('/blog/{type:atom|rss}.xml', Blog\FeedMiddleware::class, 'blog.feed');
+    $app->get('/search[/]', Blog\SearchHandler::class, 'search');
 
     // Logout
     // Session middleware is already registered in the pipeline for all /auth routes

@@ -23,4 +23,6 @@ interface MapperInterface
     public function fetchAllByTag(string $tag) : Paginator;
 
     public function fetchTagCloud() : Cloud;
+
+    public function search(string $toMatch) : array;
 }

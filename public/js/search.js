@@ -1,59 +1,58 @@
-(function ($, lunr) {
+(function ($) {
   'use strict';
-  var index, 
-    loaded = false,
-    links = {},
+  var headers,
     resultdiv;
 
-  $(document).ready(function () {
-    $('input.search').focus(function () {
-      if (loaded) {
-        return;
-      }
-      $.getJSON('/js/search_terms.json', prepare);
-    });
-  });
+  resultdiv = $('div.searchresults');
 
-  function prepare (response) {
-    index = lunr(function () {
-      this.ref('id');
-      this.field('title', {boost: 10});
-      this.field('tags', {boost: 100});
-      this.field('content');
-    });
+  headers = new Headers();
+  headers.append('Accept', 'application/json');
 
-    response.docs.forEach(function (doc) {
-      index.add(doc);
-      links[doc.id] = { title: doc.title };
-    });
+  function search(e) {
+    var data,
+      item,
+      queryString,
+      url;
 
-    resultdiv = $('div.searchresults');
-    $('input.search').on('keyup', search);
+    console.log("KeyCode:", e.keyCode);
+
+    queryString = new URLSearchParams('');
+    queryString.set('q', $(this).val());
+    url = '/search?' + queryString.toString();
+
+    data = {
+      method: 'GET',
+      headers: headers,
+      mode: 'cors',
+      cache: 'default'
+    };
+
+    fetch(url, data)
+      .then(function(response) {
+        if (! response.ok) {
+          throw new Error('Invalid response from search endpoint');
+        }
+        return response.json();
+      })
+      .then(function(payload) {
+        if (payload.length === 0) {
+          resultdiv.hide();
+          return;
+        }
+
+        resultdiv.empty();
+        resultdiv.append('<a class="list-group-item center-block search-close">[ CLOSE ]</a>');
+        for (var i in payload) {
+          item = payload[i];
+          resultdiv.append('<a class="list-group-item" href="' + item.link + '">' + item.title + '</a>');
+        }
+        resultdiv.removeClass('hidden');
+        resultdiv.show();
+        $('a.search-close').on('click', function(){
+          resultdiv.hide();
+        });
+      });
   }
 
-  function search () {
-    var item;
-
-    // Get query value
-    /* jshint validthis:true */
-    var query = $(this).val();
-
-    // Search for query value
-    var result = index.search(query);
-
-    if (result.length === 0) {
-      // Hide results; none available
-      resultdiv.hide();
-      return;
-    }
-
-    // Show results
-    resultdiv.empty();
-    for (var i in result) {
-      item = result[i];
-      resultdiv.append('<a class="list-group-item" href="' + item.ref + '">' + links[item.ref].title + '</a>');
-    }
-    resultdiv.removeClass('hidden');
-    resultdiv.show();
-  }
-})(jQuery, lunr);
+  $('input.search').on('keyup', search);
+})(jQuery);

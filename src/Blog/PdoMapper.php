@@ -91,6 +91,16 @@ class PdoMapper implements MapperInterface
         return new Cloud($options);
     }
 
+    public function search(string $toMatch) : array
+    {
+        $select = $this->pdo->prepare('SELECT id, title from search WHERE search MATCH :query');
+        if (! $select->execute([':query' => $toMatch])) {
+            return null;
+        }
+
+        return $select->fetchAll();
+    }
+
     private function preparePaginator(string $select, string $count, array $params = []) : Paginator
     {
         $select = $this->pdo->prepare($select);
