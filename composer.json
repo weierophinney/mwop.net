@@ -33,7 +33,7 @@
         "zendframework/zend-expressive-csrf": "^1.0",
         "zendframework/zend-expressive-fastroute": "^3.0",
         "zendframework/zend-expressive-session": "^1.0",
-        "zendframework/zend-expressive-session-ext": "^1.0",
+        "zendframework/zend-expressive-session-ext": "^1.1.1",
         "zendframework/zend-feed": "^2.7",
         "zendframework/zend-inputfilter": "^2.7.3",
         "zendframework/zend-mail": "^2.7.3",

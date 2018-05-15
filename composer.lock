@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "531d00cf96ed45a65eca09b7b2719364",
+    "content-hash": "a533e7572b6cb53f734403dbc176b3c2",
     "packages": [
         {
             "name": "clue/stream-filter",
@@ -2726,16 +2726,16 @@
         },
         {
             "name": "zendframework/zend-expressive-session-ext",
-            "version": "1.0.1",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-expressive-session-ext.git",
-                "reference": "7948a443e5db055ff2da88f1c8311db13a4be67c"
+                "reference": "b1102131c1e2293026a15b82d1ea459b8f3a9dcb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-expressive-session-ext/zipball/7948a443e5db055ff2da88f1c8311db13a4be67c",
-                "reference": "7948a443e5db055ff2da88f1c8311db13a4be67c",
+                "url": "https://api.github.com/repos/zendframework/zend-expressive-session-ext/zipball/b1102131c1e2293026a15b82d1ea459b8f3a9dcb",
+                "reference": "b1102131c1e2293026a15b82d1ea459b8f3a9dcb",
                 "shasum": ""
             },
             "require": {
@@ -2755,8 +2755,8 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0.x-dev",
-                    "dev-develop": "1.1.x-dev"
+                    "dev-master": "1.1.x-dev",
+                    "dev-develop": "1.2.x-dev"
                 },
                 "zf": {
                     "config-provider": "Zend\\Expressive\\Session\\Ext\\ConfigProvider"
@@ -2781,7 +2781,7 @@
                 "zend-expressive",
                 "zf"
             ],
-            "time": "2018-03-15T19:20:24+00:00"
+            "time": "2018-05-14T15:11:54+00:00"
         },
         {
             "name": "zendframework/zend-expressive-template",
