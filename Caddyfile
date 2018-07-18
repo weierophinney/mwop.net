@@ -1,0 +1,14 @@
+https://{$CADDY_WEB_HOST} {
+    proxy / nginx:8080
+    header / Strict-Transport-Security "max-age=31536000;"
+    gzip
+    tls {$CADDY_TLS_EMAIL}
+}
+
+http://{$CADDY_WEB_HOST}, http://www.{$CADDY_WEB_HOST}, https://www.{$CADDY_WEB_HOST} {
+    redir https://{$CADDY_WEB_HOST}{uri}
+}
+
+http://{$CADDY_ALT_HOST}, http://www.{$CADDY_ALT_HOST}, https://{$CADDY_ALT_HOST}, https://www.{$CADDY_ALT_HOST} {
+    redir https://blog.jwo-designs.com
+}
