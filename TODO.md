@@ -18,7 +18,7 @@
 ## New features
 
 - [ ] Blog
-  - [ ] Add search capabilities
+  - [x] Add search capabilities
   - [ ] Add media capabilities
     - [ ] Tooling to search for CC media based on post keywords
     - [ ] Include media in blog post as a banner with the title
