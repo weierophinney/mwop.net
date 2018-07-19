@@ -15,7 +15,7 @@
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
-const REPOS = ['mwopnginx', 'mwopphp'];
+const REPOS = ['mwopnginx', 'mwopphp', 'mwopcaddy'];
 const STACKFILE = 'docker-stack.yml';
 const TAGSCRIPT = './bin/get-latest-tag.php';
 const TEMPLATE = 'docker-stack.yml.dist';
@@ -23,13 +23,13 @@ const USER = 'mwop';
 
 chdir(dirname(__DIR__));
 
-if ($argc < 5) {
+if ($argc < 7) {
     fwrite(STDERR, sprintf('Missing one or more arguments.%s', str_repeat(PHP_EOL, 2)));
     usage(STDERR, $argv[0]);
     exit(1);
 }
 
-if ($argv[1] !== '-n' || $argv[3] !== '-p') {
+if ($argv[1] !== '-n' || $argv[3] !== '-p' || $argv[5] !== '-c') {
     fwrite(STDERR, sprintf('Invalid arguments provided.%s', str_repeat(PHP_EOL, 2)));
     usage(STDERR, $argv[0]);
     exit(1);
@@ -38,6 +38,7 @@ if ($argv[1] !== '-n' || $argv[3] !== '-p') {
 $versions = [
     'mwopnginx' => $argv[2],
     'mwopphp'   => $argv[4],
+    'mwopcaddy' => $argv[6],
 ];
 
 $substitutions = [];
@@ -69,12 +70,13 @@ function usage($stream, string $scriptName)
     $message = <<<'EOM'
 Usage:
 
-  %s -n <nginx version> -p <php-fpm version>
+  %s -n <nginx version> -p <php-fpm version> -c <caddy version>
 
 where:
 
   <nginx version>     Version tag of nginx container to use
   <php-fpm version>   Version tag of php-fpm container to use
+  <caddy version>     Version tag of caddy container to use
 
 Generates the docker-stack.yml file to use during deployment, using the
 specified tags for the nginx and php-fpm containers.

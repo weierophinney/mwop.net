@@ -5,26 +5,40 @@ services:
     image: "mwop/mwopphp:{mwopphp}"
     env_file:
       - .env
+    restart: on-failure
     networks:
       - server
 
   nginx:
     image: "mwop/mwopnginx:{mwopnginx}"
-    env_file:
-      - .acme.env
+    hostname: "nginx"
     depends_on:
       - php-fpm
+    restart: on-failure
+    networks:
+      - server
+
+  caddy:
+    image: "mwop/mwopcaddy:{mwopcaddy}"
+    env_file:
+      - .caddy.env
+    depends_on:
+      - nginx
+    restart: on-failure
+    volumes:
+      - /data/caddy:/root/.caddy
     ports:
       - "80:80"
       - "443:443"
-    volumes:
-      - /data/acme.sh:/root/.acme.sh/mwop.net
-      - /data/ssl:/etc/nginx/ssl
     networks:
-      - public
       - server
+      - public
 
 networks:
   public:
     external: true
   server:
+    internal: true
+
+volumes:
+  caddy-certificate-volume:

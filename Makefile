@@ -13,6 +13,7 @@
 
 VERSION := $(shell date +%Y%m%d%H%M)
 
+CADDY_VERSION?=latest
 NGINX_VERSION?=latest
 PHP_FPM_VERSION?=latest
 
@@ -30,9 +31,10 @@ endif
 
 docker-stack.yml:
 	@echo "Creating docker-stack.yml"
+	@echo "- caddy container version: $(CADDY_VERSION)"
 	@echo "- nginx container version: $(NGINX_VERSION)"
 	@echo "- php-fpm container version: $(PHP_FPM_VERSION)"
-	- $(CURDIR)/bin/create-docker-stack.php -n $(NGINX_VERSION) -p $(PHP_FPM_VERSION)
+	- $(CURDIR)/bin/create-docker-stack.php -n $(NGINX_VERSION) -p $(PHP_FPM_VERSION) -c ${CADDY_VERSION}
 
 deploy: check-env docker-stack.yml
 	@echo "Deploying to swarm"
@@ -49,6 +51,15 @@ nginx:
 	- docker tag mwopnginx:latest mwop/mwopnginx:$(VERSION)
 	@echo "- Pushing image to hub"
 	- docker push mwop/mwopnginx:$(VERSION)
+
+caddy:
+	@echo "Creating caddy container"
+	@echo "- Building container"
+	- docker build -t mwopcaddy -f ./etc/docker/caddy.Dockerfile .
+	@echo "- Tagging image"
+	- docker tag mwopcaddy:latest mwop/mwopcaddy:$(VERSION)
+	@echo "- Pushing image to hub"
+	- docker push mwop/mwopcaddy:$(VERSION)
 
 php-fpm:
 	@echo "Creating php-fpm container"
