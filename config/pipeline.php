@@ -22,6 +22,7 @@ return function (
     \Zend\Expressive\MiddlewareFactory $factory,
     \Psr\Container\ContainerInterface $container
 ) : void {
+    $app->pipe(SetHostNameMiddleware::class);
     $app->pipe(OriginalMessages::class);
     $app->pipe(XClacksOverhead::class);
     $app->pipe(XPoweredBy::class);
