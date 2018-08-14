@@ -30,6 +30,7 @@ $aggregator = new ConfigAggregator([
     \Zend\Expressive\Helper\ConfigProvider::class,
     \Zend\Expressive\Router\ConfigProvider::class,
     \Zend\Expressive\Router\FastRouteRouter\ConfigProvider::class,
+    \Zend\Expressive\Swoole\ConfigProvider::class,
     // Include cache configuration
     new ArrayProvider($cacheConfig),
 
