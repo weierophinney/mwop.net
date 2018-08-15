@@ -1,0 +1,17 @@
+#!/bin/sh
+# Entrypoint script for php container.
+#
+# Ensures file permissions are setup correctly for cron, and
+# starts the cron daemon and php.
+
+# Ensure crontabs have expected owners and permissions.
+# Done here to allow mounting the crontab as a volume within docker-compose.yml.
+chown root:root /etc/cron.d/*
+chmod 0600 /var/spool/cron/crontabs/root
+chmod 0644 /etc/cron.d/*
+
+# Start cron; it's a daemon by default.
+cron
+
+# Start application; runs in foreground.
+/usr/bin/env php public/index.php

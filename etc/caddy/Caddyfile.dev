@@ -1,0 +1,6 @@
+:8080 {
+    proxy / php:9000 {
+        transparent
+    }
+    gzip
+}

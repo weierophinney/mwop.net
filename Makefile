@@ -6,7 +6,7 @@
 # Allowed/expected variables:
 #
 # - NGINX_VERSION: specific nginx container version to use
-# - PHP_FPM_VERSION: specific php-fpm container version to use
+# - PHP_VERSION: specific php container version to use
 #
 # If not specified, each defaults to "latest", which forces a lookup of the
 # latest tagged version.
@@ -15,11 +15,11 @@ VERSION := $(shell date +%Y%m%d%H%M)
 
 CADDY_VERSION?=latest
 NGINX_VERSION?=latest
-PHP_FPM_VERSION?=latest
+PHP_VERSION?=latest
 
-.PHONY : all deploy nginx php-fpm
+.PHONY : all deploy nginx php
 
-all: check-env deploy nginx php-fpm
+all: check-env deploy nginx php
 
 check-env:
 ifndef DOCKER_MACHINE_NAME
@@ -33,8 +33,8 @@ docker-stack.yml:
 	@echo "Creating docker-stack.yml"
 	@echo "- caddy container version: $(CADDY_VERSION)"
 	@echo "- nginx container version: $(NGINX_VERSION)"
-	@echo "- php-fpm container version: $(PHP_FPM_VERSION)"
-	- $(CURDIR)/bin/create-docker-stack.php -n $(NGINX_VERSION) -p $(PHP_FPM_VERSION) -c ${CADDY_VERSION}
+	@echo "- php container version: $(PHP_VERSION)"
+	- $(CURDIR)/bin/create-docker-stack.php -n $(NGINX_VERSION) -p $(PHP_VERSION) -c ${CADDY_VERSION}
 
 deploy: check-env docker-stack.yml
 	@echo "Deploying to swarm"
@@ -61,10 +61,10 @@ caddy:
 	@echo "- Pushing image to hub"
 	- docker push mwop/mwopcaddy:$(VERSION)
 
-php-fpm:
-	@echo "Creating php-fpm container"
+php:
+	@echo "Creating php container"
 	@echo "- Building container"
-	- docker build -t mwopphp -f ./etc/docker/php-fpm.Dockerfile .
+	- docker build -t mwopphp -f ./etc/docker/php.Dockerfile .
 	@echo "- Tagging image"
 	- docker tag mwopphp:latest mwop/mwopphp:$(VERSION)
 	@echo "- Pushing image to hub"
