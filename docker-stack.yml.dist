@@ -1,7 +1,7 @@
 version: '3.2'
 
 services:
-  php-fpm:
+  php:
     image: "mwop/mwopphp:{mwopphp}"
     env_file:
       - .env
@@ -10,22 +10,12 @@ services:
         condition: on-failure
         window: 3s
 
-  nginx:
-    image: "mwop/mwopnginx:{mwopnginx}"
-    hostname: "nginx"
-    depends_on:
-      - php-fpm
-    deploy:
-      restart_policy:
-        condition: on-failure
-        window: 5s
-
   caddy:
     image: "mwop/mwopcaddy:{mwopcaddy}"
     env_file:
       - .caddy.env
     depends_on:
-      - nginx
+      - php
     deploy:
       restart_policy:
         condition: on-failure
