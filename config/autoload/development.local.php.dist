@@ -13,6 +13,7 @@
 namespace Mwop;
 
 use Phly\Expressive\OAuth2ClientAuthentication\Debug;
+use Psr\Log\LoggerInterface;
 use Whoops\Handler\PrettyPageHandler;
 use Zend\Expressive\Container;
 use Zend\Expressive\Middleware\ErrorResponseGenerator;
@@ -29,13 +30,19 @@ return [
     ],
 
     'dependencies' => [
-        'invokables' => [
-            WhoopsPageHandler::class => PrettyPageHandler::class,
+        'delegators' => [
+            ErrorHandler::class => [
+                Factory\LoggingErrorListenerDelegator::class,
+            ],
         ],
         'factories' => [
             Debug\DebugProviderMiddleware::class => Debug\DebugProviderMiddlewareFactory::class,
             ErrorResponseGenerator::class => Container\WhoopsErrorResponseGeneratorFactory::class,
+            LoggerInterface::class => Factory\ErrorLoggerFactory::class,
             Whoops::class => Container\WhoopsFactory::class,
+        ],
+        'invokables' => [
+            WhoopsPageHandler::class => PrettyPageHandler::class,
         ],
     ],
 

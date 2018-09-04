@@ -69,7 +69,7 @@ function usage($stream, string $scriptName)
     $message = <<<'EOM'
 Usage:
 
-  %s -p <php-fpm version> -c <caddy version>
+  %s -p <php version> -c <caddy version>
 
 where:
 

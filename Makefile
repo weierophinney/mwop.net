@@ -50,6 +50,8 @@ caddy:
 
 php:
 	@echo "Creating php container"
+	@echo "- Building assets"
+	- composer docker:assets
 	@echo "- Building container"
 	- docker build -t mwopphp -f ./etc/docker/php.Dockerfile .
 	@echo "- Tagging image"

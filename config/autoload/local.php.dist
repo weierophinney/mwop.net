@@ -4,6 +4,10 @@
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
+use Mwop\Factory;
+use Psr\Log\LoggerInterface;
+use Zend\Stratigility\Middleware\ErrorHandler;
+
 /** @var string */
 $messageToAddress = getenv('CONTACT_MESSAGE_TO_ADDRESS');
 
@@ -11,6 +15,16 @@ $messageToAddress = getenv('CONTACT_MESSAGE_TO_ADDRESS');
  * Defines the production settings, using values provided in the environment.
  */
 return [
+    'dependencies' => [
+        'delegators' => [
+            ErrorHandler::class => [
+                Factory\LoggingErrorListenerDelegator::class,
+            ],
+        ],
+        'factories' => [
+            LoggerInterface::class => Factory\AccessLoggerFactory::class,
+        ],
+    ],
     'contact' => [
         'recaptcha_pub_key'  => getenv('RECAPTCHA_PUB_KEY'),
         'recaptcha_priv_key' => getenv('RECAPTCHA_PRIV_KEY'),

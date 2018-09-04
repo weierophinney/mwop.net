@@ -1,51 +1,40 @@
 # DOCKER-VERSION        1.3.2
 
-FROM php:7.2-fpm
+FROM mwop/phly-docker-php-swoole:201809041014
 
 # System dependencies
-RUN apt-get update
-RUN apt-get install -y cron git libbz2-dev libicu-dev libtidy-dev libxslt1-dev zlib1g-dev
+RUN apt-get update && \
+  apt-get install -y cron && \
+  rm -rf /var/lib/apt/lists/*
 
 # PHP Extensions
 RUN docker-php-ext-install -j$(nproc) bcmath bz2 intl opcache pcntl sockets tidy xsl zip
-RUN pecl install swoole-4.0.4 && docker-php-ext-enable swoole
 
-# Install composer
-COPY etc/bin/getcomposer.sh /usr/local/bin/
-RUN /usr/local/bin/getcomposer.sh
+# PHP configuration
+COPY etc/php/mwop.ini /usr/local/etc/php/conf.d/999-mwop.ini
+
+# Overwrite entrypoint
+COPY etc/bin/php-entrypoint /usr/local/bin/entrypoint
 
 # Crontab
-COPY etc/cron.d/www-data /etc/cron.d/
+COPY etc/cron.d/mwopnet /etc/cron.d/
 
 # Project files
-COPY etc/bin/php-fpm-entrypoint /usr/local/bin/
-RUN mkdir /var/www/mwop.net
-ADD bin /var/www/mwop.net/bin
-ADD config /var/www/mwop.net/config
-ADD data /var/www/mwop.net/data
-ADD public /var/www/mwop.net/public
-ADD src /var/www/mwop.net/src
-ADD templates /var/www/mwop.net/templates
-COPY composer.json /var/www/mwop.net/
-COPY composer.lock /var/www/mwop.net/
+COPY bin /var/www/bin
+COPY data /var/www/data
+COPY public /var/www/public
+COPY templates /var/www/templates
+COPY composer.json /var/www/
+COPY composer.lock /var/www/
+COPY config /var/www/config
+COPY src /var/www/src
 
 # Reset "local"/development config files
-RUN rm -f /var/www/mwop.net/config/development.config.php
-RUN rm /var/www/mwop.net/config/autoload/*.local.php
-RUN mv /var/www/mwop.net/config/autoload/local.php.dist /var/www/mwop.net/config/autoload/local.php
+RUN rm -f /var/www/config/development.config.php && \
+  rm /var/www/config/autoload/*.local.php && \
+  mv /var/www/config/autoload/local.php.dist /var/www/config/autoload/local.php
 
 # Build project
-WORKDIR /var/www/mwop.net
-RUN composer install --quiet --no-ansi --no-dev --no-interaction --no-progress --no-scripts --no-plugins --optimize-autoloader
-RUN composer build-php-fpm
-RUN chown -R www-data.www-data /var/www/mwop.net/data
-
-# PHP config (performed late so as not to affect earlier layers)
-COPY etc/php/mwop.ini /usr/local/etc/php/conf.d/
-COPY etc/php/www.conf /usr/local/etc/php-fpm.d/
-
-# Entry point script (does not change often)
-COPY etc/bin/php-entrypoint /usr/local/bin/
-
-EXPOSE 9000
-CMD ["php-entrypoint"]
+WORKDIR /var/www
+RUN composer install --quiet --no-ansi --no-dev --no-interaction --no-progress --no-scripts --no-plugins --optimize-autoloader && \
+  composer docker:site

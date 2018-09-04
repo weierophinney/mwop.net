@@ -6,7 +6,6 @@
 
 namespace Mwop;
 
-use Psr\Log\LoggerInterface;
 use Zend\Expressive\Application;
 use Zend\Feed\Reader\Http\ClientInterface as FeedReaderHttpClientInterface;
 use Zend\ServiceManager\Factory\InvokableFactory;
@@ -33,6 +32,5 @@ return ['dependencies' => [
         Github\Console\Fetch::class       => Github\Console\FetchFactory::class,
         Github\PuSH\Logger::class         => Github\PuSH\LoggerFactory::class,
         Github\PuSH\LoggerAction::class   => Github\PuSH\LoggerActionFactory::class,
-        LoggerInterface::class            => Factory\LoggerFactory::class,
     ],
 ]];

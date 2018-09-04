@@ -34,7 +34,7 @@
         "zendframework/zend-expressive-fastroute": "^3.0",
         "zendframework/zend-expressive-session": "^1.0",
         "zendframework/zend-expressive-session-ext": "^1.1.1",
-        "zendframework/zend-expressive-swoole": "^0.1.1",
+        "zendframework/zend-expressive-swoole": "^0.2",
         "zendframework/zend-feed": "^2.7",
         "zendframework/zend-inputfilter": "^2.7.3",
         "zendframework/zend-mail": "^2.7.3",
@@ -64,62 +64,62 @@
         }
     },
     "scripts": {
-        "build": [
-            "@symlink-assets",
-            "@build-assets",
-            "bin/mwop.net.php use-dist-templates",
-            "@build-blog",
-            "@build-homepage",
-            "phly-comic.php fetch-all --output=data/comics.mustache --exclude=dilbert,reptilis-rex,nih",
-            "@clean"
-        ],
-        "build-assets": [
+        "assets:build": [
             "@npm",
             "grunt"
         ],
-        "build-blog": [
+        "assets:copy": [
+            "@npm",
+            "bin/mwop.net.php copy-asset-symlinks"
+        ],
+        "assets:symlink": [
+            "@npm",
+            "bin/mwop.net.php create-asset-symlinks"
+        ],
+        "build": [
+            "@assets:symlink",
+            "@assets:build",
+            "bin/mwop.net.php use-dist-templates",
+            "@build:blog",
+            "@build:homepage",
+            "phly-comic.php fetch-all --output=data/comics.mustache --exclude=dilbert,reptilis-rex,nih",
+            "@clean"
+        ],
+        "build:blog": [
             "bin/mwop.net.php clear-cache",
             "bin/mwop.net.php seed-blog-db",
             "bin/mwop.net.php tag-cloud",
             "bin/mwop.net.php feed-generator",
-            "bin/mwop.net.php cache-posts"
+            "bin/mwop.net.php cache-posts",
+            "@build:search"
         ],
-        "build-homepage": [
+        "build:homepage": [
             "bin/mwop.net.php github-links",
             "bin/mwop.net.php homepage-feeds"
         ],
-        "build-nginx": [
-            "@copy-assets",
-            "@build-assets",
-            "@build-blog",
-            "@clean"
-        ],
-        "build-php-fpm": [
-            "bin/mwop.net.php use-dist-templates",
-            "@build-blog",
-            "@build-homepage",
-            "phly-comic.php fetch-all --output=data/comics.mustache --exclude=dilbert,reptilis-rex,nih"
-        ],
-        "build-search": "bin/mwop.net.php generate-search-data",
+        "build:search": "bin/mwop.net.php generate-search-data",
         "clean": [
             "rm -Rf node_modules",
             "rm -Rf .tmp"
         ],
-        "copy-assets": [
-            "@npm",
-            "bin/mwop.net.php copy-asset-symlinks"
+        "cs:check": "phpcs",
+        "cs:fix": "phpcbf",
+        "development:disable": "zf-development-mode disable",
+        "development:enable": "zf-development-mode enable",
+        "development:status": "zf-development-mode status",
+        "docker:assets": [
+            "@assets:copy",
+            "@assets:build",
+            "@clean"
         ],
-        "cs-check": "phpcs",
-        "cs-fix": "phpcbf",
-        "development-disable": "zf-development-mode disable",
-        "development-enable": "zf-development-mode enable",
-        "development-status": "zf-development-mode status",
+        "docker:site": [
+            "bin/mwop.net.php use-dist-templates",
+            "@build:blog",
+            "@build:homepage",
+            "phly-comic.php fetch-all --output=data/comics.mustache --exclude=dilbert,reptilis-rex,nih"
+        ],
         "npm": "npm install --no-save",
         "serve": "php -S 0.0.0.0:8080 -t public/",
-        "symlink-assets": [
-            "@npm",
-            "bin/mwop.net.php create-asset-symlinks"
-        ],
         "test": "phpunit --colors=always",
         "expressive": "expressive"
     }

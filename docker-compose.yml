@@ -10,10 +10,9 @@ services:
     ports:
       - "9000:9000"
     volumes:
-      - .:/var/www/mwop.net
-      - ./etc/cron.d/www-data:/etc/cron.d/www-data
+      - .:/var/www
+      - ./etc/cron.d/mwopnet:/etc/cron.d/mwopnet
       - ./etc/php/mwop.ini:/usr/local/etc/php/conf.d/mwop.ini
-      - ./etc/php/www.conf:/usr/local/etc/php-fpm.d/www.conf
 
   caddy:
     build:
