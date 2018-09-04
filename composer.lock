@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a5132df861106b14953b30704b84552f",
+    "content-hash": "d01968a3d445b8743ddb1e9aa17ba6ba",
     "packages": [
         {
             "name": "clue/stream-filter",
@@ -3133,16 +3133,16 @@
         },
         {
             "name": "zendframework/zend-expressive-swoole",
-            "version": "0.2.0",
+            "version": "0.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-expressive-swoole.git",
-                "reference": "c4a9f9b134eddc3537b086300d84db50da037723"
+                "reference": "de28909382f3eb839896d18c18e70a9d02cbeb09"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-expressive-swoole/zipball/c4a9f9b134eddc3537b086300d84db50da037723",
-                "reference": "c4a9f9b134eddc3537b086300d84db50da037723",
+                "url": "https://api.github.com/repos/zendframework/zend-expressive-swoole/zipball/de28909382f3eb839896d18c18e70a9d02cbeb09",
+                "reference": "de28909382f3eb839896d18c18e70a9d02cbeb09",
                 "shasum": ""
             },
             "require": {
@@ -3189,7 +3189,7 @@
                 "swoole",
                 "zf"
             ],
-            "time": "2018-08-30T22:27:59+00:00"
+            "time": "2018-09-04T21:55:51+00:00"
         },
         {
             "name": "zendframework/zend-expressive-template",
