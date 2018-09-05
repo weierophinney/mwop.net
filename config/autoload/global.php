@@ -40,10 +40,10 @@ return [
                 'siteurl' => 'https://mwop.net/blog',
             ],
             [
-                'url' => 'http://blog.zend.com/author/matthew-wop/feed/',
+                'url' => 'https://blog.zend.com/author/matthew-wop/feed/',
                 'favicon' => 'https://pbs.twimg.com/profile_images/603690040602927104/0bp-4InR_bigger.jpg',
                 'sitename' => 'Zend Blog',
-                'siteurl' => 'http://blog.zend.com/author/matthew-wop/',
+                'siteurl' => 'https://blog.zend.com/author/matthew-wop/',
             ],
             [
                 'url' => 'https://devzone.zend.com/author/mwop/feed/',
