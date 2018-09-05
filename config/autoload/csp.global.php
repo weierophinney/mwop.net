@@ -3,15 +3,14 @@
 return [
     'content-security-policy' => [
         'default-src' => [
-            'self' => true,
+            'self' => true
         ],
-        'child-src' => [
+        'frame-src' => [
             'self' => true,
             'allow' => [
+                'https://platform.twitter.com',
+                'https://syndication.twitter.com',
                 'https://www.google.com',
-                'https://screencasts.mwop.net',
-                'https://vimeo.com',
-                'https://youtube.com',
                 'disqus.com',
             ],
         ],
@@ -24,6 +23,7 @@ return [
         'font-src' => [
             'self' => true,
             'types' => [
+                'chrome-extension:',
                 'https:',
             ],
         ],
