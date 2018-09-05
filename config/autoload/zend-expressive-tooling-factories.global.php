@@ -13,7 +13,6 @@ return [
     'dependencies' => [
         'factories' => [
             Mwop\Blog\SearchHandler::class => Mwop\Blog\SearchHandlerFactory::class,
-            Mwop\SetHostNameMiddleware::class => Mwop\SetHostNameMiddlewareFactory::class,
         ],
     ],
 ];
