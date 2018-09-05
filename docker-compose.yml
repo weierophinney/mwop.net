@@ -2,16 +2,16 @@ version: '3.3'
 
 services:
   php:
-    image: mwop/mwopphp:201809041119
+    image: mwop/mwopphp:201809041658
     # build: 
       # context: .
       # dockerfile: etc/docker/php.Dockerfile
     env_file:
       - .env
-    volumes:
-      - .:/var/www
-      - ./etc/php/mwop.ini:/usr/local/etc/php/conf.d/mwop.ini
-      - ./etc/cron.d/mwopnet:/etc/cron.d/mwopnet
+    # volumes:
+      # - .:/var/www
+      # - ./etc/php/mwop.ini:/usr/local/etc/php/conf.d/mwop.ini
+      # - ./etc/cron.d/mwopnet:/etc/cron.d/mwopnet
     networks:
       - server
 
