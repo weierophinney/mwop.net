@@ -5,7 +5,10 @@ services:
     image: "mwop/mwopphp:{mwopphp}"
     env_file:
       - .env
-    restart: on-failure
+    deploy:
+      restart_policy:
+        condition: on-failure
+        window: 3s
     networks:
       - server
 
@@ -14,7 +17,10 @@ services:
     hostname: "nginx"
     depends_on:
       - php-fpm
-    restart: on-failure
+    deploy:
+      restart_policy:
+        condition: on-failure
+        window: 5s
     networks:
       - server
 
@@ -24,7 +30,10 @@ services:
       - .caddy.env
     depends_on:
       - nginx
-    restart: on-failure
+    deploy:
+      restart_policy:
+        condition: on-failure
+        window: 5s
     volumes:
       - /data/caddy:/root/.caddy
     ports:
@@ -36,9 +45,7 @@ services:
 
 networks:
   public:
-    external: true
   server:
-    internal: true
 
 volumes:
   caddy-certificate-volume:
