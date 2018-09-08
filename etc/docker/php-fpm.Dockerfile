@@ -1,6 +1,6 @@
 # DOCKER-VERSION        1.3.2
 
-FROM php:7.1-fpm
+FROM php:7.2-fpm
 
 # System dependencies
 RUN apt-get update && \
