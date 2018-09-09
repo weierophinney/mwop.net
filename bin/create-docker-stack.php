@@ -5,7 +5,7 @@
  *
  * Usage:
  *
- *   create-docker-stack.php -p $PHP_FPM_VERSION
+ *   create-docker-stack.php -p $SWOOLE_VERSION -c $CADDY_VERSION
  *
  * If either is listed as "latest", this script will delegate to
  * get-latest-tag.php to identify the latest tag released for that
@@ -15,7 +15,7 @@
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
-const REPOS = ['mwopphp', 'mwopcaddy'];
+const REPOS = ['mwopswoole', 'mwopcaddy'];
 const STACKFILE = 'docker-stack.yml';
 const TAGSCRIPT = './bin/get-latest-tag.php';
 const TEMPLATE = 'docker-stack.yml.dist';
@@ -36,8 +36,8 @@ if ($argv[1] !== '-p' || $argv[3] !== '-c') {
 }
 
 $versions = [
-    'mwopphp'   => $argv[2],
-    'mwopcaddy' => $argv[4],
+    'mwopswoole' => $argv[2],
+    'mwopcaddy'  => $argv[4],
 ];
 
 $substitutions = [];
@@ -69,12 +69,12 @@ function usage($stream, string $scriptName)
     $message = <<<'EOM'
 Usage:
 
-  %s -p <php version> -c <caddy version>
+  %s -p <php+swoole version> -c <caddy version>
 
 where:
 
-  <php version>       Version tag of php container to use
-  <caddy version>     Version tag of caddy container to use
+  <php+swoole version>  Version tag of php+swoole container to use
+  <caddy version>       Version tag of caddy container to use
 
 Generates the docker-stack.yml file to use during deployment, using the
 specified tags for the php and caddy containers.

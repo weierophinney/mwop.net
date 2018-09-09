@@ -6,7 +6,7 @@
 # Allowed/expected variables:
 #
 # - CADDY_VERSION: specific Caddy container version to use
-# - PHP_VERSION: specific php container version to use
+# - SWOOLE_VERSION: specific php+swoole container version to use
 #
 # If not specified, each defaults to "latest", which forces a lookup of the
 # latest tagged version.
@@ -14,11 +14,11 @@
 VERSION := $(shell date +%Y%m%d%H%M)
 
 CADDY_VERSION?=latest
-PHP_VERSION?=latest
+SWOOLE_VERSION?=latest
 
-.PHONY : all deploy php caddy
+.PHONY : all deploy swoole caddy
 
-all: check-env deploy php caddy
+all: check-env deploy swoole caddy
 
 check-env:
 ifndef DOCKER_MACHINE_NAME
@@ -30,9 +30,9 @@ endif
 
 docker-stack.yml:
 	@echo "Creating docker-stack.yml"
-	@echo "- php container version: $(PHP_VERSION)"
+	@echo "- swoole container version: $(SWOOLE_VERSION)"
 	@echo "- caddy container version: $(CADDY_VERSION)"
-	- $(CURDIR)/bin/create-docker-stack.php -p $(PHP_VERSION) -c ${CADDY_VERSION}
+	- $(CURDIR)/bin/create-docker-stack.php -p $(SWOOLE_VERSION) -c ${CADDY_VERSION}
 
 deploy: check-env docker-stack.yml
 	@echo "Deploying to swarm"
@@ -48,13 +48,13 @@ caddy:
 	@echo "- Pushing image to hub"
 	- docker push mwop/mwopcaddy:$(VERSION)
 
-php:
-	@echo "Creating php container"
+swoole:
+	@echo "Creating swoole container"
 	@echo "- Building assets"
 	- composer docker:assets
 	@echo "- Building container"
-	- docker build -t mwopphp -f ./etc/docker/php.Dockerfile .
+	- docker build -t mwopswoole -f ./etc/docker/php.Dockerfile .
 	@echo "- Tagging image"
-	- docker tag mwopphp:latest mwop/mwopphp:$(VERSION)
+	- docker tag mwopswoole:latest mwop/mwopswoole:$(VERSION)
 	@echo "- Pushing image to hub"
-	- docker push mwop/mwopphp:$(VERSION)
+	- docker push mwop/mwopswoole:$(VERSION)

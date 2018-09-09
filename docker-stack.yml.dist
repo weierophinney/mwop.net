@@ -2,7 +2,7 @@ version: '3.2'
 
 services:
   php:
-    image: "mwop/mwopphp:{mwopphp}"
+    image: "mwop/mwopswoole:{mwopswoole}"
     env_file:
       - .env
     deploy:

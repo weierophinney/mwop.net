@@ -14,4 +14,4 @@ chmod 0644 /etc/cron.d/*
 cron
 
 # Start application; run in foreground, as that's what Docker prefers
-/usr/bin/env php public/index.php start -w 5
+/usr/bin/env php public/index.php start
