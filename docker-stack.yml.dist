@@ -9,8 +9,6 @@ services:
       restart_policy:
         condition: on-failure
         window: 3s
-    networks:
-      - server
 
   nginx:
     image: "mwop/mwopnginx:{mwopnginx}"
@@ -21,8 +19,6 @@ services:
       restart_policy:
         condition: on-failure
         window: 5s
-    networks:
-      - server
 
   caddy:
     image: "mwop/mwopcaddy:{mwopcaddy}"
@@ -39,13 +35,6 @@ services:
     ports:
       - "80:80"
       - "443:443"
-    networks:
-      - server
-      - public
-
-networks:
-  public:
-  server:
 
 volumes:
   caddy-certificate-volume:
