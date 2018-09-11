@@ -21,7 +21,6 @@ $aggregator = new ConfigAggregator([
     \Zend\Filter\ConfigProvider::class,
     \Zend\Validator\ConfigProvider::class,
     \Zend\Expressive\Session\ConfigProvider::class,
-    \Zend\Expressive\Session\Ext\ConfigProvider::class,
     \Zend\Expressive\Csrf\ConfigProvider::class,
     \Zend\Expressive\Authentication\ConfigProvider::class,
     \Phly\Expressive\OAuth2ClientAuthentication\ConfigProvider::class,
@@ -33,7 +32,6 @@ $aggregator = new ConfigAggregator([
     \Zend\Expressive\Swoole\ConfigProvider::class,
     // Include cache configuration
     new ArrayProvider($cacheConfig),
-
     // Load application config in a pre-defined order in such a way that local settings
     // overwrite global settings. (Loaded as first to last):
     //   - `global.php`
@@ -41,7 +39,6 @@ $aggregator = new ConfigAggregator([
     //   - `local.php`
     //   - `*.local.php`
     new PhpFileProvider('config/autoload/{{,*.}global,{,*.}local}.php'),
-
     // Load development config if it exists
     new PhpFileProvider('config/development.config.php'),
 ], $cacheConfig['config_cache_path']);
