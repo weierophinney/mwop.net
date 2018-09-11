@@ -11,7 +11,7 @@ services:
         window: 3s
 
   caddy:
-    image: "mwop/mwopcaddy:{mwopcaddy}"
+    image: "mwop/mwopswoolecaddy:{mwopswoolecaddy}"
     env_file:
       - .caddy.env
     depends_on:

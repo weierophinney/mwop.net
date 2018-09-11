@@ -32,7 +32,7 @@ class FeedGenerator
     private $defaultAuthor = [
         'name'  => 'Matthew Weier O\'Phinney',
         'email' => 'me@mwop.net',
-        'uri'   => 'http://mwop.net',
+        'uri'   => 'http://swoole.mwop.net',
     ];
 
     private $mapper;

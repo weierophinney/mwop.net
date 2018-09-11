@@ -22,10 +22,10 @@ all: check-env deploy swoole caddy
 
 check-env:
 ifndef DOCKER_MACHINE_NAME
-	$(error DOCKER_MACHINE_NAME is undefined; run "eval $$(docker-machine env mwopnet)" first)
+	$(error DOCKER_MACHINE_NAME is undefined; run "eval $$(docker-machine env mwopswoole)" first)
 endif
-ifneq ($(DOCKER_MACHINE_NAME),mwopnet)
-	$(error DOCKER_MACHINE_NAME is incorrect; run "eval $$(docker-machine env mwopnet)" first)
+ifneq ($(DOCKER_MACHINE_NAME),mwopswoole)
+	$(error DOCKER_MACHINE_NAME is incorrect; run "eval $$(docker-machine env mwopswoole)" first)
 endif
 
 docker-stack.yml:
@@ -42,11 +42,11 @@ deploy: check-env docker-stack.yml
 caddy:
 	@echo "Creating caddy container"
 	@echo "- Building container"
-	- docker build -t mwopcaddy -f ./etc/docker/caddy.Dockerfile .
+	- docker build -t mwopswoolecaddy -f ./etc/docker/caddy.Dockerfile .
 	@echo "- Tagging image"
-	- docker tag mwopcaddy:latest mwop/mwopcaddy:$(VERSION)
+	- docker tag mwopswoolecaddy:latest mwop/mwopswoolecaddy:$(VERSION)
 	@echo "- Pushing image to hub"
-	- docker push mwop/mwopcaddy:$(VERSION)
+	- docker push mwop/mwopswoolecaddy:$(VERSION)
 
 swoole:
 	@echo "Creating swoole container"

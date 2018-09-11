@@ -15,7 +15,7 @@
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
-const REPOS = ['mwopswoole', 'mwopcaddy'];
+const REPOS = ['mwopswoole', 'mwopswoolecaddy'];
 const STACKFILE = 'docker-stack.yml';
 const TAGSCRIPT = './bin/get-latest-tag.php';
 const TEMPLATE = 'docker-stack.yml.dist';
@@ -37,7 +37,7 @@ if ($argv[1] !== '-p' || $argv[3] !== '-c') {
 
 $versions = [
     'mwopswoole' => $argv[2],
-    'mwopcaddy'  => $argv[4],
+    'mwopswoolecaddy' => $argv[4],
 ];
 
 $substitutions = [];

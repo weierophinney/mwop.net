@@ -98,7 +98,7 @@ EOF;
     private function marshalEntries(array $feedInfo, Console $console) : Collection
     {
         $feedUrl  = $feedInfo['url'];
-        $logo     = $feedInfo['favicon'] ?? 'https://mwop.net/images/favicon/favicon-16x16.png';
+        $logo     = $feedInfo['favicon'] ?? 'https://swoole.mwop.net/images/favicon/favicon-16x16.png';
         $siteName = $feedInfo['sitename'] ?? '';
         $siteUrl  = $feedInfo['siteurl'] ?? '#';
         $filters  = $feedInfo['filters'] ?? [];

@@ -36,8 +36,8 @@ return [
         'feeds' => [
             [
                 'url' => realpath(getcwd()) . '/data/feeds/rss.xml',
-                'sitename' => 'mwop.net',
-                'siteurl' => 'https://mwop.net/blog',
+                'sitename' => 'swoole.mwop.net',
+                'siteurl' => 'https://swoole.mwop.net/blog',
             ],
             [
                 'url' => 'https://blog.zend.com/author/matthew-wop/feed/',
@@ -76,14 +76,14 @@ return [
         'github' => [
             'clientId'     => null,
             'clientSecret' => null,
-            'redirectUri'  => 'https://mwop.net/auth/github/oauth2callback'
+            'redirectUri'  => 'https://swoole.mwop.net/auth/github/oauth2callback'
         ],
         'google' => [
             'clientId'     => null,
             'clientSecret' => null,
-            'redirectUri'  => 'https://mwop.net/auth/google/oauth2callback',
+            'redirectUri'  => 'https://swoole.mwop.net/auth/google/oauth2callback',
             // Enable this to restrict authentication to users at the listed domain:
-            // 'hostedDomain' => 'https://mwop.net',
+            // 'hostedDomain' => 'https://swoole.mwop.net',
         ],
     ],
 ];
