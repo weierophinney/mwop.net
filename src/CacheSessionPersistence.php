@@ -92,7 +92,6 @@ class CacheSessionPersistence implements SessionPersistenceInterface
      */
     public function __construct(
         CacheItemPoolInterface $cache,
-        \Psr\Log\LoggerInterface $log,
         string $cookieName,
         string $cookiePath = '/',
         string $cacheLimiter = 'nocache',
@@ -100,7 +99,6 @@ class CacheSessionPersistence implements SessionPersistenceInterface
         int $lastModified = null
     ) {
         $this->cache = $cache;
-        $this->log = $log;
 
         if (empty($cookieName)) {
             throw new InvalidArgumentException('Session cookie name must not be empty');
@@ -176,9 +174,7 @@ class CacheSessionPersistence implements SessionPersistenceInterface
      */
     private function regenerateSession(string $id) : string
     {
-        $this->log->info(sprintf('Regenerating session %s', var_export($id, true)));
         if ('' !== $id && $this->cache->hasItem($id)) {
-            $this->log->info(sprintf('Removing cache entry for session %s', $id));
             $this->cache->deleteItem($id);
         }
         return $this->generateSessionId();

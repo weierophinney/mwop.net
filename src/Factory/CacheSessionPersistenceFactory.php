@@ -17,7 +17,6 @@ class CacheSessionPersistenceFactory
         $config = $container->get('config')['session'] ?? [];
         return new CacheSessionPersistence(
             $container->get(CacheItemPoolInterface::class),
-            $container->get(\Psr\Log\LoggerInterface::class),
             $config['cookie-name'] ?? 'MWOPSESS',
             $config['cookie-path'] ?? '/'
         );
