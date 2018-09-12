@@ -19,11 +19,9 @@ class LoggingErrorListenerDelegator
         callable $callback
     ) : ErrorHandler {
         $errorHandler = $callback();
-        /*
         $errorHandler->attachListener(
             new LoggingErrorListener($container->get(LoggerInterface::class))
         );
-         */
         return $errorHandler;
     }
 }

@@ -1,5 +1,5 @@
 https://{$CADDY_WEB_HOST} {
-    proxy / nginx:8080 {
+    proxy / php:9000 {
         transparent
     }
     header / Strict-Transport-Security "max-age=31536000;"

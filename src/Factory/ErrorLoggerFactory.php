@@ -12,7 +12,7 @@ use Monolog\Handler\ErrorLogHandler;
 use Monolog\Logger;
 use Monolog\Processor\PsrLogMessageProcessor;
 
-class LoggerFactory
+class ErrorLoggerFactory
 {
     public function __invoke(ContainerInterface $container) : LoggerInterface
     {

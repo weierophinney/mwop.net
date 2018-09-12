@@ -9,6 +9,7 @@ data/comics/*.html
 data/comics.mustache
 data/feeds/*.xml
 data/github-links.mustache
+data/redis/
 data/posts.db
 data/search_terms.json
 data/sessions/

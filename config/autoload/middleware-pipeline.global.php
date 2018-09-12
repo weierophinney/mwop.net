@@ -20,11 +20,6 @@ return ['dependencies' => [
     'aliases' => [
         Delegate\DefaultDelegate::class   => Delegate\NotFoundDelegate::class,
     ],
-    'delegators' => [
-        ErrorHandler::class => [
-            Factory\LoggingErrorListenerDelegator::class,
-        ],
-    ],
     'factories' => [
         Csp::class                        => Factory\ContentSecurityPolicyFactory::class,
         Delegate\NotFoundDelegate::class  => Container\NotFoundDelegateFactory::class,

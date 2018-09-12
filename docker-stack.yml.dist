@@ -1,31 +1,27 @@
 version: '3.2'
 
 services:
-  php-fpm:
-    image: "mwop/mwopphp:{mwopphp}"
+  redis:
+    image: "redis:alpine"
+    environment:
+      - REDIS_APPENDONLY=yes
+      - REDIS_APPENDFSYNC=always
+    volumes:
+      - /data/redis:/data
+
+  php:
+    image: "mwop/mwopswoole:{mwopswoole}"
     env_file:
       - .env
-    deploy:
-      restart_policy:
-        condition: on-failure
-        window: 3s
-
-  nginx:
-    image: "mwop/mwopnginx:{mwopnginx}"
-    hostname: "nginx"
     depends_on:
-      - php-fpm
-    deploy:
-      restart_policy:
-        condition: on-failure
-        window: 5s
+      - redis
 
   caddy:
-    image: "mwop/mwopcaddy:{mwopcaddy}"
+    image: "mwop/mwopswoolecaddy:{mwopswoolecaddy}"
     env_file:
       - .caddy.env
     depends_on:
-      - nginx
+      - php
     deploy:
       restart_policy:
         condition: on-failure

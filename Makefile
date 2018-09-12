@@ -5,8 +5,8 @@
 #
 # Allowed/expected variables:
 #
-# - NGINX_VERSION: specific nginx container version to use
-# - PHP_FPM_VERSION: specific php-fpm container version to use
+# - CADDY_VERSION: specific Caddy container version to use
+# - SWOOLE_VERSION: specific php+swoole container version to use
 #
 # If not specified, each defaults to "latest", which forces a lookup of the
 # latest tagged version.
@@ -14,12 +14,11 @@
 VERSION := $(shell date +%Y%m%d%H%M)
 
 CADDY_VERSION?=latest
-NGINX_VERSION?=latest
-PHP_FPM_VERSION?=latest
+SWOOLE_VERSION?=latest
 
-.PHONY : all deploy nginx php-fpm
+.PHONY : all deploy swoole caddy
 
-all: check-env deploy nginx php-fpm
+all: check-env deploy swoole caddy
 
 check-env:
 ifndef DOCKER_MACHINE_NAME
@@ -31,41 +30,31 @@ endif
 
 docker-stack.yml:
 	@echo "Creating docker-stack.yml"
+	@echo "- swoole container version: $(SWOOLE_VERSION)"
 	@echo "- caddy container version: $(CADDY_VERSION)"
-	@echo "- nginx container version: $(NGINX_VERSION)"
-	@echo "- php-fpm container version: $(PHP_FPM_VERSION)"
-	- $(CURDIR)/bin/create-docker-stack.php -n $(NGINX_VERSION) -p $(PHP_FPM_VERSION) -c ${CADDY_VERSION}
+	- $(CURDIR)/bin/create-docker-stack.php -p $(SWOOLE_VERSION) -c ${CADDY_VERSION}
 
 deploy: check-env docker-stack.yml
 	@echo "Deploying to swarm"
 	- docker stack deploy --with-registry-auth -c docker-stack.yml mwopnet
 	- rm docker-stack.yml
 
-nginx:
-	@echo "Creating nginx container"
-	@echo "- Building assets"
-	- composer build-nginx
-	@echo "- Building container"
-	- docker build -t mwopnginx -f ./etc/docker/nginx.Dockerfile .
-	@echo "- Tagging image"
-	- docker tag mwopnginx:latest mwop/mwopnginx:$(VERSION)
-	@echo "- Pushing image to hub"
-	- docker push mwop/mwopnginx:$(VERSION)
-
 caddy:
 	@echo "Creating caddy container"
 	@echo "- Building container"
-	- docker build -t mwopcaddy -f ./etc/docker/caddy.Dockerfile .
+	- docker build -t mwopswoolecaddy -f ./etc/docker/caddy.Dockerfile .
 	@echo "- Tagging image"
-	- docker tag mwopcaddy:latest mwop/mwopcaddy:$(VERSION)
+	- docker tag mwopswoolecaddy:latest mwop/mwopswoolecaddy:$(VERSION)
 	@echo "- Pushing image to hub"
-	- docker push mwop/mwopcaddy:$(VERSION)
+	- docker push mwop/mwopswoolecaddy:$(VERSION)
 
-php-fpm:
-	@echo "Creating php-fpm container"
+swoole:
+	@echo "Creating swoole container"
+	@echo "- Building assets"
+	- composer docker:assets
 	@echo "- Building container"
-	- docker build -t mwopphp -f ./etc/docker/php-fpm.Dockerfile .
+	- docker build -t mwopswoole -f ./etc/docker/php.Dockerfile .
 	@echo "- Tagging image"
-	- docker tag mwopphp:latest mwop/mwopphp:$(VERSION)
+	- docker tag mwopswoole:latest mwop/mwopswoole:$(VERSION)
 	@echo "- Pushing image to hub"
-	- docker push mwop/mwopphp:$(VERSION)
+	- docker push mwop/mwopswoole:$(VERSION)
