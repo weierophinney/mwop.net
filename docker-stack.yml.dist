@@ -15,10 +15,6 @@ services:
       - .env
     depends_on:
       - redis
-    deploy:
-      restart_policy:
-        condition: on-failure
-        window: 3s
 
   caddy:
     image: "mwop/mwopswoolecaddy:{mwopswoolecaddy}"

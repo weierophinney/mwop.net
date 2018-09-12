@@ -36,7 +36,7 @@ docker-stack.yml:
 
 deploy: check-env docker-stack.yml
 	@echo "Deploying to swarm"
-	- docker stack deploy --with-registry-auth -c docker-stack.yml mwopnet
+	- docker stack deploy --with-registry-auth -c docker-stack.yml mwopswoole
 	- rm docker-stack.yml
 
 caddy:
