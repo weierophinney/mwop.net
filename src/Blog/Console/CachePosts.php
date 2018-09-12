@@ -37,7 +37,7 @@ class CachePosts
 
         $path       = realpath($basePath) . '/data/blog';
         $cache      = realpath($basePath) . '/data/cache/posts';
-        $baseUri    = new Uri('https://swoole.mwop.net');
+        $baseUri    = new Uri('https://mwop.net');
         $middleware = $this->blogMiddleware;
 
         $console->writeLine('Generating static cache for blog posts', Color::GREEN);

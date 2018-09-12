@@ -22,10 +22,10 @@ all: check-env deploy swoole caddy
 
 check-env:
 ifndef DOCKER_MACHINE_NAME
-	$(error DOCKER_MACHINE_NAME is undefined; run "eval $$(docker-machine env mwopswoole)" first)
+	$(error DOCKER_MACHINE_NAME is undefined; run "eval $$(docker-machine env mwopnet)" first)
 endif
-ifneq ($(DOCKER_MACHINE_NAME),mwopswoole)
-	$(error DOCKER_MACHINE_NAME is incorrect; run "eval $$(docker-machine env mwopswoole)" first)
+ifneq ($(DOCKER_MACHINE_NAME),mwopnet)
+	$(error DOCKER_MACHINE_NAME is incorrect; run "eval $$(docker-machine env mwopnet)" first)
 endif
 
 docker-stack.yml:
@@ -36,7 +36,7 @@ docker-stack.yml:
 
 deploy: check-env docker-stack.yml
 	@echo "Deploying to swarm"
-	- docker stack deploy --with-registry-auth -c docker-stack.yml mwopswoole
+	- docker stack deploy --with-registry-auth -c docker-stack.yml mwopnet
 	- rm docker-stack.yml
 
 caddy:

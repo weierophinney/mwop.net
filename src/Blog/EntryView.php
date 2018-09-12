@@ -97,7 +97,7 @@ class EntryView
             return $text;
         });
 
-        return sprintf('https://swoole.mwop.net%s', $path);
+        return sprintf('https://mwop.net%s', $path);
     }
 
     public function tags() : array
