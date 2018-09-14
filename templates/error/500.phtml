@@ -1,6 +1,6 @@
-{{<layout::layout}}
-{{$title}}Error{{/title}}
-{{$content}}
+<?php $this->layout('layout::layout', [
+    'title' => 'Error',
+]); ?>
 <section class="col-md-8 col-md-offset-2 code_500">
     <h2>An error occurred!</h2>
 
@@ -10,9 +10,7 @@
         <a href="https://twitter.com/mwop">tweet at me</a>.
     </p>
 
-    {{#error}}
-    <pre>{{error}}</pre>
-    {{/error}}
+    <?php if ($error): ?>
+    <pre><?= $this->e($error) ?></pre>
+    <?php endif ?>
 </section>
-{{/content}}
-{{/layout::layout}}

@@ -1,6 +1,6 @@
-{{<layout::layout}}
-{{$title}}R&eacute;sum&eacute;{{/title}}}
-{{$content}}
+<?php $this->layout('layout::layout', [
+    'title' => 'R&eacute;sum&eacute;',
+]) ?>
 <article class="col-md-12 resume">
     <section>
         <h2>Personal Statement</h2> 
@@ -250,5 +250,3 @@
         </dl> 
     </section>
 </article>
-{{/content}}
-{{/layout::layout}}

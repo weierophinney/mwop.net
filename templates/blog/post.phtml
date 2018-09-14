@@ -1,0 +1,76 @@
+<?php
+$this->layout('layout::layout', [
+    'title' => $this->escapeHtml($post->title),
+]);
+$renderer = $this;
+$post->uriHelper = function () use ($renderer) : callable {
+    return function ($metadata) use ($renderer) : string {
+        $metadata = json_decode($metadata, true);
+        return $renderer->url($metadata['name'], $metadata['options'] ?? []);
+    };
+};
+
+$this->start('styles');
+$this->insert('blog::styles');
+$this->stop();
+
+$this->push('links');
+?>
+    <link rel="amphtml" href="<?= $post->url() ?>?amp=1">
+<?php foreach ($post->tags() as $tag) : ?>
+    <link href="<?= $tag['rss'] ?>" rel="alternate" type="application/rss+xml" title="phly, boy, phly RSS Feed for <?= $tag['tag'] ?>">
+    <link href="<?= $tag['atom'] ?>" rel="alternate" type="application/rss+xml" title="phly, boy, phly RSS Feed for <?= $tag['tag'] ?>">
+<?php endforeach;
+$this->end();
+
+$this->push('scripts');
+$this->insert('blog::scripts');
+$this->end();
+
+$this->push('footer');
+$this->insert('data::tag-cloud');
+$this->end();
+
+$updated = $post->updated();
+?>
+<div class="single-entry h-entry">
+    <aside class="col-md-2 col-md-offset-2 hidden-xs sidebar blog">
+        <p>
+            Written on <time class="dt-published" datetime="<?= $post->created_rfc() ?>"><?= $post->created() ?></time>.
+            <?php if ($updated) : ?>
+            <br />Last updated on <time class="dt-updated" datetime="<?= $updated['rfc'] ?>"><?= $updated['when'] ?></time>.
+            <?php endif ?>
+        </p>
+
+        <ul class="tags">
+        <?php foreach ($post->tags() as $tag) : ?>
+            <li><a class="p-category" href="<?= $tag['link'] ?>"><?= $tag['tag'] ?></a>
+        <?php endforeach ?>
+        </ul>
+    </aside>
+
+    <article class="col-md-6 blog">
+        <h2 class="p-name"><a class="u-url u-uid" href="<?= $post->url() ?>"><?= $this->escapeHtml($post->title) ?></a></h2>
+
+        <div class="e-content">
+        <?= $post->body ?>
+
+        <?= $post->extended ?>
+        </div>
+
+        <div class="p-author h-card hidden">
+          Posted by <a class="p-name u-url" href="<?= $this->serverurl() ?>">Matthew Weier O'Phinney</a>,
+          <img class="u-photo photo" width="50" src="https://avatars0.githubusercontent.com/u/25943?v=3&u=79dd2ea1d4d8855944715d09ee4c86215027fa80&s=140" alt="mwop">
+        </div>
+
+        <div class="divider"></div>
+
+        <div id="disqus_thread"
+          data-developer="<?= $post->disqus['developer'] ?>"
+          data-url="<?= $post->url() ?>"
+          data-identifier="<?= $post->id ?>"
+          data-title="<?= $post->title ?>"
+          data-key="<?= $post->disqus['key'] ?>"></div>
+        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+    </article>
+</div>

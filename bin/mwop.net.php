@@ -122,7 +122,7 @@ $routes = [
             '--template' => 'Template string to use when generating link output',
         ],
         'defaults' => [
-            'output' => 'data/github-links.mustache',
+            'output' => 'data/github-links.phtml',
         ],
         'handler' => function ($route, $console) use ($container) {
             $handler = $container->get(Github\Console\Fetch::class);
@@ -168,13 +168,13 @@ $routes = [
     [
         'name' => 'tag-cloud',
         'route' => '[--output=]',
-        'description' => 'Generate a Mustache template containing the tag cloud for the blog.',
+        'description' => 'Generate a template containing the tag cloud for the blog.',
         'short_description' => 'Generate tag cloud.',
         'options_descriptions' => [
             '--output'   => 'Output file to which to write the tag cloud',
         ],
         'defaults' => [
-            'output' => 'data/tag-cloud.mustache',
+            'output' => 'data/tag-cloud.phtml',
         ],
         'handler' => function ($route, $console) use ($container) {
             $handler = $container->get(Blog\Console\TagCloud::class);

@@ -1,6 +1,6 @@
-{{<layout::layout}}
-{{$title}}Welcome{{/title}}
-{{$content}}
+<?php $this->layout('layout::layout', [
+    'title' => 'Welcome',
+]) ?>
 <article class="col-md-4 alpha home">
     <h2>Welcome!</h2>
 
@@ -17,31 +17,35 @@
     </ul>
 
     <p>
-        I blog <a href="/blog">on this site</a>, as well as elsewhere (see the
+        I blog <a href="<?= $this->url('blog') ?>">on this site</a>, as well as elsewhere (see the
         icons next to the "Recent Blog Posts"), typically on topics related
-        to open source development. Feel free to <a href="/contact">contact me</a>.
+        to open source development. Feel free to <a href="<?= $this->url('contact') ?>">contact me</a>.
     </p>
 </article>
 
 <aside class="col-md-4 middle home">
-    <img src="/images/mwop-iced-mocha-2018-320x420.jpg" alt="Matthew likes coffee"" /><br />
+    <img src="/images/mwop-iced-mocha-2018-320x420.jpg" alt="Matthew likes coffee" /><br />
 </aside>
 
 <aside class="col-md-4 omega home">
     <h3>Recent Blog Posts</h3>
 
     <ul>
-    {{#posts}}
-        <li><a href="{{{siteurl}}}"><img src="{{{favicon}}}" alt="{{sitename}}" title="{{sitename}}" width="16"></a>&nbsp;<a href="{{link}}">{{title}}</a></li>
-    {{/posts}}
+    <?php foreach ($posts as $post) : ?>
+      <li><a href="<?= $post['siteurl'] ?>"><img
+        src="<?= $post['favicon'] ?>"
+        alt="<?= $this->escapeHtmlAttr($post['sitename']) ?>"
+        title="<?= $this->escapeHtmlAttr($post['sitename']) ?>"
+        width="16"></a>&nbsp;<a href="<?= $post['link'] ?>"><?= $this->escapeHtml($post['title']) ?></a></li>
+    <?php endforeach ?>
     </ul>
 
-    <p><em><a href="/blog">Read more</a></em></p>
+    <p><em><a href="<?= $this->url('blog') ?>">Read more</a></em></p>
 
     <h3>Recent Github Activity</h3>
 
     <ul id="github">
-        {{>github-links}}
+        <?php $this->insert('data::github-links') ?>
     </ul>
 
     <p><em><a href="https://github.com/weierophinney?tab=activity">Read more</a></em></p>
@@ -52,22 +56,20 @@
 
 <div class="h-card vcard hidden">
   <img class="u-photo photo" width="50" src="https://avatars0.githubusercontent.com/u/25943?v=3&u=79dd2ea1d4d8855944715d09ee4c86215027fa80&s=140" alt="mwop">,
-  <a class="p-name fn u-url url" href="https://mwop.net/" rel="me">Matthew Weier O'Phinney</a>,
+  <a class="p-name fn u-url url" href="<?= $this->serverurl() ?>" rel="me">Matthew Weier O'Phinney</a>,
   <a class="u-email email" href="mailto:matthew@weierophinney.net">matthew@weierophinney.net</a>,
   <span class="p-nickname nickname">mwop,weierophinney</span>,
   <div class="p-note note">
     <p>
-      <a href="https://mwop.net/" rel="author">Matthew Weier O'Phinney</a> is a
+      <a href="<?= $this->serverurl() ?>" rel="author">Matthew Weier O'Phinney</a> is a
       web professional and architect, technical writer, and speaker. Matthew
-      works as a Principal Engineer at <a href="http://www.zend.com">Zend
-        Technologies</a> (a <a href="http://www.roguewave.com">RogueWave
+      works as a Principal Engineer at <a href="https://www.zend.com">Zend
+        Technologies</a> (a <a href="https://www.roguewave.com">RogueWave
         company</a>, where he leads the Zend Framework and Apigility
       projects, providing open source tools for building web applications and
       APIs in PHP. He blogs at <a
-          href="https://mwop.net/blog">https://mwop.net/blog</a>
+        href="<?= $this->serverurl($this->url('blog')) ?>"><?= $this->serverurl($this->url('blog')) ?></a>
       and is <a href="https://twitter.com/mwop">@mwop</a> on Twitter.
     </p>
   </div>
 </div>
-{{/content}}
-{{/layout::layout}}

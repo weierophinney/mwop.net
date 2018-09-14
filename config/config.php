@@ -15,6 +15,7 @@ $cacheConfig = [
 ];
 
 $aggregator = new ConfigAggregator([
+    \Zend\Expressive\Plates\ConfigProvider::class,
     \Zend\Paginator\ConfigProvider::class,
     \Zend\Mail\ConfigProvider::class,
     \Zend\InputFilter\ConfigProvider::class,
@@ -23,7 +24,6 @@ $aggregator = new ConfigAggregator([
     \Zend\Expressive\Session\ConfigProvider::class,
     \Zend\Expressive\Csrf\ConfigProvider::class,
     \Zend\Expressive\Authentication\ConfigProvider::class,
-    \Phly\Expressive\OAuth2ClientAuthentication\ConfigProvider::class,
     \Zend\Expressive\ConfigProvider::class,
     \Zend\HttpHandlerRunner\ConfigProvider::class,
     \Zend\Expressive\Helper\ConfigProvider::class,

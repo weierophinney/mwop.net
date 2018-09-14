@@ -74,7 +74,7 @@ class DisplayPostMiddleware implements MiddlewareInterface
 
         return new HtmlResponse($this->template->render(
             $isAmp ? 'blog::post.amp' : 'blog::post',
-            $post
+            ['post' => $post]
         ));
     }
 }

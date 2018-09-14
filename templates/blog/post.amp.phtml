@@ -1,65 +1,60 @@
-{{<layout::amp}}
-{{$title}}{{title}}{{/title}}}
-{{$canonical}}{{{url}}}{{/canonical}}
-{{$metadata}}
+<?php
+$this->layout('layout::amp', [
+    'title' => $post->title,
+    'canonical' => $post->url(),
+]);
+$updated = $post->updated();
+
+$this->start('metadata');
+?>
     {
       "@context": "http://schema.org",
       "@type": "BlogPosting",
-      "@id": "{{url}}",
-      "headline": "{{title}}",
-      "datePublished": "{{created_rfc}}",
-      {{#updated}}
-      "dateModified": "{{rfc}}",
-      {{/updated}}
+      "@id": "<?= $post->url() ?>",
+      "headline": "<?= $post->title ?>",
+      "datePublished": "<?= $post->created_rfc() ?>",
+      <?php if ($updated) :?>
+      "dateModified": "<?= $updated['rfc'] ?>",
+      <?php endif ?>
       "image": {
         "@type": "ImageObject",
-        {{#image}}
-        "url": "{{url}}",
-        "height": {{height}},
-        "width": {{width}}
-        {{/image}}
-        {{^image}}
-        "url": "https://mwop.net/images/mwop-hard-rock-stack-2015.jpg",
+        "url": "<?= $this->serverurl('/images/mwop-hard-rock-stack-2015.jpg') ?>",
         "height": 576,
         "width": 1023
-        {{/image}}
       },
       "author": {
         "@type": "Person",
         "name": "Matthew Weier O'Phinney",
         "image": "https://avatars0.githubusercontent.com/u/25943?v=3&u=79dd2ea1d4d8855944715d09ee4c86215027fa80&s=140",
-        "url": "https://mwop.net"
+        "url": "<?= $this->serverurl() ?>"
       },
       "publisher": {
         "@type": "Organization",
         "name": "mwop.net",
         "image": "https://avatars0.githubusercontent.com/u/25943?v=3&u=79dd2ea1d4d8855944715d09ee4c86215027fa80&s=140",
-        "url": "https://mwop.net",
+        "url": "<?= $this->serverurl() ?>",
         "logo": {
             "@type": "ImageObject",
-            "url": "https://mwop.net/images/favicon/favicon-32x32.png",
+            "url": "<?= $this->serverurl('/images/favicon/favicon-32x32.png') ?>",
             "height": 32,
             "width": 32
         }
       },
-      "keywords": "{{keywords}}",
-      "mainEntityOfPage": "{{url}}"
+      "keywords": "<?= $post->keywords ?>",
+      "mainEntityOfPage": "<?= $post->url() ?>"
     }
-{{/metadata}}
-{{$content}}
+<?php $this->stop() ?>
 <article class="single-entry h-entry col-md-6 blog">
-    <h2 class="p-name"><a class="u-url u-uid" href="{{url}}">{{title}}</a></h2>
+    <h2 class="p-name"><a class="u-url u-uid" href="<?= $post->url() ?>"><?= $this->escapeHtml($post->title) ?></a></h2>
 
     <div class="e-content">
-    {{{body}}}
+    <?= $post->body ?>
 
-    {{{extended}}}
+    <?= $post->extended ?>
     </div>
 
     <div class="p-author h-card hidden">
-      Posted by <a class="p-name u-url" href="https://mwop.net/">Matthew Weier O'Phinney</a>,
+      Posted by <a class="p-name u-url" href="<?= $this->serverurl() ?>">Matthew Weier O'Phinney</a>,
       <amp-img class="u-photo photo" width="50" height="50" src="https://avatars0.githubusercontent.com/u/25943?v=3&u=79dd2ea1d4d8855944715d09ee4c86215027fa80&s=140" alt="mwop"></amp-img>
     </div>
 </article>
-{{/content}}
-{{/layout::amp}}

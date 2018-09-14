@@ -35,6 +35,7 @@
         "zendframework/zend-expressive": "^3.0",
         "zendframework/zend-expressive-csrf": "^1.0",
         "zendframework/zend-expressive-fastroute": "^3.0",
+        "zendframework/zend-expressive-platesrenderer": "^2.0",
         "zendframework/zend-expressive-session": "^1.1",
         "zendframework/zend-expressive-swoole": "^0.2.1",
         "zendframework/zend-feed": "^2.7",
