@@ -4,8 +4,21 @@
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
-return [
+use League\Plates\Engine;
+use Mwop\Factory\PlatesFunctionsDelegator;
+use Zend\Expressive\Plates\PlatesEngineFactory;
 
+return [
+    'dependencies' => [
+        'delegators' => [
+            Engine::class => [
+                PlatesFunctionsDelegator::class,
+            ],
+        ],
+        'factories' => [
+            Engine::class => PlatesEngineFactory::class,
+        ],
+    ],
     'templates' => [
         'extension' => 'phtml',
         'paths' => [

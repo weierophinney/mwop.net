@@ -66,15 +66,16 @@ class DisplayPostMiddleware implements MiddlewareInterface
         $post     = array_merge($post, [
             'body'      => $parts[0],
             'extended'  => isset($parts[1]) ? $parts[1] : '',
+            'updated'   => $post['updated'] && $post['updated'] !== $post['created'] ? $post['updated'] : false,
+            'tags'      => is_array($post['tags']) ? $post['tags'] : explode('|', trim((string) $post['tags'], '|')),
         ]);
-
-        $original = $request->getAttribute('originalRequest', $request)->getUri()->getPath();
-        $path     = substr($original, 0, -(strlen($post['id'] . '.html') + 1));
-        $post     = new EntryView($post, $isAmp, $this->disqus);
 
         return new HtmlResponse($this->template->render(
             $isAmp ? 'blog::post.amp' : 'blog::post',
-            ['post' => $post]
+            [
+                'post' => $post,
+                'disqus' => $this->disqus,
+            ]
         ));
     }
 }

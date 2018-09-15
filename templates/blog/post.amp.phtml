@@ -1,21 +1,20 @@
 <?php
 $this->layout('layout::amp', [
-    'title' => $post->title,
-    'canonical' => $post->url(),
+    'title' => $post['title'],
+    'canonical' => $this->serverurl($this->postUrl($post)),
 ]);
-$updated = $post->updated();
 
 $this->start('metadata');
 ?>
     {
       "@context": "http://schema.org",
       "@type": "BlogPosting",
-      "@id": "<?= $post->url() ?>",
-      "headline": "<?= $post->title ?>",
-      "datePublished": "<?= $post->created_rfc() ?>",
-      <?php if ($updated) :?>
-      "dateModified": "<?= $updated['rfc'] ?>",
-      <?php endif ?>
+      "@id": "<?= $this->serverurl($this->postUrl($post)) ?>",
+      "headline": "<?= $post['title'] ?>",
+      "datePublished": "<?= $this->formatDateRfc($post['created']) ?>",
+    <?php if ($post['updated']) :?>
+      "dateModified": "<?= $this->formatDateRfc($post['updated']) ?>",
+    <?php endif ?>
       "image": {
         "@type": "ImageObject",
         "url": "<?= $this->serverurl('/images/mwop-hard-rock-stack-2015.jpg') ?>",
@@ -40,17 +39,17 @@ $this->start('metadata');
             "width": 32
         }
       },
-      "keywords": "<?= $post->keywords ?>",
-      "mainEntityOfPage": "<?= $post->url() ?>"
+      "keywords": "<?= implode(', ', $post['tags']) ?>",
+      "mainEntityOfPage": "<?= $this->serverurl($this->postUrl($post)) ?>"
     }
 <?php $this->stop() ?>
 <article class="single-entry h-entry col-md-6 blog">
-    <h2 class="p-name"><a class="u-url u-uid" href="<?= $post->url() ?>"><?= $this->escapeHtml($post->title) ?></a></h2>
+    <h2 class="p-name"><a class="u-url u-uid" href="<?= $this->serverurl($this->postUrl($post)) ?>"><?= $this->escapeHtml($post['title']) ?></a></h2>
 
     <div class="e-content">
-    <?= $post->body ?>
+    <?= $this->ampifyContent($post['body']) ?>
 
-    <?= $post->extended ?>
+    <?= $this->ampifyContent($post['extended']) ?>
     </div>
 
     <div class="p-author h-card hidden">

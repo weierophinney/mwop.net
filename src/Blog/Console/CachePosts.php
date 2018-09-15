@@ -17,6 +17,7 @@ use Zend\Diactoros\ServerRequest as Request;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\Uri;
 use Zend\Expressive\Handler\NotFoundHandler;
+use Zend\Expressive\Helper\ServerUrlHelper;
 use ZF\Console\Route;
 
 class CachePosts
@@ -25,10 +26,15 @@ class CachePosts
 
     private $blogMiddleware;
 
-    public function __construct(MiddlewareInterface $blog, NotFoundHandler $defaultHandler)
-    {
+    public function __construct(
+        MiddlewareInterface $blog,
+        NotFoundHandler $defaultHandler,
+        ServerUrlHelper $serverUrlHelper
+    ) {
         $this->blogMiddleware = $blog;
         $this->defaultHandler = $defaultHandler;
+
+        $serverUrlHelper->setUri(new Uri('https://mwop.net'));
     }
 
     public function __invoke(Route $route, Console $console) : int

@@ -9,11 +9,12 @@ namespace Mwop\Blog\Console;
 use DateTime;
 use Mni\FrontYAML\Bridge\CommonMark\CommonMarkParser;
 use Mni\FrontYAML\Parser;
-use Mwop\Blog\EntryView;
 use Mwop\Blog\MapperInterface;
 use Symfony\Component\Yaml\Parser as YamlParser;
 use Traversable;
 use Zend\Console\Adapter\AdapterInterface as Console;
+use Zend\Diactoros\Uri;
+use Zend\Expressive\Helper\ServerUrlHelper;
 use Zend\Expressive\Router\RouterInterface;
 use Zend\Expressive\Template\TemplateRendererInterface;
 use Zend\Feed\Writer\Feed as FeedWriter;
@@ -32,7 +33,7 @@ class FeedGenerator
     private $defaultAuthor = [
         'name'  => 'Matthew Weier O\'Phinney',
         'email' => 'me@mwop.net',
-        'uri'   => 'http://mwop.net',
+        'uri'   => 'https://mwop.net',
     ];
 
     private $mapper;
@@ -45,12 +46,15 @@ class FeedGenerator
         MapperInterface $mapper,
         RouterInterface $router,
         TemplateRendererInterface $renderer,
+        ServerUrlHelper $serverUrlHelper,
         string $authorsPath
     ) {
         $this->mapper      = $mapper;
         $this->router      = $this->seedRoutes($router);
         $this->renderer    = $renderer;
         $this->authorsPath = $authorsPath;
+
+        $serverUrlHelper->setUri(new Uri('https://mwop.net'));
     }
 
     public function __invoke(Route $route, Console $console) : int
@@ -219,8 +223,10 @@ class FeedGenerator
      */
     private function createContent(string $content, array $post) : string
     {
-        $view   = new EntryView($post);
-        $hEntry = $this->renderer->render('blog::hcard', $view);
-        return sprintf("%s\n\n%s", $content, $hEntry);
+        return sprintf(
+            "%s\n\n%s",
+            $content,
+            $this->renderer->render('blog::hcard', ['post' => $post])
+        );
     }
 }
