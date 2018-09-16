@@ -7,12 +7,10 @@
 
 namespace Mwop\Blog;
 
-use Phly\Expressive\Mustache\UriHelper;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use stdClass;
-use Zend\Expressive\Helper\UrlHelper;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Diactoros\Response\RedirectResponse;
 use Zend\Expressive\Router\RouterInterface;
@@ -27,18 +25,14 @@ class ListPostsHandler implements RequestHandlerInterface
 
     private $template;
 
-    private $uriHelper;
-
     public function __construct(
         MapperInterface $mapper,
         TemplateRendererInterface $template,
-        RouterInterface $router,
-        UrlHelper $urlHelper
+        RouterInterface $router
     ) {
         $this->mapper    = $mapper;
         $this->template  = $template;
         $this->router    = $router;
-        $this->uriHelper = new UriHelper($urlHelper);
     }
 
     public function handle(ServerRequestInterface $request) : ResponseInterface
