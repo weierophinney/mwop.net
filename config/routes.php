@@ -20,7 +20,7 @@ return function (
 
     // Blog
     $app->get('/blog[/]', Blog\ListPostsHandler::class, 'blog');
-    $app->get('/blog/{id:[^/]+}.html', Blog\DisplayPostMiddleware::class, 'blog.post');
+    $app->get('/blog/{id:[^/]+}.html', Blog\DisplayPostHandler::class, 'blog.post');
     $app->get('/blog/tag/{tag:php}.xml', Blog\FeedMiddleware::class, 'blog.feed.php');
     $app->get('/blog/{tag:php}.xml', Blog\FeedMiddleware::class, 'blog.feed.php.also');
     $app->get('/blog/tag/{tag:[^/]+}/{type:atom|rss}.xml', Blog\FeedMiddleware::class, 'blog.tag.feed');

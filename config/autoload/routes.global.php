@@ -28,7 +28,7 @@ return [
             RouterInterface::class               => FastRouteRouter::class,
         ],
         'factories' => [
-            Blog\DisplayPostMiddleware::class => Blog\DisplayPostMiddlewareFactory::class,
+            Blog\DisplayPostHandler::class    => Blog\DisplayPostHandlerFactory::class,
             Blog\ListPostsHandler::class      => Blog\ListPostsHandlerFactory::class,
             Contact\LandingPage::class        => Contact\LandingPageFactory::class,
             Contact\Process::class            => Contact\ProcessFactory::class,
