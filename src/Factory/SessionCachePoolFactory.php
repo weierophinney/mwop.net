@@ -7,16 +7,13 @@
 namespace Mwop\Factory;
 
 use Mwop\SessionCachePool;
-use Predis\Client;
+use Psr\Cache\CacheItemPoolInterface;
 use Psr\Container\ContainerInterface;
 
 class SessionCachePoolFactory
 {
     public function __invoke(ContainerInterface $container) : SessionCachePool
     {
-        $config = $container->get('config')['session']['cache'];
-        $connectionParameters = $config['connection-parameters']; // required
-        $clientOptions = $config['client-options'] ?? []; // optional
-        return new SessionCachePool(new Client($connectionParameters, $clientOptions));
+        return new SessionCachePool($container->get(CacheItemPoolInterface::class));
     }
 }

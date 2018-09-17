@@ -44,6 +44,19 @@ $routes = [
         },
     ],
     [
+        'name' => 'clear-post-cache',
+        'route' => '',
+        'description' => 'Clear the blog post cache.',
+        'short_description' => 'Clear the blog post cache.',
+        'defaults' => [
+            'path' => realpath(getcwd()),
+        ],
+        'handler' => function ($route, $console) use ($container) {
+            $handler = $container->get(Blog\Console\ClearCache::class);
+            return $handler($route, $console);
+        },
+    ],
+    [
         'name' => 'copy-asset-symlinks',
         'description' => 'Copy assets installed by npm into the public tree.',
         'short_description' => 'Copy assets.',

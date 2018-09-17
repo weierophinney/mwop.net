@@ -7,15 +7,13 @@
 namespace Mwop\Blog;
 
 use Predis\Client;
+use Psr\Cache\CacheItemPoolInterface;
 use Psr\Container\ContainerInterface;
 
 class BlogCachePoolFactory
 {
     public function __invoke(ContainerInterface $container) : BlogCachePool
     {
-        $config = $container->get('config')['blog']['cache'] ?? [];
-        $connectionParameters = $config['connection-parameters']; // required
-        $clientOptions = $config['client-options'] ?? []; // optional
-        return new BlogCachePool(new Client($connectionParameters, $clientOptions));
+        return new BlogCachePool($container->get(CacheItemPoolInterface::class));
     }
 }
