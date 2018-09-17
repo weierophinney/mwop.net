@@ -29,14 +29,8 @@ class CachingMiddleware implements MiddlewareInterface
      */
     private $enabled;
 
-    /**
-     * @var MiddlewareInterface
-     */
-    private $middleware;
-
-    public function __construct(MiddlewareInterface $middleware, CacheItemPoolInterface $cache, bool $enabled = true)
+    public function __construct(CacheItemPoolInterface $cache, bool $enabled = true)
     {
-        $this->middleware = $middleware;
         $this->cache      = $cache;
         $this->enabled    = $enabled;
     }
@@ -46,8 +40,7 @@ class CachingMiddleware implements MiddlewareInterface
      */
     public function process(Request $request, RequestHandlerInterface $handler) : Response
     {
-        $middleware = $this->middleware;
-        $id         = $request->getAttribute('id', false);
+        $id = $request->getAttribute('id', false);
 
         if (! empty($request->getQueryParams()['amp'])) {
             $id .= '-amp';
@@ -55,7 +48,7 @@ class CachingMiddleware implements MiddlewareInterface
 
         // Caching is disabled, or no identifier present; invoke the middleware.
         if (! $this->enabled || ! $id) {
-            return $middleware->process($request, $handler);
+            return $handler->handle($request);
         }
 
         $item = $this->cache->getItem($id);
@@ -66,7 +59,7 @@ class CachingMiddleware implements MiddlewareInterface
         }
 
         // Invoke middleware
-        $response = $middleware->process($request, $handler);
+        $response = $handler->handle($request);
 
         // Result represents an error response; cannot cache.
         if (300 <= $response->getStatusCode()) {
