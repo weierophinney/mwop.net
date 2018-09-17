@@ -13,13 +13,9 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use RuntimeException;
 use Swoole\Event;
 use Throwable;
-use Zend\Diactoros\Exception;
-use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Diactoros\Response\Serializer;
-use Zend\Diactoros\Stream;
 
 class CachingMiddleware implements MiddlewareInterface
 {

@@ -92,7 +92,6 @@
             "bin/mwop.net.php seed-blog-db",
             "bin/mwop.net.php tag-cloud",
             "bin/mwop.net.php feed-generator",
-            "bin/mwop.net.php cache-posts",
             "@build:search"
         ],
         "build:homepage": [
@@ -121,7 +120,7 @@
             "phly-comic.php fetch-all --output=data/comics.phtml --exclude=dilbert,reptilis-rex,nih"
         ],
         "npm": "npm install --no-save",
-        "serve": "php -S 0.0.0.0:8080 -t public/",
+        "serve": "docker-compose up",
         "test": "phpunit --colors=always",
         "expressive": "expressive"
     }

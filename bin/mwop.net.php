@@ -2,8 +2,8 @@
 <?php
 /**
  * @todo Rewrite code for generating blog DB to use Puli.
- * @todo Rewrite tag-cloud, cache-posts, feed-generator to depend on DB population;
- *     either have them call that task before running, or check for the DB, or look
+ * @todo Rewrite tag-cloud, feed-generator to depend on DB population; either
+ *     have them call that task before running, or check for the DB, or look
  *     for a CLI flag that asks to update first.
  * @todo Maybe add a "blog-prepare" task that does all of the above at once, in order?
  * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
@@ -30,22 +30,6 @@ $container = require 'config/container.php';
 $container->get('Zend\Expressive\Application');
 
 $routes = [
-    [
-        'name' => 'cache-posts',
-        'route' => '[--path=]',
-        'description' => 'Generate the static cache of all blog posts.',
-        'short_description' => 'Cache blog posts.',
-        'options_descriptions' => [
-            '--path'   => 'Base path of the application; posts are expected at $path/data/blog/',
-        ],
-        'defaults' => [
-            'path'   => realpath(getcwd()),
-        ],
-        'handler' => function ($route, $console) use ($container) {
-            $handler = $container->get(Blog\Console\CachePosts::class);
-            return $handler($route, $console);
-        },
-    ],
     [
         'name' => 'clear-cache',
         'route' => '',
