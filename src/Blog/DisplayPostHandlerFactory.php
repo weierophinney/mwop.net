@@ -8,7 +8,6 @@ namespace Mwop\Blog;
 
 use Psr\Container\ContainerInterface;
 use Zend\Expressive\Middleware\NotFoundHandler;
-use Zend\Expressive\Router\RouterInterface;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
 class DisplayPostHandlerFactory
@@ -18,7 +17,6 @@ class DisplayPostHandlerFactory
         return new DisplayPostHandler(
             $container->get(__NAMESPACE__ . '\Mapper'),
             $container->get(TemplateRendererInterface::class),
-            $container->get(RouterInterface::class),
             $container->get(NotFoundHandler::class),
             $container->get('config')['blog']['disqus']
         );
