@@ -60,7 +60,7 @@ class CachingMiddleware implements MiddlewareInterface
 
         $item = $this->cache->getItem($id);
         $response = $this->unserializeResponse($item);
-        if ($response) {
+        if ($response instanceof Response) {
             // Hit cache, and was able to unserialize the data to a response.
             return $response;
         }
@@ -79,7 +79,7 @@ class CachingMiddleware implements MiddlewareInterface
             $this->cache->save($item);
         });
 
-        return $result;
+        return $response;
     }
 
     private function unserializeResponse(CacheItemInterface $item) : ?Response
