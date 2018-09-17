@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
@@ -9,22 +8,30 @@ namespace Mwop\Blog;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use RuntimeException;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\Stream;
 
-class FeedMiddleware implements MiddlewareInterface
+class FeedHandler implements RequestHandlerInterface
 {
+    /**
+     * @var string
+     */
     private $feedPath;
 
-    public function __construct(string $feedPath = 'data/feeds')
+    /**
+     * @var RequestHandlerInterface
+     */
+    private $notFoundHandler;
+
+    public function __construct(RequestHandlerInterface $notFoundHandler, string $feedPath = 'data/feeds')
     {
+        $this->notFoundHandler = $notFoundHandler;
         $this->feedPath = $feedPath;
     }
 
-    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler) : ResponseInterface
+    public function handle(ServerRequestInterface $request) : ResponseInterface
     {
         $tag  = $request->getAttribute('tag');
         $type = $request->getAttribute('type', 'rss');
@@ -33,7 +40,7 @@ class FeedMiddleware implements MiddlewareInterface
             : $this->getFeedPath($type);
 
         if (! file_exists($path)) {
-            return $handler->handle($request);
+            return $this->notFoundHandler->handle($request);
         }
 
         return (new Response())

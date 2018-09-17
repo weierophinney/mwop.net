@@ -22,13 +22,13 @@ return [
             ],
         ],
         'invokables' => [
-            Blog\FeedMiddleware::class           => Blog\FeedMiddleware::class,
             Blog\Console\SeedBlogDatabase::class => Blog\Console\SeedBlogDatabase::class,
             BodyParamsMiddleware::class          => BodyParamsMiddleware::class,
             RouterInterface::class               => FastRouteRouter::class,
         ],
         'factories' => [
             Blog\DisplayPostHandler::class    => Blog\DisplayPostHandlerFactory::class,
+            Blog\FeedHandler::class           => Blog\FeedHandlerFactory::class,
             Blog\ListPostsHandler::class      => Blog\ListPostsHandlerFactory::class,
             Contact\LandingPage::class        => Contact\LandingPageFactory::class,
             Contact\Process::class            => Contact\ProcessFactory::class,
