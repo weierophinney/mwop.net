@@ -17,7 +17,7 @@ use Zend\Expressive\Router\FastRouteRouter;
 return [
     'dependencies' => [
         'delegators' => [
-            Blog\DisplayPostMiddleware::class => [
+            Blog\DisplayPostHandler::class => [
                 Blog\CachingDelegatorFactory::class,
             ],
         ],

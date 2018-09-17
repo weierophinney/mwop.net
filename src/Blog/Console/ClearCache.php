@@ -7,66 +7,38 @@
 namespace Mwop\Blog\Console;
 
 use Psr\Cache\CacheItemPoolInterface;
-use Zend\Console\Adapter\AdapterInterface as Console;
-use Zend\Console\ColorInterface as Color;
-use ZF\Console\Route;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
-class ClearCache
+class ClearCache extends Command
 {
     private $cache;
 
     public function __construct(CacheItemPoolInterface $cache)
     {
         $this->cache = $cache;
+        parent::__construct('blog:clear-cache');
     }
 
-    public function __invoke(Route $route, Console $console) : int
+    protected function configure()
     {
-        $console->write('Removing cached blog entries...', Color::BLUE);
-
-        return $this->cache->clear()
-            ? $this->reportSuccess($console, 30, $console->getWidth())
-            : $this->reportError(
-                $console,
-                30,
-                $console->getWidth(),
-                'Cache pool indicated unsuccessful clear operation'
-            );
+        $this->setDescription('Clear the blog post cache');
+        $this->setHelp('Clear the blog post cache');
     }
 
-    /**
-     * Report an error
-     *
-     * @param Console $console
-     * @param int $width
-     * @param int $length
-     * @param string $message
-     * @return int
-     */
-    private function reportError(Console $console, int $width, int $length, string $message) : int
+    protected function execute(InputInterface $input, OutputInterface $output) : int
     {
-        if (($length + 9) > $width) {
-            $console->writeLine('');
-            $length = 0;
+        $io = new SymfonyStyle($input, $output);
+        $io->title('Removing cached blog entries');
+
+        if (! $this->cache->clear()) {
+            $io->error('Cache pool indicated unsuccessful clear operation');
+            return 1;
         }
-        $spaces = $width - $length - 9;
-        $console->writeLine(str_repeat('.', $spaces) . '[ ERROR ]', Color::RED);
-        $console->writeLine($message);
-        return 1;
-    }
 
-    /**
-     * Report success
-     */
-    private function reportSuccess(Console $console, int $width, int $length) : int
-    {
-        if (($length + 8) > $width) {
-            $console->writeLine('');
-            $length = 0;
-        }
-        $spaces = $width - $length - 8;
-        $spaces = ($spaces > 0) ? $spaces : 0;
-        $console->writeLine(str_repeat('.', $spaces) . '[ DONE ]', Color::GREEN);
+        $io->success('SUCCESS');
         return 0;
     }
 }

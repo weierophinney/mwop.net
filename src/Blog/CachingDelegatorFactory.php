@@ -7,7 +7,8 @@
 namespace Mwop\Blog;
 
 use Psr\Container\ContainerInterface;
-use Zend\Stratigility\MiddlewarePipe;
+use Psr\Http\Server\MiddlewareInterface;
+use Zend\Expressive\MiddlewareFactory;
 
 class CachingDelegatorFactory
 {
@@ -16,16 +17,16 @@ class CachingDelegatorFactory
         $requestedName,
         callable $callback,
         array $options = null
-    ) : MiddlewarePipe {
+    ) : MiddlewareInterface {
         $config = $container->get('config')['blog'] ?? [];
+        $factory = $container->get(MiddlewareFactory::class);
 
-        $pipeline = new MiddlewarePipe();
-        $pipeline->pipe(new CachingMiddleware(
-            $container->get(BlogCachePool::class),
-            $config['cache']['enabled'] ?? false
-        ));
-        $pipeline->pipe($callback());
-
-        return $pipeline;
+        return $factory->pipeline([
+            new CachingMiddleware(
+                $container->get(BlogCachePool::class),
+                $config['cache']['enabled'] ?? false
+            ),
+            $callback(),
+        ]);
     }
 }
