@@ -6,7 +6,6 @@
 
 namespace Mwop\Blog;
 
-use Psr\Cache\CacheItemPoolInterface;
 use Psr\Container\ContainerInterface;
 
 class CachingDelegatorFactory
@@ -17,12 +16,12 @@ class CachingDelegatorFactory
         callable $callback,
         array $options = null
     ) : CachingMiddleware {
-        $config = $container->get('config')['blog'];
+        $config = $container->get('config')['blog'] ?? [];
 
         return new CachingMiddleware(
             $callback(),
-            $container->get(CacheItemPoolInterface::class),
-            $config['cache_enabled']
+            $container->get(BlogCachePool::class),
+            $config['cache']['enabled'] ?? false
         );
     }
 }

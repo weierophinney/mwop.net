@@ -22,8 +22,10 @@ use Zend\Expressive\WhoopsPageHandler;
 
 return [
     'blog' => [
-        'cache_enabled' => false,
-        'disqus'        => [
+        'cache'  => [
+            'enabled' => false,
+        ],
+        'disqus' => [
             'developer' => 0,
             'key'       => 'phlyboyphly',
         ],

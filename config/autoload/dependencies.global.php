@@ -25,7 +25,6 @@ return ['dependencies' => [
         Blog\Console\GenerateSearchData::class => InvokableFactory::class,
         Blog\Console\TagCloud::class      => Blog\Console\TagCloudFactory::class,
         Blog\Mapper::class                => Blog\MapperFactory::class,
-        CacheItemPoolInterface::class     => Factory\PredisCacheFactory::class,
         Console\CopyAssetSymlinks::class  => InvokableFactory::class,
         Console\CreateAssetSymlinks::class => InvokableFactory::class,
         Console\FeedAggregator::class     => Console\FeedAggregatorFactory::class,
@@ -35,6 +34,7 @@ return ['dependencies' => [
         Github\Console\Fetch::class       => Github\Console\FetchFactory::class,
         Github\PuSH\Logger::class         => Github\PuSH\LoggerFactory::class,
         Github\PuSH\LoggerAction::class   => Github\PuSH\LoggerActionFactory::class,
+        SessionCachePool::class           => Factory\SessionCachePoolFactory::class,
         SessionPersistenceInterface::class => Factory\CacheSessionPersistenceFactory::class,
     ],
 ]];

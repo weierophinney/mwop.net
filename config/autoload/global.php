@@ -6,10 +6,11 @@
 
 return [
     'blog' => [
-        'db'            => 'sqlite:' . realpath(getcwd()) . '/data/posts.db',
-        'cache_path'    => 'data/cache/posts',
-        'cache_enabled' => true,
-        'disqus'        => [
+        'db'     => 'sqlite:' . realpath(getcwd()) . '/data/posts.db',
+        'cache'  => [
+            'enabled' => true,
+        ],
+        'disqus' => [
             'developer' => 0,
             'key'       => null,
         ],
