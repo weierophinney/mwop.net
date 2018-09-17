@@ -10,18 +10,22 @@ use Mni\FrontYAML\Bridge\CommonMark\CommonMarkParser;
 use Mni\FrontYAML\Parser;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use RuntimeException;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Expressive\Router\RouterInterface;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
-class DisplayPostMiddleware implements MiddlewareInterface
+class DisplayPostHandler implements RequestHandlerInterface
 {
     private $disqus;
 
     private $mapper;
+
+    /**
+     * @var RequestHandlerInterface
+     */
+    private $notFoundHandler;
 
     /**
      * Delimiter between post summary and extended body
@@ -38,23 +42,22 @@ class DisplayPostMiddleware implements MiddlewareInterface
         MapperInterface $mapper,
         TemplateRendererInterface $template,
         RouterInterface $router,
+        RequestHandlerInterface $notFoundHandler,
         array $disqus = []
     ) {
-        $this->mapper   = $mapper;
-        $this->template = $template;
-        $this->router   = $router;
-        $this->disqus   = $disqus;
+        $this->mapper          = $mapper;
+        $this->template        = $template;
+        $this->router          = $router;
+        $this->notFoundHandler = $notFoundHandler;
+        $this->disqus          = $disqus;
     }
 
-    /**
-     * @return ResponseInterface
-     */
-    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler) : ResponseInterface
+    public function handle(ServerRequestInterface $request) : ResponseInterface
     {
         $post = $this->mapper->fetch($request->getAttribute('id', false));
 
         if (! $post) {
-            return $handler->handle($request);
+            return $this->notFoundHandler->handle($request);
         }
 
         $isAmp = (bool) ($request->getQueryParams()['amp'] ?? false);

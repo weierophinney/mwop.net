@@ -7,17 +7,19 @@
 namespace Mwop\Blog;
 
 use Psr\Container\ContainerInterface;
-use Zend\Expressive\Template\TemplateRendererInterface;
+use Zend\Expressive\Middleware\NotFoundHandler;
 use Zend\Expressive\Router\RouterInterface;
+use Zend\Expressive\Template\TemplateRendererInterface;
 
-class DisplayPostMiddlewareFactory
+class DisplayPostHandlerFactory
 {
-    public function __invoke(ContainerInterface $container) : DisplayPostMiddleware
+    public function __invoke(ContainerInterface $container) : DisplayPostHandler
     {
-        return new DisplayPostMiddleware(
+        return new DisplayPostHandler(
             $container->get(__NAMESPACE__ . '\Mapper'),
             $container->get(TemplateRendererInterface::class),
             $container->get(RouterInterface::class),
+            $container->get(NotFoundHandler::class),
             $container->get('config')['blog']['disqus']
         );
     }
