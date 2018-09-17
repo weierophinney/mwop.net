@@ -1,6 +1,6 @@
-{{<layout::layout}}
-{{$title}}Thank You{{/title}}}
-{{$content}}
+<?php $this->layout('layout::layout', [
+    'title' => 'Thank You',
+]) ?>
 <section class="col-md-12 center-block contact">
     <h2>Thank you!</h2>
 
@@ -8,5 +8,3 @@
         Your message has been sent!
     </p>
 </section>
-{{/content}}
-{{/layout::layout}}

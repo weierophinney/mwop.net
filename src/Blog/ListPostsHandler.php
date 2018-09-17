@@ -7,12 +7,10 @@
 
 namespace Mwop\Blog;
 
-use Phly\Expressive\Mustache\UriHelper;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use stdClass;
-use Zend\Expressive\Helper\UrlHelper;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Diactoros\Response\RedirectResponse;
 use Zend\Expressive\Router\RouterInterface;
@@ -27,18 +25,14 @@ class ListPostsHandler implements RequestHandlerInterface
 
     private $template;
 
-    private $uriHelper;
-
     public function __construct(
         MapperInterface $mapper,
         TemplateRendererInterface $template,
-        RouterInterface $router,
-        UrlHelper $urlHelper
+        RouterInterface $router
     ) {
         $this->mapper    = $mapper;
         $this->template  = $template;
         $this->router    = $router;
-        $this->uriHelper = new UriHelper($urlHelper);
     }
 
     public function handle(ServerRequestInterface $request) : ResponseInterface
@@ -57,12 +51,13 @@ class ListPostsHandler implements RequestHandlerInterface
 
         $posts->setCurrentPageNumber($page);
 
-        $pagination = $this->preparePagination($path, $page, $posts->getPages());
-        $entries    = $this->prepareEntries($page, $posts);
-
         return new HtmlResponse($this->template->render(
             'blog::list',
-            $this->prepareView($tag, $entries, $pagination)
+            $this->prepareView(
+                $tag,
+                $this->prepareEntries($page, $posts),
+                $this->preparePagination($path, $page, $posts->getPages())
+            )
         ));
     }
 
@@ -99,13 +94,14 @@ class ListPostsHandler implements RequestHandlerInterface
     }
 
     /**
-     * @return EntryView[]
+     * @return array[]
      */
     private function prepareEntries(int $page, Paginator $posts) : array
     {
         return array_map(function ($post) {
-            $post['uriHelper'] = $this->uriHelper;
-            return new EntryView($post);
+            $post['updated'] = $post['updated'] && $post['updated'] !== $post['created'] ? $post['updated'] : false;
+            $post['tags']    = is_array($post['tags']) ? $post['tags'] : explode('|', trim((string) $post['tags'], '|'));
+            return $post;
         }, iterator_to_array($posts->getItemsByPage($page)));
     }
 

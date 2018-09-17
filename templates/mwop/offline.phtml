@@ -1,6 +1,6 @@
-{{<layout::layout}}
-{{$title}}Offline{{/title}}}
-{{$content}}
+<?php $this->layout('layout::layout', [
+    'title' => 'Offline',
+]) ?>
 <article class="offline col-md-6 col-md-offset-3">
     <h2>Offline</h2>
 
@@ -13,5 +13,3 @@
       You can always <a href="/">visit the homepage</a>.
     </p>
 </article>
-{{/content}}
-{{/layout::layout}}

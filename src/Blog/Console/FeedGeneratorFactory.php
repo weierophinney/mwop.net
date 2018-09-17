@@ -8,6 +8,7 @@ namespace Mwop\Blog\Console;
 
 use Psr\Container\ContainerInterface;
 use Mwop\Blog\Mapper;
+use Zend\Expressive\Helper\ServerUrlHelper;
 use Zend\Expressive\Router\RouterInterface;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
@@ -19,6 +20,7 @@ class FeedGeneratorFactory
             $container->get(Mapper::class),
             $container->get(RouterInterface::class),
             $container->get(TemplateRendererInterface::class),
+            $container->get(ServerUrlHelper::class),
             realpath(getcwd()) . '/data/blog/authors/'
         );
     }

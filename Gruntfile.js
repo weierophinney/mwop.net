@@ -25,21 +25,21 @@ module.exports = function (grunt) {
         dest: '.'
       },
       'site-styles': {
-        src: 'templates/layout/styles.mustache',
+        src: 'templates/layout/styles.phtml',
       },
       'site-scripts': {
-        src: 'templates/layout/scripts.mustache',
+        src: 'templates/layout/scripts.phtml',
       },
       'blog-styles': {
-        src: 'templates/blog/styles.mustache',
+        src: 'templates/blog/styles.phtml',
       },
       'blog-scripts': {
-        src: 'templates/blog/scripts.mustache',
+        src: 'templates/blog/scripts.phtml',
       }
     },
 
     usemin: {
-      html: ['build/**/*.mustache']
+      html: ['build/**/*.phtml']
     },
 
     swPrecache: {

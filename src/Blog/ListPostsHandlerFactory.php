@@ -7,7 +7,6 @@
 namespace Mwop\Blog;
 
 use Psr\Container\ContainerInterface;
-use Zend\Expressive\Helper\UrlHelper;
 use Zend\Expressive\Router\RouterInterface;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
@@ -18,8 +17,7 @@ class ListPostsHandlerFactory
         return new ListPostsHandler(
             $container->get(__NAMESPACE__ . '\Mapper'),
             $container->get(TemplateRendererInterface::class),
-            $container->get(RouterInterface::class),
-            $container->get(UrlHelper::class)
+            $container->get(RouterInterface::class)
         );
     }
 }

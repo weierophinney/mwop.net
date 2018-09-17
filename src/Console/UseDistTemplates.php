@@ -13,10 +13,10 @@ use ZF\Console\Route;
 class UseDistTemplates
 {
     private $distFileMap = [
-        'templates/blog/scripts.mustache.dist'   => 'templates/blog/scripts.mustache',
-        'templates/blog/styles.mustache.dist'    => 'templates/blog/styles.mustache',
-        'templates/layout/scripts.mustache.dist' => 'templates/layout/scripts.mustache',
-        'templates/layout/styles.mustache.dist'  => 'templates/layout/styles.mustache',
+        'templates/blog/scripts.phtml.dist'   => 'templates/blog/scripts.phtml',
+        'templates/blog/styles.phtml.dist'    => 'templates/blog/styles.phtml',
+        'templates/layout/scripts.phtml.dist' => 'templates/layout/scripts.phtml',
+        'templates/layout/styles.phtml.dist'  => 'templates/layout/styles.phtml',
     ];
 
     public function __invoke(Route $route, Console $console) : int

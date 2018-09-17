@@ -4,54 +4,31 @@
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
-use Mwop\Factory\UriTemplateDelegatorFactory;
-use Phly\Expressive\Mustache\MustacheTemplateFactory;
-use Phly\Mustache\Pragma;
-use Zend\Expressive\Template\TemplateRendererInterface;
+use League\Plates\Engine;
+use Mwop\Factory\PlatesFunctionsDelegator;
+use Zend\Expressive\Plates\PlatesEngineFactory;
 
 return [
     'dependencies' => [
         'delegators' => [
-            TemplateRendererInterface::class => [
-                UriTemplateDelegatorFactory::class,
+            Engine::class => [
+                PlatesFunctionsDelegator::class,
             ],
         ],
         'factories' => [
-            TemplateRendererInterface::class => MustacheTemplateFactory::class,
+            Engine::class => PlatesEngineFactory::class,
         ],
     ],
-
-    'phly-mustache' => [
-        'paths' => [
-            'blog'    => getcwd() . '/templates/blog',
-            'contact' => getcwd() . '/templates/contact',
-            'error'   => getcwd() . '/templates/error',
-            'layout'  => getcwd() . '/templates/layout',
-            'oauth2clientauthentication' => getcwd() . '/vendor/phly/phly-expressive-oauth2clientauthentication/templates',
-            'mwop'    => getcwd() . '/templates/mwop',
-            [
-                getcwd() . '/templates',
-                getcwd() . '/data',
-            ],
-        ],
-        'pragmas' => [
-            Pragma\ContextualEscape::class,
-            Pragma\ImplicitIterator::class,
-        ],
-    ],
-
     'templates' => [
-        'extension' => 'mustache',
+        'extension' => 'phtml',
         'paths' => [
             'blog'    => ['templates/blog'],
             'contact' => ['templates/contact'],
+            'data'    => [getcwd() . '/data'],
             'error'   => ['templates/error'],
             'layout'  => ['templates/layout'],
             'mwop'    => ['templates/mwop'],
-            [
-                getcwd() . '/templates',
-                getcwd() . '/data',
-            ],
+            'oauth2clientauthentication' => ['templates/oauth2clientauthentication'],
         ],
     ],
 ];

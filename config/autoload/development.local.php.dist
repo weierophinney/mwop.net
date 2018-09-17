@@ -38,7 +38,7 @@ return [
         'factories' => [
             Debug\DebugProviderMiddleware::class => Debug\DebugProviderMiddlewareFactory::class,
             ErrorResponseGenerator::class => Container\WhoopsErrorResponseGeneratorFactory::class,
-            LoggerInterface::class => Factory\ErrorLoggerFactory::class,
+            LoggerInterface::class => Factory\AccessLoggerFactory::class,
             Whoops::class => Container\WhoopsFactory::class,
         ],
         'invokables' => [

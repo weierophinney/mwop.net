@@ -10,11 +10,12 @@ return [
             'port' => 9000,
             'mode' => SWOOLE_PROCESS,
             'options' => [
-                // This seems to be the sweet spot that prevents the server from segfaulting.
-                // Test ulimit -n to see maximum the container allows, and then
-                // work up towards that from 1000. 100000 gave me a lot of failures,
-                // 10000 gave me none, 50000 gave me some, so... 25000.
-                'max_conn' => 25000,
+                // For some reason, inside a docker container, ulimit -n, which is what
+                // Swoole uses to determine this value by default, reports a ridiculously
+                // high number. The value presented here is the value reported by the
+                // docker host.
+                'max_conn' => 1024,
+                'enable_coroutine' => true,
             ],
             'static-files' => [
                 'type-map' => array_merge(ContentTypeFilterMiddleware::TYPE_MAP_DEFAULT, [

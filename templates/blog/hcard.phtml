@@ -1,0 +1,7 @@
+<div class="h-entry">
+    <img class="u-photo photo" width="50" src="https://avatars0.githubusercontent.com/u/25943?v=3&u=79dd2ea1d4d8855944715d09ee4c86215027fa80&s=140" alt="mwop">
+    <a class="u-url u-uid p-name" href="<?= $this->serverurl($this->postUrl($post)) ?>"><?= $this->escapeHtml($post['title']) ?></a> was originally
+    published <time class="dt-published" datetime="<?= $this->formatDateRfc($post['created']) ?>"><?= $this->formatDate($post['created']) ?></time>
+    on <a href="<?= $this->serverurl() ?>"><?= $this->serverurl() ?></a> by
+    <a rel="author" class="p-author" href="<?= $this->serverurl() ?>">Matthew Weier O'Phinney</a>.
+</div>

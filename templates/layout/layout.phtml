@@ -10,7 +10,7 @@
   <meta name="copyright" content="Matthew Weier O'Phinney" />
   <meta name="author" content="Matthew Weier O'Phinney" />
 
-  <title>phly, boy, phly :: {{$title}}home{{/title}}</title>
+  <title>phly, boy, phly :: <?= $title ?? 'home' ?></title>
 
 	<!--[if lt IE 9]>
 		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -18,29 +18,33 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="twitter:site" content="@mwop">
 
-  {{! android theme color: http://updates.html5rocks.com/2014/11/Support-for-theme-color-in-Chrome-39-for-Android }}
+  <?php // android theme color: http://updates.html5rocks.com/2014/11/Support-for-theme-color-in-Chrome-39-for-Android ?>
   <meta name="theme-color" content="#018401">
   <meta name="msapplication-TileColor" content="#ffffff">
 
-  {{! android install-to-homescreen https://developer.chrome.com/multidevice/android/installtohomescreen }}
+  <?php // android install-to-homescreen https://developer.chrome.com/multidevice/android/installtohomescreen ?>
   <link rel="manifest" href="/manifest.json">
 
-  {{>layout::favicon}}
-  {{>layout::semantic}}
-  {{>layout::styles}}
-  {{>layout::links}}
+  <?php
+  $this->insert('layout::favicon');
+  $this->insert('layout::semantic');
+  $this->insert('layout::styles', ['styles' => $this->section('styles')]);
+  $this->insert('layout::links', ['links' => $this->section('links')]);
+  ?>
 
   <script src="/js/ga.js"></script>
 </head>
 <body>
-{{>layout::header}}
+<?php $this->insert('layout::header') ?>
 <div class="searchresults list-group hidden"></div>
 <div class="container-fluid content-window">
   <div class="row content">
-      {{$content}}{{/content}}
+      <?= $this->section('content') ?>
   </div>
 </div>
-{{>layout::footer}}
-{{>layout::scripts}}
+<?php
+$this->insert('layout::footer', ['footer' => $this->section('footer')]);
+$this->insert('layout::scripts', ['scripts' => $this->section('scripts')]);
+?>
 </body>
 </html>

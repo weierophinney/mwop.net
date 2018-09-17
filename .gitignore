@@ -6,14 +6,14 @@ config/autoload/*local.php
 config/development.config.php
 data/cache/posts/*
 data/comics/*.html
-data/comics.mustache
+data/comics.phtml
 data/feeds/*.xml
-data/github-links.mustache
+data/github-links.phtml
 data/redis/
 data/posts.db
 data/search_terms.json
 data/sessions/
-data/tag-cloud.mustache
+data/tag-cloud.phtml
 docker-stack.yml
 log/
 node_modules/
