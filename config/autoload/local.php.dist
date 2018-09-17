@@ -25,6 +25,11 @@ return [
             LoggerInterface::class => Factory\AccessLoggerFactory::class,
         ],
     ],
+    'blog' => [
+        'disqus'  => [
+            'key' => 'phlyboyphly',
+        ],
+    ],
     'contact' => [
         'recaptcha_pub_key'  => getenv('RECAPTCHA_PUB_KEY'),
         'recaptcha_priv_key' => getenv('RECAPTCHA_PRIV_KEY'),
