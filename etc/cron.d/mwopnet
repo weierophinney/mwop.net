@@ -6,7 +6,7 @@ STDERR_LOC=/proc/1/fd/2
 
 # m        h         dom mon dow user     command
 # Update github feed
-5,20,35,50 *           *   *   * root cd /var/www ; php bin/mwop.net.php github-links > ${STDOUT_LOC} 2> ${STDERR_LOC}
+5,20,35,50 *           *   *   * root cd /var/www ; php bin/mwop.net.php github:fetch-activity > ${STDOUT_LOC} 2> ${STDERR_LOC}
 
 # Update blog posts listing
 0          0,6,12,18   *   *   * root cd /var/www ; php bin/mwop.net.php homepage-feeds > ${STDOUT_LOC} 2> ${STDERR_LOC}

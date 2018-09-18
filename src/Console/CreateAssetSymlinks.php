@@ -6,20 +6,29 @@
 
 namespace Mwop\Console;
 
-use Zend\Console\Adapter\AdapterInterface as Console;
-use Zend\Console\ColorInterface as Color;
-use ZF\Console\Route;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
-class CreateAssetSymlinks
+class CreateAssetSymlinks extends Command
 {
     const ASSET_MAP = [
         '../../node_modules/bootstrap/dist/js/bootstrap.js' => 'public/js/bootstrap.js',
         '../../node_modules/jquery/dist/jquery.js'          => 'public/js/jquery.js',
     ];
 
-    public function __invoke(Route $route, Console $console) : int
+    protected function configure()
     {
-        $console->writeLine('Creating asset symlinks... ', Color::BLUE);
+        $this->setName('asset:create-symlinks');
+        $this->setDescription('Symlink assets.');
+        $this->setHelp('Symlink assets installed by npm into the public tree.');
+    }
+
+    protected function execute(InputInterface $input, OutputInterface $output) : int
+    {
+        $io = new SymfonyStyle($input, $output);
+        $io->title('Creating asset symlinks');
 
         foreach (self::ASSET_MAP as $target => $link) {
             if (! file_exists($link)) {
@@ -27,8 +36,7 @@ class CreateAssetSymlinks
             }
         }
 
-        $console->write('[DONE] ', Color::GREEN);
-        $console->writeLine('Creating asset symlinks');
+        $io->success('Created asset symlinks');
 
         return 0;
     }

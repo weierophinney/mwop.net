@@ -10,17 +10,20 @@ use DateTime;
 use Mni\FrontYAML\Bridge\CommonMark\CommonMarkParser;
 use Mni\FrontYAML\Parser;
 use Mwop\Blog\MapperInterface;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Yaml\Parser as YamlParser;
 use Traversable;
-use Zend\Console\Adapter\AdapterInterface as Console;
 use Zend\Diactoros\Uri;
 use Zend\Expressive\Helper\ServerUrlHelper;
 use Zend\Expressive\Router\RouterInterface;
 use Zend\Expressive\Template\TemplateRendererInterface;
 use Zend\Feed\Writer\Feed as FeedWriter;
-use ZF\Console\Route;
 
-class FeedGenerator
+class FeedGenerator extends Command
 {
     use RoutesTrait;
 
@@ -28,13 +31,13 @@ class FeedGenerator
 
     private $authorsPath;
 
-    private $console;
-
     private $defaultAuthor = [
         'name'  => 'Matthew Weier O\'Phinney',
         'email' => 'me@mwop.net',
         'uri'   => 'https://mwop.net',
     ];
+
+    private $io;
 
     private $mapper;
 
@@ -55,15 +58,42 @@ class FeedGenerator
         $this->authorsPath = $authorsPath;
 
         $serverUrlHelper->setUri(new Uri('https://mwop.net'));
+
+        parent::__construct();
     }
 
-    public function __invoke(Route $route, Console $console) : int
+    protected function configure()
     {
-        $this->console = $console;
-        $outputDir = $route->getMatchedParam('outputDir');
-        $baseUri   = $route->getMatchedParam('baseUri');
+        $this->setName('blog:feed-generator');
+        $this->setDescription('Generate blog feeds.');
+        $this->setHelp('Generate feeds (RSS and Atom) for the blog, including all tags.');
 
-        $this->console->writeLine('Generating base feeds');
+        $this->addOption(
+            'output-dir',
+            'o',
+            InputOption::VALUE_REQUIRED,
+            'Directory to which to write the feeds.',
+            'data/feeds'
+        );
+
+        $this->addOption(
+            'base-uri',
+            'b',
+            InputOption::VALUE_REQUIRED,
+            'Base URI for the site.',
+            'https://mwop.net'
+        );
+    }
+
+    protected function execute(InputInterface $input, OutputInterface $output) : int
+    {
+        $this->io = $io = new SymfonyStyle($input, $output);
+        $outputDir = $input->getOption('output-dir');
+        $baseUri   = $input->getOption('base-uri');
+
+        $io->title('Generating blog feeds');
+        $io->text('<info>Generating base feeds</>');
+        $io->progressStart();
 
         $this->generateFeeds(
             $outputDir . '/',
@@ -85,7 +115,8 @@ class FeedGenerator
                 continue;
             }
 
-            $this->console->writeLine('Generating feeds for tag ' . $tag);
+            $io->text('Generating feeds for tag ' . $tag);
+            $io->progressStart();
             $this->generateFeeds(
                 sprintf('%s/%s.', $outputDir, $tag),
                 $baseUri,
@@ -95,6 +126,7 @@ class FeedGenerator
                 ['tag' => $tag],
                 $this->mapper->fetchAllByTag($tag)
             );
+            $io->progressFinish();
         }
 
         return 0;

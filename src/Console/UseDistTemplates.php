@@ -6,11 +6,13 @@
 
 namespace Mwop\Console;
 
-use Zend\Console\Adapter\AdapterInterface as Console;
-use Zend\Console\ColorInterface as Color;
-use ZF\Console\Route;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
-class UseDistTemplates
+class UseDistTemplates extends Command
 {
     private $distFileMap = [
         'templates/blog/scripts.phtml.dist'   => 'templates/blog/scripts.phtml',
@@ -19,11 +21,27 @@ class UseDistTemplates
         'templates/layout/styles.phtml.dist'  => 'templates/layout/styles.phtml',
     ];
 
-    public function __invoke(Route $route, Console $console) : int
+    protected function configure()
     {
-        $path = $route->getMatchedParam('path');
+        $this->setName('asset:use-dist-templates');
+        $this->setDescription('Use dist templates.');
+        $this->setHelp('Enable usage of distribution templates (optimizing CSS and JS).');
 
-        $console->writeLine('Enabling dist templates... ', Color::BLUE);
+        $this->addOption(
+            'path',
+            'p',
+            InputOption::VALUE_REQUIRED,
+            'Base path of the application; templates are expected at $path/templates/',
+            realpath(getcwd())
+        );
+    }
+
+    protected function execute(InputInterface $input, OutputInterface $output) : int
+    {
+        $io = new SymfonyStyle($input, $output);
+        $path = $input->getOption('path');
+
+        $io->title('Enabling dist templates');
 
         foreach ($this->distFileMap as $source => $target) {
             $source = sprintf('%s/%s', $path, $source);
@@ -31,8 +49,7 @@ class UseDistTemplates
             copy($source, $target);
         }
 
-        $console->write('[DONE] ', Color::GREEN);
-        $console->writeLine('Enabling dist templates');
+        $io->success('Enabled dist templates');
 
         return 0;
     }

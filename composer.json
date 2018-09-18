@@ -46,8 +46,7 @@
         "zendframework/zend-servicemanager": "^3.1",
         "zendframework/zend-stdlib": "^3.1",
         "zendframework/zend-stratigility": "^3.0",
-        "zendframework/zend-tag": "^2.6.1",
-        "zfcampus/zf-console": "^1.3"
+        "zendframework/zend-tag": "^2.6.1"
     },
     "require-dev": {
         "filp/whoops": "^2.1.3",
@@ -74,33 +73,33 @@
         ],
         "assets:copy": [
             "@npm",
-            "bin/mwop.net.php copy-asset-symlinks"
+            "bin/mwop.net.php asset:copy-symlinks"
         ],
         "assets:symlink": [
             "@npm",
-            "bin/mwop.net.php create-asset-symlinks"
+            "bin/mwop.net.php asset:create-symlinks"
         ],
         "build": [
             "@assets:symlink",
             "@assets:build",
-            "bin/mwop.net.php use-dist-templates",
+            "bin/mwop.net.php asset:use-dist-templates",
             "@build:blog",
             "@build:homepage",
             "phly-comic.php fetch-all --output=data/comics.phtml --exclude=dilbert,reptilis-rex,nih",
             "@clean"
         ],
         "build:blog": [
-            "bin/mwop.net.php clear-cache",
-            "bin/mwop.net.php seed-blog-db",
-            "bin/mwop.net.php tag-cloud",
-            "bin/mwop.net.php feed-generator",
+            "bin/mwop.net.php blog:clear-cache",
+            "bin/mwop.net.php blog:seed-db",
+            "bin/mwop.net.php blog:tag-cloud",
+            "bin/mwop.net.php blog:feed-generator",
             "@build:search"
         ],
         "build:homepage": [
-            "bin/mwop.net.php github-links",
+            "bin/mwop.net.php github:fetch-activity",
             "bin/mwop.net.php homepage-feeds"
         ],
-        "build:search": "bin/mwop.net.php generate-search-data",
+        "build:search": "bin/mwop.net.php blog:generate-search-data",
         "clean": [
             "rm -Rf node_modules",
             "rm -Rf .tmp"

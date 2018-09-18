@@ -27,6 +27,7 @@ return ['dependencies' => [
         Blog\Console\TagCloud::class      => Blog\Console\TagCloudFactory::class,
         Blog\Mapper::class                => Blog\MapperFactory::class,
         CacheItemPoolInterface::class     => Factory\CachePoolFactory::class,
+        Console\ClearCache::class         => InvokableFactory::class,
         Console\CopyAssetSymlinks::class  => InvokableFactory::class,
         Console\CreateAssetSymlinks::class => InvokableFactory::class,
         Console\FeedAggregator::class     => Console\FeedAggregatorFactory::class,

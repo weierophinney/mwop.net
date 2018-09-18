@@ -7,16 +7,18 @@
 namespace Mwop\Github\Console;
 
 use Mwop\Github;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 use Throwable;
-use Zend\Console\Adapter\AdapterInterface as Console;
-use Zend\Console\ColorInterface as Color;
 use Zend\Escaper\Escaper;
-use ZF\Console\Route;
 
 /**
  * Fetch github user activity links
  */
-class Fetch
+class Fetch extends Command
 {
     /**
      * @var string
@@ -34,19 +36,38 @@ class Fetch
         if (! empty($outputTemplateString)) {
             $this->outputTemplateString = $outputTemplateString;
         }
+
+        parent::__construct();
     }
 
-    /**
-     * Handle the incoming console request
-     */
-    public function __invoke(Route $route, Console $console) : int
+    protected function configure()
     {
-        if (! $route->matchedParam('output')) {
-            return $this->reportError($console, 'Missing output file');
-        }
+        $this->setName('github:fetch-activity');
+        $this->setDescription('Fetch GitHub activity stream.');
+        $this->setHelp('Fetch GitHub activity stream and generate links for the home page.');
 
-        $message = 'Retrieving Github activity links';
-        $console->write($message, Color::BLUE);
+        $this->addOption(
+            'output',
+            'o',
+            InputOption::VALUE_REQUIRED,
+            'Output file to which to write links',
+            'data/github-links.phtml'
+        );
+
+        $this->addOption(
+            'template',
+            't',
+            InputOption::VALUE_REQUIRED,
+            'Template string to use when generating link output',
+            $this->outputTemplateString
+        );
+    }
+
+    protected function execute(InputInterface $input, OutputInterface $output) : int
+    {
+        $io = new SymfonyStyle($input, $output);
+
+        $io->title('Retrieving GitHub activity');
 
         try {
             $data = $this->reader->read();
@@ -55,17 +76,16 @@ class Fetch
         }
 
         file_put_contents(
-            $route->getMatchedParam('output'),
+            $input->getOption('output'),
             $this->createContentFromData(
                 $data,
-                $route->getMatchedParam(
-                    'template',
-                    $this->outputTemplateString
-                )
+                $input->getOption('template')
             )
         );
 
-        return $this->reportSuccess($console, strlen($message));
+        $io->success('Retrieved GitHub activity.');
+
+        return 0;
     }
 
     /**
@@ -84,51 +104,5 @@ class Fetch
             );
         }, $data['links']);
         return implode("\n", $strings);
-    }
-
-    /**
-     * Report an error
-     *
-     * @param Console $console
-     * @param string|Throwable $e
-     * @param int $length
-     * @return int
-     */
-    private function reportError(Console $console, $e, int $length = 0) : int
-    {
-        $width  = $console->getWidth();
-        $length = is_string($e) ? strlen($e) : $length;
-
-        if (($length + 9) > $width) {
-            $console->writeLine('');
-            $length = 0;
-        }
-        $spaces = $width - $length - 9;
-        $console->writeLine(str_repeat('.', $spaces) . '[ ERROR ]', Color::RED);
-
-        if (is_string($e)) {
-            $console->writeLine($e);
-        }
-
-        if ($e instanceof Throwable) {
-            $console->writeLine($e->getTraceAsString());
-        }
-
-        return 1;
-    }
-
-    /**
-     * Report success
-     */
-    private function reportSuccess(Console $console, int $length = 0) : int
-    {
-        $width = $console->getWidth();
-        if (($length + 8) > $width) {
-            $console->writeLine('');
-            $length = 0;
-        }
-        $spaces = $width - $length - 8;
-        $console->writeLine(str_repeat('.', $spaces) . '[ DONE ]', Color::GREEN);
-        return 0;
     }
 }
