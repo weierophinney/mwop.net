@@ -89,7 +89,6 @@
             "@clean"
         ],
         "build:blog": [
-            "bin/mwop.net.php blog:clear-cache",
             "bin/mwop.net.php blog:seed-db",
             "bin/mwop.net.php blog:tag-cloud",
             "bin/mwop.net.php blog:feed-generator",
