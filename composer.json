@@ -22,7 +22,7 @@
         "middlewares/csp": "^1.0.1",
         "mnapoli/front-yaml": "^1.5",
         "monolog/monolog": "^1.23",
-        "phly/phly-comic": "^1.1.4",
+        "phly/phly-comic": "^2.0",
         "phly/phly-expressive-oauth2clientauthentication": "^0.2.1",
         "php-http/curl-client": "^1.4",
         "php-http/message": "^1.2",
@@ -85,7 +85,7 @@
             "bin/mwop.net.php asset:use-dist-templates",
             "@build:blog",
             "@build:homepage",
-            "phly-comic.php fetch-all --output=data/comics.phtml --exclude=dilbert,reptilis-rex,nih",
+            "phly-comic.php fetch-all --output data/comics.phtml --exclude dilbert --exclude reptilis-rex --exclude nih",
             "@clean"
         ],
         "build:blog": [
@@ -118,7 +118,7 @@
             "bin/mwop.net.php use-dist-templates",
             "@build:blog",
             "@build:homepage",
-            "phly-comic.php fetch-all --output=data/comics.phtml --exclude=dilbert,reptilis-rex,nih"
+            "phly-comic.php fetch-all --output data/comics.phtml --exclude dilbert --exclude reptilis-rex --exclude nih"
         ],
         "npm": "npm install --no-save",
         "serve": "docker-compose up",
