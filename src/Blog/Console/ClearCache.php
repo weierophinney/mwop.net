@@ -34,11 +34,11 @@ class ClearCache extends Command
         $io->title('Removing cached blog entries');
 
         if (! $this->cache->clear()) {
-            $io->error('Cache pool indicated unsuccessful clear operation');
+            $io->error('Blog cache pool indicated unsuccessful clear operation');
             return 1;
         }
 
-        $io->success('SUCCESS');
+        $io->success('Blog cache cleared');
         return 0;
     }
 }

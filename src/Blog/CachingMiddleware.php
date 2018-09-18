@@ -31,8 +31,8 @@ class CachingMiddleware implements MiddlewareInterface
 
     public function __construct(CacheItemPoolInterface $cache, bool $enabled = true)
     {
-        $this->cache      = $cache;
-        $this->enabled    = $enabled;
+        $this->cache   = $cache;
+        $this->enabled = $enabled;
     }
 
     /**
