@@ -11,12 +11,14 @@ use Mni\FrontYAML\Bridge\CommonMark\CommonMarkParser;
 use Mni\FrontYAML\Parser;
 use Mwop\Blog\MarkdownFileFilter;
 use PDO;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Yaml\Parser as YamlParser;
-use Zend\Console\Adapter\AdapterInterface as Console;
-use Zend\Console\ColorInterface as Color;
-use ZF\Console\Route;
 
-class SeedBlogDatabase
+class SeedBlogDatabase extends Command
 {
     private $authors = [];
 
@@ -99,19 +101,56 @@ class SeedBlogDatabase
             tags VARCHAR(255)
         )';
 
-    public function __invoke(Route $route, Console $console) : int
+    protected function configure()
     {
-        $basePath    = $route->getMatchedParam('path');
-        $postsPath   = $route->getMatchedParam('postsPath');
-        $authorsPath = $route->getMatchedParam('authorsPath');
-        $dbPath      = $route->getMatchedParam('dbPath');
+        $this->setName('blog:seed-db');
+        $this->setDescription('Generate and seed the blog post database.');
+        $this->setHelp('Re-create the blog post database from the post entities.');
 
-        $message = 'Generating blog post database';
-        $length  = strlen($message);
-        $width   = $console->getWidth();
-        $console->write($message, Color::BLUE);
+        $this->addOption(
+            'path',
+            'p',
+            InputOption::VALUE_REQUIRED,
+            'Base path of the application; defaults to current working directory',
+            realpath(getcwd())
+        );
 
-        $pdo = $this->createDatabase($dbPath, $console);
+        $this->addOption(
+            'db-path',
+            'd',
+            InputOption::VALUE_REQUIRED,
+            'Path to the database file, relative to the --path.',
+            'data/posts.db'
+        );
+
+        $this->addOption(
+            'posts-path',
+            'e',
+            InputOption::VALUE_REQUIRED,
+            'Path to the blog posts, relative to the --path.',
+            'data/blog'
+        );
+
+        $this->addOption(
+            'authors-path',
+            'a',
+            InputOption::VALUE_REQUIRED,
+            'Path to the author metadata files, relative to the --path.',
+            'data/blog/authors'
+        );
+    }
+
+    protected function execute(InputInterface $input, OutputInterface $output) : int
+    {
+        $io = new SymfonyStyle($input, $output);
+        $basePath    = $input->getOption('path');
+        $postsPath   = $input->getOption('posts-path');
+        $authorsPath = $input->getOption('authors-path');
+        $dbPath      = $input->getOption('db-path');
+
+        $io->title('Generating blog post database');
+
+        $pdo = $this->createDatabase($dbPath);
 
         $path = sprintf('%s/%s', realpath($basePath), ltrim($postsPath));
         $trim = strlen(realpath($basePath)) + 1;
@@ -146,10 +185,12 @@ class SeedBlogDatabase
 
         $pdo->exec(implode("\n", $statements));
 
-        return $this->reportSuccess($console, $width, $length);
+        $io->success('Created blog database');
+
+        return 0;
     }
 
-    private function createDatabase(string $path, Console $console) : PDO
+    private function createDatabase(string $path) : PDO
     {
         if (file_exists($path)) {
             $path = realpath($path);
@@ -195,20 +236,5 @@ class SeedBlogDatabase
 
         $this->authors[$author] = (new YamlParser())->parse(file_get_contents($path));
         return $this->authors[$author];
-    }
-
-    /**
-     * Report success
-     */
-    private function reportSuccess(Console $console, int $width, int $length) : int
-    {
-        if (($length + 8) > $width) {
-            $console->writeLine('');
-            $length = 0;
-        }
-        $spaces = $width - $length - 8;
-        $spaces = ($spaces > 0) ? $spaces : 0;
-        $console->writeLine(str_repeat('.', $spaces) . '[ DONE ]', Color::GREEN);
-        return 0;
     }
 }

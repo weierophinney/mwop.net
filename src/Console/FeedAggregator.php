@@ -8,13 +8,15 @@ namespace Mwop\Console;
 
 use Exception;
 use Mwop\Collection;
-use Zend\Console\Adapter\AdapterInterface as Console;
-use Zend\Console\ColorInterface as Color;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 use Zend\Feed\Reader\Reader as FeedReader;
 use Zend\Feed\Reader\Feed\FeedInterface;
-use ZF\Console\Route;
 
-class FeedAggregator
+class FeedAggregator extends Command
 {
     const CACHE_FILE = '%s/config/autoload/homepage.local.php';
 
@@ -44,28 +46,52 @@ EOF;
 
     private $toRetrieve;
 
+    private $status;
+
     public function __construct(array $feeds, int $toRetrieve)
     {
         $this->feeds = Collection::create($feeds);
         $this->toRetrieve = $toRetrieve;
+        parent::__construct();
     }
 
-    public function __invoke(Route $route, Console $console) : int
+    protected function configure()
     {
-        $console->writeLine('Aggregating feed data...', Color::GREEN);
-        file_put_contents(
-            $this->generateFilename($route->getMatchedParam('path')),
-            $this->generateContent($this->getEntries($console))
+        $this->setName('homepage-feeds');
+        $this->setDescription('Fetch homepage feed data.');
+        $this->setHelp('Fetch feed data for homepage activity stream.');
+
+        $this->addOption(
+            'path',
+            'p',
+            InputOption::VALUE_REQUIRED,
+            'Application root path',
+            realpath(getcwd())
         );
-        $console->writeLine('[DONE]', Color::GREEN);
-        return 0;
     }
 
-    private function getEntries(Console $console) : Collection
+    protected function execute(InputInterface $input, OutputInterface $output) : int
+    {
+        $this->status = 0;
+        $io = new SymfonyStyle($input, $output);
+        $io->title('Aggregating feed data for home page');
+        file_put_contents(
+            $this->generateFilename($input->getOption('path')),
+            $this->generateContent($this->getEntries($io))
+        );
+
+        if ($this->status === 0) {
+            $io->success('Aggregated home page feed data.');
+        }
+
+        return $this->status;
+    }
+
+    private function getEntries(SymfonyStyle $io) : Collection
     {
         return $this->feeds
-            ->reduce(function ($entries, $feedInfo) use ($console) {
-                return $entries->append($this->marshalEntries($feedInfo, $console));
+            ->reduce(function ($entries, $feedInfo) use ($io) {
+                return $entries->append($this->marshalEntries($feedInfo, $io));
             }, Collection::create([]))
             ->sort(function ($a, $b) {
                 return ($b['date-created'] <=> $a['date-created']);
@@ -95,7 +121,7 @@ EOF;
         );
     }
 
-    private function marshalEntries(array $feedInfo, Console $console) : Collection
+    private function marshalEntries(array $feedInfo, SymfonyStyle $io) : Collection
     {
         $feedUrl  = $feedInfo['url'];
         $logo     = $feedInfo['favicon'] ?? 'https://mwop.net/images/favicon/favicon-16x16.png';
@@ -105,17 +131,18 @@ EOF;
         $each     = $feedInfo['each'] ?? function ($item) {
         };
 
-        $message = sprintf('    Retrieving %s... ', $feedUrl);
-        $length  = strlen($message);
-        $console->write($message, Color::BLUE);
+        $io->text(sprintf('<info>Retrieving %s</>', $feedUrl));
+        $io->progressStart();
 
         try {
             $feed = preg_match('#^https?://#', $feedUrl)
                 ? $this->getFeedFromRemoteUrl($feedUrl)
                 : $this->getFeedFromLocalFile($feedUrl);
         } catch (\Throwable $e) {
-            $this->reportException($e, $console);
-            $console->writeLine('[ FAIL ]', Color::RED);
+            $io->progressFinish();
+            $this->reportException($e, $io);
+            $io->error('Failed fetching one or more feeds');
+            $this->status = 1;
             return new Collection([]);
         }
 
@@ -134,7 +161,8 @@ EOF;
                 ];
             });
 
-        $this->reportComplete($console, $length);
+        $io->progressFinish();
+
         return $entries;
     }
 
@@ -148,33 +176,21 @@ EOF;
         return FeedReader::import($url);
     }
 
-    private function reportException(Exception $e, Console $console)
+    private function reportException(Exception $e, SymfonyStyle $io)
     {
-        $console->writeLine('An exception occurred:', Color::RED);
+        $io->caution('An exception occurred:');
 
         do {
-            $console->writeLine(sprintf(
+            $io->caution(sprintf(
                 '%s: %s (in %s:%d)',
                 (int) $e->getCode(),
                 $e->getMessage(),
                 $e->getFile(),
                 $e->getLine()
             ));
-            $console->writeLine('Trace:');
-            $console->writeLine($e->getTraceAsString());
+            $io->caution('Trace:');
+            $io->caution($e->getTraceAsString());
             $e = $e->getPrevious();
         } while ($e);
-    }
-
-    private function reportComplete(Console $console, int $length)
-    {
-        $width = $console->getWidth();
-        if (($length + 8) > $width) {
-            $console->writeLine('');
-            $length = 0;
-        }
-        $spaces  = $width - $length - 8;
-        $spaces  = ($spaces > 0) ? $spaces : 0;
-        $console->writeLine(str_repeat('.', $spaces) . '[ DONE ]', Color::GREEN);
     }
 }

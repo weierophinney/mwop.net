@@ -13,5 +13,8 @@ chmod 0644 /etc/cron.d/*
 # Start cron; it's a daemon by default.
 cron
 
+# Clear the blog post cache
+/usr/bin/env php bin/mwop.net.php blog:clear-cache
+
 # Start application; run in foreground, as that's what Docker prefers
 /usr/bin/env php public/index.php start

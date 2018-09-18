@@ -7,6 +7,7 @@
 namespace Mwop\Factory;
 
 use Mwop\CacheSessionPersistence;
+use Mwop\SessionCachePool;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Container\ContainerInterface;
 
@@ -16,7 +17,7 @@ class CacheSessionPersistenceFactory
     {
         $config = $container->get('config')['session'] ?? [];
         return new CacheSessionPersistence(
-            $container->get(CacheItemPoolInterface::class),
+            $container->get(SessionCachePool::class),
             $config['cookie-name'] ?? 'MWOPSESS',
             $config['cookie-path'] ?? '/'
         );

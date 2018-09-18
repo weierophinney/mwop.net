@@ -1,23 +1,16 @@
 # TODO
 
-## Blog caching
-
-- Add Last-Modified headers
-- Cache FULL response, using Diactoros serializers
-  - Likely should go into Redis
-  - Will need to delay pre-caching to startup
-
 ## Refactoring
 
 - [x] Upgrade to PSR-15 final specs
-- [ ] Rename middleware that are handlers to handlers
-- [ ] Refactor site console tooling to symfony/console
+- [x] Rename middleware that are handlers to handlers
+- [x] Refactor site console tooling to symfony/console
 - [ ] Refactor Contact subnamespace to a module
 - [ ] Refactor Blog subnamespace to a module
   - [ ] Move document content retrieval and pagination into a Repository class
   - [ ] Refactor CLI tooling to symfony/console
 - [ ] Refactor Github subnamespace to a module
-  - [ ] Refactor CLI tooling to symfony/console
+  - [x] Refactor CLI tooling to symfony/console
   - [ ] Remove PuSH subnamespace? or set it up to do something interesting, like
     update my feed?
 - [ ] Move general site classes to new module/library "Mwop"

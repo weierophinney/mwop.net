@@ -6,10 +6,10 @@ STDERR_LOC=/proc/1/fd/2
 
 # m        h         dom mon dow user     command
 # Update github feed
-5,20,35,50 *           *   *   * root cd /var/www ; php bin/mwop.net.php github-links > ${STDOUT_LOC} 2> ${STDERR_LOC}
+5,20,35,50 *           *   *   * root cd /var/www ; php bin/mwop.net.php github:fetch-activity > ${STDOUT_LOC} 2> ${STDERR_LOC}
 
 # Update blog posts listing
 0          0,6,12,18   *   *   * root cd /var/www ; php bin/mwop.net.php homepage-feeds > ${STDOUT_LOC} 2> ${STDERR_LOC}
 
 # Fetch comics
-0 1,4,7,10,13,16,19,22 *   *   * root cd /var/www ; php vendor/bin/phly-comic.php fetch-all --output=data/comics.phtml --exclude=nih,reptilis-rex,dilbert > ${STDOUT_LOC} 2> ${STDERR_LOC}
+0 1,4,7,10,13,16,19,22 *   *   * root cd /var/www ; php vendor/bin/phly-comic.php fetch-all --output data/comics.phtml --exclude nih --exclude reptilis-rex --exclude dilbert > ${STDOUT_LOC} 2> ${STDERR_LOC}

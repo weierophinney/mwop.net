@@ -4,15 +4,16 @@
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
+namespace Mwop;
+
+use Psr\Cache\CacheItemPoolInterface;
+
 return [
     'cache' => [
         'connection-parameters' => [
             'scheme' => 'tcp',
             'host' => 'redis',
             'port' => 6379,
-        ],
-        'client-options' => [
-            'prefix' => 'session:',
         ],
     ],
 ];

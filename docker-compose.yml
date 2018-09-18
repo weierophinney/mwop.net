@@ -6,6 +6,8 @@ services:
     environment:
       - REDIS_APPENDONLY=yes
       - REDIS_APPENDFSYNC=always
+    ports:
+      - "6379:6379"
     volumes:
       - ./data/redis:/data
 
@@ -21,6 +23,7 @@ services:
       - .:/var/www
       - ./etc/php/mwop.ini:/usr/local/etc/php/conf.d/mwop.ini
       - ./etc/cron.d/mwopnet:/etc/cron.d/mwopnet
+      - ./etc/bin/php-entrypoint:/usr/local/bin/entrypoint
 
   caddy:
     build:

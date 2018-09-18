@@ -8,18 +8,37 @@ namespace Mwop\Blog\Console;
 
 use Mni\FrontYAML\Parser;
 use Mwop\Blog\MarkdownFileFilter;
-use Zend\Console\Adapter\AdapterInterface as Console;
-use Zend\Console\ColorInterface as Color;
-use ZF\Console\Route;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
-class GenerateSearchData
+class GenerateSearchData extends Command
 {
-    public function __invoke(Route $route, Console $console) : int
+    protected function configure()
     {
-        $basePath = $route->getMatchedParam('path');
+        $this->setName('blog:generate-search-data');
+        $this->setDescription('Generate site search data.');
+        $this->setHelp('Generate site search data based on blog posts.');
+
+        $this->addOption(
+            'path',
+            'p',
+            InputOption::VALUE_REQUIRED,
+            'Base path of the application; posts are expected at $path/data/blog/ '
+            . 'and search terms will be written to $path/public/js/search_terms.json',
+            realpath(getcwd())
+        );
+    }
+
+    protected function execute(InputInterface $input, OutputInterface $output) : int
+    {
+        $io = new SymfonyStyle($input, $output);
+        $basePath = $input->getOption('path');
         $path     = realpath($basePath) . '/data/blog';
 
-        $console->writeLine('Generating search metadata', Color::BLUE);
+        $io->title('Generating search metadata');
 
         $documents = [];
         $parser = new Parser();
@@ -40,8 +59,8 @@ class GenerateSearchData
             realpath($basePath) . '/public/js/search_terms.json',
             json_encode(['docs' => $documents], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)
         );
-        $console->write('[DONE]', Color::GREEN);
-        $console->writeLine(' Generating search metadata');
+
+        $io->success('Generated search metadata');
 
         return 0;
     }

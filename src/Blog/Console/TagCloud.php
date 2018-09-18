@@ -7,31 +7,45 @@
 namespace Mwop\Blog\Console;
 
 use Mwop\Blog;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 use Throwable;
-use Zend\Console\Adapter\AdapterInterface as Console;
-use Zend\Console\ColorInterface as Color;
-use ZF\Console\Route;
 
-class TagCloud
+class TagCloud extends Command
 {
     private $mapper;
 
     public function __construct(Blog\MapperInterface $mapper)
     {
         $this->mapper = $mapper;
+        parent::__construct();
     }
 
-    public function __invoke(Route $route, Console $console) : int
+    protected function configure()
     {
-        $message = 'Creating tag cloud';
-        $length  = strlen($message);
-        $width   = $console->getWidth();
-        $console->write($message, Color::BLUE);
+        $this->setName('blog:tag-cloud');
+        $this->setDescription('Generate tag cloud.');
+        $this->setHelp('Generate a template containing the tag cloud for the blog.');
 
-        if (! $route->matchedParam('output')) {
-            return $this->reportError($console, $width, $length, 'Missing output file');
-        }
-        $output = $route->getMatchedParam('output');
+        $this->addOption(
+            'output',
+            'o',
+            InputOption::VALUE_REQUIRED,
+            'Output file to which to write the tag cloud',
+            'data/tag-cloud.phtml'
+        );
+    }
+
+    protected function execute(InputInterface $input, OutputInterface $output) : int
+    {
+        $io = new SymfonyStyle($input, $output);
+
+        $io->title('Creating tag cloud');
+
+        $output = $input->getOption('output');
 
         $cloud  = $this->mapper->fetchTagCloud();
         $markup = sprintf(
@@ -40,50 +54,9 @@ class TagCloud
         );
 
         file_put_contents($output, $markup);
-        return $this->reportSuccess($console, $width, $length);
-    }
 
-    /**
-     * Report an error
-     *
-     * @param Console $console
-     * @param int $width
-     * @param int $length
-     * @param string|Throwable $e
-     * @return int
-     */
-    private function reportError(Console $console, int $width, int $length, $e) : int
-    {
-        if (($length + 9) > $width) {
-            $console->writeLine('');
-            $length = 0;
-        }
-        $spaces = $width - $length - 9;
-        $console->writeLine(str_repeat('.', $spaces) . '[ ERROR ]', Color::RED);
+        $io->success('Created tag cloud.');
 
-        if (is_string($e)) {
-            $console->writeLine($e);
-        }
-
-        if ($e instanceof Throwable) {
-            $console->writeLine($e->getTraceAsString());
-        }
-
-        return 1;
-    }
-
-    /**
-     * Report success
-     */
-    private function reportSuccess(Console $console, int $width, int $length) : int
-    {
-        if (($length + 8) > $width) {
-            $console->writeLine('');
-            $length = 0;
-        }
-        $spaces = $width - $length - 8;
-        $spaces = ($spaces > 0) ? $spaces : 0;
-        $console->writeLine(str_repeat('.', $spaces) . '[ DONE ]', Color::GREEN);
         return 0;
     }
 }

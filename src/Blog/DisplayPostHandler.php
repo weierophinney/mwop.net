@@ -6,22 +6,27 @@
 
 namespace Mwop\Blog;
 
+use DateTimeImmutable;
 use Mni\FrontYAML\Bridge\CommonMark\CommonMarkParser;
 use Mni\FrontYAML\Parser;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use RuntimeException;
 use Zend\Diactoros\Response\HtmlResponse;
-use Zend\Expressive\Router\RouterInterface;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
-class DisplayPostMiddleware implements MiddlewareInterface
+use function date;
+
+class DisplayPostHandler implements RequestHandlerInterface
 {
     private $disqus;
 
     private $mapper;
+
+    /**
+     * @var RequestHandlerInterface
+     */
+    private $notFoundHandler;
 
     /**
      * Delimiter between post summary and extended body
@@ -30,31 +35,26 @@ class DisplayPostMiddleware implements MiddlewareInterface
      */
     private $postDelimiter = '<!--- EXTENDED -->';
 
-    private $router;
-
     private $template;
 
     public function __construct(
         MapperInterface $mapper,
         TemplateRendererInterface $template,
-        RouterInterface $router,
+        RequestHandlerInterface $notFoundHandler,
         array $disqus = []
     ) {
-        $this->mapper   = $mapper;
-        $this->template = $template;
-        $this->router   = $router;
-        $this->disqus   = $disqus;
+        $this->mapper          = $mapper;
+        $this->template        = $template;
+        $this->notFoundHandler = $notFoundHandler;
+        $this->disqus          = $disqus;
     }
 
-    /**
-     * @return ResponseInterface
-     */
-    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler) : ResponseInterface
+    public function handle(ServerRequestInterface $request) : ResponseInterface
     {
         $post = $this->mapper->fetch($request->getAttribute('id', false));
 
         if (! $post) {
-            return $handler->handle($request);
+            return $this->notFoundHandler->handle($request);
         }
 
         $isAmp = (bool) ($request->getQueryParams()['amp'] ?? false);
@@ -70,12 +70,20 @@ class DisplayPostMiddleware implements MiddlewareInterface
             'tags'      => is_array($post['tags']) ? $post['tags'] : explode('|', trim((string) $post['tags'], '|')),
         ]);
 
-        return new HtmlResponse($this->template->render(
-            $isAmp ? 'blog::post.amp' : 'blog::post',
+        $lastModified = new DateTimeImmutable($post['updated'] ?: $post['created']);
+
+        return new HtmlResponse(
+            $this->template->render(
+                $isAmp ? 'blog::post.amp' : 'blog::post',
+                [
+                    'post' => $post,
+                    'disqus' => $this->disqus,
+                ]
+            ),
+            200,
             [
-                'post' => $post,
-                'disqus' => $this->disqus,
+                'Last-Modified' => $lastModified->format('r'),
             ]
-        ));
+        );
     }
 }

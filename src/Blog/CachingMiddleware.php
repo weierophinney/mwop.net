@@ -7,37 +7,32 @@
 
 namespace Mwop\Blog;
 
+use Psr\Cache\CacheItemInterface;
+use Psr\Cache\CacheItemPoolInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use RuntimeException;
+use Swoole\Event;
 use Throwable;
-use Zend\Diactoros\Response\HtmlResponse;
-use Zend\Diactoros\Stream;
+use Zend\Diactoros\Response\Serializer;
 
 class CachingMiddleware implements MiddlewareInterface
 {
     /**
-     * @var string
+     * @var CacheItemPoolInterface
      */
-    private $cachePath;
+    private $cache;
 
     /**
      * @var bool
      */
     private $enabled;
 
-    /**
-     * @var MiddlewareInterface
-     */
-    private $middleware;
-
-    public function __construct(MiddlewareInterface $middleware, string $cachePath, bool $enabled = true)
+    public function __construct(CacheItemPoolInterface $cache, bool $enabled = true)
     {
-        $this->middleware = $middleware;
-        $this->cachePath  = $cachePath;
-        $this->enabled    = $enabled;
+        $this->cache   = $cache;
+        $this->enabled = $enabled;
     }
 
     /**
@@ -45,8 +40,7 @@ class CachingMiddleware implements MiddlewareInterface
      */
     public function process(Request $request, RequestHandlerInterface $handler) : Response
     {
-        $middleware = $this->middleware;
-        $id         = $request->getAttribute('id', false);
+        $id = $request->getAttribute('id', false);
 
         if (! empty($request->getQueryParams()['amp'])) {
             $id .= '-amp';
@@ -54,77 +48,46 @@ class CachingMiddleware implements MiddlewareInterface
 
         // Caching is disabled, or no identifier present; invoke the middleware.
         if (! $this->enabled || ! $id) {
-            return $middleware->process($request, $handler);
+            return $handler->handle($request);
         }
 
-        try {
-            $result = $this->fetchFromCache($id);
-        } catch (\Throwable $e) {
-            throw $e;
-        }
-
-        // Hit cache; resturn response.
-        if ($result instanceof Response) {
-            return $result;
+        $item = $this->cache->getItem($id);
+        $response = $this->unserializeResponse($item);
+        if ($response instanceof Response) {
+            // Hit cache, and was able to unserialize the data to a response.
+            return $response;
         }
 
         // Invoke middleware
-        $result = $middleware->process($request, $handler);
-
-        // Result is not a response; cannot cache; error condition.
-        if (! $result instanceof Response) {
-            $error = $this->prepareExceptionFromMiddlewareResult($result);
-            throw $error;
-        }
+        $response = $handler->handle($request);
 
         // Result represents an error response; cannot cache.
-        if (300 <= $result->getStatusCode()) {
-            return $result;
+        if (300 <= $response->getStatusCode()) {
+            return $response;
         }
 
         // Cache result
-        $this->cache($id, $result);
+        Event::defer(function () use ($item, $response) {
+            $item->set(Serializer::toString($response));
+            $this->cache->save($item);
+        });
 
-        return $result;
+        return $response;
     }
 
-    /**
-     * @return false|HtmlResponse
-     */
-    private function fetchFromCache(string $id)
+    private function unserializeResponse(CacheItemInterface $item) : ?Response
     {
-        $cachePath = sprintf('%s/%s', $this->cachePath, $id);
-
-        if (! file_exists($cachePath)) {
-            // Nothing in cache, but should be cached
-            return false;
+        if (! $item->isHit()) {
+            return null;
         }
 
-        // Cache hit!
-        return (new HtmlResponse(''))
-            ->withBody(new Stream(fopen($cachePath, 'r')));
-    }
-
-    private function cache(string $id, Response $res)
-    {
-        $cachePath = sprintf('%s/%s', $this->cachePath, $id);
-        file_put_contents($cachePath, (string) $res->getBody());
-    }
-
-    private function prepareExceptionFromMiddlewareResult($result) : Throwable
-    {
-        if ($result instanceof Throwable) {
-            return $result;
+        $data = $item->get();
+        
+        try {
+            $response = Serializer::fromString($data);
+            return $response;
+        } catch (Throwable $e) {
+            return null;
         }
-
-        if (is_string($result)) {
-            return new RuntimeException($result);
-        }
-
-        if (is_scalar($result) || is_array($result)) {
-            return new RuntimeException(var_export($result, true));
-        }
-
-        return new RuntimeException((string) $result);
     }
 }

@@ -9,16 +9,26 @@ namespace Mwop\Console;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use SplFileInfo;
-use Zend\Console\Adapter\AdapterInterface as Console;
-use ZF\Console\Route;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
-class ClearCache
+class ClearCache extends Command
 {
     const PATH_TEMPLATE = '%s/data/cache';
 
-    public function __invoke(Route $route, Console $console) : int
+    protected function configure()
     {
-        $console->write('Clearing static cache... ');
+        $this->setName('clear-cache');
+        $this->setDescription('Clear the static cache.');
+        $this->setHelp('Clear any cached content.');
+    }
+
+    protected function execute(InputInterface $input, OutputInterface $output) : int
+    {
+        $io = new SymfonyStyle($input, $output);
+        $io->title('Clearing static cache');
 
         $rdi = new RecursiveDirectoryIterator(sprintf(self::PATH_TEMPLATE, $route->getMatchedParam('path')));
         $rii = new RecursiveIteratorIterator(
@@ -40,7 +50,7 @@ class ClearCache
             unlink($file->getRealPath());
         }
 
-        $console->writeLine('[DONE]');
+        $io->success('Static cache cleared');
 
         return 0;
     }

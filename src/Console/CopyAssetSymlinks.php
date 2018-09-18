@@ -6,15 +6,24 @@
 
 namespace Mwop\Console;
 
-use Zend\Console\Adapter\AdapterInterface as Console;
-use Zend\Console\ColorInterface as Color;
-use ZF\Console\Route;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
-class CopyAssetSymlinks
+class CopyAssetSymlinks extends Command
 {
-    public function __invoke(Route $route, Console $console) : int
+    protected function configure()
     {
-        $console->writeLine('Copying asset symlinks... ', Color::BLUE);
+        $this->setName('asset:copy-symlinks');
+        $this->setDescription('Copy assets.');
+        $this->setHelp('Copy assets installed by npm into the public tree.');
+    }
+
+    protected function execute(InputInterface $input, OutputInterface $output) : int
+    {
+        $io = new SymfonyStyle($input, $output);
+        $io->title('Copying asset symlinks');
 
         foreach (CreateAssetSymlinks::ASSET_MAP as $origin => $target) {
             if (file_exists($target)) {
@@ -26,8 +35,7 @@ class CopyAssetSymlinks
             copy($origin, $target);
         }
 
-        $console->write('[DONE] ', Color::GREEN);
-        $console->writeLine('Copying asset symlinks');
+        $io->success('Copyied asset symlinks');
 
         return 0;
     }
