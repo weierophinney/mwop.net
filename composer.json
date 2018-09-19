@@ -22,7 +22,7 @@
         "middlewares/csp": "^1.0.1",
         "mnapoli/front-yaml": "^1.5",
         "monolog/monolog": "^1.23",
-        "phly/phly-comic": "^2.0",
+        "phly/phly-comic": "^2.0.1",
         "phly/phly-expressive-oauth2clientauthentication": "^0.2.1",
         "php-http/curl-client": "^1.4",
         "php-http/message": "^1.2",

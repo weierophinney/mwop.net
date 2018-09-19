@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9810d7a1ef1589a1b477a40cc67f5ab0",
+    "content-hash": "d8a9f92caccb44281399c7822884fa35",
     "packages": [
         {
             "name": "cache/adapter-common",
@@ -1556,16 +1556,16 @@
         },
         {
             "name": "phly/phly-comic",
-            "version": "2.0.0",
+            "version": "2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/weierophinney/PhlyComic.git",
-                "reference": "5024b93a11e79fc6c55a0e6a774e3f8c3f4d5980"
+                "reference": "54332b6dcfceddb5f86fc50a20f939245341c10f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/weierophinney/PhlyComic/zipball/5024b93a11e79fc6c55a0e6a774e3f8c3f4d5980",
-                "reference": "5024b93a11e79fc6c55a0e6a774e3f8c3f4d5980",
+                "url": "https://api.github.com/repos/weierophinney/PhlyComic/zipball/54332b6dcfceddb5f86fc50a20f939245341c10f",
+                "reference": "54332b6dcfceddb5f86fc50a20f939245341c10f",
                 "shasum": ""
             },
             "require": {
@@ -1609,7 +1609,7 @@
                 "source": "https://github.com/weierophinney/PhlyComic",
                 "issues": "https://github.com/weierophinney/PhlyComic/issues"
             },
-            "time": "2018-09-18T20:31:29+00:00"
+            "time": "2018-09-19T19:20:54+00:00"
         },
         {
             "name": "phly/phly-expressive-oauth2clientauthentication",
