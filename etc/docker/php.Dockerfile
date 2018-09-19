@@ -21,13 +21,13 @@ COPY etc/cron.d/mwopnet /etc/cron.d/
 
 # Project files
 COPY bin /var/www/bin
-COPY data /var/www/data
-COPY public /var/www/public
-COPY templates /var/www/templates
 COPY composer.json /var/www/
 COPY composer.lock /var/www/
+COPY public /var/www/public
+COPY templates /var/www/templates
 COPY config /var/www/config
 COPY src /var/www/src
+COPY data /var/www/data
 
 # Reset "local"/development config files
 RUN rm -f /var/www/config/development.config.php && \
