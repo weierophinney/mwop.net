@@ -114,6 +114,7 @@
             "@clean"
         ],
         "docker:site": [
+            "perl bin/mk-ca-bundle.pl data/ca-bundle.crt",
             "bin/mwop.net.php asset:use-dist-templates",
             "@build:blog",
             "@build:homepage",

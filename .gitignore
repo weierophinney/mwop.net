@@ -1,5 +1,3 @@
-.acme.env
-.env
 .puli/
 .tmp/
 config/autoload/*local.php
@@ -19,5 +17,8 @@ log/
 node_modules/
 public/service-worker.js
 vendor/
+.acme.env
+.env
 *.log
 *.zpk
+certdata.txt
