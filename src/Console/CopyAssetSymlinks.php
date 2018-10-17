@@ -35,7 +35,7 @@ class CopyAssetSymlinks extends Command
             copy($origin, $target);
         }
 
-        $io->success('Copyied asset symlinks');
+        $io->success('Copied asset symlinks');
 
         return 0;
     }
