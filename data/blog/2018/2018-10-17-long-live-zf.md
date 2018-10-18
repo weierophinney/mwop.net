@@ -5,7 +5,7 @@ title: 'The Future of Zend Framework'
 draft: false
 public: true
 created: '2018-10-17T11:30:00-05:00'
-updated: '2018-10-17T11:30:00-05:00'
+updated: '2018-10-18T13:20:00-05:00'
 tags:
     - php
     - programming
@@ -26,12 +26,10 @@ MILLION times, with 200 million of those being in the past 18 months!
 In the last three years, I have performed this work under the umbrella of
 [Rogue Wave Software](https://www.roguewave.com), who acquired Zend in 2015.
 However, Rogue Wave has recently made a strategic decision to focus its efforts
-solely on the Zend Server product of the Zend portfolio. While Rogue Wave will
-continue to support Zend Framework via the Zend Server service license
-agreements, _*it will no longer continue to actively develop it*_ &mdash; and this
-means both myself and [Enrico Zimuel](https://www.zimuel.it) will be leaving
-the company and looking for new opportunities in the not-too-distant future,
-along with [Zeev Suraski](https://zsuraski.blogspot.com) and Dmitry Stogov.
+on the Zend Server product of the Zend portfolio. Consequently, this means both
+myself and [Enrico Zimuel](https://www.zimuel.it) will be leaving the company
+and looking for new opportunities in the not-too-distant future, along with
+[Zeev Suraski](https://zsuraski.blogspot.com) and Dmitry Stogov.
 
 We all care deeply about the Zend Framework ecosystem, and we are evaluating
 options to ensure its continuation and longevity. These include either finding a
