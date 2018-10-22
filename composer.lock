@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "d8a9f92caccb44281399c7822884fa35",
+    "content-hash": "02569ae5bde7ae3f438e48ec7b336476",
     "packages": [
         {
             "name": "cache/adapter-common",
@@ -1613,23 +1613,23 @@
         },
         {
             "name": "phly/phly-expressive-oauth2clientauthentication",
-            "version": "0.2.1",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phly/phly-expressive-oauth2clientauthentication.git",
-                "reference": "fc86b2a1264860fa5e503864028cae3ef586b8ff"
+                "reference": "6c97ed1cd72542651dcb52cf086a26a581c5f4ae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phly/phly-expressive-oauth2clientauthentication/zipball/fc86b2a1264860fa5e503864028cae3ef586b8ff",
-                "reference": "fc86b2a1264860fa5e503864028cae3ef586b8ff",
+                "url": "https://api.github.com/repos/phly/phly-expressive-oauth2clientauthentication/zipball/6c97ed1cd72542651dcb52cf086a26a581c5f4ae",
+                "reference": "6c97ed1cd72542651dcb52cf086a26a581c5f4ae",
                 "shasum": ""
             },
             "require": {
                 "league/oauth2-client": "^2.2",
                 "php": "^7.1",
                 "zendframework/zend-expressive": "^3.0",
-                "zendframework/zend-expressive-authentication": "^0.4",
+                "zendframework/zend-expressive-authentication": "^1.0",
                 "zendframework/zend-expressive-session": "^1.0"
             },
             "require-dev": {
@@ -1652,7 +1652,8 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0-dev"
+                    "dev-master": "1.0.x-dev",
+                    "dev-develop": "1.1.x-dev"
                 },
                 "zf": {
                     "config-provider": "Phly\\Expressive\\OAuth2ClientAuthentication\\ConfigProvider"
@@ -1675,7 +1676,7 @@
                 "psr-15",
                 "psr-7"
             ],
-            "time": "2018-03-28T21:58:00+00:00"
+            "time": "2018-10-18T19:38:10+00:00"
         },
         {
             "name": "php-http/curl-client",
@@ -2473,16 +2474,16 @@
         },
         {
             "name": "symfony/console",
-            "version": "v4.1.4",
+            "version": "v4.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "ca80b8ced97cf07390078b29773dc384c39eee1f"
+                "reference": "dc7122fe5f6113cfaba3b3de575d31112c9aa60b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/ca80b8ced97cf07390078b29773dc384c39eee1f",
-                "reference": "ca80b8ced97cf07390078b29773dc384c39eee1f",
+                "url": "https://api.github.com/repos/symfony/console/zipball/dc7122fe5f6113cfaba3b3de575d31112c9aa60b",
+                "reference": "dc7122fe5f6113cfaba3b3de575d31112c9aa60b",
                 "shasum": ""
             },
             "require": {
@@ -2537,7 +2538,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2018-07-26T11:24:31+00:00"
+            "time": "2018-10-03T08:15:46+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",
@@ -2658,16 +2659,16 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v2.8.45",
+            "version": "v2.8.46",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "fbf876678e29dc634430dcf0096e216eb0004467"
+                "reference": "5baf0f821b14eee8ca415e6a0361a9fa140c002c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/fbf876678e29dc634430dcf0096e216eb0004467",
-                "reference": "fbf876678e29dc634430dcf0096e216eb0004467",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/5baf0f821b14eee8ca415e6a0361a9fa140c002c",
+                "reference": "5baf0f821b14eee8ca415e6a0361a9fa140c002c",
                 "shasum": ""
             },
             "require": {
@@ -2704,7 +2705,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2018-07-26T09:03:18+00:00"
+            "time": "2018-08-29T13:11:53+00:00"
         },
         {
             "name": "true/punycode",
@@ -2956,16 +2957,16 @@
         },
         {
             "name": "zendframework/zend-expressive",
-            "version": "3.1.0",
+            "version": "3.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-expressive.git",
-                "reference": "1ddf213b4c0c7dcf39be83e8eb1a5d5b944ee346"
+                "reference": "a57c75703e781e3a8e812b83413443f3ce550a0f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-expressive/zipball/1ddf213b4c0c7dcf39be83e8eb1a5d5b944ee346",
-                "reference": "1ddf213b4c0c7dcf39be83e8eb1a5d5b944ee346",
+                "url": "https://api.github.com/repos/zendframework/zend-expressive/zipball/a57c75703e781e3a8e812b83413443f3ce550a0f",
+                "reference": "a57c75703e781e3a8e812b83413443f3ce550a0f",
                 "shasum": ""
             },
             "require": {
@@ -2991,7 +2992,7 @@
                 "phpstan/phpstan-strict-rules": "^0.9",
                 "phpunit/phpunit": "^7.0.1",
                 "zendframework/zend-coding-standard": "~1.0.0",
-                "zendframework/zend-diactoros": "^1.7.1",
+                "zendframework/zend-diactoros": "^1.7.1 || ^2.0",
                 "zendframework/zend-expressive-aurarouter": "^3.0",
                 "zendframework/zend-expressive-fastroute": "^3.0",
                 "zendframework/zend-expressive-zendrouter": "^3.0",
@@ -3012,8 +3013,8 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.0.x-dev",
-                    "dev-develop": "3.1.x-dev"
+                    "dev-master": "3.2.x-dev",
+                    "dev-develop": "3.3.x-dev"
                 },
                 "zf": {
                     "config-provider": "Zend\\Expressive\\ConfigProvider"
@@ -3044,20 +3045,20 @@
                 "zend-expressive",
                 "zf"
             ],
-            "time": "2018-07-30T21:23:01+00:00"
+            "time": "2018-09-27T21:32:28+00:00"
         },
         {
             "name": "zendframework/zend-expressive-authentication",
-            "version": "0.4.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-expressive-authentication.git",
-                "reference": "2fea5529d78cddc26921e46e87ea886ccb8cc7d1"
+                "reference": "c85f7602dc607dbcb1950dd8809c0defc92040e6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-expressive-authentication/zipball/2fea5529d78cddc26921e46e87ea886ccb8cc7d1",
-                "reference": "2fea5529d78cddc26921e46e87ea886ccb8cc7d1",
+                "url": "https://api.github.com/repos/zendframework/zend-expressive-authentication/zipball/c85f7602dc607dbcb1950dd8809c0defc92040e6",
+                "reference": "c85f7602dc607dbcb1950dd8809c0defc92040e6",
                 "shasum": ""
             },
             "require": {
@@ -3109,7 +3110,7 @@
                 "zend-expressive",
                 "zf"
             ],
-            "time": "2018-03-15T17:19:40+00:00"
+            "time": "2018-09-28T08:25:39+00:00"
         },
         {
             "name": "zendframework/zend-expressive-csrf",
@@ -3492,17 +3493,76 @@
             "time": "2018-09-12T15:16:19+00:00"
         },
         {
-            "name": "zendframework/zend-expressive-swoole",
-            "version": "0.2.2",
+            "name": "zendframework/zend-expressive-session-cache",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/zendframework/zend-expressive-swoole.git",
-                "reference": "1f0d3ed2dc5b5ef09e632c4a6f6b38b856392e22"
+                "url": "https://github.com/zendframework/zend-expressive-session-cache.git",
+                "reference": "8fb1ff6ab6d28a595ca9580fb487ada6a418eca1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-expressive-swoole/zipball/1f0d3ed2dc5b5ef09e632c4a6f6b38b856392e22",
-                "reference": "1f0d3ed2dc5b5ef09e632c4a6f6b38b856392e22",
+                "url": "https://api.github.com/repos/zendframework/zend-expressive-session-cache/zipball/8fb1ff6ab6d28a595ca9580fb487ada6a418eca1",
+                "reference": "8fb1ff6ab6d28a595ca9580fb487ada6a418eca1",
+                "shasum": ""
+            },
+            "require": {
+                "dflydev/fig-cookies": "^1.0.2 || ^2.0",
+                "php": "^7.1",
+                "psr/cache": "^1.0",
+                "psr/container": "^1.0",
+                "zendframework/zend-expressive-session": "^1.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7.1.1",
+                "zendframework/zend-coding-standard": "~1.0.0",
+                "zendframework/zend-diactoros": "^2.0"
+            },
+            "suggest": {
+                "psr/cache-implementation": "This package requires a PSR-6 CacheItemPoolInterface implementation."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev",
+                    "dev-develop": "1.1.x-dev"
+                },
+                "zf": {
+                    "config-provider": "Zend\\Expressive\\Session\\Cache\\ConfigProvider"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Zend\\Expressive\\Session\\Cache\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "PSR-6 session persistence adapter for zend-expressive-session.",
+            "keywords": [
+                "ZendFramework",
+                "cache",
+                "expressive",
+                "psr-6",
+                "session",
+                "zf"
+            ],
+            "time": "2018-10-09T21:32:27+00:00"
+        },
+        {
+            "name": "zendframework/zend-expressive-swoole",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zendframework/zend-expressive-swoole.git",
+                "reference": "0035f0537a7dea4c9a331ed5c1a5522c6c0309ed"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zendframework/zend-expressive-swoole/zipball/0035f0537a7dea4c9a331ed5c1a5522c6c0309ed",
+                "reference": "0035f0537a7dea4c9a331ed5c1a5522c6c0309ed",
                 "shasum": ""
             },
             "require": {
@@ -3516,7 +3576,7 @@
                 "psr/http-server-handler": "^1.0",
                 "psr/log": "^1.0",
                 "symfony/console": "^4.1",
-                "zendframework/zend-diactoros": "^1.8",
+                "zendframework/zend-diactoros": "^1.8 || ^2.0",
                 "zendframework/zend-expressive": "^3.0.2",
                 "zendframework/zend-httphandlerrunner": "^1.0.1"
             },
@@ -3527,7 +3587,8 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0-dev"
+                    "dev-master": "1.0.x-dev",
+                    "dev-develop": "1.1.x-dev"
                 }
             },
             "autoload": {
@@ -3545,11 +3606,12 @@
                 "components",
                 "expressive",
                 "psr-15",
+                "psr-17",
                 "psr-7",
                 "swoole",
                 "zf"
             ],
-            "time": "2018-09-05T14:21:19+00:00"
+            "time": "2018-10-02T21:31:20+00:00"
         },
         {
             "name": "zendframework/zend-expressive-template",

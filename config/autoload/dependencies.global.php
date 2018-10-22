@@ -8,11 +8,15 @@ namespace Mwop;
 
 use Psr\Cache\CacheItemPoolInterface;
 use Zend\Expressive\Application;
+use Zend\Expressive\Session\Cache\CacheSessionPersistence;
 use Zend\Expressive\Session\SessionPersistenceInterface;
 use Zend\Feed\Reader\Http\ClientInterface as FeedReaderHttpClientInterface;
 use Zend\ServiceManager\Factory\InvokableFactory;
 
 return ['dependencies' => [
+    'aliases' => [
+        SessionPersistenceInterface::class => CacheSessionPersistence::class,
+    ],
     'delegators' => [
         Application::class => [
             Github\PuSH\RoutesDelegator::class,
@@ -38,6 +42,5 @@ return ['dependencies' => [
         Github\PuSH\Logger::class         => Github\PuSH\LoggerFactory::class,
         Github\PuSH\LoggerAction::class   => Github\PuSH\LoggerActionFactory::class,
         SessionCachePool::class           => Factory\SessionCachePoolFactory::class,
-        SessionPersistenceInterface::class => Factory\CacheSessionPersistenceFactory::class,
     ],
 ]];

@@ -16,4 +16,10 @@ return [
             'port' => 6379,
         ],
     ],
+    'zend-expressive-session-cache' => [
+        'cache_item_pool_service' => SessionCachePool::class,
+        'cookie_name' => 'MWOPSESS',
+        'cache_limiter' => 'public',
+        'cache_expire' => 60 * 60 * 24 * 28, // 28 days
+    ],
 ];
