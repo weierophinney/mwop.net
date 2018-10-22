@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "02569ae5bde7ae3f438e48ec7b336476",
+    "content-hash": "6e1f99453680f0c6d59e4270a412dfd4",
     "packages": [
         {
             "name": "cache/adapter-common",
@@ -310,6 +310,45 @@
                 "tag"
             ],
             "time": "2017-03-13T09:14:27+00:00"
+        },
+        {
+            "name": "carica/phpcss",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ThomasWeinert/PhpCss.git",
+                "reference": "f30cce2e4469d87e0d015ee24c28adb453cfd180"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ThomasWeinert/PhpCss/zipball/f30cce2e4469d87e0d015ee24c28adb453cfd180",
+                "reference": "f30cce2e4469d87e0d015ee24c28adb453cfd180",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PhpCss\\": "src/PhpCss"
+                },
+                "files": [
+                    "src/PhpCss.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Thomas Weinert",
+                    "email": "thomas@weinert.info"
+                }
+            ],
+            "description": "An css selector parser and converter",
+            "time": "2018-06-27T15:14:42+00:00"
         },
         {
             "name": "clue/stream-filter",
@@ -1556,23 +1595,23 @@
         },
         {
             "name": "phly/phly-comic",
-            "version": "2.0.1",
+            "version": "2.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/weierophinney/PhlyComic.git",
-                "reference": "54332b6dcfceddb5f86fc50a20f939245341c10f"
+                "reference": "17dfcd8a5985b434dd533e5d372ef84b0a29b76f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/weierophinney/PhlyComic/zipball/54332b6dcfceddb5f86fc50a20f939245341c10f",
-                "reference": "54332b6dcfceddb5f86fc50a20f939245341c10f",
+                "url": "https://api.github.com/repos/weierophinney/PhlyComic/zipball/17dfcd8a5985b434dd533e5d372ef84b0a29b76f",
+                "reference": "17dfcd8a5985b434dd533e5d372ef84b0a29b76f",
                 "shasum": ""
             },
             "require": {
+                "carica/phpcss": "^1.0",
                 "ext-curl": "*",
                 "php": "^7.1",
-                "symfony/console": "^4.1",
-                "zendframework/zend-dom": "~2.0"
+                "symfony/console": "^4.1"
             },
             "bin": [
                 "bin/phly-comic.php"
@@ -1609,7 +1648,7 @@
                 "source": "https://github.com/weierophinney/PhlyComic",
                 "issues": "https://github.com/weierophinney/PhlyComic/issues"
             },
-            "time": "2018-09-19T19:20:54+00:00"
+            "time": "2018-10-22T19:35:15+00:00"
         },
         {
             "name": "phly/phly-expressive-oauth2clientauthentication",
@@ -2864,51 +2903,6 @@
                 "psr-7"
             ],
             "time": "2018-09-05T19:29:37+00:00"
-        },
-        {
-            "name": "zendframework/zend-dom",
-            "version": "2.7.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/zendframework/zend-dom.git",
-                "reference": "ec2c66c2bb0046e895651b24f2ebb83058b9bbca"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-dom/zipball/ec2c66c2bb0046e895651b24f2ebb83058b9bbca",
-                "reference": "ec2c66c2bb0046e895651b24f2ebb83058b9bbca",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^5.6 || ^7.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^5.7.23 || ^6.4.3",
-                "zendframework/zend-coding-standard": "~1.0.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.7.x-dev",
-                    "dev-develop": "2.8.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Zend\\Dom\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "description": "provides tools for working with DOM documents and structures",
-            "keywords": [
-                "ZendFramework",
-                "dom",
-                "zf"
-            ],
-            "time": "2018-04-09T20:18:00+00:00"
         },
         {
             "name": "zendframework/zend-escaper",
@@ -6156,6 +6150,51 @@
                 "zf"
             ],
             "time": "2018-03-21T16:53:56+00:00"
+        },
+        {
+            "name": "zendframework/zend-dom",
+            "version": "2.7.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zendframework/zend-dom.git",
+                "reference": "ec2c66c2bb0046e895651b24f2ebb83058b9bbca"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zendframework/zend-dom/zipball/ec2c66c2bb0046e895651b24f2ebb83058b9bbca",
+                "reference": "ec2c66c2bb0046e895651b24f2ebb83058b9bbca",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.6 || ^7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^5.7.23 || ^6.4.3",
+                "zendframework/zend-coding-standard": "~1.0.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.7.x-dev",
+                    "dev-develop": "2.8.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Zend\\Dom\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "provides tools for working with DOM documents and structures",
+            "keywords": [
+                "ZendFramework",
+                "dom",
+                "zf"
+            ],
+            "time": "2018-04-09T20:18:00+00:00"
         },
         {
             "name": "zendframework/zend-eventmanager",
