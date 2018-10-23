@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mwop;
 
 use Zend\Expressive\Csrf\CsrfMiddleware;
+use Zend\Expressive\Authentication\AuthenticationMiddleware;
 use Zend\Expressive\Session\SessionMiddleware;
 
 // General pages
@@ -14,9 +15,24 @@ return function (
     \Psr\Container\ContainerInterface $container
 ) : void {
     $app->get('/', HomePage::class, 'home');
-    $app->get('/comics', ComicsPage::class, 'comics');
-    $app->get('/offline', OfflinePage::class, 'offline');
+    $app->get('/comics', [
+        SessionMiddleware::class,
+        OAuth2\CheckAuthenticationMiddleware::class,
+        ComicsPage::class,
+    ], 'comics');
     $app->get('/resume', ResumePage::class, 'resume');
+
+    // OAuth2 authentication response
+    $app->get('/auth/{provider:debug|github|google}/oauth2callback', [
+        SessionMiddleware::class,
+        OAuth2\CallbackHandler::class,
+    ]);
+
+    // OAuth2 authentication request
+    $app->get('/auth/{provider:debug|github|google}', [
+        SessionMiddleware::class,
+        OAuth2\RequestAuthenticationHandler::class,
+    ]);
 
     // Blog
     $app->get('/blog[/]', Blog\ListPostsHandler::class, 'blog');

@@ -24,7 +24,6 @@ $aggregator = new ConfigAggregator([
     \Zend\Validator\ConfigProvider::class,
     \Zend\Expressive\Session\ConfigProvider::class,
     \Zend\Expressive\Csrf\ConfigProvider::class,
-    \Zend\Expressive\Authentication\ConfigProvider::class,
     \Zend\Expressive\ConfigProvider::class,
     \Zend\HttpHandlerRunner\ConfigProvider::class,
     \Zend\Expressive\Helper\ConfigProvider::class,

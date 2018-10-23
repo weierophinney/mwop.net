@@ -55,7 +55,7 @@ return [
             ],
         ],
     ],
-    'oauth2clientauthentication' => [
+    'oauth2' => [
         'debug'  => [],
         'github' => [
             'clientId'     => getenv('OAUTH2_GITHUB_CLIENTID'),

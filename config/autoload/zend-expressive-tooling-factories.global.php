@@ -13,6 +13,9 @@ return [
     'dependencies' => [
         'factories' => [
             Mwop\Blog\SearchHandler::class => Mwop\Blog\SearchHandlerFactory::class,
+            Mwop\OAuth2\CallbackHandler::class => Mwop\OAuth2\CallbackHandlerFactory::class,
+            Mwop\OAuth2\CheckAuthenticationMiddleware::class => Mwop\OAuth2\CheckAuthenticationMiddlewareFactory::class,
+            Mwop\OAuth2\RequestAuthenticationHandler::class => Mwop\OAuth2\RequestAuthenticationHandlerFactory::class,
         ],
     ],
 ];

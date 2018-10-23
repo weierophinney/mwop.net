@@ -17,18 +17,11 @@ use Zend\Stratigility\MiddlewarePipe;
 
 class ComicsPage
 {
-    public function __invoke(ContainerInterface $container) : MiddlewareInterface
+    public function __invoke(ContainerInterface $container) : Page
     {
-        $factory = $container->get(MiddlewareFactory::class);
-        $pipeline = new MiddlewarePipe();
-
-        $pipeline->pipe($factory->prepare(SessionMiddleware::class));
-        $pipeline->pipe($factory->prepare(AuthenticationMiddleware::class));
-        $pipeline->pipe($factory->prepare(new Page(
+        return new Page(
             'mwop::comics.page',
             $container->get(TemplateRendererInterface::class)
-        )));
-
-        return $pipeline;
+        );
     }
 }
