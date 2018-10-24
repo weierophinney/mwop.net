@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mwop\OAuth2;
 
 use League\OAuth2\Client\Provider\AbstractProvider;
@@ -8,7 +10,7 @@ use Psr\Http\Message\ResponseInterface;
 
 class DebugProvider extends AbstractProvider
 {
-    public const AUTHORIZATION_URL = '/auth/debug/authorize';
+    public const AUTHORIZATION_URL = '/auth/debug/oauth2callback';
     public const CODE = 'CODE';
     public const STATE = 'DEBUG';
     public const TOKEN = 'TOKEN';

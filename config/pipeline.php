@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Mwop;
 
 use Middlewares\Csp;
-use Phly\Expressive\OAuth2ClientAuthentication\OAuth2CallbackMiddleware;
 use Zend\Expressive\Helper\ServerUrlMiddleware;
 use Zend\Expressive\Helper\UrlHelperMiddleware;
 use Zend\Expressive\Handler\NotFoundHandler;
@@ -30,7 +29,6 @@ return function (
     $app->pipe(ErrorHandler::class);
     $app->pipe(ServerUrlMiddleware::class);
     $app->pipe(Redirects::class);
-    $app->pipe('/auth', OAuth2CallbackMiddleware::class);
     $app->pipe(RouteMiddleware::class);
     $app->pipe(ImplicitHeadMiddleware::class);
     $app->pipe(ImplicitOptionsMiddleware::class);

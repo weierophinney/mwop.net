@@ -16,6 +16,11 @@ class RequestAuthenticationHandler implements RequestHandlerInterface
     use RenderUnauthorizedResponseTrait;
 
     /**
+     * @var bool
+     */
+    private $isDebug = false;
+
+    /**
      * @var ProviderFactory
      */
     private $providerFactory;
@@ -40,7 +45,7 @@ class RequestAuthenticationHandler implements RequestHandlerInterface
         $redirect = $request->getQueryParams()['redirect'] ?? $request->getUri()->withPath('/');
 
         $providerType = $request->getAttribute('provider');
-        if (! $this->validateProvider()) {
+        if (! $this->validateProvider($providerType)) {
             return $this->renderUnauthorizedResponse(
                 $request,
                 $redirect,
@@ -48,7 +53,7 @@ class RequestAuthenticationHandler implements RequestHandlerInterface
             );
         }
 
-        $provider = $this->providerFactory->creatProvider($providerType);
+        $provider = $this->providerFactory->createProvider($providerType);
         $authorizationUrl = $provider->getAuthorizationUrl();
 
         $session = $request->getAttribute('session');

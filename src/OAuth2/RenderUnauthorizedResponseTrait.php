@@ -5,15 +5,12 @@ declare(strict_types=1);
 namespace Mwop\OAuth2;
 
 use Psr\Http\Message\ResponseFactoryInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
 trait RenderUnauthorizedResponseTrait
 {
-    /**
-     * @var bool
-     */
-    private $isDebug;
-
     /**
      * @var TemplateRendererInterface
      */

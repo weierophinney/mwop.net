@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mwop\OAuth2;
 
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
+use League\OAuth2\Client\Provider\ResourceOwnerInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -16,6 +17,11 @@ class CallbackHandler implements RequestHandlerInterface
 {
     use ValidateProviderTrait;
     use RenderUnauthorizedResponseTrait;
+
+    /**
+     * @var bool
+     */
+    private $isDebug = false;
 
     /**
      * @var ProviderFactory
@@ -44,7 +50,7 @@ class CallbackHandler implements RequestHandlerInterface
         $redirect = $sessionData['redirect'] ?? null;
 
         $providerType = $request->getAttribute('provider');
-        if (! $this->validateProvider()) {
+        if (! $this->validateProvider($providerType)) {
             // Invalid provider
             return $this->renderUnauthorizedResponse(
                 $request,
@@ -52,6 +58,7 @@ class CallbackHandler implements RequestHandlerInterface
                 'Invalid authentication provider'
             );
         }
+
 
         $params = $request->getQueryParams();
         $error = $params['error'] ?? false;
@@ -88,6 +95,7 @@ class CallbackHandler implements RequestHandlerInterface
         }
 
         // Attempt to retrieve the access token.
+        $provider = $this->providerFactory->createProvider($providerType);
         try {
             $token = $provider->getAccessToken('authorization_code', [
                 'code' => $code,
@@ -115,5 +123,29 @@ class CallbackHandler implements RequestHandlerInterface
         $session->set('auth', $sessionData);
         return $this->responseFactory->createResponse(301)
             ->withHeader('Location', $redirect ?? '/');
+    }
+
+
+    /**
+     * @throws Exception\UnexpectedResourceOwnerTypeException if unable to determine
+     *     username from resource owner.
+     */
+    private function getUsernameFromResourceOwner(ResourceOwnerInterface $resourceOwner) : string
+    {
+        if (method_exists($resourceOwner, 'getEmail')) {
+            // All official providers except Instagram
+            return $resourceOwner->getEmail();
+        }
+
+        if (method_exists($resourceOwner, 'getNickname')) {
+            // Instagram
+            return $resourceOwner->getNickname();
+        }
+
+        if ($resourceOwner instanceof DebugResourceOwner) {
+            return $resourceOwner->getId();
+        }
+
+        throw Exception\UnexpectedResourceOwnerTypeException::forResourceOwner($resourceOwner);
     }
 }

@@ -17,6 +17,11 @@ class CheckAuthenticationMiddleware implements MiddlewareInterface
 {
     use RenderUnauthorizedResponseTrait;
 
+    /**
+     * @var bool
+     */
+    private $isDebug = false;
+
     public function __construct(
         TemplateRendererInterface $renderer,
         ResponseFactoryInterface $responseFactory,

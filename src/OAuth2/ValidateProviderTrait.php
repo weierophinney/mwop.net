@@ -16,11 +16,6 @@ trait ValidateProviderTrait
         'github',
         'google',
     ];
-
-    /**
-     * @var bool
-     */
-    private $isDebug = false;
     
     private function validateProvider(?string $provider) : bool
     {
@@ -29,6 +24,6 @@ trait ValidateProviderTrait
             $allowedProviders[] = 'debug';
         }
 
-        return in_array($providerType, $this->allowedProviders, true);
+        return in_array($provider, $allowedProviders, true);
     }
 }

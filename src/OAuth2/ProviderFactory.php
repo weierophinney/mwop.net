@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mwop\OAuth2;
 
 use League\OAuth2\Client\Provider;
@@ -8,7 +10,7 @@ use Psr\Container\ContainerInterface;
 class ProviderFactory
 {
     public const PROVIDER_MAP = [
-        'debug'  => Debug\DebugProvider::class,
+        'debug'  => DebugProvider::class,
         'github' => Provider\Github::class,
         'google' => Provider\Google::class,
     ];
