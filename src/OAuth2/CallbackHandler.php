@@ -4,34 +4,34 @@ declare(strict_types=1);
 
 namespace Mwop\OAuth2;
 
+use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use RuntimeException;
 use Zend\Diactoros\Response\HtmlResponse;
+use Zend\Expressive\Template\TemplateRendererInterface;
 
 class CallbackHandler implements RequestHandlerInterface
 {
     use ValidateProviderTrait;
+    use RenderUnauthorizedResponseTrait;
 
     /**
      * @var ProviderFactory
      */
     private $providerFactory;
 
-    /**
-     * @var ResponseFactoryInterface
-     */
-    private $responseFactory;
-
     public function __construct(
         ResponseFactoryInterface $responseFactory,
         ProviderFactory $providerFactory,
+        TemplateRendererInterface $renderer,
         bool $isDebug
     ) {
         $this->responseFactory = $responseFactory;
         $this->providerFactory = $providerFactory;
+        $this->renderer = $renderer;
         $this->isDebug = $isDebug;
     }
 
@@ -40,50 +40,67 @@ class CallbackHandler implements RequestHandlerInterface
      */
     public function handle(ServerRequestInterface $request) : ResponseInterface
     {
+        $session = $request->getAttribute('session');
+        $sessionData = $session->get('auth', []);
+        $redirect = $sessionData['redirect'] ?? null;
+
         $providerType = $request->getAttribute('provider');
         if (! $this->validateProvider()) {
-            throw new RuntimeException(sprintf(
-                'Invalid provider provided to %s',
-                __CLASS__
-            ));
+            // Invalid provider
+            return $this->renderUnauthorizedResponse(
+                $request,
+                $redirect,
+                'Invalid authentication provider'
+            );
         }
 
         $params = $request->getQueryParams();
         $error = $params['error'] ?? false;
         if ($error) {
-            throw new RuntimeException(sprintf(
-                'Error occurred during authentication: %s',
-                var_export($error, true)
-            ));
+            // Error during authentication with provider
+            return $this->renderUnauthorizedResponse(
+                $request,
+                $redirect,
+                sprintf('Authentication error reported by provider: %s', $error)
+            );
         }
 
         $code = $params['code'] ?? false;
         if (! $code) {
-            // No code returned from provider?
-            return $this->responseFactory->createResponse(301)
-                ->withHeader('Location', '/auth/' . $provider);
+            // No code returned from provider
+            return $this->renderUnauthorizedResponse(
+                $request,
+                $redirect,
+                'Missing authorization code from provider'
+            );
         }
-
-        $session = $request->getAttribute('session');
-        $sessionData = $session->get('auth', []);
 
         $state = $params['state'] ?? '';
         if (empty($state)
             || ! isset($sessionData['state'])
             || $state !== $sessionData['state']
         ) {
-            // No state returned from provider, or mismatched state; start over
-            return $this->responseFactory->createResponse(301)
-                ->withHeader('Location', '/auth/' . $provider);
+            // No state returned from provider, or mismatched state
+            return $this->renderUnauthorizedResponse(
+                $request,
+                $redirect,
+                'Missing or mismatched provider state'
+            );
         }
 
         // Attempt to retrieve the access token.
-        // This will raise an exception if it cannot.
-        $token = $provider->getAccessToken('authorization_code', [
-            'code' => $code,
-        ]);
-
-        $resourceOwner = $provider->getResourceOwner($token);
+        try {
+            $token = $provider->getAccessToken('authorization_code', [
+                'code' => $code,
+            ]);
+            $resourceOwner = $provider->getResourceOwner($token);
+        } catch (IdentityProviderException $e) {
+            return $this->renderUnauthorizedResponse(
+                $request,
+                $redirect,
+                sprintf('Error retrieving access token from provider: %s', $e->getMessage())
+            );
+        }
 
         // Authenticated! Store details in session so we can redirect to the
         // page requesting authorization.
@@ -92,11 +109,12 @@ class CallbackHandler implements RequestHandlerInterface
             ['username' => $this->getUsernameFromResourceOwner($resourceOwner)]
         );
 
-        $redirect = $sessionData['redirect'] ?? '/';
+        // Remove the redirect and state; no longer useful
         unset($sessionData['redirect'], $sessionData['state']);
 
+        // Inject the session data into the session and redirect
         $session->set('auth', $sessionData);
         return $this->responseFactory->createResponse(301)
-            ->withHeader('Location', $redirect);
+            ->withHeader('Location', $redirect ?? '/');
     }
 }

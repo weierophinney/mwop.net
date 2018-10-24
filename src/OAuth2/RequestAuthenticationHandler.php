@@ -8,28 +8,27 @@ use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use Zend\Expressive\Template\TemplateRendererInterface;
 
 class RequestAuthenticationHandler implements RequestHandlerInterface
 {
     use ValidateProviderTrait;
+    use RenderUnauthorizedResponseTrait;
 
     /**
      * @var ProviderFactory
      */
     private $providerFactory;
 
-    /**
-     * @var ResponseFactoryInterface
-     */
-    private $responseFactory;
-
     public function __construct(
         ResponseFactoryInterface $responseFactory,
         ProviderFactory $providerFactory,
+        TemplateRendererInterface $renderer,
         bool $isDebug
     ) {
         $this->responseFactory = $responseFactory;
         $this->providerFactory = $providerFactory;
+        $this->renderer = $renderer;
         $this->isDebug = $isDebug;
     }
 
@@ -42,8 +41,11 @@ class RequestAuthenticationHandler implements RequestHandlerInterface
 
         $providerType = $request->getAttribute('provider');
         if (! $this->validateProvider()) {
-            return $this->responseFactory->createResponse(302)
-                ->withHeader('Location', $redirect);
+            return $this->renderUnauthorizedResponse(
+                $request,
+                $redirect,
+                'Invalid authentication provider'
+            );
         }
 
         $provider = $this->providerFactory->creatProvider($providerType);

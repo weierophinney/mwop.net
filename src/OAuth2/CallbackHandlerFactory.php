@@ -6,6 +6,7 @@ namespace Mwop\OAuth2;
 
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
+use Zend\Expressive\Template\TemplateRendererInterface;
 
 class CallbackHandlerFactory
 {
@@ -16,6 +17,7 @@ class CallbackHandlerFactory
         return new CallbackHandler(
             $container->get(ResponseFactoryInterface::class),
             $container->get(ProviderFactory::class),
+            $container->get(TemplateRendererInterface::class),
             $config['debug'] ?? false
         );
     }

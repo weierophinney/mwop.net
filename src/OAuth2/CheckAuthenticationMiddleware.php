@@ -13,20 +13,7 @@ use Zend\Expressive\Template\TemplateRendererInterface;
 
 class CheckAuthenticationMiddleware implements MiddlewareInterface
 {
-    /**
-     * @var TemplateRendererInterface
-     */
-    private $renderer;
-
-    /**
-     * @var ResponseFactoryInterface
-     */
-    private $responseFactory;
-
-    /**
-     * @var bool
-     */
-    private $isDebug;
+    use RenderUnauthorizedResponseTrait;
 
     public function __construct(
         TemplateRendererInterface $renderer,
@@ -58,18 +45,5 @@ class CheckAuthenticationMiddleware implements MiddlewareInterface
         }
 
         return $handler->handle($request);
-    }
-
-    private function renderUnauthorizedResponse(ServerRequestInterface $request) : ResponseInterface
-    {
-        $response = $this->responseFactory->createResponse(401, 'Unauthorized');
-
-        $response->getBody()->write($this->renderer->render('oauth2::401', [
-            'auth_path' => '/auth',
-            'redirect' => $request->getUri(),
-            'debug' => $this->isDebug,
-        ]));
-
-        return $response;
     }
 }

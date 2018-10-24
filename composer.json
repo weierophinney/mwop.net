@@ -20,7 +20,7 @@
         "league/oauth2-client": "^2.3",
         "league/oauth2-github": "^2.0",
         "league/oauth2-google": "^2.0",
-        "middlewares/csp": "^1.0.1",
+        "middlewares/csp": "^2.0",
         "mnapoli/front-yaml": "^1.5",
         "monolog/monolog": "^1.23",
         "phly/phly-comic": "^2.0.2",

@@ -6,7 +6,11 @@
   <h2>Unauthorized</h2>
 
   <p>
+    <?php if ($error) : ?>
+    <strong class="text-danger">An error occurred: <?= $this->escapeHtml($error) ?></strong>
+    <?php else : ?>
     You are not logged in, and therefore cannot perform this action.
+    <?php endif ?>
   </p>
 
   <p>
