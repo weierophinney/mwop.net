@@ -9,6 +9,8 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use Zend\Expressive\Authentication\DefaultUser;
+use Zend\Expressive\Authentication\UserInterface;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
 class CheckAuthenticationMiddleware implements MiddlewareInterface
@@ -44,6 +46,9 @@ class CheckAuthenticationMiddleware implements MiddlewareInterface
             return $this->renderUnauthorizedResponse($request);
         }
 
-        return $handler->handle($request);
+        return $handler->handle($request->withAttribute(
+            UserInterface::class,
+            new DefaultUser($user['username'], [], $user)
+        ));
     }
 }

@@ -34,6 +34,7 @@
         "zendframework/zend-diactoros": "^2.0",
         "zendframework/zend-escaper": "^2.5.2",
         "zendframework/zend-expressive": "^3.0",
+        "zendframework/zend-expressive-authentication": "^1.0",
         "zendframework/zend-expressive-csrf": "^1.0",
         "zendframework/zend-expressive-fastroute": "^3.0",
         "zendframework/zend-expressive-platesrenderer": "^2.0",
