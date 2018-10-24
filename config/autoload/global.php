@@ -73,16 +73,16 @@ return [
             ],
         ],
     ],
-    'oauth2clientauthentication' => [
+    'oauth2' => [
         'github' => [
             'clientId'     => null,
             'clientSecret' => null,
-            'redirectUri'  => 'https://mwop.net/auth/github/oauth2callback'
+            'redirectUri'  => null,
         ],
         'google' => [
             'clientId'     => null,
             'clientSecret' => null,
-            'redirectUri'  => 'https://mwop.net/auth/google/oauth2callback',
+            'redirectUri'  => null,
             // Enable this to restrict authentication to users at the listed domain:
             // 'hostedDomain' => 'https://mwop.net',
         ],

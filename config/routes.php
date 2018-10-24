@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace Mwop;
 
 use Zend\Expressive\Csrf\CsrfMiddleware;
-use Zend\Expressive\Authentication\AuthenticationMiddleware;
-use Zend\Expressive\Flash\FlashMessageMiddleware;
 use Zend\Expressive\Session\SessionMiddleware;
 
 // General pages
