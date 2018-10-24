@@ -59,7 +59,6 @@ class CallbackHandler implements RequestHandlerInterface
             );
         }
 
-
         $params = $request->getQueryParams();
         $error = $params['error'] ?? false;
         if ($error) {
@@ -82,15 +81,30 @@ class CallbackHandler implements RequestHandlerInterface
         }
 
         $state = $params['state'] ?? '';
-        if (empty($state)
-            || ! isset($sessionData['state'])
-            || $state !== $sessionData['state']
-        ) {
-            // No state returned from provider, or mismatched state
+        if (empty($state)) {
+            // No state returned from provider
             return $this->renderUnauthorizedResponse(
                 $request,
                 $redirect,
-                'Missing or mismatched provider state'
+                'Missing provider state'
+            );
+        }
+
+        if (! isset($sessionData['state'])) {
+            // No state in session
+            return $this->renderUnauthorizedResponse(
+                $request,
+                $redirect,
+                'Missing initial state'
+            );
+        }
+
+        if ($state !== $sessionData['state']) {
+            // State mismatch
+            return $this->renderUnauthorizedResponse(
+                $request,
+                $redirect,
+                'Mismatched provider state'
             );
         }
 
