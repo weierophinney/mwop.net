@@ -19,7 +19,8 @@ return [
     'zend-expressive-session-cache' => [
         'cache_item_pool_service' => SessionCachePool::class,
         'cookie_name' => 'MWOPSESS',
-        'cache_limiter' => 'public',
+        'cache_limiter' => 'nocache',
         'cache_expire' => 60 * 60 * 24 * 28, // 28 days
+        'persistent' => true,
     ],
 ];

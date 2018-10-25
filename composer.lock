@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "b35f85a1e3a4594f5f162973c015226c",
+    "content-hash": "fb8d6984aae93be7008761a197b217ab",
     "packages": [
         {
             "name": "cache/adapter-common",
@@ -3319,16 +3319,16 @@
         },
         {
             "name": "zendframework/zend-expressive-session-cache",
-            "version": "1.0.0",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-expressive-session-cache.git",
-                "reference": "8fb1ff6ab6d28a595ca9580fb487ada6a418eca1"
+                "reference": "bbc25b8147752554a25bba22c10ce3ed43338510"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-expressive-session-cache/zipball/8fb1ff6ab6d28a595ca9580fb487ada6a418eca1",
-                "reference": "8fb1ff6ab6d28a595ca9580fb487ada6a418eca1",
+                "url": "https://api.github.com/repos/zendframework/zend-expressive-session-cache/zipball/bbc25b8147752554a25bba22c10ce3ed43338510",
+                "reference": "bbc25b8147752554a25bba22c10ce3ed43338510",
                 "shasum": ""
             },
             "require": {
@@ -3349,8 +3349,8 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0.x-dev",
-                    "dev-develop": "1.1.x-dev"
+                    "dev-master": "1.1.x-dev",
+                    "dev-develop": "1.2.x-dev"
                 },
                 "zf": {
                     "config-provider": "Zend\\Expressive\\Session\\Cache\\ConfigProvider"
@@ -3374,7 +3374,7 @@
                 "session",
                 "zf"
             ],
-            "time": "2018-10-09T21:32:27+00:00"
+            "time": "2018-10-25T16:36:39+00:00"
         },
         {
             "name": "zendframework/zend-expressive-swoole",
