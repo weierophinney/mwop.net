@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "fb8d6984aae93be7008761a197b217ab",
+    "content-hash": "9af6dddd0d316f0ffade885c1a7c2ef3",
     "packages": [
         {
             "name": "cache/adapter-common",
@@ -3319,16 +3319,16 @@
         },
         {
             "name": "zendframework/zend-expressive-session-cache",
-            "version": "1.1.0",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-expressive-session-cache.git",
-                "reference": "bbc25b8147752554a25bba22c10ce3ed43338510"
+                "reference": "a9d7527ac336325a7b3972ca67fe5710043e9c80"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-expressive-session-cache/zipball/bbc25b8147752554a25bba22c10ce3ed43338510",
-                "reference": "bbc25b8147752554a25bba22c10ce3ed43338510",
+                "url": "https://api.github.com/repos/zendframework/zend-expressive-session-cache/zipball/a9d7527ac336325a7b3972ca67fe5710043e9c80",
+                "reference": "a9d7527ac336325a7b3972ca67fe5710043e9c80",
                 "shasum": ""
             },
             "require": {
@@ -3374,7 +3374,7 @@
                 "session",
                 "zf"
             ],
-            "time": "2018-10-25T16:36:39+00:00"
+            "time": "2018-10-26T14:47:48+00:00"
         },
         {
             "name": "zendframework/zend-expressive-swoole",
