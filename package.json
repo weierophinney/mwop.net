@@ -2,16 +2,16 @@
   "name": "mwop.net",
   "main": "Gruntfile.js",
   "devDependencies": {
-    "grunt": "~0.4.1",
-    "grunt-contrib-cssmin": "~0.7.0",
-    "load-grunt-tasks": "~0.2.0",
+    "grunt": "~1.0.3",
+    "grunt-contrib-cssmin": "~3.0.0",
+    "load-grunt-tasks": "~4.0.0",
     "sw-precache": "^4.0.0"
   },
   "dependencies": {
     "bootstrap": "^3.3.7",
     "bootswatch": "^3.3.7",
     "grunt-contrib-concat": "^1.0.1",
-    "grunt-contrib-less": "^1.4.0",
+    "grunt-contrib-less": "^2.0.0",
     "grunt-contrib-uglify": "^2.0.0",
     "grunt-filerev": "^2.3.1",
     "grunt-usemin": "^3.1.1",
