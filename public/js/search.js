@@ -14,8 +14,6 @@
       queryString,
       url;
 
-    console.log("KeyCode:", e.keyCode);
-
     queryString = new URLSearchParams('');
     queryString.set('q', $(this).val());
     url = '/search?' + queryString.toString();
@@ -36,7 +34,7 @@
       })
       .then(function(payload) {
         if (payload.length === 0) {
-          resultdiv.hide();
+          resultdiv.addClass('invisible');
           return;
         }
 
@@ -46,10 +44,9 @@
           item = payload[i];
           resultdiv.append('<a class="list-group-item" href="' + item.link + '">' + item.title + '</a>');
         }
-        resultdiv.removeClass('hidden');
-        resultdiv.show();
+        resultdiv.removeClass('invisible');
         $('a.search-close').on('click', function(){
-          resultdiv.hide();
+          resultdiv.addClass('invisible');
         });
       });
   }

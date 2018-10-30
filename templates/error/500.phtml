@@ -1,7 +1,7 @@
 <?php $this->layout('layout::layout', [
     'title' => 'Error',
 ]); ?>
-<section class="col-md-8 col-md-offset-2 code_500">
+<section class="col-6 code_500">
     <h2>An error occurred!</h2>
 
     <p>
@@ -10,7 +10,7 @@
         <a href="https://twitter.com/mwop">tweet at me</a>.
     </p>
 
-    <?php if ($error): ?>
+    <?php if ($error) : ?>
     <pre><?= $this->e($error) ?></pre>
     <?php endif ?>
 </section>

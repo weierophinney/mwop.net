@@ -1,23 +1,23 @@
-<footer class="navbar navbar-inverse"><div class="container-fluid">
-  <div class="row">
-    <div class="col-md-4 alpha about">
+<footer class="bg-dark container-fluid">
+  <div class="row align-items-start">
+    <div class="col alpha about">
       <h4>About</h4>
       <?php $this->insert('layout::about') ?>
     </div>
 
-    <div class="col-md-4 projects">
+    <div class="col projects">
       <h4>Projects</h4>
       <?php $this->insert('layout::projects') ?>
     </div>
 
-    <div class="col-md-4 omega tags">
-      <?= $footer ?>
+    <div class="col omega tags">
+      <?= $footer ?? '&nbsp;' ?>
     </div>
   </div>
 
-  <br />
-
-  <div class="copyright">
-    Unless otherwise noted, &#169; 2004 - 2018, Matthew Weier O'Phinney
+  <div class="row copyright align-items-end">
+    <div class="col-12 text-center">
+      Unless otherwise noted, &#169; 2004 - 2018, Matthew Weier O'Phinney
+    </div>
   </div>
-</div></footer>
+</footer>

@@ -29,7 +29,6 @@ code.hl {
 }
 
 footer {
-  margin-top: 1em;
   border-top: 1px dotted #676767;
   padding-top: 1em;
 }
@@ -39,10 +38,9 @@ footer h4 {
   text-align: left;
 }
 
-footer .copyright {
+.copyright {
   color: #FFF;
   margin-top: 0.5em;
-  text-align: center;
   font-size: 80%;
 }
 
@@ -67,7 +65,8 @@ footer a:hover {
 
 .content, .sidebar {
   background-color: #FFFFFF;
-  padding: 1em 0;
+  padding-top: 1em;
+  padding-bottom: 1em;
 }
 
 .spacer {
@@ -171,7 +170,7 @@ sup {
 
 .searchresults {
   position: fixed;
-  top: 65;
+  top: 65px;
   width: 100%;
   height: 100%;
   overflow: auto;

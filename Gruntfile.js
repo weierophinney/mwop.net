@@ -2,19 +2,24 @@
 /*jshint strict:false */
 'use strict';
 
-var packageJson= require('./package.json');
-var path = require('path');
-var swPrecache = require('sw-precache');
+const packageJson= require('./package.json');
+const path = require('path');
+const sass = require('node-sass');
+const swPrecache = require('sw-precache');
 
 module.exports = function (grunt) {
 
   require('load-grunt-tasks')(grunt);
 
   grunt.initConfig({
-    less: {
-      bootstrap: {
+    sass: {
+      dist: {
+        options: {
+          implementation: sass,
+          sourceMap: false
+        },
         files: {
-          'public/css/bootstrap.css': 'public/css/bootstrap.less'
+          'public/css/bootstrap.css': 'public/css/bootstrap.scss'
         }
       }
     },
@@ -142,7 +147,7 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask('default', [
-    'less',
+    'sass',
     'useminPrepare',
     'concat:generated',
     'cssmin:generated',

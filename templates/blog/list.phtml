@@ -24,49 +24,50 @@ $this->push('footer');
 echo $this->fetch('data::tag-cloud');
 $this->end();
 ?>
-<section class="blog center-block">
-    <div class="container-fluid"><div class="row">
-        <div class="col-md-8 col-md-offset-2">
+<section class="blog container offset-md-2 col">
+    <div class="row">
+        <div class="col">
         <h1><?= $this->escapeHtml($title) ?></h1>
         </div>
-    </div></div>
+    </div>
 
     <?php if (empty($posts)) : ?>
-    <p>No posts found.</p>
+    <div class="row"><p class="col text-center">No posts found.</p></div>
 
     <?php else : ?>
     <?php foreach ($posts as $post) : ?>
-    <div class="container-fluid h-entry">
-        <aside class="col-md-2 col-md-offset-2 hidden-xs alpha sidebar blog">
-        <p>
-            Written on <time class="dt-published" datetime="<?= $this->formatDateRfc($post['created']) ?>"><?= $this->formatDate($post['created']) ?></time>.
-        <?php if ($post['updated']) : ?>
-            <br />Last updated on <time class="dt-updated" datetime="<?= $this->formatDateRfc($post['updated']) ?>"><?= $this->formatDate($post['updated']) ?></time>.
-        <?php endif ?>
-        </p>
+    <div class="row h-entry">
+        <aside class="col-md-2 d-none d-sm-block alpha sidebar blog">
+            <p>
+                Written on <time class="dt-published" datetime="<?= $this->formatDateRfc($post['created']) ?>"><?= $this->formatDate($post['created']) ?></time>.
+            <?php if ($post['updated']) : ?>
+                <br />Last updated on <time class="dt-updated" datetime="<?= $this->formatDateRfc($post['updated']) ?>"><?= $this->formatDate($post['updated']) ?></time>.
+            <?php endif ?>
+            </p>
 
-        <ul class="tags">
-        <?php foreach ($this->processTags($post['tags']) as $tag) : ?>
-            <li><a class="p-category" href="<?= $tag->link ?>"><?= $tag->name ?></a>
-        <?php endforeach ?>
-        </ul>
+            <ul class="tags">
+            <?php foreach ($this->processTags($post['tags']) as $tag) : ?>
+                <li><a class="p-category" href="<?= $tag->link ?>"><?= $tag->name ?></a>
+            <?php endforeach ?>
+            </ul>
 
-        <div class="p-author h-card hidden">
-            Posted by <a rel="author" class="u-url" href="<?= $this->serverurl() ?>">Matthew Weier O'Phinney</a>,
-            <img class="u-photo photo" width="50" src="https://avatars0.githubusercontent.com/u/25943?v=3&u=79dd2ea1d4d8855944715d09ee4c86215027fa80&s=140" alt="mwop">
-        </div>
+            <div class="p-author h-card d-none">
+                Posted by <a rel="author" class="u-url" href="<?= $this->serverurl() ?>">Matthew Weier O'Phinney</a>,
+                <img class="u-photo photo" width="50" src="https://avatars0.githubusercontent.com/u/25943?v=3&u=79dd2ea1d4d8855944715d09ee4c86215027fa80&s=140" alt="mwop">
+            </div>
         </aside>
 
-        <section class="col-md-8 omega post-list">
-        <h4 class="entry"><a class="u-url u-uid" href="<?= $this->postUrl($post) ?>"><?= $this->escapeHtml($post['title']) ?></a></h4>
+        <section class="col-md-6 omega post-list">
+            <h4 class="entry"><a class="u-url u-uid" href="<?= $this->postUrl($post) ?>"><?= $this->escapeHtml($post['title']) ?></a></h4>
 
-        <div class="entry body p-summary"><?= $post['body'] ?></div>
+            <div class="entry body p-summary"><?= $post['body'] ?></div>
 
-        <p><a href="<?= $this->postUrl($post) ?>">Continue reading...</a></p>
+            <p><a href="<?= $this->postUrl($post) ?>">Continue reading...</a></p>
         </section>
     </div>
     <?php endforeach ?>
-    <?php endif ?>
 
     <?php $this->insert('mwop::pagination', ['pagination' => $pagination]) ?>
+
+    <?php endif ?>
 </section>

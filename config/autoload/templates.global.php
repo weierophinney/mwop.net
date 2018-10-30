@@ -29,7 +29,6 @@ return [
             'layout'  => ['templates/layout'],
             'mwop'    => ['templates/mwop'],
             'oauth2'  => ['templates/oauth2'],
-            'oauth2clientauthentication' => ['templates/oauth2clientauthentication'],
         ],
     ],
 ];

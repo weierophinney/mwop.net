@@ -24,8 +24,8 @@ $this->push('footer');
 $this->insert('data::tag-cloud');
 $this->end();
 ?>
-<div class="single-entry h-entry">
-    <aside class="col-md-2 col-md-offset-2 hidden-xs sidebar blog">
+<div class="single-entry h-entry container col offset-md-2"><div class="row">
+    <aside class="col-md-2 d-none d-sm-block sidebar blog">
         <p>
             Written on <time class="dt-published" datetime="<?= $this->formatDateRfc($post['created']) ?>"><?= $this->formatDate($post['created']) ?></time>.
             <?php if ($post['updated']) : ?>
@@ -49,7 +49,7 @@ $this->end();
         <?= $post['extended'] ?>
         </div>
 
-        <div class="p-author h-card hidden">
+        <div class="p-author h-card d-none">
           Posted by <a class="p-name u-url" href="<?= $this->serverurl() ?>">Matthew Weier O'Phinney</a>,
           <img class="u-photo photo" width="50" src="https://avatars0.githubusercontent.com/u/25943?v=3&u=79dd2ea1d4d8855944715d09ee4c86215027fa80&s=140" alt="mwop">
         </div>
@@ -64,4 +64,4 @@ $this->end();
           data-key="<?= $disqus['key'] ?>"></div>
         <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
     </article>
-</div>
+</div></div>

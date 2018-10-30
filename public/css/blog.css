@@ -10,7 +10,6 @@
 }
 
 .blog.sidebar {
-    padding: 3px 3px 3px 0;
     color: #A8A8A8;
     font-style: italic;
 }
@@ -60,10 +59,6 @@ h2.p-name {
     margin-top: 0;
 }
 
-.blog .entry.body {
-    padding-left: 2em;
-}
-
 .post-list {
   border-bottom: 1px dotted #676767;
   margin-bottom: 1em;
@@ -73,7 +68,7 @@ h2.p-name {
     padding-bottom: 2em;
 }
 
-.blog a {
+.blog .single-entry a {
   text-decoration: underline;
 }
 
@@ -83,4 +78,14 @@ h2.p-name {
 
 .social-media {
     padding-bottom: 1em;
+}
+
+.blog blockquote {
+  border-left: 5px solid #676767;
+  padding-left: 1em;
+}
+
+.blog img {
+  max-width: 100%;
+  height: auto;
 }
