@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "9af6dddd0d316f0ffade885c1a7c2ef3",
+    "content-hash": "6706b171c5ec80056b025fd891585d2a",
     "packages": [
         {
             "name": "cache/adapter-common",
@@ -1491,16 +1491,16 @@
         },
         {
             "name": "phly/phly-comic",
-            "version": "2.0.2",
+            "version": "2.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/weierophinney/PhlyComic.git",
-                "reference": "17dfcd8a5985b434dd533e5d372ef84b0a29b76f"
+                "reference": "a9cf6f0920466b83b950d91d4bbfe24562c5978d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/weierophinney/PhlyComic/zipball/17dfcd8a5985b434dd533e5d372ef84b0a29b76f",
-                "reference": "17dfcd8a5985b434dd533e5d372ef84b0a29b76f",
+                "url": "https://api.github.com/repos/weierophinney/PhlyComic/zipball/a9cf6f0920466b83b950d91d4bbfe24562c5978d",
+                "reference": "a9cf6f0920466b83b950d91d4bbfe24562c5978d",
                 "shasum": ""
             },
             "require": {
@@ -1544,7 +1544,7 @@
                 "source": "https://github.com/weierophinney/PhlyComic",
                 "issues": "https://github.com/weierophinney/PhlyComic/issues"
             },
-            "time": "2018-10-22T19:35:15+00:00"
+            "time": "2018-10-31T20:07:57+00:00"
         },
         {
             "name": "php-http/curl-client",
