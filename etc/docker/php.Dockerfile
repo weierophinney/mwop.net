@@ -3,7 +3,8 @@
 FROM mwop/phly-docker-php-swoole:7.2-alpine
 
 # System dependencies
-RUN apk update && apk add --no-cache dcron bzip2-dev icu-dev tidyhtml-dev libxml2-dev libxslt-dev
+RUN echo 'http://dl-cdn.alpinelinux.org/alpine/v3.3/main' >> /etc/apk/repositories
+RUN  apk update && apk add --no-cache dcron 'libxml2-dev==2.9.4-r3' bzip2-dev icu-dev tidyhtml-dev 'libxslt-dev==1.1.29-r1'
 
 # PHP Extensions
 RUN docker-php-ext-install -j$(nproc) bcmath bz2 dom intl opcache pcntl sockets tidy xsl zip
