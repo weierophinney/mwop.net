@@ -1,14 +1,12 @@
 # DOCKER-VERSION        1.3.2
 
-FROM mwop/phly-docker-php-swoole:201809041014
+FROM mwop/phly-docker-php-swoole:7.2-alpine
 
 # System dependencies
-RUN apt-get update && \
-  apt-get install -y cron && \
-  rm -rf /var/lib/apt/lists/*
+RUN apk update && apk add --no-cache dcron bzip2-dev icu-dev tidyhtml-dev libxml2-dev libxslt-dev
 
 # PHP Extensions
-RUN docker-php-ext-install -j$(nproc) bcmath bz2 intl opcache pcntl sockets tidy xsl zip
+RUN docker-php-ext-install -j$(nproc) bcmath bz2 dom intl opcache pcntl sockets tidy xsl zip
 
 # PHP configuration
 COPY etc/php/mwop.ini /usr/local/etc/php/conf.d/999-mwop.ini
