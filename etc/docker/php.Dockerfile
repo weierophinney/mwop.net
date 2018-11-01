@@ -3,11 +3,23 @@
 FROM mwop/phly-docker-php-swoole:7.2-alpine
 
 # System dependencies
-RUN echo 'http://dl-cdn.alpinelinux.org/alpine/v3.3/main' >> /etc/apk/repositories
-RUN  apk update && apk add --no-cache dcron 'libxml2-dev==2.9.4-r3' bzip2-dev icu-dev tidyhtml-dev 'libxslt-dev==1.1.29-r1'
+RUN echo 'http://dl-cdn.alpinelinux.org/alpine/v3.6/community' >> /etc/apk/repositories
+RUN apk update && \
+  apk add --no-cache \
+    php7-bcmath \
+    php7-bz2 \
+    php7-dom \
+    php7-intl \
+    php7-opcache \
+    php7-pcntl \
+    php7-sockets \
+    php7-xsl \
+    php7-zip \
+    dcron \
+    'tidyhtml-dev==5.2.0-r1'
 
 # PHP Extensions
-RUN docker-php-ext-install -j$(nproc) bcmath bz2 dom intl opcache pcntl sockets tidy xsl zip
+RUN docker-php-ext-install -j$(nproc) tidy
 
 # PHP configuration
 COPY etc/php/mwop.ini /usr/local/etc/php/conf.d/999-mwop.ini
