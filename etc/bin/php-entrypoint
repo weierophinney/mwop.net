@@ -11,7 +11,7 @@ chown root:root /etc/cron.d/*
 chmod 0644 /etc/cron.d/*
 
 # Start cron; it's a daemon by default.
-cron
+crond
 
 # Clear the blog post cache
 /usr/bin/env php bin/mwop.net.php blog:clear-cache
