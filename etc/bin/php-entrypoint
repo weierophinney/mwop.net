@@ -7,11 +7,13 @@
 # Ensure crontabs have expected owners and permissions.
 # Done here to allow mounting the crontab as a volume within docker-compose.yml.
 chown root:root /etc/cron.d/*
-# chmod 0600 /var/spool/cron/crontabs/root # This may not exist
 chmod 0644 /etc/cron.d/*
 
 # Start cron; it's a daemon by default.
 crond
+
+# Add the site crontab
+crontab /etc/cron.d/mwopnet
 
 # Clear the blog post cache
 /usr/bin/env php bin/mwop.net.php blog:clear-cache

@@ -15,7 +15,6 @@ RUN apk update && \
     php7-sockets \
     php7-xsl \
     php7-zip \
-    dcron \
     'tidyhtml-dev==5.2.0-r1'
 
 # PHP Extensions
