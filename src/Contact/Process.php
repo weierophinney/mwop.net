@@ -10,29 +10,29 @@ namespace Mwop\Contact;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\RequestHandlerInterface;
+use Swift_Mailer as Mailer;
+use Swift_Message as Message;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Diactoros\Response\RedirectResponse;
 use Zend\Expressive\Csrf\CsrfGuardInterface;
 use Zend\Expressive\Csrf\CsrfMiddleware;
 use Zend\Expressive\Helper\UrlHelper;
 use Zend\Expressive\Template\TemplateRendererInterface;
-use Zend\Mail\Message;
-use Zend\Mail\Transport\TransportInterface;
 
 class Process implements RequestHandlerInterface
 {
     private $config;
     private $template;
-    private $transport;
+    private $mailer;
     private $urlHelper;
 
     public function __construct(
-        TransportInterface $transport,
+        Mailer $mailer,
         TemplateRendererInterface $template,
         UrlHelper $urlHelper,
         array $config
     ) {
-        $this->transport = $transport;
+        $this->mailer    = $mailer;
         $this->template  = $template;
         $this->urlHelper = $urlHelper;
         $this->config    = $config;
@@ -96,27 +96,25 @@ class Process implements RequestHandlerInterface
 
     private function sendEmail(array $data)
     {
-        $from    = $data['from'];
+        $replyTo = $data['from'];
         $subject = '[Contact Form] ' . $data['subject'];
         $body    = $data['body'];
 
         $message = $this->createMessage();
-        $message->addFrom($from)
-            ->addReplyTo($from)
+        $message
+            ->setReplyTo($replyTo)
             ->setSubject($subject)
             ->setBody($body);
-        $this->transport->send($message);
+        $this->mailer->send($message);
     }
 
     private function createMessage() : Message
     {
         $message = new Message();
         $config  = $this->config['message'];
-        $message->addTo($config['to']);
-        if ($config['from']) {
-            $message->addFrom($config['from']);
-        }
-        $message->setSender($config['sender']['address'], $config['sender']['name']);
+        $message->setTo($config['to']);
+        $message->setFrom($config['sender']['address']);
+        $message->setSender($config['sender']['address']);
         return $message;
     }
 }

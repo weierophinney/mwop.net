@@ -19,7 +19,6 @@ $aggregator = new ConfigAggregator([
     \Zend\Expressive\Session\Cache\ConfigProvider::class,
     \Zend\Expressive\Plates\ConfigProvider::class,
     \Zend\Paginator\ConfigProvider::class,
-    \Zend\Mail\ConfigProvider::class,
     \Zend\InputFilter\ConfigProvider::class,
     \Zend\Filter\ConfigProvider::class,
     \Zend\Validator\ConfigProvider::class,

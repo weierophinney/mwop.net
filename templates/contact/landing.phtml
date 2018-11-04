@@ -22,7 +22,7 @@ $this->start('scripts');
     </p>
 
     <pre>
-        <?= $this->e($message) ?>
+        <?= $this->escapeHtml($error['message']) ?>
     </pre>
 
     <?php endif ?>

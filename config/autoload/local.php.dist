@@ -43,16 +43,11 @@ return [
     ],
     'mail' => [
         'transport' => [
-            'options' => [
-                'host'             => getenv('MAIL_TRANSPORT_HOST'),
-                'port'             => getenv('MAIL_TRANSPORT_PORT'),
-                'connectionClass'  => 'login',
-                'connectionConfig' => [
-                    'ssl'      => 'tls',
-                    'username' => getenv('MAIL_TRANSPORT_USERNAME'),
-                    'password' => getenv('MAIL_TRANSPORT_PASSWORD'),
-                ],
-            ],
+            'host'     => getenv('MAIL_TRANSPORT_HOST'),
+            'port'     => getenv('MAIL_TRANSPORT_PORT'),
+            'ssl'      => 'tls',
+            'username' => getenv('MAIL_TRANSPORT_USERNAME'),
+            'password' => getenv('MAIL_TRANSPORT_PASSWORD'),
         ],
     ],
     'oauth2' => [

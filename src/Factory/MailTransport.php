@@ -8,37 +8,39 @@ namespace Mwop\Factory;
 
 use Psr\Container\ContainerInterface;
 use RuntimeException;
-use Zend\Mail\Transport;
+use Swift_Mailer as Mailer;
+use Swift_SmtpTransport as Transport;
 
 class MailTransport
 {
-    public function __invoke(ContainerInterface $container) : Transport\TransportInterface
+    public function __invoke(ContainerInterface $container) : Mailer
     {
         $config  = $container->get('config');
         $config  = $config['mail']['transport'];
-        $class   = $config['class'];
-        $options = $config['options'];
+        $class   = $config['class'] ?? \Swift_SmtpTransport::class;
 
         switch ($class) {
-            case 'Zend\Mail\Transport\SendMail':
-            case 'Sendmail':
-            case 'sendmail':
-                return new Transport\Sendmail;
-            case 'Zend\Mail\Transport\Smtp':
-            case 'Smtp':
-            case 'smtp':
-                $options = new Transport\SmtpOptions($options);
-                return new Transport\Smtp($options);
-            case 'Zend\Mail\Transport\File':
-            case 'File':
-            case 'file':
-                $options = new Transport\FileOptions($options);
-                return new Transport\File($options);
+            case \Swift_AWSTransport::class:
+                $transport = new $class($config['username'], $config['password']);
+                break;
+            case \Swift_SmtpTransport::class:
+                $transport = $config['ssl']
+                    ? new $class($config['host'], $config['port'], $config['ssl'])
+                    : new $class($config['host'], $config['port']);
+
+                if ($config['username']) {
+                    $transport->setUsername($config['username']);
+                    $transport->setAuthMode('login');
+                }
+
+                if ($config['password']) {
+                    $transport->setPassword($config['password']);
+                }
+                break;
             default:
-                throw new RuntimeException(sprintf(
-                    'Unknown mail transport type "%s"',
-                    $class
-                ));
+                throw new RuntimeException(sprintf('Unknown mail transport class %s', $class));
         }
+
+        return new Mailer($transport);
     }
 }
