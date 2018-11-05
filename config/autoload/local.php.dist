@@ -34,7 +34,7 @@ return [
         'recaptcha_pub_key'  => getenv('RECAPTCHA_PUB_KEY'),
         'recaptcha_priv_key' => getenv('RECAPTCHA_PRIV_KEY'),
         'message' => [
-            'to'   => [$messageToAddress => getenv('CONTACT_MESSAGE_TO_FULLNAME')],
+            'to'   => $messageToAddress,
             'from' => null,
             'sender' => [
                 'address' => getenv('CONTACT_MESSAGE_SENDER_ADDRESS'),
@@ -43,6 +43,7 @@ return [
     ],
     'mail' => [
         'transport' => [
+            'class'    => \Swift_AWSTransport::class,
             'host'     => getenv('MAIL_TRANSPORT_HOST'),
             'port'     => getenv('MAIL_TRANSPORT_PORT'),
             'ssl'      => 'tls',
