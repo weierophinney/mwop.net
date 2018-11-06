@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "0cb955d16e6e374d7150ff460e2a9371",
+    "content-hash": "e593f6b2e220edee7dde5913115ab4a0",
     "packages": [
         {
             "name": "cache/adapter-common",
@@ -877,16 +877,16 @@
         },
         {
             "name": "jmhobbs/swiftmailer-transport-aws-ses",
-            "version": "dev-hotfix/swiftmailer-6-support",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/weierophinney/Swiftmailer-Transport--AWS-SES.git",
-                "reference": "cba783dd1d6cfeeb85d78784551ecff9d61bf270"
+                "url": "https://github.com/jmhobbs/Swiftmailer-Transport--AWS-SES.git",
+                "reference": "13542b013a955f4578bc945bf9949606e4e922a0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/weierophinney/Swiftmailer-Transport--AWS-SES/zipball/cba783dd1d6cfeeb85d78784551ecff9d61bf270",
-                "reference": "cba783dd1d6cfeeb85d78784551ecff9d61bf270",
+                "url": "https://api.github.com/repos/jmhobbs/Swiftmailer-Transport--AWS-SES/zipball/13542b013a955f4578bc945bf9949606e4e922a0",
+                "reference": "13542b013a955f4578bc945bf9949606e4e922a0",
                 "shasum": ""
             },
             "require": {
@@ -899,6 +899,7 @@
                     "": "classes/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -910,15 +911,12 @@
             ],
             "description": "Add AWS SES support to Swiftmailer",
             "keywords": [
-                "AWS",
-                "SES",
+                "aws",
                 "email",
+                "ses",
                 "swiftmailer"
             ],
-            "support": {
-                "source": "https://github.com/weierophinney/Swiftmailer-Transport--AWS-SES/tree/hotfix/swiftmailer-6-support"
-            },
-            "time": "2018-11-04T18:01:53+00:00"
+            "time": "2018-11-05T17:12:43+00:00"
         },
         {
             "name": "league/commonmark",
@@ -6217,18 +6215,9 @@
             "time": "2018-05-07T15:44:42+00:00"
         }
     ],
-    "aliases": [
-        {
-            "alias": "0.10.0",
-            "alias_normalized": "0.10.0.0",
-            "version": "dev-hotfix/swiftmailer-6-support",
-            "package": "jmhobbs/swiftmailer-transport-aws-ses"
-        }
-    ],
+    "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "jmhobbs/swiftmailer-transport-aws-ses": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
