@@ -16,6 +16,7 @@ class CreateAssetSymlinks extends Command
     const ASSET_MAP = [
         '../../node_modules/bootstrap/dist/js/bootstrap.js' => 'public/js/bootstrap.js',
         '../../node_modules/jquery/dist/jquery.js'          => 'public/js/jquery.js',
+        '../../node_modules/autocomplete.js/dist/autocomplete.jquery.js' => 'public/js/autocomplete.jquery.js',
     ];
 
     protected function configure()

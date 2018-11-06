@@ -1,24 +1,16 @@
 (function ($) {
   'use strict';
-  var headers,
-    resultdiv;
 
-  resultdiv = $('div.searchresults');
-
-  headers = new Headers();
+  const headers = new Headers();
   headers.append('Accept', 'application/json');
 
-  function search(e) {
-    var data,
-      item,
-      queryString,
-      url;
+  const search = (query, callback) => {
+    const queryString = new URLSearchParams('');
+    queryString.set('q', query);
 
-    queryString = new URLSearchParams('');
-    queryString.set('q', $(this).val());
-    url = '/search?' + queryString.toString();
+    const url = '/search?' + queryString.toString();
 
-    data = {
+    const data = {
       method: 'GET',
       headers: headers,
       mode: 'cors',
@@ -26,30 +18,23 @@
     };
 
     fetch(url, data)
-      .then(function(response) {
+      .then((response) => {
         if (! response.ok) {
           throw new Error('Invalid response from search endpoint');
         }
         return response.json();
       })
-      .then(function(payload) {
-        if (payload.length === 0) {
-          resultdiv.addClass('invisible');
-          return;
-        }
-
-        resultdiv.empty();
-        resultdiv.append('<a class="list-group-item center-block search-close">[ CLOSE ]</a>');
-        for (var i in payload) {
-          item = payload[i];
-          resultdiv.append('<a class="list-group-item" href="' + item.link + '">' + item.title + '</a>');
-        }
-        resultdiv.removeClass('invisible');
-        $('a.search-close').on('click', function(){
-          resultdiv.addClass('invisible');
-        });
+      .then((payload) => {
+        callback(payload);
       });
-  }
+  };
 
-  $('input.search').on('keyup', search);
+  $('#searchinput')
+    .autocomplete({}, [{
+			source: search,
+			displayKey: 'title'
+		}])
+    .on('autocomplete:selected', (event, suggestion, dataset) => {
+      window.location.href = suggestion.link;
+    });
 })(jQuery);

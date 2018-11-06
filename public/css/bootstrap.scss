@@ -46,3 +46,36 @@ li {
     font-family: $font-family-serif;
     font-size: 1em;
 }
+
+.algolia-autocomplete {
+    width: 100%;
+
+    .aa-input, .aa-hint {
+        width: 100%;
+    }
+
+    .aa-hint {
+        color: $gray-500;
+    }
+
+    .aa-dropdown-menu {
+        width: 100%;
+        background-color: $white;
+        border: 1px solid $gray-500;
+        border-top: none;
+    }
+
+    .aa-dropdown-menu .aa-suggestion {
+        cursor: pointer;
+        padding: 5px 4px;
+    }
+
+    .aa-dropdown-menu .aa-suggestion.aa-cursor {
+        background-color: $gray-200;
+    }
+
+    .aa-dropdown-menu .aa-suggestion em {
+        font-weight: bold;
+        font-style: normal;
+    }
+}

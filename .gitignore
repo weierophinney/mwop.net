@@ -15,6 +15,9 @@ data/tag-cloud.phtml
 docker-stack.yml
 log/
 node_modules/
+public/js/bootstrap.js
+public/js/jquery.js
+public/js/autocomplete.jquery.js
 public/service-worker.js
 vendor/
 .acme.env
