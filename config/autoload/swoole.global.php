@@ -5,6 +5,7 @@ use Zend\Expressive\Swoole\StaticResourceHandler\ContentTypeFilterMiddleware;
 
 return [
     'zend-expressive-swoole' => [
+        'enable_coroutine' => true,
         'swoole-http-server' => [
             'host' => '0.0.0.0',
             'port' => 9000,
@@ -15,7 +16,6 @@ return [
                 // high number. The value presented here is the value reported by the
                 // docker host.
                 'max_conn' => 1024,
-                'enable_coroutine' => true,
             ],
             'static-files' => [
                 'type-map' => array_merge(ContentTypeFilterMiddleware::TYPE_MAP_DEFAULT, [

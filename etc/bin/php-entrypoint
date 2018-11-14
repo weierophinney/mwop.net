@@ -19,4 +19,4 @@ crontab /etc/cron.d/mwopnet
 /usr/bin/env php bin/mwop.net.php blog:clear-cache
 
 # Start application; run in foreground, as that's what Docker prefers
-/usr/bin/env php public/index.php start
+/usr/bin/env php vendor/bin/zend-expressive-swoole start
