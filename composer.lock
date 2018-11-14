@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "5b9011994a4ab377f006330ba1edf4a0",
+    "content-hash": "9999cf7cc2b36569a224919bce805d27",
     "packages": [
         {
             "name": "cache/adapter-common",
@@ -643,6 +643,62 @@
                 "parser"
             ],
             "time": "2018-03-08T01:11:30+00:00"
+        },
+        {
+            "name": "fig/event-dispatcher-util",
+            "version": "0.6.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/event-dispatcher-util.git",
+                "reference": "0be78711a1fade106b475fdfe8d63f900f8b36bf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/event-dispatcher-util/zipball/0be78711a1fade106b475fdfe8d63f900f8b36bf",
+                "reference": "0be78711a1fade106b475fdfe8d63f900f8b36bf",
+                "shasum": ""
+            },
+            "require": {
+                "php": "~7.1",
+                "psr/event-dispatcher": "^0.6.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7.3",
+                "psr/event-dispatcher-task": "^0.6.0"
+            },
+            "suggest": {
+                "psr/event-dispatcher-message": "Standard interfaces for message events.",
+                "psr/event-dispatcher-task": "Standard interfaces for task events."
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Fig\\EventDispatcher\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "https://www.php-fig.org/"
+                },
+                {
+                    "name": "Larry Garfield",
+                    "email": "larry@garfieldtech.com",
+                    "homepage": "https://www.garfieldtech.com/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Useful utility classes and traits for implementing the PSR events standard",
+            "homepage": "https://github.com/Crell/Tukio",
+            "keywords": [
+                "events",
+                "psr-14"
+            ],
+            "time": "2018-09-28T22:30:47+00:00"
         },
         {
             "name": "fig/http-message-util",
@@ -1701,6 +1757,88 @@
             "time": "2018-10-31T20:07:57+00:00"
         },
         {
+            "name": "phly/phly-event-emitter",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phly/phly-event-emitter.git",
+                "reference": "af368e1bc463571f94793a3652f2435e2f9bbc57"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phly/phly-event-emitter/zipball/af368e1bc463571f94793a3652f2435e2f9bbc57",
+                "reference": "af368e1bc463571f94793a3652f2435e2f9bbc57",
+                "shasum": ""
+            },
+            "require": {
+                "fig/event-dispatcher-util": "^0.6.1",
+                "php": "^7.1",
+                "psr/event-dispatcher-message": "^0.6",
+                "psr/event-dispatcher-task": "^0.6",
+                "zendframework/zend-stdlib": "^3.2"
+            },
+            "provide": {
+                "psr/event-dispatcher-implementation": "^0.6",
+                "psr/event-dispatcher-message-implementation": "^0.6",
+                "psr/event-dispatcher-task-implementation": "^0.6"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7.1.1",
+                "zendframework/zend-coding-standard": "~1.0.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                },
+                "zf": {
+                    "config-provider": "Phly\\EventEmitter\\ConfigProvider"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Phly\\EventEmitter\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "PhlyTest\\EventEmitter\\": "test/"
+                }
+            },
+            "scripts": {
+                "check": [
+                    "@cs-check",
+                    "@test"
+                ],
+                "cs-check": [
+                    "phpcs"
+                ],
+                "cs-fix": [
+                    "phpcbf"
+                ],
+                "test": [
+                    "phpunit --colors=always"
+                ],
+                "test-coverage": [
+                    "phpunit --colors=always --coverage-clover clover.xml"
+                ]
+            },
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "PSR-14 event emitter",
+            "keywords": [
+                "event",
+                "psr-14"
+            ],
+            "support": {
+                "issues": "https://github.com/phly/phly-event-emitter/issues",
+                "source": "https://github.com/phly/phly-event-emitter",
+                "rss": "https://github.com/phly/phly-event-emitter/releases.atom"
+            },
+            "time": "2018-11-14T22:48:35+00:00"
+        },
+        {
             "name": "php-http/curl-client",
             "version": "v1.7.1",
             "source": {
@@ -2190,6 +2328,148 @@
                 "psr"
             ],
             "time": "2017-02-14T16:28:37+00:00"
+        },
+        {
+            "name": "psr/event-dispatcher",
+            "version": "0.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/event-dispatcher.git",
+                "reference": "14a25ea9045cfc34c9edc31ad468a5cc6e914a8c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/event-dispatcher/zipball/14a25ea9045cfc34c9edc31ad468a5cc6e914a8c",
+                "reference": "14a25ea9045cfc34c9edc31ad468a5cc6e914a8c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\EventDispatcher\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "http://www.php-fig.org/"
+                }
+            ],
+            "description": "Standard interfaces for event handling.",
+            "keywords": [
+                "events",
+                "psr",
+                "psr-14"
+            ],
+            "time": "2018-09-27T17:52:39+00:00"
+        },
+        {
+            "name": "psr/event-dispatcher-message",
+            "version": "0.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/event-dispatcher-message.git",
+                "reference": "68cc8bbe446f5439ba0c7a767fe4afa1c664b63b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/event-dispatcher-message/zipball/68cc8bbe446f5439ba0c7a767fe4afa1c664b63b",
+                "reference": "68cc8bbe446f5439ba0c7a767fe4afa1c664b63b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.0",
+                "psr/event-dispatcher": ">=0.6.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\EventDispatcher\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "http://www.php-fig.org/"
+                }
+            ],
+            "description": "Standard interfaces for message handling.",
+            "keywords": [
+                "events",
+                "messages",
+                "psr",
+                "psr-14"
+            ],
+            "time": "2018-09-27T17:53:13+00:00"
+        },
+        {
+            "name": "psr/event-dispatcher-task",
+            "version": "0.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/event-dispatcher-task.git",
+                "reference": "e26ac94e5925476cd4fc591add43662e0bf1646a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/event-dispatcher-task/zipball/e26ac94e5925476cd4fc591add43662e0bf1646a",
+                "reference": "e26ac94e5925476cd4fc591add43662e0bf1646a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.0",
+                "psr/event-dispatcher": ">=0.6.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\EventDispatcher\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "http://www.php-fig.org/"
+                }
+            ],
+            "description": "Standard interfaces for task handling.",
+            "keywords": [
+                "Tasks",
+                "events",
+                "psr",
+                "psr-14"
+            ],
+            "time": "2018-09-27T17:56:24+00:00"
         },
         {
             "name": "psr/http-factory",

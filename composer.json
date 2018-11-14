@@ -8,6 +8,10 @@
     "repositories": [
         {
             "type": "vcs",
+            "url": "https://github.com/phly/phly-event-emitter"
+        },
+        {
+            "type": "vcs",
             "url": "https://github.com/weierophinney/PhlyComic"
         }
     ],
@@ -25,6 +29,7 @@
         "mnapoli/front-yaml": "^1.5",
         "monolog/monolog": "^1.23",
         "phly/phly-comic": "^2.0.3",
+        "phly/phly-event-emitter": "^0.1",
         "php-http/curl-client": "^1.4",
         "php-http/message": "^1.2",
         "psr/http-message": "^1.0",
