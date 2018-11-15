@@ -6,6 +6,7 @@
 
 namespace Mwop;
 
+use Phly\EventEmitter\ListenerProvider;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Zend\Diactoros\ResponseFactory;
@@ -22,6 +23,9 @@ return ['dependencies' => [
     'delegators' => [
         Application::class => [
             Github\PuSH\RoutesDelegator::class,
+        ],
+        ListenerProvider::class => [
+            Contact\SendMessageListenerDelegator::class,
         ],
     ],
     'invokables' => [
@@ -41,6 +45,7 @@ return ['dependencies' => [
         Console\CreateAssetSymlinks::class => InvokableFactory::class,
         Console\FeedAggregator::class     => Console\FeedAggregatorFactory::class,
         Console\UseDistTemplates::class   => InvokableFactory::class,
+        Contact\SendMessageListener::class => Contact\SendMessageListenerFactory::class,
         FeedReaderHttpClientInterface::class => Feed\HttpPlugClientFactory::class,
         Github\AtomReader::class          => Github\AtomReaderFactory::class,
         Github\Console\Fetch::class       => Github\Console\FetchFactory::class,

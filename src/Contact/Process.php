@@ -10,8 +10,7 @@ namespace Mwop\Contact;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\RequestHandlerInterface;
-use Swift_Mailer as Mailer;
-use Swift_Message as Message;
+use Swoole\Http\Server as HttpServer;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Diactoros\Response\RedirectResponse;
 use Zend\Expressive\Csrf\CsrfGuardInterface;
@@ -22,20 +21,20 @@ use Zend\Expressive\Template\TemplateRendererInterface;
 class Process implements RequestHandlerInterface
 {
     private $config;
+    private $httpServer;
     private $template;
-    private $mailer;
     private $urlHelper;
 
     public function __construct(
-        Mailer $mailer,
+        HttpServer $httpServer,
         TemplateRendererInterface $template,
         UrlHelper $urlHelper,
         array $config
     ) {
-        $this->mailer    = $mailer;
-        $this->template  = $template;
-        $this->urlHelper = $urlHelper;
-        $this->config    = $config;
+        $this->httpServer = $httpServer;
+        $this->template   = $template;
+        $this->urlHelper  = $urlHelper;
+        $this->config     = $config;
     }
 
     public function handle(Request $request) : Response
@@ -72,7 +71,7 @@ class Process implements RequestHandlerInterface
             );
         }
 
-        $this->sendEmail($filter->getValues());
+        $this->sendMessage($filter->getValues());
 
         $path = ($this->urlHelper)('contact.thank-you');
         return new RedirectResponse($path);
@@ -94,27 +93,14 @@ class Process implements RequestHandlerInterface
         );
     }
 
-    private function sendEmail(array $data)
+    private function sendMessage(array $data)
     {
-        $replyTo = $data['from'];
-        $subject = '[Contact Form] ' . $data['subject'];
-        $body    = $data['body'];
+        $message = new ContactMessage(
+            $data['from'],
+            sprintf('[Contact Form] %s', $data['subject']),
+            $data['body']
+        );
 
-        $message = $this->createMessage();
-        $message
-            ->setReplyTo($replyTo)
-            ->setSubject($subject)
-            ->setBody($body);
-        $this->mailer->send($message);
-    }
-
-    private function createMessage() : Message
-    {
-        $message = new Message();
-        $config  = $this->config['message'];
-        $message->setTo($config['to']);
-        $message->setFrom($config['sender']['address']);
-        $message->setSender($config['sender']['address']);
-        return $message;
+        $this->httpServer->task($message);
     }
 }

@@ -7,6 +7,7 @@
 namespace Mwop\Contact;
 
 use Psr\Container\ContainerInterface;
+use Swoole\Http\Server as HttpServer;
 use Zend\Expressive\Helper\UrlHelper;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
@@ -15,7 +16,7 @@ class ProcessFactory
     public function __invoke(ContainerInterface $container) : Process
     {
         return new Process(
-            $container->get('mail.transport'),
+            $container->get(HttpServer::class),
             $container->get(TemplateRendererInterface::class),
             $container->get(UrlHelper::class),
             $container->get('config')['contact']
