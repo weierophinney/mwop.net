@@ -31,6 +31,10 @@ $aggregator = new ConfigAggregator([
     \Zend\Expressive\Router\ConfigProvider::class,
     \Zend\Expressive\Router\FastRouteRouter\ConfigProvider::class,
     \Zend\Expressive\Swoole\ConfigProvider::class,
+
+    // App-specific modules
+    \Mwop\TaskWorker\ConfigProvider::class,
+
     // Include cache configuration
     new ArrayProvider($cacheConfig),
     // Load application config in a pre-defined order in such a way that local settings

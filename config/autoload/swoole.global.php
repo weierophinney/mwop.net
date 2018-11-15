@@ -16,6 +16,9 @@ return [
                 // high number. The value presented here is the value reported by the
                 // docker host.
                 'max_conn' => 1024,
+
+                // Enable task workers.
+                'task_worker_num' => 4,
             ],
             'static-files' => [
                 'type-map' => array_merge(ContentTypeFilterMiddleware::TYPE_MAP_DEFAULT, [
