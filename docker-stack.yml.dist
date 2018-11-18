@@ -6,6 +6,10 @@ services:
     environment:
       - REDIS_APPENDONLY=yes
       - REDIS_APPENDFSYNC=always
+    deploy:
+        resources:
+            limits:
+                memory: 128M
     volumes:
       - /data/redis:/data
 
