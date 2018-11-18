@@ -32,6 +32,8 @@ $application->setCommandLoader(new ContainerCommandLoader($container, [
     'blog:seed-db'              => Blog\Console\SeedBlogDatabase::class,
     'blog:tag-cloud'            => Blog\Console\TagCloud::class,
     'clear-cache'               => Console\ClearCache::class,
+    'docker:create-stack'       => Console\DockerCreateStack::class,
+    'docker:get-latest-tag'     => Console\DockerGetLatestTag::class,
     'github:fetch-activity'     => Github\Console\Fetch::class,
     'homepage-feeds'            => Console\FeedAggregator::class,
 ]));

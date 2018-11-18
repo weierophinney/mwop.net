@@ -2,14 +2,7 @@ version: '3.2'
 
 services:
   redis:
-    image: "redis:alpine"
-    environment:
-      - REDIS_APPENDONLY=yes
-      - REDIS_APPENDFSYNC=always
-    deploy:
-        resources:
-            limits:
-                memory: 128M
+    image: "mwop/mwopredis:{mwopredis}"
     volumes:
       - /data/redis:/data
 

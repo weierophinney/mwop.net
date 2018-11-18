@@ -6,6 +6,7 @@
 # Allowed/expected variables:
 #
 # - CADDY_VERSION: specific Caddy container version to use
+# - REDIS_VERSION: specific redis container version to use
 # - SWOOLE_VERSION: specific php+swoole container version to use
 #
 # If not specified, each defaults to "latest", which forces a lookup of the
@@ -14,11 +15,12 @@
 VERSION := $(shell date +%Y%m%d%H%M)
 
 CADDY_VERSION?=latest
+REDIS_VERSION?=latest
 SWOOLE_VERSION?=latest
 
-.PHONY : all deploy swoole caddy
+.PHONY : all caddy deploy redis swoole
 
-all: check-env deploy swoole caddy
+all: caddy redis swoole check-env deploy
 
 check-env:
 ifndef DOCKER_MACHINE_NAME
@@ -30,14 +32,24 @@ endif
 
 docker-stack.yml:
 	@echo "Creating docker-stack.yml"
+	@echo "- redis container version: $(REDIS_VERSION)"
 	@echo "- swoole container version: $(SWOOLE_VERSION)"
 	@echo "- caddy container version: $(CADDY_VERSION)"
-	- $(CURDIR)/bin/create-docker-stack.php -p $(SWOOLE_VERSION) -c ${CADDY_VERSION}
+	- $(CURDIR)/bin/mwop.net.php docker:create-stack -p $(SWOOLE_VERSION) -c $(CADDY_VERSION) -r $(REDIS_VERSION)
 
 deploy: check-env docker-stack.yml
 	@echo "Deploying to swarm"
 	- docker stack deploy --with-registry-auth -c docker-stack.yml mwopnet
 	- rm docker-stack.yml
+
+redis:
+	@echo "Creating redis container"
+	@echo "- Building container"
+	- docker build -t mwopredis -f ./etc/docker/redis.Dockerfile .
+	@echo "- Tagging image"
+	- docker tag mwopredis:latest mwop/mwopredis:$(VERSION)
+	@echo "- Pushing image to hub"
+	- docker push mwop/mwopredis:$(VERSION)
 
 caddy:
 	@echo "Creating caddy container"

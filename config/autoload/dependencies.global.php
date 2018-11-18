@@ -29,6 +29,8 @@ return ['dependencies' => [
         ],
     ],
     'invokables' => [
+        Console\DockerCreateStack::class  => Console\DockerCreateStack::class,
+        Console\DockerGetLatestTag::class => Console\DockerGetLatestTag::class,
         ResponseFactoryInterface::class   => ResponseFactory::class,
     ],
     'factories' => [
