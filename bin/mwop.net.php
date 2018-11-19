@@ -13,15 +13,9 @@ use Symfony\Component\Console\CommandLoader\ContainerCommandLoader;
 chdir(__DIR__ . '/../');
 require_once 'vendor/autoload.php';
 
-define('VERSION', '0.1.0');
-
 $container = require 'config/container.php';
 
-$loader = new ContainerCommandLoader($container, [
-    'blog:clear-cache' => Blog\ClearCache::class,
-]);
-
-$application = new Application('mwop.net', VERSION);
+$application = new Application('mwop.net');
 $application->setCommandLoader(new ContainerCommandLoader($container, [
     'asset:copy-symlinks'       => Console\CopyAssetSymlinks::class,
     'asset:create-symlinks'     => Console\CreateAssetSymlinks::class,
