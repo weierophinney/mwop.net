@@ -30,7 +30,7 @@ return [
     'debug' => false,
     'github' => [
         'user'  => 'weierophinney',
-        'limit' => 4,
+        'limit' => 10,
     ],
     'homepage' => [
         'feed-count' => 10,
