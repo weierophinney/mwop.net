@@ -2,7 +2,7 @@
 
 ## Bugfixes
 
-- [ ] Get rid of certificate download; no longer necessary
+- [x] Get rid of certificate download; no longer necessary
 - [ ] Fix alpha/omega styles for home page; use media queries to remove borders
   on small screens.
 
