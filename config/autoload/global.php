@@ -67,10 +67,9 @@ return [
     ],
     'mail' => [
         'transport' => [
-            'class' => 'Zend\Mail\Transport\Smtp',
-            'options' => [
-                'host' => null,
-            ],
+            'class' => \Swift_AWSTransport::class,
+            'username' => '',
+            'password' => '',
         ],
     ],
     'oauth2' => [
