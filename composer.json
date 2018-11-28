@@ -47,7 +47,7 @@
         "zendframework/zend-expressive-platesrenderer": "^2.0",
         "zendframework/zend-expressive-session": "^1.1",
         "zendframework/zend-expressive-session-cache": "^1.1.1",
-        "zendframework/zend-expressive-swoole": "~2.0",
+        "zendframework/zend-expressive-swoole": "^2.1",
         "zendframework/zend-feed": "^2.7",
         "zendframework/zend-inputfilter": "^2.7.3",
         "zendframework/zend-paginator": "^2.7",

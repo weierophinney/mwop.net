@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9999cf7cc2b36569a224919bce805d27",
+    "content-hash": "23a11546381df433303c8cd5b7721813",
     "packages": [
         {
             "name": "cache/adapter-common",
@@ -3825,16 +3825,16 @@
         },
         {
             "name": "zendframework/zend-expressive-swoole",
-            "version": "2.0.0",
+            "version": "2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-expressive-swoole.git",
-                "reference": "1118d21f811d9c63eef77b9a482f773f6337b742"
+                "reference": "36713a424b1e5c0056df9454d10260562ff71332"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-expressive-swoole/zipball/1118d21f811d9c63eef77b9a482f773f6337b742",
-                "reference": "1118d21f811d9c63eef77b9a482f773f6337b742",
+                "url": "https://api.github.com/repos/zendframework/zend-expressive-swoole/zipball/36713a424b1e5c0056df9454d10260562ff71332",
+                "reference": "36713a424b1e5c0056df9454d10260562ff71332",
                 "shasum": ""
             },
             "require": {
@@ -3864,8 +3864,8 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.0.x-dev",
-                    "dev-develop": "2.1.x-dev"
+                    "dev-master": "2.1.x-dev",
+                    "dev-develop": "2.2.x-dev"
                 }
             },
             "autoload": {
@@ -3888,7 +3888,7 @@
                 "swoole",
                 "zf"
             ],
-            "time": "2018-11-15T20:23:40+00:00"
+            "time": "2018-11-28T21:40:15+00:00"
         },
         {
             "name": "zendframework/zend-expressive-template",

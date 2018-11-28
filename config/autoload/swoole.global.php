@@ -7,10 +7,11 @@ return [
     'zend-expressive-swoole' => [
         'enable_coroutine' => true,
         'swoole-http-server' => [
-            'host' => '0.0.0.0',
-            'port' => 9000,
-            'mode' => SWOOLE_PROCESS,
-            'options' => [
+            'process-name' => 'mwopnet',
+            'host'         => '0.0.0.0',
+            'port'         => 9000,
+            'mode'         => SWOOLE_PROCESS,
+            'options'      => [
                 // For some reason, inside a docker container, ulimit -n, which is what
                 // Swoole uses to determine this value by default, reports a ridiculously
                 // high number. The value presented here is the value reported by the
