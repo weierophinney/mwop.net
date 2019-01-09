@@ -25,6 +25,7 @@ return ['dependencies' => [
             Github\PuSH\RoutesDelegator::class,
         ],
         AttachableListenerProvider::class => [
+            Blog\CacheListenerDelegator::class,
             Contact\SendMessageListenerDelegator::class,
         ],
     ],
@@ -36,6 +37,7 @@ return ['dependencies' => [
     'factories' => [
         'mail.transport'                  => Factory\MailTransport::class,
         Blog\BlogCachePool::class         => Blog\BlogCachePoolFactory::class,
+        Blog\CacheListener::class         => Blog\CacheListenerFactory::class,
         Blog\Console\ClearCache::class    => Blog\Console\ClearCacheFactory::class,
         Blog\Console\FeedGenerator::class => Blog\Console\FeedGeneratorFactory::class,
         Blog\Console\GenerateSearchData::class => InvokableFactory::class,

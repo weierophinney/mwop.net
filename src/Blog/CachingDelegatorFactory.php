@@ -7,6 +7,7 @@
 namespace Mwop\Blog;
 
 use Psr\Container\ContainerInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Zend\Expressive\MiddlewareFactory;
 
@@ -24,6 +25,7 @@ class CachingDelegatorFactory
         return $factory->pipeline([
             new CachingMiddleware(
                 $container->get(BlogCachePool::class),
+                $container->get(EventDispatcherInterface::class),
                 $config['cache']['enabled'] ?? false
             ),
             $callback(),

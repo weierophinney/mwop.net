@@ -9,11 +9,11 @@ namespace Mwop\Blog;
 
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Swoole\Event;
 use Throwable;
 use Zend\Diactoros\Response\Serializer;
 
@@ -25,14 +25,23 @@ class CachingMiddleware implements MiddlewareInterface
     private $cache;
 
     /**
+     * @var EventDispatcherInterface
+     */
+    private $dispatcher;
+
+    /**
      * @var bool
      */
     private $enabled;
 
-    public function __construct(CacheItemPoolInterface $cache, bool $enabled = true)
-    {
-        $this->cache   = $cache;
-        $this->enabled = $enabled;
+    public function __construct(
+        CacheItemPoolInterface $cache,
+        EventDispatcherInterface $dispatcher,
+        bool $enabled = true
+    ) {
+        $this->cache      = $cache;
+        $this->dispatcher = $dispatcher;
+        $this->enabled    = $enabled;
     }
 
     /**
@@ -67,10 +76,7 @@ class CachingMiddleware implements MiddlewareInterface
         }
 
         // Cache result
-        Event::defer(function () use ($item, $response) {
-            $item->set(Serializer::toString($response));
-            $this->cache->save($item);
-        });
+        $this->dispatcher->dispatch(new CacheBlogPostEvent($item, $response));
 
         return $response;
     }
