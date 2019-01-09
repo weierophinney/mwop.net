@@ -9,9 +9,8 @@ declare(strict_types=1);
 namespace Mwop\Contact;
 
 use JsonSerializable;
-use Psr\EventDispatcher\MessageInterface;
 
-class ContactMessage implements MessageInterface, JsonSerializable
+class ContactMessage implements JsonSerializable
 {
     /** @var string */
     private $body;

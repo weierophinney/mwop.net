@@ -8,15 +8,16 @@ declare(strict_types=1);
 
 namespace Mwop\TaskWorker;
 
-use Phly\EventEmitter\MessageNotifier;
+use Phly\EventDispatcher\EventDispatcher;
 use Psr\Container\ContainerInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\EventDispatcher\ListenerProviderInterface;
 
-class MessageNotifierFactory
+class EventDispatcherFactory
 {
-    public function __invoke(ContainerInterface $container)
+    public function __invoke(ContainerInterface $container) : EventDispatcherInterface
     {
-        return new MessageNotifier(
+        return new EventDispatcher(
             $container->get(ListenerProviderInterface::class)
         );
     }

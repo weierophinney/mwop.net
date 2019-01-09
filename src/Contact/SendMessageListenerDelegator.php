@@ -9,14 +9,14 @@ declare(strict_types=1);
 namespace Mwop\Contact;
 
 use Psr\Container\ContainerInterface;
-use Phly\EventEmitter\ListenerProvider;
+use Phly\EventDispatcher\ListenerProvider\AttachableListenerProvider;
 
 class SendMessageListenerDelegator
 {
-    public function __invoke(ContainerInterface $container, $serviceName, callable $callback) : ListenerProvider
+    public function __invoke(ContainerInterface $container, $serviceName, callable $callback) : AttachableListenerProvider
     {
         $provider = $callback();
-        $provider->on(
+        $provider->listen(
             ContactMessage::class,
             $container->get(SendMessageListener::class)
         );

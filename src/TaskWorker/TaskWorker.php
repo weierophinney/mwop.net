@@ -8,32 +8,30 @@ declare(strict_types=1);
 
 namespace Mwop\TaskWorker;
 
-use Phly\EventEmitter\Exception\ExceptionAggregate;
-use Psr\EventDispatcher\MessageInterface;
-use Psr\EventDispatcher\MessageNotifierInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;
 use Swoole\Http\Server as HttpServer;
 use Throwable;
 
 class TaskWorker
 {
-    /** @var MessageNotifierInterface */
-    private $notifier;
+    /** @var EventDispatcherInterface */
+    private $dispatcher;
 
     /** @var LoggerInterface */
     private $logger;
 
-    public function __construct(LoggerInterface $logger, MessageNotifierInterface $notifier)
+    public function __construct(LoggerInterface $logger, EventDispatcherInterface $dispatcher)
     {
-        $this->logger = $logger;
-        $this->notifier = $notifier;
+        $this->logger     = $logger;
+        $this->dispatcher = $dispatcher;
     }
 
     public function __invoke(HttpServer $server, int $taskId, int $fromId, $data) : void
     {
-        if (! $data instanceof MessageInterface) {
+        if (! is_object($data)) {
             $this->logger->error('Invalid data type provided to task worker: {type}', [
-                'type' => is_object($data) ? get_class($data) : gettype($data)
+                'type' => gettype($data)
             ]);
             return;
         }
@@ -44,9 +42,7 @@ class TaskWorker
         ]);
 
         try {
-            $this->notifier->notify($data);
-        } catch (ExceptionAggregate $aggregate) {
-            $this->logExceptionAggregate($aggregate, $taskId);
+            $this->dispatcher->dispatch($data);
         } catch (Throwable $e) {
             $this->logNotifierException($e, $taskId);
         } finally {
@@ -60,22 +56,6 @@ class TaskWorker
         $this->logger->error('Error processing task {taskId}: {error}', [
             'taskId' => $taskId,
             'error'  => $this->formatExceptionForLogging($e),
-        ]);
-    }
-
-    private function logExceptionAggregate(ExceptionAggregate $aggregate, int $taskId)
-    {
-        foreach ($aggregate->getListenerExceptions() as $index => $e) {
-            $this->logIndividualException($e, $taskId, $index);
-        }
-    }
-
-    private function logIndividualException(Throwable $e, int $taskId, int $index)
-    {
-        $this->logger->error('Error processing task {taskId} via listener {index}: {error}', [
-            'taskId' => $taskId,
-            'error'  => $this->formatExceptionForLogging($e),
-            'index'  => $index,
         ]);
     }
 

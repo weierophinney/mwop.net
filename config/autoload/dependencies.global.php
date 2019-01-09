@@ -6,7 +6,7 @@
 
 namespace Mwop;
 
-use Phly\EventEmitter\ListenerProvider;
+use Phly\EventDispatcher\ListenerProvider\AttachableListenerProvider;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Zend\Diactoros\ResponseFactory;
@@ -24,7 +24,7 @@ return ['dependencies' => [
         Application::class => [
             Github\PuSH\RoutesDelegator::class,
         ],
-        ListenerProvider::class => [
+        AttachableListenerProvider::class => [
             Contact\SendMessageListenerDelegator::class,
         ],
     ],
