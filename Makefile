@@ -1,16 +1,6 @@
 # mwop.net Makefile
 #
-# Create a docker-stack.yml based on latest tags of required containers, and
-# deploy to swarm.
-#
-# Allowed/expected variables:
-#
-# - CADDY_VERSION: specific Caddy container version to use
-# - REDIS_VERSION: specific redis container version to use
-# - SWOOLE_VERSION: specific php+swoole container version to use
-#
-# If not specified, each defaults to "latest", which forces a lookup of the
-# latest tagged version.
+# Create and tag the various containers that make up the stack.
 
 VERSION := $(shell date +%Y%m%d%H%M)
 
@@ -18,29 +8,9 @@ CADDY_VERSION?=latest
 REDIS_VERSION?=latest
 SWOOLE_VERSION?=latest
 
-.PHONY : all caddy deploy redis swoole
+.PHONY : all caddy redis swoole
 
-all: caddy redis swoole check-env deploy
-
-check-env:
-ifndef DOCKER_MACHINE_NAME
-	$(error DOCKER_MACHINE_NAME is undefined; run "eval $$(docker-machine env mwopnet)" first)
-endif
-ifneq ($(DOCKER_MACHINE_NAME),mwopnet)
-	$(error DOCKER_MACHINE_NAME is incorrect; run "eval $$(docker-machine env mwopnet)" first)
-endif
-
-docker-stack.yml:
-	@echo "Creating docker-stack.yml"
-	@echo "- redis container version: $(REDIS_VERSION)"
-	@echo "- swoole container version: $(SWOOLE_VERSION)"
-	@echo "- caddy container version: $(CADDY_VERSION)"
-	- $(CURDIR)/bin/mwop.net.php docker:create-stack -p $(SWOOLE_VERSION) -c $(CADDY_VERSION) -r $(REDIS_VERSION)
-
-deploy: check-env docker-stack.yml
-	@echo "Deploying to swarm"
-	- docker stack deploy --with-registry-auth -c docker-stack.yml mwopnet
-	- rm docker-stack.yml
+all: caddy redis swoole
 
 redis:
 	@echo "Creating redis container"
