@@ -8,9 +8,6 @@ declare(strict_types=1);
 
 namespace Mwop\TaskWorker;
 
-use Phly\EventDispatcher\ListenerProvider\AttachableListenerProvider;
-use Psr\EventDispatcher\EventDispatcherInterface;
-use Psr\EventDispatcher\ListenerProviderInterface;
 use Swoole\Http\Server as HttpServer;
 
 class ConfigProvider
@@ -19,15 +16,9 @@ class ConfigProvider
     {
         return [
             'dependencies' => [
-                'aliases' => [
-                    ListenerProviderInterface::class => AttachableListenerProvider::class,
-                ],
-                'invokables' => [
-                    AttachableListenerProvider::class => AttachableListenerProvider::class,
-                ],
                 'factories' => [
-                    EventDispatcherInterface::class => EventDispatcherFactory::class,
-                    TaskWorker::class               => TaskWorkerFactory::class,
+                    QueueableListenerProvider::class => QueueableListenerProviderFactory::class,
+                    TaskWorker::class                => TaskWorkerFactory::class,
                 ],
                 'delegators' => [
                     HttpServer::class => [

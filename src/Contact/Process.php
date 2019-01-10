@@ -7,10 +7,10 @@
 
 namespace Mwop\Contact;
 
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\RequestHandlerInterface;
-use Swoole\Http\Server as HttpServer;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Diactoros\Response\RedirectResponse;
 use Zend\Expressive\Csrf\CsrfGuardInterface;
@@ -21,17 +21,17 @@ use Zend\Expressive\Template\TemplateRendererInterface;
 class Process implements RequestHandlerInterface
 {
     private $config;
-    private $httpServer;
+    private $dispatcher;
     private $template;
     private $urlHelper;
 
     public function __construct(
-        HttpServer $httpServer,
+        EventDispatcherInterface $dispatcher,
         TemplateRendererInterface $template,
         UrlHelper $urlHelper,
         array $config
     ) {
-        $this->httpServer = $httpServer;
+        $this->dispatcher = $dispatcher;
         $this->template   = $template;
         $this->urlHelper  = $urlHelper;
         $this->config     = $config;
@@ -101,6 +101,6 @@ class Process implements RequestHandlerInterface
             $data['body']
         );
 
-        $this->httpServer->task($message);
+        $this->dispatcher->dispatch($message);
     }
 }

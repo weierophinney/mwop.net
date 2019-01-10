@@ -9,7 +9,6 @@ declare(strict_types=1);
 namespace Mwop\TaskWorker;
 
 use Psr\Container\ContainerInterface;
-use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;
 
 class TaskWorkerFactory
@@ -17,8 +16,7 @@ class TaskWorkerFactory
     public function __invoke(ContainerInterface $container) : TaskWorker
     {
         return new TaskWorker(
-            $container->get(LoggerInterface::class),
-            $container->get(EventDispatcherInterface::class)
+            $container->get(LoggerInterface::class)
         );
     }
 }

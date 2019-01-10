@@ -8,41 +8,39 @@ declare(strict_types=1);
 
 namespace Mwop\TaskWorker;
 
-use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;
 use Swoole\Http\Server as HttpServer;
 use Throwable;
 
 class TaskWorker
 {
-    /** @var EventDispatcherInterface */
-    private $dispatcher;
-
     /** @var LoggerInterface */
     private $logger;
 
-    public function __construct(LoggerInterface $logger, EventDispatcherInterface $dispatcher)
+    public function __construct(LoggerInterface $logger)
     {
         $this->logger     = $logger;
-        $this->dispatcher = $dispatcher;
     }
 
-    public function __invoke(HttpServer $server, int $taskId, int $fromId, $data) : void
+    public function __invoke(HttpServer $server, int $taskId, int $fromId, $task) : void
     {
-        if (! is_object($data)) {
-            $this->logger->error('Invalid data type provided to task worker: {type}', [
-                'type' => gettype($data)
+        if (! $task instanceof Task) {
+            $this->logger->error('Invalid task provided to task worker: {type}', [
+                'type' => is_object($task) ? get_class($task) : gettype($task)
             ]);
             return;
         }
 
-        $this->logger->notice('Starting work on task {taskId} using data: {data}', [
+        $event    = $task->event();
+        $listener = $task->listener();
+
+        $this->logger->notice('Starting work on task {taskId} using event: {event}', [
             'taskId' => $taskId,
-            'data'   => json_encode($data),
+            'event'  => json_encode($event),
         ]);
 
         try {
-            $this->dispatcher->dispatch($data);
+            $listener($event);
         } catch (Throwable $e) {
             $this->logNotifierException($e, $taskId);
         } finally {
