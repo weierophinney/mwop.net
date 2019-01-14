@@ -37,7 +37,6 @@ return ['dependencies' => [
     ],
     'factories' => [
         'mail.transport'                  => Factory\MailTransport::class,
-        AttachableListenerProvider::class => TaskWorker\QueueableListenerProviderFactory::class,
         Blog\BlogCachePool::class         => Blog\BlogCachePoolFactory::class,
         Blog\CacheListener::class         => Blog\CacheListenerFactory::class,
         Blog\Console\ClearCache::class    => Blog\Console\ClearCacheFactory::class,

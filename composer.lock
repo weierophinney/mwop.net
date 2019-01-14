@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "33c81e493d9007934e9261ec1d2cb575",
+    "content-hash": "ac6d734389f5dd3b8b1c083230a885eb",
     "packages": [
         {
             "name": "cache/adapter-common",
@@ -1700,22 +1700,25 @@
         },
         {
             "name": "phly/phly-event-dispatcher",
-            "version": "0.2.0",
+            "version": "0.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phly/phly-event-dispatcher.git",
-                "reference": "4da978eec06cb4a59a093b7ecd316cd8e87d7f70"
+                "reference": "8815236a033c7923768e5a5c44c39f4d3db54df5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phly/phly-event-dispatcher/zipball/4da978eec06cb4a59a093b7ecd316cd8e87d7f70",
-                "reference": "4da978eec06cb4a59a093b7ecd316cd8e87d7f70",
+                "url": "https://api.github.com/repos/phly/phly-event-dispatcher/zipball/8815236a033c7923768e5a5c44c39f4d3db54df5",
+                "reference": "8815236a033c7923768e5a5c44c39f4d3db54df5",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.2",
                 "psr/container": "^1.0",
                 "psr/event-dispatcher": "^0.7.0"
+            },
+            "conflict": {
+                "phpspec/prophecy": "<1.7.5"
             },
             "provide": {
                 "psr/event-dispatcher-implementation": "^0.7"
@@ -1742,29 +1745,7 @@
                     "Phly\\EventDispatcher\\": "src/"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "PhlyTest\\EventDispatcher\\": "test/"
-                }
-            },
-            "scripts": {
-                "check": [
-                    "@cs-check",
-                    "@test"
-                ],
-                "cs-check": [
-                    "phpcs"
-                ],
-                "cs-fix": [
-                    "phpcbf"
-                ],
-                "test": [
-                    "phpunit --colors=always"
-                ],
-                "test-coverage": [
-                    "phpunit --colors=always --coverage-clover clover.xml"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause"
             ],
@@ -1774,12 +1755,63 @@
                 "event-dispatcher",
                 "psr-14"
             ],
-            "support": {
-                "issues": "https://github.com/phly/phly-event-dispatcher/issues",
-                "source": "https://github.com/phly/phly-event-dispatcher",
-                "rss": "https://github.com/phly/phly-event-dispatcher/releases.atom"
+            "time": "2019-01-14T20:27:03+00:00"
+        },
+        {
+            "name": "phly/phly-swoole-taskworker",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phly/phly-swoole-taskworker.git",
+                "reference": "f3f4a3909c6701ab40bf1526f0730aa1e99eefb0"
             },
-            "time": "2019-01-09T22:21:28+00:00"
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phly/phly-swoole-taskworker/zipball/f3f4a3909c6701ab40bf1526f0730aa1e99eefb0",
+                "reference": "f3f4a3909c6701ab40bf1526f0730aa1e99eefb0",
+                "shasum": ""
+            },
+            "require": {
+                "ext-swoole": "*",
+                "php": "^7.2",
+                "psr/log": "^1.0"
+            },
+            "conflict": {
+                "phpspec/prophecy": "<1.7.5"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7.1.1",
+                "psr/container": "^1.0",
+                "zendframework/zend-coding-standard": "~1.0.0"
+            },
+            "suggest": {
+                "psr/log-implementation": "A logger implementation is required for the task worker"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                },
+                "zf": {
+                    "config-provider": "Phly\\Swoole\\TaskWorker\\ConfigProvider"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Phly\\Swoole\\TaskWorker\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Provides a Task Worker implementation for use with Swoole",
+            "keywords": [
+                "phly",
+                "psr-14",
+                "swoole"
+            ],
+            "time": "2019-01-14T16:20:49+00:00"
         },
         {
             "name": "php-http/curl-client",

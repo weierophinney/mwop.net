@@ -8,11 +8,10 @@ declare(strict_types=1);
 
 namespace Mwop\Contact;
 
-use Mwop\TaskWorker\ListenerShouldQueue;
 use Swift_Mailer as Mailer;
 use Swift_Message as MailMessage;
 
-class SendMessageListener implements ListenerShouldQueue
+class SendMessageListener
 {
     /** @var array */
     private $config;

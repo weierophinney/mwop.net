@@ -15,6 +15,7 @@ $cacheConfig = [
 ];
 
 $aggregator = new ConfigAggregator([
+    \Phly\Swoole\TaskWorker\ConfigProvider::class,
     \Phly\EventDispatcher\ConfigProvider::class,
     \Zend\Expressive\Authentication\ConfigProvider::class,
     \Zend\Expressive\Session\Cache\ConfigProvider::class,
@@ -31,9 +32,6 @@ $aggregator = new ConfigAggregator([
     \Zend\Expressive\Router\ConfigProvider::class,
     \Zend\Expressive\Router\FastRouteRouter\ConfigProvider::class,
     \Zend\Expressive\Swoole\ConfigProvider::class,
-
-    // App-specific modules
-    \Mwop\TaskWorker\ConfigProvider::class,
 
     // Include cache configuration
     new ArrayProvider($cacheConfig),

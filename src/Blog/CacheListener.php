@@ -7,11 +7,10 @@
 
 namespace Mwop\Blog;
 
-use Mwop\TaskWorker\ListenerShouldQueue;
 use Psr\Cache\CacheItemPoolInterface;
 use Zend\Diactoros\Response\Serializer;
 
-class CacheListener implements ListenerShouldQueue
+class CacheListener
 {
     /**
      * @var CacheItemPoolInterface
