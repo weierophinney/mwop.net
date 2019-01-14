@@ -29,6 +29,9 @@ return [
         'disqus'  => [
             'key' => 'phlyboyphly',
         ],
+        'cache' => [
+            'enabled' => false,
+        ],
     ],
     'contact' => [
         'recaptcha_pub_key'  => getenv('RECAPTCHA_PUB_KEY'),
