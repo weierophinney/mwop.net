@@ -30,7 +30,7 @@ return [
             'key' => 'phlyboyphly',
         ],
         'cache' => [
-            'enabled' => false,
+            'enabled' => true,
         ],
     ],
     'contact' => [
