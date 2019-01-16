@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Mwop\Blog;
+namespace Mwop\Blog\Handler;
 
+use Mwop\Blog\Mapper\MapperInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;

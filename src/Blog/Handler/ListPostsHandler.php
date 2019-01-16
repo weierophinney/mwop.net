@@ -5,8 +5,9 @@
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
-namespace Mwop\Blog;
+namespace Mwop\Blog\Handler;
 
+use Mwop\Blog\Mapper\MapperInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -19,10 +20,13 @@ use Zend\Paginator\Paginator;
 
 class ListPostsHandler implements RequestHandlerInterface
 {
+    /** @var MapperInterface */
     private $mapper;
 
+    /** @var RouterInterface */
     private $router;
 
+    /** @var TemplateRendererInterface */
     private $template;
 
     public function __construct(
@@ -55,7 +59,7 @@ class ListPostsHandler implements RequestHandlerInterface
             'blog::list',
             $this->prepareView(
                 $tag,
-                $this->prepareEntries($page, $posts),
+                iterator_to_array($posts->getItemsByPage($page)),
                 $this->preparePagination($path, $page, $posts->getPages())
             )
         ));
@@ -94,20 +98,8 @@ class ListPostsHandler implements RequestHandlerInterface
     }
 
     /**
-     * @return array[]
-     */
-    private function prepareEntries(int $page, Paginator $posts) : array
-    {
-        return array_map(function ($post) {
-            $post['updated'] = $post['updated'] && $post['updated'] !== $post['created'] ? $post['updated'] : false;
-            $post['tags']    = is_array($post['tags']) ? $post['tags'] : explode('|', trim((string) $post['tags'], '|'));
-            return $post;
-        }, iterator_to_array($posts->getItemsByPage($page)));
-    }
-
-    /**
      * @param string $tag
-     * @param object $entries
+     * @param BlogPost[] $entries
      * @param object $pagination
      * @return array
      */

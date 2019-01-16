@@ -7,9 +7,8 @@
 namespace Mwop\Blog\Console;
 
 use DateTime;
-use Mni\FrontYAML\Bridge\CommonMark\CommonMarkParser;
 use Mni\FrontYAML\Parser;
-use Mwop\Blog\MarkdownFileFilter;
+use Mwop\Blog\CreateBlogPostFromDataArray;
 use PDO;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -20,6 +19,8 @@ use Symfony\Component\Yaml\Parser as YamlParser;
 
 class SeedBlogDatabase extends Command
 {
+    use CreateBlogPostFromDataArray;
+
     private $authors = [];
 
     private $indices = [
@@ -155,31 +156,25 @@ class SeedBlogDatabase extends Command
         $path = sprintf('%s/%s', realpath($basePath), ltrim($postsPath));
         $trim = strlen(realpath($basePath)) + 1;
 
-        $parser     = new Parser(null, new CommonMarkParser());
         $statements = [];
         foreach (new MarkdownFileFilter($path) as $fileInfo) {
             $path     = $fileInfo->getPathname();
-            $document = $parser->parse(file_get_contents($path));
-            $metadata = $document->getYAML();
-            $html     = $document->getContent();
-            $parts    = explode($this->postDelimiter, $html, 2);
-            $body     = $parts[0];
-            $extended = isset($parts[1]) ? $parts[1] : '';
-            $author   = $this->getAuthor($metadata['author'], $authorsPath);
+            $post     = $this->createBlogPostFromDataArray(['path' => $path]);
+            $author   = $this->getAuthor($post->author, $authorsPath);
             $template = empty($statements) ? $this->initial : $this->item;
 
             $statements[] = sprintf(
                 $template,
-                $pdo->quote($metadata['id']),
+                $pdo->quote($post->id),
                 $pdo->quote(substr($path, $trim)),
-                (new DateTime($metadata['created']))->getTimestamp(),
-                (new DateTime($metadata['updated']))->getTimestamp(),
-                $pdo->quote($metadata['title']),
+                $post->created->getTimestamp(),
+                $post->updated->getTimestamp(),
+                $pdo->quote($post->title),
                 $pdo->quote($author['id']),
-                $metadata['draft'] ? 1 : 0,
-                $metadata['public'] ? 1 : 0,
-                $pdo->quote($body),
-                $pdo->quote(sprintf('|%s|', implode('|', $metadata['tags'])))
+                $post->isDraft ? 1 : 0,
+                $post->isPublic ? 1 : 0,
+                $pdo->quote($post->body),
+                $pdo->quote(sprintf('|%s|', implode('|', $post->tags)))
             );
         }
 

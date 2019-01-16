@@ -34,14 +34,14 @@ return function (
     ]);
 
     // Blog
-    $app->get('/blog[/]', Blog\ListPostsHandler::class, 'blog');
-    $app->get('/blog/{id:[^/]+}.html', Blog\DisplayPostHandler::class, 'blog.post');
-    $app->get('/blog/tag/{tag:php}.xml', Blog\FeedHandler::class, 'blog.feed.php');
-    $app->get('/blog/{tag:php}.xml', Blog\FeedHandler::class, 'blog.feed.php.also');
-    $app->get('/blog/tag/{tag:[^/]+}/{type:atom|rss}.xml', Blog\FeedHandler::class, 'blog.tag.feed');
-    $app->get('/blog/tag/{tag:[^/]+}', Blog\ListPostsHandler::class, 'blog.tag');
-    $app->get('/blog/{type:atom|rss}.xml', Blog\FeedHandler::class, 'blog.feed');
-    $app->get('/search[/]', Blog\SearchHandler::class, 'search');
+    $app->get('/blog[/]', Blog\Handler\ListPostsHandler::class, 'blog');
+    $app->get('/blog/{id:[^/]+}.html', Blog\Handler\DisplayPostHandler::class, 'blog.post');
+    $app->get('/blog/tag/{tag:php}.xml', Blog\Handler\FeedHandler::class, 'blog.feed.php');
+    $app->get('/blog/{tag:php}.xml', Blog\Handler\FeedHandler::class, 'blog.feed.php.also');
+    $app->get('/blog/tag/{tag:[^/]+}/{type:atom|rss}.xml', Blog\Handler\FeedHandler::class, 'blog.tag.feed');
+    $app->get('/blog/tag/{tag:[^/]+}', Blog\Handler\ListPostsHandler::class, 'blog.tag');
+    $app->get('/blog/{type:atom|rss}.xml', Blog\Handler\FeedHandler::class, 'blog.feed');
+    $app->get('/search[/]', Blog\Handler\SearchHandler::class, 'search');
 
     // Logout
     // Session middleware is already registered in the pipeline for all /auth routes

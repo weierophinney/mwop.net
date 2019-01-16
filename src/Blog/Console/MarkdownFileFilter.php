@@ -4,7 +4,7 @@
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
-namespace Mwop\Blog;
+namespace Mwop\Blog\Console;
 
 use DirectoryIterator;
 use FilterIterator;

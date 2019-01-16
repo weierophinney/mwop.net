@@ -39,14 +39,14 @@ $this->end();
     <div class="row h-entry">
         <aside class="col-md-2 d-none d-sm-block alpha sidebar blog">
             <p>
-                Written on <time class="dt-published" datetime="<?= $this->formatDateRfc($post['created']) ?>"><?= $this->formatDate($post['created']) ?></time>.
-            <?php if ($post['updated']) : ?>
-                <br />Last updated on <time class="dt-updated" datetime="<?= $this->formatDateRfc($post['updated']) ?>"><?= $this->formatDate($post['updated']) ?></time>.
+                Written on <time class="dt-published" datetime="<?= $this->formatDateRfc($post->created) ?>"><?= $this->formatDate($post->created) ?></time>.
+            <?php if ($post->updated) : ?>
+                <br />Last updated on <time class="dt-updated" datetime="<?= $this->formatDateRfc($post->updated) ?>"><?= $this->formatDate($post->updated) ?></time>.
             <?php endif ?>
             </p>
 
             <ul class="tags">
-            <?php foreach ($this->processTags($post['tags']) as $tag) : ?>
+            <?php foreach ($this->processTags($post->tags) as $tag) : ?>
                 <li><a class="p-category" href="<?= $tag->link ?>"><?= $tag->name ?></a>
             <?php endforeach ?>
             </ul>
@@ -58,9 +58,9 @@ $this->end();
         </aside>
 
         <section class="col-md-6 omega post-list">
-            <h4 class="entry"><a class="u-url u-uid" href="<?= $this->postUrl($post) ?>"><?= $this->escapeHtml($post['title']) ?></a></h4>
+            <h4 class="entry"><a class="u-url u-uid" href="<?= $this->postUrl($post) ?>"><?= $this->escapeHtml($post->title) ?></a></h4>
 
-            <div class="entry body p-summary"><?= $post['body'] ?></div>
+            <div class="entry body p-summary"><?= $post->body ?></div>
 
             <p><a href="<?= $this->postUrl($post) ?>">Continue reading...</a></p>
         </section>

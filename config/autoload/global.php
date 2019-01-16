@@ -10,10 +10,6 @@ return [
         'cache'  => [
             'enabled' => true,
         ],
-        'disqus' => [
-            'developer' => 0,
-            'key'       => null,
-        ],
     ],
     'contact' => [
         'recaptcha_pub_key'  => null,

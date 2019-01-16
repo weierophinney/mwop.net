@@ -6,8 +6,7 @@
 
 namespace Mwop\Blog\Console;
 
-use Mni\FrontYAML\Parser;
-use Mwop\Blog\MarkdownFileFilter;
+use Mwop\Blog\CreateBlogPostFromDataArray;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -16,6 +15,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class GenerateSearchData extends Command
 {
+    use CreateBlogPostFromDataArray;
+
     protected function configure()
     {
         $this->setName('blog:generate-search-data');
@@ -41,17 +42,13 @@ class GenerateSearchData extends Command
         $io->title('Generating search metadata');
 
         $documents = [];
-        $parser = new Parser();
         foreach (new MarkdownFileFilter($path) as $fileInfo) {
-            $document = $parser->parse(file_get_contents($fileInfo->getPathname()), false);
-            $metadata = $document->getYAML();
-            $content  = $document->getContent();
-
+            $post        = $this->createBlogPostFromDataArray(['path' => $fileInfo->getPathname()]);
             $documents[] = [
-                'id'      => sprintf('/blog/%s.html', $metadata['id']),
-                'tags'    => implode(' ', $metadata['tags']),
-                'title'   => $metadata['title'],
-                'content' => $content,
+                'id'      => sprintf('/blog/%s.html', $post->id),
+                'tags'    => implode(' ', $post->tags),
+                'title'   => $post->title,
+                'content' => $post->body . $post->extended,
             ];
         }
 

@@ -4,8 +4,9 @@
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
-namespace Mwop\Blog;
+namespace Mwop\Blog\Mapper;
 
+use Mwop\Blog\BlogPost;
 use Zend\Paginator\Paginator;
 use Zend\Tag\Cloud;
 
@@ -14,7 +15,7 @@ interface MapperInterface
     /**
      * @return false|array
      */
-    public function fetch(string $id);
+    public function fetch(string $id) : ?BlogPost;
 
     public function fetchAll() : Paginator;
 

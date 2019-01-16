@@ -4,11 +4,13 @@
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
-namespace Mwop\Blog;
+namespace Mwop\Blog\Handler;
 
 use DateTimeImmutable;
 use Mni\FrontYAML\Bridge\CommonMark\CommonMarkParser;
 use Mni\FrontYAML\Parser;
+use Mwop\Blog\BlogPostEvent;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -19,31 +21,25 @@ use function date;
 
 class DisplayPostHandler implements RequestHandlerInterface
 {
+    /** @var EventDispatcherInterface */
+    private $dispatcher;
+
+    /** @var array<string, string> */
     private $disqus;
 
-    private $mapper;
-
-    /**
-     * @var RequestHandlerInterface
-     */
+    /** @var RequestHandlerInterface */
     private $notFoundHandler;
 
-    /**
-     * Delimiter between post summary and extended body
-     *
-     * @var string
-     */
-    private $postDelimiter = '<!--- EXTENDED -->';
-
+    /** @var TemplateRendererInterface */
     private $template;
 
     public function __construct(
-        MapperInterface $mapper,
+        EventDispatcherInterface $dispatcher,
         TemplateRendererInterface $template,
         RequestHandlerInterface $notFoundHandler,
         array $disqus = []
     ) {
-        $this->mapper          = $mapper;
+        $this->dispatcher      = $dispatcher;
         $this->template        = $template;
         $this->notFoundHandler = $notFoundHandler;
         $this->disqus          = $disqus;
@@ -51,32 +47,31 @@ class DisplayPostHandler implements RequestHandlerInterface
 
     public function handle(ServerRequestInterface $request) : ResponseInterface
     {
-        $post = $this->mapper->fetch($request->getAttribute('id', false));
+        $id = $request->getAttribute('id', false);
+
+        if (! $id) {
+            return $this->notFoundHandler->handle($request);
+        }
+
+        // @var \Mwop\Blog\BlogPostEvent $event
+        $event = $this->dispatcher->dispatch(new BlogPostEvent($id));
+
+        // @var null|\Mwop\Blog\BlogPost $post
+        $post = $event->blogPost();
 
         if (! $post) {
             return $this->notFoundHandler->handle($request);
         }
 
-        $isAmp = (bool) ($request->getQueryParams()['amp'] ?? false);
-
-        $parser   = new Parser(null, new CommonMarkParser());
-        $document = $parser->parse(file_get_contents($post['path']));
-        $post     = $document->getYAML();
-        $parts    = explode($this->postDelimiter, $document->getContent(), 2);
-        $post     = array_merge($post, [
-            'body'      => $parts[0],
-            'extended'  => isset($parts[1]) ? $parts[1] : '',
-            'updated'   => $post['updated'] && $post['updated'] !== $post['created'] ? $post['updated'] : false,
-            'tags'      => is_array($post['tags']) ? $post['tags'] : explode('|', trim((string) $post['tags'], '|')),
-        ]);
-
-        $lastModified = new DateTimeImmutable($post['updated'] ?: $post['created']);
+        // @var \DateTimeInterface $lastModified
+        $lastModified = $post->updated ?: $post->created;
+        $isAmp        = (bool) ($request->getQueryParams()['amp'] ?? false);
 
         return new HtmlResponse(
             $this->template->render(
                 $isAmp ? 'blog::post.amp' : 'blog::post',
                 [
-                    'post' => $post,
+                    'post'   => $post,
                     'disqus' => $this->disqus,
                 ]
             ),

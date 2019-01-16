@@ -33,6 +33,8 @@ $aggregator = new ConfigAggregator([
     \Zend\Expressive\Router\FastRouteRouter\ConfigProvider::class,
     \Zend\Expressive\Swoole\ConfigProvider::class,
 
+    \Mwop\Blog\ConfigProvider::class,
+
     // Include cache configuration
     new ArrayProvider($cacheConfig),
 

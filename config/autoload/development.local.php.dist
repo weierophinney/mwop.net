@@ -26,7 +26,7 @@ return [
             'enabled' => false,
         ],
         'disqus' => [
-            'developer' => 0,
+            'developer' => 1,
             'key'       => 'phlyboyphly',
         ],
     ],

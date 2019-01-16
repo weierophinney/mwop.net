@@ -6,7 +6,7 @@
 
 namespace Mwop\Blog\Console;
 
-use Mwop\Blog;
+use Mwop\Blog\Mapper\MapperInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -18,7 +18,7 @@ class TagCloud extends Command
 {
     private $mapper;
 
-    public function __construct(Blog\MapperInterface $mapper)
+    public function __construct(MapperInterface $mapper)
     {
         $this->mapper = $mapper;
         parent::__construct();

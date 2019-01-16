@@ -4,32 +4,35 @@
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
-namespace Mwop\Blog;
+namespace Mwop\Blog\Mapper;
 
+use Mwop\Blog\BlogPost;
+use Mwop\Blog\CreateBlogPostFromDataArray;
 use PDO;
 use Zend\Paginator\Paginator;
 use Zend\Tag\Cloud;
 
 class PdoMapper implements MapperInterface
 {
+    use CreateBlogPostFromDataArray;
+
+    /** @var PDO */
     private $pdo;
 
     public function __construct(PDO $pdo)
     {
-        $this->pdo = $pdo;
+        $this->pdo    = $pdo;
     }
 
-    /**
-     * @return false|array
-     */
-    public function fetch(string $id)
+    public function fetch(string $id) : ?BlogPost
     {
         $select = $this->pdo->prepare('SELECT * from posts WHERE id = :id');
         if (! $select->execute([':id' => $id])) {
-            return false;
+            return null;
         }
 
-        return $select->fetch();
+        $post = $select->fetch();
+        return $post ? $this->createBlogPostFromDataArray($post) : null;
     }
 
     public function fetchAll() : Paginator

@@ -1,6 +1,6 @@
 <?php
 $this->layout('layout::amp', [
-    'title' => $post['title'],
+    'title' => $post->title,
     'canonical' => $this->serverurl($this->postUrl($post)),
 ]);
 
@@ -10,10 +10,10 @@ $this->start('metadata');
       "@context": "http://schema.org",
       "@type": "BlogPosting",
       "@id": "<?= $this->serverurl($this->postUrl($post)) ?>",
-      "headline": "<?= $post['title'] ?>",
-      "datePublished": "<?= $this->formatDateRfc($post['created']) ?>",
-    <?php if ($post['updated']) :?>
-      "dateModified": "<?= $this->formatDateRfc($post['updated']) ?>",
+      "headline": "<?= $post->title ?>",
+      "datePublished": "<?= $this->formatDateRfc($post->created) ?>",
+    <?php if ($post->updated) :?>
+      "dateModified": "<?= $this->formatDateRfc($post->updated) ?>",
     <?php endif ?>
       "image": {
         "@type": "ImageObject",
@@ -39,17 +39,17 @@ $this->start('metadata');
             "width": 32
         }
       },
-      "keywords": "<?= implode(', ', $post['tags']) ?>",
+      "keywords": "<?= implode(', ', $post->tags) ?>",
       "mainEntityOfPage": "<?= $this->serverurl($this->postUrl($post)) ?>"
     }
 <?php $this->stop() ?>
 <article class="single-entry h-entry col-md-6 blog">
-    <h2 class="p-name"><a class="u-url u-uid" href="<?= $this->serverurl($this->postUrl($post)) ?>"><?= $this->escapeHtml($post['title']) ?></a></h2>
+    <h2 class="p-name"><a class="u-url u-uid" href="<?= $this->serverurl($this->postUrl($post)) ?>"><?= $this->escapeHtml($post->title) ?></a></h2>
 
     <div class="e-content">
-    <?= $this->ampifyContent($post['body']) ?>
+    <?= $this->ampifyContent($post->body) ?>
 
-    <?= $this->ampifyContent($post['extended']) ?>
+    <?= $this->ampifyContent($post->extended) ?>
     </div>
 
     <div class="p-author h-card hidden">

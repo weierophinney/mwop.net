@@ -6,10 +6,10 @@
 
 namespace Mwop\Factory;
 
-use DateTimeImmutable;
-use DateTimezone;
+use DateTimeInterface;
 use League\Plates\Engine;
 use League\Plates\Extension\ExtensionInterface;
+use Mwop\Blog\BlogPost;
 use Psr\Container\ContainerInterface;
 
 use function is_numeric;
@@ -55,22 +55,19 @@ class PlatesFunctionsDelegator implements ExtensionInterface
         }, $markup);
     }
 
-    public function formatDate($dateString, string $format = 'j F Y') : string
+    public function formatDate(DateTimeInterface $date, string $format = 'j F Y') : string
     {
-        $date = is_numeric($dateString)
-            ? new DateTimeImmutable('@' . $dateString, new DateTimezone('America/Chicago'))
-            : $date = new DateTimeImmutable($dateString);
         return $date->format($format);
     }
 
-    public function formatDateRfc($dateString) : string
+    public function formatDateRfc(DateTimeInterface $date) : string
     {
-        return $this->formatDate($dateString, 'c');
+        return $this->formatDate($date, 'c');
     }
 
-    public function postUrl(array $post) : string
+    public function postUrl(BlogPost $post) : string
     {
-        return $this->template->url('blog.post', ['id' => $post['id']]);
+        return $this->template->url('blog.post', ['id' => $post->id]);
     }
 
     public function processTags(array $tags) : array

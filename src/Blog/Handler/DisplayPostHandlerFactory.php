@@ -4,9 +4,10 @@
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
-namespace Mwop\Blog;
+namespace Mwop\Blog\Handler;
 
 use Psr\Container\ContainerInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Zend\Expressive\Middleware\NotFoundHandler;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
@@ -15,7 +16,7 @@ class DisplayPostHandlerFactory
     public function __invoke(ContainerInterface $container) : DisplayPostHandler
     {
         return new DisplayPostHandler(
-            $container->get(__NAMESPACE__ . '\Mapper'),
+            $container->get(EventDispatcherInterface::class),
             $container->get(TemplateRendererInterface::class),
             $container->get(NotFoundHandler::class),
             $container->get('config')['blog']['disqus']

@@ -7,9 +7,9 @@
 namespace Mwop\Blog\Console;
 
 use DateTime;
-use Mni\FrontYAML\Bridge\CommonMark\CommonMarkParser;
 use Mni\FrontYAML\Parser;
-use Mwop\Blog\MapperInterface;
+use Mwop\Blog\BlogPost;
+use Mwop\Blog\Mapper\MapperInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -170,38 +170,35 @@ class FeedGenerator extends Command
             $feed->setDescription($title);
         }
 
-        $parser = new Parser(null, new CommonMarkParser());
         $latest = false;
 
         if (method_exists($posts, 'setCurrentPageNumber')) {
             $posts->setCurrentPageNumber(1);
         }
 
-        foreach ($posts as $details) {
-            $document = $parser->parse(file_get_contents($details['path']));
-            $post     = $document->getYAML();
-            $html     = $document->getContent();
-            $author   = $this->getAuthor($post['author']);
+        foreach ($posts as $post) {
+            $html   = $post->body . $post->extended;
+            $author = $this->getAuthor($post->author);
 
             if (! $latest) {
                 $latest = $post;
             }
 
             $entry = $feed->createEntry();
-            $entry->setTitle($post['title']);
-            // $entry->setLink($baseUri . $this->generateUri('blog.post', ['id' => $post['id']]));
-            $entry->setLink($baseUri . sprintf('/blog/%s.html', $post['id']));
+            $entry->setTitle($post->title);
+            // $entry->setLink($baseUri . $this->generateUri('blog.post', ['id' => $post->id]));
+            $entry->setLink($baseUri . sprintf('/blog/%s.html', $post->id));
 
             $entry->addAuthor($author);
-            $entry->setDateModified(new DateTime($post['updated']));
-            $entry->setDateCreated(new DateTime($post['created']));
+            $entry->setDateModified($post->updated);
+            $entry->setDateCreated($post->created);
             $entry->setContent($this->createContent($html, $post));
 
             $feed->addEntry($entry);
         }
 
         // Set feed date
-        $feed->setDateModified(new DateTime($latest['updated']));
+        $feed->setDateModified($latest->updated);
 
         // Write feed to file
         $file = sprintf('%s%s.xml', $fileBase, $type);
@@ -248,12 +245,8 @@ class FeedGenerator extends Command
      * Create feed content.
      *
      * Renders h-entry data for the feed and appends it to the HTML markup content.
-     *
-     * @param string $content
-     * @param array $post
-     * @return string
      */
-    private function createContent(string $content, array $post) : string
+    private function createContent(string $content, BlogPost $post) : string
     {
         return sprintf(
             "%s\n\n%s",
