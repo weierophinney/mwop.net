@@ -11,18 +11,6 @@ return [
             'enabled' => true,
         ],
     ],
-    'contact' => [
-        'recaptcha_pub_key'  => null,
-        'recaptcha_priv_key' => null,
-        'message' => [
-            'to'   => null,
-            'from' => null,
-            'sender' => [
-                'address' => null,
-                'name'    => null,
-            ],
-        ],
-    ],
     'debug' => false,
     'github' => [
         'user'  => 'weierophinney',

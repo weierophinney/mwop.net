@@ -27,9 +27,6 @@ return ['dependencies' => [
         Application::class => [
             Github\PuSH\RoutesDelegator::class,
         ],
-        AttachableListenerProvider::class => [
-            Contact\SendMessageListenerDelegator::class,
-        ],
     ],
     'invokables' => [
         ResponseFactoryInterface::class => ResponseFactory::class,
@@ -42,7 +39,6 @@ return ['dependencies' => [
         Console\CreateAssetSymlinks::class   => InvokableFactory::class,
         Console\FeedAggregator::class        => Console\FeedAggregatorFactory::class,
         Console\UseDistTemplates::class      => InvokableFactory::class,
-        Contact\SendMessageListener::class   => Contact\SendMessageListenerFactory::class,
         EventDispatcherInterface::class      => Factory\EventDispatcherFactory::class,
         FeedReaderHttpClientInterface::class => Feed\HttpPlugClientFactory::class,
         Github\AtomReader::class             => Github\AtomReaderFactory::class,

@@ -5,7 +5,6 @@
  */
 
 use Mwop\ComicsPage;
-use Mwop\Contact;
 use Mwop\Factory;
 use Mwop\HomePage;
 use Mwop\ResumePage;
@@ -16,17 +15,14 @@ use Zend\Expressive\Router\FastRouteRouter;
 return [
     'dependencies' => [
         'invokables' => [
-            BodyParamsMiddleware::class          => BodyParamsMiddleware::class,
-            RouterInterface::class               => FastRouteRouter::class,
+            BodyParamsMiddleware::class => BodyParamsMiddleware::class,
+            RouterInterface::class      => FastRouteRouter::class,
         ],
         'factories' => [
-            Contact\LandingPage::class        => Contact\LandingPageFactory::class,
-            Contact\Process::class            => Contact\ProcessFactory::class,
-            Contact\ThankYouPage::class       => Contact\ThankYouPageFactory::class,
-            ComicsPage::class                 => Factory\ComicsPage::class,
-            HomePage::class                   => Factory\HomePageFactory::class,
-            ResumePage::class                 => Factory\PageFactory::class,
-            'Mwop\OfflinePage'                => Factory\PageFactory::class,
+            ComicsPage::class  => Factory\ComicsPage::class,
+            HomePage::class    => Factory\HomePageFactory::class,
+            ResumePage::class  => Factory\PageFactory::class,
+            'Mwop\OfflinePage' => Factory\PageFactory::class,
         ],
     ],
 ];

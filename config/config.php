@@ -34,6 +34,7 @@ $aggregator = new ConfigAggregator([
     \Zend\Expressive\Swoole\ConfigProvider::class,
 
     \Mwop\Blog\ConfigProvider::class,
+    \Mwop\Contact\ConfigProvider::class,
 
     // Include cache configuration
     new ArrayProvider($cacheConfig),
