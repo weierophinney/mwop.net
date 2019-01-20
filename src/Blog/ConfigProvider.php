@@ -15,8 +15,7 @@ class ConfigProvider
         return [
             'blog'         => $this->getConfig(),
             'dependencies' => $this->getDependencies(),
-            'blog' => [
-            ],
+            'templates'    => $this->getTemplateConfig(),
         ];
     }
 
@@ -59,6 +58,15 @@ class ConfigProvider
                 AttachableListenerProvider::class => [
                     Listener\BlogPostEventListenersDelegator::class,
                 ],
+            ],
+        ];
+    }
+
+    public function getTemplateConfig() : array
+    {
+        return [
+            'paths' => [
+                'blog' => [__DIR__ . '/templates'],
             ],
         ];
     }

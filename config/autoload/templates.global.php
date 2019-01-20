@@ -22,7 +22,6 @@ return [
     'templates' => [
         'extension' => 'phtml',
         'paths' => [
-            'blog'    => ['templates/blog'],
             'data'    => [getcwd() . '/data'],
             'error'   => ['templates/error'],
             'layout'  => ['templates/layout'],
