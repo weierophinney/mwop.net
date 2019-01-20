@@ -40,10 +40,10 @@ class ConfigProvider
     {
         return [
             'factories' => [
-                LandingPage::class         => LandingPageFactory::class,
-                Process::class             => ProcessFactory::class,
-                SendMessageListener::class => SendMessageListenerFactory::class,
-                ThankYouPage::class        => ThankYouPageFactory::class,
+                Handler\DisplayContactFormHandler::class => Handler\DisplayContactFormHandlerFactory::class,
+                Handler\ProcessContactFormHandler::class => Handler\ProcessContactFormHandlerFactory::class,
+                Handler\DisplayThankYouHandler::class    => Handler\DisplayThankYouHandlerFactory::class,
+                SendMessageListener::class               => SendMessageListenerFactory::class,
             ],
             'delegators' => [
                 AttachableListenerProvider::class => [

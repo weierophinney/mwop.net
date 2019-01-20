@@ -4,16 +4,16 @@
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
-namespace Mwop\Contact;
+namespace Mwop\Contact\Handler;
 
 use Psr\Container\ContainerInterface;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
-class LandingPageFactory
+class DisplayContactFormHandlerFactory
 {
-    public function __invoke(ContainerInterface $container) : LandingPage
+    public function __invoke(ContainerInterface $container) : DisplayContactFormHandler
     {
-        return new LandingPage(
+        return new DisplayContactFormHandler(
             $container->get(TemplateRendererInterface::class),
             $container->get('config')['contact']
         );

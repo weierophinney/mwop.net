@@ -4,16 +4,16 @@
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
-namespace Mwop\Contact;
+namespace Mwop\Contact\Handler;
 
 use Psr\Container\ContainerInterface;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
-class ThankYouPageFactory
+class DisplayThankYouHandlerFactory
 {
-    public function __invoke(ContainerInterface $container) : ThankYouPage
+    public function __invoke(ContainerInterface $container) : DisplayThankYouHandler
     {
-        return new ThankYouPage(
+        return new DisplayThankYouHandler(
             $container->get(TemplateRendererInterface::class)
         );
     }

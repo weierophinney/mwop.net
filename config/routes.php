@@ -54,12 +54,12 @@ return function (
     $app->get('/contact[/]', [
         SessionMiddleware::class,
         CsrfMiddleware::class,
-        Contact\LandingPage::class,
+        Contact\Handler\DisplayContactFormHandler::class,
     ], 'contact');
     $app->post('/contact/process', [
         SessionMiddleware::class,
         CsrfMiddleware::class,
-        Contact\Process::class,
+        Contact\Handler\ProcessContactFormHandler::class,
     ], 'contact.process');
-    $app->get('/contact/thank-you', Contact\ThankYouPage::class, 'contact.thank-you');
+    $app->get('/contact/thank-you', Contact\Handler\DisplayThankYouHandler::class, 'contact.thank-you');
 };

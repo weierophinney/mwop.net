@@ -5,8 +5,10 @@
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
-namespace Mwop\Contact;
+namespace Mwop\Contact\Handler;
 
+use Mwop\Contact\ContactMessage;
+use Mwop\Contact\InputFilter;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -18,7 +20,7 @@ use Zend\Expressive\Csrf\CsrfMiddleware;
 use Zend\Expressive\Helper\UrlHelper;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
-class Process implements RequestHandlerInterface
+class ProcessContactFormHandler implements RequestHandlerInterface
 {
     private $config;
     private $dispatcher;

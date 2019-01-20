@@ -5,7 +5,7 @@
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
-namespace Mwop\Contact;
+namespace Mwop\Contact\Handler;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -14,7 +14,7 @@ use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Diactoros\Response\RedirectResponse;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
-class ThankYouPage implements RequestHandlerInterface
+class DisplayThankYouHandler implements RequestHandlerInterface
 {
     private $template;
 

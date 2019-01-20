@@ -4,7 +4,7 @@
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
-namespace Mwop\Contact;
+namespace Mwop\Contact\Handler;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -13,7 +13,7 @@ use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Expressive\Csrf\CsrfMiddleware;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
-class LandingPage implements RequestHandlerInterface
+class DisplayContactFormHandler implements RequestHandlerInterface
 {
     private $config;
     private $template;
