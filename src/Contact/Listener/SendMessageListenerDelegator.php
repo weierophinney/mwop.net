@@ -6,8 +6,9 @@
 
 declare(strict_types=1);
 
-namespace Mwop\Contact;
+namespace Mwop\Contact\Listener;
 
+use Mwop\Contact\ContactMessage;
 use Psr\Container\ContainerInterface;
 use Phly\EventDispatcher\ListenerProvider\AttachableListenerProvider;
 

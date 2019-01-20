@@ -4,7 +4,9 @@
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
+use Mwop\Contact\Listener\SendMessageListener;
 use Mwop\Factory;
+use Mwop\QueueableListener;
 use Psr\Log\LoggerInterface;
 use Zend\Stratigility\Middleware\ErrorHandler;
 
@@ -19,6 +21,9 @@ return [
         'delegators' => [
             ErrorHandler::class => [
                 Factory\LoggingErrorListenerDelegator::class,
+            ],
+            SendMessageListener::class => [
+                QueueableListenerDelegator::class,
             ],
         ],
         'factories' => [

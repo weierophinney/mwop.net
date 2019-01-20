@@ -6,8 +6,9 @@
 
 declare(strict_types=1);
 
-namespace Mwop\Contact;
+namespace Mwop\Contact\Listener;
 
+use Mwop\Contact\ContactMessage;
 use Swift_Mailer as Mailer;
 use Swift_Message as MailMessage;
 

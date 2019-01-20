@@ -43,11 +43,11 @@ class ConfigProvider
                 Handler\DisplayContactFormHandler::class => Handler\DisplayContactFormHandlerFactory::class,
                 Handler\ProcessContactFormHandler::class => Handler\ProcessContactFormHandlerFactory::class,
                 Handler\DisplayThankYouHandler::class    => Handler\DisplayThankYouHandlerFactory::class,
-                SendMessageListener::class               => SendMessageListenerFactory::class,
+                Listener\SendMessageListener::class      => Listener\SendMessageListenerFactory::class,
             ],
             'delegators' => [
                 AttachableListenerProvider::class => [
-                    SendMessageListenerDelegator::class,
+                    Listener\SendMessageListenerDelegator::class,
                 ],
             ],
         ];

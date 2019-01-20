@@ -6,13 +6,12 @@
 
 declare(strict_types=1);
 
-namespace Mwop\Contact;
+namespace Mwop\Contact\Listener;
 
 use Phly\Swoole\TaskWorker\QueueableListener;
 use Psr\Container\ContainerInterface;
 use RuntimeException;
 use Swift_Mailer as Mailer;
-use Swoole\Http\Server as HttpServer;
 
 class SendMessageListenerFactory
 {
@@ -34,12 +33,9 @@ class SendMessageListenerFactory
             ));
         }
 
-        return new QueueableListener(
-            $container->get(HttpServer::class),
-            new SendMessageListener(
-                $container->get('mail.transport'),
-                $config
-            )
+        return new SendMessageListener(
+            $container->get('mail.transport'),
+            $config
         );
     }
 }
