@@ -4,6 +4,7 @@
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
+use Mwop\Blog\Listener\CacheBlogPostListener;
 use Mwop\Contact\Listener\SendMessageListener;
 use Mwop\Factory;
 use Mwop\QueueableListener;
@@ -19,6 +20,9 @@ $messageToAddress = getenv('CONTACT_MESSAGE_TO_ADDRESS');
 return [
     'dependencies' => [
         'delegators' => [
+            CacheBlogPostListener::class => [
+                QueueableListenerDelegator::class,
+            ],
             ErrorHandler::class => [
                 Factory\LoggingErrorListenerDelegator::class,
             ],

@@ -10,20 +10,16 @@ use Mwop\Blog\BlogCachePool;
 use Phly\Swoole\TaskWorker\QueueableListener;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Container\ContainerInterface;
-use Swoole\Http\Server as HttpServer;
 
 class CacheBlogPostListenerFactory
 {
-    public function __invoke(ContainerInterface $container) : callable
+    public function __invoke(ContainerInterface $container) : CacheBlogPostListener
     {
         $config  = $container->get('config')['blog'] ?? [];
 
-        return new QueueableListener(
-            $container->get(HttpServer::class),
-            new CacheBlogPostListener(
-                $container->get(BlogCachePool::class),
-                $config['cache']['enabled'] ?? false
-            )
+        return new CacheBlogPostListener(
+            $container->get(BlogCachePool::class),
+            $config['cache']['enabled'] ?? false
         );
     }
 }
