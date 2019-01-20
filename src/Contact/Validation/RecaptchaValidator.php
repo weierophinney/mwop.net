@@ -4,7 +4,7 @@
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
-namespace Mwop\Contact;
+namespace Mwop\Contact\Validation;
 
 use Zend\Validator\ValidatorInterface;
 

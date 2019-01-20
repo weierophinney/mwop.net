@@ -8,7 +8,7 @@
 namespace Mwop\Contact\Handler;
 
 use Mwop\Contact\ContactMessage;
-use Mwop\Contact\InputFilter;
+use Mwop\Contact\Validation\InputFilter;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
