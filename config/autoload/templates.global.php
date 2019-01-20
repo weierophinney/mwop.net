@@ -26,7 +26,6 @@ return [
             'error'   => ['templates/error'],
             'layout'  => ['templates/layout'],
             'mwop'    => ['templates/mwop'],
-            'oauth2'  => ['templates/oauth2'],
         ],
     ],
 ];

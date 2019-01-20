@@ -1,11 +1,20 @@
 <?php
+/**
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
+ * @copyright Copyright (c) Matthew Weier O'Phinney
+ */
 
 declare(strict_types=1);
 
-namespace Mwop\OAuth2;
+namespace Mwop\OAuth2\Handler;
 
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use League\OAuth2\Client\Provider\ResourceOwnerInterface;
+use Mwop\OAuth2\DebugResourceOwner;
+use Mwop\OAuth2\Exception;
+use Mwop\OAuth2\Provider\ProviderFactory;
+use Mwop\OAuth2\RenderUnauthorizedResponseTrait;
+use Mwop\OAuth2\ValidateProviderTrait;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -15,8 +24,8 @@ use Zend\Expressive\Template\TemplateRendererInterface;
 
 class CallbackHandler implements RequestHandlerInterface
 {
-    use ValidateProviderTrait;
     use RenderUnauthorizedResponseTrait;
+    use ValidateProviderTrait;
 
     /**
      * @var bool

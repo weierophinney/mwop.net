@@ -16,7 +16,7 @@ return function (
     $app->get('/', HomePage::class, 'home');
     $app->get('/comics', [
         SessionMiddleware::class,
-        OAuth2\CheckAuthenticationMiddleware::class,
+        OAuth2\Middleware\CheckAuthenticationMiddleware::class,
         ComicsPage::class,
     ], 'comics');
     $app->get('/resume', ResumePage::class, 'resume');
@@ -24,13 +24,13 @@ return function (
     // OAuth2 authentication response
     $app->get('/auth/{provider:debug|github|google}/oauth2callback', [
         SessionMiddleware::class,
-        OAuth2\CallbackHandler::class,
+        OAuth2\Handler\CallbackHandler::class,
     ]);
 
     // OAuth2 authentication request
     $app->get('/auth/{provider:debug|github|google}', [
         SessionMiddleware::class,
-        OAuth2\RequestAuthenticationHandler::class,
+        OAuth2\Handler\RequestAuthenticationHandler::class,
     ]);
 
     // Blog

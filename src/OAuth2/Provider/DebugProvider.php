@@ -1,9 +1,14 @@
 <?php
+/**
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
+ * @copyright Copyright (c) Matthew Weier O'Phinney
+ */
 
 declare(strict_types=1);
 
-namespace Mwop\OAuth2;
+namespace Mwop\OAuth2\Provider;
 
+use Mwop\OAuth2\DebugResourceOwner;
 use League\OAuth2\Client\Provider\AbstractProvider;
 use League\OAuth2\Client\Token\AccessToken;
 use Psr\Http\Message\ResponseInterface;
