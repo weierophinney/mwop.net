@@ -23,7 +23,6 @@ return [
         'extension' => 'phtml',
         'paths' => [
             'blog'    => ['templates/blog'],
-            'contact' => ['templates/contact'],
             'data'    => [getcwd() . '/data'],
             'error'   => ['templates/error'],
             'layout'  => ['templates/layout'],

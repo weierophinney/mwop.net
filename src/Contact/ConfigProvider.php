@@ -17,6 +17,7 @@ class ConfigProvider
         return [
             'contact'      => $this->getConfig(),
             'dependencies' => $this->getDependencies(),
+            'templates'    => $this->getTemplateConfig(),
         ];
     }
 
@@ -49,6 +50,15 @@ class ConfigProvider
                 AttachableListenerProvider::class => [
                     Listener\SendMessageListenerDelegator::class,
                 ],
+            ],
+        ];
+    }
+
+    public function getTemplateConfig() : array
+    {
+        return [
+            'paths' => [
+                'contact' => [__DIR__ . '/templates'],
             ],
         ];
     }
