@@ -2,9 +2,7 @@
 
 ## Bugfixes
 
-- [x] Get rid of certificate download; no longer necessary
-- [x] Fix alpha/omega styles for home page; use media queries to remove borders
-  on small screens.
+- [ ] CSP policy is not loading correctly
 
 ## Refactoring
 

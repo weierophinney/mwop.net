@@ -7,6 +7,7 @@
 namespace Mwop\App;
 
 use League\Plates\Engine;
+use Middlewares\Csp;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Message\RequestFactoryInterface;
@@ -40,6 +41,7 @@ class ConfigProvider
                 ResponseFactoryInterface::class             => ResponseFactory::class,
             ],
             'factories' => [
+                Csp::class                           => Middleware\ContentSecurityPolicyMiddlewareFactory::class,
                 CacheItemPoolInterface::class        => Factory\CachePoolFactory::class,
                 EventDispatcherInterface::class      => Factory\EventDispatcherFactory::class,
                 FeedReaderHttpClientInterface::class => Feed\HttpPlugClientFactory::class,
