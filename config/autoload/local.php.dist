@@ -8,7 +8,7 @@ use Mwop\Blog\Listener\CacheBlogPostListener;
 use Mwop\Contact\Listener\SendMessageListener;
 use Mwop\App\Factory\AccessLoggerFactory;
 use Mwop\App\LoggingErrorListenerDelegator;
-use Mwop\Util\QueueableListener;
+use Mwop\Util\QueueableListenerDelegator;
 use Psr\Log\LoggerInterface;
 use Zend\Stratigility\Middleware\ErrorHandler;
 
