@@ -33,6 +33,7 @@ $aggregator = new ConfigAggregator([
     \Zend\Expressive\Router\FastRouteRouter\ConfigProvider::class,
     \Zend\Expressive\Swoole\ConfigProvider::class,
 
+    // App-specific modules
     \Mwop\App\ConfigProvider::class,
     \Mwop\Blog\ConfigProvider::class,
     \Mwop\Console\ConfigProvider::class,

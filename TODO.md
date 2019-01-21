@@ -32,7 +32,7 @@
 - [ ] Github
   - [ ] Update PuSH functionality to have it update my feed(s)?
 - [ ] Contact
-  - [ ] Use something like mailchimp instead of gmail?
+  - [x] Use something like mailchimp instead of gmail?
   - [ ] Change this to a mailing list subscription?
 - [ ] API
   - [ ] Tweet latest blog post entry
