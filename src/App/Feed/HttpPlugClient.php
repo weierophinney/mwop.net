@@ -7,7 +7,7 @@
 namespace Mwop\App\Feed;
 
 use Http\Client\HttpClient;
-use Zend\Diactoros\Request;
+use Psr\Http\Message\RequestFactoryInterface;
 use Zend\Feed\Reader\Http\ClientInterface as FeedReaderHttpClientInterface;
 use Zend\Feed\Reader\Http\Psr7ResponseDecorator;
 use Zend\Feed\Reader\Http\ResponseInterface;
