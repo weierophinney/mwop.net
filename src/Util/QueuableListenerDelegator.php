@@ -12,7 +12,7 @@ use Phly\Swoole\TaskWorker\QueueableListener;
 use Psr\Container\ContainerInterface;
 use Swoole\Http\Server as HttpServer;
 
-class QueuableListenerDelegator
+class QueueableListenerDelegator
 {
     public function __invoke(
         ContainerInterface $container,
