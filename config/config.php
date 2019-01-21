@@ -35,6 +35,7 @@ $aggregator = new ConfigAggregator([
 
     \Mwop\Blog\ConfigProvider::class,
     \Mwop\Contact\ConfigProvider::class,
+    \Mwop\Github\ConfigProvider::class,
     \Mwop\OAuth2\ConfigProvider::class,
 
     // Include cache configuration

@@ -23,11 +23,6 @@ return ['dependencies' => [
         ListenerProviderInterface::class   => AttachableListenerProvider::class,
         SessionPersistenceInterface::class => CacheSessionPersistence::class,
     ],
-    'delegators' => [
-        Application::class => [
-            Github\PuSH\RoutesDelegator::class,
-        ],
-    ],
     'invokables' => [
         ResponseFactoryInterface::class => ResponseFactory::class,
     ],
@@ -41,10 +36,6 @@ return ['dependencies' => [
         Console\UseDistTemplates::class      => InvokableFactory::class,
         EventDispatcherInterface::class      => Factory\EventDispatcherFactory::class,
         FeedReaderHttpClientInterface::class => Feed\HttpPlugClientFactory::class,
-        Github\AtomReader::class             => Github\AtomReaderFactory::class,
-        Github\Console\Fetch::class          => Github\Console\FetchFactory::class,
-        Github\PuSH\Logger::class            => Github\PuSH\LoggerFactory::class,
-        Github\PuSH\LoggerAction::class      => Github\PuSH\LoggerActionFactory::class,
         SessionCachePool::class              => Factory\SessionCachePoolFactory::class,
     ],
 ]];

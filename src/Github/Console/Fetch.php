@@ -6,7 +6,7 @@
 
 namespace Mwop\Github\Console;
 
-use Mwop\Github;
+use Mwop\Github\AtomReader;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -26,11 +26,11 @@ class Fetch extends Command
     private $outputTemplateString = '<li><a href="%s">%s</a></li>';
 
     /**
-     * @var Github\AtomReader
+     * @var AtomReader
      */
     private $reader;
 
-    public function __construct(Github\AtomReader $reader = null, string $outputTemplateString = '')
+    public function __construct(AtomReader $reader = null, string $outputTemplateString = '')
     {
         $this->reader = $reader;
         if (! empty($outputTemplateString)) {

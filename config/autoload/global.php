@@ -13,8 +13,7 @@ return [
     ],
     'debug' => false,
     'github' => [
-        'user'  => 'weierophinney',
-        'limit' => 10,
+        'user' => 'weierophinney',
     ],
     'homepage' => [
         'feed-count' => 10,

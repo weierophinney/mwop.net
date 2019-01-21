@@ -15,7 +15,7 @@ class AtomReaderFactory
 {
     public function __invoke(ContainerInterface $container) : AtomReader
     {
-        $http   = $container->get(FeedReaderHttpClientInterface::class);
+        $http = $container->get(FeedReaderHttpClientInterface::class);
         FeedReader::setHttpClient($http);
         FeedReader::setExtensionManager(new StandaloneExtensionManager());
 
