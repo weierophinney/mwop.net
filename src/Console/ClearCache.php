@@ -11,6 +11,7 @@ use RecursiveIteratorIterator;
 use SplFileInfo;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
@@ -23,14 +24,23 @@ class ClearCache extends Command
         $this->setName('clear-cache');
         $this->setDescription('Clear the static cache.');
         $this->setHelp('Clear any cached content.');
+        $this->addOption(
+            'path',
+            'p',
+            InputOption::VALUE_REQUIRED,
+            'Application root path',
+            realpath(getcwd())
+        );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output) : int
     {
-        $io = new SymfonyStyle($input, $output);
-        $io->title('Clearing static cache');
+        $path = sprintf(self::PATH_TEMPLATE, $input->getOption('path'));
+        $io   = new SymfonyStyle($input, $output);
 
-        $rdi = new RecursiveDirectoryIterator(sprintf(self::PATH_TEMPLATE, $route->getMatchedParam('path')));
+        $io->title(sprintf('Clearing static cache located in %s', $path));
+
+        $rdi = new RecursiveDirectoryIterator($path);
         $rii = new RecursiveIteratorIterator(
             $rdi,
             RecursiveIteratorIterator::CHILD_FIRST | RecursiveIteratorIterator::LEAVES_ONLY
