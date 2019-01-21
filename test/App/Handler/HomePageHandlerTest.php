@@ -4,14 +4,15 @@
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
-namespace MwopTest;
+namespace MwopTest\App\Handler;
 
-use Mwop\HomePage;
+use Mwop\App\Handler\HomePageHandler;
+use MwopTest\HttpMessagesTrait;
 use PHPUnit\Framework\TestCase;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
-class HomePageTest extends TestCase
+class HomePageHandlerTest extends TestCase
 {
     use HttpMessagesTrait;
 
@@ -19,9 +20,9 @@ class HomePageTest extends TestCase
     {
         $posts = ['foo', 'bar'];
         $renderer = $this->prophesize(TemplateRendererInterface::class);
-        $handler = new HomePage($posts, $renderer->reveal());
+        $handler = new HomePageHandler($posts, $renderer->reveal());
 
-        $renderer->render(HomePage::TEMPLATE, [
+        $renderer->render(HomePageHandler::TEMPLATE, [
             'posts' => $posts,
         ])->willReturn('content')->shouldBeCalled();
 

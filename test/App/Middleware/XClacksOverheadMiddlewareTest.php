@@ -4,18 +4,19 @@
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
-namespace MwopTest;
+namespace MwopTest\App\Middleware;
 
-use Mwop\XClacksOverhead;
+use Mwop\App\Middleware\XClacksOverheadMiddleware;
+use MwopTest\HttpMessagesTrait;
 use PHPUnit\Framework\TestCase;
 
-class XClacksOverheadTest extends TestCase
+class XClacksOverheadMiddlewareTest extends TestCase
 {
     use HttpMessagesTrait;
 
     public function testMiddlewareInjectsResponseReturnedByNextWithXClacksOverheadHeader()
     {
-        $middleware = new XClacksOverhead();
+        $middleware = new XClacksOverheadMiddleware();
         $request = $this->createRequestMock()->reveal();
         $response = $this->createResponseMock();
         $response

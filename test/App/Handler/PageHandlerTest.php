@@ -4,21 +4,22 @@
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
-namespace MwopTest;
+namespace MwopTest\App\Handler;
 
-use Mwop\Page;
+use Mwop\App\Handler\PageHandler;
+use MwopTest\HttpMessagesTrait;
 use PHPUnit\Framework\TestCase;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
-class PageTest extends TestCase
+class PageHandlerTest extends TestCase
 {
     use HttpMessagesTrait;
 
     public function testMiddlewareReturnsHtmlResponseInjectedWithResultsOfRendereringPage()
     {
         $renderer = $this->prophesize(TemplateRendererInterface::class);
-        $page = new Page('foo', $renderer->reveal());
+        $page = new PageHandler('foo', $renderer->reveal());
 
         $renderer->render('foo', [])->willReturn('content')->shouldBeCalled();
         $response = $page->handle(
