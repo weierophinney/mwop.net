@@ -6,7 +6,7 @@
 
 namespace Mwop\Github;
 
-use Mwop\Collection;
+use Mwop\Util\Collection;
 use Zend\Feed\Reader\Reader as FeedReader;
 
 class AtomReader

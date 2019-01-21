@@ -8,7 +8,6 @@ declare(strict_types=1);
 
 namespace Mwop\Contact\Listener;
 
-use Phly\Swoole\TaskWorker\QueueableListener;
 use Psr\Container\ContainerInterface;
 use RuntimeException;
 use Swift_Mailer as Mailer;

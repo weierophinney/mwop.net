@@ -4,7 +4,7 @@
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
-namespace Mwop;
+namespace Mwop\Util;
 
 use ArrayAccess;
 use ArrayIterator;

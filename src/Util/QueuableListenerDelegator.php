@@ -6,7 +6,7 @@
 
 declare(strict_types=1);
 
-namespace Mwop;
+namespace Mwop\Util;
 
 use Phly\Swoole\TaskWorker\QueueableListener;
 use Psr\Container\ContainerInterface;
