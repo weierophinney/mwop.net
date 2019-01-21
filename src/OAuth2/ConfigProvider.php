@@ -25,10 +25,10 @@ class ConfigProvider
         // phpcs:disable
         return [
             'factories' => [
-                Provider\ProviderFactory::class                            => Provider\ProviderFactoryFactory::class,
-                Handler\CallbackHandler::class                             => Handler\CallbackHandlerFactory::class,
-                Middleware\Middleware\CheckAuthenticationMiddleware::class => CheckAuthenticationMiddlewareFactory::class,
-                Handler\RequestAuthenticationHandler::class                => Handler\RequestAuthenticationHandlerFactory::class,
+                Handler\CallbackHandler::class                  => Handler\CallbackHandlerFactory::class,
+                Handler\RequestAuthenticationHandler::class     => Handler\RequestAuthenticationHandlerFactory::class,
+                Middleware\CheckAuthenticationMiddleware::class => Middleware\CheckAuthenticationMiddlewareFactory::class,
+                Provider\ProviderFactory::class                 => Provider\ProviderFactoryFactory::class,
             ],
         ];
         // phpcs:enable

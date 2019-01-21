@@ -8,7 +8,7 @@ declare(strict_types=1);
 
 namespace Mwop\OAuth2\Handler;
 
-use Mwop\OAuth2\ProviderFactory;
+use Mwop\OAuth2\Provider\ProviderFactory;
 use Mwop\OAuth2\RenderUnauthorizedResponseTrait;
 use Mwop\OAuth2\ValidateProviderTrait;
 use Psr\Http\Message\ResponseFactoryInterface;
