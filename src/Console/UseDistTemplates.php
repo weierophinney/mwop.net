@@ -15,10 +15,10 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class UseDistTemplates extends Command
 {
     private $distFileMap = [
-        'templates/blog/scripts.phtml.dist'   => 'templates/blog/scripts.phtml',
-        'templates/blog/styles.phtml.dist'    => 'templates/blog/styles.phtml',
-        'templates/layout/scripts.phtml.dist' => 'templates/layout/scripts.phtml',
-        'templates/layout/styles.phtml.dist'  => 'templates/layout/styles.phtml',
+        'src/Blog/templates/scripts.phtml.dist' => 'src/Blog/templates/scripts.phtml',
+        'src/Blog/templates/styles.phtml.dist'  => 'src/Blog/templates/styles.phtml',
+        'templates/layout/scripts.phtml.dist'   => 'templates/layout/scripts.phtml',
+        'templates/layout/styles.phtml.dist'    => 'templates/layout/styles.phtml',
     ];
 
     protected function configure()
