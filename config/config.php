@@ -34,6 +34,7 @@ $aggregator = new ConfigAggregator([
     \Zend\Expressive\Swoole\ConfigProvider::class,
 
     \Mwop\Blog\ConfigProvider::class,
+    \Mwop\Console\ConfigProvider::class,
     \Mwop\Contact\ConfigProvider::class,
     \Mwop\Github\ConfigProvider::class,
     \Mwop\OAuth2\ConfigProvider::class,
