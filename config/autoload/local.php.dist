@@ -6,7 +6,8 @@
 
 use Mwop\Blog\Listener\CacheBlogPostListener;
 use Mwop\Contact\Listener\SendMessageListener;
-use Mwop\Factory;
+use Mwop\App\Factory\AccessLoggerFactory;
+use Mwop\App\LoggingErrorListenerDelegator;
 use Mwop\Util\QueueableListener;
 use Psr\Log\LoggerInterface;
 use Zend\Stratigility\Middleware\ErrorHandler;
@@ -24,14 +25,14 @@ return [
                 QueueableListenerDelegator::class,
             ],
             ErrorHandler::class => [
-                Factory\LoggingErrorListenerDelegator::class,
+                LoggingErrorListenerDelegator::class,
             ],
             SendMessageListener::class => [
                 QueueableListenerDelegator::class,
             ],
         ],
         'factories' => [
-            LoggerInterface::class => Factory\AccessLoggerFactory::class,
+            LoggerInterface::class => AccessLoggerFactory::class,
         ],
     ],
     'blog' => [

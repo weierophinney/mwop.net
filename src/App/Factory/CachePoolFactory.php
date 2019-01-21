@@ -4,7 +4,7 @@
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
-namespace Mwop\Factory;
+namespace Mwop\App\Factory;
 
 use Cache\Adapter\Predis\PredisCachePool;
 use Predis\Client;

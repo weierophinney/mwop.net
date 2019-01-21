@@ -4,7 +4,7 @@
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
-namespace Mwop;
+namespace Mwop\App\Handler;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -12,7 +12,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
-class Page implements RequestHandlerInterface
+class PageHandler implements RequestHandlerInterface
 {
     private $page;
     private $template;

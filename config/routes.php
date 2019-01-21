@@ -13,13 +13,13 @@ return function (
     \Zend\Expressive\MiddlewareFactory $factory,
     \Psr\Container\ContainerInterface $container
 ) : void {
-    $app->get('/', HomePage::class, 'home');
+    $app->get('/', App\Handler\HomePageHandler::class, 'home');
     $app->get('/comics', [
         SessionMiddleware::class,
         OAuth2\Middleware\CheckAuthenticationMiddleware::class,
-        ComicsPage::class,
+        App\Handler\ComicsPageHandler::class,
     ], 'comics');
-    $app->get('/resume', ResumePage::class, 'resume');
+    $app->get('/resume', App\Handler\ResumePageHandler::class, 'resume');
 
     // OAuth2 authentication response
     $app->get('/auth/{provider:debug|github|google}/oauth2callback', [

@@ -4,7 +4,7 @@
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
-namespace Mwop\Feed;
+namespace Mwop\App\Feed;
 
 use Http\Client\HttpClient;
 use Zend\Diactoros\Request;
@@ -20,11 +20,17 @@ class HttpPlugClient implements FeedReaderHttpClientInterface
     private $client;
 
     /**
+     * @var RequestFactoryInterface
+     */
+    private $requestFactory;
+
+    /**
      * @param HttpClient|null $client
      */
-    public function __construct(HttpClient $client)
+    public function __construct(HttpClient $client, RequestFactoryInterface $requestFactory)
     {
-        $this->client = $client;
+        $this->client         = $client;
+        $this->requestFactory = $requestFactory;
     }
 
     /**
@@ -32,7 +38,7 @@ class HttpPlugClient implements FeedReaderHttpClientInterface
      */
     public function get($uri) : ResponseInterface
     {
-        $request = (new Request($uri, 'GET'))
+        $request = $this->requestFactory->createRequest('GET', $uri)
             ->withHeader('User-Agent', 'HTTPie/0.9.2');
         return new Psr7ResponseDecorator($this->client->sendRequest($request));
     }

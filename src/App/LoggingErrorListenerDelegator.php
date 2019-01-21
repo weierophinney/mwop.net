@@ -4,11 +4,10 @@
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
-namespace Mwop\Factory;
+namespace Mwop\App;
 
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
-use Mwop\LoggingErrorListener;
 use Zend\Stratigility\Middleware\ErrorHandler;
 
 class LoggingErrorListenerDelegator

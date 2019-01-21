@@ -4,17 +4,16 @@
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
-namespace Mwop\Factory;
+namespace Mwop\App\Handler;
 
-use Mwop\HomePage;
 use Psr\Container\ContainerInterface;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
-class HomePageFactory
+class HomePageHandlerFactory
 {
-    public function __invoke(ContainerInterface $container) : HomePage
+    public function __invoke(ContainerInterface $container) : HomePageHandler
     {
-        return new HomePage(
+        return new HomePageHandler(
             $container->get('config')['homepage']['posts'] ?? [],
             $container->get(TemplateRendererInterface::class)
         );

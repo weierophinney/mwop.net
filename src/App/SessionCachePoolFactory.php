@@ -4,9 +4,8 @@
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
-namespace Mwop\Factory;
+namespace Mwop\App;
 
-use Mwop\SessionCachePool;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Container\ContainerInterface;
 

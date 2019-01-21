@@ -4,7 +4,7 @@
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
-namespace Mwop;
+namespace Mwop\App;
 
 use Exception;
 use Psr\Http\Message\ResponseInterface;
@@ -27,7 +27,7 @@ class LoggingErrorListener
     }
 
     public function __invoke(
-        $error,
+        Throwable $error,
         ServerRequestInterface $request,
         ResponseInterface $response
     ) {

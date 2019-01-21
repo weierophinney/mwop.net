@@ -7,16 +7,9 @@
 namespace Mwop;
 
 use Phly\EventDispatcher\ListenerProvider\AttachableListenerProvider;
-use Psr\Cache\CacheItemPoolInterface;
-use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\EventDispatcher\ListenerProviderInterface;
-use Psr\Http\Message\ResponseFactoryInterface;
-use Zend\Diactoros\ResponseFactory;
-use Zend\Expressive\Application;
 use Zend\Expressive\Session\Cache\CacheSessionPersistence;
 use Zend\Expressive\Session\SessionPersistenceInterface;
-use Zend\Feed\Reader\Http\ClientInterface as FeedReaderHttpClientInterface;
-use Zend\ServiceManager\Factory\InvokableFactory;
 
 return ['dependencies' => [
     'aliases' => [
@@ -24,13 +17,7 @@ return ['dependencies' => [
         SessionPersistenceInterface::class => CacheSessionPersistence::class,
     ],
     'invokables' => [
-        ResponseFactoryInterface::class => ResponseFactory::class,
     ],
     'factories' => [
-        'mail.transport'                     => Factory\MailTransport::class,
-        CacheItemPoolInterface::class        => Factory\CachePoolFactory::class,
-        EventDispatcherInterface::class      => Factory\EventDispatcherFactory::class,
-        FeedReaderHttpClientInterface::class => Feed\HttpPlugClientFactory::class,
-        SessionCachePool::class              => Factory\SessionCachePoolFactory::class,
     ],
 ]];

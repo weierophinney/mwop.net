@@ -4,9 +4,8 @@
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
-namespace Mwop\Factory;
+namespace Mwop\App\Handler;
 
-use Mwop\Page;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Zend\Expressive\Authentication\AuthenticationMiddleware;
@@ -15,11 +14,11 @@ use Zend\Expressive\Session\SessionMiddleware;
 use Zend\Expressive\Template\TemplateRendererInterface;
 use Zend\Stratigility\MiddlewarePipe;
 
-class ComicsPage
+class ComicsPageHandlerFactory
 {
-    public function __invoke(ContainerInterface $container) : Page
+    public function __invoke(ContainerInterface $container) : PageHandler
     {
-        return new Page(
+        return new PageHandler(
             'mwop::comics.page',
             $container->get(TemplateRendererInterface::class)
         );

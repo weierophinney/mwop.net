@@ -4,14 +4,14 @@
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
-namespace Mwop;
+namespace Mwop\App\Middleware;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-class XPoweredBy implements MiddlewareInterface
+class XPoweredByMiddleware implements MiddlewareInterface
 {
     public function process(Request $request, RequestHandlerInterface $handler) : Response
     {

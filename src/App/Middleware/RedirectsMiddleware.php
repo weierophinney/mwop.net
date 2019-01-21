@@ -1,11 +1,10 @@
 <?php
-
 /**
  * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
-namespace Mwop;
+namespace Mwop\App\Middleware;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -14,7 +13,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 use Psr\Http\Message\UriInterface as Uri;
 use Zend\Diactoros\Response\RedirectResponse;
 
-class Redirects implements MiddlewareInterface
+class RedirectsMiddleware implements MiddlewareInterface
 {
     public function process(Request $request, RequestHandlerInterface $handler) : Response
     {

@@ -23,12 +23,12 @@ return function (
     \Psr\Container\ContainerInterface $container
 ) : void {
     $app->pipe(OriginalMessages::class);
-    $app->pipe(XClacksOverhead::class);
-    $app->pipe(XPoweredBy::class);
+    $app->pipe(App\Middleware\XClacksOverheadMiddleware::class);
+    $app->pipe(App\Middleware\XPoweredByMiddleware::class);
     $app->pipe(Csp::class);
     $app->pipe(ErrorHandler::class);
     $app->pipe(ServerUrlMiddleware::class);
-    $app->pipe(Redirects::class);
+    $app->pipe(App\Middleware\RedirectsMiddleware::class);
     $app->pipe(RouteMiddleware::class);
     $app->pipe(ImplicitHeadMiddleware::class);
     $app->pipe(ImplicitOptionsMiddleware::class);

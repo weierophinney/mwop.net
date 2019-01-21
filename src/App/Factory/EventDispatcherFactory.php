@@ -6,7 +6,7 @@
 
 declare(strict_types=1);
 
-namespace Mwop\Factory;
+namespace Mwop\App\Factory;
 
 use Phly\EventDispatcher\EventDispatcher;
 use Psr\Container\ContainerInterface;

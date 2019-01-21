@@ -1,12 +1,16 @@
 <?php
+/**
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
+ * @copyright Copyright (c) Matthew Weier O'Phinney
+ */
 
-namespace Mwop\Factory;
+namespace Mwop\App\Middleware;
 
 use Psr\Container\ContainerInterface;
 use Middlewares\Csp;
 use ParagonIE\CSPBuilder\CSPBuilder;
 
-class ContentSecurityPolicyFactory
+class ContentSecurityPolicyMiddlewareFactory
 {
     public function __invoke(ContainerInterface $container) : Csp
     {

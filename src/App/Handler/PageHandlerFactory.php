@@ -4,17 +4,16 @@
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
-namespace Mwop\Factory;
+namespace Mwop\App\Handler;
 
-use Mwop\Page;
 use Psr\Container\ContainerInterface;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
-class PageFactory
+class PageHandlerFactory
 {
-    public function __invoke(ContainerInterface $container, string $requestedName) : Page
+    public function __invoke(ContainerInterface $container, string $requestedName) : PageHandler
     {
-        return new Page(
+        return new PageHandler(
             $this->deriveTemplateName($requestedName),
             $container->get(TemplateRendererInterface::class)
         );
@@ -22,21 +21,16 @@ class PageFactory
 
     private function deriveTemplateName(string $service) : string
     {
-        // Separate the first namespace out as the template namespace
-        $ns       = preg_quote('\\');
-        $pattern  = sprintf('#^([^%s]+)%s+(.*)$#', $ns, $ns);
-        $template = preg_replace($pattern, '$1::$2', $service);
+        $parts = explode('\\', $service);
+        $ns    = array_shift($parts);
+        $page  = array_pop($parts);
+        $page  = preg_replace('/Handler$/', '', $page);
 
-        if (strstr($template, '::')) {
-            list($namespace, $template) = explode('::', $template, 2);
-            return sprintf(
-                '%s::%s',
-                $this->camelCaseToDotSeparated($namespace),
-                $this->camelCaseToDotSeparated($template)
-            );
-        }
-
-        return $this->camelCaseToDotSeparated($template);
+        return sprintf(
+            '%s::%s',
+            $this->camelCaseToDotSeparated($ns),
+            $this->camelCaseToDotSeparated($page)
+        );
     }
 
     private function camelCaseToDotSeparated(string $string) : string
