@@ -11,6 +11,7 @@ return [
             'enabled' => true,
         ],
     ],
+    'config_cache_enabled' => false,
     'debug' => false,
     'github' => [
         'user' => 'weierophinney',
@@ -27,6 +28,12 @@ return [
             'redirectUri'  => null,
             // Enable this to restrict authentication to users at the listed domain:
             // 'hostedDomain' => 'https://mwop.net',
+        ],
+    ],
+    'zend-expressive' => [
+        'error_handler' => [
+            'template_404'   => 'error::404',
+            'template_error' => 'error::500',
         ],
     ],
 ];
