@@ -9,6 +9,9 @@ declare(strict_types=1);
 namespace Mwop\Contact;
 
 use Phly\EventDispatcher\ListenerProvider\AttachableListenerProvider;
+use Zend\Expressive\Application;
+use Zend\Expressive\Csrf\CsrfMiddleware;
+use Zend\Expressive\Session\SessionMiddleware;
 
 class ConfigProvider
 {
@@ -61,5 +64,20 @@ class ConfigProvider
                 'contact' => [__DIR__ . '/templates'],
             ],
         ];
+    }
+
+    public function registerRoutes(string $basepath, Application $app) : void
+    {
+        $app->get($basePath . '[/]', [
+            SessionMiddleware::class,
+            CsrfMiddleware::class,
+            Handler\DisplayContactFormHandler::class,
+        ], 'contact');
+        $app->post($basePath . '/process', [
+            SessionMiddleware::class,
+            CsrfMiddleware::class,
+            Handler\ProcessContactFormHandler::class,
+        ], 'contact.process');
+        $app->get($basePath . '/thank-you', Handler\DisplayThankYouHandler::class, 'contact.thank-you');
     }
 }
