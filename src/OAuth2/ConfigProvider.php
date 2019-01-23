@@ -8,6 +8,9 @@ declare(strict_types=1);
 
 namespace Mwop\OAuth2;
 
+use Zend\Expressive\Application;
+use Zend\Expressive\Session\SessionMiddleware;
+
 class ConfigProvider
 {
     public function __invoke() : array
@@ -41,5 +44,20 @@ class ConfigProvider
                 'oauth2' => [__DIR__ . '/templates'],
             ],
         ];
+    }
+
+    public function registerRoutes(string $basePath, Application $app) : void
+    {
+        // OAuth2 authentication response
+        $app->get($basePath . '/{provider:debug|github|google}/oauth2callback', [
+            SessionMiddleware::class,
+            Handler\CallbackHandler::class,
+        ]);
+
+        // OAuth2 authentication request
+        $app->get($basePath . '/{provider:debug|github|google}', [
+            SessionMiddleware::class,
+            Handler\RequestAuthenticationHandler::class,
+        ]);
     }
 }

@@ -21,17 +21,7 @@ return function (
     ], 'comics');
     $app->get('/resume', App\Handler\ResumePageHandler::class, 'resume');
 
-    // OAuth2 authentication response
-    $app->get('/auth/{provider:debug|github|google}/oauth2callback', [
-        SessionMiddleware::class,
-        OAuth2\Handler\CallbackHandler::class,
-    ]);
-
-    // OAuth2 authentication request
-    $app->get('/auth/{provider:debug|github|google}', [
-        SessionMiddleware::class,
-        OAuth2\Handler\RequestAuthenticationHandler::class,
-    ]);
+    (new OAuth2\ConfigProvider())->registerRoutes('/auth', $app);
 
     // Blog
     $app->get('/blog[/]', Blog\Handler\ListPostsHandler::class, 'blog');
