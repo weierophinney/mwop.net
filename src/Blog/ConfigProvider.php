@@ -7,6 +7,7 @@
 namespace Mwop\Blog;
 
 use Phly\EventDispatcher\ListenerProvider\AttachableListenerProvider;
+use Zend\Expressive\Application;
 
 class ConfigProvider
 {
@@ -69,5 +70,17 @@ class ConfigProvider
                 'blog' => [__DIR__ . '/templates'],
             ],
         ];
+    }
+
+    public function registerRoutes(string $basePath, Application $app) : void
+    {
+        $app->get($basePath, '[/]', Handler\ListPostsHandler::class, 'blog');
+        $app->get($basePath, '/{id:[^/]+}.html', Handler\DisplayPostHandler::class, 'blog.post');
+        $app->get($basePath, '/tag/{tag:php}.xml', Handler\FeedHandler::class, 'blog.feed.php');
+        $app->get($basePath, '/{tag:php}.xml', Handler\FeedHandler::class, 'blog.feed.php.also');
+        $app->get($basePath, '/tag/{tag:[^/]+}/{type:atom|rss}.xml', Handler\FeedHandler::class, 'blog.tag.feed');
+        $app->get($basePath, '/tag/{tag:[^/]+}', Handler\ListPostsHandler::class, 'blog.tag');
+        $app->get($basePath, '/{type:atom|rss}.xml', Handler\FeedHandler::class, 'blog.feed');
+        $app->get($basePath, '/search[/]', Handler\SearchHandler::class, 'blog.search');
     }
 }
