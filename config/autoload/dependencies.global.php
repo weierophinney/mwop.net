@@ -35,4 +35,9 @@ return ['dependencies' => [
         Helper\UrlHelperMiddleware::class => Helper\UrlHelperMiddlewareFactory::class,
         NotFoundHandler::class            => Container\NotFoundHandlerFactory::class,
     ],
+    'delegators' => [
+        App\Handler\ComicsPageHandler::class => [
+            App\Handler\ComicsPageHandlerAuthDelegator::class,
+        ],
+    ],
 ]];

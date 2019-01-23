@@ -15,6 +15,8 @@ use Psr\Http\Message\ResponseFactoryInterface;
 use Swift_AWSTransport;
 use Zend\Diactoros\RequestFactory;
 use Zend\Diactoros\ResponseFactory;
+use Zend\Expressive\Application;
+use Zend\Expressive\Session\SessionMiddleware;
 use Zend\Feed\Reader\Http\ClientInterface as FeedReaderHttpClientInterface;
 
 class ConfigProvider
@@ -118,5 +120,18 @@ class ConfigProvider
                 'password' => '',
             ],
         ];
+    }
+
+    public function registerRoutes(Application $app) : void
+    {
+        $app->get('/', Handler\HomePageHandler::class, 'home');
+        $app->get('/comics', Handler\ComicsPageHandler::class, 'comics');
+        $app->get('/resume', Handler\ResumePageHandler::class, 'resume');
+
+        // Logout
+        $app->get('/logout', [
+            SessionMiddleware::class,
+            Handler\LogoutHandler::class
+        ], 'logout');
     }
 }
