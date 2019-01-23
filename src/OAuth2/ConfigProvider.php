@@ -46,7 +46,7 @@ class ConfigProvider
         ];
     }
 
-    public function registerRoutes(string $basePath, Application $app) : void
+    public function registerRoutes(Application $app, string $basePath = '/blog') : void
     {
         // OAuth2 authentication response
         $app->get($basePath . '/{provider:debug|github|google}/oauth2callback', [

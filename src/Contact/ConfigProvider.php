@@ -66,7 +66,7 @@ class ConfigProvider
         ];
     }
 
-    public function registerRoutes(string $basepath, Application $app) : void
+    public function registerRoutes(Application $app, string $basePath = '/contact') : void
     {
         $app->get($basePath . '[/]', [
             SessionMiddleware::class,

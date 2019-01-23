@@ -17,11 +17,11 @@ return function (
     $app->get('/search[/]', Blog\Handler\SearchHandler::class, 'search');
 
     // OAuth2 routes
-    (new OAuth2\ConfigProvider())->registerRoutes('/auth', $app);
+    (new OAuth2\ConfigProvider())->registerRoutes($app, '/auth');
 
     // Blog routes
-    (new Blog\ConfigProvider())->registerRoutes('/blog', $app);
+    (new Blog\ConfigProvider())->registerRoutes($app, '/blog');
 
     // Contact form
-    (new Contact\ConfigProvider())->registerRoutes('/contact', $app);
+    (new Contact\ConfigProvider())->registerRoutes($app, '/contact');
 };

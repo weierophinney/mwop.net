@@ -72,7 +72,7 @@ class ConfigProvider
         ];
     }
 
-    public function registerRoutes(string $basePath, Application $app) : void
+    public function registerRoutes(Application $app, string $basePath = '/blog') : void
     {
         $app->get($basePath, '[/]', Handler\ListPostsHandler::class, 'blog');
         $app->get($basePath, '/{id:[^/]+}.html', Handler\DisplayPostHandler::class, 'blog.post');
