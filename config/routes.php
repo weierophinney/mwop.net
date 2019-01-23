@@ -16,12 +16,12 @@ return function (
     // Register an app-level search route that maps to the blog search handler
     $app->get('/search[/]', Blog\Handler\SearchHandler::class, 'search');
 
-    // OAuth2 routes
-    (new OAuth2\ConfigProvider())->registerRoutes($app, '/auth');
-
     // Blog routes
     (new Blog\ConfigProvider())->registerRoutes($app, '/blog');
 
     // Contact form
     (new Contact\ConfigProvider())->registerRoutes($app, '/contact');
+
+    // OAuth2 routes
+    (new OAuth2\ConfigProvider())->registerRoutes($app, '/auth');
 };
