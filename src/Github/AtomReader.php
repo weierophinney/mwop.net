@@ -4,9 +4,10 @@
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
+declare(strict_types=1);
+
 namespace Mwop\Github;
 
-use Mwop\Util\Collection;
 use Zend\Feed\Reader\Reader as FeedReader;
 
 class AtomReader
@@ -38,7 +39,7 @@ class AtomReader
         $url  = sprintf(self::ATOM_FORMAT, $this->user);
         $feed = FeedReader::import($url);
 
-        $entries = Collection::create($feed)
+        $entries = AtomCollection::make($feed)
             ->filterChain($this->filters)
             ->slice($this->limit)
             ->map(function ($entry) {

@@ -4,15 +4,17 @@
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
+declare(strict_types=1);
+
 namespace Mwop\Console;
 
 use Exception;
-use Mwop\Util\Collection;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Throwable;
 use Zend\Feed\Reader\Reader as FeedReader;
 use Zend\Feed\Reader\Feed\FeedInterface;
 
@@ -50,7 +52,7 @@ EOF;
 
     public function __construct(array $feeds, int $toRetrieve)
     {
-        $this->feeds = Collection::create($feeds);
+        $this->feeds = FeedCollection::make($feeds);
         $this->toRetrieve = $toRetrieve;
         parent::__construct();
     }
@@ -87,16 +89,14 @@ EOF;
         return $this->status;
     }
 
-    private function getEntries(SymfonyStyle $io) : Collection
+    private function getEntries(SymfonyStyle $io) : FeedCollection
     {
         return $this->feeds
             ->reduce(function ($entries, $feedInfo) use ($io) {
-                return $entries->append($this->marshalEntries($feedInfo, $io));
-            }, Collection::create([]))
-            ->sort(function ($a, $b) {
-                return ($b['date-created'] <=> $a['date-created']);
-            })
-            ->slice($this->toRetrieve);
+                return $entries->merge($this->marshalEntries($feedInfo, $io));
+            }, FeedCollection::make([]))
+            ->sortByDesc('date-created')
+            ->slice(0, $this->toRetrieve);
     }
 
     private function generateFilename(string $path) : string
@@ -104,7 +104,7 @@ EOF;
         return sprintf(self::CACHE_FILE, $path);
     }
 
-    private function generateContent(Collection $entries) : string
+    private function generateContent(FeedCollection $entries) : string
     {
         return sprintf(
             $this->configFormat,
@@ -121,7 +121,7 @@ EOF;
         );
     }
 
-    private function marshalEntries(array $feedInfo, SymfonyStyle $io) : Collection
+    private function marshalEntries(array $feedInfo, SymfonyStyle $io) : FeedCollection
     {
         $feedUrl  = $feedInfo['url'];
         $logo     = $feedInfo['favicon'] ?? 'https://mwop.net/images/favicon/favicon-16x16.png';
@@ -138,17 +138,16 @@ EOF;
             $feed = preg_match('#^https?://#', $feedUrl)
                 ? $this->getFeedFromRemoteUrl($feedUrl)
                 : $this->getFeedFromLocalFile($feedUrl);
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             $io->progressFinish();
             $this->reportException($e, $io);
             $io->error('Failed fetching one or more feeds');
             $this->status = 1;
-            return new Collection([]);
+            return new FeeedCollection([]);
         }
 
-        $entries = Collection::create($feed)
+        $entries = FeedCollection::make($feed)
             ->filterChain($filters)
-            ->slice(5)
             ->each($each)
             ->map(function ($entry) use ($logo, $siteName, $siteUrl) {
                 return [
