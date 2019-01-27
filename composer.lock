@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "ac6d734389f5dd3b8b1c083230a885eb",
+    "content-hash": "09651fb3cd34a7e04f57efda81e1f6b5",
     "packages": [
         {
             "name": "cache/adapter-common",
@@ -1759,16 +1759,16 @@
         },
         {
             "name": "phly/phly-swoole-taskworker",
-            "version": "1.0.0",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phly/phly-swoole-taskworker.git",
-                "reference": "f3f4a3909c6701ab40bf1526f0730aa1e99eefb0"
+                "reference": "b2c199b7907b2cf9e47c69828b33802d20b2a669"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phly/phly-swoole-taskworker/zipball/f3f4a3909c6701ab40bf1526f0730aa1e99eefb0",
-                "reference": "f3f4a3909c6701ab40bf1526f0730aa1e99eefb0",
+                "url": "https://api.github.com/repos/phly/phly-swoole-taskworker/zipball/b2c199b7907b2cf9e47c69828b33802d20b2a669",
+                "reference": "b2c199b7907b2cf9e47c69828b33802d20b2a669",
                 "shasum": ""
             },
             "require": {
@@ -1790,7 +1790,8 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0-dev"
+                    "dev-master": "1.1.x-dev",
+                    "dev-develop": "1.2.x-dev"
                 },
                 "zf": {
                     "config-provider": "Phly\\Swoole\\TaskWorker\\ConfigProvider"
@@ -1811,7 +1812,7 @@
                 "psr-14",
                 "swoole"
             ],
-            "time": "2019-01-14T16:20:49+00:00"
+            "time": "2019-01-24T20:13:46+00:00"
         },
         {
             "name": "php-http/curl-client",

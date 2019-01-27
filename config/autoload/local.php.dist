@@ -8,7 +8,7 @@ use Mwop\Blog\Listener\CacheBlogPostListener;
 use Mwop\Contact\Listener\SendMessageListener;
 use Mwop\App\Factory\AccessLoggerFactory;
 use Mwop\App\LoggingErrorListenerDelegator;
-use Mwop\Util\QueueableListenerDelegator;
+use Phly\Swoole\TaskWorker\DeferredListenerDelegator;
 use Psr\Log\LoggerInterface;
 use Zend\Stratigility\Middleware\ErrorHandler;
 
@@ -22,13 +22,13 @@ return [
     'dependencies' => [
         'delegators' => [
             CacheBlogPostListener::class => [
-                QueueableListenerDelegator::class,
+                DeferredListenerDelegator::class,
             ],
             ErrorHandler::class => [
                 LoggingErrorListenerDelegator::class,
             ],
             SendMessageListener::class => [
-                QueueableListenerDelegator::class,
+                DeferredListenerDelegator::class,
             ],
         ],
         'factories' => [
