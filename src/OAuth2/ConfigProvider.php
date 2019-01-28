@@ -25,6 +25,7 @@ class ConfigProvider
 
     public function getDependencies() : array
     {
+        // @codingStandardsIgnoreStart
         // phpcs:disable
         return [
             'factories' => [
@@ -35,6 +36,7 @@ class ConfigProvider
             ],
         ];
         // phpcs:enable
+        // @codingStandardsIgnoreEnd
     }
 
     public function getTemplateConfig() : array

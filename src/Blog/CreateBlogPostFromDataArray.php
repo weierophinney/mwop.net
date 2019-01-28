@@ -43,7 +43,7 @@ trait CreateBlogPostFromDataArray
                 BlogPost::class
             ));
         }
-        
+
         $parser   = $this->getParser();
         $document = $parser->parse(file_get_contents($post['path']));
         $post     = $document->getYAML();

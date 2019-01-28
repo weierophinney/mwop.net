@@ -22,7 +22,7 @@ trait ValidateProviderTrait
         'github',
         'google',
     ];
-    
+
     private function validateProvider(?string $provider) : bool
     {
         $allowedProviders = $this->allowedProviders;

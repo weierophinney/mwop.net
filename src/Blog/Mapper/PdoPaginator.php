@@ -24,7 +24,7 @@ class PdoPaginator implements AdapterInterface
 
     /** @var int */
     protected $count;
-    
+
     /** @var array<string, mixed> */
     protected $params;
 

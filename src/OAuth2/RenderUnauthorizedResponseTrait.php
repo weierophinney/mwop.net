@@ -24,7 +24,7 @@ trait RenderUnauthorizedResponseTrait
      * @var ResponseFactoryInterface
      */
     private $responseFactory;
-    
+
     private function renderUnauthorizedResponse(
         ServerRequestInterface $request,
         ?string $redirect = null,

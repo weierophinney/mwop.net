@@ -49,7 +49,7 @@ class RedirectAmpPagesMiddleware implements MiddlewareInterface
                 ini_get('arg_separator.output'),
                 PHP_QUERY_RFC3986
             ));
-            
+
         return $this->responseFactory->createResponse(301)
             ->withHeader('Location', (string) $uri)
             ->withHeader('X-Robots-Tag', 'noindex');

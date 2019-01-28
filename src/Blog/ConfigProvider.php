@@ -39,6 +39,8 @@ class ConfigProvider
     public function getDependencies() : array
     {
         return [
+            // @codingStandardsIgnoreStart
+            // phpcs:disable
             'factories' => [
                 BlogCachePool::class                            => BlogCachePoolFactory::class,
                 Console\ClearCache::class                       => Console\ClearCacheFactory::class,
@@ -53,6 +55,8 @@ class ConfigProvider
                 Listener\FetchBlogPostFromMapperListener::class => Listener\FetchBlogPostFromMapperListenerFactory::class,
                 Mapper\MapperInterface::class                   => Mapper\MapperFactory::class,
             ],
+            // phpcs:enable
+            // @codingStandardsIgnoreEnd
             'invokables' => [
                 Console\GenerateSearchData::class => Console\GenerateSearchData::class,
                 Console\SeedBlogDatabase::class   => Console\SeedBlogDatabase::class,

@@ -14,8 +14,11 @@ use Phly\EventDispatcher\ListenerProvider\AttachableListenerProvider;
 
 class SendContactMessageListenerDelegator
 {
-    public function __invoke(ContainerInterface $container, $serviceName, callable $callback) : AttachableListenerProvider
-    {
+    public function __invoke(
+        ContainerInterface $container,
+        $serviceName,
+        callable $callback
+    ) : AttachableListenerProvider {
         $provider = $callback();
         $provider->listen(
             SendContactMessageEvent::class,

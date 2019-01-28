@@ -43,6 +43,8 @@ class ConfigProvider
                 RequestFactoryInterface::class              => RequestFactory::class,
                 ResponseFactoryInterface::class             => ResponseFactory::class,
             ],
+            // @codingStandardsIgnoreStart
+            // phpcs:disable
             'factories' => [
                 Csp::class                                   => Middleware\ContentSecurityPolicyMiddlewareFactory::class,
                 CacheItemPoolInterface::class                => Factory\CachePoolFactory::class,
@@ -56,6 +58,8 @@ class ConfigProvider
                 Middleware\RedirectAmpPagesMiddleware::class => Middleware\RedirectAmpPagesMiddlewareFactory::class,
                 SessionCachePool::class                      => SessionCachePoolFactory::class,
             ],
+            // phpcs:enable
+            // @codingStandardsIgnoreEnd
             'delegators' => [
                 DisplayPostHandler::class => [
                     Middleware\DisplayBlogPostHandlerDelegator::class,
