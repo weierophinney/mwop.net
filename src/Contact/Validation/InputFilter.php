@@ -4,6 +4,8 @@
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
+declare(strict_types=1);
+
 namespace Mwop\Contact\Validation;
 
 use Zend\InputFilter\InputFilter as BaseInputFilter;
