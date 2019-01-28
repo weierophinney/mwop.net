@@ -4,6 +4,8 @@
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
+declare(strict_types=1);
+
 namespace Mwop\Blog\Handler;
 
 use Psr\Http\Message\ResponseInterface;
@@ -28,7 +30,7 @@ class FeedHandler implements RequestHandlerInterface
     public function __construct(RequestHandlerInterface $notFoundHandler, string $feedPath = 'data/feeds')
     {
         $this->notFoundHandler = $notFoundHandler;
-        $this->feedPath = $feedPath;
+        $this->feedPath        = $feedPath;
     }
 
     public function handle(ServerRequestInterface $request) : ResponseInterface

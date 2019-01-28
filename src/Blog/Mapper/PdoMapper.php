@@ -4,6 +4,8 @@
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
+declare(strict_types=1);
+
 namespace Mwop\Blog\Mapper;
 
 use Mwop\Blog\BlogPost;
@@ -11,6 +13,13 @@ use Mwop\Blog\CreateBlogPostFromDataArray;
 use PDO;
 use Zend\Paginator\Paginator;
 use Zend\Tag\Cloud;
+
+use function array_map;
+use function array_reduce;
+use function explode;
+use function sprintf;
+use function str_replace;
+use function trim;
 
 class PdoMapper implements MapperInterface
 {

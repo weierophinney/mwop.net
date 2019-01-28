@@ -1,4 +1,8 @@
 <?php
+/**
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
+ * @copyright Copyright (c) Matthew Weier O'Phinney
+ */
 
 declare(strict_types=1);
 
@@ -13,12 +17,15 @@ use Zend\Expressive\Helper\UrlHelper;
 
 class SearchHandler implements RequestHandlerInterface
 {
+    /** @var MapperInterface */
     private $mapper;
+
+    /** @var UrlHelper */
     private $urlHelper;
 
     public function __construct(MapperInterface $mapper, UrlHelper $urlHelper)
     {
-        $this->mapper = $mapper;
+        $this->mapper    = $mapper;
         $this->urlHelper = $urlHelper;
     }
 
@@ -35,7 +42,7 @@ class SearchHandler implements RequestHandlerInterface
 
         $results = array_map(function ($row) {
             return [
-                'link' => $this->urlHelper->generate('blog.post', ['id' => $row['id']]),
+                'link'  => $this->urlHelper->generate('blog.post', ['id' => $row['id']]),
                 'title' => $row['title'],
             ];
         }, $this->mapper->search($toMatch));

@@ -4,10 +4,10 @@
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
+declare(strict_types=1);
+
 namespace Mwop\Blog\Console;
 
-use DateTime;
-use Mni\FrontYAML\Parser;
 use Mwop\Blog\CreateBlogPostFromDataArray;
 use PDO;
 use Symfony\Component\Console\Command\Command;
@@ -17,18 +17,30 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Yaml\Parser as YamlParser;
 
+use function file_exists;
+use function getcwd;
+use function implode;
+use function ltrim;
+use function realpath;
+use function sprintf;
+use function strlen;
+use function unlink;
+
 class SeedBlogDatabase extends Command
 {
     use CreateBlogPostFromDataArray;
 
+    /** @var array<string, array<string, string>> */
     private $authors = [];
 
+    /** @var string[] */
     private $indices = [
         'CREATE INDEX visible ON posts ( created, draft, public )',
         'CREATE INDEX visible_tags ON posts ( tags, created, draft, public )',
         'CREATE INDEX visible_author ON posts ( author, created, draft, public )',
     ];
 
+    /** @var string */
     private $initial = 'INSERT INTO posts
         SELECT
             %s AS id,
@@ -42,6 +54,7 @@ class SeedBlogDatabase extends Command
             %s AS body,
             %s AS tags';
 
+    /** @var string */
     private $item = 'UNION SELECT
         %s,
         %s,
@@ -61,6 +74,7 @@ class SeedBlogDatabase extends Command
      */
     private $postDelimiter = '<!--- EXTENDED -->';
 
+    /** @var string */
     private $searchTable = 'CREATE VIRTUAL TABLE search USING FTS4(
             id,
             created,
@@ -69,6 +83,7 @@ class SeedBlogDatabase extends Command
             tags
         )';
 
+    /** @var string */
     private $searchTrigger = 'CREATE TRIGGER after_posts_insert
             AFTER INSERT ON posts
             BEGIN
@@ -89,6 +104,7 @@ class SeedBlogDatabase extends Command
             END
         ';
 
+    /** @var string */
     private $table = 'CREATE TABLE "posts" (
             id VARCHAR(255) NOT NULL PRIMARY KEY,
             path VARCHAR(255) NOT NULL,
@@ -102,7 +118,7 @@ class SeedBlogDatabase extends Command
             tags VARCHAR(255)
         )';
 
-    protected function configure()
+    protected function configure() : void
     {
         $this->setName('blog:seed-db');
         $this->setDescription('Generate and seed the blog post database.');
@@ -143,7 +159,7 @@ class SeedBlogDatabase extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output) : int
     {
-        $io = new SymfonyStyle($input, $output);
+        $io          = new SymfonyStyle($input, $output);
         $basePath    = $input->getOption('path');
         $postsPath   = $input->getOption('posts-path');
         $authorsPath = $input->getOption('authors-path');

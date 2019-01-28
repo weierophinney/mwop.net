@@ -4,6 +4,8 @@
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
+declare(strict_types=1);
+
 namespace Mwop\Blog\Console;
 
 use Psr\Cache\CacheItemPoolInterface;
@@ -22,7 +24,7 @@ class ClearCache extends Command
         parent::__construct('blog:clear-cache');
     }
 
-    protected function configure()
+    protected function configure() : void
     {
         $this->setDescription('Clear the blog post cache');
         $this->setHelp('Clear the blog post cache');

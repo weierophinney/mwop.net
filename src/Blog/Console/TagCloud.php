@@ -4,6 +4,8 @@
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
+declare(strict_types=1);
+
 namespace Mwop\Blog\Console;
 
 use Mwop\Blog\Mapper\MapperInterface;
@@ -13,6 +15,9 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Throwable;
+
+use function file_put_contents;
+use function sprintf;
 
 class TagCloud extends Command
 {
@@ -24,7 +29,7 @@ class TagCloud extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure() : void
     {
         $this->setName('blog:tag-cloud');
         $this->setDescription('Generate tag cloud.');

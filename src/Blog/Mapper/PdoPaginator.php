@@ -4,6 +4,8 @@
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
+declare(strict_types=1);
+
 namespace Mwop\Blog\Mapper;
 
 use Closure;
@@ -12,6 +14,9 @@ use PDO;
 use PDOStatement;
 use RuntimeException;
 use Zend\Paginator\Adapter\AdapterInterface;
+
+use function array_map;
+use function array_merge;
 
 class PdoPaginator implements AdapterInterface
 {
@@ -63,6 +68,6 @@ class PdoPaginator implements AdapterInterface
         if (! $result) {
             throw new RuntimeException('Failed to fetch count from database');
         }
-        return $this->count->fetchColumn();
+        return (int) $this->count->fetchColumn();
     }
 }

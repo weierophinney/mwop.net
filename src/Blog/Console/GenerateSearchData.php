@@ -4,6 +4,8 @@
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
+declare(strict_types=1);
+
 namespace Mwop\Blog\Console;
 
 use Mwop\Blog\CreateBlogPostFromDataArray;
@@ -13,11 +15,21 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+use function getcwd;
+use function implode;
+use function json_encode;
+use function realpath;
+use function sprintf;
+
+use const JSON_PRETTY_PRINT;
+use const JSON_UNESCAPED_SLASHES;
+use const JSON_UNESCAPED_UNICODE;
+
 class GenerateSearchData extends Command
 {
     use CreateBlogPostFromDataArray;
 
-    protected function configure()
+    protected function configure() : void
     {
         $this->setName('blog:generate-search-data');
         $this->setDescription('Generate site search data.');

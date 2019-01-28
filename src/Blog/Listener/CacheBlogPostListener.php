@@ -4,10 +4,14 @@
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
+declare(strict_types=1);
+
 namespace Mwop\Blog\Listener;
 
 use Mwop\Blog\FetchBlogPostEvent;
 use Psr\Cache\CacheItemPoolInterface;
+
+use function serialize;
 
 class CacheBlogPostListener
 {

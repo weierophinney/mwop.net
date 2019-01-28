@@ -4,6 +4,8 @@
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
+declare(strict_types=1);
+
 namespace Mwop\Blog\Console;
 
 use DirectoryIterator;
@@ -13,6 +15,9 @@ use RecursiveDirectoryIterator;
 use RecursiveIterator;
 use RecursiveIteratorIterator;
 use SplFileInfo;
+
+use function is_dir;
+use function is_string;
 
 /**
  * Usage:
@@ -44,11 +49,9 @@ class MarkdownFileFilter extends FilterIterator
             throw new InvalidArgumentException('Expected a DirectoryIterator');
         }
 
-        if ($dirOrIterator instanceof RecursiveIterator) {
-            $iterator = new RecursiveIteratorIterator($dirOrIterator);
-        } else {
-            $iterator = $dirOrIterator;
-        }
+        $iterator = $dirOrIterator instanceof RecursiveIterator
+            ? new RecursiveIteratorIterator($dirOrIterator)
+            : $dirOrIterator;
 
         parent::__construct($iterator);
         $this->rewind();
@@ -66,7 +69,7 @@ class MarkdownFileFilter extends FilterIterator
         }
 
         $ext = $current->getExtension();
-        if ($ext != 'md') {
+        if ($ext !== 'md') {
             return false;
         }
 
