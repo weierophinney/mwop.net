@@ -15,14 +15,12 @@ use Zend\Expressive\Router\Middleware\MethodNotAllowedMiddleware;
 use Zend\Expressive\Router\Middleware\RouteMiddleware;
 use Zend\Expressive\Session\SessionMiddleware;
 use Zend\Stratigility\Middleware\ErrorHandler;
-use Zend\Stratigility\Middleware\OriginalMessages;
 
 return function (
     \Zend\Expressive\Application $app,
     \Zend\Expressive\MiddlewareFactory $factory,
     \Psr\Container\ContainerInterface $container
 ) : void {
-    $app->pipe(OriginalMessages::class);
     $app->pipe(App\Middleware\XClacksOverheadMiddleware::class);
     $app->pipe(App\Middleware\XPoweredByMiddleware::class);
     $app->pipe(Csp::class);

@@ -16,7 +16,6 @@ use Zend\Expressive\Router;
 use Zend\Expressive\Session\Cache\CacheSessionPersistence;
 use Zend\Expressive\Session\SessionPersistenceInterface;
 use Zend\Stratigility\Middleware\ErrorHandler;
-use Zend\Stratigility\Middleware\OriginalMessages;
 
 return ['dependencies' => [
     'aliases' => [
@@ -25,7 +24,6 @@ return ['dependencies' => [
     ],
     'invokables' => [
         Helper\BodyParamsMiddleware::class => Helper\BodyParamsMiddleware::class,
-        OriginalMessages::class            => OriginalMessages::class,
         Router\RouterInterface::class      => Router\FastRouteRouter::class,
     ],
     'factories' => [
