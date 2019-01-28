@@ -8,11 +8,11 @@ declare(strict_types=1);
 
 namespace Mwop\Contact\Listener;
 
-use Mwop\Contact\ContactMessage;
+use Mwop\Contact\SendContactMessageEvent;
 use Swift_Mailer as Mailer;
 use Swift_Message as MailMessage;
 
-class SendMessageListener
+class SendContactMessageListener
 {
     /** @var array */
     private $config;
@@ -26,7 +26,7 @@ class SendMessageListener
         $this->config = $config;
     }
 
-    public function __invoke(ContactMessage $contactMessage)
+    public function __invoke(SendContactMessageEvent $contactMessage)
     {
         $message = $this->createMessage();
         $message

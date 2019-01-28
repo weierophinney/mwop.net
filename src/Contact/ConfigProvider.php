@@ -44,14 +44,14 @@ class ConfigProvider
     {
         return [
             'factories' => [
-                Handler\DisplayContactFormHandler::class => Handler\DisplayContactFormHandlerFactory::class,
-                Handler\ProcessContactFormHandler::class => Handler\ProcessContactFormHandlerFactory::class,
-                Handler\DisplayThankYouHandler::class    => Handler\DisplayThankYouHandlerFactory::class,
-                Listener\SendMessageListener::class      => Listener\SendMessageListenerFactory::class,
+                Handler\DisplayContactFormHandler::class   => Handler\DisplayContactFormHandlerFactory::class,
+                Handler\ProcessContactFormHandler::class   => Handler\ProcessContactFormHandlerFactory::class,
+                Handler\DisplayThankYouHandler::class      => Handler\DisplayThankYouHandlerFactory::class,
+                Listener\SendContactMessageListener::class => Listener\SendContactMessageListenerFactory::class,
             ],
             'delegators' => [
                 AttachableListenerProvider::class => [
-                    Listener\SendMessageListenerDelegator::class,
+                    Listener\SendContactMessageListenerDelegator::class,
                 ],
             ],
         ];

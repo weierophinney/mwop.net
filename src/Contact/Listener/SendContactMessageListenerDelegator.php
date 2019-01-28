@@ -8,18 +8,18 @@ declare(strict_types=1);
 
 namespace Mwop\Contact\Listener;
 
-use Mwop\Contact\ContactMessage;
+use Mwop\Contact\SendContactMessageEvent;
 use Psr\Container\ContainerInterface;
 use Phly\EventDispatcher\ListenerProvider\AttachableListenerProvider;
 
-class SendMessageListenerDelegator
+class SendContactMessageListenerDelegator
 {
     public function __invoke(ContainerInterface $container, $serviceName, callable $callback) : AttachableListenerProvider
     {
         $provider = $callback();
         $provider->listen(
-            ContactMessage::class,
-            $container->get(SendMessageListener::class)
+            SendContactMessageEvent::class,
+            $container->get(SendContactMessageListener::class)
         );
         return $provider;
     }

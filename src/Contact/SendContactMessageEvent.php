@@ -10,7 +10,7 @@ namespace Mwop\Contact;
 
 use JsonSerializable;
 
-class ContactMessage implements JsonSerializable
+class SendContactMessageEvent implements JsonSerializable
 {
     /** @var string */
     private $body;

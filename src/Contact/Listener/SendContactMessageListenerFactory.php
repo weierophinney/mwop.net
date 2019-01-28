@@ -12,9 +12,9 @@ use Psr\Container\ContainerInterface;
 use RuntimeException;
 use Swift_Mailer as Mailer;
 
-class SendMessageListenerFactory
+class SendContactMessageListenerFactory
 {
-    public function __invoke(ContainerInterface $container) : callable
+    public function __invoke(ContainerInterface $container) : SendContactMessageListener
     {
         $config = $container->has('config') ? $container->get('config') : [];
         $config = $config['contact']['message'] ?? [];
@@ -26,13 +26,13 @@ class SendMessageListenerFactory
             throw new RuntimeException(sprintf(
                 'Cannot create %s; missing required config structure.'
                 . ' Requires each of: %s.to and %s.sender.address',
-                SendMessageListener::class,
+                SendContactMessageListener::class,
                 $baseConfigKey,
                 $baseConfigKey
             ));
         }
 
-        return new SendMessageListener(
+        return new SendContactMessageListener(
             $container->get('mail.transport'),
             $config
         );

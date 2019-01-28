@@ -33,7 +33,7 @@ class DisplayThankYouHandler implements RequestHandlerInterface
     {
         $parentUrl = $this->urlHelper->generate('contact');
         if (! $request->hasHeader('Referer')
-            || ! preg_match('#^' . $parentUrl . '#', $request->getHeaderLine('Referer'))
+            || ! preg_match('#^(https?://[^/]+)' . $parentUrl . '#', $request->getHeaderLine('Referer'))
         ) {
             return new RedirectResponse($parentUrl);
         }

@@ -7,7 +7,7 @@
 
 namespace Mwop\Contact\Handler;
 
-use Mwop\Contact\ContactMessage;
+use Mwop\Contact\SendContactMessageEvent;
 use Mwop\Contact\Validation\InputFilter;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -96,7 +96,7 @@ class ProcessContactFormHandler implements RequestHandlerInterface
 
     private function sendMessage(array $data)
     {
-        $message = new ContactMessage(
+        $message = new SendContactMessageEvent(
             $data['from'],
             sprintf('[Contact Form] %s', $data['subject']),
             $data['body']

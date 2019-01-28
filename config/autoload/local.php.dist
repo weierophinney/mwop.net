@@ -5,7 +5,7 @@
  */
 
 use Mwop\Blog\Listener\CacheBlogPostListener;
-use Mwop\Contact\Listener\SendMessageListener;
+use Mwop\Contact\Listener\SendContactMessageListener;
 use Mwop\App\Factory\AccessLoggerFactory;
 use Mwop\App\LoggingErrorListenerDelegator;
 use Phly\Swoole\TaskWorker\DeferredListenerDelegator;
@@ -27,7 +27,7 @@ return [
             ErrorHandler::class => [
                 LoggingErrorListenerDelegator::class,
             ],
-            SendMessageListener::class => [
+            SendContactMessageListener::class => [
                 DeferredListenerDelegator::class,
             ],
         ],
