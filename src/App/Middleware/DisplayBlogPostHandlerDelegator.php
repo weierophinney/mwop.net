@@ -8,7 +8,7 @@ declare(strict_types=1);
 
 namespace Mwop\App\Middleware;
 
-use Mwop\Blog\DisplayPostHandler;
+use Mwop\Blog\Handler\DisplayPostHandler;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Zend\Expressive\MiddlewareFactory;
@@ -24,7 +24,7 @@ class DisplayBlogPostHandlerDelegator
 
         return $factory->pipeline(
             RedirectAmpPagesMiddleware::class,
-            DisplayPostHandler::class
+            $callback()
         );
     }
 }
