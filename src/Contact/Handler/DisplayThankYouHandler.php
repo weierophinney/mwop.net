@@ -12,21 +12,26 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\RequestHandlerInterface;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Diactoros\Response\RedirectResponse;
+use Zend\Expressive\Helper\UrlHelper;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
 class DisplayThankYouHandler implements RequestHandlerInterface
 {
+    /** @var TemplateRendererInterface */
     private $template;
 
-    public function __construct(TemplateRendererInterface $template)
+    /** @var UrlHelper */
+    private $urlHelper;
+
+    public function __construct(TemplateRendererInterface $template, UrlHelper $urlHelper)
     {
-        $this->template = $template;
+        $this->template  = $template;
+        $this->urlHelper = $urlHelper;
     }
 
     public function handle(Request $request) : Response
     {
-        $parent    = $request->getAttribute('originalRequest', $request);
-        $parentUrl = str_replace('/thank-you', '', (string) $parent->getUri());
+        $parentUrl = $this->urlHelper->generate('contact');
         if (! $request->hasHeader('Referer')
             || ! preg_match('#^' . $parentUrl . '#', $request->getHeaderLine('Referer'))
         ) {

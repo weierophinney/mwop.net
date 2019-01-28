@@ -75,7 +75,7 @@ class ProcessContactFormHandler implements RequestHandlerInterface
 
         $this->sendMessage($filter->getValues());
 
-        $path = ($this->urlHelper)('contact.thank-you');
+        $path = $this->urlHelper->generate('contact.thank-you');
         return new RedirectResponse($path);
     }
 
@@ -86,7 +86,6 @@ class ProcessContactFormHandler implements RequestHandlerInterface
                 $error,
                 JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_PRESERVE_ZERO_FRACTION | JSON_NUMERIC_CHECK
             )],
-            'action' => (string) $request->getAttribute('originalRequest', $request)->getUri(),
             'csrf'   => $guard->generateToken(),
         ]);
 

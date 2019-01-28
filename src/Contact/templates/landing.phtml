@@ -27,7 +27,7 @@ $this->start('scripts');
 
     <?php endif ?>
 
-    <form method="post" name="contact" action="<?= $action ?>" id="contact">
+    <form method="post" name="contact" action="<?= $this->url('contact.process') ?>" id="contact">
         <div class="form-group">
             <label for="from">From (email):</label>
             <input class="form-control" type="text" name="from" value="">

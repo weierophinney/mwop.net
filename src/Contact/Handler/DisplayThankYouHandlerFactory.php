@@ -7,6 +7,7 @@
 namespace Mwop\Contact\Handler;
 
 use Psr\Container\ContainerInterface;
+use Zend\Expressive\Helper\UrlHelper;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
 class DisplayThankYouHandlerFactory
@@ -14,7 +15,8 @@ class DisplayThankYouHandlerFactory
     public function __invoke(ContainerInterface $container) : DisplayThankYouHandler
     {
         return new DisplayThankYouHandler(
-            $container->get(TemplateRendererInterface::class)
+            $container->get(TemplateRendererInterface::class),
+            $container->get(UrlHelper::class)
         );
     }
 }

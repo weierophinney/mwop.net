@@ -15,7 +15,10 @@ use Zend\Expressive\Template\TemplateRendererInterface;
 
 class DisplayContactFormHandler implements RequestHandlerInterface
 {
+    /** @var array<string, mixed> */
     private $config;
+
+    /** @var TemplateRendererInterface */
     private $template;
 
     public function __construct(
@@ -30,9 +33,7 @@ class DisplayContactFormHandler implements RequestHandlerInterface
     {
         $guard = $request->getAttribute(CsrfMiddleware::GUARD_ATTRIBUTE);
 
-        $basePath = $request->getAttribute('originalRequest', $request)->getUri()->getPath();
         $view = array_merge($this->config, [
-            'action' => rtrim($basePath, '/') . '/process',
             'csrf'   => $guard->generateToken(),
         ]);
 
