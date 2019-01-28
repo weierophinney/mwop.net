@@ -9,7 +9,7 @@ namespace Mwop\Blog;
 use JsonSerializable;
 use Psr\EventDispatcher\StoppableEventInterface;
 
-class BlogPostEvent implements
+class FetchBlogPostEvent implements
     JsonSerializable,
     StoppableEventInterface
 {

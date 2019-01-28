@@ -7,7 +7,7 @@
 namespace Mwop\Blog\Listener;
 
 use Mwop\Blog\BlogPost;
-use Mwop\Blog\BlogPostEvent;
+use Mwop\Blog\FetchBlogPostEvent;
 use Psr\Cache\CacheItemPoolInterface;
 
 class FetchBlogPostFromCacheListener
@@ -30,7 +30,7 @@ class FetchBlogPostFromCacheListener
         $this->enabled = $enabled;
     }
 
-    public function __invoke(BlogPostEvent $event) : void
+    public function __invoke(FetchBlogPostEvent $event) : void
     {
         if (! $this->enabled) {
             return;

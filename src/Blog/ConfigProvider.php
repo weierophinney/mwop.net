@@ -46,10 +46,10 @@ class ConfigProvider
                 Handler\FeedHandler::class                      => Handler\FeedHandlerFactory::class,
                 Handler\ListPostsHandler::class                 => Handler\ListPostsHandlerFactory::class,
                 Handler\SearchHandler::class                    => Handler\SearchHandlerFactory::class,
-                Mapper\MapperInterface::class                   => Mapper\MapperFactory::class,
                 Listener\CacheBlogPostListener::class           => Listener\CacheBlogPostListenerFactory::class,
-                Listener\FetchBlogPostFromMapperListener::class => Listener\FetchBlogPostFromMapperListenerFactory::class,
                 Listener\FetchBlogPostFromCacheListener::class  => Listener\FetchBlogPostFromCacheListenerFactory::class,
+                Listener\FetchBlogPostFromMapperListener::class => Listener\FetchBlogPostFromMapperListenerFactory::class,
+                Mapper\MapperInterface::class                   => Mapper\MapperFactory::class,
             ],
             'invokables' => [
                 Console\GenerateSearchData::class => Console\GenerateSearchData::class,
@@ -57,7 +57,7 @@ class ConfigProvider
             ],
             'delegators' => [
                 AttachableListenerProvider::class => [
-                    Listener\BlogPostEventListenersDelegator::class,
+                    Listener\FetchBlogPostEventListenersDelegator::class,
                 ],
             ],
         ];

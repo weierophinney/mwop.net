@@ -9,7 +9,7 @@ namespace Mwop\Blog\Handler;
 use DateTimeImmutable;
 use Mni\FrontYAML\Bridge\CommonMark\CommonMarkParser;
 use Mni\FrontYAML\Parser;
-use Mwop\Blog\BlogPostEvent;
+use Mwop\Blog\FetchBlogPostEvent;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -53,8 +53,8 @@ class DisplayPostHandler implements RequestHandlerInterface
             return $this->notFoundHandler->handle($request);
         }
 
-        // @var \Mwop\Blog\BlogPostEvent $event
-        $event = $this->dispatcher->dispatch(new BlogPostEvent($id));
+        // @var \Mwop\Blog\FetchBlogPostEvent $event
+        $event = $this->dispatcher->dispatch(new FetchBlogPostEvent($id));
 
         // @var null|\Mwop\Blog\BlogPost $post
         $post = $event->blogPost();

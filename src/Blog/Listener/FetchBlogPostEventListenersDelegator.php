@@ -6,11 +6,11 @@
 
 namespace Mwop\Blog\Listener;
 
-use Mwop\Blog\BlogPostEvent;
+use Mwop\Blog\FetchBlogPostEvent;
 use Phly\EventDispatcher\ListenerProvider\AttachableListenerProvider;
 use Psr\Container\ContainerInterface;
 
-class BlogPostEventListenersDelegator
+class FetchBlogPostEventListenersDelegator
 {
     public function __invoke(
         ContainerInterface $container,
@@ -18,9 +18,9 @@ class BlogPostEventListenersDelegator
         callable $factory
     ) : AttachableListenerProvider {
         $provider = $factory();
-        $provider->listen(BlogPostEvent::class, $container->get(FetchBlogPostFromCacheListener::class));
-        $provider->listen(BlogPostEvent::class, $container->get(FetchBlogPostFromMapperListener::class));
-        $provider->listen(BlogPostEvent::class, $container->get(CacheBlogPostListener::class));
+        $provider->listen(FetchBlogPostEvent::class, $container->get(FetchBlogPostFromCacheListener::class));
+        $provider->listen(FetchBlogPostEvent::class, $container->get(FetchBlogPostFromMapperListener::class));
+        $provider->listen(FetchBlogPostEvent::class, $container->get(CacheBlogPostListener::class));
         return $provider;
     }
 }

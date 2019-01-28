@@ -7,7 +7,7 @@
 namespace Mwop\Blog\Listener;
 
 use Mwop\Blog\BlogPost;
-use Mwop\Blog\BlogPostEvent;
+use Mwop\Blog\FetchBlogPostEvent;
 use Mwop\Blog\Mapper\MapperInterface;
 
 class FetchBlogPostFromMapperListener
@@ -22,7 +22,7 @@ class FetchBlogPostFromMapperListener
         $this->mapper = $mapper;
     }
 
-    public function __invoke(BlogPostEvent $event) : void
+    public function __invoke(FetchBlogPostEvent $event) : void
     {
         $post = $this->mapper->fetch($event->id());
 
