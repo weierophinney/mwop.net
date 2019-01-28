@@ -4,12 +4,16 @@
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
+declare(strict_types=1);
+
 namespace Mwop\Github;
 
 use Psr\Container\ContainerInterface;
 use Zend\Feed\Reader\Http\ClientInterface as FeedReaderHttpClientInterface;
 use Zend\Feed\Reader\Reader as FeedReader;
 use Zend\Feed\Reader\StandaloneExtensionManager;
+
+use function strpos;
 
 class AtomReaderFactory
 {

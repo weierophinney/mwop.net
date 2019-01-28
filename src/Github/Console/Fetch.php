@@ -4,6 +4,8 @@
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
+declare(strict_types=1);
+
 namespace Mwop\Github\Console;
 
 use Mwop\Github\AtomReader;
@@ -14,6 +16,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Throwable;
 use Zend\Escaper\Escaper;
+
+use function array_map;
+use function implode;
+use function file_put_contents;
+use function sprintf;
 
 /**
  * Fetch github user activity links
@@ -40,7 +47,7 @@ class Fetch extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure() : void
     {
         $this->setName('github:fetch-activity');
         $this->setDescription('Fetch GitHub activity stream.');

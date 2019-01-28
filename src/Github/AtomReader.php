@@ -10,6 +10,8 @@ namespace Mwop\Github;
 
 use Zend\Feed\Reader\Reader as FeedReader;
 
+use function sprintf;
+
 class AtomReader
 {
     const ATOM_FORMAT = 'https://github.com/%s.atom';
@@ -41,7 +43,7 @@ class AtomReader
 
         $entries = AtomCollection::make($feed)
             ->filterChain($this->filters)
-            ->slice($this->limit)
+            ->slice(0, $this->limit)
             ->map(function ($entry) {
                 return [
                     'title' => $entry->getTitle(),
