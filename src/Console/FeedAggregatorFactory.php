@@ -4,6 +4,8 @@
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
+declare(strict_types=1);
+
 namespace Mwop\Console;
 
 use Psr\Container\ContainerInterface;
@@ -15,7 +17,7 @@ class FeedAggregatorFactory
 {
     public function __invoke(ContainerInterface $container) : FeedAggregator
     {
-        $http   = $container->get(FeedReaderHttpClientInterface::class);
+        $http = $container->get(FeedReaderHttpClientInterface::class);
         FeedReader::setHttpClient($http);
         FeedReader::setExtensionManager(new StandaloneExtensionManager());
 

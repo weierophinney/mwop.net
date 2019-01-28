@@ -4,6 +4,8 @@
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
+declare(strict_types=1);
+
 namespace Mwop\Console;
 
 use RecursiveDirectoryIterator;
@@ -15,11 +17,16 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+use function getcwd;
+use function realpath;
+use function sprintf;
+use function unlink;
+
 class ClearCache extends Command
 {
     const PATH_TEMPLATE = '%s/data/cache';
 
-    protected function configure()
+    protected function configure() : void
     {
         $this->setName('clear-cache');
         $this->setDescription('Clear the static cache.');

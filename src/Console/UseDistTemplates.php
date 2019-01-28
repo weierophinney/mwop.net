@@ -4,6 +4,8 @@
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
+declare(strict_types=1);
+
 namespace Mwop\Console;
 
 use Symfony\Component\Console\Command\Command;
@@ -11,6 +13,11 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+
+use function copy;
+use function getcwd;
+use function realpath;
+use function sprintf;
 
 class UseDistTemplates extends Command
 {
@@ -21,7 +28,7 @@ class UseDistTemplates extends Command
         'templates/layout/styles.phtml.dist'    => 'templates/layout/styles.phtml',
     ];
 
-    protected function configure()
+    protected function configure() : void
     {
         $this->setName('asset:use-dist-templates');
         $this->setDescription('Use dist templates.');
@@ -38,7 +45,7 @@ class UseDistTemplates extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output) : int
     {
-        $io = new SymfonyStyle($input, $output);
+        $io   = new SymfonyStyle($input, $output);
         $path = $input->getOption('path');
 
         $io->title('Enabling dist templates');

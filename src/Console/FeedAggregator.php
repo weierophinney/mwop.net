@@ -6,6 +6,8 @@
 
 declare(strict_types=1);
 
+declare(strict_types=1);
+
 namespace Mwop\Console;
 
 use Exception;
@@ -18,10 +20,19 @@ use Throwable;
 use Zend\Feed\Reader\Reader as FeedReader;
 use Zend\Feed\Reader\Feed\FeedInterface;
 
+use function file_get_contents;
+use function file_put_contents;
+use function getcwd;
+use function preg_match;
+use function realpath;
+use function sprintf;
+
 class FeedAggregator extends Command
 {
+    /** @var string */
     const CACHE_FILE = '%s/config/autoload/homepage.local.php';
 
+    /** @var string */
     private $configFormat = <<< EOC
 <?php
 return [
@@ -33,8 +44,10 @@ return [
 
 EOC;
 
+    /** @var FeedCollection */
     private $feeds;
 
+    /** @var string */
     private $itemFormat = <<< EOF
             [
                 'title'    => '%s',
@@ -46,8 +59,10 @@ EOC;
 
 EOF;
 
+    /** @var int */
     private $toRetrieve;
 
+    /** @var int */
     private $status;
 
     public function __construct(array $feeds, int $toRetrieve)
@@ -57,7 +72,7 @@ EOF;
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure() : void
     {
         $this->setName('homepage-feeds');
         $this->setDescription('Fetch homepage feed data.');

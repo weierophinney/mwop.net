@@ -4,12 +4,17 @@
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
+declare(strict_types=1);
+
 namespace Mwop\Console;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+
+use function file_exists;
+use function symlink;
 
 class CreateAssetSymlinks extends Command
 {
@@ -19,7 +24,7 @@ class CreateAssetSymlinks extends Command
         '../../node_modules/autocomplete.js/dist/autocomplete.jquery.js' => 'public/js/autocomplete.jquery.js',
     ];
 
-    protected function configure()
+    protected function configure() : void
     {
         $this->setName('asset:create-symlinks');
         $this->setDescription('Symlink assets.');
