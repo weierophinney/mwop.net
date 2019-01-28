@@ -4,11 +4,10 @@
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
+declare(strict_types=1);
+
 namespace Mwop\Blog\Handler;
 
-use DateTimeImmutable;
-use Mni\FrontYAML\Bridge\CommonMark\CommonMarkParser;
-use Mni\FrontYAML\Parser;
 use Mwop\Blog\FetchBlogPostEvent;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -16,8 +15,6 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Expressive\Template\TemplateRendererInterface;
-
-use function date;
 
 class DisplayPostHandler implements RequestHandlerInterface
 {
@@ -65,16 +62,12 @@ class DisplayPostHandler implements RequestHandlerInterface
 
         // @var \DateTimeInterface $lastModified
         $lastModified = $post->updated ?: $post->created;
-        $isAmp        = (bool) ($request->getQueryParams()['amp'] ?? false);
 
         return new HtmlResponse(
-            $this->template->render(
-                $isAmp ? 'blog::post.amp' : 'blog::post',
-                [
-                    'post'   => $post,
-                    'disqus' => $this->disqus,
-                ]
-            ),
+            $this->template->render('blog::post', [
+                'post'   => $post,
+                'disqus' => $this->disqus,
+            ]),
             200,
             [
                 'Last-Modified' => $lastModified->format('r'),

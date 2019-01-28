@@ -9,7 +9,6 @@ $this->stop();
 
 $this->push('links');
 ?>
-    <link rel="amphtml" href="<?= $this->serverurl($this->postUrl($post)) ?>?amp=1">
 <?php foreach ($this->processTags($post->tags) as $tag) : ?>
     <link href="<?= $this->serverurl($tag->rss) ?>" rel="alternate" type="application/rss+xml" title="phly, boy, phly RSS Feed for <?= $tag->name ?>">
     <link href="<?= $this->serverurl($tag->atom) ?>" rel="alternate" type="application/rss+xml" title="phly, boy, phly RSS Feed for <?= $tag->name ?>">

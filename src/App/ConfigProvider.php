@@ -8,6 +8,7 @@ namespace Mwop\App;
 
 use League\Plates\Engine;
 use Middlewares\Csp;
+use Mwop\Blog\Handler\DisplayPostHandler;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Message\RequestFactoryInterface;
@@ -43,18 +44,22 @@ class ConfigProvider
                 ResponseFactoryInterface::class             => ResponseFactory::class,
             ],
             'factories' => [
-                Csp::class                           => Middleware\ContentSecurityPolicyMiddlewareFactory::class,
-                CacheItemPoolInterface::class        => Factory\CachePoolFactory::class,
-                EventDispatcherInterface::class      => Factory\EventDispatcherFactory::class,
-                FeedReaderHttpClientInterface::class => Feed\HttpPlugClientFactory::class,
-                Handler\ComicsPageHandler::class     => Handler\ComicsPageHandlerFactory::class,
-                Handler\HomePageHandler::class       => Handler\HomePageHandlerFactory::class,
-                Handler\ResumePageHandler::class     => Handler\PageHandlerFactory::class,
-                Handler\ResumePageHandler::class     => Handler\PageHandlerFactory::class,
-                'mail.transport'                     => Factory\MailTransport::class,
-                SessionCachePool::class              => SessionCachePoolFactory::class,
+                Csp::class                                   => Middleware\ContentSecurityPolicyMiddlewareFactory::class,
+                CacheItemPoolInterface::class                => Factory\CachePoolFactory::class,
+                EventDispatcherInterface::class              => Factory\EventDispatcherFactory::class,
+                FeedReaderHttpClientInterface::class         => Feed\HttpPlugClientFactory::class,
+                Handler\ComicsPageHandler::class             => Handler\ComicsPageHandlerFactory::class,
+                Handler\HomePageHandler::class               => Handler\HomePageHandlerFactory::class,
+                Handler\ResumePageHandler::class             => Handler\PageHandlerFactory::class,
+                Handler\ResumePageHandler::class             => Handler\PageHandlerFactory::class,
+                'mail.transport'                             => Factory\MailTransport::class,
+                Middleware\RedirectAmpPagesMiddleware::class => Middleware\RedirectAmpPagesMiddlewareFactory::class,
+                SessionCachePool::class                      => SessionCachePoolFactory::class,
             ],
             'delegators' => [
+                DisplayPostHandler::class => [
+                    Middleware\DisplayBlogPostHandlerDelegator::class,
+                ],
                 Engine::class => [
                     Factory\PlatesFunctionsDelegator::class,
                 ],
