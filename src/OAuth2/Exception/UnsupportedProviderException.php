@@ -10,6 +10,9 @@ namespace Mwop\OAuth2\Exception;
 
 use RuntimeException;
 
+use function implode;
+use function sprintf;
+
 class UnsupportedProviderException extends RuntimeException implements ExceptionInterface
 {
     public static function forProvider(string $provider, array $knownProviders) : self

@@ -32,9 +32,9 @@ class CheckAuthenticationMiddleware implements MiddlewareInterface
         ResponseFactoryInterface $responseFactory,
         bool $isDebug
     ) {
-        $this->renderer = $renderer;
+        $this->renderer        = $renderer;
         $this->responseFactory = $responseFactory;
-        $this->isDebug = $isDebug;
+        $this->isDebug         = $isDebug;
     }
 
     /**
@@ -49,7 +49,7 @@ class CheckAuthenticationMiddleware implements MiddlewareInterface
         }
 
         $authData = $session->get('auth', []);
-        $user = $authData['user'] ?? false;
+        $user     = $authData['user'] ?? false;
 
         if (! $user) {
             // No user found in session data; render an unauthorized response

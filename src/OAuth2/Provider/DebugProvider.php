@@ -16,9 +16,9 @@ use Psr\Http\Message\ResponseInterface;
 class DebugProvider extends AbstractProvider
 {
     public const AUTHORIZATION_URL = '/auth/debug/oauth2callback';
-    public const CODE = 'CODE';
-    public const STATE = 'DEBUG';
-    public const TOKEN = 'TOKEN';
+    public const CODE              = 'CODE';
+    public const STATE             = 'DEBUG';
+    public const TOKEN             = 'TOKEN';
 
     /**
      * @var string
@@ -30,29 +30,20 @@ class DebugProvider extends AbstractProvider
         $this->authorizationUrl = $options['authorization_url'] ?? self::AUTHORIZATION_URL;
     }
 
-    /**
-     * @return string
-     */
-    public function getState()
+    public function getState() : string
     {
         return self::STATE;
     }
 
-    /**
-     * @param array $options
-     * @return string
-     */
-    public function getAuthorizationUrl(array $options = [])
+    public function getAuthorizationUrl(array $options = []) : string
     {
         return $this->authorizationUrl;
     }
 
     /**
      * @param string $grant
-     * @param array $options
-     * @return AccessToken
      */
-    public function getAccessToken($grant, array $options = [])
+    public function getAccessToken($grant, array $options = []) : AccessToken
     {
         return new AccessToken([
             'access_token' => self::TOKEN,
@@ -63,7 +54,7 @@ class DebugProvider extends AbstractProvider
      * @param AccessToken $token
      * @return DebugResourceOwner
      */
-    public function getResourceOwner(AccessToken $token)
+    public function getResourceOwner(AccessToken $token) : DebugResourceOwner
     {
         return new DebugResourceOwner();
     }

@@ -14,18 +14,12 @@ class DebugResourceOwner implements ResourceOwnerInterface
 {
     public const USER_ID = 'USER';
 
-    /**
-     * @return string
-     */
-    public function getId()
+    public function getId() : string
     {
         return self::USER_ID;
     }
 
-    /**
-     * @return array
-     */
-    public function toArray()
+    public function toArray() : array
     {
         return [
             'id' => self::USER_ID,

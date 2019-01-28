@@ -22,6 +22,10 @@ use Psr\Http\Server\RequestHandlerInterface;
 use RuntimeException;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
+use function array_merge;
+use function method_exists;
+use function sprintf;
+
 class CallbackHandler implements RequestHandlerInterface
 {
     use RenderUnauthorizedResponseTrait;
@@ -54,9 +58,9 @@ class CallbackHandler implements RequestHandlerInterface
      */
     public function handle(ServerRequestInterface $request) : ResponseInterface
     {
-        $session = $request->getAttribute('session');
+        $session     = $request->getAttribute('session');
         $sessionData = $session->get('auth', []);
-        $redirect = $sessionData['redirect'] ?? null;
+        $redirect    = $sessionData['redirect'] ?? null;
 
         $providerType = $request->getAttribute('provider');
         if (! $this->validateProvider($providerType)) {
@@ -69,7 +73,7 @@ class CallbackHandler implements RequestHandlerInterface
         }
 
         $params = $request->getQueryParams();
-        $error = $params['error'] ?? false;
+        $error  = $params['error'] ?? false;
         if ($error) {
             // Error during authentication with provider
             return $this->renderUnauthorizedResponse(

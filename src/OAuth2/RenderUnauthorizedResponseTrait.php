@@ -34,9 +34,9 @@ trait RenderUnauthorizedResponseTrait
 
         $response->getBody()->write($this->renderer->render('oauth2::401', [
             'auth_path' => '/auth',
-            'redirect' => $redirect ?? $request->getUri(),
-            'debug' => $this->isDebug,
-            'error' => $error,
+            'redirect'  => $redirect ?? $request->getUri(),
+            'debug'     => $this->isDebug,
+            'error'     => $error,
         ]));
 
         return $response;

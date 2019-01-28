@@ -10,6 +10,8 @@ namespace Mwop\OAuth2\Exception;
 
 use RuntimeException;
 
+use function sprintf;
+
 class MissingProviderConfigException extends RuntimeException implements ExceptionInterface
 {
     public static function forProvider(string $provider) : self

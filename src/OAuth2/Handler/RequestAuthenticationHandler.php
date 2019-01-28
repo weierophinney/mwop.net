@@ -40,8 +40,8 @@ class RequestAuthenticationHandler implements RequestHandlerInterface
     ) {
         $this->responseFactory = $responseFactory;
         $this->providerFactory = $providerFactory;
-        $this->renderer = $renderer;
-        $this->isDebug = $isDebug;
+        $this->renderer        = $renderer;
+        $this->isDebug         = $isDebug;
     }
 
     /**
@@ -65,7 +65,7 @@ class RequestAuthenticationHandler implements RequestHandlerInterface
 
         $session = $request->getAttribute('session');
         $session->set('auth', [
-            'state' => $provider->getState(),
+            'state'    => $provider->getState(),
             'redirect' => $redirect,
         ]);
 

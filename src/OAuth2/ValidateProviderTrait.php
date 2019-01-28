@@ -11,6 +11,8 @@ namespace Mwop\OAuth2;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
+use function in_array;
+
 trait ValidateProviderTrait
 {
     /**

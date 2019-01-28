@@ -11,6 +11,9 @@ namespace Mwop\OAuth2\Exception;
 use League\OAuth2\Client\Provider\ResourceOwnerInterface;
 use RuntimeException;
 
+use function get_class;
+use function sprintf;
+
 class UnexpectedResourceOwnerTypeException extends RuntimeException
 {
     public static function forResourceOwner(ResourceOwnerInterface $resourceOwner) : self
