@@ -114,11 +114,6 @@
         "development:disable": "zf-development-mode disable",
         "development:enable": "zf-development-mode enable",
         "development:status": "zf-development-mode status",
-        "docker:assets": [
-            "@assets:copy",
-            "@assets:build",
-            "@clean"
-        ],
         "docker:site": [
             "bin/mwop.net.php asset:use-dist-templates",
             "@build:blog",

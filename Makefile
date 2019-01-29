@@ -32,8 +32,6 @@ caddy:
 
 swoole:
 	@echo "Creating swoole container"
-	@echo "- Building assets"
-	- composer docker:assets
 	@echo "- Building container"
 	- docker build -t mwopswoole -f ./etc/docker/php.Dockerfile .
 	@echo "- Tagging image"

@@ -4,7 +4,7 @@
 
 ## Refactoring
 
-- [ ] Use docker builder pattern to build site assets for container.
+- [x] Use docker builder pattern to build site assets for container.
 
 ## New features
 
