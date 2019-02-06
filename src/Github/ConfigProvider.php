@@ -8,6 +8,8 @@ declare(strict_types=1);
 
 namespace Mwop\Github;
 
+use Phly\Expressive\ConfigFactory;
+
 class ConfigProvider
 {
     public function __invoke() : array
@@ -31,6 +33,7 @@ class ConfigProvider
         return [
             'factories' => [
                 AtomReader::class    => AtomReaderFactory::class,
+                'config-github'      => ConfigFactory::class,
                 Console\Fetch::class => Console\FetchFactory::class,
             ],
         ];

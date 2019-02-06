@@ -8,22 +8,22 @@ namespace Mwop\App\Factory;
 
 use Psr\Container\ContainerInterface;
 use RuntimeException;
+use Swift_AWSTransport as AWSTransport;
 use Swift_Mailer as Mailer;
-use Swift_SmtpTransport as Transport;
+use Swift_SmtpTransport as SMTPTransport;
 
 class MailTransport
 {
     public function __invoke(ContainerInterface $container) : Mailer
     {
-        $config  = $container->get('config');
-        $config  = $config['mail']['transport'];
-        $class   = $config['class'] ?? \Swift_SmtpTransport::class;
+        $config = $container->get('config-mail.transport');
+        $class  = $config['class'] ?? SMTPTransport::class;
 
         switch ($class) {
-            case \Swift_AWSTransport::class:
+            case AWSTransport::class:
                 $transport = new $class($config['username'], $config['password']);
                 break;
-            case \Swift_SmtpTransport::class:
+            case SMTPTransport::class:
                 $transport = $config['ssl']
                     ? new $class($config['host'], $config['port'], $config['ssl'])
                     : new $class($config['host'], $config['port']);

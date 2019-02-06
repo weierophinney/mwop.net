@@ -9,6 +9,7 @@ declare(strict_types=1);
 namespace Mwop\Contact;
 
 use Phly\EventDispatcher\ListenerProvider\AttachableListenerProvider;
+use Phly\Expressive\ConfigFactory;
 use Zend\Expressive\Application;
 use Zend\Expressive\Csrf\CsrfMiddleware;
 use Zend\Expressive\Session\SessionMiddleware;
@@ -44,6 +45,8 @@ class ConfigProvider
     {
         return [
             'factories' => [
+                'config-contact'                           => ConfigFactory::class,
+                'config-contact.message'                   => ConfigFactory::class,
                 Handler\DisplayContactFormHandler::class   => Handler\DisplayContactFormHandlerFactory::class,
                 Handler\ProcessContactFormHandler::class   => Handler\ProcessContactFormHandlerFactory::class,
                 Handler\DisplayThankYouHandler::class      => Handler\DisplayThankYouHandlerFactory::class,

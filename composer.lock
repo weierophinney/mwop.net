@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "76245ffb43dea860f00a8df9b433abf4",
+    "content-hash": "65a9397b55536695ba1f5cb691cf4ef0",
     "packages": [
         {
             "name": "cache/adapter-common",
@@ -1756,6 +1756,52 @@
                 "psr-14"
             ],
             "time": "2019-01-14T20:27:03+00:00"
+        },
+        {
+            "name": "phly/phly-expressive-configfactory",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phly/phly-expressive-configfactory.git",
+                "reference": "4d4e19e39f98bccfc597900e2df20a9fd3dc6e37"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phly/phly-expressive-configfactory/zipball/4d4e19e39f98bccfc597900e2df20a9fd3dc6e37",
+                "reference": "4d4e19e39f98bccfc597900e2df20a9fd3dc6e37",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1",
+                "psr/container": "^1.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7.1.1",
+                "webimpress/coding-standard": "dev-master@dev",
+                "zendframework/zend-coding-standard": "~2.0.0@alpha"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Phly\\Expressive\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Factory for pulling nested configuration arrays from the config service",
+            "keywords": [
+                "PSR-11",
+                "config",
+                "expressive"
+            ],
+            "time": "2019-02-06T21:54:05+00:00"
         },
         {
             "name": "phly/phly-swoole-taskworker",

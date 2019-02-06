@@ -16,8 +16,7 @@ class SendContactMessageListenerFactory
 {
     public function __invoke(ContainerInterface $container) : SendContactMessageListener
     {
-        $config = $container->has('config') ? $container->get('config') : [];
-        $config = $config['contact']['message'] ?? [];
+        $config = $container->get('config-contact.message');
 
         if (! isset($config['to'])
             || ! isset($config['sender']['address'])

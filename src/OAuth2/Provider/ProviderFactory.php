@@ -43,7 +43,7 @@ class ProviderFactory
             throw Exception\UnsupportedProviderException::forProvider($name, $knownProviders);
         }
 
-        $config = $this->container->get('config')['oauth2'] ?? [];
+        $config = $this->container->get('config-oauth2');
 
         if (! isset($config[$name])) {
             throw Exception\MissingProviderConfigException::forProvider($name);

@@ -8,6 +8,7 @@ declare(strict_types=1);
 
 namespace Mwop\OAuth2;
 
+use Phly\Expressive\ConfigFactory;
 use Zend\Expressive\Application;
 use Zend\Expressive\Session\SessionMiddleware;
 
@@ -29,6 +30,7 @@ class ConfigProvider
         // phpcs:disable
         return [
             'factories' => [
+                'config-oauth2'                                 => ConfigFactory::class,
                 Handler\CallbackHandler::class                  => Handler\CallbackHandlerFactory::class,
                 Handler\RequestAuthenticationHandler::class     => Handler\RequestAuthenticationHandlerFactory::class,
                 Middleware\CheckAuthenticationMiddleware::class => Middleware\CheckAuthenticationMiddlewareFactory::class,

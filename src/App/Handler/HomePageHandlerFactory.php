@@ -14,7 +14,7 @@ class HomePageHandlerFactory
     public function __invoke(ContainerInterface $container) : HomePageHandler
     {
         return new HomePageHandler(
-            $container->get('config')['homepage']['posts'] ?? [],
+            $container->get('config-homepage.posts'),
             $container->get(TemplateRendererInterface::class)
         );
     }

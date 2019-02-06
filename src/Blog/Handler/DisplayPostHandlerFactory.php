@@ -19,7 +19,7 @@ class DisplayPostHandlerFactory
             $container->get(EventDispatcherInterface::class),
             $container->get(TemplateRendererInterface::class),
             $container->get(NotFoundHandler::class),
-            $container->get('config')['blog']['disqus']
+            $container->get('config-blog.disqus')
         );
     }
 }

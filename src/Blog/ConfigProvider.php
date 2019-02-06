@@ -9,6 +9,7 @@ declare(strict_types=1);
 namespace Mwop\Blog;
 
 use Phly\EventDispatcher\ListenerProvider\AttachableListenerProvider;
+use Phly\Expressive\ConfigFactory;
 use Zend\Expressive\Application;
 
 class ConfigProvider
@@ -43,6 +44,9 @@ class ConfigProvider
             // phpcs:disable
             'factories' => [
                 BlogCachePool::class                            => BlogCachePoolFactory::class,
+                'config-blog'                                   => ConfigFactory::class,
+                'config-blog.cache'                             => ConfigFactory::class,
+                'config-blog.disqus'                            => ConfigFactory::class,
                 Console\ClearCache::class                       => Console\ClearCacheFactory::class,
                 Console\FeedGenerator::class                    => Console\FeedGeneratorFactory::class,
                 Console\TagCloud::class                         => Console\TagCloudFactory::class,

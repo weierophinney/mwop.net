@@ -21,7 +21,7 @@ class ProcessContactFormHandlerFactory
             $container->get(EventDispatcherInterface::class),
             $container->get(TemplateRendererInterface::class),
             $container->get(UrlHelper::class),
-            $container->get('config')['contact']
+            $container->get('config-contact')
         );
     }
 }

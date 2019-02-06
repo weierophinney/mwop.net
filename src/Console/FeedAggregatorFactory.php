@@ -21,11 +21,11 @@ class FeedAggregatorFactory
         FeedReader::setHttpClient($http);
         FeedReader::setExtensionManager(new StandaloneExtensionManager());
 
-        $config = $container->get('config');
+        $config = $container->get('config-homepage');
 
         return new FeedAggregator(
-            $config['homepage']['feeds'] ?? [],
-            $config['homepage']['feed-count'] ?? 10
+            $config['feeds'] ?? [],
+            $config['feed-count'] ?? 10
         );
     }
 }

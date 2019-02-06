@@ -9,6 +9,7 @@ namespace Mwop\App;
 use League\Plates\Engine;
 use Middlewares\Csp;
 use Mwop\Blog\Handler\DisplayPostHandler;
+use Phly\Expressive\ConfigFactory;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Message\RequestFactoryInterface;
@@ -46,6 +47,10 @@ class ConfigProvider
             // @codingStandardsIgnoreStart
             // phpcs:disable
             'factories' => [
+                'config-cache'                               => ConfigFactory::class,
+                'config-content-security-policy'             => ConfigFactory::class,
+                'config-homepage.posts'                      => ConfigFactory::class,
+                'config-mail.transport'                      => ConfigFactory::class,
                 Csp::class                                   => Middleware\ContentSecurityPolicyMiddlewareFactory::class,
                 CacheItemPoolInterface::class                => Factory\CachePoolFactory::class,
                 EventDispatcherInterface::class              => Factory\EventDispatcherFactory::class,

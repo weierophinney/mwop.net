@@ -14,8 +14,7 @@ class ContentSecurityPolicyMiddlewareFactory
 {
     public function __invoke(ContainerInterface $container) : Csp
     {
-        $config = $container->has('config') ? $container->get('config') : [];
-        $config = $config['content-security-policy'] ?? [];
+        $config = $container->get('config-content-security-policy');
         return new Csp(new CSPBuilder($config));
     }
 }

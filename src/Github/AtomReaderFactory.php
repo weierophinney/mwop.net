@@ -23,8 +23,7 @@ class AtomReaderFactory
         FeedReader::setHttpClient($http);
         FeedReader::setExtensionManager(new StandaloneExtensionManager());
 
-        $config = $container->get('config');
-        $config = $config['github'];
+        $config = $container->get('config-github');
 
         $reader = new AtomReader($config['user']);
         $reader->setLimit($config['limit']);

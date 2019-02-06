@@ -16,11 +16,11 @@ class FetchBlogPostFromCacheListenerFactory
 {
     public function __invoke(ContainerInterface $container) : FetchBlogPostFromCacheListener
     {
-        $config  = $container->get('config')['blog'] ?? [];
+        $config  = $container->get('config-blog.cache');
 
         return new FetchBlogPostFromCacheListener(
             $container->get(BlogCachePool::class),
-            $config['cache']['enabled'] ?? false
+            $config['enabled'] ?? false
         );
     }
 }
