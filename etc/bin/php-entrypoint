@@ -9,8 +9,10 @@
 chown root:root /etc/cron.d/*
 chmod 0644 /etc/cron.d/*
 
-# Start cron; it's a daemon by default. -s swtich sends log output to syslog.
-crond -s
+# Start cron; it's a daemon by default.
+# -l 0 tells it to be verbose, -d 3 tells it to log levels 4 and up (default is
+# only debug messages)
+crond -l 0 -d 3
 
 # Add the site crontab
 crontab /etc/cron.d/mwopnet
