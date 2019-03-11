@@ -3,10 +3,10 @@ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 # m        h         dom mon dow user     command
 # Update github feed
-*/15 *                    *   *   * cd /var/www ; php bin/mwop.net.php github:fetch-activity
+*/15 *                    *   *   * cd /var/www ; php bin/mwop.net.php github:fetch-activity > /proc/self/fd/1 2> /proc/self/fd/2
 
 # Update blog posts listing
-0    0,6,12,18            *   *   * cd /var/www ; php bin/mwop.net.php homepage-feeds
+0    0,6,12,18            *   *   * cd /var/www ; php bin/mwop.net.php homepage-feeds > /proc/self/fd/1 2> /proc/self/fd/2
 
 # Fetch comics
-0    1,4,7,10,13,16,19,22 *   *   * cd /var/www ; php vendor/bin/phly-comic.php fetch-all --output data/comics.phtml --exclude nih --exclude reptilis-rex --exclude dilbert
+0    1,4,7,10,13,16,19,22 *   *   * cd /var/www ; php vendor/bin/phly-comic.php fetch-all --output data/comics.phtml --exclude nih --exclude reptilis-rex --exclude dilbert > /proc/self/fd/1 2> /proc/self/fd/2
