@@ -9,8 +9,8 @@
 chown root:root /etc/cron.d/*
 chmod 0644 /etc/cron.d/*
 
-# Start cron; it's a daemon by default.
-crond
+# Start cron; it's a daemon by default. -s swtich sends log output to syslog.
+crond -s
 
 # Add the site crontab
 crontab /etc/cron.d/mwopnet
