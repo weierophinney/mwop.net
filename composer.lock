@@ -4044,16 +4044,16 @@
         },
         {
             "name": "zendframework/zend-expressive-swoole",
-            "version": "2.2.0",
+            "version": "2.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-expressive-swoole.git",
-                "reference": "76ff7702b1831e8650b989eeb885fb8676736ca9"
+                "reference": "772454d1ebac9fe2223eb36b7e442266bd46953d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-expressive-swoole/zipball/76ff7702b1831e8650b989eeb885fb8676736ca9",
-                "reference": "76ff7702b1831e8650b989eeb885fb8676736ca9",
+                "url": "https://api.github.com/repos/zendframework/zend-expressive-swoole/zipball/772454d1ebac9fe2223eb36b7e442266bd46953d",
+                "reference": "772454d1ebac9fe2223eb36b7e442266bd46953d",
                 "shasum": ""
             },
             "require": {
@@ -4077,14 +4077,17 @@
                 "zendframework/zend-coding-standard": "~1.0.0",
                 "zendframework/zend-servicemanager": "^3.3"
             },
+            "suggest": {
+                "ext-inotify": "To use inotify based file watcher. Required for hot code reloading."
+            },
             "bin": [
                 "bin/zend-expressive-swoole"
             ],
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.2.x-dev",
-                    "dev-develop": "2.3.x-dev"
+                    "dev-master": "2.4.x-dev",
+                    "dev-develop": "2.5.x-dev"
                 }
             },
             "autoload": {
@@ -4107,7 +4110,7 @@
                 "swoole",
                 "zf"
             ],
-            "time": "2018-12-03T16:30:27+00:00"
+            "time": "2019-03-05T18:06:50+00:00"
         },
         {
             "name": "zendframework/zend-expressive-template",
@@ -5640,6 +5643,7 @@
                 "mock",
                 "xunit"
             ],
+            "abandoned": true,
             "time": "2018-08-09T05:50:03+00:00"
         },
         {
