@@ -19,6 +19,7 @@ use Zend\Expressive\Container;
 use Zend\Expressive\Middleware\ErrorResponseGenerator;
 use Zend\Expressive\Whoops;
 use Zend\Expressive\WhoopsPageHandler;
+use Zend\Stratigility\Middleware\ErrorHandler;
 
 return [
     'blog' => [
