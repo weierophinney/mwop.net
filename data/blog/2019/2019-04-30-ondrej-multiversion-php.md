@@ -5,7 +5,7 @@ title: 'Managing Multiple PHP versions via the ondrej/php PPA'
 draft: false
 public: true
 created: '2019-04-30T17:10:00-05:00'
-updated: '2019-04-30T17:10:00-05:00'
+updated: '2019-05-01T12:00:00-05:00'
 tags:
     - php
     - ubuntu
@@ -37,6 +37,8 @@ has multiple PHP versions already, including source packages.
 And then I thought: why not try using those instead of phpbrew?
 
 The rest of this post is how I made that work.
+
+<!--- EXTENDED -->
 
 > I use Ubuntu for my operating system. The instructions I present here should
 > work on any Debian-based system, but your mileage may vary. If you are using
@@ -290,3 +292,7 @@ original problem that led me here in the first place. I'll cross that bridge
 when I get to it. Until then, I have a workable solution &mdash; and finally a
 single document I can refer to when I need to remember again at a later date,
 instead of cobbling it together from multiple sources!
+
+### Updates
+
+- 2019-05-01: added breakpoint so that full post is not presented in lists.
