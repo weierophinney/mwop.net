@@ -10,6 +10,9 @@ services:
     volumes:
       - ./etc/redis/redis.conf:/usr/local/etc/redis/redis.conf
       - ./data/redis:/data
+    logging:
+      options:
+        max-size: 50m
 
   php:
     build: 
@@ -24,6 +27,9 @@ services:
       - ./etc/php/mwop.ini:/usr/local/etc/php/conf.d/mwop.ini
       - ./etc/cron.d/mwopnet:/etc/cron.d/mwopnet
       - ./etc/bin/php-entrypoint:/usr/local/bin/entrypoint
+    logging:
+      options:
+        max-size: 50m
 
   caddy:
     build:
@@ -35,3 +41,6 @@ services:
       - "8080:8080"
     volumes:
       - ./etc/caddy/Caddyfile.dev:/etc/Caddyfile
+    logging:
+      options:
+        max-size: 50m
