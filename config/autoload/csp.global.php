@@ -48,8 +48,21 @@ return [
                 'https://code.jquery.com',
                 '*.disqus.com',
                 '*.disquscdn.com',
-                'https://platform.twitter.com',
                 'https://*.twimg.com',
+                'https://platform.twitter.com',
+            ],
+        ],
+        // Not honored yet by paragonie/csp-builder:
+        'prefetch-src' => [
+            'self' => true,
+            'types' => [
+                'data:',
+                'http:',
+                'https:',
+            ],
+            'allow' => [
+                '*.disqus.com',
+                '*.disquscdn.com',
             ],
         ],
         'style-src' => [
