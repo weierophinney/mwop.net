@@ -182,3 +182,7 @@ sup {
 div.comic img {
   max-width: 100%;
 }
+
+img.max-width {
+  max-width: 100%;
+}
