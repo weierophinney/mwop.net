@@ -10,3 +10,6 @@ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 # Fetch comics
 0    1,4,7,10,13,16,19,22 *   *   * cd /var/www ; php vendor/bin/phly-comic.php fetch-all --output data/comics.phtml --exclude nih --exclude reptilis-rex --exclude dilbert > /proc/1/fd/1 2> /proc/1/fd/2
+
+# Update instagram feed
+30   10,20                *   *   * cd /var/www ; php bin/mwop.net.php instagram-feeds > /proc/1/fd/1 2> /proc/1/fd/2

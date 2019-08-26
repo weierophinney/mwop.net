@@ -28,6 +28,7 @@ $application->setCommandLoader(new ContainerCommandLoader($container, [
     'clear-cache'               => Console\ClearCache::class,
     'github:fetch-activity'     => Github\Console\Fetch::class,
     'homepage-feeds'            => Console\FeedAggregator::class,
+    'instagram-feeds'           => Console\InstagramFeed::class,
 ]));
 $application->setDefaultCommand('list');
 $application->run();

@@ -186,3 +186,7 @@ div.comic img {
 img.max-width {
   max-width: 100%;
 }
+
+.instagram {
+  max-width: 480px;
+}

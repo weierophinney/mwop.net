@@ -15,6 +15,7 @@ class HomePageHandlerFactory
     {
         return new HomePageHandler(
             $container->get('config-homepage.posts'),
+            $container->get('config-instagram.feed'),
             $container->get(TemplateRendererInterface::class)
         );
     }

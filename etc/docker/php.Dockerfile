@@ -25,20 +25,21 @@ FROM mwop/phly-docker-php-swoole:7.2-alpine
 # System dependencies
 RUN echo 'http://dl-cdn.alpinelinux.org/alpine/v3.6/community' >> /etc/apk/repositories
 RUN apk update && \
-  apk add --no-cache \
-    php7-bcmath \
-    php7-bz2 \
-    php7-dom \
-    php7-intl \
-    php7-opcache \
-    php7-pcntl \
-    php7-sockets \
-    php7-xsl \
-    php7-zip \
-    'tidyhtml-dev==5.2.0-r1'
+  apk add --no-cache bzip2-dev freetype-dev icu-dev libjpeg-turbo-dev libpng-dev libxml2-dev libxslt-dev libzip-dev 'tidyhtml-dev==5.2.0-r1'
 
 # PHP Extensions
-RUN docker-php-ext-install -j$(nproc) tidy
+RUN docker-php-ext-configure zip --with-libzip=/usr/include && \
+  docker-php-ext-configure gd --with-gd --with-freetype-dir=/usr/include --with-png-dir=/usr/include --with-jpeg-dir=/usr-include && \
+  docker-php-ext-install -j$(nproc) bcmath && \
+  docker-php-ext-install -j$(nproc) bz2 && \
+  docker-php-ext-install -j$(nproc) exif && \
+  docker-php-ext-install -j$(nproc) gd && \
+  docker-php-ext-install -j$(nproc) intl && \
+  docker-php-ext-install -j$(nproc) opcache && \
+  docker-php-ext-install -j$(nproc) pcntl && \
+  docker-php-ext-install -j$(nproc) tidy && \
+  docker-php-ext-install -j$(nproc) xsl && \
+  docker-php-ext-install -j$(nproc) zip
 
 # PHP configuration
 COPY etc/php/mwop.ini /usr/local/etc/php/conf.d/999-mwop.ini
@@ -70,5 +71,5 @@ RUN rm -f /var/www/config/development.config.php && \
 
 # Build project
 WORKDIR /var/www
-RUN composer install --quiet --no-ansi --no-dev --no-interaction --no-progress --no-scripts --no-plugins --optimize-autoloader && \
+RUN composer install --no-ansi --no-dev --no-interaction --no-scripts --no-plugins --optimize-autoloader && \
   composer docker:site

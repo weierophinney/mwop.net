@@ -51,6 +51,7 @@ class ConfigProvider
                 'config-content-security-policy'             => ConfigFactory::class,
                 'config-homepage'                            => ConfigFactory::class,
                 'config-homepage.posts'                      => ConfigFactory::class,
+                'config-instagram.feed'                      => ConfigFactory::class,
                 'config-mail.transport'                      => ConfigFactory::class,
                 Csp::class                                   => Middleware\ContentSecurityPolicyMiddlewareFactory::class,
                 CacheItemPoolInterface::class                => Factory\CachePoolFactory::class,

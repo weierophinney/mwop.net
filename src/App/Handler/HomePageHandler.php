@@ -16,22 +16,26 @@ class HomePageHandler implements RequestHandlerInterface
 {
     const TEMPLATE = 'mwop::home.page';
 
+    private $instagramPosts;
     private $posts;
     private $renderer;
 
     public function __construct(
         array $posts,
+        array $instagramPosts,
         TemplateRendererInterface $renderer
     ) {
-        $this->posts    = $posts ;
-        $this->renderer = $renderer;
+        $this->posts          = $posts;
+        $this->instagramPosts = $instagramPosts;
+        $this->renderer       = $renderer;
     }
 
     public function handle(Request $request) : Response
     {
         return new HtmlResponse(
             $this->renderer->render(self::TEMPLATE, [
-                'posts' => $this->posts,
+                'posts'     => $this->posts,
+                'instagram' => $this->instagramPosts,
             ])
         );
     }

@@ -20,5 +20,8 @@ crontab /etc/cron.d/mwopnet
 # Clear the blog post cache
 /usr/bin/env php bin/mwop.net.php blog:clear-cache
 
+# Fetch initial Instagram feed
+/usr/bin/env php bin/mwop.net.php instagram-feeds
+
 # Start application; run in foreground, as that's what Docker prefers
 /usr/bin/env php vendor/bin/zend-expressive-swoole start

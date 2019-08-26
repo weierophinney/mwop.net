@@ -54,6 +54,18 @@
 
 <aside class="col-lg middle home">
     <img src="/images/2018-09-09-mwop-nugget-320x420.jpg" alt="Matthew likes puppers" /><br />
+
+    <p>&nbsp;</p>
+
+    <h3><a href="https://www.instagram.com/phlytangle" target="_blank">@phlytangle on Instagram</a></h3>
+
+    <div class="card-columns">
+    <?php foreach ($instagram as $instagramPost) : ?>
+        <div class="card instagram">
+            <a href="<?= $instagramPost['post_url'] ?>"><img class="card-img-top" src="<?= $instagramPost['image_url'] ?>" alt="Instagram post" /></a>
+        </div>
+    <?php endforeach ?>
+    </div>
 </aside>
 
 <aside class="col-lg omega home">
