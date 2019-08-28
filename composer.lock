@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b48d34127b27e1a3a36eaa16ee0579c8",
+    "content-hash": "bb5894a32187e0e58199afb084d4702f",
     "packages": [
         {
             "name": "binsoul/net-mqtt",
@@ -2069,16 +2069,16 @@
         },
         {
             "name": "phly/phly-comic",
-            "version": "2.0.4",
+            "version": "2.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/weierophinney/PhlyComic.git",
-                "reference": "a32bfd3c5ef6f3b13927849ce9de1b206f56949d"
+                "reference": "774c2f5d5c75f0053097d5b27a0875264ca081ac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/weierophinney/PhlyComic/zipball/a32bfd3c5ef6f3b13927849ce9de1b206f56949d",
-                "reference": "a32bfd3c5ef6f3b13927849ce9de1b206f56949d",
+                "url": "https://api.github.com/repos/weierophinney/PhlyComic/zipball/774c2f5d5c75f0053097d5b27a0875264ca081ac",
+                "reference": "774c2f5d5c75f0053097d5b27a0875264ca081ac",
                 "shasum": ""
             },
             "require": {
@@ -2122,7 +2122,7 @@
                 "source": "https://github.com/weierophinney/PhlyComic",
                 "issues": "https://github.com/weierophinney/PhlyComic/issues"
             },
-            "time": "2019-03-11T17:29:07+00:00"
+            "time": "2019-08-28T15:26:40+00:00"
         },
         {
             "name": "phly/phly-event-dispatcher",
