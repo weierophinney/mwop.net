@@ -18,26 +18,22 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class InstagramFeed extends Command
 {
     /** @var string */
-    const CACHE_FILE = '%s/config/autoload/instagram.local.php';
+    private const CACHE_FILE = '%s/data/instagram.feed.php';
 
     /** @var string */
     private $configFormat = <<< EOC
 <?php
 return [
-    'instagram' => [
-        'feed' => [
 %s
-        ],
-    ],
 ];
 
 EOC;
 
     private $configItemFormat = <<< EOC
-            [
-                'image_url' => '%s',
-                'post_url'  => '%s',
-            ],
+    [
+        'image_url' => '%s',
+        'post_url'  => '%s',
+    ],
 
 EOC;
 

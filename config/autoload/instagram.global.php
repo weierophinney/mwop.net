@@ -12,7 +12,6 @@ return [
         'truncated_debug' => true,
         'username'        => getenv('INSTAGRAM_USERNAME'),
         'password'        => getenv('INSTAGRAM_PASSWORD'),
-        'feed'            => [
-        ],
+        'feed'            => getcwd() . '/data/instagram.feed.php',
     ],
 ];

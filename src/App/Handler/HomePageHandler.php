@@ -16,18 +16,18 @@ class HomePageHandler implements RequestHandlerInterface
 {
     const TEMPLATE = 'mwop::home.page';
 
-    private $instagramPosts;
+    private $instagramFeedLocation;
     private $posts;
     private $renderer;
 
     public function __construct(
         array $posts,
-        array $instagramPosts,
+        string $instagramFeedLocation,
         TemplateRendererInterface $renderer
     ) {
-        $this->posts          = $posts;
-        $this->instagramPosts = $instagramPosts;
-        $this->renderer       = $renderer;
+        $this->posts                 = $posts;
+        $this->instagramFeedLocation = $instagramFeedLocation;
+        $this->renderer              = $renderer;
     }
 
     public function handle(Request $request) : Response
@@ -35,8 +35,18 @@ class HomePageHandler implements RequestHandlerInterface
         return new HtmlResponse(
             $this->renderer->render(self::TEMPLATE, [
                 'posts'     => $this->posts,
-                'instagram' => $this->instagramPosts,
+                'instagram' => $this->getInstagramPosts(),
             ])
         );
+    }
+
+    public function getInstagramPosts() : array
+    {
+        if (! file_exists($this->instagramFeedLocation)) {
+            return [];
+        }
+
+        $posts = include $this->instagramFeedLocation;
+        return $posts ?: [];
     }
 }
