@@ -9,6 +9,9 @@ declare(strict_types=1);
 namespace Mwop\Console;
 
 use InstagramAPI\Instagram;
+use InstagramAPI\Response\Model\CarouselMedia;
+use InstagramAPI\Response\Model\Image_Versions2;
+use InstagramAPI\Response\Model\Item;
 
 class InstagramClient
 {
@@ -50,7 +53,8 @@ class InstagramClient
 
         foreach ($response->getItems() as $item) {
             $image = null;
-            foreach ($item->getImageVersions2()->getCandidates() as $candidate) {
+
+            foreach ($this->getImagesFromItem($item) as $candidate) {
                 if ($image === null) {
                     $image = $candidate;
                     continue;
@@ -70,5 +74,26 @@ class InstagramClient
         }
 
         return $feed;
+    }
+
+    private function getImagesFromItem(Item $item) : iterable
+    {
+        $images = $item->getImageVersions2();
+        if ($images instanceof Image_Versions2) {
+            yield from $images->getCandidates();
+        }
+
+        $carousel = $item->getCarouselMedia();
+        if ($carousel instanceof CarouselMedia) {
+            foreach ($carousel as $carouselItem) {
+                $images = $carouselItem->getImageVersions2();
+                if (! $images instanceof Image_Versions2) {
+                    continue;
+                }
+                yield from $images->getCandidates();
+            }
+        }
+
+        yield from [];
     }
 }
