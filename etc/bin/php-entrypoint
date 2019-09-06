@@ -17,8 +17,13 @@ crond -d 3
 # Add the site crontab
 crontab /etc/cron.d/mwopnet
 
-# Clear the blog post cache
-/usr/bin/env php bin/mwop.net.php blog:clear-cache
+# Build the blog
+composer build:blog
+composer build:homepage
+/usr/bin/env php bin/mwop.net.php blog:clear-cache # really only necessary when running locally
+
+# Prepare initial comics
+/usr/bin/env php ./vendor/bin/phly-comic.php fetch-all --output data/comics.phtml --exclude dilbert --exclude reptilis-rex --exclude nih
 
 # Fetch initial Instagram feed
 /usr/bin/env php bin/mwop.net.php instagram-feeds
