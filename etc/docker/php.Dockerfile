@@ -44,6 +44,9 @@ RUN docker-php-ext-configure zip --with-libzip=/usr/include && \
 # PHP configuration
 COPY etc/php/mwop.ini /usr/local/etc/php/conf.d/999-mwop.ini
 
+# Add Prestissimo plugin
+RUN composer global require hirak/prestissimo
+
 # Overwrite entrypoint
 COPY etc/bin/php-entrypoint /usr/local/bin/entrypoint
 
@@ -71,5 +74,5 @@ RUN rm -f /var/www/config/development.config.php && \
 
 # Build project
 WORKDIR /var/www
-RUN composer install --no-ansi --no-dev --no-interaction --no-scripts --no-plugins --optimize-autoloader && \
+RUN composer install --no-ansi --no-dev --no-interaction --no-scripts --optimize-autoloader && \
   /usr/bin/env php bin/mwop.net.php asset:use-dist-templates
