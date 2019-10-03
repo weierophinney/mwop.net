@@ -42,7 +42,7 @@ class HomePageHandler implements RequestHandlerInterface
 
     public function getInstagramPosts() : array
     {
-        if (! file_exists($this->instagramFeedLocation)) {
+        if (empty($this->instagramFeedLocation) || ! file_exists($this->instagramFeedLocation)) {
             return [];
         }
 
