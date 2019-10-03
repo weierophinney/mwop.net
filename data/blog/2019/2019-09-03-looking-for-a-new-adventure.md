@@ -5,12 +5,17 @@ title: 'Looking For A New Adventure'
 draft: false
 public: true
 created: '2019-09-03T11:30:00-05:00'
-updated: '2019-09-03T11:30:00-05:00'
+updated: '2019-10-03T15:44:00-05:00'
 tags:
     - php
     - zendframework
     - laminas
 ---
+
+> ## Update
+>
+> As of 2019-10-01, I am once again employed full-time. Thank you everyone who
+> reached out!
 
 Fourteen years ago, almost to the day, I received a job offer from Zend to join
 their nascent eBiz team, where I started contributing almost immediately to the
@@ -87,6 +92,8 @@ from users.
 One dream I've had for some time is to work for a company with a social mission,
 as I'd like to use my skills to make the world a better place.
 
+<!--
+
 If you or your company feel like I'd be a good fit for your organization, I
 invite you to [contact me via my contact page](/contact)!
 
@@ -95,3 +102,5 @@ invite you to [contact me via my contact page](/contact)!
 I have also launched a [Patreon](https://www.patreon.com/mwop), to cover some of
 my time and expenses while I work towards the Laminas launch and finalizing its
 funding. If you find this valuable, [become a Patron today!](https://www.patreon.com/mwop)
+
+-->
