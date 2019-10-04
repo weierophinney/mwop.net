@@ -8,10 +8,24 @@ declare(strict_types=1);
 
 namespace Mwop\Console;
 
-use InstagramAPI\Instagram;
-use InstagramAPI\Response\Model\CarouselMedia;
-use InstagramAPI\Response\Model\Image_Versions2;
-use InstagramAPI\Response\Model\Item;
+use DOMDocument;
+use JsonException;
+
+use function file_get_contents;
+use function fwrite;
+use function json_decode;
+use function libxml_clear_errors;
+use function libxml_use_internal_errors;
+use function preg_match;
+use function preg_replace;
+use function restore_error_handler;
+use function set_error_handler;
+use function sprintf;
+
+use const E_WARNING;
+use const JSON_THROW_ON_ERROR;
+use const LIBXML_HTML_NODEFDTD;
+use const STDERR;
 
 class InstagramClient
 {
@@ -19,20 +33,12 @@ class InstagramClient
     private $debug;
 
     /** @var string */
-    private $password;
+    private $url;
 
-    /** @var bool */
-    private $truncatedDebug;
-
-    /** @var string */
-    private $username;
-
-    public function __construct(string $username, string $password, bool $debug, bool $truncatedDebug)
+    public function __construct(string $url, bool $debug = false)
     {
-        $this->username       = $username;
-        $this->password       = $password;
-        $this->debug          = $debug;
-        $this->truncatedDebug = $truncatedDebug;
+        $this->url   = $url;
+        $this->debug = $debug;
     }
 
     /**
@@ -40,60 +46,100 @@ class InstagramClient
      */
     public function fetchFeed() : array
     {
-        $feed      = [];
-        $instagram = new Instagram($this->debug, $this->truncatedDebug);
+        $feed = [];
+        $html = $this->fetchHtml();
+        $json = $this->parseHtml($html);
 
-        $instagram->login($this->username, $this->password);
-
-        // Get UserPK ID for me
-        $userId = $instagram->people->getUserIdForName($this->username);
-
-        // Get feed for user
-        $response = $instagram->timeline->getUserFeed($userId, null);
-
-        foreach ($response->getItems() as $item) {
-            $image = null;
-
-            foreach ($this->getImagesFromItem($item) as $candidate) {
-                if ($image === null) {
-                    $image = $candidate;
-                    continue;
-                }
-                if ($image->getWidth() > $candidate->getWidth()) {
-                    $image = $candidate;
-                    continue;
-                }
+        foreach ($this->parseJsonForItems($json) as $item) {
+            $node = $item['node'] ?? [];
+            if (! (isset($node['thumbnail_resources']) && is_array($node['thumbnail_resources']))
+                || ! isset($node['shortcode'])
+            ) {
+                continue;
             }
 
-            if ($image !== null) {
-                $feed[] = [
-                    'image_url' => $image->getUrl(),
-                    'post_url'  => sprintf('https://instagram.com/p/%s', $item->getCode()),
-                ];
+            $thumbnail = array_shift($node['thumbnail_resources']);
+            if (! isset($thumbnail['src'])) {
+                continue;
             }
+
+            $feed[] = [
+                'post_url'  => sprintf('https://www.instagram.com/p/%s', $node['shortcode']),
+                'image_url' => $thumbnail['src'],
+            ];
         }
 
         return $feed;
     }
 
-    private function getImagesFromItem(Item $item) : iterable
+    private function fetchHtml() : string
     {
-        $images = $item->getImageVersions2();
-        if ($images instanceof Image_Versions2) {
-            yield from $images->getCandidates();
-        }
-
-        $carousel = $item->getCarouselMedia();
-        if ($carousel instanceof CarouselMedia) {
-            foreach ($carousel as $carouselItem) {
-                $images = $carouselItem->getImageVersions2();
-                if (! $images instanceof Image_Versions2) {
-                    continue;
-                }
-                yield from $images->getCandidates();
+        if ('' === $this->url) {
+            if ($this->debug) {
+                fwrite(STDERR, 'No Instagram URL is configured');
             }
+            return '';
         }
 
-        yield from [];
+        set_error_handler(function ($errno, $errstr) {
+            if ($errno !== E_WARNING) {
+                return false;
+            }
+
+            if ($this->debug) {
+                fwrite(STDERR, sprintf('Error fetching Instagram page (%s): %s', $this->url, $errstr));
+            }
+        });
+        $html = file_get_contents($this->url);
+        restore_error_handler();
+
+        return false === $html ? '' : $html;
+    }
+
+    /**
+     * @return string Literal JSON discovered in the HTML document.
+     */
+    private function parseHtml(string $html) : string
+    {
+        $dom  = new DOMDocument();
+        $dom->strictErrorChecking = false;
+        $useLibxmlErrors = libxml_use_internal_errors(true);
+        $dom->loadHTML($html, LIBXML_HTML_NODEFDTD);
+        libxml_clear_errors();
+        libxml_use_internal_errors($useLibxmlErrors);
+
+        foreach ($dom->getElementsByTagName('script') as $node) {
+            if (! $node->hasAttributes() || count($node->attributes) > 1) {
+                continue;
+            }
+
+            if (! preg_match('/^window\._sharedData/', $node->textContent)) {
+                continue;
+            }
+
+            return preg_replace('/^window\._sharedData\s*\=[^{]*(\{.*});$/s', '$1', $node->textContent);
+        }
+
+        return '{}';
+    }
+
+    /**
+     * @return array[] Array of arrays.
+     */
+    private function parseJsonForItems(string $json) : array
+    {
+        try {
+            $query = json_decode($json, true, 512, JSON_THROW_ON_ERROR);
+        } catch (JsonException $e) {
+            fwrite(STDERR, sprintf(
+                "Error parsing data from Instagram page (%s): %s\nJSON: %s",
+                $this->url,
+                $e->getMessage(),
+                $json
+            ));
+            return [];
+        }
+
+        return $query['entry_data']['ProfilePage'][0]['graphql']['user']['edge_owner_to_timeline_media']['edges'] ?? [];
     }
 }

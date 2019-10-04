@@ -26,7 +26,7 @@ composer build:homepage
 /usr/bin/env php ./vendor/bin/phly-comic.php fetch-all --output data/comics.phtml --exclude dilbert --exclude reptilis-rex --exclude nih
 
 # Fetch initial Instagram feed
-# /usr/bin/env php bin/mwop.net.php instagram-feeds
+/usr/bin/env php bin/mwop.net.php instagram-feeds
 
 # Start application; run in foreground, as that's what Docker prefers
 /usr/bin/env php vendor/bin/zend-expressive-swoole start

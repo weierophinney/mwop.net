@@ -16,15 +16,10 @@ class InstagramClientFactory
     {
         $config         = $container->get('config');
         $config         = $config['instagram'] ?? [];
-        $truncatedDebug = array_key_exists('truncated_debug', $config)
-            ? $config['truncated_debug']
-            : true;
 
         return new InstagramClient(
-            $config['username'],
-            $config['password'],
-            $config['debug'] ?? false,
-            $truncatedDebug
+            $config['url'],
+            $config['debug'] ?? false
         );
     }
 }

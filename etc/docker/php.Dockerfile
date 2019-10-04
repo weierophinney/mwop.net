@@ -20,20 +20,17 @@ RUN cp node_modules/autocomplete.js/dist/autocomplete.jquery.js public/js/
 RUN grunt
 
 # Build the PHP container
-FROM mwop/phly-docker-php-swoole:7.2-alpine
+FROM mwop/phly-docker-php-swoole:7.3-alpine
 
 # System dependencies
 RUN echo 'http://dl-cdn.alpinelinux.org/alpine/v3.6/community' >> /etc/apk/repositories
 RUN apk update && \
-  apk add --no-cache bzip2-dev freetype-dev icu-dev libjpeg-turbo-dev libpng-dev libxml2-dev libxslt-dev libzip-dev 'tidyhtml-dev==5.2.0-r1'
+  apk add --no-cache bzip2-dev icu-dev libxml2-dev libxslt-dev libzip-dev 'tidyhtml-dev==5.2.0-r1'
 
 # PHP Extensions
 RUN docker-php-ext-configure zip --with-libzip=/usr/include && \
-  docker-php-ext-configure gd --with-gd --with-freetype-dir=/usr/include --with-png-dir=/usr/include --with-jpeg-dir=/usr-include && \
   docker-php-ext-install -j$(nproc) bcmath && \
   docker-php-ext-install -j$(nproc) bz2 && \
-  docker-php-ext-install -j$(nproc) exif && \
-  docker-php-ext-install -j$(nproc) gd && \
   docker-php-ext-install -j$(nproc) intl && \
   docker-php-ext-install -j$(nproc) opcache && \
   docker-php-ext-install -j$(nproc) pcntl && \
@@ -43,9 +40,6 @@ RUN docker-php-ext-configure zip --with-libzip=/usr/include && \
 
 # PHP configuration
 COPY etc/php/mwop.ini /usr/local/etc/php/conf.d/999-mwop.ini
-
-# Add Prestissimo plugin
-RUN composer global require hirak/prestissimo
 
 # Overwrite entrypoint
 COPY etc/bin/php-entrypoint /usr/local/bin/entrypoint

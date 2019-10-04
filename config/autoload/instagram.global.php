@@ -8,10 +8,8 @@ return [
         ],
     ],
     'instagram' => [
-        'debug'           => false,
-        'truncated_debug' => true,
-        'username'        => getenv('INSTAGRAM_USERNAME'),
-        'password'        => getenv('INSTAGRAM_PASSWORD'),
-        'feed'            => getcwd() . '/data/instagram.feed.php',
+        'debug' => false,
+        'url'   => getenv('INSTAGRAM_URL'),
+        'feed'  => getcwd() . '/data/instagram.feed.php',
     ],
 ];
