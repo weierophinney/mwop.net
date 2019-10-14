@@ -69,4 +69,5 @@ RUN rm -f /var/www/config/development.config.php && \
 # Build project
 WORKDIR /var/www
 RUN composer install --no-ansi --no-dev --no-interaction --no-scripts --optimize-autoloader && \
-  /usr/bin/env php bin/mwop.net.php asset:use-dist-templates
+  /usr/bin/env php bin/mwop.net.php asset:use-dist-templates && \
+  composer clean:build-assets
