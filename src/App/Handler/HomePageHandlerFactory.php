@@ -6,6 +6,7 @@
 
 namespace Mwop\App\Handler;
 
+use Mwop\Console\FeedAggregator;
 use Psr\Container\ContainerInterface;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
@@ -15,9 +16,27 @@ class HomePageHandlerFactory
     {
         $config = $container->get('config');
         return new HomePageHandler(
-            $config['homepage']['posts'] ?? [],
+            $this->getHomepagePosts(),
             $config['instagram']['feed'] ?? '',
             $container->get(TemplateRendererInterface::class)
         );
+    }
+
+    private function getHomepagePosts() : array
+    {
+        $location = sprintf(FeedAggregator::CACHE_FILE, realpath(getcwd()));
+
+        if (! file_exists($location)) {
+            fwrite(STDERR, sprintf("Missing home page posts file at %s", $location));
+            return [];
+        }
+
+        $posts = include $location;
+
+        if (! is_array($posts)) {
+            return [];
+        }
+
+        return $posts;
     }
 }

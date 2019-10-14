@@ -7,6 +7,7 @@ data/comics/*.html
 data/comics.phtml
 data/feeds/*.xml
 data/github-links.phtml
+data/homepage.posts.php
 data/instagram.feed.php
 data/redis/
 data/posts.db

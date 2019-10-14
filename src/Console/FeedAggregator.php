@@ -28,16 +28,13 @@ use function sprintf;
 class FeedAggregator extends Command
 {
     /** @var string */
-    const CACHE_FILE = '%s/config/autoload/homepage.local.php';
+    const CACHE_FILE = '%s/data/homepage.posts.php';
 
     /** @var string */
     private $configFormat = <<< EOC
 <?php
 return [
-    'homepage' => [
-        'posts' => [
-%s        ],
-    ],
+%s
 ];
 
 EOC;
@@ -47,13 +44,13 @@ EOC;
 
     /** @var string */
     private $itemFormat = <<< EOF
-            [
-                'title'    => '%s',
-                'link'     => '%s',
-                'favicon'  => '%s',
-                'sitename' => '%s',
-                'siteurl'  => '%s',
-            ],
+    [
+        'title'    => '%s',
+        'link'     => '%s',
+        'favicon'  => '%s',
+        'sitename' => '%s',
+        'siteurl'  => '%s',
+    ],
 
 EOF;
 

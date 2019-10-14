@@ -110,6 +110,20 @@
             "rm -Rf node_modules",
             "rm -Rf .tmp"
         ],
+        "clean:build-assets": [
+            "echo 'Removing generated blog files'",
+            "rm data/posts.db",
+            "rm data/tag-cloud.phtml",
+            "rm data/feeds/*.xml",
+            "rm data/search_terms.json",
+            "bin/mwop.net.php blog:clear-cache",
+            "echo 'Removing generated homepage files'",
+            "rm data/homepage.posts.php",
+            "rm data/github-links.phtml",
+            "rm data/instagram.feed.php",
+            "echo 'Removing generated comics page'",
+            "rm data/comics.phtml"
+        ],
         "cs:check": "phpcs",
         "cs:fix": "phpcbf",
         "development:disable": "zf-development-mode disable",
