@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cd1b8779145ae3e48cc8e7f3410a1644",
+    "content-hash": "8bedbdc269175886ad7ee38fce94175a",
     "packages": [
         {
             "name": "cache/adapter-common",
@@ -1708,16 +1708,16 @@
         },
         {
             "name": "phly/phly-comic",
-            "version": "2.1.1",
+            "version": "2.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/weierophinney/PhlyComic.git",
-                "reference": "cd1ce7a2e23b040588ec3a54c44feba4edcb9619"
+                "reference": "64d97e2d6481c7347138fe71ed4b0e8b472ff50f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/weierophinney/PhlyComic/zipball/cd1ce7a2e23b040588ec3a54c44feba4edcb9619",
-                "reference": "cd1ce7a2e23b040588ec3a54c44feba4edcb9619",
+                "url": "https://api.github.com/repos/weierophinney/PhlyComic/zipball/64d97e2d6481c7347138fe71ed4b0e8b472ff50f",
+                "reference": "64d97e2d6481c7347138fe71ed4b0e8b472ff50f",
                 "shasum": ""
             },
             "require": {
@@ -1765,7 +1765,7 @@
                 "source": "https://github.com/weierophinney/PhlyComic",
                 "issues": "https://github.com/weierophinney/PhlyComic/issues"
             },
-            "time": "2019-10-14T22:04:51+00:00"
+            "time": "2019-10-16T20:42:11+00:00"
         },
         {
             "name": "phly/phly-event-dispatcher",

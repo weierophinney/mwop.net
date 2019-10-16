@@ -24,7 +24,7 @@
         "middlewares/csp": "^2.0",
         "mnapoli/front-yaml": "^1.5",
         "monolog/monolog": "^1.23",
-        "phly/phly-comic": "^2.1.1",
+        "phly/phly-comic": "^2.1.2",
         "phly/phly-event-dispatcher": "^0.3",
         "phly/phly-expressive-configfactory": "^1.0",
         "phly/phly-swoole-taskworker": "^1.1",
