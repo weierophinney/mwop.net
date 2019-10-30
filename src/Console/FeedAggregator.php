@@ -153,7 +153,7 @@ EOF;
             $this->reportException($e, $io);
             $io->error('Failed fetching one or more feeds');
             $this->status = 1;
-            return new FeeedCollection([]);
+            return new FeedCollection([]);
         }
 
         $entries = FeedCollection::make($feed)
