@@ -8,11 +8,11 @@ namespace Mwop\App\Handler;
 
 use Psr\Container\ContainerInterface;
 use Psr\Http\Server\MiddlewareInterface;
-use Zend\Expressive\Authentication\AuthenticationMiddleware;
-use Zend\Expressive\MiddlewareFactory;
-use Zend\Expressive\Session\SessionMiddleware;
-use Zend\Expressive\Template\TemplateRendererInterface;
-use Zend\Stratigility\MiddlewarePipe;
+use Mezzio\Authentication\AuthenticationMiddleware;
+use Mezzio\MiddlewareFactory;
+use Mezzio\Session\SessionMiddleware;
+use Mezzio\Template\TemplateRendererInterface;
+use Laminas\Stratigility\MiddlewarePipe;
 
 class ComicsPageHandlerFactory
 {

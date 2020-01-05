@@ -10,9 +10,9 @@ namespace Mwop\Blog\Console;
 
 use Psr\Container\ContainerInterface;
 use Mwop\Blog\Mapper\MapperInterface;
-use Zend\Expressive\Helper\ServerUrlHelper;
-use Zend\Expressive\Router\RouterInterface;
-use Zend\Expressive\Template\TemplateRendererInterface;
+use Mezzio\Helper\ServerUrlHelper;
+use Mezzio\Router\RouterInterface;
+use Mezzio\Template\TemplateRendererInterface;
 
 class FeedGeneratorFactory
 {

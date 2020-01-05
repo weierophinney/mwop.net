@@ -5,14 +5,14 @@ This is the code behind mwop.net.
 
 It is built on:
 
-- [Expressive](https://github.com/zendframework/zend-expressive) - The entire site consists of
+- [Expressive](https://github.com/mezzio/mezzio) - The entire site consists of
   different middleware and handlers for accomplishing different tasks. These
   include a contact form, social authentication, a blog, and static pages.
 - [Swoole](https://www.swoole.co.uk) and the [Expressive Swoole
-  bindings](https://docs.zendframework.com/zend-expressive-swoole/), for serving
+  bindings](https://docs.zendframework.com/mezzio-swoole/), for serving
   the site, as well as providing async task workers.
 - [league/plates](http://platesphp.com) for templating.
-- [zendframework/zend-expressive-session-cache](https://docs.zendframework.com/zend-expressive-session-cache/) for managing sessions.
+- [mezzio/mezzio-session-cache](https://docs.zendframework.com/mezzio-session-cache/) for managing sessions.
 - [league/oauth2-client](http://oauth2-client.thephpleague.com/) for social authentication.
 - [zend-inputfilter](https://docs.zendframework.com/zend-input-filter/),
   [zend-expressive-csrf](https://docs.zendframework.com/zend-expressive-csrf/),

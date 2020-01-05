@@ -9,9 +9,9 @@ declare(strict_types=1);
 namespace Mwop\Github;
 
 use Psr\Container\ContainerInterface;
-use Zend\Feed\Reader\Http\ClientInterface as FeedReaderHttpClientInterface;
-use Zend\Feed\Reader\Reader as FeedReader;
-use Zend\Feed\Reader\StandaloneExtensionManager;
+use Laminas\Feed\Reader\Http\ClientInterface as FeedReaderHttpClientInterface;
+use Laminas\Feed\Reader\Reader as FeedReader;
+use Laminas\Feed\Reader\StandaloneExtensionManager;
 
 use function strpos;
 

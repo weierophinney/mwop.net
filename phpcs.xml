@@ -2,7 +2,7 @@
 <ruleset name="mwop.net coding standard">
     <description>mwop.net coding standard</description>
 
-    <rule ref="./vendor/zendframework/zend-coding-standard/ruleset.xml"/>
+    <rule ref="./vendor/laminas/laminas-coding-standard/ruleset.xml"/>
 
     <rule ref="PSR1.Files.SideEffects">
         <exclude-pattern>bin/mwop.net.php</exclude-pattern>

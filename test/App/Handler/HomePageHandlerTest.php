@@ -9,8 +9,8 @@ namespace MwopTest\App\Handler;
 use Mwop\App\Handler\HomePageHandler;
 use MwopTest\HttpMessagesTrait;
 use PHPUnit\Framework\TestCase;
-use Zend\Diactoros\Response\HtmlResponse;
-use Zend\Expressive\Template\TemplateRendererInterface;
+use Laminas\Diactoros\Response\HtmlResponse;
+use Mezzio\Template\TemplateRendererInterface;
 
 class HomePageHandlerTest extends TestCase
 {

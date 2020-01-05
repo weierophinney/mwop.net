@@ -5,7 +5,7 @@
  */
 
 use League\Plates\Engine;
-use Zend\Expressive\Plates\PlatesEngineFactory;
+use Mezzio\Plates\PlatesEngineFactory;
 
 return [
     'dependencies' => [

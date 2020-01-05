@@ -8,9 +8,9 @@ namespace Mwop\App\Feed;
 
 use Http\Client\HttpClient;
 use Psr\Http\Message\RequestFactoryInterface;
-use Zend\Feed\Reader\Http\ClientInterface as FeedReaderHttpClientInterface;
-use Zend\Feed\Reader\Http\Psr7ResponseDecorator;
-use Zend\Feed\Reader\Http\ResponseInterface;
+use Laminas\Feed\Reader\Http\ClientInterface as FeedReaderHttpClientInterface;
+use Laminas\Feed\Reader\Http\Psr7ResponseDecorator;
+use Laminas\Feed\Reader\Http\ResponseInterface;
 
 class HttpPlugClient implements FeedReaderHttpClientInterface
 {

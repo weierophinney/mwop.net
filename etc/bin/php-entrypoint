@@ -39,4 +39,4 @@ if [ ! -f "data/comics.phtml" ];then
 fi
 
 # Start application; run in foreground, as that's what Docker prefers
-/usr/bin/env php vendor/bin/zend-expressive-swoole start
+/usr/bin/env php vendor/bin/mezzio-swoole start

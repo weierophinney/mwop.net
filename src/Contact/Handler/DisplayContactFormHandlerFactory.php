@@ -9,7 +9,7 @@ declare(strict_types=1);
 namespace Mwop\Contact\Handler;
 
 use Psr\Container\ContainerInterface;
-use Zend\Expressive\Template\TemplateRendererInterface;
+use Mezzio\Template\TemplateRendererInterface;
 
 class DisplayContactFormHandlerFactory
 {

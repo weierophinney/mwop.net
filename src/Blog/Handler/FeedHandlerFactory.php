@@ -8,7 +8,7 @@ namespace Mwop\Blog\Handler;
 
 use Psr\Container\ContainerInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Zend\Expressive\Middleware\NotFoundHandler;
+use Mezzio\Middleware\NotFoundHandler;
 
 class FeedHandlerFactory
 {

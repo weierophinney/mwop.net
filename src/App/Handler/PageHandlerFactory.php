@@ -7,7 +7,7 @@
 namespace Mwop\App\Handler;
 
 use Psr\Container\ContainerInterface;
-use Zend\Expressive\Template\TemplateRendererInterface;
+use Mezzio\Template\TemplateRendererInterface;
 
 class PageHandlerFactory
 {

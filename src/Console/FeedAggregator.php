@@ -15,8 +15,8 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Throwable;
-use Zend\Feed\Reader\Reader as FeedReader;
-use Zend\Feed\Reader\Feed\FeedInterface;
+use Laminas\Feed\Reader\Reader as FeedReader;
+use Laminas\Feed\Reader\Feed\FeedInterface;
 
 use function file_get_contents;
 use function file_put_contents;

@@ -11,9 +11,9 @@ namespace Mwop\Contact\Handler;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\RequestHandlerInterface;
-use Zend\Diactoros\Response\HtmlResponse;
-use Zend\Expressive\Csrf\CsrfMiddleware;
-use Zend\Expressive\Template\TemplateRendererInterface;
+use Laminas\Diactoros\Response\HtmlResponse;
+use Mezzio\Csrf\CsrfMiddleware;
+use Mezzio\Template\TemplateRendererInterface;
 
 class DisplayContactFormHandler implements RequestHandlerInterface
 {

@@ -11,8 +11,8 @@ namespace Mwop\Blog\Mapper;
 use Mwop\Blog\BlogPost;
 use Mwop\Blog\CreateBlogPostFromDataArray;
 use PDO;
-use Zend\Paginator\Paginator;
-use Zend\Tag\Cloud;
+use Laminas\Paginator\Paginator;
+use Laminas\Tag\Cloud;
 
 use function array_map;
 use function array_reduce;

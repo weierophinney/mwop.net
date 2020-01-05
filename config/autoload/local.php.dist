@@ -10,7 +10,7 @@ use Mwop\App\Factory\AccessLoggerFactory;
 use Mwop\App\LoggingErrorListenerDelegator;
 use Phly\Swoole\TaskWorker\DeferredListenerDelegator;
 use Psr\Log\LoggerInterface;
-use Zend\Stratigility\Middleware\ErrorHandler;
+use Laminas\Stratigility\Middleware\ErrorHandler;
 
 /** @var string */
 $messageToAddress = getenv('CONTACT_MESSAGE_TO_ADDRESS');

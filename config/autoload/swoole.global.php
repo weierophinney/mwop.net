@@ -1,10 +1,10 @@
 <?php
 use Mwop\Factory\AccessLogFactory;
-use Zend\Expressive\Swoole\Log\AccessLogInterface;
-use Zend\Expressive\Swoole\StaticResourceHandler\ContentTypeFilterMiddleware;
+use Mezzio\Swoole\Log\AccessLogInterface;
+use Mezzio\Swoole\StaticResourceHandler\ContentTypeFilterMiddleware;
 
 return [
-    'zend-expressive-swoole' => [
+    'mezzio-swoole' => [
         'enable_coroutine' => true,
         'swoole-http-server' => [
             'process-name' => 'mwopnet',

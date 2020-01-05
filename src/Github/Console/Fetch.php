@@ -15,7 +15,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Throwable;
-use Zend\Escaper\Escaper;
+use Laminas\Escaper\Escaper;
 
 use function array_map;
 use function implode;

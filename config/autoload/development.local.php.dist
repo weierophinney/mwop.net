@@ -12,14 +12,14 @@
 
 namespace Mwop;
 
-use Phly\Expressive\OAuth2ClientAuthentication\Debug;
+use Phly\Mezzio\OAuth2ClientAuthentication\Debug;
 use Psr\Log\LoggerInterface;
 use Whoops\Handler\PrettyPageHandler;
-use Zend\Expressive\Container;
-use Zend\Expressive\Middleware\ErrorResponseGenerator;
-use Zend\Expressive\Whoops;
-use Zend\Expressive\WhoopsPageHandler;
-use Zend\Stratigility\Middleware\ErrorHandler;
+use Mezzio\Container;
+use Mezzio\Middleware\ErrorResponseGenerator;
+use Mezzio\Whoops;
+use Mezzio\WhoopsPageHandler;
+use Laminas\Stratigility\Middleware\ErrorHandler;
 
 return [
     'blog' => [

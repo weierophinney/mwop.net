@@ -11,8 +11,8 @@ namespace Mwop\App\Handler;
 use Mwop\OAuth2\Middleware\CheckAuthenticationMiddleware;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Server\MiddlewareInterface;
-use Zend\Expressive\MiddlewareFactory;
-use Zend\Expressive\Session\SessionMiddleware;
+use Mezzio\MiddlewareFactory;
+use Mezzio\Session\SessionMiddleware;
 
 class ComicsPageHandlerAuthDelegator
 {

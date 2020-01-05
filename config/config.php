@@ -4,9 +4,9 @@
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
-use Zend\ConfigAggregator\ArrayProvider;
-use Zend\ConfigAggregator\ConfigAggregator;
-use Zend\ConfigAggregator\PhpFileProvider;
+use Laminas\ConfigAggregator\ArrayProvider;
+use Laminas\ConfigAggregator\ConfigAggregator;
+use Laminas\ConfigAggregator\PhpFileProvider;
 
 // To enable or disable caching, set the `ConfigAggregator::ENABLE_CACHE` boolean in
 // `config/autoload/local.php`.
@@ -17,21 +17,21 @@ $cacheConfig = [
 $aggregator = new ConfigAggregator([
     \Phly\Swoole\TaskWorker\ConfigProvider::class,
     \Phly\EventDispatcher\ConfigProvider::class,
-    \Zend\Expressive\Authentication\ConfigProvider::class,
-    \Zend\Expressive\Session\Cache\ConfigProvider::class,
-    \Zend\Expressive\Plates\ConfigProvider::class,
-    \Zend\Paginator\ConfigProvider::class,
-    \Zend\InputFilter\ConfigProvider::class,
-    \Zend\Filter\ConfigProvider::class,
-    \Zend\Validator\ConfigProvider::class,
-    \Zend\Expressive\Session\ConfigProvider::class,
-    \Zend\Expressive\Csrf\ConfigProvider::class,
-    \Zend\Expressive\ConfigProvider::class,
-    \Zend\HttpHandlerRunner\ConfigProvider::class,
-    \Zend\Expressive\Helper\ConfigProvider::class,
-    \Zend\Expressive\Router\ConfigProvider::class,
-    \Zend\Expressive\Router\FastRouteRouter\ConfigProvider::class,
-    \Zend\Expressive\Swoole\ConfigProvider::class,
+    \Mezzio\Authentication\ConfigProvider::class,
+    \Mezzio\Session\Cache\ConfigProvider::class,
+    \Mezzio\Plates\ConfigProvider::class,
+    \Laminas\Paginator\ConfigProvider::class,
+    \Laminas\InputFilter\ConfigProvider::class,
+    \Laminas\Filter\ConfigProvider::class,
+    \Laminas\Validator\ConfigProvider::class,
+    \Mezzio\Session\ConfigProvider::class,
+    \Mezzio\Csrf\ConfigProvider::class,
+    \Mezzio\ConfigProvider::class,
+    \Laminas\HttpHandlerRunner\ConfigProvider::class,
+    \Mezzio\Helper\ConfigProvider::class,
+    \Mezzio\Router\ConfigProvider::class,
+    \Mezzio\Router\FastRouteRouter\ConfigProvider::class,
+    \Mezzio\Swoole\ConfigProvider::class,
 
     // App-specific modules
     \Mwop\App\ConfigProvider::class,
@@ -54,6 +54,6 @@ $aggregator = new ConfigAggregator([
 
     // Load development config if it exists
     new PhpFileProvider('config/development.config.php'),
-], $cacheConfig['config_cache_path']);
+], $cacheConfig['config_cache_path'], [\Laminas\ZendFrameworkBridge\ConfigPostProcessor::class]);
 
 return $aggregator->getMergedConfig();

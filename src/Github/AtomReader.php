@@ -8,7 +8,7 @@ declare(strict_types=1);
 
 namespace Mwop\Github;
 
-use Zend\Feed\Reader\Reader as FeedReader;
+use Laminas\Feed\Reader\Reader as FeedReader;
 
 use function sprintf;
 

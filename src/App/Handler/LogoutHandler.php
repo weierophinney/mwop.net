@@ -9,8 +9,8 @@ namespace Mwop\App\Handler;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\RequestHandlerInterface;
-use Zend\Diactoros\Response\RedirectResponse;
-use Zend\Expressive\Session\SessionMiddleware;
+use Laminas\Diactoros\Response\RedirectResponse;
+use Mezzio\Session\SessionMiddleware;
 
 class LogoutHandler implements RequestHandlerInterface
 {

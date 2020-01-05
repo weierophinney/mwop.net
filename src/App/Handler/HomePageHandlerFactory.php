@@ -8,7 +8,7 @@ namespace Mwop\App\Handler;
 
 use Mwop\Console\FeedAggregator;
 use Psr\Container\ContainerInterface;
-use Zend\Expressive\Template\TemplateRendererInterface;
+use Mezzio\Template\TemplateRendererInterface;
 
 class HomePageHandlerFactory
 {

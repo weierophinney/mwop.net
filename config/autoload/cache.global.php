@@ -9,7 +9,7 @@ namespace Mwop;
 use Psr\Cache\CacheItemPoolInterface;
 
 return [
-    'zend-expressive-session-cache' => [
+    'mezzio-session-cache' => [
         'cache_item_pool_service' => App\SessionCachePool::class,
         'cookie_name' => 'MWOPSESS',
         'cache_limiter' => 'nocache',

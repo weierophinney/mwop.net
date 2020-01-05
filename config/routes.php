@@ -6,8 +6,8 @@ namespace Mwop;
 
 // General pages
 return function (
-    \Zend\Expressive\Application $app,
-    \Zend\Expressive\MiddlewareFactory $factory,
+    \Mezzio\Application $app,
+    \Mezzio\MiddlewareFactory $factory,
     \Psr\Container\ContainerInterface $container
 ) : void {
     // App routes

@@ -4,8 +4,8 @@
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
-use Zend\ServiceManager\Config;
-use Zend\ServiceManager\ServiceManager;
+use Laminas\ServiceManager\Config;
+use Laminas\ServiceManager\ServiceManager;
 
 // Load configuration
 $config = require 'config.php';

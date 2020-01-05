@@ -9,8 +9,8 @@ declare(strict_types=1);
 namespace Mwop\Contact\Handler;
 
 use Psr\Container\ContainerInterface;
-use Zend\Expressive\Helper\UrlHelper;
-use Zend\Expressive\Template\TemplateRendererInterface;
+use Mezzio\Helper\UrlHelper;
+use Mezzio\Template\TemplateRendererInterface;
 
 class DisplayThankYouHandlerFactory
 {

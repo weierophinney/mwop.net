@@ -9,7 +9,7 @@ declare(strict_types=1);
 namespace Mwop\OAuth2;
 
 use Psr\Http\Message\ResponseFactoryInterface;
-use Zend\Expressive\Template\TemplateRendererInterface;
+use Mezzio\Template\TemplateRendererInterface;
 
 use function in_array;
 

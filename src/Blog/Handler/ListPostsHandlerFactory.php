@@ -8,8 +8,8 @@ namespace Mwop\Blog\Handler;
 
 use Mwop\Blog\Mapper\MapperInterface;
 use Psr\Container\ContainerInterface;
-use Zend\Expressive\Router\RouterInterface;
-use Zend\Expressive\Template\TemplateRendererInterface;
+use Mezzio\Router\RouterInterface;
+use Mezzio\Template\TemplateRendererInterface;
 
 class ListPostsHandlerFactory
 {

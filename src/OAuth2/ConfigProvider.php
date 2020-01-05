@@ -9,8 +9,8 @@ declare(strict_types=1);
 namespace Mwop\OAuth2;
 
 use Phly\Expressive\ConfigFactory;
-use Zend\Expressive\Application;
-use Zend\Expressive\Session\SessionMiddleware;
+use Mezzio\Application;
+use Mezzio\Session\SessionMiddleware;
 
 class ConfigProvider
 {

@@ -8,14 +8,14 @@ namespace Mwop;
 
 use Phly\EventDispatcher\ListenerProvider\AttachableListenerProvider;
 use Psr\EventDispatcher\ListenerProviderInterface;
-use Zend\Expressive\Container;
-use Zend\Expressive\Helper;
-use Zend\Expressive\Middleware\ErrorResponseGenerator;
-use Zend\Expressive\Middleware\NotFoundHandler;
-use Zend\Expressive\Router;
-use Zend\Expressive\Session\Cache\CacheSessionPersistence;
-use Zend\Expressive\Session\SessionPersistenceInterface;
-use Zend\Stratigility\Middleware\ErrorHandler;
+use Mezzio\Container;
+use Mezzio\Helper;
+use Mezzio\Middleware\ErrorResponseGenerator;
+use Mezzio\Middleware\NotFoundHandler;
+use Mezzio\Router;
+use Mezzio\Session\Cache\CacheSessionPersistence;
+use Mezzio\Session\SessionPersistenceInterface;
+use Laminas\Stratigility\Middleware\ErrorHandler;
 
 return ['dependencies' => [
     'aliases' => [

@@ -10,9 +10,9 @@ namespace Mwop\Contact;
 
 use Phly\EventDispatcher\ListenerProvider\AttachableListenerProvider;
 use Phly\Expressive\ConfigFactory;
-use Zend\Expressive\Application;
-use Zend\Expressive\Csrf\CsrfMiddleware;
-use Zend\Expressive\Session\SessionMiddleware;
+use Mezzio\Application;
+use Mezzio\Csrf\CsrfMiddleware;
+use Mezzio\Session\SessionMiddleware;
 
 class ConfigProvider
 {

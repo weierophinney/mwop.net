@@ -15,11 +15,11 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Swift_AWSTransport;
-use Zend\Diactoros\RequestFactory;
-use Zend\Diactoros\ResponseFactory;
-use Zend\Expressive\Application;
-use Zend\Expressive\Session\SessionMiddleware;
-use Zend\Feed\Reader\Http\ClientInterface as FeedReaderHttpClientInterface;
+use Laminas\Diactoros\RequestFactory;
+use Laminas\Diactoros\ResponseFactory;
+use Mezzio\Application;
+use Mezzio\Session\SessionMiddleware;
+use Laminas\Feed\Reader\Http\ClientInterface as FeedReaderHttpClientInterface;
 
 class ConfigProvider
 {

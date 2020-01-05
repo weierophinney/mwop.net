@@ -8,8 +8,8 @@ namespace Mwop\Blog\Handler;
 
 use Psr\Container\ContainerInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
-use Zend\Expressive\Middleware\NotFoundHandler;
-use Zend\Expressive\Template\TemplateRendererInterface;
+use Mezzio\Middleware\NotFoundHandler;
+use Mezzio\Template\TemplateRendererInterface;
 
 class DisplayPostHandlerFactory
 {

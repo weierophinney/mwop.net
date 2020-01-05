@@ -10,7 +10,7 @@ namespace Mwop\Blog;
 
 use Phly\EventDispatcher\ListenerProvider\AttachableListenerProvider;
 use Phly\Expressive\ConfigFactory;
-use Zend\Expressive\Application;
+use Mezzio\Application;
 
 class ConfigProvider
 {

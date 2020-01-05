@@ -10,7 +10,7 @@ namespace Mwop\OAuth2\Middleware;
 
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
-use Zend\Expressive\Template\TemplateRendererInterface;
+use Mezzio\Template\TemplateRendererInterface;
 
 class CheckAuthenticationMiddlewareFactory
 {

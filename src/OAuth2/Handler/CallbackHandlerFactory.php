@@ -11,7 +11,7 @@ namespace Mwop\OAuth2\Handler;
 use Mwop\OAuth2\Provider\ProviderFactory;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
-use Zend\Expressive\Template\TemplateRendererInterface;
+use Mezzio\Template\TemplateRendererInterface;
 
 class CallbackHandlerFactory
 {

@@ -11,7 +11,7 @@ namespace Mwop\App\Middleware;
 use Mwop\Blog\Handler\DisplayPostHandler;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Server\MiddlewareInterface;
-use Zend\Expressive\MiddlewareFactory;
+use Mezzio\MiddlewareFactory;
 
 class DisplayBlogPostHandlerDelegator
 {

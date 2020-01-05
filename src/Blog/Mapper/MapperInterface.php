@@ -9,8 +9,8 @@ declare(strict_types=1);
 namespace Mwop\Blog\Mapper;
 
 use Mwop\Blog\BlogPost;
-use Zend\Paginator\Paginator;
-use Zend\Tag\Cloud;
+use Laminas\Paginator\Paginator;
+use Laminas\Tag\Cloud;
 
 interface MapperInterface
 {
