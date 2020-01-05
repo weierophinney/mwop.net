@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1b78025e43ec7c50b59d7bd42642ff8e",
+    "content-hash": "d73ab704eea52150782682cf6b187f58",
     "packages": [
         {
             "name": "cache/adapter-common",
@@ -1867,34 +1867,34 @@
         },
         {
             "name": "league/commonmark",
-            "version": "0.14.0",
+            "version": "0.18.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/commonmark.git",
-                "reference": "b73c0b7288bd0e6f9f56bd0b20d0657214b91838"
+                "reference": "b1ec41ce15c3bd6f7cbe86a645b3efc78d927446"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/b73c0b7288bd0e6f9f56bd0b20d0657214b91838",
-                "reference": "b73c0b7288bd0e6f9f56bd0b20d0657214b91838",
+                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/b1ec41ce15c3bd6f7cbe86a645b3efc78d927446",
+                "reference": "b1ec41ce15c3bd6f7cbe86a645b3efc78d927446",
                 "shasum": ""
             },
             "require": {
                 "ext-mbstring": "*",
-                "php": ">=5.4.8"
+                "php": ">=5.6.5"
             },
             "replace": {
                 "colinodell/commonmark-php": "*"
             },
             "require-dev": {
                 "cebe/markdown": "~1.0",
+                "commonmark/commonmark.js": "0.28",
                 "erusev/parsedown": "~1.0",
-                "jgm/commonmark": "0.25",
                 "michelf/php-markdown": "~1.4",
-                "mikehaertl/php-shellcommand": "~1.2.0",
-                "phpunit/phpunit": "~4.3|~5.0",
-                "scrutinizer/ocular": "~1.1",
-                "symfony/finder": "~2.3|~3.0"
+                "mikehaertl/php-shellcommand": "^1.2",
+                "phpunit/phpunit": "^5.7.27|^6.5.14",
+                "scrutinizer/ocular": "^1.1",
+                "symfony/finder": "^3.0|^4.0"
             },
             "suggest": {
                 "league/commonmark-extras": "Library of useful extensions including smart punctuation"
@@ -1905,7 +1905,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.15-dev"
+                    "dev-master": "0.19-dev"
                 }
             },
             "autoload": {
@@ -1925,14 +1925,14 @@
                     "role": "Lead Developer"
                 }
             ],
-            "description": "Markdown parser for PHP based on the CommonMark spec",
+            "description": "PHP Markdown parser based on the CommonMark spec",
             "homepage": "https://github.com/thephpleague/commonmark",
             "keywords": [
                 "commonmark",
                 "markdown",
                 "parser"
             ],
-            "time": "2016-07-02T18:48:39+00:00"
+            "time": "2019-03-21T22:47:25+00:00"
         },
         {
             "name": "league/oauth2-client",
