@@ -8,7 +8,7 @@ declare(strict_types=1);
 
 namespace Mwop\Contact\Validation;
 
-use Zend\Validator\ValidatorInterface;
+use Laminas\Validator\ValidatorInterface;
 
 class RecaptchaValidator implements ValidatorInterface
 {
@@ -26,8 +26,7 @@ class RecaptchaValidator implements ValidatorInterface
 
     public function isValid($value) : bool
     {
-        $uri  = sprintf(self::RECAPTCHA_VERIFICATION_URI_PATTERN, $this->key, $value);
-        $json = file_get_contents($uri);
+        $json     = $this->sendRecaptchaVerification($value);
         $response = json_decode($json);
         if (! isset($response->success) || $response->success !== true) {
             $this->messages = [ 'ReCaptcha was invalid!' ];
@@ -39,5 +38,19 @@ class RecaptchaValidator implements ValidatorInterface
     public function getMessages() : array
     {
         return $this->messages;
+    }
+
+    private function sendRecaptchaVerification(string $value) : string
+    {
+        $ch = curl_init(sprintf(self::RECAPTCHA_VERIFICATION_URI_PATTERN, $this->key, $value));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+        curl_setopt($ch, CURLOPT_USERAGENT, 'mwopnet/recaptcha-validator');
+
+        $result = curl_exec($ch);
+
+        curl_close($ch);
+
+        return $result;
     }
 }

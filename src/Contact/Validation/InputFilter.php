@@ -8,8 +8,8 @@ declare(strict_types=1);
 
 namespace Mwop\Contact\Validation;
 
-use Zend\InputFilter\InputFilter as BaseInputFilter;
-use Zend\Validator\Hostname as HostnameValidator;
+use Laminas\InputFilter\InputFilter as BaseInputFilter;
+use Laminas\Validator\Hostname as HostnameValidator;
 
 class InputFilter extends BaseInputFilter
 {
@@ -20,7 +20,7 @@ class InputFilter extends BaseInputFilter
             'required'   => true,
             'validators' => [
                 [
-                    'name'    => 'Zend\Validator\EmailAddress',
+                    'name'    => 'Laminas\Validator\EmailAddress',
                     'options' => [
                         'allow'  => HostnameValidator::ALLOW_DNS,
                         'domain' => true,
@@ -34,12 +34,12 @@ class InputFilter extends BaseInputFilter
             'required'   => true,
             'filters'    => [
                 [
-                    'name'    => 'Zend\Filter\StripTags',
+                    'name'    => 'Laminas\Filter\StripTags',
                 ],
             ],
             'validators' => [
                 [
-                    'name'    => 'Zend\Validator\StringLength',
+                    'name'    => 'Laminas\Validator\StringLength',
                     'options' => [
                         'encoding' => 'UTF-8',
                         'min'      => 2,

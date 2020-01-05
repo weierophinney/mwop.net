@@ -25,18 +25,26 @@ FROM mwop/phly-docker-php-swoole:7.3-alpine
 # System dependencies
 RUN echo 'http://dl-cdn.alpinelinux.org/alpine/v3.6/community' >> /etc/apk/repositories
 RUN apk update && \
-  apk add --no-cache bzip2-dev icu-dev libxml2-dev libxslt-dev libzip-dev 'tidyhtml-dev==5.2.0-r1'
+  apk add --no-cache \
+    bzip2-dev \
+    icu-dev \
+    libxml2-dev \
+    libxslt-dev \
+    libzip-dev \
+    'tidyhtml-dev==5.2.0-r1' \
+    php7-bcmath \
+    php7-bz2 \
+    php7-curl \
+    php7-intl \
+    php7-opcache \
+    php7-openssl \
+    php7-pcntl \
+    php7-xsl \
+    php7-zip
 
 # PHP Extensions
 RUN docker-php-ext-configure zip --with-libzip=/usr/include && \
-  docker-php-ext-install -j$(nproc) bcmath && \
-  docker-php-ext-install -j$(nproc) bz2 && \
-  docker-php-ext-install -j$(nproc) intl && \
-  docker-php-ext-install -j$(nproc) opcache && \
-  docker-php-ext-install -j$(nproc) pcntl && \
-  docker-php-ext-install -j$(nproc) tidy && \
-  docker-php-ext-install -j$(nproc) xsl && \
-  docker-php-ext-install -j$(nproc) zip
+  docker-php-ext-install -j$(nproc) tidy
 
 # PHP configuration
 COPY etc/php/mwop.ini /usr/local/etc/php/conf.d/999-mwop.ini
