@@ -8,7 +8,7 @@ declare(strict_types=1);
 
 namespace Mwop\OAuth2;
 
-use Phly\Expressive\ConfigFactory;
+use Phly\ConfigFactory\ConfigFactory;
 use Mezzio\Application;
 use Mezzio\Session\SessionMiddleware;
 

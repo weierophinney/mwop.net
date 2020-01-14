@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1b78025e43ec7c50b59d7bd42642ff8e",
+    "content-hash": "7cd339ba9afaca71d17992717f7919fb",
     "packages": [
         {
             "name": "cache/adapter-common",
@@ -552,16 +552,16 @@
         },
         {
             "name": "egulias/email-validator",
-            "version": "2.1.13",
+            "version": "2.1.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/egulias/EmailValidator.git",
-                "reference": "834593d5900615639208417760ba6a17299e2497"
+                "reference": "c4b8d12921999d8a561004371701dbc2e05b5ece"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/egulias/EmailValidator/zipball/834593d5900615639208417760ba6a17299e2497",
-                "reference": "834593d5900615639208417760ba6a17299e2497",
+                "url": "https://api.github.com/repos/egulias/EmailValidator/zipball/c4b8d12921999d8a561004371701dbc2e05b5ece",
+                "reference": "c4b8d12921999d8a561004371701dbc2e05b5ece",
                 "shasum": ""
             },
             "require": {
@@ -605,7 +605,7 @@
                 "validation",
                 "validator"
             ],
-            "time": "2019-12-30T08:14:25+00:00"
+            "time": "2020-01-05T14:11:20+00:00"
         },
         {
             "name": "erusev/parsedown",
@@ -984,16 +984,16 @@
         },
         {
             "name": "laminas/laminas-dependency-plugin",
-            "version": "1.0.0",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-dependency-plugin.git",
-                "reference": "1e0e1dab486afd40b879fa5783055fc4f114f7be"
+                "reference": "306bbea99ed3d3b8b8bc29da9c4faeaa88fef761"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-dependency-plugin/zipball/1e0e1dab486afd40b879fa5783055fc4f114f7be",
-                "reference": "1e0e1dab486afd40b879fa5783055fc4f114f7be",
+                "url": "https://api.github.com/repos/laminas/laminas-dependency-plugin/zipball/306bbea99ed3d3b8b8bc29da9c4faeaa88fef761",
+                "reference": "306bbea99ed3d3b8b8bc29da9c4faeaa88fef761",
                 "shasum": ""
             },
             "require": {
@@ -1026,20 +1026,20 @@
                 "BSD-3-Clause"
             ],
             "description": "Replace zendframework and zfcampus packages with their Laminas Project equivalents.",
-            "time": "2019-12-31T21:06:56+00:00"
+            "time": "2020-01-07T18:34:51+00:00"
         },
         {
             "name": "laminas/laminas-diactoros",
-            "version": "2.2.1",
+            "version": "2.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-diactoros.git",
-                "reference": "064f0b20e832bb232d0311f915c7422fef1b1857"
+                "reference": "95178c4751d737cdf9ab0a9f70a42754ac860e7b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-diactoros/zipball/064f0b20e832bb232d0311f915c7422fef1b1857",
-                "reference": "064f0b20e832bb232d0311f915c7422fef1b1857",
+                "url": "https://api.github.com/repos/laminas/laminas-diactoros/zipball/95178c4751d737cdf9ab0a9f70a42754ac860e7b",
+                "reference": "95178c4751d737cdf9ab0a9f70a42754ac860e7b",
                 "shasum": ""
             },
             "require": {
@@ -1047,6 +1047,9 @@
                 "php": "^7.1",
                 "psr/http-factory": "^1.0",
                 "psr/http-message": "^1.0"
+            },
+            "conflict": {
+                "phpspec/prophecy": "<1.9.0"
             },
             "provide": {
                 "psr/http-factory-implementation": "1.0",
@@ -1062,7 +1065,7 @@
                 "http-interop/http-factory-tests": "^0.5.0",
                 "laminas/laminas-coding-standard": "~1.0.0",
                 "php-http/psr7-integration-tests": "dev-master",
-                "phpunit/phpunit": "^7.0.2"
+                "phpunit/phpunit": "^7.5.18"
             },
             "type": "library",
             "extra": {
@@ -1107,7 +1110,7 @@
                 "psr",
                 "psr-7"
             ],
-            "time": "2019-12-31T16:41:56+00:00"
+            "time": "2020-01-07T19:39:26+00:00"
         },
         {
             "name": "laminas/laminas-escaper",
@@ -1227,16 +1230,16 @@
         },
         {
             "name": "laminas/laminas-filter",
-            "version": "2.9.2",
+            "version": "2.9.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-filter.git",
-                "reference": "4d8c0c25e40836bd617335e744009c2c950c4ad5"
+                "reference": "52b5cdbef8902280996e687e7352a648a8e22f31"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-filter/zipball/4d8c0c25e40836bd617335e744009c2c950c4ad5",
-                "reference": "4d8c0c25e40836bd617335e744009c2c950c4ad5",
+                "url": "https://api.github.com/repos/laminas/laminas-filter/zipball/52b5cdbef8902280996e687e7352a648a8e22f31",
+                "reference": "52b5cdbef8902280996e687e7352a648a8e22f31",
                 "shasum": ""
             },
             "require": {
@@ -1292,7 +1295,7 @@
                 "filter",
                 "laminas"
             ],
-            "time": "2019-12-31T16:54:29+00:00"
+            "time": "2020-01-07T20:43:53+00:00"
         },
         {
             "name": "laminas/laminas-httphandlerrunner",
@@ -1607,16 +1610,16 @@
         },
         {
             "name": "laminas/laminas-stratigility",
-            "version": "3.2.0",
+            "version": "3.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-stratigility.git",
-                "reference": "7e36f4b6b9d3461c6e35bb7cbfa0c14f90e14f74"
+                "reference": "2776cc08e1dd820bb68e17cd59605bdc9e5807b5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-stratigility/zipball/7e36f4b6b9d3461c6e35bb7cbfa0c14f90e14f74",
-                "reference": "7e36f4b6b9d3461c6e35bb7cbfa0c14f90e14f74",
+                "url": "https://api.github.com/repos/laminas/laminas-stratigility/zipball/2776cc08e1dd820bb68e17cd59605bdc9e5807b5",
+                "reference": "2776cc08e1dd820bb68e17cd59605bdc9e5807b5",
                 "shasum": ""
             },
             "require": {
@@ -1677,7 +1680,7 @@
                 "psr-15",
                 "psr-7"
             ],
-            "time": "2019-12-31T17:51:56+00:00"
+            "time": "2020-01-07T21:13:38+00:00"
         },
         {
             "name": "laminas/laminas-tag",
@@ -1815,16 +1818,16 @@
         },
         {
             "name": "laminas/laminas-zendframework-bridge",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-zendframework-bridge.git",
-                "reference": "32d7095e436a31b8d98e485a5c63d70df74915a8"
+                "reference": "0fb9675b84a1666ab45182b6c5b29956921e818d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-zendframework-bridge/zipball/32d7095e436a31b8d98e485a5c63d70df74915a8",
-                "reference": "32d7095e436a31b8d98e485a5c63d70df74915a8",
+                "url": "https://api.github.com/repos/laminas/laminas-zendframework-bridge/zipball/0fb9675b84a1666ab45182b6c5b29956921e818d",
+                "reference": "0fb9675b84a1666ab45182b6c5b29956921e818d",
                 "shasum": ""
             },
             "require": {
@@ -1863,7 +1866,7 @@
                 "laminas",
                 "zf"
             ],
-            "time": "2019-12-31T15:24:03+00:00"
+            "time": "2020-01-07T22:58:31+00:00"
         },
         {
             "name": "league/commonmark",
@@ -3132,34 +3135,35 @@
         },
         {
             "name": "ocramius/package-versions",
-            "version": "1.4.2",
+            "version": "1.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Ocramius/PackageVersions.git",
-                "reference": "44af6f3a2e2e04f2af46bcb302ad9600cba41c7d"
+                "reference": "1d32342b8c1eb27353c8887c366147b4c2da673c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Ocramius/PackageVersions/zipball/44af6f3a2e2e04f2af46bcb302ad9600cba41c7d",
-                "reference": "44af6f3a2e2e04f2af46bcb302ad9600cba41c7d",
+                "url": "https://api.github.com/repos/Ocramius/PackageVersions/zipball/1d32342b8c1eb27353c8887c366147b4c2da673c",
+                "reference": "1d32342b8c1eb27353c8887c366147b4c2da673c",
                 "shasum": ""
             },
             "require": {
                 "composer-plugin-api": "^1.0.0",
-                "php": "^7.1.0"
+                "php": "^7.3.0"
             },
             "require-dev": {
-                "composer/composer": "^1.6.3",
-                "doctrine/coding-standard": "^5.0.1",
+                "composer/composer": "^1.8.6",
+                "doctrine/coding-standard": "^6.0.0",
                 "ext-zip": "*",
-                "infection/infection": "^0.7.1",
-                "phpunit/phpunit": "^7.5.17"
+                "infection/infection": "^0.13.4",
+                "phpunit/phpunit": "^8.2.5",
+                "vimeo/psalm": "^3.4.9"
             },
             "type": "composer-plugin",
             "extra": {
                 "class": "PackageVersions\\Installer",
                 "branch-alias": {
-                    "dev-master": "2.0.x-dev"
+                    "dev-master": "1.6.x-dev"
                 }
             },
             "autoload": {
@@ -3178,7 +3182,7 @@
                 }
             ],
             "description": "Composer plugin that provides efficient querying for installed package versions (no runtime IO)",
-            "time": "2019-11-15T16:17:10+00:00"
+            "time": "2019-07-17T15:49:50+00:00"
         },
         {
             "name": "opis/closure",
@@ -3466,6 +3470,58 @@
             "time": "2019-10-16T20:42:11+00:00"
         },
         {
+            "name": "phly/phly-configfactory",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phly/phly-configfactory.git",
+                "reference": "c96ee456ea21eb04a051cc4be9ff7838b48a07f2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phly/phly-configfactory/zipball/c96ee456ea21eb04a051cc4be9ff7838b48a07f2",
+                "reference": "c96ee456ea21eb04a051cc4be9ff7838b48a07f2",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1",
+                "psr/container": "^1.0"
+            },
+            "require-dev": {
+                "laminas/laminas-coding-standard": "~2.0.0@alpha",
+                "laminas/laminas-dependency-plugin": "^1.0",
+                "laminas/laminas-servicemanager": "^3.4",
+                "phpunit/phpunit": "^7.1.1",
+                "webimpress/coding-standard": "dev-master@dev"
+            },
+            "suggest": {
+                "laminas/laminas-servicemanager": "Install laminas-servicemanager to use the ConfigAbstractFactory"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Phly\\ConfigFactory\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Factory for pulling nested configuration arrays from the config service",
+            "keywords": [
+                "PSR-11",
+                "config",
+                "expressive",
+                "mezzio"
+            ],
+            "time": "2020-01-14T13:42:28+00:00"
+        },
+        {
             "name": "phly/phly-event-dispatcher",
             "version": "0.3.0",
             "source": {
@@ -3523,56 +3579,6 @@
                 "psr-14"
             ],
             "time": "2019-01-14T20:27:03+00:00"
-        },
-        {
-            "name": "phly/phly-expressive-configfactory",
-            "version": "1.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phly/phly-expressive-configfactory.git",
-                "reference": "95b814bf185a7674ee2677610736ba9695049ed2"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phly/phly-expressive-configfactory/zipball/95b814bf185a7674ee2677610736ba9695049ed2",
-                "reference": "95b814bf185a7674ee2677610736ba9695049ed2",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.1",
-                "psr/container": "^1.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^7.1.1",
-                "webimpress/coding-standard": "dev-master@dev",
-                "zendframework/zend-coding-standard": "~2.0.0@alpha",
-                "zendframework/zend-servicemanager": "^3.4"
-            },
-            "suggest": {
-                "zendframework/zend-servicemanager": "Install zend-servicemanager to use the ConfigAbstractFactory"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Phly\\Expressive\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "description": "Factory for pulling nested configuration arrays from the config service",
-            "keywords": [
-                "PSR-11",
-                "config",
-                "expressive"
-            ],
-            "time": "2019-02-07T14:46:47+00:00"
         },
         {
             "name": "phly/phly-swoole-taskworker",
@@ -5346,6 +5352,72 @@
     ],
     "packages-dev": [
         {
+            "name": "dealerdirect/phpcodesniffer-composer-installer",
+            "version": "v0.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Dealerdirect/phpcodesniffer-composer-installer.git",
+                "reference": "e749410375ff6fb7a040a68878c656c2e610b132"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Dealerdirect/phpcodesniffer-composer-installer/zipball/e749410375ff6fb7a040a68878c656c2e610b132",
+                "reference": "e749410375ff6fb7a040a68878c656c2e610b132",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^1.0",
+                "php": "^5.3|^7",
+                "squizlabs/php_codesniffer": "^2|^3"
+            },
+            "require-dev": {
+                "composer/composer": "*",
+                "phpcompatibility/php-compatibility": "^9.0",
+                "sensiolabs/security-checker": "^4.1.0"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "class": "Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Plugin"
+            },
+            "autoload": {
+                "psr-4": {
+                    "Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Franck Nijhof",
+                    "email": "franck.nijhof@dealerdirect.com",
+                    "homepage": "http://www.frenck.nl",
+                    "role": "Developer / IT Manager"
+                }
+            ],
+            "description": "PHP_CodeSniffer Standards Composer Installer Plugin",
+            "homepage": "http://www.dealerdirect.com",
+            "keywords": [
+                "PHPCodeSniffer",
+                "PHP_CodeSniffer",
+                "code quality",
+                "codesniffer",
+                "composer",
+                "installer",
+                "phpcs",
+                "plugin",
+                "qa",
+                "quality",
+                "standard",
+                "standards",
+                "style guide",
+                "stylecheck",
+                "tests"
+            ],
+            "time": "2018-10-26T13:21:45+00:00"
+        },
+        {
             "name": "doctrine/instantiator",
             "version": "1.3.0",
             "source": {
@@ -5525,37 +5597,52 @@
         },
         {
             "name": "laminas/laminas-coding-standard",
-            "version": "1.0.0",
+            "version": "2.0.0rc1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-coding-standard.git",
-                "reference": "08880ce2fbfe62d471cd3cb766a91da630b32539"
+                "reference": "e8716f56be0dcee3f82fa550ef4a895faac7ccef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-coding-standard/zipball/08880ce2fbfe62d471cd3cb766a91da630b32539",
-                "reference": "08880ce2fbfe62d471cd3cb766a91da630b32539",
+                "url": "https://api.github.com/repos/laminas/laminas-coding-standard/zipball/e8716f56be0dcee3f82fa550ef4a895faac7ccef",
+                "reference": "e8716f56be0dcee3f82fa550ef4a895faac7ccef",
                 "shasum": ""
             },
             "require": {
+                "dealerdirect/phpcodesniffer-composer-installer": "^0.5.0",
                 "laminas/laminas-zendframework-bridge": "^1.0",
-                "squizlabs/php_codesniffer": "^2.7"
+                "php": "^7.1",
+                "slevomat/coding-standard": "^5.0.4",
+                "squizlabs/php_codesniffer": "^3.5.3",
+                "webimpress/coding-standard": "~1.0.6"
             },
             "replace": {
                 "zendframework/zend-coding-standard": "self.version"
             },
-            "type": "library",
+            "type": "phpcodesniffer-standard",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev",
+                    "dev-develop": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "LaminasCodingStandard\\": "src/LaminasCodingStandard/"
+                }
+            },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause"
             ],
-            "description": "Laminas coding standard",
+            "description": "Laminas Coding Standard",
             "homepage": "https://laminas.dev",
             "keywords": [
                 "Coding Standard",
                 "laminas"
             ],
-            "time": "2019-12-31T16:28:26+00:00"
+            "time": "2020-01-06T09:35:12+00:00"
         },
         {
             "name": "laminas/laminas-component-installer",
@@ -6215,6 +6302,53 @@
                 "stub"
             ],
             "time": "2019-12-22T21:05:45+00:00"
+        },
+        {
+            "name": "phpstan/phpdoc-parser",
+            "version": "0.3.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpstan/phpdoc-parser.git",
+                "reference": "8c4ef2aefd9788238897b678a985e1d5c8df6db4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/8c4ef2aefd9788238897b678a985e1d5c8df6db4",
+                "reference": "8c4ef2aefd9788238897b678a985e1d5c8df6db4",
+                "shasum": ""
+            },
+            "require": {
+                "php": "~7.1"
+            },
+            "require-dev": {
+                "consistence/coding-standard": "^3.5",
+                "jakub-onderka/php-parallel-lint": "^0.9.2",
+                "phing/phing": "^2.16.0",
+                "phpstan/phpstan": "^0.10",
+                "phpunit/phpunit": "^6.3",
+                "slevomat/coding-standard": "^4.7.2",
+                "squizlabs/php_codesniffer": "^3.3.2",
+                "symfony/process": "^3.4 || ^4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.3-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "PHPStan\\PhpDocParser\\": [
+                        "src/"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "PHPDoc parser with support for nullable, intersection and generic types",
+            "time": "2019-06-07T19:13:52+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -7169,64 +7303,77 @@
             "time": "2016-10-03T07:35:21+00:00"
         },
         {
-            "name": "squizlabs/php_codesniffer",
-            "version": "2.9.2",
+            "name": "slevomat/coding-standard",
+            "version": "5.0.4",
             "source": {
                 "type": "git",
-                "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-                "reference": "2acf168de78487db620ab4bc524135a13cfe6745"
+                "url": "https://github.com/slevomat/coding-standard.git",
+                "reference": "287ac3347c47918c0bf5e10335e36197ea10894c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/2acf168de78487db620ab4bc524135a13cfe6745",
-                "reference": "2acf168de78487db620ab4bc524135a13cfe6745",
+                "url": "https://api.github.com/repos/slevomat/coding-standard/zipball/287ac3347c47918c0bf5e10335e36197ea10894c",
+                "reference": "287ac3347c47918c0bf5e10335e36197ea10894c",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1",
+                "phpstan/phpdoc-parser": "^0.3.1",
+                "squizlabs/php_codesniffer": "^3.4.1"
+            },
+            "require-dev": {
+                "jakub-onderka/php-parallel-lint": "1.0.0",
+                "phing/phing": "2.16.1",
+                "phpstan/phpstan": "0.11.4",
+                "phpstan/phpstan-phpunit": "0.11",
+                "phpstan/phpstan-strict-rules": "0.11",
+                "phpunit/phpunit": "8.0.5"
+            },
+            "type": "phpcodesniffer-standard",
+            "autoload": {
+                "psr-4": {
+                    "SlevomatCodingStandard\\": "SlevomatCodingStandard"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Slevomat Coding Standard for PHP_CodeSniffer complements Consistence Coding Standard by providing sniffs with additional checks.",
+            "time": "2019-03-22T19:10:53+00:00"
+        },
+        {
+            "name": "squizlabs/php_codesniffer",
+            "version": "3.5.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
+                "reference": "557a1fc7ac702c66b0bbfe16ab3d55839ef724cb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/557a1fc7ac702c66b0bbfe16ab3d55839ef724cb",
+                "reference": "557a1fc7ac702c66b0bbfe16ab3d55839ef724cb",
                 "shasum": ""
             },
             "require": {
                 "ext-simplexml": "*",
                 "ext-tokenizer": "*",
                 "ext-xmlwriter": "*",
-                "php": ">=5.1.2"
+                "php": ">=5.4.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "~4.0"
+                "phpunit/phpunit": "^4.0 || ^5.0 || ^6.0 || ^7.0"
             },
             "bin": [
-                "scripts/phpcs",
-                "scripts/phpcbf"
+                "bin/phpcs",
+                "bin/phpcbf"
             ],
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.x-dev"
+                    "dev-master": "3.x-dev"
                 }
-            },
-            "autoload": {
-                "classmap": [
-                    "CodeSniffer.php",
-                    "CodeSniffer/CLI.php",
-                    "CodeSniffer/Exception.php",
-                    "CodeSniffer/File.php",
-                    "CodeSniffer/Fixer.php",
-                    "CodeSniffer/Report.php",
-                    "CodeSniffer/Reporting.php",
-                    "CodeSniffer/Sniff.php",
-                    "CodeSniffer/Tokens.php",
-                    "CodeSniffer/Reports/",
-                    "CodeSniffer/Tokenizers/",
-                    "CodeSniffer/DocGenerators/",
-                    "CodeSniffer/Standards/AbstractPatternSniff.php",
-                    "CodeSniffer/Standards/AbstractScopeSniff.php",
-                    "CodeSniffer/Standards/AbstractVariableSniff.php",
-                    "CodeSniffer/Standards/IncorrectPatternException.php",
-                    "CodeSniffer/Standards/Generic/Sniffs/",
-                    "CodeSniffer/Standards/MySource/Sniffs/",
-                    "CodeSniffer/Standards/PEAR/Sniffs/",
-                    "CodeSniffer/Standards/PSR1/Sniffs/",
-                    "CodeSniffer/Standards/PSR2/Sniffs/",
-                    "CodeSniffer/Standards/Squiz/Sniffs/",
-                    "CodeSniffer/Standards/Zend/Sniffs/"
-                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -7239,12 +7386,12 @@
                 }
             ],
             "description": "PHP_CodeSniffer tokenizes PHP, JavaScript and CSS files and detects violations of a defined set of coding standards.",
-            "homepage": "http://www.squizlabs.com/php-codesniffer",
+            "homepage": "https://github.com/squizlabs/PHP_CodeSniffer",
             "keywords": [
                 "phpcs",
                 "standards"
             ],
-            "time": "2018-11-07T22:31:41+00:00"
+            "time": "2019-12-04T04:46:47+00:00"
         },
         {
             "name": "theseer/tokenizer",
@@ -7285,6 +7432,51 @@
             ],
             "description": "A small library for converting tokenized PHP source code into XML and potentially other formats",
             "time": "2019-06-13T22:48:21+00:00"
+        },
+        {
+            "name": "webimpress/coding-standard",
+            "version": "1.0.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/webimpress/coding-standard.git",
+                "reference": "ece265467a883370ab75746c4318b5d47c010ab7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/webimpress/coding-standard/zipball/ece265467a883370ab75746c4318b5d47c010ab7",
+                "reference": "ece265467a883370ab75746c4318b5d47c010ab7",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1",
+                "squizlabs/php_codesniffer": "^3.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7.5.6"
+            },
+            "type": "phpcodesniffer-standard",
+            "extra": {
+                "dev-master": "1.0.x-dev",
+                "dev-develop": "1.1.x-dev"
+            },
+            "autoload": {
+                "psr-4": {
+                    "WebimpressCodingStandard\\": "src/WebimpressCodingStandard/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-2-Clause"
+            ],
+            "description": "Webimpress Coding Standard",
+            "keywords": [
+                "Coding Standard",
+                "PSR-2",
+                "phpcs",
+                "psr-12",
+                "webimpress"
+            ],
+            "time": "2019-11-13T22:29:56+00:00"
         },
         {
             "name": "webmozart/assert",
@@ -7337,7 +7529,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "laminas/laminas-coding-standard": 5
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

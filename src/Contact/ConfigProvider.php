@@ -8,11 +8,11 @@ declare(strict_types=1);
 
 namespace Mwop\Contact;
 
-use Phly\EventDispatcher\ListenerProvider\AttachableListenerProvider;
-use Phly\Expressive\ConfigFactory;
 use Mezzio\Application;
 use Mezzio\Csrf\CsrfMiddleware;
 use Mezzio\Session\SessionMiddleware;
+use Phly\ConfigFactory\ConfigFactory;
+use Phly\EventDispatcher\ListenerProvider\AttachableListenerProvider;
 
 class ConfigProvider
 {

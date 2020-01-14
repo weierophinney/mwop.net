@@ -26,7 +26,7 @@
         "monolog/monolog": "^1.23",
         "phly/phly-comic": "^2.1.2",
         "phly/phly-event-dispatcher": "^0.3",
-        "phly/phly-expressive-configfactory": "^1.0",
+        "phly/phly-configfactory": "^1.0",
         "phly/phly-swoole-taskworker": "^1.1",
         "php-http/curl-client": "^1.4",
         "php-http/message": "^1.2",
@@ -59,7 +59,7 @@
     "require-dev": {
         "filp/whoops": "^2.1.3",
         "phpunit/phpunit": "^5.7 || ^6.0",
-        "laminas/laminas-coding-standard": "~1.0.0",
+        "laminas/laminas-coding-standard": "~2.0.0rc1 || ~2.0.0",
         "laminas/laminas-component-installer": "^2.1",
         "mezzio/mezzio-tooling": "^1.0",
         "laminas/laminas-development-mode": "^3.1"

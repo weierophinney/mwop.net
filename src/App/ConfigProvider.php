@@ -9,7 +9,7 @@ namespace Mwop\App;
 use League\Plates\Engine;
 use Middlewares\Csp;
 use Mwop\Blog\Handler\DisplayPostHandler;
-use Phly\Expressive\ConfigFactory;
+use Phly\ConfigFactory\ConfigFactory;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Message\RequestFactoryInterface;

@@ -8,7 +8,7 @@ declare(strict_types=1);
 
 namespace Mwop\Github;
 
-use Phly\Expressive\ConfigFactory;
+use Phly\ConfigFactory\ConfigFactory;
 
 class ConfigProvider
 {

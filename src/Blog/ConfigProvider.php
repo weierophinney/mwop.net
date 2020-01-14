@@ -8,8 +8,8 @@ declare(strict_types=1);
 
 namespace Mwop\Blog;
 
+use Phly\ConfigFactory\ConfigFactory;
 use Phly\EventDispatcher\ListenerProvider\AttachableListenerProvider;
-use Phly\Expressive\ConfigFactory;
 use Mezzio\Application;
 
 class ConfigProvider
