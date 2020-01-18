@@ -1,19 +1,21 @@
 <?php
+
 /**
- * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  */
 
 declare(strict_types=1);
 
 namespace Mwop\Blog\Console;
 
+use Laminas\Diactoros\Response;
+use Mezzio\Router\Route;
+use Mezzio\Router\RouterInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Mezzio\Router\Route;
-use Mezzio\Router\RouterInterface;
 
 trait RoutesTrait
 {
@@ -30,13 +32,14 @@ trait RoutesTrait
         'resume'             => '/resume',
     ];
 
-    private function seedRoutes(RouterInterface $router) : RouterInterface
+    private function seedRoutes(RouterInterface $router): RouterInterface
     {
         $middleware = new class implements MiddlewareInterface {
             public function process(
                 ServerRequestInterface $request,
                 RequestHandlerInterface $handler
-            ) : ResponseInterface {
+            ): ResponseInterface {
+                return new Response(500);
             }
         };
 

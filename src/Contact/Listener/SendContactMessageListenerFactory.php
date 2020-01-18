@@ -1,7 +1,8 @@
 <?php
+
 /**
- * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  */
 
 declare(strict_types=1);
@@ -10,15 +11,17 @@ namespace Mwop\Contact\Listener;
 
 use Psr\Container\ContainerInterface;
 use RuntimeException;
-use Swift_Mailer as Mailer;
+
+use function sprintf;
 
 class SendContactMessageListenerFactory
 {
-    public function __invoke(ContainerInterface $container) : SendContactMessageListener
+    public function __invoke(ContainerInterface $container): SendContactMessageListener
     {
         $config = $container->get('config-contact.message');
 
-        if (! isset($config['to'])
+        if (
+            ! isset($config['to'])
             || ! isset($config['sender']['address'])
         ) {
             $baseConfigKey = 'contact.message';

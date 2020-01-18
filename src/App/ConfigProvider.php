@@ -1,12 +1,20 @@
 <?php
+
 /**
- * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  */
+
+declare(strict_types=1);
 
 namespace Mwop\App;
 
+use Laminas\Diactoros\RequestFactory;
+use Laminas\Diactoros\ResponseFactory;
+use Laminas\Feed\Reader\Http\ClientInterface as FeedReaderHttpClientInterface;
 use League\Plates\Engine;
+use Mezzio\Application;
+use Mezzio\Session\SessionMiddleware;
 use Middlewares\Csp;
 use Mwop\Blog\Handler\DisplayPostHandler;
 use Phly\ConfigFactory\ConfigFactory;
@@ -15,15 +23,14 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Swift_AWSTransport;
-use Laminas\Diactoros\RequestFactory;
-use Laminas\Diactoros\ResponseFactory;
-use Mezzio\Application;
-use Mezzio\Session\SessionMiddleware;
-use Laminas\Feed\Reader\Http\ClientInterface as FeedReaderHttpClientInterface;
+
+use function getcwd;
+use function realpath;
+use function strpos;
 
 class ConfigProvider
 {
-    public function __invoke() : array
+    public function __invoke(): array
     {
         return [
             'dependencies'            => $this->getDependencies(),
@@ -34,7 +41,7 @@ class ConfigProvider
         ];
     }
 
-    public function getDependencies() : array
+    public function getDependencies(): array
     {
         return [
             'invokables' => [
@@ -71,51 +78,51 @@ class ConfigProvider
                 DisplayPostHandler::class => [
                     Middleware\DisplayBlogPostHandlerDelegator::class,
                 ],
-                Engine::class => [
+                Engine::class             => [
                     Factory\PlatesFunctionsDelegator::class,
                 ],
             ],
         ];
     }
 
-    public function getCacheConfig() : array
+    public function getCacheConfig(): array
     {
         return [
             'connection-parameters' => [
                 'scheme' => 'tcp',
-                'host' => 'redis',
-                'port' => 6379,
+                'host'   => 'redis',
+                'port'   => 6379,
             ],
         ];
     }
 
-    public function getHomePageConfig() : array
+    public function getHomePageConfig(): array
     {
         return [
             'feed-count' => 10,
-            'feeds' => [
+            'feeds'      => [
                 [
-                    'url' => realpath(getcwd()) . '/data/feeds/rss.xml',
+                    'url'      => realpath(getcwd()) . '/data/feeds/rss.xml',
                     'sitename' => 'mwop.net',
-                    'siteurl' => 'https://mwop.net/blog',
+                    'siteurl'  => 'https://mwop.net/blog',
                 ],
                 [
-                    'url' => 'https://framework.zend.com/blog/feed-rss.xml',
-                    'favicon' => 'https://framework.zend.com/ico/favicon.ico',
+                    'url'      => 'https://framework.zend.com/blog/feed-rss.xml',
+                    'favicon'  => 'https://framework.zend.com/ico/favicon.ico',
                     'sitename' => 'Zend Framework Blog',
-                    'siteurl' => 'https://framework.zend.com/blog/',
-                    'filters' => [
+                    'siteurl'  => 'https://framework.zend.com/blog/',
+                    'filters'  => [
                         function ($entry) {
-                            return (false !== strpos($entry->getAuthor()['name'], 'Phinney'));
+                            return false !== strpos($entry->getAuthor()['name'], 'Phinney');
                         },
                     ],
                 ],
             ],
-            'posts' => [],
+            'posts'      => [],
         ];
     }
 
-    public function getMailConfig() : array
+    public function getMailConfig(): array
     {
         return [
             'transport' => [
@@ -126,7 +133,7 @@ class ConfigProvider
         ];
     }
 
-    public function registerRoutes(Application $app) : void
+    public function registerRoutes(Application $app): void
     {
         $app->get('/', Handler\HomePageHandler::class, 'home');
         $app->get('/comics', Handler\ComicsPageHandler::class, 'comics');
@@ -135,7 +142,7 @@ class ConfigProvider
         // Logout
         $app->get('/logout', [
             SessionMiddleware::class,
-            Handler\LogoutHandler::class
+            Handler\LogoutHandler::class,
         ], 'logout');
     }
 }

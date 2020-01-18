@@ -1,7 +1,8 @@
 <?php
+
 /**
- * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  */
 
 declare(strict_types=1);
@@ -9,14 +10,14 @@ declare(strict_types=1);
 namespace Mwop\Console;
 
 use Exception;
+use Laminas\Feed\Reader\Feed\FeedInterface;
+use Laminas\Feed\Reader\Reader as FeedReader;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Throwable;
-use Laminas\Feed\Reader\Reader as FeedReader;
-use Laminas\Feed\Reader\Feed\FeedInterface;
 
 use function file_get_contents;
 use function file_put_contents;
@@ -28,10 +29,10 @@ use function sprintf;
 class FeedAggregator extends Command
 {
     /** @var string */
-    const CACHE_FILE = '%s/data/homepage.posts.php';
+    private const CACHE_FILE = '%s/data/homepage.posts.php';
 
     /** @var string */
-    private $configFormat = <<< EOC
+    private $configFormat = <<<EOC
 <?php
 return [
 %s
@@ -43,7 +44,7 @@ EOC;
     private $feeds;
 
     /** @var string */
-    private $itemFormat = <<< EOF
+    private $itemFormat = <<<EOF
     [
         'title'    => '%s',
         'link'     => '%s',
@@ -62,12 +63,12 @@ EOF;
 
     public function __construct(array $feeds, int $toRetrieve)
     {
-        $this->feeds = FeedCollection::make($feeds);
+        $this->feeds      = FeedCollection::make($feeds);
         $this->toRetrieve = $toRetrieve;
         parent::__construct();
     }
 
-    protected function configure() : void
+    protected function configure(): void
     {
         $this->setName('homepage-feeds');
         $this->setDescription('Fetch homepage feed data.');
@@ -82,10 +83,10 @@ EOF;
         );
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output) : int
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->status = 0;
-        $io = new SymfonyStyle($input, $output);
+        $io           = new SymfonyStyle($input, $output);
         $io->title('Aggregating feed data for home page');
         file_put_contents(
             $this->generateFilename($input->getOption('path')),
@@ -99,7 +100,7 @@ EOF;
         return $this->status;
     }
 
-    private function getEntries(SymfonyStyle $io) : FeedCollection
+    private function getEntries(SymfonyStyle $io): FeedCollection
     {
         return $this->feeds
             ->reduce(function ($entries, $feedInfo) use ($io) {
@@ -109,12 +110,12 @@ EOF;
             ->slice(0, $this->toRetrieve);
     }
 
-    private function generateFilename(string $path) : string
+    private function generateFilename(string $path): string
     {
         return sprintf(self::CACHE_FILE, $path);
     }
 
-    private function generateContent(FeedCollection $entries) : string
+    private function generateContent(FeedCollection $entries): string
     {
         return sprintf(
             $this->configFormat,
@@ -131,7 +132,7 @@ EOF;
         );
     }
 
-    private function marshalEntries(array $feedInfo, SymfonyStyle $io) : FeedCollection
+    private function marshalEntries(array $feedInfo, SymfonyStyle $io): FeedCollection
     {
         $feedUrl  = $feedInfo['url'];
         $logo     = $feedInfo['favicon'] ?? 'https://mwop.net/images/favicon/favicon-16x16.png';
@@ -175,12 +176,12 @@ EOF;
         return $entries;
     }
 
-    private function getFeedFromLocalFile(string $file) : FeedInterface
+    private function getFeedFromLocalFile(string $file): FeedInterface
     {
         return FeedReader::importString(file_get_contents($file));
     }
 
-    private function getFeedFromRemoteUrl(string $url) : FeedInterface
+    private function getFeedFromRemoteUrl(string $url): FeedInterface
     {
         return FeedReader::import($url);
     }

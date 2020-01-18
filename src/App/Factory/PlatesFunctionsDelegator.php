@@ -1,8 +1,11 @@
 <?php
+
 /**
- * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  */
+
+declare(strict_types=1);
 
 namespace Mwop\App\Factory;
 
@@ -12,7 +15,7 @@ use League\Plates\Extension\ExtensionInterface;
 use Mwop\Blog\BlogPost;
 use Psr\Container\ContainerInterface;
 
-use function is_numeric;
+use function array_map;
 use function preg_replace;
 use function preg_replace_callback;
 use function sprintf;
@@ -22,17 +25,21 @@ class PlatesFunctionsDelegator implements ExtensionInterface
 {
     public $template;
 
-    private $engine;
-
-    public function __invoke(ContainerInterface $container, $name, callable $factory)
-    {
+    /**
+     * @inheritDoc
+     */
+    public function __invoke(
+        ContainerInterface $container,
+        string $name,
+        callable $factory
+    ): Engine {
         $engine = $factory();
         $engine->loadExtension($this);
 
         return $engine;
     }
 
-    public function register(Engine $engine) : void
+    public function register(Engine $engine): void
     {
         $engine->registerFunction('ampifyContent', [$this, 'ampifyContent']);
         $engine->registerFunction('formatDate', [$this, 'formatDate']);
@@ -41,7 +48,7 @@ class PlatesFunctionsDelegator implements ExtensionInterface
         $engine->registerFunction('processTags', [$this, 'processTags']);
     }
 
-    public function ampifyContent(string $markup) : string
+    public function ampifyContent(string $markup): string
     {
         return preg_replace_callback('#(<img)([^>]+>)#', function (array $matches) {
             $attributes = preg_replace('#\s*/>$#', '>', $matches[2]);
@@ -55,22 +62,22 @@ class PlatesFunctionsDelegator implements ExtensionInterface
         }, $markup);
     }
 
-    public function formatDate(DateTimeInterface $date, string $format = 'j F Y') : string
+    public function formatDate(DateTimeInterface $date, string $format = 'j F Y'): string
     {
         return $date->format($format);
     }
 
-    public function formatDateRfc(DateTimeInterface $date) : string
+    public function formatDateRfc(DateTimeInterface $date): string
     {
         return $this->formatDate($date, 'c');
     }
 
-    public function postUrl(BlogPost $post) : string
+    public function postUrl(BlogPost $post): string
     {
         return $this->template->url('blog.post', ['id' => $post->id]);
     }
 
-    public function processTags(array $tags) : array
+    public function processTags(array $tags): array
     {
         return array_map(function ($tag) {
             return (object) [

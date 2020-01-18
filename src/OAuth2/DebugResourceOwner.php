@@ -1,7 +1,8 @@
 <?php
+
 /**
- * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  */
 
 declare(strict_types=1);
@@ -14,12 +15,12 @@ class DebugResourceOwner implements ResourceOwnerInterface
 {
     public const USER_ID = 'USER';
 
-    public function getId() : string
+    public function getId(): string
     {
         return self::USER_ID;
     }
 
-    public function toArray() : array
+    public function toArray(): array
     {
         return [
             'id' => self::USER_ID,

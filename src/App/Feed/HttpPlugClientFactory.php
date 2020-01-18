@@ -1,8 +1,11 @@
 <?php
+
 /**
- * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  */
+
+declare(strict_types=1);
 
 namespace Mwop\App\Feed;
 
@@ -14,7 +17,7 @@ use Psr\Http\Message\RequestFactoryInterface;
 
 class HttpPlugClientFactory
 {
-    public function __invoke(ContainerInterface $container) : HttpPlugClient
+    public function __invoke(ContainerInterface $container): HttpPlugClient
     {
         return new HttpPlugClient(
             new Client(

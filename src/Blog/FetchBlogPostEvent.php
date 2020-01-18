@@ -1,7 +1,8 @@
 <?php
+
 /**
- * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  */
 
 declare(strict_types=1);
@@ -29,7 +30,7 @@ class FetchBlogPostEvent implements
         $this->id = $id;
     }
 
-    public function jsonSerialize() : array
+    public function jsonSerialize(): array
     {
         return [
             'id'         => $this->id,
@@ -38,30 +39,30 @@ class FetchBlogPostEvent implements
         ];
     }
 
-    public function isPropagationStopped() : bool
+    public function isPropagationStopped(): bool
     {
         return $this->post && $this->fromCache;
     }
 
-    public function blogPost() : ?BlogPost
+    public function blogPost(): ?BlogPost
     {
         return $this->post;
     }
 
-    public function id() : string
+    public function id(): string
     {
         return $this->id;
     }
 
-    public function provideBlogPostFromCache(BlogPost $post) : void
+    public function provideBlogPostFromCache(BlogPost $post): void
     {
-        $this->post = $post;
+        $this->post      = $post;
         $this->fromCache = true;
     }
 
-    public function provideBlogPost(BlogPost $post) : void
+    public function provideBlogPost(BlogPost $post): void
     {
-        $this->post = $post;
+        $this->post      = $post;
         $this->fromCache = false;
     }
 }

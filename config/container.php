@@ -1,10 +1,12 @@
 <?php
+
 /**
- * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  */
 
-use Laminas\ServiceManager\Config;
+declare(strict_types=1);
+
 use Laminas\ServiceManager\ServiceManager;
 
 // Load configuration

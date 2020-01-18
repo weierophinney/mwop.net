@@ -1,35 +1,35 @@
 <?php
+
 /**
- * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  */
 
 declare(strict_types=1);
 
 namespace Mwop\OAuth2;
 
+use Mezzio\Template\TemplateRendererInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Mezzio\Template\TemplateRendererInterface;
 
 trait RenderUnauthorizedResponseTrait
 {
-    /**
-     * @var TemplateRendererInterface
-     */
+    /** @var bool */
+    private $isDebug = false;
+
+    /** @var TemplateRendererInterface */
     private $renderer;
 
-    /**
-     * @var ResponseFactoryInterface
-     */
+    /** @var ResponseFactoryInterface */
     private $responseFactory;
 
     private function renderUnauthorizedResponse(
         ServerRequestInterface $request,
         ?string $redirect = null,
         ?string $error = null
-    ) : ResponseInterface {
+    ): ResponseInterface {
         $response = $this->responseFactory->createResponse(401, 'Unauthorized');
 
         $response->getBody()->write($this->renderer->render('oauth2::401', [

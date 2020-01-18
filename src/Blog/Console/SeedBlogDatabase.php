@@ -1,14 +1,15 @@
 <?php
+
 /**
- * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  */
 
 declare(strict_types=1);
 
 namespace Mwop\Blog\Console;
 
-use Mwop\Blog\CreateBlogPostFromDataArray;
+use Mwop\Blog\CreateBlogPostFromDataArrayTrait;
 use PDO;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -18,19 +19,21 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Yaml\Parser as YamlParser;
 
 use function file_exists;
+use function file_get_contents;
 use function getcwd;
 use function implode;
 use function ltrim;
 use function realpath;
 use function sprintf;
 use function strlen;
+use function substr;
 use function unlink;
 
 class SeedBlogDatabase extends Command
 {
-    use CreateBlogPostFromDataArray;
+    use CreateBlogPostFromDataArrayTrait;
 
-    /** @var array<string, array<string, string>> */
+    /** @var array array<string, array<string, string>> */
     private $authors = [];
 
     /** @var string[] */
@@ -66,13 +69,6 @@ class SeedBlogDatabase extends Command
         %d,
         %s,
         %s';
-
-    /**
-     * Delimiter between post summary and extended body
-     *
-     * @var string
-     */
-    private $postDelimiter = '<!--- EXTENDED -->';
 
     /** @var string */
     private $searchTable = 'CREATE VIRTUAL TABLE search USING FTS4(
@@ -118,7 +114,7 @@ class SeedBlogDatabase extends Command
             tags VARCHAR(255)
         )';
 
-    protected function configure() : void
+    protected function configure(): void
     {
         $this->setName('blog:seed-db');
         $this->setDescription('Generate and seed the blog post database.');
@@ -157,7 +153,7 @@ class SeedBlogDatabase extends Command
         );
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output) : int
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io          = new SymfonyStyle($input, $output);
         $basePath    = $input->getOption('path');
@@ -201,7 +197,7 @@ class SeedBlogDatabase extends Command
         return 0;
     }
 
-    private function createDatabase(string $path) : PDO
+    private function createDatabase(string $path): PDO
     {
         if (file_exists($path)) {
             $path = realpath($path);
@@ -229,11 +225,9 @@ class SeedBlogDatabase extends Command
     /**
      * Retrieve author metadata.
      *
-     * @param string $author
-     * @param string $authorsPath
      * @return string[]
      */
-    private function getAuthor(string $author, string $authorsPath) : array
+    private function getAuthor(string $author, string $authorsPath): array
     {
         if (isset($this->authors[$author])) {
             return $this->authors[$author];

@@ -1,13 +1,19 @@
 <?php
+
 /**
- * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  */
 
 declare(strict_types=1);
 
 namespace Mwop\Blog\Console;
 
+use Laminas\Diactoros\Uri;
+use Laminas\Feed\Writer\Feed as FeedWriter;
+use Mezzio\Helper\ServerUrlHelper;
+use Mezzio\Router\RouterInterface;
+use Mezzio\Template\TemplateRendererInterface;
 use Mwop\Blog\BlogPost;
 use Mwop\Blog\Mapper\MapperInterface;
 use Symfony\Component\Console\Command\Command;
@@ -17,13 +23,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Yaml\Parser as YamlParser;
 use Traversable;
-use Laminas\Diactoros\Uri;
-use Mezzio\Helper\ServerUrlHelper;
-use Mezzio\Router\RouterInterface;
-use Mezzio\Template\TemplateRendererInterface;
-use Laminas\Feed\Writer\Feed as FeedWriter;
 
+use function array_map;
 use function file_exists;
+use function file_get_contents;
 use function file_put_contents;
 use function iterator_to_array;
 use function method_exists;
@@ -43,8 +46,6 @@ class FeedGenerator extends Command
         'email' => 'me@mwop.net',
         'uri'   => 'https://mwop.net',
     ];
-
-    private $io;
 
     private $mapper;
 
@@ -69,7 +70,7 @@ class FeedGenerator extends Command
         parent::__construct();
     }
 
-    protected function configure() : void
+    protected function configure(): void
     {
         $this->setName('blog:feed-generator');
         $this->setDescription('Generate blog feeds.');
@@ -92,7 +93,7 @@ class FeedGenerator extends Command
         );
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output) : int
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io        = new SymfonyStyle($input, $output);
         $outputDir = $input->getOption('output-dir');
@@ -216,10 +217,9 @@ class FeedGenerator extends Command
     /**
      * Retrieve author metadata.
      *
-     * @param string $author
      * @return string[]
      */
-    private function getAuthor(string $author) : array
+    private function getAuthor(string $author): array
     {
         if (isset($this->authors[$author])) {
             return $this->authors[$author];
@@ -237,12 +237,8 @@ class FeedGenerator extends Command
 
     /**
      * Normalize generated URIs.
-     *
-     * @param string $route
-     * @param array $options
-     * @return string
      */
-    private function generateUri(string $route, array $options) : string
+    private function generateUri(string $route, array $options): string
     {
         $uri = $this->router->generateUri($route, $options);
         return str_replace('[/]', '', $uri);
@@ -253,7 +249,7 @@ class FeedGenerator extends Command
      *
      * Renders h-entry data for the feed and appends it to the HTML markup content.
      */
-    private function createContent(string $content, BlogPost $post) : string
+    private function createContent(string $content, BlogPost $post): string
     {
         return sprintf(
             "%s\n\n%s",

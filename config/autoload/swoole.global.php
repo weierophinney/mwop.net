@@ -1,11 +1,12 @@
 <?php
-use Mwop\Factory\AccessLogFactory;
-use Mezzio\Swoole\Log\AccessLogInterface;
+
+declare(strict_types=1);
+
 use Mezzio\Swoole\StaticResourceHandler\ContentTypeFilterMiddleware;
 
 return [
     'mezzio-swoole' => [
-        'enable_coroutine' => true,
+        'enable_coroutine'   => true,
         'swoole-http-server' => [
             'process-name' => 'mwopnet',
             'host'         => '0.0.0.0',
@@ -22,29 +23,28 @@ return [
                 'task_worker_num' => 4,
             ],
             'static-files' => [
-                'type-map' => array_merge(ContentTypeFilterMiddleware::TYPE_MAP_DEFAULT, [
+                'type-map'   => array_merge(ContentTypeFilterMiddleware::TYPE_MAP_DEFAULT, [
                     'asc' => 'application/octet-stream',
                 ]),
-                'gzip' => [
+                'gzip'       => [
                     'level' => 6,
                 ],
                 'directives' => [
                     '/\.(?:ico|png|gif|jpg|jpeg)$/' => [
                         'cache-control' => ['public', 'max-age=' . 60 * 60 * 24 * 365],
                         'last-modified' => true,
-                        'etag' => true,
+                        'etag'          => true,
                     ],
-                    '/\.(?:asc)$/' => [
+                    '/\.(?:asc)$/'                  => [
                         'cache-control' => ['public', 'max-age=' . 60 * 60 * 24 * 365],
                         'last-modified' => true,
                     ],
-                    '/\.(?:css|js)$/' => [
+                    '/\.(?:css|js)$/'               => [
                         'cache-control' => ['public', 'max-age=' . 60 * 60 * 24 * 30],
                         'last-modified' => true,
-                        'etag' => true,
+                        'etag'          => true,
                     ],
                 ],
-
             ],
         ],
     ],

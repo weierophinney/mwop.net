@@ -1,29 +1,25 @@
 <?php
+
 /**
- * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  */
 
 declare(strict_types=1);
 
 namespace Mwop\OAuth2;
 
-use Psr\Http\Message\ResponseFactoryInterface;
-use Mezzio\Template\TemplateRendererInterface;
-
 use function in_array;
 
 trait ValidateProviderTrait
 {
-    /**
-     * @var string[]
-     */
+    /** @var string[] */
     private $allowedProviders = [
         'github',
         'google',
     ];
 
-    private function validateProvider(?string $provider) : bool
+    private function validateProvider(?string $provider): bool
     {
         $allowedProviders = $this->allowedProviders;
         if ($this->isDebug) {

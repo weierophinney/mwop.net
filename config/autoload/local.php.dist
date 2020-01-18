@@ -4,6 +4,8 @@
  * @copyright Copyright (c) Matthew Weier O'Phinney
  */
 
+declare(strict_types=1);
+
 use Mwop\Blog\Listener\CacheBlogPostListener;
 use Mwop\Contact\Listener\SendContactMessageListener;
 use Mwop\App\Factory\AccessLoggerFactory;

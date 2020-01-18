@@ -1,7 +1,8 @@
 <?php
+
 /**
- * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  */
 
 declare(strict_types=1);
@@ -16,14 +17,10 @@ use function unserialize;
 
 class FetchBlogPostFromCacheListener
 {
-    /**
-     * @var CacheItemPoolInterface
-     */
+    /** @var CacheItemPoolInterface */
     private $cache;
 
-    /**
-     * @var bool
-     */
+    /** @var bool */
     private $enabled;
 
     public function __construct(
@@ -34,7 +31,7 @@ class FetchBlogPostFromCacheListener
         $this->enabled = $enabled;
     }
 
-    public function __invoke(FetchBlogPostEvent $event) : void
+    public function __invoke(FetchBlogPostEvent $event): void
     {
         if (! $this->enabled) {
             return;
@@ -46,7 +43,7 @@ class FetchBlogPostFromCacheListener
         }
 
         $serialized = $item->get();
-        $post = unserialize($serialized);
+        $post       = unserialize($serialized);
 
         if (! $post instanceof BlogPost) {
             return;

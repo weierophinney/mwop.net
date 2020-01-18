@@ -1,7 +1,8 @@
 <?php
+
 /**
- * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  */
 
 declare(strict_types=1);
@@ -15,13 +16,22 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+use function array_map;
+use function file_put_contents;
+use function get_class;
+use function getcwd;
+use function implode;
+use function realpath;
+use function rtrim;
+use function sprintf;
+
 class InstagramFeed extends Command
 {
     /** @var string */
     private const CACHE_FILE = '%s/data/instagram.feed.php';
 
     /** @var string */
-    private $configFormat = <<< EOC
+    private $configFormat = <<<EOC
 <?php
 return [
 %s
@@ -29,7 +39,7 @@ return [
 
 EOC;
 
-    private $configItemFormat = <<< EOC
+    private $configItemFormat = <<<EOC
     [
         'image_url' => '%s',
         'post_url'  => '%s',
@@ -46,7 +56,7 @@ EOC;
         parent::__construct();
     }
 
-    protected function configure() : void
+    protected function configure(): void
     {
         $this->setName('instagram-feeds');
         $this->setDescription('Fetch instagram feed data.');
@@ -61,7 +71,7 @@ EOC;
         );
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output) : int
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
         $io->title('Aggregating instagram feed URLs for home page');
@@ -87,15 +97,15 @@ EOC;
         return 0;
     }
 
-    private function generateFilename(string $path) : string
+    private function generateFilename(string $path): string
     {
         return sprintf(self::CACHE_FILE, $path);
     }
 
     /**
-     * @param array<string, string> $feed
+     * @param array $feed array<string, string>
      */
-    private function generateContent(array $feed) : string
+    private function generateContent(array $feed): string
     {
         $entries = implode('', array_map(
             function ($entry) {

@@ -1,7 +1,8 @@
 <?php
+
 /**
- * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  */
 
 declare(strict_types=1);
@@ -12,10 +13,10 @@ use Psr\Container\ContainerInterface;
 
 class InstagramClientFactory
 {
-    public function __invoke(ContainerInterface $container) : InstagramClient
+    public function __invoke(ContainerInterface $container): InstagramClient
     {
-        $config         = $container->get('config');
-        $config         = $config['instagram'] ?? [];
+        $config = $container->get('config');
+        $config = $config['instagram'] ?? [];
 
         return new InstagramClient(
             $config['url'],

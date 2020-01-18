@@ -1,27 +1,28 @@
 <?php
+
 /**
- * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  */
 
 declare(strict_types=1);
 
 namespace Mwop\Blog\Handler;
 
+use Laminas\Diactoros\Response\HtmlResponse;
+use Mezzio\Template\TemplateRendererInterface;
 use Mwop\Blog\FetchBlogPostEvent;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Laminas\Diactoros\Response\HtmlResponse;
-use Mezzio\Template\TemplateRendererInterface;
 
 class DisplayPostHandler implements RequestHandlerInterface
 {
     /** @var EventDispatcherInterface */
     private $dispatcher;
 
-    /** @var array<string, string> */
+    /** @var array array<string, string> */
     private $disqus;
 
     /** @var RequestHandlerInterface */
@@ -42,7 +43,7 @@ class DisplayPostHandler implements RequestHandlerInterface
         $this->disqus          = $disqus;
     }
 
-    public function handle(ServerRequestInterface $request) : ResponseInterface
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $id = $request->getAttribute('id', false);
 

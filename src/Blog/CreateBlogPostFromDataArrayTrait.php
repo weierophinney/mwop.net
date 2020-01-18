@@ -1,7 +1,8 @@
 <?php
+
 /**
- * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  */
 
 declare(strict_types=1);
@@ -9,12 +10,19 @@ declare(strict_types=1);
 namespace Mwop\Blog;
 
 use DateTime;
-use DateTimezone;
+use DateTimeZone;
 use Mni\FrontYAML\Bridge\CommonMark\CommonMarkParser;
 use Mni\FrontYAML\Parser;
 use RuntimeException;
 
-trait CreateBlogPostFromDataArray
+use function explode;
+use function file_get_contents;
+use function is_array;
+use function is_numeric;
+use function sprintf;
+use function trim;
+
+trait CreateBlogPostFromDataArrayTrait
 {
     /** @var Parser */
     private $parser;
@@ -26,7 +34,7 @@ trait CreateBlogPostFromDataArray
      */
     private $postDelimiter = '<!--- EXTENDED -->';
 
-    private function getParser() : Parser
+    private function getParser(): Parser
     {
         if (! $this->parser) {
             $this->parser = new Parser(null, new CommonMarkParser());
@@ -35,7 +43,7 @@ trait CreateBlogPostFromDataArray
         return $this->parser;
     }
 
-    private function createBlogPostFromDataArray(array $post) : BlogPost
+    private function createBlogPostFromDataArray(array $post): BlogPost
     {
         if (! isset($post['path'])) {
             throw new RuntimeException(sprintf(
@@ -69,10 +77,10 @@ trait CreateBlogPostFromDataArray
         );
     }
 
-    private function createDateTimeFromString(string $dateString) : DateTime
+    private function createDateTimeFromString(string $dateString): DateTime
     {
         return is_numeric($dateString)
-            ? new DateTime('@' . $dateString, new DateTimezone('America/Chicago'))
+            ? new DateTime('@' . $dateString, new DateTimeZone('America/Chicago'))
             : new DateTime($dateString);
     }
 }

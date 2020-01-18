@@ -1,15 +1,18 @@
 <?php
+
 /**
- * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  */
+
+declare(strict_types=1);
 
 namespace MwopTest\App\Middleware;
 
 use Mwop\App\Middleware\RedirectsMiddleware;
 use MwopTest\HttpMessagesTrait;
-use Prophecy\Argument;
 use PHPUnit\Framework\TestCase;
+use Prophecy\Argument;
 use Psr\Http\Message\ResponseInterface;
 
 class RedirectsMiddlewareTest extends TestCase
@@ -19,8 +22,8 @@ class RedirectsMiddlewareTest extends TestCase
     public function testMiddlewarePassesPhpNetUrlToDelegate()
     {
         $middleware = new RedirectsMiddleware();
-        $uri = $this->createUriMock();
-        $request = $this->createRequestMock();
+        $uri        = $this->createUriMock();
+        $request    = $this->createRequestMock();
         $request->getUri()->will([$uri, 'reveal']);
         $response = $this->createResponseMock()->reveal();
 
@@ -62,11 +65,15 @@ class RedirectsMiddlewareTest extends TestCase
     /**
      * @dataProvider expectedRedirects
      */
-    public function testMiddlewareRedirectsAsExpected($incomingUri, $path, $query, $redirect)
-    {
+    public function testMiddlewareRedirectsAsExpected(
+        string $incomingUri,
+        string $path,
+        ?string $query,
+        string $redirect
+    ) {
         $middleware = new RedirectsMiddleware();
-        $uri = $this->createUriMock();
-        $request = $this->createRequestMock();
+        $uri        = $this->createUriMock();
+        $request    = $this->createRequestMock();
         $request->getUri()->will([$uri, 'reveal']);
 
         $uri->getPath()->willReturn($incomingUri);
@@ -105,15 +112,15 @@ class RedirectsMiddlewareTest extends TestCase
      * @dataProvider expectedAlternateHostRedirects
      */
     public function testMiddlewareRedirectsToAlternateHostsWhenExpected(
-        $incomingUri,
-        $hostTo,
-        $schemeTo,
-        $pathTo,
-        $location
+        string $incomingUri,
+        string $hostTo,
+        string $schemeTo,
+        string $pathTo,
+        string $location
     ) {
         $middleware = new RedirectsMiddleware();
-        $uri = $this->createUriMock();
-        $request = $this->createRequestMock();
+        $uri        = $this->createUriMock();
+        $request    = $this->createRequestMock();
         $request->getUri()->will([$uri, 'reveal']);
 
         $uri->getPath()->willReturn($incomingUri);
@@ -137,8 +144,8 @@ class RedirectsMiddlewareTest extends TestCase
     public function testS9yTagFeedsRedirectToBlogTagFeeds()
     {
         $middleware = new RedirectsMiddleware();
-        $uri = $this->createUriMock();
-        $request = $this->createRequestMock();
+        $uri        = $this->createUriMock();
+        $request    = $this->createRequestMock();
         $request->getUri()->will([$uri, 'reveal']);
 
         $uri->getPath()->willReturn('/matthew/rss.php');
@@ -161,8 +168,8 @@ class RedirectsMiddlewareTest extends TestCase
     public function testS9yFeedRedirectsToBlogFeed()
     {
         $middleware = new RedirectsMiddleware();
-        $uri = $this->createUriMock();
-        $request = $this->createRequestMock();
+        $uri        = $this->createUriMock();
+        $request    = $this->createRequestMock();
         $request->getUri()->will([$uri, 'reveal']);
 
         $uri->getPath()->willReturn('/matthew/rss.php');
@@ -185,8 +192,8 @@ class RedirectsMiddlewareTest extends TestCase
     public function testS9yBaseRedirectsToBlog()
     {
         $middleware = new RedirectsMiddleware();
-        $uri = $this->createUriMock();
-        $request = $this->createRequestMock();
+        $uri        = $this->createUriMock();
+        $request    = $this->createRequestMock();
         $request->getUri()->will([$uri, 'reveal']);
 
         $uri->getPath()->willReturn('/matthew');
@@ -209,8 +216,8 @@ class RedirectsMiddlewareTest extends TestCase
     public function testInvokesNextIfPathDoesNotMatchARedirect()
     {
         $middleware = new RedirectsMiddleware();
-        $uri = $this->createUriMock();
-        $request = $this->createRequestMock();
+        $uri        = $this->createUriMock();
+        $request    = $this->createRequestMock();
         $request->getUri()->will([$uri, 'reveal']);
         $response = $this->createResponseMock()->reveal();
 

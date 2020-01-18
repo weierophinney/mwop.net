@@ -1,7 +1,8 @@
 <?php
+
 /**
- * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  */
 
 declare(strict_types=1);
@@ -11,8 +12,11 @@ namespace Mwop\Console;
 use DOMDocument;
 use JsonException;
 
+use function array_shift;
+use function count;
 use function file_get_contents;
 use function fwrite;
+use function is_array;
 use function json_decode;
 use function libxml_clear_errors;
 use function libxml_use_internal_errors;
@@ -42,9 +46,9 @@ class InstagramClient
     }
 
     /**
-     * @return array<string, string>
+     * @return array Array<string, string>
      */
-    public function fetchFeed() : array
+    public function fetchFeed(): array
     {
         $feed = [];
         $html = $this->fetchHtml();
@@ -52,7 +56,8 @@ class InstagramClient
 
         foreach ($this->parseJsonForItems($json) as $item) {
             $node = $item['node'] ?? [];
-            if (! (isset($node['thumbnail_resources']) && is_array($node['thumbnail_resources']))
+            if (
+                ! (isset($node['thumbnail_resources']) && is_array($node['thumbnail_resources']))
                 || ! isset($node['shortcode'])
             ) {
                 continue;
@@ -72,7 +77,7 @@ class InstagramClient
         return $feed;
     }
 
-    private function fetchHtml() : string
+    private function fetchHtml(): string
     {
         if ('' === $this->url) {
             if ($this->debug) {
@@ -99,11 +104,11 @@ class InstagramClient
     /**
      * @return string Literal JSON discovered in the HTML document.
      */
-    private function parseHtml(string $html) : string
+    private function parseHtml(string $html): string
     {
-        $dom  = new DOMDocument();
+        $dom                      = new DOMDocument();
         $dom->strictErrorChecking = false;
-        $useLibxmlErrors = libxml_use_internal_errors(true);
+        $useLibxmlErrors          = libxml_use_internal_errors(true);
         $dom->loadHTML($html, LIBXML_HTML_NODEFDTD);
         libxml_clear_errors();
         libxml_use_internal_errors($useLibxmlErrors);
@@ -126,7 +131,7 @@ class InstagramClient
     /**
      * @return array[] Array of arrays.
      */
-    private function parseJsonForItems(string $json) : array
+    private function parseJsonForItems(string $json): array
     {
         try {
             $query = json_decode($json, true, 512, JSON_THROW_ON_ERROR);

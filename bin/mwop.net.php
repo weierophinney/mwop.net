@@ -1,14 +1,19 @@
 #!/usr/bin/env php
 <?php
+
 /**
- * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  */
+
+declare(strict_types=1);
 
 namespace Mwop;
 
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\CommandLoader\ContainerCommandLoader;
+
+use function chdir;
 
 chdir(__DIR__ . '/../');
 require_once 'vendor/autoload.php';

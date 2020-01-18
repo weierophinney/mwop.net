@@ -1,21 +1,33 @@
 <?php
+
 /**
- * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  */
+
+declare(strict_types=1);
 
 namespace Mwop\App\Middleware;
 
+use Laminas\Diactoros\Response\RedirectResponse;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Message\UriInterface as Uri;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Psr\Http\Message\UriInterface as Uri;
-use Laminas\Diactoros\Response\RedirectResponse;
+
+use function count;
+use function http_build_query;
+use function preg_match;
+use function preg_replace;
+use function sprintf;
+use function str_replace;
+use function strtolower;
+use function substr;
 
 class RedirectsMiddleware implements MiddlewareInterface
 {
-    public function process(Request $request, RequestHandlerInterface $handler) : Response
+    public function process(Request $request, RequestHandlerInterface $handler): Response
     {
         $url  = $request->getUri();
         $path = $url->getPath();
@@ -33,7 +45,7 @@ class RedirectsMiddleware implements MiddlewareInterface
             return $this->redirect(sprintf('/blog/tag/%s', $matches['tag']), $url, ['page' => $matches['page']]);
         }
         if (preg_match('#^/blog\.html(?P<path>/.*)?$#', $path, $matches)) {
-            $blogPath = isset($matches['path']) ? $matches['path'] : '';
+            $blogPath = $matches['path'] ?? '';
             return $this->redirect('/blog' . $blogPath, $url);
         }
 
@@ -56,7 +68,8 @@ class RedirectsMiddleware implements MiddlewareInterface
         }
 
         // Redirect blog posts not ending in .html to .html version
-        if (preg_match('#^/blog/(?<!tag/)(?P<post>[^/]+)$#', $path, $matches)
+        if (
+            preg_match('#^/blog/(?<!tag/)(?P<post>[^/]+)$#', $path, $matches)
             && ! preg_match('#\.(html|xml)$#', $path)
         ) {
             $newPath = sprintf('/blog/%s.html', $matches['post']);
@@ -90,15 +103,15 @@ class RedirectsMiddleware implements MiddlewareInterface
         // Serendipity
         if (preg_match('#^/matthew#', $path)) {
             $regexes = [
-                '^/matthew/feeds/index.rss2'                          => '/blog/rss.xml',
-                '^/matthew/feeds/atom.xml'                            => '/blog/atom.xml',
-                '^/matthew/archives/(\d{4}).html'                     => '/blog', // no longer supporting by year
-                '^/matthew/archives/(\d{4})/(\d{2}).html'             => '/blog', // no longer supporting by month
-                '^/matthew/archives/(\d{4})/(\d{2})/(\d{2}).html'     => '/blog', // no longer supporting by day
-                '^/matthew/archives/([^/]+).html'                     => '/blog/$1.html',
-                '^/matthew/plugin/tag/([^/]+)'                        => '/blog/tag/$1',
-                '^/matthew/categories/\d+-([^/]+).rss'                => '/blog/tag/$1/rss.xml',
-                '^/matthew/categories/\d+-([^/]+)'                    => '/blog/tag/$1',
+                '^/matthew/feeds/index.rss2'                      => '/blog/rss.xml',
+                '^/matthew/feeds/atom.xml'                        => '/blog/atom.xml',
+                '^/matthew/archives/(\d{4}).html'                 => '/blog', // no longer supporting by year
+                '^/matthew/archives/(\d{4})/(\d{2}).html'         => '/blog', // no longer supporting by month
+                '^/matthew/archives/(\d{4})/(\d{2})/(\d{2}).html' => '/blog', // no longer supporting by day
+                '^/matthew/archives/([^/]+).html'                 => '/blog/$1.html',
+                '^/matthew/plugin/tag/([^/]+)'                    => '/blog/tag/$1',
+                '^/matthew/categories/\d+-([^/]+).rss'            => '/blog/tag/$1/rss.xml',
+                '^/matthew/categories/\d+-([^/]+)'                => '/blog/tag/$1',
             ];
             foreach ($regexes as $regex => $replacement) {
                 $regex = '#' . $regex . '#';
@@ -122,7 +135,7 @@ class RedirectsMiddleware implements MiddlewareInterface
         return $handler->handle($request);
     }
 
-    private function redirect(string $path, Uri $url, array $query = []) : RedirectResponse
+    private function redirect(string $path, Uri $url, array $query = []): RedirectResponse
     {
         $url = $url->withPath($path);
 

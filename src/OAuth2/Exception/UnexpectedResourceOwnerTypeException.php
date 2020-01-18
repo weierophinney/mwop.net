@@ -1,7 +1,8 @@
 <?php
+
 /**
- * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  */
 
 declare(strict_types=1);
@@ -16,7 +17,7 @@ use function sprintf;
 
 class UnexpectedResourceOwnerTypeException extends RuntimeException
 {
-    public static function forResourceOwner(ResourceOwnerInterface $resourceOwner) : self
+    public static function forResourceOwner(ResourceOwnerInterface $resourceOwner): self
     {
         return new self(sprintf(
             'Unable to obtain a username from authenticated user; received unknown %s type "%s", '

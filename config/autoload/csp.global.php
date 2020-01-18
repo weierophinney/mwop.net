@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'content-security-policy' => [
         'default-src' => [
-            'self' => true
-        ],
-        'frame-src' => [
             'self' => true,
+        ],
+        'frame-src'   => [
+            'self'  => true,
             'allow' => [
                 'https://platform.twitter.com',
                 'https://syndication.twitter.com',
@@ -15,28 +17,28 @@ return [
             ],
         ],
         'connect-src' => [
-            'self' => true,
+            'self'  => true,
             'types' => [
                 'https:',
             ],
         ],
-        'font-src' => [
-            'self' => true,
+        'font-src'    => [
+            'self'  => true,
             'types' => [
                 'chrome-extension:',
                 'https:',
             ],
         ],
-        'img-src' => [
-            'self' => true,
+        'img-src'     => [
+            'self'  => true,
             'types' => [
                 'data:',
                 'http:',
                 'https:',
             ],
         ],
-        'script-src' => [
-            'self' => true,
+        'script-src'  => [
+            'self'  => true,
             'types' => [
                 'data:',
             ],
@@ -54,7 +56,7 @@ return [
         ],
         // Not honored yet by paragonie/csp-builder:
         'prefetch-src' => [
-            'self' => true,
+            'self'  => true,
             'types' => [
                 'data:',
                 'http:',
@@ -65,10 +67,10 @@ return [
                 '*.disquscdn.com',
             ],
         ],
-        'style-src' => [
-            'self' => true,
+        'style-src'    => [
+            'self'          => true,
             'unsafe-inline' => true, // allow inlined styles; mostly for widgets
-            'allow' => [
+            'allow'         => [
                 'https://fonts.googleapis.com',
                 'platform.twitter.com',
                 'https://*.twimg.com',

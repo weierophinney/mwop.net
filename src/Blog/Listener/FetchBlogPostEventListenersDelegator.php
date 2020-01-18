@@ -1,7 +1,8 @@
 <?php
+
 /**
- * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  */
 
 declare(strict_types=1);
@@ -18,7 +19,7 @@ class FetchBlogPostEventListenersDelegator
         ContainerInterface $container,
         string $serviceName,
         callable $factory
-    ) : AttachableListenerProvider {
+    ): AttachableListenerProvider {
         $provider = $factory();
         $provider->listen(FetchBlogPostEvent::class, $container->get(FetchBlogPostFromCacheListener::class));
         $provider->listen(FetchBlogPostEvent::class, $container->get(FetchBlogPostFromMapperListener::class));

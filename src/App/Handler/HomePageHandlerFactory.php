@@ -1,18 +1,30 @@
 <?php
+
 /**
- * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  */
+
+declare(strict_types=1);
 
 namespace Mwop\App\Handler;
 
+use Mezzio\Template\TemplateRendererInterface;
 use Mwop\Console\FeedAggregator;
 use Psr\Container\ContainerInterface;
-use Mezzio\Template\TemplateRendererInterface;
+
+use function file_exists;
+use function fwrite;
+use function getcwd;
+use function is_array;
+use function realpath;
+use function sprintf;
+
+use const STDERR;
 
 class HomePageHandlerFactory
 {
-    public function __invoke(ContainerInterface $container) : HomePageHandler
+    public function __invoke(ContainerInterface $container): HomePageHandler
     {
         $config = $container->get('config');
         return new HomePageHandler(
@@ -22,7 +34,7 @@ class HomePageHandlerFactory
         );
     }
 
-    private function getHomepagePosts() : array
+    private function getHomepagePosts(): array
     {
         $location = sprintf(FeedAggregator::CACHE_FILE, realpath(getcwd()));
 

@@ -1,19 +1,22 @@
 <?php
+
 /**
- * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  */
+
+declare(strict_types=1);
 
 namespace Mwop\Blog\Handler;
 
-use Psr\Container\ContainerInterface;
-use Psr\EventDispatcher\EventDispatcherInterface;
 use Mezzio\Middleware\NotFoundHandler;
 use Mezzio\Template\TemplateRendererInterface;
+use Psr\Container\ContainerInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 
 class DisplayPostHandlerFactory
 {
-    public function __invoke(ContainerInterface $container) : DisplayPostHandler
+    public function __invoke(ContainerInterface $container): DisplayPostHandler
     {
         return new DisplayPostHandler(
             $container->get(EventDispatcherInterface::class),

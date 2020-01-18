@@ -1,16 +1,17 @@
 <?php
+
 /**
- * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  */
 
 declare(strict_types=1);
 
 namespace Mwop\OAuth2\Provider;
 
-use Mwop\OAuth2\DebugResourceOwner;
 use League\OAuth2\Client\Provider\AbstractProvider;
 use League\OAuth2\Client\Token\AccessToken;
+use Mwop\OAuth2\DebugResourceOwner;
 use Psr\Http\Message\ResponseInterface;
 
 class DebugProvider extends AbstractProvider
@@ -20,9 +21,7 @@ class DebugProvider extends AbstractProvider
     public const STATE             = 'DEBUG';
     public const TOKEN             = 'TOKEN';
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $authorizationUrl;
 
     public function __construct(array $options = [])
@@ -30,12 +29,12 @@ class DebugProvider extends AbstractProvider
         $this->authorizationUrl = $options['authorization_url'] ?? self::AUTHORIZATION_URL;
     }
 
-    public function getState() : string
+    public function getState(): string
     {
         return self::STATE;
     }
 
-    public function getAuthorizationUrl(array $options = []) : string
+    public function getAuthorizationUrl(array $options = []): string
     {
         return $this->authorizationUrl;
     }
@@ -43,18 +42,14 @@ class DebugProvider extends AbstractProvider
     /**
      * @param string $grant
      */
-    public function getAccessToken($grant, array $options = []) : AccessToken
+    public function getAccessToken($grant, array $options = []): AccessToken
     {
         return new AccessToken([
             'access_token' => self::TOKEN,
         ]);
     }
 
-    /**
-     * @param AccessToken $token
-     * @return DebugResourceOwner
-     */
-    public function getResourceOwner(AccessToken $token) : DebugResourceOwner
+    public function getResourceOwner(AccessToken $token): DebugResourceOwner
     {
         return new DebugResourceOwner();
     }
@@ -89,6 +84,8 @@ class DebugProvider extends AbstractProvider
 
     /**
      * No-op; implemented to fulfill abstract parent class.
+     *
+     * @param array|string $data Parsed response data
      */
     protected function checkResponse(ResponseInterface $response, $data)
     {

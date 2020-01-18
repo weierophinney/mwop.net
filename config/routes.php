@@ -4,12 +4,16 @@ declare(strict_types=1);
 
 namespace Mwop;
 
+use Mezzio\Application;
+use Mezzio\MiddlewareFactory;
+use Psr\Container\ContainerInterface;
+
 // General pages
 return function (
-    \Mezzio\Application $app,
-    \Mezzio\MiddlewareFactory $factory,
-    \Psr\Container\ContainerInterface $container
-) : void {
+    Application $app,
+    MiddlewareFactory $factory,
+    ContainerInterface $container
+): void {
     // App routes
     (new App\ConfigProvider())->registerRoutes($app);
 

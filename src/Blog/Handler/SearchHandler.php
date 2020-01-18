@@ -1,19 +1,22 @@
 <?php
+
 /**
- * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  */
 
 declare(strict_types=1);
 
 namespace Mwop\Blog\Handler;
 
+use Laminas\Diactoros\Response\JsonResponse;
+use Mezzio\Helper\UrlHelper;
 use Mwop\Blog\Mapper\MapperInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Laminas\Diactoros\Response\JsonResponse;
-use Mezzio\Helper\UrlHelper;
+
+use function array_map;
 
 class SearchHandler implements RequestHandlerInterface
 {
@@ -32,7 +35,7 @@ class SearchHandler implements RequestHandlerInterface
     /**
      * {@inheritDoc}
      */
-    public function handle(ServerRequestInterface $request) : ResponseInterface
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $toMatch = $request->getQueryParams()['q'] ?? '';
 

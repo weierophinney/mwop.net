@@ -1,3 +1,4 @@
+.phpcs_cache
 .puli/
 .tmp/
 config/autoload/*local.php

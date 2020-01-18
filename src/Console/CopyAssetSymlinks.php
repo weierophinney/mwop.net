@@ -1,7 +1,8 @@
 <?php
+
 /**
- * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  */
 
 declare(strict_types=1);
@@ -20,14 +21,14 @@ use function unlink;
 
 class CopyAssetSymlinks extends Command
 {
-    protected function configure() : void
+    protected function configure(): void
     {
         $this->setName('asset:copy-symlinks');
         $this->setDescription('Copy assets.');
         $this->setHelp('Copy assets installed by npm into the public tree.');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output) : int
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
         $io->title('Copying asset symlinks');

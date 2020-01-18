@@ -1,7 +1,8 @@
 <?php
+
 /**
- * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  */
 
 declare(strict_types=1);
@@ -31,22 +32,22 @@ class SendContactMessageEvent implements JsonSerializable
         $this->body    = $body;
     }
 
-    public function getBody() : string
+    public function getBody(): string
     {
         return $this->body;
     }
 
-    public function getReplyTo() : string
+    public function getReplyTo(): string
     {
         return $this->replyTo;
     }
 
-    public function getSubject() : string
+    public function getSubject(): string
     {
         return $this->subject;
     }
 
-    public function jsonSerialize() : array
+    public function jsonSerialize(): array
     {
         return [
             'replyTo' => $this->replyTo,

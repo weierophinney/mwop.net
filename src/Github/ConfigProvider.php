@@ -1,7 +1,8 @@
 <?php
+
 /**
- * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  */
 
 declare(strict_types=1);
@@ -12,7 +13,7 @@ use Phly\ConfigFactory\ConfigFactory;
 
 class ConfigProvider
 {
-    public function __invoke() : array
+    public function __invoke(): array
     {
         return [
             'github'       => $this->getConfig(),
@@ -20,7 +21,7 @@ class ConfigProvider
         ];
     }
 
-    public function getConfig() : array
+    public function getConfig(): array
     {
         return [
             'user'  => '',
@@ -28,7 +29,7 @@ class ConfigProvider
         ];
     }
 
-    public function getDependencies() : array
+    public function getDependencies(): array
     {
         return [
             'factories' => [

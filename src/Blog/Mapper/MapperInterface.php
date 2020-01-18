@@ -1,31 +1,29 @@
 <?php
+
 /**
- * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  */
 
 declare(strict_types=1);
 
 namespace Mwop\Blog\Mapper;
 
-use Mwop\Blog\BlogPost;
 use Laminas\Paginator\Paginator;
 use Laminas\Tag\Cloud;
+use Mwop\Blog\BlogPost;
 
 interface MapperInterface
 {
-    /**
-     * @return false|array
-     */
-    public function fetch(string $id) : ?BlogPost;
+    public function fetch(string $id): ?BlogPost;
 
-    public function fetchAll() : Paginator;
+    public function fetchAll(): Paginator;
 
-    public function fetchAllByAuthor(string $author) : Paginator;
+    public function fetchAllByAuthor(string $author): Paginator;
 
-    public function fetchAllByTag(string $tag) : Paginator;
+    public function fetchAllByTag(string $tag): Paginator;
 
-    public function fetchTagCloud() : Cloud;
+    public function fetchTagCloud(): Cloud;
 
-    public function search(string $toMatch) : array;
+    public function search(string $toMatch): ?array;
 }

@@ -1,7 +1,8 @@
 <?php
+
 /**
- * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  */
 
 declare(strict_types=1);
@@ -15,7 +16,7 @@ use Psr\EventDispatcher\ListenerProviderInterface;
 
 class EventDispatcherFactory
 {
-    public function __invoke(ContainerInterface $container) : EventDispatcherInterface
+    public function __invoke(ContainerInterface $container): EventDispatcherInterface
     {
         return new EventDispatcher(
             $container->get(ListenerProviderInterface::class)

@@ -1,8 +1,11 @@
 <?php
+
 /**
- * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  */
+
+declare(strict_types=1);
 
 namespace MwopTest\App\Middleware;
 
@@ -17,8 +20,8 @@ class XClacksOverheadMiddlewareTest extends TestCase
     public function testMiddlewareInjectsResponseReturnedByNextWithXClacksOverheadHeader()
     {
         $middleware = new XClacksOverheadMiddleware();
-        $request = $this->createRequestMock()->reveal();
-        $response = $this->createResponseMock();
+        $request    = $this->createRequestMock()->reveal();
+        $response   = $this->createResponseMock();
         $response
             ->withHeader('X-Clacks-Overhead', 'GNU Terry Pratchett')
             ->will([$response, 'reveal'])

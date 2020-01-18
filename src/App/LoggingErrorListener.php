@@ -1,12 +1,14 @@
 <?php
+
 /**
- * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  */
+
+declare(strict_types=1);
 
 namespace Mwop\App;
 
-use Exception;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerInterface;
@@ -15,9 +17,9 @@ use Throwable;
 class LoggingErrorListener
 {
    /**
-     * Log message string with placeholders
-     */
-    const LOG_STRING = '{status} [{method}] {uri}: {error}';
+    * Log message string with placeholders
+    */
+    private const LOG_STRING = '{status} [{method}] {uri}: {error}';
 
     private $logger;
 

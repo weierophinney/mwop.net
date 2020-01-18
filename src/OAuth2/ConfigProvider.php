@@ -1,20 +1,21 @@
 <?php
+
 /**
- * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  */
 
 declare(strict_types=1);
 
 namespace Mwop\OAuth2;
 
-use Phly\ConfigFactory\ConfigFactory;
 use Mezzio\Application;
 use Mezzio\Session\SessionMiddleware;
+use Phly\ConfigFactory\ConfigFactory;
 
 class ConfigProvider
 {
-    public function __invoke() : array
+    public function __invoke(): array
     {
         return [
             'oauth'        => [],
@@ -24,7 +25,7 @@ class ConfigProvider
         ];
     }
 
-    public function getDependencies() : array
+    public function getDependencies(): array
     {
         // @codingStandardsIgnoreStart
         // phpcs:disable
@@ -41,7 +42,7 @@ class ConfigProvider
         // @codingStandardsIgnoreEnd
     }
 
-    public function getTemplateConfig() : array
+    public function getTemplateConfig(): array
     {
         return [
             'paths' => [
@@ -50,7 +51,7 @@ class ConfigProvider
         ];
     }
 
-    public function registerRoutes(Application $app, string $basePath = '/blog') : void
+    public function registerRoutes(Application $app, string $basePath = '/blog'): void
     {
         // OAuth2 authentication response
         $app->get($basePath . '/{provider:debug|github|google}/oauth2callback', [

@@ -1,17 +1,29 @@
 <?php
+
 /**
- * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  */
+
+declare(strict_types=1);
 
 namespace Mwop\App\Handler;
 
-use Psr\Container\ContainerInterface;
 use Mezzio\Template\TemplateRendererInterface;
+use Psr\Container\ContainerInterface;
+
+use function array_pop;
+use function array_shift;
+use function explode;
+use function preg_replace;
+use function preg_replace_callback;
+use function sprintf;
+use function strlen;
+use function strtolower;
 
 class PageHandlerFactory
 {
-    public function __invoke(ContainerInterface $container, string $requestedName) : PageHandler
+    public function __invoke(ContainerInterface $container, string $requestedName): PageHandler
     {
         return new PageHandler(
             $this->deriveTemplateName($requestedName),
@@ -19,7 +31,7 @@ class PageHandlerFactory
         );
     }
 
-    private function deriveTemplateName(string $service) : string
+    private function deriveTemplateName(string $service): string
     {
         $parts = explode('\\', $service);
         $ns    = array_shift($parts);
@@ -33,7 +45,7 @@ class PageHandlerFactory
         );
     }
 
-    private function camelCaseToDotSeparated(string $string) : string
+    private function camelCaseToDotSeparated(string $string): string
     {
         return preg_replace_callback('/(^|[a-z])([A-Z])/', function ($matches) {
             $string = strlen($matches[1]) ? sprintf('%s.%s', $matches[1], $matches[2]) : $matches[2];

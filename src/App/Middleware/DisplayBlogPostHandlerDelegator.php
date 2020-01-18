@@ -1,17 +1,17 @@
 <?php
+
 /**
- * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  */
 
 declare(strict_types=1);
 
 namespace Mwop\App\Middleware;
 
-use Mwop\Blog\Handler\DisplayPostHandler;
+use Mezzio\MiddlewareFactory;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Server\MiddlewareInterface;
-use Mezzio\MiddlewareFactory;
 
 class DisplayBlogPostHandlerDelegator
 {
@@ -19,7 +19,7 @@ class DisplayBlogPostHandlerDelegator
         ContainerInterface $container,
         string $serviceName,
         callable $callback
-    ) : MiddlewareInterface {
+    ): MiddlewareInterface {
         $factory = $container->get(MiddlewareFactory::class);
 
         return $factory->pipeline(

@@ -1,7 +1,8 @@
 <?php
+
 /**
- * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  */
 
 declare(strict_types=1);
@@ -36,7 +37,7 @@ class SendContactMessageListener
         $this->mailer->send($message);
     }
 
-    private function createMessage() : MailMessage
+    private function createMessage(): MailMessage
     {
         $message = new MailMessage();
         $message->setTo($this->config['to']);

@@ -1,7 +1,8 @@
 <?php
+
 /**
- * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  */
 
 declare(strict_types=1);
@@ -10,6 +11,7 @@ namespace Mwop\OAuth2\Handler;
 
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use League\OAuth2\Client\Provider\ResourceOwnerInterface;
+use Mezzio\Template\TemplateRendererInterface;
 use Mwop\OAuth2\DebugResourceOwner;
 use Mwop\OAuth2\Exception;
 use Mwop\OAuth2\Provider\ProviderFactory;
@@ -19,8 +21,6 @@ use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use RuntimeException;
-use Mezzio\Template\TemplateRendererInterface;
 
 use function array_merge;
 use function method_exists;
@@ -31,14 +31,7 @@ class CallbackHandler implements RequestHandlerInterface
     use RenderUnauthorizedResponseTrait;
     use ValidateProviderTrait;
 
-    /**
-     * @var bool
-     */
-    private $isDebug = false;
-
-    /**
-     * @var ProviderFactory
-     */
+    /** @var ProviderFactory */
     private $providerFactory;
 
     public function __construct(
@@ -49,14 +42,14 @@ class CallbackHandler implements RequestHandlerInterface
     ) {
         $this->responseFactory = $responseFactory;
         $this->providerFactory = $providerFactory;
-        $this->renderer = $renderer;
-        $this->isDebug = $isDebug;
+        $this->renderer        = $renderer;
+        $this->isDebug         = $isDebug;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function handle(ServerRequestInterface $request) : ResponseInterface
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $session     = $request->getAttribute('session');
         $sessionData = $session->get('auth', []);
@@ -124,7 +117,7 @@ class CallbackHandler implements RequestHandlerInterface
         // Attempt to retrieve the access token.
         $provider = $this->providerFactory->createProvider($providerType);
         try {
-            $token = $provider->getAccessToken('authorization_code', [
+            $token         = $provider->getAccessToken('authorization_code', [
                 'code' => $code,
             ]);
             $resourceOwner = $provider->getResourceOwner($token);
@@ -152,12 +145,11 @@ class CallbackHandler implements RequestHandlerInterface
             ->withHeader('Location', $redirect ?? '/');
     }
 
-
     /**
-     * @throws Exception\UnexpectedResourceOwnerTypeException if unable to determine
+     * @throws Exception\UnexpectedResourceOwnerTypeException If unable to determine
      *     username from resource owner.
      */
-    private function getUsernameFromResourceOwner(ResourceOwnerInterface $resourceOwner) : string
+    private function getUsernameFromResourceOwner(ResourceOwnerInterface $resourceOwner): string
     {
         if (method_exists($resourceOwner, 'getEmail')) {
             // All official providers except Instagram

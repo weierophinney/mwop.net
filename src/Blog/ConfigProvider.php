@@ -1,20 +1,21 @@
 <?php
+
 /**
- * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  */
 
 declare(strict_types=1);
 
 namespace Mwop\Blog;
 
+use Mezzio\Application;
 use Phly\ConfigFactory\ConfigFactory;
 use Phly\EventDispatcher\ListenerProvider\AttachableListenerProvider;
-use Mezzio\Application;
 
 class ConfigProvider
 {
-    public function __invoke() : array
+    public function __invoke(): array
     {
         return [
             'blog'         => $this->getConfig(),
@@ -23,7 +24,7 @@ class ConfigProvider
         ];
     }
 
-    public function getConfig() : array
+    public function getConfig(): array
     {
         return [
             'db'     => null,
@@ -37,7 +38,7 @@ class ConfigProvider
         ];
     }
 
-    public function getDependencies() : array
+    public function getDependencies(): array
     {
         return [
             // @codingStandardsIgnoreStart
@@ -73,7 +74,7 @@ class ConfigProvider
         ];
     }
 
-    public function getTemplateConfig() : array
+    public function getTemplateConfig(): array
     {
         return [
             'paths' => [
@@ -82,7 +83,7 @@ class ConfigProvider
         ];
     }
 
-    public function registerRoutes(Application $app, string $basePath = '/blog') : void
+    public function registerRoutes(Application $app, string $basePath = '/blog'): void
     {
         $app->get($basePath . '[/]', Handler\ListPostsHandler::class, 'blog');
         $app->get($basePath . '/{id:[^/]+}.html', Handler\DisplayPostHandler::class, 'blog.post');

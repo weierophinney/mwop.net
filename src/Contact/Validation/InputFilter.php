@@ -1,15 +1,19 @@
 <?php
+
 /**
- * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  */
 
 declare(strict_types=1);
 
 namespace Mwop\Contact\Validation;
 
+use Laminas\Filter\StripTags;
 use Laminas\InputFilter\InputFilter as BaseInputFilter;
+use Laminas\Validator\EmailAddress;
 use Laminas\Validator\Hostname as HostnameValidator;
+use Laminas\Validator\StringLength;
 
 class InputFilter extends BaseInputFilter
 {
@@ -20,7 +24,7 @@ class InputFilter extends BaseInputFilter
             'required'   => true,
             'validators' => [
                 [
-                    'name'    => 'Laminas\Validator\EmailAddress',
+                    'name'    => EmailAddress::class,
                     'options' => [
                         'allow'  => HostnameValidator::ALLOW_DNS,
                         'domain' => true,
@@ -34,12 +38,12 @@ class InputFilter extends BaseInputFilter
             'required'   => true,
             'filters'    => [
                 [
-                    'name'    => 'Laminas\Filter\StripTags',
+                    'name' => StripTags::class,
                 ],
             ],
             'validators' => [
                 [
-                    'name'    => 'Laminas\Validator\StringLength',
+                    'name'    => StringLength::class,
                     'options' => [
                         'encoding' => 'UTF-8',
                         'min'      => 2,
@@ -58,8 +62,8 @@ class InputFilter extends BaseInputFilter
         ]);
 
         $this->add([
-            'name'       => 'body',
-            'required'   => true,
+            'name'     => 'body',
+            'required' => true,
         ]);
     }
 }

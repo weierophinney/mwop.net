@@ -1,8 +1,14 @@
 <?xml version="1.0"?>
-<ruleset name="mwop.net coding standard">
+<ruleset
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="vendor/squizlabs/php_codesniffer/phpcs.xsd"
+    name="mwop.net coding standard">
     <description>mwop.net coding standard</description>
 
-    <rule ref="./vendor/laminas/laminas-coding-standard/ruleset.xml"/>
+    <arg name="basepath" value="./" />
+    <arg name="cache" value=".phpcs_cache" />
+    <arg name="colors" />
+    <arg name="parallel" value="80" />
 
     <rule ref="PSR1.Files.SideEffects">
         <exclude-pattern>bin/mwop.net.php</exclude-pattern>
@@ -15,4 +21,6 @@
     <file>public/index.php</file>
     <file>src</file>
     <file>test</file>
+
+    <rule ref="LaminasCodingStandard"/>
 </ruleset>

@@ -1,7 +1,8 @@
 <?php
+
 /**
- * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  */
 
 declare(strict_types=1);
@@ -14,9 +15,7 @@ use Mwop\Blog\Mapper\MapperInterface;
 
 class FetchBlogPostFromMapperListener
 {
-    /**
-     * @var MapperInterface
-     */
+    /** @var MapperInterface */
     private $mapper;
 
     public function __construct(MapperInterface $mapper)
@@ -24,7 +23,7 @@ class FetchBlogPostFromMapperListener
         $this->mapper = $mapper;
     }
 
-    public function __invoke(FetchBlogPostEvent $event) : void
+    public function __invoke(FetchBlogPostEvent $event): void
     {
         $post = $this->mapper->fetch($event->id());
 

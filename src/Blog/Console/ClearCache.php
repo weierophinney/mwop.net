@@ -1,7 +1,8 @@
 <?php
+
 /**
- * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  */
 
 declare(strict_types=1);
@@ -24,13 +25,13 @@ class ClearCache extends Command
         parent::__construct('blog:clear-cache');
     }
 
-    protected function configure() : void
+    protected function configure(): void
     {
         $this->setDescription('Clear the blog post cache');
         $this->setHelp('Clear the blog post cache');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output) : int
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
         $io->title('Removing cached blog entries');

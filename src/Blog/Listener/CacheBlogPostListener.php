@@ -1,7 +1,8 @@
 <?php
+
 /**
- * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  */
 
 declare(strict_types=1);
@@ -15,25 +16,21 @@ use function serialize;
 
 class CacheBlogPostListener
 {
-    /**
-     * @var CacheItemPoolInterface
-     */
+    /** @var CacheItemPoolInterface */
     private $cache;
 
-    /**
-     * @var bool
-     */
+    /** @var bool */
     private $enabled;
 
     public function __construct(
         CacheItemPoolInterface $cache,
         bool $enabled = true
     ) {
-        $this->cache      = $cache;
-        $this->enabled    = $enabled;
+        $this->cache   = $cache;
+        $this->enabled = $enabled;
     }
 
-    public function __invoke(FetchBlogPostEvent $event) : void
+    public function __invoke(FetchBlogPostEvent $event): void
     {
         if (! $this->enabled) {
             return;

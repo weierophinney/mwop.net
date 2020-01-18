@@ -1,8 +1,11 @@
 <?php
+
 /**
- * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  */
+
+declare(strict_types=1);
 
 use Laminas\ConfigAggregator\ArrayProvider;
 use Laminas\ConfigAggregator\ConfigAggregator;
@@ -15,31 +18,31 @@ $cacheConfig = [
 ];
 
 $aggregator = new ConfigAggregator([
-    \Phly\Swoole\TaskWorker\ConfigProvider::class,
-    \Phly\EventDispatcher\ConfigProvider::class,
-    \Mezzio\Authentication\ConfigProvider::class,
-    \Mezzio\Session\Cache\ConfigProvider::class,
-    \Mezzio\Plates\ConfigProvider::class,
-    \Laminas\Paginator\ConfigProvider::class,
-    \Laminas\InputFilter\ConfigProvider::class,
-    \Laminas\Filter\ConfigProvider::class,
-    \Laminas\Validator\ConfigProvider::class,
-    \Mezzio\Session\ConfigProvider::class,
-    \Mezzio\Csrf\ConfigProvider::class,
-    \Mezzio\ConfigProvider::class,
-    \Laminas\HttpHandlerRunner\ConfigProvider::class,
-    \Mezzio\Helper\ConfigProvider::class,
-    \Mezzio\Router\ConfigProvider::class,
-    \Mezzio\Router\FastRouteRouter\ConfigProvider::class,
-    \Mezzio\Swoole\ConfigProvider::class,
+    Phly\Swoole\TaskWorker\ConfigProvider::class,
+    Phly\EventDispatcher\ConfigProvider::class,
+    Mezzio\Authentication\ConfigProvider::class,
+    Mezzio\Session\Cache\ConfigProvider::class,
+    Mezzio\Plates\ConfigProvider::class,
+    Laminas\Paginator\ConfigProvider::class,
+    Laminas\InputFilter\ConfigProvider::class,
+    Laminas\Filter\ConfigProvider::class,
+    Laminas\Validator\ConfigProvider::class,
+    Mezzio\Session\ConfigProvider::class,
+    Mezzio\Csrf\ConfigProvider::class,
+    Mezzio\ConfigProvider::class,
+    Laminas\HttpHandlerRunner\ConfigProvider::class,
+    Mezzio\Helper\ConfigProvider::class,
+    Mezzio\Router\ConfigProvider::class,
+    Mezzio\Router\FastRouteRouter\ConfigProvider::class,
+    Mezzio\Swoole\ConfigProvider::class,
 
     // App-specific modules
-    \Mwop\App\ConfigProvider::class,
-    \Mwop\Blog\ConfigProvider::class,
-    \Mwop\Console\ConfigProvider::class,
-    \Mwop\Contact\ConfigProvider::class,
-    \Mwop\Github\ConfigProvider::class,
-    \Mwop\OAuth2\ConfigProvider::class,
+    Mwop\App\ConfigProvider::class,
+    Mwop\Blog\ConfigProvider::class,
+    Mwop\Console\ConfigProvider::class,
+    Mwop\Contact\ConfigProvider::class,
+    Mwop\Github\ConfigProvider::class,
+    Mwop\OAuth2\ConfigProvider::class,
 
     // Include cache configuration
     new ArrayProvider($cacheConfig),
@@ -54,6 +57,6 @@ $aggregator = new ConfigAggregator([
 
     // Load development config if it exists
     new PhpFileProvider('config/development.config.php'),
-], $cacheConfig['config_cache_path'], [\Laminas\ZendFrameworkBridge\ConfigPostProcessor::class]);
+], $cacheConfig['config_cache_path'], [Laminas\ZendFrameworkBridge\ConfigPostProcessor::class]);
 
 return $aggregator->getMergedConfig();

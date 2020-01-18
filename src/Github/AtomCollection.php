@@ -1,7 +1,8 @@
 <?php
+
 /**
- * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  */
 
 declare(strict_types=1);
@@ -18,10 +19,9 @@ class AtomCollection extends Collection
      * Passes each item through a collection of filters, keeping only
      * those items that pass all filters.
      *
-     * @param array $filters
      * @return static
      */
-    public function filterChain(array $filters) : self
+    public function filterChain(array $filters): self
     {
         $filters = Collection::make($filters);
         return $this->filter(function ($item) use ($filters) {

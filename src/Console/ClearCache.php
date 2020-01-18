@@ -1,7 +1,8 @@
 <?php
+
 /**
- * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  */
 
 declare(strict_types=1);
@@ -24,9 +25,9 @@ use function unlink;
 
 class ClearCache extends Command
 {
-    const PATH_TEMPLATE = '%s/data/cache';
+    private const PATH_TEMPLATE = '%s/data/cache';
 
-    protected function configure() : void
+    protected function configure(): void
     {
         $this->setName('clear-cache');
         $this->setDescription('Clear the static cache.');
@@ -40,7 +41,7 @@ class ClearCache extends Command
         );
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output) : int
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $path = sprintf(self::PATH_TEMPLATE, $input->getOption('path'));
         $io   = new SymfonyStyle($input, $output);
@@ -54,7 +55,8 @@ class ClearCache extends Command
         );
 
         foreach ($rii as $file) {
-            if (! $file instanceof SplFileInfo
+            if (
+                ! $file instanceof SplFileInfo
                 || $file->isDir()
             ) {
                 continue;

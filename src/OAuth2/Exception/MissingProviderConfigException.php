@@ -1,7 +1,8 @@
 <?php
+
 /**
- * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  */
 
 declare(strict_types=1);
@@ -14,7 +15,7 @@ use function sprintf;
 
 class MissingProviderConfigException extends RuntimeException implements ExceptionInterface
 {
-    public static function forProvider(string $provider) : self
+    public static function forProvider(string $provider): self
     {
         return new self(sprintf(
             'No configuration found for OAuth2 provider "%s"; please provide it via '

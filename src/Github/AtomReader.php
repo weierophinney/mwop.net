@@ -1,7 +1,8 @@
 <?php
+
 /**
- * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  */
 
 declare(strict_types=1);
@@ -14,18 +15,18 @@ use function sprintf;
 
 class AtomReader
 {
-    const ATOM_FORMAT = 'https://github.com/%s.atom';
+    private const ATOM_FORMAT = 'https://github.com/%s.atom';
 
     protected $filters = [];
-    protected $limit = 10;
+    protected $limit   = 10;
     protected $user;
 
     public function __construct(string $user)
     {
-        $this->user  = $user;
+        $this->user = $user;
     }
 
-    public function setLimit(int $limit) : self
+    public function setLimit(int $limit): self
     {
         $this->limit = $limit;
         return $this;
@@ -36,7 +37,7 @@ class AtomReader
         $this->filters[] = $filter;
     }
 
-    public function read() : array
+    public function read(): array
     {
         $url  = sprintf(self::ATOM_FORMAT, $this->user);
         $feed = FeedReader::import($url);

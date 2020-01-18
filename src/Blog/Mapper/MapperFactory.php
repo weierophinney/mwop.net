@@ -1,7 +1,8 @@
 <?php
+
 /**
- * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  */
 
 declare(strict_types=1);
@@ -13,7 +14,7 @@ use Psr\Container\ContainerInterface;
 
 class MapperFactory
 {
-    public function __invoke(ContainerInterface $container) : PdoMapper
+    public function __invoke(ContainerInterface $container): PdoMapper
     {
         $config = $container->get('config-blog');
         $pdo    = new PDO($config['db'] ?? '');

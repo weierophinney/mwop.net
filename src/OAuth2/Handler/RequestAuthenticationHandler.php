@@ -1,13 +1,15 @@
 <?php
+
 /**
- * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  */
 
 declare(strict_types=1);
 
 namespace Mwop\OAuth2\Handler;
 
+use Mezzio\Template\TemplateRendererInterface;
 use Mwop\OAuth2\Provider\ProviderFactory;
 use Mwop\OAuth2\RenderUnauthorizedResponseTrait;
 use Mwop\OAuth2\ValidateProviderTrait;
@@ -15,21 +17,13 @@ use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Mezzio\Template\TemplateRendererInterface;
 
 class RequestAuthenticationHandler implements RequestHandlerInterface
 {
     use RenderUnauthorizedResponseTrait;
     use ValidateProviderTrait;
 
-    /**
-     * @var bool
-     */
-    private $isDebug = false;
-
-    /**
-     * @var ProviderFactory
-     */
+    /** @var ProviderFactory */
     private $providerFactory;
 
     public function __construct(
@@ -47,7 +41,7 @@ class RequestAuthenticationHandler implements RequestHandlerInterface
     /**
      * {@inheritDoc}
      */
-    public function handle(ServerRequestInterface $request) : ResponseInterface
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $redirect = $request->getQueryParams()['redirect'] ?? $request->getUri()->withPath('/');
 
@@ -60,7 +54,7 @@ class RequestAuthenticationHandler implements RequestHandlerInterface
             );
         }
 
-        $provider = $this->providerFactory->createProvider($providerType);
+        $provider         = $this->providerFactory->createProvider($providerType);
         $authorizationUrl = $provider->getAuthorizationUrl();
 
         $session = $request->getAttribute('session');

@@ -1,20 +1,22 @@
 <?php
+
 /**
- * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  */
 
 declare(strict_types=1);
 
 namespace Mwop\Blog\Console;
 
-use Mwop\Blog\CreateBlogPostFromDataArray;
+use Mwop\Blog\CreateBlogPostFromDataArrayTrait;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+use function file_put_contents;
 use function getcwd;
 use function implode;
 use function json_encode;
@@ -27,9 +29,9 @@ use const JSON_UNESCAPED_UNICODE;
 
 class GenerateSearchData extends Command
 {
-    use CreateBlogPostFromDataArray;
+    use CreateBlogPostFromDataArrayTrait;
 
-    protected function configure() : void
+    protected function configure(): void
     {
         $this->setName('blog:generate-search-data');
         $this->setDescription('Generate site search data.');
@@ -45,9 +47,9 @@ class GenerateSearchData extends Command
         );
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output) : int
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $io = new SymfonyStyle($input, $output);
+        $io       = new SymfonyStyle($input, $output);
         $basePath = $input->getOption('path');
         $path     = realpath($basePath) . '/data/blog';
 

@@ -1,8 +1,11 @@
 <?php
+
 /**
- * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  */
+
+declare(strict_types=1);
 
 namespace Mwop\App\Middleware;
 
@@ -13,7 +16,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 class XPoweredByMiddleware implements MiddlewareInterface
 {
-    public function process(Request $request, RequestHandlerInterface $handler) : Response
+    public function process(Request $request, RequestHandlerInterface $handler): Response
     {
         $response = $handler->handle($request);
         return $response->withHeader('X-Powered-By', 'Coffee, Beer, and Whiskey, in no particular order');

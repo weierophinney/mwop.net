@@ -1,22 +1,25 @@
 <?php
+
 /**
- * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  */
 
+declare(strict_types=1);
+
 return [
-    'blog' => [
-        'db'     => 'sqlite:' . realpath(getcwd()) . '/data/posts.db',
-        'cache'  => [
+    'blog'                 => [
+        'db'    => 'sqlite:' . realpath(getcwd()) . '/data/posts.db',
+        'cache' => [
             'enabled' => true,
         ],
     ],
     'config_cache_enabled' => false,
-    'debug' => false,
-    'github' => [
+    'debug'                => false,
+    'github'               => [
         'user' => 'weierophinney',
     ],
-    'oauth2' => [
+    'oauth2'               => [
         'github' => [
             'clientId'     => null,
             'clientSecret' => null,
@@ -30,7 +33,7 @@ return [
             // 'hostedDomain' => 'https://mwop.net',
         ],
     ],
-    'mezzio' => [
+    'mezzio'               => [
         'error_handler' => [
             'template_404'   => 'error::404',
             'template_error' => 'error::500',

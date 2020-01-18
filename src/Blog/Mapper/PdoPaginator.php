@@ -1,7 +1,8 @@
 <?php
+
 /**
- * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  * @copyright Copyright (c) Matthew Weier O'Phinney
+ * @license http://opensource.org/licenses/BSD-2-Clause BSD-2-Clause
  */
 
 declare(strict_types=1);
@@ -9,23 +10,24 @@ declare(strict_types=1);
 namespace Mwop\Blog\Mapper;
 
 use Closure;
-use Mwop\Blog\CreateBlogPostFromDataArray;
+use Laminas\Paginator\Adapter\AdapterInterface;
+use Mwop\Blog\BlogPost;
+use Mwop\Blog\CreateBlogPostFromDataArrayTrait;
 use PDO;
 use PDOStatement;
 use RuntimeException;
-use Laminas\Paginator\Adapter\AdapterInterface;
 
 use function array_map;
 use function array_merge;
 
 class PdoPaginator implements AdapterInterface
 {
-    use CreateBlogPostFromDataArray;
+    use CreateBlogPostFromDataArrayTrait;
 
     /** @var int */
     protected $count;
 
-    /** @var array<string, mixed> */
+    /** @var array array<string, mixed> */
     protected $params;
 
     /** @var PDOStatement */
@@ -41,9 +43,9 @@ class PdoPaginator implements AdapterInterface
     /**
      * @param int $offset
      * @param int $itemCountPerPage
-     * @return \Mwop\Blog\BlogPost[]
+     * @return BlogPost[]
      */
-    public function getItems($offset, $itemCountPerPage) : array
+    public function getItems($offset, $itemCountPerPage): array
     {
         $params = array_merge($this->params, [
             ':offset' => $offset,
@@ -62,7 +64,7 @@ class PdoPaginator implements AdapterInterface
         );
     }
 
-    public function count() : int
+    public function count(): int
     {
         $result = $this->count->execute($this->params);
         if (! $result) {
