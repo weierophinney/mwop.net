@@ -29,7 +29,7 @@ use function sprintf;
 class FeedAggregator extends Command
 {
     /** @var string */
-    private const CACHE_FILE = '%s/data/homepage.posts.php';
+    public const CACHE_FILE = '%s/data/homepage.posts.php';
 
     /** @var string */
     private $configFormat = <<<EOC
