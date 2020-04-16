@@ -5,7 +5,7 @@ title: 'Managing Multiple PHP versions via the ondrej/php PPA'
 draft: false
 public: true
 created: '2019-04-30T17:10:00-05:00'
-updated: '2019-05-01T12:00:00-05:00'
+updated: '2020-04-16T11:46:00-05:00'
 tags:
     - php
     - ubuntu
@@ -53,7 +53,7 @@ The rest of this post is how I made that work.
 First, I had to add the PPA to the system:
 
 ```bash
-$ sudo add-apt-repository ppa:ondrej/ppa
+$ sudo add-apt-repository ppa:ondrej/php
 ```
 
 Then the usual:
@@ -295,4 +295,5 @@ instead of cobbling it together from multiple sources!
 
 ### Updates
 
+- 2020-04-16: fixes reference to PPA in command that adds it to system.
 - 2019-05-01: added breakpoint so that full post is not presented in lists.
