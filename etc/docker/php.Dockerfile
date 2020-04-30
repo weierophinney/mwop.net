@@ -43,8 +43,7 @@ RUN apk update && \
     php7-zip
 
 # PHP Extensions
-RUN docker-php-ext-configure zip --with-libzip=/usr/include && \
-  docker-php-ext-install -j$(nproc) tidy
+RUN docker-php-ext-install -j$(nproc) tidy
 
 # PHP configuration
 COPY etc/php/mwop.ini /usr/local/etc/php/conf.d/999-mwop.ini
