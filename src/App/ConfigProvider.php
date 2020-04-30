@@ -9,8 +9,6 @@ declare(strict_types=1);
 
 namespace Mwop\App;
 
-use Laminas\Diactoros\RequestFactory;
-use Laminas\Diactoros\ResponseFactory;
 use Laminas\Feed\Reader\Http\ClientInterface as FeedReaderHttpClientInterface;
 use League\Plates\Engine;
 use Mezzio\Application;
@@ -20,8 +18,6 @@ use Mwop\Blog\Handler\DisplayPostHandler;
 use Phly\ConfigFactory\ConfigFactory;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
-use Psr\Http\Message\RequestFactoryInterface;
-use Psr\Http\Message\ResponseFactoryInterface;
 use Swift_AWSTransport;
 
 use function getcwd;
@@ -48,8 +44,6 @@ class ConfigProvider
                 Middleware\RedirectsMiddleware::class       => Middleware\RedirectsMiddleware::class,
                 Middleware\XClacksOverheadMiddleware::class => Middleware\XClacksOverheadMiddleware::class,
                 Middleware\XPoweredByMiddleware::class      => Middleware\XPoweredByMiddleware::class,
-                RequestFactoryInterface::class              => RequestFactory::class,
-                ResponseFactoryInterface::class             => ResponseFactory::class,
             ],
             // @codingStandardsIgnoreStart
             // phpcs:disable

@@ -1,7 +1,7 @@
 # DOCKER-VERSION        1.3.2
 
 # Build UI assets
-FROM node:8-alpine as assets
+FROM node:10-alpine as assets
 RUN apk add git
 RUN npm install -g grunt-cli
 RUN mkdir -p /work/public/js /work/public/css templates/layout templates/blog
@@ -20,7 +20,7 @@ RUN cp node_modules/autocomplete.js/dist/autocomplete.jquery.js public/js/
 RUN grunt
 
 # Build the PHP container
-FROM mwop/phly-docker-php-swoole:7.3-alpine
+FROM mwop/phly-docker-php-swoole:7.4-alpine
 
 # System dependencies
 RUN echo 'http://dl-cdn.alpinelinux.org/alpine/v3.6/community' >> /etc/apk/repositories
