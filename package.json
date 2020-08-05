@@ -2,24 +2,26 @@
   "name": "mwop.net",
   "main": "Gruntfile.js",
   "devDependencies": {
-    "grunt": "^1.0.4",
+    "grunt": "^1.2.1",
     "grunt-contrib-cssmin": "~3.0.0",
     "load-grunt-tasks": "~4.0.0",
+    "minimist": "^1.2.5",
+    "mkdirp": "^1.0.4",
     "sw-precache": "^4.0.0"
   },
   "dependencies": {
     "autocomplete.js": "^0.32.0",
-    "bootstrap": "^4.3.1",
-    "bootswatch": "^4.3.1",
+    "bootstrap": "^4.5.1",
+    "bootswatch": "^4.5.1",
     "grunt-contrib-concat": "^1.0.1",
     "grunt-contrib-uglify": "^2.0.0",
     "grunt-contrib-uglify-es": "github:gruntjs/grunt-contrib-uglify#harmony",
     "grunt-filerev": "^2.3.1",
-    "grunt-sass": "^3.0.2",
+    "grunt-sass": "^3.1.0",
     "grunt-usemin": "^3.1.1",
-    "jquery": "^3.5.0",
+    "jquery": "^3.5.1",
     "lunr": "^0.7.1",
-    "node-sass": "^4.9.4",
-    "popper.js": "^1.14.3"
+    "node-sass": "^4.14.1",
+    "popper.js": "^1.16.1"
   }
 }
