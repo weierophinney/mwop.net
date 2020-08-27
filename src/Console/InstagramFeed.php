@@ -87,12 +87,10 @@ EOC;
             return 1;
         }
 
-        file_put_contents(
-            $this->generateFilename($input->getOption('path')),
-            $this->generateContent($feed)
-        );
+        $filename = $this->generateFilename($input->getOption('path'));
+        file_put_contents($filename, $this->generateContent($feed));
 
-        $io->success('Aggregated instagram feed URLs.');
+        $io->success(sprintf('Aggregated instagram feed URLs to %s.', $filename));
 
         return 0;
     }

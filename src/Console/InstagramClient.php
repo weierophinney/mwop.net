@@ -14,8 +14,8 @@ use JsonException;
 
 use function array_shift;
 use function count;
+use function error_log;
 use function file_get_contents;
-use function fwrite;
 use function is_array;
 use function json_decode;
 use function libxml_clear_errors;
@@ -29,7 +29,6 @@ use function sprintf;
 use const E_WARNING;
 use const JSON_THROW_ON_ERROR;
 use const LIBXML_HTML_NODEFDTD;
-use const STDERR;
 
 class InstagramClient
 {
@@ -81,7 +80,7 @@ class InstagramClient
     {
         if ('' === $this->url) {
             if ($this->debug) {
-                fwrite(STDERR, 'No Instagram URL is configured');
+                error_log('[Instagram] No Instagram URL is configured');
             }
             return '';
         }
@@ -92,7 +91,7 @@ class InstagramClient
             }
 
             if ($this->debug) {
-                fwrite(STDERR, sprintf('Error fetching Instagram page (%s): %s', $this->url, $errstr));
+                error_log(sprintf('[Instagram] Error fetching Instagram page (%s): %s', $this->url, $errstr));
             }
         });
         $html = file_get_contents($this->url);
@@ -125,6 +124,10 @@ class InstagramClient
             return preg_replace('/^window\._sharedData\s*\=[^{]*(\{.*});$/s', '$1', $node->textContent);
         }
 
+        if ($this->debug) {
+            error_log(sprintf('[Instagram] Unable to parse %s', $this->url));
+        }
+
         return '{}';
     }
 
@@ -136,8 +139,8 @@ class InstagramClient
         try {
             $query = json_decode($json, true, 512, JSON_THROW_ON_ERROR);
         } catch (JsonException $e) {
-            fwrite(STDERR, sprintf(
-                "Error parsing data from Instagram page (%s): %s\nJSON: %s",
+            error_log(sprintf(
+                "[Instagram] Error parsing data from Instagram page (%s): %s\nJSON: %s",
                 $this->url,
                 $e->getMessage(),
                 $json
