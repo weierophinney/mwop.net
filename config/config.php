@@ -7,9 +7,15 @@
 
 declare(strict_types=1);
 
+use Dotenv\Dotenv;
 use Laminas\ConfigAggregator\ArrayProvider;
 use Laminas\ConfigAggregator\ConfigAggregator;
 use Laminas\ConfigAggregator\PhpFileProvider;
+
+$dotEnvFile = dirname(__DIR__) . '/.env';
+if (file_exists($dotEnvFile)) {
+    Dotenv::createImmutable(dirname(__DIR__))->load();
+}
 
 // To enable or disable caching, set the `ConfigAggregator::ENABLE_CACHE` boolean in
 // `config/autoload/local.php`.
@@ -58,6 +64,6 @@ $aggregator = new ConfigAggregator([
 
     // Load development config if it exists
     new PhpFileProvider('config/development.config.php'),
-], $cacheConfig['config_cache_path'], [Laminas\ZendFrameworkBridge\ConfigPostProcessor::class]);
+], $cacheConfig['config_cache_path']);
 
 return $aggregator->getMergedConfig();

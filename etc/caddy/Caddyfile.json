@@ -1,0 +1,87 @@
+{
+    "logging": {
+        "logs": {
+            "default": {
+                "exclude": [
+                    "http.log.access.log_mwop_net"
+                ]
+            },
+            "log_mwop_net": {
+                "writer": {
+                    "filename": "/var/log/caddy/testing.mwop.net",
+                    "output": "file",
+                    "roll_keep": 3,
+                    "roll_keep_days": 30
+                },
+                "encoder": {
+                    "format":"json"
+                },
+                "include": [
+                    "http.log.access.log_mwop_net"
+                ]
+            }
+        }
+    },
+    "apps": {
+        "http": {
+            "servers": {
+                "mwop_net": {
+                    "listen": [":443"],
+                    "routes": [
+                        {
+                            "match": [
+                                {
+                                    "host": ["testing.mwop.net"]
+                                }
+                            ],
+                            "handle": [
+                                {
+                                    "handler": "subroute",
+                                    "routes": [
+                                        {
+                                            "handle": [
+                                                {
+                                                    "handler": "headers",
+                                                    "response": {
+                                                        "set": {
+                                                            "Strict-Transport-Security": ["max-age=31536000;"]
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "encodings": {
+                                                        "gzip": {}
+                                                    },
+                                                    "handler": "encode"
+                                                },
+                                                {
+                                                    "handler": "reverse_proxy",
+                                                    "headers": {
+                                                        "response": {
+                                                            "delete": ["Server"]
+                                                        }
+                                                    },
+                                                    "upstreams": [
+                                                        {
+                                                            "dial": "localhost:9000"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ],
+                            "terminal":true
+                        }
+                    ],
+                    "logs": {
+                        "logger_names": {
+                            "testing.mwop.net": "log_mwop_net"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

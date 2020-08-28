@@ -15,7 +15,7 @@ use Psr\Log\LoggerInterface;
 use Laminas\Stratigility\Middleware\ErrorHandler;
 
 /** @var string */
-$messageToAddress = getenv('CONTACT_MESSAGE_TO_ADDRESS');
+$messageToAddress = $_ENV['CONTACT_MESSAGE_TO_ADDRESS'];
 
 /**
  * Defines the production settings, using values provided in the environment.
@@ -46,39 +46,45 @@ return [
         ],
     ],
     'contact' => [
-        'recaptcha_pub_key'  => getenv('RECAPTCHA_PUB_KEY'),
-        'recaptcha_priv_key' => getenv('RECAPTCHA_PRIV_KEY'),
+        'recaptcha_pub_key'  => $_ENV['RECAPTCHA_PUB_KEY'],
+        'recaptcha_priv_key' => $_ENV['RECAPTCHA_PRIV_KEY'],
         'message' => [
             'to'   => $messageToAddress,
             'from' => null,
             'sender' => [
-                'address' => getenv('CONTACT_MESSAGE_SENDER_ADDRESS'),
+                'address' => $_ENV['CONTACT_MESSAGE_SENDER_ADDRESS'],
             ],
         ],
     ],
     'mail' => [
         'transport' => [
             'class'    => \Swift_AWSTransport::class,
-            'host'     => getenv('MAIL_TRANSPORT_HOST'),
-            'port'     => getenv('MAIL_TRANSPORT_PORT'),
+            'host'     => $_ENV['MAIL_TRANSPORT_HOST'],
+            'port'     => $_ENV['MAIL_TRANSPORT_PORT'],
             'ssl'      => 'tls',
-            'username' => getenv('MAIL_TRANSPORT_USERNAME'),
-            'password' => getenv('MAIL_TRANSPORT_PASSWORD'),
+            'username' => $_ENV['MAIL_TRANSPORT_USERNAME'],
+            'password' => $_ENV['MAIL_TRANSPORT_PASSWORD'],
+        ],
+    ],
+    'mezzio-swoole' => [
+        'swoole-http-server' => [
+            // Only listen on localhost in production!
+            'host'    => '127.0.0.1',
         ],
     ],
     'oauth2' => [
         'debug'  => [],
         'github' => [
-            'clientId'     => getenv('OAUTH2_GITHUB_CLIENTID'),
-            'clientSecret' => getenv('OAUTH2_GITHUB_CLIENTSECRET'),
-            'redirectUri'  => getenv('OAUTH2_GITHUB_REDIRECTURI'),
+            'clientId'     => $_ENV['OAUTH2_GITHUB_CLIENTID'],
+            'clientSecret' => $_ENV['OAUTH2_GITHUB_CLIENTSECRET'],
+            'redirectUri'  => $_ENV['OAUTH2_GITHUB_REDIRECTURI'],
         ],
         'google' => [
-            'clientId'     => getenv('OAUTH2_GOOGLE_CLIENTID'),
-            'clientSecret' => getenv('OAUTH2_GOOGLE_CLIENTSECRET'),
-            'redirectUri'  => getenv('OAUTH2_GOOGLE_REDIRECTURI'),
+            'clientId'     => $_ENV['OAUTH2_GOOGLE_CLIENTID'],
+            'clientSecret' => $_ENV['OAUTH2_GOOGLE_CLIENTSECRET'],
+            'redirectUri'  => $_ENV['OAUTH2_GOOGLE_REDIRECTURI'],
             // Enable this to restrict authentication to users at the listed domain:
-            // 'hostedDomain' => getenv('OAUTH2_GOOGLE_HOSTEDDOMAIN'),
+            // 'hostedDomain' => $_ENV['OAUTH2_GOOGLE_HOSTEDDOMAIN'],
         ],
     ],
 ];

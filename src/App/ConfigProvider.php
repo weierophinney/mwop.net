@@ -84,7 +84,7 @@ class ConfigProvider
         return [
             'connection-parameters' => [
                 'scheme' => 'tcp',
-                'host'   => 'redis',
+                'host'   => 'localhost',
                 'port'   => 6379,
             ],
         ];
@@ -99,17 +99,6 @@ class ConfigProvider
                     'url'      => realpath(getcwd()) . '/data/feeds/rss.xml',
                     'sitename' => 'mwop.net',
                     'siteurl'  => 'https://mwop.net/blog',
-                ],
-                [
-                    'url'      => 'https://framework.zend.com/blog/feed-rss.xml',
-                    'favicon'  => 'https://framework.zend.com/ico/favicon.ico',
-                    'sitename' => 'Zend Framework Blog',
-                    'siteurl'  => 'https://framework.zend.com/blog/',
-                    'filters'  => [
-                        function ($entry) {
-                            return false !== strpos($entry->getAuthor()['name'], 'Phinney');
-                        },
-                    ],
                 ],
             ],
             'posts'      => [],

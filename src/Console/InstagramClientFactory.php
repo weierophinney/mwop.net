@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Mwop\Console;
 
 use Psr\Container\ContainerInterface;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
 class InstagramClientFactory
 {
@@ -18,8 +19,13 @@ class InstagramClientFactory
         $config = $container->get('config');
         $config = $config['instagram'] ?? [];
 
+        $cachePath = $config['cache_path'] ?? getcwd() . '/data/cache/instagram';
+
         return new InstagramClient(
-            $config['url'],
+            $config['login'],
+            $config['password'],
+            $config['profile'],
+            new FilesystemAdapter('Insta', 0, $cachePath),
             $config['debug'] ?? false
         );
     }

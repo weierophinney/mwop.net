@@ -10,8 +10,11 @@ return [
         ],
     ],
     'instagram'    => [
-        'debug' => false,
-        'url'   => getenv('INSTAGRAM_URL'),
-        'feed'  => getcwd() . '/data/instagram.feed.php',
+        'debug'      => false,
+        'login'      => $_ENV['INSTAGRAM_LOGIN'],
+        'password'   => $_ENV['INSTAGRAM_PASSWORD'],
+        'profile'    => $_ENV['INSTAGRAM_PROFILE'],
+        'cache_path' => getcwd() . '/data/cache/instagram/',
+        'feed'       => getcwd() . '/data/instagram.feed.php',
     ],
 ];

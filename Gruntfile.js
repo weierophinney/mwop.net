@@ -36,10 +36,10 @@ module.exports = function (grunt) {
         src: 'templates/layout/scripts.phtml',
       },
       'blog-styles': {
-        src: 'templates/blog/styles.phtml',
+        src: 'src/Blog/templates/blog/styles.phtml',
       },
       'blog-scripts': {
-        src: 'templates/blog/scripts.phtml',
+        src: 'src/Blog/templates/blog/scripts.phtml',
       }
     },
 

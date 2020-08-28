@@ -77,7 +77,10 @@ class Fetch extends Command
         try {
             $data = $this->reader->read();
         } catch (Throwable $e) {
-            return $this->reportError($console, $e, strlen($message));
+            $io->error('Failed to retrieve github activiity');
+            $io->writeln($e->getMessage());
+            $io->writeln($e->getTraceAsString());
+            return 1;
         }
 
         file_put_contents(

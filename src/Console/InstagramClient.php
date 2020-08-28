@@ -9,39 +9,42 @@ declare(strict_types=1);
 
 namespace Mwop\Console;
 
-use DOMDocument;
-use JsonException;
+use Exception;
+use Instagram\Api;
+use Psr\Cache\CacheItemPoolInterface;
 
-use function array_shift;
-use function count;
 use function error_log;
-use function file_get_contents;
-use function is_array;
-use function json_decode;
-use function libxml_clear_errors;
-use function libxml_use_internal_errors;
-use function preg_match;
-use function preg_replace;
-use function restore_error_handler;
-use function set_error_handler;
 use function sprintf;
-
-use const E_WARNING;
-use const JSON_THROW_ON_ERROR;
-use const LIBXML_HTML_NODEFDTD;
 
 class InstagramClient
 {
+    /** @var CacheItemPoolInterface */
+    private $cachePool;
+
     /** @var bool */
     private $debug;
 
     /** @var string */
-    private $url;
+    private $login;
 
-    public function __construct(string $url, bool $debug = false)
-    {
-        $this->url   = $url;
-        $this->debug = $debug;
+    /** @var string */
+    private $password;
+
+    /** @var string */
+    private $profile;
+
+    public function __construct(
+        string $login,
+        string $password,
+        string $profile,
+        CacheItemPoolInterface $cachePool,
+        bool $debug = false
+    ) {
+        $this->login     = $login;
+        $this->password  = $password;
+        $this->profile   = $profile;
+        $this->cachePool = $cachePool;
+        $this->debug     = $debug;
     }
 
     /**
@@ -49,105 +52,26 @@ class InstagramClient
      */
     public function fetchFeed(): array
     {
-        $feed = [];
-        $html = $this->fetchHtml();
-        $json = $this->parseHtml($html);
-
-        foreach ($this->parseJsonForItems($json) as $item) {
-            $node = $item['node'] ?? [];
-            if (
-                ! (isset($node['thumbnail_resources']) && is_array($node['thumbnail_resources']))
-                || ! isset($node['shortcode'])
-            ) {
-                continue;
+        $api = new Api($this->cachePool);
+        try {
+            $api->login($this->login, $this->password);
+        } catch (Exception $e) {
+            if ($this->debug) {
+                error_log(sprintf('[Instagram] failed to login: %s', $e->getMessage()));
             }
+            throw $e;
+        }
 
-            $thumbnail = array_shift($node['thumbnail_resources']);
-            if (! isset($thumbnail['src'])) {
-                continue;
-            }
+        $profile = $api->getProfile($this->profile);
+        $feed    = [];
 
+        foreach ($profile->getMedias() as $media) {
             $feed[] = [
-                'post_url'  => sprintf('https://www.instagram.com/p/%s', $node['shortcode']),
-                'image_url' => $thumbnail['src'],
+                'post_url'  => $media->getLink(),
+                'image_url' => $media->getThumbnailSrc(),
             ];
         }
 
         return $feed;
-    }
-
-    private function fetchHtml(): string
-    {
-        if ('' === $this->url) {
-            if ($this->debug) {
-                error_log('[Instagram] No Instagram URL is configured');
-            }
-            return '';
-        }
-
-        set_error_handler(function ($errno, $errstr) {
-            if ($errno !== E_WARNING) {
-                return false;
-            }
-
-            if ($this->debug) {
-                error_log(sprintf('[Instagram] Error fetching Instagram page (%s): %s', $this->url, $errstr));
-            }
-        });
-        $html = file_get_contents($this->url);
-        restore_error_handler();
-
-        return false === $html ? '' : $html;
-    }
-
-    /**
-     * @return string Literal JSON discovered in the HTML document.
-     */
-    private function parseHtml(string $html): string
-    {
-        $dom                      = new DOMDocument();
-        $dom->strictErrorChecking = false;
-        $useLibxmlErrors          = libxml_use_internal_errors(true);
-        $dom->loadHTML($html, LIBXML_HTML_NODEFDTD);
-        libxml_clear_errors();
-        libxml_use_internal_errors($useLibxmlErrors);
-
-        foreach ($dom->getElementsByTagName('script') as $node) {
-            if (! $node->hasAttributes() || count($node->attributes) > 1) {
-                continue;
-            }
-
-            if (! preg_match('/^window\._sharedData/', $node->textContent)) {
-                continue;
-            }
-
-            return preg_replace('/^window\._sharedData\s*\=[^{]*(\{.*});$/s', '$1', $node->textContent);
-        }
-
-        if ($this->debug) {
-            error_log(sprintf('[Instagram] Unable to parse %s', $this->url));
-        }
-
-        return '{}';
-    }
-
-    /**
-     * @return array[] Array of arrays.
-     */
-    private function parseJsonForItems(string $json): array
-    {
-        try {
-            $query = json_decode($json, true, 512, JSON_THROW_ON_ERROR);
-        } catch (JsonException $e) {
-            error_log(sprintf(
-                "[Instagram] Error parsing data from Instagram page (%s): %s\nJSON: %s",
-                $this->url,
-                $e->getMessage(),
-                $json
-            ));
-            return [];
-        }
-
-        return $query['entry_data']['ProfilePage'][0]['graphql']['user']['edge_owner_to_timeline_media']['edges'] ?? [];
     }
 }

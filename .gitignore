@@ -3,6 +3,7 @@
 .tmp/
 config/autoload/*local.php
 config/development.config.php
+data/cache/instagram/*
 data/cache/posts/*
 data/comics/*.html
 data/comics.phtml
