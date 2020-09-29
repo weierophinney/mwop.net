@@ -3,13 +3,13 @@ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 # m        h         dom mon dow user     command
 # Update github feed
-*/15 *                    *   *   * www-data cd %release_path% ; php bin/mwop.net.php github:fetch-activity > /var/log/cron-mwopnet.log 2>&1
+*/15 *                    *   *   * www-data cd %release_path% ; php bin/mwop.net.php github:fetch-activity | /usr/bin/logger -t MWOPNET
 
 # Update blog posts listing
-0    0,6,12,18            *   *   * www-data cd %release_path% ; php bin/mwop.net.php homepage-feeds > /var/log/cron-mwopnet.log 2>&1
+0    0,6,12,18            *   *   * www-data cd %release_path% ; php bin/mwop.net.php homepage-feeds | /usr/bin/logger -t MWOPNET
 
 # Fetch comics
-0    1,4,7,10,13,16,19,22 *   *   * www-data cd %release_path% ; php vendor/bin/phly-comic.php fetch-all -p --output data/comics.phtml --exclude nih --exclude reptilis-rex --exclude dilbert > /var/log/cron-mwopnet.log 2>&1
+0    1,4,7,10,13,16,19,22 *   *   * www-data cd %release_path% ; php vendor/bin/phly-comic.php fetch-all -p --output data/comics.phtml --exclude nih --exclude reptilis-rex --exclude dilbert | /usr/bin/logger -t MWOPNET
 
 # Update instagram feed
-30   4,10,16,22           *   *   * www-data cd %release_path% ; php bin/mwop.net.php instagram-feeds > /var/log/cron-mwopnet.log 2>&1
+30   4,10,16,22           *   *   * www-data cd %release_path% ; php bin/mwop.net.php instagram-feeds | /usr/bin/logger -t MWOPNET
