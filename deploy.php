@@ -218,10 +218,10 @@ task('caddy:reload_previous', function () {
 desc('Stop swoole instance');
 task('swoole:stop', function () {
     run('
-        IS_SUPERVISOR_RUNNING=$(ps ax | grep -v grep | grep -q supervisord)
-        if [ "$IS_SUPERVISOR_RUNNING" == "0" ];then
-            IS_AVAIL=$(supervisorctl avail | grep -v grep | grep -q mwop_net:mwopnet)
-            if [ "$IS_AVAIL" == "0" ];then
+        ps ax | grep -v grep | grep -q supervisord ;
+        if [ "$?" == "0" ];then
+            supervisorctl avail | grep -v grep | grep -q mwop_net:mwopnet ;
+            if [ "$?" == "0" ];then
                 supervisorctl stop mwop_net:mwopnet
             fi
         fi
@@ -231,11 +231,11 @@ task('swoole:stop', function () {
 desc('Start swoole instance');
 task('swoole:start', function () {
     run('
-        IS_SUPERVISOR_RUNNING=$(ps ax | grep -v grep | grep -q supervisord)
-        if [ "$IS_SUPERVISOR_RUNNING" != "0" ];then
+        ps ax | grep -v grep | grep -q supervisord ;
+        if [ "$?" != "0" ];then
             service supervisor start
         else
-            supervisorctl reload ;
+            supervisorctl restart mwop_net:mwopnet
         fi
     ');
 });
