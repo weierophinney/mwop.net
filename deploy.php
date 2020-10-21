@@ -222,7 +222,7 @@ task('swoole:stop', function () {
         if [ "$?" == "0" ];then
             supervisorctl avail | grep -v grep | grep -q mwop_net:mwopnet ;
             if [ "$?" == "0" ];then
-                supervisorctl stop mwop_net:mwopnet
+                supervisorctl stop mwop_net:mwopnet ;
             fi
         fi
     ');
@@ -233,9 +233,9 @@ task('swoole:start', function () {
     run('
         ps ax | grep -v grep | grep -q supervisord ;
         if [ "$?" != "0" ];then
-            service supervisor start
+            service supervisor start ;
         else
-            supervisorctl restart mwop_net:mwopnet
+            supervisorctl restart mwop_net:mwopnet ;
         fi
     ');
 });
