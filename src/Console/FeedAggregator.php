@@ -10,6 +10,8 @@ declare(strict_types=1);
 namespace Mwop\Console;
 
 use Exception;
+use Http\Discovery\HttpClientDiscovery;
+use Http\Discovery\MessageFactoryDiscovery;
 use Laminas\Feed\Reader\Feed\FeedInterface;
 use Laminas\Feed\Reader\Reader as FeedReader;
 use Symfony\Component\Console\Command\Command;
@@ -107,6 +109,11 @@ EOF;
                 return $entries->merge($this->marshalEntries($feedInfo, $io));
             }, FeedCollection::make([]))
             ->sortByDesc('date-created')
+        /*
+            ->each(function ($entry) {
+                printf("- [%s] %s (%s)\n", $entry['date-created']->format('Y-m-d'), $entry['title'], $entry['link']);
+            })
+         */
             ->slice(0, $this->toRetrieve);
     }
 
@@ -134,12 +141,14 @@ EOF;
 
     private function marshalEntries(array $feedInfo, SymfonyStyle $io): FeedCollection
     {
-        $feedUrl  = $feedInfo['url'];
-        $logo     = $feedInfo['favicon'] ?? 'https://mwop.net/images/favicon/favicon-16x16.png';
-        $siteName = $feedInfo['sitename'] ?? '';
-        $siteUrl  = $feedInfo['siteurl'] ?? '#';
-        $filters  = $feedInfo['filters'] ?? [];
-        $each     = $feedInfo['each'] ?? function ($item) {
+        $feedUrl     = $feedInfo['url'];
+        $logo        = $feedInfo['favicon'] ?? 'https://mwop.net/images/favicon/favicon-16x16.png';
+        $siteName    = $feedInfo['sitename'] ?? '';
+        $siteUrl     = $feedInfo['siteurl'] ?? '#';
+        $filters     = $feedInfo['filters'] ?? [];
+        $normalizers = $feedInfo['normalizers'] ?? [];
+        $each        = $feedInfo['each'] ?? function ($item) {
+            printf("- %s\n", is_object($item) ? get_class($item) : gettype($item));
         };
 
         $io->text(sprintf('<info>Retrieving %s</>', $feedUrl));
@@ -147,7 +156,7 @@ EOF;
 
         try {
             $feed = preg_match('#^https?://#', $feedUrl)
-                ? $this->getFeedFromRemoteUrl($feedUrl)
+                ? $this->getFeedFromRemoteUrl($feedUrl, $normalizers)
                 : $this->getFeedFromLocalFile($feedUrl);
         } catch (Throwable $e) {
             $io->progressFinish();
@@ -181,9 +190,21 @@ EOF;
         return FeedReader::importString(file_get_contents($file));
     }
 
-    private function getFeedFromRemoteUrl(string $url): FeedInterface
+    private function getFeedFromRemoteUrl(string $url, array $normalizers): FeedInterface
     {
-        return FeedReader::import($url);
+        $client         = HttpClientDiscovery::find();
+        $messageFactory = MessageFactoryDiscovery::find();
+        $response       = $client->sendRequest($messageFactory->createRequest('GET', $url));
+        $feedContent    = $response->getBody()->getContents();
+
+        foreach ($normalizers as $normalizer) {
+            if (! is_callable($normalizer)) {
+                continue;
+            }
+            $feedContent = $normalizer($feedContent);
+        }
+
+        return FeedReader::importString($feedContent);
     }
 
     private function reportException(Exception $e, SymfonyStyle $io)
