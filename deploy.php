@@ -196,8 +196,8 @@ task('install:system_dependencies', [
 
 desc('Reload Caddy with revised configuration');
 task('caddy:reload', function () {
+    cd('{{release_path}}');
     run('
-        cd {{release_path}} ;
         cp etc/caddy/mwop.net.caddy /etc/caddy/conf.d/ ;
         systemctl restart caddy ;
     ');
@@ -208,8 +208,8 @@ task('caddy:reload_previous', function () {
     if (! has('previous_release')) {
         return;
     }
+    cd('{{previous_release}}');
     run('
-        cd {{previous_release}} ;
         cp etc/caddy/mwop.net.caddy /etc/caddy/conf.d/ ;
         systemctl restart caddy ;
     ');
