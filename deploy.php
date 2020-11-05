@@ -173,9 +173,9 @@ task('install:caddy', function () {
             echo "deb [trusted=yes] https://apt.fury.io/caddy/ /" > /etc/apt/sources.list.d/caddy-fury.list ;
             apt update ;
             apt install -y caddy ;
+            mkdir -p /etc/caddy/conf.d ;
+            echo "import /etc/caddy/conf.d/*.caddy" > /etc/caddy/Caddyfile ;
         fi
-        mkdir -p /etc/caddy/conf.d ;
-        echo "import /etc/caddy/conf.d/*.caddy" > /etc/caddy/Caddyfile
     ');
 });
 
