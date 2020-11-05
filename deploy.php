@@ -51,10 +51,10 @@ host('testing.mwop.net')
 desc('Install util packages');
 task('install:utils', function () {
     run('
-        which curl && which jq && which unzip ;
+        which curl && which unzip ;
         if [ "$?" -ne "0" ];then
             apt update -y ;
-            apt install -y curl jq unzip
+            apt install -y curl unzip
         fi
     ');
 });
@@ -174,6 +174,8 @@ task('install:caddy', function () {
             apt update ;
             apt install -y caddy ;
         fi
+        mkdir -p /etc/caddy/conf.d ;
+        echo "include /etc/caddy/conf.d/*.caddy" > /etc/caddy/Caddyfile
     ');
 });
 
@@ -196,9 +198,8 @@ desc('Reload Caddy with revised configuration');
 task('caddy:reload', function () {
     run('
         cd {{release_path}} ;
-        cat etc/caddy/Caddyfile.json | jq ".logging.logs.default.exclude[0]" | curl -X POST -H "Content-Type: application/json" -d @- http://localhost:2019/config/logging/logs/default/exclude/0/ ;
-        cat etc/caddy/Caddyfile.json | jq ".logging.logs.log_mwop_net" | curl -X POST -H "Content-Type: application/json" -d @- http://localhost:2019/config/logging/logs/log_mwop_net/ ;
-        cat etc/caddy/Caddyfile.json | jq ".apps.http.servers.mwop_net" | curl -X POST -H "Content-Type: application/json" -d @- http://localhost:2019/config/apps/http/servers/mwop_net/ ;
+        cp etc/caddy/mwop.net.caddy /etc/caddy/conf.d/ ;
+        caddy reload ;
     ');
 });
 
@@ -209,9 +210,8 @@ task('caddy:reload_previous', function () {
     }
     run('
         cd {{previous_release}} ;
-        cat etc/caddy/Caddyfile.json | jq ".logging.logs.default.exclude[0]" | curl -X POST -H "Content-Type: application/json" -d @- http://localhost:2019/config/logging/logs/default/exclude/0/ ;
-        cat etc/caddy/Caddyfile.json | jq ".logging.logs.log_mwop_net" | curl -X POST -H "Content-Type: application/json" -d -d @- http://localhost:2019/config/logging/logs/log_mwop_net/ ;
-        cat etc/caddy/Caddyfile.json | jq ".apps.http.servers.mwop_net" | curl -X POST -H "Content-Type: application/json" -d @- http://localhost:2019/config/apps/http/servers/mwop_net/ ;
+        cp etc/caddy/mwop.net.caddy /etc/caddy/conf.d/ ;
+        caddy reload ;
     ');
 });
 
