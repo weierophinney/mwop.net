@@ -7,7 +7,7 @@ testing.mwop.net {
     log {
         output file /var/log/caddy/testing.mwop.net {
             roll_keep 3
-            roll_keep_for 30
+            roll_keep_for 30d
         }
         format json
     }

@@ -175,7 +175,7 @@ task('install:caddy', function () {
             apt install -y caddy ;
         fi
         mkdir -p /etc/caddy/conf.d ;
-        echo "include /etc/caddy/conf.d/*.caddy" > /etc/caddy/Caddyfile
+        echo "import /etc/caddy/conf.d/*.caddy" > /etc/caddy/Caddyfile
     ');
 });
 
@@ -199,7 +199,7 @@ task('caddy:reload', function () {
     run('
         cd {{release_path}} ;
         cp etc/caddy/mwop.net.caddy /etc/caddy/conf.d/ ;
-        caddy reload ;
+        systemctl restart caddy ;
     ');
 });
 
@@ -211,7 +211,7 @@ task('caddy:reload_previous', function () {
     run('
         cd {{previous_release}} ;
         cp etc/caddy/mwop.net.caddy /etc/caddy/conf.d/ ;
-        caddy reload ;
+        systemctl restart caddy ;
     ');
 });
 
