@@ -21,6 +21,9 @@ return [
 
                 // Enable task workers.
                 'task_worker_num' => 4,
+
+                // PID file
+                'pid_file' => sys_get_temp_dir() . '/mwop-net.pid',
             ],
             'static-files' => [
                 'type-map'   => array_merge(ContentTypeFilterMiddleware::TYPE_MAP_DEFAULT, [
