@@ -60,7 +60,7 @@ class ConfigProvider
                 FeedReaderHttpClientInterface::class         => Feed\HttpPlugClientFactory::class,
                 Handler\ComicsPageHandler::class             => Handler\ComicsPageHandlerFactory::class,
                 Handler\HomePageHandler::class               => Handler\HomePageHandlerFactory::class,
-                Handler\ResumePageHandler::class             => Handler\PageHandlerFactory::class,
+                Handler\PrivacyPolicyPageHandler::class      => Handler\PageHandlerFactory::class,
                 Handler\ResumePageHandler::class             => Handler\PageHandlerFactory::class,
                 'mail.transport'                             => Factory\MailTransport::class,
                 Middleware\RedirectAmpPagesMiddleware::class => Middleware\RedirectAmpPagesMiddlewareFactory::class,
@@ -132,6 +132,7 @@ class ConfigProvider
         $app->get('/', Handler\HomePageHandler::class, 'home');
         $app->get('/comics', Handler\ComicsPageHandler::class, 'comics');
         $app->get('/resume', Handler\ResumePageHandler::class, 'resume');
+        $app->get('/privacy-policy', Handler\PrivacyPolicyPageHandler::class, 'privacy-policy');
 
         // Logout
         $app->get('/logout', [
