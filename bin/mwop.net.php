@@ -22,9 +22,6 @@ $container = require 'config/container.php';
 
 $application = new Application('mwop.net');
 $application->setCommandLoader(new ContainerCommandLoader($container, [
-    'asset:copy-symlinks'       => Console\CopyAssetSymlinks::class,
-    'asset:create-symlinks'     => Console\CreateAssetSymlinks::class,
-    'asset:use-dist-templates'  => Console\UseDistTemplates::class,
     'blog:clear-cache'          => Blog\Console\ClearCache::class,
     'blog:feed-generator'       => Blog\Console\FeedGenerator::class,
     'blog:generate-search-data' => Blog\Console\GenerateSearchData::class,

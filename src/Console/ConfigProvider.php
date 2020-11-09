@@ -23,9 +23,6 @@ class ConfigProvider
         return [
             'invokables' => [
                 ClearCache::class          => ClearCache::class,
-                CopyAssetSymlinks::class   => CopyAssetSymlinks::class,
-                CreateAssetSymlinks::class => CreateAssetSymlinks::class,
-                UseDistTemplates::class    => UseDistTemplates::class,
             ],
             'factories'  => [
                 FeedAggregator::class => FeedAggregatorFactory::class,
