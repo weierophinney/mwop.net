@@ -207,7 +207,8 @@ task('swoole:start', function () {
         if [ "$?" != "0" ];then
             service supervisor start ;
         else
-            supervisorctl restart mwop_net:mwopnet ;
+            supervisorctl stop mwop_net:mwopnet ;
+            supervisorctl start mwop_net:mwopnet ;
         fi
     ');
 });
