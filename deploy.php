@@ -29,7 +29,7 @@ set('writable_dirs', ['data']);
 set('writable_mode', 'chown');
 
 // Hosts
-host('testing.mwop.net')
+host('mwop.net')
     ->stage('production')
     ->set('deploy_path', '/var/www/{{application}}')
     ->set('http_user', 'www-data');
