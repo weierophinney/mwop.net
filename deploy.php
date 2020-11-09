@@ -279,7 +279,7 @@ task('rollback:cronjob', function () {
     if (! has('previous_release')) {
         return;
     }
-    run('cp {{previous_release}}/etc/cron.d/mwop.net /etc/cron.d/mwopnet');
+    run('cp {{previous_release}}/etc/cron.d/mwopnet /etc/cron.d/mwopnet');
 });
 
 desc('Upload env');
