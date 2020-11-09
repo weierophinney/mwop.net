@@ -8,12 +8,12 @@ $pagination-hover-color: $white;
 $pagination-hover-bg: $gray-800;
 $pagination-active-color: $white;
 $pagination-active-bg: $black;
-@import "../../node_modules/bootstrap/scss/bootstrap";
+@import "../node_modules/bootstrap/scss/bootstrap";
 
 /* Litera theme */
-@import "../../node_modules/bootswatch/dist/litera/variables";
+@import "../node_modules/bootswatch/dist/litera/variables";
 $navbar-dark-color: $white;
-@import "../../node_modules/bootswatch/dist/litera/bootswatch";
+@import "../node_modules/bootswatch/dist/litera/bootswatch";
 
 /* My theme overrides */
 .navbar {

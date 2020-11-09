@@ -1,6 +1,13 @@
 <?php $this->layout('layout::layout', [
     'title' => 'Welcome',
 ]) ?>
+
+<?php
+$this->push('scripts');
+echo '<script src="/js/twitter.js"></script>';
+$this->end();
+?>
+
 <article class="col-lg alpha home">
     <h2>Welcome!</h2>
 

@@ -3,10 +3,6 @@ $this->layout('layout::layout', [
     'title' => $this->escapeHtml($post->title),
 ]);
 
-$this->start('styles');
-$this->insert('blog::styles');
-$this->stop();
-
 $this->push('links');
 ?>
 <?php foreach ($this->processTags($post->tags) as $tag) : ?>
@@ -16,7 +12,8 @@ $this->push('links');
 $this->end();
 
 $this->push('scripts');
-$this->insert('blog::scripts');
+echo '<script src="/js/prism.js"></script>';
+echo '<script src="/js/disqus.js"></script>';
 $this->end();
 
 $this->push('footer');

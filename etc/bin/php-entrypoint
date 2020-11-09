@@ -10,15 +10,10 @@ chown root:root /etc/cron.d/*
 chmod 0644 /etc/cron.d/*
 
 # Start cron; it's a daemon by default.
-# -d 3 tells it to log to stderr, and to log levels 4 and up (default is
-# only debug messages)
-crond -d 3
-
-# Add the site crontab
-crontab /etc/cron.d/mwopnet
+service cron start
 
 # Build the blog
-if [ ! -f "data/posts.db" ] || [ ! -f "data/tag-cloud.phtml" ] || [ ! -f "data/search_terms.json" ];then
+if [ ! -f "data/posts.db" ] || [ ! -f "data/tag-cloud.phtml" ] || [ ! -f "public/search_terms.json" ];then
     composer build:blog
 fi
 /usr/bin/env php bin/mwop.net.php blog:clear-cache # really only necessary when running locally

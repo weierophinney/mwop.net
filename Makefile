@@ -8,7 +8,7 @@ CADDY_VERSION?=latest
 REDIS_VERSION?=latest
 SWOOLE_VERSION?=latest
 
-.PHONY : all caddy redis swoole
+.PHONY : all assets caddy redis swoole
 
 all: caddy redis swoole
 
@@ -38,3 +38,10 @@ swoole:
 	- docker tag mwopswoole:latest mwop/mwopswoole:$(VERSION)
 	@echo "- Pushing image to hub"
 	- docker push mwop/mwopswoole:$(VERSION)
+
+assets:
+	@echo "Building assets"
+	@echo "- Installing dependencies"
+	- (cd assets && npm install)
+	@echo "- Building assets"
+	- (cd assets && grunt)

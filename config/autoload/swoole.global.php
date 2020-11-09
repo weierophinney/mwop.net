@@ -28,6 +28,7 @@ return [
             'static-files' => [
                 'type-map'   => array_merge(ContentTypeFilterMiddleware::TYPE_MAP_DEFAULT, [
                     'asc' => 'application/octet-stream',
+                    'map' => 'application/octet-stream',
                 ]),
                 'gzip'       => [
                     'level' => 6,

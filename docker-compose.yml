@@ -2,13 +2,13 @@ version: '3.3'
 
 services:
   redis:
-    build: 
+    build:
       context: .
       dockerfile: etc/docker/redis.Dockerfile
     ports:
       - "6379:6379"
     volumes:
-      - ./etc/redis/redis.conf:/usr/local/etc/redis/redis.conf
+      - ./etc/redis/redis.docker.conf:/usr/local/etc/redis/redis.conf
       - ./data/redis:/data
     logging:
       options:
@@ -24,6 +24,8 @@ services:
       - redis
     volumes:
       - .:/var/www
+      - ./assets/build/css:/var/www/public/css
+      - ./assets/build/js:/var/www/public/js
       - ./etc/php/mwop.ini:/usr/local/etc/php/conf.d/mwop.ini
       - ./etc/cron.d/mwopnet:/etc/cron.d/mwopnet
       - ./etc/bin/php-entrypoint:/usr/local/bin/entrypoint

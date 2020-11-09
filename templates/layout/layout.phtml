@@ -41,9 +41,7 @@
       <?= $this->section('content') ?>
   </div>
 </div>
-<?php
-$this->insert('layout::footer', ['footer' => $this->section('footer')]);
-$this->insert('layout::scripts', ['scripts' => $this->section('scripts')]);
-?>
+<?php $this->insert('layout::footer', ['footer' => $this->section('footer')]) ?>
+<?php $this->insert('layout::scripts', ['scripts' => $this->section('scripts')]) ?>
 </body>
 </html>

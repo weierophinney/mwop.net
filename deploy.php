@@ -28,9 +28,6 @@ set('shared_dirs', []);
 set('writable_dirs', ['data']);
 set('writable_mode', 'chown');
 
-// Paths to clear on completion
-set('clear_paths', ['node_modules']);
-
 // Hosts
 host('testing.mwop.net')
     ->stage('production')
@@ -93,30 +90,6 @@ task('install:redis', function () {
         touch /var/spool/redis/mwop.net.rdb
     ');
 });
-
-desc('Install node');
-task('install:node', function () {
-    run('
-        dpkg --no-pager -l nodejs ;
-        if [ "$?" -ne "0" ];then
-            echo "Installing node.js 10 for the first time";
-            curl -sL https://deb.nodesource.com/setup_10.x | bash - ;
-            apt-get install -y nodejs ;
-        fi
-    ');
-});
-
-desc('Install grunt');
-task('install:grunt', function () {
-    run('
-        which grunt ;
-        if [ "$?" -ne "0" ];then
-            echo "Installing Grunt for the first time" ;
-            npm install -g grunt-cli
-        fi
-    ');
-});
-after('install:node', 'install:grunt');
 
 desc('Install PHP');
 task('install:php', function () {
@@ -185,7 +158,6 @@ task('install:system_dependencies', [
     'install:cron',
     'install:supervisor',
     'install:redis',
-    'install:node',
     'install:php',
     'install:caddy',
 ]);
@@ -316,14 +288,10 @@ task('upload:env', function () {
     upload('.prod.env', '{{release_path}}/.env');
 });
 
-desc('Build js and css');
-task('build:grunt', '
-    npm install ;
-    cp node_modules/bootstrap/dist/js/bootstrap.js public/js/ ;
-    cp node_modules/jquery/dist/jquery.js public/js/ ;
-    cp node_modules/autocomplete.js/dist/autocomplete.jquery.js public/js/ ;
-    grunt
-');
+desc('Build assets');
+task('build:assets', function () {
+    runLocally('make assets');
+});
 
 desc('Build blog');
 task('build:blog', 'sudo -u www-data composer build:blog');
@@ -338,8 +306,11 @@ desc('Fetch comics');
 task('build:comics', 'sudo -u www-data php vendor/bin/phly-comic.php fetch-all -p --output data/comics.phtml --exclude dilbert --exclude reptilis-rex --exclude nih');
 
 // Copy asset templates
-desc('Prepare asset templates');
-task('deploy:assets', 'php bin/mwop.net.php asset:use-dist-templates');
+desc('Deploy assets');
+task('deploy:assets', function () {
+    upload('build/js', '{release_path}}/public');
+    upload('build/css', '{release_path}}/public');
+});
 
 desc('Build');
 task('build', [
@@ -348,8 +319,8 @@ task('build', [
     'deploy:install_redis_conf',
     'deploy:install_supervisor_conf',
     'deploy:cronjob',
-    'build:grunt',
     'upload:env',
+    'build:assets',
     'build:blog',
     'build:homepage',
     'build:instagram',

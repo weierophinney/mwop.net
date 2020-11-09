@@ -77,26 +77,12 @@
         }
     },
     "scripts": {
-        "assets:build": [
-            "@npm",
-            "grunt"
-        ],
-        "assets:copy": [
-            "@npm",
-            "bin/mwop.net.php asset:copy-symlinks"
-        ],
-        "assets:symlink": [
-            "@npm",
-            "bin/mwop.net.php asset:create-symlinks"
-        ],
+        "assets": "make assets",
         "build": [
-            "@assets:symlink",
-            "@assets:build",
-            "bin/mwop.net.php asset:use-dist-templates",
+            "@assets",
             "@build:blog",
             "@build:homepage",
-            "phly-comic.php fetch-all --output data/comics.phtml --exclude dilbert --exclude reptilis-rex --exclude nih",
-            "@clean"
+            "phly-comic.php fetch-all --output data/comics.phtml --exclude dilbert --exclude reptilis-rex --exclude nih"
         ],
         "build:blog": [
             "bin/mwop.net.php blog:seed-db",
@@ -109,10 +95,6 @@
             "bin/mwop.net.php homepage-feeds"
         ],
         "build:search": "bin/mwop.net.php blog:generate-search-data",
-        "clean": [
-            "rm -Rf node_modules",
-            "rm -Rf .tmp"
-        ],
         "clean:build-assets": [
             "echo 'Removing generated blog files'",
             "rm -f data/posts.db",
@@ -132,7 +114,6 @@
         "development:enable": "laminas-development-mode enable",
         "development:status": "laminas-development-mode status",
         "docker:site": [
-            "bin/mwop.net.php asset:use-dist-templates",
             "@build:blog",
             "@build:homepage",
             "phly-comic.php fetch-all --output data/comics.phtml --exclude dilbert --exclude reptilis-rex --exclude nih"

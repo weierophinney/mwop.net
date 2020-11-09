@@ -3,10 +3,6 @@ $this->layout('layout::layout', [
     'title' => $this->escapeHtml($title),
 ]);
 
-$this->push('styles');
-echo $this->fetch('blog::styles');
-$this->end();
-
 $this->push('links');
 if (isset($tag)) :
 ?>
@@ -17,7 +13,7 @@ endif;
 $this->end();
 
 $this->push('scripts');
-echo $this->fetch('blog::scripts');
+echo '<script src="/js/prism.js"></script>';
 $this->end();
 
 $this->push('footer');
