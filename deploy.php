@@ -307,8 +307,8 @@ task('build:comics', 'sudo -u www-data php vendor/bin/phly-comic.php fetch-all -
 // Copy asset templates
 desc('Deploy assets');
 task('deploy:assets', function () {
-    upload('build/js', '{release_path}}/public');
-    upload('build/css', '{release_path}}/public');
+    upload('build/js', '{{release_path}}/public');
+    upload('build/css', '{{release_path}}/public');
 });
 
 desc('Build');
