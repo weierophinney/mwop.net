@@ -108,19 +108,16 @@ task('install:php', function () {
 desc('Install Swoole');
 task('install:swoole', function () {
     run('
-        php -m | grep -q swoole ;
-        if [ "$?" -ne "0" ];then
             echo "Installing Swoole for the first time" ;
             mkdir -p /tmp/swoole ;
-            cd /tmp/swoole && curl -s -o swoole.tgz https://pecl.php.net/get/swoole-4.4.17.tgz ;
+            cd /tmp/swoole && curl -s -o swoole.tgz https://pecl.php.net/get/swoole-4.5.6.tgz ;
             cd /tmp/swoole && tar xzvf swoole.tgz --strip-components=1 ;
             cd /tmp/swoole && phpize ;
-            cd /tmp/swoole && ./configure --enable-http2 ;
+            cd /tmp/swoole && ./configure --enable-http2 --enable-sockets ;
             cd /tmp/swoole && make ;
             cd /tmp/swoole && make install ;
             rm -rf /tmp/swoole ;
             echo "extension=swoole.so" > /etc/php/7.4/cli/conf.d/swoole.ini
-        fi
     ');
 });
 after('install:php', 'install:swoole');
