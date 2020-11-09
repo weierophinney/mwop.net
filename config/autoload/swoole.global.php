@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
+use Mezzio\Swoole\Event\TaskEvent;
 use Mezzio\Swoole\StaticResourceHandler\ContentTypeFilterMiddleware;
+use Mezzio\Swoole\Task\TaskInvokerListener;
 
 return [
     'mezzio-swoole' => [
@@ -24,6 +26,11 @@ return [
 
                 // PID file
                 'pid_file' => sys_get_temp_dir() . '/mwop-net.pid',
+            ],
+            'listeners' => [
+                TaskEvent::class => [
+                    TaskInvokerListener::class,
+                ],
             ],
             'static-files' => [
                 'type-map'   => array_merge(ContentTypeFilterMiddleware::TYPE_MAP_DEFAULT, [
