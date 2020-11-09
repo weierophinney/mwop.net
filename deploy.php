@@ -115,7 +115,7 @@ task('install:swoole', function () {
             cd /tmp/swoole && curl -s -o swoole.tgz https://pecl.php.net/get/swoole-4.5.6.tgz ;
             cd /tmp/swoole && tar xzvf swoole.tgz --strip-components=1 ;
             cd /tmp/swoole && phpize ;
-            cd /tmp/swoole && ./configure --enable-http2 --enable-sockets ;
+            cd /tmp/swoole && ./configure --enable-http2 --enable-sockets --enable-openssl ;
             cd /tmp/swoole && make ;
             cd /tmp/swoole && make install ;
             rm -rf /tmp/swoole ;
