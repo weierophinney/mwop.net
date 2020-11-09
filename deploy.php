@@ -15,7 +15,7 @@ set('application', 'mwop.net');
 
 // Project repository
 set('repository', 'git://github.com/weierophinney/mwop.net.git');
-set('branch', 'feature/deployer');
+set('branch', 'main');
 
 // [Optional] Allocate tty for git clone. Default value is false.
 set('git_tty', true);
