@@ -24,7 +24,7 @@ return [
     'dependencies' => [
         'delegators' => [
             CacheBlogPostListener::class => [
-                DeferredListenerDelegator::class,
+                DeferredServiceListenerDelegator::class,
             ],
             ErrorHandler::class => [
                 LoggingErrorListenerDelegator::class,
