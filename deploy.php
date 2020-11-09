@@ -284,7 +284,6 @@ task('rollback:cronjob', function () {
 
 desc('Upload env');
 task('upload:env', function () {
-    write('Uploading production env');
     upload('.prod.env', '{{release_path}}/.env');
 });
 
