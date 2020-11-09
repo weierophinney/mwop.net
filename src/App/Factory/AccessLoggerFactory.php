@@ -23,7 +23,7 @@ class AccessLoggerFactory
         $logger->pushHandler(new RotatingFileHandler(
             $filename = getcwd() . '/data/log/error.log',
             $maxFiles = 7,
-            $level = Logger::INFO,
+            $level = Logger::WARNING,
             $bubble         = true,
             $filePermissions = 0644,
             $useLocking = true
