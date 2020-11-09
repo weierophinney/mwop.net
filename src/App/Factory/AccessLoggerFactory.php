@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Mwop\App\Factory;
 
-use Monolog\Handler\StreamHandler;
+use Monolog\Handler\RotatingFileHandler;
 use Monolog\Logger;
 use Monolog\Processor\PsrLogMessageProcessor;
 use Psr\Container\ContainerInterface;
@@ -20,11 +20,13 @@ class AccessLoggerFactory
     public function __invoke(ContainerInterface $container): LoggerInterface
     {
         $logger             = new Logger('mwopnet');
-        $logger->pushHandler(new StreamHandler(
-            'php://stderr',
-            Logger::INFO,
+        $logger->pushHandler(new RotatingFileHandler(
+            $filename = getcwd() . '/data/log/error.log',
+            $maxFiles = 7,
+            $level = Logger::INFO,
             $bubble         = true,
-            $expandNewLines = true
+            $filePermissions = 0644,
+            $useLocking = true
         ));
         $logger->pushProcessor(new PsrLogMessageProcessor());
         return $logger;
