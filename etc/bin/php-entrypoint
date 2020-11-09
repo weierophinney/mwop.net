@@ -16,7 +16,7 @@ service cron start
 if [ ! -f "data/posts.db" ] || [ ! -f "data/tag-cloud.phtml" ] || [ ! -f "public/search_terms.json" ];then
     composer build:blog
 fi
-/usr/bin/env php bin/mwop.net.php blog:clear-cache # really only necessary when running locally
+/usr/bin/env php vendor/bin/laminas blog:clear-cache # really only necessary when running locally
 
 # Build homepage assets
 if [ ! -f "config/autoload/homepage.local.php" ] || [ ! -f "data/github-links.phtml" ];then
@@ -25,7 +25,7 @@ fi
 
 # Fetch initial Instagram feed
 if [ ! -f "data/instagram.feed.php" ];then
-    /usr/bin/env php bin/mwop.net.php instagram-feeds
+    /usr/bin/env php vendor/bin/laminas instagram-feeds
 fi
 
 # Prepare initial comics

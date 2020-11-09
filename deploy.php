@@ -300,7 +300,7 @@ desc('Build homepage');
 task('build:homepage', 'sudo -u www-data composer build:homepage');
 
 desc('Fetch instagram feed');
-task('build:instagram', 'sudo -u www-data php bin/mwop.net.php instagram-feeds');
+task('build:instagram', 'sudo -u www-data php vendor/bin/laminas instagram-feeds');
 
 desc('Fetch comics');
 task('build:comics', 'sudo -u www-data php vendor/bin/phly-comic.php fetch-all -p --output data/comics.phtml --exclude dilbert --exclude reptilis-rex --exclude nih');
