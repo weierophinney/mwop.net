@@ -30,17 +30,17 @@ $this->start('scripts');
     <form method="post" name="contact" action="<?= $this->url('contact.process') ?>" id="contact">
         <div class="form-group">
             <label for="from">From (email):</label>
-            <input class="form-control" type="text" name="from" value="">
+            <input class="form-control" type="text" name="from" value="" required="required">
         </div>
 
         <div class="form-group">
             <label for="subject">Subject:</label>
-            <input class="form-control" type="text" name="subject" value="">
+            <input class="form-control" type="text" name="subject" value="" required="required">
         </div>
 
         <div class="form-group">
             <label for="body">Your message:</label>
-            <textarea class="form-control" rows="10" name="body"></textarea>
+            <textarea class="form-control" rows="10" name="body" required="required"></textarea>
         </div>
 
         <div
