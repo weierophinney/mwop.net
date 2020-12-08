@@ -4,6 +4,7 @@
 
 <?php
 $this->push('scripts');
+echo '<script src="/js/instagram.js"></script>';
 echo '<script src="/js/twitter.js"></script>';
 $this->end();
 ?>
@@ -71,7 +72,13 @@ $this->end();
     <div class="card-columns">
     <?php foreach ($instagram as $instagramPost) : ?>
         <div class="card instagram">
-            <a href="<?= $instagramPost['post_url'] ?>"><img class="card-img-top" src="<?= $instagramPost['image_url'] ?>" alt="Instagram post" /></a>
+            <a
+                data-toggle="modal"
+                data-target="#modal-instagram"
+                data-instagram-image="<?= $instagramPost['image_url'] ?>"
+                data-instagram-url="<?= $instagramPost['post_url'] ?>">
+               <img class="card-img-top" src="<?= $instagramPost['image_url'] ?>" alt="Instagram post" /> 
+            </a>
         </div>
     <?php endforeach ?>
     </div>
@@ -121,4 +128,19 @@ $this->end();
         and tweets as <a href="https://twitter.com/mwop">@mwop</a>.
     </p>
   </div>
+</div>
+
+<div class="modal" id="modal-instagram" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+            </div>
+        </div>
+    </div>
 </div>
