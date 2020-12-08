@@ -192,10 +192,7 @@ task('swoole:stop', function () {
     run('
         ps ax | grep -v grep | grep -q supervisord ;
         if [ "$?" == "0" ];then
-            supervisorctl avail | grep -v grep | grep -q mwop_net:mwopnet ;
-            if [ "$?" == "0" ];then
-                supervisorctl stop mwop_net:mwopnet ;
-            fi
+            systemctl stop supervisor ;
         fi
     ');
 });
@@ -205,10 +202,10 @@ task('swoole:start', function () {
     run('
         ps ax | grep -v grep | grep -q supervisord ;
         if [ "$?" != "0" ];then
-            service supervisor start ;
+            systemctl start supervisor ;
         else
-            supervisorctl stop mwop_net:mwopnet ;
-            supervisorctl start mwop_net:mwopnet ;
+            systemctl stop supervisor ;
+            systemctl start supervisor ;
         fi
     ');
 });
