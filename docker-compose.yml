@@ -22,6 +22,8 @@ services:
       - .env
     depends_on:
       - redis
+    ports:
+      - "9000:9000"
     volumes:
       - .:/var/www
       - ./assets/build/css:/var/www/public/css
@@ -34,15 +36,13 @@ services:
         max-size: 50m
 
   caddy:
-    build:
-      context: .
-      dockerfile: etc/docker/caddy.Dockerfile
+    image: caddy:2.1.1-alpine
     depends_on:
       - php
     ports:
       - "8080:8080"
     volumes:
-      - ./etc/caddy/Caddyfile.dev:/etc/Caddyfile
+      - ./etc/caddy/Caddyfile.dev:/etc/caddy/Caddyfile
     logging:
       options:
         max-size: 50m

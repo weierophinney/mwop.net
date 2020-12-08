@@ -26,6 +26,7 @@ public/service-worker.js
 vendor/
 .acme.env
 .env
+.*.env
 *.log
 *.zpk
 certdata.txt

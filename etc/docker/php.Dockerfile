@@ -6,6 +6,7 @@ FROM phpswoole/swoole:4.5.6-php7.4
 # System dependencies
 RUN apt update \
     && apt install -y \
+        cron \
         libbz2-dev \
         libicu-dev \
         libtidy-dev \
@@ -26,6 +27,5 @@ RUN docker-php-ext-install -j$(nproc) bz2 \
 # Overwrite entrypoint
 COPY etc/bin/php-entrypoint /usr/local/bin/entrypoint
 
-# Build project
 WORKDIR /var/www
 ENTRYPOINT ["/usr/local/bin/entrypoint"]

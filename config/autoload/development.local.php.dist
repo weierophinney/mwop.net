@@ -41,11 +41,17 @@ return [
         'factories' => [
             Debug\DebugProviderMiddleware::class => Debug\DebugProviderMiddlewareFactory::class,
             ErrorResponseGenerator::class => Container\WhoopsErrorResponseGeneratorFactory::class,
-            LoggerInterface::class => App\Factory\AccessLoggerFactory::class,
+            LoggerInterface::class => App\Factory\DockerAccessLoggerFactory::class,
             Whoops::class => Container\WhoopsFactory::class,
         ],
         'invokables' => [
             WhoopsPageHandler::class => PrettyPageHandler::class,
+        ],
+    ],
+
+    'mezzio-swoole' => [
+        'swoole-http-server' => [
+            'host'         => '0.0.0.0',
         ],
     ],
 

@@ -1,6 +1,6 @@
 :8080 {
-    proxy / php:9000 {
-        transparent
+    encode gzip
+    reverse_proxy php:9000 {
+        header_down -Server
     }
-    gzip
 }

@@ -4,6 +4,11 @@
 # Ensures file permissions are setup correctly for cron, and
 # starts the cron daemon and php.
 
+set -e
+
+echo "Starting application in ${PWD}"
+echo "Composer version: $(composer --version)"
+
 # Ensure crontabs have expected owners and permissions.
 # Done here to allow mounting the crontab as a volume within docker-compose.yml.
 chown root:root /etc/cron.d/*
@@ -34,4 +39,5 @@ if [ ! -f "data/comics.phtml" ];then
 fi
 
 # Start application; run in foreground, as that's what Docker prefers
-/usr/bin/env php vendor/bin/laminas mezzio:swoole:start
+echo "Starting web server"
+exec vendor/bin/laminas mezzio:swoole:start
