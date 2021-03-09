@@ -20,19 +20,20 @@ class XClacksOverheadMiddlewareTest extends TestCase
     public function testMiddlewareInjectsResponseReturnedByNextWithXClacksOverheadHeader()
     {
         $middleware = new XClacksOverheadMiddleware();
-        $request    = $this->createRequestMock()->reveal();
+        $request    = $this->createRequestMock();
         $response   = $this->createResponseMock();
         $response
-            ->withHeader('X-Clacks-Overhead', 'GNU Terry Pratchett')
-            ->will([$response, 'reveal'])
-            ->shouldBeCalled();
+            ->expects($this->atLeastOnce())
+            ->method('withHeader')
+            ->with('X-Clacks-Overhead', 'GNU Terry Pratchett')
+            ->willReturnSelf();
         $handler = $this->handlerShouldExpectAndReturn(
-            $response->reveal(),
+            $response,
             $request
         );
 
         $this->assertSame(
-            $response->reveal(),
+            $response,
             $middleware->process($request, $handler)
         );
     }

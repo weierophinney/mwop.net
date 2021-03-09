@@ -12,7 +12,6 @@ namespace MwopTest\App\Middleware;
 use Mwop\App\Middleware\RedirectsMiddleware;
 use MwopTest\HttpMessagesTrait;
 use PHPUnit\Framework\TestCase;
-use Prophecy\Argument;
 use Psr\Http\Message\ResponseInterface;
 
 class RedirectsMiddlewareTest extends TestCase
@@ -24,14 +23,14 @@ class RedirectsMiddlewareTest extends TestCase
         $middleware = new RedirectsMiddleware();
         $uri        = $this->createUriMock();
         $request    = $this->createRequestMock();
-        $request->getUri()->will([$uri, 'reveal']);
-        $response = $this->createResponseMock()->reveal();
+        $response   = $this->createResponseMock();
 
-        $uri->getPath()->willReturn('/blog/tag/php.xml');
+        $request->method('getUri')->willReturn($uri);
+        $uri->method('getPath')->willReturn('/blog/tag/php.xml');
 
-        $handler = $this->handlerShouldExpectAndReturn($response, $request->reveal());
+        $handler = $this->handlerShouldExpectAndReturn($response, $request);
 
-        $this->assertSame($response, $middleware->process($request->reveal(), $handler));
+        $this->assertSame($response, $middleware->process($request, $handler));
     }
 
     /**
@@ -82,19 +81,21 @@ class RedirectsMiddlewareTest extends TestCase
         $middleware = new RedirectsMiddleware();
         $uri        = $this->createUriMock();
         $request    = $this->createRequestMock();
-        $request->getUri()->will([$uri, 'reveal']);
 
-        $uri->getPath()->willReturn($incomingUri);
-        $uri->withPath($path)->will([$uri, 'reveal']);
+        $request->method('getUri')->willReturn($uri);
+
+        $uri->method('getPath')->willReturn($incomingUri);
+        $uri->method('withPath')->with($path)->willReturn($uri);
+
         if ($query) {
-            $uri->withQuery($query)->will([$uri, 'reveal']);
+            $uri->method('withQuery')->with($query)->willReturn($uri);
         } else {
-            $uri->withQuery(Argument::any())->shouldNotBeCalled();
+            $uri->expects($this->never())->method('withQuery');
         }
-        $uri->__toString()->willReturn($redirect);
+        $uri->method('__toString')->willReturn($redirect);
 
         $response = $middleware->process(
-            $request->reveal(),
+            $request,
             $this->handlerShouldNotBeCalled()
         );
 
@@ -138,17 +139,18 @@ class RedirectsMiddlewareTest extends TestCase
         $middleware = new RedirectsMiddleware();
         $uri        = $this->createUriMock();
         $request    = $this->createRequestMock();
-        $request->getUri()->will([$uri, 'reveal']);
 
-        $uri->getPath()->willReturn($incomingUri);
-        $uri->withHost($hostTo)->will([$uri, 'reveal']);
-        $uri->withScheme($schemeTo)->will([$uri, 'reveal']);
-        $uri->withPath($pathTo)->will([$uri, 'reveal']);
-        $uri->withQuery(Argument::any())->shouldNotBeCalled();
-        $uri->__toString()->willReturn($location);
+        $request->method('getUri')->willReturn($uri);
+
+        $uri->method('getPath')->willReturn($incomingUri);
+        $uri->method('withHost')->with($hostTo)->willReturn($uri);
+        $uri->method('withScheme')->with($schemeTo)->willReturn($uri);
+        $uri->method('withPath')->with($pathTo)->willReturn($uri);
+        $uri->expects($this->never())->method('withQuery');
+        $uri->method('__toString')->willReturn($location);
 
         $response = $middleware->process(
-            $request->reveal(),
+            $request,
             $this->handlerShouldNotBeCalled()
         );
 
@@ -163,16 +165,16 @@ class RedirectsMiddlewareTest extends TestCase
         $middleware = new RedirectsMiddleware();
         $uri        = $this->createUriMock();
         $request    = $this->createRequestMock();
-        $request->getUri()->will([$uri, 'reveal']);
 
-        $uri->getPath()->willReturn('/matthew/rss.php');
-        $request->getQueryParams()->willReturn(['serendipity' => ['tag' => 'foo']]);
-        $uri->withPath('/blog/tag/foo/rss.xml')->will([$uri, 'reveal']);
-        $uri->withQuery(Argument::any())->shouldNotBeCalled();
-        $uri->__toString()->willReturn('/blog/tag/foo/rss.xml');
+        $request->method('getUri')->willReturn($uri);
+        $uri->method('getPath')->willReturn('/matthew/rss.php');
+        $request->method('getQueryParams')->willReturn(['serendipity' => ['tag' => 'foo']]);
+        $uri->method('withPath')->with('/blog/tag/foo/rss.xml')->willReturn($uri);
+        $uri->expects($this->never())->method('withQuery');
+        $uri->method('__toString')->willReturn('/blog/tag/foo/rss.xml');
 
         $response = $middleware->process(
-            $request->reveal(),
+            $request,
             $this->handlerShouldNotBeCalled()
         );
 
@@ -187,16 +189,17 @@ class RedirectsMiddlewareTest extends TestCase
         $middleware = new RedirectsMiddleware();
         $uri        = $this->createUriMock();
         $request    = $this->createRequestMock();
-        $request->getUri()->will([$uri, 'reveal']);
 
-        $uri->getPath()->willReturn('/matthew/rss.php');
-        $request->getQueryParams()->willReturn([]);
-        $uri->withPath('/blog/rss.xml')->will([$uri, 'reveal']);
-        $uri->withQuery(Argument::any())->shouldNotBeCalled();
-        $uri->__toString()->willReturn('/blog/rss.xml');
+        $request->method('getUri')->willReturn($uri);
+
+        $uri->method('getPath')->willReturn('/matthew/rss.php');
+        $request->method('getQueryParams')->willReturn([]);
+        $uri->method('withPath')->with('/blog/rss.xml')->willReturn($uri);
+        $uri->expects($this->never())->method('withQuery');
+        $uri->method('__toString')->willReturn('/blog/rss.xml');
 
         $response = $middleware->process(
-            $request->reveal(),
+            $request,
             $this->handlerShouldNotBeCalled()
         );
 
@@ -211,16 +214,17 @@ class RedirectsMiddlewareTest extends TestCase
         $middleware = new RedirectsMiddleware();
         $uri        = $this->createUriMock();
         $request    = $this->createRequestMock();
-        $request->getUri()->will([$uri, 'reveal']);
 
-        $uri->getPath()->willReturn('/matthew');
-        $request->getQueryParams()->willReturn([]);
-        $uri->withPath('/blog')->will([$uri, 'reveal']);
-        $uri->withQuery(Argument::any())->shouldNotBeCalled();
-        $uri->__toString()->willReturn('/blog');
+        $request->method('getUri')->willReturn($uri);
+
+        $uri->method('getPath')->willReturn('/matthew');
+        $request->method('getQueryParams')->willReturn([]);
+        $uri->method('withPath')->with('/blog')->willReturn($uri);
+        $uri->expects($this->never())->method('withQuery');
+        $uri->method('__toString')->willReturn('/blog');
 
         $response = $middleware->process(
-            $request->reveal(),
+            $request,
             $this->handlerShouldNotBeCalled()
         );
 
@@ -235,16 +239,17 @@ class RedirectsMiddlewareTest extends TestCase
         $middleware = new RedirectsMiddleware();
         $uri        = $this->createUriMock();
         $request    = $this->createRequestMock();
-        $request->getUri()->will([$uri, 'reveal']);
-        $response = $this->createResponseMock()->reveal();
+        $response   = $this->createResponseMock();
 
-        $uri->getPath()->willReturn('/comics');
+        $request->method('getUri')->willReturn($uri);
+
+        $uri->method('getPath')->willReturn('/comics');
 
         $handler = $this->handlerShouldExpectAndReturn(
             $response,
-            $request->reveal()
+            $request
         );
 
-        $this->assertSame($response, $middleware->process($request->reveal(), $handler));
+        $this->assertSame($response, $middleware->process($request, $handler));
     }
 }

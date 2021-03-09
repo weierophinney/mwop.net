@@ -9,9 +9,8 @@ declare(strict_types=1);
 
 namespace MwopTest;
 
-use PHPUnit\Framework\Assert;
-use Prophecy\Argument;
-use Prophecy\Prophecy\ObjectProphecy;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ServerRequestInterface;
@@ -20,45 +19,51 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 trait HttpMessagesTrait
 {
-    /** @return Request|ObjectProphecy */
-    public function createRequestMock(): ObjectProphecy
+    /** @return Request|MockObject */
+    public function createRequestMock()
     {
-        return $this->prophesize(Request::class);
+        return $this->createMock(Request::class);
     }
 
-    /** @return Response|ObjectProphecy */
-    public function createResponseMock(): ObjectProphecy
+    /** @return Response|MockObject */
+    public function createResponseMock()
     {
-        return $this->prophesize(Response::class);
+        return $this->createMock(Response::class);
     }
 
-    public function handlerShouldNotBeCalled(): RequestHandlerInterface
+    /** @return RequestHandlerInterface|MockObject */
+    public function handlerShouldNotBeCalled()
     {
-        $handler = $this->prophesize(RequestHandlerInterface::class);
-        $handler->handle(Argument::any())->shouldNotBeCalled();
-        return $handler->reveal();
+        /** @var RequestHandlerInterface|MockObject $handler */
+        $handler = $this->createMock(RequestHandlerInterface::class);
+        /** @var TestCase $this */
+        $handler->expects($this->never())->method('handle');
+        return $handler;
     }
 
     /**
-     * @param mixed $return
+     * @param RequestHandlerInterface|MockObject $return
      */
-    public function handlerShouldExpectAndReturn($return, ServerRequestInterface $request): RequestHandlerInterface
+    public function handlerShouldExpectAndReturn($return, ServerRequestInterface $request)
     {
-        $requestExpectation = Argument::that(function ($argument) use ($request) {
-            Assert::assertSame($request, $argument, 'Request passed to handler does not match expectation');
-            return true;
-        });
-        $handler            = $this->prophesize(RequestHandlerInterface::class);
+        /** @var TestCase $this */
+        $handler = $this->createMock(RequestHandlerInterface::class);
+
+        /** @var RequestHandlerInterface|MockObject */
         $handler
-            ->handle($requestExpectation)
+            ->method('handle')
+            ->with($this->callback(function (ServerRequestInterface $actualRequest) use ($request): bool {
+                return $request === $actualRequest;
+            }))
             ->willReturn($return);
 
-        return $handler->reveal();
+
+        return $handler;
     }
 
-    /** @return UriInterface|ObjectProphecy */
-    public function createUriMock(): ObjectProphecy
+    /** @return Uri|MockObject */
+    public function createUriMock()
     {
-        return $this->prophesize(Uri::class);
+        return $this->createMock(Uri::class);
     }
 }

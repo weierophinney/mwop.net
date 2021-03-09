@@ -21,12 +21,17 @@ class PageHandlerTest extends TestCase
 
     public function testMiddlewareReturnsHtmlResponseInjectedWithResultsOfRendereringPage()
     {
-        $renderer = $this->prophesize(TemplateRendererInterface::class);
-        $page     = new PageHandler('foo', $renderer->reveal());
+        $renderer = $this->createMock(TemplateRendererInterface::class);
+        $page     = new PageHandler('foo', $renderer);
 
-        $renderer->render('foo', [])->willReturn('content')->shouldBeCalled();
+        $renderer
+            ->expects($this->atLeastOnce())
+            ->method('render')
+            ->with('foo', [])
+            ->willReturn('content');
+
         $response = $page->handle(
-            $this->createRequestMock()->reveal()
+            $this->createRequestMock()
         );
 
         $this->assertInstanceOf(HtmlResponse::class, $response);

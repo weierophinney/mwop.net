@@ -1,4 +1,5 @@
 .phpcs_cache
+.phpunit.result.cache
 .puli/
 .tmp/
 config/autoload/*local.php

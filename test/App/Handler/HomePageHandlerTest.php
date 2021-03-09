@@ -13,6 +13,7 @@ use Laminas\Diactoros\Response\HtmlResponse;
 use Mezzio\Template\TemplateRendererInterface;
 use Mwop\App\Handler\HomePageHandler;
 use MwopTest\HttpMessagesTrait;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class HomePageHandlerTest extends TestCase
@@ -22,16 +23,21 @@ class HomePageHandlerTest extends TestCase
     public function testMiddlewareReturnsHtmlResponseInjectedWithResultsOfRendereringPosts()
     {
         $posts    = ['foo', 'bar'];
-        $renderer = $this->prophesize(TemplateRendererInterface::class);
-        $handler  = new HomePageHandler($posts, '', $renderer->reveal());
+        /** @var TemplateRendererInterface|MockObject $renderer */
+        $renderer = $this->createMock(TemplateRendererInterface::class);
+        $handler  = new HomePageHandler($posts, '', $renderer);
 
-        $renderer->render(HomePageHandler::TEMPLATE, [
-            'posts'     => $posts,
-            'instagram' => [],
-        ])->willReturn('content')->shouldBeCalled();
+        $renderer
+            ->expects($this->atLeastOnce())
+            ->method('render')
+            ->with(HomePageHandler::TEMPLATE, [
+                'posts'     => $posts,
+                'instagram' => [],
+            ])
+            ->willReturn('content');
 
         $response = $handler->handle(
-            $this->createRequestMock()->reveal()
+            $this->createRequestMock()
         );
 
         $this->assertInstanceOf(HtmlResponse::class, $response);
