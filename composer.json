@@ -19,7 +19,6 @@
         "jmhobbs/swiftmailer-transport-aws-ses": "^1.0",
         "laminas/laminas-cli": "^0.1.5",
         "laminas/laminas-config-aggregator": "^0.2.0",
-        "laminas/laminas-dependency-plugin": "^1.0",
         "laminas/laminas-diactoros": "^2.3",
         "laminas/laminas-escaper": "^2.5.2",
         "laminas/laminas-feed": "^2.7",
@@ -60,11 +59,14 @@
     },
     "require-dev": {
         "filp/whoops": "^2.1.3",
-        "phpunit/phpunit": "^5.7 || ^6.0",
-        "laminas/laminas-coding-standard": "~2.0.0rc1 || ~2.0.0",
+        "phpunit/phpunit": "^9.3",
+        "laminas/laminas-coding-standard": "~2.1.4",
         "laminas/laminas-component-installer": "^2.1",
         "mezzio/mezzio-tooling": "^1.0",
         "laminas/laminas-development-mode": "^3.1"
+    },
+    "provides": {
+        "laminas/laminas-zendframework-bridge": "*"
     },
     "autoload": {
         "psr-4": {
