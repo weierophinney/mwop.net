@@ -1,7 +1,7 @@
 # DOCKER-VERSION        1.3.2
 
 # Build the PHP container
-FROM phpswoole/swoole:4.5.6-php7.4
+FROM phpswoole/swoole:4.6-php8.0
 
 # System dependencies
 RUN apt update \
