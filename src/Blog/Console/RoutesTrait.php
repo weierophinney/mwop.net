@@ -19,7 +19,8 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 trait RoutesTrait
 {
-    private $routes = [
+    /** @psalm-var array<string, string> */
+    private array $routes = [
         'blog'               => '/blog[/]',
         'blog.post'          => '/blog/{id:[^/]+}.html',
         'blog.feed.php'      => '/blog/tag/{tag:php}.xml',

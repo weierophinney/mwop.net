@@ -27,7 +27,7 @@ return [
                 // PID file
                 'pid_file' => sys_get_temp_dir() . '/mwop-net.pid',
             ],
-            'listeners' => [
+            'listeners'    => [
                 TaskEvent::class => [
                     TaskInvokerListener::class,
                 ],

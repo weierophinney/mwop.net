@@ -33,10 +33,10 @@ use const JSON_UNESCAPED_SLASHES;
 
 class ProcessContactFormHandler implements RequestHandlerInterface
 {
-    private $config;
-    private $dispatcher;
-    private $template;
-    private $urlHelper;
+    private array $config;
+    private EventDispatcherInterface $dispatcher;
+    private TemplateRendererInterface $template;
+    private UrlHelper $urlHelper;
 
     public function __construct(
         EventDispatcherInterface $dispatcher,

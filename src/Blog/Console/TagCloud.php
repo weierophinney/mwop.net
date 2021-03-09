@@ -21,7 +21,7 @@ use function sprintf;
 
 class TagCloud extends Command
 {
-    private $mapper;
+    private MapperInterface $mapper;
 
     public function __construct(MapperInterface $mapper)
     {

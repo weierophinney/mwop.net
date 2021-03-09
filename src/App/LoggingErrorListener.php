@@ -21,7 +21,7 @@ class LoggingErrorListener
     */
     private const LOG_STRING = '{status} [{method}] {uri}: {error}';
 
-    private $logger;
+    private LoggerInterface $logger;
 
     public function __construct(LoggerInterface $logger)
     {

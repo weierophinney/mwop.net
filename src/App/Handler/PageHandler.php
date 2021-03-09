@@ -17,8 +17,8 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 class PageHandler implements RequestHandlerInterface
 {
-    private $page;
-    private $template;
+    private string $page;
+    private TemplateRendererInterface $template;
 
     public function __construct(string $page, TemplateRendererInterface $template)
     {

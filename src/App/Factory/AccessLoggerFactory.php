@@ -15,18 +15,20 @@ use Monolog\Processor\PsrLogMessageProcessor;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 
+use function getcwd;
+
 class AccessLoggerFactory
 {
     public function __invoke(ContainerInterface $container): LoggerInterface
     {
-        $logger             = new Logger('mwopnet');
+        $logger              = new Logger('mwopnet');
         $logger->pushHandler(new RotatingFileHandler(
-            $filename = getcwd() . '/data/log/error.log',
-            $maxFiles = 7,
-            $level = Logger::WARNING,
-            $bubble         = true,
+            $filename        = getcwd() . '/data/log/error.log',
+            $maxFiles        = 7,
+            $level           = Logger::WARNING,
+            $bubble          = true,
             $filePermissions = 0644,
-            $useLocking = true
+            $useLocking      = true
         ));
         $logger->pushProcessor(new PsrLogMessageProcessor());
         return $logger;

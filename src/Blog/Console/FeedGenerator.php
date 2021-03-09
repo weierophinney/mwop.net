@@ -37,21 +37,22 @@ class FeedGenerator extends Command
 {
     use RoutesTrait;
 
-    private $authors = [];
+    private array $authors = [];
 
-    private $authorsPath;
+    private string $authorsPath;
 
-    private $defaultAuthor = [
+    /** @psalm-var array<string, string> */
+    private array $defaultAuthor = [
         'name'  => 'Matthew Weier O\'Phinney',
         'email' => 'me@mwop.net',
         'uri'   => 'https://mwop.net',
     ];
 
-    private $mapper;
+    private MapperInterface $mapper;
 
-    private $renderer;
+    private TemplateRendererInterface $renderer;
 
-    private $router;
+    private RouterInterface $router;
 
     public function __construct(
         MapperInterface $mapper,

@@ -21,9 +21,13 @@ use Psr\Cache\CacheItemPoolInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Swift_AWSTransport;
 
+use function date;
 use function getcwd;
+use function preg_replace_callback;
 use function realpath;
+use function sprintf;
 use function strpos;
+use function strtotime;
 
 class ConfigProvider
 {
@@ -102,11 +106,11 @@ class ConfigProvider
                     'siteurl'  => 'https://mwop.net/blog',
                 ],
                 [
-                    'url'      => 'https://www.zend.com/blog/feed',
-                    'sitename' => 'Zend',
-                    'favicon'  => 'https://www.zend.com/sites/zend/themes/custom/zend/images/favicons/favicon.ico',
-                    'siteurl'  => 'https://www.zend.com/blog',
-                    'filters'  => [
+                    'url'         => 'https://www.zend.com/blog/feed',
+                    'sitename'    => 'Zend',
+                    'favicon'     => 'https://www.zend.com/sites/zend/themes/custom/zend/images/favicons/favicon.ico',
+                    'siteurl'     => 'https://www.zend.com/blog',
+                    'filters'     => [
                         function (EntryInterface $item): bool {
                             return false !== strpos($item->getAuthor()['name'], 'Phinney');
                         },
@@ -115,6 +119,7 @@ class ConfigProvider
                         function (string $content): string {
                             // Munge publication dates to valid format (RSS)
                             return preg_replace_callback(
+                                // phpcs:ignore Generic.Files.LineLength.TooLong
                                 '#<pubDate>(?P<dow>Mon|Tue|Wed|Thu|Fri|Sat|Sun),\D+(?P<month>\d+)/(?P<day>\d+)/(?P<year>\d+)\D+(?P<hour>\d+):(?P<min>\d+)</pubDate>#',
                                 function (array $matches): string {
                                     return sprintf(

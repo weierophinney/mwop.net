@@ -19,14 +19,15 @@ use function error_log;
 use function file_exists;
 use function is_array;
 use function sprintf;
+use function var_export;
 
 class HomePageHandler implements RequestHandlerInterface
 {
     public const TEMPLATE = 'mwop::home.page';
 
-    private $instagramFeedLocation;
-    private $posts;
-    private $renderer;
+    private string $instagramFeedLocation;
+    private array $posts;
+    private TemplateRendererInterface $renderer;
 
     public function __construct(
         array $posts,

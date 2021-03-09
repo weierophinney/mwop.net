@@ -30,25 +30,23 @@ class InstagramFeed extends Command
     /** @var string */
     private const CACHE_FILE = '%s/data/instagram.feed.php';
 
-    /** @var string */
-    private $configFormat = <<<EOC
-<?php
-return [
-%s
-];
+    private string $configFormat = <<<EOC
+        <?php
+        return [
+        %s
+        ];
+        
+        EOC;
 
-EOC;
+    private string $configItemFormat = <<<EOC
+        [
+            'image_url' => '%s',
+            'post_url'  => '%s',
+        ],
+        
+        EOC;
 
-    private $configItemFormat = <<<EOC
-    [
-        'image_url' => '%s',
-        'post_url'  => '%s',
-    ],
-
-EOC;
-
-    /** @var InstagramClient */
-    private $client;
+    private InstagramClient $client;
 
     public function __construct(InstagramClient $client)
     {

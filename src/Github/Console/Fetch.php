@@ -22,7 +22,6 @@ use function array_map;
 use function file_put_contents;
 use function implode;
 use function sprintf;
-use function strlen;
 
 /**
  * Fetch github user activity links

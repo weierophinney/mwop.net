@@ -27,9 +27,9 @@ class RecaptchaValidator implements ValidatorInterface
     private const RECAPTCHA_VERIFICATION_URI_PATTERN =
         'https://www.google.com/recaptcha/api/siteverify?secret=%s&response=%s';
 
-    private $key;
+    private string $key;
 
-    private $messages = [];
+    private array $messages = [];
 
     public function __construct(string $key)
     {

@@ -23,8 +23,13 @@ use Throwable;
 
 use function file_get_contents;
 use function file_put_contents;
+use function get_class;
 use function getcwd;
+use function gettype;
+use function is_callable;
+use function is_object;
 use function preg_match;
+use function printf;
 use function realpath;
 use function sprintf;
 

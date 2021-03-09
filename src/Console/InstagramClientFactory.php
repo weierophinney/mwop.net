@@ -12,6 +12,8 @@ namespace Mwop\Console;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
+use function getcwd;
+
 class InstagramClientFactory
 {
     public function __invoke(ContainerInterface $container): InstagramClient

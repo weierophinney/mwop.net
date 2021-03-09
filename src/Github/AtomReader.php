@@ -17,9 +17,9 @@ class AtomReader
 {
     private const ATOM_FORMAT = 'https://github.com/%s.atom';
 
-    protected $filters = [];
-    protected $limit   = 10;
-    protected $user;
+    protected array $filters = [];
+    protected int $limit     = 10;
+    protected string $user;
 
     public function __construct(string $user)
     {

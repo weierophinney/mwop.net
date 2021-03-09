@@ -22,7 +22,7 @@ class ConfigProvider
     {
         return [
             'invokables' => [
-                ClearCache::class          => ClearCache::class,
+                ClearCache::class => ClearCache::class,
             ],
             'factories'  => [
                 FeedAggregator::class => FeedAggregatorFactory::class,

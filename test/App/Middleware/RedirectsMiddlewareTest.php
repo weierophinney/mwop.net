@@ -34,7 +34,15 @@ class RedirectsMiddlewareTest extends TestCase
         $this->assertSame($response, $middleware->process($request->reveal(), $handler));
     }
 
-    public function expectedRedirects()
+    /**
+     * @psalm-return array<string, array{
+     *     0: string,
+     *     1: string,
+     *     2: string|null,
+     *     3: string
+     * }>
+     */
+    public function expectedRedirects(): array
     {
         // @codingStandardsIgnoreStart
         return [
@@ -96,7 +104,16 @@ class RedirectsMiddlewareTest extends TestCase
         $this->assertEquals($redirect, $response->getHeaderLine('Location'));
     }
 
-    public function expectedAlternateHostRedirects()
+    /**
+     * @psalm-return array<string, array{
+     *     0: string,
+     *     1: string,
+     *     2: string,
+     *     3: string,
+     *     4: string
+     * }>
+     */
+    public function expectedAlternateHostRedirects(): array
     {
         // @codingStandardsIgnoreStart
         return [

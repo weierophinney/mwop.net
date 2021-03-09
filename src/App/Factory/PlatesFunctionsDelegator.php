@@ -12,6 +12,7 @@ namespace Mwop\App\Factory;
 use DateTimeInterface;
 use League\Plates\Engine;
 use League\Plates\Extension\ExtensionInterface;
+use League\Plates\Template\Template;
 use Mwop\Blog\BlogPost;
 use Psr\Container\ContainerInterface;
 
@@ -23,7 +24,7 @@ use function strstr;
 
 class PlatesFunctionsDelegator implements ExtensionInterface
 {
-    public $template;
+    public Template $template;
 
     /**
      * @inheritDoc
@@ -33,6 +34,7 @@ class PlatesFunctionsDelegator implements ExtensionInterface
         string $name,
         callable $factory
     ): Engine {
+        /** @var Engine $engine */
         $engine = $factory();
         $engine->loadExtension($this);
 

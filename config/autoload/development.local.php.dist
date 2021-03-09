@@ -12,17 +12,17 @@
 
 namespace Mwop;
 
-use Phly\Mezzio\OAuth2ClientAuthentication\Debug;
-use Psr\Log\LoggerInterface;
-use Whoops\Handler\PrettyPageHandler;
+use Laminas\Stratigility\Middleware\ErrorHandler;
 use Mezzio\Container;
 use Mezzio\Middleware\ErrorResponseGenerator;
 use Mezzio\Whoops;
 use Mezzio\WhoopsPageHandler;
-use Laminas\Stratigility\Middleware\ErrorHandler;
+use Phly\Mezzio\OAuth2ClientAuthentication\Debug;
+use Psr\Log\LoggerInterface;
+use Whoops\Handler\PrettyPageHandler;
 
 return [
-    'blog' => [
+    'blog'          => [
         'cache'  => [
             'enabled' => false,
         ],
@@ -31,35 +31,31 @@ return [
             'key'       => 'phlyboyphly',
         ],
     ],
-
-    'dependencies' => [
+    'dependencies'  => [
         'delegators' => [
             ErrorHandler::class => [
                 App\LoggingErrorListenerDelegator::class,
             ],
         ],
-        'factories' => [
+        'factories'  => [
             Debug\DebugProviderMiddleware::class => Debug\DebugProviderMiddlewareFactory::class,
-            ErrorResponseGenerator::class => Container\WhoopsErrorResponseGeneratorFactory::class,
-            LoggerInterface::class => App\Factory\DockerAccessLoggerFactory::class,
-            Whoops::class => Container\WhoopsFactory::class,
+            ErrorResponseGenerator::class        => Container\WhoopsErrorResponseGeneratorFactory::class,
+            LoggerInterface::class               => App\Factory\DockerAccessLoggerFactory::class,
+            Whoops::class                        => Container\WhoopsFactory::class,
         ],
         'invokables' => [
             WhoopsPageHandler::class => PrettyPageHandler::class,
         ],
     ],
-
     'mezzio-swoole' => [
         'swoole-http-server' => [
-            'host'         => '0.0.0.0',
+            'host' => '0.0.0.0',
         ],
     ],
-
-    'oauth2' => [
+    'oauth2'        => [
         'debug' => [],
     ],
-
-    'whoops' => [
+    'whoops'        => [
         'json_exceptions' => [
             'display'    => true,
             'show_trace' => true,
