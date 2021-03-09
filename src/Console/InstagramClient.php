@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:disable Generic.WhiteSpace.ScopeIndent.IncorrectExact
 
 /**
  * @copyright Copyright (c) Matthew Weier O'Phinney
@@ -18,33 +18,13 @@ use function sprintf;
 
 class InstagramClient
 {
-    /** @var CacheItemPoolInterface */
-    private $cachePool;
-
-    /** @var bool */
-    private $debug;
-
-    /** @var string */
-    private $login;
-
-    /** @var string */
-    private $password;
-
-    /** @var string */
-    private $profile;
-
     public function __construct(
-        string $login,
-        string $password,
-        string $profile,
-        CacheItemPoolInterface $cachePool,
-        bool $debug = false
+        private string $login,
+        private string $password,
+        private string $profile,
+        private CacheItemPoolInterface $cachePool,
+        private bool $debug = false,
     ) {
-        $this->login     = $login;
-        $this->password  = $password;
-        $this->profile   = $profile;
-        $this->cachePool = $cachePool;
-        $this->debug     = $debug;
     }
 
     /**

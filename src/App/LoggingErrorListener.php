@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:disable Generic.WhiteSpace.ScopeIndent.IncorrectExact
 
 /**
  * @copyright Copyright (c) Matthew Weier O'Phinney
@@ -21,11 +21,8 @@ class LoggingErrorListener
     */
     private const LOG_STRING = '{status} [{method}] {uri}: {error}';
 
-    private LoggerInterface $logger;
-
-    public function __construct(LoggerInterface $logger)
+    public function __construct(private LoggerInterface $logger)
     {
-        $this->logger = $logger;
     }
 
     public function __invoke(

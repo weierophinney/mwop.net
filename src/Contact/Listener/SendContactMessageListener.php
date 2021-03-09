@@ -15,16 +15,8 @@ use Swift_Message as MailMessage;
 
 class SendContactMessageListener
 {
-    /** @var array */
-    private $config;
-
-    /** @var Mailer */
-    private $mailer;
-
-    public function __construct(Mailer $mailer, array $config = [])
+    public function __construct(private Mailer $mailer, private array $config = [])
     {
-        $this->mailer = $mailer;
-        $this->config = $config;
     }
 
     public function __invoke(SendContactMessageEvent $contactMessage)

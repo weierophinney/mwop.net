@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:disable Generic.WhiteSpace.ScopeIndent.IncorrectExact
 
 /**
  * @copyright Copyright (c) Matthew Weier O'Phinney
@@ -17,13 +17,10 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 class PageHandler implements RequestHandlerInterface
 {
-    private string $page;
-    private TemplateRendererInterface $template;
-
-    public function __construct(string $page, TemplateRendererInterface $template)
-    {
-        $this->page     = $page;
-        $this->template = $template;
+    public function __construct(
+        private string $page,
+        private TemplateRendererInterface $template
+    ) {
     }
 
     public function handle(Request $request): Response

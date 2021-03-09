@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:disable Generic.WhiteSpace.ScopeIndent.IncorrectExact
 
 /**
  * @copyright Copyright (c) Matthew Weier O'Phinney
@@ -26,23 +26,11 @@ use function str_replace;
 
 class ListPostsHandler implements RequestHandlerInterface
 {
-    /** @var MapperInterface */
-    private $mapper;
-
-    /** @var RouterInterface */
-    private $router;
-
-    /** @var TemplateRendererInterface */
-    private $template;
-
     public function __construct(
-        MapperInterface $mapper,
-        TemplateRendererInterface $template,
-        RouterInterface $router
+        private MapperInterface $mapper,
+        private TemplateRendererInterface $template,
+        private RouterInterface $router,
     ) {
-        $this->mapper   = $mapper;
-        $this->template = $template;
-        $this->router   = $router;
     }
 
     public function handle(ServerRequestInterface $request): ResponseInterface

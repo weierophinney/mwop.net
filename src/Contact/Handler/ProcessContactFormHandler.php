@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:disable Generic.WhiteSpace.ScopeIndent.IncorrectExact
 
 /**
  * @copyright Copyright (c) Matthew Weier O'Phinney
@@ -33,21 +33,12 @@ use const JSON_UNESCAPED_SLASHES;
 
 class ProcessContactFormHandler implements RequestHandlerInterface
 {
-    private array $config;
-    private EventDispatcherInterface $dispatcher;
-    private TemplateRendererInterface $template;
-    private UrlHelper $urlHelper;
-
     public function __construct(
-        EventDispatcherInterface $dispatcher,
-        TemplateRendererInterface $template,
-        UrlHelper $urlHelper,
-        array $config
+        private EventDispatcherInterface $dispatcher,
+        private TemplateRendererInterface $template,
+        private UrlHelper $urlHelper,
+        private array $config
     ) {
-        $this->dispatcher = $dispatcher;
-        $this->template   = $template;
-        $this->urlHelper  = $urlHelper;
-        $this->config     = $config;
     }
 
     public function handle(Request $request): Response

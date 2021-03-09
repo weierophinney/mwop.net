@@ -17,11 +17,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class ClearCache extends Command
 {
-    private CacheItemPoolInterface $cache;
-
-    public function __construct(CacheItemPoolInterface $cache)
+    public function __construct(private CacheItemPoolInterface $cache)
     {
-        $this->cache = $cache;
         parent::__construct('blog:clear-cache');
     }
 

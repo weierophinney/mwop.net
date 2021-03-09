@@ -21,8 +21,7 @@ class DebugProvider extends AbstractProvider
     public const STATE             = 'DEBUG';
     public const TOKEN             = 'TOKEN';
 
-    /** @var string */
-    private $authorizationUrl;
+    private string $authorizationUrl;
 
     public function __construct(array $options = [])
     {

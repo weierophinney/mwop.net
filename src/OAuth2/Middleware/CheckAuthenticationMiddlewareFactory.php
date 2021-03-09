@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:disable Generic.PHP.DiscourageGoto.Found
 
 /**
  * @copyright Copyright (c) Matthew Weier O'Phinney
@@ -19,9 +19,9 @@ class CheckAuthenticationMiddlewareFactory
     {
         $config = $container->get('config');
         return new CheckAuthenticationMiddleware(
-            $container->get(TemplateRendererInterface::class),
-            $container->get(ResponseFactoryInterface::class),
-            $config['debug'] ?? false
+            renderer: $container->get(TemplateRendererInterface::class),
+            responseFactory: $container->get(ResponseFactoryInterface::class),
+            isDebug: $config['debug'] ?? false,
         );
     }
 }

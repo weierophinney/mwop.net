@@ -15,12 +15,8 @@ use Mwop\Blog\Mapper\MapperInterface;
 
 class FetchBlogPostFromMapperListener
 {
-    /** @var MapperInterface */
-    private $mapper;
-
-    public function __construct(MapperInterface $mapper)
+    public function __construct(private MapperInterface $mapper)
     {
-        $this->mapper = $mapper;
     }
 
     public function __invoke(FetchBlogPostEvent $event): void

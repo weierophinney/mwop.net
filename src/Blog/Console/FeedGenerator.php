@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:disable Generic.WhiteSpace.ScopeIndent.IncorrectExact
 
 /**
  * @copyright Copyright (c) Matthew Weier O'Phinney
@@ -39,8 +39,6 @@ class FeedGenerator extends Command
 
     private array $authors = [];
 
-    private string $authorsPath;
-
     /** @psalm-var array<string, string> */
     private array $defaultAuthor = [
         'name'  => 'Matthew Weier O\'Phinney',
@@ -48,25 +46,15 @@ class FeedGenerator extends Command
         'uri'   => 'https://mwop.net',
     ];
 
-    private MapperInterface $mapper;
-
-    private TemplateRendererInterface $renderer;
-
-    private RouterInterface $router;
-
     public function __construct(
-        MapperInterface $mapper,
-        RouterInterface $router,
-        TemplateRendererInterface $renderer,
-        ServerUrlHelper $serverUrlHelper,
-        string $authorsPath
+        private MapperInterface $mapper,
+        private RouterInterface $router,
+        private TemplateRendererInterface $renderer,
+        private ServerUrlHelper $serverUrlHelper,
+        private string $authorsPath
     ) {
-        $this->mapper      = $mapper;
-        $this->router      = $this->seedRoutes($router);
-        $this->renderer    = $renderer;
-        $this->authorsPath = $authorsPath;
-
-        $serverUrlHelper->setUri(new Uri('https://mwop.net'));
+        $this->seedRoutes($this->router);
+        $this->serverUrlHelper->setUri(new Uri('https://mwop.net'));
 
         parent::__construct();
     }

@@ -33,7 +33,7 @@ trait RoutesTrait
         'resume'             => '/resume',
     ];
 
-    private function seedRoutes(RouterInterface $router): RouterInterface
+    private function seedRoutes(RouterInterface $router): void
     {
         $middleware = new class implements MiddlewareInterface {
             public function process(
@@ -47,7 +47,5 @@ trait RoutesTrait
         foreach ($this->routes as $name => $path) {
             $router->addRoute(new Route($path, $middleware, ['GET'], $name));
         }
-
-        return $router;
     }
 }

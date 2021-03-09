@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:disable Generic.PHP.DiscourageGoto.Found
 
 /**
  * @copyright Copyright (c) Matthew Weier O'Phinney
@@ -24,11 +24,11 @@ class InstagramClientFactory
         $cachePath = $config['cache_path'] ?? getcwd() . '/data/cache/instagram';
 
         return new InstagramClient(
-            $config['login'],
-            $config['password'],
-            $config['profile'],
-            new FilesystemAdapter('Insta', 0, $cachePath),
-            $config['debug'] ?? false
+            login: $config['login'],
+            password: $config['password'],
+            profile: $config['profile'],
+            cachePool: new FilesystemAdapter('Insta', 0, $cachePath),
+            debug: $config['debug'] ?? false,
         );
     }
 }

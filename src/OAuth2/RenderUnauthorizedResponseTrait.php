@@ -16,14 +16,11 @@ use Psr\Http\Message\ServerRequestInterface;
 
 trait RenderUnauthorizedResponseTrait
 {
-    /** @var bool */
-    private $isDebug = false;
+    private bool $isDebug = false;
 
-    /** @var TemplateRendererInterface */
-    private $renderer;
+    private TemplateRendererInterface $renderer;
 
-    /** @var ResponseFactoryInterface */
-    private $responseFactory;
+    private ResponseFactoryInterface $responseFactory;
 
     private function renderUnauthorizedResponse(
         ServerRequestInterface $request,

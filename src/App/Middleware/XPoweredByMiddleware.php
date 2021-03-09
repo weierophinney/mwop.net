@@ -19,6 +19,6 @@ class XPoweredByMiddleware implements MiddlewareInterface
     public function process(Request $request, RequestHandlerInterface $handler): Response
     {
         $response = $handler->handle($request);
-        return $response->withHeader('X-Powered-By', 'Coffee, Beer, and Whiskey, in no particular order');
+        return $response->withHeader('X-Powered-By', 'Coffee and Tequila, in no particular order');
     }
 }

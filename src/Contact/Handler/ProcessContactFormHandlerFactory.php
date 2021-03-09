@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:disable Generic.PHP.DiscourageGoto.Found
 
 /**
  * @copyright Copyright (c) Matthew Weier O'Phinney
@@ -19,10 +19,10 @@ class ProcessContactFormHandlerFactory
     public function __invoke(ContainerInterface $container): ProcessContactFormHandler
     {
         return new ProcessContactFormHandler(
-            $container->get(EventDispatcherInterface::class),
-            $container->get(TemplateRendererInterface::class),
-            $container->get(UrlHelper::class),
-            $container->get('config-contact')
+            dispatcher: $container->get(EventDispatcherInterface::class),
+            template: $container->get(TemplateRendererInterface::class),
+            urlHelper: $container->get(UrlHelper::class),
+            config: $container->get('config-contact'),
         );
     }
 }

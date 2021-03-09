@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:disable Generic.WhiteSpace.ScopeIndent.IncorrectExact
 
 /**
  * @copyright Copyright (c) Matthew Weier O'Phinney
@@ -20,16 +20,10 @@ use function array_map;
 
 class SearchHandler implements RequestHandlerInterface
 {
-    /** @var MapperInterface */
-    private $mapper;
-
-    /** @var UrlHelper */
-    private $urlHelper;
-
-    public function __construct(MapperInterface $mapper, UrlHelper $urlHelper)
-    {
-        $this->mapper    = $mapper;
-        $this->urlHelper = $urlHelper;
+    public function __construct(
+        private MapperInterface $mapper,
+        private UrlHelper $urlHelper,
+    ) {
     }
 
     /**

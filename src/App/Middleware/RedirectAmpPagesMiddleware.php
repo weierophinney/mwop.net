@@ -22,12 +22,8 @@ use const PHP_QUERY_RFC3986;
 
 class RedirectAmpPagesMiddleware implements MiddlewareInterface
 {
-    /** @var ResponseFactoryInterface */
-    private $responseFactory;
-
-    public function __construct(ResponseFactoryInterface $responseFactory)
+    public function __construct(private ResponseFactoryInterface $responseFactory)
     {
-        $this->responseFactory = $responseFactory;
     }
 
     public function process(

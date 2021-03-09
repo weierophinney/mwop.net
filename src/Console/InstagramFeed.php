@@ -46,11 +46,8 @@ class InstagramFeed extends Command
         
         EOC;
 
-    private InstagramClient $client;
-
-    public function __construct(InstagramClient $client)
+    public function __construct(private InstagramClient $client)
     {
-        $this->client = $client;
         parent::__construct();
     }
 

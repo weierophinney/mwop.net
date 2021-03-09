@@ -31,12 +31,8 @@ class Fetch extends Command
     /** @var string */
     private $outputTemplateString = '<li><a href="%s">%s</a></li>';
 
-    /** @var AtomReader */
-    private $reader;
-
-    public function __construct(?AtomReader $reader = null, string $outputTemplateString = '')
+    public function __construct(private ?AtomReader $reader = null, string $outputTemplateString = '')
     {
-        $this->reader = $reader;
         if (! empty($outputTemplateString)) {
             $this->outputTemplateString = $outputTemplateString;
         }

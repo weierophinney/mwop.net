@@ -19,11 +19,9 @@ class AtomReader
 
     protected array $filters = [];
     protected int $limit     = 10;
-    protected string $user;
 
-    public function __construct(string $user)
+    public function __construct(protected string $user)
     {
-        $this->user = $user;
     }
 
     public function setLimit(int $limit): self

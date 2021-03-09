@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:disable Generic.PHP.DiscourageGoto.Found
 
 /**
  * @copyright Copyright (c) Matthew Weier O'Phinney
@@ -19,8 +19,8 @@ class FetchBlogPostFromCacheListenerFactory
         $config = $container->get('config-blog.cache');
 
         return new FetchBlogPostFromCacheListener(
-            $container->get(BlogCachePool::class),
-            $config['enabled'] ?? false
+            cache: $container->get(BlogCachePool::class),
+            enabled: $config['enabled'] ?? false,
         );
     }
 }

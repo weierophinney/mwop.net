@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:disable Generic.PHP.DiscourageGoto.Found
 
 declare(strict_types=1);
 
@@ -13,8 +13,8 @@ class SearchHandlerFactory
     public function __invoke(ContainerInterface $container): SearchHandler
     {
         return new SearchHandler(
-            $container->get(MapperInterface::class),
-            $container->get(UrlHelper::class)
+            mapper: $container->get(MapperInterface::class),
+            urlHelper: $container->get(UrlHelper::class),
         );
     }
 }

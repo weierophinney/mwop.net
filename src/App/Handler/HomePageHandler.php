@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:disable Generic.WhiteSpace.ScopeIndent.IncorrectExact
 
 /**
  * @copyright Copyright (c) Matthew Weier O'Phinney
@@ -25,18 +25,11 @@ class HomePageHandler implements RequestHandlerInterface
 {
     public const TEMPLATE = 'mwop::home.page';
 
-    private string $instagramFeedLocation;
-    private array $posts;
-    private TemplateRendererInterface $renderer;
-
     public function __construct(
-        array $posts,
-        string $instagramFeedLocation,
-        TemplateRendererInterface $renderer
+        private array $posts,
+        private string $instagramFeedLocation,
+        private TemplateRendererInterface $renderer
     ) {
-        $this->posts                 = $posts;
-        $this->instagramFeedLocation = $instagramFeedLocation;
-        $this->renderer              = $renderer;
     }
 
     public function handle(Request $request): Response

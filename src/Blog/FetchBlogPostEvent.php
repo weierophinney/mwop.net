@@ -16,18 +16,12 @@ class FetchBlogPostEvent implements
     JsonSerializable,
     StoppableEventInterface
 {
-    /** @var bool */
-    private $fromCache = false;
+    private bool $fromCache = false;
 
-    /** @var string */
-    private $id;
+    private ?BlogPost $post = null;
 
-    /** @var null|BlogPost */
-    private $post;
-
-    public function __construct(string $id)
+    public function __construct(private string $id)
     {
-        $this->id = $id;
     }
 
     public function jsonSerialize(): array

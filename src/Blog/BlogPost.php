@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:disable Generic.WhiteSpace.ScopeIndent.IncorrectExact
 
 /**
  * @copyright Copyright (c) Matthew Weier O'Phinney
@@ -13,57 +13,17 @@ use DateTimeInterface;
 
 class BlogPost
 {
-    /** @var string */
-    public $author;
-
-    /** @var string */
-    public $body;
-
-    /** @var DateTimeInterface */
-    public $created;
-
-    /** @var string */
-    public $extended;
-
-    /** @var string */
-    public $id;
-
-    /** @var bool */
-    public $isDraft;
-
-    /** @var bool */
-    public $isPublic;
-
-    /** @var string[] */
-    public $tags;
-
-    /** @var string */
-    public $title;
-
-    /** @var null|DateTimeInterface */
-    public $updated;
-
     public function __construct(
-        string $id,
-        string $title,
-        string $author,
-        DateTimeInterface $created,
-        ?DateTimeInterface $updated,
-        array $tags,
-        string $body,
-        string $extended,
-        bool $isDraft,
-        bool $isPublic
+        public string $id,
+        public string $title,
+        public string $author,
+        public DateTimeInterface $created,
+        public ?DateTimeInterface $updated,
+        public array $tags,
+        public string $body,
+        public string $extended,
+        public bool $isDraft,
+        public bool $isPublic
     ) {
-        $this->id       = $id;
-        $this->title    = $title;
-        $this->author   = $author;
-        $this->created  = $created;
-        $this->updated  = $updated;
-        $this->tags     = $tags;
-        $this->body     = $body;
-        $this->extended = $extended;
-        $this->isDraft  = $isDraft;
-        $this->isPublic = $isPublic;
     }
 }

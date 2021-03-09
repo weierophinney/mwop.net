@@ -63,15 +63,11 @@ EOC;
 EOF;
 
     /** @var int */
-    private $toRetrieve;
-
-    /** @var int */
     private $status;
 
-    public function __construct(array $feeds, int $toRetrieve)
+    public function __construct(array $feeds, private int $toRetrieve)
     {
-        $this->feeds      = FeedCollection::make($feeds);
-        $this->toRetrieve = $toRetrieve;
+        $this->feeds = FeedCollection::make($feeds);
         parent::__construct();
     }
 

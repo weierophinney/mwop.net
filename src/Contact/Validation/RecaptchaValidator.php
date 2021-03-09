@@ -27,13 +27,10 @@ class RecaptchaValidator implements ValidatorInterface
     private const RECAPTCHA_VERIFICATION_URI_PATTERN =
         'https://www.google.com/recaptcha/api/siteverify?secret=%s&response=%s';
 
-    private string $key;
-
     private array $messages = [];
 
-    public function __construct(string $key)
+    public function __construct(private string $key)
     {
-        $this->key = $key;
     }
 
     /**

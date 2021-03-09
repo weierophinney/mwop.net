@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:disable Generic.WhiteSpace.ScopeIndent.IncorrectExact
 
 /**
  * @copyright Copyright (c) Matthew Weier O'Phinney
@@ -23,17 +23,13 @@ class RequestAuthenticationHandler implements RequestHandlerInterface
     use RenderUnauthorizedResponseTrait;
     use ValidateProviderTrait;
 
-    /** @var ProviderFactory */
-    private $providerFactory;
-
     public function __construct(
         ResponseFactoryInterface $responseFactory,
-        ProviderFactory $providerFactory,
+        private ProviderFactory $providerFactory,
         TemplateRendererInterface $renderer,
         bool $isDebug
     ) {
         $this->responseFactory = $responseFactory;
-        $this->providerFactory = $providerFactory;
         $this->renderer        = $renderer;
         $this->isDebug         = $isDebug;
     }

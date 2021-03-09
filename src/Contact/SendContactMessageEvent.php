@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:disable Generic.WhiteSpace.ScopeIndent.IncorrectExact
 
 /**
  * @copyright Copyright (c) Matthew Weier O'Phinney
@@ -13,23 +13,11 @@ use JsonSerializable;
 
 class SendContactMessageEvent implements JsonSerializable
 {
-    /** @var string */
-    private $body;
-
-    /** @var string */
-    private $replyTo;
-
-    /** @var string */
-    private $subject;
-
     public function __construct(
-        string $replyTo,
-        string $subject,
-        string $body
+        private string $replyTo,
+        private string $subject,
+        private string $body,
     ) {
-        $this->replyTo = $replyTo;
-        $this->subject = $subject;
-        $this->body    = $body;
     }
 
     public function getBody(): string

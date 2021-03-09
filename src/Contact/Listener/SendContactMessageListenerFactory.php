@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:disable Generic.PHP.DiscourageGoto.Found
 
 /**
  * @copyright Copyright (c) Matthew Weier O'Phinney
@@ -35,8 +35,8 @@ class SendContactMessageListenerFactory
         }
 
         return new SendContactMessageListener(
-            $container->get('mail.transport'),
-            $config
+            mailer: $container->get('mail.transport'),
+            config: $config,
         );
     }
 }

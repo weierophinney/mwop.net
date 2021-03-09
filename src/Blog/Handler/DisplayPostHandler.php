@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:disable Generic.WhiteSpace.ScopeIndent.IncorrectExact
 
 /**
  * @copyright Copyright (c) Matthew Weier O'Phinney
@@ -19,28 +19,12 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 class DisplayPostHandler implements RequestHandlerInterface
 {
-    /** @var EventDispatcherInterface */
-    private $dispatcher;
-
-    /** @var array array<string, string> */
-    private $disqus;
-
-    /** @var RequestHandlerInterface */
-    private $notFoundHandler;
-
-    /** @var TemplateRendererInterface */
-    private $template;
-
     public function __construct(
-        EventDispatcherInterface $dispatcher,
-        TemplateRendererInterface $template,
-        RequestHandlerInterface $notFoundHandler,
-        array $disqus = []
+        private EventDispatcherInterface $dispatcher,
+        private TemplateRendererInterface $template,
+        private RequestHandlerInterface $notFoundHandler,
+        private array $disqus = [],
     ) {
-        $this->dispatcher      = $dispatcher;
-        $this->template        = $template;
-        $this->notFoundHandler = $notFoundHandler;
-        $this->disqus          = $disqus;
     }
 
     public function handle(ServerRequestInterface $request): ResponseInterface

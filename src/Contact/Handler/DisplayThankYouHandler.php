@@ -21,16 +21,8 @@ use function preg_match;
 
 class DisplayThankYouHandler implements RequestHandlerInterface
 {
-    /** @var TemplateRendererInterface */
-    private $template;
-
-    /** @var UrlHelper */
-    private $urlHelper;
-
-    public function __construct(TemplateRendererInterface $template, UrlHelper $urlHelper)
+    public function __construct(private TemplateRendererInterface $template, private UrlHelper $urlHelper)
     {
-        $this->template  = $template;
-        $this->urlHelper = $urlHelper;
     }
 
     public function handle(Request $request): Response

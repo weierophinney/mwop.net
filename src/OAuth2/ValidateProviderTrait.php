@@ -14,7 +14,7 @@ use function in_array;
 trait ValidateProviderTrait
 {
     /** @var string[] */
-    private $allowedProviders = [
+    private array $allowedProviders = [
         'github',
         'google',
     ];

@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:disable Generic.WhiteSpace.ScopeIndent.IncorrectExact
 
 /**
  * @copyright Copyright (c) Matthew Weier O'Phinney
@@ -22,16 +22,10 @@ use function str_replace;
 
 class FeedHandler implements RequestHandlerInterface
 {
-    /** @var string */
-    private $feedPath;
-
-    /** @var RequestHandlerInterface */
-    private $notFoundHandler;
-
-    public function __construct(RequestHandlerInterface $notFoundHandler, string $feedPath = 'data/feeds')
-    {
-        $this->notFoundHandler = $notFoundHandler;
-        $this->feedPath        = $feedPath;
+    public function __construct(
+        private RequestHandlerInterface $notFoundHandler,
+        private string $feedPath = 'data/feeds',
+    ) {
     }
 
     public function handle(ServerRequestInterface $request): ResponseInterface

@@ -33,18 +33,17 @@ class SeedBlogDatabase extends Command
 {
     use CreateBlogPostFromDataArrayTrait;
 
-    /** @var array array<string, array<string, string>> */
-    private $authors = [];
+    /** @psalm-var array<string, array<string, string>> */
+    private array $authors = [];
 
     /** @var string[] */
-    private $indices = [
+    private array $indices = [
         'CREATE INDEX visible ON posts ( created, draft, public )',
         'CREATE INDEX visible_tags ON posts ( tags, created, draft, public )',
         'CREATE INDEX visible_author ON posts ( author, created, draft, public )',
     ];
 
-    /** @var string */
-    private $initial = 'INSERT INTO posts
+    private string $initial = 'INSERT INTO posts
         SELECT
             %s AS id,
             %s AS path,
@@ -57,8 +56,7 @@ class SeedBlogDatabase extends Command
             %s AS body,
             %s AS tags';
 
-    /** @var string */
-    private $item = 'UNION SELECT
+    private string $item = 'UNION SELECT
         %s,
         %s,
         %d,
@@ -70,8 +68,7 @@ class SeedBlogDatabase extends Command
         %s,
         %s';
 
-    /** @var string */
-    private $searchTable = 'CREATE VIRTUAL TABLE search USING FTS4(
+    private string $searchTable = 'CREATE VIRTUAL TABLE search USING FTS4(
             id,
             created,
             title,
@@ -79,8 +76,7 @@ class SeedBlogDatabase extends Command
             tags
         )';
 
-    /** @var string */
-    private $searchTrigger = 'CREATE TRIGGER after_posts_insert
+    private string $searchTrigger = 'CREATE TRIGGER after_posts_insert
             AFTER INSERT ON posts
             BEGIN
                 INSERT INTO search (
@@ -100,8 +96,7 @@ class SeedBlogDatabase extends Command
             END
         ';
 
-    /** @var string */
-    private $table = 'CREATE TABLE "posts" (
+    private string $table = 'CREATE TABLE "posts" (
             id VARCHAR(255) NOT NULL PRIMARY KEY,
             path VARCHAR(255) NOT NULL,
             created UNSIGNED INTEGER NOT NULL,

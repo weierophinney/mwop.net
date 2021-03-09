@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:disable Generic.PHP.DiscourageGoto.Found
 
 /**
  * @copyright Copyright (c) Matthew Weier O'Phinney
@@ -21,10 +21,10 @@ class RequestAuthenticationHandlerFactory
         $config = $container->get('config');
 
         return new RequestAuthenticationHandler(
-            $container->get(ResponseFactoryInterface::class),
-            $container->get(ProviderFactory::class),
-            $container->get(TemplateRendererInterface::class),
-            $config['debug'] ?? false
+            responseFactory: $container->get(ResponseFactoryInterface::class),
+            providerFactory: $container->get(ProviderFactory::class),
+            renderer: $container->get(TemplateRendererInterface::class),
+            isDebug: $config['debug'] ?? false,
         );
     }
 }

@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:disable Generic.WhiteSpace.ScopeIndent.IncorrectExact
 
 /**
  * @copyright Copyright (c) Matthew Weier O'Phinney
@@ -20,18 +20,10 @@ use function array_merge;
 
 class DisplayContactFormHandler implements RequestHandlerInterface
 {
-    /** @var array array<string, mixed> */
-    private $config;
-
-    /** @var TemplateRendererInterface */
-    private $template;
-
     public function __construct(
-        TemplateRendererInterface $template,
-        array $config
+        private TemplateRendererInterface $template,
+        private array $config,
     ) {
-        $this->template = $template;
-        $this->config   = $config;
     }
 
     public function handle(Request $request): Response

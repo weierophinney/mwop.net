@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:disable Generic.PHP.DiscourageGoto.Found
 
 /**
  * @copyright Copyright (c) Matthew Weier O'Phinney
@@ -19,9 +19,9 @@ class ListPostsHandlerFactory
     public function __invoke(ContainerInterface $container): ListPostsHandler
     {
         return new ListPostsHandler(
-            $container->get(MapperInterface::class),
-            $container->get(TemplateRendererInterface::class),
-            $container->get(RouterInterface::class)
+            mapper: $container->get(MapperInterface::class),
+            template: $container->get(TemplateRendererInterface::class),
+            router: $container->get(RouterInterface::class),
         );
     }
 }

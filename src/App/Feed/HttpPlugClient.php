@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:disable Generic.WhiteSpace.ScopeIndent.IncorrectExact
 
 /**
  * @copyright Copyright (c) Matthew Weier O'Phinney
@@ -17,16 +17,10 @@ use Psr\Http\Message\RequestFactoryInterface;
 
 class HttpPlugClient implements FeedReaderHttpClientInterface
 {
-    /** @var HttpClient */
-    private $client;
-
-    /** @var RequestFactoryInterface */
-    private $requestFactory;
-
-    public function __construct(HttpClient $client, RequestFactoryInterface $requestFactory)
-    {
-        $this->client         = $client;
-        $this->requestFactory = $requestFactory;
+    public function __construct(
+        private HttpClient $client,
+        private RequestFactoryInterface $requestFactory
+    ) {
     }
 
     /**

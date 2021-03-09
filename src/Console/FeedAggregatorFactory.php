@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:disable Generic.PHP.DiscourageGoto.Found
 
 /**
  * @copyright Copyright (c) Matthew Weier O'Phinney
@@ -25,8 +25,8 @@ class FeedAggregatorFactory
         $config = $container->get('config-homepage');
 
         return new FeedAggregator(
-            $config['feeds'] ?? [],
-            $config['feed-count'] ?? 10
+            feeds: $config['feeds'] ?? [],
+            toRetrieve: $config['feed-count'] ?? 10,
         );
     }
 }

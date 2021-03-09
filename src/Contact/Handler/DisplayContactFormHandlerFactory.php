@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:disable Generic.PHP.DiscourageGoto.Found
 
 /**
  * @copyright Copyright (c) Matthew Weier O'Phinney
@@ -17,8 +17,8 @@ class DisplayContactFormHandlerFactory
     public function __invoke(ContainerInterface $container): DisplayContactFormHandler
     {
         return new DisplayContactFormHandler(
-            $container->get(TemplateRendererInterface::class),
-            $container->get('config-contact')
+            template: $container->get(TemplateRendererInterface::class),
+            config: $container->get('config-contact'),
         );
     }
 }

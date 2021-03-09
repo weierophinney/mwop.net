@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:disable Generic.PHP.DiscourageGoto.Found
 
 /**
  * @copyright Copyright (c) Matthew Weier O'Phinney
@@ -18,8 +18,8 @@ class DisplayThankYouHandlerFactory
     public function __invoke(ContainerInterface $container): DisplayThankYouHandler
     {
         return new DisplayThankYouHandler(
-            $container->get(TemplateRendererInterface::class),
-            $container->get(UrlHelper::class)
+            template: $container->get(TemplateRendererInterface::class),
+            urlHelper: $container->get(UrlHelper::class),
         );
     }
 }

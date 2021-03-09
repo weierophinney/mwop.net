@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:disable Generic.PHP.DiscourageGoto.Found
 
 /**
  * @copyright Copyright (c) Matthew Weier O'Phinney
@@ -23,11 +23,11 @@ class FeedGeneratorFactory
     public function __invoke(ContainerInterface $container): FeedGenerator
     {
         return new FeedGenerator(
-            $container->get(MapperInterface::class),
-            $container->get(RouterInterface::class),
-            $container->get(TemplateRendererInterface::class),
-            $container->get(ServerUrlHelper::class),
-            realpath(getcwd()) . '/data/blog/authors/'
+            mapper: $container->get(MapperInterface::class),
+            router: $container->get(RouterInterface::class),
+            renderer: $container->get(TemplateRendererInterface::class),
+            serverUrlHelper: $container->get(ServerUrlHelper::class),
+            authorsPath: realpath(getcwd()) . '/data/blog/authors/',
         );
     }
 }

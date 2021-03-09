@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:disable Generic.WhiteSpace.ScopeIndent.IncorrectExact
 
 /**
  * @copyright Copyright (c) Matthew Weier O'Phinney
@@ -16,18 +16,10 @@ use function serialize;
 
 class CacheBlogPostListener
 {
-    /** @var CacheItemPoolInterface */
-    private $cache;
-
-    /** @var bool */
-    private $enabled;
-
     public function __construct(
-        CacheItemPoolInterface $cache,
-        bool $enabled = true
+        private CacheItemPoolInterface $cache,
+        private bool $enabled = true,
     ) {
-        $this->cache   = $cache;
-        $this->enabled = $enabled;
     }
 
     public function __invoke(FetchBlogPostEvent $event): void
