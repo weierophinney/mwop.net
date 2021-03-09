@@ -94,13 +94,13 @@ task('install:redis', function () {
 desc('Install PHP');
 task('install:php', function () {
     run('
-        dpkg --no-pager -l php7.4-cli ;
+        dpkg --no-pager -l php8.0-cli ;
         if [ "$?" -ne "0" ];then
-            echo "Installing PHP 7.4 for the first time" ;
+            echo "Installing PHP 8.0 for the first time" ;
             add-apt-repository -y ppa:ondrej/php ;
             apt update ;
-            apt install -y php7.4-cli php7.4-bcmath php7.4-bz2 php7.4-curl php7.4-dev php7.4-gd php7.4-intl php7.4-json php7.4-ldap php7.4-mbstring php7.4-opcache php7.4-readline php7.4-sqlite3 php7.4-tidy php7.4-xml php7.4-xsl php7.4-zip ;
-            update-alternatives --set php /usr/bin/php7.4
+            apt install -y php8.0-cli php8.0-bcmath php8.0-bz2 php8.0-curl php8.0-dev php8.0-gd php8.0-intl php8.0-json php8.0-ldap php8.0-mbstring php8.0-opcache php8.0-readline php8.0-sqlite3 php8.0-tidy php8.0-xml php8.0-xsl php8.0-zip ;
+            update-alternatives --set php /usr/bin/php8.0
         fi
     ');
 });
@@ -112,14 +112,14 @@ task('install:swoole', function () {
         if [ "$?" -ne "0" ];then
             echo "Installing Swoole for the first time" ;
             mkdir -p /tmp/swoole ;
-            cd /tmp/swoole && curl -s -o swoole.tgz https://pecl.php.net/get/swoole-4.5.6.tgz ;
+            cd /tmp/swoole && curl -s -o swoole.tgz https://pecl.php.net/get/swoole-4.6.3.tgz ;
             cd /tmp/swoole && tar xzvf swoole.tgz --strip-components=1 ;
             cd /tmp/swoole && phpize ;
-            cd /tmp/swoole && ./configure --enable-http2 --enable-sockets --enable-openssl ;
+            cd /tmp/swoole && ./configure --enable-swoole --enable-http2 --enable-sockets --enable-openssl --enable-swoole-json --enable-swoole-curl ;
             cd /tmp/swoole && make ;
             cd /tmp/swoole && make install ;
             rm -rf /tmp/swoole ;
-            echo "extension=swoole.so" > /etc/php/7.4/cli/conf.d/swoole.ini
+            echo "extension=swoole.so" > /etc/php/8.0/cli/conf.d/swoole.ini
         fi
     ');
 });
@@ -129,8 +129,9 @@ desc('Install Composer');
 task('install:composer', function () {
     run('
         which composer ;
-        if [ "$?" -ne "0" ];then
-            curl https://getcomposer.org/composer-1.phar --output /usr/local/bin/composer ;
+        if [[ "$?" != "0" || ! "$(composer --no-ansi --version)" =~ "^Composer version 2" ]];then
+            echo "Installing Composer for the first time" ;
+            curl https://getcomposer.org/composer.phar --output /usr/local/bin/composer ;
             chmod 755 /usr/local/bin/composer
         fi
     ');
