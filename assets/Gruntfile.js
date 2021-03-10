@@ -36,7 +36,7 @@ module.exports = function (grunt) {
       css: {
         src: [
           'build/css/bootstrap.css',
-          'css/prism.css',
+          'node_modules/prism-solarized-dark/prism-solarizeddark.css',
           'css/site.css',
           'css/blog.css'
         ],

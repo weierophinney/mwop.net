@@ -19,6 +19,7 @@
     "minimist": "^1.2.5",
     "mkdirp": "^1.0.4",
     "node-sass": "^4.14.1",
-    "popper.js": "^1.16.1"
+    "popper.js": "^1.16.1",
+    "prism-solarized-dark": "^1.0.1"
   }
 }
