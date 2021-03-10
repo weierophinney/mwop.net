@@ -285,16 +285,16 @@ task('build:assets', function () {
 });
 
 desc('Build blog');
-task('build:blog', 'sudo -u www-data {{bin/composer}} build:blog');
+task('build:blog', 'sudo -u www-data /bin/bash -c "{{bin/composer}} build:blog"');
 
 desc('Build homepage');
-task('build:homepage', 'sudo -u www-data {{bin/composer}} build:homepage');
+task('build:homepage', 'sudo -u www-data /bin/bash -c "{{bin/composer}} build:homepage"');
 
 desc('Fetch instagram feed');
-task('build:instagram', 'sudo -u www-data {{bin/php}} vendor/bin/laminas instagram-feeds');
+task('build:instagram', 'sudo -u www-data /bin/bash -c "{{bin/php}} vendor/bin/laminas instagram-feeds"');
 
 desc('Fetch comics');
-task('build:comics', 'sudo -u www-data {{bin/php}} vendor/bin/phly-comic.php fetch-all -p --output data/comics.phtml --exclude dilbert --exclude reptilis-rex --exclude nih');
+task('build:comics', 'sudo -u www-data /bin/bash -c "{{bin/php}} vendor/bin/phly-comic.php fetch-all -p --output data/comics.phtml --exclude dilbert --exclude reptilis-rex --exclude nih"');
 
 // Copy asset templates
 desc('Deploy assets');
