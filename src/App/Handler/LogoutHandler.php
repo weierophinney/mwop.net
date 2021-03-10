@@ -22,17 +22,17 @@ class LogoutHandler implements RequestHandlerInterface
         $session = $request->getAttribute(SessionMiddleware::SESSION_ATTRIBUTE);
         $auth    = $session->get('auth') ?? [];
         $user    = $auth['user'] ?? false;
-        if (! $user) {
-            return $this->redirect($request);
+
+        if ($user) {
+            $session->clear();
         }
 
-        $session->clear();
         return $this->redirect($request);
     }
 
     private function redirect(Request $request): RedirectResponse
     {
-        $originalUri = $request->getAttribute('originalRequest', $request)->getUri();
+        $originalUri = $request->getAttribute('originalRequest', $request)?->getUri() ?: $request->getUri();
         $redirectUri = $originalUri->withPath('/');
 
         return new RedirectResponse((string) $redirectUri);
