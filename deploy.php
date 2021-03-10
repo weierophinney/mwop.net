@@ -97,8 +97,9 @@ task('install:swoole', function () {
         if [[ ! "$({{bin/php}} -m)" =~ "swoole" || "$({{bin/php}} -r "echo swoole_version();")" != "4.6.3" ]];then
             echo "Installing Swoole 4.6.3 for the first time" ;
             mkdir -p /tmp/swoole ;
-            update-alternatives --set php-config /usr/bin/php-config8.0
-            update-alternatives --set phpize /usr/bin/phpize8.0
+            update-alternatives --set php-config /usr/bin/php-config8.0 ;
+            update-alternatives --set phpize /usr/bin/phpize8.0 ;
+            apt install -y libcurl4-openssl-dev ;
             cd /tmp/swoole && curl -s -o swoole.tgz https://pecl.php.net/get/swoole-4.6.3.tgz ;
             cd /tmp/swoole && tar xzvf swoole.tgz --strip-components=1 ;
             cd /tmp/swoole && phpize ;
