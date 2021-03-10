@@ -27,7 +27,7 @@ class AccessLoggerFactory
             maxFiles: 7,
             level: Logger::WARNING,
             bubble: true,
-            filePermissions: 0644,
+            filePermission: 0644,
             useLocking: true,
         ));
         $logger->pushProcessor(new PsrLogMessageProcessor());
