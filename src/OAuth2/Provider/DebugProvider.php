@@ -86,7 +86,7 @@ class DebugProvider extends AbstractProvider
      *
      * @param array|string $data Parsed response data
      */
-    protected function checkResponse(ResponseInterface $response, $data): array|string
+    protected function checkResponse(ResponseInterface $response, $data)
     {
     }
 

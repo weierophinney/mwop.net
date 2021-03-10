@@ -102,6 +102,7 @@ class InstagramFeed extends Command
     private function generateContent(array $feed): string
     {
         $entries = implode('', array_map(
+            // phpcs:ignore
             function (array|ArrayAccess $entry): string {
                 return sprintf($this->configItemFormat, $entry['image_url'], $entry['post_url']);
             },

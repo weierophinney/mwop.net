@@ -129,7 +129,8 @@ EOF;
     {
         return sprintf(
             $this->configFormat,
-            $entries->reduce(function (string $string, array|ArrayAccess $entry) {
+            // phpcs:ignore
+            $entries->reduce(function (string $string, array|ArrayAccess $entry): string {
                 return $string . sprintf(
                     $this->itemFormat,
                     $entry['title'],

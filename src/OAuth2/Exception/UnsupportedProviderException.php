@@ -14,11 +14,11 @@ use RuntimeException;
 use function implode;
 use function sprintf;
 
-class UnsupportedProviderException extends RuntimeException implements ExceptionInterface
+final class UnsupportedProviderException extends RuntimeException implements ExceptionInterface
 {
-    public static function forProvider(string $provider, array $knownProviders): static
+    public static function forProvider(string $provider, array $knownProviders): self
     {
-        return new static(sprintf(
+        return new self(sprintf(
             'Unsupported OAuth2 provider "%s"; must be one of: %s',
             $provider,
             implode(', ', $knownProviders)

@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:disable PSR1.Files.SideEffects.FoundWithSymbols,Generic.WhiteSpace.ScopeIndent.IncorrectExact
 
 /**
  * @copyright Copyright (c) Matthew Weier O'Phinney
@@ -26,14 +26,15 @@ class MailTransport
 
         $transport = match($class) {
             AWSTransport::class  => new $class($config['username'], $config['password']),
-            SMTPTransport::class => $this->smtpTransportFactory($config),
+            SMTPTransport::class => $this->smtpTransportFactory($class, $config),
+            // phpcs:ignore
             default              => throw new RuntimeException(sprintf('Unknown mail transport class %s', $class)),
         };
 
         return new Mailer($transport);
     }
 
-    private function smtpTransportFactory(array $config): SMTPTransport
+    private function smtpTransportFactory(string $class, array $config): SMTPTransport
     {
         $transport = $config['ssl']
             ? new $class($config['host'], $config['port'], $config['ssl'])

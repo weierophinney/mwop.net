@@ -38,6 +38,7 @@ class SearchHandler implements RequestHandlerInterface
             return new JsonResponse([]);
         }
 
+        // phpcs:ignore
         $results = array_map(function (array|ArrayAccess $row): array {
             return [
                 'link'  => $this->urlHelper->generate('blog.post', ['id' => $row['id']]),
