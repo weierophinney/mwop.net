@@ -286,23 +286,35 @@ task('build:assets', function () {
 
 desc('Build blog');
 task('build:blog', function () {
-    run('sudo -u www-data /bin/bash -c "{{bin/php}} vendor/bin/laminas blog:seed-db"');
-    run('sudo -u www-data /bin/bash -c "{{bin/php}} vendor/bin/laminas blog:tag-cloud"');
-    run('sudo -u www-data /bin/bash -c "{{bin/php}} vendor/bin/laminas blog:feed-generator"');
-    run('sudo -u www-data /bin/bash -c "{{bin/php}} vendor/bin/laminas blog:generate-search-data"');
+    within('{{release_path}}', function () {
+        run('sudo -u www-data /bin/bash -c "{{bin/php}} vendor/bin/laminas blog:seed-db"');
+        run('sudo -u www-data /bin/bash -c "{{bin/php}} vendor/bin/laminas blog:tag-cloud"');
+        run('sudo -u www-data /bin/bash -c "{{bin/php}} vendor/bin/laminas blog:feed-generator"');
+        run('sudo -u www-data /bin/bash -c "{{bin/php}} vendor/bin/laminas blog:generate-search-data"');
+    });
 });
 
 desc('Build homepage');
 task('build:homepage', function () {
-    run('sudo -u www-data /bin/bash -c "{{bin/php}} vendor/bin/laminas github:fetch-activity"');
-    run('sudo -u www-data /bin/bash -c "{{bin/php}} vendor/bin/laminas github:homepage-feeds"');
+    within('{{release_path}}', function () {
+        run('sudo -u www-data /bin/bash -c "{{bin/php}} vendor/bin/laminas github:fetch-activity"');
+        run('sudo -u www-data /bin/bash -c "{{bin/php}} vendor/bin/laminas github:homepage-feeds"');
+    });
 });
 
 desc('Fetch instagram feed');
-task('build:instagram', 'sudo -u www-data /bin/bash -c "{{bin/php}} vendor/bin/laminas instagram-feeds"');
+task('build:instagram', function () {
+    within('{{release_path}}', function () {
+        run('sudo -u www-data /bin/bash -c "{{bin/php}} vendor/bin/laminas instagram-feeds"');
+    });
+});
 
 desc('Fetch comics');
-task('build:comics', 'sudo -u www-data /bin/bash -c "{{bin/php}} vendor/bin/phly-comic.php fetch-all -p --output data/comics.phtml --exclude dilbert --exclude reptilis-rex --exclude nih"');
+task('build:comics', function () {
+    within('{{release_path}}', function () {
+        run('sudo -u www-data /bin/bash -c "{{bin/php}} vendor/bin/phly-comic.php fetch-all -p --output data/comics.phtml --exclude dilbert --exclude reptilis-rex --exclude nih"');
+    });
+});
 
 // Copy asset templates
 desc('Deploy assets');
