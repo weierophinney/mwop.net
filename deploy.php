@@ -46,61 +46,48 @@ host('mwop.net')
  * present... and that path WILL NOT exist on first run.
  */
 
+desc('Update package sources');
+task('install:prepare', function () {
+    run('apt update -y');
+});
+
 desc('Install util packages');
 task('install:utils', function () {
-    run('
-        if [[ ! -x /usr/bin/curl || ! -x /usr/bin/unzip ]];then
-            apt update -y ;
-            apt install -y curl unzip
-        fi
-    ');
+    run('apt install -y curl unzip');
 });
 
 desc('Install cron');
 task('install:cron', function () {
-    run('
-        if [[ ! "$(dpkg -W -f=\'${Status}\' cron 2>/dev/null)" =~ "ok installed" ]];then
-            echo "Installing cron for the first time" ;
-             apt-get install -y cron
-        fi
-    ');
+    run('apt install -y cron');
 });
 
 desc('Install supervisor');
 task('install:supervisor', function () {
-    run('
-        if [[ ! "$(dpkg -W -f=\'${Status}\' supervisor 2>/dev/null)" =~ "ok installed" ]];then
-            echo "Installing supervisor for the first time" ;
-             apt-get install -y supervisor
-        fi
-    ');
+    run('apt install -y supervisor');
 });
 
 desc('Install redis');
 task('install:redis', function () {
     run('
-        if [[ ! "$(dpkg -W -f=\'${Status}\' redis-server 2>/dev/null)" =~ "ok installed" ]];then
-            echo "Installing Redis for the first time" ;
-             apt-get install -y redis-server
+        apt install -y redis-server ;
+        if [[ ! -f /var/spool/redis/mwop.net.rdb ]];then
+            mkdir -p /var/spool/redis ;
+            touch /var/spool/redis/mwop.net.rdb
         fi
-        mkdir -p /var/spool/redis ;
-        touch /var/spool/redis/mwop.net.rdb
     ');
 });
 
 desc('Install PHP');
 task('install:php', function () {
+    // Depending on PHP version, php{VERSION}-json package may be required
+    // Note: "apt install" will upgrade a package if already installed and a newer version exists.
     run('
-        if [[ ! "$(dpkg -W -f=\'${Status}\' php8.0-cli 2>/dev/null)" =~ "ok installed" ]];then
-            echo "Installing PHP 8.0 for the first time" ;
-            if [[ ! "$(ls -l /etc/apt/sources.list.d/)" =~ ondrej-.*?\.list[^.] ]]
-            then
-                add-apt-repository -y ppa:ondrej/php
-            else
-                apt update
-            fi
-            apt install -y php8.0-cli php8.0-bcmath php8.0-bz2 php8.0-curl php8.0-dev php8.0-gd php8.0-intl php8.0-json php8.0-ldap php8.0-mbstring php8.0-opcache php8.0-readline php8.0-sqlite3 php8.0-tidy php8.0-xml php8.0-xsl php8.0-zip ;
+        if [[ ! "$(ls -l /etc/apt/sources.list.d/)" =~ ondrej-.*?\.list[^.] ]]
+        then
+            echo "Installing ondrej PPA for the first time" ;
+            add-apt-repository -y ppa:ondrej/php
         fi
+        apt install -y php8.0-cli php8.0-bcmath php8.0-bz2 php8.0-curl php8.0-dev php8.0-gd php8.0-intl php8.0-ldap php8.0-mbstring php8.0-opcache php8.0-readline php8.0-sqlite3 php8.0-tidy php8.0-xml php8.0-xsl php8.0-zip ;
     ');
 });
 
@@ -142,14 +129,14 @@ set(
 desc('Install Caddy');
 task('install:caddy', function () {
     run('
-        if [[ ! "$(dpkg -W -f=\'${Status}\' caddy 2>/dev/null)" =~ "ok installed" ]];then
-            echo "Installing Caddy for the first time" ;
+        if [[ ! "$(ls -l /etc/apt/sources.list.d/)" =~ caddy-fury\.list[^.] ]]
+            echo "Installing Caddy repo for the first time" ;
             echo "deb [trusted=yes] https://apt.fury.io/caddy/ /" > /etc/apt/sources.list.d/caddy-fury.list ;
             apt update ;
-            apt install -y caddy ;
             mkdir -p /etc/caddy/conf.d ;
             echo "import /etc/caddy/conf.d/*.caddy" > /etc/caddy/Caddyfile ;
         fi
+        apt install -y caddy ;
     ');
 });
 
@@ -162,6 +149,7 @@ task('install:system_dependencies', [
     'install:php',
     'install:caddy',
 ]);
+before('install:system_dependencies', 'install:prepare');
 
 /*
  * SERVICE START/STOP
