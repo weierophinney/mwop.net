@@ -93,8 +93,12 @@ task('install:php', function () {
     run('
         if [[ ! "$(dpkg -W -f=\'${Status}\' php8.0-cli 2>/dev/null)" =~ "ok installed" ]];then
             echo "Installing PHP 8.0 for the first time" ;
-            add-apt-repository -y ppa:ondrej/php ;
-            apt update ;
+            if [[ ! "$(ls -l /etc/apt/sources.list.d/)" =~ ondrej-.*?\.list[^.] ]]
+            then
+                add-apt-repository -y ppa:ondrej/php
+            else
+                apt update
+            fi
             apt install -y php8.0-cli php8.0-bcmath php8.0-bz2 php8.0-curl php8.0-dev php8.0-gd php8.0-intl php8.0-json php8.0-ldap php8.0-mbstring php8.0-opcache php8.0-readline php8.0-sqlite3 php8.0-tidy php8.0-xml php8.0-xsl php8.0-zip ;
         fi
     ');
