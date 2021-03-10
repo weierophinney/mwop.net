@@ -173,11 +173,12 @@ task('install:system_dependencies', [
 
 desc('Reload Caddy with revised configuration');
 task('caddy:reload', function () {
-    cd('{{release_path}}');
-    run('
-        cp etc/caddy/mwop.net.caddy /etc/caddy/conf.d/ ;
-        systemctl restart caddy ;
-    ');
+    within('{{release_path}}', function () {
+        run('
+            cp etc/caddy/mwop.net.caddy /etc/caddy/conf.d/ ;
+            systemctl restart caddy ;
+        ');
+    });
 });
 
 desc('Reload Caddy with previous configuration');
@@ -185,11 +186,12 @@ task('caddy:reload_previous', function () {
     if (! has('previous_release')) {
         return;
     }
-    cd('{{previous_release}}');
-    run('
-        cp etc/caddy/mwop.net.caddy /etc/caddy/conf.d/ ;
-        systemctl restart caddy ;
-    ');
+    within('{{previous_release}}', function () {
+        run('
+            cp etc/caddy/mwop.net.caddy /etc/caddy/conf.d/ ;
+            systemctl restart caddy ;
+        ');
+    });
 });
 
 desc('Stop swoole instance');
