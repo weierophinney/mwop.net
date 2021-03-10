@@ -285,10 +285,18 @@ task('build:assets', function () {
 });
 
 desc('Build blog');
-task('build:blog', 'sudo -u www-data /bin/bash -c "{{bin/composer}} build:blog"');
+task('build:blog', function () {
+    run('sudo -u www-data /bin/bash -c "{{bin/php}} vendor/bin/laminas blog:seed-db"');
+    run('sudo -u www-data /bin/bash -c "{{bin/php}} vendor/bin/laminas blog:tag-cloud"');
+    run('sudo -u www-data /bin/bash -c "{{bin/php}} vendor/bin/laminas blog:feed-generator"');
+    run('sudo -u www-data /bin/bash -c "{{bin/php}} vendor/bin/laminas blog:generate-search-data"');
+});
 
 desc('Build homepage');
-task('build:homepage', 'sudo -u www-data /bin/bash -c "{{bin/composer}} build:homepage"');
+task('build:homepage', function () {
+    run('sudo -u www-data /bin/bash -c "{{bin/php}} vendor/bin/laminas github:fetch-activity"');
+    run('sudo -u www-data /bin/bash -c "{{bin/php}} vendor/bin/laminas github:homepage-feeds"');
+});
 
 desc('Fetch instagram feed');
 task('build:instagram', 'sudo -u www-data /bin/bash -c "{{bin/php}} vendor/bin/laminas instagram-feeds"');
