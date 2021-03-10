@@ -35,17 +35,15 @@ class DisplayPostHandler implements RequestHandlerInterface
             return $this->notFoundHandler->handle($request);
         }
 
-        // @var \Mwop\Blog\FetchBlogPostEvent $event
+        /** @var FetchBlogPostEvent $event */
         $event = $this->dispatcher->dispatch(new FetchBlogPostEvent($id));
 
-        // @var null|\Mwop\Blog\BlogPost $post
         $post = $event->blogPost();
 
         if (! $post) {
             return $this->notFoundHandler->handle($request);
         }
 
-        // @var \DateTimeInterface $lastModified
         $lastModified = $post->updated ?: $post->created;
 
         return new HtmlResponse(
