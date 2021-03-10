@@ -9,6 +9,7 @@ require 'recipe/common.php';
  */
 
 set('allow_anonymous_stats', false);
+set('bin/php', '/usr/bin/php8.0');
 
 // Project name
 set('application', 'mwop.net');
@@ -100,7 +101,6 @@ task('install:php', function () {
             add-apt-repository -y ppa:ondrej/php ;
             apt update ;
             apt install -y php8.0-cli php8.0-bcmath php8.0-bz2 php8.0-curl php8.0-dev php8.0-gd php8.0-intl php8.0-json php8.0-ldap php8.0-mbstring php8.0-opcache php8.0-readline php8.0-sqlite3 php8.0-tidy php8.0-xml php8.0-xsl php8.0-zip ;
-            update-alternatives --set php /usr/bin/php8.0
         fi
     ');
 });
@@ -108,13 +108,13 @@ task('install:php', function () {
 desc('Install Swoole');
 task('install:swoole', function () {
     run('
-        php -m | grep -q swoole ;
-        if [ "$?" -ne "0" ];then
-            echo "Installing Swoole for the first time" ;
+        {{bin/php}} -m | grep -q swoole ;
+        if [[ "$?" != "0" || "$({{bin/php}} -r "echo swoole_version();")" != "4.6.3" ]];then
+            echo "Installing Swoole 4.6.3 for the first time" ;
             mkdir -p /tmp/swoole ;
             cd /tmp/swoole && curl -s -o swoole.tgz https://pecl.php.net/get/swoole-4.6.3.tgz ;
             cd /tmp/swoole && tar xzvf swoole.tgz --strip-components=1 ;
-            cd /tmp/swoole && phpize ;
+            cd /tmp/swoole && phpize8.0 ;
             cd /tmp/swoole && ./configure --enable-swoole --enable-http2 --enable-sockets --enable-openssl --enable-swoole-json --enable-swoole-curl ;
             cd /tmp/swoole && make ;
             cd /tmp/swoole && make install ;
@@ -137,6 +137,10 @@ task('install:composer', function () {
     ');
 });
 after('install:swoole', 'install:composer');
+set(
+    'composer_options',
+    '--verbose --prefer-dist --no-progress --no-interaction --no-dev --optimize-autoloader --ignore-platform-req=php'
+);
 
 desc('Install Caddy');
 task('install:caddy', function () {
@@ -226,14 +230,14 @@ desc('Prepare application configuration');
 task('deploy:app_config', 'mv config/autoload/local.php.dist config/autoload/local.php');
 
 desc('Update php.ini');
-task('deploy:install_php_ini', 'cp etc/php/mwop.ini /etc/php/7.4/cli/conf.d');
+task('deploy:install_php_ini', 'cp etc/php/mwop.ini /etc/php/8.0/cli/conf.d');
 
 desc('Rollback php.ini');
 task('rollback:php_ini', function () {
     if (! has('previous_release')) {
         return;
     }
-    run('cp {{previous_release}}/etc/php/mwop.ini /etc/php/7.4/cli/conf.d');
+    run('cp {{previous_release}}/etc/php/mwop.ini /etc/php/8.0/cli/conf.d');
 });
 
 desc('Install redis configuration');
@@ -292,16 +296,16 @@ task('build:assets', function () {
 });
 
 desc('Build blog');
-task('build:blog', 'sudo -u www-data composer build:blog');
+task('build:blog', 'sudo -u www-data {{bin/composer}} build:blog');
 
 desc('Build homepage');
-task('build:homepage', 'sudo -u www-data composer build:homepage');
+task('build:homepage', 'sudo -u www-data {{bin/composer}} build:homepage');
 
 desc('Fetch instagram feed');
-task('build:instagram', 'sudo -u www-data php vendor/bin/laminas instagram-feeds');
+task('build:instagram', 'sudo -u www-data {{bin/php}} vendor/bin/laminas instagram-feeds');
 
 desc('Fetch comics');
-task('build:comics', 'sudo -u www-data php vendor/bin/phly-comic.php fetch-all -p --output data/comics.phtml --exclude dilbert --exclude reptilis-rex --exclude nih');
+task('build:comics', 'sudo -u www-data {{bin/php}} vendor/bin/phly-comic.php fetch-all -p --output data/comics.phtml --exclude dilbert --exclude reptilis-rex --exclude nih');
 
 // Copy asset templates
 desc('Deploy assets');

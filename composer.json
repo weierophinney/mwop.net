@@ -12,7 +12,7 @@
         }
     ],
     "require": {
-        "php": "^7.4",
+        "php": "~8.0.0",
         "cache/namespaced-cache": "^1.0",
         "cache/predis-adapter": "^1.0",
         "dflydev/fig-cookies": "^2.0",
@@ -65,7 +65,7 @@
         "mezzio/mezzio-tooling": "^1.0",
         "laminas/laminas-development-mode": "^3.1"
     },
-    "provides": {
+    "provide": {
         "laminas/laminas-zendframework-bridge": "*"
     },
     "autoload": {
@@ -115,14 +115,9 @@
         "development:disable": "laminas-development-mode disable",
         "development:enable": "laminas-development-mode enable",
         "development:status": "laminas-development-mode status",
-        "docker:site": [
-            "@build:blog",
-            "@build:homepage",
-            "phly-comic.php fetch-all --output data/comics.phtml --exclude dilbert --exclude reptilis-rex --exclude nih"
-        ],
         "npm": "npm install --no-save",
         "serve": "docker-compose up",
         "test": "phpunit --colors=always",
-        "expressive": "expressive"
+        "mezzio": "mezzio"
     }
 }

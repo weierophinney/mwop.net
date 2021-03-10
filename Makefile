@@ -2,7 +2,7 @@
 
 .PHONY : all assets
 
-all: asssets
+all: assets
 
 assets:
 	@echo "Building assets"
