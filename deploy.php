@@ -125,7 +125,7 @@ task('install:composer', function () {
 after('install:swoole', 'install:composer');
 set(
     'composer_options',
-    '--verbose --prefer-dist --no-progress --no-interaction --no-dev --optimize-autoloader --ignore-platform-req=php'
+    '{{composer_action}} --verbose --prefer-dist --no-progress --no-interaction --no-dev --optimize-autoloader --no-suggest --ignore-platform-req=php'
 );
 
 desc('Install Caddy');
