@@ -19,7 +19,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 use function array_map;
 use function file_put_contents;
-use function get_class;
 use function getcwd;
 use function implode;
 use function realpath;
@@ -77,7 +76,7 @@ class InstagramFeed extends Command
         } catch (Exception $e) {
             $io->error(sprintf(
                 'Error fetching Instagram feed: (%s) %s',
-                get_class($e),
+                $e::class,
                 $e->getMessage()
             ));
             return 1;

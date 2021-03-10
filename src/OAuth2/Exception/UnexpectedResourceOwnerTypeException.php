@@ -12,7 +12,6 @@ namespace Mwop\OAuth2\Exception;
 use League\OAuth2\Client\Provider\ResourceOwnerInterface;
 use RuntimeException;
 
-use function get_class;
 use function sprintf;
 
 final class UnexpectedResourceOwnerTypeException extends RuntimeException
@@ -23,7 +22,7 @@ final class UnexpectedResourceOwnerTypeException extends RuntimeException
             'Unable to obtain a username from authenticated user; received unknown %s type "%s", '
             . 'which does not implement either a getEmail() or getNickname() method.',
             ResourceOwnerInterface::class,
-            get_class($resourceOwner)
+            $resourceOwner::class
         ));
     }
 }

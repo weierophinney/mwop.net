@@ -25,11 +25,9 @@ use Throwable;
 
 use function file_get_contents;
 use function file_put_contents;
-use function get_class;
 use function getcwd;
-use function gettype;
+use function get_debug_type;
 use function is_callable;
-use function is_object;
 use function preg_match;
 use function printf;
 use function realpath;
@@ -42,27 +40,27 @@ class FeedAggregator extends Command
 
     /** @var string */
     private $configFormat = <<<EOC
-<?php
-return [
-%s
-];
-
-EOC;
+        <?php
+        return [
+        %s
+        ];
+        
+        EOC;
 
     /** @var FeedCollection */
     private $feeds;
 
     /** @var string */
     private $itemFormat = <<<EOF
-    [
-        'title'    => '%s',
-        'link'     => '%s',
-        'favicon'  => '%s',
-        'sitename' => '%s',
-        'siteurl'  => '%s',
-    ],
-
-EOF;
+            [
+                'title'    => '%s',
+                'link'     => '%s',
+                'favicon'  => '%s',
+                'sitename' => '%s',
+                'siteurl'  => '%s',
+            ],
+        
+        EOF;
 
     /** @var int */
     private $status;
@@ -152,7 +150,7 @@ EOF;
         $filters     = $feedInfo['filters'] ?? [];
         $normalizers = $feedInfo['normalizers'] ?? [];
         $each        = $feedInfo['each'] ?? function (mixed $item): void {
-            printf("- %s\n", is_object($item) ? get_class($item) : gettype($item));
+            printf("- %s\n", get_debug_type($item));
         };
 
         $io->text(sprintf('<info>Retrieving %s</>', $feedUrl));
