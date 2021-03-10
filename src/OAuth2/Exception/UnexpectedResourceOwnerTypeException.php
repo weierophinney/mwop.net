@@ -17,9 +17,9 @@ use function sprintf;
 
 class UnexpectedResourceOwnerTypeException extends RuntimeException
 {
-    public static function forResourceOwner(ResourceOwnerInterface $resourceOwner): self
+    public static function forResourceOwner(ResourceOwnerInterface $resourceOwner): static
     {
-        return new self(sprintf(
+        return new static(sprintf(
             'Unable to obtain a username from authenticated user; received unknown %s type "%s", '
             . 'which does not implement either a getEmail() or getNickname() method.',
             ResourceOwnerInterface::class,

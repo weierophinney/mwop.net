@@ -16,9 +16,9 @@ use function sprintf;
 
 class UnsupportedProviderException extends RuntimeException implements ExceptionInterface
 {
-    public static function forProvider(string $provider, array $knownProviders): self
+    public static function forProvider(string $provider, array $knownProviders): static
     {
-        return new self(sprintf(
+        return new static(sprintf(
             'Unsupported OAuth2 provider "%s"; must be one of: %s',
             $provider,
             implode(', ', $knownProviders)

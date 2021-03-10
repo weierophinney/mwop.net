@@ -15,9 +15,9 @@ use function sprintf;
 
 class MissingProviderConfigException extends RuntimeException implements ExceptionInterface
 {
-    public static function forProvider(string $provider): self
+    public static function forProvider(string $provider): static
     {
-        return new self(sprintf(
+        return new static(sprintf(
             'No configuration found for OAuth2 provider "%s"; please provide it via '
             . 'the config key oauth2clientauthentication.%s',
             $provider,
