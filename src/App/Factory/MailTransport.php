@@ -24,28 +24,30 @@ class MailTransport
         $config = $container->get('config-mail.transport');
         $class  = $config['class'] ?? SMTPTransport::class;
 
-        switch ($class) {
-            case AWSTransport::class:
-                $transport = new $class($config['username'], $config['password']);
-                break;
-            case SMTPTransport::class:
-                $transport = $config['ssl']
-                    ? new $class($config['host'], $config['port'], $config['ssl'])
-                    : new $class($config['host'], $config['port']);
-
-                if ($config['username']) {
-                    $transport->setUsername($config['username']);
-                    $transport->setAuthMode('login');
-                }
-
-                if ($config['password']) {
-                    $transport->setPassword($config['password']);
-                }
-                break;
-            default:
-                throw new RuntimeException(sprintf('Unknown mail transport class %s', $class));
-        }
+        $transport = match($class) {
+            AWSTransport::class  => new $class($config['username'], $config['password']),
+            SMTPTransport::class => $this->smtpTransportFactory($config),
+            default              => throw new RuntimeException(sprintf('Unknown mail transport class %s', $class)),
+        };
 
         return new Mailer($transport);
+    }
+
+    private function smtpTransportFactory(array $config): SMTPTransport
+    {
+        $transport = $config['ssl']
+            ? new $class($config['host'], $config['port'], $config['ssl'])
+            : new $class($config['host'], $config['port']);
+
+        if ($config['username']) {
+            $transport->setUsername($config['username']);
+            $transport->setAuthMode('login');
+        }
+
+        if ($config['password']) {
+            $transport->setPassword($config['password']);
+        }
+
+        return $transport;
     }
 }
