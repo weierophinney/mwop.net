@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Mwop\Github;
 
+use Laminas\Feed\Reader\Entry\EntryInterface;
 use Laminas\Feed\Reader\Http\ClientInterface as FeedReaderHttpClientInterface;
 use Laminas\Feed\Reader\Reader as FeedReader;
 use Laminas\Feed\Reader\StandaloneExtensionManager;
@@ -28,7 +29,7 @@ class AtomReaderFactory
 
         $reader = new AtomReader($config['user']);
         $reader->setLimit($config['limit']);
-        $reader->addFilter(function ($entry) {
+        $reader->addFilter(function (EntryInterface $entry): bool {
             if (false !== strpos($entry->getLink(), 'weierophinney/mwop.net')) {
                 return false;
             }

@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Mwop\Console;
 
+use ArrayAccess;
 use Exception;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -101,7 +102,7 @@ class InstagramFeed extends Command
     private function generateContent(array $feed): string
     {
         $entries = implode('', array_map(
-            function ($entry) {
+            function (array|ArrayAccess $entry): string {
                 return sprintf($this->configItemFormat, $entry['image_url'], $entry['post_url']);
             },
             $feed

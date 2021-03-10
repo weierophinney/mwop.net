@@ -11,6 +11,7 @@ namespace Mwop\Blog\Console;
 
 use Laminas\Diactoros\Uri;
 use Laminas\Feed\Writer\Feed as FeedWriter;
+use Laminas\Tag\Item;
 use Mezzio\Helper\ServerUrlHelper;
 use Mezzio\Router\RouterInterface;
 use Mezzio\Template\TemplateRendererInterface;
@@ -103,7 +104,7 @@ class FeedGenerator extends Command
         );
 
         $cloud = $this->mapper->fetchTagCloud();
-        $tags  = array_map(function ($item) {
+        $tags  = array_map(function (Item $item): string {
             return $item->getTitle();
         }, iterator_to_array($cloud->getItemList()));
 

@@ -99,7 +99,7 @@ class Fetch extends Command
     private function createContentFromData(array $data, string $template): string
     {
         $escaper = new Escaper();
-        $strings = array_map(function ($link) use ($template, $escaper) {
+        $strings = array_map(function (array $link) use ($template, $escaper): string {
             return sprintf(
                 $template,
                 $link['link'],

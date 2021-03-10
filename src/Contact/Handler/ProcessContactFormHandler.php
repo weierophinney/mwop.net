@@ -98,7 +98,7 @@ class ProcessContactFormHandler implements RequestHandlerInterface
         );
     }
 
-    private function sendMessage(array $data)
+    private function sendMessage(array $data): void
     {
         $message = new SendContactMessageEvent(
             $data['from'],

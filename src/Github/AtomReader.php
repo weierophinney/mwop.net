@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Mwop\Github;
 
+use Laminas\Feed\Reader\Entry\EntryInterface;
 use Laminas\Feed\Reader\Reader as FeedReader;
 
 use function sprintf;
@@ -43,7 +44,7 @@ class AtomReader
         $entries = AtomCollection::make($feed)
             ->filterChain($this->filters)
             ->slice(0, $this->limit)
-            ->map(function ($entry) {
+            ->map(function (EntryInterface $entry): array {
                 return [
                     'title' => $entry->getTitle(),
                     'link'  => $entry->getLink(),

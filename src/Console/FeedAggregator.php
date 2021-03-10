@@ -9,9 +9,11 @@ declare(strict_types=1);
 
 namespace Mwop\Console;
 
+use ArrayAccess;
 use Exception;
 use Http\Discovery\HttpClientDiscovery;
 use Http\Discovery\MessageFactoryDiscovery;
+use Laminas\Feed\Reader\Entry\EntryInterface;
 use Laminas\Feed\Reader\Feed\FeedInterface;
 use Laminas\Feed\Reader\Reader as FeedReader;
 use Symfony\Component\Console\Command\Command;
@@ -106,7 +108,7 @@ EOF;
     private function getEntries(SymfonyStyle $io): FeedCollection
     {
         return $this->feeds
-            ->reduce(function ($entries, $feedInfo) use ($io) {
+            ->reduce(function (FeedCollection $entries, array $feedInfo) use ($io): FeedCollection {
                 return $entries->merge($this->marshalEntries($feedInfo, $io));
             }, FeedCollection::make([]))
             ->sortByDesc('date-created')
@@ -127,7 +129,7 @@ EOF;
     {
         return sprintf(
             $this->configFormat,
-            $entries->reduce(function ($string, $entry) {
+            $entries->reduce(function (string $string, array|ArrayAccess $entry) {
                 return $string . sprintf(
                     $this->itemFormat,
                     $entry['title'],
@@ -148,7 +150,7 @@ EOF;
         $siteUrl     = $feedInfo['siteurl'] ?? '#';
         $filters     = $feedInfo['filters'] ?? [];
         $normalizers = $feedInfo['normalizers'] ?? [];
-        $each        = $feedInfo['each'] ?? function ($item) {
+        $each        = $feedInfo['each'] ?? function (mixed $item): void {
             printf("- %s\n", is_object($item) ? get_class($item) : gettype($item));
         };
 
@@ -170,7 +172,7 @@ EOF;
         $entries = FeedCollection::make($feed)
             ->filterChain($filters)
             ->each($each)
-            ->map(function ($entry) use ($logo, $siteName, $siteUrl) {
+            ->map(function (EntryInterface $entry) use ($logo, $siteName, $siteUrl): array {
                 return [
                     'title'        => $entry->getTitle(),
                     'link'         => $entry->getLink(),

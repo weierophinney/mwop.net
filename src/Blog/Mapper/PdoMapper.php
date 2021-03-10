@@ -77,11 +77,11 @@ class PdoMapper implements MapperInterface
         $select = $this->pdo->prepare('SELECT tags FROM posts WHERE tags IS NOT NULL AND tags != ""');
         $select->execute();
 
-        $tagsByRow = array_map(function ($value) {
+        $tagsByRow = array_map(function (string $value): array {
             return explode('|', trim($value, '|'));
         }, $select->fetchAll(PDO::FETCH_COLUMN));
 
-        $options['tags'] = array_reduce($tagsByRow, function ($carry, $item) use ($urlTemplate) {
+        $options['tags'] = array_reduce($tagsByRow, function (array $carry, array $item) use ($urlTemplate): array {
             foreach ($item as $tag) {
                 if (! isset($carry[$tag])) {
                     $carry[$tag] = [

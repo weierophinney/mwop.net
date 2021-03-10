@@ -24,7 +24,7 @@ class FeedCollection extends Collection
     public function filterChain(array $filters): self
     {
         $filters = Collection::make($filters);
-        return $this->filter(function ($item) use ($filters) {
+        return $this->filter(function (mixed $item) use ($filters): bool {
             return $filters
                 ->reduce(function ($keep, callable $filter) use ($item) {
                     if (! $keep) {

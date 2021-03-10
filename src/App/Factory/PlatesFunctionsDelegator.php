@@ -52,7 +52,7 @@ class PlatesFunctionsDelegator implements ExtensionInterface
 
     public function ampifyContent(string $markup): string
     {
-        return preg_replace_callback('#(<img)([^>]+>)#', function (array $matches) {
+        return preg_replace_callback('#(<img)([^>]+>)#', function (array $matches): string {
             $attributes = preg_replace('#\s*/>$#', '>', $matches[2]);
             if (false === strstr($attributes, 'width=')) {
                 $attributes = ' width="400" ' . $attributes;
@@ -81,7 +81,7 @@ class PlatesFunctionsDelegator implements ExtensionInterface
 
     public function processTags(array $tags): array
     {
-        return array_map(function ($tag) {
+        return array_map(function (string $tag): object {
             return (object) [
                 'name' => $this->template->e($tag),
                 'link' => $this->template->url('blog.tag', ['tag' => $tag]),

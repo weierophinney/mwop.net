@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Mwop\Blog\Handler;
 
+use ArrayAccess;
 use Laminas\Diactoros\Response\JsonResponse;
 use Mezzio\Helper\UrlHelper;
 use Mwop\Blog\Mapper\MapperInterface;
@@ -37,7 +38,7 @@ class SearchHandler implements RequestHandlerInterface
             return new JsonResponse([]);
         }
 
-        $results = array_map(function ($row) {
+        $results = array_map(function (array|ArrayAccess $row): array {
             return [
                 'link'  => $this->urlHelper->generate('blog.post', ['id' => $row['id']]),
                 'title' => $row['title'],
