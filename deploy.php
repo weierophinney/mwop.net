@@ -10,6 +10,7 @@ require 'recipe/common.php';
 
 set('allow_anonymous_stats', false);
 set('bin/php', '/usr/bin/php8.0');
+set('bin/composer', '{{bin/php}} /usr/local/bin/composer');
 
 // Project name
 set('application', 'mwop.net');
