@@ -49,8 +49,7 @@ host('mwop.net')
 desc('Install util packages');
 task('install:utils', function () {
     run('
-        which curl && which unzip ;
-        if [ "$?" -ne "0" ];then
+        if [[ ! -x /usr/bin/curl || ! -x /usr/bin/unzip ]];then
             apt update -y ;
             apt install -y curl unzip
         fi
@@ -60,8 +59,7 @@ task('install:utils', function () {
 desc('Install cron');
 task('install:cron', function () {
     run('
-        dpkg --no-pager -l cron ;
-        if [ "$?" -ne "0" ];then
+        if [[ ! "$(dpkg -W -f=\'${Status}\' cron 2>/dev/null)" =~ "ok installed" ]];then
             echo "Installing cron for the first time" ;
              apt-get install -y cron
         fi
@@ -71,8 +69,7 @@ task('install:cron', function () {
 desc('Install supervisor');
 task('install:supervisor', function () {
     run('
-        dpkg --no-pager -l supervisor ;
-        if [ "$?" -ne "0" ];then
+        if [[ ! "$(dpkg -W -f=\'${Status}\' supervisor 2>/dev/null)" =~ "ok installed" ]];then
             echo "Installing supervisor for the first time" ;
              apt-get install -y supervisor
         fi
@@ -82,8 +79,7 @@ task('install:supervisor', function () {
 desc('Install redis');
 task('install:redis', function () {
     run('
-        dpkg --no-pager -l redis-server ;
-        if [ "$?" -ne "0" ];then
+        if [[ ! "$(dpkg -W -f=\'${Status}\' redis-server 2>/dev/null)" =~ "ok installed" ]];then
             echo "Installing Redis for the first time" ;
              apt-get install -y redis-server
         fi
@@ -95,8 +91,7 @@ task('install:redis', function () {
 desc('Install PHP');
 task('install:php', function () {
     run('
-        dpkg --no-pager -l php8.0-cli ;
-        if [ "$?" -ne "0" ];then
+        if [[ ! "$(dpkg -W -f=\'${Status}\' php8.0-cli 2>/dev/null)" =~ "ok installed" ]];then
             echo "Installing PHP 8.0 for the first time" ;
             add-apt-repository -y ppa:ondrej/php ;
             apt update ;
@@ -108,8 +103,7 @@ task('install:php', function () {
 desc('Install Swoole');
 task('install:swoole', function () {
     run('
-        {{bin/php}} -m | grep -q swoole ;
-        if [[ "$?" != "0" || "$({{bin/php}} -r "echo swoole_version();")" != "4.6.3" ]];then
+        if [[ ! "$({{bin/php}} -m)" =~ "swoole" || "$({{bin/php}} -r "echo swoole_version();")" != "4.6.3" ]];then
             echo "Installing Swoole 4.6.3 for the first time" ;
             mkdir -p /tmp/swoole ;
             cd /tmp/swoole && curl -s -o swoole.tgz https://pecl.php.net/get/swoole-4.6.3.tgz ;
@@ -128,8 +122,7 @@ after('install:php', 'install:swoole');
 desc('Install Composer');
 task('install:composer', function () {
     run('
-        which composer ;
-        if [[ "$?" != "0" || ! "$(composer --no-ansi --version)" =~ "^Composer version 2" ]];then
+        if [[ ! -x /usr/local/bin/composer || ! "$(composer --no-ansi --version)" =~ "^Composer version 2" ]];then
             echo "Installing Composer for the first time" ;
             curl https://getcomposer.org/composer.phar --output /usr/local/bin/composer ;
             chmod 755 /usr/local/bin/composer
@@ -145,8 +138,7 @@ set(
 desc('Install Caddy');
 task('install:caddy', function () {
     run('
-        dpkg --no-pager -l caddy ;
-        if [ "$?" -ne "0" ];then
+        if [[ ! "$(dpkg -W -f=\'${Status}\' caddy 2>/dev/null)" =~ "ok installed" ]];then
             echo "Installing Caddy for the first time" ;
             echo "deb [trusted=yes] https://apt.fury.io/caddy/ /" > /etc/apt/sources.list.d/caddy-fury.list ;
             apt update ;
@@ -197,8 +189,7 @@ task('caddy:reload_previous', function () {
 desc('Stop swoole instance');
 task('swoole:stop', function () {
     run('
-        ps ax | grep -v grep | grep -q supervisord ;
-        if [ "$?" == "0" ];then
+        if [[ "$(ps ax)" =~ "supervisord" ]];then
             systemctl stop supervisor ;
         fi
     ');
@@ -207,8 +198,7 @@ task('swoole:stop', function () {
 desc('Start swoole instance');
 task('swoole:start', function () {
     run('
-        ps ax | grep -v grep | grep -q supervisord ;
-        if [ "$?" != "0" ];then
+        if [[ ! "$(ps ax)" =~ "supervisord" ]];then
             systemctl start supervisor ;
         else
             systemctl stop supervisor ;
