@@ -298,7 +298,7 @@ desc('Build homepage');
 task('build:homepage', function () {
     within('{{release_path}}', function () {
         run('sudo -u www-data /bin/bash -c "{{bin/php}} vendor/bin/laminas github:fetch-activity"');
-        run('sudo -u www-data /bin/bash -c "{{bin/php}} vendor/bin/laminas github:homepage-feeds"');
+        run('sudo -u www-data /bin/bash -c "{{bin/php}} vendor/bin/laminas homepage-feeds"');
     });
 });
 
