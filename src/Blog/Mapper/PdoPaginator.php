@@ -43,11 +43,7 @@ class PdoPaginator implements AdapterInterface
             ':limit'  => $itemCountPerPage,
         ]);
 
-        $result = $this->select->execute($params);
-
-        if (! $result) {
-            throw new RuntimeException('Failed to fetch items from database');
-        }
+        $result = $this->select->execute($params) ?? throw new RuntimeException('Failed to fetch items from database');
 
         return array_map(
             Closure::fromCallable([$this, 'createBlogPostFromDataArray']),
@@ -57,10 +53,9 @@ class PdoPaginator implements AdapterInterface
 
     public function count(): int
     {
-        $result = $this->count->execute($this->params);
-        if (! $result) {
-            throw new RuntimeException('Failed to fetch count from database');
-        }
+        $result = $this->count->execute($this->params) ?? throw new RuntimeException(
+            'Failed to fetch count from database'
+        );
         return (int) $this->count->fetchColumn();
     }
 }

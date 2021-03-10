@@ -45,15 +45,12 @@ trait CreateBlogPostFromDataArrayTrait
 
     private function createBlogPostFromDataArray(array $post): BlogPost
     {
-        if (! isset($post['path'])) {
-            throw new RuntimeException(sprintf(
-                'Blog data provided does not include a "path" element; cannot create %s instance',
-                BlogPost::class
-            ));
-        }
-
+        $path     = $post['path'] ?? throw new RuntimeException(sprintf(
+            'Blog data provided does not include a "path" element; cannot create %s instance',
+            BlogPost::class
+        ));
         $parser   = $this->getParser();
-        $document = $parser->parse(file_get_contents($post['path']));
+        $document = $parser->parse(file_get_contents($path));
         $post     = $document->getYAML();
         $parts    = explode($this->postDelimiter, $document->getContent(), 2);
         $created  = $this->createDateTimeFromString($post['created']);
