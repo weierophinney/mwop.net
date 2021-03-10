@@ -312,7 +312,7 @@ task('build:instagram', function () {
 desc('Fetch comics');
 task('build:comics', function () {
     within('{{release_path}}', function () {
-        run('sudo -u www-data /bin/bash -c "{{bin/php}} vendor/bin/phly-comic.php fetch-all -p --output data/comics.phtml --exclude dilbert --exclude reptilis-rex --exclude nih"');
+        run('sudo -u www-data /bin/bash -c "{{bin/php}} vendor/bin/phly-comic.php fetch-all -p --output data/comics.phtml --exclude dilbert --exclude reptilis-rex --exclude nih --exclude phd --exclude g-g --exclude bloom-county --exclude listen-tome"');
     });
 });
 
