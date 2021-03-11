@@ -2,6 +2,7 @@
   "name": "mwop.net",
   "main": "Gruntfile.js",
   "dependencies": {
+    "@forevolve/bootstrap-dark": "^1.0.0",
     "autocomplete.js": "^0.32.0",
     "bootstrap": "^4.5.1",
     "bootswatch": "^4.5.1",

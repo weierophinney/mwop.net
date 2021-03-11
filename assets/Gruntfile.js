@@ -18,7 +18,8 @@ module.exports = function (grunt) {
           sourceMap: false
         },
         files: {
-          'build/css/bootstrap.css': 'css/bootstrap.scss'
+          'build/css/bootstrap.css': 'css/bootstrap.scss',
+          'build/css/toggle-bootstrap-print.css': 'css/toggle-bootstrap-print.scss'
         }
       }
     },
@@ -37,8 +38,6 @@ module.exports = function (grunt) {
         src: [
           'build/css/bootstrap.css',
           'node_modules/prism-solarized-dark/prism-solarizeddark.css',
-          'css/site.css',
-          'css/blog.css'
         ],
         dest: 'build/css/styles.css'
       }
@@ -50,7 +49,8 @@ module.exports = function (grunt) {
       },
       target: {
         files: {
-          'build/css/styles.min.css': ['build/css/styles.css']
+          'build/css/styles.min.css': ['build/css/styles.css'],
+          'build/css/print.min.css': ['build/css/toggle-bootstrap-print.css']
         }
       }
     },
