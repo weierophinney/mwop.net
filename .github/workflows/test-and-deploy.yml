@@ -1,0 +1,55 @@
+name: "Test and Deploy"
+
+on:
+  push:
+    branches:
+      - "main"
+
+jobs:
+  run:
+    runs-on: ubuntu-20.04
+    env:
+      extensions: bcmath, bz2, curl, gd, intl, ldap, mbstring, opcache, readline, sqlite3, tidy, xml, xsl, zip, swoole-4.6.3
+      ini-values: memory_limit=-1
+      key: swoole-4.6.3
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup cache
+        id: extcache
+        uses: shivammathur/cache-extensions@v1
+        with:
+          php-version: "8.0"
+          extensions: ${{ env.extensions }}
+          key: ${{ env.key }}
+
+      - name: Cache extensions
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.extcache.outputs.dir }}
+          key: ${{ steps.extcache.outputs.key }}
+          restore-key: ${{ steps.extcache.outputs.key }}
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        env:
+          COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          php-version: "8.0"
+          extensions: ${{ env.extensions }}
+          ini-values: ${{ env.ini-values }}
+          coverage: none
+          tools: cs2pr, composer:v2
+
+      - name: Setup PHPUnit problem matchers
+        run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+
+      - name: Install dependencies
+        run: composer install --ignore-platform-req=php
+
+      - name: Run tests
+        run: ./vendor/bin/phpunit
+
+      - name: Run CS checks
+        run: ./vendor/bin/phpcs
