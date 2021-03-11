@@ -11,7 +11,6 @@ use Dotenv\Dotenv;
 use Laminas\ConfigAggregator\ArrayProvider;
 use Laminas\ConfigAggregator\ConfigAggregator;
 use Laminas\ConfigAggregator\PhpFileProvider;
-use Laminas\Diactoros\ConfigProvider;
 
 $dotEnvFile = dirname(__DIR__) . '/.env';
 if (file_exists($dotEnvFile)) {
@@ -25,7 +24,7 @@ $cacheConfig = [
 ];
 
 $aggregator = new ConfigAggregator([
-    ConfigProvider::class,
+    Laminas\Diactoros\ConfigProvider::class,
     Phly\EventDispatcher\ConfigProvider::class,
     Mezzio\Authentication\ConfigProvider::class,
     Mezzio\Session\Cache\ConfigProvider::class,
