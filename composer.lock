@@ -4197,16 +4197,16 @@
         },
         {
             "name": "phly/phly-comic",
-            "version": "2.1.3",
+            "version": "2.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/weierophinney/PhlyComic.git",
-                "reference": "852eb05e836f2d6ff154d70794715b9e174d92c1"
+                "reference": "d6cef18291807168d9865cfdef12bbdeb4651dd6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/weierophinney/PhlyComic/zipball/852eb05e836f2d6ff154d70794715b9e174d92c1",
-                "reference": "852eb05e836f2d6ff154d70794715b9e174d92c1",
+                "url": "https://api.github.com/repos/weierophinney/PhlyComic/zipball/d6cef18291807168d9865cfdef12bbdeb4651dd6",
+                "reference": "d6cef18291807168d9865cfdef12bbdeb4651dd6",
                 "shasum": ""
             },
             "require": {
@@ -4260,7 +4260,7 @@
                     "url": "https://funding.communitybridge.org/projects/laminas-project"
                 }
             ],
-            "time": "2021-03-11T14:31:39+00:00"
+            "time": "2021-03-11T19:13:00+00:00"
         },
         {
             "name": "phly/phly-configfactory",
