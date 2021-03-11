@@ -9,7 +9,7 @@ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 0    0,6,12,18            *   *   * www-data cd %release_path% ; php8.0 vendor/bin/laminas homepage-feeds | /usr/bin/logger -t MWOPNET
 
 # Fetch comics
-0    1,4,7,10,13,16,19,22 *   *   * www-data cd %release_path% ; php8.0 vendor/bin/phly-comic.php fetch-all -p --output data/comics.phtml --exclude nih --exclude reptilis-rex --exclude dilbert | /usr/bin/logger -t MWOPNET
+0    1,4,7,10,13,16,19,22 *   *   * www-data cd %release_path% ; php8.0 vendor/bin/phly-comic.php fetch-all -p --output data/comics.phtml --exclude nih --exclude reptilis-rex --exclude dilbert --exclude phd --exclude g-g --exclude bloom-county --exclude listen-tome | /usr/bin/logger -t MWOPNET
 
 # Update instagram feed
 30   4,10,16,22           *   *   * www-data cd %release_path% ; php8.0 vendor/bin/laminas instagram-feeds | /usr/bin/logger -t MWOPNET
