@@ -25,8 +25,8 @@ use Throwable;
 
 use function file_get_contents;
 use function file_put_contents;
-use function getcwd;
 use function get_debug_type;
+use function getcwd;
 use function is_callable;
 use function preg_match;
 use function printf;

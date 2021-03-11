@@ -17,6 +17,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class FetchComicsCommand extends Command
 {
+    /** @var string */
     protected static $defaultName = 'comics:for-site';
 
     protected function configure(): void
@@ -32,7 +33,7 @@ class FetchComicsCommand extends Command
 
         return $fetchAllCommand->run(
             new ArrayInput([
-                '--exclude' => [
+                '--exclude'   => [
                     'bloom-county',
                     'dilbert',
                     'g-g',

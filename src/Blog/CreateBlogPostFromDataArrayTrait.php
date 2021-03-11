@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:disable Squiz.PHP.NonExecutableCode.Unreachable
 
 /**
  * @copyright Copyright (c) Matthew Weier O'Phinney

@@ -1,4 +1,4 @@
-<?php // phpcs:disable Generic.WhiteSpace.ScopeIndent.IncorrectExact
+<?php // phpcs:disable Generic.WhiteSpace.ScopeIndent.IncorrectExact,Squiz.PHP.NonExecutableCode.Unreachable
 
 /**
  * @copyright Copyright (c) Matthew Weier O'Phinney
