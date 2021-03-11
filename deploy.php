@@ -20,7 +20,7 @@ set('repository', 'git://github.com/weierophinney/mwop.net.git');
 set('branch', 'main');
 
 // [Optional] Allocate tty for git clone. Default value is false.
-set('git_tty', true);
+// set('git_tty', true);
 
 // Shared files/dirs between deploys
 set('shared_files', []);
