@@ -41,6 +41,7 @@ class FetchComicsCommand extends Command
                     'nih',
                     'phd',
                     'reptilis-rex',
+                    'uf',
                 ],
                 '--output'    => 'data/comics.phtml',
                 '--processes' => 5,
