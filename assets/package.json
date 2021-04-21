@@ -21,6 +21,7 @@
     "mkdirp": "^1.0.4",
     "node-sass": "^4.14.1",
     "popper.js": "^1.16.1",
-    "prism-solarized-dark": "^1.0.1"
+    "prism-solarized-dark": "^1.0.1",
+    "y18n": "^4.0.1"
   }
 }
