@@ -58,7 +58,7 @@ return [
     ],
     'mail' => [
         'transport' => [
-            'class'    => \Swift_AWSTransport::class,
+            'class'    => \Swift_SmtpTransport::class,
             'host'     => $_ENV['MAIL_TRANSPORT_HOST'],
             'port'     => $_ENV['MAIL_TRANSPORT_PORT'],
             'ssl'      => 'tls',

@@ -19,7 +19,7 @@ use Mwop\Blog\Handler\DisplayPostHandler;
 use Phly\ConfigFactory\ConfigFactory;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
-use Swift_AWSTransport;
+use Swift_SmtpTransport;
 
 use function date;
 use function getcwd;
@@ -152,7 +152,7 @@ class ConfigProvider
     {
         return [
             'transport' => [
-                'class'    => Swift_AWSTransport::class,
+                'class'    => Swift_SmtpTransport::class,
                 'username' => '',
                 'password' => '',
             ],
