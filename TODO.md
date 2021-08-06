@@ -2,6 +2,10 @@
 
 ## Bugfixes
 
+- [ ] Instagram photos on home page do not show.
+  Issue is due to Instagram CORS rules.
+  May need to do something with Nextcloud to make this work.
+
 ## New features
 
 - [ ] Blog
