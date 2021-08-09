@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c31ff8bd6bd86ba0d041089a25c0e45b",
+    "content-hash": "e1ef909c766686f9f8a99a694268051e",
     "packages": [
         {
             "name": "cache/adapter-common",
@@ -1158,16 +1158,16 @@
         },
         {
             "name": "laminas/laminas-cli",
-            "version": "0.1.6",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-cli.git",
-                "reference": "b5f61716da4a80d0242e0bbbfad997160a15258c"
+                "reference": "875a174c161c84c84c43bdff1e10cfe4ecbda704"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-cli/zipball/b5f61716da4a80d0242e0bbbfad997160a15258c",
-                "reference": "b5f61716da4a80d0242e0bbbfad997160a15258c",
+                "url": "https://api.github.com/repos/laminas/laminas-cli/zipball/875a174c161c84c84c43bdff1e10cfe4ecbda704",
+                "reference": "875a174c161c84c84c43bdff1e10cfe4ecbda704",
                 "shasum": ""
             },
             "require": {
@@ -1183,6 +1183,7 @@
                 "laminas/laminas-coding-standard": "~2.0.0",
                 "laminas/laminas-mvc": "^3.1.1",
                 "laminas/laminas-servicemanager": "^3.4",
+                "mikey179/vfsstream": "2.0.x-dev",
                 "phpunit/phpunit": "^9.4.1",
                 "vimeo/psalm": "^4.4.1"
             },
@@ -1229,7 +1230,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2021-01-21T15:16:52+00:00"
+            "time": "2021-05-20T17:32:19+00:00"
         },
         {
             "name": "laminas/laminas-config-aggregator",
@@ -7438,77 +7439,6 @@
             "time": "2020-12-01T22:04:24+00:00"
         },
         {
-            "name": "laminas/laminas-composer-autoloading",
-            "version": "2.1.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/laminas/laminas-composer-autoloading.git",
-                "reference": "8f3589aea9e4b3db3ea92d092f9ce7aa3140eb53"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-composer-autoloading/zipball/8f3589aea9e4b3db3ea92d092f9ce7aa3140eb53",
-                "reference": "8f3589aea9e4b3db3ea92d092f9ce7aa3140eb53",
-                "shasum": ""
-            },
-            "require": {
-                "laminas/laminas-stdlib": "^3.1",
-                "laminas/laminas-zendframework-bridge": "^1.0",
-                "php": "^5.6 || ^7.0"
-            },
-            "replace": {
-                "zfcampus/zf-composer-autoloading": "^2.1.0"
-            },
-            "require-dev": {
-                "laminas/laminas-coding-standard": "~1.0.0",
-                "mikey179/vfsstream": "^1.6.4",
-                "mockery/mockery": "^1.0",
-                "php-mock/php-mock-phpunit": "^1.1.2 || ^2.0",
-                "phpunit/phpunit": "^5.7.27 || ^6.5.8 || ^7.1.5"
-            },
-            "bin": [
-                "bin/laminas-composer-autoloading"
-            ],
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.1.x-dev",
-                    "dev-develop": "2.2.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Laminas\\ComposerAutoloading\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "description": "Sets up Composer-based autoloading for your Laminas modules",
-            "homepage": "https://laminas.dev",
-            "keywords": [
-                "autoloading",
-                "console",
-                "framework",
-                "laminas"
-            ],
-            "support": {
-                "chat": "https://laminas.dev/chat",
-                "forum": "https://discourse.laminas.dev",
-                "issues": "https://github.com/laminas/laminas-composer-autoloading/issues",
-                "rss": "https://github.com/laminas/laminas-composer-autoloading/releases.atom",
-                "source": "https://github.com/laminas/laminas-composer-autoloading"
-            },
-            "funding": [
-                {
-                    "url": "https://funding.communitybridge.org/projects/laminas-project",
-                    "type": "community_bridge"
-                }
-            ],
-            "time": "2020-04-20T14:04:57+00:00"
-        },
-        {
             "name": "laminas/laminas-development-mode",
             "version": "3.3.0",
             "source": {
@@ -7636,51 +7566,48 @@
         },
         {
             "name": "mezzio/mezzio-tooling",
-            "version": "1.3.0",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mezzio/mezzio-tooling.git",
-                "reference": "7e3c40d20b3a1ff9b5d014870797899aae85e80b"
+                "reference": "dc9853188ed5f780502c8deced1380a539d0ded4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mezzio/mezzio-tooling/zipball/7e3c40d20b3a1ff9b5d014870797899aae85e80b",
-                "reference": "7e3c40d20b3a1ff9b5d014870797899aae85e80b",
+                "url": "https://api.github.com/repos/mezzio/mezzio-tooling/zipball/dc9853188ed5f780502c8deced1380a539d0ded4",
+                "reference": "dc9853188ed5f780502c8deced1380a539d0ded4",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
+                "laminas/laminas-cli": "^1.1",
                 "laminas/laminas-code": "^2.6.3 || ^3.3",
                 "laminas/laminas-component-installer": "^2.0",
-                "laminas/laminas-composer-autoloading": "^2.0",
                 "laminas/laminas-stdlib": "^3.1",
                 "laminas/laminas-stratigility": "^3.0",
                 "laminas/laminas-zendframework-bridge": "^1.0",
                 "mezzio/mezzio": "^3.0",
                 "mezzio/mezzio-router": "^3.0",
-                "ocramius/package-versions": "^1.3",
-                "php": "^7.1",
-                "symfony/console": "^2.8 || ^3.0 || ^4.0 || ^5.0"
+                "php": "^7.3 || ~8.0.0",
+                "symfony/process": "^4.3 || ^5.1.2"
             },
             "replace": {
-                "zendframework/zend-expressive-tooling": "self.version"
+                "zendframework/zend-expressive-tooling": "^1.3.0"
             },
             "require-dev": {
-                "laminas/laminas-coding-standard": "~1.0.0",
+                "laminas/laminas-coding-standard": "~2.3.0",
+                "laminas/laminas-diactoros": "^1.8.7 || ^2.2.3",
                 "malukenho/docheader": "^0.1.6",
                 "mikey179/vfsstream": "^1.6.7",
                 "mockery/mockery": "^1.2.4",
                 "php-mock/php-mock-phpunit": "^2.5",
-                "phpunit/phpunit": "^7.5.17 || ^8.4.3"
+                "phpspec/prophecy-phpunit": "^2.0",
+                "phpunit/phpunit": "^9.4.1"
             },
-            "bin": [
-                "bin/mezzio"
-            ],
             "type": "library",
             "extra": {
-                "branch-alias": {
-                    "dev-master": "1.3.x-dev",
-                    "dev-develop": "1.4.x-dev"
+                "laminas": {
+                    "config-provider": "Mezzio\\Tooling\\ConfigProvider"
                 }
             },
             "autoload": {
@@ -7704,13 +7631,19 @@
             ],
             "support": {
                 "chat": "https://laminas.dev/chat",
-                "docs": "https://docs.mezzio.dev/mezzio-tooling/",
+                "docs": "https://docs.mezzio.dev/mezzio/",
                 "forum": "https://discourse.laminas.dev",
                 "issues": "https://github.com/mezzio/mezzio-tooling/issues",
                 "rss": "https://github.com/mezzio/mezzio-tooling/releases.atom",
                 "source": "https://github.com/mezzio/mezzio-tooling"
             },
-            "time": "2019-12-31T15:48:32+00:00"
+            "funding": [
+                {
+                    "url": "https://funding.communitybridge.org/projects/laminas-project",
+                    "type": "community_bridge"
+                }
+            ],
+            "time": "2021-08-09T22:20:02+00:00"
         },
         {
             "name": "myclabs/deep-copy",

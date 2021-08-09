@@ -5,18 +5,18 @@
     "config": {
         "sort-packages": true
     },
-    "repositories": [
-        {
+    "repositories": {
+        "phly-comic": {
             "type": "vcs",
             "url": "https://github.com/weierophinney/PhlyComic"
         }
-    ],
+    },
     "require": {
         "php": "~8.0.0",
         "cache/namespaced-cache": "^1.0",
         "cache/predis-adapter": "^1.0",
         "dflydev/fig-cookies": "^2.0",
-        "laminas/laminas-cli": "^0.1.5",
+        "laminas/laminas-cli": "^1.1.0",
         "laminas/laminas-config-aggregator": "^0.2.0",
         "laminas/laminas-diactoros": "^2.3",
         "laminas/laminas-escaper": "^2.5.2",
@@ -61,7 +61,7 @@
         "phpunit/phpunit": "^9.3",
         "laminas/laminas-coding-standard": "~2.1.4",
         "laminas/laminas-component-installer": "^2.1",
-        "mezzio/mezzio-tooling": "^1.0",
+        "mezzio/mezzio-tooling": "^2.0",
         "laminas/laminas-development-mode": "^3.1"
     },
     "provide": {

@@ -33,6 +33,7 @@ $aggregator = new ConfigAggregator([
     Laminas\InputFilter\ConfigProvider::class,
     Laminas\Filter\ConfigProvider::class,
     Laminas\Validator\ConfigProvider::class,
+    Mezzio\Tooling\ConfigProvider::class,
     Mezzio\Session\ConfigProvider::class,
     Mezzio\Csrf\ConfigProvider::class,
     Mezzio\ConfigProvider::class,
