@@ -24,7 +24,7 @@ class MailTransport
         $config = $container->get('config-mail.transport');
         $class  = $config['class'] ?? SMTPTransport::class;
 
-        $transport = match($class) {
+        $transport = match ($class) {
             AWSTransport::class  => new $class($config['username'], $config['password']),
             SMTPTransport::class => $this->smtpTransportFactory($class, $config),
             // phpcs:ignore
