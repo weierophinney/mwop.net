@@ -42,7 +42,6 @@
         "middlewares/csp": "^2.0",
         "mnapoli/front-yaml": "^1.7",
         "monolog/monolog": "^1.23",
-        "pgrimaud/instagram-user-feed": "^6.4",
         "phly/phly-comic": "^2.1.2",
         "phly/phly-configfactory": "^1.0",
         "phly/phly-event-dispatcher": "^1.0",
@@ -105,7 +104,6 @@
             "echo 'Removing generated homepage files'",
             "rm -f data/homepage.posts.php",
             "rm -f data/github-links.phtml",
-            "rm -f data/instagram.feed.php",
             "echo 'Removing generated comics page'",
             "rm -f data/comics.phtml"
         ],
