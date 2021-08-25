@@ -33,7 +33,6 @@ $aggregator = new ConfigAggregator([
     Laminas\InputFilter\ConfigProvider::class,
     Laminas\Filter\ConfigProvider::class,
     Laminas\Validator\ConfigProvider::class,
-    Mezzio\Tooling\ConfigProvider::class,
     Mezzio\Session\ConfigProvider::class,
     Mezzio\Csrf\ConfigProvider::class,
     Mezzio\ConfigProvider::class,
@@ -42,6 +41,13 @@ $aggregator = new ConfigAggregator([
     Mezzio\Router\ConfigProvider::class,
     Mezzio\Router\FastRouteRouter\ConfigProvider::class,
     Mezzio\Swoole\ConfigProvider::class,
+
+    // Conditional, as it will not be used in production
+    class_exists(Mezzio\Tooling\ConfigProvider::class)
+        ? Mezzio\Tooling\ConfigProvider::class
+        : function (): array {
+            return [];
+        },
 
     // App-specific modules
     Mwop\App\ConfigProvider::class,
