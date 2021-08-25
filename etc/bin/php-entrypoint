@@ -28,11 +28,6 @@ if [ ! -f "config/autoload/homepage.local.php" ] || [ ! -f "data/github-links.ph
     composer build:homepage
 fi
 
-# Fetch initial Instagram feed
-if [ ! -f "data/instagram.feed.php" ];then
-    /usr/bin/env php vendor/bin/laminas instagram-feeds
-fi
-
 # Prepare initial comics
 if [ ! -f "data/comics.phtml" ];then
     /usr/bin/env php ./vendor/bin/phly-comic.php fetch-all -p --output data/comics.phtml --exclude dilbert --exclude reptilis-rex --exclude nih

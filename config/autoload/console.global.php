@@ -9,7 +9,6 @@ use Mwop\Blog\Console\SeedBlogDatabase;
 use Mwop\Blog\Console\TagCloud;
 use Mwop\Console\ClearCache;
 use Mwop\Console\FeedAggregator;
-use Mwop\Console\InstagramFeed;
 use Mwop\Github\Console\Fetch;
 
 return [
@@ -23,7 +22,6 @@ return [
             'clear-cache'               => ClearCache::class,
             'github:fetch-activity'     => Fetch::class,
             'homepage-feeds'            => FeedAggregator::class,
-            'instagram-feeds'           => InstagramFeed::class,
         ],
     ],
 ];
