@@ -302,13 +302,6 @@ task('build:homepage', function () {
     });
 });
 
-desc('Fetch instagram feed');
-task('build:instagram', function () {
-    within('{{release_path}}', function () {
-        run('sudo -u www-data /bin/bash -c "{{bin/php}} vendor/bin/laminas instagram-feeds"');
-    });
-});
-
 desc('Fetch comics');
 task('build:comics', function () {
     within('{{release_path}}', function () {
@@ -334,7 +327,6 @@ task('build', [
     'build:assets',
     'build:blog',
     'build:homepage',
-    'build:instagram',
     'build:comics',
     'deploy:assets',
 ]);
