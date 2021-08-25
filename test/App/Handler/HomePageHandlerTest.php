@@ -26,14 +26,13 @@ class HomePageHandlerTest extends TestCase
 
         /** @var TemplateRendererInterface|MockObject $renderer */
         $renderer = $this->createMock(TemplateRendererInterface::class);
-        $handler  = new HomePageHandler($posts, '', $renderer);
+        $handler  = new HomePageHandler($posts, $renderer);
 
         $renderer
             ->expects($this->atLeastOnce())
             ->method('render')
             ->with(HomePageHandler::TEMPLATE, [
-                'posts'     => $posts,
-                'instagram' => [],
+                'posts' => $posts,
             ])
             ->willReturn('content');
 
