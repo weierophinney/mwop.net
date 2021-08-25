@@ -13,6 +13,7 @@ return [
                 'https://platform.twitter.com',
                 'https://syndication.twitter.com',
                 'https://www.google.com',
+                'https://*.woxo.tech',
                 'disqus.com',
             ],
         ],
@@ -52,6 +53,7 @@ return [
                 '*.disquscdn.com',
                 'https://*.twimg.com',
                 'https://platform.twitter.com',
+                'https://*.woxo.tech',
             ],
         ],
         // Not honored yet by paragonie/csp-builder:

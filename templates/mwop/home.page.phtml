@@ -4,8 +4,9 @@
 
 <?php
 $this->push('scripts');
-echo '<script src="/js/instagram.js"></script>';
+// echo '<script src="/js/instagram.js"></script>';
 echo '<script src="/js/twitter.js"></script>';
+echo '<script src="https://cdn2.woxo.tech/a.js#61265c474b32b7001602858e" async data-usrc></script>';
 $this->end();
 ?>
 
@@ -40,21 +41,7 @@ $this->end();
 
     <p>&nbsp;</p>
 
-    <h3><a href="https://www.instagram.com/phlytangle" target="_blank">@phlytangle on Instagram</a></h3>
-
-    <div class="card-columns">
-    <?php foreach ($instagram as $instagramPost) : ?>
-        <div class="card instagram">
-            <a
-                data-toggle="modal"
-                data-target="#modal-instagram"
-                data-instagram-image="<?= $instagramPost['image_url'] ?>"
-                data-instagram-url="<?= $instagramPost['post_url'] ?>">
-               <img class="card-img-top" src="<?= $instagramPost['image_url'] ?>" alt="Instagram post" /> 
-            </a>
-        </div>
-    <?php endforeach ?>
-    </div>
+	<div loading="lazy" data-mc-src="daf1a12e-02c8-4fcc-80cb-9b65210d9e20#instagram"></div>
 </aside>
 
 <aside class="col-lg omega home">
