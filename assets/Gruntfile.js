@@ -71,7 +71,6 @@ module.exports = function (grunt) {
         files: [{
           src: [
             'js/disqus.js',
-            'js/instagram.js',
             'js/prism.js',
             'js/twitter.js'
           ],
