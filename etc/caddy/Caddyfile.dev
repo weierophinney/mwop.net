@@ -1,6 +1,0 @@
-:8080 {
-    encode gzip
-    reverse_proxy php:9000 {
-        header_down -Server
-    }
-}

@@ -1,11 +1,5 @@
 # TODO
 
-## Bugfixes
-
-- [ ] Instagram photos on home page do not show.
-  Issue is due to Instagram CORS rules.
-  May need to do something with Nextcloud to make this work.
-
 ## New features
 
 - [ ] Blog
@@ -27,3 +21,52 @@
   - Means I can have different PHP versions for each application
   - Simplifies rollback
   - Ensures I can test locally in a fashion that mimics production closely
+
+### Architecture
+
+A Caddy server sits in front of all sites and reverse proxies to each.
+As such, this can be a relatively simple setup:
+
+- services
+  - php
+  - redis
+- volumes
+  - mwop_net_redis (for persisting session and blog cache data)
+
+### Prerequisites
+
+- Docker
+- Docker-compose
+- `docker volume create mwop_net_redis`
+
+### Deployment
+
+- [ ] Resolve "previous" symlink to concrete directory and store value as "$old"
+- [ ] Resolve "current" symlink to concrete directory and store value as "$previous"
+- [ ] Store repository sha1 for deployment as "$new"
+- [ ] Prepare new deployment
+  - [ ] Push or pull the repo at "$new"
+    - In new directory based on "$new"
+  - [ ] Retrieve env
+    - Resolve env version from value in repo
+    - Fetch to `.env` file in new directory
+  - [ ] Build: `docker-compose build`
+- [ ] Deploy
+  - [ ] Stop current deployment
+    - cd "current"
+    - docker-compose down
+  - [ ] Symlink new deployment directory to "current"
+  - [ ] Start new deployment
+    - cd "current"
+    - docker-compose up -d
+- [ ] On failure
+  - [ ] Stop deployment
+    - cd "current"
+    - docker-compose stop
+  - [ ] Symlink "$previous" to "current"
+  - [ ] Redeploy
+    - cd "current"
+    - docker-compose up -d
+- [ ] On success
+  - [ ] Symlink "$previous" to "previous"
+  - [ ] Symlink "$new" to "current"

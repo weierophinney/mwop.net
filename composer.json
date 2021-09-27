@@ -52,8 +52,7 @@
         "swiftmailer/swiftmailer": "^6.1",
         "symfony/console": "^4.1",
         "symfony/yaml": "^2.7",
-        "tightenco/collect": "^5.7",
-        "vlucas/phpdotenv": "^5.1"
+        "tightenco/collect": "^5.7"
     },
     "require-dev": {
         "filp/whoops": "^2.1.3",
@@ -77,44 +76,72 @@
         }
     },
     "scripts": {
-        "assets": "make assets",
         "build": [
-            "@assets",
             "@build:blog",
             "@build:homepage",
-            "phly-comic.php fetch-all --output data/comics.phtml --exclude dilbert --exclude reptilis-rex --exclude nih"
+            "@build:comics"
         ],
         "build:blog": [
             "laminas blog:seed-db",
             "laminas blog:tag-cloud",
             "laminas blog:feed-generator",
-            "@build:search"
+            "laminas blog:generate-search-data"
         ],
+        "build:comics": "laminas comics:for-site",
         "build:homepage": [
             "laminas github:fetch-activity",
             "laminas homepage-feeds"
         ],
-        "build:search": "laminas blog:generate-search-data",
-        "clean:build-assets": [
+        "clean": [
+            "@clean:blog",
+            "@clean:comics",
+            "@clean:homepage"
+        ],
+        "clean:blog": [
             "echo 'Removing generated blog files'",
+            "@clean:blog-cache",
             "rm -f data/posts.db",
             "rm -f data/tag-cloud.phtml",
             "rm -f data/feeds/*.xml",
-            "rm -f data/search_terms.json",
-            "echo 'Removing generated homepage files'",
-            "rm -f data/homepage.posts.php",
-            "rm -f data/github-links.phtml",
+            "rm -f data/search_terms.json"
+        ],
+        "clean:blog-cache": [
+            "echo 'Clearing blog static content cache'",
+            "laminas blog:clear-cache"
+        ],
+        "clean:comics": [
             "echo 'Removing generated comics page'",
             "rm -f data/comics.phtml"
         ],
-        "cs:check": "phpcs",
+        "clean:homepage": [
+            "echo 'Removing generated homepage files'",
+            "rm -f data/homepage.posts.php",
+            "rm -f data/github-links.phtml"
+        ],
+        "cs:check": "phpcs -s",
         "cs:fix": "phpcbf",
         "development:disable": "laminas-development-mode disable",
         "development:enable": "laminas-development-mode enable",
         "development:status": "laminas-development-mode status",
-        "npm": "npm install --no-save",
-        "serve": "docker-compose up",
-        "test": "phpunit --colors=always",
-        "mezzio": "mezzio"
+        "serve:dev": "docker-compose -f docker-compose.dev.yml up",
+        "test": "phpunit --colors=always"
+    },
+    "scripts-descriptions": {
+        "build": "Build the blog, homepage, and comics page",
+        "build:blog": "Seeds the blog database, creates the tag cloud, generates feed, and creates search data",
+        "build:comics": "Builds the comics page",
+        "build:homepage": "Fetches current github activity and RSS feeds for the homepage",
+        "clean": "Removes all generated files for the blog, home page, and comics page",
+        "clean:blog": "Removes all generated files for the blog",
+        "clean:blog-cache": "Removes the blog static content cache",
+        "clean:comics": "Removes the generated comics page",
+        "clean:homepage": "Removes all generated content for the homepage",
+        "cs:check": "Check source code against coding standards",
+        "cs:fix": "Apply automatic coding standards fixes against source code",
+        "development:disable": "Disable development mode",
+        "development:enable": "Enable development mode",
+        "development:status": "Check status of development mode",
+        "serve:dev": "Start the development server",
+        "test": "Run unit tests"
     }
 }

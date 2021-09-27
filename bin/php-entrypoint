@@ -17,21 +17,8 @@ chmod 0644 /etc/cron.d/*
 # Start cron; it's a daemon by default.
 service cron start
 
-# Build the blog
-if [ ! -f "data/posts.db" ] || [ ! -f "data/tag-cloud.phtml" ] || [ ! -f "public/search_terms.json" ];then
-    composer build:blog
-fi
-/usr/bin/env php vendor/bin/laminas blog:clear-cache # really only necessary when running locally
-
-# Build homepage assets
-if [ ! -f "config/autoload/homepage.local.php" ] || [ ! -f "data/github-links.phtml" ];then
-    composer build:homepage
-fi
-
-# Prepare initial comics
-if [ ! -f "data/comics.phtml" ];then
-    /usr/bin/env php ./vendor/bin/phly-comic.php fetch-all -p --output data/comics.phtml --exclude dilbert --exclude reptilis-rex --exclude nih
-fi
+# Build site assets
+/var/www/bin/build.sh
 
 # Start application; run in foreground, as that's what Docker prefers
 echo "Starting web server"

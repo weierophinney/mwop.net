@@ -64,6 +64,7 @@ class ConfigProvider
                 FeedReaderHttpClientInterface::class         => Feed\HttpPlugClientFactory::class,
                 Handler\ComicsPageHandler::class             => Handler\ComicsPageHandlerFactory::class,
                 Handler\HomePageHandler::class               => Handler\HomePageHandlerFactory::class,
+                Handler\PingHandler::class                   => Handler\PingHandlerFactory::class,
                 Handler\PrivacyPolicyPageHandler::class      => Handler\PageHandlerFactory::class,
                 Handler\ResumePageHandler::class             => Handler\PageHandlerFactory::class,
                 'mail.transport'                             => Factory\MailTransport::class,
@@ -164,6 +165,7 @@ class ConfigProvider
         $app->get('/comics', Handler\ComicsPageHandler::class, 'comics');
         $app->get('/resume', Handler\ResumePageHandler::class, 'resume');
         $app->get('/privacy-policy', Handler\PrivacyPolicyPageHandler::class, 'privacy-policy');
+        $app->get('/api/ping', Handler\PingHandler::class, 'api.ping');
 
         // Logout
         $app->get('/logout', [
