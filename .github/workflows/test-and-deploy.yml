@@ -9,9 +9,9 @@ jobs:
   run:
     runs-on: ubuntu-20.04
     env:
-      extensions: bcmath, bz2, curl, gd, intl, ldap, mbstring, opcache, readline, sqlite3, tidy, xml, xsl, zip, swoole-4.6.3
+      extensions: bcmath, bz2, curl, gd, intl, ldap, mbstring, opcache, readline, sqlite3, tidy, xml, xsl, zip, swoole-4.7.1
       ini-values: memory_limit=-1
-      key: swoole-4.6.3
+      key: swoole-4.7.1
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -54,31 +54,18 @@ jobs:
       - name: Run CS checks
         run: ./vendor/bin/phpcs -q --report=checkstyle | cs2pr
 
-      - name: Cache deployer executable
-        id: deployercache
-        uses: actions/cache@v2
-        with:
-          path: /usr/local/bin/dep
-          key: ${{ runner.os }}.${{ hashFiles('/usr/local/bin/dep') }}
-
-      - name: Install deployer executable
-        if: steps.deployercache.outputs.cache-hit != 'true'
-        run: |
-          curl -LO https://deployer.org/deployer.phar
-          mv deployer.phar /usr/local/bin/dep
-          chmod +x /usr/local/bin/dep
-
       - name: Install SSH key
         uses: shimataro/ssh-key-action@v2
         with:
-          key: ${{ secrets.DEPLOY_KEY }}
-          known_hosts: ${{ secrets.SSH_KNOWN_HOSTS }}
-          config: ${{ secrets.SSH_CONFIG }}
+          key: ${{ secrets.CLOUD_MWOP_NET_SSH_KEY }}
+          known_hosts: ${{ secrets.CLOUD_MWOP_NET_SSH_KNOWN_HOSTS }}
+          config: ${{ secrets.CLOUD_MWOP_NET_SSH_CONFIG }}
 
       - name: Deploy
         env:
-          PROD_ENV: ${{ secrets.PROD_ENV_FILE }}
+          DEPLOY_HOST: ${{ secrets.CLOUD_MWOP_NET_HOSTNAME }}
+          REPO_NAME: ${{ github.repository }}
+          SHA: ${{ github.sha }}
         run: |
-          echo "${PROD_ENV}" > .prod.env
-          dep deploy production
-
+          set -e
+          ssh "${DEPLOY_HOST}" /usr/local/bin/deploy.sh "${REPO_NAME}" "${SHA}"
