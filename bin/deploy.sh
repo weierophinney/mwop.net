@@ -29,6 +29,7 @@ PREVIOUS=
 
 # Prepare deployment directory, if it does not exist
 if [ ! -d "${BASEDIR}" ];then
+    echo "Creating deployment directory ${BASEDIR}"
     mkdir -p "${BASEDIR}"
 fi
 
@@ -38,28 +39,31 @@ if [ -d "${BASEDIR}/current" ];then
 fi
 
 # Prepare new release
+echo "Preparing release directory based on commit ${SHA}"
 DEPLOY_DIR="${BASEDIR}/${SHA}"
-git clone "https://${GITHUB_USERNAME}:${GITHUB_TOKEN}@github.com/${GITHUB_USERNAME}/${REPO}.git" "${DEPLOY_DIR}"
+git clone --depth=1 "https://${GITHUB_USERNAME}:${GITHUB_TOKEN}@github.com/${GITHUB_USERNAME}/${REPO}.git" "${DEPLOY_DIR}"
 cd "${DEPLOY_DIR}"
 git checkout "${SHA}"
 
 # Get env file
-if [ ! -f "${DEPLOY_DIR}/env-version" ];then
-    echo "FAILED - repository is missing an env-version file"
-    exit 1;
-fi
-ENV_FILE="${SITE_CONFIG_DIR}/$(cat "${DEPLOY_DIR}/env-version")"
+if [ -f "${DEPLOY_DIR}/env-version" ];then
+    echo "Found env-version file; fetching production env"
+    ENV_FILE="${SITE_CONFIG_DIR}/$(cat "${DEPLOY_DIR}/env-version")"
 
-if [ ! -f "${ENV_FILE}" ];then
-    echo "FAILED - site config file specified in env-version not found"
-    exit 1;
+    if [ ! -f "${ENV_FILE}" ];then
+        echo "FAILED - site config file specified in env-version not found"
+        exit 1;
+    fi
+
+    cp "${ENV_FILE}" "${DEPLOY_DIR}/.env"
 fi
-cp "${ENV_FILE}" "${DEPLOY_DIR}/.env"
 
 # Build
+echo "Building containers"
 cd "${DEPLOY_DIR}"
 if [ -f "${DEPLOY_DIR}/.deploy/pre-build.sh" ];then
     # This can be used to do things like create volumes
+    echo "- Executing pre-build step"
     /bin/bash .deploy/pre-build.sh
 fi
 docker-compose build
@@ -67,11 +71,13 @@ docker-compose build
 # Deploy
 # Stop previous
 if [ "${PREVIOUS}" != "" ];then
+    echo "Stopping previous deployment"
     cd "${PREVIOUS}"
     docker-compose down
 fi
 
 # Start new
+echo "Starting deployment"
 cd "${DEPLOY_DIR}"
 
 set +e
