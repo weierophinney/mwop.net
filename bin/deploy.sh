@@ -81,7 +81,7 @@ echo "Starting deployment"
 cd "${DEPLOY_DIR}"
 
 set +e
-if docker-compose up -d;then
+if ! docker-compose up -d;then
     # FAILURE
     echo "FAILED deploying ${SHA}; rolling back"
     docker-compose down
