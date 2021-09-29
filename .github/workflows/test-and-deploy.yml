@@ -54,18 +54,16 @@ jobs:
       - name: Run CS checks
         run: ./vendor/bin/phpcs -q --report=checkstyle | cs2pr
 
-      - name: Install SSH key
-        uses: shimataro/ssh-key-action@v2
-        with:
-          key: ${{ secrets.CLOUD_MWOP_NET_SSH_KEY }}
-          known_hosts: ${{ secrets.CLOUD_MWOP_NET_SSH_KNOWN_HOSTS }}
-
       - name: Deploy
+        uses: appleboy/ssh-action@master
         env:
-          DEPLOY_HOST_USERNAME: ${{ secrets.CLOUD_MWOP_NET_SSH_USERNAME }}
-          DEPLOY_HOST: ${{ secrets.CLOUD_MWOP_NET_HOSTNAME }}
           REPO_NAME: ${{ github.repository }}
           SHA: ${{ github.sha }}
-        run: |
-          set -e
-          ssh "${DEPLOY_HOST_USERNAME}@${DEPLOY_HOST}" /usr/local/bin/deploy.sh "${REPO_NAME}" "${SHA}"
+        with:
+          host: ${{ secrets.CLOUD_MWOP_NET_HOSTNAME }}
+          username: ${{ secrets.CLOUD_MWOP_NET_SSH_USERNAME }}
+          key: ${{ secrets.CLOUD_MWOP_NET_SSH_KEY }}
+          envs: REPO_NAME,SHA
+          script_stop: true
+          script: |
+            /usr/local/bin/deploy.sh "${REPO_NAME}" "${SHA}"
