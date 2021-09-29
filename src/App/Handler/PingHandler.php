@@ -9,6 +9,9 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
+use function json_encode;
+use function time;
+
 class PingHandler implements RequestHandlerInterface
 {
     public function __construct(

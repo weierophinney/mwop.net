@@ -17,7 +17,7 @@ $messageToAddress = $_ENV['CONTACT_MESSAGE_TO_ADDRESS'] ?? '';
  * Defines env-specific settings.
  */
 return [
-    'blog'          => [
+    'blog'         => [
         'disqus' => [
             'key' => 'phlyboyphly',
         ],
@@ -25,12 +25,12 @@ return [
             'enabled' => true,
         ],
     ],
-    'cache'         => [
+    'cache'        => [
         'connection-parameters' => [
             'host' => 'redis',
         ],
     ],
-    'contact'       => [
+    'contact'      => [
         'recaptcha_pub_key'  => $_ENV['RECAPTCHA_PUB_KEY'] ?? '',
         'recaptcha_priv_key' => $_ENV['RECAPTCHA_PRIV_KEY'] ?? '',
         'message'            => [
@@ -41,7 +41,7 @@ return [
             ],
         ],
     ],
-    'dependencies'  => [
+    'dependencies' => [
         'delegators' => [
             CacheBlogPostListener::class      => [
                 DeferredServiceListenerDelegator::class,
@@ -57,7 +57,7 @@ return [
             LoggerInterface::class => AccessLoggerFactory::class,
         ],
     ],
-    'mail'          => [
+    'mail'         => [
         'transport' => [
             'class'    => Swift_SmtpTransport::class,
             'host'     => $_ENV['MAIL_TRANSPORT_HOST'] ?? '',
