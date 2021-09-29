@@ -60,9 +60,9 @@ jobs:
           REPO_NAME: ${{ github.repository }}
           SHA: ${{ github.sha }}
         with:
-          host: ${{ secrets.CLOUD_MWOP_NET_HOSTNAME }}
-          username: ${{ secrets.CLOUD_MWOP_NET_SSH_USERNAME }}
-          key: ${{ secrets.CLOUD_MWOP_NET_SSH_KEY }}
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
           envs: REPO_NAME,SHA
           script_stop: true
           script: |
