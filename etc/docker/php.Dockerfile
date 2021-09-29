@@ -13,6 +13,8 @@ RUN set -e; \
         echo "Removing existing installed node modules"; \
         rm -rf node_modules; \
     fi; \
+    echo "Installing agentkeepalive NPM module (required for npm upgrade)"; \
+    npm install -g agentkeepalive --save; \
     echo "Upgrading npm to latest version"; \
     npm install -g npm@latest; \
     echo "Installing asset dependencies"; \
