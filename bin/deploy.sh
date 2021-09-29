@@ -2,7 +2,7 @@
 
 set -e
 
-if [ "${GITHUB_TOKEN}" -eq "" ] || [ "${GITHUB_USERNAME}" -eq "" ];then
+if [ "${GITHUB_TOKEN}" == "" ] || [ "${GITHUB_USERNAME}" == "" ];then
     echo "Missing github login information"
     exit 1;
 fi
@@ -66,7 +66,7 @@ docker-compose build
 
 # Deploy
 # Stop previous
-if [ "${PREVIOUS}" -ne "" ];then
+if [ "${PREVIOUS}" != "" ];then
     cd "${PREVIOUS}"
     docker-compose down
 fi
@@ -79,7 +79,7 @@ if docker-compose up -d;then
     # FAILURE
     echo "FAILED deploying ${SHA}; rolling back"
     docker-compose down
-    if [ "${PREVIOUS}" -ne "" ];then
+    if [ "${PREVIOUS}" != "" ];then
         cd "${PREVIOUS}"
         docker-compose up -d
     fi
