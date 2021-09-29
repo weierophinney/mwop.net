@@ -59,13 +59,13 @@ jobs:
         with:
           key: ${{ secrets.CLOUD_MWOP_NET_SSH_KEY }}
           known_hosts: ${{ secrets.CLOUD_MWOP_NET_SSH_KNOWN_HOSTS }}
-          config: ${{ secrets.CLOUD_MWOP_NET_SSH_CONFIG }}
 
       - name: Deploy
         env:
+          DEPLOY_HOST_USERNAME: ${{ secrets.CLOUD_MWOP_NET_SSH_USERNAME }}
           DEPLOY_HOST: ${{ secrets.CLOUD_MWOP_NET_HOSTNAME }}
           REPO_NAME: ${{ github.repository }}
           SHA: ${{ github.sha }}
         run: |
           set -e
-          ssh "${DEPLOY_HOST}" /usr/local/bin/deploy.sh "${REPO_NAME}" "${SHA}"
+          ssh "${DEPLOY_HOST_USERNAME}@${DEPLOY_HOST}" /usr/local/bin/deploy.sh "${REPO_NAME}" "${SHA}"
