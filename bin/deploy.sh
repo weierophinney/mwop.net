@@ -95,7 +95,7 @@ fi
 # SUCCESS
 cd "${BASEDIR}"
 if [ "${PREVIOUS}" != "" ];then
-    ln -fs "$(basename "${PREVIOUS}")" previous
+    ln -fsn "$(basename "${PREVIOUS}")" previous
 fi
-ln -fs "${SHA}" current
+ln -fsn "${SHA}" current
 echo "SUCCESS deploying ${SHA}"
