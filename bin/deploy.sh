@@ -41,7 +41,7 @@ fi
 # Prepare new release
 echo "Preparing release directory based on commit ${SHA}"
 DEPLOY_DIR="${BASEDIR}/${SHA}"
-git clone --depth=1 "https://${GITHUB_USERNAME}:${GITHUB_TOKEN}@github.com/${GITHUB_USERNAME}/${REPO}.git" "${DEPLOY_DIR}"
+git clone --depth=1 --recurse-submodules "https://${GITHUB_USERNAME}:${GITHUB_TOKEN}@github.com/${GITHUB_USERNAME}/${REPO}.git" "${DEPLOY_DIR}"
 cd "${DEPLOY_DIR}"
 git checkout "${SHA}"
 
