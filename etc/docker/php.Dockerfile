@@ -3,6 +3,10 @@
 # Build assets
 FROM node:15.12 as assets
 RUN set -e; \
+    echo "Installing agentkeepalive NPM module (required for npm upgrade)"; \
+    npm install -g agentkeepalive --save; \
+    echo "Upgrading npm to latest version"; \
+    npm install -g npm@latest; \
     echo "Installing Grunt"; \
     npm install -g grunt-cli
 
@@ -13,10 +17,6 @@ RUN set -e; \
         echo "Removing existing installed node modules"; \
         rm -rf node_modules; \
     fi; \
-    echo "Installing agentkeepalive NPM module (required for npm upgrade)"; \
-    npm install -g agentkeepalive --save; \
-    echo "Upgrading npm to latest version"; \
-    npm install -g npm@latest; \
     echo "Installing asset dependencies"; \
     npm install --sass-binary-name=linux-x64-88; \
     echo "Building assets"; \
@@ -54,7 +54,7 @@ RUN set -e; \
     composer self-update --no-interaction
 
 # Install assets
-COPY --from=assets /assets/build/js public/
-COPY --from=assets /assets/build/css public/
+COPY --from=assets /assets/build/js public/js
+COPY --from=assets /assets/build/css public/css
 
 ENTRYPOINT ["/usr/local/bin/entrypoint"]

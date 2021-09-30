@@ -23,10 +23,22 @@ services:
     ports:
       - "9001:9001"
     volumes:
-      - .:/var/www
-      - ./etc/php/mwop.ini:/usr/local/etc/php/conf.d/mwop.ini
-      - ./etc/cron.d/mwopnet:/etc/cron.d/mwopnet
+      - ./bin/build.sh:/var/www/bin/build.sh
       - ./bin/php-entrypoint:/usr/local/bin/entrypoint
+      - ./config:/var/www/config
+      - ./data:/var/www/data
+      - ./etc/cron.d/mwopnet:/etc/cron.d/mwopnet
+      - ./etc/php/mwop.ini:/usr/local/etc/php/conf.d/mwop.ini
+      - ./src:/var/www/src
+      - ./templates:/var/www/templates
+      - ./vendor:/var/www/vendor
+      - ./composer.json:/var/www/composer.json
+      - ./composer.lock:/var/www/composer.lock
+      - ./public/23ED29DA.asc:/var/www/public/23ED29DA.asc
+      - ./public/images:/var/www/public/images
+      - ./public/favicon.ico:/var/www/public/favicon.ico
+      - ./public/index.php:/var/www/public/index.php
+      - ./public/manifest.json:/var/www/public/manifest.json
     logging:
       options:
         max-size: 50m
