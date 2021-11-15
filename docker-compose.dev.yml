@@ -16,6 +16,10 @@ services:
     build: 
       context: .
       dockerfile: etc/docker/php.Dockerfile
+      args:
+        INSTALL_COMPOSER: 'true'
+        SYSTEM_PACKAGES: 'cron'
+        ZEND_EXTENSIONS_LIST: 'bz2 curl intl mbstring opcache sqlite3 tidy xsl zip'
     env_file:
       - .env
     depends_on:
@@ -23,12 +27,10 @@ services:
     ports:
       - "9001:9001"
     volumes:
-      - ./bin/build.sh:/var/www/bin/build.sh
-      - ./bin/php-entrypoint:/usr/local/bin/entrypoint
       - ./config:/var/www/config
       - ./data:/var/www/data
       - ./etc/cron.d/mwopnet:/etc/cron.d/mwopnet
-      - ./etc/php/mwop.ini:/usr/local/etc/php/conf.d/mwop.ini
+      - ./etc/php/mwop.ini:/etc/zendphp/cli/conf.d/mwop.ini
       - ./src:/var/www/src
       - ./templates:/var/www/templates
       - ./vendor:/var/www/vendor
@@ -39,6 +41,13 @@ services:
       - ./public/favicon.ico:/var/www/public/favicon.ico
       - ./public/index.php:/var/www/public/index.php
       - ./public/manifest.json:/var/www/public/manifest.json
+      - ./s6/cont-init.d/00-build.sh:/etc/cont-init.d/00-build.sh
+      - ./s6/cont-init.d/01-std-stream-permissions.sh:/etc/cont-init.d/01-std-stream-permissions.sh
+      - ./s6/cont-init.d/99-start-message.sh:/etc/cont-init.d/99-start-message.sh
+      - ./s6/fix-attrs.d/app:/etc/fix-attrs.d/app
+      - ./s6/fix-attrs.d/crond:/etc/fix-attrs.d/crond
+      - ./s6/services.d/cron:/etc/services.d/cron
+      - ./s6/services.d/swoole:/etc/services.d/swoole
     logging:
       options:
         max-size: 50m

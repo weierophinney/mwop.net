@@ -3,10 +3,10 @@ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 # m  h                    dom mon dow user     command
 # Update github feed
-*/15 *                    *   *   * root cd /var/www; ./vendor/bin/laminas github:fetch-activity | /usr/bin/logger -t MWOPNET
+*/15 *                    *   *   * zendphp cd /var/www; ./vendor/bin/laminas github:fetch-activity
 
 # Update blog posts listing
-0    0,6,12,18            *   *   * root cd /var/www; ./vendor/bin/laminas homepage-feeds | /usr/bin/logger -t MWOPNET
+0    0,6,12,18            *   *   * zendphp cd /var/www; ./vendor/bin/laminas homepage-feeds
 
 # Fetch comics
-0    1,4,7,10,13,16,19,22 *   *   * root cd /var/www; ./vendor/bin/laminas comics:for-site | /usr/bin/logger -t MWOPNET
+0    1,4,7,10,13,16,19,22 *   *   * zendphp cd /var/www; ./vendor/bin/laminas comics:for-site

@@ -6,6 +6,10 @@
         "sort-packages": true
     },
     "repositories": {
+        "mezzio-swoole": {
+            "type": "vcs",
+            "url": "https://github.com/weierophinney/mezzio-swoole"
+        },
         "phly-comic": {
             "type": "vcs",
             "url": "https://github.com/weierophinney/PhlyComic"
@@ -39,7 +43,7 @@
         "mezzio/mezzio-platesrenderer": "^2.0",
         "mezzio/mezzio-session": "^1.1",
         "mezzio/mezzio-session-cache": "^1.1.1",
-        "mezzio/mezzio-swoole": "^3.0.1",
+        "mezzio/mezzio-swoole": "dev-feature/openswoole-support as 3.4.0",
         "middlewares/csp": "^3.0",
         "mnapoli/front-yaml": "^1.7",
         "monolog/monolog": "^1.23",
