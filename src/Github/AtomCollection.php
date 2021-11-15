@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Mwop\Github;
 
-use Tightenco\Collect\Support\Collection;
+use Illuminate\Support\Collection;
 
 class AtomCollection extends Collection
 {

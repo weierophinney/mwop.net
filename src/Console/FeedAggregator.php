@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Mwop\Console;
 
 use ArrayAccess;
-use Exception;
+use Error;
 use Http\Discovery\HttpClientDiscovery;
 use Http\Discovery\MessageFactoryDiscovery;
 use Laminas\Feed\Reader\Entry\EntryInterface;
@@ -209,9 +209,9 @@ class FeedAggregator extends Command
         return FeedReader::importString($feedContent);
     }
 
-    private function reportException(Exception $e, SymfonyStyle $io)
+    private function reportException(Throwable $e, SymfonyStyle $io)
     {
-        $io->caution('An exception occurred:');
+        $io->caution(sprintf('An %s occurred:', $e instanceof Error ? 'error' : 'exception'));
 
         do {
             $io->caution(sprintf(

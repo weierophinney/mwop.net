@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Mwop\Console;
 
-use Tightenco\Collect\Support\Collection;
+use Illuminate\Support\Collection;
 
 class FeedCollection extends Collection
 {
