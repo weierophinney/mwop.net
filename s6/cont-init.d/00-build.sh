@@ -7,9 +7,9 @@ export COMPOSER_HOME=/var/local/composer
 
 if [ ! -d "vendor" ];then
     if [[ "$DEBUG" != "" ]];then
-        "${composer}" install --prefer-dist --no-interaction --ignore-platform-req=php
+        "${composer}" install --prefer-dist --no-interaction
     else
-        "${composer}" install --no-scripts --no-dev -o --prefer-dist --no-interaction --ignore-platform-req=php
+        "${composer}" install --no-scripts --no-dev -o --prefer-dist --no-interaction
     fi
 fi
 

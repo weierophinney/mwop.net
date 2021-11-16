@@ -4,6 +4,7 @@
 FROM cr.zend.com/zendphp/8.0:ubuntu-20.04-cli as swoole
 
 ## Prepare image
+ARG SWOOLE_VERSION=4.7.2
 ARG TIMEZONE=UTC
 ENV TZ=$TIMEZONE
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
@@ -13,9 +14,9 @@ RUN set -e; \
     apt-get install -y php8.0-zend-dev libcurl4-openssl-dev; \
     mkdir /workdir; \
     cd /workdir; \
-    curl -L -o swoole-src-4.7.2.tgz https://github.com/openswoole/swoole-src/archive/refs/tags/v4.7.2.tar.gz; \
-    tar xzf swoole-src-4.7.2.tgz; \
-    cd swoole-src-4.7.2; \
+    curl -L -o swoole-src-${SWOOLE_VERSION}.tgz https://github.com/openswoole/swoole-src/archive/refs/tags/v${SWOOLE_VERSION}.tar.gz; \
+    tar xzf swoole-src-${SWOOLE_VERSION}.tgz; \
+    cd swoole-src-${SWOOLE_VERSION}; \
     phpize; \
     ./configure \
         --enable-swoole \
