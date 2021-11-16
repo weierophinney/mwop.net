@@ -28,7 +28,7 @@ RUN set -e; \
     make install
 
 # Build assets
-FROM node:15.12 as assets
+FROM node:16.13 as assets
 RUN set -e; \
     echo "Installing agentkeepalive NPM module (required for npm upgrade)"; \
     npm install -g agentkeepalive --save; \
@@ -45,7 +45,7 @@ RUN set -e; \
         rm -rf node_modules; \
     fi; \
     echo "Installing asset dependencies"; \
-    npm install --sass-binary-name=linux-x64-88; \
+    npm install; \
     echo "Building assets"; \
     grunt
 
