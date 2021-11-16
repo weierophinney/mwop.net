@@ -1,9 +1,5 @@
 # TODO
 
-## Fixes
-
-- [ ] Add "text-center" class to "article" element on comics page
-
 ## New features
 
 - [ ] Blog
