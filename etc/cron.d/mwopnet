@@ -1,12 +1,13 @@
 # CRONTAB file for mwop.net
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+SHELL=/bin/bash
 
 # m  h                    dom mon dow user     command
 # Update github feed
-*/15 *                    *   *   * zendphp cd /var/www; ./vendor/bin/laminas github:fetch-activity
+*/15 *                    *   *   * zendphp cd /var/www; ./vendor/bin/laminas github:fetch-activity 2>&1 > /proc/self/fd/2
 
 # Update blog posts listing
-0    0,6,12,18            *   *   * zendphp cd /var/www; ./vendor/bin/laminas homepage-feeds
+0    0,6,12,18            *   *   * zendphp cd /var/www; ./vendor/bin/laminas homepage-feeds 2>&1 > /proc/self/fd/2
 
 # Fetch comics
-0    1,4,7,10,13,16,19,22 *   *   * zendphp cd /var/www; ./vendor/bin/laminas comics:for-site
+0    1,4,7,10,13,16,19,22 *   *   * zendphp cd /var/www; ./vendor/bin/laminas comics:for-site 2>&1 > /proc/self/fd/2
