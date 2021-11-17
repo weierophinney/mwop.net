@@ -35,6 +35,7 @@ services:
     ports:
       - "9001:9001"
     volumes:
+      - /etc/localtime:/etc/localtime:ro
       - ./composer.json:/var/www/composer.json
       - ./composer.lock:/var/www/composer.lock
       - ./config:/var/www/config
