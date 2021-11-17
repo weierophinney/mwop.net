@@ -51,7 +51,6 @@ services:
       - ./public/manifest.json:/var/www/public/manifest.json
       - ./s6/cont-init.d/00-build.sh:/etc/cont-init.d/00-build.sh
       - ./s6/cont-init.d/01-std-stream-permissions.sh:/etc/cont-init.d/01-std-stream-permissions.sh
-      - ./s6/cont-init.d/02-data-dir-permissions.sh:/etc/cont-init.d/02-data-dir-permissions.sh
       - ./s6/cont-init.d/99-start-message.sh:/etc/cont-init.d/99-start-message.sh
       - ./s6/fix-attrs.d/crond:/etc/fix-attrs.d/crond
       - ./s6/services.d/cron:/etc/services.d/cron
