@@ -1,2 +1,3 @@
-#!/usr/bin/execlineb -P
-cron -f -L 15
+#!/bin/bash
+# From https://stackoverflow.com/a/51442053
+cron && touch /var/log/cron.log && tail -F /var/log/cron.log
