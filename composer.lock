@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6a032f8727c5a4266ae65d5d45fd5cb9",
+    "content-hash": "b58052dd102e36dff7a86d538cbf4d6d",
     "packages": [
         {
             "name": "brick/varexporter",
@@ -1230,16 +1230,16 @@
         },
         {
             "name": "illuminate/collections",
-            "version": "v8.70.2",
+            "version": "v8.72.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/collections.git",
-                "reference": "05f286ec5fd2dd286e8384577047efc375c8954c"
+                "reference": "bfb57bc1863689058706eb41287b7ad523d74403"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/collections/zipball/05f286ec5fd2dd286e8384577047efc375c8954c",
-                "reference": "05f286ec5fd2dd286e8384577047efc375c8954c",
+                "url": "https://api.github.com/repos/illuminate/collections/zipball/bfb57bc1863689058706eb41287b7ad523d74403",
+                "reference": "bfb57bc1863689058706eb41287b7ad523d74403",
                 "shasum": ""
             },
             "require": {
@@ -1280,20 +1280,20 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2021-10-22T18:01:46+00:00"
+            "time": "2021-11-15T14:44:56+00:00"
         },
         {
             "name": "illuminate/contracts",
-            "version": "v8.70.2",
+            "version": "v8.72.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/contracts.git",
-                "reference": "e76f4bce73a2a1656add24bd5210ebc4b8af49c0"
+                "reference": "b0886ec05a63b204634d64d0b39d5b78a7c06f81"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/contracts/zipball/e76f4bce73a2a1656add24bd5210ebc4b8af49c0",
-                "reference": "e76f4bce73a2a1656add24bd5210ebc4b8af49c0",
+                "url": "https://api.github.com/repos/illuminate/contracts/zipball/b0886ec05a63b204634d64d0b39d5b78a7c06f81",
+                "reference": "b0886ec05a63b204634d64d0b39d5b78a7c06f81",
                 "shasum": ""
             },
             "require": {
@@ -1328,20 +1328,20 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2021-10-22T18:01:46+00:00"
+            "time": "2021-11-17T15:04:30+00:00"
         },
         {
             "name": "illuminate/macroable",
-            "version": "v8.70.2",
+            "version": "v8.72.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/macroable.git",
-                "reference": "300aa13c086f25116b5f3cde3ca54ff5c822fb05"
+                "reference": "aed81891a6e046fdee72edd497f822190f61c162"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/macroable/zipball/300aa13c086f25116b5f3cde3ca54ff5c822fb05",
-                "reference": "300aa13c086f25116b5f3cde3ca54ff5c822fb05",
+                "url": "https://api.github.com/repos/illuminate/macroable/zipball/aed81891a6e046fdee72edd497f822190f61c162",
+                "reference": "aed81891a6e046fdee72edd497f822190f61c162",
                 "shasum": ""
             },
             "require": {
@@ -1374,7 +1374,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2020-10-27T15:20:30+00:00"
+            "time": "2021-11-16T13:57:03+00:00"
         },
         {
             "name": "laminas/laminas-cli",
@@ -3524,16 +3524,16 @@
         },
         {
             "name": "mezzio/mezzio-swoole",
-            "version": "dev-feature/openswoole-support",
+            "version": "3.4.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/weierophinney/mezzio-swoole.git",
-                "reference": "7ab10756e2f45665ca65e73f4294a83dd830fd49"
+                "url": "https://github.com/mezzio/mezzio-swoole.git",
+                "reference": "628721cb04fc7f97a230093dc305bfbee3d8d721"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/weierophinney/mezzio-swoole/zipball/7ab10756e2f45665ca65e73f4294a83dd830fd49",
-                "reference": "7ab10756e2f45665ca65e73f4294a83dd830fd49",
+                "url": "https://api.github.com/repos/mezzio/mezzio-swoole/zipball/628721cb04fc7f97a230093dc305bfbee3d8d721",
+                "reference": "628721cb04fc7f97a230093dc305bfbee3d8d721",
                 "shasum": ""
             },
             "require": {
@@ -3567,8 +3567,8 @@
             },
             "suggest": {
                 "ext-inotify": "To use inotify based file watcher. Required for hot code reloading.",
-                "ext-openswoole": "The package requires at least one of OpenSwoole or Swoole",
-                "ext-swoole": "The package requires at least one of OpenSwoole or Swoole"
+                "ext-openswoole": "The package requires at least one of Open Swoole or Swoole",
+                "ext-swoole": "The package requires at least one of Open Swoole or Swoole"
             },
             "type": "library",
             "autoload": {
@@ -3576,32 +3576,7 @@
                     "Mezzio\\Swoole\\": "src/"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "MezzioTest\\Swoole\\": "test/"
-                }
-            },
-            "scripts": {
-                "check": [
-                    "@cs-check",
-                    "@test"
-                ],
-                "cs-check": [
-                    "phpcs"
-                ],
-                "cs-fix": [
-                    "phpcbf"
-                ],
-                "static-analysis": [
-                    "psalm --shepherd --stats"
-                ],
-                "test": [
-                    "phpunit --colors=always"
-                ],
-                "test-coverage": [
-                    "phpunit --colors=always --coverage-clover clover.xml"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause"
             ],
@@ -3619,20 +3594,20 @@
                 "swoole"
             ],
             "support": {
-                "docs": "https://docs.mezzio.dev/mezzio-swoole/",
-                "issues": "https://github.com/mezzio/mezzio-swoole/issues",
-                "source": "https://github.com/mezzio/mezzio-swoole",
-                "rss": "https://github.com/mezzio/mezzio-swoole/releases.atom",
                 "chat": "https://laminas.dev/chat",
-                "forum": "https://discourse.laminas.dev"
+                "docs": "https://docs.mezzio.dev/mezzio-swoole/",
+                "forum": "https://discourse.laminas.dev",
+                "issues": "https://github.com/mezzio/mezzio-swoole/issues",
+                "rss": "https://github.com/mezzio/mezzio-swoole/releases.atom",
+                "source": "https://github.com/mezzio/mezzio-swoole"
             },
             "funding": [
                 {
-                    "type": "community_bridge",
-                    "url": "https://funding.communitybridge.org/projects/laminas-project"
+                    "url": "https://funding.communitybridge.org/projects/laminas-project",
+                    "type": "community_bridge"
                 }
             ],
-            "time": "2021-11-15T22:52:44+00:00"
+            "time": "2021-11-17T15:35:27+00:00"
         },
         {
             "name": "mezzio/mezzio-template",
@@ -9690,18 +9665,9 @@
             "time": "2021-10-28T21:18:17+00:00"
         }
     ],
-    "aliases": [
-        {
-            "package": "mezzio/mezzio-swoole",
-            "version": "dev-feature/openswoole-support",
-            "alias": "3.4.0",
-            "alias_normalized": "3.4.0.0"
-        }
-    ],
+    "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "mezzio/mezzio-swoole": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
