@@ -60,6 +60,7 @@ class ConfigProvider
             'factories' => [
                 BlogCachePool::class                            => BlogCachePoolFactory::class,
                 'config-blog'                                   => ConfigFactory::class,
+                'config-blog.api'                               => ConfigFactory::class,
                 'config-blog.cache'                             => ConfigFactory::class,
                 'config-blog.disqus'                            => ConfigFactory::class,
                 'config-blog.twitter'                           => ConfigFactory::class,
