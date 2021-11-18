@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Mwop\Blog;
 
+use Laminas\ServiceManager\Factory\InvokableFactory;
 use Mezzio\Application;
 use Mezzio\ProblemDetails\ProblemDetailsMiddleware;
 use Mwop\Blog\Handler\TweetLatestHandler;
@@ -65,7 +66,7 @@ class ConfigProvider
                 Console\ClearCache::class                       => Console\ClearCacheFactory::class,
                 Console\FeedGenerator::class                    => Console\FeedGeneratorFactory::class,
                 Console\TagCloud::class                         => Console\TagCloudFactory::class,
-                Console\TweetLatest::class                      => Console\TweetLatestFactory::class,
+                Console\TweetLatest::class                      => InvokableFactory::class,
                 Handler\DisplayPostHandler::class               => Handler\DisplayPostHandlerFactory::class,
                 Handler\FeedHandler::class                      => Handler\FeedHandlerFactory::class,
                 Handler\ListPostsHandler::class                 => Handler\ListPostsHandlerFactory::class,
