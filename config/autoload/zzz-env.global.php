@@ -18,11 +18,20 @@ $messageToAddress = $_ENV['CONTACT_MESSAGE_TO_ADDRESS'] ?? '';
  */
 return [
     'blog'         => [
-        'disqus' => [
+        'api'     => [
+            'key' => $_ENV['BLOG_API_KEY'],
+        ],
+        'disqus'  => [
             'key' => 'phlyboyphly',
         ],
-        'cache'  => [
+        'cache'   => [
             'enabled' => true,
+        ],
+        'twitter' => [
+            'consumer_key'        => $_ENV['TWITTER_CONSUMER_KEY'],
+            'consumer_secret'     => $_ENV['TWITTER_CONSUMER_SECRET'],
+            'access_token'        => $_ENV['TWITTER_ACCESS_TOKEN'],
+            'access_token_secret' => $_ENV['TWITTER_ACCESS_TOKEN_SECRET'],
         ],
     ],
     'cache'        => [

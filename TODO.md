@@ -12,5 +12,3 @@
     Basically, I could have the initial deploy grab data from GitHub.
     A webhook would then get any updates and choose whether or not to update the internal feed.
     That way, instead of polling, I just get updates.
-- [ ] API
-  - [ ] Tweet latest blog post entry

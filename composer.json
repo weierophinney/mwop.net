@@ -13,6 +13,7 @@
     },
     "require": {
         "php": "~8.0.0",
+        "abraham/twitteroauth": "^3.1",
         "cache/namespaced-cache": "^1.0",
         "cache/predis-adapter": "^1.0",
         "dflydev/fig-cookies": "^3.0",
@@ -37,6 +38,7 @@
         "mezzio/mezzio-csrf": "^1.0",
         "mezzio/mezzio-fastroute": "^3.0",
         "mezzio/mezzio-platesrenderer": "^2.0",
+        "mezzio/mezzio-problem-details": "^1.4",
         "mezzio/mezzio-session": "^1.1",
         "mezzio/mezzio-session-cache": "^1.1.1",
         "mezzio/mezzio-swoole": "^3.4",
