@@ -20,7 +20,7 @@ fi
 "${composer}" clean:blog-cache # really only necessary when running locally
 
 # Build homepage assets
-if [ ! -f "config/autoload/homepage.local.php" ] || [ ! -f "data/github-links.phtml" ];then
+if [ ! -f "data/homepage.posts.php" ] || [ ! -f "data/github-links.phtml" ];then
     "${composer}" build:homepage
 fi
 
