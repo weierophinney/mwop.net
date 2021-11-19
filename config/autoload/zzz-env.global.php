@@ -10,8 +10,6 @@ use Mwop\Blog\Listener\CacheBlogPostListener;
 use Mwop\Contact\Listener\SendContactMessageListener;
 use Psr\Log\LoggerInterface;
 
-error_log(var_export($_SERVER, true), 4);
-
 /** @var string $messageToAddress */
 $messageToAddress = $_SERVER['CONTACT_MESSAGE_TO_ADDRESS'] ?? '';
 
