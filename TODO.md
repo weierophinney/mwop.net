@@ -18,5 +18,3 @@
   Emails come from me, to me, so they are automatically marked "read" by gmail.
   On top of that, the reply-to does not work.
   I would like to make this work better.
-- [ ] Task worker logging
-  Currently, task workers are not logged.

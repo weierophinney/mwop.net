@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Mezzio\Swoole\StaticResourceHandler\ContentTypeFilterMiddleware;
+use Psr\Log\LoggerInterface;
 
 return [
     'mezzio-swoole' => [
@@ -51,5 +52,6 @@ return [
                 ],
             ],
         ],
+        'task-logger-service' => LoggerInterface::class,
     ],
 ];
