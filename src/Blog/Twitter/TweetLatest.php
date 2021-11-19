@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Mwop\Blog\Twitter;
 
 use Abraham\TwitterOAuth\TwitterOAuth;
-use Mezzio\Helper\ServerUrlHelper;
 use Mezzio\Helper\UrlHelper;
 use Mwop\Blog\BlogPost;
 use Mwop\Blog\Mapper\MapperInterface;
@@ -18,6 +17,8 @@ use function str_replace;
 
 class TweetLatest
 {
+    private const SCHEME_AND_AUTHORITY = 'https://mwop.net';
+
     private const TEMPLATE = <<<'END'
         Blogged: %title%
 
@@ -29,7 +30,6 @@ class TweetLatest
     public function __construct(
         private MapperInterface $blogPostMapper,
         private TwitterFactory $factory,
-        private ServerUrlHelper $serverUrlHelper,
         private UrlHelper $urlHelper,
         private string $logoPath
     ) {
@@ -81,11 +81,9 @@ class TweetLatest
 
     private function createPostUrl(BlogPost $post): string
     {
-        return $this->serverUrlHelper->generate(
-            $this->urlHelper->generate(
-                'blog.post',
-                ['id' => $post->id]
-            )
+        return self::SCHEME_AND_AUTHORITY . $this->urlHelper->generate(
+            'blog.post',
+            ['id' => $post->id]
         );
     }
 }

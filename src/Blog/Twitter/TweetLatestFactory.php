@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Mwop\Blog\Twitter;
 
-use Mezzio\Helper\ServerUrlHelper;
 use Mezzio\Helper\UrlHelper;
 use Mwop\Blog\Mapper\MapperInterface;
 use Psr\Container\ContainerInterface;
@@ -16,11 +15,10 @@ class TweetLatestFactory
         $config = $container->get('config-blog.twitter');
 
         return new TweetLatest(
-            $container->get(MapperInterface::class),
-            $container->get(TwitterFactory::class),
-            $container->get(ServerUrlHelper::class),
-            $container->get(UrlHelper::class),
-            $config['logo_path'],
+            blogPostMapper: $container->get(MapperInterface::class),
+            factory: $container->get(TwitterFactory::class),
+            urlHelper: $container->get(UrlHelper::class),
+            logoPath: $config['logo_path'],
         );
     }
 }
