@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace Mwop\Blog\Console;
 
 use Http\Discovery\HttpClientDiscovery;
-use Http\Discovery\MessageFactoryDiscovery;
+use Psr\Http\Message\RequestFactoryInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+
+use function sprintf;
 
 class TweetLatest extends Command
 {
@@ -17,8 +19,10 @@ class TweetLatest extends Command
         Finds the most recent blog post, and sends a tweet with details about it.
         END;
 
-    public function __construct(private string $tokenHeader)
-    {
+    public function __construct(
+        private RequestFactoryInterface $requestFactory,
+        private string $tokenHeader,
+    ) {
         parent::__construct();
     }
 
@@ -34,11 +38,10 @@ class TweetLatest extends Command
         $output->writeln('<info>Sending tweet detailing latest blog post</info>');
         $apiKey = $input->getArgument('apikey');
 
-        $client = HttpClientDiscovery::find();
-        $messageFactory = MessageFactoryDiscovery::find();
-        $request = $messageFactory
+        $client   = HttpClientDiscovery::find();
+        $request  = $this->requestFactory
             ->createRequest('POST', 'https://mwop.net/blog/api/tweet/latest')
-            ->withAddedHeader('X-MWOP-NET-BLOG-API-KEY', $apiKey);
+            ->withAddedHeader($this->tokenHeader, $apiKey);
         $response = $client->sendRequest($request);
 
         if ($response->getStatusCode() !== 204) {

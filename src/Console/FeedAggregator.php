@@ -12,10 +12,10 @@ namespace Mwop\Console;
 use ArrayAccess;
 use Error;
 use Http\Discovery\HttpClientDiscovery;
-use Http\Discovery\MessageFactoryDiscovery;
 use Laminas\Feed\Reader\Entry\EntryInterface;
 use Laminas\Feed\Reader\Feed\FeedInterface;
 use Laminas\Feed\Reader\Reader as FeedReader;
+use Psr\Http\Message\RequestFactoryInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -65,8 +65,11 @@ class FeedAggregator extends Command
     /** @var int */
     private $status;
 
-    public function __construct(array $feeds, private int $toRetrieve)
-    {
+    public function __construct(
+        array $feeds,
+        private int $toRetrieve,
+        private RequestFactoryInterface $requestFactory
+    ) {
         $this->feeds = FeedCollection::make($feeds);
         parent::__construct();
     }
@@ -194,10 +197,9 @@ class FeedAggregator extends Command
 
     private function getFeedFromRemoteUrl(string $url, array $normalizers): FeedInterface
     {
-        $client         = HttpClientDiscovery::find();
-        $messageFactory = MessageFactoryDiscovery::find();
-        $response       = $client->sendRequest($messageFactory->createRequest('GET', $url));
-        $feedContent    = $response->getBody()->getContents();
+        $client      = HttpClientDiscovery::find();
+        $response    = $client->sendRequest($this->requestFactory->createRequest('GET', $url));
+        $feedContent = $response->getBody()->getContents();
 
         foreach ($normalizers as $normalizer) {
             if (! is_callable($normalizer)) {

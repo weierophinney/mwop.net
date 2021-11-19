@@ -47,8 +47,8 @@ class ConfigProvider
     public function getDependencies(): array
     {
         return [
-            'aliases' => [
-                SwooleEventDispatcher::class                => EventDispatcherInterface::class,
+            'aliases'    => [
+                SwooleEventDispatcher::class => EventDispatcherInterface::class,
             ],
             'invokables' => [
                 Middleware\RedirectsMiddleware::class       => Middleware\RedirectsMiddleware::class,
@@ -82,10 +82,10 @@ class ConfigProvider
                 AttachableListenerProvider::class => [
                     Factory\SwooleTaskInvokerListenerDelegator::class,
                 ],
-                DisplayPostHandler::class => [
+                DisplayPostHandler::class         => [
                     Middleware\DisplayBlogPostHandlerDelegator::class,
                 ],
-                Engine::class             => [
+                Engine::class                     => [
                     Factory\PlatesFunctionsDelegator::class,
                 ],
             ],

@@ -58,7 +58,7 @@ class ConfigProvider
                 AttachableListenerProvider::class => [
                     Listener\SendContactMessageListenerDelegator::class,
                 ],
-                SendContactMessageEvent::class => [
+                SendContactMessageEvent::class    => [
                     DeferredServiceListenerDelegator::class,
                 ],
             ],

@@ -7,8 +7,8 @@ namespace Mwop\Blog\Handler;
 use Mwop\Blog\Twitter\TweetLatestEvent;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
-use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
 class TweetLatestHandler implements RequestHandlerInterface

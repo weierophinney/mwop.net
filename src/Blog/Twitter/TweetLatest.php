@@ -11,6 +11,11 @@ use Mwop\Blog\BlogPost;
 use Mwop\Blog\Mapper\MapperInterface;
 use RuntimeException;
 
+use function array_map;
+use function implode;
+use function sprintf;
+use function str_replace;
+
 class TweetLatest
 {
     private const TEMPLATE = <<<'END'
@@ -35,7 +40,7 @@ class TweetLatest
         $twitter = ($this->factory)();
 
         $twitter->post('statuses/update', [
-            'status' => $this->generateStatusFromFirstPost($this->getFirstPost()),
+            'status'    => $this->generateStatusFromFirstPost($this->getFirstPost()),
             'media_ids' => [$this->generateMediaIDFromLogo($twitter)],
         ]);
     }
@@ -51,7 +56,7 @@ class TweetLatest
             [
                 $post->title,
                 $this->createPostUrl($post),
-                implode(' ', array_map(fn (string $tag) => sprintf('#%s', $tag), $post->tags))
+                implode(' ', array_map(fn (string $tag) => sprintf('#%s', $tag), $post->tags)),
             ],
             self::TEMPLATE,
         );

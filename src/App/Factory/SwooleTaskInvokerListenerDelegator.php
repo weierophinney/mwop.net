@@ -20,8 +20,11 @@ use Psr\Container\ContainerInterface;
 
 class SwooleTaskInvokerListenerDelegator
 {
-    public function __invoke(ContainerInterface $container, string $serviceName, callable $factory): AttachableListenerProvider
-    {
+    public function __invoke(
+        ContainerInterface $container,
+        string $serviceName,
+        callable $factory
+    ): AttachableListenerProvider {
         $provider = $factory();
 
         $provider->listen(ServerStartEvent::class, $container->get(ServerStartListener::class));
