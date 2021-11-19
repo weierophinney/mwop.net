@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Mwop\Blog;
 
-use Laminas\ServiceManager\Factory\InvokableFactory;
 use Mezzio\Application;
 use Mezzio\ProblemDetails\ProblemDetailsMiddleware;
+use Mezzio\Swoole\Task\DeferredServiceListenerDelegator;
 use Mwop\Blog\Handler\TweetLatestHandler;
 use Mwop\Blog\Middleware\ValidateAPIKeyMiddleware;
 use Phly\ConfigFactory\ConfigFactory;
@@ -32,7 +32,8 @@ class ConfigProvider
     {
         return [
             'api'     => [
-                'key' => '',
+                'key'          => '',
+                'token_header' => 'X-MWOP-NET-BLOG-API-KEY',
             ],
             'db'      => null,
             'cache'   => [
@@ -67,7 +68,7 @@ class ConfigProvider
                 Console\ClearCache::class                       => Console\ClearCacheFactory::class,
                 Console\FeedGenerator::class                    => Console\FeedGeneratorFactory::class,
                 Console\TagCloud::class                         => Console\TagCloudFactory::class,
-                Console\TweetLatest::class                      => InvokableFactory::class,
+                Console\TweetLatest::class                      => Console\TweetLatestFactory::class,
                 Handler\DisplayPostHandler::class               => Handler\DisplayPostHandlerFactory::class,
                 Handler\FeedHandler::class                      => Handler\FeedHandlerFactory::class,
                 Handler\ListPostsHandler::class                 => Handler\ListPostsHandlerFactory::class,
@@ -92,6 +93,9 @@ class ConfigProvider
                 AttachableListenerProvider::class => [
                     Listener\FetchBlogPostEventListenersDelegator::class,
                     Twitter\TweetLatestEventListenerDelegator::class,
+                ],
+                Twitter\TweetLatestEventListener::class => [
+                    DeferredServiceListenerDelegator::class,
                 ],
             ],
         ];

@@ -16,13 +16,14 @@ class ValidateAPIKeyMiddleware implements MiddlewareInterface
 {
     public function __construct(
         private string $apiKey,
+        private string $tokenHeader,
     ) {
     }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        $apiKey = $request->getHeaderLine('X-MWOP-NET-BLOG-API-KEY');
-        if ($apiKey !== $this->apiKey) {
+        $apiKey = $request->getHeaderLine($this->tokenHeader);
+        if (empty($apiKey) || $apiKey !== $this->apiKey) {
             throw new class extends InvalidArgumentException implements ProblemDetailsExceptionInterface {
                 use CommonProblemDetailsExceptionTrait;
 

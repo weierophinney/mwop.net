@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace Mwop\Blog\Twitter;
 
 use Abraham\TwitterOAuth\TwitterOAuth;
-use Mwop\App\Factory\PlatesFunctionsDelegator;
+use Mezzio\Helper\ServerUrlHelper;
+use Mezzio\Helper\UrlHelper;
 use Mwop\Blog\BlogPost;
 use Mwop\Blog\Mapper\MapperInterface;
 use RuntimeException;
@@ -23,7 +24,8 @@ class TweetLatest
     public function __construct(
         private MapperInterface $blogPostMapper,
         private TwitterFactory $factory,
-        private PlatesFunctionsDelegator $urlHelper,
+        private ServerUrlHelper $serverUrlHelper,
+        private UrlHelper $urlHelper,
         private string $logoPath
     ) {
     }
@@ -48,8 +50,8 @@ class TweetLatest
             ],
             [
                 $post->title,
-                $this->urlHelper->postUrl($post),
-                array_map(fn (string $tag) => sprintf('#%s', $tag), $post->tags)
+                $this->createPostUrl($post),
+                implode(' ', array_map(fn (string $tag) => sprintf('#%s', $tag), $post->tags))
             ],
             self::TEMPLATE,
         );
@@ -70,5 +72,15 @@ class TweetLatest
     {
         $media = $twitter->upload('media/upload', ['media' => $this->logoPath]);
         return $media->media_id_string;
+    }
+
+    private function createPostUrl(BlogPost $post): string
+    {
+        return $this->serverUrlHelper->generate(
+            $this->urlHelper->generate(
+                'blog.post',
+                ['id' => $post->id]
+            )
+        );
     }
 }

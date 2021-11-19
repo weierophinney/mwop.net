@@ -14,9 +14,11 @@ use Laminas\Feed\Reader\Http\ClientInterface as FeedReaderHttpClientInterface;
 use League\Plates\Engine;
 use Mezzio\Application;
 use Mezzio\Session\SessionMiddleware;
+use Mezzio\Swoole\Event\EventDispatcherInterface as SwooleEventDispatcher;
 use Middlewares\Csp;
 use Mwop\Blog\Handler\DisplayPostHandler;
 use Phly\ConfigFactory\ConfigFactory;
+use Phly\EventDispatcher\ListenerProvider\AttachableListenerProvider;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Swift_SmtpTransport;
@@ -45,6 +47,9 @@ class ConfigProvider
     public function getDependencies(): array
     {
         return [
+            'aliases' => [
+                SwooleEventDispatcher::class                => EventDispatcherInterface::class,
+            ],
             'invokables' => [
                 Middleware\RedirectsMiddleware::class       => Middleware\RedirectsMiddleware::class,
                 Middleware\XClacksOverheadMiddleware::class => Middleware\XClacksOverheadMiddleware::class,
@@ -74,6 +79,9 @@ class ConfigProvider
             // phpcs:enable
             // @codingStandardsIgnoreEnd
             'delegators' => [
+                AttachableListenerProvider::class => [
+                    Factory\SwooleTaskInvokerListenerDelegator::class,
+                ],
                 DisplayPostHandler::class => [
                     Middleware\DisplayBlogPostHandlerDelegator::class,
                 ],

@@ -12,6 +12,7 @@ namespace Mwop\Contact;
 use Mezzio\Application;
 use Mezzio\Csrf\CsrfMiddleware;
 use Mezzio\Session\SessionMiddleware;
+use Mezzio\Swoole\Task\DeferredServiceListenerDelegator;
 use Phly\ConfigFactory\ConfigFactory;
 use Phly\EventDispatcher\ListenerProvider\AttachableListenerProvider;
 
@@ -56,6 +57,9 @@ class ConfigProvider
             'delegators' => [
                 AttachableListenerProvider::class => [
                     Listener\SendContactMessageListenerDelegator::class,
+                ],
+                SendContactMessageEvent::class => [
+                    DeferredServiceListenerDelegator::class,
                 ],
             ],
         ];

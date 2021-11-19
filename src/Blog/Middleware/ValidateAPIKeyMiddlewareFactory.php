@@ -11,6 +11,6 @@ class ValidateAPIKeyMiddlewareFactory
     public function __invoke(ContainerInterface $container): ValidateAPIKeyMiddleware
     {
         $config = $container->get('config-blog.api');
-        return new ValidateAPIKeyMiddleware($config['key']);
+        return new ValidateAPIKeyMiddleware($config['key'], $config['token_header']);
     }
 }

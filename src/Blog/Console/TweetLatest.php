@@ -17,6 +17,11 @@ class TweetLatest extends Command
         Finds the most recent blog post, and sends a tweet with details about it.
         END;
 
+    public function __construct(private string $tokenHeader)
+    {
+        parent::__construct();
+    }
+
     protected function configure(): void
     {
         $this->setDescription('Tweet the most recent blog post');
