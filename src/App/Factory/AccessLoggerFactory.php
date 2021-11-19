@@ -9,13 +9,11 @@ declare(strict_types=1);
 
 namespace Mwop\App\Factory;
 
-use Monolog\Handler\StreamHandler;
+use Monolog\Handler\ErrorLogHandler;
 use Monolog\Logger;
 use Monolog\Processor\PsrLogMessageProcessor;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
-
-use function fopen;
 
 class AccessLoggerFactory
 {
@@ -25,10 +23,11 @@ class AccessLoggerFactory
         $isDebug = (bool) $config['debug'];
 
         $logger = new Logger('mwopnet');
-        $logger->pushHandler(new StreamHandler(
-            stream: fopen('/proc/self/fd/2', 'ab+'),
-            level: $isDebug ? Logger::DEBUG : Logger::WARNING,
+        $logger->pushHandler(new ErrorLogHandler(
+            messageType: ErrorLogHandler::SAPI,
+            level: $isDebug ? Logger::DEBUG : Logger::INFO,
             bubble: true,
+            expandNewlines: true,
         ));
         $logger->pushProcessor(new PsrLogMessageProcessor());
         return $logger;
