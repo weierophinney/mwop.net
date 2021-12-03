@@ -1,17 +1,17 @@
 # DOCKER-VERSION        1.3
 
 # Build Swoole
-FROM cr.zend.com/zendphp/8.0:ubuntu-20.04-cli as swoole
+FROM cr.zend.com/zendphp/8.1:ubuntu-20.04-cli as swoole
 
 ## Prepare image
-ARG SWOOLE_VERSION=4.7.2
+ARG SWOOLE_VERSION=4.8.0
 ARG TIMEZONE=UTC
 ENV TZ=$TIMEZONE
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 RUN set -e; \
     apt-get update; \
-    apt-get install -y php8.0-zend-dev libcurl4-openssl-dev; \
+    apt-get install -y php8.1-zend-dev libcurl4-openssl-dev; \
     mkdir /workdir; \
     cd /workdir; \
     curl -L -o swoole-src-${SWOOLE_VERSION}.tgz https://github.com/openswoole/swoole-src/archive/refs/tags/v${SWOOLE_VERSION}.tar.gz; \
@@ -50,11 +50,11 @@ RUN set -e; \
     grunt
 
 # Build the PHP container
-FROM cr.zend.com/zendphp/8.0:ubuntu-20.04-cli
+FROM cr.zend.com/zendphp/8.1:ubuntu-20.04-cli
 
 ## Install Swoole
-COPY --from=swoole /usr/lib/php/8.0-zend/openswoole.so /usr/lib/php/8.0-zend/openswoole.so
-COPY --from=swoole /usr/include/php/8.0-zend/ext/openswoole /usr/include/php/8.0-zend/ext/openswoole
+COPY --from=swoole /usr/lib/php/8.1-zend/openswoole.so /usr/lib/php/8.1-zend/openswoole.so
+COPY --from=swoole /usr/include/php/8.1-zend/ext/openswoole /usr/include/php/8.1-zend/ext/openswoole
 RUN set -e; \
     echo "extension=openswoole.so" > /etc/zendphp/cli/conf.d/60-swoole.ini
 

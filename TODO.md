@@ -18,3 +18,15 @@
   Emails come from me, to me, so they are automatically marked "read" by gmail.
   On top of that, the reply-to does not work.
   I would like to make this work better.
+
+## PHP 8.1
+
+- [x] mezzio-problem-details
+- [x] mezzio-swoole
+- [x] laminas-input-filter
+- [x] laminas-filter
+- [x] laminas-tag
+- [x] mezzio-authentication
+- [x] laminas-component-installer
+- [ ] mezzio-tooling
+  - This is done, but since it depends on laminas-code, which is not yet ready, I've removed it for now.
