@@ -10,6 +10,8 @@
  * `composer development-enable`.
  */
 
+declare(strict_types=1);
+
 namespace Mwop;
 
 use Laminas\Stratigility\Middleware\ErrorHandler;

@@ -1,5 +1,6 @@
 <?php // phpcs:disable Generic.PHP.DiscourageGoto.Found
 
+
 declare(strict_types=1);
 
 namespace Mwop\Blog\Handler;
