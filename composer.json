@@ -41,7 +41,7 @@
         "mezzio/mezzio-problem-details": "^1.5",
         "mezzio/mezzio-session": "^1.5",
         "mezzio/mezzio-session-cache": "^1.6",
-        "mezzio/mezzio-swoole": "^3.5.1",
+        "mezzio/mezzio-swoole": "^4.0",
         "middlewares/csp": "^3.0",
         "mnapoli/front-yaml": "^1.7",
         "monolog/monolog": "^1.23",

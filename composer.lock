@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a351c30bfcca4325f1af2b207567f7b6",
+    "content-hash": "4bc7a93eae15b9ccaf29c988a7ef53e7",
     "packages": [
         {
             "name": "abraham/twitteroauth",
@@ -1970,30 +1970,26 @@
         },
         {
             "name": "laminas/laminas-httphandlerrunner",
-            "version": "1.5.0",
+            "version": "2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-httphandlerrunner.git",
-                "reference": "5f94e55d93f756e8ad07b9049aeb3d6d84582d0e"
+                "reference": "4d337cde83e6b901a4443b0ab5c3b97cbaa46413"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-httphandlerrunner/zipball/5f94e55d93f756e8ad07b9049aeb3d6d84582d0e",
-                "reference": "5f94e55d93f756e8ad07b9049aeb3d6d84582d0e",
+                "url": "https://api.github.com/repos/laminas/laminas-httphandlerrunner/zipball/4d337cde83e6b901a4443b0ab5c3b97cbaa46413",
+                "reference": "4d337cde83e6b901a4443b0ab5c3b97cbaa46413",
                 "shasum": ""
             },
             "require": {
-                "laminas/laminas-zendframework-bridge": "^1.0",
                 "php": "^7.3 || ~8.0.0 || ~8.1.0",
                 "psr/http-message": "^1.0",
                 "psr/http-message-implementation": "^1.0",
                 "psr/http-server-handler": "^1.0"
             },
-            "replace": {
-                "zendframework/zend-httphandlerrunner": "^1.1.0"
-            },
             "require-dev": {
-                "laminas/laminas-coding-standard": "~1.0.0",
+                "laminas/laminas-coding-standard": "~2.3.0",
                 "laminas/laminas-diactoros": "^2.8.0",
                 "phpunit/phpunit": "^9.5.9",
                 "psalm/plugin-phpunit": "^0.16.1",
@@ -2037,7 +2033,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2021-09-22T09:17:54+00:00"
+            "time": "2021-09-22T09:27:36+00:00"
         },
         {
             "name": "laminas/laminas-inputfilter",
@@ -2921,21 +2917,21 @@
         },
         {
             "name": "mezzio/mezzio",
-            "version": "3.7.0",
+            "version": "3.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mezzio/mezzio.git",
-                "reference": "974ada22c4be16130656f9a688a630aaf1e4baa7"
+                "reference": "e2d81de19ebd1c09c3f047f9d6a233688cbe34b0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mezzio/mezzio/zipball/974ada22c4be16130656f9a688a630aaf1e4baa7",
-                "reference": "974ada22c4be16130656f9a688a630aaf1e4baa7",
+                "url": "https://api.github.com/repos/mezzio/mezzio/zipball/e2d81de19ebd1c09c3f047f9d6a233688cbe34b0",
+                "reference": "e2d81de19ebd1c09c3f047f9d6a233688cbe34b0",
                 "shasum": ""
             },
             "require": {
                 "fig/http-message-util": "^1.1.5",
-                "laminas/laminas-httphandlerrunner": "^1.5",
+                "laminas/laminas-httphandlerrunner": "^2.1",
                 "laminas/laminas-stratigility": "^3.5",
                 "mezzio/mezzio-router": "^3.7",
                 "mezzio/mezzio-template": "^2.2",
@@ -3026,7 +3022,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2021-12-01T18:45:03+00:00"
+            "time": "2021-12-07T07:17:08+00:00"
         },
         {
             "name": "mezzio/mezzio-authentication",
@@ -3729,16 +3725,16 @@
         },
         {
             "name": "mezzio/mezzio-swoole",
-            "version": "3.5.1",
+            "version": "4.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mezzio/mezzio-swoole.git",
-                "reference": "67de9505c86a4d058668be81804ab1619c29d55a"
+                "reference": "458a57c971529a6a389cb8fcb9a21f863c7cc64b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mezzio/mezzio-swoole/zipball/67de9505c86a4d058668be81804ab1619c29d55a",
-                "reference": "67de9505c86a4d058668be81804ab1619c29d55a",
+                "url": "https://api.github.com/repos/mezzio/mezzio-swoole/zipball/458a57c971529a6a389cb8fcb9a21f863c7cc64b",
+                "reference": "458a57c971529a6a389cb8fcb9a21f863c7cc64b",
                 "shasum": ""
             },
             "require": {
@@ -3746,7 +3742,7 @@
                 "dflydev/fig-cookies": "^2.0.1 || ^3.0",
                 "laminas/laminas-cli": "^0.1.5 || ^1.0",
                 "laminas/laminas-diactoros": "^1.8 || ^2.0",
-                "laminas/laminas-httphandlerrunner": "^1.0.1",
+                "laminas/laminas-httphandlerrunner": "^2.1",
                 "mezzio/mezzio": "^3.0.2",
                 "php": "^7.4 || ~8.0.0 || ~8.1.0",
                 "psr/container": "^1.0",
@@ -3755,7 +3751,7 @@
                 "psr/http-message-implementation": "^1.0",
                 "psr/http-server-handler": "^1.0",
                 "psr/log": "^1.0",
-                "symfony/console": "^4.1 || ^5.0",
+                "symfony/console": "^5.0 || ^6.0",
                 "webmozart/assert": "^1.9"
             },
             "conflict": {
@@ -3764,7 +3760,7 @@
             },
             "require-dev": {
                 "filp/whoops": "^2.1",
-                "laminas/laminas-coding-standard": "~2.2.0",
+                "laminas/laminas-coding-standard": "~2.3.0",
                 "laminas/laminas-servicemanager": "^3.3",
                 "phpunit/phpunit": "^9.5.5",
                 "psalm/plugin-phpunit": "^0.13.0",
@@ -3813,7 +3809,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2021-12-03T17:49:52+00:00"
+            "time": "2021-12-16T15:56:52+00:00"
         },
         {
             "name": "mezzio/mezzio-template",
@@ -5816,23 +5812,23 @@
         },
         {
             "name": "symfony/console",
-            "version": "v5.4.0",
+            "version": "v5.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "ec3661faca1d110d6c307e124b44f99ac54179e3"
+                "reference": "9130e1a0fc93cb0faadca4ee917171bd2ca9e5f4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/ec3661faca1d110d6c307e124b44f99ac54179e3",
-                "reference": "ec3661faca1d110d6c307e124b44f99ac54179e3",
+                "url": "https://api.github.com/repos/symfony/console/zipball/9130e1a0fc93cb0faadca4ee917171bd2ca9e5f4",
+                "reference": "9130e1a0fc93cb0faadca4ee917171bd2ca9e5f4",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.2.5",
                 "symfony/deprecation-contracts": "^2.1|^3",
                 "symfony/polyfill-mbstring": "~1.0",
-                "symfony/polyfill-php73": "^1.8",
+                "symfony/polyfill-php73": "^1.9",
                 "symfony/polyfill-php80": "^1.16",
                 "symfony/service-contracts": "^1.1|^2|^3",
                 "symfony/string": "^5.1|^6.0"
@@ -5895,7 +5891,7 @@
                 "terminal"
             ],
             "support": {
-                "source": "https://github.com/symfony/console/tree/v5.4.0"
+                "source": "https://github.com/symfony/console/tree/v5.4.1"
             },
             "funding": [
                 {
@@ -5911,7 +5907,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-11-29T15:30:56+00:00"
+            "time": "2021-12-09T11:22:43+00:00"
         },
         {
             "name": "symfony/deprecation-contracts",
@@ -5982,16 +5978,16 @@
         },
         {
             "name": "symfony/event-dispatcher",
-            "version": "v6.0.0",
+            "version": "v6.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/event-dispatcher.git",
-                "reference": "2774908d5ae32fd94e363e7cbbd87462712c4576"
+                "reference": "4f06d19a5f78087061f9de6df3269c139c3d289d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/2774908d5ae32fd94e363e7cbbd87462712c4576",
-                "reference": "2774908d5ae32fd94e363e7cbbd87462712c4576",
+                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/4f06d19a5f78087061f9de6df3269c139c3d289d",
+                "reference": "4f06d19a5f78087061f9de6df3269c139c3d289d",
                 "shasum": ""
             },
             "require": {
@@ -6045,7 +6041,7 @@
             "description": "Provides tools that allow your application components to communicate with each other by dispatching events and listening to them",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/event-dispatcher/tree/v6.0.0"
+                "source": "https://github.com/symfony/event-dispatcher/tree/v6.0.1"
             },
             "funding": [
                 {
@@ -6061,7 +6057,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-11-23T19:05:29+00:00"
+            "time": "2021-12-08T15:13:44+00:00"
         },
         {
             "name": "symfony/event-dispatcher-contracts",
@@ -7018,16 +7014,16 @@
         },
         {
             "name": "symfony/string",
-            "version": "v6.0.0",
+            "version": "v6.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/string.git",
-                "reference": "ba727797426af0f587f4800566300bdc0cda0777"
+                "reference": "0cfed595758ec6e0a25591bdc8ca733c1896af32"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/string/zipball/ba727797426af0f587f4800566300bdc0cda0777",
-                "reference": "ba727797426af0f587f4800566300bdc0cda0777",
+                "url": "https://api.github.com/repos/symfony/string/zipball/0cfed595758ec6e0a25591bdc8ca733c1896af32",
+                "reference": "0cfed595758ec6e0a25591bdc8ca733c1896af32",
                 "shasum": ""
             },
             "require": {
@@ -7083,7 +7079,7 @@
                 "utf8"
             ],
             "support": {
-                "source": "https://github.com/symfony/string/tree/v6.0.0"
+                "source": "https://github.com/symfony/string/tree/v6.0.1"
             },
             "funding": [
                 {
@@ -7099,7 +7095,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-10-29T07:35:21+00:00"
+            "time": "2021-12-08T15:13:44+00:00"
         },
         {
             "name": "symfony/yaml",
@@ -8050,16 +8046,16 @@
         },
         {
             "name": "phpspec/prophecy",
-            "version": "1.14.0",
+            "version": "v1.15.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpspec/prophecy.git",
-                "reference": "d86dfc2e2a3cd366cee475e52c6bb3bbc371aa0e"
+                "reference": "bbcd7380b0ebf3961ee21409db7b38bc31d69a13"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/d86dfc2e2a3cd366cee475e52c6bb3bbc371aa0e",
-                "reference": "d86dfc2e2a3cd366cee475e52c6bb3bbc371aa0e",
+                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/bbcd7380b0ebf3961ee21409db7b38bc31d69a13",
+                "reference": "bbcd7380b0ebf3961ee21409db7b38bc31d69a13",
                 "shasum": ""
             },
             "require": {
@@ -8111,9 +8107,9 @@
             ],
             "support": {
                 "issues": "https://github.com/phpspec/prophecy/issues",
-                "source": "https://github.com/phpspec/prophecy/tree/1.14.0"
+                "source": "https://github.com/phpspec/prophecy/tree/v1.15.0"
             },
-            "time": "2021-09-10T09:02:12+00:00"
+            "time": "2021-12-08T12:19:24+00:00"
         },
         {
             "name": "phpstan/phpdoc-parser",
