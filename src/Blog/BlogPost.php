@@ -10,16 +10,16 @@ use DateTimeInterface;
 class BlogPost
 {
     public function __construct(
-        public string $id,
-        public string $title,
-        public string $author,
-        public DateTimeInterface $created,
-        public ?DateTimeInterface $updated,
-        public array $tags,
-        public string $body,
-        public string $extended,
-        public bool $isDraft,
-        public bool $isPublic
+        public readonly string $id,
+        public readonly string $title,
+        public readonly string $author,
+        public readonly DateTimeInterface $created,
+        public readonly ?DateTimeInterface $updated,
+        public readonly array $tags,
+        public readonly string $body,
+        public readonly string $extended,
+        public readonly bool $isDraft,
+        public readonly bool $isPublic
     ) {
     }
 }
