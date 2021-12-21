@@ -7,7 +7,6 @@ namespace Mwop\Blog;
 
 use DateTime;
 use DateTimeZone;
-use Mni\FrontYAML\Bridge\CommonMark\CommonMarkParser;
 use Mni\FrontYAML\Parser;
 use RuntimeException;
 
@@ -33,7 +32,7 @@ trait CreateBlogPostFromDataArrayTrait
     private function getParser(): Parser
     {
         if (! $this->parser) {
-            $this->parser = new Parser(null, new CommonMarkParser());
+            $this->parser = new Parser();
         }
 
         return $this->parser;
