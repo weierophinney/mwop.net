@@ -16,7 +16,7 @@ class FetchBlogPostFromMapperListener
 
     public function __invoke(FetchBlogPostEvent $event): void
     {
-        $post = $this->mapper->fetch($event->id());
+        $post = $this->mapper->fetch($event->id);
 
         if (! $post instanceof BlogPost) {
             return;

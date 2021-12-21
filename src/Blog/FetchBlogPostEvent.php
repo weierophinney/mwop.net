@@ -15,7 +15,7 @@ class FetchBlogPostEvent implements
 
     private ?BlogPost $post = null;
 
-    public function __construct(private string $id)
+    public function __construct(public readonly string $id)
     {
     }
 
@@ -36,11 +36,6 @@ class FetchBlogPostEvent implements
     public function blogPost(): ?BlogPost
     {
         return $this->post;
-    }
-
-    public function id(): string
-    {
-        return $this->id;
     }
 
     public function provideBlogPostFromCache(BlogPost $post): void

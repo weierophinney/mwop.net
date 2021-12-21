@@ -29,7 +29,7 @@ class CacheBlogPostListener
             return;
         }
 
-        $item = $this->cache->getItem($event->id());
+        $item = $this->cache->getItem($event->id);
         $item->set(serialize($post));
         $this->cache->save($item);
     }
