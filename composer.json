@@ -3,7 +3,12 @@
     "license": "BSD-2-Clause",
     "description": "Source code for mwop.net",
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "laminas/laminas-component-installer": true,
+            "composer/package-versions-deprecated": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
     },
     "repositories": {
         "phly-comic": {
