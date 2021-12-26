@@ -18,6 +18,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Throwable;
 
+use function addslashes;
 use function file_get_contents;
 use function file_put_contents;
 use function get_debug_type;
@@ -129,7 +130,7 @@ class FeedAggregator extends Command
             $entries->reduce(function (string $string, array|ArrayAccess $entry): string {
                 return $string . sprintf(
                     $this->itemFormat,
-                    $entry['title'],
+                    addslashes($entry['title']),
                     $entry['link'],
                     $entry['favicon'],
                     $entry['sitename'],
