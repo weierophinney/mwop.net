@@ -10,7 +10,7 @@
         <a href="https://twitter.com/mwop">tweet at me</a>.
     </p>
 
-    <?php if ($error) : ?>
+    <?php if (isset($error)): ?>
     <pre><?= $this->e($error) ?></pre>
     <?php endif ?>
 </section>
