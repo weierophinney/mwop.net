@@ -21,13 +21,10 @@ class FeedCollection extends Collection
         $filters = Collection::make($filters);
         return $this->filter(function (mixed $item) use ($filters): bool {
             return $filters
-                ->reduce(function ($keep, callable $filter) use ($item) {
-                    if (! $keep) {
-                        return $keep;
-                    }
-
-                    return $filter($item);
-                }, true);
+                ->reduce(
+                    fn ($keep, callable $filter) => ! $keep ? $keep : $filter($item),
+                    true
+                );
         });
     }
 }

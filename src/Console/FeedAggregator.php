@@ -105,15 +105,11 @@ class FeedAggregator extends Command
     private function getEntries(SymfonyStyle $io): FeedCollection
     {
         return $this->feeds
-            ->reduce(function (FeedCollection $entries, array $feedInfo) use ($io): FeedCollection {
-                return $entries->merge($this->marshalEntries($feedInfo, $io));
-            }, FeedCollection::make([]))
+            ->reduce(
+                fn (FeedCollection $entries, array $feedInfo): FeedCollection => $entries->merge($this->marshalEntries($feedInfo, $io)),
+                FeedCollection::make([])
+            )
             ->sortByDesc('date-created')
-        /*
-            ->each(function ($entry) {
-                printf("- [%s] %s (%s)\n", $entry['date-created']->format('Y-m-d'), $entry['title'], $entry['link']);
-            })
-         */
             ->slice(0, $this->toRetrieve);
     }
 
@@ -127,16 +123,17 @@ class FeedAggregator extends Command
         return sprintf(
             $this->configFormat,
             // phpcs:ignore
-            $entries->reduce(function (string $string, array|ArrayAccess $entry): string {
-                return $string . sprintf(
+            $entries->reduce(
+                fn (string $string, array|ArrayAccess $entry): string => $string . sprintf(
                     $this->itemFormat,
                     addslashes($entry['title']),
                     $entry['link'],
                     $entry['favicon'],
                     $entry['sitename'],
                     $entry['siteurl']
-                );
-            }, '')
+                ),
+                ''
+            )
         );
     }
 
@@ -170,16 +167,14 @@ class FeedAggregator extends Command
         $entries = FeedCollection::make($feed)
             ->filterChain($filters)
             ->each($each)
-            ->map(function (EntryInterface $entry) use ($logo, $siteName, $siteUrl): array {
-                return [
+            ->map(fn (EntryInterface $entry): array => [
                     'title'        => $entry->getTitle(),
                     'link'         => $entry->getLink(),
                     'date-created' => $entry->getDateCreated(),
                     'favicon'      => $logo,
                     'sitename'     => $siteName,
                     'siteurl'      => $siteUrl,
-                ];
-            });
+            ]);
 
         $io->progressFinish();
 
