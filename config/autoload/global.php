@@ -14,20 +14,6 @@ return [
     'github'               => [
         'user' => 'weierophinney',
     ],
-    'oauth2'               => [
-        'github' => [
-            'clientId'     => null,
-            'clientSecret' => null,
-            'redirectUri'  => null,
-        ],
-        'google' => [
-            'clientId'     => null,
-            'clientSecret' => null,
-            'redirectUri'  => null,
-            // Enable this to restrict authentication to users at the listed domain:
-            // 'hostedDomain' => 'https://mwop.net',
-        ],
-    ],
     'mezzio'               => [
         'error_handler' => [
             'template_404'   => 'error::404',

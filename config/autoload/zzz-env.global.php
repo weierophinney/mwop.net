@@ -76,21 +76,4 @@ return [
             'password' => $_SERVER['MAIL_TRANSPORT_PASSWORD'] ?? '',
         ],
     ],
-    /*
-    'oauth2'        => [
-        'debug'  => [],
-        'github' => [
-            'clientId'     => $_SERVER['OAUTH2_GITHUB_CLIENTID'],
-            'clientSecret' => $_SERVER['OAUTH2_GITHUB_CLIENTSECRET'],
-            'redirectUri'  => $_SERVER['OAUTH2_GITHUB_REDIRECTURI'],
-        ],
-        'google' => [
-            'clientId'     => $_SERVER['OAUTH2_GOOGLE_CLIENTID'],
-            'clientSecret' => $_SERVER['OAUTH2_GOOGLE_CLIENTSECRET'],
-            'redirectUri'  => $_SERVER['OAUTH2_GOOGLE_REDIRECTURI'],
-            // Enable this to restrict authentication to users at the listed domain:
-            // 'hostedDomain' => $_SERVER['OAUTH2_GOOGLE_HOSTEDDOMAIN'],
-        ],
-    ],
-     */
 ];

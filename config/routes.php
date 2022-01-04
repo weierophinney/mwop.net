@@ -25,7 +25,4 @@ return function (
 
     // Contact form
     (new Contact\ConfigProvider())->registerRoutes($app, '/contact');
-
-    // OAuth2 routes
-    (new OAuth2\ConfigProvider())->registerRoutes($app, '/auth');
 };
