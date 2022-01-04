@@ -22,8 +22,7 @@ class ConfigProvider
 
     public function getDependencies(): array
     {
-        // @codingStandardsIgnoreStart
-        // phpcs:disable
+        // phpcs:disable Generic.Files.LineLength.TooLong
         return [
             'factories' => [
                 'config-oauth2'                                 => ConfigFactory::class,
@@ -33,8 +32,7 @@ class ConfigProvider
                 Provider\ProviderFactory::class                 => Provider\ProviderFactoryFactory::class,
             ],
         ];
-        // phpcs:enable
-        // @codingStandardsIgnoreEnd
+        // phpcs:enable Generic.Files.LineLength.TooLong
     }
 
     public function getTemplateConfig(): array
