@@ -100,9 +100,10 @@ class FeedGenerator extends Command
         );
 
         $cloud = $this->mapper->fetchTagCloud();
-        $tags  = array_map(function (Item $item): string {
-            return $item->getTitle();
-        }, iterator_to_array($cloud->getItemList()));
+        $tags  = array_map(
+            fn (Item $item): string => $item->getTitle(),
+            iterator_to_array($cloud->getItemList())
+        );
 
         foreach ($tags as $tag) {
             if (empty($tag)) {

@@ -45,20 +45,24 @@ class PdoMapper implements MapperInterface
 
     public function fetchAllByAuthor(string $author): Paginator
     {
-        $select = 'SELECT * FROM posts '
-            . 'WHERE draft = 0 AND public = 1 AND author = :author '
-            . 'ORDER BY created '
-            . 'DESC LIMIT :offset, :limit';
+        $select = <<< 'END'
+            SELECT * FROM posts
+            WHERE draft = 0 AND public = 1 AND author = :author
+            ORDER BY created DESC
+            LIMIT :offset, :limit
+            END;
         $count  = 'SELECT COUNT(id) FROM posts WHERE draft = 0 AND public = 1 AND author = :author';
         return $this->preparePaginator($select, $count, [':author' => $author]);
     }
 
     public function fetchAllByTag(string $tag): Paginator
     {
-        $select = 'SELECT * FROM posts '
-            . 'WHERE draft = 0 AND public = 1 AND tags LIKE :tag '
-            . 'ORDER BY created '
-            . 'DESC LIMIT :offset, :limit';
+        $select = <<< 'END'
+            SELECT * FROM posts
+            WHERE draft = 0 AND public = 1 AND tags LIKE :tag
+            ORDER BY created DESC
+            LIMIT :offset, :limit
+            END;
         $count  = 'SELECT COUNT(id) FROM posts WHERE draft = 0 AND public = 1 AND tags LIKE :tag';
         return $this->preparePaginator($select, $count, [':tag' => sprintf('%%|%s|%%', $tag)]);
     }

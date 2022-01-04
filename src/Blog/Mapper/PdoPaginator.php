@@ -42,7 +42,7 @@ class PdoPaginator implements AdapterInterface
         $result = $this->select->execute($params) ?? throw new RuntimeException('Failed to fetch items from database');
 
         return array_map(
-            Closure::fromCallable([$this, 'createBlogPostFromDataArray']),
+            [$this, 'createBlogPostFromDataArray'](...),
             $this->select->fetchAll(PDO::FETCH_ASSOC)
         );
     }

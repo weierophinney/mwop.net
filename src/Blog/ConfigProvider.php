@@ -53,9 +53,8 @@ class ConfigProvider
 
     public function getDependencies(): array
     {
+        // phpcs:disable Generic.Files.LineLength.TooLong
         return [
-            // @codingStandardsIgnoreStart
-            // phpcs:disable
             'factories' => [
                 BlogCachePool::class                            => BlogCachePoolFactory::class,
                 'config-blog'                                   => ConfigFactory::class,
@@ -81,8 +80,6 @@ class ConfigProvider
                 Twitter\TweetLatestEventListener::class         => Twitter\TweetLatestEventListenerFactory::class,
                 Twitter\TwitterFactory::class                   => Twitter\TwitterFactoryFactory::class,
             ],
-            // phpcs:enable
-            // @codingStandardsIgnoreEnd
             'invokables' => [
                 Console\GenerateSearchData::class => Console\GenerateSearchData::class,
                 Console\SeedBlogDatabase::class   => Console\SeedBlogDatabase::class,
@@ -97,6 +94,7 @@ class ConfigProvider
                 ],
             ],
         ];
+        // phpcs:enable Generic.Files.LineLength.TooLong
     }
 
     public function getTemplateConfig(): array

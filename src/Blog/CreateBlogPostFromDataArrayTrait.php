@@ -5,7 +5,8 @@ declare(strict_types=1);
 
 namespace Mwop\Blog;
 
-use DateTime;
+use DateTimeImmutable;
+use DateTimeInterface;
 use DateTimeZone;
 use Mni\FrontYAML\Parser;
 use RuntimeException;
@@ -52,27 +53,28 @@ trait CreateBlogPostFromDataArrayTrait
         $updated  = $post['updated'] && $post['updated'] !== $post['created']
             ? $this->createDateTimeFromString($post['updated'])
             : $created;
+        $tags     = is_array($post['tags'])
+            ? $post['tags']
+            : explode('|', trim((string) $post['tags'], '|'));
 
         return new BlogPost(
-            $post['id'],
-            $post['title'],
-            $post['author'],
-            $created,
-            $updated,
-            is_array($post['tags'])
-                ? $post['tags']
-                : explode('|', trim((string) $post['tags'], '|')),
-            $parts[0],
-            $parts[1] ?? '',
-            (bool) $post['draft'],
-            (bool) $post['public']
+            id: $post['id'],
+            title: $post['title'],
+            author: $post['author'],
+            created: $created,
+            updated: $updated,
+            tags: $tags,
+            body: $parts[0],
+            extended: $parts[1] ?? '',
+            isDraft: (bool) $post['draft'],
+            isPublic: (bool) $post['public'],
         );
     }
 
-    private function createDateTimeFromString(string $dateString): DateTime
+    private function createDateTimeFromString(string $dateString): DateTimeInterface
     {
         return is_numeric($dateString)
-            ? new DateTime('@' . $dateString, new DateTimeZone('America/Chicago'))
-            : new DateTime($dateString);
+            ? new DateTimeImmutable('@' . $dateString, new DateTimeZone('America/Chicago'))
+            : new DateTimeImmutable($dateString);
     }
 }

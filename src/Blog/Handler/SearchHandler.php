@@ -34,13 +34,13 @@ class SearchHandler implements RequestHandlerInterface
             return new JsonResponse([]);
         }
 
-        // phpcs:ignore
-        $results = array_map(function (array|ArrayAccess $row): array {
-            return [
+        $results = array_map(
+            fn (array|ArrayAccess $row): array => [
                 'link'  => $this->urlHelper->generate('blog.post', ['id' => $row['id']]),
                 'title' => $row['title'],
-            ];
-        }, $this->mapper->search($toMatch));
+            ],
+            $this->mapper->search($toMatch)
+        );
 
         return new JsonResponse($results);
     }
