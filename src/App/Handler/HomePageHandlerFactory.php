@@ -38,10 +38,8 @@ class HomePageHandlerFactory
 
         $posts = include $location;
 
-        if (! is_array($posts)) {
-            return [];
-        }
-
-        return $posts;
+        return is_array($posts)
+            ? $posts
+            : [];
     }
 }

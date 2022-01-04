@@ -119,31 +119,27 @@ class ConfigProvider
                         },
                     ],
                     'normalizers' => [
-                        function (string $content): string {
-                            // Munge publication dates to valid format (RSS)
-                            return preg_replace_callback(
-                                // phpcs:ignore Generic.Files.LineLength.TooLong
-                                '#<pubDate>(?P<dow>Mon|Tue|Wed|Thu|Fri|Sat|Sun),\D+(?P<month>\d+)/(?P<day>\d+)/(?P<year>\d+)\D+(?P<hour>\d+):(?P<min>\d+)</pubDate>#',
-                                function (array $matches): string {
-                                    return sprintf(
-                                        '<pubDate>%s, %02d %s %d %02d:%02d:00 America/Chicago</pubDate>',
-                                        $matches['dow'],
-                                        $matches['day'],
-                                        // Need textual representation of Month name
-                                        date('M', strtotime(sprintf(
-                                            '%d-%02d-%02d',
-                                            $matches['year'],
-                                            $matches['month'],
-                                            $matches['day']
-                                        ))),
-                                        $matches['year'],
-                                        $matches['hour'],
-                                        $matches['min'],
-                                    );
-                                },
-                                $content
-                            ) ?: $content;
-                        },
+                        // Munge publication dates to valid format (RSS)
+                        fn (string $content): string  => preg_replace_callback(
+                            // phpcs:ignore Generic.Files.LineLength.TooLong
+                            '#<pubDate>(?P<dow>Mon|Tue|Wed|Thu|Fri|Sat|Sun),\D+(?P<month>\d+)/(?P<day>\d+)/(?P<year>\d+)\D+(?P<hour>\d+):(?P<min>\d+)</pubDate>#',
+                            fn (array $matches): string => sprintf(
+                                '<pubDate>%s, %02d %s %d %02d:%02d:00 America/Chicago</pubDate>',
+                                $matches['dow'],
+                                $matches['day'],
+                                // Need textual representation of Month name
+                                date('M', strtotime(sprintf(
+                                    '%d-%02d-%02d',
+                                    $matches['year'],
+                                    $matches['month'],
+                                    $matches['day']
+                                ))),
+                                $matches['year'],
+                                $matches['hour'],
+                                $matches['min'],
+                            ),
+                            $content
+                        ) ?: $content,
                     ],
                 ],
             ],

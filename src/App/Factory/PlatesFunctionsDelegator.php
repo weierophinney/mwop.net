@@ -76,13 +76,14 @@ class PlatesFunctionsDelegator implements ExtensionInterface
 
     public function processTags(array $tags): array
     {
-        return array_map(function (string $tag): object {
-            return (object) [
+        return array_map(
+            fn (string $tag): object => (object) [
                 'name' => $this->template->e($tag),
                 'link' => $this->template->url('blog.tag', ['tag' => $tag]),
                 'atom' => $this->template->url('blog.tag.feed', ['tag' => $tag, 'type' => 'atom']),
                 'rss'  => $this->template->url('blog.tag.feed', ['tag' => $tag, 'type' => 'rss']),
-            ];
-        }, $tags);
+            ],
+            $tags
+        );
     }
 }

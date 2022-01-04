@@ -42,9 +42,13 @@ class PageHandlerFactory
 
     private function camelCaseToDotSeparated(string $string): string
     {
-        return preg_replace_callback('/(^|[a-z])([A-Z])/', function (array $matches): string {
-            $string = strlen($matches[1]) ? sprintf('%s.%s', $matches[1], $matches[2]) : $matches[2];
-            return strtolower($string);
-        }, $string);
+        return preg_replace_callback(
+            '/(^|[a-z])([A-Z])/',
+            fn (array $matches): string => strtolower(
+                strlen($matches[1])
+                    ? sprintf('%s.%s', $matches[1], $matches[2])
+                    : $matches[2]
+            ),
+            $string);
     }
 }
