@@ -19,15 +19,11 @@ class AtomCollection extends Collection
     public function filterChain(array $filters): self
     {
         $filters = Collection::make($filters);
-        return $this->filter(function (mixed $item) use ($filters): bool {
-            return $filters
-                ->reduce(function (bool $keep, callable $filter) use ($item): bool {
-                    if (! $keep) {
-                        return $keep;
-                    }
-
-                    return $filter($item);
-                }, true);
-        });
+        return $this->filter(
+            fn (mixed $item): bool => $filters->reduce(
+                fn (bool $keep, callable $filter): bool  => ! $keep ? $keep : $filter($item),
+                true,
+            )
+        );
     }
 }

@@ -24,12 +24,10 @@ class AtomReaderFactory
 
         $reader = new AtomReader($config['user']);
         $reader->setLimit($config['limit']);
-        $reader->addFilter(function (EntryInterface $entry): bool {
-            if (false !== strpos($entry->getLink(), 'weierophinney/mwop.net')) {
-                return false;
-            }
-            return true;
-        });
+        $reader->addFilter(
+            // phpcs:ignore Generic.Files.LineLength.TooLong
+            fn (EntryInterface $entry): bool => false !== strpos($entry->getLink(), 'weierophinney/mwop.net') ? false : true
+        );
 
         return $reader;
     }
