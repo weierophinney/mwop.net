@@ -17,6 +17,12 @@ $messageToAddress = $_SERVER['CONTACT_MESSAGE_TO_ADDRESS'] ?? '';
  * Defines env-specific settings.
  */
 return [
+    'authentication' => [
+        'allowed_credentials' => [
+            'username' => $_SERVER['AUTH_USERNAME'] ?? null,
+            'password' => $_SERVER['AUTH_PASSWORD'] ?? null,
+        ],
+    ],
     'blog'         => [
         'api'     => [
             'key' => $_SERVER['BLOG_API_KEY'] ?? '',

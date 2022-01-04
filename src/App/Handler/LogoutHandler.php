@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mwop\App\Handler;
 
 use Laminas\Diactoros\Response\RedirectResponse;
+use Mezzio\Authentication\UserInterface;
 use Mezzio\Session\SessionMiddleware;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -15,11 +16,9 @@ class LogoutHandler implements RequestHandlerInterface
     public function handle(Request $request): Response
     {
         $session = $request->getAttribute(SessionMiddleware::SESSION_ATTRIBUTE);
-        $auth    = $session->get('auth') ?? [];
-        $user    = $auth['user'] ?? false;
 
-        if ($user) {
-            $session->clear();
+        if ($session->has(UserInterface::class)) {
+            $session->unset(UserInterface::class);
         }
 
         return $this->redirect($request);

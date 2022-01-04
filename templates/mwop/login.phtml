@@ -1,0 +1,26 @@
+<?php $this->layout('layout::layout', [
+    'title' => 'Login',
+]) ?>
+<section class="login col-md-6">
+    <h2>Login</h2>
+
+    <?php if (isset($error)) : ?>
+    <p class="error">
+        Unable to validate your credentials. Please try again.
+    </p>
+    <?php endif ?>
+
+    <form method="post" name="login" action="<?= $this->url('login') ?>" id="login">
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input class="form-control" type="text" name="username" value="" placeholder="Enter your username" required="required">
+        </div>
+
+        <div class="form-group">
+            <label for="password">Subject:</label>
+            <input class="form-control" type="password" name="password" value="" placeholder="Provide your password" required="required">
+        </div>
+
+        <button type="submit" class="btn btn-outline-primary" name="login">Login</button>
+    </form>
+</section>

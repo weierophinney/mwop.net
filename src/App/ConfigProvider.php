@@ -8,9 +8,17 @@ use Laminas\Feed\Reader\Entry\EntryInterface;
 use Laminas\Feed\Reader\Http\ClientInterface as FeedReaderHttpClientInterface;
 use League\Plates\Engine;
 use Mezzio\Application;
+use Mezzio\Authentication\AuthenticationInterface;
+use Mezzio\Authentication\AuthenticationMiddleware;
+use Mezzio\Authentication\Session\PhpSession;
+use Mezzio\Authentication\UserRepositoryInterface;
+use Mezzio\Authorization\AuthorizationInterface;
+use Mezzio\Authorization\AuthorizationMiddleware;
+use Mezzio\Authorization\Rbac\LaminasRbac;
 use Mezzio\Session\SessionMiddleware;
 use Mezzio\Swoole\Event\EventDispatcherInterface as SwooleEventDispatcher;
 use Middlewares\Csp;
+use Mwop\App\Factory\UserRepositoryFactory;
 use Mwop\Blog\Handler\DisplayPostHandler;
 use Phly\ConfigFactory\ConfigFactory;
 use Phly\EventDispatcher\ListenerProvider\AttachableListenerProvider;
@@ -31,28 +39,33 @@ class ConfigProvider
     public function __invoke(): array
     {
         return [
-            'dependencies'            => $this->getDependencies(),
-            'cache'                   => $this->getCacheConfig(),
-            'content-security-policy' => [],
-            'homepage'                => $this->getHomePageConfig(),
-            'mail'                    => $this->getMailConfig(),
+            'authentication'            => $this->getAuthenticationConfig(),
+            'dependencies'              => $this->getDependencies(),
+            'cache'                     => $this->getCacheConfig(),
+            'content-security-policy'   => [],
+            'homepage'                  => $this->getHomePageConfig(),
+            'mail'                      => $this->getMailConfig(),
+            'mezzio-authorization-rbac' => $this->getAuthorizationConfig(),
         ];
     }
 
     public function getDependencies(): array
     {
+        // phpcs:disable Generic.Files.LineLength.TooLong
         return [
             'aliases'    => [
-                SwooleEventDispatcher::class => EventDispatcherInterface::class,
+                AuthenticationInterface::class => AuthenticationAdapter::class,
+                AuthorizationInterface::class  => LaminasRbac::class,
+                SwooleEventDispatcher::class   => EventDispatcherInterface::class,
             ],
             'invokables' => [
                 Middleware\RedirectsMiddleware::class       => Middleware\RedirectsMiddleware::class,
                 Middleware\XClacksOverheadMiddleware::class => Middleware\XClacksOverheadMiddleware::class,
                 Middleware\XPoweredByMiddleware::class      => Middleware\XPoweredByMiddleware::class,
             ],
-            // @codingStandardsIgnoreStart
-            // phpcs:disable
             'factories' => [
+                AuthenticationAdapter::class                 => AuthenticationAdapterFactory::class,
+                'config-authentication'                      => ConfigFactory::class,
                 'config-cache'                               => ConfigFactory::class,
                 'config-content-security-policy'             => ConfigFactory::class,
                 'config-homepage'                            => ConfigFactory::class,
@@ -64,15 +77,15 @@ class ConfigProvider
                 FeedReaderHttpClientInterface::class         => Feed\HttpPlugClientFactory::class,
                 Handler\ComicsPageHandler::class             => Handler\ComicsPageHandlerFactory::class,
                 Handler\HomePageHandler::class               => Handler\HomePageHandlerFactory::class,
+                Handler\LoginHandler::class                  => Handler\LoginHandlerFactory::class,
                 Handler\PingHandler::class                   => Handler\PingHandlerFactory::class,
                 Handler\PrivacyPolicyPageHandler::class      => Handler\PageHandlerFactory::class,
                 Handler\ResumePageHandler::class             => Handler\PageHandlerFactory::class,
                 'mail.transport'                             => Factory\MailTransport::class,
                 Middleware\RedirectAmpPagesMiddleware::class => Middleware\RedirectAmpPagesMiddlewareFactory::class,
                 SessionCachePool::class                      => SessionCachePoolFactory::class,
+                UserRepositoryInterface::class               => UserRepositoryFactory::class,
             ],
-            // phpcs:enable
-            // @codingStandardsIgnoreEnd
             'delegators' => [
                 AttachableListenerProvider::class => [
                     Factory\SwooleTaskInvokerListenerDelegator::class,
@@ -82,6 +95,36 @@ class ConfigProvider
                 ],
                 Engine::class                     => [
                     Factory\PlatesFunctionsDelegator::class,
+                ],
+            ],
+        ];
+        // phpcs:enable Generic.Files.LineLength.TooLong
+    }
+
+    public function getAuthenticationConfig(): array
+    {
+        return [
+            // Form fields
+            'username' => 'username',
+            'password' => 'password',
+            'redirect' => '/login',
+            // Credentials
+            'allowed_credentials' => [
+                'username' => null,
+                'password' => null,
+            ],
+        ];
+    }
+
+    public function getAuthorizationConfig(): array
+    {
+        return [
+            'roles' => [
+                'admin' => [],
+            ],
+            'permissions' => [
+                'admin' => [
+                    'comics',
                 ],
             ],
         ];
@@ -161,12 +204,26 @@ class ConfigProvider
     public function registerRoutes(Application $app): void
     {
         $app->get('/', Handler\HomePageHandler::class, 'home');
-        $app->get('/comics', Handler\ComicsPageHandler::class, 'comics');
+        $app->get('/comics', [
+            SessionMiddleware::class,
+            AuthenticationMiddleware::class,
+            AuthorizationMiddleware::class,
+            Handler\ComicsPageHandler::class,
+        ], 'comics');
         $app->get('/resume', Handler\ResumePageHandler::class, 'resume');
         $app->get('/privacy-policy', Handler\PrivacyPolicyPageHandler::class, 'privacy-policy');
         $app->get('/api/ping', Handler\PingHandler::class, 'api.ping');
 
-        // Logout
+        // Authentication
+        $app->get('/login', [
+            SessionMiddleware::class,
+            Handler\LoginHandler::class,
+        ], 'login');
+        $app->post('/login', [
+            SessionMiddleware::class,
+            Handler\LoginHandler::class,
+        ]);
+
         $app->get('/logout', [
             SessionMiddleware::class,
             Handler\LogoutHandler::class,
