@@ -6,11 +6,11 @@ namespace Mwop\App;
 
 use Mezzio\Authentication\AuthenticationInterface;
 use Mezzio\Authentication\Session\PhpSession;
-use Psr\Http\Message\ServerRequestInterface;
 use Mezzio\Authentication\UserInterface;
 use Mezzio\Session\SessionInterface;
 use Mezzio\Session\SessionMiddleware;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
 class AuthenticationAdapter implements AuthenticationInterface
 {

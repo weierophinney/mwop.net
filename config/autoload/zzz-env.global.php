@@ -23,7 +23,7 @@ return [
             'password' => $_SERVER['AUTH_PASSWORD'] ?? null,
         ],
     ],
-    'blog'         => [
+    'blog'           => [
         'api'     => [
             'key' => $_SERVER['BLOG_API_KEY'] ?? '',
         ],
@@ -40,12 +40,12 @@ return [
             'access_token_secret' => $_SERVER['TWITTER_ACCESS_TOKEN_SECRET'] ?? '',
         ],
     ],
-    'cache'        => [
+    'cache'          => [
         'connection-parameters' => [
             'host' => 'redis',
         ],
     ],
-    'contact'      => [
+    'contact'        => [
         'recaptcha_pub_key'  => $_SERVER['RECAPTCHA_PUB_KEY'] ?? '',
         'recaptcha_priv_key' => $_SERVER['RECAPTCHA_PRIV_KEY'] ?? '',
         'message'            => [
@@ -56,7 +56,7 @@ return [
             ],
         ],
     ],
-    'dependencies' => [
+    'dependencies'   => [
         'delegators' => [
             CacheBlogPostListener::class      => [
                 DeferredServiceListenerDelegator::class,
@@ -72,7 +72,7 @@ return [
             LoggerInterface::class => AccessLoggerFactory::class,
         ],
     ],
-    'mail'         => [
+    'mail'           => [
         'transport' => [
             'class'    => Swift_SmtpTransport::class,
             'host'     => $_SERVER['MAIL_TRANSPORT_HOST'] ?? '',

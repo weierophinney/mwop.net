@@ -10,7 +10,6 @@ use League\Plates\Engine;
 use Mezzio\Application;
 use Mezzio\Authentication\AuthenticationInterface;
 use Mezzio\Authentication\AuthenticationMiddleware;
-use Mezzio\Authentication\Session\PhpSession;
 use Mezzio\Authentication\UserRepositoryInterface;
 use Mezzio\Authorization\AuthorizationInterface;
 use Mezzio\Authorization\AuthorizationMiddleware;
@@ -63,7 +62,7 @@ class ConfigProvider
                 Middleware\XClacksOverheadMiddleware::class => Middleware\XClacksOverheadMiddleware::class,
                 Middleware\XPoweredByMiddleware::class      => Middleware\XPoweredByMiddleware::class,
             ],
-            'factories' => [
+            'factories'  => [
                 AuthenticationAdapter::class                 => AuthenticationAdapterFactory::class,
                 'config-authentication'                      => ConfigFactory::class,
                 'config-cache'                               => ConfigFactory::class,
@@ -119,7 +118,7 @@ class ConfigProvider
     public function getAuthorizationConfig(): array
     {
         return [
-            'roles' => [
+            'roles'       => [
                 'admin' => [],
             ],
             'permissions' => [

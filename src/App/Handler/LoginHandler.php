@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Mwop\App\Handler;
 
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Server\RequestHandlerInterface;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Laminas\Diactoros\Uri;
@@ -14,6 +11,11 @@ use Mezzio\Authentication\UserInterface;
 use Mezzio\Session\SessionInterface;
 use Mezzio\Template\TemplateRendererInterface;
 use Mwop\App\AuthenticationAdapter;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
+
+use function in_array;
 
 class LoginHandler implements RequestHandlerInterface
 {
