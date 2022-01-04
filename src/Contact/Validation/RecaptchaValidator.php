@@ -19,8 +19,8 @@ use const CURLOPT_USERAGENT;
 
 class RecaptchaValidator implements ValidatorInterface
 {
-    private const RECAPTCHA_VERIFICATION_URI_PATTERN =
-        'https://www.google.com/recaptcha/api/siteverify?secret=%s&response=%s';
+    // phpcs:ignore Generic.Files.LineLength.TooLong
+    private const RECAPTCHA_VERIFICATION_URI_PATTERN = 'https://www.google.com/recaptcha/api/siteverify?secret=%s&response=%s';
 
     private array $messages = [];
 
