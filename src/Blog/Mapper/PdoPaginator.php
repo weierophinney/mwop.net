@@ -5,7 +5,6 @@ declare(strict_types=1);
 
 namespace Mwop\Blog\Mapper;
 
-use Closure;
 use Laminas\Paginator\Adapter\AdapterInterface;
 use Mwop\Blog\BlogPost;
 use Mwop\Blog\CreateBlogPostFromDataArrayTrait;
@@ -42,7 +41,7 @@ class PdoPaginator implements AdapterInterface
         $result = $this->select->execute($params) ?? throw new RuntimeException('Failed to fetch items from database');
 
         return array_map(
-            [$this, 'createBlogPostFromDataArray'](...),
+            [$this, 'createBlogPostFromDataArray']...,
             $this->select->fetchAll(PDO::FETCH_ASSOC)
         );
     }

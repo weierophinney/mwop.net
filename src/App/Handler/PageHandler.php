@@ -1,5 +1,6 @@
 <?php // phpcs:disable Generic.WhiteSpace.ScopeIndent.IncorrectExact
 
+
 declare(strict_types=1);
 
 namespace Mwop\App\Handler;

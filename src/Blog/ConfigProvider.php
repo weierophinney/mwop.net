@@ -55,7 +55,7 @@ class ConfigProvider
     {
         // phpcs:disable Generic.Files.LineLength.TooLong
         return [
-            'factories' => [
+            'factories'  => [
                 BlogCachePool::class                            => BlogCachePoolFactory::class,
                 'config-blog'                                   => ConfigFactory::class,
                 'config-blog.api'                               => ConfigFactory::class,
@@ -70,12 +70,12 @@ class ConfigProvider
                 Handler\FeedHandler::class                      => Handler\FeedHandlerFactory::class,
                 Handler\ListPostsHandler::class                 => Handler\ListPostsHandlerFactory::class,
                 Handler\SearchHandler::class                    => Handler\SearchHandlerFactory::class,
-                Handler\TweetLatestHandler::class               => Handler\TweetLatestHandlerFactory::class,
+                TweetLatestHandler::class                       => Handler\TweetLatestHandlerFactory::class,
                 Listener\CacheBlogPostListener::class           => Listener\CacheBlogPostListenerFactory::class,
                 Listener\FetchBlogPostFromCacheListener::class  => Listener\FetchBlogPostFromCacheListenerFactory::class,
                 Listener\FetchBlogPostFromMapperListener::class => Listener\FetchBlogPostFromMapperListenerFactory::class,
                 Mapper\MapperInterface::class                   => Mapper\MapperFactory::class,
-                Middleware\ValidateAPIKeyMiddleware::class      => Middleware\ValidateAPIKeyMiddlewareFactory::class,
+                ValidateAPIKeyMiddleware::class                 => Middleware\ValidateAPIKeyMiddlewareFactory::class,
                 Twitter\TweetLatest::class                      => Twitter\TweetLatestFactory::class,
                 Twitter\TweetLatestEventListener::class         => Twitter\TweetLatestEventListenerFactory::class,
                 Twitter\TwitterFactory::class                   => Twitter\TwitterFactoryFactory::class,

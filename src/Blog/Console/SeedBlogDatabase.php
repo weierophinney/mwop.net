@@ -38,7 +38,7 @@ class SeedBlogDatabase extends Command
         'CREATE INDEX visible_author ON posts ( author, created, draft, public )',
     ];
 
-    private string $initial = <<< 'EOS'
+    private string $initial = <<<'EOS'
         INSERT INTO posts
         SELECT
             %s AS id,
@@ -53,7 +53,7 @@ class SeedBlogDatabase extends Command
             %s AS tags
         EOS;
 
-    private string $item = <<< 'EOS'
+    private string $item = <<<'EOS'
         UNION SELECT
             %s,
             %s,
@@ -67,7 +67,7 @@ class SeedBlogDatabase extends Command
             %s
         EOS;
 
-    private string $searchTable = <<< 'EOS'
+    private string $searchTable = <<<'EOS'
         CREATE VIRTUAL TABLE search USING FTS4(
             id,
             created,
@@ -77,7 +77,7 @@ class SeedBlogDatabase extends Command
         )
         EOS;
 
-    private string $searchTrigger = <<< 'EOS'
+    private string $searchTrigger = <<<'EOS'
         CREATE TRIGGER after_posts_insert
             AFTER INSERT ON posts
             BEGIN
@@ -98,7 +98,7 @@ class SeedBlogDatabase extends Command
             END
         EOS;
 
-    private string $table = <<< 'EOS'
+    private string $table = <<<'EOS'
         CREATE TABLE "posts" (
             id VARCHAR(255) NOT NULL PRIMARY KEY,
             path VARCHAR(255) NOT NULL,

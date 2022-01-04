@@ -45,7 +45,7 @@ class PdoMapper implements MapperInterface
 
     public function fetchAllByAuthor(string $author): Paginator
     {
-        $select = <<< 'END'
+        $select = <<<'END'
             SELECT * FROM posts
             WHERE draft = 0 AND public = 1 AND author = :author
             ORDER BY created DESC
@@ -57,7 +57,7 @@ class PdoMapper implements MapperInterface
 
     public function fetchAllByTag(string $tag): Paginator
     {
-        $select = <<< 'END'
+        $select = <<<'END'
             SELECT * FROM posts
             WHERE draft = 0 AND public = 1 AND tags LIKE :tag
             ORDER BY created DESC

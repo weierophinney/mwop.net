@@ -49,6 +49,7 @@ class PageHandlerFactory
                     ? sprintf('%s.%s', $matches[1], $matches[2])
                     : $matches[2]
             ),
-            $string);
+            $string
+        );
     }
 }

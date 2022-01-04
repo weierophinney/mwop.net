@@ -106,6 +106,7 @@ class FeedAggregator extends Command
     {
         return $this->feeds
             ->reduce(
+                // phpcs:ignore Generic.Files.LineLength.TooLong
                 fn (FeedCollection $entries, array $feedInfo): FeedCollection => $entries->merge($this->marshalEntries($feedInfo, $io)),
                 FeedCollection::make([])
             )
@@ -168,12 +169,12 @@ class FeedAggregator extends Command
             ->filterChain($filters)
             ->each($each)
             ->map(fn (EntryInterface $entry): array => [
-                    'title'        => $entry->getTitle(),
-                    'link'         => $entry->getLink(),
-                    'date-created' => $entry->getDateCreated(),
-                    'favicon'      => $logo,
-                    'sitename'     => $siteName,
-                    'siteurl'      => $siteUrl,
+                'title'        => $entry->getTitle(),
+                'link'         => $entry->getLink(),
+                'date-created' => $entry->getDateCreated(),
+                'favicon'      => $logo,
+                'sitename'     => $siteName,
+                'siteurl'      => $siteUrl,
             ]);
 
         $io->progressFinish();
