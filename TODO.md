@@ -9,24 +9,10 @@
     - [ ] Social media integration (Twitter cards, Facebook open graph, etc.)
   - [ ] Expand tweet API
     - [ ] Allow specifying a blog ID to tweet (`blog:tweet [-k apikey] <id>`) to tweet an arbitrary blog post.
-- [ ] Github
-  - [ ] Re-create PuSH functionality to have it update my feed(s)?
-    Basically, I could have the initial deploy grab data from GitHub.
-    A webhook would then get any updates and choose whether or not to update the internal feed.
-    That way, instead of polling, I just get updates.
 - [ ] Contact form
   Emails come from me, to me, so they are automatically marked "read" by gmail.
   On top of that, the reply-to does not work.
   I would like to make this work better.
-
-## PHP 8.1
-
-- [x] mezzio-problem-details
-- [x] mezzio-swoole
-- [x] laminas-input-filter
-- [x] laminas-filter
-- [x] laminas-tag
-- [x] mezzio-authentication
-- [x] laminas-component-installer
-- [ ] mezzio-tooling
-  - This is done, but since it depends on laminas-code, which is not yet ready, I've removed it for now.
+- [ ] Switch from Grunt to Gulp
+  See https://www.boag.online/blog/gulp-2021 as it details the majority of what I want to do.
+  There's no need to switch to webpack yet; webpack is more interesting when you're building a SPA.
