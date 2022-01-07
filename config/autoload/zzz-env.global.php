@@ -13,6 +13,12 @@ use Psr\Log\LoggerInterface;
 /** @var string $messageToAddress */
 $messageToAddress = $_SERVER['CONTACT_MESSAGE_TO_ADDRESS'] ?? '';
 
+/** @var string $messageToName */
+$messageToName = $_SERVER['CONTACT_MESSAGE_TO_FULLNAME'] ?? '';
+
+/** @var string $messageFromAddress */
+$messageFromAddress = $_SERVER['CONTACT_MESSAGE_SENDER_ADDRESS'] ?? '';
+
 /**
  * Defines env-specific settings.
  */
@@ -52,7 +58,8 @@ return [
             'to'     => $messageToAddress,
             'from'   => null,
             'sender' => [
-                'address' => $_SERVER['CONTACT_MESSAGE_SENDER_ADDRESS'] ?? '',
+                'address' => $messageFromAddress,
+                'name'    => 'mwop.net Contact Form',
             ],
         ],
     ],
@@ -74,12 +81,7 @@ return [
     ],
     'mail'           => [
         'transport' => [
-            'class'    => Swift_SmtpTransport::class,
-            'host'     => $_SERVER['MAIL_TRANSPORT_HOST'] ?? '',
-            'port'     => $_SERVER['MAIL_TRANSPORT_PORT'] ?? '',
-            'ssl'      => 'tls',
-            'username' => $_SERVER['MAIL_TRANSPORT_USERNAME'] ?? '',
-            'password' => $_SERVER['MAIL_TRANSPORT_PASSWORD'] ?? '',
+            'apikey' => $_SERVER['SENDGRID_APIKEY'] ?? '',
         ],
     ],
 ];

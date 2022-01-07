@@ -23,7 +23,6 @@ use Phly\ConfigFactory\ConfigFactory;
 use Phly\EventDispatcher\ListenerProvider\AttachableListenerProvider;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
-use Swift_SmtpTransport;
 
 use function date;
 use function getcwd;
@@ -193,9 +192,7 @@ class ConfigProvider
     {
         return [
             'transport' => [
-                'class'    => Swift_SmtpTransport::class,
-                'username' => '',
-                'password' => '',
+                'apikey' => '',
             ],
         ];
     }

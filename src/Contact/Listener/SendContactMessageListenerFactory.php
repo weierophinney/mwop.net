@@ -6,6 +6,7 @@ declare(strict_types=1);
 namespace Mwop\Contact\Listener;
 
 use Psr\Container\ContainerInterface;
+use Psr\Log\LoggerInterface;
 use RuntimeException;
 
 use function sprintf;
@@ -33,6 +34,7 @@ class SendContactMessageListenerFactory
         return new SendContactMessageListener(
             mailer: $container->get('mail.transport'),
             config: $config,
+            logger: $container->get(LoggerInterface::class),
         );
     }
 }
