@@ -13,3 +13,5 @@
   Emails come from me, to me, so they are automatically marked "read" by gmail.
   On top of that, the reply-to does not work.
   I would like to make this work better.
+- [ ] /now page
+  See https://nownownow.com/about and https://www.stefankoopmanschap.com/now/
