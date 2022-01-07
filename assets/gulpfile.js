@@ -1,12 +1,12 @@
 'use strict';
 
-const concat     = require('gulp-concat');
-const del        = require('del');
-const gulp       = require('gulp');
-const minify     = require('gulp-minify-css');
-const rename     = require('gulp-rename');
-const sass       = require('gulp-sass')(require('node-sass'));
-const uglify     = require('gulp-uglify');
+const concat = require('gulp-concat');
+const del    = require('del');
+const gulp   = require('gulp');
+const minify = require('gulp-clean-css');
+const rename = require('gulp-rename');
+const sass   = require('gulp-sass')(require('node-sass'));
+const uglify = require('gulp-uglify');
 
 // CSS
 
