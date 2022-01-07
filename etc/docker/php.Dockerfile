@@ -34,8 +34,8 @@ RUN set -e; \
     npm install -g agentkeepalive --save; \
     echo "Upgrading npm to latest version"; \
     npm install -g npm@latest; \
-    echo "Installing Grunt"; \
-    npm install -g grunt-cli
+    echo "Installing Gulp"; \
+    npm install -g gulp-cli
 
 COPY assets /assets
 WORKDIR assets
@@ -47,7 +47,7 @@ RUN set -e; \
     echo "Installing asset dependencies"; \
     npm install; \
     echo "Building assets"; \
-    grunt
+    gulp default
 
 # Build the PHP container
 FROM cr.zend.com/zendphp/8.1:ubuntu-20.04-cli
