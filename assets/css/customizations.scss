@@ -342,3 +342,30 @@ img.max-width {
 .social-media {
   padding-bottom: 1em;
 }
+
+/* Now page styles */
+.now {
+  h4 {
+    font-size: 2em;
+    margin-top: 1em;
+  }
+
+  p {
+    font-size: 1.4em;
+    line-height: 1.6em;
+  }
+
+  li {
+    padding-left: 0;
+    margin-left: 0;
+    list-style-type: none;
+    text-indent: -5px;
+    font-family: 'Libre Baskerville', serif;
+
+    &:before {
+      content: "-";
+      position: relative;
+      left: -5px;
+    }
+  }
+}
