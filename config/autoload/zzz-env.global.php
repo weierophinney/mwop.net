@@ -79,6 +79,9 @@ return [
             LoggerInterface::class => AccessLoggerFactory::class,
         ],
     ],
+    'hooks' => [
+        'token-value'  => $_SERVER['WEBHOOK_TOKEN'] ?? '',
+    ],
     'mail'           => [
         'transport' => [
             'apikey' => $_SERVER['SENDGRID_APIKEY'] ?? '',

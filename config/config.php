@@ -48,6 +48,7 @@ $aggregator = new ConfigAggregator([
     Mwop\Console\ConfigProvider::class,
     Mwop\Contact\ConfigProvider::class,
     Mwop\Github\ConfigProvider::class,
+    Mwop\Hooks\ConfigProvider::class,
 
     // Include cache configuration
     new ArrayProvider($cacheConfig),

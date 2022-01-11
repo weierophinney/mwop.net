@@ -25,4 +25,7 @@ return function (
 
     // Contact form
     (new Contact\ConfigProvider())->registerRoutes($app, '/contact');
+
+    // Webhooks
+    (new Hooks\ConfigProvider())->registerRoutes($app);
 };
