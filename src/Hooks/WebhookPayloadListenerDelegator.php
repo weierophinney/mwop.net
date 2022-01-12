@@ -9,8 +9,11 @@ use Psr\Container\ContainerInterface;
 
 class WebhookPayloadListenerDelegator
 {
-    public function __invoke(ContainerInterface $container, string $serviceName, callable $factory): AttachableListenerProvider
-    {
+    public function __invoke(
+        ContainerInterface $container,
+        string $serviceName,
+        callable $factory
+    ): AttachableListenerProvider {
         /** @var AttachableListenerProvider $provider */
         $provider = $factory();
         $provider->listen(WebhookPayload::class, $container->get(WebhookPayloadListener::class));

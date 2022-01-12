@@ -6,6 +6,8 @@ namespace Mwop\Hooks;
 
 use Psr\Log\LoggerInterface;
 
+use function sprintf;
+
 class WebhookPayloadListener
 {
     public function __construct(

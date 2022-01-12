@@ -22,6 +22,7 @@ class ConfigProvider
 
     public function getDependencies(): array
     {
+        // phpcs:disable Generic.Files.LineLength.TooLong
         return [
             'delegators' => [
                 AttachableListenerProvider::class => [
@@ -31,13 +32,14 @@ class ConfigProvider
                     DeferredServiceListenerDelegator::class,
                 ],
             ],
-            'factories' => [
+            'factories'  => [
                 'config-hooks'                                     => ConfigFactory::class,
                 Handler\GitHubAtomHandler::class                   => Handler\GitHubAtomHandlerFactory::class,
                 Middleware\ValidateWebhookRequestMiddleware::class => Middleware\ValidateWebhookRequestMiddlewareFactory::class,
                 WebhookPayloadListener::class                      => WebhookPayloadListenerFactory::class,
             ],
         ];
+        // phpcs:enable Generic.Files.LineLength.TooLong
     }
 
     public function getHooksConfig(): array
