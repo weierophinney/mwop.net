@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Mwop\Hooks;
+namespace Mwop\Github\Webhook;
 
-class WebhookPayload
+class Payload
 {
     public function __construct(
-        public readonly string $payload
+        public readonly string $json
     ) {
     }
 }

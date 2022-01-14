@@ -3,9 +3,6 @@ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 SHELL=/bin/bash
 
 # m  h                    dom mon dow user     command
-# Update github feed
-*/15 *                    *   *   * root cd /var/www; ./vendor/bin/laminas github:fetch-activity 2>&1 > /proc/self/fd/2
-
 # Update blog posts listing
 0    0,6,12,18            *   *   * root cd /var/www; ./vendor/bin/laminas homepage-feeds 2>&1 > /proc/self/fd/2
 

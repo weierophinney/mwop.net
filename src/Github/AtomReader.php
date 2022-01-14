@@ -48,7 +48,7 @@ class AtomReader
         return [
             'last_modified' => $feed->getDateModified(),
             'link'          => $feed->getLink(),
-            'links'         => $entries->toArray(),
+            'links'         => $entries,
         ];
     }
 }

@@ -5,7 +5,12 @@ declare(strict_types=1);
 namespace Mwop\Github;
 
 use League\Plates\Engine;
+use Mezzio\Application;
+use Mezzio\ProblemDetails\ProblemDetailsMiddleware;
+use Mezzio\Swoole\Task\DeferredServiceListenerDelegator;
+use Mwop\Hooks\Middleware\ValidateWebhookRequestMiddleware;
 use Phly\ConfigFactory\ConfigFactory;
+use Phly\EventDispatcher\ListenerProvider\AttachableListenerProvider;
 
 class ConfigProvider
 {
@@ -30,15 +35,33 @@ class ConfigProvider
     {
         return [
             'delegators' => [
+                AttachableListenerProvider::class => [
+                    Webhook\PayloadListenerDelegator::class,
+                ],
                 Engine::class => [
                     RenderLinksDelegator::class,
+                ],
+                Webhook\PayloadListener::class => [
+                    DeferredServiceListenerDelegator::class,
                 ],
             ],
             'factories' => [
                 AtomReader::class    => AtomReaderFactory::class,
                 'config-github'      => ConfigFactory::class,
                 Console\Fetch::class => Console\FetchFactory::class,
+                Handler\AtomHandler::class => Handler\AtomHandlerFactory::class,
+                ItemList::class      => ItemListFactory::class,
+                Webhook\PayloadListener::class => Webhook\PayloadListenerFactory::class,
             ],
         ];
+    }
+
+    public function registerRoutes(Application $app, string $basePath = ''): void
+    {
+        $app->post($basePath . '/api/hook/github', [
+            ProblemDetailsMiddleware::class,
+            ValidateWebhookRequestMiddleware::class,
+            Handler\AtomHandler::class,
+        ], 'api.hook.github');
     }
 }

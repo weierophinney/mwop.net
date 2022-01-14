@@ -2,12 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Mwop\Hooks;
+namespace Mwop\Github\Webhook;
 
 use Phly\EventDispatcher\ListenerProvider\AttachableListenerProvider;
 use Psr\Container\ContainerInterface;
+use Psr\Log\LoggerInterface;
 
-class WebhookPayloadListenerDelegator
+class PayloadListenerDelegator
 {
     public function __invoke(
         ContainerInterface $container,
@@ -16,7 +17,10 @@ class WebhookPayloadListenerDelegator
     ): AttachableListenerProvider {
         /** @var AttachableListenerProvider $provider */
         $provider = $factory();
-        $provider->listen(WebhookPayload::class, $container->get(WebhookPayloadListener::class));
+        $provider->listen(
+            Payload::class,
+            $container->get(PayloadListener::class),
+        );
         return $provider;
     }
 }
