@@ -3,7 +3,6 @@
 const concat     = require('gulp-concat');
 const del        = require('del');
 const gulp       = require('gulp');
-const merge      = require('gulp-merge');
 const minify     = require('gulp-clean-css');
 const rename     = require('gulp-rename');
 const sass       = require('gulp-sass')(require('node-sass'));
@@ -13,17 +12,12 @@ const uglify     = require('gulp-uglify');
 // CSS
 
 gulp.task('css-screen', () => {
-    let sassCss = gulp.src('css/bootstrap.scss')
+    return gulp.src('css/bootstrap.scss')
         .pipe(sourcemaps.init())
-        .pipe(sass().on('error', sass.logError));
-
-    let extraCss = gulp.src('node_modules/prism-solarized-dark/prism-solarizeddark.css')
-        .pipe(sourcemaps.init());
-
-    return merge(sassCss, extraCss)
-        .pipe(concat('styles.css'))
+        .pipe(sass().on('error', sass.logError))
         .pipe(minify())
         .pipe(rename((file) => {
+            file.basename = 'styles';
             file.extname = '.min.css';
         }))
         .pipe(sourcemaps.write('.'))
