@@ -26,9 +26,14 @@ class PayloadListener
     {
         $entry = AtomEntry::fromArray($this->parsePayloadJson($payload));
         if (null === $entry) {
+            $this->logger->warning(sprintf(
+                'Empty GitHub atom payload detected: %s',
+                $payload->json
+            ));
             return;
         }
 
+        $this->logger->info(sprintf('Adding GitHub atom entry "%s" (%s)', $entry->title, $entry->link)); 
         $items = $this->itemList->read();
         $items->prepend($entry);
         $this->itemList->write($items);
