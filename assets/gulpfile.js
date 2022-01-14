@@ -36,7 +36,7 @@ gulp.task('css-print', () => {
         .pipe(sass().on('error', sass.logError))
         .pipe(minify())
         .pipe(rename((file) => {
-            file.stem    = 'print';
+            file.basename = 'print';
             file.extname = '.min.css';
         }))
         .pipe(sourcemaps.write('.'))
