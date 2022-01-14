@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Mwop\Github\Console;
 
-use Laminas\Escaper\Escaper;
 use Mwop\Github\AtomReader;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -13,25 +12,18 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Throwable;
 
-use function array_map;
 use function file_put_contents;
-use function implode;
-use function sprintf;
+use function json_encode;
 
 /**
  * Fetch github user activity links
  */
 class Fetch extends Command
 {
-    /** @var string */
-    private $outputTemplateString = '<li><a href="%s">%s</a></li>';
-
-    public function __construct(private ?AtomReader $reader = null, string $outputTemplateString = '')
-    {
-        if (! empty($outputTemplateString)) {
-            $this->outputTemplateString = $outputTemplateString;
-        }
-
+    public function __construct(
+        private ?AtomReader $reader = null,
+        private string $defaultListFile = '',
+    ) {
         parent::__construct();
     }
 
@@ -46,15 +38,7 @@ class Fetch extends Command
             'o',
             InputOption::VALUE_REQUIRED,
             'Output file to which to write links',
-            'data/github-links.phtml'
-        );
-
-        $this->addOption(
-            'template',
-            't',
-            InputOption::VALUE_REQUIRED,
-            'Template string to use when generating link output',
-            $this->outputTemplateString
+            $this->defaultListFile,
         );
     }
 
@@ -75,10 +59,7 @@ class Fetch extends Command
 
         file_put_contents(
             $input->getOption('output'),
-            $this->createContentFromData(
-                $data,
-                $input->getOption('template')
-            )
+            $this->createContentFromData($data),
         );
 
         $io->success('Retrieved GitHub activity.');
@@ -89,20 +70,10 @@ class Fetch extends Command
     /**
      * Create content to write to the output file
      *
-     * Uses the passed data and template to generate content.
+     * Uses the passed data to generate content.
      */
-    private function createContentFromData(array $data, string $template): string
+    private function createContentFromData(array $data): string
     {
-        $escaper = new Escaper();
-        $strings = array_map(
-            fn (array $link): string => sprintf(
-                $template,
-                $link['link'],
-                $escaper->escapeHtml($link['title'])
-            ),
-            $data['links']
-        );
-
-        return implode("\n", $strings);
+        return json_encode($data['links'], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
     }
 }

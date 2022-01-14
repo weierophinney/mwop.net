@@ -10,7 +10,7 @@ use Laminas\Feed\Reader\Reader as FeedReader;
 use Laminas\Feed\Reader\StandaloneExtensionManager;
 use Psr\Container\ContainerInterface;
 
-use function strpos;
+use function preg_match;
 
 class AtomReaderFactory
 {
@@ -26,7 +26,7 @@ class AtomReaderFactory
         $reader->setLimit($config['limit']);
         $reader->addFilter(
             // phpcs:ignore Generic.Files.LineLength.TooLong
-            fn (EntryInterface $entry): bool => false !== strpos($entry->getLink(), 'weierophinney/mwop.net') ? false : true
+            fn (EntryInterface $entry): bool => preg_match('#weierophinney/.*?mwop\.net#', $entry->getLink()) ? false : true
         );
 
         return $reader;

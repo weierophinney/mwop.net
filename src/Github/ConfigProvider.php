@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Mwop\Github;
 
+use League\Plates\Engine;
 use Phly\ConfigFactory\ConfigFactory;
 
 class ConfigProvider
@@ -19,14 +20,20 @@ class ConfigProvider
     public function getConfig(): array
     {
         return [
-            'user'  => '',
-            'limit' => 10,
+            'user'      => '',
+            'limit'     => 10,
+            'list_file' => getcwd() . '/data/github-feed.json',
         ];
     }
 
     public function getDependencies(): array
     {
         return [
+            'delegators' => [
+                Engine::class => [
+                    RenderLinksDelegator::class,
+                ],
+            ],
             'factories' => [
                 AtomReader::class    => AtomReaderFactory::class,
                 'config-github'      => ConfigFactory::class,

@@ -62,7 +62,7 @@ $this->end();
     <h3>Recent Github Activity</h3>
 
     <ul id="github">
-        <?php $this->insert('data::github-links') ?>
+        <?= $this->renderGithubFeed() ?>
     </ul>
 
     <p><em><a href="https://github.com/weierophinney?tab=activity">Read more</a></em></p>

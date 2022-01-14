@@ -40,8 +40,9 @@ class AtomReader
             ->filterChain($this->filters)
             ->slice(0, $this->limit)
             ->map(fn (EntryInterface $entry): array => [
-                'title' => $entry->getTitle(),
-                'link'  => $entry->getLink(),
+                'title'   => $entry->getTitle(),
+                'link'    => $entry->getLink(),
+                'content' => $entry->getContent(),
             ]);
 
         return [

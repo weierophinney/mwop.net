@@ -11,6 +11,9 @@ class FetchFactory
 {
     public function __invoke(ContainerInterface $container): Fetch
     {
-        return new Fetch($container->get(AtomReader::class));
+        return new Fetch(
+            $container->get(AtomReader::class),
+            $container->get('config-github')['list_file'],
+        );
     }
 }
