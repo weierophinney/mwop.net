@@ -25,7 +25,7 @@ class FetchBlogPostFromCacheListener
             return;
         }
 
-        $item = $this->cache->getItem($event->id());
+        $item = $this->cache->getItem($event->id);
         if (! $item->isHit()) {
             return;
         }
