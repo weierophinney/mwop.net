@@ -20,7 +20,7 @@ class ConfigProvider
     {
         // phpcs:disable Generic.Files.LineLength.TooLong
         return [
-            'factories'  => [
+            'factories' => [
                 'config-hooks'                                     => ConfigFactory::class,
                 Middleware\ValidateWebhookRequestMiddleware::class => Middleware\ValidateWebhookRequestMiddlewareFactory::class,
             ],

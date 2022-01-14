@@ -10,6 +10,13 @@ use League\Plates\Engine;
 use League\Plates\Extension\ExtensionInterface;
 use Psr\Container\ContainerInterface;
 
+use function file_exists;
+use function file_get_contents;
+use function implode;
+use function json_decode;
+
+use const JSON_THROW_ON_ERROR;
+
 class RenderLinksDelegator implements ExtensionInterface
 {
     private const LINK_TEMPLATE = '<li><a href="%s">%s</a></li>';

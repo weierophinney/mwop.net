@@ -8,6 +8,18 @@ use Illuminate\Support\Collection;
 use JsonException;
 use Psr\Log\LoggerInterface;
 
+use function file_exists;
+use function file_get_contents;
+use function file_put_contents;
+use function json_decode;
+use function json_encode;
+use function sprintf;
+
+use const JSON_PRETTY_PRINT;
+use const JSON_THROW_ON_ERROR;
+use const JSON_UNESCAPED_SLASHES;
+use const JSON_UNESCAPED_UNICODE;
+
 class ItemList
 {
     public function __construct(

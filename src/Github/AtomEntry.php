@@ -4,10 +4,15 @@ declare(strict_types=1);
 
 namespace Mwop\Github;
 
-use JsonException;
 use JsonSerializable;
 use Stringable;
 use Webmozart\Assert\Assert;
+
+use function json_decode;
+use function preg_match;
+use function sprintf;
+
+use const JSON_THROW_ON_ERROR;
 
 class AtomEntry implements JsonSerializable, Stringable
 {

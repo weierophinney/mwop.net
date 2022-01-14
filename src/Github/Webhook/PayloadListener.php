@@ -9,7 +9,10 @@ use Mwop\Github\AtomEntry;
 use Mwop\Github\ItemList;
 use Psr\Log\LoggerInterface;
 
+use function json_decode;
 use function sprintf;
+
+use const JSON_THROW_ON_ERROR;
 
 class PayloadListener
 {

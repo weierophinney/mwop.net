@@ -6,7 +6,6 @@ namespace Mwop\Github\Webhook;
 
 use Phly\EventDispatcher\ListenerProvider\AttachableListenerProvider;
 use Psr\Container\ContainerInterface;
-use Psr\Log\LoggerInterface;
 
 class PayloadListenerDelegator
 {
