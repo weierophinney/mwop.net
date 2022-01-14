@@ -20,7 +20,7 @@ fi
 "${composer}" clean:blog-cache # really only necessary when running locally
 
 # Build homepage assets
-if [ ! -f "data/homepage.posts.php" ] || [ ! -f "data/github-links.phtml" ];then
+if [ ! -f "data/homepage.posts.php" ] || [ ! -f "data/github-feed.json" ];then
     "${composer}" build:homepage
 fi
 
@@ -28,3 +28,7 @@ fi
 if [ ! -f "data/comics.phtml" ];then
     "${composer}" build:comics
 fi
+
+# Fix permissions for files that will be touched by the web user
+chgrp zendphp data/github-feed.json
+chmod g+rw data/github-feed.json

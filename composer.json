@@ -119,7 +119,7 @@
         "clean:homepage": [
             "echo 'Removing generated homepage files'",
             "rm -f data/homepage.posts.php",
-            "rm -f data/github-links.phtml"
+            "rm -f data/github-feed.json"
         ],
         "cs:check": "phpcs -s",
         "cs:fix": "phpcbf",
