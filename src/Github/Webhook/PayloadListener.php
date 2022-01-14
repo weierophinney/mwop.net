@@ -33,7 +33,7 @@ class PayloadListener
             return;
         }
 
-        $this->logger->info(sprintf('Adding GitHub atom entry "%s" (%s)', $entry->title, $entry->link)); 
+        $this->logger->info(sprintf('Adding GitHub atom entry "%s" (%s)', $entry->title, $entry->link));
         $items = $this->itemList->read();
         $items->prepend($entry);
         $this->itemList->write($items);
