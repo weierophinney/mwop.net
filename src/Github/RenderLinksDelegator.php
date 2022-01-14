@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Mwop\Github;
 
+use Illuminate\Support\Collection;
 use Laminas\Escaper\Escaper;
 use League\Plates\Engine;
 use League\Plates\Extension\ExtensionInterface;
@@ -37,16 +38,12 @@ class RenderLinksDelegator implements ExtensionInterface
     public function renderLinks(): string
     {
         $escaper = new Escaper();
-        $links = array_map(
-            fn (array $link): string => sprintf(
-                self::LINK_TEMPLATE,
-                $link['link'],
-                $escaper->escapeHtml($link['title']),
-            ),
-            $this->parseList(),
-        );
+        $links   = (new Collection($this->parseList()))
+            ->map(fn (array $item): AtomEntry => AtomEntry::fromArray($item))
+            ->filter(fn (?AtomEntry $item): bool => $item !== null)
+            ->map(fn (AtomEntry $item): string => (string) $item);
 
-        return implode("\n", $links);
+        return implode("\n", $links->toArray());
     }
 
     private function parseList(): array

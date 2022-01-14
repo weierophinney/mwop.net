@@ -39,11 +39,11 @@ class AtomReader
         $entries = AtomCollection::make($feed)
             ->filterChain($this->filters)
             ->slice(0, $this->limit)
-            ->map(fn (EntryInterface $entry): array => [
+            ->map(fn (EntryInterface $entry): AtomEntry => AtomEntry::fromArray([
                 'title'   => $entry->getTitle(),
                 'link'    => $entry->getLink(),
                 'content' => $entry->getContent(),
-            ]);
+            ]));
 
         return [
             'last_modified' => $feed->getDateModified(),
