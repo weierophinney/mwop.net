@@ -18,7 +18,7 @@ class FeedAggregatorFactory
         FeedReader::setHttpClient($http);
         FeedReader::setExtensionManager(new StandaloneExtensionManager());
 
-        $config = $container->get('config-homepage');
+        $config = $container->get('config-feeds');
 
         return new FeedAggregator(
             feeds: $config['feeds'] ?? [],
