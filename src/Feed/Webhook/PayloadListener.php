@@ -25,6 +25,9 @@ class PayloadListener
     public function __invoke(Payload $payload): void
     {
         $item = FeedItem::fromArray($this->parsePayloadJson($payload));
+        if (null === $item) {
+            return;
+        }
 
         $this->logger->info(sprintf('Adding RSS entry "%s" (%s)', $item->title, $item->link));
         $posts = $this->postsList->read();

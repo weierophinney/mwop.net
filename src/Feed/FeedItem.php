@@ -9,6 +9,8 @@ use DateTimeInterface;
 use JsonSerializable;
 use Webmozart\Assert\Assert;
 
+use function array_key_exists;
+use function preg_match;
 use function sprintf;
 
 class FeedItem implements JsonSerializable
@@ -32,8 +34,15 @@ class FeedItem implements JsonSerializable
     ) {
     }
 
-    public static function fromArray(array $payload): self
+    public static function fromArray(array $payload): ?self
     {
+        if (
+            array_key_exists('author', $payload)
+            && ! preg_match('/phinney/i', $payload['author'])
+        ) {
+            return null;
+        }
+
         foreach (self::REQUIRED_PAYLOAD_KEYS as $key) {
             Assert::keyExists($payload, $key, sprintf('Missing "%s" in payload', $key));
             Assert::stringNotEmpty($payload[$key], sprintf('"%s" was not a non-empty-string', $key));
