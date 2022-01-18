@@ -1,5 +1,4 @@
-<?php // phpcs:disable Generic.WhiteSpace.ScopeIndent.IncorrectExact
-
+<?php
 
 declare(strict_types=1);
 
@@ -16,17 +15,14 @@ class HomePageHandler implements RequestHandlerInterface
     public const TEMPLATE = 'mwop::home.page';
 
     public function __construct(
-        private array $posts,
-        private TemplateRendererInterface $renderer
+        private TemplateRendererInterface $renderer,
     ) {
     }
 
     public function handle(Request $request): Response
     {
         return new HtmlResponse(
-            $this->renderer->render(self::TEMPLATE, [
-                'posts' => $this->posts,
-            ])
+            $this->renderer->render(self::TEMPLATE, [])
         );
     }
 }

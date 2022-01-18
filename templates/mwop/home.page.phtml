@@ -47,15 +47,7 @@ $this->end();
 <aside class="col-lg omega home">
     <h3>Recent Blog Posts</h3>
 
-    <ul>
-    <?php foreach ($posts as $post) : ?>
-      <li><a href="<?= $post['siteurl'] ?>"><img
-        src="<?= $post['favicon'] ?>"
-        alt="<?= $this->escapeHtmlAttr($post['sitename']) ?>"
-        title="<?= $this->escapeHtmlAttr($post['sitename']) ?>"
-        width="16"></a>&nbsp;<a href="<?= $post['link'] ?>"><?= $this->escapeHtml($post['title']) ?></a></li>
-    <?php endforeach ?>
-    </ul>
+	<ul><?= $this->homepagePosts() ?></ul>
 
     <p><em><a href="<?= $this->url('blog') ?>">Read more</a></em></p>
 

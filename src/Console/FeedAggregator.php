@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Mwop\Console;
 
-use ArrayAccess;
+use DateTimeInterface;
 use Error;
 use Http\Discovery\HttpClientDiscovery;
 use Laminas\Feed\Reader\Entry\EntryInterface;
@@ -18,7 +18,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Throwable;
 
-use function addslashes;
 use function file_get_contents;
 use function file_put_contents;
 use function get_debug_type;
@@ -32,31 +31,10 @@ use function sprintf;
 class FeedAggregator extends Command
 {
     /** @var string */
-    public const CACHE_FILE = '%s/data/homepage.posts.php';
-
-    /** @var string */
-    private $configFormat = <<<EOC
-        <?php
-        return [
-        %s
-        ];
-        
-        EOC;
+    public const CACHE_FILE = '%s/data/homepage.posts.json';
 
     /** @var FeedCollection */
     private $feeds;
-
-    /** @var string */
-    private $itemFormat = <<<EOF
-            [
-                'title'    => '%s',
-                'link'     => '%s',
-                'favicon'  => '%s',
-                'sitename' => '%s',
-                'siteurl'  => '%s',
-            ],
-        
-        EOF;
 
     /** @var int */
     private $status;
@@ -110,7 +88,7 @@ class FeedAggregator extends Command
                 fn (FeedCollection $entries, array $feedInfo): FeedCollection => $entries->merge($this->marshalEntries($feedInfo, $io)),
                 FeedCollection::make([])
             )
-            ->sortByDesc('date-created')
+            ->sortByDesc(fn (FeedItem $item): DateTimeInterface => $item->created)
             ->slice(0, $this->toRetrieve);
     }
 
@@ -121,21 +99,11 @@ class FeedAggregator extends Command
 
     private function generateContent(FeedCollection $entries): string
     {
-        return sprintf(
-            $this->configFormat,
-            // phpcs:ignore
-            $entries->reduce(
-                fn (string $string, array|ArrayAccess $entry): string => $string . sprintf(
-                    $this->itemFormat,
-                    addslashes($entry['title']),
-                    $entry['link'],
-                    $entry['favicon'],
-                    $entry['sitename'],
-                    $entry['siteurl']
-                ),
-                ''
-            )
-        );
+        return $entries
+            ->values()
+            ->toJson(
+                JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT
+            );
     }
 
     private function marshalEntries(array $feedInfo, SymfonyStyle $io): FeedCollection
@@ -168,14 +136,14 @@ class FeedAggregator extends Command
         $entries = FeedCollection::make($feed)
             ->filterChain($filters)
             ->each($each)
-            ->map(fn (EntryInterface $entry): array => [
-                'title'        => $entry->getTitle(),
-                'link'         => $entry->getLink(),
-                'date-created' => $entry->getDateCreated(),
-                'favicon'      => $logo,
-                'sitename'     => $siteName,
-                'siteurl'      => $siteUrl,
-            ]);
+            ->map(fn (EntryInterface $entry): FeedItem => new FeedItem(
+                title: $entry->getTitle(),
+                link: $entry->getLink(),
+                favicon: $logo,
+                sitename: $siteName,
+                siteurl: $siteUrl,
+                created: $entry->getDateCreated(),
+            ));
 
         $io->progressFinish();
 

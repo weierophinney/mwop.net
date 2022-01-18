@@ -11,6 +11,7 @@ data/comics.phtml
 data/feeds/*.xml
 data/github-feed.json
 data/github-links.phtml
+data/homepage.posts.json
 data/homepage.posts.php
 data/instagram.feed.php
 data/redis/
