@@ -28,9 +28,6 @@ class ConfigProvider
                 FetchComicsCommand::class => FetchComicsCommand::class,
                 ListComics::class         => ListComics::class,
             ],
-            'factories'  => [
-                FeedAggregator::class => FeedAggregatorFactory::class,
-            ],
         ];
     }
 

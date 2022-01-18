@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Mwop\Console;
+namespace Mwop\Feed\Console;
 
 use DateTimeInterface;
 use Error;

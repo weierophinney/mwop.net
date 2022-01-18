@@ -23,7 +23,6 @@ return [
             'blog:tweet-latest'         => TweetLatest::class,
             'clear-cache'               => ClearCache::class,
             'github:fetch-activity'     => Fetch::class,
-            'homepage-feeds'            => FeedAggregator::class,
         ],
     ],
 ];

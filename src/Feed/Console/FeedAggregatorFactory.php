@@ -1,9 +1,8 @@
-<?php // phpcs:disable Generic.PHP.DiscourageGoto.Found
-
+<?php
 
 declare(strict_types=1);
 
-namespace Mwop\Console;
+namespace Mwop\Feed\Console;
 
 use Laminas\Feed\Reader\Http\ClientInterface as FeedReaderHttpClientInterface;
 use Laminas\Feed\Reader\Reader as FeedReader;
