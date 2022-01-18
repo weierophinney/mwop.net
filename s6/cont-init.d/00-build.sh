@@ -30,5 +30,5 @@ if [ ! -f "data/comics.phtml" ];then
 fi
 
 # Fix permissions for files that will be touched by the web user
-chgrp zendphp data/github-feed.json
-chmod g+rw data/github-feed.json
+chgrp zendphp data/github-feed.json data/homepage.posts.json
+chmod g+rw data/github-feed.json data/homepage.posts.json
