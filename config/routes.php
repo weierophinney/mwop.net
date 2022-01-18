@@ -26,6 +26,9 @@ return function (
     // Contact form
     (new Contact\ConfigProvider())->registerRoutes($app, '/contact');
 
+    // Feed (webhooks)
+    (new Feed\ConfigProvider())->registerRoutes($app);
+
     // Github (webhooks)
     (new Github\ConfigProvider())->registerRoutes($app);
 };

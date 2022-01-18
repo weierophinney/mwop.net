@@ -6,7 +6,12 @@ namespace Mwop\Feed;
 
 use Laminas\Feed\Reader\Entry\EntryInterface;
 use League\Plates\Engine;
+use Mezzio\Application;
+use Mezzio\ProblemDetails\ProblemDetailsMiddleware;
+use Mezzio\Swoole\Task\DeferredServiceListenerDelegator;
+use Mwop\Hooks\Middleware\ValidateWebhookRequestMiddleware;
 use Phly\ConfigFactory\ConfigFactory;
+use Phly\EventDispatcher\ListenerProvider\AttachableListenerProvider;
 
 use function date;
 use function getcwd;
@@ -31,13 +36,22 @@ class ConfigProvider
     {
         return [
             'delegators' => [
+                AttachableListenerProvider::class => [
+                    Webhook\PayloadListenerDelegator::class,
+                ],
                 Engine::class => [
                     HomepagePostsDelegator::class,
                 ],
+                Webhook\PayloadListener::class => [
+                    DeferredServiceListenerDelegator::class,
+                ],
             ],
             'factories'  => [
-                'config-feeds'                => ConfigFactory::class,
-                Console\FeedAggregator::class => Console\FeedAggregatorFactory::class,
+                'config-feeds'                 => ConfigFactory::class,
+                Console\FeedAggregator::class  => Console\FeedAggregatorFactory::class,
+                Handler\RssHandler::class      => Handler\RssHandlerFactory::class,
+                HomepagePostsList::class       => HomepagePostsListFactory::class,
+                Webhook\PayloadListener::class => Webhook\PayloadListenerFactory::class,
             ],
         ];
     }
@@ -102,5 +116,14 @@ class ConfigProvider
                 ],
             ],
         ];
+    }
+
+    public function registerRoutes(Application $app, string $basePath = ''): void
+    {
+        $app->post($basePath . '/api/feed/rss-item', [
+            ProblemDetailsMiddleware::class,
+            ValidateWebhookRequestMiddleware::class,
+            Handler\RssHandler::class,
+        ], 'api.hook.rss-item');
     }
 }
