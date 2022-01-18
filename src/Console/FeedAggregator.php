@@ -10,6 +10,8 @@ use Http\Discovery\HttpClientDiscovery;
 use Laminas\Feed\Reader\Entry\EntryInterface;
 use Laminas\Feed\Reader\Feed\FeedInterface;
 use Laminas\Feed\Reader\Reader as FeedReader;
+use Mwop\Feed\FeedCollection;
+use Mwop\Feed\FeedItem;
 use Psr\Http\Message\RequestFactoryInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
