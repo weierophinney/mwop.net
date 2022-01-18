@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mwop\Feed;
 
 use Laminas\Feed\Reader\Entry\EntryInterface;
+use League\Plates\Engine;
 use Phly\ConfigFactory\ConfigFactory;
 
 use function date;
@@ -29,6 +30,11 @@ class ConfigProvider
     public function getDependencies(): array
     {
         return [
+            'delegators' => [
+                Engine::class => [
+                    HomepagePostsDelegator::class,
+                ],
+            ],
             'factories'  => [
                 'config-feeds'                => ConfigFactory::class,
                 Console\FeedAggregator::class => Console\FeedAggregatorFactory::class,

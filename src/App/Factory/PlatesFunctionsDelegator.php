@@ -5,13 +5,10 @@ declare(strict_types=1);
 namespace Mwop\App\Factory;
 
 use DateTimeInterface;
-use JsonException;
-use Laminas\Escaper\Escaper;
 use League\Plates\Engine;
 use League\Plates\Extension\ExtensionInterface;
 use League\Plates\Template\Template;
 use Mwop\Blog\BlogPost;
-use Mwop\Console\FeedAggregator;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 
@@ -23,13 +20,7 @@ use function strstr;
 
 class PlatesFunctionsDelegator implements ExtensionInterface
 {
-    private const TEMPLATE_POST = <<< 'END'
-        <li><a href="%s"><img src="%s" alt="%s" title="%s" width="16"></a>&nbsp;<a href="%s">%s</a></li>
-        END;
-
     public Template $template;
-
-    private ?LoggerInterface $logger;
 
     /**
      * @inheritDoc
@@ -53,7 +44,6 @@ class PlatesFunctionsDelegator implements ExtensionInterface
         $engine->registerFunction('ampifyContent', [$this, 'ampifyContent']);
         $engine->registerFunction('formatDate', [$this, 'formatDate']);
         $engine->registerFunction('formatDateRfc', [$this, 'formatDateRfc']);
-        $engine->registerFunction('homepagePosts', [$this, 'homepagePosts']);
         $engine->registerFunction('postUrl', [$this, 'postUrl']);
         $engine->registerFunction('processTags', [$this, 'processTags']);
     }
@@ -98,40 +88,5 @@ class PlatesFunctionsDelegator implements ExtensionInterface
             ],
             $tags
         );
-    }
-
-    public function homepagePosts(): string
-    {
-        $cacheFile = sprintf(FeedAggregator::CACHE_FILE, realpath(getcwd()));
-        if (! file_exists($cacheFile)) {
-            return '';
-        }
-
-        $json = file_get_contents($cacheFile);
-        try {
-            $items = json_decode($json, true, 4, JSON_THROW_ON_ERROR);
-        } catch (JsonException $e) {
-            $this->logger?->warning(sprintf(
-                "Error parsing feed cache file: %s\nContents:\n%s",
-                $e->getMessage(),
-                $json,
-            ));
-            return '';
-        }
-
-        $escaper = new Escaper('utf-8');
-
-        return implode("\n", array_map(
-            fn (array $item): string => sprintf(
-                self::TEMPLATE_POST,
-                $item['siteurl'],
-                $item['favicon'],
-                $escaper->escapeHtmlAttr($item['sitename']),
-                $escaper->escapeHtmlAttr($item['sitename']),
-                $item['link'],
-                $escaper->escapeHtml($item['title']),
-            ),
-            $items,
-        ));
     }
 }
