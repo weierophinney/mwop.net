@@ -17,18 +17,14 @@ class HomePageHandlerTest extends TestCase
 
     public function testMiddlewareReturnsHtmlResponseInjectedWithResultsOfRendereringPosts()
     {
-        $posts = ['foo', 'bar'];
-
         /** @var TemplateRendererInterface|MockObject $renderer */
         $renderer = $this->createMock(TemplateRendererInterface::class);
-        $handler  = new HomePageHandler($posts, $renderer);
+        $handler  = new HomePageHandler($renderer);
 
         $renderer
             ->expects($this->atLeastOnce())
             ->method('render')
-            ->with(HomePageHandler::TEMPLATE, [
-                'posts' => $posts,
-            ])
+            ->with(HomePageHandler::TEMPLATE, [])
             ->willReturn('content');
 
         $response = $handler->handle(

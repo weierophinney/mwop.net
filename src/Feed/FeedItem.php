@@ -9,6 +9,8 @@ use DateTimeInterface;
 use JsonSerializable;
 use Webmozart\Assert\Assert;
 
+use function sprintf;
+
 class FeedItem implements JsonSerializable
 {
     private const REQUIRED_PAYLOAD_KEYS = [

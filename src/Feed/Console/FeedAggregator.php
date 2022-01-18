@@ -30,6 +30,11 @@ use function printf;
 use function realpath;
 use function sprintf;
 
+use const JSON_PRETTY_PRINT;
+use const JSON_THROW_ON_ERROR;
+use const JSON_UNESCAPED_SLASHES;
+use const JSON_UNESCAPED_UNICODE;
+
 class FeedAggregator extends Command
 {
     /** @var string */

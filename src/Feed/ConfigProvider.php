@@ -39,10 +39,10 @@ class ConfigProvider
                 AttachableListenerProvider::class => [
                     Webhook\PayloadListenerDelegator::class,
                 ],
-                Engine::class => [
+                Engine::class                     => [
                     HomepagePostsDelegator::class,
                 ],
-                Webhook\PayloadListener::class => [
+                Webhook\PayloadListener::class    => [
                     DeferredServiceListenerDelegator::class,
                 ],
             ],

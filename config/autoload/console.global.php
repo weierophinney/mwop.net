@@ -9,7 +9,6 @@ use Mwop\Blog\Console\SeedBlogDatabase;
 use Mwop\Blog\Console\TagCloud;
 use Mwop\Blog\Console\TweetLatest;
 use Mwop\Console\ClearCache;
-use Mwop\Console\FeedAggregator;
 use Mwop\Github\Console\Fetch;
 
 return [

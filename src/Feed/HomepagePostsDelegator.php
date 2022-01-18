@@ -11,9 +11,20 @@ use League\Plates\Extension\ExtensionInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 
+use function array_map;
+use function file_exists;
+use function file_get_contents;
+use function getcwd;
+use function implode;
+use function json_decode;
+use function realpath;
+use function sprintf;
+
+use const JSON_THROW_ON_ERROR;
+
 class HomepagePostsDelegator implements ExtensionInterface
 {
-    private const TEMPLATE_POST = <<< 'END'
+    private const TEMPLATE_POST = <<<'END'
         <li><a href="%s"><img src="%s" alt="%s" title="%s" width="16"></a>&nbsp;<a href="%s">%s</a></li>
         END;
 
