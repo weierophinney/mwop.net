@@ -36,8 +36,8 @@ class AtomEntry implements JsonSerializable, Stringable
         Assert::keyExists($payload, 'link', 'Missing "link" in payload');
         Assert::stringNotEmpty($payload['link'], 'Link was not a non-empty-string');
 
-        if (preg_match('#weierophinney/.*?mwop\.net#', $payload['link'])) {
-            // Ignore items related to my websites
+        if (preg_match('#weierophinney/#', $payload['link'])) {
+            // Ignore items related to my personal repos
             return null;
         }
 

@@ -26,7 +26,7 @@ class AtomReaderFactory
         $reader->setLimit($config['limit']);
         $reader->addFilter(
             // phpcs:ignore Generic.Files.LineLength.TooLong
-            fn (EntryInterface $entry): bool => preg_match('#weierophinney/.*?mwop\.net#', $entry->getLink()) ? false : true
+            fn (EntryInterface $entry): bool => preg_match('#weierophinney/#', $entry->getLink()) ? false : true
         );
 
         return $reader;
