@@ -1,7 +1,0 @@
-# CRONTAB file for mwop.net
-PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-SHELL=/bin/bash
-
-# m  h                    dom mon dow user     command
-# Fetch comics
-0    1,4,7,10,13,16,19,22 *   *   * root cd /var/www; ./vendor/bin/laminas comics:for-site 2>&1 > /proc/self/fd/2

@@ -1,7 +1,0 @@
-#!/usr/bin/with-contenv sh
-# From https://esc.sh/blog/cron-jobs-in-docker/
-
-# Fix hard link errors
-touch /etc/crontab /etc/cron.*/*
-
-exec cron -f
