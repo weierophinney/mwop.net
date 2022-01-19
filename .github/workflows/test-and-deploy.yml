@@ -9,9 +9,9 @@ jobs:
   run:
     runs-on: ubuntu-20.04
     env:
-      extensions: bcmath, bz2, curl, gd, intl, ldap, mbstring, opcache, readline, sqlite3, tidy, xml, xsl, zip, openswoole-4.8.0
+      extensions: bcmath, bz2, curl, gd, intl, ldap, mbstring, opcache, readline, sqlite3, tidy, xml, xsl, zip, openswoole-4.9.0
       ini-values: memory_limit=-1
-      key: openswoole-4.8.0
+      key: openswoole-4.9.0
     steps:
       - name: Checkout
         uses: actions/checkout@v2
