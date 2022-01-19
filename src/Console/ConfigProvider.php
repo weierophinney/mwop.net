@@ -25,8 +25,10 @@ class ConfigProvider
                 ClearCache::class         => ClearCache::class,
                 FetchAllComics::class     => FetchAllComics::class,
                 FetchComic::class         => FetchComic::class,
-                FetchComicsCommand::class => FetchComicsCommand::class,
                 ListComics::class         => ListComics::class,
+            ],
+            'factories' => [
+                FetchComicsCommand::class => FetchComicsCommandFactory::class,
             ],
         ];
     }

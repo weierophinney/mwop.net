@@ -15,6 +15,7 @@ use Mezzio\Authorization\AuthorizationMiddleware;
 use Mezzio\Authorization\Rbac\LaminasRbac;
 use Mezzio\Session\SessionMiddleware;
 use Mezzio\Swoole\Event\EventDispatcherInterface as SwooleEventDispatcher;
+use Mezzio\Swoole\SwooleRequestHandlerRunner;
 use Middlewares\Csp;
 use Mwop\App\Factory\UserRepositoryFactory;
 use Mwop\Blog\Handler\DisplayPostHandler;
@@ -31,6 +32,7 @@ class ConfigProvider
             'authentication'            => $this->getAuthenticationConfig(),
             'dependencies'              => $this->getDependencies(),
             'cache'                     => $this->getCacheConfig(),
+            'comics'                    => $this->getComicsConfig(),
             'content-security-policy'   => [],
             'mail'                      => $this->getMailConfig(),
             'mezzio-authorization-rbac' => $this->getAuthorizationConfig(),
@@ -55,6 +57,7 @@ class ConfigProvider
                 AuthenticationAdapter::class                 => AuthenticationAdapterFactory::class,
                 'config-authentication'                      => ConfigFactory::class,
                 'config-cache'                               => ConfigFactory::class,
+                'config-comics'                              => ConfigFactory::class,
                 'config-content-security-policy'             => ConfigFactory::class,
                 'config-mail.transport'                      => ConfigFactory::class,
                 Csp::class                                   => Middleware\ContentSecurityPolicyMiddlewareFactory::class,
@@ -70,12 +73,14 @@ class ConfigProvider
                 Handler\ResumePageHandler::class             => Handler\PageHandlerFactory::class,
                 'mail.transport'                             => Factory\MailTransport::class,
                 Middleware\RedirectAmpPagesMiddleware::class => Middleware\RedirectAmpPagesMiddlewareFactory::class,
+                PeriodicTask\FetchComics::class              => PeriodicTask\FetchComicsFactory::class,
                 SessionCachePool::class                      => SessionCachePoolFactory::class,
                 UserRepositoryInterface::class               => UserRepositoryFactory::class,
             ],
             'delegators' => [
                 AttachableListenerProvider::class => [
                     Factory\SwooleTaskInvokerListenerDelegator::class,
+                    PeriodicTask\SwooleTimerDelegator::class,
                 ],
                 DisplayPostHandler::class         => [
                     Middleware\DisplayBlogPostHandlerDelegator::class,
@@ -125,6 +130,26 @@ class ConfigProvider
                 'host'   => 'localhost',
                 'port'   => 6379,
             ],
+        ];
+    }
+
+    public function getComicsConfig(): array
+    {
+        return [
+            'exclusions' => [
+                'bloom-county',
+                'dilbert',
+                'g-g',
+                'goats',
+                'listen-tome',
+                'nih',
+                'pennyarcade',
+                'phd',
+                'pickles',
+                'reptilis-rex',
+                'uf',
+            ],
+            'output_file' => sprintf('%s/data/comics.phtml', realpath(getcwd())),
         ];
     }
 

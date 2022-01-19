@@ -15,6 +15,12 @@ class FetchComicsCommand extends Command
     /** @var string */
     protected static $defaultName = 'comics:for-site';
 
+    public function __construct(
+        private readonly array $exclusions,
+    ) {
+        parent::__construct();
+    }
+
     protected function configure(): void
     {
         $this->setDescription('Fetch comics for the website.');
@@ -28,19 +34,7 @@ class FetchComicsCommand extends Command
 
         return $fetchAllCommand->run(
             new ArrayInput([
-                '--exclude'   => [
-                    'bloom-county',
-                    'dilbert',
-                    'g-g',
-                    'goats',
-                    'listen-tome',
-                    'nih',
-                    'pennyarcade',
-                    'phd',
-                    'pickles',
-                    'reptilis-rex',
-                    'uf',
-                ],
+                '--exclude'   => $this->exclusions,
                 '--output'    => 'data/comics.phtml',
                 '--processes' => 5,
             ]),
