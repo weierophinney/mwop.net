@@ -18,10 +18,13 @@ class FeedItem implements JsonSerializable
     private const REQUIRED_PAYLOAD_KEYS = [
         'title',
         'link',
-        'favicon',
         'sitename',
         'siteurl',
         'created',
+    ];
+
+    private const DEFAULT_FAVICON_MAP = [
+        'https://www.zend.com/' => 'https://www.zend.com/sites/zend/themes/custom/zend/images/favicons/favicon.ico',
     ];
 
     public function __construct(
@@ -48,10 +51,21 @@ class FeedItem implements JsonSerializable
             Assert::stringNotEmpty($payload[$key], sprintf('"%s" was not a non-empty-string', $key));
         }
 
+        if (array_key_exists('favicon', $payload)) {
+            Assert::stringNotEmpty($payload['favicon'], '"favicon" was not a non-empty-string');
+        }
+
+        if (! 
+            array_key_exists('favicon', $payload)
+            && array_key_exists($payload['siteurl'], self::DEFAULT_FAVICON_MAP)
+        ) {
+            $payload['favicon'] = self::DEFAULT_FAVICON_MAP[$payload['siteurl']];
+        }
+
         return new self(
             title: $payload['title'],
             link: $payload['link'],
-            favicon: $payload['favicon'],
+            favicon: $payload['favicon'] ?? '',
             sitename: $payload['sitename'],
             siteurl: $payload['siteurl'],
             created: new DateTimeImmutable($payload['created']),
