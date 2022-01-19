@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "84e2911e2f2dc2026687cf7fd620950e",
+    "content-hash": "592093deb04440b7947936d6941b6b50",
     "packages": [
         {
             "name": "abraham/twitteroauth",
@@ -4158,16 +4158,16 @@
         },
         {
             "name": "phly/phly-comic",
-            "version": "2.3.1",
+            "version": "2.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/weierophinney/PhlyComic.git",
-                "reference": "54f8493c4cd2647ea4f91cbaa8f9877625229ae3"
+                "reference": "2a4b04220494d3e6916fdd5eae69f0543da74f1e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/weierophinney/PhlyComic/zipball/54f8493c4cd2647ea4f91cbaa8f9877625229ae3",
-                "reference": "54f8493c4cd2647ea4f91cbaa8f9877625229ae3",
+                "url": "https://api.github.com/repos/weierophinney/PhlyComic/zipball/2a4b04220494d3e6916fdd5eae69f0543da74f1e",
+                "reference": "2a4b04220494d3e6916fdd5eae69f0543da74f1e",
                 "shasum": ""
             },
             "require": {
@@ -4221,7 +4221,7 @@
                     "url": "https://funding.communitybridge.org/projects/laminas-project"
                 }
             ],
-            "time": "2022-01-19T21:48:33+00:00"
+            "time": "2022-01-19T22:18:07+00:00"
         },
         {
             "name": "phly/phly-configfactory",

@@ -15,9 +15,10 @@ use Mezzio\Authorization\AuthorizationMiddleware;
 use Mezzio\Authorization\Rbac\LaminasRbac;
 use Mezzio\Session\SessionMiddleware;
 use Mezzio\Swoole\Event\EventDispatcherInterface as SwooleEventDispatcher;
-use Mezzio\Swoole\SwooleRequestHandlerRunner;
+use Mezzio\Swoole\Task\DeferredServiceListenerDelegator;
 use Middlewares\Csp;
 use Mwop\App\Factory\UserRepositoryFactory;
+use Mwop\App\PeriodicTask\ComicsEventListener;
 use Mwop\Blog\Handler\DisplayPostHandler;
 use Phly\ConfigFactory\ConfigFactory;
 use Phly\EventDispatcher\ListenerProvider\AttachableListenerProvider;
@@ -81,6 +82,9 @@ class ConfigProvider
                 AttachableListenerProvider::class => [
                     Factory\SwooleTaskInvokerListenerDelegator::class,
                     PeriodicTask\SwooleTimerDelegator::class,
+                ],
+                PeriodicTask\FetchComics::class   => [
+                    DeferredServiceListenerDelegator::class,
                 ],
                 DisplayPostHandler::class         => [
                     Middleware\DisplayBlogPostHandlerDelegator::class,

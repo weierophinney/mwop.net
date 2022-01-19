@@ -4,7 +4,7 @@
 FROM cr.zend.com/zendphp/8.1:ubuntu-20.04-cli as swoole
 
 ## Prepare image
-ARG SWOOLE_VERSION=4.8.0
+ARG SWOOLE_VERSION=4.9.0
 ARG TIMEZONE=UTC
 ENV TZ=$TIMEZONE
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
@@ -22,6 +22,7 @@ RUN set -e; \
         --enable-swoole \
         --enable-sockets \
         --enable-http2 \
+        --enable-openssl \
         --enable-swoole-json \
         --enable-swoole-curl; \
     make; \

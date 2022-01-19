@@ -7,6 +7,7 @@ namespace Mwop\App\PeriodicTask;
 use PhlyComic\Comic;
 use PhlyComic\ComicFactory;
 use Psr\Log\LoggerInterface;
+use Throwable;
 
 class FetchComics
 {
@@ -33,7 +34,7 @@ class FetchComics
     ) {
     }
 
-    public function __invoke(): void
+    public function __invoke(ComicsEvent $event): void
     {
         $supported = ComicFactory::getSupported();
         ksort($supported);
@@ -53,10 +54,21 @@ class FetchComics
     {
         $html  = '';
         foreach ($comics as $name) {
-            $comic = $this->fetchComic($name, $console);
-            if (! $comic instanceof Comic) {
+            $this->logger->info(sprintf('Attempting to fetch comic "%s"', $name));
+
+            try {
+                $comic = $this->fetchComic($name);
+            } catch (Throwable $e) {
+                $this->logger->info(sprintf('EXCEPTION fetching comic "%s" (%s): %s', $name, $e::class, $e->getMessage()));
                 continue;
             }
+
+            if (! $comic instanceof Comic) {
+                $this->logger->info(sprintf('FAILED to fetch comic "%s"', $name));
+                continue;
+            }
+
+            $this->logger->info(sprintf('SUCCEEDED fetching comic "%s"', $name));
             $html .= $this->createComicOutput($comic);
         }
         return $html;
