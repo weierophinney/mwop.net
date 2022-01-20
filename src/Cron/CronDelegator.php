@@ -9,7 +9,6 @@ use Phly\EventDispatcher\ListenerProvider\AttachableListenerProvider;
 use Psr\Container\ContainerInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;
-use Swoole\Timer;
 
 class CronDelegator
 {
@@ -27,17 +26,20 @@ class CronDelegator
             return $provider;
         }
 
-        $provider->listen(ServerStartEvent::class, function () use ($container, $crontab): void {
-            // Pull the dispatcher from within the listener to prevent race conditions
-            $dispatcher = new Dispatcher(
-                eventDispatcher: $container->get(EventDispatcherInterface::class),
-                crontab: $crontab,
-                logger: $container->get(LoggerInterface::class),
-            );
+        $provider->listen(
+            ServerStartEvent::class,
+            function (ServerStartEvent $event) use ($container, $crontab): void {
+                // Pull the dispatcher from within the listener to prevent race conditions
+                $dispatcher = new Dispatcher(
+                    eventDispatcher: $container->get(EventDispatcherInterface::class),
+                    crontab: $crontab,
+                    logger: $container->get(LoggerInterface::class),
+                );
 
-            // Run every minute
-            Timer::tick(1000 * 60, $dispatcher);
-        });
+                // Run every minute
+                $event->getServer()->tick(1000 * 60, $dispatcher);
+            },
+        );
 
         return $provider;
     }
