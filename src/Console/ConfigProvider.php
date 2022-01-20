@@ -22,12 +22,12 @@ class ConfigProvider
     {
         return [
             'invokables' => [
-                ClearCache::class         => ClearCache::class,
-                FetchAllComics::class     => FetchAllComics::class,
-                FetchComic::class         => FetchComic::class,
-                ListComics::class         => ListComics::class,
+                ClearCache::class     => ClearCache::class,
+                FetchAllComics::class => FetchAllComics::class,
+                FetchComic::class     => FetchComic::class,
+                ListComics::class     => ListComics::class,
             ],
-            'factories' => [
+            'factories'  => [
                 FetchComicsCommand::class => FetchComicsCommandFactory::class,
             ],
         ];

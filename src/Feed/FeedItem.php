@@ -55,8 +55,8 @@ class FeedItem implements JsonSerializable
             Assert::stringNotEmpty($payload['favicon'], '"favicon" was not a non-empty-string');
         }
 
-        if (! 
-            array_key_exists('favicon', $payload)
+        if (
+            ! array_key_exists('favicon', $payload)
             && array_key_exists($payload['siteurl'], self::DEFAULT_FAVICON_MAP)
         ) {
             $payload['favicon'] = self::DEFAULT_FAVICON_MAP[$payload['siteurl']];

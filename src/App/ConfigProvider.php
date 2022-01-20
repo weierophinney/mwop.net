@@ -18,12 +18,15 @@ use Mezzio\Swoole\Event\EventDispatcherInterface as SwooleEventDispatcher;
 use Mezzio\Swoole\Task\DeferredServiceListenerDelegator;
 use Middlewares\Csp;
 use Mwop\App\Factory\UserRepositoryFactory;
-use Mwop\App\PeriodicTask\ComicsEventListener;
 use Mwop\Blog\Handler\DisplayPostHandler;
 use Phly\ConfigFactory\ConfigFactory;
 use Phly\EventDispatcher\ListenerProvider\AttachableListenerProvider;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
+
+use function getcwd;
+use function realpath;
+use function sprintf;
 
 class ConfigProvider
 {
@@ -140,7 +143,7 @@ class ConfigProvider
     public function getComicsConfig(): array
     {
         return [
-            'exclusions' => [
+            'exclusions'  => [
                 'bloom-county',
                 'dilbert',
                 'g-g',

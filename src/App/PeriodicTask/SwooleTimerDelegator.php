@@ -23,11 +23,11 @@ class SwooleTimerDelegator
         $provider->listen(ComicsEvent::class, $container->get(FetchComics::class));
         $provider->listen(ServerStartEvent::class, function () use ($container): void {
             // Pull the dispatcher from within the listener to prevent race conditions
+            /** @var EventDispatcherInterface $dispatcher */
             $dispatcher = $container->get(EventDispatcherInterface::class);
 
             // Fetch comics every 3 hours
             Timer::tick(1000 * 60 * 60 * 3, function () use ($dispatcher) {
-                /** @var EventDispatcherInterface $dispatcher */
                 $dispatcher->dispatch(new ComicsEvent());
             });
         });

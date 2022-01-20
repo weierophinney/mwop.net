@@ -9,9 +9,16 @@ use PhlyComic\ComicFactory;
 use Psr\Log\LoggerInterface;
 use Throwable;
 
+use function array_filter;
+use function array_keys;
+use function file_put_contents;
+use function in_array;
+use function ksort;
+use function sprintf;
+
 class FetchComics
 {
-    private const TEMPLATE_COMIC = <<< 'EOT'
+    private const TEMPLATE_COMIC = <<<'EOT'
         <div class="comic">
             <h4><a href="%s">%s</a></h4>
             <p><a href="%s"><img src="%s"/></a></p>
@@ -19,7 +26,7 @@ class FetchComics
 
         EOT;
 
-    private const TEMPLATE_ERROR = <<< 'EOT'
+    private const TEMPLATE_ERROR = <<<'EOT'
         <div class="comic">
             <h4><a href="%s">%s</a></h4>
             <p class="error">%s</p>
@@ -52,14 +59,19 @@ class FetchComics
 
     private function fetchComics(array $comics): string
     {
-        $html  = '';
+        $html = '';
         foreach ($comics as $name) {
             $this->logger->info(sprintf('Attempting to fetch comic "%s"', $name));
 
             try {
                 $comic = $this->fetchComic($name);
             } catch (Throwable $e) {
-                $this->logger->info(sprintf('EXCEPTION fetching comic "%s" (%s): %s', $name, $e::class, $e->getMessage()));
+                $this->logger->info(sprintf(
+                    'EXCEPTION fetching comic "%s" (%s): %s',
+                    $name,
+                    $e::class,
+                    $e->getMessage()
+                ));
                 continue;
             }
 
