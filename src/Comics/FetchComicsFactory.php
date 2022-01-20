@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Mwop\App\PeriodicTask;
+namespace Mwop\Comics;
 
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;

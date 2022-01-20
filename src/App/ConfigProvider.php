@@ -8,14 +8,11 @@ use Laminas\Feed\Reader\Http\ClientInterface as FeedReaderHttpClientInterface;
 use League\Plates\Engine;
 use Mezzio\Application;
 use Mezzio\Authentication\AuthenticationInterface;
-use Mezzio\Authentication\AuthenticationMiddleware;
 use Mezzio\Authentication\UserRepositoryInterface;
 use Mezzio\Authorization\AuthorizationInterface;
-use Mezzio\Authorization\AuthorizationMiddleware;
 use Mezzio\Authorization\Rbac\LaminasRbac;
 use Mezzio\Session\SessionMiddleware;
 use Mezzio\Swoole\Event\EventDispatcherInterface as SwooleEventDispatcher;
-use Mezzio\Swoole\Task\DeferredServiceListenerDelegator;
 use Middlewares\Csp;
 use Mwop\App\Factory\UserRepositoryFactory;
 use Mwop\Blog\Handler\DisplayPostHandler;
@@ -23,10 +20,6 @@ use Phly\ConfigFactory\ConfigFactory;
 use Phly\EventDispatcher\ListenerProvider\AttachableListenerProvider;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
-
-use function getcwd;
-use function realpath;
-use function sprintf;
 
 class ConfigProvider
 {
@@ -36,7 +29,6 @@ class ConfigProvider
             'authentication'            => $this->getAuthenticationConfig(),
             'dependencies'              => $this->getDependencies(),
             'cache'                     => $this->getCacheConfig(),
-            'comics'                    => $this->getComicsConfig(),
             'content-security-policy'   => [],
             'mail'                      => $this->getMailConfig(),
             'mezzio-authorization-rbac' => $this->getAuthorizationConfig(),
@@ -61,14 +53,12 @@ class ConfigProvider
                 AuthenticationAdapter::class                 => AuthenticationAdapterFactory::class,
                 'config-authentication'                      => ConfigFactory::class,
                 'config-cache'                               => ConfigFactory::class,
-                'config-comics'                              => ConfigFactory::class,
                 'config-content-security-policy'             => ConfigFactory::class,
                 'config-mail.transport'                      => ConfigFactory::class,
                 Csp::class                                   => Middleware\ContentSecurityPolicyMiddlewareFactory::class,
                 CacheItemPoolInterface::class                => Factory\CachePoolFactory::class,
                 EventDispatcherInterface::class              => Factory\EventDispatcherFactory::class,
                 FeedReaderHttpClientInterface::class         => Feed\HttpPlugClientFactory::class,
-                Handler\ComicsPageHandler::class             => Handler\ComicsPageHandlerFactory::class,
                 Handler\HomePageHandler::class               => Handler\HomePageHandlerFactory::class,
                 Handler\LoginHandler::class                  => Handler\LoginHandlerFactory::class,
                 Handler\NowPageHandler::class                => Handler\PageHandlerFactory::class,
@@ -77,17 +67,12 @@ class ConfigProvider
                 Handler\ResumePageHandler::class             => Handler\PageHandlerFactory::class,
                 'mail.transport'                             => Factory\MailTransport::class,
                 Middleware\RedirectAmpPagesMiddleware::class => Middleware\RedirectAmpPagesMiddlewareFactory::class,
-                PeriodicTask\FetchComics::class              => PeriodicTask\FetchComicsFactory::class,
                 SessionCachePool::class                      => SessionCachePoolFactory::class,
                 UserRepositoryInterface::class               => UserRepositoryFactory::class,
             ],
             'delegators' => [
                 AttachableListenerProvider::class => [
                     Factory\SwooleTaskInvokerListenerDelegator::class,
-                    PeriodicTask\SwooleTimerDelegator::class,
-                ],
-                PeriodicTask\FetchComics::class   => [
-                    DeferredServiceListenerDelegator::class,
                 ],
                 DisplayPostHandler::class         => [
                     Middleware\DisplayBlogPostHandlerDelegator::class,
@@ -118,13 +103,8 @@ class ConfigProvider
     public function getAuthorizationConfig(): array
     {
         return [
-            'roles'       => [
+            'roles' => [
                 'admin' => [],
-            ],
-            'permissions' => [
-                'admin' => [
-                    'comics',
-                ],
             ],
         ];
     }
@@ -140,26 +120,6 @@ class ConfigProvider
         ];
     }
 
-    public function getComicsConfig(): array
-    {
-        return [
-            'exclusions'  => [
-                'bloom-county',
-                'dilbert',
-                'g-g',
-                'goats',
-                'listen-tome',
-                'nih',
-                'pennyarcade',
-                'phd',
-                'pickles',
-                'reptilis-rex',
-                'uf',
-            ],
-            'output_file' => sprintf('%s/data/comics.phtml', realpath(getcwd())),
-        ];
-    }
-
     public function getMailConfig(): array
     {
         return [
@@ -172,12 +132,6 @@ class ConfigProvider
     public function registerRoutes(Application $app): void
     {
         $app->get('/', Handler\HomePageHandler::class, 'home');
-        $app->get('/comics', [
-            SessionMiddleware::class,
-            AuthenticationMiddleware::class,
-            AuthorizationMiddleware::class,
-            Handler\ComicsPageHandler::class,
-        ], 'comics');
         $app->get('/resume', Handler\ResumePageHandler::class, 'resume');
         $app->get('/now', Handler\NowPageHandler::class, 'now');
         $app->get('/privacy-policy', Handler\PrivacyPolicyPageHandler::class, 'privacy-policy');

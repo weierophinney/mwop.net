@@ -23,6 +23,9 @@ return function (
     // Blog routes
     (new Blog\ConfigProvider())->registerRoutes($app, '/blog');
 
+    // Comics
+    (new Comics\ConfigProvider())->registerRoutes($app);
+
     // Contact form
     (new Contact\ConfigProvider())->registerRoutes($app, '/contact');
 

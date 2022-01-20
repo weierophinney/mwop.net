@@ -45,8 +45,10 @@ $aggregator = new ConfigAggregator([
     // App-specific modules
     Mwop\App\ConfigProvider::class,
     Mwop\Blog\ConfigProvider::class,
+    Mwop\Comics\ConfigProvider::class,
     Mwop\Console\ConfigProvider::class,
     Mwop\Contact\ConfigProvider::class,
+    Mwop\Cron\ConfigProvider::class,
     Mwop\Feed\ConfigProvider::class,
     Mwop\Github\ConfigProvider::class,
     Mwop\Hooks\ConfigProvider::class,

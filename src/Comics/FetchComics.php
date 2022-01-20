@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Mwop\App\PeriodicTask;
+namespace Mwop\Comics;
 
 use PhlyComic\Comic;
 use PhlyComic\ComicFactory;

@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Mwop\App\Handler;
+namespace Mwop\Comics\Handler;
 
 use Mezzio\Template\TemplateRendererInterface;
+use Mwop\App\Handler\PageHandler;
 use Psr\Container\ContainerInterface;
 
 class ComicsPageHandlerFactory
