@@ -10,6 +10,7 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;
 
 use function sprintf;
+use function vsprintf;
 
 class Dispatcher
 {
