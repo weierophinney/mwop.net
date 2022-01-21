@@ -12,7 +12,7 @@ use function array_key_exists;
 use function class_exists;
 use function is_array;
 use function is_string;
-use function sprintf;
+use function vsprintf;
 
 /**
  * @internal
@@ -39,18 +39,20 @@ class ConfigParser
     private function validateAndExtractCronjob(mixed $jobDetails, int|string $index, LoggerInterface $logger): ?Cronjob
     {
         if (! is_array($jobDetails)) {
-            $logger->warning(sprintf(
+            $this->logWarning(
+                $logger,
                 'Job at index %s is invalid; it must be an array with the keys "schedule" and "event"',
                 (string) $index,
-            ));
+            );
             return null;
         }
 
         if (! array_key_exists('schedule', $jobDetails)) {
-            $logger->warning(sprintf(
+            $this->logWarning(
+                $logger,
                 'Job at index %s is invalid; missing "schedule" key',
                 (string) $index,
-            ));
+            );
             return null;
         }
 
@@ -59,10 +61,11 @@ class ConfigParser
         }
 
         if (! array_key_exists('event', $jobDetails)) {
-            $logger->warning(sprintf(
+            $this->logWarning(
+                $logger,
                 'Job at index %s is invalid; missing "event" key',
                 (string) $index,
-            ));
+            );
             return null;
         }
 
@@ -79,19 +82,21 @@ class ConfigParser
     private function isScheduleValid(mixed $schedule, int|string $index, LoggerInterface $logger): bool
     {
         if (! is_string($schedule)) {
-            $logger->warning(sprintf(
+            $this->logWarning(
+                $logger,
                 'Job at index %s is invalid; "schedule" value is not a string',
                 (string) $index,
-            ));
+            );
             return false;
         }
 
         if (! CronExpression::isValidExpression($schedule)) {
-            $logger->warning(sprintf(
+            $this->logWarning(
+                $logger,
                 'Job at index %s is invalid; schedule "%s" is invalid',
                 (string) $index,
                 $schedule,
-            ));
+            );
             return false;
         }
 
@@ -101,12 +106,13 @@ class ConfigParser
     private function isEventClassValid(mixed $eventClass, int|string $index, LoggerInterface $logger): bool
     {
         if (! is_string($eventClass)) {
-            $logger->warning(sprintf(
+            $this->logWarning(
+                $logger,
                 // phpcs:ignore Generic.Files.LineLength.TooLong
                 'Job at index %s is invalid; non-string "event" key provided; must be a class name of a %s implementation',
                 (string) $index,
                 CronEventInterface::class,
-            ));
+            );
             return false;
         }
 
@@ -114,13 +120,14 @@ class ConfigParser
             ! class_exists($eventClass)
             || ! $this->isCronEvent($eventClass)
         ) {
-            $logger->warning(sprintf(
+            $this->logWarning(
+                $logger,
                 // phpcs:ignore Generic.Files.LineLength.TooLong
                 'Job at index %s is invalid; "event" value ("%s") must be a class name of a %s implementation',
                 (string) $index,
                 $eventClass,
                 CronEventInterface::class,
-            ));
+            );
             return false;
         }
 
@@ -131,5 +138,11 @@ class ConfigParser
     {
         $r = new ReflectionClass($eventClass);
         return $r->implementsInterface(CronEventInterface::class);
+    }
+
+    private function logWarning(LoggerInterface $logger, string $message, string ...$replacements): void
+    {
+        $message = '[CRON][PARSER] ' . $message;
+        $logger->warning(vsprintf($message, $replacements));
     }
 }
