@@ -4,8 +4,8 @@ author: matthew
 title: 'Running cronjobs via an Openswoole timer'
 draft: false
 public: true
-created: '2022-01-21T09:08:00-06:00'
-updated: '2022-01-21T09:08:00-06:00'
+created: '2022-01-21T09:16:00-06:00'
+updated: '2022-01-21T09:16:00-06:00'
 tags:
     - openswoole
     - swoole
