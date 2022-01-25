@@ -5,11 +5,12 @@ title: 'Laminas CI Automation'
 draft: false
 public: true
 created: '2021-03-12T10:14:00-05:00'
-updated: '2021-03-12T10:14:00-05:00'
+updated: '2022-01-25T08:32:00-06:00'
 tags:
-    - php
-    - laminas
     - github
+    - laminas
+    - mezzio
+    - php
 ---
 
 The Laminas Project has close to 200 repositories between the main project, Laminas API Tools, and Mezzio.

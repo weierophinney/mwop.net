@@ -5,11 +5,12 @@ title: 'More Changes Coming for the Laminas Project'
 draft: false
 public: true
 created: '2019-12-05T11:45:00-05:00'
-updated: '2019-12-05T11:45:00-05:00'
+updated: '2022-01-25T08:32:00-06:00'
 tags:
     - php
     - zendframework
     - laminas
+    - mezzio
 ---
 
 Progress has been happening at a furious pace on the Zend Framework to Laminas

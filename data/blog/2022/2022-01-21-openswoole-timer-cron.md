@@ -5,11 +5,12 @@ title: 'Running cronjobs via an Openswoole timer'
 draft: false
 public: true
 created: '2022-01-21T09:16:00-06:00'
-updated: '2022-01-21T09:16:00-06:00'
+updated: '2022-01-25T08:32:00-06:00'
 tags:
+    - mezzio
     - openswoole
-    - swoole
     - php
+    - swoole
 ---
 
 Sites I build often utilize cronjobs to periodically pull in data from other sources.
