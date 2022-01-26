@@ -134,6 +134,6 @@ class ConfigProvider
             Middleware\ValidateAPIKeyMiddleware::class,
             BodyParamsMiddleware::class,
             Handler\TweetLatestHandler::class,
-        ], 'blog.tweet.latest');
+        ], 'blog.tweet.post');
     }
 }
