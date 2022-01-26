@@ -8,15 +8,16 @@ use Mezzio\Helper\UrlHelper;
 use Mwop\Blog\BlogPost;
 use Mwop\Blog\Mapper\MapperInterface;
 use RuntimeException;
+use Throwable;
 
 use function sprintf;
 
-class TweetLatest
+class TweetPost
 {
     use TweetTrait;
 
     private const TEMPLATE = <<<'END'
-        Blogged: %title%
+        From the archives: %title%
 
         %link%
 
@@ -31,27 +32,29 @@ class TweetLatest
     ) {
     }
 
-    public function __invoke(): void
+    public function __invoke(string $postIdentifier): void
     {
         $twitter = ($this->factory)();
 
         $twitter->post('statuses/update', [
             'status'    => $this->generateStatusFromPost(
-                $this->getFirstPost(),
+                $this->getPost($postIdentifier),
                 self::TEMPLATE,
             ),
             'media_ids' => [$this->generateMediaIDFromLogo($twitter)],
         ]);
     }
 
-    private function getFirstPost(): BlogPost
+    private function getPost(string $postIdentifier): BlogPost
     {
-        foreach ($this->blogPostMapper->fetchAll() as $post) {
-            return $post;
+        try {
+            return $this->blogPostMapper->fetch($postIdentifier);
+        } catch (Throwable $e) {
+            throw new RuntimeException(sprintf(
+                'Failed to retrieve post "%s": %s',
+                $postIdentifier,
+                $e->getMessage()
+            ), previous: $e);
         }
-
-        throw new RuntimeException(sprintf(
-            'Failed to retrieve the first blog post; cannot tweet a link to it.'
-        ));
     }
 }

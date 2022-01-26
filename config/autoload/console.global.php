@@ -8,6 +8,7 @@ use Mwop\Blog\Console\GenerateSearchData;
 use Mwop\Blog\Console\SeedBlogDatabase;
 use Mwop\Blog\Console\TagCloud;
 use Mwop\Blog\Console\TweetLatest;
+use Mwop\Blog\Console\TweetPost;
 use Mwop\Console\ClearCache;
 use Mwop\Github\Console\Fetch;
 
@@ -20,6 +21,7 @@ return [
             'blog:seed-db'              => SeedBlogDatabase::class,
             'blog:tag-cloud'            => TagCloud::class,
             'blog:tweet-latest'         => TweetLatest::class,
+            'blog:tweet-post'           => TweetPost::class,
             'clear-cache'               => ClearCache::class,
             'github:fetch-activity'     => Fetch::class,
         ],

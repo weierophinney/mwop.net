@@ -5,10 +5,9 @@ declare(strict_types=1);
 namespace Mwop\Blog;
 
 use Mezzio\Application;
+use Mezzio\Helper\BodyParams\BodyParamsMiddleware;
 use Mezzio\ProblemDetails\ProblemDetailsMiddleware;
 use Mezzio\Swoole\Task\DeferredServiceListenerDelegator;
-use Mwop\Blog\Handler\TweetLatestHandler;
-use Mwop\Blog\Middleware\ValidateAPIKeyMiddleware;
 use Phly\ConfigFactory\ConfigFactory;
 use Phly\EventDispatcher\ListenerProvider\AttachableListenerProvider;
 
@@ -66,18 +65,22 @@ class ConfigProvider
                 Console\FeedGenerator::class                    => Console\FeedGeneratorFactory::class,
                 Console\TagCloud::class                         => Console\TagCloudFactory::class,
                 Console\TweetLatest::class                      => Console\TweetLatestFactory::class,
+                Console\TweetPost::class                        => Console\TweetPostFactory::class,
                 Handler\DisplayPostHandler::class               => Handler\DisplayPostHandlerFactory::class,
                 Handler\FeedHandler::class                      => Handler\FeedHandlerFactory::class,
                 Handler\ListPostsHandler::class                 => Handler\ListPostsHandlerFactory::class,
                 Handler\SearchHandler::class                    => Handler\SearchHandlerFactory::class,
-                TweetLatestHandler::class                       => Handler\TweetLatestHandlerFactory::class,
+                Handler\TweetLatestHandler::class               => Handler\TweetLatestHandlerFactory::class,
+                Handler\TweetPostHandler::class                 => Handler\TweetPostHandlerFactory::class,
                 Listener\CacheBlogPostListener::class           => Listener\CacheBlogPostListenerFactory::class,
                 Listener\FetchBlogPostFromCacheListener::class  => Listener\FetchBlogPostFromCacheListenerFactory::class,
                 Listener\FetchBlogPostFromMapperListener::class => Listener\FetchBlogPostFromMapperListenerFactory::class,
                 Mapper\MapperInterface::class                   => Mapper\MapperFactory::class,
-                ValidateAPIKeyMiddleware::class                 => Middleware\ValidateAPIKeyMiddlewareFactory::class,
+                Middleware\ValidateAPIKeyMiddleware::class      => Middleware\ValidateAPIKeyMiddlewareFactory::class,
                 Twitter\TweetLatest::class                      => Twitter\TweetLatestFactory::class,
                 Twitter\TweetLatestEventListener::class         => Twitter\TweetLatestEventListenerFactory::class,
+                Twitter\TweetPost::class                        => Twitter\TweetPostFactory::class,
+                Twitter\TweetPostEventListener::class           => Twitter\TweetPostEventListenerFactory::class,
                 Twitter\TwitterFactory::class                   => Twitter\TwitterFactoryFactory::class,
             ],
             'invokables' => [
@@ -88,8 +91,12 @@ class ConfigProvider
                 AttachableListenerProvider::class       => [
                     Listener\FetchBlogPostEventListenersDelegator::class,
                     Twitter\TweetLatestEventListenerDelegator::class,
+                    Twitter\TweetPostEventListenerDelegator::class,
                 ],
                 Twitter\TweetLatestEventListener::class => [
+                    DeferredServiceListenerDelegator::class,
+                ],
+                Twitter\TweetPostEventListener::class   => [
                     DeferredServiceListenerDelegator::class,
                 ],
             ],
@@ -119,8 +126,14 @@ class ConfigProvider
 
         $app->post($basePath . '/api/tweet/latest', [
             ProblemDetailsMiddleware::class,
-            ValidateAPIKeyMiddleware::class,
-            TweetLatestHandler::class,
+            Middleware\ValidateAPIKeyMiddleware::class,
+            Handler\TweetLatestHandler::class,
+        ], 'blog.tweet.latest');
+        $app->post($basePath . '/api/tweet/post', [
+            ProblemDetailsMiddleware::class,
+            Middleware\ValidateAPIKeyMiddleware::class,
+            BodyParamsMiddleware::class,
+            Handler\TweetLatestHandler::class,
         ], 'blog.tweet.latest');
     }
 }
