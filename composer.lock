@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c55901217ea310ab65fc8e4190abf951",
+    "content-hash": "3466df0e9df695d9d208e1056542ed26",
     "packages": [
         {
             "name": "abraham/twitteroauth",
@@ -909,7 +909,7 @@
         },
         {
             "name": "illuminate/collections",
-            "version": "v8.81.0",
+            "version": "v8.82.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/collections.git",
@@ -963,7 +963,7 @@
         },
         {
             "name": "illuminate/contracts",
-            "version": "v8.81.0",
+            "version": "v8.82.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/contracts.git",
@@ -1011,7 +1011,7 @@
         },
         {
             "name": "illuminate/macroable",
-            "version": "v8.81.0",
+            "version": "v8.82.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/macroable.git",
@@ -4220,16 +4220,16 @@
         },
         {
             "name": "phly/phly-comic",
-            "version": "2.3.3",
+            "version": "2.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/weierophinney/PhlyComic.git",
-                "reference": "079dacdd6cf2d6bf74e4bf06953e7b8a9104341e"
+                "reference": "c6b786c27ac325715a7441c33c368b9abf050be9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/weierophinney/PhlyComic/zipball/079dacdd6cf2d6bf74e4bf06953e7b8a9104341e",
-                "reference": "079dacdd6cf2d6bf74e4bf06953e7b8a9104341e",
+                "url": "https://api.github.com/repos/weierophinney/PhlyComic/zipball/c6b786c27ac325715a7441c33c368b9abf050be9",
+                "reference": "c6b786c27ac325715a7441c33c368b9abf050be9",
                 "shasum": ""
             },
             "require": {
@@ -4283,7 +4283,7 @@
                     "url": "https://funding.communitybridge.org/projects/laminas-project"
                 }
             ],
-            "time": "2022-02-01T15:10:34+00:00"
+            "time": "2022-02-01T16:37:26+00:00"
         },
         {
             "name": "phly/phly-configfactory",

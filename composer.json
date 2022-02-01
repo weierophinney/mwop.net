@@ -51,7 +51,7 @@
         "middlewares/csp": "^3.0",
         "mnapoli/front-yaml": "^2.0.2",
         "monolog/monolog": "^1.23",
-        "phly/phly-comic": "^2.3.3",
+        "phly/phly-comic": "^2.3.4",
         "phly/phly-configfactory": "^1.1",
         "phly/phly-event-dispatcher": "^1.1",
         "php-http/curl-client": "^1.4",
