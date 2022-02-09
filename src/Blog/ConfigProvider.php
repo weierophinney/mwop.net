@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Mwop\Blog;
 
+use JeroenG\Flickr\Flickr as FlickrService;
 use Mezzio\Application;
 use Mezzio\Helper\BodyParams\BodyParamsMiddleware;
 use Mezzio\ProblemDetails\ProblemDetailsMiddleware;
@@ -66,6 +67,10 @@ class ConfigProvider
                 Console\TagCloud::class                         => Console\TagCloudFactory::class,
                 Console\TweetLatest::class                      => Console\TweetLatestFactory::class,
                 Console\TweetPost::class                        => Console\TweetPostFactory::class,
+                FlickrService::class                            => Flickr\FlickrFactory::class,
+                Flickr\Photos::class                            => Flickr\PhotosFactory::class,
+                Flickr\PhotoInfoCommand::class                  => Flickr\PhotoInfoCommandFactory::class,
+                Flickr\SearchCommand::class                     => Flickr\SearchCommandFactory::class,
                 Handler\DisplayPostHandler::class               => Handler\DisplayPostHandlerFactory::class,
                 Handler\FeedHandler::class                      => Handler\FeedHandlerFactory::class,
                 Handler\ListPostsHandler::class                 => Handler\ListPostsHandlerFactory::class,
