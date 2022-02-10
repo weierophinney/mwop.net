@@ -272,6 +272,18 @@ img.max-width {
   section {
     padding-bottom: 2em;
   }
+
+
+  .banner {
+    position: relative;
+
+    h2.p-name {
+      position: absolute;
+      bottom: 1em;
+      left: 0.5em;
+      mix-blend-mode: color-dodge;
+    }
+  }
   
   .single-entry a {
     text-decoration: underline;
