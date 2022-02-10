@@ -40,7 +40,7 @@ class ConfigProvider
                 'developer' => 0,
                 'key'       => null,
             ],
-            'images' => [
+            'images'  => [
                 'openverse' => [
                     'client_id'     => '',
                     'client_secret' => '',

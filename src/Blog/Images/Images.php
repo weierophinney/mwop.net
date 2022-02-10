@@ -9,6 +9,12 @@ use Psr\Http\Message\RequestFactoryInterface;
 use RuntimeException;
 
 use function array_map;
+use function implode;
+use function json_decode;
+use function sprintf;
+use function urlencode;
+
+use const JSON_THROW_ON_ERROR;
 
 class Images
 {

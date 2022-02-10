@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mwop\Blog\Images;
 
 use function sprintf;
+use function strtoupper;
 
 class Image
 {

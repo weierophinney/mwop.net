@@ -12,12 +12,17 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use RuntimeException;
 
+use function json_decode;
+use function sprintf;
+
+use const JSON_THROW_ON_ERROR;
+
 class ApiClient implements HttpClient
 {
-    private const URI_AUTH   = 'https://api.openverse.engineering/v1/auth_tokens/token/';
+    private const URI_AUTH = 'https://api.openverse.engineering/v1/auth_tokens/token/';
 
     private ?string $accessToken = null;
-    private ?string $tokenType = null;
+    private ?string $tokenType   = null;
 
     public function __construct(
         private RequestFactoryInterface $requestFactory,
@@ -26,7 +31,7 @@ class ApiClient implements HttpClient
         private string $clientSecret,
     ) {
     }
-        
+
     public function sendRequest(RequestInterface $request): ResponseInterface
     {
         if (null === $this->accessToken) {
