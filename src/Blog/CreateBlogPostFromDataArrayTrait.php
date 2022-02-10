@@ -56,6 +56,9 @@ trait CreateBlogPostFromDataArrayTrait
         $tags     = is_array($post['tags'])
             ? $post['tags']
             : explode('|', trim((string) $post['tags'], '|'));
+        $image    = isset($post['image']) && is_array($post['image'])
+            ? Images\Image::fromBlogYaml($post['image'])
+            : null;
 
         return new BlogPost(
             id: $post['id'],
@@ -68,6 +71,7 @@ trait CreateBlogPostFromDataArrayTrait
             extended: $parts[1] ?? '',
             isDraft: (bool) $post['draft'],
             isPublic: (bool) $post['public'],
+            image: $image,
         );
     }
 

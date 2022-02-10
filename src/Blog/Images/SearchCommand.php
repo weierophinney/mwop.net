@@ -25,11 +25,10 @@ class SearchCommand extends Command
 
         The best way to use this is:
 
-        $ laminas blog:image-search {some text} | vim -
+        $ laminas blog:image-search {some text} | vim -c 'set ft=markdown' -
         
         In vim, then:
 
-        :set ft=markdown
         :MarkdownPreview
 
         END;

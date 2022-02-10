@@ -36,4 +36,14 @@ class Image
             $data['title'],
         );
     }
+
+    public static function fromBlogYaml(array $data): self
+    {
+        return new self(
+            $data['url'],
+            $data['creator'],
+            $data['attribution_url'],
+            $data['alt_text'],
+        );
+    }
 }

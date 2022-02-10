@@ -19,7 +19,8 @@ class BlogPost
         public readonly string $body,
         public readonly string $extended,
         public readonly bool $isDraft,
-        public readonly bool $isPublic
+        public readonly bool $isPublic,
+        public readonly ?Images\Image $image = null,
     ) {
     }
 }
