@@ -5,12 +5,19 @@ title: 'Running cronjobs via an Openswoole timer'
 draft: false
 public: true
 created: '2022-01-21T09:16:00-06:00'
-updated: '2022-01-25T08:32:00-06:00'
+updated: '2022-02-10T14:55:00-06:00'
 tags:
     - mezzio
     - openswoole
     - php
     - swoole
+image:
+    url: https://live.staticflickr.com/7030/6812481635_ed463ae1fa_b.jpg
+    creator: 'photosteve101'
+    attribution_url: https://www.flickr.com/photos/42931449@N07/6812481635
+    alt_text: 'Business Calendar & Schedule'
+    license: 'BY'
+    license_url: https://creativecommons.org/licenses/by/2.0/
 ---
 
 Sites I build often utilize cronjobs to periodically pull in data from other sources.
