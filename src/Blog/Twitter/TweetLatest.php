@@ -36,7 +36,7 @@ class TweetLatest
         $twitter = ($this->factory)();
 
         $twitter->post('statuses/update', [
-            'status'    => $this->generateStatusFromPost(
+            'status' => $this->generateStatusFromPost(
                 $this->getFirstPost(),
                 self::TEMPLATE,
             ),
