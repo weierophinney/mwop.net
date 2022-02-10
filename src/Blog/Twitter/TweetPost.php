@@ -41,7 +41,7 @@ class TweetPost
                 $this->getPost($postIdentifier),
                 self::TEMPLATE,
             ),
-            'media_ids' => [$this->generateMediaIDFromLogo($twitter)],
+            // 'media_ids' => [$this->generateMediaIDFromLogo($twitter)],
         ]);
     }
 

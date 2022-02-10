@@ -40,7 +40,7 @@ class TweetLatest
                 $this->getFirstPost(),
                 self::TEMPLATE,
             ),
-            'media_ids' => [$this->generateMediaIDFromLogo($twitter)],
+            // 'media_ids' => [$this->generateMediaIDFromLogo($twitter)],
         ]);
     }
 
