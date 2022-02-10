@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Mwop\Blog;
 
-use JeroenG\Flickr\Flickr as FlickrService;
 use Mezzio\Application;
 use Mezzio\Helper\BodyParams\BodyParamsMiddleware;
 use Mezzio\ProblemDetails\ProblemDetailsMiddleware;
@@ -41,6 +40,12 @@ class ConfigProvider
                 'developer' => 0,
                 'key'       => null,
             ],
+            'images' => [
+                'openverse' => [
+                    'client_id'     => '',
+                    'client_secret' => '',
+                ],
+            ],
             'twitter' => [
                 'consumer_key'        => '',
                 'consumer_secret'     => '',
@@ -67,16 +72,15 @@ class ConfigProvider
                 Console\TagCloud::class                         => Console\TagCloudFactory::class,
                 Console\TweetLatest::class                      => Console\TweetLatestFactory::class,
                 Console\TweetPost::class                        => Console\TweetPostFactory::class,
-                FlickrService::class                            => Flickr\FlickrFactory::class,
-                Flickr\Photos::class                            => Flickr\PhotosFactory::class,
-                Flickr\PhotoInfoCommand::class                  => Flickr\PhotoInfoCommandFactory::class,
-                Flickr\SearchCommand::class                     => Flickr\SearchCommandFactory::class,
                 Handler\DisplayPostHandler::class               => Handler\DisplayPostHandlerFactory::class,
                 Handler\FeedHandler::class                      => Handler\FeedHandlerFactory::class,
                 Handler\ListPostsHandler::class                 => Handler\ListPostsHandlerFactory::class,
                 Handler\SearchHandler::class                    => Handler\SearchHandlerFactory::class,
                 Handler\TweetLatestHandler::class               => Handler\TweetLatestHandlerFactory::class,
                 Handler\TweetPostHandler::class                 => Handler\TweetPostHandlerFactory::class,
+                Images\ApiClient::class                         => Images\ApiClientFactory::class,
+                Images\Images::class                            => Images\ImagesFactory::class,
+                Images\SearchCommand::class                     => Images\SearchCommandFactory::class,
                 Listener\CacheBlogPostListener::class           => Listener\CacheBlogPostListenerFactory::class,
                 Listener\FetchBlogPostFromCacheListener::class  => Listener\FetchBlogPostFromCacheListenerFactory::class,
                 Listener\FetchBlogPostFromMapperListener::class => Listener\FetchBlogPostFromMapperListenerFactory::class,

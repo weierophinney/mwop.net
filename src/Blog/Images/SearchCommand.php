@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Mwop\Blog\Flickr;
+namespace Mwop\Blog\Images;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -15,27 +15,37 @@ use function sprintf;
 class SearchCommand extends Command
 {
     private const HELP = <<<'END'
-        Allows performing a fulltext search against the Flickr API to get a list of potential photos.
-        You may specify how many photos to retrieve at a time, as well, as which page of photos
-        (the latter is useful if you do not find suitable results in the first or later pages).
+        Allows performing a fulltext image search to get a list of potential
+        images. You may specify how many to retrieve at a time, as well, as which
+        page (the latter is useful if you do not find suitable results in the first
+        or later pages).
 
-        The list returned will include the image title, its ID and secret (for use with blog:photo-fetch),
-        and a URL for preview.
+        The list returned will include the image url, the creator, and an
+        attribution URL.
+
+        The best way to use this is:
+
+        $ laminas blog:image-search {some text} | vim -
+        
+        In vim, then:
+
+        :set ft=markdown
+        :MarkdownPreview
 
         END;
 
     public function __construct(
-        private Photos $photos,
+        private Images $images,
     ) {
         parent::__construct();
     }
 
     protected function configure(): void
     {
-        $this->setDescription('Search for photos on Flickr');
+        $this->setDescription('Search for images');
         $this->setHelp(self::HELP);
         $this->addArgument('search', InputArgument::REQUIRED, 'Search term(s) to use');
-        $this->addOption('count', 'c', InputOption::VALUE_REQUIRED, 'How many results to return', 10);
+        $this->addOption('count', 'c', InputOption::VALUE_REQUIRED, 'How many results to return', 25);
         $this->addOption('page', 'p', InputOption::VALUE_REQUIRED, 'Which page of results to return', 1);
     }
 
@@ -50,9 +60,12 @@ class SearchCommand extends Command
             $search
         ));
 
-        $results = $this->photos->search($search, $page, $perPage);
-        foreach ($results as $photo) {
-            $output->writeln($photo);
+        $results = $this->images->search($search, $page, $perPage);
+
+        $output->writeln(sprintf('<info>Showing %d results:</info>', $results->count()));
+
+        foreach ($results as $image) {
+            $output->writeln($image);
         }
 
         return 0;
