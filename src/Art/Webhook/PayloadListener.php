@@ -47,7 +47,7 @@ class PayloadListener
     private function parsePayloadJson(Payload $payload): array
     {
         try {
-            return json_decode($payload->json, true, JSON_THROW_ON_ERROR);
+            return json_decode($payload->json, true, flags: JSON_THROW_ON_ERROR);
         } catch (JsonException $e) {
             $this->logger->warning(sprintf(
                 "Unable to parse Instagram webhook payload: %s\nPayload: %s",
