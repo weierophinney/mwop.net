@@ -18,7 +18,7 @@ services:
       dockerfile: etc/docker/php.Dockerfile
       args:
         INSTALL_COMPOSER: 'true'
-        ZEND_EXTENSIONS_LIST: 'bz2 curl intl mbstring opcache sqlite3 tidy xsl zip'
+        ZEND_EXTENSIONS_LIST: 'bz2 curl imagick intl mbstring opcache sqlite3 tidy xsl zip'
     env_file:
       - .env
     depends_on:
@@ -43,6 +43,7 @@ services:
       - ./s6/cont-init.d/01-std-stream-permissions.sh:/etc/cont-init.d/01-std-stream-permissions.sh
       - ./s6/cont-init.d/99-start-message.sh:/etc/cont-init.d/99-start-message.sh
       - ./s6/services.d/swoole:/etc/services.d/swoole
+      - /tmp/image.jpg:/tmp/image.jpg
     logging:
       options:
         max-size: 50m

@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Mwop\Art;
 
+use Aws\S3\S3Client;
 use Mezzio\Application;
 use Mezzio\ProblemDetails\ProblemDetailsMiddleware;
 use Mezzio\Swoole\Task\DeferredServiceListenerDelegator;
 use Mwop\Hooks\Middleware\ValidateWebhookRequestMiddleware;
+use Phly\ConfigFactory\ConfigFactory;
 use Phly\EventDispatcher\ListenerProvider\AttachableListenerProvider;
 
 class ConfigProvider
@@ -15,7 +17,22 @@ class ConfigProvider
     public function __invoke(): array
     {
         return [
+            'art'          => $this->getConfig(),
             'dependencies' => $this->getDependencies(),
+        ];
+    }
+
+    public function getConfig(): array
+    {
+        return [
+            'storage' => [
+                'endpoint' => '',
+                'region'   => '',
+                'bucket'   => '',
+                'folder'   => '',
+                'key'      => '',
+                'secret'   => '',
+            ],
         ];
     }
 
@@ -31,7 +48,14 @@ class ConfigProvider
                 ],
             ],
             'factories'  => [
+                'config-art'                   => ConfigFactory::class,
+                Handler\ImageHandler::class    => Handler\ImageHandlerFactory::class,
                 Handler\NewImageHandler::class => Handler\NewImageHandlerFactory::class,
+                'Mwop\Art\Storage\Images'      => Storage\ImagesFilesystemFactory::class,
+                'Mwop\Art\Storage\Public'      => Storage\PublicFilesystemFactory::class,
+                'Mwop\Art\Storage\Thumbnails'  => Storage\ThumbnailsFilesystemFactory::class,
+                PhotoStorage::class            => PhotoStorageFactory::class,
+                S3Client::class                => Storage\S3ClientFactory::class,
                 Webhook\PayloadListener::class => Webhook\PayloadListenerFactory::class,
             ],
         ];
@@ -39,6 +63,18 @@ class ConfigProvider
 
     public function registerRoutes(Application $app, string $basePath = ''): void
     {
+        $app->get(
+            $basePath . '/images/art/{type:fullsize}/{image:[^/ ]+.(?:png|jpg|jpeg|webp)}',
+            Handler\ImageHandler::class,
+            'art.image.fullsize'
+        );
+
+        $app->get(
+            $basePath . '/images/art/{type:thumbnails}/{image:[^/ ]+.(?:png|jpg|jpeg|webp)}',
+            Handler\ImageHandler::class,
+            'art.image.thumbnail'
+        );
+
         $app->post($basePath . '/api/art/new-photo', [
             ProblemDetailsMiddleware::class,
             ValidateWebhookRequestMiddleware::class,

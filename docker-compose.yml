@@ -25,7 +25,7 @@ services:
       dockerfile: etc/docker/php.Dockerfile
       args:
         INSTALL_COMPOSER: 'true'
-        ZEND_EXTENSIONS_LIST: 'bz2 curl intl mbstring opcache sqlite3 tidy xsl zip'
+        ZEND_EXTENSIONS_LIST: 'bz2 curl imagick intl mbstring opcache sqlite3 tidy xsl zip'
     env_file:
       - .env
     restart: unless-stopped
