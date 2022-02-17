@@ -11,7 +11,7 @@ CREATE TABLE "photos" (
 CREATE VIRTUAL TABLE search USING FTS4(
     filename,
     description,
-)
+);
 
 CREATE TRIGGER after_photos_insert
     AFTER INSERT ON photos
@@ -24,7 +24,6 @@ CREATE TRIGGER after_photos_insert
             new.filename,
             new.description
         );
-    END
+    END;
 
 COMMIT;
-

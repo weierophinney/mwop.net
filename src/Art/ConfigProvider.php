@@ -26,6 +26,9 @@ class ConfigProvider
     {
         return [
             'database_filename'  => 'photos.db',
+            'db' => [
+                'dsn' => 'sqlite:' . realpath(getcwd()) . '/data/photos.db',
+            ],
             'error_notification' => [
                 'sender'    => '',
                 'recipient' => '',
@@ -58,6 +61,7 @@ class ConfigProvider
                 Handler\NewImageHandler::class => Handler\NewImageHandlerFactory::class,
                 'Mwop\Art\Storage\Images'      => Storage\ImagesFilesystemFactory::class,
                 'Mwop\Art\Storage\Thumbnails'  => Storage\ThumbnailsFilesystemFactory::class,
+                PhotoMapper::class             => PdoPhotoMapperFactory::class,
                 PhotoStorage::class            => PhotoStorageFactory::class,
                 S3Client::class                => Storage\S3ClientFactory::class,
                 Webhook\DatabaseBackup::class  => Webhook\DatabaseBackupFactory::class,

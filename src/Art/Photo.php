@@ -24,7 +24,7 @@ class Photo implements JsonSerializable
         private ?string $filename = null,
     ) {
         if (is_string($createdAt)) {
-            $createdAt = $this->transformStringDateTime();
+            $createdAt = $this->transformStringDateTime($createdAt);
         }
         $this->createdAt = $createdAt;
     }
@@ -67,7 +67,7 @@ class Photo implements JsonSerializable
 
         if (
             ! preg_match(
-                '/^(?P<month>\S+) (?P<day>\d+), (?P<year>\d{4}) at $(?P<time>\d{2}:\d{2})(?P<>meridian>am|pm)$/i',
+                '/^(?P<month>\S+) (?P<day>\d+), (?P<year>\d{4}) at (?P<time>\d{2}:\d{2})(?P<meridian>am|pm)$/i',
                 $dateTime,
                 $matches
             )
