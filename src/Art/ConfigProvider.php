@@ -25,6 +25,11 @@ class ConfigProvider
     public function getConfig(): array
     {
         return [
+            'database_filename' => 'photos.db',
+            'error_notification' => [
+                'sender'    => '',
+                'recipient' => '',
+            ],
             'storage' => [
                 'endpoint' => '',
                 'region'   => '',
@@ -52,10 +57,11 @@ class ConfigProvider
                 Handler\ImageHandler::class    => Handler\ImageHandlerFactory::class,
                 Handler\NewImageHandler::class => Handler\NewImageHandlerFactory::class,
                 'Mwop\Art\Storage\Images'      => Storage\ImagesFilesystemFactory::class,
-                'Mwop\Art\Storage\Public'      => Storage\PublicFilesystemFactory::class,
                 'Mwop\Art\Storage\Thumbnails'  => Storage\ThumbnailsFilesystemFactory::class,
                 PhotoStorage::class            => PhotoStorageFactory::class,
                 S3Client::class                => Storage\S3ClientFactory::class,
+                Webhook\DatabaseBackup::class  => Webhook\DatabaseBackupFactory::class,
+                Webhook\ErrorNotifier::class   => Webhook\ErrorNotifierFactory::class,
                 Webhook\PayloadListener::class => Webhook\PayloadListenerFactory::class,
             ],
         ];

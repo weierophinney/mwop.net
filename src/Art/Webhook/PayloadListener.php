@@ -5,56 +5,157 @@ declare(strict_types=1);
 namespace Mwop\Art\Webhook;
 
 use JsonException;
+use ImagickException;
+use League\Flysystem\FilesystemException;
+use League\Flysystem\UnableToCopyFile;
+use League\Flysystem\UnableToWriteFile;
 use Mwop\Art\Photo;
+use Mwop\Art\PhotoMapper;
+use Mwop\Art\PhotoStorage;
+use PDOException;
 use Psr\Log\LoggerInterface;
 
 use function json_decode;
-use function json_encode;
 use function sprintf;
 
-use const JSON_PRETTY_PRINT;
 use const JSON_THROW_ON_ERROR;
-use const JSON_UNESCAPED_SLASHES;
-use const JSON_UNESCAPED_UNICODE;
 
 class PayloadListener
 {
     public function __construct(
+        private PhotoStorage $photos,
+        private PhotoMapper $mapper,
+        private DatabaseBackup $backup,
         private LoggerInterface $logger,
+        private ErrorNotifier $notifier,
     ) {
     }
 
     public function __invoke(Payload $payload): void
     {
-        $photo = Photo::fromArray($this->parsePayloadJson($payload));
+        // Parse
+        $photo = $this->parsePayloadJson($payload);
         if (null === $photo) {
-            $this->logger->warning(sprintf(
-                'Empty Instagram payload detected: %s',
-                $payload->json
-            ));
             return;
         }
 
-        $this->logger->info(sprintf(
-            "Received Instagram payload:\n%s",
-            json_encode(
-                $photo,
-                JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT
-            )
-        ));
+        // Upload
+        $filename = $this->upload($photo);
+        if (null === $filename) {
+            return;
+        }
+        $photo->injectFilename($filename);
+
+        // Create thumbnail
+        $this->createThumbnail($filename, $photo);
+
+        // Add to database
+        if (! $this->insertIntoDatabase($photo)) {
+            // Failed
+            return;
+        }
+
+        // Backup database
+        $this->backupDatabase();
     }
 
-    private function parsePayloadJson(Payload $payload): array
+    private function parsePayloadJson(Payload $payload): ?Photo
     {
         try {
-            return json_decode($payload->json, true, flags: JSON_THROW_ON_ERROR);
+            $photoData = json_decode($payload->json, true, flags: JSON_THROW_ON_ERROR);
         } catch (JsonException $e) {
-            $this->logger->warning(sprintf(
+            $message = sprintf(
                 "Unable to parse Instagram webhook payload: %s\nPayload: %s",
                 $e->getMessage(),
                 $payload->json
-            ));
-            return [];
+            );
+            $this->notifier->sendNotification($message);
+            $this->logger->warning($message);
+
+            return null;
         }
+
+        $photo = Photo::fromArray($photoData);
+        if (null === $photo) {
+            $message = sprintf(
+                'Invalid Instagram payload detected: %s',
+                $payload->json
+            );
+            $this->notifier->sendNotification($message);
+            $this->logger->warning($message);
+
+            return null;
+        }
+
+        return $photo;
+    }
+
+    private function upload(Photo $photo): ?string
+    {
+        try {
+            return $this->photos->upload($photo->sourceUrl);
+        } catch (UnableToWriteFile|FilesystemException $e) {
+            $message = sprintf(
+                'Failed to upload Instagram photo (%s): %s',
+                $photo->sourceUrl,
+                $e->getMessage(),
+            );
+            $this->notifier->sendNotification($message);
+            $this->logger->warning($message);
+        }
+
+        return null;
+    }
+
+    private function createThumbnail(string $filename, Photo $photo): void
+    {
+        try {
+            $this->photos->createThumbnail($filename);
+        } catch (ImagickException|UnableToWriteFile|FilesystemException $e) {
+            $message = sprintf(
+                'Failed to scale Instagram photo (%s:%s): %s',
+                $photo->filename,
+                $photo->sourceUrl,
+                $e->getMessage(),
+            );
+            $this->notifier->sendNotification($message);
+            $this->logger->warning($message);
+        }
+    }
+
+    private function insertIntoDatabase(Photo $photo): bool
+    {
+        try {
+            $this->mapper->create($photo);
+            return true;
+        } catch (PDOException $e) {
+            $message = sprintf(
+                'Failed to create database record for (%s:%s): %s',
+                $photo->filename,
+                $photo->sourceUrl,
+                $e->getMessage(),
+            );
+            $this->notifier->sendNotification($message);
+            $this->logger->warning($message);
+        }
+        
+        return false;
+    }
+
+    private function backupDatabase(): bool
+    {
+        try {
+            $this->backup->backup();
+        } catch (UnableToCopyFile|FilesystemException $e) {
+            $message = sprintf(
+                'Unable to backup photo database: %s',
+                $e->getMessage(),
+            );
+            $this->notifier->sendNotification($message);
+            $this->logger->warning($message);
+            return false;
+        }
+
+        return true;
     }
 }
