@@ -25,12 +25,12 @@ class ConfigProvider
     public function getConfig(): array
     {
         return [
-            'database_filename' => 'photos.db',
+            'database_filename'  => 'photos.db',
             'error_notification' => [
                 'sender'    => '',
                 'recipient' => '',
             ],
-            'storage' => [
+            'storage'            => [
                 'endpoint' => '',
                 'region'   => '',
                 'bucket'   => '',

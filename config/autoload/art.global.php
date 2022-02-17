@@ -5,10 +5,10 @@ declare(strict_types=1);
 return [
     'art' => [
         'error_notification' => [
-            'sender' => $_SERVER['CONTACT_MESSAGE_SENDER_ADDRESS'] ?? '',
+            'sender'    => $_SERVER['CONTACT_MESSAGE_SENDER_ADDRESS'] ?? '',
             'recipient' => $_SERVER['ERROR_NOTIFICATION_ADDRESS'] ?? '',
         ],
-        'storage' => [
+        'storage'            => [
             'endpoint' => $_SERVER['ART_SPACES_ENDPOINT'] ?? '',
             'region'   => $_SERVER['ART_SPACES_REGION'] ?? '',
             'bucket'   => $_SERVER['ART_SPACES_BUCKET'] ?? '',

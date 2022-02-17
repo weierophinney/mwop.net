@@ -9,6 +9,11 @@ use SendGrid;
 use SendGrid\Mail\Mail;
 use Throwable;
 
+use function array_map;
+use function implode;
+use function json_decode;
+use function sprintf;
+
 class ErrorNotifier
 {
     public function __construct(
@@ -26,7 +31,7 @@ class ErrorNotifier
         $message->addTo($this->recipient);
         $message->setSubject('[mwop.net] Failure to process new photo');
         $message->addContent('text/plain', $content);
-        
+
         try {
             $response = $this->mailer->send($message);
         } catch (Throwable $e) {

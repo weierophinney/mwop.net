@@ -6,8 +6,8 @@ namespace Mwop\Art\Handler;
 
 use Mezzio\Router\RouteResult;
 use Mwop\Art\PhotoStorage;
-use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
 class ImageHandler implements RequestHandlerInterface

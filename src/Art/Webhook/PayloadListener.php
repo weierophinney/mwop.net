@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Mwop\Art\Webhook;
 
-use JsonException;
 use ImagickException;
+use JsonException;
 use League\Flysystem\FilesystemException;
 use League\Flysystem\UnableToCopyFile;
 use League\Flysystem\UnableToWriteFile;
@@ -94,7 +94,7 @@ class PayloadListener
     {
         try {
             return $this->photos->upload($photo->sourceUrl);
-        } catch (UnableToWriteFile|FilesystemException $e) {
+        } catch (UnableToWriteFile | FilesystemException $e) {
             $message = sprintf(
                 'Failed to upload Instagram photo (%s): %s',
                 $photo->sourceUrl,
@@ -111,7 +111,7 @@ class PayloadListener
     {
         try {
             $this->photos->createThumbnail($filename);
-        } catch (ImagickException|UnableToWriteFile|FilesystemException $e) {
+        } catch (ImagickException | UnableToWriteFile | FilesystemException $e) {
             $message = sprintf(
                 'Failed to scale Instagram photo (%s:%s): %s',
                 $photo->filename,
@@ -138,7 +138,7 @@ class PayloadListener
             $this->notifier->sendNotification($message);
             $this->logger->warning($message);
         }
-        
+
         return false;
     }
 
@@ -146,7 +146,7 @@ class PayloadListener
     {
         try {
             $this->backup->backup();
-        } catch (UnableToCopyFile|FilesystemException $e) {
+        } catch (UnableToCopyFile | FilesystemException $e) {
             $message = sprintf(
                 'Unable to backup photo database: %s',
                 $e->getMessage(),

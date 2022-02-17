@@ -12,9 +12,18 @@ use Psr\Http\Message\ResponseInterface;
 use Ramsey\Uuid\Uuid;
 use RuntimeException;
 
+use function fopen;
+use function in_array;
+use function parse_url;
+use function pathinfo;
+use function sprintf;
+
+use const PATHINFO_EXTENSION;
+use const PHP_URL_PATH;
+
 class PhotoStorage
 {
-    public const TYPE_IMAGE = 'images';
+    public const TYPE_IMAGE     = 'images';
     public const TYPE_THUMBNAIL = 'thumbs';
 
     private const TYPE_ALLOWED = [
@@ -30,8 +39,8 @@ class PhotoStorage
         private ResponseFactoryInterface $responseFactory
     ) {
         $this->filesystem = new MountManager([
-            'images'     => $images,
-            'thumbs'     => $thumbnails,
+            'images' => $images,
+            'thumbs' => $thumbnails,
         ]);
     }
 

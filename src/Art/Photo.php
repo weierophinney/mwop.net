@@ -8,6 +8,10 @@ use DateTimeImmutable;
 use DateTimeInterface;
 use JsonSerializable;
 
+use function is_string;
+use function preg_match;
+use function sprintf;
+
 class Photo implements JsonSerializable
 {
     public readonly DateTimeInterface $createdAt;
@@ -61,7 +65,13 @@ class Photo implements JsonSerializable
     {
         $matches = [];
 
-        if (! preg_match('/^(?P<month>\S+) (?P<day>\d+), (?P<year>\d{4}) at $(?P<time>\d{2}:\d{2})(?P<>meridian>am|pm)$/i', $dateTime, $matches)) {
+        if (
+            ! preg_match(
+                '/^(?P<month>\S+) (?P<day>\d+), (?P<year>\d{4}) at $(?P<time>\d{2}:\d{2})(?P<>meridian>am|pm)$/i',
+                $dateTime,
+                $matches
+            )
+        ) {
             return new DateTimeImmutable($dateTime);
         }
 

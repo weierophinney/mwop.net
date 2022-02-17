@@ -7,13 +7,14 @@ namespace Mwop\Art;
 use Illuminate\Support\Collection;
 use Laminas\Paginator\Paginator;
 
+// phpcs:ignore WebimpressCodingStandard.NamingConventions.Interface.Suffix
 interface PhotoMapper
 {
     public function fetchAll(): Paginator;
 
     public function fetch(string $filename): ?Photo;
 
-    public function search(string $toMatch): Collection
+    public function search(string $toMatch): Collection;
 
     public function create(Photo $photo): void;
 }

@@ -9,7 +9,10 @@ use Illuminate\Support\Collection;
 use Laminas\Paginator\Paginator;
 use Mwop\App\PdoPaginator;
 use PDO;
-use RuntimeException;
+
+use function array_map;
+use function array_shift;
+use function count;
 
 class PdoPhotoMapper implements PhotoMapper
 {
@@ -20,7 +23,7 @@ class PdoPhotoMapper implements PhotoMapper
 
     public function fetchAll(): Paginator
     {
-        $select = <<< 'SQL'
+        $select = <<<'SQL'
             SELECT *
             FROM photos
             ORDER BY created DESC
@@ -38,7 +41,7 @@ class PdoPhotoMapper implements PhotoMapper
 
     public function fetch(string $filename): ?Photo
     {
-        $select = <<< 'SQL'
+        $select = <<<'SQL'
             SELECT * FROM photos WHERE filename = :filename
             SQL;
 
@@ -63,7 +66,7 @@ class PdoPhotoMapper implements PhotoMapper
 
     public function search(string $toMatch): Collection
     {
-        $select = <<< 'SQL'
+        $select = <<<'SQL'
             SELECT
                 filename, description
             FROM search
@@ -83,7 +86,7 @@ class PdoPhotoMapper implements PhotoMapper
 
     public function create(Photo $photo): void
     {
-        $insert = <<< 'SQL'
+        $insert = <<<'SQL'
             INSERT INTO photos (
                 filename,
                 source,
