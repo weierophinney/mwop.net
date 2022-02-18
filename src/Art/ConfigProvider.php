@@ -19,6 +19,7 @@ class ConfigProvider
         return [
             'art'          => $this->getConfig(),
             'dependencies' => $this->getDependencies(),
+            'templates'    => $this->getTemplateConfig(),
         ];
     }
 
@@ -26,13 +27,14 @@ class ConfigProvider
     {
         return [
             'database_filename'  => 'photos.db',
-            'db' => [
+            'db'                 => [
                 'dsn' => 'sqlite:' . realpath(getcwd()) . '/data/photos.db',
             ],
             'error_notification' => [
                 'sender'    => '',
                 'recipient' => '',
             ],
+            'per_page'           => 12,
             'storage'            => [
                 'endpoint' => '',
                 'region'   => '',
@@ -59,6 +61,8 @@ class ConfigProvider
                 'config-art'                   => ConfigFactory::class,
                 Handler\ImageHandler::class    => Handler\ImageHandlerFactory::class,
                 Handler\NewImageHandler::class => Handler\NewImageHandlerFactory::class,
+                Handler\PhotoHandler::class    => Handler\PhotoHandlerFactory::class,
+                Handler\PhotosHandler::class   => Handler\PhotosHandlerFactory::class,
                 'Mwop\Art\Storage\Images'      => Storage\ImagesFilesystemFactory::class,
                 'Mwop\Art\Storage\Thumbnails'  => Storage\ThumbnailsFilesystemFactory::class,
                 PhotoMapper::class             => PdoPhotoMapperFactory::class,
@@ -67,6 +71,15 @@ class ConfigProvider
                 Webhook\DatabaseBackup::class  => Webhook\DatabaseBackupFactory::class,
                 Webhook\ErrorNotifier::class   => Webhook\ErrorNotifierFactory::class,
                 Webhook\PayloadListener::class => Webhook\PayloadListenerFactory::class,
+            ],
+        ];
+    }
+
+    public function getTemplateConfig(): array
+    {
+        return [
+            'paths' => [
+                'art' => [__DIR__ . '/templates'],
             ],
         ];
     }
@@ -84,6 +97,10 @@ class ConfigProvider
             Handler\ImageHandler::class,
             'art.image.thumbnail'
         );
+
+        $app->get($basePath . '/art/', Handler\PhotosHandler::class, 'art.gallery');
+
+        $app->get($basePath . '/art/{image:[^/]+\.(?:png|jpg|jpeg|webp)}/', Handler\PhotosHandler::class, 'art.photo');
 
         $app->post($basePath . '/api/art/new-photo', [
             ProblemDetailsMiddleware::class,

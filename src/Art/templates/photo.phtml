@@ -1,0 +1,44 @@
+<?php
+/** @var \Mwop\Art\Photo $photo */
+$this->layout('layout::layout', [
+    'title' => $this->escapeHtml($photo->filename()),
+]);
+
+$matches = [];
+$tags    = [];
+if (preg_match_all('/\#(?<tag>\S+)/', $photo->description, $matches)) {
+    foreach ($matches['tag'] as $tag) {
+        $tags[] = $tag;
+    }
+}
+
+$this->push('links');
+?>
+    <!-- OpenGraph -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:creator" content="@mwop" />
+    <meta property="og:site_name" content="mwop.net" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="<?= $this->escapeHtmlAttr($post->title) ?>" />
+    <meta property="og:url" content="<?= $this->serverurl($this->postUrl($post)) ?>" />
+    <meta property="og:image" content="<?= $post->image ? $post->image->url : $this->serverurl('/images/logo.png') ?>" />
+    <meta property="og:image:alt" content="<?= $this->escapeHtmlAttr($imageAltText) ?>" />
+    <meta property="article:published_time" content="<?= $post->created->format('c') ?>" />
+    <meta property="article:modified_time" content="<?= $post->updated->format('c') ?>" />
+    <?php foreach ($tags as $tag): ?>
+    <meta property="article:tag" content="<?= $this->escapeHtmlAttr($tag) ?>" />
+    <?php endforeach ?>
+<?php
+$this->end();
+
+$this->push('scripts');
+echo '<script src="/js/prism.js"></script>';
+echo '<script src="/js/disqus.js"></script>';
+$this->end();
+
+$this->push('footer');
+$this->insert('data::tag-cloud');
+$this->end();
+?>
+<div class="single-entry h-entry container col offset-md-2"><div class="row">
+
