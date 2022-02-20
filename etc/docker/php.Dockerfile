@@ -23,7 +23,7 @@ RUN set -e; \
         --enable-sockets \
         --enable-http2 \
         --enable-openssl \
-        --enable-swoole-json \
+        --enable-swoole-json; \
     make; \
     make install
 
