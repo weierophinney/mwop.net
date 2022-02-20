@@ -72,7 +72,6 @@ class ConfigProvider
             ],
             'delegators' => [
                 AttachableListenerProvider::class => [
-                    ServerStartListenerDelegator::class,
                     Factory\SwooleTaskInvokerListenerDelegator::class,
                 ],
                 DisplayPostHandler::class         => [
