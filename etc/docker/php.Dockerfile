@@ -24,7 +24,6 @@ RUN set -e; \
         --enable-http2 \
         --enable-openssl \
         --enable-swoole-json \
-        --enable-swoole-curl; \
     make; \
     make install
 
