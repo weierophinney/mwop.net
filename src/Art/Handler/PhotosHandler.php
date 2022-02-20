@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Mwop\Art\Handler;
 
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Server\RequestHandlerInterface;
 use Mezzio\Template\TemplateRendererInterface;
 use Mwop\Art\PhotoMapper;
 use Psr\Http\Message\ResponseFactoryInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
 class PhotosHandler implements RequestHandlerInterface
 {
@@ -21,7 +21,7 @@ class PhotosHandler implements RequestHandlerInterface
     ) {
     }
 
-    public function handle(ServerRequestInterface $request) : ResponseInterface
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $page   = $request->getQueryParams()['page'] ?? 1;
         $photos = $this->mapper->fetchAll();

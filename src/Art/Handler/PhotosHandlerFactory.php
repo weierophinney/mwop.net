@@ -11,7 +11,7 @@ use Psr\Http\Message\ResponseFactoryInterface;
 
 class PhotosHandlerFactory
 {
-    public function __invoke(ContainerInterface $container) : PhotosHandler
+    public function __invoke(ContainerInterface $container): PhotosHandler
     {
         $config = $container->get('config-art');
         return new PhotosHandler(

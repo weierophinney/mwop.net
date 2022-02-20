@@ -8,6 +8,9 @@ use League\Flysystem\Filesystem;
 use League\Flysystem\Local\LocalFilesystemAdapter;
 use Psr\Container\ContainerInterface;
 
+use function getcwd;
+use function realpath;
+
 class FetchPhotoDatabaseFactory
 {
     public function __invoke(ContainerInterface $container): FetchPhotoDatabase
@@ -21,6 +24,5 @@ class FetchPhotoDatabaseFactory
             remote: $container->get('Mwop\Art\Storage\Images'),
             database: $config['database_filename'],
         );
-        
     }
 }

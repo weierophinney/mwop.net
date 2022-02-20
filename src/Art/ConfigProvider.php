@@ -12,6 +12,9 @@ use Mwop\Hooks\Middleware\ValidateWebhookRequestMiddleware;
 use Phly\ConfigFactory\ConfigFactory;
 use Phly\EventDispatcher\ListenerProvider\AttachableListenerProvider;
 
+use function getcwd;
+use function realpath;
+
 class ConfigProvider
 {
     public function __invoke(): array

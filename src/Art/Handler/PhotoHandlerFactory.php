@@ -11,7 +11,7 @@ use Psr\Http\Message\ResponseFactoryInterface;
 
 class PhotoHandlerFactory
 {
-    public function __invoke(ContainerInterface $container) : PhotoHandler
+    public function __invoke(ContainerInterface $container): PhotoHandler
     {
         return new PhotoHandler(
             mapper: $container->get(PhotoMapper::class),
