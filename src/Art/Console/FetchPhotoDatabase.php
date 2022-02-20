@@ -35,7 +35,7 @@ class FetchPhotoDatabase extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         try {
-            $this->filesystem->copy('remote://' . $this->database, 'app//' . $this->database);
+            $this->filesystem->copy('remote://' . $this->database, 'app://' . $this->database);
         } catch (Throwable $e) {
             $output->writeln('<error>Failed to fetch remote photo database for local use</error>');
             $output->writeln($e->getMessage());
