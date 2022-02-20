@@ -32,10 +32,20 @@ class PdoPhotoMapper implements PhotoMapper
 
         $count = 'SELECT COUNT(filename) FROM photos';
 
+        $factory = function (array $row): Photo {
+            return new Photo(
+                url: $row['source'],
+                sourceUrl: $row['source_url'],
+                description: $row['description'],
+                createdAt: $row['created'],
+                filename: $row['filename'],
+            );
+        };
+
         return new Paginator(new PdoPaginator(
             $this->pdo->prepare($select),
             $this->pdo->prepare($count),
-            'Photo::fromArray',
+            $factory,
         ));
     }
 
@@ -45,7 +55,7 @@ class PdoPhotoMapper implements PhotoMapper
             SELECT * FROM photos WHERE filename = :filename
             SQL;
 
-        $statement = $this->db->prepare($select);
+        $statement = $this->pdo->prepare($select);
         $statement->execute(['filename' => $filename]);
 
         $rows = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -56,11 +66,11 @@ class PdoPhotoMapper implements PhotoMapper
         $row = array_shift($rows);
 
         return new Photo(
-            $row['source'],
-            $row['source_url'],
-            $row['description'],
-            $row['created'],
-            $row['filename'],
+            url: $row['source'],
+            sourceUrl: $row['source_url'],
+            description: $row['description'],
+            createdAt: $row['created'],
+            filename: $row['filename'],
         );
     }
 

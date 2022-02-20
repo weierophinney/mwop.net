@@ -15,6 +15,7 @@ data/homepage.posts.json
 data/homepage.posts.php
 data/instagram.feed.php
 data/redis/
+data/photos.db
 data/posts.db
 data/search_terms.json
 data/sessions/

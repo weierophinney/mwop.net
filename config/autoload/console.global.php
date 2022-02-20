@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Mwop\Art\Console\FetchPhotoDatabase;
 use Mwop\Blog\Console\ClearCache as BlogClearCache;
 use Mwop\Blog\Console\FeedGenerator;
 use Mwop\Blog\Console\GenerateSearchData;
@@ -24,6 +25,7 @@ return [
             'blog:tweet-post'           => TweetPost::class,
             'clear-cache'               => ClearCache::class,
             'github:fetch-activity'     => Fetch::class,
+            'photo:fetch-db'            => FetchPhotoDatabase::class,
         ],
     ],
 ];

@@ -4,9 +4,7 @@
 
 <?php
 $this->push('scripts');
-// echo '<script src="/js/instagram.js"></script>';
 echo '<script src="/js/twitter.js"></script>';
-echo '<script src="https://cdn2.woxo.tech/a.js#61265c474b32b7001602858e" async data-usrc></script>';
 $this->end();
 ?>
 
@@ -42,6 +40,16 @@ $this->end();
     <p>&nbsp;</p>
 
 	<div loading="lazy" data-mc-src="daf1a12e-02c8-4fcc-80cb-9b65210d9e20#instagram"></div>
+
+    <div class="container card-columns">
+    <?php foreach ($photos as $photo): ?>
+        <div class="card">
+            <img class="card-img-top img-fluid" src="<?= $this->url('art.image', ['type' => 'thumbnails', 'image' => $photo->filename()]) ?>" alt="Original art by Matthew Weier O'Phinney">
+
+            <div class="card-img-overlay"><a class="btn btn-info photo-link" href="<?= $this->url('art.photo', ['image' => $photo->filename()]) ?>"><img src="/images/external-link.svg" width="32"></a></div>
+        </div>
+    <?php endforeach ?>
+    </div>
 </aside>
 
 <aside class="col-lg omega home">
@@ -80,19 +88,4 @@ $this->end();
         and tweets as <a href="https://twitter.com/mwop">@mwop</a>.
     </p>
   </div>
-</div>
-
-<div class="modal" id="modal-instagram" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-
-            <div class="modal-body">
-            </div>
-        </div>
-    </div>
 </div>

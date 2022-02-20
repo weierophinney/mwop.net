@@ -7,6 +7,7 @@ namespace Mwop\Art;
 use DateTimeImmutable;
 use DateTimeInterface;
 use JsonSerializable;
+use Webmozart\Assert\Assert;
 
 use function is_string;
 use function preg_match;
@@ -31,11 +32,16 @@ class Photo implements JsonSerializable
 
     public static function fromArray(array $payload): self
     {
+        Assert::keyExists($payload, 'source_url', 'Missing source_url in Instagram payload');
+        Assert::keyExists($payload, 'created_at', 'Missing created_at in Instagram payload');
+        Assert::stringNotEmpty($payload['source_url'], 'Empty source_url in Instagram payload');
+        Assert::stringNotEmpty($payload['created_at'], 'Empty created_at in Instagram payload');
+
         return new self(
             url: $payload['url'] ?? '',
-            sourceUrl: $payload['source_url'] ?? '',
+            sourceUrl: $payload['source_url'],
             description: $payload['description'] ?? '',
-            createdAt: $payload['created_at'] ?? '',
+            createdAt: $payload['created_at'],
             filename: $payload['filename'] ?? null,
         );
     }

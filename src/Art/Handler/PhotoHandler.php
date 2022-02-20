@@ -22,7 +22,7 @@ class PhotoHandler implements RequestHandlerInterface
 
     public function handle(ServerRequestInterface $request) : ResponseInterface
     {
-        $photo = $this->mapper->fetch($request->getAttribute('photo'));
+        $photo = $this->mapper->fetch($request->getAttribute('image'));
 
         if (null === $photo) {
             $response = $this->responseFactory->createResponse(404)
@@ -39,5 +39,7 @@ class PhotoHandler implements RequestHandlerInterface
                 'photo' => $photo,
             ])
         );
+
+        return $response;
     }
 }

@@ -7,6 +7,7 @@ namespace Mwop\Art\Handler;
 use Mezzio\Template\TemplateRendererInterface;
 use Mwop\Art\PhotoMapper;
 use Psr\Container\ContainerInterface;
+use Psr\Http\Message\ResponseFactoryInterface;
 
 class PhotoHandlerFactory
 {

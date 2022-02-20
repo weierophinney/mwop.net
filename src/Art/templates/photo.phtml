@@ -1,7 +1,7 @@
 <?php
 /** @var \Mwop\Art\Photo $photo */
 $this->layout('layout::layout', [
-    'title' => $this->escapeHtml($photo->filename()),
+    'title' => $this->escapeHtml('Art: ' . $photo->filename()),
 ]);
 
 $matches = [];
@@ -19,26 +19,38 @@ $this->push('links');
     <meta name="twitter:creator" content="@mwop" />
     <meta property="og:site_name" content="mwop.net" />
     <meta property="og:type" content="article" />
-    <meta property="og:title" content="<?= $this->escapeHtmlAttr($post->title) ?>" />
-    <meta property="og:url" content="<?= $this->serverurl($this->postUrl($post)) ?>" />
-    <meta property="og:image" content="<?= $post->image ? $post->image->url : $this->serverurl('/images/logo.png') ?>" />
-    <meta property="og:image:alt" content="<?= $this->escapeHtmlAttr($imageAltText) ?>" />
-    <meta property="article:published_time" content="<?= $post->created->format('c') ?>" />
-    <meta property="article:modified_time" content="<?= $post->updated->format('c') ?>" />
+    <meta property="og:title" content="<?= $this->escapeHtmlAttr('Original art by Matthew Weier O\'Phinney: ' . $photo->filename()) ?>" />
+    <meta property="og:url" content="<?= $this->serverurl($this->url('art.photo', ['image' => $photo->filename()])) ?>" />
+    <meta property="og:image" content="<?= $this->url('art.image', ['type' => 'thumbnails', 'image' => $photo->filename()]) ?>" />
+    <meta property="og:image:alt" content="<?= $this->escapeHtmlAttr('Original art by Matthew Weier O\'Phinney: ' . $photo->filename()) ?>" />
+    <meta property="article:published_time" content="<?= $photo->createdAt->format('c') ?>" />
     <?php foreach ($tags as $tag): ?>
     <meta property="article:tag" content="<?= $this->escapeHtmlAttr($tag) ?>" />
     <?php endforeach ?>
 <?php
 $this->end();
 
-$this->push('scripts');
-echo '<script src="/js/prism.js"></script>';
-echo '<script src="/js/disqus.js"></script>';
-$this->end();
 
-$this->push('footer');
-$this->insert('data::tag-cloud');
-$this->end();
 ?>
-<div class="single-entry h-entry container col offset-md-2"><div class="row">
+<div class="container-fluid photo">
+    <nav class="row" aria-label="breadcrumb">
+        <ol class="breadcrumb col-md-8 offset-md-2">
+            <li class="breadcrumb-item"><a href="<?= $this->url('art.gallery') ?>">Gallery</a></li>
+            <li class="breadcrumb-item active" aria-current="page"><?= $photo->filename() ?></li>
+        </ol>
+    </nav>
 
+    <div class="row">
+        <div class="card col-md-8 offset-md-2">
+            <div class="card-body">
+                <p class="card-text"><?= $this->escapeHtml($photo->description) ?></p>
+            </div>
+
+            <img class="card-img-bottom" src="<?= $this->url('art.image', ['type' => 'fullsize', 'image' => $photo->filename()]) ?>" alt="Original art by Matthew Weier O'Phinney">
+
+            <div class="card-footer text-muted">
+                Posted <?= $photo->createdAt->format('l, F j, Y') ?>
+            </div>
+        </div>
+    </div>
+</div></div>

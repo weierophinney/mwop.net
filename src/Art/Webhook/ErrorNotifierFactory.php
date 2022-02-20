@@ -6,7 +6,6 @@ namespace Mwop\Art\Webhook;
 
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
-use SendGrid;
 
 class ErrorNotifierFactory
 {
@@ -15,7 +14,7 @@ class ErrorNotifierFactory
         $config = $container->get('config-art');
 
         return new ErrorNotifier(
-            mailer: $container->get(SendGrid::class),
+            mailer: $container->get('mail.transport'),
             logger: $container->get(LoggerInterface::class),
             sender: $config['error_notification']['sender'],
             recipient: $config['error_notification']['recipient'],

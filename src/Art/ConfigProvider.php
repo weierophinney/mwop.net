@@ -58,19 +58,20 @@ class ConfigProvider
                 ],
             ],
             'factories'  => [
-                'config-art'                   => ConfigFactory::class,
-                Handler\ImageHandler::class    => Handler\ImageHandlerFactory::class,
-                Handler\NewImageHandler::class => Handler\NewImageHandlerFactory::class,
-                Handler\PhotoHandler::class    => Handler\PhotoHandlerFactory::class,
-                Handler\PhotosHandler::class   => Handler\PhotosHandlerFactory::class,
-                'Mwop\Art\Storage\Images'      => Storage\ImagesFilesystemFactory::class,
-                'Mwop\Art\Storage\Thumbnails'  => Storage\ThumbnailsFilesystemFactory::class,
-                PhotoMapper::class             => PdoPhotoMapperFactory::class,
-                PhotoStorage::class            => PhotoStorageFactory::class,
-                S3Client::class                => Storage\S3ClientFactory::class,
-                Webhook\DatabaseBackup::class  => Webhook\DatabaseBackupFactory::class,
-                Webhook\ErrorNotifier::class   => Webhook\ErrorNotifierFactory::class,
-                Webhook\PayloadListener::class => Webhook\PayloadListenerFactory::class,
+                'config-art'                      => ConfigFactory::class,
+                Console\FetchPhotoDatabase::class => Console\FetchPhotoDatabaseFactory::class,
+                Handler\ImageHandler::class       => Handler\ImageHandlerFactory::class,
+                Handler\NewImageHandler::class    => Handler\NewImageHandlerFactory::class,
+                Handler\PhotoHandler::class       => Handler\PhotoHandlerFactory::class,
+                Handler\PhotosHandler::class      => Handler\PhotosHandlerFactory::class,
+                'Mwop\Art\Storage\Images'         => Storage\ImagesFilesystemFactory::class,
+                'Mwop\Art\Storage\Thumbnails'     => Storage\ThumbnailsFilesystemFactory::class,
+                PhotoMapper::class                => PdoPhotoMapperFactory::class,
+                PhotoStorage::class               => PhotoStorageFactory::class,
+                S3Client::class                   => Storage\S3ClientFactory::class,
+                Webhook\DatabaseBackup::class     => Webhook\DatabaseBackupFactory::class,
+                Webhook\ErrorNotifier::class      => Webhook\ErrorNotifierFactory::class,
+                Webhook\PayloadListener::class    => Webhook\PayloadListenerFactory::class,
             ],
         ];
     }
@@ -87,20 +88,14 @@ class ConfigProvider
     public function registerRoutes(Application $app, string $basePath = ''): void
     {
         $app->get(
-            $basePath . '/images/art/{type:fullsize}/{image:[^/ ]+.(?:png|jpg|jpeg|webp)}',
+            $basePath . '/images/art/{type:fullsize|thumbnails}/{image:[^/ ]+.(?:png|jpg|jpeg|webp)}',
             Handler\ImageHandler::class,
-            'art.image.fullsize'
-        );
-
-        $app->get(
-            $basePath . '/images/art/{type:thumbnails}/{image:[^/ ]+.(?:png|jpg|jpeg|webp)}',
-            Handler\ImageHandler::class,
-            'art.image.thumbnail'
+            'art.image'
         );
 
         $app->get($basePath . '/art/', Handler\PhotosHandler::class, 'art.gallery');
 
-        $app->get($basePath . '/art/{image:[^/]+\.(?:png|jpg|jpeg|webp)}/', Handler\PhotosHandler::class, 'art.photo');
+        $app->get($basePath . '/art/{image:[^/]+\.(?:png|jpg|jpeg|webp)}/', Handler\PhotoHandler::class, 'art.photo');
 
         $app->post($basePath . '/api/art/new-photo', [
             ProblemDetailsMiddleware::class,

@@ -23,14 +23,16 @@ class PhotosHandler implements RequestHandlerInterface
 
     public function handle(ServerRequestInterface $request) : ResponseInterface
     {
+        $page   = $request->getQueryParams()['page'] ?? 1;
         $photos = $this->mapper->fetchAll();
-        $photos->setItemCountPerPage($perPage);
-        $photos->setCurrentPageNumber($request->getQueryParams()['page'] ?? 1);
+        $photos->setItemCountPerPage($this->perPage);
+        $photos->setCurrentPageNumber($page);
 
         $response = $this->responseFactory->createResponse()
             ->withHeader('Content-Type', 'text/html');
         $response->getBody()->write(
             $this->renderer->render('art::photos', [
+                'page'   => $page,
                 'photos' => $photos,
             ])
         );

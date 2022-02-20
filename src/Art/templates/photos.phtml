@@ -1,1 +1,62 @@
-Template for Mwop\Art\Handler\PhotosHandler
+<?php
+$this->layout('layout::layout', ['title' => 'Art']);
+
+$path                  = $this->url('art.gallery');
+$pagination            = $photos->getPages();
+$pagination->base_path = $path;
+$pagination->is_first  = $page === $pagination->first;
+$pagination->is_last   = $page === $pagination->last;
+$pagination->pages     = [];
+for ($i = $pagination->firstPageInRange; $i <= $pagination->lastPageInRange; $i += 1) {
+    $pagination->pages[] = [
+        'base_path' => $path,
+        'number'    => $i,
+        'current'   => $page === $i,
+    ];
+}
+?>
+<section class="container-fluid">
+    <div class="row">
+        <h2 class="col-md-8 offset-md-2 text-center">Gallery</h2>
+    </div>
+
+    <div class="row"><div class="col-md-8 offset-md-2 container card-columns">
+    <?php foreach ($photos as $photo): ?>
+        <div class="card">
+            <img class="card-img-top img-fluid" src="<?= $this->url('art.image', ['type' => 'thumbnails', 'image' => $photo->filename()]) ?>" alt="Original art by Matthew Weier O'Phinney">
+
+            <div class="card-img-overlay"><a class="btn btn-info photo-link" href="<?= $this->url('art.photo', ['image' => $photo->filename()]) ?>"><img src="/images/external-link.svg" width="32"></a></div>
+        </div>
+    <?php endforeach ?>
+    </div></div>
+
+    <div class="d-flex justify-content-center">
+        <nav>
+            <ul class="pagination">
+                <?php if (! $pagination->is_first) : ?>
+                <li class="page-item"><a href="<?= $pagination->base_path ?>" class="page-link">&lt;&lt;<span class="sr-only">First</span></a></li>
+                <?php endif ?>
+
+                <?php if (isset($pagination->previous)) : ?>
+                <li class="page-item"><a href="<?= $pagination->base_path ?>?page=<?= $pagination->previous ?>" class="page-link">&lt;<span class="sr-only">Previous</span></a></li>
+                <?php endif ?>
+
+                <?php foreach ($pagination->pages as $page) : ?>
+                    <?php if ($page['current']) : ?>
+                <li class="page-item active"><a href="#" class="page-link"><?= $page['number'] ?></a></li>
+                    <?php else : ?>
+                <li class="page-item"><a href="<?= $pagination->base_path ?>?page=<?= $page['number'] ?>" class="page-link"><?= $page['number'] ?></a></li>
+                    <?php endif ?>
+                <?php endforeach ?>
+
+                <?php if (isset($pagination->next)) : ?>
+                <li class="page-item"><a href="<?= $pagination->base_path ?>?page=<?= $pagination->next ?>" class="page-link"><span class="sr-only">Next</span>&gt;</a></li>
+                <?php endif ?>
+
+                <?php if (! $pagination->is_last) : ?>
+                <li class="page-item"><a href="<?= $pagination->base_path ?>?page=<?= $pagination->last ?>" class="page-link"><span class="sr-only">Last</span>&gt;&gt</a></li>
+                <?php endif ?>
+            </ul>
+        </nav>
+    </div>
+</section>
