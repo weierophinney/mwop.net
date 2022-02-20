@@ -12,6 +12,9 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Psr\Log\LoggerInterface;
 
+use function sprintf;
+use function trim;
+
 class NewImageHandler implements RequestHandlerInterface
 {
     public function __construct(
