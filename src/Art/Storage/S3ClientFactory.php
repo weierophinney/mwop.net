@@ -6,17 +6,12 @@ namespace Mwop\Art\Storage;
 
 use Aws\S3\S3Client;
 use Psr\Container\ContainerInterface;
-use Swoole\Runtime;
-
-use const SWOOLE_HOOK_NATIVE_CURL;
 
 class S3ClientFactory
 {
     public function __invoke(ContainerInterface $container): S3Client
     {
         $config = $container->get('config-art');
-
-        Runtime::enableCoroutine(SWOOLE_HOOK_NATIVE_CURL);
 
         return new S3Client([
             'version'     => 'latest',
