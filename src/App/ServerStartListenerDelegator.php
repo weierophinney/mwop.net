@@ -7,6 +7,9 @@ namespace Mwop\App;
 use Mezzio\Swoole\Event\ServerStartEvent;
 use Phly\EventDispatcher\ListenerProvider\AttachableListenerProvider;
 use Psr\Container\ContainerInterface;
+use Swoole\Runtime;
+
+use const SWOOLE_HOOK_NATIVE_CURL;
 
 class ServerStartListenerDelegator
 {
@@ -18,7 +21,12 @@ class ServerStartListenerDelegator
         /** @var AttachableListenerProvider $provider */
         $provider = $factory();
 
-        $provider->listen(ServerStartEvent::class, new ServerStartListener());
+        $provider->listen(
+            ServerStartEvent::class,
+            function (): void {
+                Runtime::enableCoroutine(SWOOLE_HOOK_NATIVE_CURL);
+            },
+        );
 
         return $provider;
     }
