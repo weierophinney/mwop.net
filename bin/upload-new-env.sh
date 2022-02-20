@@ -20,7 +20,12 @@ if [ $# -ge 2 ];then
     UPLOAD_NAME="${2}"
 fi
 
-s3cmd put "${ENV_FILE}" "s3://cloud-mwop-net/site-config/${UPLOAD_NAME}"
+command -v s3cmd
+if [ $? > 0 ];then
+    s3cmd put "${ENV_FILE}" "s3://cloud-mwop-net/site-config/${UPLOAD_NAME}"
+else
+    awsdo s3 cp "${ENV_FILE}" "s3://cloud-mwop-net/site-config/${UPLOAD_NAME}"
+fi
 
 echo "${UPLOAD_NAME}" > env-version
 
