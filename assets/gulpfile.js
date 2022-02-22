@@ -41,7 +41,7 @@ gulp.task('css-clean', () => {
     return del(['build/css/*.*']);
 });
 
-gulp.task('css', gulp.series('css-screen', 'css-print'));
+gulp.task('css', gulp.series('css-screen'));
 
 // JS
 

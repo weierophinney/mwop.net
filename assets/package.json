@@ -3,10 +3,9 @@
   "main": "gulpfile.js",
   "private": true,
   "dependencies": {
-    "@forevolve/bootstrap-dark": "^1.0.0",
     "autocomplete.js": "^0.32.0",
-    "bootstrap": "^4.5.1",
-    "bootswatch": "^4.5.1",
+    "bootstrap": "^5.1.3",
+    "bootswatch": "^5.1.3",
     "del": "^6.0.0",
     "gulp": "^4.0.2",
     "gulp-clean-css": "^4.3.0",

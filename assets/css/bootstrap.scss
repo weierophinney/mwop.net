@@ -1,4 +1,7 @@
-@import "./variables",
-    "../node_modules/@forevolve/bootstrap-dark/scss/bootstrap-dark",
+@import
+    "./variables",
+    "../node_modules/bootswatch/dist/darkly/variables",
+    "../node_modules/bootstrap/scss/bootstrap",
+    "../node_modules/bootswatch/dist/darkly/bootswatch",
     "../node_modules/prism-solarized-dark/prism-solarizeddark.css",
     "./customizations";

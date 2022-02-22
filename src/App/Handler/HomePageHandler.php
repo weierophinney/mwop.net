@@ -24,7 +24,7 @@ class HomePageHandler implements RequestHandlerInterface
     public function handle(Request $request): Response
     {
         $photos = $this->photos->fetchAll();
-        $photos->setItemCountPerPage(9);
+        $photos->setItemCountPerPage(12);
         $photos->setCurrentPageNumber(1);
 
         return new HtmlResponse(

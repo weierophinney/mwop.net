@@ -37,7 +37,7 @@ class ConfigProvider
                 'sender'    => '',
                 'recipient' => '',
             ],
-            'per_page'           => 12,
+            'per_page'           => 24,
             'storage'            => [
                 'endpoint' => '',
                 'region'   => '',

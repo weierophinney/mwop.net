@@ -41,9 +41,9 @@ $this->end();
 
 	<div loading="lazy" data-mc-src="daf1a12e-02c8-4fcc-80cb-9b65210d9e20#instagram"></div>
 
-    <div class="container card-columns">
+    <div class="container d-flex flex-row justify-content-evenly align-items-start flex-wrap">
     <?php foreach ($photos as $photo): ?>
-        <div class="card">
+        <div class="card photo-thumbnail mx-1 my-1">
             <img class="card-img-top img-fluid" src="<?= $this->url('art.image', ['type' => 'thumbnails', 'image' => $photo->filename()]) ?>" alt="Original art by Matthew Weier O'Phinney">
 
             <div class="card-img-overlay"><a class="btn btn-info photo-link" href="<?= $this->url('art.photo', ['image' => $photo->filename()]) ?>"><img src="/images/external-link.svg" width="32"></a></div>

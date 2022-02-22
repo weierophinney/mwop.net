@@ -1,8 +1,9 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-  <span class="navbar-brand">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top py-1"><div class="container-fluid">
+  <span class="navbar-brand mb-0">
     <a href="<?= $this->url('home') ?>"><img src="/images/logo.gif" height="37" width="37" alt="Celtic Knot - Matthew Weier O'Phinney" />
     <span class="main_title d-none d-sm-inline">phly, boy, phly: matthew weier o'phinney</span></a>
   </span>
+
   <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapseMenu" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -15,8 +16,8 @@
       <li class="nav-item"><a class="nav-link" href="<?= $this->url('contact') ?>">Contact</a></li>
     </ul>
 
-    <form class="form-inline my-2 my-lg-0">
-      <input id="searchinput" class="form-control mr-sm-2" type="text" size="25" placeholder="Search..." aria-label="Search">
+    <form class="d-flex ms-auto">
+      <input id="searchinput" class="align-self-end form-control mr-sm-2" type="text" size="25" placeholder="Search..." aria-label="Search">
     </form>
   </div>
-</nav>
+</div></nav>
