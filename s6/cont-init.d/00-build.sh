@@ -2,9 +2,8 @@
 
 set -e
 
-composer=${COMPOSER:-/usr/local/sbin/composer}
+composer=${COMPOSER_BIN:-/usr/local/sbin/composer}
 export COMPOSER_HOME=/var/local/composer
-unset COMPOSER
 
 if [ ! -d "vendor" ];then
     if [[ "$DEBUG" != "" ]];then

@@ -7,7 +7,7 @@ use Psr\Log\LoggerInterface;
 
 return [
     'mezzio-swoole' => [
-        'enable_coroutine'    => false,
+        'enable_coroutine'    => true,
         'swoole-http-server'  => [
             'process-name' => 'mwopnet',
             'host'         => '0.0.0.0',

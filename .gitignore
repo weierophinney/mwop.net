@@ -21,6 +21,7 @@ data/search_terms.json
 data/sessions/
 data/tag-cloud.phtml
 docker-stack.yml
+instagram/
 log/
 node_modules/
 public/css/

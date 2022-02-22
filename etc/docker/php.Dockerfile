@@ -4,7 +4,7 @@
 FROM cr.zend.com/zendphp/8.1:ubuntu-20.04-cli as swoole
 
 ## Prepare image
-ARG SWOOLE_VERSION=4.9.0
+ARG SWOOLE_VERSION=4.10.0
 ARG TIMEZONE=UTC
 ENV TZ=$TIMEZONE
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
@@ -14,15 +14,16 @@ RUN set -e; \
     apt-get install -y php8.1-zend-dev libcurl4-openssl-dev; \
     mkdir /workdir; \
     cd /workdir; \
-    curl -L -o swoole-src-${SWOOLE_VERSION}.tgz https://github.com/openswoole/swoole-src/archive/refs/tags/v${SWOOLE_VERSION}.tar.gz; \
-    tar xzf swoole-src-${SWOOLE_VERSION}.tgz; \
-    cd swoole-src-${SWOOLE_VERSION}; \
-    phpize; \
+    curl -L -o openswoole-${SWOOLE_VERSION}.tgz https://pecl.php.net/get/openswoole-${SWOOLE_VERSION}.tgz; \
+    tar xzf openswoole-${SWOOLE_VERSION}.tgz; \
+    cd openswoole-${SWOOLE_VERSION}; \
+    phpize8.1-zend; \
     ./configure \
-        --enable-swoole \
-        --enable-sockets \
+        --with-php-config=/usr/bin/php-config8.1-zend \
         --enable-http2 \
         --enable-openssl \
+        --enable-sockets \
+        --enable-swoole \
         --enable-swoole-curl \
         --enable-swoole-json; \
     make; \
@@ -90,6 +91,6 @@ EXPOSE 9001
 WORKDIR /var/www
 
 ## Override entrypoint to use s6
-ENV COMPOSER=/usr/local/sbin/composer
+ENV COMPOSER_BIN=/usr/local/sbin/composer
 ENV COMPOSER_HOME=/var/local/composer
 ENTRYPOINT ["/init"]
