@@ -38,8 +38,12 @@ class FetchPhotoDatabase extends Command
             $this->filesystem->copy('remote://' . $this->database, 'app://' . $this->database);
         } catch (Throwable $e) {
             $output->writeln('<error>Failed to fetch remote photo database for local use</error>');
-            $output->writeln($e->getMessage());
-            $output->writeln($e->getTraceAsString());
+            do {
+                $output->writeln($e->getMessage());
+                $output->writeln($e->getTraceAsString());
+                $e = $e->getPrevious();
+            } while ($e);
+
             return 1;
         }
 
