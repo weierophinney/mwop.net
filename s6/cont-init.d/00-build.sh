@@ -5,8 +5,6 @@ set -e
 composer=${COMPOSER_BIN:-/usr/local/sbin/composer}
 export COMPOSER_HOME=/var/local/composer
 
-env
-
 if [ ! -d "vendor" ];then
     if [[ "$DEBUG" != "" ]];then
         "${composer}" install --prefer-dist --no-interaction
