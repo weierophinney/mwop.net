@@ -72,8 +72,8 @@ $this->end();
     <?php if (null === $post->image) : ?>
         <h2 class="p-name"><a class="u-url u-uid" href="<?= $this->postUrl($post) ?>"><?= $this->escapeHtml($post->title) ?></a></h2>
     <?php else : ?>
-        <section class="banner">
-            <img class="float-end" src="<?= $post->image->url ?>" alt="<?= $post->image->title ?>">
+        <section class="banner float-end ms-lg-3">
+            <img src="<?= $post->image->url ?>" alt="<?= $post->image->title ?>">
             <h2 class="p-name"><a class="u-url u-uid" href="<?= $this->postUrl($post) ?>"><?= $this->escapeHtml($post->title) ?></a></h2>
         </section>
     <?php endif ; ?>
