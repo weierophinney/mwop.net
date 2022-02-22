@@ -1,9 +1,11 @@
-#!/bin/bash
+#!/usr/bin/with-contenv /bin/bash
 
 set -e
 
 composer=${COMPOSER_BIN:-/usr/local/sbin/composer}
 export COMPOSER_HOME=/var/local/composer
+
+env
 
 if [ ! -d "vendor" ];then
     if [[ "$DEBUG" != "" ]];then
