@@ -8,6 +8,8 @@ use Aws\S3\S3Client;
 use Mezzio\Application;
 use Mezzio\ProblemDetails\ProblemDetailsMiddleware;
 use Mezzio\Swoole\Task\DeferredServiceListenerDelegator;
+use Mwop\Art\Storage\PhotoRetrieval;
+use Mwop\Art\Storage\PhotoRetrievalFactory;
 use Mwop\Hooks\Middleware\ValidateWebhookRequestMiddleware;
 use Phly\ConfigFactory\ConfigFactory;
 use Phly\EventDispatcher\ListenerProvider\AttachableListenerProvider;
@@ -70,6 +72,7 @@ class ConfigProvider
                 'Mwop\Art\Storage\Images'         => Storage\ImagesFilesystemFactory::class,
                 'Mwop\Art\Storage\Thumbnails'     => Storage\ThumbnailsFilesystemFactory::class,
                 PhotoMapper::class                => PdoPhotoMapperFactory::class,
+                PhotoRetrieval::class             => PhotoRetrievalFactory::class,
                 PhotoStorage::class               => PhotoStorageFactory::class,
                 S3Client::class                   => Storage\S3ClientFactory::class,
                 Webhook\DatabaseBackup::class     => Webhook\DatabaseBackupFactory::class,

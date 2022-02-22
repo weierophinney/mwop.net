@@ -6,6 +6,7 @@ namespace Mwop\Art\Handler;
 
 use Mezzio\Router\RouteResult;
 use Mwop\Art\PhotoStorage;
+use Mwop\Art\Storage\PhotoRetrieval;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -13,7 +14,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 class ImageHandler implements RequestHandlerInterface
 {
     public function __construct(
-        private PhotoStorage $photos,
+        private PhotoRetrieval $photos,
     ) {
     }
 
@@ -28,6 +29,6 @@ class ImageHandler implements RequestHandlerInterface
             'thumbnails' => PhotoStorage::TYPE_THUMBNAIL,
         };
 
-        return $this->photos->getPsr7ResponseForImageName($matches['image'], $type);
+        return $this->photos->fetchAsResponse($matches['image'], $type);
     }
 }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Mwop\Art\Handler;
 
-use Mwop\Art\PhotoStorage;
+use Mwop\Art\Storage\PhotoRetrieval;
 use Psr\Container\ContainerInterface;
 
 class ImageHandlerFactory
@@ -12,7 +12,7 @@ class ImageHandlerFactory
     public function __invoke(ContainerInterface $container): ImageHandler
     {
         return new ImageHandler(
-            photos: $container->get(PhotoStorage::class),
+            photos: $container->get(PhotoRetrieval::class),
         );
     }
 }
