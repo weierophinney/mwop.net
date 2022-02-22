@@ -22,10 +22,10 @@ class S3ClientFactory
         ]);
 
         return new S3Client([
-            'version'     => 'latest',
-            'endpoint'    => $config['storage']['endpoint'],
-            'region'      => $config['storage']['region'],
-            'credentials' => [
+            'version'      => 'latest',
+            'endpoint'     => $config['storage']['endpoint'],
+            'region'       => $config['storage']['region'],
+            'credentials'  => [
                 'key'    => $config['storage']['key'],
                 'secret' => $config['storage']['secret'],
             ],
