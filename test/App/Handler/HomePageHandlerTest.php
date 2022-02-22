@@ -34,7 +34,7 @@ class HomePageHandlerTest extends TestCase
         $paginator
             ->expects($this->once())
             ->method('setItemCountPerPage')
-            ->with(9);
+            ->with($this->isType('int'));
         $paginator
             ->expects($this->once())
             ->method('setCurrentPageNumber')
