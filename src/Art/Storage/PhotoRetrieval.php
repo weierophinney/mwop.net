@@ -38,10 +38,13 @@ class PhotoRetrieval
     {
         $this->guardType($type);
 
-        $result = $this->client->getObject([
-            'Bucket' => $this->bucket,
-            'Key'    => sprintf('%s%s%s', $this->pathPrefix, self::TYPE_PREFIX_MAP[$type], $imageName),
-        ]);
+        $key = sprintf('%s%s%s', $this->pathPrefix, self::TYPE_PREFIX_MAP[$type], $imageName);
+
+        if (! $this->client->doesObjectExist($this->bucket, $key)) {
+            return $this->responseFactory->createResponse(404);
+        }
+
+        $result = $this->client->getObject(['Bucket' => $this->bucket, 'Key' => $key]);
 
         return $this->responseFactory->createResponse(200)
             ->withHeader('Content-Type', $result['ContentType'])
