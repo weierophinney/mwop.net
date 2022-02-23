@@ -1,8 +1,10 @@
 <?php $this->layout('layout::layout', [
     'title' => 'Comics',
 ]) ?>
-<article class="comics col-12 text-center">
+<article class="comics col-10 text-center">
     <h2>Comics</h2>
 
-    <?php $this->insert('data::comics') ?>
+    <div class="d-flex justify-content-evenly align-items-start align-content-start flex-wrap">
+        <?php $this->insert('data::comics') ?>
+    </div>
 </article>

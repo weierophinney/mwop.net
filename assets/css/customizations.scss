@@ -76,8 +76,13 @@ aside.home .block {
   border-left: 1px dotted $gray-600;
 }
 
-div.comic img {
-  max-width: 100%;
+div.comic {
+  margin-right: 1em;
+  margin-bottom: 1em;
+
+  img {
+    max-width: 100%;
+  }
 }
 
 dl.resume {
