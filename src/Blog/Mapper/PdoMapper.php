@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Mwop\Blog\Mapper;
 
+use Closure;
 use Laminas\Paginator\Paginator;
 use Laminas\Tag\Cloud;
+use Mwop\App\PdoPaginator;
 use Mwop\Blog\BlogPost;
 use Mwop\Blog\CreateBlogPostFromDataArrayTrait;
 use PDO;
@@ -114,9 +116,10 @@ class PdoMapper implements MapperInterface
         $select = $this->pdo->prepare($select);
         $count  = $this->pdo->prepare($count);
         return new Paginator(new PdoPaginator(
-            $select,
-            $count,
-            $params
+            select: $select,
+            count: $count,
+            itemFactory: Closure::fromCallable([$this, 'createBlogPostFromDataArray']),
+            params: $params
         ));
     }
 }
