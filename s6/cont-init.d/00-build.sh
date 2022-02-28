@@ -34,6 +34,9 @@ if [ ! -f "data/photos.db" ];then
     ./vendor/bin/laminas photo:fetch-db
 fi
 
-# Fix permissions for files that will be touched by the web user
-chgrp zendphp data/github-feed.json data/homepage.posts.json data/comics.phtml data/photos.db
-chmod g+rw data/github-feed.json data/homepage.posts.json data/comics.phtml data/photos.db
+# Fix permissions for files that will be touched by the web user (data directory).
+# The directory needs to be owned by the web user, and allow r/w privileges to
+# allow writing (particularly for SQLite databases).
+chown -R zendphp.zendphp data
+chmod 0775 data
+chmod -R u+rw data
