@@ -114,7 +114,7 @@ class PayloadListener
         } catch (ImagickException | UnableToWriteFile | FilesystemException $e) {
             $message = sprintf(
                 'Failed to scale Instagram photo (%s:%s): %s',
-                $photo->filename,
+                $photo->filename(),
                 $photo->sourceUrl,
                 $e->getMessage(),
             );
@@ -131,7 +131,7 @@ class PayloadListener
         } catch (PDOException $e) {
             $message = sprintf(
                 'Failed to create database record for (%s:%s): %s',
-                $photo->filename,
+                $photo->filename(),
                 $photo->sourceUrl,
                 $e->getMessage(),
             );
