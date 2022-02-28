@@ -4,6 +4,8 @@ $this->layout('layout::layout', [
     'title' => $this->escapeHtml('Art: ' . $photo->filename()),
 ]);
 
+$pageUrl = $this->serverurl($this->url('art.photo', ['image' => $photo->filename()]));
+
 $matches = [];
 $tags    = [];
 if (preg_match_all('/\#(?<tag>\S+)/', $photo->description, $matches)) {
@@ -20,7 +22,7 @@ $this->push('links');
     <meta property="og:site_name" content="mwop.net" />
     <meta property="og:type" content="article" />
     <meta property="og:title" content="<?= $this->escapeHtmlAttr('Original art by Matthew Weier O\'Phinney: ' . $photo->filename()) ?>" />
-    <meta property="og:url" content="<?= $this->serverurl($this->url('art.photo', ['image' => $photo->filename()])) ?>" />
+    <meta property="og:url" content="<?= $pageUrl ?>" />
     <meta property="og:image" content="<?= $this->serverurl($this->url('art.image', ['type' => 'thumbnails', 'image' => $photo->filename()])) ?>" />
     <meta property="og:image:alt" content="<?= $this->escapeHtmlAttr('Original art by Matthew Weier O\'Phinney: ' . $photo->filename()) ?>" />
     <meta property="article:published_time" content="<?= $photo->createdAt->format('c') ?>" />
@@ -50,6 +52,12 @@ $this->end();
 
             <div class="card-footer text-muted">
                 Posted <?= $photo->createdAt->format('l, F j, Y') ?>
+            </div>
+
+            <div class="card-footer text-center fs-1">
+                <a href="https://twitter.com/intent/tweet?url=<?= $pageUrl ?>&text=<?= $this->escapeHtmlAttr('Photo by @mwop') ?>"><i class="fa-brands fa-twitter"></i></a>
+                <a href="https://www.facebook.com/sharer.php?u=<?= $pageUrl ?>"><i class="fa-brands fa-facebook"></i></a>
+                <a href="https://pinterest.com/pin/create/link/?url=<?= $pageUrl?>&description=<?= $this->escapeHtmlAttr('Photo by @mwop') ?>"><i class="fa-brands fa-pinterest"></i></a>
             </div>
         </div>
     </div>

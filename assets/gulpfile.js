@@ -24,6 +24,11 @@ gulp.task('css-screen', () => {
         .pipe(gulp.dest('build/css'));
 });
 
+gulp.task('css-fa-fonts', () => {
+    return gulp.src('node_modules/@fortawesome/fontawesome-free/webfonts/*.{ttf,woff2}')
+        .pipe(gulp.dest('build/css/webfonts'));
+});
+
 gulp.task('css-print', () => {
     return gulp.src('css/toggle-bootstrap-print.scss')
         .pipe(sourcemaps.init())
@@ -41,7 +46,7 @@ gulp.task('css-clean', () => {
     return del(['build/css/*.*']);
 });
 
-gulp.task('css', gulp.series('css-screen'));
+gulp.task('css', gulp.series('css-screen', 'css-fa-fonts'));
 
 // JS
 

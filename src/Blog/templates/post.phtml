@@ -3,6 +3,8 @@ $this->layout('layout::layout', [
     'title' => $this->escapeHtml($post->title),
 ]);
 
+$pageUrl = $this->serverurl($this->postUrl($post));
+
 $imageAltText = null === $post->image
     ? 'mwop.net celtic knot logo'
     : sprintf(
@@ -20,7 +22,7 @@ $this->push('links');
     <meta property="og:site_name" content="mwop.net" />
     <meta property="og:type" content="article" />
     <meta property="og:title" content="<?= $this->escapeHtmlAttr($post->title) ?>" />
-    <meta property="og:url" content="<?= $this->serverurl($this->postUrl($post)) ?>" />
+    <meta property="og:url" content="<?= $pageUrl ?>" />
     <meta property="og:image" content="<?= $post->image ? $post->image->url : $this->serverurl('/images/logo.png') ?>" />
     <meta property="og:image:alt" content="<?= $this->escapeHtmlAttr($imageAltText) ?>" />
     <meta property="article:published_time" content="<?= $post->created->format('c') ?>" />
@@ -89,13 +91,13 @@ $this->end();
           <img class="u-photo photo" width="50" src="https://avatars0.githubusercontent.com/u/25943?v=3&u=79dd2ea1d4d8855944715d09ee4c86215027fa80&s=140" alt="mwop">
         </div>
 
-        <?php /*
         <div class="divider"></div>
 
-        <h3 class="text-center"><em>Like this content?</em></h3>
-
-        <p class="text-center"><a href="https://www.patreon.com/mwop"><img src="/images/become_a_patron_button@2x.png" alt="Become a Patron!" /></a></p>
-         */ ?>
+        <p class="text-center fs-1">
+            <a href="https://twitter.com/intent/tweet?url=<?= $pageUrl ?>&text=<?= $this->escapeHtmlAttr($post->title) ?>"><i class="fa-brands fa-twitter"></i></a>
+            <a href="https://www.facebook.com/sharer.php?u=<?= $pageUrl ?>"><i class="fa-brands fa-facebook"></i></a>
+            <a href="https://www.linkedin.com/shareArticle?mini=true&url=<?= $pageUrl ?>"><i class="fa-brands fa-linkedin"></i></a>
+        </p>
 
         <div class="divider"></div>
 
