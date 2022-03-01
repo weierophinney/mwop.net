@@ -1,0 +1,30 @@
+<?php
+/** @var \Mwop\Art\Photo $photo */
+$this->layout('layout::layout', [
+    'title' => $this->escapeHtml('Art: Upload new photo'),
+]);
+?>
+
+<div class="container-fluid upload"><div class="row"><div class="col-md-8 offset-md-2 d-flex justify-content-center align-items-center"><form class="container-fluid" method="post" action="<?= $this->url('art.photo.upload.process') ?>" enctype="multipart/form-data"><div class="row">
+
+    <h3>Upload new artwork</h3>
+
+    <div class="col-md-6 bg-secondary d-flex justify-content-center align-items-center p-0">
+        <div class="image-upload position-relative h-100 w-100 p-3 rounded border border-primary fs-2 text-center">
+            <input type="file" accept="image/jpeg,image/png,image/webp" name="imageUpload" required="required">
+            <div class="mwop-art-upload-content w-100 px-3 py-4 bg-transparent border-secondary border-2">
+                <div class="default"><i class="fa fa-cloud-arrow-up fs-1"></i><br />Drag and drop, or click to select</div>
+                <div class="complete"><i class="fa fa-circle-check text-success"></i></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card col-md-6 rounded border border-primary fw-bolder"><div class="card-body">
+        <div class="mb-3">
+            <label class="form-label" for="mwopArtUploadDescription">Description</label>
+            <textarea class="form-control" rows="10" name="description" id="mwopArtUploadDescription"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div></div>
+</div></form></div></div></div>

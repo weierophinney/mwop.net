@@ -25,6 +25,9 @@ return [
 
                 // PID file
                 'pid_file' => sys_get_temp_dir() . '/mwop-net.pid',
+
+                // Allow uploads up to 48MB
+                'package_max_length' => 48 * 1024 * 1024,
             ],
             'static-files' => [
                 'type-map'   => array_merge(ContentTypeFilterMiddleware::TYPE_MAP_DEFAULT, [

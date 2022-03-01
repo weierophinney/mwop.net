@@ -402,3 +402,48 @@ img.max-width {
     right: 0;
     bottom: 0;
 }
+
+.image-upload {
+    input[type=file] {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        opacity: 0;
+        cursor: pointer;
+    }
+
+    .mwop-art-upload-content {
+        border-style: dashed;
+        transition: background 0.3s ease-in-out;
+
+        .complete {
+            display: none;
+        }
+    }
+
+    &:hover .mwop-art-upload-content {
+        border-color: $secondary;
+    }
+
+    input[type=file]:focus + .mwop-art-upload-content {
+        outline: 2px solid $yellow;
+        outline: -webkit-focus-ring-color auto 5px;
+    }
+
+    input[type=file]:valid + .mwop-art-upload-content {
+        border-color: $success;
+
+        .complete {
+            display: block;
+            font-size: 5em;
+        }
+
+        .default {
+            display: none;
+        }
+    }
+}
