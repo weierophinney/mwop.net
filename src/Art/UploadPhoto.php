@@ -10,6 +10,10 @@ use Psr\Http\Message\UploadedFileInterface;
 use Psr\Log\LoggerInterface;
 use Throwable;
 
+use function count;
+use function in_array;
+use function sprintf;
+
 class UploadPhoto
 {
     private const ALLOWED_MEDIA_TYPES = [
@@ -28,13 +32,12 @@ class UploadPhoto
 
     public function process(ServerRequestInterface $request): UploadPhotoResult
     {
-        $form     = $request->getParsedBody();
-        $files    = $request->getUploadedFiles();
+        $form  = $request->getParsedBody();
+        $files = $request->getUploadedFiles();
 
         if (0 === count($files) || ! isset($files['imageUpload'])) {
             return UploadPhotoResult::fromError('Missing image file! Please resubmit with an image to upload.');
         }
-
 
         /** @var UploadedFileInterface $upload */
         $upload = $files['imageUpload'];
@@ -63,7 +66,7 @@ class UploadPhoto
         $photo = new Photo(
             filename: $filename,
             description: $form['description'],
-            createdAt: new DateTimeImmutable,
+            createdAt: new DateTimeImmutable(),
             url: 'https://mwop.net/',
             sourceUrl: $sourceFile,
         );
@@ -87,7 +90,7 @@ class UploadPhoto
     {
         $this->logger->error(sprintf(
             "[%s] %s: %s\nTrace:\n%s",
-            __CLASS__ . $error,
+            self::class . $error,
             $e->getMessage(),
             $this->generateStackTrace($e)
         ));

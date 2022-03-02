@@ -22,7 +22,7 @@ class ProcessUploadHandler implements RequestHandlerInterface
     ) {
     }
 
-    public function handle(ServerRequestInterface $request) : ResponseInterface
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $result = $this->uploader->process($request);
 
@@ -40,9 +40,7 @@ class ProcessUploadHandler implements RequestHandlerInterface
             return $response;
         }
 
-        $response = $this->responseFactory->createResponse(302)
+        return $this->responseFactory->createResponse(302)
             ->withHeader('Location', $this->url->generate('art.photo', ['image' => $result->filename()]));
-
-        return $response;
     }
 }

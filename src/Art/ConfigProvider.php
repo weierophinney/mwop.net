@@ -93,7 +93,7 @@ class ConfigProvider
     public function getRbac(): array
     {
         return [
-            'roles' => [
+            'roles'       => [
                 'admin' => [],
             ],
             'permissions' => [

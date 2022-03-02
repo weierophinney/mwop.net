@@ -18,7 +18,7 @@ class UploadHandler implements RequestHandlerInterface
     ) {
     }
 
-    public function handle(ServerRequestInterface $request) : ResponseInterface
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $response = $this->responseFactory->createResponse()
             ->withHeader('Content-Type', 'text/html');

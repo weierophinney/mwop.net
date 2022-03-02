@@ -7,7 +7,7 @@ namespace Mwop\Art;
 class UploadPhotoResult
 {
     private ?string $filename = null;
-    private ?string $error = null;
+    private ?string $error    = null;
 
     private function __construct()
     {
@@ -15,21 +15,21 @@ class UploadPhotoResult
 
     public static function fromError(string $error): self
     {
-        $instance = new self();
+        $instance        = new self();
         $instance->error = $error;
         return $instance;
     }
 
     public static function withFilename(string $filename): self
     {
-        $instance = new self();
+        $instance           = new self();
         $instance->filename = $filename;
         return $instance;
     }
 
     public function isError(): bool
     {
-        return (null !== $this->error);
+        return null !== $this->error;
     }
 
     public function getError(): string

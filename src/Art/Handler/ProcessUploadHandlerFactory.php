@@ -12,7 +12,7 @@ use Psr\Http\Message\ResponseFactoryInterface;
 
 class ProcessUploadHandlerFactory
 {
-    public function __invoke(ContainerInterface $container) : ProcessUploadHandler
+    public function __invoke(ContainerInterface $container): ProcessUploadHandler
     {
         return new ProcessUploadHandler(
             responseFactory: $container->get(ResponseFactoryInterface::class),

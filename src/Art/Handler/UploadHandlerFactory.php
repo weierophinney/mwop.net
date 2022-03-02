@@ -10,7 +10,7 @@ use Psr\Http\Message\ResponseFactoryInterface;
 
 class UploadHandlerFactory
 {
-    public function __invoke(ContainerInterface $container) : UploadHandler
+    public function __invoke(ContainerInterface $container): UploadHandler
     {
         return new UploadHandler(
             responseFactory: $container->get(ResponseFactoryInterface::class),

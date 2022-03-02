@@ -106,7 +106,7 @@ class ConfigProvider
     public function getAuthorizationConfig(): array
     {
         return [
-            'roles' => [
+            'roles'       => [
                 'admin' => [],
             ],
             'permissions' => [

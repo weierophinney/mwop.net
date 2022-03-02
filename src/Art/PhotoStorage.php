@@ -49,7 +49,7 @@ class PhotoStorage
 
     public function fromUploadedFile(UploadedFileInterface $upload): string
     {
-        $suffix   = match ($upload->getClientMediaType()) {
+        $suffix = match ($upload->getClientMediaType()) {
             'image/jpeg' => 'jpg',
             'image/png'  => 'png',
             'image/webp' => 'webp',
