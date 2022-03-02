@@ -8,8 +8,10 @@ use Laminas\Feed\Reader\Http\ClientInterface as FeedReaderHttpClientInterface;
 use League\Plates\Engine;
 use Mezzio\Application;
 use Mezzio\Authentication\AuthenticationInterface;
+use Mezzio\Authentication\AuthenticationMiddleware;
 use Mezzio\Authentication\UserRepositoryInterface;
 use Mezzio\Authorization\AuthorizationInterface;
+use Mezzio\Authorization\AuthorizationMiddleware;
 use Mezzio\Authorization\Rbac\LaminasRbac;
 use Mezzio\Session\SessionMiddleware;
 use Mezzio\Swoole\Event\EventDispatcherInterface as SwooleEventDispatcher;
@@ -59,6 +61,7 @@ class ConfigProvider
                 CacheItemPoolInterface::class                => Factory\CachePoolFactory::class,
                 EventDispatcherInterface::class              => Factory\EventDispatcherFactory::class,
                 FeedReaderHttpClientInterface::class         => Feed\HttpPlugClientFactory::class,
+                Handler\AdminPageHandler::class              => Handler\PageHandlerFactory::class,
                 Handler\HomePageHandler::class               => Handler\HomePageHandlerFactory::class,
                 Handler\LoginHandler::class                  => Handler\LoginHandlerFactory::class,
                 Handler\NowPageHandler::class                => Handler\PageHandlerFactory::class,
@@ -106,6 +109,11 @@ class ConfigProvider
             'roles' => [
                 'admin' => [],
             ],
+            'permissions' => [
+                'admin' => [
+                    'admin',
+                ],
+            ],
         ];
     }
 
@@ -136,6 +144,12 @@ class ConfigProvider
         $app->get('/now', Handler\NowPageHandler::class, 'now');
         $app->get('/privacy-policy', Handler\PrivacyPolicyPageHandler::class, 'privacy-policy');
         $app->get('/api/ping', Handler\PingHandler::class, 'api.ping');
+        $app->get('/admin', [
+            SessionMiddleware::class,
+            AuthenticationMiddleware::class,
+            AuthorizationMiddleware::class,
+            Handler\AdminPageHandler::class,
+        ], 'admin');
 
         // Authentication
         $app->get('/login', [
