@@ -1,0 +1,21 @@
+<?php
+/** @var \Mwop\Art\Photo $photo */
+$this->layout('layout::layout', [
+    'title' => $this->escapeHtml('Art: Process uploaded photo'),
+]);
+
+?>
+
+<div class="container-fluid"><div class="row"><div class="col-md-6">
+    <pre><?= var_export($received, true) ?></pre>
+
+    <h4>Files received</h4>
+
+    <ul>
+    <?php foreach ($files as $file):
+        /** @var \Psr\Http\Message\UploadedFileInterface $file */
+    ?>
+        <li><?= $file->getClientFilename() ?> (<?= $file->getClientMediaType() ?>) (size: <?= $file->getSize() ?>)</li>
+    <?php endforeach ?>
+    </ul>
+</div></div></div>

@@ -7,7 +7,9 @@ namespace Mwop\Art;
 use Imagick;
 use League\Flysystem\Filesystem;
 use League\Flysystem\MountManager;
+use Psr\Http\Message\UploadedFileInterface;
 use Ramsey\Uuid\Uuid;
+use RuntimeException;
 
 use function fopen;
 use function parse_url;
@@ -41,6 +43,22 @@ class PhotoStorage
         $source   = fopen($sourceUrl, 'r');
 
         $this->filesystem->writeStream(sprintf('images://%s', $filename), $source);
+
+        return $filename;
+    }
+
+    public function fromUploadedFile(UploadedFileInterface $upload): string
+    {
+        $suffix   = match ($upload->getClientMediaType()) {
+            'image/jpeg' => 'jpg',
+            'image/png'  => 'png',
+            'image/webp' => 'webp',
+            default      => throw new RuntimeException('Invalid media type detected: ' . $upload->getClientMediaType()),
+        };
+        $filename = sprintf('%s.%s', Uuid::uuid6()->__toString(), $suffix);
+        $resource = $upload->getStream()->detach();
+
+        $this->filesystem->writeStream(sprintf('images://%s', $filename), $resource);
 
         return $filename;
     }

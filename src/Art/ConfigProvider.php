@@ -6,7 +6,11 @@ namespace Mwop\Art;
 
 use Aws\S3\S3Client;
 use Mezzio\Application;
+use Mezzio\Authentication\AuthenticationMiddleware;
+use Mezzio\Authorization\AuthorizationMiddleware;
+use Mezzio\Helper\BodyParams\BodyParamsMiddleware;
 use Mezzio\ProblemDetails\ProblemDetailsMiddleware;
+use Mezzio\Session\SessionMiddleware;
 use Mezzio\Swoole\Task\DeferredServiceListenerDelegator;
 use Mwop\Art\Storage\PhotoRetrieval;
 use Mwop\Art\Storage\PhotoRetrievalFactory;
@@ -22,9 +26,10 @@ class ConfigProvider
     public function __invoke(): array
     {
         return [
-            'art'          => $this->getConfig(),
-            'dependencies' => $this->getDependencies(),
-            'templates'    => $this->getTemplateConfig(),
+            'art'                       => $this->getConfig(),
+            'dependencies'              => $this->getDependencies(),
+            'mezzio-authorization-rbac' => $this->getRbac(),
+            'templates'                 => $this->getTemplateConfig(),
         ];
     }
 
@@ -63,21 +68,39 @@ class ConfigProvider
                 ],
             ],
             'factories'  => [
-                'config-art'                      => ConfigFactory::class,
-                Console\FetchPhotoDatabase::class => Console\FetchPhotoDatabaseFactory::class,
-                Handler\ImageHandler::class       => Handler\ImageHandlerFactory::class,
-                Handler\NewImageHandler::class    => Handler\NewImageHandlerFactory::class,
-                Handler\PhotoHandler::class       => Handler\PhotoHandlerFactory::class,
-                Handler\PhotosHandler::class      => Handler\PhotosHandlerFactory::class,
-                'Mwop\Art\Storage\Images'         => Storage\ImagesFilesystemFactory::class,
-                'Mwop\Art\Storage\Thumbnails'     => Storage\ThumbnailsFilesystemFactory::class,
-                PhotoMapper::class                => PdoPhotoMapperFactory::class,
-                PhotoRetrieval::class             => PhotoRetrievalFactory::class,
-                PhotoStorage::class               => PhotoStorageFactory::class,
-                S3Client::class                   => Storage\S3ClientFactory::class,
-                Webhook\DatabaseBackup::class     => Webhook\DatabaseBackupFactory::class,
-                Webhook\ErrorNotifier::class      => Webhook\ErrorNotifierFactory::class,
-                Webhook\PayloadListener::class    => Webhook\PayloadListenerFactory::class,
+                'config-art'                        => ConfigFactory::class,
+                Console\FetchPhotoDatabase::class   => Console\FetchPhotoDatabaseFactory::class,
+                Handler\ImageHandler::class         => Handler\ImageHandlerFactory::class,
+                Handler\NewImageHandler::class      => Handler\NewImageHandlerFactory::class,
+                Handler\PhotoHandler::class         => Handler\PhotoHandlerFactory::class,
+                Handler\PhotosHandler::class        => Handler\PhotosHandlerFactory::class,
+                Handler\ProcessUploadHandler::class => Handler\ProcessUploadHandlerFactory::class,
+                Handler\UploadHandler::class        => Handler\UploadHandlerFactory::class,
+                'Mwop\Art\Storage\Images'           => Storage\ImagesFilesystemFactory::class,
+                'Mwop\Art\Storage\Thumbnails'       => Storage\ThumbnailsFilesystemFactory::class,
+                PhotoMapper::class                  => PdoPhotoMapperFactory::class,
+                PhotoRetrieval::class               => PhotoRetrievalFactory::class,
+                PhotoStorage::class                 => PhotoStorageFactory::class,
+                S3Client::class                     => Storage\S3ClientFactory::class,
+                UploadPhoto::class                  => UploadPhotoFactory::class,
+                Webhook\DatabaseBackup::class       => Webhook\DatabaseBackupFactory::class,
+                Webhook\ErrorNotifier::class        => Webhook\ErrorNotifierFactory::class,
+                Webhook\PayloadListener::class      => Webhook\PayloadListenerFactory::class,
+            ],
+        ];
+    }
+
+    public function getRbac(): array
+    {
+        return [
+            'roles' => [
+                'admin' => [],
+            ],
+            'permissions' => [
+                'admin' => [
+                    'art.photo.upload',
+                    'art.photo.upload.process',
+                ],
             ],
         ];
     }
@@ -102,6 +125,20 @@ class ConfigProvider
         $app->get($basePath . '/art/', Handler\PhotosHandler::class, 'art.gallery');
 
         $app->get($basePath . '/art/{image:[^/]+\.(?:png|jpg|jpeg|webp)}/', Handler\PhotoHandler::class, 'art.photo');
+
+        $app->get($basePath . '/art/photo/upload', [
+            SessionMiddleware::class,
+            AuthenticationMiddleware::class,
+            AuthorizationMiddleware::class,
+            Handler\UploadHandler::class,
+        ], 'art.photo.upload');
+        $app->post($basePath . '/art/photo/upload/process', [
+            SessionMiddleware::class,
+            AuthenticationMiddleware::class,
+            AuthorizationMiddleware::class,
+            BodyParamsMiddleware::class,
+            Handler\ProcessUploadHandler::class,
+        ], 'art.photo.upload.process');
 
         $app->post($basePath . '/api/art/new-photo', [
             ProblemDetailsMiddleware::class,

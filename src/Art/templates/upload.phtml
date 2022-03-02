@@ -5,7 +5,17 @@ $this->layout('layout::layout', [
 ]);
 ?>
 
-<div class="container-fluid upload"><div class="row"><div class="col-md-8 offset-md-2 d-flex justify-content-center align-items-center"><form class="container-fluid" method="post" action="<?= $this->url('art.photo.upload.process') ?>" enctype="multipart/form-data"><div class="row">
+<div class="container-fluid upload">
+<?php if (isset($error)): ?>
+    <div class="row"><div class="col-md-8 offset-md-2"><div class="card mb-3 bg-danger text-white">
+        <div class="card-body">
+            <div class="card-title">Error processing image</div>
+            <div class="card-text"><?= $this->escapeHtml($error) ?></div>
+        </div>
+    </div></div></div>
+<?php endif ?>
+
+    <div class="row"><div class="col-md-8 offset-md-2 d-flex justify-content-center align-items-center"><form class="container-fluid" method="post" action="<?= $this->url('art.photo.upload.process') ?>" enctype="multipart/form-data"><div class="row">
 
     <h3>Upload new artwork</h3>
 
@@ -22,9 +32,10 @@ $this->layout('layout::layout', [
     <div class="card col-md-6 rounded border border-primary fw-bolder"><div class="card-body">
         <div class="mb-3">
             <label class="form-label" for="mwopArtUploadDescription">Description</label>
-            <textarea class="form-control" rows="10" name="description" id="mwopArtUploadDescription"></textarea>
+            <textarea class="form-control" rows="10" name="description" id="mwopArtUploadDescription"><?= isset($form['description']) ? $this->escapeHtml($form['description']) : '' ?></textarea>
         </div>
 
         <button type="submit" class="btn btn-primary">Submit</button>
     </div></div>
-</div></form></div></div></div>
+    </div></form></div></div>
+</div>
