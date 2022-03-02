@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Mwop\Art;
 
-use Aws\S3\S3Client;
 use Mezzio\Application;
 use Mezzio\Authentication\AuthenticationMiddleware;
 use Mezzio\Authorization\AuthorizationMiddleware;
@@ -46,12 +45,7 @@ class ConfigProvider
             ],
             'per_page'           => 24,
             'storage'            => [
-                'endpoint' => '',
-                'region'   => '',
-                'bucket'   => '',
-                'folder'   => '',
-                'key'      => '',
-                'secret'   => '',
+                'folder'    => '',
             ],
         ];
     }
@@ -81,7 +75,6 @@ class ConfigProvider
                 PhotoMapper::class                  => PdoPhotoMapperFactory::class,
                 PhotoRetrieval::class               => PhotoRetrievalFactory::class,
                 PhotoStorage::class                 => PhotoStorageFactory::class,
-                S3Client::class                     => Storage\S3ClientFactory::class,
                 UploadPhoto::class                  => UploadPhotoFactory::class,
                 Webhook\DatabaseBackup::class       => Webhook\DatabaseBackupFactory::class,
                 Webhook\ErrorNotifier::class        => Webhook\ErrorNotifierFactory::class,

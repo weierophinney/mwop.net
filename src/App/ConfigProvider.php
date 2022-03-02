@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Mwop\App;
 
+use Aws\S3\S3Client;
 use Laminas\Feed\Reader\Http\ClientInterface as FeedReaderHttpClientInterface;
 use League\Plates\Engine;
 use Mezzio\Application;
@@ -32,6 +33,7 @@ class ConfigProvider
             'dependencies'              => $this->getDependencies(),
             'cache'                     => $this->getCacheConfig(),
             'content-security-policy'   => [],
+            'file-storage'              => $this->getFileStorageConfig(),
             'mail'                      => $this->getMailConfig(),
             'mezzio-authorization-rbac' => $this->getAuthorizationConfig(),
         ];
@@ -56,6 +58,7 @@ class ConfigProvider
                 'config-authentication'                      => ConfigFactory::class,
                 'config-cache'                               => ConfigFactory::class,
                 'config-content-security-policy'             => ConfigFactory::class,
+                'config-file-storage'                        => ConfigFactory::class,
                 'config-mail.transport'                      => ConfigFactory::class,
                 Csp::class                                   => Middleware\ContentSecurityPolicyMiddlewareFactory::class,
                 CacheItemPoolInterface::class                => Factory\CachePoolFactory::class,
@@ -70,6 +73,7 @@ class ConfigProvider
                 Handler\ResumePageHandler::class             => Handler\PageHandlerFactory::class,
                 'mail.transport'                             => Factory\MailTransport::class,
                 Middleware\RedirectAmpPagesMiddleware::class => Middleware\RedirectAmpPagesMiddlewareFactory::class,
+                S3Client::class                              => Factory\S3ClientFactory::class,
                 SessionCachePool::class                      => SessionCachePoolFactory::class,
                 UserRepositoryInterface::class               => UserRepositoryFactory::class,
             ],
@@ -125,6 +129,17 @@ class ConfigProvider
                 'host'   => 'localhost',
                 'port'   => 6379,
             ],
+        ];
+    }
+
+    public function getFileStorageConfig(): array
+    {
+        return [
+            'endpoint' => '',
+            'region'   => '',
+            'key'      => '',
+            'secret'   => '',
+            'bucket'   => '',
         ];
     }
 

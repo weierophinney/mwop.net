@@ -12,13 +12,10 @@ class PhotoRetrievalFactory
 {
     public function __invoke(ContainerInterface $container): PhotoRetrieval
     {
-        $config = $container->get('config-art');
-        $bucket = $config['storage']['bucket'];
-
         return new PhotoRetrieval(
             responseFactory: $container->get(ResponseFactoryInterface::class),
             client: $container->get(S3Client::class),
-            bucket: $bucket,
+            bucket: $container->get('config-file-storage')['bucket'] ?? '',
         );
     }
 }

@@ -16,13 +16,12 @@ class ThumbnailsFilesystemFactory
 {
     public function __invoke(ContainerInterface $container): FilesystemOperator
     {
-        $config = $container->get('config-art');
-        $bucket = $config['storage']['bucket'];
+        $folder = $container->get('config-art')['storage']['folder'] ?? '';
         return new Filesystem(
             new AwsS3V3Adapter(
                 $container->get(S3Client::class),
-                $bucket,
-                'art/thumbs/',
+                $container->get('config-file-storage')['bucket'] ?? '',
+                $folder . '/thumbs/',
                 new PortableVisibilityConverter(
                     Visibility::PRIVATE
                 ),

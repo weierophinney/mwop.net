@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Mwop\Art\Storage;
+namespace Mwop\App\Factory;
 
 use Aws\Handler\GuzzleV6\GuzzleHandler;
 use Aws\S3\S3Client;
@@ -15,7 +15,7 @@ class S3ClientFactory
 {
     public function __invoke(ContainerInterface $container): S3Client
     {
-        $config = $container->get('config-art');
+        $config = $container->get('config-file-storage');
 
         $httpClient = new Client([
             'handler' => HandlerStack::create(new CurlHandler()),
@@ -23,11 +23,11 @@ class S3ClientFactory
 
         return new S3Client([
             'version'      => 'latest',
-            'endpoint'     => $config['storage']['endpoint'],
-            'region'       => $config['storage']['region'],
+            'endpoint'     => $config['endpoint'],
+            'region'       => $config['region'],
             'credentials'  => [
-                'key'    => $config['storage']['key'],
-                'secret' => $config['storage']['secret'],
+                'key'    => $config['key'],
+                'secret' => $config['secret'],
             ],
             'http_handler' => new GuzzleHandler($httpClient),
         ]);

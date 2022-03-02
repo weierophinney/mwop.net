@@ -22,12 +22,7 @@ return [
             'recipient' => $getSetting('ERROR_NOTIFICATION_ADDRESS'),
         ],
         'storage'            => [
-            'endpoint' => $getSetting('ART_SPACES_ENDPOINT'),
-            'region'   => $getSetting('ART_SPACES_REGION'),
-            'bucket'   => $getSetting('ART_SPACES_BUCKET'),
-            'folder'   => $getSetting('ART_SPACES_FOLDER'),
-            'key'      => $getSetting('ART_SPACES_KEY'),
-            'secret'   => $getSetting('ART_SPACES_SECRET'),
+            'folder'    => $getSetting('ART_SPACES_FOLDER'),
         ],
     ],
 ];
