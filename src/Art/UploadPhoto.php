@@ -6,6 +6,7 @@ namespace Mwop\Art;
 
 use DateTimeImmutable;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\UploadedFileInterface;
 use Psr\Log\LoggerInterface;
 use Throwable;
 
@@ -35,10 +36,13 @@ class UploadPhoto
         }
 
 
+        /** @var UploadedFileInterface $upload */
         $upload = $files['imageUpload'];
         if (! in_array($upload->getClientMediaType(), self::ALLOWED_MEDIA_TYPES, true)) {
             return UploadPhotoResult::fromError('Invalid image file! Must be a JPEG, PNG, or WEBP image.');
         }
+
+        $sourceFile = $upload->getClientFilename();
 
         if (empty($form['description'])) {
             return UploadPhotoResult::fromError('Missing description! Please resubmit with a non-empty description.');
@@ -61,7 +65,7 @@ class UploadPhoto
             description: $form['description'],
             createdAt: new DateTimeImmutable,
             url: 'https://mwop.net/',
-            source_url: '',
+            sourceUrl: $sourceFile,
         );
 
         try {
