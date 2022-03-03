@@ -2,7 +2,7 @@
     'title' => $latest ? 'Now' : 'Then',
 ]) ?>
 <article class="col-md-6 now">
-    <h2><?= $latest ? 'Now' : 'Then' ?></h2>
+    <h2 class="border-bottom border-2 mb-5 pt-3"><?= $latest ? 'Now' : 'Then' ?></h2>
 
     <?= $page ? $this->markdown($fs->read($page->path()) ?? '') : '' ?>
 
