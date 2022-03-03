@@ -67,7 +67,6 @@ class ConfigProvider
                 Handler\AdminPageHandler::class              => Handler\PageHandlerFactory::class,
                 Handler\HomePageHandler::class               => Handler\HomePageHandlerFactory::class,
                 Handler\LoginHandler::class                  => Handler\LoginHandlerFactory::class,
-                Handler\NowPageHandler::class                => Handler\PageHandlerFactory::class,
                 Handler\PingHandler::class                   => Handler\PingHandlerFactory::class,
                 Handler\PrivacyPolicyPageHandler::class      => Handler\PageHandlerFactory::class,
                 Handler\ResumePageHandler::class             => Handler\PageHandlerFactory::class,
@@ -156,7 +155,6 @@ class ConfigProvider
     {
         $app->get('/', Handler\HomePageHandler::class, 'home');
         $app->get('/resume', Handler\ResumePageHandler::class, 'resume');
-        $app->get('/now', Handler\NowPageHandler::class, 'now');
         $app->get('/privacy-policy', Handler\PrivacyPolicyPageHandler::class, 'privacy-policy');
         $app->get('/api/ping', Handler\PingHandler::class, 'api.ping');
         $app->get('/admin', [

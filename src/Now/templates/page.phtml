@@ -1,0 +1,26 @@
+<?php $this->layout('layout::layout', [
+    'title' => $latest ? 'Now' : 'Then',
+]) ?>
+<article class="col-md-6 now">
+    <h2><?= $latest ? 'Now' : 'Then' ?></h2>
+
+    <?= $page ? $this->markdown($fs->read($page->path()) ?? '') : '' ?>
+
+<?php if ($archives->count() > 1): ?>
+    <section class="archives border-top border-2 mt-5 pt-3">
+        <h3>Previously</h3>
+
+        <ul>
+        <?php
+        foreach ($archives as $archive):
+            $name = basename($archive->path(), '.md');
+            if ($archive === $page) {
+                continue;
+            }
+        ?>
+            <li><a href="<?= $this->url('now.then', ['when' => $name]) ?>"><?= (new DateTimeImmutable($name . '-01'))->format('F Y') ?></a></li>
+        <?php endforeach ?>
+        </ul>
+    </section>
+<?php endif ?>
+</article>

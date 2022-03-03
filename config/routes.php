@@ -35,6 +35,9 @@ return function (
     // Github (webhooks)
     (new Github\ConfigProvider())->registerRoutes($app);
 
-    // Art (webhooks)
+    // Art
     (new Art\ConfigProvider())->registerRoutes($app);
+
+    // Now pages
+    (new Now\ConfigProvider())->registerRoutes($app);
 };
