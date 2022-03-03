@@ -22,7 +22,7 @@ return [
             'recipient' => $getSetting('ERROR_NOTIFICATION_ADDRESS'),
         ],
         'storage'            => [
-            'folder'    => $getSetting('ART_SPACES_FOLDER'),
+            'folder' => $getSetting('ART_SPACES_FOLDER'),
         ],
     ],
 ];

@@ -45,7 +45,7 @@ class ConfigProvider
             ],
             'per_page'           => 24,
             'storage'            => [
-                'folder'    => '',
+                'folder' => '',
             ],
         ];
     }

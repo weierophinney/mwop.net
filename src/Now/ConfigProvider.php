@@ -28,9 +28,9 @@ class ConfigProvider
                 ],
             ],
             'factories'  => [
-                'config-now-and-then'      => ConfigFactory::class,
-                Archives::class            => ArchivesFactory::class,
-                Handler\PageHandler::class => Handler\PageHandlerFactory::class,
+                'config-now-and-then'       => ConfigFactory::class,
+                Archives::class             => ArchivesFactory::class,
+                Handler\PageHandler::class  => Handler\PageHandlerFactory::class,
                 NowAndThenFilesystem::class => NowAndThenFilesystemFactory::class,
             ],
         ];

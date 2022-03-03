@@ -10,9 +10,11 @@ use League\Flysystem\StorageAttributes;
 use Mezzio\Router\RouteResult;
 use Mezzio\Template\TemplateRendererInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
-use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+
+use function basename;
 
 class PageHandler implements RequestHandlerInterface
 {
@@ -27,11 +29,11 @@ class PageHandler implements RequestHandlerInterface
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         /** @var RouteResult $routing */
-        $routing   = $request->getAttribute(RouteResult::class);
-        $when      = $routing->getMatchedParams()['when'] ?? null;
-        $page      = $this->getPage($when);
+        $routing = $request->getAttribute(RouteResult::class);
+        $when    = $routing->getMatchedParams()['when'] ?? null;
+        $page    = $this->getPage($when);
 
-        $response  = $this->responseFactory->createResponse()
+        $response = $this->responseFactory->createResponse()
             ->withHeader('Content-Type', 'text/html');
 
         $response->getBody()->write(

@@ -15,6 +15,7 @@ class ArchivesFactory
 {
     public function __invoke(ContainerInterface $container): Collection
     {
+        // phpcs:disable Generic.Files.LineLength.TooLong
         return (new Collection(
             $container->get(NowAndThenFilesystem::class)->listContents('.')
                 ->filter(fn (StorageAttributes $item): bool => $item->isFile())
@@ -22,5 +23,6 @@ class ArchivesFactory
                 ->sortByPath()
                 ->toArray()
         ))->reverse();
+        // phpcs:enable Generic.Files.LineLength.TooLong
     }
 }

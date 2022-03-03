@@ -12,6 +12,8 @@ use League\Plates\Engine;
 use League\Plates\Extension\ExtensionInterface;
 use Psr\Container\ContainerInterface;
 
+use function preg_replace;
+
 class MarkdownPlatesDelegator implements ExtensionInterface
 {
     private MarkdownConverter $markdown;
@@ -31,7 +33,7 @@ class MarkdownPlatesDelegator implements ExtensionInterface
         callable $factory,
     ): Engine {
         /** @var Engine $engine */
-        $engine = $factory(); 
+        $engine = $factory();
         $engine->loadExtension($this);
 
         return $engine;
