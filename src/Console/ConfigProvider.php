@@ -17,8 +17,11 @@ class ConfigProvider
     public function getDependencies(): array
     {
         return [
+            'factories'  => [
+                ClearResponseCache::class => ClearResponseCacheFactory::class,
+            ],
             'invokables' => [
-                ClearCache::class => ClearCache::class,
+                ClearStaticCache::class   => ClearStaticCache::class,
             ],
         ];
     }
@@ -27,7 +30,8 @@ class ConfigProvider
     {
         return [
             'commands' => [
-                'clear-cache' => ClearCache::class,
+                'cache:clear-static'   => ClearStaticCache::class,
+                'cache:clear-response' => ClearResposneCache::class,
             ],
         ];
     }

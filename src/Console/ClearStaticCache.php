@@ -18,13 +18,12 @@ use function realpath;
 use function sprintf;
 use function unlink;
 
-class ClearCache extends Command
+class ClearStaticCache extends Command
 {
     private const PATH_TEMPLATE = '%s/data/cache';
 
     protected function configure(): void
     {
-        $this->setName('clear-cache');
         $this->setDescription('Clear the static cache.');
         $this->setHelp('Clear any cached content.');
         $this->addOption(

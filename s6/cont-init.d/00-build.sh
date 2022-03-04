@@ -34,6 +34,9 @@ if [ ! -f "data/photos.db" ];then
     ./vendor/bin/laminas photo:fetch-db
 fi
 
+# Clear the response cache
+./vendor/bin/laminas cache:clear-response
+
 # Fix permissions for files that will be touched by the web user (data directory).
 # The directory needs to be owned by the web user, and allow r/w privileges to
 # allow writing (particularly for SQLite databases).

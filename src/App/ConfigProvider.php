@@ -65,13 +65,16 @@ class ConfigProvider
                 EventDispatcherInterface::class              => Factory\EventDispatcherFactory::class,
                 FeedReaderHttpClientInterface::class         => Feed\HttpPlugClientFactory::class,
                 Handler\AdminPageHandler::class              => Handler\PageHandlerFactory::class,
+                Handler\ClearResponseCacheHandler::class     => Handler\ClearResponseCacheHandlerFactory::class,
                 Handler\HomePageHandler::class               => Handler\HomePageHandlerFactory::class,
                 Handler\LoginHandler::class                  => Handler\LoginHandlerFactory::class,
                 Handler\PingHandler::class                   => Handler\PingHandlerFactory::class,
                 Handler\PrivacyPolicyPageHandler::class      => Handler\PageHandlerFactory::class,
                 Handler\ResumePageHandler::class             => Handler\PageHandlerFactory::class,
                 'mail.transport'                             => Factory\MailTransport::class,
+                Middleware\CacheMiddleware::class            => Middleware\CacheMiddlewareFactory::class,
                 Middleware\RedirectAmpPagesMiddleware::class => Middleware\RedirectAmpPagesMiddlewareFactory::class,
+                ResponseCachePool::class                     => Factory\ResponseCachePoolFactory::class,
                 S3Client::class                              => Factory\S3ClientFactory::class,
                 SessionCachePool::class                      => SessionCachePoolFactory::class,
                 UserRepositoryInterface::class               => UserRepositoryFactory::class,
@@ -115,6 +118,7 @@ class ConfigProvider
             'permissions' => [
                 'admin' => [
                     'admin',
+                    'admin.clear-response-cache',
                 ],
             ],
         ];
@@ -157,12 +161,23 @@ class ConfigProvider
         $app->get('/resume', Handler\ResumePageHandler::class, 'resume');
         $app->get('/privacy-policy', Handler\PrivacyPolicyPageHandler::class, 'privacy-policy');
         $app->get('/api/ping', Handler\PingHandler::class, 'api.ping');
-        $app->get('/admin', [
+
+        // Admin
+        $adminMiddleware = [
             SessionMiddleware::class,
             AuthenticationMiddleware::class,
             AuthorizationMiddleware::class,
-            Handler\AdminPageHandler::class,
-        ], 'admin');
+        ];
+        $app->get(
+            '/admin',
+            [...$adminMiddleware, Handler\AdminPageHandler::class],
+            'admin'
+        );
+        $app->get(
+            '/admin/clear-response-cache',
+            [...$adminMiddleware, Handler\ClearResponseCacheHandler::class],
+            'admin.clear-response-cache'
+        );
 
         // Authentication
         $app->get('/login', [
