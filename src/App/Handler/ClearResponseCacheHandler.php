@@ -7,8 +7,8 @@ namespace Mwop\App\Handler;
 use Mezzio\Template\TemplateRendererInterface;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
-use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
 class ClearResponseCacheHandler implements RequestHandlerInterface

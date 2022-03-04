@@ -7,12 +7,16 @@ namespace Mwop\App\Middleware;
 use Laminas\Diactoros\Response\Serializer;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
-use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Psr\Log\LoggerInterface;
 use Throwable;
+
+use function hash;
+use function sprintf;
+use function substr;
 
 class CacheMiddleware implements MiddlewareInterface
 {

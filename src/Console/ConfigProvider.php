@@ -21,7 +21,7 @@ class ConfigProvider
                 ClearResponseCache::class => ClearResponseCacheFactory::class,
             ],
             'invokables' => [
-                ClearStaticCache::class   => ClearStaticCache::class,
+                ClearStaticCache::class => ClearStaticCache::class,
             ],
         ];
     }
