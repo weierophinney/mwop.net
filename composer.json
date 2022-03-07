@@ -146,7 +146,6 @@
         "build:homepage": "Fetches current github activity and RSS feeds for the homepage",
         "clean": "Removes all generated files for the blog, home page, and comics page",
         "clean:blog": "Removes all generated files for the blog",
-        "clean:blog-cache": "Removes the blog static content cache",
         "clean:comics": "Removes the generated comics page",
         "clean:homepage": "Removes all generated content for the homepage",
         "cs:check": "Check source code against coding standards",

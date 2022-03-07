@@ -34,9 +34,6 @@ class ConfigProvider
                 'token_header' => 'X-MWOP-NET-BLOG-API-KEY',
             ],
             'db'      => null,
-            'cache'   => [
-                'enabled' => false,
-            ],
             'disqus'  => [
                 'developer' => 0,
                 'key'       => null,
@@ -68,7 +65,6 @@ class ConfigProvider
                 'config-blog.cache'                             => ConfigFactory::class,
                 'config-blog.disqus'                            => ConfigFactory::class,
                 'config-blog.twitter'                           => ConfigFactory::class,
-                Console\ClearCache::class                       => Console\ClearCacheFactory::class,
                 Console\FeedGenerator::class                    => Console\FeedGeneratorFactory::class,
                 Console\TagCloud::class                         => Console\TagCloudFactory::class,
                 Console\TweetLatest::class                      => Console\TweetLatestFactory::class,
@@ -82,9 +78,6 @@ class ConfigProvider
                 Images\ApiClient::class                         => Images\ApiClientFactory::class,
                 Images\Images::class                            => Images\ImagesFactory::class,
                 Images\SearchCommand::class                     => Images\SearchCommandFactory::class,
-                Listener\CacheBlogPostListener::class           => Listener\CacheBlogPostListenerFactory::class,
-                Listener\FetchBlogPostFromCacheListener::class  => Listener\FetchBlogPostFromCacheListenerFactory::class,
-                Listener\FetchBlogPostFromMapperListener::class => Listener\FetchBlogPostFromMapperListenerFactory::class,
                 Mapper\MapperInterface::class                   => Mapper\MapperFactory::class,
                 Middleware\ValidateAPIKeyMiddleware::class      => Middleware\ValidateAPIKeyMiddlewareFactory::class,
                 Twitter\TweetLatest::class                      => Twitter\TweetLatestFactory::class,
@@ -99,7 +92,6 @@ class ConfigProvider
             ],
             'delegators' => [
                 AttachableListenerProvider::class       => [
-                    Listener\FetchBlogPostEventListenersDelegator::class,
                     Twitter\TweetLatestEventListenerDelegator::class,
                     Twitter\TweetPostEventListenerDelegator::class,
                 ],

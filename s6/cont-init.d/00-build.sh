@@ -17,7 +17,6 @@ fi
 if [ ! -f "data/posts.db" ] || [ ! -f "data/tag-cloud.phtml" ] || [ ! -f "public/search_terms.json" ];then
     "${composer}" build:blog
 fi
-"${composer}" clean:blog-cache # really only necessary when running locally
 
 # Build homepage assets
 if [ ! -f "data/homepage.posts.php" ] || [ ! -f "data/github-feed.json" ];then
