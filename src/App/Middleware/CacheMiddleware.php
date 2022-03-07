@@ -23,11 +23,16 @@ class CacheMiddleware implements MiddlewareInterface
     public function __construct(
         private CacheItemPoolInterface $cache,
         private LoggerInterface $logger,
+        private bool $enabled = true,
     ) {
     }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
+        if (! $this->enabled) {
+            return $handler->handle($request);
+        }
+
         $path = $request->getUri()->getPath();
         $key  = substr(hash('sha256', $path), 0, 16);
 

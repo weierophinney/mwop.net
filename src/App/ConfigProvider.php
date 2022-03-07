@@ -132,6 +132,7 @@ class ConfigProvider
                 'host'   => 'localhost',
                 'port'   => 6379,
             ],
+            'enabled'               => true,
         ];
     }
 
