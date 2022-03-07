@@ -5,10 +5,10 @@ declare(strict_types=1);
 
 namespace Mwop\Blog\Handler;
 
-use Laminas\Diactoros\Response\HtmlResponse;
 use Mezzio\Template\TemplateRendererInterface;
-use Mwop\Blog\FetchBlogPostEvent;
-use Psr\EventDispatcher\EventDispatcherInterface;
+use Mwop\Blog\BlogPost;
+use Mwop\Blog\Mapper\MapperInterface;
+use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -16,8 +16,9 @@ use Psr\Http\Server\RequestHandlerInterface;
 class DisplayPostHandler implements RequestHandlerInterface
 {
     public function __construct(
-        private EventDispatcherInterface $dispatcher,
+        private MapperInterface $mapper,
         private TemplateRendererInterface $template,
+        private ResponseFactoryInterface $responseFactory,
         private RequestHandlerInterface $notFoundHandler,
         private array $disqus = [],
     ) {
@@ -31,26 +32,25 @@ class DisplayPostHandler implements RequestHandlerInterface
             return $this->notFoundHandler->handle($request);
         }
 
-        /** @var FetchBlogPostEvent $event */
-        $event = $this->dispatcher->dispatch(new FetchBlogPostEvent($id));
+        $post = $this->mapper->fetch($id);
 
-        $post = $event->blogPost();
-
-        if (! $post) {
+        if (! $post instanceof BlogPost){
             return $this->notFoundHandler->handle($request);
         }
 
         $lastModified = $post->updated ?: $post->created;
 
-        return new HtmlResponse(
+        $response = $this->responseFactory->createResponse(200)
+            ->withHeader('Content-Type', 'text/html')
+            ->withHeader('Last-Modified', $lastModified->format('r'));
+
+        $response->getBody()->write(
             $this->template->render('blog::post', [
                 'post'   => $post,
                 'disqus' => $this->disqus,
             ]),
-            200,
-            [
-                'Last-Modified' => $lastModified->format('r'),
-            ]
         );
+
+        return $response;
     }
 }
