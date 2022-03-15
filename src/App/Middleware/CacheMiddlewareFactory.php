@@ -7,6 +7,8 @@ namespace Mwop\App\Middleware;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 
+use function array_key_exists;
+
 class CacheMiddlewareFactory
 {
     public function __invoke(ContainerInterface $container): CacheMiddleware

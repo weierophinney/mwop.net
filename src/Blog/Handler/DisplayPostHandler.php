@@ -34,7 +34,7 @@ class DisplayPostHandler implements RequestHandlerInterface
 
         $post = $this->mapper->fetch($id);
 
-        if (! $post instanceof BlogPost){
+        if (! $post instanceof BlogPost) {
             return $this->notFoundHandler->handle($request);
         }
 
