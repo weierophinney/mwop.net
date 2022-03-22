@@ -29,7 +29,7 @@ if [ ! -f "data/comics.phtml" ];then
 fi
 
 # Copy photo database
-if [ ! -f "data/photos.db" ];then
+if [ ! -f "data/photodb/photos.db" ];then
     ./vendor/bin/laminas photo:fetch-db
 fi
 

@@ -34,10 +34,11 @@ class ConfigProvider
 
     public function getConfig(): array
     {
+        $databasePath = realpath(getcwd()) . '/data/photodb/photos.db';
         return [
-            'database_filename'  => 'photos.db',
+            'database_path'      => $databasePath,
             'db'                 => [
-                'dsn' => 'sqlite:' . realpath(getcwd()) . '/data/photos.db',
+                'dsn' => 'sqlite:' . $databasePath,
             ],
             'error_notification' => [
                 'sender'    => '',

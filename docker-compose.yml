@@ -34,6 +34,7 @@ services:
     ports:
       - "9001:9001"
     volumes:
+      - mwop_net_photodb:/var/www/data/photodb
       - /etc/localtime:/etc/localtime:ro
       - ./composer.json:/var/www/composer.json
       - ./composer.lock:/var/www/composer.lock
@@ -63,4 +64,6 @@ services:
 
 volumes:
   mwop_net_redis:
+    external: true
+  mwop_net_photodb:
     external: true

@@ -6,6 +6,6 @@ if ! docker volume ls | grep -q "mwop_net_redis";then
     docker volume create mwop_net_redis
 fi
 
-if [ -f /mnt/art/photos.db ];then
-    cp /mnt/art/photos.db data/photos.db
+if ! docker volume ls | grep -q "mwop_net_photodb";then
+    docker volume create mwop_net_photodb
 fi
