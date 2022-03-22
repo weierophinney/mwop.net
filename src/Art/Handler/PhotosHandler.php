@@ -37,6 +37,9 @@ class PhotosHandler implements RequestHandlerInterface
             ])
         );
 
+        // Clear out statements from memory
+        $photos = null;
+
         return $response;
     }
 }

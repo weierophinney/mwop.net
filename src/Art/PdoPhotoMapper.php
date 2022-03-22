@@ -17,7 +17,7 @@ use function count;
 class PdoPhotoMapper implements PhotoMapper
 {
     public function __construct(
-        private PDO $pdo,
+        private PDOConnection $pdo,
     ) {
     }
 
@@ -42,9 +42,11 @@ class PdoPhotoMapper implements PhotoMapper
             );
         };
 
+        $pdo = $this->pdo->connect();
+
         return new Paginator(new PdoPaginator(
-            $this->pdo->prepare($select),
-            $this->pdo->prepare($count),
+            $pdo->prepare($select),
+            $pdo->prepare($count),
             $factory,
         ));
     }
@@ -55,10 +57,13 @@ class PdoPhotoMapper implements PhotoMapper
             SELECT * FROM photos WHERE filename = :filename
             SQL;
 
-        $statement = $this->pdo->prepare($select);
+        $pdo       = $this->pdo->connect();
+        $statement = $pdo->prepare($select);
         $statement->execute(['filename' => $filename]);
 
         $rows = $statement->fetchAll(PDO::FETCH_ASSOC);
+        $this->pdo->disconnect();
+
         if (0 === count($rows)) {
             return null;
         }
@@ -83,8 +88,10 @@ class PdoPhotoMapper implements PhotoMapper
             WHERE search match :query
             SQL;
 
-        $statement = $this->pdo->prepare($select);
+        $pdo       = $this->pdo->connect();
+        $statement = $pdo->prepare($select);
         if (! $statement->execute([':query' => $toMatch])) {
+            $this->pdo->disconnect();
             return null;
         }
 
@@ -112,7 +119,8 @@ class PdoPhotoMapper implements PhotoMapper
             )
             SQL;
 
-        $statement = $this->pdo->prepare($insert);
+        $pdo       = $this->pdo->connect();
+        $statement = $pdo->prepare($insert);
 
         $statement->execute([
             'filename'    => $photo->filename(),
@@ -121,5 +129,8 @@ class PdoPhotoMapper implements PhotoMapper
             'description' => $photo->description,
             'created'     => $photo->createdAt->format(DateTimeInterface::ISO8601),
         ]);
+
+        $statement = null;
+        $this->pdo->disconnect();
     }
 }

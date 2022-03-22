@@ -27,6 +27,11 @@ class PdoPaginator implements AdapterInterface
         $this->itemFactory = $itemFactory;
     }
 
+    public function __destruct()
+    {
+        unset($this->select, $this->count);
+    }
+
     /**
      * @param int $offset
      * @param int $itemCountPerPage
