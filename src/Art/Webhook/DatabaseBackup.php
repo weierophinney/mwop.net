@@ -25,5 +25,13 @@ class DatabaseBackup
     public function backup(): void
     {
         $this->filesystem->copy('app://' . $this->database, 'backup://' . $this->database);
+
+        // If WAL pragma is enabled, copy that file
+        if ($this->filesystem->has('app://' . $this->database . '-wal')) {
+            $this->filesystem->copy(
+                'app://' . $this->database . '-wal',
+                'backup://' . $this->database . '-wal'
+            );
+        }
     }
 }

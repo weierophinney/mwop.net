@@ -36,6 +36,14 @@ class FetchPhotoDatabase extends Command
     {
         try {
             $this->filesystem->copy('remote://' . $this->database, 'app://' . $this->database);
+
+            // If WAL pragma is enabled, copy that file
+            if ($this->filesystem->has('remote://' . $this->database . '-wal')) {
+                $this->filesystem->copy(
+                    'remote://' . $this->database . '-wal',
+                    'app://' . $this->database . '-wal'
+                );
+            }
         } catch (Throwable $e) {
             $output->writeln('<error>Failed to fetch remote photo database for local use</error>');
             do {
