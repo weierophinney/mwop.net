@@ -80,8 +80,16 @@ div.comic {
   margin-right: 1em;
   margin-bottom: 1em;
 
-  img {
-    max-width: 100%;
+  @media screen and (max-width: 1024px) {
+    img {
+        max-width: 100%;
+    }
+  }
+
+  @media screen and (min-width: 1025px) {
+    img {
+        max-width: 750px;
+    }
   }
 }
 
