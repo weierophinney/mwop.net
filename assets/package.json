@@ -18,7 +18,7 @@
     "gulp-uglify": "^3.0.2",
     "jquery": "^3.5.1",
     "lunr": "^0.7.1",
-    "minimist": "^1.2.5",
+    "minimist": "^1.2.6",
     "mkdirp": "^1.0.4",
     "node-sass": "^7.0.1",
     "prism-solarized-dark": "^1.0.1",
