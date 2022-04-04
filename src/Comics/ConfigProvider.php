@@ -46,7 +46,6 @@ class ConfigProvider
     {
         return [
             'exclusions'  => [
-                'basicinstructions',
                 'bloom-county',
                 'dilbert',
                 'g-g',
