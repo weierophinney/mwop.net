@@ -23,4 +23,12 @@
     .laminas-tag-cloud li {
         @apply px-1 hover:font-semibold hover:text-white hover:underline;
     }
+
+    .homepage-feed li {
+        @apply ml-8;
+    }
+
+    .homepage-feed li img {
+        @apply inline;
+    }
 }

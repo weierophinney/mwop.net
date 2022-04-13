@@ -8,71 +8,76 @@ echo '<script src="/js/twitter.js"></script>';
 $this->end();
 ?>
 
-<article class="col-lg alpha home">
-    <h2>Welcome!</h2>
+<div class="mt-24 mb-8 grid grid-cols-3 gap-x-8 divide-x-2 divide-dashed divide-neutral-400 text-neutral-100">
 
-    <p>
+<article class="px-8">
+    <h2 class="font-semibold text-4xl mb-2">Welcome!</h2>
+
+    <p class="py-2">
         I'm Matthew Weier O'Phinney. I am a software engineer and architect, PHP
         expert, standards developer, and product manager. I create the tools that PHP
         developers use to build and deploy their applications, from APIs to content
         management systems. In addition, I am:
     </p>
 
-    <ul>
-        <li>He/him.</li>
-        <li>A husband.</li>
-        <li>A father of two wonderful children.</li>
-        <li>An aspiring artist.</li>
-        <li>An open source software developer and advocate.</li>
-        <li>Serial Basset Hound owner, and Boston Terrier wrangler.</li>
+    <ul class="list-disc list-outside">
+        <li class="ml-8">He/him.</li>
+        <li class="ml-8">A husband.</li>
+        <li class="ml-8">A father of two wonderful children.</li>
+        <li class="ml-8">An aspiring artist.</li>
+        <li class="ml-8">An open source software developer and advocate.</li>
+        <li class="ml-8">Serial Basset Hound owner, and Boston Terrier wrangler.</li>
     </ul>
 
-    <p>
+    <p class="py-2">
         I blog <a href="<?= $this->url('blog') ?>">on this site</a>, as well as elsewhere (see the
         icons next to the "Recent Blog Posts"), typically on topics related
         to open source development. Feel free to <a href="<?= $this->url('contact') ?>">contact me</a>.
     </p>
 </article>
 
-<aside class="col-lg middle home">
-    <img src="/images/2018-09-09-mwop-nugget-320x420.jpg" alt="Matthew likes puppers" /><br />
+<aside class="px-8">
+    <img class="w-full mx-auto mb-2" src="/images/2018-09-09-mwop-nugget-320x420.jpg" alt="Matthew likes puppers" /><br />
 
-    <p>&nbsp;</p>
-
-	<div loading="lazy" data-mc-src="daf1a12e-02c8-4fcc-80cb-9b65210d9e20#instagram"></div>
-
-    <div class="container d-flex flex-row justify-content-evenly align-items-start flex-wrap">
+    <div class="flex flex-row flex-wrap justify-evenly items-start">
     <?php foreach ($photos as $photo): ?>
-        <div class="card photo-thumbnail mx-1 my-1">
-            <img class="card-img-top img-fluid" src="<?= $this->url('art.image', ['type' => 'thumbnails', 'image' => $photo->filename()]) ?>" alt="Original art by Matthew Weier O'Phinney">
+        <div class="relative mx-1 my-1">
+            <img class="" src="<?= $this->url('art.image', ['type' => 'thumbnails', 'image' => $photo->filename()]) ?>" alt="Original art by Matthew Weier O'Phinney">
 
-            <div class="card-img-overlay"><a class="btn btn-info photo-link" href="<?= $this->url('art.photo', ['image' => $photo->filename()]) ?>"><img src="/images/external-link.svg" width="32"></a></div>
+            <div class="absolute bottom-0 right-0 rounded bg-neutral-200"><a class="photo-link" href="<?= $this->url('art.photo', ['image' => $photo->filename()]) ?>"><img class="stroke-neutral-700" src="/images/external-link.svg" width="32"></a></div>
         </div>
     <?php endforeach ?>
     </div>
 </aside>
 
-<aside class="col-lg omega home">
-    <h3>Recent Blog Posts</h3>
+<aside class="px-8">
+    <div class="border-b-2 border-dashed border-neutral-400">
+        <h3 class="font-semibold text-3xl mb-2">Recent Blog Posts</h3>
 
-	<ul><?= $this->homepagePosts() ?></ul>
+        <ul class="list-disc list-outside homepage-feed"><?= $this->homepagePosts() ?></ul>
 
-    <p><em><a href="<?= $this->url('blog') ?>">Read more</a></em></p>
+        <p class="py-2 text-right"><em><a class="underline" href="<?= $this->url('blog') ?>">Read more</a></em></p>
+    </div>
 
-    <h3>Recent Github Activity</h3>
+    <div class="my-2 border-b-2 border-dashed border-neutral-400">
+        <h3 class="font-semibold text-3xl my-2">Recent Github Activity</h3>
 
-    <ul id="github">
-        <?= $this->renderGithubFeed() ?>
-    </ul>
+        <ul id="github" class="list-disc list-outside homepage-feed">
+            <?= $this->renderGithubFeed() ?>
+        </ul>
 
-    <p><em><a href="https://github.com/weierophinney?tab=activity">Read more</a></em></p>
+        <p class="py-2 text-right"><em><a class="underline" href="https://github.com/weierophinney?tab=activity">Read more</a></em></p>
+    </div>
 
-
-    <a class="twitter-timeline" data-height="600" href="https://twitter.com/mwop?ref_src=twsrc%5Etfw">Tweets by mwop</a>
-    <script async src="/js/twitter.js"></script>
+    <div class="mt-2">
+        <a class="twitter-timeline" data-height="600" href="https://twitter.com/mwop?ref_src=twsrc%5Etfw">Tweets by mwop</a>
+        <script async src="/js/twitter.js"></script>
+    </div>
 </aside>
 
-<div class="h-card vcard d-none">
+</div>
+
+<div class="hidden h-card vcard">
   <img class="u-photo photo" width="50" src="https://avatars0.githubusercontent.com/u/25943?v=3&u=79dd2ea1d4d8855944715d09ee4c86215027fa80&s=140" alt="mwop">,
   <a class="p-name fn u-url url" href="<?= $this->serverurl() ?>" rel="me">Matthew Weier O'Phinney</a>,
   <a class="u-email email" href="mailto:matthew@weierophinney.net">matthew@weierophinney.net</a>,
@@ -89,3 +94,4 @@ $this->end();
     </p>
   </div>
 </div>
+
