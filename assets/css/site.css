@@ -1,0 +1,18 @@
+@import './prism.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .search-results {
+        @apply absolute bg-white overflow-y-visible space-y-1 divide-y divide-solid divide-neutral-500 w-[25rem] rounded-lg;
+    }
+
+    .search-result {
+        @apply block px-1 py-1 hover:bg-neutral-700 hover:text-neutral-100 hover:font-semibold;
+    }
+
+    .search-result a {
+        @apply decoration-0;
+    }
+}

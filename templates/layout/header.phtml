@@ -1,23 +1,131 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top py-1"><div class="container-fluid">
-  <span class="navbar-brand mb-0">
-    <a class="text-decoration-none" href="<?= $this->url('home') ?>"><img src="/images/logo.gif" height="37" width="37" alt="Celtic Knot - Matthew Weier O'Phinney" />
-    <span class="main_title d-none d-sm-inline">phly, boy, phly: matthew weier o'phinney</span></a>
-  </span>
+<nav class="bg-neutral-700 shadow-lg p-2 mt-0 fixed w-full z-10 top-0" role="navigation">
+  <div class="w-full mx-auto px-4">
+    <div class="flex justify-between items-center">
+      <div class="flex space-x-7">
+        <div>
+          <a class="decoration-0 flex items-center py-4" href="<?= $this->url('home') ?>">
+            <img class="w-9 h-9" src="/images/logo.gif" alt="Celtic Knot - Matthew Weier O'Phinney" />
+            <span class="hidden lg:inline min-w-4">&nbsp;</span>
+            <span class="hidden lg:inline text-neutral-100">phly, boy, phly: matthew weier o'phinney</span>
+          </a>
+        </div>
 
-  <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapseMenu" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  
-  <div id="navbarCollapseMenu" class="collapse navbar-collapse" role="navigation">
-    <ul class="navbar-nav me-auto">
-      <li class="nav-item"><a class="nav-link" href="<?= $this->url('blog') ?>">Blog</a></li>
-      <li class="nav-item"><a class="nav-link" href="<?= $this->url('art.gallery') ?>">Art</a></li>
-      <li class="nav-item"><a class="nav-link" href="<?= $this->url('resume') ?>">R&eacute;sum&eacute;</a></li>
-      <li class="nav-item"><a class="nav-link" href="<?= $this->url('contact') ?>">Contact</a></li>
-    </ul>
+        <div class="hidden md:flex items-center space-x-1">
+          <a class="py-4 px-2 font-semibold text-neutral-400 hover:text-neutral-100 transition duration-300" href="<?= $this->url('blog') ?>">Blog</a>
+          <a class="py-4 px-2 font-semibold text-neutral-400 hover:text-neutral-100 transition duration-300" href="<?= $this->url('art.gallery') ?>">Art</a>
+          <a class="py-4 px-2 font-semibold text-neutral-400 hover:text-neutral-100 transition duration-300" href="<?= $this->url('resume') ?>">R&eacute;sum&eacute;</a>
+          <a class="py-4 px-2 font-semibold text-neutral-400 hover:text-neutral-100 transition duration-300" href="<?= $this->url('contact') ?>">Contact</a>
+        </div>
+      </div>
 
-    <form class="d-flex ms-auto">
-      <input id="searchinput" class="align-self-end form-control mr-sm-2" type="text" size="25" placeholder="Search..." aria-label="Search">
-    </form>
+      <div class="hidden md:flex items-center space-x-3">
+        <div class="self-end flex-col search">
+          <form class="flex">
+            <input class="appearance-none rounded-lg border w-[25rem] px-2 py-2 bg-neutral-100 placeholder-neutral-500 text-black" type="text" placeholder="Search..." aria-label="Search">
+          </form>
+
+          <ul class="search-results"></ul>
+        </div>
+
+      </div>
+
+      <div class="md:hidden flex items-center">
+        <button class="outline-none mobile-menu-button">
+          <svg class=" w-6 h-6 text-neutral-400 hover:text-neutral-100 "
+            x-show="!showMenu"
+            fill="none"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
   </div>
-</div></nav>
+
+  <!-- mobile menu -->
+  <div class="hidden mobile-menu">
+    <ul>
+      <li><a class="block text-sm px-2 py-4 font-semibold text-neutral-500 hover:text-neutral-100 transition duration-300" href="<?= $this->url('blog') ?>">Blog</a></li>
+      <li><a class="block text-sm px-2 py-4 font-semibold text-neutral-500 hover:text-neutral-100 transition duration-300" href="<?= $this->url('art.gallery') ?>">Art</a></li>
+      <li><a class="block text-sm px-2 py-4 font-semibold text-neutral-500 hover:text-neutral-100 transition duration-300" href="<?= $this->url('resume') ?>">R&eacute;sum&eacute;</a></li>
+      <li><a class="block text-sm px-2 py-4 font-semibold text-neutral-500 hover:text-neutral-100 transition duration-300" href="<?= $this->url('contact') ?>">Contact</a></li>
+      <li class="search flex-col">
+        <form>
+          <input class="appearance-none rounded-lg border w-full px-2 py-2 bg-neutral-100 placeholder-neutral-500 text-black" type="text" placeholder="Search..." aria-label="Search">
+        </form>
+
+        <ul class="search-results"></ul>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<script language="javascript">
+  (function () {
+    const btn = document.querySelector("button.mobile-menu-button");
+    const menu = document.querySelector(".mobile-menu");
+
+    btn.addEventListener("click", () => {
+      menu.classList.toggle("hidden");
+    });
+  })();
+
+  (function () {
+    'use strict';
+
+    const searchElements = document.querySelectorAll('.search');
+
+    const headers = new Headers();
+    headers.append('Accept', 'application/json');
+
+    const search = (query, callback) => {
+      const queryString = new URLSearchParams('');
+      queryString.set('q', query);
+
+      const url = '/search?' + queryString.toString();
+
+      const data = {
+        method: 'GET',
+        headers: headers,
+        mode: 'cors',
+        cache: 'default'
+      };
+
+      fetch(url, data)
+        .then((response) => {
+          if (! response.ok) {
+            throw new Error('Invalid response from search endpoint');
+          }
+          return response.json();
+        })
+        .then((payload) => {
+          callback(payload);
+        });
+    };
+
+    searchElements.forEach((searchElement) => {
+      const autocomplete = searchElement.querySelector('input');
+      const resultList = searchElement.querySelector('.search-results');
+
+      autocomplete.oninput = function () {
+        let results = [];
+        const userInput = this.value;
+        resultList.innerHTML = "";
+
+        if (userInput.length > 0) {
+          search(userInput, (results) => {
+            for (let i = 0; i < results.length; i++) {
+              resultList.innerHTML += `<li class="search-result"><a href="${ results[i].link }">${ results[i].title }</a></li>`;
+            }
+          });
+        }
+      };
+    });
+  })();
+</script>

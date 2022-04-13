@@ -1,22 +1,22 @@
-<footer class="bg-dark container-fluid mt-auto">
-  <div class="row align-items-start">
-    <div class="col alpha about">
+<footer class="bg-neutral-700 mt-auto flex justify-between">
+  <div class="items-start">
+    <div class="sm:width-1/2 md:width-1/3 about">
       <h4>About</h4>
       <?php $this->insert('layout::about') ?>
     </div>
 
-    <div class="col projects">
+    <div class="sm:width-1/2 md:width-1/3 projects">
       <h4>Projects</h4>
       <?php $this->insert('layout::projects') ?>
     </div>
 
-    <div class="col omega tags">
+    <div class="sm:width-1/2 md:width-1/3 tags">
       <?= $footer ?? '&nbsp;' ?>
     </div>
   </div>
 
-  <div class="row copyright align-items-end">
-    <div class="col-12 text-center">
+  <div class="copyright items-end">
+    <div class="min-w-full text-center">
       Unless otherwise noted, &#169; Matthew Weier O'Phinney
     </div>
   </div>
