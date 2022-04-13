@@ -54,12 +54,6 @@ RUN set -e; \
 # Build the PHP container
 FROM cr.zend.com/zendphp/8.1:ubuntu-20.04-cli
 
-## Install Swoole
-COPY --from=swoole /usr/lib/php/8.1-zend/openswoole.so /usr/lib/php/8.1-zend/openswoole.so
-COPY --from=swoole /usr/include/php/8.1-zend/ext/openswoole /usr/include/php/8.1-zend/ext/openswoole
-RUN set -e; \
-    echo "extension=openswoole.so" > /etc/zendphp/cli/conf.d/60-swoole.ini
-
 ## Customizations
 ARG TIMEZONE=UTC
 ARG INSTALL_COMPOSER=false
@@ -83,6 +77,12 @@ COPY --from=assets /assets/build/css /var/www/public/css
 ## Customize PHP runtime according
 ## to the given building arguments
 RUN ZendPHPCustomizeWithBuildArgs.sh
+
+## Install Swoole
+COPY --from=swoole /usr/lib/php/8.1-zend/openswoole.so /usr/lib/php/8.1-zend/openswoole.so
+COPY --from=swoole /usr/include/php/8.1-zend/ext/openswoole /usr/include/php/8.1-zend/ext/openswoole
+RUN set -e; \
+    echo "extension=openswoole.so" > /etc/zendphp/cli/conf.d/60-swoole.ini
 
 ## Expose 9001
 EXPOSE 9001
