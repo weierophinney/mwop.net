@@ -15,4 +15,12 @@
     .search-result a {
         @apply decoration-0;
     }
+
+    .laminas-tag-cloud {
+        @apply list-none flex flex-row flex-wrap;
+    }
+
+    .laminas-tag-cloud li {
+        @apply px-1 hover:font-semibold hover:text-white hover:underline;
+    }
 }
