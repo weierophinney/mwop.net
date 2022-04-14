@@ -1,14 +1,14 @@
 @import "../node_modules/prism-solarized-dark/prism-solarizeddark.css";
-@import "../node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss";
-@import "../node_modules/@fortawesome/fontawesome-free/scss/brands.scss";
-@import "../node_modules/@fortawesome/fontawesome-free/scss/solid.scss";
+@import "../node_modules/@fortawesome/fontawesome-free/css/fontawesome.css";
+@import "../node_modules/@fortawesome/fontawesome-free/css/brands.css";
+@import "../node_modules/@fortawesome/fontawesome-free/css/solid.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
     body {
-        @apply  text-neutral-100;
+        @apply text-neutral-100;
         font-family: Georgia, Cambria, "Times New Roman", Times, serif !default;
     }
 

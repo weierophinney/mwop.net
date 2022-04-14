@@ -1,29 +1,41 @@
-<div class="row justify-content-center">
-  <nav class="col-md-6">
-    <ul class="pagination">
-        <?php if (! $pagination->is_first) : ?>
-        <li class="page-item"><a href="<?= $pagination->base_path ?>" class="page-link">&lt;&lt;<span class="sr-only">First</span></a></li>
-        <?php endif ?>
+<nav class="my-4 flex justify-center items-center space-x-1">
+    <?php if (! $pagination->is_first) : ?>
+    <a class="flex items-center px-4 py-2 no-underline bg-emerald-500 text-black hover:bg-neutral-700 hover:text-neutral-100" href="<?= $pagination->base_path ?>">
+		<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21,11H9.41l2.3-2.29a1,1,0,1,0-1.42-1.42l-4,4a1,1,0,0,0-.21.33,1,1,0,0,0,0,.76,1,1,0,0,0,.21.33l4,4a1,1,0,0,0,1.42,0,1,1,0,0,0,0-1.42L9.41,13H21a1,1,0,0,0,0-2ZM3,3A1,1,0,0,0,2,4V20a1,1,0,0,0,2,0V4A1,1,0,0,0,3,3Z"/>
+        </svg>
+    </a>
+    <?php endif ?>
 
-        <?php if (isset($pagination->previous)) : ?>
-        <li class="page-item"><a href="<?= $pagination->base_path ?>?page=<?= $pagination->previous ?>" class="page-link">&lt;<span class="sr-only">Previous</span></a></li>
-        <?php endif ?>
+    <?php if (isset($pagination->previous)) : ?>
+    <a class="flex items-center px-4 py-2 no-underline bg-emerald-500 text-black hover:bg-neutral-700 hover:text-neutral-100" href="<?= $pagination->base_path ?>?page=<?= $pagination->previous ?>">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 17l-5-5m0 0l5-5m-5 5h12" />
+        </svg>
+    </a>
+    <?php endif ?>
 
-        <?php foreach ($pagination->pages as $page) : ?>
-            <?php if ($page['current']) : ?>
-        <li class="page-item active"><a href="#" class="page-link"><?= $page['number'] ?></a></li>
-            <?php else : ?>
-        <li class="page-item"><a href="<?= $pagination->base_path ?>?page=<?= $page['number'] ?>" class="page-link"><?= $page['number'] ?></a></li>
-            <?php endif ?>
-        <?php endforeach ?>
-
-        <?php if (isset($pagination->next)) : ?>
-        <li class="page-item"><a href="<?= $pagination->base_path ?>?page=<?= $pagination->next ?>" class="page-link"><span class="sr-only">Next</span>&gt;</a></li>
+    <?php foreach ($pagination->pages as $page) : ?>
+        <?php if ($page['current']) : ?>
+    <a class="px-4 py-2 no-underline bg-emerald-900 text-white font-semibold" href="#"><?= $page['number'] ?></a>
+        <?php else : ?>
+    <a class="px-4 py-2 no-underline bg-emerald-500 text-black hover:bg-neutral-700 hover:text-neutral-100" href="<?= $pagination->base_path ?>?page=<?= $page['number'] ?>" class="page-link"><?= $page['number'] ?></a>
         <?php endif ?>
+    <?php endforeach ?>
 
-        <?php if (! $pagination->is_last) : ?>
-        <li class="page-item"><a href="<?= $pagination->base_path ?>?page=<?= $pagination->last ?>" class="page-link"><span class="sr-only">Last</span>&gt;&gt</a></li>
-        <?php endif ?>
-    </ul>
-  </nav>
-</div>
+    <?php if (isset($pagination->next)) : ?>
+    <a class="flex items-center px-4 py-2 no-underline bg-emerald-500 text-black hover:bg-neutral-700 hover:text-neutral-100" href="<?= $pagination->base_path ?>?page=<?= $pagination->next ?>">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+        </svg>
+    </a>
+    <?php endif ?>
+
+    <?php if (! $pagination->is_last) : ?>
+    <a class="flex items-center px-4 py-2 no-underline bg-emerald-500 text-black hover:bg-neutral-700 hover:text-neutral-100" href="<?= $pagination->base_path ?>?page=<?= $pagination->last ?>">
+		<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.71,11.29l-4-4a1,1,0,1,0-1.42,1.42L14.59,11H3a1,1,0,0,0,0,2H14.59l-2.3,2.29a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0l4-4a1,1,0,0,0,.21-.33,1,1,0,0,0,0-.76A1,1,0,0,0,17.71,11.29ZM21,4a1,1,0,0,0-1,1V19a1,1,0,0,0,2,0V5A1,1,0,0,0,21,4Z" />
+        </svg>
+    </a>
+    <?php endif ?>
+</nav>

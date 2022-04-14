@@ -1,10 +1,14 @@
 <?php $this->layout('layout::layout', [
     'title' => 'Comics',
 ]) ?>
-<article class="comics col-10 text-center">
+<div class="mt-24 mb-8">
+
+<article class="mx-auto mt-24 mb-8 w-5/6 text-center">
     <h2>Comics</h2>
 
-    <div class="d-flex justify-content-evenly align-items-start align-content-start flex-wrap">
+    <div class="flex flex-row flex-wrap justify-between justify-items-stretch content-start items-stretch gap-x-8">
         <?php $this->insert('data::comics') ?>
     </div>
 </article>
+
+</div>
