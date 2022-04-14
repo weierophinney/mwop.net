@@ -1,7 +1,78 @@
-@import './prism.css';
+@import "../node_modules/prism-solarized-dark/prism-solarizeddark.css";
+@import "../node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss";
+@import "../node_modules/@fortawesome/fontawesome-free/scss/brands.scss";
+@import "../node_modules/@fortawesome/fontawesome-free/scss/solid.scss";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    body {
+        @apply  text-neutral-100;
+        font-family: Georgia, Cambria, "Times New Roman", Times, serif !default;
+    }
+
+    p {
+        @apply mb-4;
+    }
+
+    a {
+        @apply text-neutral-400 underline decoration-1 decoration-dotted transition duration-300;
+    }
+
+
+    a:hover {
+        @apply text-neutral-100 font-semibold decoration-solid;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !default;
+    }
+
+    h1 {
+        @apply font-bold text-4xl mb-2;
+    }
+
+    h2 {
+        @apply font-bold text-3xl mb-2;
+    }
+
+    h3 {
+        @apply font-bold text-2xl mb-2;
+    }
+
+    h4 {
+        @apply font-bold text-xl mb-2;
+    }
+
+    ul {
+        @apply list-disc list-outside mb-4 ml-5;
+    }
+
+    ol {
+        @apply list-decimal list-outside mb-4 ml-5;
+    }
+
+    li {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !default;
+    }
+
+    kbd {
+        @apply font-bold;
+    }
+
+    sup {
+        @apply text-xs align-super;
+    }
+
+    img {
+        @apply max-w-full;
+    }
+
+    blockquote {
+        @apply border-neutral-500 border-solid border-l-4 pl-4;
+    }
+}
 
 @layer components {
     .search-results {

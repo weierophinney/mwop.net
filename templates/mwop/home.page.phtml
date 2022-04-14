@@ -11,25 +11,25 @@ $this->end();
 <div class="mt-24 mb-8 flex flex-row flex-wrap justify-between justify-items-stretch content-start items-stretch gap-x-8 text-neutral-100">
 
 <article class="px-8 lg:w-1/4 lg:border-neutral-500 lg:border-dashed lg:border-r">
-    <h2 class="font-semibold text-4xl mb-2">Welcome!</h2>
+    <h2>Welcome!</h2>
 
-    <p class="py-2">
+    <p>
         I'm Matthew Weier O'Phinney. I am a software engineer and architect, PHP
         expert, standards developer, and product manager. I create the tools that PHP
         developers use to build and deploy their applications, from APIs to content
         management systems. In addition, I am:
     </p>
 
-    <ul class="list-disc list-outside">
-        <li class="ml-8">He/him.</li>
-        <li class="ml-8">A husband.</li>
-        <li class="ml-8">A father of two wonderful children.</li>
-        <li class="ml-8">An aspiring artist.</li>
-        <li class="ml-8">An open source software developer and advocate.</li>
-        <li class="ml-8">Serial Basset Hound owner, and Boston Terrier wrangler.</li>
+    <ul>
+        <li>He/him.</li>
+        <li>A husband.</li>
+        <li>A father of two wonderful children.</li>
+        <li>An aspiring artist.</li>
+        <li>An open source software developer and advocate.</li>
+        <li>Serial Basset Hound owner, and Boston Terrier wrangler.</li>
     </ul>
 
-    <p class="py-2">
+    <p>
         I blog <a href="<?= $this->url('blog') ?>">on this site</a>, as well as elsewhere (see the
         icons next to the "Recent Blog Posts"), typically on topics related
         to open source development. Feel free to <a href="<?= $this->url('contact') ?>">contact me</a>.
@@ -44,7 +44,7 @@ $this->end();
         <div class="relative mx-1 my-1">
             <img class="" src="<?= $this->url('art.image', ['type' => 'thumbnails', 'image' => $photo->filename()]) ?>" alt="Original art by Matthew Weier O'Phinney">
 
-            <div class="absolute bottom-0 right-0 rounded bg-neutral-200"><a class="photo-link" href="<?= $this->url('art.photo', ['image' => $photo->filename()]) ?>"><img class="stroke-neutral-700" src="/images/external-link.svg" width="32"></a></div>
+            <div class="absolute bottom-0 right-0 rounded bg-neutral-200"><a href="<?= $this->url('art.photo', ['image' => $photo->filename()]) ?>"><img class="stroke-neutral-700" src="/images/external-link.svg" width="32"></a></div>
         </div>
     <?php endforeach ?>
     </div>
@@ -52,21 +52,19 @@ $this->end();
 
 <aside class="px-8 lg:w-1/4 lg:border-neutral-500 lg:border-dashed lg:border-l">
     <div class="border-b-2 border-dashed border-neutral-400">
-        <h3 class="font-semibold text-3xl mb-2">Recent Blog Posts</h3>
+        <h3>Recent Blog Posts</h3>
 
-        <ul class="list-disc list-outside homepage-feed"><?= $this->homepagePosts() ?></ul>
+        <ul class="homepage-feed"><?= $this->homepagePosts() ?></ul>
 
-        <p class="py-2 text-right"><em><a class="underline" href="<?= $this->url('blog') ?>">Read more</a></em></p>
+        <p class="text-right"><em><a href="<?= $this->url('blog') ?>">Read more</a></em></p>
     </div>
 
     <div class="my-2 border-b-2 border-dashed border-neutral-400">
-        <h3 class="font-semibold text-3xl my-2">Recent Github Activity</h3>
+        <h3>Recent Github Activity</h3>
 
-        <ul id="github" class="list-disc list-outside homepage-feed">
-            <?= $this->renderGithubFeed() ?>
-        </ul>
+        <ul id="github" class="homepage-feed"><?= $this->renderGithubFeed() ?></ul>
 
-        <p class="py-2 text-right"><em><a class="underline" href="https://github.com/weierophinney?tab=activity">Read more</a></em></p>
+        <p class="text-right"><em><a href="https://github.com/weierophinney?tab=activity">Read more</a></em></p>
     </div>
 
     <div class="mt-2">
