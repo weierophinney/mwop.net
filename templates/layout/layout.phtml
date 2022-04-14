@@ -29,9 +29,9 @@
 </head>
 <body class="bg-neutral-800 flex flex-col h-screen">
 <?php $this->insert('layout::header') ?>
-<div>
-    <?= $this->section('content') ?>
-</div>
+
+<?= $this->section('content') ?>
+
 <?php $this->insert('layout::footer', ['footer' => $this->section('footer')]) ?>
 <?php $this->insert('layout::scripts', ['scripts' => $this->section('scripts')]) ?>
 </body>

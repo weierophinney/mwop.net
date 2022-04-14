@@ -52,8 +52,10 @@ return [
                 '*.disquscdn.com',
                 'https://*.twimg.com',
                 'https://platform.twitter.com',
+                'https://unpkg.com',
                 'https://*.woxo.tech',
             ],
+            'unsafe-inline' => true,
         ],
         // Not honored yet by paragonie/csp-builder:
         'prefetch-src' => [

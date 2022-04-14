@@ -102,4 +102,20 @@
     .homepage-feed li img {
         @apply inline;
     }
+
+    .comic {
+        @apply p-8 w-full md:w-2/5 lg:w-1/4;
+    }
+
+    .comic h4 {
+        @apply w-full text-left;
+    }
+
+    .comic h4 a {
+        @apply no-underline;
+    }
+
+    .comic p {
+        @apply w-full;
+    }
 }
