@@ -7,13 +7,12 @@
 @tailwind utilities;
 
 @layer base {
-    body {
-        @apply text-neutral-100;
-        font-family: Georgia, Cambria, "Times New Roman", Times, serif !default;
+    html {
+        @apply font-serif text-neutral-100;
     }
 
     p {
-        @apply mb-4;
+        @apply mb-4 leading-relaxed tracking-wide;
     }
 
     a {
@@ -26,7 +25,7 @@
     }
 
     h1, h2, h3, h4, h5, h6 {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !default;
+        @apply font-sans;
     }
 
     h1 {
@@ -58,7 +57,7 @@
     }
 
     li {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !default;
+        @apply font-sans;
     }
 
     kbd {

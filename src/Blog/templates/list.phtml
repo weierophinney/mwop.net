@@ -20,20 +20,24 @@ $this->push('footer');
 echo $this->fetch('data::tag-cloud');
 $this->end();
 ?>
-<section class="blog container offset-md-2 col">
-    <div class="row">
-        <div class="col">
-        <h1><?= $this->escapeHtml($title) ?></h1>
-        </div>
-    </div>
+<section class="md:w-3/4 mt-24 mb-4 mx-auto">
+    <h1><?= $this->escapeHtml($title) ?></h1>
 
     <?php if (empty($posts)) : ?>
-    <div class="row"><p class="col text-center">No posts found.</p></div>
+    <p class="text-center">No posts found.</p>
 
     <?php else : ?>
     <?php foreach ($posts as $post) : ?>
-    <div class="row h-entry">
-        <aside class="col-md-2 d-none d-sm-block alpha sidebar blog">
+    <div class="md:flex md:flex-row-reverse md:justify-end md:justify-items-start md:content-start md:items-start md:gap-8 h-entry">
+        <section class="w-full md:w-3/4 md:mb-8 md:border-b md:border-dotted">
+            <h4 class=""><a class="u-url u-uid" href="<?= $this->postUrl($post) ?>"><?= $this->escapeHtml($post->title) ?></a></h4>
+
+            <div class="entry body p-summary"><?= $post->body ?></div>
+
+            <p><a href="<?= $this->postUrl($post) ?>">Continue reading...</a></p>
+        </section>
+
+        <aside class="w-full md:w-1/4 mb-8 border-b border-dotted md:mb-0 md:border-none italic">
             <p>
                 Written on <time class="dt-published" datetime="<?= $this->formatDateRfc($post->created) ?>"><?= $this->formatDate($post->created) ?></time>.
             <?php if ($post->updated) : ?>
@@ -41,25 +45,17 @@ $this->end();
             <?php endif ?>
             </p>
 
-            <ul class="tags">
+            <ul>
             <?php foreach ($this->processTags($post->tags) as $tag) : ?>
                 <li><a class="p-category" href="<?= $tag->link ?>"><?= $tag->name ?></a>
             <?php endforeach ?>
             </ul>
 
-            <div class="p-author h-card d-none">
+            <div class="hidden p-author h-card">
                 Posted by <a rel="author" class="u-url" href="<?= $this->serverurl() ?>">Matthew Weier O'Phinney</a>,
-                <img class="u-photo photo" width="50" src="https://avatars0.githubusercontent.com/u/25943?v=3&u=79dd2ea1d4d8855944715d09ee4c86215027fa80&s=140" alt="mwop">
+                <img class="u-photo" width="50" src="https://avatars0.githubusercontent.com/u/25943?v=3&u=79dd2ea1d4d8855944715d09ee4c86215027fa80&s=140" alt="mwop">
             </div>
         </aside>
-
-        <section class="col-md-6 omega post-list">
-            <h4 class="entry"><a class="u-url u-uid" href="<?= $this->postUrl($post) ?>"><?= $this->escapeHtml($post->title) ?></a></h4>
-
-            <div class="entry body p-summary"><?= $post->body ?></div>
-
-            <p><a href="<?= $this->postUrl($post) ?>">Continue reading...</a></p>
-        </section>
     </div>
     <?php endforeach ?>
 
