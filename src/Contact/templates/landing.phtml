@@ -6,7 +6,7 @@ $this->start('scripts');
 ?>
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <?php $this->stop() ?>
-<section class="col-md-6 contact">
+<article class="md:w-1/2 mt-24 mx-auto">
     <h2>Contact Me</h2>
 
     <p>
@@ -16,39 +16,38 @@ $this->start('scripts');
     </p>
 
     <?php if (isset($error)) : ?>
-    <p class="error">
+    <p class="text-red-700 font-semibold">
         There were one or more isues with your submission. Please correct them as 
         indicated below.
     </p>
 
-    <pre>
+    <pre class="font-mono">
         <?= $this->escapeHtml($error['message']) ?>
     </pre>
-
     <?php endif ?>
 
-    <form method="post" name="contact" action="<?= $this->url('contact.process') ?>" id="contact">
+    <form class="bg-neutral-700 p-4 w-full rounded-lg" method="post" name="contact" action="<?= $this->url('contact.process') ?>" id="contact">
         <div class="form-group">
-            <label for="from">From (email):</label>
-            <input class="form-control" type="text" name="from" value="" required="required">
+            <label class="block mb-2 font-semibold" for="from">From (email):</label>
+            <input class="w-full mb-4 p-2 rounded border-neutral-900 bg-neutral-100 text-neutral-900" type="text" name="from" value="" required="required">
         </div>
 
         <div class="form-group">
-            <label for="subject">Subject:</label>
-            <input class="form-control" type="text" name="subject" value="" required="required">
+            <label class="block mb-2 font-semibold" for="subject">Subject:</label>
+            <input class="w-full mb-4 p-2 rounded border-neutral-900 bg-neutral-100 text-neutral-900" type="text" name="subject" value="" required="required">
         </div>
 
         <div class="form-group">
-            <label for="body">Your message:</label>
-            <textarea class="form-control" rows="10" name="body" required="required"></textarea>
+            <label class="block mb-2 font-semibold" for="body">Your message:</label>
+            <textarea class="w-full h-48 mb-4 -p2 rounded border-neutral-900 bg-neutral-100 text-neutral=900" name="body" required="required"></textarea>
         </div>
 
         <div
-            class="form-group g-recaptcha"
+            class="form-group g-recaptcha my-4"
             data-sitekey="<?= $recaptcha_pub_key ?>"
             data-theme="dark"></div>
 
         <input type="hidden" name="csrf" value="<?= $csrf ?>">
-        <button type="submit" class="btn btn-outline-secondary" name="Send">Send</button>
+        <button class="rounded p-2 bg-emerald-500 border-emerald-800 text-black hover:bg-emerald-200 active:bg-emerald-200 transition duration-300" type="submit" name="Send">Send</button>
     </form>
-</section>
+</article>
