@@ -47,7 +47,7 @@ $this->push('footer');
 $this->insert('data::tag-cloud');
 $this->end();
 ?>
-<div class="lg:w-3/4 mt-24 mb-4 mx-auto lg:flex lg:flex-row-reverse lg:justify-end lg:justify-items-start lg:content-start lg:items-start lg:gap-8 h-entry">
+<div class="w-full px-4 lg:w-3/4 lg:px-0 mt-24 mb-4 mx-auto lg:flex lg:flex-row-reverse lg:justify-end lg:justify-items-start lg:content-start lg:items-start lg:gap-8 h-entry">
     <article class="lg:w-3/4 text-xl">
     <?php if (null === $post->image) : ?>
         <h2 class="p-name"><a class="no-underline text-neutral-100 u-url u-uid" href="<?= $this->postUrl($post) ?>"><?= $this->escapeHtml($post->title) ?></a></h2>

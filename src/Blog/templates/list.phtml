@@ -20,7 +20,7 @@ $this->push('footer');
 echo $this->fetch('data::tag-cloud');
 $this->end();
 ?>
-<section class="md:w-3/4 mt-24 mb-4 mx-auto">
+<section class="w-full px-4 lg:w-3/4 lg:px-0 mt-24 mb-4 mx-auto">
     <h1><?= $this->escapeHtml($title) ?></h1>
 
     <?php if (empty($posts)) : ?>

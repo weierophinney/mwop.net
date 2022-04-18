@@ -37,6 +37,7 @@ class ListPostsHandler implements RequestHandlerInterface
         $posts = $tag ? $this->mapper->fetchAllByTag($tag) : $this->mapper->fetchAll();
 
         $posts->setItemCountPerPage(10);
+        $posts->setPageRange(7);
 
         // If the requested page is later than the last, redirect to the last
         if (count($posts) && $page > count($posts)) {
