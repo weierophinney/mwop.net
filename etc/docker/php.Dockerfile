@@ -32,12 +32,15 @@ RUN set -e; \
 # Build assets
 FROM node:16.13 as assets
 RUN set -e; \
+    echo "Installing make (required for building assets)"; \
+    apt-get update; \
+    apt-get install -y make; \
     echo "Installing agentkeepalive NPM module (required for npm upgrade)"; \
     npm install -g agentkeepalive --save; \
     echo "Upgrading npm to latest version"; \
     npm install -g npm@latest; \
-    echo "Installing Gulp"; \
-    npm install -g gulp-cli
+    echo "Installing PostCSS"; \
+    npm install -g postcss-cli
 
 COPY assets /assets
 WORKDIR assets
@@ -49,7 +52,7 @@ RUN set -e; \
     echo "Installing asset dependencies"; \
     npm install; \
     echo "Building assets"; \
-    gulp default
+    make assets
 
 # Build the PHP container
 FROM cr.zend.com/zendphp/8.1:ubuntu-20.04-cli
@@ -71,8 +74,7 @@ RUN set -e; \
     mkdir -p /var/www/public/js /var/www/public/css /var/local/composer
 
 ## Install assets
-COPY --from=assets /assets/build/js /var/www/public/js
-COPY --from=assets /assets/build/css /var/www/public/css
+COPY --from=assets /assets/dist /var/www/public/assets
 
 ## Customize PHP runtime according
 ## to the given building arguments

@@ -1,10 +1,23 @@
 <?php $this->layout('layout::layout', [
     'title' => 'Comics',
 ]) ?>
-<article class="comics col-10 text-center">
+<?php $this->push('scripts'); ?>
+<script src="/assets/js/imagesloaded.pkgd.min.js"></script>
+<script src="/assets/js/masonry.pkgd.min.js"></script>
+<script>
+(function() {
+    imagesLoaded(document.querySelector('.comics-grid'), function () {
+        new Masonry('.comics-grid', {
+            itemSelector: ".comic"
+        });
+    });
+})();
+</script>
+<?php $this->end(); ?>
+<article class="mt-24 mb-8 mx-auto w-11/12 text-center">
     <h2>Comics</h2>
 
-    <div class="d-flex justify-content-evenly align-items-start align-content-start flex-wrap">
+    <div class="comics-grid">
         <?php $this->insert('data::comics') ?>
     </div>
 </article>

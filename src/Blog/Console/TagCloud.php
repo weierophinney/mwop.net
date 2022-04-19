@@ -46,7 +46,7 @@ class TagCloud extends Command
 
         $cloud  = $this->mapper->fetchTagCloud();
         $markup = sprintf(
-            "<h4>Tag Cloud</h4>\n<div class=\"cloud\">%s</div>",
+            "<h4 class=\"text-2xl font-semibold\">Tag Cloud</h4>\n<div class=\"cloud\">%s</div>",
             $cloud->render()
         );
 

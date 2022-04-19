@@ -39,16 +39,53 @@ $this->push('links');
 $this->end();
 
 $this->push('scripts');
-echo '<script src="/js/prism.js"></script>';
-echo '<script src="/js/disqus.js"></script>';
+echo '<script src="/assets/js/prism.js"></script>';
+echo '<script src="/assets/js/disqus.js"></script>';
 $this->end();
 
 $this->push('footer');
 $this->insert('data::tag-cloud');
 $this->end();
 ?>
-<div class="single-entry h-entry container col offset-md-2"><div class="row">
-    <aside class="col-md-2 d-none d-sm-block sidebar blog">
+<div class="w-full px-4 lg:w-3/4 lg:px-0 mt-24 mb-4 mx-auto lg:flex lg:flex-row-reverse lg:justify-end lg:justify-items-start lg:content-start lg:items-start lg:gap-8 h-entry">
+    <article class="lg:w-3/4 text-xl">
+    <?php if (null === $post->image) : ?>
+        <h2 class="p-name"><a class="no-underline text-neutral-100 u-url u-uid" href="<?= $this->postUrl($post) ?>"><?= $this->escapeHtml($post->title) ?></a></h2>
+    <?php else : ?>
+        <?php /* <section class="float-right ml-4 mb-2 relative"> */ ?>
+        <section class="mb-2 lg:float-right lg:w-1/2 lg:ml-4 lg:relative">
+            <img class="w-fit h-auto lg:w-full" src="<?= $post->image->url ?>" alt="<?= $post->image->title ?>">
+            <h2 class="lg:absolute lg:bottom-4 lg:left-2 p-name"><a class="no-underline text-neutral-100 drop-shadow-lg u-url u-uid" href="<?= $this->postUrl($post) ?>"><?= $this->escapeHtml($post->title) ?></a></h2>
+        </section>
+    <?php endif ; ?>
+
+        <div class="e-content">
+        <?= $post->body ?>
+
+        <?= $post->extended ?>
+        </div>
+
+        <div class="hidden p-author h-card">
+          Posted by <a class="p-name u-url" href="<?= $this->serverurl() ?>">Matthew Weier O'Phinney</a>,
+          <img class="u-photo photo" width="50" src="https://avatars0.githubusercontent.com/u/25943?v=3&u=79dd2ea1d4d8855944715d09ee4c86215027fa80&s=140" alt="mwop">
+        </div>
+
+        <p class="my-4 py-4 border-y border-dashed text-center">
+            <a href="https://twitter.com/intent/tweet?url=<?= $pageUrl ?>&text=<?= $this->escapeHtmlAttr($post->title) ?>"><i class="fa-brands fa-twitter fa-2xl"></i></a>
+            <a href="https://www.facebook.com/sharer.php?u=<?= $pageUrl ?>"><i class="fa-brands fa-facebook fa-2xl"></i></a>
+            <a href="https://www.linkedin.com/shareArticle?mini=true&url=<?= $pageUrl ?>"><i class="fa-brands fa-linkedin fa-2xl"></i></a>
+        </p>
+
+        <div id="disqus_thread"
+          data-developer="<?= $disqus['developer'] ?>"
+          data-url="<?= $this->serverurl($this->postUrl($post)) ?>"
+          data-identifier="<?= $post->id ?>"
+          data-title="<?= $post->title ?>"
+          data-key="<?= $disqus['key'] ?>"></div>
+        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+    </article>
+
+    <aside class="w-full md:w-1/4 mb-8 py-4 border-y border-dotted my-4 md:mb-0 md:border-none">
         <p>
             Written on <time class="dt-published" datetime="<?= $this->formatDateRfc($post->created) ?>"><?= $this->formatDate($post->created) ?></time>.
             <?php if ($post->updated) : ?>
@@ -56,7 +93,7 @@ $this->end();
             <?php endif ?>
         </p>
 
-        <ul class="tags">
+        <ul"tags">
         <?php foreach ($this->processTags($post->tags) as $tag) : ?>
             <li><a class="p-category" href="<?= $tag->link ?>"><?= $tag->name ?></a>
         <?php endforeach ?>
@@ -69,44 +106,4 @@ $this->end();
         </p>
     <?php endif ?>
     </aside>
-
-    <article class="col-md-8 blog">
-    <?php if (null === $post->image) : ?>
-        <h2 class="p-name"><a class="u-url u-uid" href="<?= $this->postUrl($post) ?>"><?= $this->escapeHtml($post->title) ?></a></h2>
-    <?php else : ?>
-        <section class="banner float-end ms-lg-3">
-            <img src="<?= $post->image->url ?>" alt="<?= $post->image->title ?>">
-            <h2 class="p-name"><a class="u-url u-uid" href="<?= $this->postUrl($post) ?>"><?= $this->escapeHtml($post->title) ?></a></h2>
-        </section>
-    <?php endif ; ?>
-
-        <div class="e-content">
-        <?= $post->body ?>
-
-        <?= $post->extended ?>
-        </div>
-
-        <div class="p-author h-card d-none">
-          Posted by <a class="p-name u-url" href="<?= $this->serverurl() ?>">Matthew Weier O'Phinney</a>,
-          <img class="u-photo photo" width="50" src="https://avatars0.githubusercontent.com/u/25943?v=3&u=79dd2ea1d4d8855944715d09ee4c86215027fa80&s=140" alt="mwop">
-        </div>
-
-        <div class="divider"></div>
-
-        <p class="text-center fs-1">
-            <a href="https://twitter.com/intent/tweet?url=<?= $pageUrl ?>&text=<?= $this->escapeHtmlAttr($post->title) ?>"><i class="fa-brands fa-twitter"></i></a>
-            <a href="https://www.facebook.com/sharer.php?u=<?= $pageUrl ?>"><i class="fa-brands fa-facebook"></i></a>
-            <a href="https://www.linkedin.com/shareArticle?mini=true&url=<?= $pageUrl ?>"><i class="fa-brands fa-linkedin"></i></a>
-        </p>
-
-        <div class="divider"></div>
-
-        <div id="disqus_thread"
-          data-developer="<?= $disqus['developer'] ?>"
-          data-url="<?= $this->serverurl($this->postUrl($post)) ?>"
-          data-identifier="<?= $post->id ?>"
-          data-title="<?= $post->title ?>"
-          data-key="<?= $disqus['key'] ?>"></div>
-        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-    </article>
-</div></div>
+</div>

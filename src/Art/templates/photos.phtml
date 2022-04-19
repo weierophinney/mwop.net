@@ -15,48 +15,18 @@ for ($i = $pagination->firstPageInRange; $i <= $pagination->lastPageInRange; $i 
     ];
 }
 ?>
-<section class="container-fluid photos">
-    <div class="row">
-        <h2 class="col-md-8 offset-md-2 text-center mt-5">Gallery</h2>
-    </div>
+<section class="w-full px-4 lg:w-3/4 lg:px-0 mt-24 mb-4 mx-auto">
+    <h2 class="text-center">Gallery</h2>
 
-    <div class="row"><div class="col-md-6 offset-md-3 container d-flex flex-row justify-content-evenly align-items-start flex-wrap">
+    <div class="flex flex-row flex-wrap justify-evenly items-start gap-8">
     <?php foreach ($photos as $photo): ?>
-        <div class="card photo-thumbnail mx-1 my-1">
-            <img class="card-img-top img-fluid" src="<?= $this->url('art.image', ['type' => 'thumbnails', 'image' => $photo->filename()]) ?>" alt="Original art by Matthew Weier O'Phinney">
+        <a class="block no-underline relative mx-1 my-1" href="<?= $this->url('art.photo', ['image' => $photo->filename()]) ?>">
+            <img class="" src="<?= $this->url('art.image', ['type' => 'thumbnails', 'image' => $photo->filename()]) ?>" alt="Original art by Matthew Weier O'Phinney">
 
-            <div class="card-img-overlay"><a class="btn btn-info photo-link" href="<?= $this->url('art.photo', ['image' => $photo->filename()]) ?>"><img src="/images/external-link.svg" width="32"></a></div>
-        </div>
+            <div class="absolute bottom-0 right-0 rounded bg-neutral-200"><img class="stroke-neutral-700" src="/images/external-link.svg" width="32"></div>
+        </a>
     <?php endforeach ?>
     </div></div>
 
-    <div class="d-flex mt-5 justify-content-center">
-        <nav>
-            <ul class="pagination">
-                <?php if (! $pagination->is_first) : ?>
-                <li class="page-item"><a href="<?= $pagination->base_path ?>" class="page-link">&lt;&lt;<span class="sr-only">First</span></a></li>
-                <?php endif ?>
-
-                <?php if (isset($pagination->previous)) : ?>
-                <li class="page-item"><a href="<?= $pagination->base_path ?>?page=<?= $pagination->previous ?>" class="page-link">&lt;<span class="sr-only">Previous</span></a></li>
-                <?php endif ?>
-
-                <?php foreach ($pagination->pages as $page) : ?>
-                    <?php if ($page['current']) : ?>
-                <li class="page-item active"><a href="#" class="page-link"><?= $page['number'] ?></a></li>
-                    <?php else : ?>
-                <li class="page-item"><a href="<?= $pagination->base_path ?>?page=<?= $page['number'] ?>" class="page-link"><?= $page['number'] ?></a></li>
-                    <?php endif ?>
-                <?php endforeach ?>
-
-                <?php if (isset($pagination->next)) : ?>
-                <li class="page-item"><a href="<?= $pagination->base_path ?>?page=<?= $pagination->next ?>" class="page-link"><span class="sr-only">Next</span>&gt;</a></li>
-                <?php endif ?>
-
-                <?php if (! $pagination->is_last) : ?>
-                <li class="page-item"><a href="<?= $pagination->base_path ?>?page=<?= $pagination->last ?>" class="page-link"><span class="sr-only">Last</span>&gt;&gt</a></li>
-                <?php endif ?>
-            </ul>
-        </nav>
-    </div>
+    <?= $this->insert('mwop::pagination', ['pagination' => $pagination]) ?>
 </section>

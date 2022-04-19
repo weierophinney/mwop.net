@@ -1,8 +1,4 @@
-<!DOCTYPE html>
-<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
-<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
-<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
-<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<!doctype html>
 <html>
 <head>
   <meta charset="utf-8">
@@ -12,10 +8,7 @@
 
   <title>phly, boy, phly :: <?= $title ?? 'home' ?></title>
 
-	<!--[if lt IE 9]>
-		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-	<![endif]-->
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="twitter:site" content="@mwop">
 
   <?php // android theme color: http://updates.html5rocks.com/2014/11/Support-for-theme-color-in-Chrome-39-for-Android ?>
@@ -34,13 +27,11 @@
 
    <meta name="ocs-site-verification" content="c4b02f596a79a562778389766296d956" />
 </head>
-<body class="d-flex flex-column min-vh-100">
+<body class="bg-neutral-800 flex flex-col h-screen">
 <?php $this->insert('layout::header') ?>
-<div class="container-fluid content-window">
-  <div class="row content justify-content-center">
-      <?= $this->section('content') ?>
-  </div>
-</div>
+
+<?= $this->section('content') ?>
+
 <?php $this->insert('layout::footer', ['footer' => $this->section('footer')]) ?>
 <?php $this->insert('layout::scripts', ['scripts' => $this->section('scripts')]) ?>
 </body>

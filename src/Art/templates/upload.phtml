@@ -5,37 +5,36 @@ $this->layout('layout::layout', [
 ]);
 ?>
 
-<div class="container-fluid upload">
+<section class="w-full px-4 lg:w-3/4 lg:px-0 mt-24 mb-4 mx-auto">
 <?php if (isset($error)): ?>
-    <div class="row"><div class="col-md-8 offset-md-2"><div class="card mb-3 bg-danger text-white">
-        <div class="card-body">
-            <div class="card-title">Error processing image</div>
-            <div class="card-text"><?= $this->escapeHtml($error) ?></div>
-        </div>
-    </div></div></div>
+
+    <div class="w-full mb-4 p-4 bg-red-700 text-white text-center">
+        <h4>Error processing image</h4>
+        <p><?= $this->escapeHtml($error) ?></p>
+    </div>
 <?php endif ?>
 
-    <div class="row"><div class="col-md-8 offset-md-2 d-flex justify-content-center align-items-center"><form class="container-fluid" method="post" action="<?= $this->url('art.photo.upload.process') ?>" enctype="multipart/form-data"><div class="row">
+    <h3 class="w-full text-center">Upload new artwork</h3>
 
-    <h3>Upload new artwork</h3>
+    <form class="flex flex-row justify-center items-stretch gap-0 border-none" method="post" action="<?= $this->url('art.photo.upload.process') ?>" enctype="multipart/form-data">
 
-    <div class="col-md-6 bg-secondary d-flex justify-content-center align-items-center p-0">
-        <div class="image-upload position-relative h-100 w-100 p-3 rounded border border-primary fs-2 text-center">
-            <input type="file" accept="image/jpeg,image/png,image/webp" name="imageUpload" required="required">
-            <div class="mwop-art-upload-content w-100 px-3 py-4 bg-transparent border-secondary border-2">
-                <div class="default"><i class="fa fa-cloud-arrow-up fs-1"></i><br />Drag and drop, or click to select</div>
-                <div class="complete"><i class="fa fa-circle-check text-success"></i></div>
+    <div class="w-2/5 flex items-center p-0 bg-neutral-700">
+        <div class="relative min-h-full min-w-full p-4 rounded-l-lg border border-neutral-400 text-center">
+            <input class="absolute w-max h-max top-0 left-0 right-0 bottom-0 opacity-0 cursor-pointer focus:outline-2 focus:outline-neutral-100 focus:ring-4 valid:border-neutral-200" type="file" accept="image/jpeg,image/png,image/webp" name="imageUpload" required="required">
+            <div class="mwop-art-upload-content min-w-full px-3 py-4 bg-transparent border-2 border-neutral-400 border-dashed transition ease-in-out delay-300 hover:border-neutral-100">
+                <div class="default h-2 pt-[50%] pb-[50%] valid:hidden"><i class="fa fa-cloud-arrow-up fa-2xl fs-1"></i><br />Drag and drop, or click to select</div>
+                <div class="complete h-2 pt-[50%] pb-[50%] hidden valid:block valid:text-[5em]"><i class="fa fa-circle-check fa-2xl text-emerald-600"></i></div>
             </div>
         </div>
     </div>
 
-    <div class="card col-md-6 rounded border border-primary fw-bolder"><div class="card-body">
+    <div class="w-2/5 rounded-r-lg border border-neutral-400 p-4 font-semibold">
         <div class="mb-3">
-            <label class="form-label" for="mwopArtUploadDescription">Description</label>
-            <textarea class="form-control" rows="10" name="description" id="mwopArtUploadDescription"><?= isset($form['description']) ? $this->escapeHtml($form['description']) : '' ?></textarea>
+            <label class="block mb-2 text-xl" for="mwopArtUploadDescription">Description</label>
+            <textarea class="min-w-full bg-neutral-100 text-neutral-900 border-neutral-900 rounded-lg" rows="10" name="description" id="mwopArtUploadDescription"><?= isset($form['description']) ? $this->escapeHtml($form['description']) : '' ?></textarea>
         </div>
 
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </div></div>
-    </div></form></div></div>
-</div>
+        <button class="bg-neutral-700 border-neutral-900 rounded p-2" type="submit">Submit</button>
+    </div>
+    </form>
+</section>

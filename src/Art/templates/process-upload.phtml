@@ -6,8 +6,8 @@ $this->layout('layout::layout', [
 
 ?>
 
-<div class="container-fluid"><div class="row"><div class="col-md-6">
-    <pre><?= var_export($received, true) ?></pre>
+<section class="w-full px-4 lg:w-1/2 lg:px-0 mt-24 mb-4 mx-auto">
+    <pre class="font-mono border p-2"><?= var_export($received, true) ?></pre>
 
     <h4>Files received</h4>
 
@@ -18,4 +18,4 @@ $this->layout('layout::layout', [
         <li><?= $file->getClientFilename() ?> (<?= $file->getClientMediaType() ?>) (size: <?= $file->getSize() ?>)</li>
     <?php endforeach ?>
     </ul>
-</div></div></div>
+</section>
