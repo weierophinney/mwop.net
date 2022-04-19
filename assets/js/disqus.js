@@ -1,7 +1,6 @@
 var disqus_config = Object.assign({}, document.getElementById('#disqus_thread').dataset);
 
 (function(key) {
-  const thread = ;
   var d = document, s = d.createElement('script');
 
   s.src = 'https://' + key + '.disqus.com/embed.js';
