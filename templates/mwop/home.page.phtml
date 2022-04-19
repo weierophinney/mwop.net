@@ -41,11 +41,11 @@ $this->end();
 
     <div class="flex flex-row flex-wrap justify-evenly items-start">
     <?php foreach ($photos as $photo): ?>
-        <div class="relative mx-1 my-1">
+        <a class="block no-underline relative mx-1 my-1" href="<?= $this->url('art.photo', ['image' => $photo->filename()]) ?>">
             <img class="" src="<?= $this->url('art.image', ['type' => 'thumbnails', 'image' => $photo->filename()]) ?>" alt="Original art by Matthew Weier O'Phinney">
 
-            <div class="absolute bottom-0 right-0 rounded bg-neutral-200"><a href="<?= $this->url('art.photo', ['image' => $photo->filename()]) ?>"><img class="stroke-neutral-700" src="/images/external-link.svg" width="32"></a></div>
-        </div>
+            <div class="absolute bottom-0 right-0 rounded bg-neutral-200"><img class="stroke-neutral-700" src="/images/external-link.svg" width="32"></div>
+        </a>
     <?php endforeach ?>
     </div>
 </aside>
