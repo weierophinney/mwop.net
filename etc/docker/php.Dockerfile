@@ -45,7 +45,6 @@ RUN set -e; \
     mkdir /build
 
 COPY assets /build/assets
-COPY data /build/data
 COPY src /build/src
 COPY templates /build/templates
 

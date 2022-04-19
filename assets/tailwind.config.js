@@ -1,5 +1,5 @@
 module.exports = {
-  content: ["../src/**/*.phtml", "../templates/**/*.phtml", "../data/**/*.phtml"],
+  content: ["../src/**/*.phtml", "../templates/**/*.phtml"],
   theme: {
     extend: {
       listStyleType: {
