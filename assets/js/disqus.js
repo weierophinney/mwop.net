@@ -1,4 +1,4 @@
-var disqus_config = Object.assign({}, document.getElementById('#disqus_thread').dataset);
+var disqus_config = Object.assign({}, document.querySelector('#disqus_thread').dataset);
 
 (function(key) {
   var d = document, s = d.createElement('script');
