@@ -40,10 +40,16 @@ RUN set -e; \
     echo "Upgrading npm to latest version"; \
     npm install -g npm@latest; \
     echo "Installing PostCSS"; \
-    npm install -g postcss-cli
+    npm install -g postcss-cli; \
+    echo "Creating build directory"; \
+    mkdir /build
 
-COPY assets /assets
-WORKDIR assets
+COPY assets /build/assets
+COPY data /build/data
+COPY src /build/src
+COPY templates /build/templates
+
+WORKDIR /build/assets
 RUN set -e; \
     if [ -d "node_modules" ];then \
         echo "Removing existing installed node modules"; \
@@ -74,7 +80,7 @@ RUN set -e; \
     mkdir -p /var/www/public/js /var/www/public/css /var/local/composer
 
 ## Install assets
-COPY --from=assets /assets/dist /var/www/public/assets
+COPY --from=assets /build/assets/dist /var/www/public/assets
 
 ## Customize PHP runtime according
 ## to the given building arguments
