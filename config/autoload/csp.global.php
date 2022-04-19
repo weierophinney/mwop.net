@@ -39,11 +39,11 @@ return [
             ],
         ],
         'script-src'  => [
-            'self'  => true,
-            'types' => [
+            'self'          => true,
+            'types'         => [
                 'data:',
             ],
-            'allow' => [
+            'allow'         => [
                 'https://cdn.ampproject.org',
                 'https://www.google.com',
                 'https://www.gstatic.com',
@@ -52,8 +52,6 @@ return [
                 '*.disquscdn.com',
                 'https://*.twimg.com',
                 'https://platform.twitter.com',
-                'https://unpkg.com',
-                'https://*.woxo.tech',
             ],
             'unsafe-inline' => true,
         ],
