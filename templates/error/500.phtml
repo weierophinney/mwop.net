@@ -1,7 +1,7 @@
 <?php $this->layout('layout::layout', [
     'title' => 'Error',
 ]); ?>
-<section class="col-6 code_500">
+<section class="md:w-1/3 mt-24 mx-auto flex flex-row justify-items-center">
     <h2>An error occurred!</h2>
 
     <p>
@@ -11,6 +11,6 @@
     </p>
 
     <?php if (isset($error)): ?>
-    <pre><?= $this->e($error) ?></pre>
+    <pre class="font-mono border-dashed border-neutral-400 p-4"><?= $this->e($error) ?></pre>
     <?php endif ?>
 </section>
