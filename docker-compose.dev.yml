@@ -26,6 +26,7 @@ services:
     ports:
       - "9001:9001"
     volumes:
+      - ./assets/dist:/var/www/public/assets
       - ./config:/var/www/config
       - ./data:/var/www/data
       - ./etc/php/mwop.ini:/etc/zendphp/cli/conf.d/mwop.ini

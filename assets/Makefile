@@ -29,7 +29,7 @@ styles: dist ## Build CSS
 	@cd "$(HERE)"
 	@printf "\n\033[92mBuilding CSS...\033[0m\n"
 	( IS_PROD=1 postcss css/site.css -o dist/css/site.css )
-	cp -a node_modules/@fortawesome/fontawesome-free/webfonts dist/css/
+	cp -a node_modules/@fortawesome/fontawesome-free/webfonts dist/
 
 scripts: dist ## Build JS
 	@cd "$(HERE)"

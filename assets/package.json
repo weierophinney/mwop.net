@@ -15,7 +15,7 @@
     "watch": "^0.13.0"
   },
   "scripts": {
-    "dev:css": "postcss css/site.css -o ../public/assets/css/site.css",
+    "dev:css": "postcss css/site.css -o dist/css/site.css",
     "watch": "watch 'npm run dev:css' ./css ../templates ../src ../data"
   }
 }
