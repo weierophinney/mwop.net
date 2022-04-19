@@ -35,5 +35,7 @@ scripts: dist ## Build JS
 	@cd "$(HERE)"
 	@printf "\n\033[92mBuilding JS...\033[0m\n"
 	cp js/*.js dist/js/
+	cp node_modules/masonry-layout/dist/masonry.pkgd.min.js dist/js/
+	cp node_modules/imagesloaded/imagesloaded.pkgd.min.js dist/js/
 
 assets: clean styles scripts  ## Build all assets
