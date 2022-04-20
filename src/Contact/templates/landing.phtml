@@ -1,53 +1,52 @@
 <?php
 $this->layout('layout::layout', [
-    'title' => 'Contact',
+    'title'  => 'Contact',
+    'layout' => 'medium',
 ]);
 $this->start('scripts');
 ?>
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <?php $this->stop() ?>
-<article class="md:w-1/2 mt-24 mb-4 mx-auto">
-    <h2>Contact Me</h2>
+<h2>Contact Me</h2>
 
-    <p>
-        Feel free to contact me. Please note, however, that I likely will not 
-        respond to recruiters, nor to questions that could be asked in public
-        forums.
-    </p>
+<p>
+    Feel free to contact me. Please note, however, that I likely will not 
+    respond to recruiters, nor to questions that could be asked in public
+    forums.
+</p>
 
-    <?php if (isset($error)) : ?>
-    <p class="text-red-700 font-semibold">
-        There were one or more isues with your submission. Please correct them as 
-        indicated below.
-    </p>
+<?php if (isset($error)) : ?>
+<p class="text-red-700 font-semibold">
+    There were one or more isues with your submission. Please correct them as 
+    indicated below.
+</p>
 
-    <pre class="font-mono">
-        <?= $this->escapeHtml($error['message']) ?>
-    </pre>
-    <?php endif ?>
+<pre class="font-mono">
+    <?= $this->escapeHtml($error['message']) ?>
+</pre>
+<?php endif ?>
 
-    <form class="bg-neutral-700 p-4 w-full rounded-lg" method="post" name="contact" action="<?= $this->url('contact.process') ?>" id="contact">
-        <div class="form-group">
-            <label class="block mb-2 font-semibold" for="from">From (email):</label>
-            <input class="w-full mb-4 p-2 rounded border-neutral-900 bg-neutral-100 text-neutral-900" type="text" name="from" value="" required="required">
-        </div>
+<form class="bg-neutral-700 p-4 w-full rounded-lg" method="post" name="contact" action="<?= $this->url('contact.process') ?>" id="contact">
+    <div class="form-group">
+        <label class="block mb-2 font-semibold" for="from">From (email):</label>
+        <input class="w-full mb-4 p-2 rounded border-neutral-900 bg-neutral-100 text-neutral-900" type="text" name="from" value="" required="required">
+    </div>
 
-        <div class="form-group">
-            <label class="block mb-2 font-semibold" for="subject">Subject:</label>
-            <input class="w-full mb-4 p-2 rounded border-neutral-900 bg-neutral-100 text-neutral-900" type="text" name="subject" value="" required="required">
-        </div>
+    <div class="form-group">
+        <label class="block mb-2 font-semibold" for="subject">Subject:</label>
+        <input class="w-full mb-4 p-2 rounded border-neutral-900 bg-neutral-100 text-neutral-900" type="text" name="subject" value="" required="required">
+    </div>
 
-        <div class="form-group">
-            <label class="block mb-2 font-semibold" for="body">Your message:</label>
-            <textarea class="w-full h-48 mb-4 -p2 rounded border-neutral-900 bg-neutral-100 text-neutral=900" name="body" required="required"></textarea>
-        </div>
+    <div class="form-group">
+        <label class="block mb-2 font-semibold" for="body">Your message:</label>
+        <textarea class="w-full h-48 mb-4 -p2 rounded border-neutral-900 bg-neutral-100 text-neutral=900" name="body" required="required"></textarea>
+    </div>
 
-        <div
-            class="form-group g-recaptcha my-4"
-            data-sitekey="<?= $recaptcha_pub_key ?>"
-            data-theme="dark"></div>
+    <div
+        class="form-group g-recaptcha my-4"
+        data-sitekey="<?= $recaptcha_pub_key ?>"
+        data-theme="dark"></div>
 
-        <input type="hidden" name="csrf" value="<?= $csrf ?>">
-        <button class="rounded p-2 bg-emerald-500 border-emerald-800 text-black hover:bg-emerald-200 active:bg-emerald-200 transition duration-300" type="submit" name="Send">Send</button>
-    </form>
-</article>
+    <input type="hidden" name="csrf" value="<?= $csrf ?>">
+    <button class="rounded p-2 bg-emerald-500 border-emerald-800 text-black hover:bg-emerald-200 active:bg-emerald-200 transition duration-300" type="submit" name="Send">Send</button>
+</form>

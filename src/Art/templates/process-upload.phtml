@@ -1,21 +1,18 @@
 <?php
 /** @var \Mwop\Art\Photo $photo */
 $this->layout('layout::layout', [
-    'title' => $this->escapeHtml('Art: Process uploaded photo'),
+    'title'  => $this->escapeHtml('Art: Process uploaded photo'),
+    'layout' => 'medium',
 ]);
-
 ?>
+<pre class="font-mono border p-2"><?= var_export($received, true) ?></pre>
 
-<section class="w-full px-4 lg:w-1/2 lg:px-0 mt-24 mb-4 mx-auto">
-    <pre class="font-mono border p-2"><?= var_export($received, true) ?></pre>
+<h4>Files received</h4>
 
-    <h4>Files received</h4>
-
-    <ul>
-    <?php foreach ($files as $file):
-        /** @var \Psr\Http\Message\UploadedFileInterface $file */
-    ?>
-        <li><?= $file->getClientFilename() ?> (<?= $file->getClientMediaType() ?>) (size: <?= $file->getSize() ?>)</li>
-    <?php endforeach ?>
-    </ul>
-</section>
+<ul>
+<?php foreach ($files as $file):
+    /** @var \Psr\Http\Message\UploadedFileInterface $file */
+?>
+    <li><?= $file->getClientFilename() ?> (<?= $file->getClientMediaType() ?>) (size: <?= $file->getSize() ?>)</li>
+<?php endforeach ?>
+</ul>

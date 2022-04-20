@@ -1,6 +1,7 @@
 <?php
 $this->layout('layout::layout', [
-    'title' => $this->escapeHtml($title),
+    'title'  => $this->escapeHtml($title),
+    'layout' => 'large',
 ]);
 
 $this->push('links');
@@ -20,13 +21,11 @@ $this->push('footer');
 echo $this->fetch('data::tag-cloud');
 $this->end();
 ?>
-<section class="w-full px-4 lg:w-3/4 lg:px-0 mt-24 mb-4 mx-auto">
-    <h2><?= $this->escapeHtml($title) ?></h2>
+<h2><?= $this->escapeHtml($title) ?></h2>
 
-    <?php if (empty($posts)) : ?>
+<?php if (empty($posts)) : ?>
     <p class="text-center">No posts found.</p>
-
-    <?php else : ?>
+<?php else : ?>
     <?php foreach ($posts as $post) : ?>
     <div class="md:flex md:flex-row-reverse md:justify-end md:justify-items-start md:content-start md:items-start md:gap-8 h-entry">
         <section class="w-full md:w-3/4 md:mb-8 md:border-b md:border-dotted">
@@ -60,6 +59,4 @@ $this->end();
     <?php endforeach ?>
 
     <?php $this->insert('mwop::pagination', ['pagination' => $pagination]) ?>
-
-    <?php endif ?>
-</section>
+<?php endif ?>

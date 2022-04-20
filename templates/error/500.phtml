@@ -1,16 +1,15 @@
 <?php $this->layout('layout::layout', [
-    'title' => 'Error',
+    'title'  => 'Error',
+    'layout' => 'small',
 ]); ?>
-<section class="md:w-1/3 mt-24 mx-auto">
-    <h2>An error occurred!</h2>
+<h2>An error occurred!</h2>
 
-    <p>
-        An error of some sort occurred! It's not you, it's me... Try again later. If it still doesn't work,
-        <a href="/contact">contact me</a>, or, if that was the problem, try to
-        <a href="https://twitter.com/mwop">tweet at me</a>.
-    </p>
+<p>
+    An error of some sort occurred! It's not you, it's me... Try again later. If it still doesn't work,
+    <a href="/contact">contact me</a>, or, if that was the problem, try to
+    <a href="https://twitter.com/mwop">tweet at me</a>.
+</p>
 
-    <?php if (isset($error)): ?>
-    <pre class="font-mono border-dashed border-neutral-400 p-4"><?= $this->e($error) ?></pre>
-    <?php endif ?>
-</section>
+<?php if (isset($error)): ?>
+<pre class="font-mono border-dashed border-neutral-400 p-4"><?= $this->e($error) ?></pre>
+<?php endif ?>

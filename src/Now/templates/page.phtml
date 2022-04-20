@@ -1,26 +1,25 @@
 <?php $this->layout('layout::layout', [
-    'title' => $latest ? 'Now' : 'Then',
+    'title'  => $latest ? 'Now' : 'Then',
+    'layout' => 'medium',
 ]) ?>
-<article class="md:w-1/2 mt-24 mx-auto">
-    <h2 class="border-b-2 border-solid mb-5 pt-3"><?= $latest ? 'Now' : 'Then' ?></h2>
+<h2 class="border-b-2 border-solid mb-5 pt-3"><?= $latest ? 'Now' : 'Then' ?></h2>
 
-    <?= $page ? $this->markdown($fs->read($page->path()) ?? '') : '' ?>
+<?= $page ? $this->markdown($fs->read($page->path()) ?? '') : '' ?>
 
 <?php if ($archives->count() > 1): ?>
-    <section class="archives border-t-2 border-solid mt-8 pt-3">
-        <h3>Previously</h3>
+<section class="archives border-t-2 border-solid mt-8 pt-3">
+    <h3>Previously</h3>
 
-        <ul>
-        <?php
-        foreach ($archives as $archive):
-            $name = basename($archive->path(), '.md');
-            if ($archive === $page) {
-                continue;
-            }
-        ?>
-            <li><a href="<?= $this->url('now.then', ['when' => $name]) ?>"><?= (new DateTimeImmutable($name . '-01'))->format('F Y') ?></a></li>
-        <?php endforeach ?>
-        </ul>
-    </section>
+    <ul>
+    <?php
+    foreach ($archives as $archive):
+        $name = basename($archive->path(), '.md');
+        if ($archive === $page) {
+            continue;
+        }
+    ?>
+        <li><a href="<?= $this->url('now.then', ['when' => $name]) ?>"><?= (new DateTimeImmutable($name . '-01'))->format('F Y') ?></a></li>
+    <?php endforeach ?>
+    </ul>
+</section>
 <?php endif ?>
-</article>

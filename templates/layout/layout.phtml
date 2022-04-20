@@ -1,3 +1,11 @@
+<?php
+$contentDiv = match($layout ?? null) {
+    'large'  => '<div class="w-full mt-24 mb-4 mx-auto p-4 lg:w-3/4 lg:px-0">',
+    'medium' => '<div class="w-full mt-24 mb-4 mx-auto p-4 md:w-1/2 md:px-0">',
+    'small'  => '<div class="w-full mt-24 mb-4 mx-auto p-4 md:w-1/3 md:px-0">',
+    default  => '',
+};
+?>
 <!doctype html>
 <html>
 <head>
@@ -30,7 +38,9 @@
 <body class="bg-neutral-800 flex flex-col h-screen">
 <?php $this->insert('layout::header') ?>
 
+<?= $contentDiv ?>
 <?= $this->section('content') ?>
+<?= $contentDiv !== '' ? '</div>' : '' ?>
 
 <?php $this->insert('layout::footer', ['footer' => $this->section('footer')]) ?>
 <?php $this->insert('layout::scripts', ['scripts' => $this->section('scripts')]) ?>

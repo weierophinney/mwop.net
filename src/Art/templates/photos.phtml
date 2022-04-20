@@ -1,5 +1,8 @@
 <?php
-$this->layout('layout::layout', ['title' => 'Art']);
+$this->layout('layout::layout', [
+    'title'  => 'Art',
+    'layout' => 'large',
+]);
 
 $path                  = $this->url('art.gallery');
 $pagination            = $photos->getPages();
@@ -15,18 +18,16 @@ for ($i = $pagination->firstPageInRange; $i <= $pagination->lastPageInRange; $i 
     ];
 }
 ?>
-<section class="w-full px-4 lg:w-3/4 lg:px-0 mt-24 mb-4 mx-auto">
-    <h2 class="text-center">Gallery</h2>
+<h2 class="text-center">Gallery</h2>
 
-    <div class="flex flex-row flex-wrap justify-evenly items-start gap-8">
-    <?php foreach ($photos as $photo): ?>
-        <a class="block no-underline relative mx-1 my-1" href="<?= $this->url('art.photo', ['image' => $photo->filename()]) ?>">
-            <img class="" src="<?= $this->url('art.image', ['type' => 'thumbnails', 'image' => $photo->filename()]) ?>" alt="Original art by Matthew Weier O'Phinney">
+<div class="flex flex-row flex-wrap justify-evenly items-start gap-8">
+<?php foreach ($photos as $photo): ?>
+    <a class="block no-underline relative mx-1 my-1" href="<?= $this->url('art.photo', ['image' => $photo->filename()]) ?>">
+        <img class="" src="<?= $this->url('art.image', ['type' => 'thumbnails', 'image' => $photo->filename()]) ?>" alt="Original art by Matthew Weier O'Phinney">
 
-            <div class="absolute bottom-0 right-0 rounded bg-neutral-200"><img class="stroke-neutral-700" src="/images/external-link.svg" width="32"></div>
-        </a>
-    <?php endforeach ?>
-    </div></div>
+        <div class="absolute bottom-0 right-0 rounded bg-neutral-200"><img class="stroke-neutral-700" src="/images/external-link.svg" width="32"></div>
+    </a>
+<?php endforeach ?>
+</div></div>
 
-    <?= $this->insert('mwop::pagination', ['pagination' => $pagination]) ?>
-</section>
+<?= $this->insert('mwop::pagination', ['pagination' => $pagination]) ?>
