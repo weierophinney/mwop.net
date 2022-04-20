@@ -7,21 +7,17 @@
         <h2>Login</h2>
 
         <?php if (isset($error)) : ?>
-        <p class="my-4 text-red-700 font-bold">
+        <p class="my-4 p-2 bg-red-700 text-white font-bold">
             Unable to validate your credentials. Please try again.
         </p>
         <?php endif ?>
 
-        <form class="" method="post" name="login" action="<?= $this->url('login') ?>" id="login">
-            <div class="form-group">
-                <label class="block mb-2 font-semibold" for="username">Username:</label>
-                <input class="w-full mb-4 p-2 rounded border-mwop-bg bg-mwop-fg text-mwop-bg" type="text" name="username" value="" placeholder="Enter your username" required="required">
-            </div>
+        <form method="post" name="login" action="<?= $this->url('login') ?>" id="login">
+            <label class="label" for="username">Username:</label>
+            <input class="text-input" type="text" name="username" value="" placeholder="Enter your username" required="required">
 
-            <div class="form-group">
-                <label class="block mb-2 font-semibold" for="password">Subject:</label>
-                <input class="w-full mb-4 p-2 rounded border-mwop-bg bg-mwop-fg text-mwop-bg" type="password" name="password" value="" placeholder="Provide your password" required="required">
-            </div>
+            <label class="label" for="password">Subject:</label>
+            <input class="text-input" type="password" name="password" value="" placeholder="Provide your password" required="required">
 
             <button class="btn" type="submit" name="login">Login</button>
         </form>

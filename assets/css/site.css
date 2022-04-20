@@ -85,6 +85,18 @@
     .btn {
         @apply rounded p-2 bg-action-bg border-action-border text-mwop-bg hover:bg-action-active active:bg-action-active active:text-mwop-bg transition duration-300
     }
+
+    .text-input {
+        @apply w-full mb-4 border-mwop-bg p-2 rounded bg-mwop-fg text-mwop-bg;
+    }
+
+    .label {
+        @apply block mb-2 font-semibold;
+    }
+
+    .textarea {
+        @apply w-full mb-4 border-mwop-bg p-2 rounded-lg bg-mwop-fg text-mwop-bg;
+    }
 }
 
 /* The following are often injected after-the-fact or created via manual

@@ -28,8 +28,8 @@ $this->layout('layout::layout', [
 
 <div class="w-2/5 rounded-r-lg border border-mwop-soft p-4 font-semibold">
     <div class="mb-3">
-        <label class="block mb-2 text-xl" for="mwopArtUploadDescription">Description</label>
-        <textarea class="min-w-full p-2 bg-mwop-fg text-mwop-bg border-mwop-bg rounded-lg" rows="10" name="description" id="mwopArtUploadDescription"><?= isset($form['description']) ? $this->escapeHtml($form['description']) : '' ?></textarea>
+        <label class="label text-xl" for="mwopArtUploadDescription">Description</label>
+        <textarea class="textarea" rows="10" name="description" id="mwopArtUploadDescription"><?= isset($form['description']) ? $this->escapeHtml($form['description']) : '' ?></textarea>
     </div>
 
     <button class="btn" type="submit">Submit</button>

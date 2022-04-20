@@ -27,23 +27,17 @@ $this->start('scripts');
 <?php endif ?>
 
 <form class="bg-mwop-nav p-4 w-full rounded-lg" method="post" name="contact" action="<?= $this->url('contact.process') ?>" id="contact">
-    <div class="form-group">
-        <label class="block mb-2 font-semibold" for="from">From (email):</label>
-        <input class="w-full mb-4 p-2 rounded border-mwop-bg bg-mwop-fg text-mwop-bg" type="text" name="from" value="" required="required">
-    </div>
+    <label class="label" for="from">From (email):</label>
+    <input class="text-input" type="text" name="from" value="" required="required">
 
-    <div class="form-group">
-        <label class="block mb-2 font-semibold" for="subject">Subject:</label>
-        <input class="w-full mb-4 p-2 rounded border-mwop-bg bg-mwop-fg text-mwop-bg" type="text" name="subject" value="" required="required">
-    </div>
+    <label class="label" for="subject">Subject:</label>
+    <input class="text-input" type="text" name="subject" value="" required="required">
 
-    <div class="form-group">
-        <label class="block mb-2 font-semibold" for="body">Your message:</label>
-        <textarea class="w-full h-48 mb-4 p-2 rounded border-mwop-bg bg-mwop-fg text-mwop-bg" name="body" required="required"></textarea>
-    </div>
+    <label class="label" for="body">Your message:</label>
+    <textarea class="textarea h-48" name="body" required="required"></textarea>
 
     <div
-        class="form-group g-recaptcha my-4"
+        class="g-recaptcha my-4"
         data-sitekey="<?= $recaptcha_pub_key ?>"
         data-theme="dark"></div>
 
