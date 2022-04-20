@@ -18,15 +18,12 @@
         </div>
       </div>
 
-      <div class="hidden md:flex items-center space-x-3">
-        <div class="self-end flex-col search">
-          <form class="flex">
-            <input class="text-input appearance-none rounded-lg md:w-[15rem] lg:w-[25rem] placeholder-mwop-contrast" type="text" placeholder="Search..." aria-label="Search">
-          </form>
+      <div class="hidden md:block md:space-x-3">
+        <form class="flex flex-col justify-center search">
+          <input class="text-input mb-0 appearance-none rounded-lg md:w-[15rem] lg:w-[25rem] placeholder-mwop-contrast" type="text" placeholder="Search..." aria-label="Search">
 
           <ul class="search-results"></ul>
-        </div>
-
+        </form>
       </div>
 
       <div class="md:hidden flex items-center">
@@ -55,7 +52,7 @@
     <a class="block px-2 py-4 no-underline text-sm font-semibold text-mwop-light transition duration-300 hover:bg-mwop-fg hover:text-mwop-bg" href="<?= $this->url('resume') ?>">R&eacute;sum&eacute;</a>
     <a class="block px-2 py-4 no-underline text-sm font-semibold text-mwop-light transition duration-300 hover:bg-mwop-fg hover:text-mwop-bg" href="<?= $this->url('contact') ?>">Contact</a>
     <form class="search block flex-col">
-        <input class="appearance-none rounded-lg mt-2 border w-full px-2 py-2 bg-mwop-fg placeholder-mwop-dark text-black" type="text" placeholder="Search..." aria-label="Search">
+        <input class="text-input appearance-none rounded-lg mt-2" type="text" placeholder="Search..." aria-label="Search">
         <ul class="search-results"></ul>
     </form>
   </div>
