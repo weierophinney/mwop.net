@@ -32,6 +32,6 @@ $this->layout('layout::layout', [
         <textarea class="min-w-full p-2 bg-mwop-fg text-mwop-bg border-mwop-bg rounded-lg" rows="10" name="description" id="mwopArtUploadDescription"><?= isset($form['description']) ? $this->escapeHtml($form['description']) : '' ?></textarea>
     </div>
 
-    <button class="bg-action-bg border-action-border rounded p-2 text-black hover:bg-action-active hover:text-mwop-bg active:bg-action-active active:text-mwop-bg" type="submit">Submit</button>
+    <button class="btn" type="submit">Submit</button>
 </div>
 </form>

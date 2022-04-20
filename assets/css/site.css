@@ -81,6 +81,10 @@
     .search-results {
         @apply absolute bg-white overflow-y-visible space-y-1 divide-y divide-solid divide-mwop-dark w-[25rem] rounded-lg list-none ml-0;
     }
+
+    .btn {
+        @apply rounded p-2 bg-action-bg border-action-border text-mwop-bg hover:bg-action-active active:bg-action-active active:text-mwop-bg transition duration-300
+    }
 }
 
 /* The following are often injected after-the-fact or created via manual
