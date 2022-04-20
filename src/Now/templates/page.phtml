@@ -4,7 +4,9 @@
 ]) ?>
 <h2 class="border-b-2 border-solid mb-5 pt-3"><?= $latest ? 'Now' : 'Then' ?></h2>
 
+<div class="text-xl">
 <?= $page ? $this->markdown($fs->read($page->path()) ?? '') : '' ?>
+</div>
 
 <?php if ($archives->count() > 1): ?>
 <section class="archives border-t-2 border-solid mt-8 pt-3">
