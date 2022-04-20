@@ -8,7 +8,7 @@
 
 @layer base {
     html {
-        @apply font-serif text-neutral-100;
+        @apply font-serif text-mwop-fg;
     }
 
     p {
@@ -16,12 +16,12 @@
     }
 
     a {
-        @apply text-neutral-400 underline decoration-1 decoration-dotted transition duration-300;
+        @apply text-mwop-soft underline decoration-1 decoration-dotted transition duration-300;
     }
 
 
     a:hover {
-        @apply text-neutral-100 font-semibold decoration-solid;
+        @apply text-mwop-fg font-semibold decoration-solid;
     }
 
     h1, h2, h3, h4, h5, h6 {
@@ -73,13 +73,13 @@
     }
 
     blockquote {
-        @apply border-neutral-500 border-solid border-l-4 pl-4;
+        @apply border-mwop-dark border-solid border-l-4 pl-4;
     }
 }
 
 @layer components {
     .search-results {
-        @apply absolute bg-white overflow-y-visible space-y-1 divide-y divide-solid divide-neutral-500 w-[25rem] rounded-lg list-none ml-0;
+        @apply absolute bg-white overflow-y-visible space-y-1 divide-y divide-solid divide-mwop-dark w-[25rem] rounded-lg list-none ml-0;
     }
 }
 
@@ -88,7 +88,7 @@
  * Creating them outside a layer ensures they are always present.
  */
 .search-result {
-    @apply block p-2 hover:bg-neutral-700 hover:text-neutral-100 hover:font-semibold;
+    @apply block p-2 hover:bg-mwop-nav hover:text-mwop-fg hover:font-semibold;
 }
 
 .search-result a {

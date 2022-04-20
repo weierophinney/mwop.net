@@ -1,32 +1,32 @@
 <nav class="w-fit lg:w-full mx-auto my-4 flex justify-center justify-items-stretch items-stretch flex-wrap space-x-1">
     <?php if (! $pagination->is_first) : ?>
-    <a class="flex items-center px-4 py-4 no-underline bg-emerald-500 text-black hover:bg-neutral-700 hover:text-neutral-100" href="<?= $pagination->base_path ?>">
+    <a class="flex items-center px-4 py-4 no-underline bg-action-bg text-mwop-bg hover:bg-action-active hover:text-mwop-bg" href="<?= $pagination->base_path ?>">
         <i class="fa-solid fa-angles-left h-full w-full"></i>
     </a>
     <?php endif ?>
 
     <?php if (isset($pagination->previous)) : ?>
-    <a class="flex items-center px-4 py-4 no-underline bg-emerald-500 text-black hover:bg-neutral-700 hover:text-neutral-100" href="<?= $pagination->base_path ?>?page=<?= $pagination->previous ?>">
+    <a class="flex items-center px-4 py-4 no-underline bg-action-bg text-mwop-bg hover:bg-action-active hover:text-mwop-bg" href="<?= $pagination->base_path ?>?page=<?= $pagination->previous ?>">
         <i class="fa-solid fa-angle-left h-full w-full"></i>
     </a>
     <?php endif ?>
 
     <?php foreach ($pagination->pages as $page) : ?>
         <?php if ($page['current']) : ?>
-    <a class="px-4 py-4 no-underline bg-emerald-900 text-white font-semibold" href="#"><?= $page['number'] ?></a>
+    <a class="px-4 py-4 no-underline bg-action-highlight text-white font-semibold" href="#"><?= $page['number'] ?></a>
         <?php else : ?>
-    <a class="px-4 py-4 no-underline bg-emerald-500 text-black hover:bg-neutral-700 hover:text-neutral-100" href="<?= $pagination->base_path ?>?page=<?= $page['number'] ?>" class="page-link"><?= $page['number'] ?></a>
+    <a class="px-4 py-4 no-underline bg-action-bg text-mwop-bg hover:bg-action-active hover:text-mwop-bg" href="<?= $pagination->base_path ?>?page=<?= $page['number'] ?>" class="page-link"><?= $page['number'] ?></a>
         <?php endif ?>
     <?php endforeach ?>
 
     <?php if (isset($pagination->next)) : ?>
-    <a class="flex items-center px-4 py-4 no-underline bg-emerald-500 text-black hover:bg-neutral-700 hover:text-neutral-100" href="<?= $pagination->base_path ?>?page=<?= $pagination->next ?>">
+    <a class="flex items-center px-4 py-4 no-underline bg-action-bg text-mwop-bg hover:bg-action-active hover:text-mwop-bg" href="<?= $pagination->base_path ?>?page=<?= $pagination->next ?>">
         <i class="fa-solid fa-angle-right h-full w-full"></i>
     </a>
     <?php endif ?>
 
     <?php if (! $pagination->is_last) : ?>
-    <a class="flex items-center px-4 py-4 no-underline bg-emerald-500 text-black hover:bg-neutral-700 hover:text-neutral-100" href="<?= $pagination->base_path ?>?page=<?= $pagination->last ?>">
+    <a class="flex items-center px-4 py-4 no-underline bg-action-bg text-mwop-bg hover:bg-action-active hover:text-mwop-bg" href="<?= $pagination->base_path ?>?page=<?= $pagination->last ?>">
         <i class="fa-solid fa-angles-right h-full w-full"></i>
     </a>
     <?php endif ?>

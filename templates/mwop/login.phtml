@@ -3,7 +3,7 @@
     'layout' => 'small',
 ]) ?>
 <section class="flex flex-row justify-items-center">
-    <div class="bg-neutral-700 p-4 w-full rounded-lg">
+    <div class="bg-mwop-nav p-4 w-full rounded-lg">
         <h2>Login</h2>
 
         <?php if (isset($error)) : ?>
@@ -15,15 +15,15 @@
         <form class="" method="post" name="login" action="<?= $this->url('login') ?>" id="login">
             <div class="form-group">
                 <label class="block mb-2 font-semibold" for="username">Username:</label>
-                <input class="w-full mb-4 p-2 rounded border-neutral-900 bg-neutral-100 text-neutral-900" type="text" name="username" value="" placeholder="Enter your username" required="required">
+                <input class="w-full mb-4 p-2 rounded border-mwop-bg bg-mwop-fg text-mwop-bg" type="text" name="username" value="" placeholder="Enter your username" required="required">
             </div>
 
             <div class="form-group">
                 <label class="block mb-2 font-semibold" for="password">Subject:</label>
-                <input class="w-full mb-4 p-2 rounded border-neutral-900 bg-neutral-100 text-neutral-900" type="password" name="password" value="" placeholder="Provide your password" required="required">
+                <input class="w-full mb-4 p-2 rounded border-mwop-bg bg-mwop-fg text-mwop-bg" type="password" name="password" value="" placeholder="Provide your password" required="required">
             </div>
 
-            <button class="rounded p-2 bg-emerald-500 border-emerald-800 text-black hover:bg-emerald-200 active:bg-emerald-200 transition duration-300" type="submit" name="login">Login</button>
+            <button class="rounded p-2 bg-action-bg border-action-border text-mwop-bg hover:bg-action-active active:bg-action-active transition duration-300" type="submit" name="login">Login</button>
         </form>
     </div>
 </section>

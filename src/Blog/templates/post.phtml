@@ -51,12 +51,12 @@ $this->end();
 <div class="lg:flex lg:flex-row-reverse lg:justify-end lg:justify-items-start lg:content-start lg:items-start lg:gap-8 h-entry">
     <article class="lg:w-3/4 text-xl">
     <?php if (null === $post->image) : ?>
-        <h2 class="p-name"><a class="no-underline text-neutral-100 u-url u-uid" href="<?= $this->postUrl($post) ?>"><?= $this->escapeHtml($post->title) ?></a></h2>
+        <h2 class="p-name"><a class="no-underline text-mwop-fg u-url u-uid" href="<?= $this->postUrl($post) ?>"><?= $this->escapeHtml($post->title) ?></a></h2>
     <?php else : ?>
         <?php /* <section class="float-right ml-4 mb-2 relative"> */ ?>
         <section class="mb-2 lg:float-right lg:w-1/2 lg:ml-4 lg:relative">
             <img class="w-fit h-auto lg:w-full" src="<?= $post->image->url ?>" alt="<?= $post->image->title ?>">
-            <h2 class="lg:absolute lg:bottom-4 lg:left-2 p-name"><a class="no-underline text-neutral-100 drop-shadow-lg u-url u-uid" href="<?= $this->postUrl($post) ?>"><?= $this->escapeHtml($post->title) ?></a></h2>
+            <h2 class="lg:absolute lg:bottom-4 lg:left-2 p-name"><a class="no-underline text-mwop-fg drop-shadow-lg u-url u-uid" href="<?= $this->postUrl($post) ?>"><?= $this->escapeHtml($post->title) ?></a></h2>
         </section>
     <?php endif ; ?>
 

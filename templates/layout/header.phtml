@@ -1,12 +1,12 @@
-<nav class="bg-neutral-700 shadow-lg p-2 mt-0 fixed w-full z-10 top-0" role="navigation">
+<nav class="bg-mwop-nav shadow-lg p-2 mt-0 fixed w-full z-10 top-0" role="navigation">
   <div class="w-full mx-auto px-4">
     <div class="flex justify-between items-center">
       <div class="flex space-x-7">
         <div>
           <a class="no-underline flex items-center py-4 hover:font-normal" href="<?= $this->url('home') ?>">
             <img class="w-9 h-9" src="/images/logo.gif" alt="Celtic Knot - Matthew Weier O'Phinney" />
-            <span class="inline-block pl-4 xl:hidden text-neutral-100 hover:text-white">mwop.net</span>
-            <span class="hidden xl:inline-block xl:pl-4 text-neutral-100 hover:text-white">phly, boy, phly: matthew weier o'phinney</span>
+            <span class="inline-block pl-4 xl:hidden text-mwop-fg hover:text-white">mwop.net</span>
+            <span class="hidden xl:inline-block xl:pl-4 text-mwop-fg hover:text-white">phly, boy, phly: matthew weier o'phinney</span>
           </a>
         </div>
 
@@ -21,7 +21,7 @@
       <div class="hidden md:flex items-center space-x-3">
         <div class="self-end flex-col search">
           <form class="flex">
-            <input class="appearance-none rounded-lg border md:w-[15rem] lg:w-[25rem] px-2 py-2 bg-neutral-100 placeholder-neutral-500 text-black" type="text" placeholder="Search..." aria-label="Search">
+            <input class="appearance-none rounded-lg border md:w-[15rem] lg:w-[25rem] px-2 py-2 bg-mwop-fg placeholder-mwop-contrast text-black" type="text" placeholder="Search..." aria-label="Search">
           </form>
 
           <ul class="search-results"></ul>
@@ -31,7 +31,7 @@
 
       <div class="md:hidden flex items-center">
         <button class="outline-none mobile-menu-button">
-          <svg class=" w-6 h-6 text-neutral-400 hover:text-neutral-100 "
+          <svg class="w-6 h-6 text-mwop-osft hover:text-mwop-fg"
             x-show="!showMenu"
             fill="none"
             stroke-linecap="round"
@@ -50,12 +50,12 @@
 
   <!-- mobile menu -->
   <div class="hidden mobile-menu divide-y divide-neutral-300 divide-dotted">
-    <a class="block border-t border-neutral-300 border-dotted px-2 py-4 no-underline text-sm font-semibold text-neutral-300 transition duration-300 hover:bg-neutral-100 hover:text-neutral-800" href="<?= $this->url('blog') ?>">Blog</a>
-    <a class="block px-2 py-4 no-underline text-sm font-semibold text-neutral-300 transition duration-300 hover:bg-neutral-100 hover:text-neutral-800" href="<?= $this->url('art.gallery') ?>">Art</a>
-    <a class="block px-2 py-4 no-underline text-sm font-semibold text-neutral-300 transition duration-300 hover:bg-neutral-100 hover:text-neutral-800" href="<?= $this->url('resume') ?>">R&eacute;sum&eacute;</a>
-    <a class="block px-2 py-4 no-underline text-sm font-semibold text-neutral-300 transition duration-300 hover:bg-neutral-100 hover:text-neutral-800" href="<?= $this->url('contact') ?>">Contact</a>
+    <a class="block border-t border-mwop-light border-dotted px-2 py-4 no-underline text-sm font-semibold text-mwop-light transition duration-300 hover:bg-mwop-fg hover:text-mwop-bg" href="<?= $this->url('blog') ?>">Blog</a>
+    <a class="block px-2 py-4 no-underline text-sm font-semibold text-mwop-light transition duration-300 hover:bg-mwop-fg hover:text-mwop-bg" href="<?= $this->url('art.gallery') ?>">Art</a>
+    <a class="block px-2 py-4 no-underline text-sm font-semibold text-mwop-light transition duration-300 hover:bg-mwop-fg hover:text-mwop-bg" href="<?= $this->url('resume') ?>">R&eacute;sum&eacute;</a>
+    <a class="block px-2 py-4 no-underline text-sm font-semibold text-mwop-light transition duration-300 hover:bg-mwop-fg hover:text-mwop-bg" href="<?= $this->url('contact') ?>">Contact</a>
     <form class="search block flex-col">
-        <input class="appearance-none rounded-lg mt-2 border w-full px-2 py-2 bg-neutral-100 placeholder-neutral-500 text-black" type="text" placeholder="Search..." aria-label="Search">
+        <input class="appearance-none rounded-lg mt-2 border w-full px-2 py-2 bg-mwop-fg placeholder-mwop-dark text-black" type="text" placeholder="Search..." aria-label="Search">
         <ul class="search-results"></ul>
     </form>
   </div>

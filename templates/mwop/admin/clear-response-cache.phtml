@@ -1,12 +1,11 @@
 <?php $this->layout('layout::layout', [
-    'title' => 'Admin - Clear Response Cache',
+    'title'  => 'Admin - Clear Response Cache',
+    'layout' => 'small',
 ]) ?>
-<section class="w-1/3 mt-24 mx-auto flex flex-row justify-items-center">
-    <div class="bg-neutral-700 p-4 w-full">
-        <h4>Clear response cache complete</h4>
+<div class="bg-mwop-nav p-4 w-full">
+    <h4>Clear response cache complete</h4>
 
-        <div class="bg-neutral-800 gap-4 divide-y divide-neutral-500 divide-solid">
-            <a class="block p-2" href="<?= $this->url('admin') ?>">Back to admin</a>
-        </div>
+    <div class="bg-mwop-bg gap-4 divide-y divide-mwop-dark divide-solid">
+        <a class="block p-2" href="<?= $this->url('admin') ?>">Back to admin</a>
     </div>
-</section>
+</div>

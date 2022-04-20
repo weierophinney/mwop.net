@@ -10,7 +10,7 @@ $this->end();
 
 <div class="mt-24 mb-4 flex flex-row flex-wrap justify-between justify-items-stretch content-start items-stretch">
 
-<article class="w-full px-4 lg:w-1/3 lg:max-w-[33%] lg:border-neutral-500 lg:border-dashed lg:border-r">
+<article class="w-full px-4 lg:w-1/3 lg:max-w-[33%] lg:border-mwop-dark lg:border-dashed lg:border-r">
     <h2>Welcome!</h2>
 
     <p>
@@ -44,14 +44,14 @@ $this->end();
         <a class="block no-underline relative mx-1 my-1" href="<?= $this->url('art.photo', ['image' => $photo->filename()]) ?>">
             <img class="" src="<?= $this->url('art.image', ['type' => 'thumbnails', 'image' => $photo->filename()]) ?>" alt="Original art by Matthew Weier O'Phinney">
 
-            <div class="absolute bottom-0 right-0 rounded bg-neutral-200"><img class="stroke-neutral-700" src="/images/external-link.svg" width="32"></div>
+            <div class="absolute bottom-0 right-0 rounded bg-mwop-light"><img class="stroke-mwop-nav" src="/images/external-link.svg" width="32"></div>
         </a>
     <?php endforeach ?>
     </div>
 </aside>
 
-<aside class="w-full px-4 lg:w-1/3 lg:max-w-[33%] lg:border-neutral-500 lg:border-dashed lg:border-l">
-    <div class="border-b-2 border-dashed border-neutral-400">
+<aside class="w-full px-4 lg:w-1/3 lg:max-w-[33%] lg:border-mwop-dark lg:border-dashed lg:border-l">
+    <div class="border-b-2 border-dashed border-mwop-soft">
         <h3>Recent Blog Posts</h3>
 
         <ul class="homepage-feed"><?= $this->homepagePosts() ?></ul>
@@ -59,7 +59,7 @@ $this->end();
         <p class="text-right"><em><a href="<?= $this->url('blog') ?>">Read more</a></em></p>
     </div>
 
-    <div class="my-2 border-b-2 border-dashed border-neutral-400">
+    <div class="my-2 border-b-2 border-dashed border-mwop-soft">
         <h3>Recent Github Activity</h3>
 
         <ul id="github" class="homepage-feed"><?= $this->renderGithubFeed() ?></ul>

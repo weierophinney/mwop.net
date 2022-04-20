@@ -26,20 +26,20 @@ $this->start('scripts');
 </pre>
 <?php endif ?>
 
-<form class="bg-neutral-700 p-4 w-full rounded-lg" method="post" name="contact" action="<?= $this->url('contact.process') ?>" id="contact">
+<form class="bg-mwop-nav p-4 w-full rounded-lg" method="post" name="contact" action="<?= $this->url('contact.process') ?>" id="contact">
     <div class="form-group">
         <label class="block mb-2 font-semibold" for="from">From (email):</label>
-        <input class="w-full mb-4 p-2 rounded border-neutral-900 bg-neutral-100 text-neutral-900" type="text" name="from" value="" required="required">
+        <input class="w-full mb-4 p-2 rounded border-mwop-bg bg-mwop-fg text-mwop-bg" type="text" name="from" value="" required="required">
     </div>
 
     <div class="form-group">
         <label class="block mb-2 font-semibold" for="subject">Subject:</label>
-        <input class="w-full mb-4 p-2 rounded border-neutral-900 bg-neutral-100 text-neutral-900" type="text" name="subject" value="" required="required">
+        <input class="w-full mb-4 p-2 rounded border-mwop-bg bg-mwop-fg text-mwop-bg" type="text" name="subject" value="" required="required">
     </div>
 
     <div class="form-group">
         <label class="block mb-2 font-semibold" for="body">Your message:</label>
-        <textarea class="w-full h-48 mb-4 -p2 rounded border-neutral-900 bg-neutral-100 text-neutral=900" name="body" required="required"></textarea>
+        <textarea class="w-full h-48 mb-4 p-2 rounded border-mwop-bg bg-mwop-fg text-mwop-bg" name="body" required="required"></textarea>
     </div>
 
     <div
@@ -48,5 +48,5 @@ $this->start('scripts');
         data-theme="dark"></div>
 
     <input type="hidden" name="csrf" value="<?= $csrf ?>">
-    <button class="rounded p-2 bg-emerald-500 border-emerald-800 text-black hover:bg-emerald-200 active:bg-emerald-200 transition duration-300" type="submit" name="Send">Send</button>
+    <button class="rounded p-2 bg-action-bg border-action-border text-mwop-bg hover:bg-action-active active:bg-action-active transition duration-300" type="submit" name="Send">Send</button>
 </form>
