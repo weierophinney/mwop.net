@@ -56,10 +56,6 @@
         @apply list-decimal list-outside mb-4 ml-5;
     }
 
-    li {
-        @apply font-sans;
-    }
-
     kbd {
         @apply font-bold;
     }
@@ -116,7 +112,7 @@
 }
 
 .laminas-tag-cloud li {
-    @apply px-1 hover:font-semibold hover:text-white hover:underline;
+    @apply px-1 hover:font-semibold hover:text-white hover:underline font-sans;
 }
 
 .homepage-feed li img {
