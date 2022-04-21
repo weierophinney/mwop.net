@@ -17,7 +17,7 @@ $this->layout('layout::layout', [
 <form class="flex flex-col md:flex-row justify-center items-stretch gap-0 border-none" method="post" action="<?= $this->url('art.photo.upload.process') ?>" enctype="multipart/form-data">
 
 <div class="w-full md:w-2/5 flex items-center p-0 bg-mwop-nav">
-    <div class="relative min-h-full min-w-full p-4 rounded-l-lg border border-mwop-soft text-center">
+    <div class="relative min-h-full min-w-full p-4 rounded-t-lg md:rounded-t-none md:rounded-l-lg border border-mwop-soft text-center">
         <input class="z-100 absolute min-h-full min-w-full top-0 left-0 right-0 bottom-0 opacity-0 cursor-pointer focus:outline-2 focus:outline-mwop-fg focus:ring-4 valid:border-mwop-light" type="file" accept="image/jpeg,image/png,image/webp" name="imageUpload" required="required">
 
         <div class="z-0 mwop-art-upload-content min-w-full px-3 py-4 bg-transparent border-2 border-mwop-soft border-dashed transition ease-in-out delay-300 hover:border-mwop-fg">
@@ -27,7 +27,7 @@ $this->layout('layout::layout', [
     </div>
 </div>
 
-<div class="w-full md:w-2/5 rounded-r-lg border border-mwop-soft p-4 font-semibold">
+<div class="w-full md:w-2/5 rounded-b-lg md:rounded-b-none md:rounded-r-lg border border-mwop-soft p-4 font-semibold">
     <div class="mb-3">
         <label class="label text-xl" for="mwopArtUploadDescription">Description</label>
         <textarea class="textarea" rows="10" name="description" id="mwopArtUploadDescription"><?= isset($form['description']) ? $this->escapeHtml($form['description']) : '' ?></textarea>
