@@ -14,19 +14,20 @@ $this->layout('layout::layout', [
 
 <h3 class="w-full text-center">Upload new artwork</h3>
 
-<form class="flex flex-row justify-center items-stretch gap-0 border-none" method="post" action="<?= $this->url('art.photo.upload.process') ?>" enctype="multipart/form-data">
+<form class="flex flex-col md:flex-row justify-center items-stretch gap-0 border-none" method="post" action="<?= $this->url('art.photo.upload.process') ?>" enctype="multipart/form-data">
 
-<div class="w-2/5 flex items-center p-0 bg-mwop-nav">
+<div class="w-full md:w-2/5 flex items-center p-0 bg-mwop-nav">
     <div class="relative min-h-full min-w-full p-4 rounded-l-lg border border-mwop-soft text-center">
-        <input class="absolute w-max h-max top-0 left-0 right-0 bottom-0 opacity-0 cursor-pointer focus:outline-2 focus:outline-mwop-fg focus:ring-4 valid:border-mwop-light" type="file" accept="image/jpeg,image/png,image/webp" name="imageUpload" required="required">
-        <div class="mwop-art-upload-content min-w-full px-3 py-4 bg-transparent border-2 border-mwop-soft border-dashed transition ease-in-out delay-300 hover:border-mwop-fg">
+        <input class="z-100 absolute min-h-full min-w-full top-0 left-0 right-0 bottom-0 opacity-0 cursor-pointer focus:outline-2 focus:outline-mwop-fg focus:ring-4 valid:border-mwop-light" type="file" accept="image/jpeg,image/png,image/webp" name="imageUpload" required="required">
+
+        <div class="z-0 mwop-art-upload-content min-w-full px-3 py-4 bg-transparent border-2 border-mwop-soft border-dashed transition ease-in-out delay-300 hover:border-mwop-fg">
             <div class="default h-2 pt-[50%] pb-[50%] valid:hidden"><i class="fa fa-cloud-arrow-up fa-2xl fs-1"></i><br />Drag and drop, or click to select</div>
             <div class="complete h-2 pt-[50%] pb-[50%] hidden valid:block valid:text-[5em]"><i class="fa fa-circle-check fa-2xl text-action-border"></i></div>
         </div>
     </div>
 </div>
 
-<div class="w-2/5 rounded-r-lg border border-mwop-soft p-4 font-semibold">
+<div class="w-full md:w-2/5 rounded-r-lg border border-mwop-soft p-4 font-semibold">
     <div class="mb-3">
         <label class="label text-xl" for="mwopArtUploadDescription">Description</label>
         <textarea class="textarea" rows="10" name="description" id="mwopArtUploadDescription"><?= isset($form['description']) ? $this->escapeHtml($form['description']) : '' ?></textarea>
