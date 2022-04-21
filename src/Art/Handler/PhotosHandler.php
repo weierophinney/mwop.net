@@ -24,7 +24,7 @@ class PhotosHandler implements RequestHandlerInterface
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $page  = PaginationPreparation::getPageFromRequest($request);
+        $page   = PaginationPreparation::getPageFromRequest($request);
         $path   = $request->getAttribute('originalRequest', $request)->getUri()->getPath();
         $photos = $this->mapper->fetchAll();
         $photos->setItemCountPerPage($this->perPage);
@@ -35,7 +35,7 @@ class PhotosHandler implements RequestHandlerInterface
         $response->getBody()->write(
             $this->renderer->render('art::photos', [
                 'photos'     => $photos,
-                'pagination' => PaginationPreparation::prepare($path, $page, $photos->getPages())
+                'pagination' => PaginationPreparation::prepare($path, $page, $photos->getPages()),
             ])
         );
 
