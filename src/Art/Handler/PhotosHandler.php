@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mwop\Art\Handler;
 
 use Mezzio\Template\TemplateRendererInterface;
+use Mwop\App\PaginationPreparation;
 use Mwop\Art\PhotoMapper;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -23,7 +24,8 @@ class PhotosHandler implements RequestHandlerInterface
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $page   = $request->getQueryParams()['page'] ?? 1;
+        $page  = PaginationPreparation::getPageFromRequest($request);
+        $path   = $request->getAttribute('originalRequest', $request)->getUri()->getPath();
         $photos = $this->mapper->fetchAll();
         $photos->setItemCountPerPage($this->perPage);
         $photos->setCurrentPageNumber($page);
@@ -32,8 +34,8 @@ class PhotosHandler implements RequestHandlerInterface
             ->withHeader('Content-Type', 'text/html');
         $response->getBody()->write(
             $this->renderer->render('art::photos', [
-                'page'   => $page,
-                'photos' => $photos,
+                'photos'     => $photos,
+                'pagination' => PaginationPreparation::prepare($path, $page, $photos->getPages())
             ])
         );
 

@@ -9,6 +9,7 @@ use Laminas\Diactoros\Response\HtmlResponse;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Mezzio\Router\RouterInterface;
 use Mezzio\Template\TemplateRendererInterface;
+use Mwop\App\PaginationPreparation;
 use Mwop\Blog\Mapper\MapperInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -33,7 +34,7 @@ class ListPostsHandler implements RequestHandlerInterface
     {
         $tag   = str_replace(['+', '%20'], ' ', $request->getAttribute('tag', ''));
         $path  = $request->getAttribute('originalRequest', $request)->getUri()->getPath();
-        $page  = $this->getPageFromRequest($request);
+        $page  = PaginationPreparation::getPageFromRequest($request);
         $posts = $tag ? $this->mapper->fetchAllByTag($tag) : $this->mapper->fetchAll();
 
         $posts->setItemCountPerPage(10);
@@ -51,35 +52,9 @@ class ListPostsHandler implements RequestHandlerInterface
             $this->prepareView(
                 $tag,
                 iterator_to_array($posts->getItemsByPage($page)),
-                $this->preparePagination($path, $page, $posts->getPages())
+                PaginationPreparation::prepare($path, $page, $posts->getPages()),
             )
         ));
-    }
-
-    private function getPageFromRequest(ServerRequestInterface $request): int
-    {
-        $page = $request->getQueryParams()['page'] ?? 1;
-        $page = (int) $page;
-        return $page < 1 ? 1 : $page;
-    }
-
-    private function preparePagination(string $path, int $page, object $pagination): object
-    {
-        $pagination->base_path = $path;
-        $pagination->is_first  = $page === $pagination->first;
-        $pagination->is_last   = $page === $pagination->last;
-
-        $pages = [];
-        for ($i = $pagination->firstPageInRange; $i <= $pagination->lastPageInRange; $i += 1) {
-            $pages[] = [
-                'base_path' => $path,
-                'number'    => $i,
-                'current'   => $page === $i,
-            ];
-        }
-        $pagination->pages = $pages;
-
-        return $pagination;
     }
 
     /**

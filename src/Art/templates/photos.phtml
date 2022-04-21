@@ -1,23 +1,7 @@
-<?php
-$this->layout('layout::layout', [
+<?php $this->layout('layout::layout', [
     'title'  => 'Art',
     'layout' => 'large',
-]);
-
-$path                  = $this->url('art.gallery');
-$pagination            = $photos->getPages();
-$pagination->base_path = $path;
-$pagination->is_first  = $page === $pagination->first;
-$pagination->is_last   = $page === $pagination->last;
-$pagination->pages     = [];
-for ($i = $pagination->firstPageInRange; $i <= $pagination->lastPageInRange; $i += 1) {
-    $pagination->pages[] = [
-        'base_path' => $path,
-        'number'    => $i,
-        'current'   => $page === $i,
-    ];
-}
-?>
+]); ?>
 <h2 class="text-center">Gallery</h2>
 
 <div class="flex flex-row flex-wrap justify-evenly items-start gap-8">
