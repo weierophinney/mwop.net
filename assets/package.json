@@ -13,9 +13,5 @@
     "postcss-import": "^14.1.0",
     "prism-solarized-dark": "^1.0.1",
     "tailwindcss": "^3.0.24"
-  },
-  "scripts": {
-    "dev:css": "postcss css/site.css -o dist/css/site.css",
-    "watch": "npx chokidar \"./css/*.css\" \"../templates/**/*.phtml\" \"../src/**/*.phtml\" -c \"npm run dev:css\""
   }
 }

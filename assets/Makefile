@@ -39,3 +39,7 @@ scripts: dist ## Build JS
 	cp node_modules/imagesloaded/imagesloaded.pkgd.min.js dist/js/
 
 assets: clean styles scripts  ## Build all assets
+
+watch: ## Watch templates and build CSS
+	@cd "$(HERE)"
+	./node_modules/.bin/chokidar "./css/*.css" "../templates/**/*.phtml" "../src/**/*.phtml" -c "postcss css/site.css -o dist/css/site.css"
