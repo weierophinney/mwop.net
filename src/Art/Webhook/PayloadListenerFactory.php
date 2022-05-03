@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Mwop\Art\Webhook;
 
+use Mwop\App\HomePageCacheExpiration;
 use Mwop\Art\PhotoMapper;
 use Mwop\Art\PhotoStorage;
 use Psr\Container\ContainerInterface;
@@ -19,6 +20,7 @@ class PayloadListenerFactory
             logger: $container->get(LoggerInterface::class),
             notifier: $container->get(ErrorNotifier::class),
             backup: $container->get(DatabaseBackup::class),
+            expireHomePageCache: $container->get(HomePageCacheExpiration::class),
         );
     }
 }

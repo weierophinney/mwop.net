@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mwop\Github\Webhook;
 
 use JsonException;
+use Mwop\App\HomePageCacheExpiration;
 use Mwop\Github\AtomEntry;
 use Mwop\Github\ItemList;
 use Psr\Log\LoggerInterface;
@@ -19,6 +20,7 @@ class PayloadListener
     public function __construct(
         private ItemList $itemList,
         private LoggerInterface $logger,
+        private HomePageCacheExpiration $expireHomePageCache,
     ) {
     }
 
@@ -37,6 +39,8 @@ class PayloadListener
         $items = $this->itemList->read();
         $items->prepend($entry);
         $this->itemList->write($items);
+
+        ($this->expireHomePageCache)();
     }
 
     private function parsePayloadJson(Payload $payload): array

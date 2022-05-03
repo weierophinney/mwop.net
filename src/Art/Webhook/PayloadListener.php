@@ -9,6 +9,7 @@ use JsonException;
 use League\Flysystem\FilesystemException;
 use League\Flysystem\UnableToCopyFile;
 use League\Flysystem\UnableToWriteFile;
+use Mwop\App\HomePageCacheExpiration;
 use Mwop\Art\Photo;
 use Mwop\Art\PhotoMapper;
 use Mwop\Art\PhotoStorage;
@@ -28,6 +29,7 @@ class PayloadListener
         private DatabaseBackup $backup,
         private LoggerInterface $logger,
         private ErrorNotifier $notifier,
+        private HomePageCacheExpiration $expireHomePageCache,
     ) {
     }
 
@@ -54,6 +56,8 @@ class PayloadListener
             // Failed
             return;
         }
+
+        ($this->expireHomePageCache)();
 
         // Backup database
         $this->backupDatabase();

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Mwop\Feed\Webhook;
 
+use Mwop\App\HomePageCacheExpiration;
 use Mwop\Feed\HomepagePostsList;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
@@ -15,6 +16,7 @@ class PayloadListenerFactory
         return new PayloadListener(
             postsList: $container->get(HomepagePostsList::class),
             logger: $container->get(LoggerInterface::class),
+            expireHomePageCache: $container->get(HomePageCacheExpiration::class),
         );
     }
 }

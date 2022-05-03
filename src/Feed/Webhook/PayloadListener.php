@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mwop\Feed\Webhook;
 
 use JsonException;
+use Mwop\App\HomePageCacheExpiration;
 use Mwop\Feed\FeedItem;
 use Mwop\Feed\HomepagePostsList;
 use Psr\Log\LoggerInterface;
@@ -19,6 +20,7 @@ class PayloadListener
     public function __construct(
         private HomepagePostsList $postsList,
         private LoggerInterface $logger,
+        private HomePageCacheExpiration $expireHomePageCache,
     ) {
     }
 
@@ -33,6 +35,8 @@ class PayloadListener
         $posts = $this->postsList->read();
         $posts->prepend($item);
         $this->postsList->write($posts);
+
+        ($this->expireHomePageCache)();
     }
 
     private function parsePayloadJson(Payload $payload): array

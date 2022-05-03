@@ -71,6 +71,7 @@ class ConfigProvider
                 Handler\PingHandler::class                   => Handler\PingHandlerFactory::class,
                 Handler\PrivacyPolicyPageHandler::class      => Handler\PageHandlerFactory::class,
                 Handler\ResumePageHandler::class             => Handler\PageHandlerFactory::class,
+                HomePageCacheExpiration::class               => HomePageCacheExpirationFactory::class,
                 'mail.transport'                             => Factory\MailTransport::class,
                 Middleware\CacheMiddleware::class            => Middleware\CacheMiddlewareFactory::class,
                 Middleware\RedirectAmpPagesMiddleware::class => Middleware\RedirectAmpPagesMiddlewareFactory::class,
@@ -158,9 +159,18 @@ class ConfigProvider
 
     public function registerRoutes(Application $app): void
     {
-        $app->get('/', Handler\HomePageHandler::class, 'home');
-        $app->get('/resume', Handler\ResumePageHandler::class, 'resume');
-        $app->get('/privacy-policy', Handler\PrivacyPolicyPageHandler::class, 'privacy-policy');
+        $app->get('/', [
+            Middleware\CacheMiddleware::class,
+            Handler\HomePageHandler::class,
+        ], 'home');
+        $app->get('/resume', [
+            Middleware\CacheMiddleware::class,
+            Handler\ResumePageHandler::class,
+        ], 'resume');
+        $app->get('/privacy-policy', [
+            Middleware\CacheMiddleware::class,
+            Handler\PrivacyPolicyPageHandler::class,
+        ], 'privacy-policy');
         $app->get('/api/ping', Handler\PingHandler::class, 'api.ping');
 
         // Admin
