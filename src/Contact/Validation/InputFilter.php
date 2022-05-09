@@ -8,6 +8,7 @@ use Laminas\Filter\StripTags;
 use Laminas\InputFilter\InputFilter as BaseInputFilter;
 use Laminas\Validator\EmailAddress;
 use Laminas\Validator\Hostname as HostnameValidator;
+use Laminas\Validator\Regex;
 use Laminas\Validator\StringLength;
 
 class InputFilter extends BaseInputFilter
@@ -57,8 +58,17 @@ class InputFilter extends BaseInputFilter
         ]);
 
         $this->add([
-            'name'     => 'body',
-            'required' => true,
+            'name'          => 'body',
+            'required'      => true,
+            'validators'    => [
+                [
+                    'name'    => Regex::class,
+                    'options' => [
+                        'pattern' => '/^((?!talk with web).)*$/is',
+                    ],
+                ],
+            ],
+            'error_message' => 'Your contact message was either empty, or contains disallowed content.',
         ]);
     }
 }
