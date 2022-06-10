@@ -22,10 +22,11 @@ $this->push('links');
     <meta name="twitter:creator" content="@mwop" />
     <meta property="og:site_name" content="mwop.net" />
     <meta property="og:type" content="article" />
-    <meta property="og:title" content="<?= $this->escapeHtmlAttr('Original art by Matthew Weier O\'Phinney: ' . $photo->filename()) ?>" />
+    <meta property="og:title" content="<?= strtr('Original art by Matthew Weier O\'Phinney: ' . $photo->filename(), '"', "'") ?>" />
     <meta property="og:url" content="<?= $pageUrl ?>" />
     <meta property="og:image" content="<?= $this->serverurl($this->url('art.image', ['type' => 'thumbnails', 'image' => $photo->filename()])) ?>" />
-    <meta property="og:image:alt" content="<?= $this->escapeHtmlAttr('Original art by Matthew Weier O\'Phinney: ' . $photo->filename()) ?>" />
+    <meta property="og:image:alt" content="<?= strtr('Original art by Matthew Weier O\'Phinney: ' . $photo->filename(), '"', "'") ?>" />
+    <meta property="og:description" content="<?= strtr(substr($photo->description, 0, 150), '"', "'") . '...' ?>" />
     <meta property="article:published_time" content="<?= $photo->createdAt->format('c') ?>" />
     <?php foreach ($tags as $tag): ?>
     <meta property="article:tag" content="<?= $this->escapeHtmlAttr($tag) ?>" />
