@@ -92,7 +92,7 @@ class FeedGenerator extends Command
         $this->generateFeeds(
             $outputDir . '/',
             $baseUri,
-            'Blog entries :: phly, boy, phly',
+            'Blog entries :: mwop.net',
             'blog',
             'blog.feed',
             [],
@@ -115,7 +115,7 @@ class FeedGenerator extends Command
             $this->generateFeeds(
                 sprintf('%s/%s.', $outputDir, $tag),
                 $baseUri,
-                sprintf('Tag: %s :: phly, boy, phly', $tag),
+                sprintf('Tag: %s :: mwop.net', $tag),
                 'blog.tag',
                 'blog.tag.feed',
                 ['tag' => $tag],

@@ -7,8 +7,8 @@ $this->layout('layout::layout', [
 $this->push('links');
 if (isset($tag)) :
 ?>
-    <link href="<?= $this->serverurl($rss) ?>" rel="alternate" type="application/rss+xml" title="phly, boy, phly RSS Feed for <?= $this->escapeHtmlAttr($tag) ?>">
-    <link href="<?= $this->serverurl($atom) ?>" rel="alternate" type="application/atom+xml" title="phly, boy, phly Atom Feed for <?= $this->escapeHtmlAttr($tag) ?>">
+    <link href="<?= $this->serverurl($rss) ?>" rel="alternate" type="application/rss+xml" title="mwop.net RSS Feed for <?= $this->escapeHtmlAttr($tag) ?>">
+    <link href="<?= $this->serverurl($atom) ?>" rel="alternate" type="application/atom+xml" title="mwop.net Atom Feed for <?= $this->escapeHtmlAttr($tag) ?>">
 <?php
 endif;
 $this->end();

@@ -33,8 +33,8 @@ $this->push('links');
     <?php endforeach ?>
 <?php foreach ($this->processTags($post->tags) as $tag): ?>
     <!-- Feeds -->
-    <link href="<?= $this->serverurl($tag->rss) ?>" rel="alternate" type="application/rss+xml" title="phly, boy, phly RSS Feed for <?= $tag->name ?>">
-    <link href="<?= $this->serverurl($tag->atom) ?>" rel="alternate" type="application/rss+xml" title="phly, boy, phly RSS Feed for <?= $tag->name ?>">
+    <link href="<?= $this->serverurl($tag->rss) ?>" rel="alternate" type="application/rss+xml" title="mwop.net RSS Feed for <?= $tag->name ?>">
+    <link href="<?= $this->serverurl($tag->atom) ?>" rel="alternate" type="application/rss+xml" title="mwop.net RSS Feed for <?= $tag->name ?>">
 <?php endforeach; ?>
 <?php
 $this->end();
