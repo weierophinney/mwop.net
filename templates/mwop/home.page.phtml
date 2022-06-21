@@ -3,6 +3,12 @@
 ]) ?>
 
 <?php
+$this->push('links');
+echo '<link rel="canonical" href="https://mwop.net/" />';
+$this->end();
+?>
+
+<?php
 $this->push('scripts');
 echo '<script src="/assets/js/twitter.js"></script>';
 $this->end();
