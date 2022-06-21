@@ -116,7 +116,7 @@ class ConfigProvider
             'art.image'
         );
 
-        $app->get($basePath . '/art/', Handler\PhotosHandler::class, 'art.gallery');
+        $app->get($basePath . '/art[/]', Handler\PhotosHandler::class, 'art.gallery');
 
         $app->get($basePath . '/art/{image:[^/]+\.(?:png|jpg|jpeg|webp)}/', Handler\PhotoHandler::class, 'art.photo');
 
