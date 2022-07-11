@@ -19,15 +19,17 @@ class HomePageCacheExpiration
 
     public function __invoke(): void
     {
-        $key = substr(hash('sha256', '/'), 0, 16);
-        if (! $this->cache->hasItem($key)) {
-            return;
-        }
+        foreach (['/', ''] as $path) {
+            $key = substr(hash('sha256', $path), 0, 16);
+            if (! $this->cache->hasItem($key)) {
+                return;
+            }
 
-        try {
-            $this->cache->deleteItem($key);
-        } catch (Throwable) {
-            // Don't really care if we have an issue here
+            try {
+                $this->cache->deleteItem($key);
+            } catch (Throwable) {
+                // Don't really care if we have an issue here
+            }
         }
     }
 }
