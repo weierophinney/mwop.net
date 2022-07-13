@@ -24,10 +24,18 @@ class AtomReaderFactory
 
         $reader = new AtomReader($config['user']);
         $reader->setLimit($config['limit']);
+
+        // phpcs:disable Generic.Files.LineLength.TooLong
         $reader->addFilter(
-            // phpcs:ignore Generic.Files.LineLength.TooLong
             fn (EntryInterface $entry): bool => preg_match('#weierophinney/#', $entry->getLink()) ? false : true
         );
+        $reader->addFilter(
+            fn (EntryInterface $entry): bool => preg_match('#weierophinney/#', $entry->getTitle()) ? false : true
+        );
+        $reader->addFilter(
+            fn (EntryInterface $entry): bool => preg_match('#pushed to gh-pages#', $entry->getTitle()) ? false : true
+        );
+        // phpcs:enable Generic.Files.LineLength.TooLong
 
         return $reader;
     }
