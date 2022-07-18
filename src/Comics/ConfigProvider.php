@@ -47,6 +47,7 @@ class ConfigProvider
         return [
             'exclusions'  => [
                 'bloom-county',
+                'culdesac',
                 'dilbert',
                 'g-g',
                 'goats',
