@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Mwop\Github\Webhook;
 
+use CuyZ\Valinor\Mapper\TreeMapper;
 use Mwop\App\HomePageCacheExpiration;
 use Mwop\Github\ItemList;
 use Psr\Container\ContainerInterface;
@@ -17,6 +18,7 @@ class PayloadListenerFactory
             itemList: $container->get(ItemList::class),
             logger: $container->get(LoggerInterface::class),
             expireHomePageCache: $container->get(HomePageCacheExpiration::class),
+            mapper: $container->get(TreeMapper::class),
         );
     }
 }

@@ -4,16 +4,15 @@ declare(strict_types=1);
 
 namespace Mwop\Github\Webhook;
 
-use JsonException;
+use CuyZ\Valinor\Mapper\MappingError;
+use CuyZ\Valinor\Mapper\Source\Source;
+use CuyZ\Valinor\Mapper\TreeMapper;
 use Mwop\App\HomePageCacheExpiration;
 use Mwop\Github\AtomEntry;
 use Mwop\Github\ItemList;
 use Psr\Log\LoggerInterface;
 
-use function json_decode;
 use function sprintf;
-
-use const JSON_THROW_ON_ERROR;
 
 class PayloadListener
 {
@@ -21,17 +20,14 @@ class PayloadListener
         private ItemList $itemList,
         private LoggerInterface $logger,
         private HomePageCacheExpiration $expireHomePageCache,
+        private TreeMapper $mapper,
     ) {
     }
 
     public function __invoke(Payload $payload): void
     {
-        $entry = AtomEntry::fromArray($this->parsePayloadJson($payload));
-        if (null === $entry) {
-            $this->logger->warning(sprintf(
-                'Empty GitHub atom payload detected: %s',
-                $payload->json
-            ));
+        $entry = $this->parsePayloadJson($payload);
+        if (null === $entry || null === $entry->link) {
             return;
         }
 
@@ -43,17 +39,17 @@ class PayloadListener
         ($this->expireHomePageCache)();
     }
 
-    private function parsePayloadJson(Payload $payload): array
+    private function parsePayloadJson(Payload $payload): ?AtomEntry
     {
         try {
-            return json_decode($payload->json, true, flags: JSON_THROW_ON_ERROR);
-        } catch (JsonException $e) {
+            return $this->mapper->map(AtomEntry::class, Source::json($payload->json));
+        } catch (MappingError $e) {
             $this->logger->warning(sprintf(
                 "Unable to parse GitHub atom entry webhook payload: %s\nPayload: %s",
                 $e->getMessage(),
                 $payload->json
             ));
-            return [];
+            return null;
         }
     }
 }
