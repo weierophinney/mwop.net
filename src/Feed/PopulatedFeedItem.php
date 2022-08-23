@@ -9,14 +9,14 @@ use DateTimeInterface;
 class PopulatedFeedItem implements FeedItem
 {
     public function __construct(
-        /** @var not-empty-string */
+        /** @var non-empty-string */
         public readonly string $title,
-        /** @var not-empty-string */
+        /** @var non-empty-string */
         public readonly string $link,
         public readonly string $favicon,
-        /** @var not-empty-string */
+        /** @var non-empty-string */
         public readonly string $sitename,
-        /** @var not-empty-string */
+        /** @var non-empty-string */
         public readonly string $siteurl,
         public readonly DateTimeInterface $created,
     ) {

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mwop\Feed\Webhook;
 
 use CuyZ\Valinor\Mapper\MappingError;
+use CuyZ\Valinor\Mapper\Source\Source;
 use CuyZ\Valinor\Mapper\TreeMapper;
 use Mwop\App\HomePageCacheExpiration;
 use Mwop\Feed\FeedItem;
@@ -42,13 +43,18 @@ class PayloadListener
     private function parsePayloadJson(Payload $payload): FeedItem
     {
         try {
-            return $this->mapper->map(FeedItem::class, $payload->json);
+            return $this->mapper->map(FeedItem::class, Source::json($payload->json));
         } catch (MappingError $e) {
             $this->logger->warning(sprintf(
                 "Unable to parse Feed RSS item webhook payload: %s\nPayload: %s",
                 $e->getMessage(),
                 $payload->json
             ));
+
+            while (null !== ($e = $e->getPrevious())) {
+                $this->logger->warning(sprintf('Previous message: %s', $e->getMessage()));
+            }
+
             return new InvalidFeedItem();
         }
     }

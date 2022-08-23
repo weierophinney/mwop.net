@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Mwop\Feed;
 
-use CuyZ\Valinor\Mapper\Tree\Message\ThrowableMessage;
 use CuyZ\Valinor\MapperBuilder;
 use DateTimeInterface;
 use Psr\Container\ContainerInterface;
@@ -23,12 +22,30 @@ class MapperBuilderDelegator
         $faviconMap = $container->get('config')['feeds']['favicon-map'] ?? [];
         Assert::isMap($faviconMap);
 
-        $builder->registerConstructor(
+        // The MapperBuilder class is immutable, so each method returns a new
+        // instance. As such, you need to capture it.
+        $builder = $builder->infer(
+            FeedItem::class,
+            /** @return class-string<InvalidFeedItem|PopulatedFeedItem> */
+            fn (string $author): string => preg_match('/phinney/i', $author)
+                    ? PopulatedFeedItem::class
+                    : InvalidFeedItem::class,
+        );
+
+        $builder = $builder->registerConstructor(
+            fn (
+                string $title,
+                string $link,
+                string $sitename,
+                string $siteurl,
+                DateTimeInterface $created,
+                string $favicon,
+            ): InvalidFeedItem => new InvalidFeedItem(),
             /**
-             * @param not-empty-string $title
-             * @param not-empty-string $link
-             * @param not-empty-string $sitename
-             * @param not-empty-string $siteurl
+             * @param non-empty-string $title
+             * @param non-empty-string $link
+             * @param non-empty-string $sitename
+             * @param non-empty-string $siteurl
              */
             function (
                 string $title,
@@ -36,19 +53,10 @@ class MapperBuilderDelegator
                 string $sitename,
                 string $siteurl,
                 DateTimeInterface $created,
-                null|string $favicon = null,
-                null|string $author = null,
-            ) use ($faviconMap): FeedItem {
-                if (is_string($author) && ! preg_match('/phinney/i', $author)) {
-                    return new InvalidFeedItem();
-                }
-
-                if (is_string($favicon) && preg_match('/^\s*$/', $favicon)) {
-                    throw ThrowableMessage::new('"favicon" was not a non-empty-string', 'empty_string');
-                }
-
+                string $favicon,
+            ) use ($faviconMap): PopulatedFeedItem {
                 if (
-                    null === $favicon
+                    empty($favicon)
                     && array_key_exists($siteurl, $faviconMap)
                 ) {
                     $favicon = $faviconMap[$siteurl];

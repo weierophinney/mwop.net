@@ -9,16 +9,21 @@ use DateTimeInterface;
 
 class InvalidFeedItem implements FeedItem
 {
-    public readonly string $title = '';
-    public readonly string $link = '';
-    public readonly string $favicon = '';
-    public readonly string $sitename = '';
-    public readonly string $siteurl = '';
+    public readonly string $title;
+    public readonly string $link;
+    public readonly string $favicon;
+    public readonly string $sitename;
+    public readonly string $siteurl;
     public readonly DateTimeInterface $created;
 
     public function __construct()
     {
-        $this->created = new DateTimeImmutable('now');
+        $this->title    = '';
+        $this->link     = '';
+        $this->favicon  = '';
+        $this->sitename = '';
+        $this->siteurl  = '';
+        $this->created  = new DateTimeImmutable('now');
     }
 
     public function jsonSerialize(): array
