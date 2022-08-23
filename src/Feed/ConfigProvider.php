@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Mwop\Feed;
 
+use CuyZ\Valinor\MapperBuilder;
 use Laminas\Feed\Reader\Entry\EntryInterface;
 use League\Plates\Engine;
 use Mezzio\Application;
@@ -42,6 +43,9 @@ class ConfigProvider
                 Engine::class                     => [
                     HomepagePostsDelegator::class,
                 ],
+                MapperBuilder::class              => [
+                    MapperBuilderDelegator::class,
+                ],
                 Webhook\PayloadListener::class    => [
                     DeferredServiceListenerDelegator::class,
                 ],
@@ -67,10 +71,15 @@ class ConfigProvider
 
     public function getFeedsConfig(): array
     {
+        // phpcs:disable Generic.Files.LineLength.TooLong
         return [
-            'feed-count' => 10,
-            'feeds'      => $this->getDefaultFeedsConfig(),
+            'favicon-map' => [
+                'https://www.zend.com/' => 'https://www.zend.com/sites/zend/themes/custom/zend/images/favicons/favicon.ico',
+            ],
+            'feed-count'  => 10,
+            'feeds'       => $this->getDefaultFeedsConfig(),
         ];
+        // phpcs:enable Generic.Files.LineLength.TooLong
     }
 
     public function getDefaultFeedsConfig(): array
