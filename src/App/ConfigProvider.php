@@ -6,6 +6,7 @@ namespace Mwop\App;
 
 use Aws\S3\S3Client;
 use CuyZ\Valinor\Mapper\TreeMapper;
+use CuyZ\Valinor\MapperBuilder;
 use Laminas\Feed\Reader\Http\ClientInterface as FeedReaderHttpClientInterface;
 use League\Plates\Engine;
 use Mezzio\Application;
@@ -50,6 +51,7 @@ class ConfigProvider
                 SwooleEventDispatcher::class   => EventDispatcherInterface::class,
             ],
             'invokables' => [
+                MapperBuilder::class                        => MapperBuilder::class,
                 Middleware\RedirectsMiddleware::class       => Middleware\RedirectsMiddleware::class,
                 Middleware\XClacksOverheadMiddleware::class => Middleware\XClacksOverheadMiddleware::class,
                 Middleware\XPoweredByMiddleware::class      => Middleware\XPoweredByMiddleware::class,
