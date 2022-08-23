@@ -4,16 +4,15 @@ declare(strict_types=1);
 
 namespace Mwop\Feed\Webhook;
 
-use JsonException;
+use CuyZ\Valinor\Mapper\MappingError;
+use CuyZ\Valinor\Mapper\TreeMapper;
 use Mwop\App\HomePageCacheExpiration;
 use Mwop\Feed\FeedItem;
 use Mwop\Feed\HomepagePostsList;
+use Mwop\Feed\InvalidFeedItem;
 use Psr\Log\LoggerInterface;
 
-use function json_decode;
 use function sprintf;
-
-use const JSON_THROW_ON_ERROR;
 
 class PayloadListener
 {
@@ -21,13 +20,14 @@ class PayloadListener
         private HomepagePostsList $postsList,
         private LoggerInterface $logger,
         private HomePageCacheExpiration $expireHomePageCache,
+        private TreeMapper $mapper,
     ) {
     }
 
     public function __invoke(Payload $payload): void
     {
-        $item = FeedItem::fromArray($this->parsePayloadJson($payload));
-        if (null === $item) {
+        $item = $this->parsePayloadJson($payload);
+        if ($item instanceof InvalidFeedItem) {
             return;
         }
 
@@ -39,17 +39,17 @@ class PayloadListener
         ($this->expireHomePageCache)();
     }
 
-    private function parsePayloadJson(Payload $payload): array
+    private function parsePayloadJson(Payload $payload): FeedItem
     {
         try {
-            return json_decode($payload->json, true, JSON_THROW_ON_ERROR);
-        } catch (JsonException $e) {
+            return $this->mapper->map(FeedItem::class, $payload->json);
+        } catch (MappingError $e) {
             $this->logger->warning(sprintf(
                 "Unable to parse Feed RSS item webhook payload: %s\nPayload: %s",
                 $e->getMessage(),
                 $payload->json
             ));
-            return [];
+            return new InvalidFeedItem();
         }
     }
 }
