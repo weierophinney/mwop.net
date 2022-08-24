@@ -10,14 +10,12 @@ use Stringable;
 use function preg_match;
 use function sprintf;
 
-use const JSON_THROW_ON_ERROR;
-
 class AtomEntry implements JsonSerializable, Stringable
 {
     private const TEMPLATE = '<li><a href="%s">%s</a></li>';
 
     /** @var null|non-empty-string */
-    private readonly ?string $link;
+    public readonly ?string $link;
 
     /** @param non-empty-string $link */
     public function __construct(
