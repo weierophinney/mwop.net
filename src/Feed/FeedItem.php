@@ -6,6 +6,7 @@ namespace Mwop\Feed;
 
 use JsonSerializable;
 
+// phpcs:ignore WebimpressCodingStandard.NamingConventions.Interface.Suffix
 interface FeedItem extends JsonSerializable
 {
 }

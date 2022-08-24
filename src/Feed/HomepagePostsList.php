@@ -54,8 +54,10 @@ class HomepagePostsList
             $items = [];
         }
 
+        // phpcs:disable Generic.Files.LineLength.TooLong
         return FeedCollection::make($items)
             ->map(fn (array $item): PopulatedFeedItem => $this->mapper->map(PopulatedFeedItem::class, Source::array($item)));
+        // phpcs:enable Generic.Files.LineLength.TooLong
     }
 
     public function write(FeedCollection $entries): void

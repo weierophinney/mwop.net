@@ -13,9 +13,9 @@ class HomepagePostsListFactory
 {
     public function __invoke(ContainerInterface $container): HomepagePostsList
     {
-        $config  = $container->get('config-feeds');
+        $config = $container->get('config-feeds');
 
-        $logger  = $container->get(LoggerInterface::class);
+        $logger = $container->get(LoggerInterface::class);
         Assert::isInstanceOf($logger, LoggerInterface::class);
 
         $builder = $container->get(MapperBuilder::class);

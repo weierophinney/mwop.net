@@ -9,6 +9,9 @@ use DateTimeInterface;
 use Psr\Container\ContainerInterface;
 use Webmozart\Assert\Assert;
 
+use function array_key_exists;
+use function preg_match;
+
 class MapperBuilderDelegator
 {
     public function __invoke(

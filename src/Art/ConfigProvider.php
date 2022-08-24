@@ -59,7 +59,7 @@ class ConfigProvider
                 AttachableListenerProvider::class => [
                     Webhook\PayloadListenerDelegator::class,
                 ],
-                MapperBuilder::class => [
+                MapperBuilder::class              => [
                     MapperBuilderDelegator::class,
                 ],
                 Webhook\PayloadListener::class    => [

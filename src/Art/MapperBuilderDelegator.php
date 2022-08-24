@@ -9,6 +9,9 @@ use DateTimeImmutable;
 use DateTimeInterface;
 use Psr\Container\ContainerInterface;
 
+use function preg_match;
+use function sprintf;
+
 class MapperBuilderDelegator
 {
     public function __invoke(
@@ -19,6 +22,7 @@ class MapperBuilderDelegator
         /** @var MapperBuilder $builder */
         $builder = $factory();
 
+        // phpcs:disable WebimpressCodingStandard.NamingConventions.ValidVariableName.NotCamelCaps
         // MapperBuilder is immutable; capture the return value.
         // This constructor is for incoming IG payloads
         $builder = $builder->registerConstructor(
@@ -38,6 +42,7 @@ class MapperBuilderDelegator
                 $this->transformStringDateTime($created_at)
             ),
         );
+        // phpcs:enable WebimpressCodingStandard.NamingConventions.ValidVariableName.NotCamelCaps
 
         return $builder;
     }
