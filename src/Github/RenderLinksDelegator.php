@@ -4,11 +4,16 @@ declare(strict_types=1);
 
 namespace Mwop\Github;
 
+use CuyZ\Valinor\Mapper\Source\Source;
+use CuyZ\Valinor\Mapper\TreeMapper;
+use CuyZ\Valinor\MapperBuilder;
 use Illuminate\Support\Collection;
+use JsonException;
 use Laminas\Escaper\Escaper;
 use League\Plates\Engine;
 use League\Plates\Extension\ExtensionInterface;
 use Psr\Container\ContainerInterface;
+use Webmozart\Assert\Assert;
 
 use function file_exists;
 use function file_get_contents;
@@ -19,9 +24,8 @@ use const JSON_THROW_ON_ERROR;
 
 class RenderLinksDelegator implements ExtensionInterface
 {
-    private const LINK_TEMPLATE = '<li><a href="%s">%s</a></li>';
-
     private readonly string $listLocation;
+    private readonly TreeMapper $dataMapper;
 
     public function __invoke(
         ContainerInterface $container,
@@ -30,6 +34,11 @@ class RenderLinksDelegator implements ExtensionInterface
     ): Engine {
         $config             = $container->get('config-github');
         $this->listLocation = $config['list_file'];
+
+        /** @var MapperBuilder $builder */
+        $builder = $container->get(MapperBuilder::class);
+        Assert::isInstanceOf($builder, MapperBuilder::class);
+        $this->dataMapper = $builder->mapper();
 
         /** @var Engine $engine */
         $engine = $factory();
@@ -46,7 +55,7 @@ class RenderLinksDelegator implements ExtensionInterface
     {
         $escaper = new Escaper();
         $links   = (new Collection($this->parseList()))
-            ->map(fn (array $item): AtomEntry => AtomEntry::fromArray($item))
+            ->map(fn (array $item): AtomEntry => $this->dataMapper->map(AtomEntry::class, Source::array($item)))
             ->filter(fn (?AtomEntry $item): bool => $item !== null)
             ->map(fn (AtomEntry $item): string => (string) $item);
 

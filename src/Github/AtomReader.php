@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Mwop\Github;
 
+use CuyZ\Valinor\Mapper\Source\Source;
+use CuyZ\Valinor\Mapper\TreeMapper;
 use Laminas\Feed\Reader\Entry\EntryInterface;
 use Laminas\Feed\Reader\Reader as FeedReader;
 
@@ -16,8 +18,10 @@ class AtomReader
     protected array $filters = [];
     protected int $limit     = 10;
 
-    public function __construct(protected string $user)
-    {
+    public function __construct(
+        protected string $user,
+        private TreeMapper $mapper,
+    ) {
     }
 
     public function setLimit(int $limit): self
@@ -39,11 +43,11 @@ class AtomReader
         $entries = AtomCollection::make($feed)
             ->filterChain($this->filters)
             ->slice(0, $this->limit)
-            ->map(fn (EntryInterface $entry): AtomEntry => AtomEntry::fromArray([
+            ->map(fn (EntryInterface $entry): AtomEntry => $this->mapper->map(AtomEntry::class, Source::array([
                 'title'   => $entry->getTitle(),
                 'link'    => $entry->getLink(),
                 'content' => $entry->getContent(),
-            ]));
+            ])));
 
         return [
             'last_modified' => $feed->getDateModified(),
