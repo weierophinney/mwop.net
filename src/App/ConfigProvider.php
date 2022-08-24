@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Mwop\App;
 
 use Aws\S3\S3Client;
-use CuyZ\Valinor\Mapper\TreeMapper;
 use CuyZ\Valinor\MapperBuilder;
 use Laminas\Feed\Reader\Http\ClientInterface as FeedReaderHttpClientInterface;
 use League\Plates\Engine;
@@ -81,7 +80,6 @@ class ConfigProvider
                 ResponseCachePool::class                     => Factory\ResponseCachePoolFactory::class,
                 S3Client::class                              => Factory\S3ClientFactory::class,
                 SessionCachePool::class                      => SessionCachePoolFactory::class,
-                TreeMapper::class                            => Factory\JsonMapperFactory::class,
                 UserRepositoryInterface::class               => UserRepositoryFactory::class,
             ],
             'delegators' => [

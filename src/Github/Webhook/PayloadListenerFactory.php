@@ -4,21 +4,25 @@ declare(strict_types=1);
 
 namespace Mwop\Github\Webhook;
 
-use CuyZ\Valinor\Mapper\TreeMapper;
+use CuyZ\Valinor\MapperBuilder;
 use Mwop\App\HomePageCacheExpiration;
 use Mwop\Github\ItemList;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
+use Webmozart\Assert\Assert;
 
 class PayloadListenerFactory
 {
     public function __invoke(ContainerInterface $container): PayloadListener
     {
+        $builder = $container->get(MapperBuilder::class);
+        Assert::isInstanceOf($builder, MapperBuilder::class);
+
         return new PayloadListener(
             itemList: $container->get(ItemList::class),
             logger: $container->get(LoggerInterface::class),
             expireHomePageCache: $container->get(HomePageCacheExpiration::class),
-            mapper: $container->get(TreeMapper::class),
+            mapper: $builder->mapper(),
         );
     }
 }
