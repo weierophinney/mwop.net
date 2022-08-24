@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Mwop\Feed;
 
+use CuyZ\Valinor\Mapper\Source\Source;
+use CuyZ\Valinor\Mapper\TreeMapper;
 use JsonException;
 use Psr\Log\LoggerInterface;
 
@@ -28,6 +30,7 @@ class HomepagePostsList
     public function __construct(
         private readonly int $limit,
         private LoggerInterface $logger,
+        private TreeMapper $mapper,
     ) {
         $this->listLocation = sprintf(Console\FeedAggregator::CACHE_FILE, realpath(getcwd()));
     }
@@ -52,7 +55,7 @@ class HomepagePostsList
         }
 
         return FeedCollection::make($items)
-            ->map(fn (array $item): FeedItem => FeedItem::fromArray($item));
+            ->map(fn (array $item): PopulatedFeedItem => $this->mapper->map(PopulatedFeedItem::class, Source::array($item)));
     }
 
     public function write(FeedCollection $entries): void
