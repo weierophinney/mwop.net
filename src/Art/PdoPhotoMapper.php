@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Mwop\Art;
 
+use DateTimeImmutable;
 use DateTimeInterface;
 use Illuminate\Support\Collection;
 use Laminas\Paginator\Paginator;
@@ -37,7 +38,7 @@ class PdoPhotoMapper implements PhotoMapper
                 url: $row['source'],
                 sourceUrl: $row['source_url'],
                 description: $row['description'],
-                createdAt: $row['created'],
+                createdAt: new DateTimeImmutable($row['created']),
                 filename: $row['filename'],
             );
         };
@@ -74,7 +75,7 @@ class PdoPhotoMapper implements PhotoMapper
             url: $row['source'],
             sourceUrl: $row['source_url'],
             description: $row['description'],
-            createdAt: $row['created'],
+            createdAt: new DateTimeImmutable($row['created']),
             filename: $row['filename'],
         );
     }

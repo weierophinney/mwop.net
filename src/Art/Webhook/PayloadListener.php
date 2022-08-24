@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Mwop\Art\Webhook;
 
+use CuyZ\Valinor\Mapper\MappingError;
+use CuyZ\Valinor\Mapper\Source\Source;
+use CuyZ\Valinor\Mapper\TreeMapper;
 use ImagickException;
-use JsonException;
 use League\Flysystem\FilesystemException;
 use League\Flysystem\UnableToCopyFile;
 use League\Flysystem\UnableToWriteFile;
@@ -16,10 +18,7 @@ use Mwop\Art\PhotoStorage;
 use PDOException;
 use Psr\Log\LoggerInterface;
 
-use function json_decode;
 use function sprintf;
-
-use const JSON_THROW_ON_ERROR;
 
 class PayloadListener
 {
@@ -27,6 +26,7 @@ class PayloadListener
         private PhotoStorage $photos,
         private PhotoMapper $mapper,
         private DatabaseBackup $backup,
+        private TreeMapper $dataMapper,
         private LoggerInterface $logger,
         private ErrorNotifier $notifier,
         private HomePageCacheExpiration $expireHomePageCache,
@@ -66,10 +66,10 @@ class PayloadListener
     private function parsePayloadJson(Payload $payload): ?Photo
     {
         try {
-            $photoData = json_decode($payload->json, true, flags: JSON_THROW_ON_ERROR);
-        } catch (JsonException $e) {
+            return $this->dataMapper->map(Photo::class, Source::json($payload->json));
+        } catch (MappingError $e) {
             $message = sprintf(
-                "Unable to parse Instagram webhook payload: %s\nPayload: %s",
+                "Unable to parse Instagram webhook payload, or invalid Instagram payload detected: %s\nPayload: %s",
                 $e->getMessage(),
                 $payload->json
             );
@@ -78,20 +78,6 @@ class PayloadListener
 
             return null;
         }
-
-        $photo = Photo::fromArray($photoData);
-        if (null === $photo) {
-            $message = sprintf(
-                'Invalid Instagram payload detected: %s',
-                $payload->json
-            );
-            $this->notifier->sendNotification($message);
-            $this->logger->warning($message);
-
-            return null;
-        }
-
-        return $photo;
     }
 
     private function upload(Photo $photo): ?string

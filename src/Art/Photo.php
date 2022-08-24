@@ -4,46 +4,18 @@ declare(strict_types=1);
 
 namespace Mwop\Art;
 
-use DateTimeImmutable;
 use DateTimeInterface;
 use JsonSerializable;
-use Webmozart\Assert\Assert;
-
-use function is_string;
-use function preg_match;
-use function sprintf;
 
 class Photo implements JsonSerializable
 {
-    public readonly DateTimeInterface $createdAt;
-
     public function __construct(
         public readonly string $url,
         public readonly string $sourceUrl,
         public readonly string $description,
-        string|DateTimeInterface $createdAt,
+        public readonly DateTimeInterface $createdAt,
         private ?string $filename = null,
     ) {
-        if (is_string($createdAt)) {
-            $createdAt = $this->transformStringDateTime($createdAt);
-        }
-        $this->createdAt = $createdAt;
-    }
-
-    public static function fromArray(array $payload): self
-    {
-        Assert::keyExists($payload, 'source_url', 'Missing source_url in Instagram payload');
-        Assert::keyExists($payload, 'created_at', 'Missing created_at in Instagram payload');
-        Assert::stringNotEmpty($payload['source_url'], 'Empty source_url in Instagram payload');
-        Assert::stringNotEmpty($payload['created_at'], 'Empty created_at in Instagram payload');
-
-        return new self(
-            url: $payload['url'] ?? '',
-            sourceUrl: $payload['source_url'],
-            description: $payload['description'] ?? '',
-            createdAt: $payload['created_at'],
-            filename: $payload['filename'] ?? null,
-        );
     }
 
     public function jsonSerialize(): array
@@ -65,29 +37,5 @@ class Photo implements JsonSerializable
     public function injectFilename(string $filename): void
     {
         $this->filename = $filename;
-    }
-
-    private function transformStringDateTime(string $dateTime): DateTimeInterface
-    {
-        $matches = [];
-
-        if (
-            ! preg_match(
-                '/^(?P<month>\S+) (?P<day>\d+), (?P<year>\d{4}) at (?P<time>\d{2}:\d{2})(?P<meridian>am|pm)$/i',
-                $dateTime,
-                $matches
-            )
-        ) {
-            return new DateTimeImmutable($dateTime);
-        }
-
-        return new DateTimeImmutable(sprintf(
-            '%s %d, %d %s%s',
-            $matches['month'],
-            $matches['day'],
-            $matches['year'],
-            $matches['time'],
-            $matches['meridian'],
-        ));
     }
 }

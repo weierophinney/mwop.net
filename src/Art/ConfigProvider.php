@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Mwop\Art;
 
+use CuyZ\Valinor\MapperBuilder;
 use Mezzio\Application;
 use Mezzio\Authentication\AuthenticationMiddleware;
 use Mezzio\Authorization\AuthorizationMiddleware;
@@ -57,6 +58,9 @@ class ConfigProvider
             'delegators' => [
                 AttachableListenerProvider::class => [
                     Webhook\PayloadListenerDelegator::class,
+                ],
+                MapperBuilder::class => [
+                    MapperBuilderDelegator::class,
                 ],
                 Webhook\PayloadListener::class    => [
                     DeferredServiceListenerDelegator::class,
