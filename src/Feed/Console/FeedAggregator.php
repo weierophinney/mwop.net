@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Mwop\Feed\Console;
 
+use DateTimeImmutable;
 use DateTimeInterface;
 use Error;
 use Http\Discovery\HttpClientDiscovery;
@@ -12,6 +13,7 @@ use Laminas\Feed\Reader\Feed\FeedInterface;
 use Laminas\Feed\Reader\Reader as FeedReader;
 use Mwop\Feed\FeedCollection;
 use Mwop\Feed\FeedItem;
+use Mwop\Feed\PopulatedFeedItem;
 use Psr\Http\Message\RequestFactoryInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -143,13 +145,13 @@ class FeedAggregator extends Command
         $entries = FeedCollection::make($feed)
             ->filterChain($filters)
             ->each($each)
-            ->map(fn (EntryInterface $entry): FeedItem => new FeedItem(
+            ->map(fn (EntryInterface $entry): FeedItem => new PopulatedFeedItem(
                 title: $entry->getTitle(),
                 link: $entry->getLink(),
                 favicon: $logo,
                 sitename: $siteName,
                 siteurl: $siteUrl,
-                created: $entry->getDateCreated(),
+                created: $entry->getDateCreated() ?: new DateTimeImmutable('now'),
             ));
 
         $io->progressFinish();
