@@ -1,4 +1,8 @@
-<?php $this->layout('layout::layout', [
+<?php
+
+use Mwop\Console\Mastodon\Collection;
+
+ $this->layout('layout::layout', [
     'title' => 'Welcome',
 ]) ?>
 
@@ -73,10 +77,17 @@ $this->end();
         <p class="text-right"><em><a href="https://github.com/weierophinney?tab=activity">Read more</a></em></p>
     </div>
 
+<?php if ($mastodon instanceof Collection): ?>
     <div class="mt-2">
-        <a class="twitter-timeline" data-height="600" href="https://twitter.com/mwop?ref_src=twsrc%5Etfw">Tweets by mwop</a>
-        <script async src="/js/twitter.js"></script>
+        <h3>Recent social posts</h3>
+
+        <ul>
+        <?php foreach ($mastodon as $post): ?>
+            <li><?= $post->content ?><br />(posted <a href="<?= $post->link ?>"><?= $post->created->format(DateTimeInterface::RFC7231) ?></a>)</li>
+        <?php endforeach ?>
+        </ul>
     </div>
+<?php endif ?>
 </aside>
 
 </div>

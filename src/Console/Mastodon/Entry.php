@@ -21,7 +21,7 @@ class Entry implements JsonSerializable
     public function jsonSerialize(): array
     {
         return [
-            'created' => $this->created->format('c'),
+            'created' => $this->created->format(DateTimeInterface::ATOM),
             'link'    => $this->link,
             'content' => $this->content,
         ];
