@@ -19,6 +19,7 @@ class ConfigProvider
         return [
             'factories'  => [
                 ClearResponseCache::class => ClearResponseCacheFactory::class,
+                FetchMastodonFeed::class  => FetchMastodonFeedFactory::class,
             ],
             'invokables' => [
                 ClearStaticCache::class => ClearStaticCache::class,
@@ -32,6 +33,7 @@ class ConfigProvider
             'commands' => [
                 'cache:clear-static'   => ClearStaticCache::class,
                 'cache:clear-response' => ClearResposneCache::class,
+                'mastodon:fetch'       => FetchMastodonFeed::class,
             ],
         ];
     }

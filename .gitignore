@@ -14,9 +14,10 @@ data/github-links.phtml
 data/homepage.posts.json
 data/homepage.posts.php
 data/instagram.feed.php
-data/redis/
+data/mastodon.json
 data/photodb/
 data/posts.db
+data/redis/
 data/search_terms.json
 data/sessions/
 data/tag-cloud.phtml
