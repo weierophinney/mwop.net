@@ -81,11 +81,13 @@ $this->end();
     <div class="mt-2">
         <h3>Recent social posts</h3>
 
-        <ul>
-        <?php foreach ($mastodon as $post): ?>
-            <li><?= $post->content ?><br />(posted <a href="<?= $post->link ?>"><?= $post->created->format(DateTimeInterface::RFC7231) ?></a>)</li>
-        <?php endforeach ?>
-        </ul>
+    <?php foreach ($mastodon->slice(0, 5) as $post): ?>
+        <div class="w-full my-2 mx-auto p-4 border-2 border-black rounded bg-mwop-light text-mwop-bg">
+            <div class="mb-4 border-b border-dashed border-mwop-nav"><?= $post->content ?></div>
+
+            <p class="text-right">&mdash; posted <a class="text-mwop-dark hover:text-mwop-nav hover:font-normal " href="<?= $post->link ?>"><?= $post->created->format(DateTimeInterface::RFC7231) ?></a>)</p>
+        </div>
+    <?php endforeach ?>
     </div>
 <?php endif ?>
 </aside>
