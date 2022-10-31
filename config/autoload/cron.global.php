@@ -12,6 +12,11 @@ return [
                 'schedule' => '0 */3 * * *',
                 'event'    => Comics\ComicsEvent::class,
             ],
+            // Fetch social posts every 15 minutes
+            'phpc_social' => [
+                'schedule' => '*/15 * * * *',
+                'event'    => Mastodon\PostEvent::class,
+            ],
         ],
     ],
 ];

@@ -104,6 +104,7 @@
         "build:comics": "laminas comics:for-site",
         "build:homepage": [
             "laminas github:fetch-activity",
+            "laminas mastodon:fetch",
             "laminas homepage-feeds"
         ],
         "clean": [

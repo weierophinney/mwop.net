@@ -8,6 +8,7 @@ use CuyZ\Valinor\Mapper\Source\Source;
 use CuyZ\Valinor\Mapper\TreeMapper;
 use Laminas\Feed\Reader\Entry\EntryInterface;
 use Laminas\Feed\Reader\Reader;
+use Psr\Log\LoggerInterface;
 
 class FetchMastodonFeed
 {
@@ -16,11 +17,6 @@ class FetchMastodonFeed
     public function __construct(
         private TreeMapper $mapper,
     ) {
-    }
-
-    public function __invoke(): void
-    {
-        
     }
 
     public function fetchEntries(): Collection
