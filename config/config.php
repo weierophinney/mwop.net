@@ -53,6 +53,7 @@ $aggregator = new ConfigAggregator([
     Mwop\Feed\ConfigProvider::class,
     Mwop\Github\ConfigProvider::class,
     Mwop\Hooks\ConfigProvider::class,
+    Mwop\Mastodon\ConfigProvider::class,
     Mwop\Now\ConfigProvider::class,
 
     // Include cache configuration

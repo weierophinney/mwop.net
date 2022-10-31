@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Mwop\Console;
+namespace Mwop\Mastodon;
 
 use CuyZ\Valinor\MapperBuilder;
 use Laminas\Feed\Reader\Http\ClientInterface as FeedReaderHttpClientInterface;

@@ -2,12 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Mwop\Console;
+namespace Mwop\Mastodon\Console;
 
 use CuyZ\Valinor\Mapper\Source\Source;
 use CuyZ\Valinor\Mapper\TreeMapper;
 use Laminas\Feed\Reader\Entry\EntryInterface;
 use Laminas\Feed\Reader\Reader;
+use Mwop\Mastodon\Collection;
+use Mwop\Mastodon\Entry;
+use Mwop\Mastodon\FetchMastodonFeed as FetchMastodonFeedService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -16,10 +19,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class FetchMastodonFeed extends Command
 {
-    private const FEED_URI = 'https://phpc.social/users/mwop.rss';
     public function __construct(
-        private TreeMapper $mapper,
-        private int $maxItems = 10,
+        private FetchMastodonFeedService $feed,
     ) {
         parent::__construct();
     }
@@ -41,22 +42,12 @@ class FetchMastodonFeed extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $path = $input->getOption('path');
+        $io   = new SymfonyStyle($input, $output);
 
-        $io = new SymfonyStyle($input, $output);
         $io->title('Retrieving Mastodon activity');
-
-        $feed = Reader::import(self::FEED_URI);
-        $entries = Mastodon\Collection::make($feed)
-            ->slice(0, $this->maxItems)
-            ->map(fn (EntryInterface $entry): Mastodon\Entry => $this->mapper->map(Mastodon\Entry::class, Source::array([
-                'link'    => $entry->getLink(),
-                'content' => $entry->getDescription(),
-                'created' => $entry->getDateCreated(),
-            ])));
-
+        $entries = $this->feed->fetchEntries();
         $io->info(sprintf('Writing entries to %s', $path));
-        file_put_contents($path, $entries->toJson(JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE));
-        
+        $this->feed->cacheEntries($entries, $path);
         $io->success('Done!');
 
         return 0;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Mwop\Console\Mastodon;
+namespace Mwop\Mastodon;
 
 use Illuminate\Support\Collection as SupportCollection;
 
