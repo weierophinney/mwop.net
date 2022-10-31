@@ -1,20 +1,19 @@
 <?php
 
 use Mwop\Console\Mastodon\Collection;
+use Mwop\App\RelativeTime;
 
- $this->layout('layout::layout', [
+$this->layout('layout::layout', [
     'title' => 'Welcome',
-]) ?>
+]);
+
+$relativeTime = new RelativeTime();
+
+?>
 
 <?php
 $this->push('links');
 echo '<link rel="canonical" href="https://mwop.net/" />';
-$this->end();
-?>
-
-<?php
-$this->push('scripts');
-echo '<script src="/assets/js/twitter.js"></script>';
 $this->end();
 ?>
 
@@ -66,7 +65,7 @@ $this->end();
 
         <ul class="homepage-feed"><?= $this->homepagePosts() ?></ul>
 
-        <p class="text-right"><em><a href="<?= $this->url('blog') ?>">Read more</a></em></p>
+        <p class="text-right italic"><a href="<?= $this->url('blog') ?>">Read more</a></p>
     </div>
 
     <div class="my-2 border-b-2 border-dashed border-mwop-soft">
@@ -74,7 +73,7 @@ $this->end();
 
         <ul id="github" class="homepage-feed"><?= $this->renderGithubFeed() ?></ul>
 
-        <p class="text-right"><em><a href="https://github.com/weierophinney?tab=activity">Read more</a></em></p>
+        <p class="text-right italic"><a href="https://github.com/weierophinney?tab=activity">Read more</a></p>
     </div>
 
 <?php if ($mastodon instanceof Collection): ?>
@@ -82,12 +81,14 @@ $this->end();
         <h3>Recent social posts</h3>
 
     <?php foreach ($mastodon->slice(0, 5) as $post): ?>
-        <div class="w-full my-2 mx-auto p-4 border-2 border-black rounded bg-mwop-light text-mwop-bg">
-            <div class="mb-4 border-b border-dashed border-mwop-nav"><?= $post->content ?></div>
+        <div class="w-full my-2 mx-auto p-4 border-2 border-black rounded-tl-lg bg-mwop-light text-mwop-bg">
+            <div class="mb-4"><?= $post->content ?></div>
 
-            <p class="text-right">&mdash; posted <a class="text-mwop-dark hover:text-mwop-nav hover:font-normal " href="<?= $post->link ?>"><?= $post->created->format(DateTimeInterface::RFC7231) ?></a>)</p>
+            <p class="mb-0 pt-2 border-t border-dashed border-mwop-nav text-right text-sm italic">&mdash; posted <a class="text-mwop-dark hover:text-mwop-nav hover:font-normal " href="<?= $post->link ?>"><?= $relativeTime($post->created) ?></a></p>
         </div>
     <?php endforeach ?>
+
+        <p class="text-right italic"><a href="https://phpc.social/@mwop">Read more</a></p>
     </div>
 <?php endif ?>
 </aside>
@@ -107,7 +108,7 @@ $this->end();
         their applications, from APIs to content management systems, including Zend Framework, Apigility, and Expressive.
         He is a renowned speaker and technical writer, blogs at
         <a href="<?= $this->serverurl($this->url('blog')) ?>"><?= $this->serverurl($this->url('blog')) ?></a>
-        and tweets as <a href="https://twitter.com/mwop">@mwop</a>.
+        and posts as <a href="https://phpc.social/@mwop">@mwop</a>.
     </p>
   </div>
 </div>
