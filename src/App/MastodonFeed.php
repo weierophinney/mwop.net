@@ -8,8 +8,8 @@ use CuyZ\Valinor\Mapper\MappingError;
 use CuyZ\Valinor\Mapper\Source\Source;
 use CuyZ\Valinor\Mapper\TreeMapper;
 use JsonException;
-use Mwop\Console\Mastodon\Collection;
-use Mwop\Console\Mastodon\Entry;
+use Mwop\Mastodon\Collection;
+use Mwop\Mastodon\Entry;
 use Psr\Log\LoggerInterface;
 
 use function file_get_contents;
