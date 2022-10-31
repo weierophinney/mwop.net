@@ -54,7 +54,7 @@ class HomePageHandlerTest extends TestCase
             ->expects($this->atLeastOnce())
             ->method('render')
             ->with(HomePageHandler::TEMPLATE, [
-                'photos' => $paginator,
+                'photos'   => $paginator,
                 'mastodon' => $collection,
             ])
             ->willReturn('content');
