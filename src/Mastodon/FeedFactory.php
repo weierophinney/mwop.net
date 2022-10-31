@@ -2,23 +2,26 @@
 
 declare(strict_types=1);
 
-namespace Mwop\App;
+namespace Mwop\Mastodon;
 
 use CuyZ\Valinor\MapperBuilder;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 use Webmozart\Assert\Assert;
 
-class MastodonFeedFactory
+use function getcwd;
+use function realpath;
+
+class FeedFactory
 {
-    public function __invoke(ContainerInterface $container): MastodonFeed
+    public function __invoke(ContainerInterface $container): Feed
     {
         /** @var MapperBuilder $builder */
         $builder = $container->get(MapperBuilder::class);
         Assert::isInstanceOf($builder, MapperBuilder::class);
 
-        return new MastodonFeed(
-            feedPath: 'data/mastodon.json',
+        return new Feed(
+            feedPath: realpath(getcwd()) . '/data/mastodon.json',
             mapper: $builder->mapper(),
             logger: $container->get(LoggerInterface::class),
         );

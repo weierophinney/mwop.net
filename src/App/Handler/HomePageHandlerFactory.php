@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Mwop\App\Handler;
 
 use Mezzio\Template\TemplateRendererInterface;
-use Mwop\App\MastodonFeed;
 use Mwop\Art\PhotoMapper;
+use Mwop\Mastodon\Feed;
 use Psr\Container\ContainerInterface;
 
 class HomePageHandlerFactory
@@ -15,7 +15,7 @@ class HomePageHandlerFactory
     {
         return new HomePageHandler(
             photos: $container->get(PhotoMapper::class),
-            mastodonFeed: $container->get(MastodonFeed::class),
+            mastodonFeed: $container->get(Feed::class),
             renderer: $container->get(TemplateRendererInterface::class),
         );
     }

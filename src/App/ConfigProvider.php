@@ -75,7 +75,6 @@ class ConfigProvider
                 Handler\ResumePageHandler::class             => Handler\PageHandlerFactory::class,
                 HomePageCacheExpiration::class               => HomePageCacheExpirationFactory::class,
                 'mail.transport'                             => Factory\MailTransport::class,
-                MastodonFeed::class                          => MastodonFeedFactory::class,
                 Middleware\CacheMiddleware::class            => Middleware\CacheMiddlewareFactory::class,
                 Middleware\RedirectAmpPagesMiddleware::class => Middleware\RedirectAmpPagesMiddlewareFactory::class,
                 ResponseCachePool::class                     => Factory\ResponseCachePoolFactory::class,

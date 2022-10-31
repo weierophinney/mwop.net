@@ -2,14 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Mwop\App;
+namespace Mwop\Mastodon;
 
 use CuyZ\Valinor\Mapper\MappingError;
 use CuyZ\Valinor\Mapper\Source\Source;
 use CuyZ\Valinor\Mapper\TreeMapper;
 use JsonException;
-use Mwop\Mastodon\Collection;
-use Mwop\Mastodon\Entry;
 use Psr\Log\LoggerInterface;
 
 use function file_get_contents;
@@ -17,7 +15,7 @@ use function json_decode;
 
 use const JSON_THROW_ON_ERROR;
 
-class MastodonFeed
+class Feed
 {
     public function __construct(
         /** @psalm-var non-empty-string */

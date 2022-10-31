@@ -30,6 +30,7 @@ class ConfigProvider
             ],
             'factories'  => [
                 Console\FetchMastodonFeed::class => Console\FetchMastodonFeedFactory::class,
+                Feed::class                      => FeedFactory::class,
                 FetchMastodonFeed::class         => FetchMastodonFeedFactory::class,
                 FetchMastodonFeedListener::class => FetchMastodonFeedListenerFactory::class,
             ],

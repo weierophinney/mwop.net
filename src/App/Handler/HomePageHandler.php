@@ -6,8 +6,8 @@ namespace Mwop\App\Handler;
 
 use Laminas\Diactoros\Response\HtmlResponse;
 use Mezzio\Template\TemplateRendererInterface;
-use Mwop\App\MastodonFeed;
 use Mwop\Art\PhotoMapper;
+use Mwop\Mastodon\Feed;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -18,7 +18,7 @@ class HomePageHandler implements RequestHandlerInterface
 
     public function __construct(
         private PhotoMapper $photos,
-        private MastodonFeed $mastodonFeed,
+        private Feed $mastodonFeed,
         private TemplateRendererInterface $renderer,
     ) {
     }

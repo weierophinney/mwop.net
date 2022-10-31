@@ -8,9 +8,9 @@ use Laminas\Diactoros\Response\HtmlResponse;
 use Laminas\Paginator\Paginator;
 use Mezzio\Template\TemplateRendererInterface;
 use Mwop\App\Handler\HomePageHandler;
-use Mwop\App\MastodonFeed;
 use Mwop\Art\PhotoMapper;
 use Mwop\Mastodon\Collection;
+use Mwop\Mastodon\Feed;
 use MwopTest\HttpMessagesTrait;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -27,8 +27,8 @@ class HomePageHandlerTest extends TestCase
         $photos = $this->createMock(PhotoMapper::class);
         /** @var Paginator|MockObject $paginator */
         $paginator = $this->createMock(Paginator::class);
-        /** @var MastodonFeed|MockObject $mastodon */
-        $mastodon   = $this->createMock(MastodonFeed::class);
+        /** @var Feed|MockObject $mastodon */
+        $mastodon   = $this->createMock(Feed::class);
         $collection = new Collection([]);
 
         $photos
