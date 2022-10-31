@@ -162,10 +162,7 @@ class ConfigProvider
 
     public function registerRoutes(Application $app): void
     {
-        $app->get('/', [
-            Middleware\CacheMiddleware::class,
-            Handler\HomePageHandler::class,
-        ], 'home');
+        $app->get('/', Handler\HomePageHandler::class, 'home');
         $app->get('/resume', [
             Middleware\CacheMiddleware::class,
             Handler\ResumePageHandler::class,
