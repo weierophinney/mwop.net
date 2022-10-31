@@ -4,18 +4,14 @@ declare(strict_types=1);
 
 namespace Mwop\Mastodon\Console;
 
-use CuyZ\Valinor\Mapper\Source\Source;
-use CuyZ\Valinor\Mapper\TreeMapper;
-use Laminas\Feed\Reader\Entry\EntryInterface;
-use Laminas\Feed\Reader\Reader;
-use Mwop\Mastodon\Collection;
-use Mwop\Mastodon\Entry;
 use Mwop\Mastodon\FetchMastodonFeed as FetchMastodonFeedService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+
+use function sprintf;
 
 class FetchMastodonFeed extends Command
 {

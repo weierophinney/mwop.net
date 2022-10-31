@@ -24,11 +24,11 @@ class ConfigProvider
                 AttachableListenerProvider::class => [
                     FetchMastodonFeedDelegator::class,
                 ],
-                FetchMastodonFeedListener::class => [
+                FetchMastodonFeedListener::class  => [
                     DeferredServiceListenerDelegator::class,
                 ],
             ],
-            'factories' => [
+            'factories'  => [
                 Console\FetchMastodonFeed::class => Console\FetchMastodonFeedFactory::class,
                 FetchMastodonFeed::class         => FetchMastodonFeedFactory::class,
                 FetchMastodonFeedListener::class => FetchMastodonFeedListenerFactory::class,
@@ -41,7 +41,7 @@ class ConfigProvider
         return [
             'commands' => [
                 'mastodon:fetch' => Console\FetchMastodonFeed::class,
-            ]
+            ],
         ];
     }
 }

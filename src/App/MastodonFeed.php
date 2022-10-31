@@ -12,6 +12,11 @@ use Mwop\Console\Mastodon\Collection;
 use Mwop\Console\Mastodon\Entry;
 use Psr\Log\LoggerInterface;
 
+use function file_get_contents;
+use function json_decode;
+
+use const JSON_THROW_ON_ERROR;
+
 class MastodonFeed
 {
     public function __construct(
@@ -27,10 +32,10 @@ class MastodonFeed
         $json = file_get_contents($this->feedPath);
 
         try {
-            $raw  = json_decode($json, associative: true, flags: JSON_THROW_ON_ERROR);
+            $raw = json_decode($json, associative: true, flags: JSON_THROW_ON_ERROR);
         } catch (JsonException $e) {
             $this->logger->warning('Error parsing Mastodon social feed: {error}', [
-                'error' => $e->getMessage()
+                'error' => $e->getMessage(),
             ]);
 
             return null;

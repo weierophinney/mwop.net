@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Mwop\App\Handler;
 
-use Mwop\App\MastodonFeed;
 use Mezzio\Template\TemplateRendererInterface;
+use Mwop\App\MastodonFeed;
 use Mwop\Art\PhotoMapper;
 use Psr\Container\ContainerInterface;
 

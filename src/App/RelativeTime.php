@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mwop\App;
 
 use DateInterval;
@@ -10,9 +12,9 @@ class RelativeTime
 {
     public function __invoke(DateTimeInterface $compare): string
     {
-        $now = new DateTimeImmutable();
+        $now  = new DateTimeImmutable();
         $diff = $now->diff($compare);
-        
+
         return $diff->invert === 1
             ? $this->preparePastTimeString($diff)
             : $this->prepareFutureTimeString($diff);
