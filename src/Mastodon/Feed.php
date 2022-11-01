@@ -42,7 +42,7 @@ class Feed
         $items = Collection::make($raw);
 
         try {
-            $items = $items->map(fn (array $entry): Entry => $this->mapper->map(Entry::class, Source::array($entry)));
+            return $items->map(fn (array $entry): Entry => $this->mapper->map(Entry::class, Source::array($entry)));
         } catch (MappingError $e) {
             $this->logger->warning('Error mapping Mastodon social feed item: {error}', [
                 'error' => $e->getMessage(),
@@ -56,7 +56,5 @@ class Feed
 
             return null;
         }
-
-        return $items;
     }
 }
