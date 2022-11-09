@@ -5,7 +5,6 @@ declare(strict_types=1);
 use Laminas\ConfigAggregator\ArrayProvider;
 use Laminas\ConfigAggregator\ConfigAggregator;
 use Laminas\ConfigAggregator\PhpFileProvider;
-use Mezzio\Hal\ConfigProvider;
 
 // To enable or disable caching, set the `ConfigAggregator::ENABLE_CACHE` boolean in
 // `config/autoload/local.php`.
@@ -14,7 +13,7 @@ $cacheConfig = [
 ];
 
 $aggregator = new ConfigAggregator([
-    ConfigProvider::class,
+    Mezzio\Hal\ConfigProvider::class,
     Mezzio\Authorization\Rbac\ConfigProvider::class,
     Mezzio\Authorization\ConfigProvider::class,
     Mezzio\Authentication\Session\ConfigProvider::class,
