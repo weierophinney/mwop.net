@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ac11f32ee3a1324178236fd53a73679a",
+    "content-hash": "66cb2f9d93c528d62849c73f772e3d71",
     "packages": [
         {
             "name": "abraham/twitteroauth",
@@ -3977,6 +3977,99 @@
             "time": "2022-10-10T21:52:43+00:00"
         },
         {
+            "name": "mezzio/mezzio-hal",
+            "version": "2.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mezzio/mezzio-hal.git",
+                "reference": "09d1965257585e230ed304734803a3c8601a467c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mezzio/mezzio-hal/zipball/09d1965257585e230ed304734803a3c8601a467c",
+                "reference": "09d1965257585e230ed304734803a3c8601a467c",
+                "shasum": ""
+            },
+            "require": {
+                "ext-dom": "*",
+                "ext-json": "*",
+                "php": "^7.4 || ~8.0.0 || ~8.1.0",
+                "psr/container": "^1.1.2 || ^2.0.2",
+                "psr/http-factory": "^1.0",
+                "psr/http-message": "^1.0.1",
+                "psr/link": "^1.0",
+                "webmozart/assert": "^1.10",
+                "willdurand/negotiation": "^3.0"
+            },
+            "conflict": {
+                "zendframework/zend-expressive-hal": "*"
+            },
+            "provide": {
+                "psr/link-implementation": "1.0"
+            },
+            "require-dev": {
+                "doctrine/orm": "^2.9.4",
+                "laminas/laminas-coding-standard": "~2.3.0",
+                "laminas/laminas-hydrator": "^4.3",
+                "laminas/laminas-paginator": "^2.11",
+                "mezzio/mezzio-helpers": "^5.7",
+                "phpspec/prophecy-phpunit": "^2.0",
+                "phpunit/phpunit": "^9.5.8",
+                "psalm/plugin-phpunit": "^0.15.0",
+                "vimeo/psalm": "^4.3"
+            },
+            "suggest": {
+                "laminas/laminas-hydrator": "^4.3 in order to use the ResourceGenerator to create Resource instances from objects",
+                "laminas/laminas-paginator": "^2.11 in order to provide paginated collections",
+                "mezzio/mezzio-helpers": "^5.7 in order to use UrlHelper/ServerUrlHelper-based MezzioUrlGenerator with the LinkGenerator",
+                "psr/container-implementation": "^1.0 in order to use the provided PSR-11 factories"
+            },
+            "type": "library",
+            "extra": {
+                "laminas": {
+                    "config-provider": "Mezzio\\Hal\\ConfigProvider"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Mezzio\\Hal\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Hypertext Application Language implementation for PHP and PSR-7",
+            "homepage": "https://mezzio.dev",
+            "keywords": [
+                "PSR-11",
+                "hal",
+                "http",
+                "laminas",
+                "mezzio",
+                "psr",
+                "psr-13",
+                "psr-17",
+                "psr-7",
+                "rest"
+            ],
+            "support": {
+                "chat": "https://laminas.dev/chat",
+                "docs": "https://docs.mezzio.dev/mezzio-hal/",
+                "forum": "https://discourse.laminas.dev",
+                "issues": "https://github.com/mezzio/mezzio-hal/issues",
+                "rss": "https://github.com/mezzio/mezzio-hal/releases.atom",
+                "source": "https://github.com/mezzio/mezzio-hal"
+            },
+            "funding": [
+                {
+                    "url": "https://funding.communitybridge.org/projects/laminas-project",
+                    "type": "community_bridge"
+                }
+            ],
+            "time": "2022-01-12T12:51:09+00:00"
+        },
+        {
             "name": "mezzio/mezzio-helpers",
             "version": "5.11.0",
             "source": {
@@ -6261,6 +6354,59 @@
                 "source": "https://github.com/php-fig/http-server-middleware/tree/master"
             },
             "time": "2018-10-30T17:12:04+00:00"
+        },
+        {
+            "name": "psr/link",
+            "version": "1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/link.git",
+                "reference": "846c25f58a1f02b93a00f2404e3626b6bf9b7807"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/link/zipball/846c25f58a1f02b93a00f2404e3626b6bf9b7807",
+                "reference": "846c25f58a1f02b93a00f2404e3626b6bf9b7807",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\Link\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "http://www.php-fig.org/"
+                }
+            ],
+            "description": "Common interfaces for HTTP links",
+            "homepage": "https://github.com/php-fig/link",
+            "keywords": [
+                "http",
+                "http-link",
+                "link",
+                "psr",
+                "psr-13",
+                "rest"
+            ],
+            "support": {
+                "source": "https://github.com/php-fig/link/tree/1.1.1"
+            },
+            "time": "2021-03-11T22:59:13+00:00"
         },
         {
             "name": "psr/log",

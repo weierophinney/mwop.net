@@ -50,6 +50,7 @@
         "mezzio/mezzio-authorization-rbac": "^1.2",
         "mezzio/mezzio-csrf": "^1.3",
         "mezzio/mezzio-fastroute": "^3.4",
+        "mezzio/mezzio-hal": "^2.4",
         "mezzio/mezzio-platesrenderer": "^2.4",
         "mezzio/mezzio-problem-details": "^1.5",
         "mezzio/mezzio-session": "^1.5",
