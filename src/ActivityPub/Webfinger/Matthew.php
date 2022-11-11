@@ -49,7 +49,7 @@ class Matthew implements Account
 
     private function createProfileLink(): LinkInterface
     {
-        return new Link('http://webfinger.net/rel/profile-page', 'https://mwop.net/about', false, [
+        return new Link('http://webfinger.net/rel/profile-page', 'https://mwop.net/', false, [
             'type' => 'text/html',
         ]);
     }
