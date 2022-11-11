@@ -13,8 +13,11 @@ class Matthew implements Account
     use LinkCollection;
 
     private array $aliases = [
+        'https://mwop.net',
         'https://phpc.social/@mwop',
         'https://phpc.social/users/mwop',
+        'https://pixelfed.social/@mwop',
+        'https://pixelfed.social/users/mwop',
     ];
 
     private string $subject = 'acct:matthew@mwop.net';
@@ -23,8 +26,8 @@ class Matthew implements Account
     {
         $this->links = [
             $this->createProfileLink(),
-            $this->createSelfLink(),
-            $this->createSubscribeLink(),
+            ...$this->createPhpSocialLinks(),
+            ...$this->createPixelfedLinks(),
         ];
     }
 
@@ -54,19 +57,34 @@ class Matthew implements Account
         ]);
     }
 
-    private function createSelfLink(): LinkInterface
+    /** @psalm-return list<LinkInterface> */
+    private function createPhpSocialLinks(): array
     {
-        return new Link('self', 'https://phpc.social/users/mwop', false, [
-            'type' => 'application/activity+json',
-        ]);
+        return [
+            new Link('self', 'https://phpc.social/users/mwop', false, [
+                'type' => 'application/activity+json',
+            ]),
+            new Link(
+                'http://ostatus.org/schema/1.0/subscribe',
+                'https://phpc.social/authorize_interaction?uri={uri}',
+                true
+            ),
+        ];
     }
 
-    private function createSubscribeLink(): LinkInterface
+    /** @psalm-return list<LinkInterface> */
+    private function createPixelfedLinks(): array
     {
-        return new Link(
-            'http://ostatus.org/schema/1.0/subscribe',
-            'https://phpc.social/authorize_interaction?uri={uri}',
-            true
-        );
+        return [
+            new Link('self', 'https://pixelfed.social/users/mwop', false, [
+                'type' => 'application/activity+json',
+            ]),
+            new Link(
+                'http://schemas.google.com/g/2010#updates-from',
+                'https://pixelfed.social/users/mwop.atom',
+                false,
+                ['type' => 'application/atom+xml'],
+            ),
+        ];
     }
 }
