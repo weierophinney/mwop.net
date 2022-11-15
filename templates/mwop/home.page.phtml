@@ -81,7 +81,7 @@ $this->end();
         <h3>Recent social posts</h3>
 
     <?php foreach ($mastodon->slice(0, 5) as $post): ?>
-        <div class="w-full my-2 mx-auto p-4 border-2 border-black rounded-tl-lg bg-mwop-light text-mwop-bg">
+        <div class="w-full my-2 mx-auto p-4 border-2 border-black rounded-tl-lg bg-white text-mwop-bg">
             <div class="mb-4"><?= $post->content ?></div>
 
             <p class="mb-0 pt-2 border-t border-dashed border-mwop-nav text-right text-sm italic">&mdash; posted <a class="text-mwop-dark hover:text-mwop-nav hover:font-normal " href="<?= $post->link ?>"><?= $relativeTime($post->created) ?></a></p>
