@@ -26,6 +26,7 @@ class Matthew implements Account
     {
         $this->links = [
             $this->createProfileLink(),
+            $this->createAvatarLink(),
             ...$this->createPhpSocialLinks(),
             // ...$this->createPixelfedLinks(),
         ];
@@ -54,6 +55,13 @@ class Matthew implements Account
     {
         return new Link('http://webfinger.net/rel/profile-page', 'https://mwop.net/', false, [
             'type' => 'text/html',
+        ]);
+    }
+
+    private function createAvatarLink(): LinkInterface
+    {
+        return new Link('http://webfinger.net/rel/avatar', 'https://mwop.net/images/logo.png', false, [
+            'type' => 'image/png',
         ]);
     }
 
