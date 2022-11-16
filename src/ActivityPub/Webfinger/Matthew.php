@@ -16,8 +16,8 @@ class Matthew implements Account
         'https://mwop.net',
         'https://phpc.social/@mwop',
         'https://phpc.social/users/mwop',
-        // 'https://pixelfed.social/@mwop',
-        // 'https://pixelfed.social/users/mwop',
+        'https://pixelfed.social/@mwop',
+        'https://pixelfed.social/users/mwop',
     ];
 
     private string $subject = 'acct:matthew@mwop.net';
