@@ -60,7 +60,7 @@ COPY --from=assets /build/assets/dist /var/www/public/assets
 ## Also, install shared libraries required by OpenSwoole
 RUN set -e; \
     apt-get update; \
-    apt-get install libcurl4; \
+    apt-get install -y libcurl4; \
     ZendPHPCustomizeWithBuildArgs.sh
 
 ## Install OpenSwoole
