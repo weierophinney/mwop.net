@@ -5,50 +5,17 @@ $this->layout('layout::layout', [
 ]);
 $this->start('scripts');
 ?>
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <?php $this->stop() ?>
 <h2>Contact Me</h2>
 
-<p>
-    Feel free to contact me. Please note, however, that I likely will not 
-    respond to recruiters, questions that can be asked in public forums,
-    requests to post content, or SEO spammers.
-</p>
+<div class="bg-mwop-nav p-4 w-full rounded-lg">
+    <div class="flex flex-col lg:flex-row mt-4 mb-8 gap-4">
+        <div class="w-full lg:w-1/4 font-semibold text-lg self-center">Via Email</div>
+        <div class="w-full lg:w-2/3 font-semibold self-center pl-8 lg:pl-0">contact@mwop.net</div>
+    </div>
 
-<?php if (isset($error)) : ?>
-<p class="text-red-700 font-semibold">
-    There were one or more isues with your submission. Please correct them as 
-    indicated below.
-</p>
-
-<pre class="font-mono">
-    <?= $this->escapeHtml($error['message']) ?>
-</pre>
-<?php endif ?>
-
-<form class="bg-mwop-nav p-4 w-full rounded-lg" method="post" name="contact" action="<?= $this->url('contact.process') ?>" id="contact">
-    <label class="label" for="from">From (email):</label>
-    <input class="text-input" type="text" name="from" value="" required="required">
-
-    <label class="label" for="subject">Subject:</label>
-    <input class="text-input" type="text" name="subject" value="" required="required">
-
-    <label class="label" for="body">Your message:</label>
-    <textarea class="textarea h-48" name="body" required="required"></textarea>
-
-    <div
-        class="g-recaptcha my-4"
-        data-sitekey="<?= $recaptcha_pub_key ?>"
-        data-theme="dark"></div>
-
-    <input type="hidden" name="csrf" value="<?= $csrf ?>">
-    <button class="btn" type="submit" name="Send">Send</button>
-</form>
-
-<div class="bg-mwop-nav mt-4 p-4 w-full rounded-lg">
-    <p>Or reach out via the Fediverse:</p>
-
-    <p class="text-center">
-        <a class="no-underline" href="https://phpc.social/@mwop"><i class="fa-brands fa-mastodon fa-2xl"></i></a>
-    </p>
+    <div class="flex flex-col lg:flex-row mb-4 gap-4">
+        <div class="w-full lg:w-1/4 font-semibold text-lg self-center">Fediverse / Mastodon</div>
+        <div class="w-full lg:w-2/3 self-center pl-8 lg:pl-0"><a class="no-underline" href="https://phpc.social/@mwop"><i class="fa-brands fa-mastodon fa-2xl"></i></a></div>
+    </div>
 </div>
