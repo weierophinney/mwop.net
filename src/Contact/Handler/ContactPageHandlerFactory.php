@@ -5,17 +5,15 @@ declare(strict_types=1);
 
 namespace Mwop\Contact\Handler;
 
-use Mezzio\Helper\UrlHelper;
 use Mezzio\Template\TemplateRendererInterface;
 use Psr\Container\ContainerInterface;
 
-class DisplayThankYouHandlerFactory
+class ContactPageHandlerFactory
 {
-    public function __invoke(ContainerInterface $container): DisplayThankYouHandler
+    public function __invoke(ContainerInterface $container): ContactPageHandler
     {
-        return new DisplayThankYouHandler(
+        return new ContactPageHandler(
             template: $container->get(TemplateRendererInterface::class),
-            urlHelper: $container->get(UrlHelper::class),
         );
     }
 }
