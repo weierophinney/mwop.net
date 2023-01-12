@@ -76,11 +76,5 @@ class ConfigProvider
             CsrfMiddleware::class,
             Handler\DisplayContactFormHandler::class,
         ], 'contact');
-        $app->post($basePath . '/process', [
-            SessionMiddleware::class,
-            CsrfMiddleware::class,
-            Handler\ProcessContactFormHandler::class,
-        ], 'contact.process');
-        $app->get($basePath . '/thank-you', Handler\DisplayThankYouHandler::class, 'contact.thank-you');
     }
 }
