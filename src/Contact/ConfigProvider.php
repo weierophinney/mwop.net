@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace Mwop\Contact;
 
 use Mezzio\Application;
-use Mezzio\Csrf\CsrfMiddleware;
-use Mezzio\Session\SessionMiddleware;
 
 class ConfigProvider
 {
@@ -39,8 +37,6 @@ class ConfigProvider
     public function registerRoutes(Application $app, string $basePath = '/contact'): void
     {
         $app->get($basePath . '[/]', [
-            SessionMiddleware::class,
-            CsrfMiddleware::class,
             Handler\DisplayContactFormHandler::class,
         ], 'contact');
     }
