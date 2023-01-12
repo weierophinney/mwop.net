@@ -19,8 +19,8 @@ class ConfigProvider
     public function getDependencies(): array
     {
         return [
-            'factories'  => [
-                Handler\ContactPageHandler::class   => Handler\ContactPageHandlerFactory::class,
+            'factories' => [
+                Handler\ContactPageHandler::class => Handler\ContactPageHandlerFactory::class,
             ],
         ];
     }

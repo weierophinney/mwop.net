@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Defines env-specific settings.
+ */
+
 declare(strict_types=1);
 
 use Laminas\Stratigility\Middleware\ErrorHandler;
@@ -9,9 +13,6 @@ use Mwop\App\LoggingErrorListenerDelegator;
 use Mwop\Blog\Listener\CacheBlogPostListener;
 use Psr\Log\LoggerInterface;
 
-/**
- * Defines env-specific settings.
- */
 return [
     'authentication' => [
         'allowed_credentials' => [
@@ -43,10 +44,10 @@ return [
     ],
     'dependencies'   => [
         'delegators' => [
-            CacheBlogPostListener::class      => [
+            CacheBlogPostListener::class => [
                 DeferredServiceListenerDelegator::class,
             ],
-            ErrorHandler::class               => [
+            ErrorHandler::class          => [
                 LoggingErrorListenerDelegator::class,
             ],
         ],
