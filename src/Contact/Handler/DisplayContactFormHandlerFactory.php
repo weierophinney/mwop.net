@@ -14,7 +14,6 @@ class DisplayContactFormHandlerFactory
     {
         return new DisplayContactFormHandler(
             template: $container->get(TemplateRendererInterface::class),
-            config: $container->get('config-contact'),
         );
     }
 }
