@@ -20,7 +20,7 @@ class ConfigProvider
     {
         return [
             'factories'  => [
-                Handler\DisplayContactFormHandler::class   => Handler\DisplayContactFormHandlerFactory::class,
+                Handler\ContactPageHandler::class   => Handler\ContactPageHandlerFactory::class,
             ],
         ];
     }
@@ -37,7 +37,7 @@ class ConfigProvider
     public function registerRoutes(Application $app, string $basePath = '/contact'): void
     {
         $app->get($basePath . '[/]', [
-            Handler\DisplayContactFormHandler::class,
+            Handler\ContactPageHandler::class,
         ], 'contact');
     }
 }

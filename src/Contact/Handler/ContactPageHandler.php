@@ -11,7 +11,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\RequestHandlerInterface;
 
-class DisplayContactFormHandler implements RequestHandlerInterface
+class ContactPageHandler implements RequestHandlerInterface
 {
     public function __construct(
         private TemplateRendererInterface $template,
