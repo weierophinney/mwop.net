@@ -7,17 +7,7 @@ use Mezzio\Swoole\Task\DeferredServiceListenerDelegator;
 use Mwop\App\Factory\AccessLoggerFactory;
 use Mwop\App\LoggingErrorListenerDelegator;
 use Mwop\Blog\Listener\CacheBlogPostListener;
-use Mwop\Contact\Listener\SendContactMessageListener;
 use Psr\Log\LoggerInterface;
-
-/** @var string $messageToAddress */
-$messageToAddress = $_SERVER['CONTACT_MESSAGE_TO_ADDRESS'] ?? '';
-
-/** @var string $messageToName */
-$messageToName = $_SERVER['CONTACT_MESSAGE_TO_FULLNAME'] ?? '';
-
-/** @var string $messageFromAddress */
-$messageFromAddress = $_SERVER['CONTACT_MESSAGE_SENDER_ADDRESS'] ?? '';
 
 /**
  * Defines env-specific settings.
@@ -51,18 +41,6 @@ return [
             'host' => 'redis',
         ],
     ],
-    'contact'        => [
-        'recaptcha_pub_key'  => $_SERVER['RECAPTCHA_PUB_KEY'] ?? '',
-        'recaptcha_priv_key' => $_SERVER['RECAPTCHA_PRIV_KEY'] ?? '',
-        'message'            => [
-            'to'     => $messageToAddress,
-            'from'   => null,
-            'sender' => [
-                'address' => $messageFromAddress,
-                'name'    => 'mwop.net Contact Form',
-            ],
-        ],
-    ],
     'dependencies'   => [
         'delegators' => [
             CacheBlogPostListener::class      => [
@@ -70,9 +48,6 @@ return [
             ],
             ErrorHandler::class               => [
                 LoggingErrorListenerDelegator::class,
-            ],
-            SendContactMessageListener::class => [
-                DeferredServiceListenerDelegator::class,
             ],
         ],
         'factories'  => [
