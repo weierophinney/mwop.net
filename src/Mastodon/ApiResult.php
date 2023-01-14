@@ -18,9 +18,19 @@ final class ApiResult
 {
     private function __construct(
         private readonly bool $status,
-        public readonly ?ResponseInterface $response,
-        public readonly ?Throwable $error,
+        public readonly ?ResponseInterface $response = null,
+        public readonly ?Throwable $error = null,
     ) {
+    }
+
+    public static function createSuccessFromResponse(ResponseInterface $response): self
+    {
+        return new ApiResult(true, response: $response);
+    }
+
+    public static function createFailureFromResponse(ResponseInterface $response): self
+    {
+        return new ApiResult(false, response: $response);
     }
 
     public function isSuccessful(): bool
