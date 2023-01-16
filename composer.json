@@ -79,7 +79,8 @@
         "laminas/laminas-component-installer": "^2.6",
         "laminas/laminas-development-mode": "^3.6",
         "mezzio/mezzio-tooling": "^2.4",
-        "phpunit/phpunit": "^9.5.11"
+        "phpunit/phpunit": "^9.5.11",
+        "vlucas/phpdotenv": "^5.5"
     },
     "autoload": {
         "psr-4": {

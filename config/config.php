@@ -6,6 +6,10 @@ use Laminas\ConfigAggregator\ArrayProvider;
 use Laminas\ConfigAggregator\ConfigAggregator;
 use Laminas\ConfigAggregator\PhpFileProvider;
 
+if (class_exists(Dotenv\Dotenv::class)) {
+    Dotenv\Dotenv::createImmutable(realpath(getcwd()))->safeLoad();
+}
+
 // To enable or disable caching, set the `ConfigAggregator::ENABLE_CACHE` boolean in
 // `config/autoload/local.php`.
 $cacheConfig = [
