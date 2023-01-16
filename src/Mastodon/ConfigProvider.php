@@ -14,6 +14,7 @@ class ConfigProvider
         return [
             'dependencies' => $this->getDependencyConfig(),
             'laminas-cli'  => $this->getConsoleConfig(),
+            'mastodon'     => $this->getConfig(),
         ];
     }
 
@@ -29,7 +30,9 @@ class ConfigProvider
                 ],
             ],
             'factories'  => [
+                ApiClient::class                 => PsrApiClientFactory::class,
                 Console\FetchMastodonFeed::class => Console\FetchMastodonFeedFactory::class,
+                Credentials::class               => CredentialsFactory::class,
                 Feed::class                      => FeedFactory::class,
                 FetchMastodonFeed::class         => FetchMastodonFeedFactory::class,
                 FetchMastodonFeedListener::class => FetchMastodonFeedListenerFactory::class,
@@ -43,6 +46,15 @@ class ConfigProvider
             'commands' => [
                 'mastodon:fetch' => Console\FetchMastodonFeed::class,
             ],
+        ];
+    }
+
+    public function getConfig(): array
+    {
+        return [
+            'domain'        => '',
+            'client_id'     => '',
+            'client_secret' => '',
         ];
     }
 }

@@ -6,9 +6,15 @@ namespace Mwop\Mastodon;
 
 use Fig\Http\Message\RequestMethodInterface;
 use Fig\Http\Message\StatusCodeInterface;
+use Http\Message\MultipartStream\MultipartStreamBuilder;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
+use Psr\Http\Message\StreamFactoryInterface;
 use Webmozart\Assert\Assert;
+
+use function json_decode;
+use function json_encode;
+use function sprintf;
 
 final class PsrApiClient implements ApiClient
 {
@@ -17,13 +23,14 @@ final class PsrApiClient implements ApiClient
     public function __construct(
         private readonly ClientInterface $http,
         private readonly RequestFactoryInterface $requestFactory,
+        private readonly StreamFactoryInterface $streamFactory,
         string $domain,
     ) {
         Assert::stringNotEmpty($domain);
         $this->domain = $domain;
     }
 
-    public function authenticate(string $clientId, string $clientSecret): Authorization
+    public function authenticate(Credentials $credentials): Authorization
     {
         $request = $this->requestFactory
             ->createRequest(
@@ -34,8 +41,8 @@ final class PsrApiClient implements ApiClient
             ->withHeader('Content-Type', 'application/json');
 
         $request->getBody()->write(json_encode([
-            'client_id'     => $clientId,
-            'client_secret' => $clientSecret,
+            'client_id'     => $credentials->clientId,
+            'client_secret' => $credentials->clientSecret,
             'redirect_uri'  => 'urn:ietf:wg:oauth:2.0:oob',
             'grant_type'    => 'client_credentials',
         ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR));
@@ -48,10 +55,7 @@ final class PsrApiClient implements ApiClient
 
         $json   = $response->getBody();
         $values = json_decode($json, true, flags: JSON_THROW_ON_ERROR);
-        Assert::isArray($values, sprintf(
-            'Authentication to %s did not return expected payload',
-            $this->domain,
-        ));
+        Assert::isArray($values, sprintf('Authentication to %s did not return expected payload', $this->domain));
         Assert::keyExists($values, 'access_token', sprintf('Authentication to %s did not return access_token', $this->domain));
         Assert::stringNotEmpty($values['access_token'], sprintf('Authentication to %s returned invalid access_token', $this->domain));
         Assert::keyExists($values, 'token_type', sprintf('Authentication to %s did not return token_type', $this->domain));
@@ -99,6 +103,36 @@ final class PsrApiClient implements ApiClient
 
     public function uploadMedia(Authorization $auth, Media $media, ?string $description = null, ?Media $thumbnail): ApiResult
     {
-        throw new \Exception('Method not implemented');
+        $streamBuilder = new MultipartStreamBuilder($this->streamFactory);
+        $streamBuilder->addResource('file', $media->getStream(), ['filename' => $media->filename]);
+
+        if (is_string($description)) {
+            $streamBuilder->addResource('description', 'string', ['Content-Type' => 'text/plain']);
+        }
+
+        if ($thumbnail instanceof Media) {
+            $streamBuilder->addResource('thumbnail', $thumbnail->getStream(), ['filename' => $thumbnail->filename]);
+        }
+
+        $stream   = $streamBuilder->build();
+        $boundary = $streamBuilder->getBoundary();
+
+        $request = $this->requestFactory
+            ->createRequest(
+                RequestMethodInterface::METHOD_POST,
+                sprintf('https://%s%s', $this->domain, ApiPath::MEDIA->value),
+            )
+            ->withHeader('Accept', 'application/json')
+            ->withHeader('Content-Type', sprintf('multipare/form-data; boundary=%s', $boundary))
+            ->withHeader('Authorization', sprintf('%s %s', $auth->tokenType, $auth->accessToken))
+            ->withBody($stream);
+
+        $response = $this->http->sendRequest($request);
+
+        if ($response->getStatusCode() !== StatusCodeInterface::STATUS_OK) {
+            return ApiResult::createFailureFromResponse($response);
+        }
+
+        return ApiResult::createSuccessFromResponse($response);
     }
 }

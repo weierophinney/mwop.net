@@ -7,7 +7,7 @@ namespace Mwop\Mastodon;
 // phpcs:ignore WebimpressCodingStandard.NamingConventions.Interface.Suffix
 interface ApiClient
 {
-    public function authenticate(string $clientId, string $clientSecret): Authorization;
+    public function authenticate(Credentials $credentials): Authorization;
 
     public function createStatus(Authorization $auth, Status $status): ApiResult;
 

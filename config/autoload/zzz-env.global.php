@@ -63,4 +63,9 @@ return [
             'apikey' => $_SERVER['SENDGRID_APIKEY'] ?? '',
         ],
     ],
+    'mastodon'       => [
+        'domain'        => $_SERVER['MASTO_DOMAIN'],
+        'client_id'     => $_SERVER['MASTO_CLIENT_ID'],
+        'client_secret' => $_SERVER['MASTO_CLIENT_SECRET'],
+    ],
 ];
