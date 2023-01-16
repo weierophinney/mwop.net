@@ -7,13 +7,15 @@ namespace Mwop\Mastodon\Exception;
 use Psr\Http\Message\ResponseInterface;
 use RuntimeException;
 
+use function sprintf;
+
 final class AuthenticationException extends RuntimeException
 {
     private string $response;
 
     public static function fromResponse(string $domain, ResponseInterface $response): self
     {
-        $instance = new self(
+        $instance           = new self(
             sprintf('Authentication to Mastodon instance %s failed', $domain),
             $response->getStatusCode(),
         );

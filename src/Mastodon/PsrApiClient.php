@@ -12,9 +12,15 @@ use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 use Webmozart\Assert\Assert;
 
+use function is_array;
+use function is_string;
 use function json_decode;
 use function json_encode;
 use function sprintf;
+
+use const JSON_THROW_ON_ERROR;
+use const JSON_UNESCAPED_SLASHES;
+use const JSON_UNESCAPED_UNICODE;
 
 final class PsrApiClient implements ApiClient
 {
@@ -55,11 +61,14 @@ final class PsrApiClient implements ApiClient
 
         $json   = $response->getBody();
         $values = json_decode($json, true, flags: JSON_THROW_ON_ERROR);
+
+        // phpcs:disable Generic.Files.LineLength.TooLong
         Assert::isArray($values, sprintf('Authentication to %s did not return expected payload', $this->domain));
         Assert::keyExists($values, 'access_token', sprintf('Authentication to %s did not return access_token', $this->domain));
         Assert::stringNotEmpty($values['access_token'], sprintf('Authentication to %s returned invalid access_token', $this->domain));
         Assert::keyExists($values, 'token_type', sprintf('Authentication to %s did not return token_type', $this->domain));
         Assert::stringNotEmpty($values['token_type'], sprintf('Authentication to %s returned invalid access_token', $this->domain));
+        // phpcs:enable Generic.Files.LineLength.TooLong
 
         return new Authorization($values['access_token'], $values['token_type']);
     }
@@ -90,7 +99,11 @@ final class PsrApiClient implements ApiClient
             $data['media_ids'] = $status->mediaIds;
         }
 
-        $request->getBody()->write(json_encode($data , JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR));
+        $request->getBody()
+            ->write(json_encode(
+                $data,
+                JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR
+            ));
 
         $response = $this->http->sendRequest($request);
 
@@ -101,8 +114,12 @@ final class PsrApiClient implements ApiClient
         return ApiResult::createSuccessFromResponse($response);
     }
 
-    public function uploadMedia(Authorization $auth, Media $media, ?string $description = null, ?Media $thumbnail): ApiResult
-    {
+    public function uploadMedia(
+        Authorization $auth,
+        Media $media,
+        ?string $description = null,
+        ?Media $thumbnail
+    ): ApiResult {
         $streamBuilder = new MultipartStreamBuilder($this->streamFactory);
         $streamBuilder->addResource('file', $media->getStream(), ['filename' => $media->filename]);
 
