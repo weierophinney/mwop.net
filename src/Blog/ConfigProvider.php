@@ -12,9 +12,6 @@ use Mwop\App\Middleware\CacheMiddleware;
 use Phly\ConfigFactory\ConfigFactory;
 use Phly\EventDispatcher\ListenerProvider\AttachableListenerProvider;
 
-use function getcwd;
-use function realpath;
-
 class ConfigProvider
 {
     public function __invoke(): array
@@ -44,13 +41,6 @@ class ConfigProvider
                     'client_secret' => '',
                 ],
             ],
-            'twitter' => [
-                'consumer_key'        => '',
-                'consumer_secret'     => '',
-                'access_token'        => '',
-                'access_token_secret' => '',
-                'logo_path'           => realpath(getcwd()) . '/public/images/favicon/android-chrome-144x144.png',
-            ],
         ];
     }
 
@@ -64,27 +54,25 @@ class ConfigProvider
                 'config-blog.api'                          => ConfigFactory::class,
                 'config-blog.cache'                        => ConfigFactory::class,
                 'config-blog.disqus'                       => ConfigFactory::class,
-                'config-blog.twitter'                      => ConfigFactory::class,
                 Console\FeedGenerator::class               => Console\FeedGeneratorFactory::class,
                 Console\TagCloud::class                    => Console\TagCloudFactory::class,
-                Console\TweetLatest::class                 => Console\TweetLatestFactory::class,
-                Console\TweetPost::class                   => Console\TweetPostFactory::class,
+                Console\PostLatestToMastodon::class        => Console\PostLatestToMastodonFactory::class,
+                Console\PostToMastodon::class              => Console\PostToMastodonFactory::class,
                 Handler\DisplayPostHandler::class          => Handler\DisplayPostHandlerFactory::class,
                 Handler\FeedHandler::class                 => Handler\FeedHandlerFactory::class,
                 Handler\ListPostsHandler::class            => Handler\ListPostsHandlerFactory::class,
                 Handler\SearchHandler::class               => Handler\SearchHandlerFactory::class,
-                Handler\TweetLatestHandler::class          => Handler\TweetLatestHandlerFactory::class,
-                Handler\TweetPostHandler::class            => Handler\TweetPostHandlerFactory::class,
+                Handler\PostLatestToMastodonHandler::class => Handler\PostLatestToMastodonHandlerFactory::class,
+                Handler\PostToMastodonHandler::class       => Handler\PostToMastodonHandlerFactory::class,
                 Images\ApiClient::class                    => Images\ApiClientFactory::class,
                 Images\Images::class                       => Images\ImagesFactory::class,
                 Images\SearchCommand::class                => Images\SearchCommandFactory::class,
                 Mapper\MapperInterface::class              => Mapper\MapperFactory::class,
+                Mastodon\PostLatest::class                 => Mastodon\PostLatestFactory::class,
+                Mastodon\PostLatestEventListener::class    => Mastodon\PostLatestEventListenerFactory::class,
+                Mastodon\Post::class                       => Mastodon\PostFactory::class,
+                Mastodon\PostEventListener::class          => Mastodon\PostEventListenerFactory::class,
                 Middleware\ValidateAPIKeyMiddleware::class => Middleware\ValidateAPIKeyMiddlewareFactory::class,
-                Twitter\TweetLatest::class                 => Twitter\TweetLatestFactory::class,
-                Twitter\TweetLatestEventListener::class    => Twitter\TweetLatestEventListenerFactory::class,
-                Twitter\TweetPost::class                   => Twitter\TweetPostFactory::class,
-                Twitter\TweetPostEventListener::class      => Twitter\TweetPostEventListenerFactory::class,
-                Twitter\TwitterFactory::class              => Twitter\TwitterFactoryFactory::class,
             ],
             'invokables' => [
                 Console\GenerateSearchData::class => Console\GenerateSearchData::class,
@@ -92,13 +80,13 @@ class ConfigProvider
             ],
             'delegators' => [
                 AttachableListenerProvider::class       => [
-                    Twitter\TweetLatestEventListenerDelegator::class,
-                    Twitter\TweetPostEventListenerDelegator::class,
+                    Mastodon\PostLatestEventListenerDelegator::class,
+                    Mastodon\PostEventListenerDelegator::class,
                 ],
-                Twitter\TweetLatestEventListener::class => [
+                Mastodon\PostLatestEventListener::class => [
                     DeferredServiceListenerDelegator::class,
                 ],
-                Twitter\TweetPostEventListener::class   => [
+                Mastodon\PostEventListener::class   => [
                     DeferredServiceListenerDelegator::class,
                 ],
             ],
@@ -129,16 +117,16 @@ class ConfigProvider
         $app->get($basePath . '/{type:atom|rss}.xml', Handler\FeedHandler::class, 'blog.feed');
         $app->get($basePath . '/search[/]', Handler\SearchHandler::class, 'blog.search');
 
-        $app->post($basePath . '/api/tweet/latest', [
+        $app->post($basePath . '/api/mastodon/latest', [
             ProblemDetailsMiddleware::class,
             Middleware\ValidateAPIKeyMiddleware::class,
-            Handler\TweetLatestHandler::class,
-        ], 'blog.tweet.latest');
-        $app->post($basePath . '/api/tweet/post', [
+            Handler\PostLatestToMastodonHandler::class,
+        ], 'blog.mastodon.latest');
+        $app->post($basePath . '/api/mastodon/post', [
             ProblemDetailsMiddleware::class,
             Middleware\ValidateAPIKeyMiddleware::class,
             BodyParamsMiddleware::class,
-            Handler\TweetLatestHandler::class,
-        ], 'blog.tweet.post');
+            Handler\PostToMastodonHandler::class,
+        ], 'blog.mastodon.post');
     }
 }

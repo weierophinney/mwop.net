@@ -8,11 +8,11 @@ use Psr\Container\ContainerInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 
-class TweetLatestHandlerFactory
+class PostToMastodonHandlerFactory
 {
-    public function __invoke(ContainerInterface $container): TweetLatestHandler
+    public function __invoke(ContainerInterface $container): PostToMastodonHandler
     {
-        return new TweetLatestHandler(
+        return new PostToMastodonHandler(
             $container->get(EventDispatcherInterface::class),
             $container->get(ResponseFactoryInterface::class),
         );

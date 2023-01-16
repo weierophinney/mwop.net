@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Mwop\Blog\Twitter;
+namespace Mwop\Blog\Mastodon;
 
-class TweetPostEvent
+class PostEvent
 {
     public function __construct(
         private readonly string $id,

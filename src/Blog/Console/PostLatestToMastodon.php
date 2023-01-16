@@ -13,10 +13,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 use function sprintf;
 
-class TweetLatest extends Command
+class PostLatestToMastodon extends Command
 {
     private const HELP = <<<'END'
-        Finds the most recent blog post, and sends a tweet with details about it.
+        Finds the most recent blog post, and posts to Mastodon with details about it.
         END;
 
     public function __construct(
@@ -28,19 +28,19 @@ class TweetLatest extends Command
 
     protected function configure(): void
     {
-        $this->setDescription('Tweet the most recent blog post');
+        $this->setDescription('Post the most recent blog post to Mastodon');
         $this->setHelp(self::HELP);
         $this->addArgument('apikey', InputArgument::REQUIRED, 'mwop.net blog API key to use when making the request');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $output->writeln('<info>Sending tweet detailing latest blog post</info>');
+        $output->writeln('<info>Posting to Mastodon with details of latest blog post</info>');
         $apiKey = $input->getArgument('apikey');
 
         $client   = HttpClientDiscovery::find();
         $request  = $this->requestFactory
-            ->createRequest('POST', 'https://mwop.net/blog/api/tweet/latest')
+            ->createRequest('POST', 'https://mwop.net/blog/api/mastodon/latest')
             ->withAddedHeader($this->tokenHeader, $apiKey);
         $response = $client->sendRequest($request);
 

@@ -7,12 +7,12 @@ namespace Mwop\Blog\Console;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 
-class TweetPostFactory
+class PostToMastodonFactory
 {
-    public function __invoke(ContainerInterface $container): TweetPost
+    public function __invoke(ContainerInterface $container): PostToMastodon
     {
         $config = $container->get('config-blog.api');
-        return new TweetPost(
+        return new PostToMastodon(
             $container->get(RequestFactoryInterface::class),
             $config['token_header'],
         );

@@ -2,19 +2,22 @@
 
 declare(strict_types=1);
 
-namespace Mwop\Blog\Twitter;
+namespace Mwop\Blog\Mastodon;
 
 use Mezzio\Helper\UrlHelper;
 use Mwop\Blog\BlogPost;
 use Mwop\Blog\Mapper\MapperInterface;
+use Mwop\Mastodon\ApiClient;
+use Mwop\Mastodon\Credentials;
+use Mwop\Mastodon\Status;
 use RuntimeException;
 use Throwable;
 
 use function sprintf;
 
-class TweetPost
+class Post
 {
-    use TweetTrait;
+    use PostTrait;
 
     private const TEMPLATE = <<<'END'
         From the archives: %title%
@@ -25,24 +28,30 @@ class TweetPost
         END;
 
     public function __construct(
+        private ApiClient $mastodon,
+        private Credentials $credentials,
         private MapperInterface $blogPostMapper,
-        private TwitterFactory $factory,
         private UrlHelper $urlHelper,
-        private string $logoPath
     ) {
     }
 
     public function __invoke(string $postIdentifier): void
     {
-        $twitter = ($this->factory)();
+        $auth = $this->mastodon->authenticate($this->credentials);
 
-        $twitter->post('statuses/update', [
-            'status' => $this->generateStatusFromPost(
-                $this->getPost($postIdentifier),
-                self::TEMPLATE,
-            ),
-            // 'media_ids' => [$this->generateMediaIDFromLogo($twitter)],
-        ]);
+        $status = new Status($this->generateStatusFromPost(
+            $this->getPost($postIdentifier),
+            self::TEMPLATE,
+        ));
+
+        $result = $this->mastodon->createStatus($auth, $status);
+
+        if (! $result->isSuccessful()) {
+            throw new RuntimeException(sprintf(
+                'Posting to Mastodon failed with status %d',
+                $result->response->getStatusCode(),
+            ));
+        }
     }
 
     private function getPost(string $postIdentifier): BlogPost

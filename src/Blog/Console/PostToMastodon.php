@@ -14,10 +14,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 use function json_encode;
 use function sprintf;
 
-class TweetPost extends Command
+class PostToMastodon extends Command
 {
     private const HELP = <<<'END'
-        Sends a tweet with details about the requested blog post.
+        Sends a post to Mastodon with details about the requested blog post.
         END;
 
     public function __construct(
@@ -29,7 +29,7 @@ class TweetPost extends Command
 
     protected function configure(): void
     {
-        $this->setDescription('Tweet details for the requested blog post');
+        $this->setDescription('Post to Mastodon with details for the requested blog post');
         $this->setHelp(self::HELP);
         $this->addArgument(
             'apikey',
@@ -39,19 +39,19 @@ class TweetPost extends Command
         $this->addArgument(
             'post',
             InputArgument::REQUIRED,
-            'Identifier (slug, minus path and extension) of blog post to tweet'
+            'Identifier (slug, minus path and extension) of blog entry to post to Mastodon'
         );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $post = $input->getArgument('post');
-        $output->writeln(sprintf('<info>Sending tweet for blog post %s</info>', $post));
+        $output->writeln(sprintf('<info>Posting to Mastodon for blog post %s</info>', $post));
 
         $apiKey  = $input->getArgument('apikey');
         $client  = HttpClientDiscovery::find();
         $request = $this->requestFactory
-            ->createRequest('POST', 'https://mwop.net/blog/api/tweet/latest')
+            ->createRequest('POST', 'https://mwop.net/blog/api/mastodon/latest')
             ->withAddedHeader($this->tokenHeader, $apiKey);
         $request->getBody()->write(json_encode(['id' => $post]));
 

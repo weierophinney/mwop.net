@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Mwop\Blog\Twitter;
+namespace Mwop\Blog\Mastodon;
 
 use Phly\EventDispatcher\ListenerProvider\AttachableListenerProvider;
 use Psr\Container\ContainerInterface;
 
-class TweetPostEventListenerDelegator
+class PostLatestEventListenerDelegator
 {
     public function __invoke(
         ContainerInterface $container,
@@ -16,7 +16,7 @@ class TweetPostEventListenerDelegator
     ): AttachableListenerProvider {
         /** @var AttachableListenerProvider $provider */
         $provider = $factory();
-        $provider->listen(TweetPostEvent::class, $container->get(TweetPostEventListener::class));
+        $provider->listen(PostLatestEvent::class, $container->get(PostLatestEventListener::class));
         return $provider;
     }
 }

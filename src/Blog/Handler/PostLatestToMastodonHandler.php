@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Mwop\Blog\Handler;
 
-use Mwop\Blog\Twitter\TweetLatestEvent;
+use Mwop\Blog\Mastodon\PostLatestEvent;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-class TweetLatestHandler implements RequestHandlerInterface
+class PostLatestToMastodonHandler implements RequestHandlerInterface
 {
     public function __construct(
         private EventDispatcherInterface $dispatcher,
@@ -21,7 +21,7 @@ class TweetLatestHandler implements RequestHandlerInterface
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $this->dispatcher->dispatch(new TweetLatestEvent());
+        $this->dispatcher->dispatch(new PostLatestEvent());
         return $this->responseFactory->createResponse(204);
     }
 }

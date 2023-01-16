@@ -7,7 +7,7 @@ namespace Mwop\Blog\Handler;
 use InvalidArgumentException;
 use Mezzio\ProblemDetails\Exception\CommonProblemDetailsExceptionTrait;
 use Mezzio\ProblemDetails\Exception\ProblemDetailsExceptionInterface;
-use Mwop\Blog\Twitter\TweetPostEvent;
+use Mwop\Blog\Mastodon\PostEvent;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -16,7 +16,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 use function is_string;
 
-class TweetPostHandler implements RequestHandlerInterface
+class PostToMastodonHandler implements RequestHandlerInterface
 {
     public function __construct(
         private EventDispatcherInterface $dispatcher,
@@ -42,7 +42,7 @@ class TweetPostHandler implements RequestHandlerInterface
             };
         }
 
-        $this->dispatcher->dispatch(new TweetPostEvent($id));
+        $this->dispatcher->dispatch(new PostEvent($id));
         return $this->responseFactory->createResponse(204);
     }
 }
