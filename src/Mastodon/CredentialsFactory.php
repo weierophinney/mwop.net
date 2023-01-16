@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mwop\Mastodon;
 
 use Psr\Container\ContainerInterface;
+use Webmozart\Assert\Assert;
 
 final class CredentialsFactory
 {

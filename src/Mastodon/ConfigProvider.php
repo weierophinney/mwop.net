@@ -36,6 +36,7 @@ class ConfigProvider
                 Feed::class                      => FeedFactory::class,
                 FetchMastodonFeed::class         => FetchMastodonFeedFactory::class,
                 FetchMastodonFeedListener::class => FetchMastodonFeedListenerFactory::class,
+                MediaFactory::class              => MediaFactoryFactory::class,
             ],
         ];
     }

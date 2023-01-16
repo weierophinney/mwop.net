@@ -4,22 +4,29 @@ declare(strict_types=1);
 
 namespace Mwop\Mastodon;
 
+use InvalidArgumentException;
+use Psr\Http\Message\StreamInterface;
 use Webmozart\Assert\Assert;
 
 use function sprintf;
 
 final class Media
 {
-    /** @var resource */
+    /** @var resource|StreamInterface */
     public $stream;
 
-    /** @param resource $stream */
+    /** @param resource|StreamInterface $stream */
     public function __construct(
         $stream,
         public readonly string $filename,
         public readonly string $contentType,
     ) {
-        Assert::resource($stream, message: sprintf('%s did not receive a resource for the stream value', self::class));
+        if (! is_resource($stream) && ! $stream instanceof StreamInterface) {
+            throw new InvalidArgumentException(sprintf(
+                'Media stream MUST be a resource or a PSR-7 StreamInterface; received %s',
+                get_debug_type($stream)
+            ));
+        }
         $this->stream = $stream;
     }
 

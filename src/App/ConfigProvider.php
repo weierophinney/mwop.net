@@ -24,6 +24,7 @@ use Phly\ConfigFactory\ConfigFactory;
 use Phly\EventDispatcher\ListenerProvider\AttachableListenerProvider;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
+use Psr\Http\Client\ClientInterface;
 
 class ConfigProvider
 {
@@ -57,6 +58,7 @@ class ConfigProvider
             ],
             'factories'  => [
                 AuthenticationAdapter::class                 => AuthenticationAdapterFactory::class,
+                ClientInterface::class                       => Factory\HttpClientFactory::class,
                 'config-authentication'                      => ConfigFactory::class,
                 'config-cache'                               => ConfigFactory::class,
                 'config-content-security-policy'             => ConfigFactory::class,

@@ -80,6 +80,7 @@ class ConfigProvider
                 PhotoMapper::class                  => PdoPhotoMapperFactory::class,
                 PhotoRetrieval::class               => PhotoRetrievalFactory::class,
                 PhotoStorage::class                 => PhotoStorageFactory::class,
+                PostToMastodon::class               => PostToMastodonFactory::class,
                 UploadPhoto::class                  => UploadPhotoFactory::class,
                 Webhook\DatabaseBackup::class       => Webhook\DatabaseBackupFactory::class,
                 Webhook\ErrorNotifier::class        => Webhook\ErrorNotifierFactory::class,
