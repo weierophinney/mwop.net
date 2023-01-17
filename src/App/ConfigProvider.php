@@ -10,12 +10,9 @@ use Laminas\Feed\Reader\Http\ClientInterface as FeedReaderHttpClientInterface;
 use League\Plates\Engine;
 use Mezzio\Application;
 use Mezzio\Authentication\AuthenticationInterface;
-use Mezzio\Authentication\AuthenticationMiddleware;
 use Mezzio\Authentication\UserRepositoryInterface;
 use Mezzio\Authorization\AuthorizationInterface;
-use Mezzio\Authorization\AuthorizationMiddleware;
 use Mezzio\Authorization\Rbac\LaminasRbac;
-use Mezzio\Session\SessionMiddleware;
 use Mezzio\Swoole\Event\EventDispatcherInterface as SwooleEventDispatcher;
 use Middlewares\Csp;
 use Mwop\App\Factory\UserRepositoryFactory;
@@ -85,6 +82,9 @@ class ConfigProvider
                 UserRepositoryInterface::class               => UserRepositoryFactory::class,
             ],
             'delegators' => [
+                Application::class                => [
+                    Factory\RoutesDelegator::class,
+                ],
                 AttachableListenerProvider::class => [
                     Factory\SwooleTaskInvokerListenerDelegator::class,
                 ],
@@ -159,51 +159,5 @@ class ConfigProvider
                 'apikey' => '',
             ],
         ];
-    }
-
-    public function registerRoutes(Application $app): void
-    {
-        $app->get('/', Handler\HomePageHandler::class, 'home');
-        $app->get('/resume', [
-            Middleware\CacheMiddleware::class,
-            Handler\ResumePageHandler::class,
-        ], 'resume');
-        $app->get('/privacy-policy', [
-            Middleware\CacheMiddleware::class,
-            Handler\PrivacyPolicyPageHandler::class,
-        ], 'privacy-policy');
-        $app->get('/api/ping', Handler\PingHandler::class, 'api.ping');
-
-        // Admin
-        $adminMiddleware = [
-            SessionMiddleware::class,
-            AuthenticationMiddleware::class,
-            AuthorizationMiddleware::class,
-        ];
-        $app->get(
-            '/admin',
-            [...$adminMiddleware, Handler\AdminPageHandler::class],
-            'admin'
-        );
-        $app->get(
-            '/admin/clear-response-cache',
-            [...$adminMiddleware, Handler\ClearResponseCacheHandler::class],
-            'admin.clear-response-cache'
-        );
-
-        // Authentication
-        $app->get('/login', [
-            SessionMiddleware::class,
-            Handler\LoginHandler::class,
-        ], 'login');
-        $app->post('/login', [
-            SessionMiddleware::class,
-            Handler\LoginHandler::class,
-        ]);
-
-        $app->get('/logout', [
-            SessionMiddleware::class,
-            Handler\LogoutHandler::class,
-        ], 'logout');
     }
 }

@@ -37,6 +37,9 @@ class ConfigProvider
     {
         return [
             'delegators' => [
+                Application::class                => [
+                    RoutesDelegator::class,
+                ],
                 AttachableListenerProvider::class => [
                     Webhook\PayloadListenerDelegator::class,
                 ],
@@ -56,14 +59,5 @@ class ConfigProvider
                 Webhook\PayloadListener::class => Webhook\PayloadListenerFactory::class,
             ],
         ];
-    }
-
-    public function registerRoutes(Application $app, string $basePath = ''): void
-    {
-        $app->post($basePath . '/api/hook/github', [
-            ProblemDetailsMiddleware::class,
-            ValidateWebhookRequestMiddleware::class,
-            Handler\AtomHandler::class,
-        ], 'api.hook.github');
     }
 }

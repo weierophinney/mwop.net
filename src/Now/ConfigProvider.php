@@ -6,7 +6,6 @@ namespace Mwop\Now;
 
 use League\Plates\Engine;
 use Mezzio\Application;
-use Mwop\App\Middleware\CacheMiddleware;
 use Phly\ConfigFactory\ConfigFactory;
 
 class ConfigProvider
@@ -24,7 +23,10 @@ class ConfigProvider
     {
         return [
             'delegators' => [
-                Engine::class => [
+                Application::class => [
+                    RoutesDelegator::class,
+                ],
+                Engine::class      => [
                     MarkdownPlatesDelegator::class,
                 ],
             ],
@@ -53,18 +55,5 @@ class ConfigProvider
                 'now' => [__DIR__ . '/templates'],
             ],
         ];
-    }
-
-    public function registerRoutes(Application $app): void
-    {
-        $app->get('/now', [
-            CacheMiddleware::class,
-            Handler\PageHandler::class,
-        ], 'now');
-
-        $app->get('/then/{when:\d{4}-\d{2}}', [
-            CacheMiddleware::class,
-            Handler\PageHandler::class,
-        ], 'now.then');
     }
 }

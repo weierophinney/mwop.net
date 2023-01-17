@@ -5,10 +5,7 @@ declare(strict_types=1);
 namespace Mwop\Blog;
 
 use Mezzio\Application;
-use Mezzio\Helper\BodyParams\BodyParamsMiddleware;
-use Mezzio\ProblemDetails\ProblemDetailsMiddleware;
 use Mezzio\Swoole\Task\DeferredServiceListenerDelegator;
-use Mwop\App\Middleware\CacheMiddleware;
 use Phly\ConfigFactory\ConfigFactory;
 use Phly\EventDispatcher\ListenerProvider\AttachableListenerProvider;
 
@@ -79,6 +76,9 @@ class ConfigProvider
                 Console\SeedBlogDatabase::class   => Console\SeedBlogDatabase::class,
             ],
             'delegators' => [
+                Application::class                      => [
+                    RoutesDelegator::class,
+                ],
                 AttachableListenerProvider::class       => [
                     Mastodon\PostLatestEventListenerDelegator::class,
                     Mastodon\PostEventListenerDelegator::class,
@@ -101,32 +101,5 @@ class ConfigProvider
                 'blog' => [__DIR__ . '/templates'],
             ],
         ];
-    }
-
-    public function registerRoutes(Application $app, string $basePath = '/blog'): void
-    {
-        $app->get($basePath . '[/]', Handler\ListPostsHandler::class, 'blog');
-        $app->get("{$basePath}/{id:[^/]+}.html", [
-            CacheMiddleware::class,
-            Handler\DisplayPostHandler::class,
-        ], 'blog.post');
-        $app->get($basePath . '/tag/{tag:php}.xml', Handler\FeedHandler::class, 'blog.feed.php');
-        $app->get($basePath . '/{tag:php}.xml', Handler\FeedHandler::class, 'blog.feed.php.also');
-        $app->get($basePath . '/tag/{tag:[^/]+}/{type:atom|rss}.xml', Handler\FeedHandler::class, 'blog.tag.feed');
-        $app->get($basePath . '/tag/{tag:[^/]+}', Handler\ListPostsHandler::class, 'blog.tag');
-        $app->get($basePath . '/{type:atom|rss}.xml', Handler\FeedHandler::class, 'blog.feed');
-        $app->get($basePath . '/search[/]', Handler\SearchHandler::class, 'blog.search');
-
-        $app->post($basePath . '/api/mastodon/latest', [
-            ProblemDetailsMiddleware::class,
-            Middleware\ValidateAPIKeyMiddleware::class,
-            Handler\PostLatestToMastodonHandler::class,
-        ], 'blog.mastodon.latest');
-        $app->post($basePath . '/api/mastodon/post', [
-            ProblemDetailsMiddleware::class,
-            Middleware\ValidateAPIKeyMiddleware::class,
-            BodyParamsMiddleware::class,
-            Handler\PostToMastodonHandler::class,
-        ], 'blog.mastodon.post');
     }
 }

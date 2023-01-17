@@ -6,15 +6,9 @@ namespace Mwop\Art;
 
 use CuyZ\Valinor\MapperBuilder;
 use Mezzio\Application;
-use Mezzio\Authentication\AuthenticationMiddleware;
-use Mezzio\Authorization\AuthorizationMiddleware;
-use Mezzio\Helper\BodyParams\BodyParamsMiddleware;
-use Mezzio\ProblemDetails\ProblemDetailsMiddleware;
-use Mezzio\Session\SessionMiddleware;
 use Mezzio\Swoole\Task\DeferredServiceListenerDelegator;
 use Mwop\Art\Storage\PhotoRetrieval;
 use Mwop\Art\Storage\PhotoRetrievalFactory;
-use Mwop\Hooks\Middleware\ValidateWebhookRequestMiddleware;
 use Phly\ConfigFactory\ConfigFactory;
 use Phly\EventDispatcher\ListenerProvider\AttachableListenerProvider;
 
@@ -56,6 +50,9 @@ class ConfigProvider
     {
         return [
             'delegators' => [
+                Application::class                => [
+                    RoutesDelegator::class,
+                ],
                 AttachableListenerProvider::class => [
                     Webhook\PayloadListenerDelegator::class,
                 ],
@@ -111,38 +108,5 @@ class ConfigProvider
                 'art' => [__DIR__ . '/templates'],
             ],
         ];
-    }
-
-    public function registerRoutes(Application $app, string $basePath = ''): void
-    {
-        $app->get(
-            $basePath . '/images/art/{type:fullsize|thumbnails}/{image:[^/ ]+.(?:png|jpg|jpeg|webp)}',
-            Handler\ImageHandler::class,
-            'art.image'
-        );
-
-        $app->get($basePath . '/art[/]', Handler\PhotosHandler::class, 'art.gallery');
-
-        $app->get($basePath . '/art/{image:[^/]+\.(?:png|jpg|jpeg|webp)}/', Handler\PhotoHandler::class, 'art.photo');
-
-        $app->get($basePath . '/art/photo/upload', [
-            SessionMiddleware::class,
-            AuthenticationMiddleware::class,
-            AuthorizationMiddleware::class,
-            Handler\UploadHandler::class,
-        ], 'art.photo.upload');
-        $app->post($basePath . '/art/photo/upload/process', [
-            SessionMiddleware::class,
-            AuthenticationMiddleware::class,
-            AuthorizationMiddleware::class,
-            BodyParamsMiddleware::class,
-            Handler\ProcessUploadHandler::class,
-        ], 'art.photo.upload.process');
-
-        $app->post($basePath . '/api/art/new-photo', [
-            ProblemDetailsMiddleware::class,
-            ValidateWebhookRequestMiddleware::class,
-            Handler\NewImageHandler::class,
-        ], 'api.hook.instagram');
     }
 }

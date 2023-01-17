@@ -8,9 +8,7 @@ use CuyZ\Valinor\MapperBuilder;
 use Laminas\Feed\Reader\Entry\EntryInterface;
 use League\Plates\Engine;
 use Mezzio\Application;
-use Mezzio\ProblemDetails\ProblemDetailsMiddleware;
 use Mezzio\Swoole\Task\DeferredServiceListenerDelegator;
-use Mwop\Hooks\Middleware\ValidateWebhookRequestMiddleware;
 use Phly\ConfigFactory\ConfigFactory;
 use Phly\EventDispatcher\ListenerProvider\AttachableListenerProvider;
 
@@ -37,6 +35,9 @@ class ConfigProvider
     {
         return [
             'delegators' => [
+                Application::class                => [
+                    RoutesDelegator::class,
+                ],
                 AttachableListenerProvider::class => [
                     Webhook\PayloadListenerDelegator::class,
                 ],
@@ -125,14 +126,5 @@ class ConfigProvider
                 ],
             ],
         ];
-    }
-
-    public function registerRoutes(Application $app, string $basePath = ''): void
-    {
-        $app->post($basePath . '/api/feed/rss-item', [
-            ProblemDetailsMiddleware::class,
-            ValidateWebhookRequestMiddleware::class,
-            Handler\RssHandler::class,
-        ], 'api.hook.rss-item');
     }
 }

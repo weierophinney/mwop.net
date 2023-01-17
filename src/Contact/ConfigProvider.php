@@ -19,7 +19,12 @@ class ConfigProvider
     public function getDependencies(): array
     {
         return [
-            'factories' => [
+            'delegators' => [
+                Application::class => [
+                    RoutesDelegator::class,
+                ],
+            ],
+            'factories'  => [
                 Handler\ContactPageHandler::class => Handler\ContactPageHandlerFactory::class,
             ],
         ];
@@ -32,12 +37,5 @@ class ConfigProvider
                 'contact' => [__DIR__ . '/templates'],
             ],
         ];
-    }
-
-    public function registerRoutes(Application $app, string $basePath = '/contact'): void
-    {
-        $app->get($basePath . '[/]', [
-            Handler\ContactPageHandler::class,
-        ], 'contact');
     }
 }

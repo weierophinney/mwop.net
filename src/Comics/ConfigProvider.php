@@ -90,6 +90,9 @@ class ConfigProvider
                 ListComics::class     => ListComics::class,
             ],
             'delegators' => [
+                Application::class                => [
+                    RoutesDelegator::class,
+                ],
                 AttachableListenerProvider::class => [
                     FetchComicsDelegator::class,
                 ],
@@ -98,15 +101,5 @@ class ConfigProvider
                 ],
             ],
         ];
-    }
-
-    public function registerRoutes(Application $app): void
-    {
-        $app->get('/comics', [
-            SessionMiddleware::class,
-            AuthenticationMiddleware::class,
-            AuthorizationMiddleware::class,
-            Handler\ComicsPageHandler::class,
-        ], 'comics');
     }
 }
