@@ -14,7 +14,6 @@ use Webmozart\Assert\Assert;
 
 use function is_array;
 use function is_string;
-use function json_decode;
 use function json_encode;
 use function sprintf;
 
@@ -24,6 +23,11 @@ use const JSON_UNESCAPED_UNICODE;
 
 final class PsrApiClient implements ApiClient
 {
+    private const VALID_MEDIA_UPLOAD_STATUS = [
+        StatusCodeInterface::STATUS_OK,
+        StatusCodeInterface::STATUS_ACCEPTED,
+    ];
+
     private string $domain;
 
     public function __construct(
@@ -36,44 +40,7 @@ final class PsrApiClient implements ApiClient
         $this->domain = $domain;
     }
 
-    public function authenticate(Credentials $credentials): Authorization
-    {
-        $request = $this->requestFactory
-            ->createRequest(
-                RequestMethodInterface::METHOD_POST,
-                sprintf('https://%s%s', $this->domain, ApiPath::OAUTH->value),
-            )
-            ->withHeader('Accept', 'application/json')
-            ->withHeader('Content-Type', 'application/json');
-
-        $request->getBody()->write(json_encode([
-            'client_id'     => $credentials->clientId,
-            'client_secret' => $credentials->clientSecret,
-            'redirect_uri'  => 'urn:ietf:wg:oauth:2.0:oob',
-            'grant_type'    => 'client_credentials',
-        ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR));
-
-        $response = $this->http->sendRequest($request);
-
-        if ($response->getStatusCode() !== StatusCodeInterface::STATUS_OK) {
-            throw Exception\AuthenticationException::fromResponse($this->domain, $response);
-        }
-
-        $json   = $response->getBody();
-        $values = json_decode($json, true, flags: JSON_THROW_ON_ERROR);
-
-        // phpcs:disable Generic.Files.LineLength.TooLong
-        Assert::isArray($values, sprintf('Authentication to %s did not return expected payload', $this->domain));
-        Assert::keyExists($values, 'access_token', sprintf('Authentication to %s did not return access_token', $this->domain));
-        Assert::stringNotEmpty($values['access_token'], sprintf('Authentication to %s returned invalid access_token', $this->domain));
-        Assert::keyExists($values, 'token_type', sprintf('Authentication to %s did not return token_type', $this->domain));
-        Assert::stringNotEmpty($values['token_type'], sprintf('Authentication to %s returned invalid access_token', $this->domain));
-        // phpcs:enable Generic.Files.LineLength.TooLong
-
-        return new Authorization($values['access_token'], $values['token_type']);
-    }
-
-    public function createStatus(Authorization $auth, Status $status): ApiResult
+    public function createStatus(Credentials $credentials, Status $status): ApiResult
     {
         $request = $this->requestFactory
             ->createRequest(
@@ -82,7 +49,7 @@ final class PsrApiClient implements ApiClient
             )
             ->withHeader('Accept', 'application/json')
             ->withHeader('Content-Type', 'application/json')
-            ->withHeader('Authorization', sprintf('%s %s', $auth->tokenType, $auth->accessToken));
+            ->withHeader('Authorization', sprintf('Bearer %s', $credentials->accessToken));
 
         if (is_string($status->idempotencyKey)) {
             $request = $request->withHeader('Idempotency-Key', $status->idempotencyKey);
@@ -115,20 +82,15 @@ final class PsrApiClient implements ApiClient
     }
 
     public function uploadMedia(
-        Authorization $auth,
+        Credentials $credentials,
         Media $media,
         ?string $description = null,
-        ?Media $thumbnail
     ): ApiResult {
         $streamBuilder = new MultipartStreamBuilder($this->streamFactory);
         $streamBuilder->addResource('file', $media->getStream(), ['filename' => $media->filename]);
 
         if (is_string($description)) {
             $streamBuilder->addResource('description', 'string', ['Content-Type' => 'text/plain']);
-        }
-
-        if ($thumbnail instanceof Media) {
-            $streamBuilder->addResource('thumbnail', $thumbnail->getStream(), ['filename' => $thumbnail->filename]);
         }
 
         $stream   = $streamBuilder->build();
@@ -140,13 +102,13 @@ final class PsrApiClient implements ApiClient
                 sprintf('https://%s%s', $this->domain, ApiPath::MEDIA->value),
             )
             ->withHeader('Accept', 'application/json')
-            ->withHeader('Content-Type', sprintf('multipare/form-data; boundary=%s', $boundary))
-            ->withHeader('Authorization', sprintf('%s %s', $auth->tokenType, $auth->accessToken))
+            ->withHeader('Content-Type', sprintf('multipart/form-data; boundary=%s', $boundary))
+            ->withHeader('Authorization', sprintf('Bearer %s', $credentials->accessToken))
             ->withBody($stream);
 
         $response = $this->http->sendRequest($request);
 
-        if ($response->getStatusCode() !== StatusCodeInterface::STATUS_OK) {
+        if (! in_array($response->getStatusCode(), self::VALID_MEDIA_UPLOAD_STATUS, true)) {
             return ApiResult::createFailureFromResponse($response);
         }
 

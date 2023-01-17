@@ -30,7 +30,7 @@ final class Media
         $this->stream = $stream;
     }
 
-    /** @return resource */
+    /** @return resource|StreamInterface */
     public function getStream()
     {
         return $this->stream;

@@ -53,9 +53,8 @@ class ConfigProvider
     public function getConfig(): array
     {
         return [
-            'domain'        => '',
-            'client_id'     => '',
-            'client_secret' => '',
+            'domain'       => '',
+            'access_token' => '',
         ];
     }
 }

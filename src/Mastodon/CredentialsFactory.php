@@ -19,8 +19,7 @@ final class CredentialsFactory
         $config = $config['mastodon'];
 
         return new Credentials(
-            $config['client_id'] ?? '',
-            $config['client_secret'] ?? '',
+            $config['access_token'] ?? '',
         );
     }
 }

@@ -8,15 +8,11 @@ use Webmozart\Assert\Assert;
 
 final class Credentials
 {
-    public readonly string $clientId;
-    public readonly string $clientSecret;
+    public readonly string $accessToken;
 
-    public function __construct(string $clientId, string $clientSecret)
+    public function __construct(string $accessToken)
     {
-        Assert::stringNotEmpty($clientId, 'Mastodon client_id MUST NOT be empty');
-        Assert::stringNotEmpty($clientSecret, 'Mastodon client_secret MUST NOT be empty');
-
-        $this->clientId     = $clientId;
-        $this->clientSecret = $clientSecret;
+        Assert::stringNotEmpty($accessToken, 'Mastodon access_token MUST NOT be empty');
+        $this->accessToken     = $accessToken;
     }
 }
