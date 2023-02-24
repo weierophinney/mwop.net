@@ -7,7 +7,8 @@
         "allow-plugins": {
             "laminas/laminas-component-installer": true,
             "composer/package-versions-deprecated": true,
-            "dealerdirect/phpcodesniffer-composer-installer": true
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "php-http/discovery": true
         },
         "platform": {
             "php": "8.1"
@@ -59,7 +60,7 @@
         "middlewares/csp": "^3.0",
         "mnapoli/front-yaml": "^2.0.2",
         "monolog/monolog": "^1.23",
-        "phly/phly-comic": "^2.4.2",
+        "phly/phly-comic": "^2.4.3",
         "phly/phly-configfactory": "^1.1",
         "phly/phly-event-dispatcher": "^1.1",
         "php-http/curl-client": "^1.4",
