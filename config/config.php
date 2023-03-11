@@ -35,7 +35,6 @@ $aggregator = new ConfigAggregator([
     Mezzio\Helper\ConfigProvider::class,
     Mezzio\Router\ConfigProvider::class,
     Mezzio\Router\FastRouteRouter\ConfigProvider::class,
-    Mezzio\Swoole\ConfigProvider::class,
 
     // Conditional, as it will not be used in production
     class_exists(Mezzio\Tooling\ConfigProvider::class)

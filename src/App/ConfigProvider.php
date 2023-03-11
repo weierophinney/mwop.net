@@ -16,7 +16,6 @@ use Mezzio\Authorization\AuthorizationInterface;
 use Mezzio\Authorization\AuthorizationMiddleware;
 use Mezzio\Authorization\Rbac\LaminasRbac;
 use Mezzio\Session\SessionMiddleware;
-use Mezzio\Swoole\Event\EventDispatcherInterface as SwooleEventDispatcher;
 use Middlewares\Csp;
 use Mwop\App\Factory\UserRepositoryFactory;
 use Mwop\Blog\Handler\DisplayPostHandler;
@@ -49,7 +48,6 @@ class ConfigProvider
             'aliases'    => [
                 AuthenticationInterface::class => AuthenticationAdapter::class,
                 AuthorizationInterface::class  => LaminasRbac::class,
-                SwooleEventDispatcher::class   => EventDispatcherInterface::class,
             ],
             'invokables' => [
                 MapperBuilder::class                        => MapperBuilder::class,
@@ -90,7 +88,6 @@ class ConfigProvider
             'delegators' => [
                 AttachableListenerProvider::class => [
                     EventDispatcher\DeferredEventListenerDelegator::class,
-                    Factory\SwooleTaskInvokerListenerDelegator::class,
                 ],
                 DisplayPostHandler::class         => [
                     Middleware\DisplayBlogPostHandlerDelegator::class,
