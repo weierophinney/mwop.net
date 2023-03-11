@@ -65,6 +65,7 @@ class ConfigProvider
                 Csp::class                                   => Middleware\ContentSecurityPolicyMiddlewareFactory::class,
                 CacheItemPoolInterface::class                => Factory\CachePoolFactory::class,
                 EventDispatcherInterface::class              => Factory\EventDispatcherFactory::class,
+                EventDispatcher\DeferredEventListener::class => EventDispatcher\DeferredEventListenerFactoryy::class,
                 FeedReaderHttpClientInterface::class         => Feed\HttpPlugClientFactory::class,
                 Handler\AdminPageHandler::class              => Handler\PageHandlerFactory::class,
                 Handler\ClearResponseCacheHandler::class     => Handler\ClearResponseCacheHandlerFactory::class,
@@ -84,6 +85,7 @@ class ConfigProvider
             ],
             'delegators' => [
                 AttachableListenerProvider::class => [
+                    EventDispatcher\DeferredEVentListenerDelegator::class,
                     Factory\SwooleTaskInvokerListenerDelegator::class,
                 ],
                 DisplayPostHandler::class         => [
