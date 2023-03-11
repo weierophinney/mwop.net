@@ -52,7 +52,6 @@ $aggregator = new ConfigAggregator([
     Mwop\Comics\ConfigProvider::class,
     Mwop\Console\ConfigProvider::class,
     Mwop\Contact\ConfigProvider::class,
-    Mwop\Cron\ConfigProvider::class,
     Mwop\Feed\ConfigProvider::class,
     Mwop\Github\ConfigProvider::class,
     Mwop\Hooks\ConfigProvider::class,

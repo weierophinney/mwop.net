@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mwop\Mastodon;
 
 use Phly\EventDispatcher\ListenerProvider\AttachableListenerProvider;
+use Phly\RedisTaskQueue\Mapper\Mapper;
 
 class ConfigProvider
 {
@@ -22,6 +23,9 @@ class ConfigProvider
             'delegators' => [
                 AttachableListenerProvider::class => [
                     FetchMastodonFeedDelegator::class,
+                ],
+                Mapper::class => [
+                    PostMapperDelegator::class,
                 ],
             ],
             'factories'  => [

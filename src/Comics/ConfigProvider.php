@@ -10,6 +10,7 @@ use Mezzio\Authorization\AuthorizationMiddleware;
 use Mezzio\Session\SessionMiddleware;
 use Phly\ConfigFactory\ConfigFactory;
 use Phly\EventDispatcher\ListenerProvider\AttachableListenerProvider;
+use Phly\RedisTaskQueue\Mapper\Mapper;
 use PhlyComic\Console\FetchAllComics;
 use PhlyComic\Console\FetchComic;
 use PhlyComic\Console\ListComics;
@@ -91,6 +92,9 @@ class ConfigProvider
             'delegators' => [
                 AttachableListenerProvider::class => [
                     FetchComicsDelegator::class,
+                ],
+                Mapper::class => [
+                    ComicsMapperDelegator::class,
                 ],
             ],
         ];

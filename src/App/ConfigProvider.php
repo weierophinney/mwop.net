@@ -22,6 +22,7 @@ use Mwop\App\Factory\UserRepositoryFactory;
 use Mwop\Blog\Handler\DisplayPostHandler;
 use Phly\ConfigFactory\ConfigFactory;
 use Phly\EventDispatcher\ListenerProvider\AttachableListenerProvider;
+use Predis\Client as PredisClient;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 
@@ -37,6 +38,7 @@ class ConfigProvider
             'file-storage'              => $this->getFileStorageConfig(),
             'mail'                      => $this->getMailConfig(),
             'mezzio-authorization-rbac' => $this->getAuthorizationConfig(),
+            'redis'                     => $this->getRedisConfig(),
         ];
     }
 
@@ -62,10 +64,11 @@ class ConfigProvider
                 'config-content-security-policy'             => ConfigFactory::class,
                 'config-file-storage'                        => ConfigFactory::class,
                 'config-mail.transport'                      => ConfigFactory::class,
+                'config-redis'                               => ConfigFactory::class,
                 Csp::class                                   => Middleware\ContentSecurityPolicyMiddlewareFactory::class,
                 CacheItemPoolInterface::class                => Factory\CachePoolFactory::class,
                 EventDispatcherInterface::class              => Factory\EventDispatcherFactory::class,
-                EventDispatcher\DeferredEventListener::class => EventDispatcher\DeferredEventListenerFactoryy::class,
+                EventDispatcher\DeferredEventListener::class => EventDispatcher\DeferredEventListenerFactory::class,
                 FeedReaderHttpClientInterface::class         => Feed\HttpPlugClientFactory::class,
                 Handler\AdminPageHandler::class              => Handler\PageHandlerFactory::class,
                 Handler\ClearResponseCacheHandler::class     => Handler\ClearResponseCacheHandlerFactory::class,
@@ -78,6 +81,7 @@ class ConfigProvider
                 'mail.transport'                             => Factory\MailTransport::class,
                 Middleware\CacheMiddleware::class            => Middleware\CacheMiddlewareFactory::class,
                 Middleware\RedirectAmpPagesMiddleware::class => Middleware\RedirectAmpPagesMiddlewareFactory::class,
+                PredisClient::class                          => Factory\PredisClientFactory::class,
                 ResponseCachePool::class                     => Factory\ResponseCachePoolFactory::class,
                 S3Client::class                              => Factory\S3ClientFactory::class,
                 SessionCachePool::class                      => SessionCachePoolFactory::class,
@@ -85,7 +89,7 @@ class ConfigProvider
             ],
             'delegators' => [
                 AttachableListenerProvider::class => [
-                    EventDispatcher\DeferredEVentListenerDelegator::class,
+                    EventDispatcher\DeferredEventListenerDelegator::class,
                     Factory\SwooleTaskInvokerListenerDelegator::class,
                 ],
                 DisplayPostHandler::class         => [
@@ -132,12 +136,7 @@ class ConfigProvider
     public function getCacheConfig(): array
     {
         return [
-            'connection-parameters' => [
-                'scheme' => 'tcp',
-                'host'   => 'localhost',
-                'port'   => 6379,
-            ],
-            'enabled'               => true,
+            'enabled' => true,
         ];
     }
 
@@ -157,6 +156,17 @@ class ConfigProvider
         return [
             'transport' => [
                 'apikey' => '',
+            ],
+        ];
+    }
+
+    public function getRedisConfig(): array
+    {
+        return [
+            'connection-parameters' => [
+                'scheme' => 'tcp',
+                'host'   => 'localhost',
+                'port'   => 6379,
             ],
         ];
     }

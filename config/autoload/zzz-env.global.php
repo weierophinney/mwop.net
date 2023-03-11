@@ -29,11 +29,6 @@ return [
             'enabled' => true,
         ],
     ],
-    'cache'          => [
-        'connection-parameters' => [
-            'host' => 'redis',
-        ],
-    ],
     'dependencies'   => [
         'delegators' => [
             ErrorHandler::class          => [
@@ -50,6 +45,11 @@ return [
     'mail'           => [
         'transport' => [
             'apikey' => $_SERVER['SENDGRID_APIKEY'] ?? '',
+        ],
+    ],
+    'redis'          => [
+        'connection-parameters' => [
+            'host' => 'redis',
         ],
     ],
 ];
