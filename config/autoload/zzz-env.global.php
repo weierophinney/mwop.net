@@ -30,12 +30,6 @@ return [
         'cache'   => [
             'enabled' => true,
         ],
-        'twitter' => [
-            'consumer_key'        => $_SERVER['TWITTER_CONSUMER_KEY'] ?? '',
-            'consumer_secret'     => $_SERVER['TWITTER_CONSUMER_SECRET'] ?? '',
-            'access_token'        => $_SERVER['TWITTER_ACCESS_TOKEN'] ?? '',
-            'access_token_secret' => $_SERVER['TWITTER_ACCESS_TOKEN_SECRET'] ?? '',
-        ],
     ],
     'cache'          => [
         'connection-parameters' => [

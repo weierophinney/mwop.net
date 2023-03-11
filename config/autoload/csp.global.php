@@ -10,10 +10,6 @@ return [
         'frame-src'   => [
             'self'  => true,
             'allow' => [
-                'https://platform.twitter.com',
-                'https://syndication.twitter.com',
-                'https://www.google.com',
-                'https://*.woxo.tech',
                 'disqus.com',
             ],
         ],
@@ -44,14 +40,8 @@ return [
                 'data:',
             ],
             'allow'         => [
-                'https://cdn.ampproject.org',
-                'https://www.google.com',
-                'https://www.gstatic.com',
-                'https://code.jquery.com',
                 '*.disqus.com',
                 '*.disquscdn.com',
-                'https://*.twimg.com',
-                'https://platform.twitter.com',
             ],
             'unsafe-inline' => true,
         ],
@@ -73,8 +63,6 @@ return [
             'unsafe-inline' => true, // allow inlined styles; mostly for widgets
             'allow'         => [
                 'https://fonts.googleapis.com',
-                'platform.twitter.com',
-                'https://*.twimg.com',
                 '*.disqus.com',
                 '*.disquscdn.com',
             ],
