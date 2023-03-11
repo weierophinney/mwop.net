@@ -55,7 +55,6 @@
         "mezzio/mezzio-problem-details": "^1.5",
         "mezzio/mezzio-session": "^1.5",
         "mezzio/mezzio-session-cache": "^1.6",
-        "mezzio/mezzio-swoole": "^4.3",
         "middlewares/csp": "^3.0",
         "mnapoli/front-yaml": "^2.0.2",
         "monolog/monolog": "^1.23",
