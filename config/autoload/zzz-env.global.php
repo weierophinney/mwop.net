@@ -7,10 +7,8 @@
 declare(strict_types=1);
 
 use Laminas\Stratigility\Middleware\ErrorHandler;
-use Mezzio\Swoole\Task\DeferredServiceListenerDelegator;
 use Mwop\App\Factory\AccessLoggerFactory;
 use Mwop\App\LoggingErrorListenerDelegator;
-use Mwop\Blog\Listener\CacheBlogPostListener;
 use Psr\Log\LoggerInterface;
 
 return [
@@ -38,9 +36,6 @@ return [
     ],
     'dependencies'   => [
         'delegators' => [
-            CacheBlogPostListener::class => [
-                DeferredServiceListenerDelegator::class,
-            ],
             ErrorHandler::class          => [
                 LoggingErrorListenerDelegator::class,
             ],

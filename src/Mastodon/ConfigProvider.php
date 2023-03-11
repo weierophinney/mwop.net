@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Mwop\Mastodon;
 
-use Mezzio\Swoole\Task\DeferredServiceListenerDelegator;
 use Phly\EventDispatcher\ListenerProvider\AttachableListenerProvider;
 
 class ConfigProvider
@@ -23,9 +22,6 @@ class ConfigProvider
             'delegators' => [
                 AttachableListenerProvider::class => [
                     FetchMastodonFeedDelegator::class,
-                ],
-                FetchMastodonFeedListener::class  => [
-                    DeferredServiceListenerDelegator::class,
                 ],
             ],
             'factories'  => [

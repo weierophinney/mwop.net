@@ -11,7 +11,6 @@ use Mezzio\Authorization\AuthorizationMiddleware;
 use Mezzio\Helper\BodyParams\BodyParamsMiddleware;
 use Mezzio\ProblemDetails\ProblemDetailsMiddleware;
 use Mezzio\Session\SessionMiddleware;
-use Mezzio\Swoole\Task\DeferredServiceListenerDelegator;
 use Mwop\Art\Storage\PhotoRetrieval;
 use Mwop\Art\Storage\PhotoRetrievalFactory;
 use Mwop\Hooks\Middleware\ValidateWebhookRequestMiddleware;
@@ -61,9 +60,6 @@ class ConfigProvider
                 ],
                 MapperBuilder::class              => [
                     MapperBuilderDelegator::class,
-                ],
-                Webhook\PayloadListener::class    => [
-                    DeferredServiceListenerDelegator::class,
                 ],
             ],
             'factories'  => [

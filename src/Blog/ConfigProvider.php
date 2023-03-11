@@ -5,12 +5,8 @@ declare(strict_types=1);
 namespace Mwop\Blog;
 
 use Mezzio\Application;
-use Mezzio\Helper\BodyParams\BodyParamsMiddleware;
-use Mezzio\ProblemDetails\ProblemDetailsMiddleware;
-use Mezzio\Swoole\Task\DeferredServiceListenerDelegator;
 use Mwop\App\Middleware\CacheMiddleware;
 use Phly\ConfigFactory\ConfigFactory;
-use Phly\EventDispatcher\ListenerProvider\AttachableListenerProvider;
 
 class ConfigProvider
 {

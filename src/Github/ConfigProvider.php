@@ -7,7 +7,6 @@ namespace Mwop\Github;
 use League\Plates\Engine;
 use Mezzio\Application;
 use Mezzio\ProblemDetails\ProblemDetailsMiddleware;
-use Mezzio\Swoole\Task\DeferredServiceListenerDelegator;
 use Mwop\Hooks\Middleware\ValidateWebhookRequestMiddleware;
 use Phly\ConfigFactory\ConfigFactory;
 use Phly\EventDispatcher\ListenerProvider\AttachableListenerProvider;
@@ -42,9 +41,6 @@ class ConfigProvider
                 ],
                 Engine::class                     => [
                     RenderLinksDelegator::class,
-                ],
-                Webhook\PayloadListener::class    => [
-                    DeferredServiceListenerDelegator::class,
                 ],
             ],
             'factories'  => [

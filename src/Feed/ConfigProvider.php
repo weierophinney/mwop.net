@@ -9,7 +9,6 @@ use Laminas\Feed\Reader\Entry\EntryInterface;
 use League\Plates\Engine;
 use Mezzio\Application;
 use Mezzio\ProblemDetails\ProblemDetailsMiddleware;
-use Mezzio\Swoole\Task\DeferredServiceListenerDelegator;
 use Mwop\Hooks\Middleware\ValidateWebhookRequestMiddleware;
 use Phly\ConfigFactory\ConfigFactory;
 use Phly\EventDispatcher\ListenerProvider\AttachableListenerProvider;
@@ -45,9 +44,6 @@ class ConfigProvider
                 ],
                 MapperBuilder::class              => [
                     MapperBuilderDelegator::class,
-                ],
-                Webhook\PayloadListener::class    => [
-                    DeferredServiceListenerDelegator::class,
                 ],
             ],
             'factories'  => [

@@ -8,7 +8,6 @@ use Mezzio\Application;
 use Mezzio\Authentication\AuthenticationMiddleware;
 use Mezzio\Authorization\AuthorizationMiddleware;
 use Mezzio\Session\SessionMiddleware;
-use Mezzio\Swoole\Task\DeferredServiceListenerDelegator;
 use Phly\ConfigFactory\ConfigFactory;
 use Phly\EventDispatcher\ListenerProvider\AttachableListenerProvider;
 use PhlyComic\Console\FetchAllComics;
@@ -92,9 +91,6 @@ class ConfigProvider
             'delegators' => [
                 AttachableListenerProvider::class => [
                     FetchComicsDelegator::class,
-                ],
-                FetchComics::class                => [
-                    DeferredServiceListenerDelegator::class,
                 ],
             ],
         ];
