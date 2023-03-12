@@ -16,6 +16,7 @@ use Mwop\Art\Storage\PhotoRetrievalFactory;
 use Mwop\Hooks\Middleware\ValidateWebhookRequestMiddleware;
 use Phly\ConfigFactory\ConfigFactory;
 use Phly\EventDispatcher\ListenerProvider\AttachableListenerProvider;
+use Phly\RedisTaskQueue\Mapper\Mapper;
 
 use function getcwd;
 use function realpath;
@@ -57,6 +58,9 @@ class ConfigProvider
             'delegators' => [
                 AttachableListenerProvider::class => [
                     Webhook\PayloadListenerDelegator::class,
+                ],
+                Mapper::class                     => [
+                    Webhook\PayloadMapperDelegator::class,
                 ],
                 MapperBuilder::class              => [
                     MapperBuilderDelegator::class,
