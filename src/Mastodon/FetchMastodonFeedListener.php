@@ -11,7 +11,7 @@ class FetchMastodonFeedListener
     public function __construct(
         private FetchMastodonFeed $feed,
         private LoggerInterface $logger,
-        private string $path = 'data/mastodon.json',
+        private string $path = 'data/shared/mastodon.json',
     ) {
     }
 

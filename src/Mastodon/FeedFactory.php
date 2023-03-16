@@ -21,7 +21,7 @@ class FeedFactory
         Assert::isInstanceOf($builder, MapperBuilder::class);
 
         return new Feed(
-            feedPath: realpath(getcwd()) . '/data/mastodon.json',
+            feedPath: realpath(getcwd()) . '/data/shared/mastodon.json',
             mapper: $builder->mapper(),
             logger: $container->get(LoggerInterface::class),
         );

@@ -24,6 +24,7 @@ use Phly\EventDispatcher\ListenerProvider\AttachableListenerProvider;
 use Predis\Client as PredisClient;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
+use Psr\Log\LoggerInterface;
 
 class ConfigProvider
 {
@@ -76,6 +77,7 @@ class ConfigProvider
                 Handler\PrivacyPolicyPageHandler::class      => Handler\PageHandlerFactory::class,
                 Handler\ResumePageHandler::class             => Handler\PageHandlerFactory::class,
                 HomePageCacheExpiration::class               => HomePageCacheExpirationFactory::class,
+                LoggerInterface::class                       => Factory\LoggerFactory::class,
                 'mail.transport'                             => Factory\MailTransport::class,
                 Middleware\CacheMiddleware::class            => Middleware\CacheMiddlewareFactory::class,
                 Middleware\RedirectAmpPagesMiddleware::class => Middleware\RedirectAmpPagesMiddlewareFactory::class,

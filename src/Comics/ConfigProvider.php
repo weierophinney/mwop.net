@@ -59,7 +59,7 @@ class ConfigProvider
                 'reptilis-rex',
                 'uf',
             ],
-            'output_file' => sprintf('%s/data/comics.phtml', realpath(getcwd())),
+            'output_file' => sprintf('%s/data/shared/comics.phtml', realpath(getcwd())),
         ];
     }
 

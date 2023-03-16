@@ -35,7 +35,7 @@ class ConfigProvider
 
     public function getConfig(): array
     {
-        $databasePath = realpath(getcwd()) . '/data/photodb/photos.db';
+        $databasePath = realpath(getcwd()) . '/data/shared/photodb/photos.db';
         return [
             'database_path'      => $databasePath,
             'db'                 => [

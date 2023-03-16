@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 return [
     'blog'                 => [
-        'db'    => 'sqlite:' . realpath(getcwd()) . '/data/posts.db',
+        'db'    => 'sqlite:' . realpath(getcwd()) . '/data/shared/posts.db',
         'cache' => [
             'enabled' => true,
         ],

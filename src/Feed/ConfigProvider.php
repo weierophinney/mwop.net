@@ -86,7 +86,7 @@ class ConfigProvider
     {
         return [
             [
-                'url'      => realpath(getcwd()) . '/data/feeds/rss.xml',
+                'url'      => realpath(getcwd()) . '/data/shared/feeds/rss.xml',
                 'sitename' => 'mwop.net',
                 'siteurl'  => 'https://mwop.net/blog',
             ],

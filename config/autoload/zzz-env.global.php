@@ -7,9 +7,7 @@
 declare(strict_types=1);
 
 use Laminas\Stratigility\Middleware\ErrorHandler;
-use Mwop\App\Factory\AccessLoggerFactory;
 use Mwop\App\LoggingErrorListenerDelegator;
-use Psr\Log\LoggerInterface;
 
 return [
     'authentication' => [
@@ -34,9 +32,6 @@ return [
             ErrorHandler::class          => [
                 LoggingErrorListenerDelegator::class,
             ],
-        ],
-        'factories'  => [
-            LoggerInterface::class => AccessLoggerFactory::class,
         ],
     ],
     'hooks'          => [

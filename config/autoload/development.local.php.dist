@@ -19,7 +19,6 @@ use Mezzio\Container;
 use Mezzio\Middleware\ErrorResponseGenerator;
 use Mezzio\Whoops;
 use Mezzio\WhoopsPageHandler;
-use Psr\Log\LoggerInterface;
 use Whoops\Handler\PrettyPageHandler;
 
 return [
@@ -41,7 +40,6 @@ return [
         'factories'  => [
             Debug\DebugProviderMiddleware::class => Debug\DebugProviderMiddlewareFactory::class,
             ErrorResponseGenerator::class        => Container\WhoopsErrorResponseGeneratorFactory::class,
-            LoggerInterface::class               => App\Factory\DockerAccessLoggerFactory::class,
             Whoops::class                        => Container\WhoopsFactory::class,
         ],
         'invokables' => [

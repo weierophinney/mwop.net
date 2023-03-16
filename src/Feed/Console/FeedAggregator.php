@@ -40,7 +40,7 @@ use const JSON_UNESCAPED_UNICODE;
 class FeedAggregator extends Command
 {
     /** @var string */
-    public const CACHE_FILE = '%s/data/homepage.posts.json';
+    public const CACHE_FILE = '%s/data/shared/homepage.posts.json';
 
     /** @var FeedCollection */
     private $feeds;

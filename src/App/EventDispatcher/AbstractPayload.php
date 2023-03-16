@@ -7,7 +7,7 @@ namespace Mwop\App\EventDispatcher;
 abstract class AbstractPayload
 {
     final public function __construct(
-        public readonly string $json,
+        public readonly string $payload,
     ) {
     }
 }

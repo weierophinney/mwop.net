@@ -29,7 +29,7 @@ class ConfigProvider
         return [
             'user'      => '',
             'limit'     => 10,
-            'list_file' => getcwd() . '/data/github-feed.json',
+            'list_file' => getcwd() . '/data/shared/github-feed.json',
         ];
     }
 

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2a8cd97bbf6b3a5adbe5cbdfde472bbb",
+    "content-hash": "aedbba534d4ca24bd88b5ca61feecef9",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -58,16 +58,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.261.9",
+            "version": "3.261.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "d91e6f89a6c41e8df859b0d313150386cfee6f6a"
+                "reference": "bba0c975f34325cfb218d68bda6d9e476d309b4c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/d91e6f89a6c41e8df859b0d313150386cfee6f6a",
-                "reference": "d91e6f89a6c41e8df859b0d313150386cfee6f6a",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/bba0c975f34325cfb218d68bda6d9e476d309b4c",
+                "reference": "bba0c975f34325cfb218d68bda6d9e476d309b4c",
                 "shasum": ""
             },
             "require": {
@@ -146,9 +146,9 @@
             "support": {
                 "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.261.9"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.261.11"
             },
-            "time": "2023-03-10T19:25:08+00:00"
+            "time": "2023-03-14T18:26:15+00:00"
         },
         {
             "name": "brick/math",
@@ -3981,16 +3981,16 @@
         },
         {
             "name": "mezzio/mezzio-helpers",
-            "version": "5.13.0",
+            "version": "5.13.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mezzio/mezzio-helpers.git",
-                "reference": "f22dff3b3e38130e7db001f3087e6cc24197cede"
+                "reference": "b2489bb73f531eb32224bb8687858cb9445d8791"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mezzio/mezzio-helpers/zipball/f22dff3b3e38130e7db001f3087e6cc24197cede",
-                "reference": "f22dff3b3e38130e7db001f3087e6cc24197cede",
+                "url": "https://api.github.com/repos/mezzio/mezzio-helpers/zipball/b2489bb73f531eb32224bb8687858cb9445d8791",
+                "reference": "b2489bb73f531eb32224bb8687858cb9445d8791",
                 "shasum": ""
             },
             "require": {
@@ -4053,7 +4053,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2023-03-02T11:50:26+00:00"
+            "time": "2023-03-14T10:49:28+00:00"
         },
         {
             "name": "mezzio/mezzio-platesrenderer",
@@ -5308,16 +5308,16 @@
         },
         {
             "name": "phly/phly-redis-task-queue",
-            "version": "0.4.3",
+            "version": "0.4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phly/phly-redis-task-queue.git",
-                "reference": "4eb641d7f1a924ef67c140de77ecbb9f7761137e"
+                "reference": "f363aaa780e69afc6391c41f9f60cb902b301385"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phly/phly-redis-task-queue/zipball/4eb641d7f1a924ef67c140de77ecbb9f7761137e",
-                "reference": "4eb641d7f1a924ef67c140de77ecbb9f7761137e",
+                "url": "https://api.github.com/repos/phly/phly-redis-task-queue/zipball/f363aaa780e69afc6391c41f9f60cb902b301385",
+                "reference": "f363aaa780e69afc6391c41f9f60cb902b301385",
                 "shasum": ""
             },
             "require": {
@@ -5368,9 +5368,9 @@
             ],
             "support": {
                 "issues": "https://github.com/phly/phly-redis-task-queue/issues",
-                "source": "https://github.com/phly/phly-redis-task-queue/tree/0.4.3"
+                "source": "https://github.com/phly/phly-redis-task-queue/tree/0.4.4"
             },
-            "time": "2023-03-11T17:40:57+00:00"
+            "time": "2023-03-14T20:54:12+00:00"
         },
         {
             "name": "php-http/curl-client",
@@ -10592,5 +10592,5 @@
     "platform-overrides": {
         "php": "8.1"
     },
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.3.0"
 }

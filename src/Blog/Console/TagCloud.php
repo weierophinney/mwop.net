@@ -32,7 +32,7 @@ class TagCloud extends Command
             'o',
             InputOption::VALUE_REQUIRED,
             'Output file to which to write the tag cloud',
-            'data/tag-cloud.phtml'
+            'data/shared/tag-cloud.phtml'
         );
     }
 
