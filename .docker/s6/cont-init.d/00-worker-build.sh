@@ -7,34 +7,33 @@ export COMPOSER_HOME=/var/local/composer
 
 cd /var/www
 
-if [ ! -d "vendor" ];then
-    if [[ "$DEBUG" != "" ]];then
+if [[ ! -d "vendor" ]];then
+    if [[ "${DEBUG}" != "" ]];then
         "${composer}" install --prefer-dist --no-interaction
     else
         "${composer}" install --no-scripts --no-dev -o --prefer-dist --no-interaction
     fi
 fi
 
-rm -Rf data/shared/*
 mkdir -p data/shared/feeds
 
 # Build the blog
-if [ ! -f "data/shared/posts.db" ] || [ ! -f "data/shared/tag-cloud.phtml" ];then
+if [[ ! -f "data/shared/posts.db" || ! -f "data/shared/tag-cloud.phtml" ]];then
     "${composer}" build:blog
 fi
 
 # Build homepage assets
-if [ ! -f "data/shared/homepage.posts.php" ] || [ ! -f "data/shared/github-feed.json" ];then
+if [[ ! -f "data/shared/homepage.posts.php" || ! -f "data/shared/github-feed.json" ]];then
     "${composer}" build:homepage
 fi
 
 # Prepare initial comics
-if [ ! -f "data/shared/comics.phtml" ];then
+if [[ ! -f "data/shared/comics.phtml" ]];then
     "${composer}" build:comics
 fi
 
 # Copy photo database
-if [ ! -f "data/shared/photodb/photos.db" ];then
+if [[ ! -f "data/shared/photodb/photos.db" ]];then
     ./vendor/bin/laminas photo:fetch-db
 fi
 
