@@ -13,7 +13,7 @@ services:
     expose:
       - "6379"
     volumes:
-      - ./etc/redis/redis.conf:/usr/local/etc/redis/redis.conf
+      - ./.docker/etc/redis/redis.conf:/usr/local/etc/redis/redis.conf
       - mwop_net_redis:/data
     logging:
       options:

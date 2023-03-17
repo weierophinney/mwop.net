@@ -32,5 +32,4 @@ WORKDIR /var/www
 
 ## Override entrypoint to use s6
 ENTRYPOINT ["/init"]
-USER zendphp
 CMD ["php-fpm"]
