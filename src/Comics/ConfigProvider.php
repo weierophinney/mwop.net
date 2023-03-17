@@ -93,7 +93,7 @@ class ConfigProvider
                 AttachableListenerProvider::class => [
                     FetchComicsDelegator::class,
                 ],
-                Mapper::class => [
+                Mapper::class                     => [
                     ComicsMapperDelegator::class,
                 ],
             ],

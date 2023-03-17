@@ -6,6 +6,8 @@ namespace Mwop\App\EventDispatcher;
 
 use Phly\RedisTaskQueue\Mapper\MapperInterface;
 
+use function array_key_exists;
+
 final class PayloadMapper implements MapperInterface
 {
     public function __construct(

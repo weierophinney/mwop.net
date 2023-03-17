@@ -22,16 +22,16 @@ class ConfigProvider
     public function getConfig(): array
     {
         return [
-            'api'     => [
+            'api'    => [
                 'key'          => '',
                 'token_header' => 'X-MWOP-NET-BLOG-API-KEY',
             ],
-            'db'      => null,
-            'disqus'  => [
+            'db'     => null,
+            'disqus' => [
                 'developer' => 0,
                 'key'       => null,
             ],
-            'images'  => [
+            'images' => [
                 'openverse' => [
                     'client_id'     => '',
                     'client_secret' => '',

@@ -24,7 +24,7 @@ class ConfigProvider
                 AttachableListenerProvider::class => [
                     FetchMastodonFeedDelegator::class,
                 ],
-                Mapper::class => [
+                Mapper::class                     => [
                     PostMapperDelegator::class,
                 ],
             ],

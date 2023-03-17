@@ -17,19 +17,19 @@ return [
         ],
     ],
     'blog'           => [
-        'api'     => [
+        'api'    => [
             'key' => $_SERVER['BLOG_API_KEY'] ?? '',
         ],
-        'disqus'  => [
+        'disqus' => [
             'key' => 'phlyboyphly',
         ],
-        'cache'   => [
+        'cache'  => [
             'enabled' => true,
         ],
     ],
     'dependencies'   => [
         'delegators' => [
-            ErrorHandler::class          => [
+            ErrorHandler::class => [
                 LoggingErrorListenerDelegator::class,
             ],
         ],

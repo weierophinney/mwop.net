@@ -9,6 +9,8 @@ use Predis\Client;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Container\ContainerInterface;
 
+use function assert;
+
 class CachePoolFactory
 {
     public function __invoke(ContainerInterface $container): CacheItemPoolInterface

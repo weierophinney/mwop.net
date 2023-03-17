@@ -8,6 +8,8 @@ use Phly\RedisTaskQueue\Mapper\EmptyObjectMapper;
 use Phly\RedisTaskQueue\Mapper\Mapper;
 use Psr\Container\ContainerInterface;
 
+use function assert;
+
 final class PostMapperDelegator
 {
     public function __invoke(ContainerInterface $container, string $requestedName, callable $factory): Mapper

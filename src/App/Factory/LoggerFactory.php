@@ -10,11 +10,15 @@ use Monolog\Processor\PsrLogMessageProcessor;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 
+use function assert;
+use function fopen;
+use function is_array;
+
 final class LoggerFactory
 {
     public function __invoke(ContainerInterface $container): LoggerInterface
     {
-        $config  = $container->get('config');
+        $config = $container->get('config');
         assert(is_array($config));
 
         $isDebug = $config['debug'] ?? false;

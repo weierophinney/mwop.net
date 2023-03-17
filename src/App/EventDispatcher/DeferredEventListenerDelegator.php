@@ -7,6 +7,9 @@ namespace Mwop\App\EventDispatcher;
 use Phly\EventDispatcher\ListenerProvider\AttachableListenerProvider;
 use Psr\Container\ContainerInterface;
 
+use function assert;
+use function is_callable;
+
 final class DeferredEventListenerDelegator
 {
     public function __invoke(
@@ -14,7 +17,7 @@ final class DeferredEventListenerDelegator
         string $requestedName,
         callable $factory,
     ): AttachableListenerProvider {
-        $provider = $factory(); 
+        $provider = $factory();
         assert($provider instanceof AttachableListenerProvider);
 
         $listener = $container->get(DeferredEventListener::class);

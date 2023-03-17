@@ -8,13 +8,15 @@ use Phly\RedisTaskQueue\Mapper\EmptyObjectMapper;
 use Phly\RedisTaskQueue\Mapper\Mapper;
 use Psr\Container\ContainerInterface;
 
+use function assert;
+
 final class ComicsMapperDelegator
 {
     public function __invoke(
         ContainerInterface $container,
         string $requestedName,
         callable $factory,
-    ): Mapper{
+    ): Mapper {
         $mapper = $factory();
         assert($mapper instanceof Mapper);
 

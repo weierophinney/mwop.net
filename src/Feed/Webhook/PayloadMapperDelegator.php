@@ -8,6 +8,8 @@ use Mwop\App\EventDispatcher\PayloadMapper;
 use Phly\RedisTaskQueue\Mapper\Mapper;
 use Psr\Container\ContainerInterface;
 
+use function assert;
+
 final class PayloadMapperDelegator
 {
     public function __invoke(

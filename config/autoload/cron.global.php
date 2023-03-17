@@ -6,6 +6,9 @@ namespace Mwop;
 
 use function json_encode;
 
+use const JSON_UNESCAPED_SLASHES;
+use const JSON_UNESCAPED_UNICODE;
+
 return [
     'cron' => [
         'jobs' => [
