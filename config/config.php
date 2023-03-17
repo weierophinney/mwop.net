@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Laminas\ConfigAggregator\ArrayProvider;
 use Laminas\ConfigAggregator\ConfigAggregator;
 use Laminas\ConfigAggregator\PhpFileProvider;
+use Phly\RedisTaskQueue\ConfigProvider;
 
 // To enable or disable caching, set the `ConfigAggregator::ENABLE_CACHE` boolean in
 // `config/autoload/local.php`.
@@ -13,6 +14,7 @@ $cacheConfig = [
 ];
 
 $aggregator = new ConfigAggregator([
+    ConfigProvider::class,
     Mezzio\Hal\ConfigProvider::class,
     Mezzio\Authorization\Rbac\ConfigProvider::class,
     Mezzio\Authorization\ConfigProvider::class,
@@ -34,7 +36,6 @@ $aggregator = new ConfigAggregator([
     Mezzio\Helper\ConfigProvider::class,
     Mezzio\Router\ConfigProvider::class,
     Mezzio\Router\FastRouteRouter\ConfigProvider::class,
-    Mezzio\Swoole\ConfigProvider::class,
 
     // Conditional, as it will not be used in production
     class_exists(Mezzio\Tooling\ConfigProvider::class)
@@ -51,7 +52,6 @@ $aggregator = new ConfigAggregator([
     Mwop\Comics\ConfigProvider::class,
     Mwop\Console\ConfigProvider::class,
     Mwop\Contact\ConfigProvider::class,
-    Mwop\Cron\ConfigProvider::class,
     Mwop\Feed\ConfigProvider::class,
     Mwop\Github\ConfigProvider::class,
     Mwop\Hooks\ConfigProvider::class,

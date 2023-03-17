@@ -16,14 +16,15 @@ use Mezzio\Authorization\AuthorizationInterface;
 use Mezzio\Authorization\AuthorizationMiddleware;
 use Mezzio\Authorization\Rbac\LaminasRbac;
 use Mezzio\Session\SessionMiddleware;
-use Mezzio\Swoole\Event\EventDispatcherInterface as SwooleEventDispatcher;
 use Middlewares\Csp;
 use Mwop\App\Factory\UserRepositoryFactory;
 use Mwop\Blog\Handler\DisplayPostHandler;
 use Phly\ConfigFactory\ConfigFactory;
 use Phly\EventDispatcher\ListenerProvider\AttachableListenerProvider;
+use Predis\Client as PredisClient;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
+use Psr\Log\LoggerInterface;
 
 class ConfigProvider
 {
@@ -37,6 +38,7 @@ class ConfigProvider
             'file-storage'              => $this->getFileStorageConfig(),
             'mail'                      => $this->getMailConfig(),
             'mezzio-authorization-rbac' => $this->getAuthorizationConfig(),
+            'redis'                     => $this->getRedisConfig(),
         ];
     }
 
@@ -47,7 +49,6 @@ class ConfigProvider
             'aliases'    => [
                 AuthenticationInterface::class => AuthenticationAdapter::class,
                 AuthorizationInterface::class  => LaminasRbac::class,
-                SwooleEventDispatcher::class   => EventDispatcherInterface::class,
             ],
             'invokables' => [
                 MapperBuilder::class                        => MapperBuilder::class,
@@ -62,9 +63,11 @@ class ConfigProvider
                 'config-content-security-policy'             => ConfigFactory::class,
                 'config-file-storage'                        => ConfigFactory::class,
                 'config-mail.transport'                      => ConfigFactory::class,
+                'config-redis'                               => ConfigFactory::class,
                 Csp::class                                   => Middleware\ContentSecurityPolicyMiddlewareFactory::class,
                 CacheItemPoolInterface::class                => Factory\CachePoolFactory::class,
                 EventDispatcherInterface::class              => Factory\EventDispatcherFactory::class,
+                EventDispatcher\DeferredEventListener::class => EventDispatcher\DeferredEventListenerFactory::class,
                 FeedReaderHttpClientInterface::class         => Feed\HttpPlugClientFactory::class,
                 Handler\AdminPageHandler::class              => Handler\PageHandlerFactory::class,
                 Handler\ClearResponseCacheHandler::class     => Handler\ClearResponseCacheHandlerFactory::class,
@@ -74,9 +77,11 @@ class ConfigProvider
                 Handler\PrivacyPolicyPageHandler::class      => Handler\PageHandlerFactory::class,
                 Handler\ResumePageHandler::class             => Handler\PageHandlerFactory::class,
                 HomePageCacheExpiration::class               => HomePageCacheExpirationFactory::class,
+                LoggerInterface::class                       => Factory\LoggerFactory::class,
                 'mail.transport'                             => Factory\MailTransport::class,
                 Middleware\CacheMiddleware::class            => Middleware\CacheMiddlewareFactory::class,
                 Middleware\RedirectAmpPagesMiddleware::class => Middleware\RedirectAmpPagesMiddlewareFactory::class,
+                PredisClient::class                          => Factory\PredisClientFactory::class,
                 ResponseCachePool::class                     => Factory\ResponseCachePoolFactory::class,
                 S3Client::class                              => Factory\S3ClientFactory::class,
                 SessionCachePool::class                      => SessionCachePoolFactory::class,
@@ -84,7 +89,7 @@ class ConfigProvider
             ],
             'delegators' => [
                 AttachableListenerProvider::class => [
-                    Factory\SwooleTaskInvokerListenerDelegator::class,
+                    EventDispatcher\DeferredEventListenerDelegator::class,
                 ],
                 DisplayPostHandler::class         => [
                     Middleware\DisplayBlogPostHandlerDelegator::class,
@@ -130,12 +135,7 @@ class ConfigProvider
     public function getCacheConfig(): array
     {
         return [
-            'connection-parameters' => [
-                'scheme' => 'tcp',
-                'host'   => 'localhost',
-                'port'   => 6379,
-            ],
-            'enabled'               => true,
+            'enabled' => true,
         ];
     }
 
@@ -155,6 +155,17 @@ class ConfigProvider
         return [
             'transport' => [
                 'apikey' => '',
+            ],
+        ];
+    }
+
+    public function getRedisConfig(): array
+    {
+        return [
+            'connection-parameters' => [
+                'scheme' => 'tcp',
+                'host'   => 'localhost',
+                'port'   => 6379,
             ],
         ];
     }

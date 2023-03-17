@@ -42,12 +42,12 @@ class PayloadListener
     private function parsePayloadJson(Payload $payload): ?AtomEntry
     {
         try {
-            return $this->mapper->map(AtomEntry::class, Source::json($payload->json));
+            return $this->mapper->map(AtomEntry::class, Source::json($payload->payload));
         } catch (MappingError $e) {
             $this->logger->warning(sprintf(
                 "Unable to parse GitHub atom entry webhook payload: %s\nPayload: %s",
                 $e->getMessage(),
-                $payload->json
+                $payload->payload
             ));
             return null;
         }

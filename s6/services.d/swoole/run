@@ -1,2 +1,0 @@
-#!/usr/bin/with-contenv sh
-s6-setuidgid zendphp /etc/services.d/swoole/daemon

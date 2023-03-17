@@ -7,10 +7,10 @@ namespace Mwop\Github;
 use League\Plates\Engine;
 use Mezzio\Application;
 use Mezzio\ProblemDetails\ProblemDetailsMiddleware;
-use Mezzio\Swoole\Task\DeferredServiceListenerDelegator;
 use Mwop\Hooks\Middleware\ValidateWebhookRequestMiddleware;
 use Phly\ConfigFactory\ConfigFactory;
 use Phly\EventDispatcher\ListenerProvider\AttachableListenerProvider;
+use Phly\RedisTaskQueue\Mapper\Mapper;
 
 use function getcwd;
 
@@ -29,7 +29,7 @@ class ConfigProvider
         return [
             'user'      => '',
             'limit'     => 10,
-            'list_file' => getcwd() . '/data/github-feed.json',
+            'list_file' => getcwd() . '/data/shared/github-feed.json',
         ];
     }
 
@@ -43,8 +43,8 @@ class ConfigProvider
                 Engine::class                     => [
                     RenderLinksDelegator::class,
                 ],
-                Webhook\PayloadListener::class    => [
-                    DeferredServiceListenerDelegator::class,
+                Mapper::class                     => [
+                    Webhook\PayloadMapperDelegator::class,
                 ],
             ],
             'factories'  => [

@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace Mwop\Art\Webhook;
 
-class Payload
+use Mwop\App\EventDispatcher\AbstractPayload;
+
+class Payload extends AbstractPayload
 {
-    public function __construct(
-        public readonly string $json
-    ) {
-    }
 }

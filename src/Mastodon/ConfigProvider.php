@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Mwop\Mastodon;
 
-use Mezzio\Swoole\Task\DeferredServiceListenerDelegator;
 use Phly\EventDispatcher\ListenerProvider\AttachableListenerProvider;
+use Phly\RedisTaskQueue\Mapper\Mapper;
 
 class ConfigProvider
 {
@@ -24,8 +24,8 @@ class ConfigProvider
                 AttachableListenerProvider::class => [
                     FetchMastodonFeedDelegator::class,
                 ],
-                FetchMastodonFeedListener::class  => [
-                    DeferredServiceListenerDelegator::class,
+                Mapper::class                     => [
+                    PostMapperDelegator::class,
                 ],
             ],
             'factories'  => [

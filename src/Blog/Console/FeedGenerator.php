@@ -67,7 +67,7 @@ class FeedGenerator extends Command
             'o',
             InputOption::VALUE_REQUIRED,
             'Directory to which to write the feeds.',
-            'data/feeds'
+            'data/shared/feeds'
         );
 
         $this->addOption(

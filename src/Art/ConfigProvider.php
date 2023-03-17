@@ -11,12 +11,12 @@ use Mezzio\Authorization\AuthorizationMiddleware;
 use Mezzio\Helper\BodyParams\BodyParamsMiddleware;
 use Mezzio\ProblemDetails\ProblemDetailsMiddleware;
 use Mezzio\Session\SessionMiddleware;
-use Mezzio\Swoole\Task\DeferredServiceListenerDelegator;
 use Mwop\Art\Storage\PhotoRetrieval;
 use Mwop\Art\Storage\PhotoRetrievalFactory;
 use Mwop\Hooks\Middleware\ValidateWebhookRequestMiddleware;
 use Phly\ConfigFactory\ConfigFactory;
 use Phly\EventDispatcher\ListenerProvider\AttachableListenerProvider;
+use Phly\RedisTaskQueue\Mapper\Mapper;
 
 use function getcwd;
 use function realpath;
@@ -35,7 +35,7 @@ class ConfigProvider
 
     public function getConfig(): array
     {
-        $databasePath = realpath(getcwd()) . '/data/photodb/photos.db';
+        $databasePath = realpath(getcwd()) . '/data/shared/photodb/photos.db';
         return [
             'database_path'      => $databasePath,
             'db'                 => [
@@ -59,11 +59,11 @@ class ConfigProvider
                 AttachableListenerProvider::class => [
                     Webhook\PayloadListenerDelegator::class,
                 ],
+                Mapper::class                     => [
+                    Webhook\PayloadMapperDelegator::class,
+                ],
                 MapperBuilder::class              => [
                     MapperBuilderDelegator::class,
-                ],
-                Webhook\PayloadListener::class    => [
-                    DeferredServiceListenerDelegator::class,
                 ],
             ],
             'factories'  => [

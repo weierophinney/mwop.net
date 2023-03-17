@@ -1,2 +1,0 @@
-#!/bin/bash
-cd /var/www && ./vendor/bin/laminas mezzio:swoole:start

@@ -9,10 +9,10 @@ use Laminas\Feed\Reader\Entry\EntryInterface;
 use League\Plates\Engine;
 use Mezzio\Application;
 use Mezzio\ProblemDetails\ProblemDetailsMiddleware;
-use Mezzio\Swoole\Task\DeferredServiceListenerDelegator;
 use Mwop\Hooks\Middleware\ValidateWebhookRequestMiddleware;
 use Phly\ConfigFactory\ConfigFactory;
 use Phly\EventDispatcher\ListenerProvider\AttachableListenerProvider;
+use Phly\RedisTaskQueue\Mapper\Mapper;
 
 use function date;
 use function getcwd;
@@ -43,11 +43,11 @@ class ConfigProvider
                 Engine::class                     => [
                     HomepagePostsDelegator::class,
                 ],
+                Mapper::class                     => [
+                    Webhook\PayloadMapperDelegator::class,
+                ],
                 MapperBuilder::class              => [
                     MapperBuilderDelegator::class,
-                ],
-                Webhook\PayloadListener::class    => [
-                    DeferredServiceListenerDelegator::class,
                 ],
             ],
             'factories'  => [
@@ -86,7 +86,7 @@ class ConfigProvider
     {
         return [
             [
-                'url'      => realpath(getcwd()) . '/data/feeds/rss.xml',
+                'url'      => realpath(getcwd()) . '/data/shared/feeds/rss.xml',
                 'sitename' => 'mwop.net',
                 'siteurl'  => 'https://mwop.net/blog',
             ],

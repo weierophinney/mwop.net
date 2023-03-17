@@ -23,7 +23,6 @@
     "require": {
         "php": "~8.1.0",
         "ext-imagick": "*",
-        "abraham/twitteroauth": "^3.1",
         "cache/namespaced-cache": "^1.0",
         "cache/predis-adapter": "^1.0",
         "cuyz/valinor": "^0.13.0",
@@ -56,13 +55,13 @@
         "mezzio/mezzio-problem-details": "^1.5",
         "mezzio/mezzio-session": "^1.5",
         "mezzio/mezzio-session-cache": "^1.6",
-        "mezzio/mezzio-swoole": "^4.3",
         "middlewares/csp": "^3.0",
         "mnapoli/front-yaml": "^2.0.2",
         "monolog/monolog": "^1.23",
         "phly/phly-comic": "^2.4.3",
         "phly/phly-configfactory": "^1.1",
         "phly/phly-event-dispatcher": "^1.1",
+        "phly/phly-redis-task-queue": "^0.4.4",
         "php-http/curl-client": "^1.4",
         "php-http/discovery": "^1.14",
         "php-http/message": "^1.2",
@@ -82,14 +81,16 @@
     "autoload": {
         "psr-4": {
             "Mwop\\": "src/",
-            "Opis\\Closure\\": "polyfill/Opis/Closure/",
-            "Spatie\\Async\\": "polyfill/Spatie/Async/"
+            "Opis\\Closure\\": "polyfill/Opis/Closure/"
         }
     },
     "autoload-dev": {
         "psr-4": {
             "MwopTest\\": "test/"
         }
+    },
+    "conflict": {
+        "spatie/async": "<1.5.5"
     },
     "scripts": {
         "build": [
@@ -100,8 +101,7 @@
         "build:blog": [
             "laminas blog:seed-db",
             "laminas blog:tag-cloud",
-            "laminas blog:feed-generator",
-            "laminas blog:generate-search-data"
+            "laminas blog:feed-generator"
         ],
         "build:comics": "laminas comics:for-site",
         "build:homepage": [

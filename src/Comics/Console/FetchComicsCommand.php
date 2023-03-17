@@ -35,7 +35,7 @@ class FetchComicsCommand extends Command
         return $fetchAllCommand->run(
             new ArrayInput([
                 '--exclude'   => $this->exclusions,
-                '--output'    => 'data/comics.phtml',
+                '--output'    => 'data/shared/comics.phtml',
                 '--processes' => 5,
             ]),
             $output

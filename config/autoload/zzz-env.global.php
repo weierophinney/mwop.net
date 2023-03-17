@@ -7,11 +7,7 @@
 declare(strict_types=1);
 
 use Laminas\Stratigility\Middleware\ErrorHandler;
-use Mezzio\Swoole\Task\DeferredServiceListenerDelegator;
-use Mwop\App\Factory\AccessLoggerFactory;
 use Mwop\App\LoggingErrorListenerDelegator;
-use Mwop\Blog\Listener\CacheBlogPostListener;
-use Psr\Log\LoggerInterface;
 
 return [
     'authentication' => [
@@ -21,38 +17,21 @@ return [
         ],
     ],
     'blog'           => [
-        'api'     => [
+        'api'    => [
             'key' => $_SERVER['BLOG_API_KEY'] ?? '',
         ],
-        'disqus'  => [
+        'disqus' => [
             'key' => 'phlyboyphly',
         ],
-        'cache'   => [
+        'cache'  => [
             'enabled' => true,
-        ],
-        'twitter' => [
-            'consumer_key'        => $_SERVER['TWITTER_CONSUMER_KEY'] ?? '',
-            'consumer_secret'     => $_SERVER['TWITTER_CONSUMER_SECRET'] ?? '',
-            'access_token'        => $_SERVER['TWITTER_ACCESS_TOKEN'] ?? '',
-            'access_token_secret' => $_SERVER['TWITTER_ACCESS_TOKEN_SECRET'] ?? '',
-        ],
-    ],
-    'cache'          => [
-        'connection-parameters' => [
-            'host' => 'redis',
         ],
     ],
     'dependencies'   => [
         'delegators' => [
-            CacheBlogPostListener::class => [
-                DeferredServiceListenerDelegator::class,
-            ],
-            ErrorHandler::class          => [
+            ErrorHandler::class => [
                 LoggingErrorListenerDelegator::class,
             ],
-        ],
-        'factories'  => [
-            LoggerInterface::class => AccessLoggerFactory::class,
         ],
     ],
     'hooks'          => [
@@ -61,6 +40,11 @@ return [
     'mail'           => [
         'transport' => [
             'apikey' => $_SERVER['SENDGRID_APIKEY'] ?? '',
+        ],
+    ],
+    'redis'          => [
+        'connection-parameters' => [
+            'host' => 'redis',
         ],
     ],
 ];

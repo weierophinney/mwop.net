@@ -31,7 +31,7 @@ class FetchMastodonFeed extends Command
             shortcut: 'p',
             mode: InputOption::VALUE_REQUIRED,
             description: 'Path to which to write the feed data',
-            default: 'data/mastodon.json'
+            default: 'data/shared/mastodon.json'
         );
     }
 

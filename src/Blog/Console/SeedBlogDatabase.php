@@ -132,7 +132,7 @@ class SeedBlogDatabase extends Command
             'd',
             InputOption::VALUE_REQUIRED,
             'Path to the database file, relative to the --path.',
-            'data/posts.db'
+            'data/shared/posts.db'
         );
 
         $this->addOption(

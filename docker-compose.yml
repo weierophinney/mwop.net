@@ -1,5 +1,11 @@
 version: '3.3'
 
+volumes:
+  mwop_net_redis:
+    external: true
+  mwop_net_shared_data:
+    external: true
+
 services:
   redis:
     image: redis
@@ -7,13 +13,13 @@ services:
     expose:
       - "6379"
     volumes:
-      - ./etc/redis/redis.conf:/usr/local/etc/redis/redis.conf
+      - ./.docker/etc/redis/redis.conf:/usr/local/etc/redis/redis.conf
       - mwop_net_redis:/data
     logging:
       options:
         max-size: 50m
     healthcheck:
-      test: ["CMD", "redis-cli","ping"]
+      test: redis-cli ping
       interval: 30s
       timeout: 10s
       retries: 5
@@ -22,48 +28,102 @@ services:
   php:
     build: 
       context: .
-      dockerfile: etc/docker/php.Dockerfile
-      args:
-        INSTALL_COMPOSER: 'true'
-        ZEND_EXTENSIONS_LIST: 'bz2 curl imagick intl mbstring opcache sqlite3 tidy xsl zip'
+      dockerfile: .docker/php.Dockerfile
+    env_file:
+      - .env
+    restart: unless-stopped
+    depends_on:
+      - worker
+      - redis
+    volumes:
+      - mwop_net_shared_data:/var/www/data/shared
+      - /etc/localtime:/etc/localtime:ro
+      - ./.docker/etc/nginx/conf.d:/etc/nginx/conf.d
+      - ./.docker/etc/zendphp/conf.d/mwop.ini:/etc/zendphp/conf.d/99-mwop.ini
+      - ./.docker/etc/nginx/nginx.conf:/etc/nginx/nginx.con
+      - ./.docker/s6/cont-init.d/00-build.sh:/etc/cont-init.d/00-build.sh
+      - ./.docker/s6/cont-init.d/01-std-stream-permissions.sh:/etc/cont-init.d/01-std-stream-permissions.sh
+      - ./.docker/s6/cont-init.d/99-start-message.sh:/etc/cont-init.d/99-start-message.sh
+      - ./.docker/usr/local/bin/php-fpm-healthcheck:/usr/local/bin/php-fpm-healthcheck
+      - ./composer.json:/var/www/composer.json
+      - ./composer.lock:/var/www/composer.lock
+      - ./config:/var/www/config
+      - ./data:/var/www/data
+      - ./public:/var/www/public
+      - ./src:/var/www/src
+      - ./templates:/var/www/templates
+    logging:
+      options:
+        max-size: 50m
+    healthcheck:
+      test: /usr/local/bin/php-fpm-healthcheck
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+
+  worker:
+    build: 
+      context: .
+      dockerfile: .docker/worker.Dockerfile
     env_file:
       - .env
     restart: unless-stopped
     depends_on:
       - redis
-    ports:
-      - "9001:9001"
     volumes:
-      - mwop_net_photodb:/var/www/data/photodb
-      - /etc/localtime:/etc/localtime:ro
+      - mwop_net_shared_data:/var/www/data/shared
+      - ./.docker/etc/zendphp/conf.d/mwop.ini:/etc/zendphp/conf.d/99-mwop.ini
+      - ./.docker/etc/supervisord/supervisord.conf:/etc/supervisord/supervisord.conf
+      - ./.docker/s6/cont-init.d/00-worker-build.sh:/etc/cont-init.d/00-worker-build.sh
+      - ./.docker/s6/cont-init.d/01-worker-pidfile-permissions.sh:/etc/cont-init.d/01-worker-pidfile-permissions.sh
+      - ./.docker/s6/cont-init.d/01-std-stream-permissions.sh:/etc/cont-init.d/01-std-stream-permissions.sh
+      - ./.docker/s6/cont-init.d/99-start-message.sh:/etc/cont-init.d/99-start-message.sh
+      - ./.docker/s6/services.d/supervisor:/etc/services.d/supervisor
       - ./composer.json:/var/www/composer.json
       - ./composer.lock:/var/www/composer.lock
       - ./config:/var/www/config
       - ./data:/var/www/data
-      - ./etc/php/mwop.ini:/etc/zendphp/cli/conf.d/mwop.ini
+      - ./public:/var/www/public
       - ./src:/var/www/src
       - ./templates:/var/www/templates
-      - ./public/23ED29DA.asc:/var/www/public/23ED29DA.asc
-      - ./public/images:/var/www/public/images
-      - ./public/favicon.ico:/var/www/public/favicon.ico
-      - ./public/index.php:/var/www/public/index.php
-      - ./public/manifest.json:/var/www/public/manifest.json
-      - ./s6/cont-init.d/00-build.sh:/etc/cont-init.d/00-build.sh
-      - ./s6/cont-init.d/01-std-stream-permissions.sh:/etc/cont-init.d/01-std-stream-permissions.sh
-      - ./s6/cont-init.d/99-start-message.sh:/etc/cont-init.d/99-start-message.sh
-      - ./s6/services.d/swoole:/etc/services.d/swoole
     logging:
       options:
         max-size: 50m
     healthcheck:
-      test: ['CMD', 'curl', '-f', 'http://localhost:9001/api/ping']
+      test: supervisorctl -c /etc/supervisord/supervisord.conf status all
       interval: 30s
       timeout: 10s
       retries: 5
       start_period: 60s
 
-volumes:
-  mwop_net_redis:
-    external: true
-  mwop_net_photodb:
-    external: true
+  nginx:
+    build: 
+      context: .
+      dockerfile: .docker/nginx.Dockerfile
+    env_file:
+      - .env
+    restart: unless-stopped
+    depends_on:
+      - php
+    ports:
+      - "9001:80"
+    volumes:
+      - ./.docker/etc/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./.docker/etc/nginx/mime.types:/etc/nginx/mime.types
+      - ./.docker/etc/nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
+      - ./assets/dist:/var/www/public/assets
+      - ./public/23ED29DA.asc:/var/www/public/23ED29DA.asc
+      - ./public/images:/var/www/public/images
+      - ./public/favicon.ico:/var/www/public/favicon.ico
+      - ./public/index.php:/var/www/public/index.php
+      - ./public/manifest.json:/var/www/public/manifest.json
+    logging:
+      options:
+        max-size: 50m
+    healthcheck:
+      test: curl --fail http://localhost/23ED29DA.asc || exit 1
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 10s

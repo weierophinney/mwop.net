@@ -9,13 +9,15 @@ use Predis\Client;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Container\ContainerInterface;
 
+use function assert;
+
 class CachePoolFactory
 {
     public function __invoke(ContainerInterface $container): CacheItemPoolInterface
     {
-        $config               = $container->get('config-cache');
-        $connectionParameters = $config['connection-parameters']; // required
-        $clientOptions        = $config['client-options'] ?? []; // optional
-        return new PredisCachePool(new Client($connectionParameters, $clientOptions));
+        $predis = $container->get(Client::class);
+        assert($predis instanceof Client);
+
+        return new PredisCachePool($predis);
     }
 }

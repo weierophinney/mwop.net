@@ -20,7 +20,7 @@ class FeedHandler implements RequestHandlerInterface
 {
     public function __construct(
         private RequestHandlerInterface $notFoundHandler,
-        private string $feedPath = 'data/feeds',
+        private string $feedPath = 'data/shared/feeds',
     ) {
     }
 
