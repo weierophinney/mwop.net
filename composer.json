@@ -81,14 +81,16 @@
     "autoload": {
         "psr-4": {
             "Mwop\\": "src/",
-            "Opis\\Closure\\": "polyfill/Opis/Closure/",
-            "Spatie\\Async\\": "polyfill/Spatie/Async/"
+            "Opis\\Closure\\": "polyfill/Opis/Closure/"
         }
     },
     "autoload-dev": {
         "psr-4": {
             "MwopTest\\": "test/"
         }
+    },
+    "conflict": {
+        "spatie/async": "<1.5.5"
     },
     "scripts": {
         "build": [
