@@ -7,7 +7,7 @@ FROM cr.zend.com/zendphp/8.1:alpine-3.16-fpm
 ARG TIMEZONE=UTC
 ARG INSTALL_COMPOSER=true
 ARG SYSTEM_PACKAGES
-ARG ZEND_EXTENSIONS_LIST="bz2 curl imagick intl mbstring opcache pdo_sqlite simplexml sqlite3 tidy xsl zip"
+ARG ZEND_EXTENSIONS_LIST="bz2 curl dom imagick intl mbstring opcache pdo_sqlite simplexml sqlite3 tidy xml xmlwriter xsl zip"
 ARG PECL_EXTENSIONS_LIST
 ARG POST_BUILD_BASH
 
@@ -26,6 +26,8 @@ ENV COMPOSER_HOME=/var/local/composer
 ## Also, install shared libraries required by OpenSwoole
 RUN set -e; \
     ZendPHPCustomizeWithBuildArgs.sh
+
+## TEMPLATED ##
 
 ## Set working directory
 WORKDIR /var/www

@@ -33,7 +33,9 @@ RUN set -e; \
 # Build the nginx container
 FROM nginx:1-alpine
 
-## Create working directory and composer home
+## TEMPLATED ##
+
+## Create document root if not already created
 RUN set -e; \
     mkdir -p /var/www/public
 

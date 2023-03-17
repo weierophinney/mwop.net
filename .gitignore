@@ -1,3 +1,5 @@
+.docker/php.prod.Dockerfile
+.docker/worker.prod.Dockerfile
 .phpcs_cache
 .phpunit.result.cache
 .puli/

@@ -28,7 +28,7 @@ services:
   php:
     build: 
       context: .
-      dockerfile: .docker/php.Dockerfile
+      dockerfile: .docker/php.prod.Dockerfile
     env_file:
       - .env
     restart: unless-stopped
@@ -38,20 +38,6 @@ services:
     volumes:
       - mwop_net_shared_data:/var/www/data/shared
       - /etc/localtime:/etc/localtime:ro
-      - ./.docker/etc/nginx/conf.d:/etc/nginx/conf.d
-      - ./.docker/etc/zendphp/conf.d/mwop.ini:/etc/zendphp/conf.d/99-mwop.ini
-      - ./.docker/etc/nginx/nginx.conf:/etc/nginx/nginx.con
-      - ./.docker/s6/cont-init.d/00-build.sh:/etc/cont-init.d/00-build.sh
-      - ./.docker/s6/cont-init.d/01-std-stream-permissions.sh:/etc/cont-init.d/01-std-stream-permissions.sh
-      - ./.docker/s6/cont-init.d/99-start-message.sh:/etc/cont-init.d/99-start-message.sh
-      - ./.docker/usr/local/bin/php-fpm-healthcheck:/usr/local/bin/php-fpm-healthcheck
-      - ./composer.json:/var/www/composer.json
-      - ./composer.lock:/var/www/composer.lock
-      - ./config:/var/www/config
-      - ./data:/var/www/data
-      - ./public:/var/www/public
-      - ./src:/var/www/src
-      - ./templates:/var/www/templates
     logging:
       options:
         max-size: 50m
@@ -65,7 +51,7 @@ services:
   worker:
     build: 
       context: .
-      dockerfile: .docker/worker.Dockerfile
+      dockerfile: .docker/worker.prod.Dockerfile
     env_file:
       - .env
     restart: unless-stopped
@@ -73,20 +59,6 @@ services:
       - redis
     volumes:
       - mwop_net_shared_data:/var/www/data/shared
-      - ./.docker/etc/zendphp/conf.d/mwop.ini:/etc/zendphp/conf.d/99-mwop.ini
-      - ./.docker/etc/supervisord/supervisord.conf:/etc/supervisord/supervisord.conf
-      - ./.docker/s6/cont-init.d/00-worker-build.sh:/etc/cont-init.d/00-worker-build.sh
-      - ./.docker/s6/cont-init.d/01-worker-pidfile-permissions.sh:/etc/cont-init.d/01-worker-pidfile-permissions.sh
-      - ./.docker/s6/cont-init.d/01-std-stream-permissions.sh:/etc/cont-init.d/01-std-stream-permissions.sh
-      - ./.docker/s6/cont-init.d/99-start-message.sh:/etc/cont-init.d/99-start-message.sh
-      - ./.docker/s6/services.d/supervisor:/etc/services.d/supervisor
-      - ./composer.json:/var/www/composer.json
-      - ./composer.lock:/var/www/composer.lock
-      - ./config:/var/www/config
-      - ./data:/var/www/data
-      - ./public:/var/www/public
-      - ./src:/var/www/src
-      - ./templates:/var/www/templates
     logging:
       options:
         max-size: 50m
@@ -100,7 +72,7 @@ services:
   nginx:
     build: 
       context: .
-      dockerfile: .docker/nginx.Dockerfile
+      dockerfile: .docker/nginx.prod.Dockerfile
     env_file:
       - .env
     restart: unless-stopped
@@ -108,16 +80,6 @@ services:
       - php
     ports:
       - "9001:80"
-    volumes:
-      - ./.docker/etc/nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ./.docker/etc/nginx/mime.types:/etc/nginx/mime.types
-      - ./.docker/etc/nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
-      - ./assets/dist:/var/www/public/assets
-      - ./public/23ED29DA.asc:/var/www/public/23ED29DA.asc
-      - ./public/images:/var/www/public/images
-      - ./public/favicon.ico:/var/www/public/favicon.ico
-      - ./public/index.php:/var/www/public/index.php
-      - ./public/manifest.json:/var/www/public/manifest.json
     logging:
       options:
         max-size: 50m

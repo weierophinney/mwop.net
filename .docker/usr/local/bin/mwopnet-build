@@ -1,0 +1,11 @@
+#!/bin/bash
+
+set -e
+
+composer=${COMPOSER_BIN:-/usr/local/sbin/composer}
+export COMPOSER_HOME=/var/local/composer
+export COMPOSER_ALLOW_SUPERUSER=1
+
+cd /var/www
+
+"${composer}" install --no-dev --prefer-dist --no-interaction
