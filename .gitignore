@@ -18,9 +18,9 @@ data/mastodon.json
 data/photodb/
 data/posts.db
 data/redis/
-data/shared/
 data/search_terms.json
 data/sessions/
+data/shared/
 data/tag-cloud.phtml
 docker-stack.yml
 instagram/
