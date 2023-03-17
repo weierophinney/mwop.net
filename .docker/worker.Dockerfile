@@ -14,6 +14,8 @@ ARG POST_BUILD_BASH
 ## Create working directory and composer home
 RUN set -e; \
     mkdir -p /var/www /var/local/composer
+ENV COMPOSER_BIN=/usr/local/sbin/composer
+ENV COMPOSER_HOME=/var/local/composer
 
 ## Customize PHP runtime according
 ## to the given building arguments
@@ -24,6 +26,4 @@ RUN set -e; \
 WORKDIR /var/www
 
 ## Override entrypoint to use s6
-ENV COMPOSER_BIN=/usr/local/sbin/composer
-ENV COMPOSER_HOME=/var/local/composer
 ENTRYPOINT ["/init"]
