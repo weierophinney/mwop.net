@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+PATH=./bin:./vendor/bin:$PATH
+
+function default {
+    help
+}
+
+function prod_dockerfiles {
+    local dockerfile
+
+    echo "Generating production Dockerfiles"
+
+    for dockerfile in nginx php worker; do
+        awk -v "template=$(cat "./.docker/${dockerfile}.prod-template.Dockerfile")" "{sub(/## TEMPLATED ##/,template)}1" "./.docker/${dockerfile}.Dockerfile" > "./.docker/${dockerfile}.prod.Dockerfile"
+    done
+}
+
+function help {
+    echo "$0 <task> <args>"
+    echo "Tasks:"
+    compgen -A function | cat -n
+}
+
+TIMEFORMAT="Task completed in %3lR"
+time ${@:-default}
+
+unset PATH
