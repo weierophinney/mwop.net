@@ -42,7 +42,7 @@ services:
       options:
         max-size: 50m
     healthcheck:
-      test: /usr/local/bin/php-fpm-healthcheck
+      test: /usr/local/bin/fpm-healthcheck.sh
       interval: 30s
       timeout: 10s
       retries: 5

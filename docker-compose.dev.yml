@@ -37,7 +37,6 @@ services:
       - ./.docker/s6/cont-init.d/00-build.sh:/etc/cont-init.d/00-build.sh
       - ./.docker/s6/cont-init.d/01-std-stream-permissions.sh:/etc/cont-init.d/01-std-stream-permissions.sh
       - ./.docker/s6/cont-init.d/99-start-message.sh:/etc/cont-init.d/99-start-message.sh
-      - ./.docker/usr/local/bin/php-fpm-healthcheck:/usr/local/bin/php-fpm-healthcheck
       - ./composer.json:/var/www/composer.json
       - ./composer.lock:/var/www/composer.lock
       - ./config:/var/www/config
@@ -50,7 +49,7 @@ services:
       options:
         max-size: 50m
     healthcheck:
-      test: /usr/local/bin/php-fpm-healthcheck
+      test: /usr/local/bin/fpm-healthcheck.sh
       interval: 30s
       timeout: 10s
       retries: 5
