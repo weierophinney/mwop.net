@@ -33,8 +33,8 @@ services:
       - redis
     volumes:
       - mwop_net_shared_data:/var/www/data/shared
-      - ./.docker/etc/zendphp/conf.d/mwop.ini:/etc/zendphp/conf.d/99-mwop.ini
-      - ./.docker/s6/cont-init.d/00-build.sh:/etc/cont-init.d/00-build.sh
+      - ./.docker/etc/zendphp/conf.d/mwop.ini:/entrypoint.d/conf.d/99-mwop.ini
+      - ./.docker/s6/cont-init.d/00-build.sh:/entrypoint.d/00-build.sh
       - ./.docker/s6/cont-init.d/01-std-stream-permissions.sh:/etc/cont-init.d/01-std-stream-permissions.sh
       - ./.docker/s6/cont-init.d/99-start-message.sh:/etc/cont-init.d/99-start-message.sh
       - ./composer.json:/var/www/composer.json
@@ -65,9 +65,9 @@ services:
       - redis
     volumes:
       - mwop_net_shared_data:/var/www/data/shared
-      - ./.docker/etc/zendphp/conf.d/mwop.ini:/etc/zendphp/conf.d/99-mwop.ini
+      - ./.docker/etc/zendphp/conf.d/mwop.ini:/entrypoint.d/conf.d/99-mwop.ini
       - ./.docker/etc/supervisord/supervisord.conf:/etc/supervisord/supervisord.conf
-      - ./.docker/s6/cont-init.d/00-worker-build.sh:/etc/cont-init.d/00-worker-build.sh
+      - ./.docker/s6/cont-init.d/00-worker-build.sh:/entrypoint.d/00-worker-build.sh
       - ./.docker/s6/cont-init.d/01-worker-pidfile-permissions.sh:/etc/cont-init.d/01-worker-pidfile-permissions.sh
       - ./.docker/s6/cont-init.d/01-std-stream-permissions.sh:/etc/cont-init.d/01-std-stream-permissions.sh
       - ./.docker/s6/cont-init.d/99-start-message.sh:/etc/cont-init.d/99-start-message.sh
