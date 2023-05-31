@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "335ca2cc9eb3ad8d562189246147274b",
+    "content-hash": "59170a187bc3085b531ebd6d0ca01202",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -62,16 +62,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.271.4",
+            "version": "3.271.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "bc19179c5f070b3d7ca7fe8a87eaeda1464b94e5"
+                "reference": "a583ea7638ebd7710f964ba34aa36ba30ef6a942"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/bc19179c5f070b3d7ca7fe8a87eaeda1464b94e5",
-                "reference": "bc19179c5f070b3d7ca7fe8a87eaeda1464b94e5",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/a583ea7638ebd7710f964ba34aa36ba30ef6a942",
+                "reference": "a583ea7638ebd7710f964ba34aa36ba30ef6a942",
                 "shasum": ""
             },
             "require": {
@@ -151,9 +151,9 @@
             "support": {
                 "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.271.4"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.271.5"
             },
-            "time": "2023-05-30T18:21:41+00:00"
+            "time": "2023-05-31T18:26:09+00:00"
         },
         {
             "name": "brick/math",
@@ -8576,33 +8576,33 @@
         },
         {
             "name": "laminas/laminas-component-installer",
-            "version": "2.8.0",
+            "version": "3.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-component-installer.git",
-                "reference": "3c998d2b2755985c71cd4d5d9b294228f63d3a65"
+                "reference": "a7b486a4df99e0e1cf45ae6e72d88a475fecfb90"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-component-installer/zipball/3c998d2b2755985c71cd4d5d9b294228f63d3a65",
-                "reference": "3c998d2b2755985c71cd4d5d9b294228f63d3a65",
+                "url": "https://api.github.com/repos/laminas/laminas-component-installer/zipball/a7b486a4df99e0e1cf45ae6e72d88a475fecfb90",
+                "reference": "a7b486a4df99e0e1cf45ae6e72d88a475fecfb90",
                 "shasum": ""
             },
             "require": {
-                "composer-plugin-api": "^1.0 || ^2.0",
-                "php": "^7.4 || ~8.0.0 || ~8.1.0"
+                "composer-plugin-api": "^2.0",
+                "php": "~8.0.0 || ~8.1.0 || ~8.2.0"
             },
             "conflict": {
                 "zendframework/zend-component-installer": "*"
             },
             "require-dev": {
-                "composer/composer": "^2.1.9@RC",
-                "laminas/laminas-coding-standard": "~2.3.0",
-                "mikey179/vfsstream": "^1.6.10",
-                "phpunit/phpunit": "^9.5.19",
-                "psalm/plugin-phpunit": "^0.16.1",
-                "vimeo/psalm": "^4.22.0",
-                "webmozart/assert": "^1.10.0"
+                "composer/composer": "^2.4.4",
+                "laminas/laminas-coding-standard": "~2.4.0",
+                "mikey179/vfsstream": "^1.6.11",
+                "phpunit/phpunit": "^9.5.26",
+                "psalm/plugin-phpunit": "^0.18.0",
+                "vimeo/psalm": "^5.0.0",
+                "webmozart/assert": "^1.11.0"
             },
             "type": "composer-plugin",
             "extra": {
@@ -8639,7 +8639,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2022-07-03T21:27:51+00:00"
+            "time": "2023-05-24T16:25:08+00:00"
         },
         {
             "name": "laminas/laminas-development-mode",
