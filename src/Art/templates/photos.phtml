@@ -7,7 +7,7 @@
 <div class="flex flex-row flex-wrap justify-evenly items-start gap-8">
 <?php foreach ($photos as $photo): ?>
     <a class="block no-underline relative mx-1 my-1" href="<?= $this->url('art.photo', ['image' => $photo->filename()]) ?>">
-        <img class="" src="<?= $this->url('art.image', ['type' => 'thumbnails', 'image' => $photo->filename()]) ?>" alt="Original art by Matthew Weier O'Phinney">
+        <img class="" src="<?= $this->url('art.image', ['type' => 'thumbnails', 'image' => $photo->filename()]) ?>" alt="Original art by Matthew Weier O'Phinney" loading="lazy">
 
         <div class="absolute bottom-0 right-0 rounded bg-mwop-light"><img class="stroke-mwop-nav" src="/images/external-link.svg" width="32"></div>
     </a>

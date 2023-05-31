@@ -56,7 +56,7 @@ $this->end();
     <?php else : ?>
         <?php /* <section class="float-right ml-4 mb-2 relative"> */ ?>
         <section class="mb-2 lg:float-right lg:w-1/2 lg:ml-4 lg:relative">
-            <img class="w-fit h-auto lg:w-full" src="<?= $post->image->url ?>" alt="<?= $post->image->title ?>">
+            <img class="w-fit h-auto lg:w-full" src="<?= $post->image->url ?>" alt="<?= $post->image->title ?>" loading="lazy">
             <h2 class="lg:absolute lg:bottom-4 lg:left-2 p-name"><a class="no-underline text-mwop-fg drop-shadow-lg u-url u-uid" href="<?= $this->postUrl($post) ?>"><?= $this->escapeHtml($post->title) ?></a></h2>
         </section>
     <?php endif ; ?>
