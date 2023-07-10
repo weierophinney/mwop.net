@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bde742d7a09ff623e016c21b3ae9707a",
+    "content-hash": "7f318196cc2bcddd15f86096716ca502",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -5179,16 +5179,16 @@
         },
         {
             "name": "phly/phly-comic",
-            "version": "2.4.6",
+            "version": "2.4.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/weierophinney/PhlyComic.git",
-                "reference": "351af0acd71885b2602df357f00ffb4f95c96e61"
+                "reference": "99f9dc07c776455e2180a1c612f856cfc07d0a73"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/weierophinney/PhlyComic/zipball/351af0acd71885b2602df357f00ffb4f95c96e61",
-                "reference": "351af0acd71885b2602df357f00ffb4f95c96e61",
+                "url": "https://api.github.com/repos/weierophinney/PhlyComic/zipball/99f9dc07c776455e2180a1c612f856cfc07d0a73",
+                "reference": "99f9dc07c776455e2180a1c612f856cfc07d0a73",
                 "shasum": ""
             },
             "require": {
@@ -5242,7 +5242,7 @@
                     "url": "https://funding.communitybridge.org/projects/laminas-project"
                 }
             ],
-            "time": "2023-07-10T16:48:44+00:00"
+            "time": "2023-07-10T17:18:22+00:00"
         },
         {
             "name": "phly/phly-configfactory",
