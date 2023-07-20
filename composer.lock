@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7f318196cc2bcddd15f86096716ca502",
+    "content-hash": "4bff0723474caed1af6e74f26eaefc33",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -5179,22 +5179,22 @@
         },
         {
             "name": "phly/phly-comic",
-            "version": "2.4.7",
+            "version": "2.4.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/weierophinney/PhlyComic.git",
-                "reference": "99f9dc07c776455e2180a1c612f856cfc07d0a73"
+                "reference": "f9b22a119403a15d3f64c27c52ce9748bb7be12e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/weierophinney/PhlyComic/zipball/99f9dc07c776455e2180a1c612f856cfc07d0a73",
-                "reference": "99f9dc07c776455e2180a1c612f856cfc07d0a73",
+                "url": "https://api.github.com/repos/weierophinney/PhlyComic/zipball/f9b22a119403a15d3f64c27c52ce9748bb7be12e",
+                "reference": "f9b22a119403a15d3f64c27c52ce9748bb7be12e",
                 "shasum": ""
             },
             "require": {
                 "carica/phpcss": "^2.0",
                 "ext-curl": "*",
-                "php": "~7.4.0 || ~8.0.0 || ~8.1.0",
+                "php": "~7.4.0 || ~8.0.0 || ~8.1.0 || ~8.2.0",
                 "spatie/async": "^1.5",
                 "symfony/console": "^5.0 || ^6.0"
             },
@@ -5242,7 +5242,7 @@
                     "url": "https://funding.communitybridge.org/projects/laminas-project"
                 }
             ],
-            "time": "2023-07-10T17:18:22+00:00"
+            "time": "2023-07-20T15:01:38+00:00"
         },
         {
             "name": "phly/phly-configfactory",
