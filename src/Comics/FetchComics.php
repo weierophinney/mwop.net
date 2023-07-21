@@ -21,7 +21,7 @@ class FetchComics
     private const TEMPLATE_COMIC = <<<'EOT'
         <div class="comic">
             <h4><a href="%s">%s</a></h4>
-            <p><a href="%s"><img src="%s"/></a></p>
+            <p><a href="%s"><img referrerpolicy="no-referrer" src="%s"/></a></p>
         </div>
 
         EOT;
