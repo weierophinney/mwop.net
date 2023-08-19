@@ -47,13 +47,14 @@ class PhotoStorage
         return $filename;
     }
 
-    public function fromUploadedFile(UploadedFileInterface $upload): string
+    public function fromUploadedFile(UploadedFileInterface $upload, ?string $mimeType = null): string
     {
-        $suffix = match ($upload->getClientMediaType()) {
+        $mimeType = $mimeType ?: $upload->getClientMediaType();
+        $suffix   = match ($mimeType) {
             'image/jpeg' => 'jpg',
             'image/png'  => 'png',
             'image/webp' => 'webp',
-            default      => throw new RuntimeException('Invalid media type detected: ' . $upload->getClientMediaType()),
+            default      => throw new RuntimeException('Invalid media type detected: ' . $mimeType),
         };
         $filename = sprintf('%s.%s', Uuid::uuid6()->__toString(), $suffix);
         $resource = $upload->getStream()->detach();

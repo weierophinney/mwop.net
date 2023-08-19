@@ -12,6 +12,7 @@ use Throwable;
 
 use function count;
 use function in_array;
+use function mime_content_type;
 use function sprintf;
 
 class UploadPhoto
@@ -40,9 +41,14 @@ class UploadPhoto
         }
 
         /** @var UploadedFileInterface $upload */
-        $upload = $files['imageUpload'];
-        if (! in_array($upload->getClientMediaType(), self::ALLOWED_MEDIA_TYPES, true)) {
-            return UploadPhotoResult::fromError('Invalid image file! Must be a JPEG, PNG, or WEBP image.');
+        $upload   = $files['imageUpload'];
+        $mimeType = $this->getMediaType($upload);
+
+        if (! in_array($mimeType, self::ALLOWED_MEDIA_TYPES, true)) {
+            return UploadPhotoResult::fromError(sprintf(
+                'Invalid image file! Must be a JPEG, PNG, or WEBP image; received "%s"',
+                $mimeType
+            ));
         }
 
         $sourceFile = $upload->getClientFilename();
@@ -52,7 +58,7 @@ class UploadPhoto
         }
 
         try {
-            $filename = $this->storage->fromUploadedFile($upload);
+            $filename = $this->storage->fromUploadedFile($upload, $mimeType);
         } catch (Throwable $e) {
             return $this->generateErrorResult('Error uploading image; please try again.', $e);
         }
@@ -90,7 +96,8 @@ class UploadPhoto
     {
         $this->logger->error(sprintf(
             "[%s] %s: %s\nTrace:\n%s",
-            self::class . $error,
+            self::class,
+            $error,
             $e->getMessage(),
             $this->generateStackTrace($e)
         ));
@@ -106,5 +113,11 @@ class UploadPhoto
         } while ($e = $e->getPrevious());
 
         return $trace;
+    }
+
+    private function getMediaType(UploadedFileInterface $upload): string
+    {
+        $filename = $upload->getStream()->getMetadata('uri');
+        return mime_content_type($filename) ?: '';
     }
 }
