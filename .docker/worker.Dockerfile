@@ -7,7 +7,7 @@ FROM cr.zend.com/zendphp/8.1:alpine-3.16-cli
 ARG TIMEZONE=UTC
 ARG INSTALL_COMPOSER=true
 ARG SYSTEM_PACKAGES="supervisor"
-ARG ZEND_EXTENSIONS_LIST="bz2 curl dom imagick intl mbstring opcache pdo_sqlite simplexml sqlite3 tidy xml xmlwriter xsl zip"
+ARG ZEND_EXTENSIONS_LIST="bz2 curl dom imagick intl mbstring opcache pcntl pdo_sqlite simplexml sqlite3 tidy xml xmlwriter xsl zip"
 ARG PECL_EXTENSIONS_LIST
 ARG POST_BUILD_BASH
 
