@@ -20,6 +20,7 @@
     "require": {
         "php": "~8.1.0",
         "ext-imagick": "*",
+        "ext-pcntl": "*",
         "cache/namespaced-cache": "^1.0",
         "cache/predis-adapter": "^1.0",
         "cuyz/valinor": "^0.13.0",
@@ -58,7 +59,7 @@
         "phly/phly-comic": "^2.4.8",
         "phly/phly-configfactory": "^1.1",
         "phly/phly-event-dispatcher": "^1.1",
-        "phly/phly-redis-task-queue": "^0.4.4",
+        "phly/phly-redis-task-queue": "^0.4.5",
         "php-http/curl-client": "^1.4",
         "php-http/discovery": "^1.14",
         "php-http/message": "^1.2",

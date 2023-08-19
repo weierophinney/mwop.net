@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4bff0723474caed1af6e74f26eaefc33",
+    "content-hash": "f0b24423e7efb4bfecb478e2a51d1c94",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -5357,16 +5357,16 @@
         },
         {
             "name": "phly/phly-redis-task-queue",
-            "version": "0.4.4",
+            "version": "0.4.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phly/phly-redis-task-queue.git",
-                "reference": "f363aaa780e69afc6391c41f9f60cb902b301385"
+                "reference": "146a103be8c0c84e002f5b72c6bec5ae82c25fcd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phly/phly-redis-task-queue/zipball/f363aaa780e69afc6391c41f9f60cb902b301385",
-                "reference": "f363aaa780e69afc6391c41f9f60cb902b301385",
+                "url": "https://api.github.com/repos/phly/phly-redis-task-queue/zipball/146a103be8c0c84e002f5b72c6bec5ae82c25fcd",
+                "reference": "146a103be8c0c84e002f5b72c6bec5ae82c25fcd",
                 "shasum": ""
             },
             "require": {
@@ -5417,9 +5417,9 @@
             ],
             "support": {
                 "issues": "https://github.com/phly/phly-redis-task-queue/issues",
-                "source": "https://github.com/phly/phly-redis-task-queue/tree/0.4.4"
+                "source": "https://github.com/phly/phly-redis-task-queue/tree/0.4.5"
             },
-            "time": "2023-03-14T20:54:12+00:00"
+            "time": "2023-08-19T18:33:48+00:00"
         },
         {
             "name": "php-http/curl-client",
@@ -10616,11 +10616,12 @@
     "prefer-lowest": false,
     "platform": {
         "php": "~8.1.0",
-        "ext-imagick": "*"
+        "ext-imagick": "*",
+        "ext-pcntl": "*"
     },
     "platform-dev": [],
     "platform-overrides": {
         "php": "8.1"
     },
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.2.0"
 }
