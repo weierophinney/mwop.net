@@ -64,7 +64,7 @@ class SearchCommand extends Command
         $output->writeln(sprintf('<info>Showing %d results:</info>', $results->count()));
 
         foreach ($results as $image) {
-            $output->writeln($image);
+            $output->writeln($image->__toString());
         }
 
         return 0;

@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Mwop\Blog\Images;
 
+use Stringable;
+
 use function sprintf;
 use function strtoupper;
 
-class Image
+class Image implements Stringable
 {
     public function __construct(
         public readonly string $url,
