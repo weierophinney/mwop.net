@@ -9,7 +9,7 @@ RUN set -e; \
     echo "Installing agentkeepalive NPM module (required for npm upgrade)"; \
     npm install -g agentkeepalive --save; \
     echo "Upgrading npm to latest version"; \
-    npm install -g npm@latest; \
+    npm install -g npm@8.x; \
     echo "Installing PostCSS"; \
     npm install -g postcss-cli; \
     echo "Creating build directory"; \

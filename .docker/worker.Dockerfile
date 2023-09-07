@@ -1,7 +1,7 @@
 # DOCKER-VERSION        1.3
 
 # Build the PHP container
-FROM cr.zend.com/zendphp/8.1:alpine-3.16-cli
+FROM cr.zend.com/zendphp/8.1:alpine-3.18-cli
 
 ## Customizations
 ARG TIMEZONE=UTC
