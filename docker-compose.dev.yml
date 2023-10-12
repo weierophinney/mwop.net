@@ -55,6 +55,14 @@ services:
       retries: 5
       start_period: 30s
 
+  zendhq:
+    image: cr.zend.com/zendhq:alpine-3.18
+    user: zendphp
+    volumes:
+      - ./.docker/etc/zendhq/license:/opt/zend/zendphp/etc/license
+    ports:
+      - "10091:10091"
+
   worker:
     build: 
       context: .
