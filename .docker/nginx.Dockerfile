@@ -1,7 +1,7 @@
 # DOCKER-VERSION        1.3
 
 # Build assets
-FROM node:16.13 as assets
+FROM node:18.18 as assets
 RUN set -e; \
     echo "Installing make (required for building assets)"; \
     apt-get update; \
@@ -9,7 +9,7 @@ RUN set -e; \
     echo "Installing agentkeepalive NPM module (required for npm upgrade)"; \
     npm install -g agentkeepalive --save; \
     echo "Upgrading npm to latest version"; \
-    npm install -g npm@8.x; \
+    npm install -g npm@"^9.8.1"; \
     echo "Installing PostCSS"; \
     npm install -g postcss-cli; \
     echo "Creating build directory"; \
