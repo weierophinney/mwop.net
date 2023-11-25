@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f6150c8877035e158acbd243b7f3a46a",
+    "content-hash": "8fe0fa966feb942b33c387d677b1d8ba",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -5184,6 +5184,51 @@
                 "source": "https://github.com/phly/phly-event-dispatcher"
             },
             "time": "2023-01-10T19:15:49+00:00"
+        },
+        {
+            "name": "phly/phly-rule-validation",
+            "version": "0.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phly/phly-rule-validation.git",
+                "reference": "50598249b69c699f7fbf43d51357333d03ed0d11"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phly/phly-rule-validation/zipball/50598249b69c699f7fbf43d51357333d03ed0d11",
+                "reference": "50598249b69c699f7fbf43d51357333d03ed0d11",
+                "shasum": ""
+            },
+            "require": {
+                "php": "~8.2.0 || ~8.3.0"
+            },
+            "require-dev": {
+                "laminas/laminas-coding-standard": "~2.5.0",
+                "phpunit/phpunit": "^10.1",
+                "psalm/plugin-phpunit": "^0.18.4",
+                "roave/security-advisories": "dev-master",
+                "vimeo/psalm": "^5.7.7"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Phly\\RuleValidation\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-2-Clause"
+            ],
+            "description": "Simple rule-based validation framework",
+            "keywords": [
+                "validation"
+            ],
+            "support": {
+                "issues": "https://github.com/phly/phly-rule-validation/issues",
+                "rss": "https://github.com/phly/phly-rule-validation/releases.atom",
+                "source": "https://github.com/phly/phly-rule-validation"
+            },
+            "time": "2023-11-20T22:02:46+00:00"
         },
         {
             "name": "php-http/curl-client",

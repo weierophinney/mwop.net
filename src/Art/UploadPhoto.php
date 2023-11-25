@@ -28,12 +28,13 @@ class UploadPhoto
         private PhotoStorage $storage,
         private PhotoMapper $mapper,
         private Webhook\DatabaseBackup $backup,
+        private Form\UploadRuleSet $form,
     ) {
     }
 
     public function process(ServerRequestInterface $request): UploadPhotoResult
     {
-        $form  = $request->getParsedBody();
+        $data  = $request->getParsedBody();
         $files = $request->getUploadedFiles();
 
         if (0 === count($files) || ! isset($files['imageUpload'])) {
@@ -53,8 +54,10 @@ class UploadPhoto
 
         $sourceFile = $upload->getClientFilename();
 
-        if (empty($form['description'])) {
-            return UploadPhotoResult::fromError('Missing description! Please resubmit with a non-empty description.');
+        $formResult = $this->form->validate($data);
+
+        if (! $formResult->isValid()) {
+            return UploadPhotoResult::fromError($formResult->description->message());
         }
 
         try {
@@ -71,7 +74,7 @@ class UploadPhoto
 
         $photo = new Photo(
             filename: $filename,
-            description: $form['description'],
+            description: $formResult->description->value(),
             createdAt: new DateTimeImmutable(),
             url: 'https://mwop.net/',
             sourceUrl: $sourceFile,
