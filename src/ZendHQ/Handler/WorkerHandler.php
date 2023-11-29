@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Mwop\ZendHQ\Handler;
 
-use Mwop\ZendHQ\EventFactory;
 use Mwop\ZendHQ\JobValidator;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -25,12 +24,14 @@ class WorkerHandler implements RequestHandlerInterface
     {
         $payload = json_decode(
             json: $request->getBody()->getContents(),
-            associative: false,
+            associative: true,
             flags: JSON_THROW_ON_ERROR,
         );
 
         (new JobValidator())($payload);
-        $event = (new EventFactory())($payload);
+
+        $class = $payload['type'];
+        $event = $class::fromDataArray($payload['data'] ?? []);
 
         $this->dispatcher->dispatch($event);
 

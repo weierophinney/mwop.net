@@ -12,7 +12,7 @@ class InvalidJobException extends RuntimeException implements ProblemDetailsExce
 {
     use CommonProblemDetailsExceptionTrait;
 
-    public function __construct(string $message, string $title, string $type, object $job)
+    public function __construct(string $message, string $title, string $type, array $job)
     {
         parent::__construct($message, 400);
 
@@ -23,7 +23,7 @@ class InvalidJobException extends RuntimeException implements ProblemDetailsExce
         $this->additional['job'] = $job;
     }
 
-    public static function forMissingJobType(object $job): self
+    public static function forMissingJobType(array $job): self
     {
         return new self(
             'Invalid job; missing job "type"',
@@ -33,17 +33,17 @@ class InvalidJobException extends RuntimeException implements ProblemDetailsExce
         );
     }
 
-    public static function forInvalidJobType(object $job): self
+    public static function forInvalidJobType(array $job): self
     {
         return new self(
-            'Invalid job; job "type" must be a valid event class name',
+            'Invalid job; job "type" must be a valid event class name implementing Mwop\QueueableEvent',
             'Invalid job type',
             'http://worker/error/job/type/malformed',
             $job
         );
     }
 
-    public static function forInvalidJobData(object $job): self
+    public static function forInvalidJobData(array $job): self
     {
         return new self(
             'Invalid job; job "data" must be an object',
