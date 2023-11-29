@@ -46,7 +46,8 @@ class Payload implements QueueableEvent
         return new self($data);
     }
 
-    public function jsonSerialize(): mixed
+    public function jsonSerialize(): array
     {
+        return $this->payload;
     }
 }
