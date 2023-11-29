@@ -56,6 +56,7 @@ $aggregator = new ConfigAggregator([
     Mwop\Hooks\ConfigProvider::class,
     Mwop\Mastodon\ConfigProvider::class,
     Mwop\Now\ConfigProvider::class,
+    Mwop\ZendHQ\ConfigProvider::class,
 
     // Include cache configuration
     new ArrayProvider($cacheConfig),
