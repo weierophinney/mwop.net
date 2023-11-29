@@ -43,7 +43,7 @@ class PayloadListener
     private function parsePayloadJson(Payload $payload): FeedItem
     {
         try {
-            return $this->mapper->map(FeedItem::class, Source::json($payload->payload));
+            return $this->mapper->map(FeedItem::class, Source::array($payload->payload));
         } catch (MappingError $e) {
             $this->logger->warning(sprintf(
                 "Unable to parse Feed RSS item webhook payload: %s\nPayload: %s",

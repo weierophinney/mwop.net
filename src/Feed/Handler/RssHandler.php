@@ -23,7 +23,7 @@ class RssHandler implements RequestHandlerInterface
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $this->dispatcher->dispatch(new DeferredEvent(
-            new Payload((string) $request->getBody())
+            Payload::fromJSON((string) $request->getBody())
         ));
 
         return $this->responseFactory->createResponse(204);
