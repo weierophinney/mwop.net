@@ -30,7 +30,7 @@ class NewImageHandler implements RequestHandlerInterface
         $content = trim($request->getBody()->__toString());
 
         $this->logger->info(sprintf('Received Instagram payload: %s', $content));
-        $this->dispatcher->dispatch(new DeferredEvent(new Payload($content)));
+        $this->dispatcher->dispatch(new DeferredEvent(Payload::fromJSON($content)));
 
         return $this->responseFactory->createResponse(204);
     }

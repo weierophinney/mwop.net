@@ -66,7 +66,7 @@ class PayloadListener
     private function parsePayloadJson(Payload $payload): ?Photo
     {
         try {
-            return $this->dataMapper->map(Photo::class, Source::json($payload->payload));
+            return $this->dataMapper->map(Photo::class, Source::array($payload->payload));
         } catch (MappingError $e) {
             $message = sprintf(
                 "Unable to parse Instagram webhook payload, or invalid Instagram payload detected: %s\nPayload: %s",
