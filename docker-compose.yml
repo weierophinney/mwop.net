@@ -33,7 +33,7 @@ services:
       - .env
     restart: unless-stopped
     depends_on:
-      - worker
+      - zendhq
       - redis
     volumes:
       - mwop_net_shared_data:/var/www/data/shared
@@ -48,26 +48,13 @@ services:
       retries: 5
       start_period: 30s
 
-  worker:
-    build: 
-      context: .
-      dockerfile: .docker/worker.prod.Dockerfile
-    env_file:
-      - .env
-    restart: unless-stopped
-    depends_on:
-      - redis
+  zendhq:
+    image: cr.zend.com/zendhq:alpine-3.18
+    user: zendphp
     volumes:
-      - mwop_net_shared_data:/var/www/data/shared
-    logging:
-      options:
-        max-size: 50m
-    healthcheck:
-      test: supervisorctl -c /etc/supervisord/supervisord.conf status all
-      interval: 30s
-      timeout: 10s
-      retries: 5
-      start_period: 60s
+      - /etc/zendhq/license:/opt/zend/zendphp/etc/license
+    ports:
+      - "10091:10091"
 
   nginx:
     build: 
