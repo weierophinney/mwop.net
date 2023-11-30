@@ -5,11 +5,12 @@ volumes:
     external: true
   mwop_net_shared_data:
     external: true
+  mwop_net_zendhq_db:
+    external: true
 
 services:
   redis:
     image: redis
-    restart: unless-stopped
     expose:
       - "6379"
     volumes:
@@ -24,6 +25,7 @@ services:
       timeout: 10s
       retries: 5
       start_period: 30s
+    restart: unless-stopped
 
   php:
     build: 
@@ -31,9 +33,8 @@ services:
       dockerfile: .docker/php.prod.Dockerfile
     env_file:
       - .env
-    restart: unless-stopped
     depends_on:
-      - worker
+      - zendhq
       - redis
     volumes:
       - mwop_net_shared_data:/var/www/data/shared
@@ -47,27 +48,23 @@ services:
       timeout: 10s
       retries: 5
       start_period: 30s
-
-  worker:
-    build: 
-      context: .
-      dockerfile: .docker/worker.prod.Dockerfile
-    env_file:
-      - .env
     restart: unless-stopped
-    depends_on:
-      - redis
+
+  zendhq:
+    image: cr.zend.com/zendhq:alpine-3.18
+    user: zendphp
     volumes:
-      - mwop_net_shared_data:/var/www/data/shared
-    logging:
-      options:
-        max-size: 50m
+      - /etc/zendhq/license:/opt/zend/zendphp/etc/license
+      - mwop_net_zendhq_db:/opt/zend/zendphp/var/db
+    ports:
+      - "10091:10091"
     healthcheck:
-      test: supervisorctl -c /etc/supervisord/supervisord.conf status all
+      test: /usr/local/bin/healthcheck.sh
       interval: 30s
       timeout: 10s
       retries: 5
-      start_period: 60s
+      start_period: 30s
+    restart: unless-stopped
 
   nginx:
     build: 
@@ -75,7 +72,6 @@ services:
       dockerfile: .docker/nginx.prod.Dockerfile
     env_file:
       - .env
-    restart: unless-stopped
     depends_on:
       - php
     ports:
@@ -84,8 +80,9 @@ services:
       options:
         max-size: 50m
     healthcheck:
-      test: curl --fail http://localhost/23ED29DA.asc || exit 1
+      test: curl --fail http://localhost/health || exit 1
       interval: 30s
       timeout: 10s
       retries: 5
       start_period: 10s
+    restart: unless-stopped

@@ -7,6 +7,8 @@ namespace Mwop\App;
 use Aws\S3\S3Client;
 use CuyZ\Valinor\MapperBuilder;
 use Laminas\Feed\Reader\Http\ClientInterface as FeedReaderHttpClientInterface;
+use Laminas\ServiceManager\AbstractFactory\ReflectionBasedAbstractFactory;
+use Laminas\ServiceManager\Factory\InvokableFactory;
 use League\Plates\Engine;
 use Mezzio\Application;
 use Mezzio\Authentication\AuthenticationInterface;
@@ -25,6 +27,7 @@ use Predis\Client as PredisClient;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;
+use ZendHQ\JobQueue\JobQueue;
 
 class ConfigProvider
 {
@@ -36,6 +39,7 @@ class ConfigProvider
             'cache'                     => $this->getCacheConfig(),
             'content-security-policy'   => [],
             'file-storage'              => $this->getFileStorageConfig(),
+            'jq'                        => $this->getJobQueueConfig(),
             'mail'                      => $this->getMailConfig(),
             'mezzio-authorization-rbac' => $this->getAuthorizationConfig(),
             'redis'                     => $this->getRedisConfig(),
@@ -71,12 +75,14 @@ class ConfigProvider
                 FeedReaderHttpClientInterface::class         => Feed\HttpPlugClientFactory::class,
                 Handler\AdminPageHandler::class              => Handler\PageHandlerFactory::class,
                 Handler\ClearResponseCacheHandler::class     => Handler\ClearResponseCacheHandlerFactory::class,
+                Handler\HealthHandler::class                 => ReflectionBasedAbstractFactory::class,
                 Handler\HomePageHandler::class               => Handler\HomePageHandlerFactory::class,
                 Handler\LoginHandler::class                  => Handler\LoginHandlerFactory::class,
                 Handler\PingHandler::class                   => Handler\PingHandlerFactory::class,
                 Handler\PrivacyPolicyPageHandler::class      => Handler\PageHandlerFactory::class,
                 Handler\ResumePageHandler::class             => Handler\PageHandlerFactory::class,
                 HomePageCacheExpiration::class               => HomePageCacheExpirationFactory::class,
+                JobQueue::class                              => InvokableFactory::class,
                 LoggerInterface::class                       => Factory\LoggerFactory::class,
                 'mail.transport'                             => Factory\MailTransport::class,
                 Middleware\CacheMiddleware::class            => Middleware\CacheMiddlewareFactory::class,
@@ -88,6 +94,9 @@ class ConfigProvider
                 UserRepositoryInterface::class               => UserRepositoryFactory::class,
             ],
             'delegators' => [
+                Application::class                => [
+                    Factory\CronjobDelegator::class,
+                ],
                 AttachableListenerProvider::class => [
                     EventDispatcher\DeferredEventListenerDelegator::class,
                 ],
@@ -150,6 +159,13 @@ class ConfigProvider
         ];
     }
 
+    public function getJobQueueConfig(): array
+    {
+        return [
+            'workerUrl' => 'http://nginx/jq/worker',
+        ];
+    }
+
     public function getMailConfig(): array
     {
         return [
@@ -173,6 +189,7 @@ class ConfigProvider
     public function registerRoutes(Application $app): void
     {
         $app->get('/', Handler\HomePageHandler::class, 'home');
+        $app->get('/health', Handler\HealthHandler::class, 'health');
         $app->get('/resume', [
             Middleware\CacheMiddleware::class,
             Handler\ResumePageHandler::class,

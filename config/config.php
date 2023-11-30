@@ -13,7 +13,6 @@ $cacheConfig = [
 ];
 
 $aggregator = new ConfigAggregator([
-    Phly\RedisTaskQueue\ConfigProvider::class,
     Mezzio\Hal\ConfigProvider::class,
     Mezzio\Authorization\Rbac\ConfigProvider::class,
     Mezzio\Authorization\ConfigProvider::class,
@@ -56,6 +55,7 @@ $aggregator = new ConfigAggregator([
     Mwop\Hooks\ConfigProvider::class,
     Mwop\Mastodon\ConfigProvider::class,
     Mwop\Now\ConfigProvider::class,
+    Mwop\ZendHQ\ConfigProvider::class,
 
     // Include cache configuration
     new ArrayProvider($cacheConfig),

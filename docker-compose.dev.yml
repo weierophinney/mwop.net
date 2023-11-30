@@ -29,8 +29,8 @@ services:
     env_file:
       - .env
     depends_on:
-      - worker
       - redis
+      - zendhq
     volumes:
       - mwop_net_shared_data:/var/www/data/shared
       - ./.docker/etc/zendphp/conf.d/mwop.ini:/entrypoint.d/conf.d/zzz-mwop.ini
@@ -55,40 +55,13 @@ services:
       retries: 5
       start_period: 30s
 
-  worker:
-    build: 
-      context: .
-      dockerfile: .docker/worker.Dockerfile
-    env_file:
-      - .env
-    depends_on:
-      - redis
+  zendhq:
+    image: cr.zend.com/zendhq:alpine-3.18
+    user: zendphp
     volumes:
-      - mwop_net_shared_data:/var/www/data/shared
-      - ./.docker/etc/zendphp/conf.d/mwop.ini:/entrypoint.d/conf.d/99-mwop.ini
-      - ./.docker/etc/supervisord/supervisord.conf:/etc/supervisord/supervisord.conf
-      - ./.docker/s6/cont-init.d/00-worker-build.sh:/entrypoint.d/00-worker-build.sh
-      - ./.docker/s6/cont-init.d/01-worker-pidfile-permissions.sh:/etc/cont-init.d/01-worker-pidfile-permissions.sh
-      - ./.docker/s6/cont-init.d/01-std-stream-permissions.sh:/etc/cont-init.d/01-std-stream-permissions.sh
-      - ./.docker/s6/cont-init.d/99-start-message.sh:/etc/cont-init.d/99-start-message.sh
-      - ./.docker/s6/services.d/supervisor:/etc/services.d/supervisor
-      - ./config:/var/www/config
-      - ./data:/var/www/data
-      - ./public:/var/www/public
-      - ./src:/var/www/src
-      - ./templates:/var/www/templates
-      - ./vendor:/var/www/vendor
-      - ./composer.json:/var/www/composer.json
-      - ./composer.lock:/var/www/composer.lock
-    logging:
-      options:
-        max-size: 50m
-    healthcheck:
-      test: supervisorctl -c /etc/supervisord/supervisord.conf status all
-      interval: 30s
-      timeout: 10s
-      retries: 5
-      start_period: 60s
+      - ./.docker/etc/zendhq/license:/opt/zend/zendphp/etc/license
+    ports:
+      - "10091:10091"
 
   nginx:
     build: 
@@ -104,6 +77,7 @@ services:
       - ./.docker/etc/nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./.docker/etc/nginx/mime.types:/etc/nginx/mime.types
       - ./.docker/etc/nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
+      - ./.docker/etc/nginx/conf.d/jq.conf:/etc/nginx/conf.d/jq.conf
       - ./assets/dist:/var/www/public/assets
       - ./public/23ED29DA.asc:/var/www/public/23ED29DA.asc
       - ./public/images:/var/www/public/images
@@ -114,7 +88,7 @@ services:
       options:
         max-size: 50m
     healthcheck:
-      test: curl --fail http://localhost/23ED29DA.asc || exit 1
+      test: curl --fail http://localhost/health || exit 1
       interval: 30s
       timeout: 10s
       retries: 5

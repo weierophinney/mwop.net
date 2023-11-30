@@ -1,4 +1,5 @@
 .docker/*.prod.Dockerfile
+.docker/etc/zendhq/license
 .phpcs_cache
 .phpunit.result.cache
 .puli/

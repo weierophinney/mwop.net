@@ -10,7 +10,6 @@ use Mezzio\ProblemDetails\ProblemDetailsMiddleware;
 use Mwop\Hooks\Middleware\ValidateWebhookRequestMiddleware;
 use Phly\ConfigFactory\ConfigFactory;
 use Phly\EventDispatcher\ListenerProvider\AttachableListenerProvider;
-use Phly\RedisTaskQueue\Mapper\Mapper;
 
 use function getcwd;
 
@@ -42,9 +41,6 @@ class ConfigProvider
                 ],
                 Engine::class                     => [
                     RenderLinksDelegator::class,
-                ],
-                Mapper::class                     => [
-                    Webhook\PayloadMapperDelegator::class,
                 ],
             ],
             'factories'  => [
