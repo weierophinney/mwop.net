@@ -46,8 +46,9 @@ class CronjobDelegator
             return;
         }
 
-        $job = new HTTPJob($workerUrl, HTTPJob::HTTP_METHOD_POST, HTTPJob::CONTENT_TYPE_JSON);
+        $job = new HTTPJob($workerUrl, HTTPJob::HTTP_METHOD_POST);
         $job->setName('comics');
+        $job->addHeader('Content-Type', 'application/mwop-net-jq+json');
         $job->setRawBody(json_encode([
             'type' => ComicsEvent::class,
             'data' => [],
@@ -64,8 +65,9 @@ class CronjobDelegator
             return;
         }
 
-        $job = new HTTPJob($workerUrl, HTTPJob::HTTP_METHOD_POST, HTTPJob::CONTENT_TYPE_JSON);
+        $job = new HTTPJob($workerUrl, HTTPJob::HTTP_METHOD_POST);
         $job->setName('mastodon');
+        $job->addHeader('Content-Type', 'application/mwop-net-jq+json');
         $job->setRawBody(json_encode([
             'type' => PostEvent::class,
             'data' => [],

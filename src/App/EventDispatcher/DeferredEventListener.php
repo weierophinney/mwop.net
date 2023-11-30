@@ -30,7 +30,8 @@ final class DeferredEventListener
 
         $queue = $this->getQueue($baseEvent::class);
 
-        $job = new HTTPJob($this->workerUrl, HTTPJob::HTTP_METHOD_POST, HTTPJob::CONTENT_TYPE_JSON);
+        $job = new HTTPJob($this->workerUrl, HTTPJob::HTTP_METHOD_POST);
+        $job->addHeader('Content-Type', 'application/mwop-net-jq+json');
         $job->setRawBody(json_encode([
             'type' => $baseEvent::class,
             'data' => $baseEvent,
