@@ -81,6 +81,7 @@ class ConfigProvider
                 Handler\ResumePageHandler::class             => Handler\PageHandlerFactory::class,
                 HomePageCacheExpiration::class               => HomePageCacheExpirationFactory::class,
                 JobQueue::class                              => InvokableFactory::class,
+                'jq-deferred-job-queue-definition'           => Factory\DeferredJobQueueDefinitionFactory::class,
                 LoggerInterface::class                       => Factory\LoggerFactory::class,
                 'mail.transport'                             => Factory\MailTransport::class,
                 Middleware\CacheMiddleware::class            => Middleware\CacheMiddlewareFactory::class,
