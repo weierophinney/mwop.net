@@ -46,11 +46,6 @@ return [
             WhoopsPageHandler::class => PrettyPageHandler::class,
         ],
     ],
-    'mezzio-swoole' => [
-        'swoole-http-server' => [
-            'host' => '0.0.0.0',
-        ],
-    ],
     'whoops'        => [
         'json_exceptions' => [
             'display'    => true,
