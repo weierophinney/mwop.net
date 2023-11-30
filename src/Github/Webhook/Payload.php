@@ -6,8 +6,8 @@ namespace Mwop\Github\Webhook;
 
 use Mezzio\ProblemDetails\Exception\CommonProblemDetailsExceptionTrait;
 use Mezzio\ProblemDetails\Exception\ProblemDetailsExceptionInterface;
+use Mwop\App\EventDispatcher\QueueableEvent;
 use Mwop\JsonValidate;
-use Mwop\QueueableEvent;
 use RuntimeException;
 
 class Payload implements QueueableEvent
