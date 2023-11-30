@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2e1ed408b44d2fe807218d2c3e81989d",
+    "content-hash": "5a0bf4c8737579fbc51b379d091697b0",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -5356,72 +5356,6 @@
             "time": "2023-01-10T19:15:49+00:00"
         },
         {
-            "name": "phly/phly-redis-task-queue",
-            "version": "0.4.5",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phly/phly-redis-task-queue.git",
-                "reference": "146a103be8c0c84e002f5b72c6bec5ae82c25fcd"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phly/phly-redis-task-queue/zipball/146a103be8c0c84e002f5b72c6bec5ae82c25fcd",
-                "reference": "146a103be8c0c84e002f5b72c6bec5ae82c25fcd",
-                "shasum": ""
-            },
-            "require": {
-                "dragonmantank/cron-expression": "^3.3.2",
-                "phly/phly-configfactory": "^1.2",
-                "php": "~8.1.0 || ~8.2.0",
-                "predis/predis": "^1.1.10 || ^2.1",
-                "psr/container": "^1.0 || ^2.0",
-                "psr/event-dispatcher": "^1.0",
-                "psr/log": "^1.0 || ^2.0 || ^3.0",
-                "react/event-loop": "^1.3",
-                "symfony/console": "^6.2",
-                "webmozart/assert": "^1.11"
-            },
-            "require-dev": {
-                "laminas/laminas-coding-standard": "~2.3.0",
-                "phpunit/phpunit": "^9.6.5",
-                "vimeo/psalm": "^5.0"
-            },
-            "type": "library",
-            "extra": {
-                "laminas": {
-                    "config-provider": "Phly\\RedisTaskQueue\\ConfigProvider"
-                }
-            },
-            "autoload": {
-                "files": [
-                    "./src/functions.php"
-                ],
-                "psr-4": {
-                    "Phly\\RedisTaskQueue\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-2-Clause"
-            ],
-            "keywords": [
-                "PSR-11",
-                "components",
-                "console",
-                "cron",
-                "laminas",
-                "psr-14",
-                "psr-3",
-                "queue",
-                "redis"
-            ],
-            "support": {
-                "issues": "https://github.com/phly/phly-redis-task-queue/issues",
-                "source": "https://github.com/phly/phly-redis-task-queue/tree/0.4.5"
-            },
-            "time": "2023-08-19T18:33:48+00:00"
-        },
-        {
             "name": "php-http/curl-client",
             "version": "v1.4.2",
             "source": {
@@ -6668,78 +6602,6 @@
                 }
             ],
             "time": "2023-04-15T23:01:58+00:00"
-        },
-        {
-            "name": "react/event-loop",
-            "version": "v1.4.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/reactphp/event-loop.git",
-                "reference": "6e7e587714fff7a83dcc7025aee42ab3b265ae05"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/reactphp/event-loop/zipball/6e7e587714fff7a83dcc7025aee42ab3b265ae05",
-                "reference": "6e7e587714fff7a83dcc7025aee42ab3b265ae05",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^9.6 || ^5.7 || ^4.8.36"
-            },
-            "suggest": {
-                "ext-pcntl": "For signal handling support when using the StreamSelectLoop"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "React\\EventLoop\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Christian Lück",
-                    "email": "christian@clue.engineering",
-                    "homepage": "https://clue.engineering/"
-                },
-                {
-                    "name": "Cees-Jan Kiewiet",
-                    "email": "reactphp@ceesjankiewiet.nl",
-                    "homepage": "https://wyrihaximus.net/"
-                },
-                {
-                    "name": "Jan Sorgalla",
-                    "email": "jsorgalla@gmail.com",
-                    "homepage": "https://sorgalla.com/"
-                },
-                {
-                    "name": "Chris Boden",
-                    "email": "cboden@gmail.com",
-                    "homepage": "https://cboden.dev/"
-                }
-            ],
-            "description": "ReactPHP's core reactor event loop that libraries can use for evented I/O.",
-            "keywords": [
-                "asynchronous",
-                "event-loop"
-            ],
-            "support": {
-                "issues": "https://github.com/reactphp/event-loop/issues",
-                "source": "https://github.com/reactphp/event-loop/tree/v1.4.0"
-            },
-            "funding": [
-                {
-                    "url": "https://opencollective.com/reactphp",
-                    "type": "open_collective"
-                }
-            ],
-            "time": "2023-05-05T10:11:24+00:00"
         },
         {
             "name": "sendgrid/php-http-client",

@@ -13,7 +13,6 @@ $cacheConfig = [
 ];
 
 $aggregator = new ConfigAggregator([
-    Phly\RedisTaskQueue\ConfigProvider::class,
     Mezzio\Hal\ConfigProvider::class,
     Mezzio\Authorization\Rbac\ConfigProvider::class,
     Mezzio\Authorization\ConfigProvider::class,
