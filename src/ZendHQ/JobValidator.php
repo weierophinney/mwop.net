@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Mwop\ZendHQ;
 
-use Mwop\QueueableEvent;
+use Mwop\App\EventDispatcher\QueueableEvent;
 
 class JobValidator
 {

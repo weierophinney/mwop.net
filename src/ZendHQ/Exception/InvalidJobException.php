@@ -6,6 +6,7 @@ namespace Mwop\ZendHQ\Exception;
 
 use Mezzio\ProblemDetails\Exception\CommonProblemDetailsExceptionTrait;
 use Mezzio\ProblemDetails\Exception\ProblemDetailsExceptionInterface;
+use Mwop\App\EventDispatcher\QueueableEvent;
 use RuntimeException;
 
 class InvalidJobException extends RuntimeException implements ProblemDetailsExceptionInterface
@@ -36,7 +37,10 @@ class InvalidJobException extends RuntimeException implements ProblemDetailsExce
     public static function forInvalidJobType(array $job): self
     {
         return new self(
-            'Invalid job; job "type" must be a valid event class name implementing Mwop\QueueableEvent',
+            sprintf(
+                'Invalid job; job "type" must be a valid event class name implementing %s',
+                QueueableEvent::class,
+            ),
             'Invalid job type',
             'http://worker/error/job/type/malformed',
             $job
