@@ -11,7 +11,6 @@ volumes:
 services:
   redis:
     image: redis
-    restart: unless-stopped
     expose:
       - "6379"
     volumes:
@@ -26,6 +25,7 @@ services:
       timeout: 10s
       retries: 5
       start_period: 30s
+    restart: unless-stopped
 
   php:
     build: 
@@ -33,7 +33,6 @@ services:
       dockerfile: .docker/php.prod.Dockerfile
     env_file:
       - .env
-    restart: unless-stopped
     depends_on:
       - zendhq
       - redis
@@ -49,6 +48,7 @@ services:
       timeout: 10s
       retries: 5
       start_period: 30s
+    restart: unless-stopped
 
   zendhq:
     image: cr.zend.com/zendhq:alpine-3.18
@@ -64,7 +64,7 @@ services:
       timeout: 10s
       retries: 5
       start_period: 30s
-    restart: always
+    restart: unless-stopped
 
   nginx:
     build: 
@@ -72,7 +72,6 @@ services:
       dockerfile: .docker/nginx.prod.Dockerfile
     env_file:
       - .env
-    restart: unless-stopped
     depends_on:
       - php
     ports:
@@ -86,3 +85,4 @@ services:
       timeout: 10s
       retries: 5
       start_period: 10s
+    restart: unless-stopped
