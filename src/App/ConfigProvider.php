@@ -92,6 +92,9 @@ class ConfigProvider
                 UserRepositoryInterface::class               => UserRepositoryFactory::class,
             ],
             'delegators' => [
+                Application::class                => [
+                    Factory\CronjobDelegator::class,
+                ],
                 AttachableListenerProvider::class => [
                     EventDispatcher\DeferredEventListenerDelegator::class,
                 ],
