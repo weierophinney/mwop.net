@@ -5,6 +5,8 @@ volumes:
     external: true
   mwop_net_shared_data:
     external: true
+  mwop_net_zendhq_db:
+    external: true
 
 services:
   redis:
@@ -53,8 +55,16 @@ services:
     user: zendphp
     volumes:
       - /etc/zendhq/license:/opt/zend/zendphp/etc/license
+      - mwop_net_zendhq_db:/opt/zend/zendphp/var/db
     ports:
       - "10091:10091"
+    healthcheck:
+      test: /usr/local/bin/healthcheck.sh
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    restart: always
 
   nginx:
     build: 
