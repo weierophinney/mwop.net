@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Mwop\App\Handler;
 
 use Psr\Http\Message\ResponseFactoryInterface;
-use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
 class HealthHandler implements RequestHandlerInterface

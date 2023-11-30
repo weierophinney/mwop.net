@@ -6,6 +6,12 @@ namespace Mwop\ZendHQ;
 
 use Mwop\App\EventDispatcher\QueueableEvent;
 
+use function array_key_exists;
+use function class_exists;
+use function is_array;
+use function is_string;
+use function is_subclass_of;
+
 class JobValidator
 {
     /** @throws Exception\InvalidJobException */
@@ -15,7 +21,8 @@ class JobValidator
             throw Exception\InvalidJobException::forMissingJobType($job);
         }
 
-        if (! is_string($job['type'])
+        if (
+            ! is_string($job['type'])
             || ! class_exists($job['type'])
             || ! is_subclass_of($job['type'], QueueableEvent::class)
         ) {

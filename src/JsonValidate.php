@@ -6,6 +6,8 @@ namespace Mwop;
 
 use JsonException;
 
+use function json_decode;
+
 class JsonValidate
 {
     public function __invoke(string $json): bool

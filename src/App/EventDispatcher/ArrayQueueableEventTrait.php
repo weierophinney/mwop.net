@@ -9,6 +9,8 @@ use Mezzio\ProblemDetails\Exception\ProblemDetailsExceptionInterface;
 use Mwop\JsonValidate;
 use RuntimeException;
 
+use function json_decode;
+
 trait ArrayQueueableEventTrait
 {
     private function __construct(

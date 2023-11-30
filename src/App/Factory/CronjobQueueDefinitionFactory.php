@@ -16,8 +16,8 @@ class CronjobQueueDefinitionFactory
             new JobOptions(
                 JobOptions::PRIORITY_NORMAL,
                 60, // timeout
-                3,  // allowed retries
-                30,  // retry wait time
+                3, // allowed retries
+                30, // retry wait time
                 JobOptions::PERSIST_OUTPUT_ERROR,
                 false, // validate SSL
             )

@@ -10,6 +10,11 @@ use ZendHQ\JobQueue\JobQueue;
 use ZendHQ\JobQueue\Queue;
 use ZendHQ\JobQueue\QueueDefinition;
 
+use function explode;
+use function implode;
+use function json_encode;
+use function strtolower;
+
 final class DeferredEventListener
 {
     public function __construct(
@@ -45,7 +50,7 @@ final class DeferredEventListener
         $queueName = $this->deriveQueueNameFromEventClass($class);
         return $this->jq->hasQueue($queueName)
             ? $this->jq->getQueue($queueName)
-            : $this->jq->addQueue( $queueName, $this->queueDefinition);
+            : $this->jq->addQueue($queueName, $this->queueDefinition);
     }
 
     private function deriveQueueNameFromEventClass(string $class): string

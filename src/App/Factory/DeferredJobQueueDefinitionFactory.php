@@ -16,8 +16,8 @@ class DeferredJobQueueDefinitionFactory
             new JobOptions(
                 JobOptions::PRIORITY_NORMAL,
                 30, // timeout
-                3,  // allowed retries
-                5,  // retry wait time
+                3, // allowed retries
+                5, // retry wait time
                 JobOptions::PERSIST_OUTPUT_ERROR,
                 false, // validate SSL
             )
