@@ -25,7 +25,7 @@ class ConfigProvider
                     RouteProviderDelegator::class,
                 ],
             ],
-            'factories' => [
+            'factories'  => [
                 Handler\WorkerHandler::class            => Handler\WorkerHandlerFactory::class,
                 Middleware\ContentTypeMiddleware::class => InvokableFactory::class,
                 Middleware\HostNameMiddleware::class    => InvokableFactory::class,

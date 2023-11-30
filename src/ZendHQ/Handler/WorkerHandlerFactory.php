@@ -10,7 +10,7 @@ use Psr\Http\Message\ResponseFactoryInterface;
 
 class WorkerHandlerFactory
 {
-    public function __invoke(ContainerInterface $container) : WorkerHandler
+    public function __invoke(ContainerInterface $container): WorkerHandler
     {
         return new WorkerHandler(
             dispatcher: $container->get(EventDispatcherInterface::class),

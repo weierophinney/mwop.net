@@ -17,5 +17,7 @@
     <file>test</file>
     <exclude-pattern>config/autoload/*.local.php</exclude-pattern>
 
-    <rule ref="LaminasCodingStandard"/>
+    <rule ref="LaminasCodingStandard">
+        <exclude name="WebimpressCodingStandard.NamingConventions.Interface.Suffix"/>
+    </rule>
 </ruleset>

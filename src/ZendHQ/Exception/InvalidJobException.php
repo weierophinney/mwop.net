@@ -9,6 +9,8 @@ use Mezzio\ProblemDetails\Exception\ProblemDetailsExceptionInterface;
 use Mwop\App\EventDispatcher\QueueableEvent;
 use RuntimeException;
 
+use function sprintf;
+
 class InvalidJobException extends RuntimeException implements ProblemDetailsExceptionInterface
 {
     use CommonProblemDetailsExceptionTrait;

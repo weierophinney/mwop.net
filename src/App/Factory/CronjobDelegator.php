@@ -13,6 +13,12 @@ use ZendHQ\JobQueue\JobQueue;
 use ZendHQ\JobQueue\Queue;
 use ZendHQ\JobQueue\RecurringSchedule;
 
+use function assert;
+use function count;
+use function is_array;
+use function is_string;
+use function json_encode;
+
 class CronjobDelegator
 {
     public function __invoke(ContainerInterface $container, string $name, callable $factory): Application

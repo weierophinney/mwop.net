@@ -10,6 +10,7 @@ use Psr\Log\LoggerInterface;
 use ZendHQ\JobQueue\JobQueue;
 
 use function assert;
+use function is_string;
 
 final class DeferredEventListenerFactory
 {

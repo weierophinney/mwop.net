@@ -5,22 +5,25 @@ declare(strict_types=1);
 namespace Mwop\ZendHQ\Handler;
 
 use Mwop\ZendHQ\JobValidator;
+use Psr\EventDispatcher\EventDispatcherInterface;
+use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Psr\EventDispatcher\EventDispatcherInterface;
-use Psr\Http\Message\ResponseFactoryInterface;
+
+use function json_decode;
+
+use const JSON_THROW_ON_ERROR;
 
 class WorkerHandler implements RequestHandlerInterface
 {
-
     public function __construct(
         private EventDispatcherInterface $dispatcher,
         private ResponseFactoryInterface $responseFactory,
     ) {
     }
 
-    public function handle(ServerRequestInterface $request) : ResponseInterface
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $payload = json_decode(
             json: $request->getBody()->getContents(),

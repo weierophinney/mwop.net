@@ -6,8 +6,8 @@ namespace Mwop\ZendHQ\Middleware;
 
 use Mezzio\ProblemDetails\Exception\CommonProblemDetailsExceptionTrait;
 use Mezzio\ProblemDetails\Exception\ProblemDetailsExceptionInterface;
-use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use RuntimeException;
@@ -28,10 +28,10 @@ class HostNameMiddleware implements MiddlewareInterface
 
                     parent::__construct($message, $status);
 
-                    $this->status     = $status;
-                    $this->detail     = $message;
-                    $this->title      = 'Misdirected Request';
-                    $this->type       = 'https://httpstatuses.io/421';
+                    $this->status = $status;
+                    $this->detail = $message;
+                    $this->title  = 'Misdirected Request';
+                    $this->type   = 'https://httpstatuses.io/421';
                 }
             };
         }
