@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f0b24423e7efb4bfecb478e2a51d1c94",
+    "content-hash": "2e1ed408b44d2fe807218d2c3e81989d",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -10607,6 +10607,44 @@
                 }
             ],
             "time": "2023-03-09T15:05:18+00:00"
+        },
+        {
+            "name": "zendtech/zendhq-ide-helper",
+            "version": "1.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zendtech/zendhq-ide-helper.git",
+                "reference": "1b7ba559699bbbe1f345c112c83d84e844d2dadf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zendtech/zendhq-ide-helper/zipball/1b7ba559699bbbe1f345c112c83d84e844d2dadf",
+                "reference": "1b7ba559699bbbe1f345c112c83d84e844d2dadf",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2.0 || ~8.0.0 || ~8.1.0 || ~8.2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/include.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Provides class stubs for ZendHQ classes to help with IDE completion when the ZendHQ extension is not installed",
+            "keywords": [
+                "dev",
+                "zendhq"
+            ],
+            "support": {
+                "issues": "https://github.com/zendtech/zendhq-ide-helper/issues",
+                "source": "https://github.com/zendtech/zendhq-ide-helper/tree/1.3.1"
+            },
+            "time": "2023-09-06T18:55:27+00:00"
         }
     ],
     "aliases": [],
@@ -10623,5 +10661,5 @@
     "platform-overrides": {
         "php": "8.1"
     },
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.6.0"
 }
