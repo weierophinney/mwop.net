@@ -4,22 +4,65 @@ declare(strict_types=1);
 
 namespace Mwop\App\EventDispatcher;
 
-use Phly\RedisTaskQueue\RedisTaskQueue;
 use Psr\Log\LoggerInterface;
+use ZendHQ\JobQueue\HTTPJob;
+use ZendHQ\JobQueue\JobOptions;
+use ZendHQ\JobQueue\JobQueue;
+use ZendHQ\JobQueue\Queue;
+use ZendHQ\JobQueue\QueueDefinition;
 
 final class DeferredEventListener
 {
     public function __construct(
-        private RedisTaskQueue $queue,
+        private string $workerUrl,
+        private JobQueue $jq,
         private ?LoggerInterface $logger = null,
     ) {
     }
 
     public function __invoke(DeferredEvent $event): void
     {
+        $baseEvent = $event->wrappedEvent;
+
         $this->logger?->info('Queuing task of type {task}', [
-            'task' => $event::class,
+            'task' => $baseEvent::class,
         ]);
-        $this->queue->queue($event->wrappedEvent);
+
+        $queue = $this->getQueue($baseEvent::class);
+
+        $job = new HTTPJob($this->workerUrl, HTTPJob::HTTP_METHOD_POST, HTTPJob::CONTENT_TYPE_JSON);
+        $job->setRawBody(json_encode([
+            'type' => $baseEvent::class,
+            'data' => $baseEvent,
+        ]));
+
+        $queue->scheduleJob($job);
+    }
+
+    private function getQueue(string $class): Queue
+    {
+        $queueName = $this->deriveQueueNameFromEventClass($class);
+        return $this->jq->hasQueue($queueName)
+            ? $this->jq->getQueue($queueName)
+            : $this->jq->addQueue(
+                $queueName,
+                new QueueDefinition(
+                    QueueDefinition::PRIORITY_NORMAL,
+                    new JobOptions(
+                        JobOptions::PRIORITY_NORMAL,
+                        30, // timeout
+                        3,  // allowed retries
+                        5,  // retry wait time
+                        JobOptions::PERSIST_OUTPUT_ERROR,
+                        false, // validate SSL
+                    )
+                )
+            );
+    }
+
+    private function deriveQueueNameFromEventClass(string $class): string
+    {
+        $parts = explode('\\', strtolower($class));
+        return implode('-', $parts);
     }
 }

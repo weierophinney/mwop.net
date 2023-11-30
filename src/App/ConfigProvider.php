@@ -7,6 +7,7 @@ namespace Mwop\App;
 use Aws\S3\S3Client;
 use CuyZ\Valinor\MapperBuilder;
 use Laminas\Feed\Reader\Http\ClientInterface as FeedReaderHttpClientInterface;
+use Laminas\ServiceManager\Factory\InvokableFactory;
 use League\Plates\Engine;
 use Mezzio\Application;
 use Mezzio\Authentication\AuthenticationInterface;
@@ -25,6 +26,7 @@ use Predis\Client as PredisClient;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;
+use ZendHQ\JobQueue\JobQueue;
 
 class ConfigProvider
 {
@@ -36,6 +38,7 @@ class ConfigProvider
             'cache'                     => $this->getCacheConfig(),
             'content-security-policy'   => [],
             'file-storage'              => $this->getFileStorageConfig(),
+            'jq'                        => $this->getJobQueueConfig(),
             'mail'                      => $this->getMailConfig(),
             'mezzio-authorization-rbac' => $this->getAuthorizationConfig(),
             'redis'                     => $this->getRedisConfig(),
@@ -77,6 +80,7 @@ class ConfigProvider
                 Handler\PrivacyPolicyPageHandler::class      => Handler\PageHandlerFactory::class,
                 Handler\ResumePageHandler::class             => Handler\PageHandlerFactory::class,
                 HomePageCacheExpiration::class               => HomePageCacheExpirationFactory::class,
+                JobQueue::class                              => InvokableFactory::class,
                 LoggerInterface::class                       => Factory\LoggerFactory::class,
                 'mail.transport'                             => Factory\MailTransport::class,
                 Middleware\CacheMiddleware::class            => Middleware\CacheMiddlewareFactory::class,
@@ -147,6 +151,13 @@ class ConfigProvider
             'key'      => '',
             'secret'   => '',
             'bucket'   => '',
+        ];
+    }
+
+    public function getJobQueueConfig(): array
+    {
+        return [
+            'workerUrl' => 'http://nginx/jq/worker',
         ];
     }
 
