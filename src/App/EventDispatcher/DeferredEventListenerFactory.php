@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Mwop\App\EventDispatcher;
 
+use Mwop\App\Factory\DeferredJobQueueDefinitionFactory;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 use ZendHQ\JobQueue\JobQueue;
-use ZendHQ\JobQueue\QueueDefinition;
 
 use function assert;
 
@@ -22,13 +22,10 @@ final class DeferredEventListenerFactory
         $workerUrl = $config['jq']['workerUrl'] ?? '';
         assert(is_string($workerUrl) && ! empty($workerUrl));
 
-        $queueDefinition = $container->get('jq-deferred-job-queue-definition');
-        assert($queueDefinition instanceof QueueDefinition);
-
         return new DeferredEventListener(
             $workerUrl,
             $jq,
-            $queueDefinition,
+            (new DeferredJobQueueDefinitionFactory())(),
             $this->getLogger($container),
         );
     }

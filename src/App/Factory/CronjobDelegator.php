@@ -9,10 +9,8 @@ use Mwop\Comics\ComicsEvent;
 use Mwop\Mastodon\PostEvent;
 use Psr\Container\ContainerInterface;
 use ZendHQ\JobQueue\HTTPJob;
-use ZendHQ\JobQueue\JobOptions;
 use ZendHQ\JobQueue\JobQueue;
 use ZendHQ\JobQueue\Queue;
-use ZendHQ\JobQueue\QueueDefinition;
 use ZendHQ\JobQueue\RecurringSchedule;
 
 class CronjobDelegator
@@ -79,19 +77,6 @@ class CronjobDelegator
     {
         return $jq->hasQueue($name)
             ? $jq->getQueue($name)
-            : $jq->addQueue(
-                $name,
-                new QueueDefinition(
-                    QueueDefinition::PRIORITY_NORMAL,
-                    new JobOptions(
-                        JobOptions::PRIORITY_NORMAL,
-                        60, // timeout
-                        3,  // allowed retries
-                        30,  // retry wait time
-                        JobOptions::PERSIST_OUTPUT_ERROR,
-                        false, // validate SSL
-                    )
-                )
-            );
+            : $jq->addQueue($name, (new CronjobQueueDefinitionFactory())());
     }
 }
