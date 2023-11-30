@@ -7,6 +7,7 @@ namespace Mwop\App;
 use Aws\S3\S3Client;
 use CuyZ\Valinor\MapperBuilder;
 use Laminas\Feed\Reader\Http\ClientInterface as FeedReaderHttpClientInterface;
+use Laminas\ServiceManager\AbstractFactory\ReflectionBasedAbstractFactory;
 use Laminas\ServiceManager\Factory\InvokableFactory;
 use League\Plates\Engine;
 use Mezzio\Application;
@@ -74,6 +75,7 @@ class ConfigProvider
                 FeedReaderHttpClientInterface::class         => Feed\HttpPlugClientFactory::class,
                 Handler\AdminPageHandler::class              => Handler\PageHandlerFactory::class,
                 Handler\ClearResponseCacheHandler::class     => Handler\ClearResponseCacheHandlerFactory::class,
+                Handler\HealthHandler::class                 => ReflectionBasedAbstractFactory::class,
                 Handler\HomePageHandler::class               => Handler\HomePageHandlerFactory::class,
                 Handler\LoginHandler::class                  => Handler\LoginHandlerFactory::class,
                 Handler\PingHandler::class                   => Handler\PingHandlerFactory::class,
@@ -187,6 +189,7 @@ class ConfigProvider
     public function registerRoutes(Application $app): void
     {
         $app->get('/', Handler\HomePageHandler::class, 'home');
+        $app->get('/health', Handler\HealthHandler::class, 'health');
         $app->get('/resume', [
             Middleware\CacheMiddleware::class,
             Handler\ResumePageHandler::class,
