@@ -8,7 +8,7 @@
             "php-http/discovery": true
         },
         "platform": {
-            "php": "8.1"
+            "php": "8.2.99"
         }
     },
     "repositories": {
@@ -18,12 +18,12 @@
         }
     },
     "require": {
-        "php": "~8.1.0",
+        "php": "~8.2.0",
         "ext-imagick": "*",
         "ext-pcntl": "*",
         "cache/namespaced-cache": "^1.0",
         "cache/predis-adapter": "^1.0",
-        "cuyz/valinor": "^0.13.0",
+        "cuyz/valinor": "^1.7",
         "dflydev/fig-cookies": "^3.0",
         "dragonmantank/cron-expression": "^3.3",
         "illuminate/collections": "^8.0",

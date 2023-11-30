@@ -7,7 +7,7 @@ on:
 
 jobs:
   run:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     env:
       extensions: bcmath, bz2, curl, gd, intl, ldap, mbstring, opcache, readline, sqlite3, tidy, xml, xsl, zip
       ini-values: memory_limit=-1
@@ -20,7 +20,7 @@ jobs:
         id: extcache
         uses: shivammathur/cache-extensions@v1
         with:
-          php-version: "8.1"
+          php-version: "8.2"
           extensions: ${{ env.extensions }}
           key: ${{ env.key }}
 
@@ -36,7 +36,7 @@ jobs:
         env:
           COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          php-version: "8.1"
+          php-version: "8.2"
           extensions: ${{ env.extensions }}
           ini-values: ${{ env.ini-values }}
           coverage: none
