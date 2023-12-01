@@ -1,6 +1,7 @@
 #!make
 ########################## Variables #####################
 HERE := $(dir $(realpath $(firstword $(MAKEFILE_LIST))))
+SHELL := /bin/bash
 ##########################################################
 
 .PHONY:
