@@ -43,13 +43,13 @@ prod-build: prod-dockerfiles pull-images ## Build production compose containers
 	@printf "\n\033[92mBuilding production compose containers\033[0m\n"
 	cd $(HERE)
 	docker compose -f ./docker-compose.yml build --no-cache
-	@printf "\n\033[92mDONE!\033[0m\n"
+	@printf "\n\033[92m[DONE] Built production compose containers\033[0m\n"
 
 prod-run:  ## Run production compose containers
 	@printf "\n\033[92mStarting production compose containers\033[0m\n"
 	cd $(HERE)
 	docker compose -f ./docker-compose.yml up -d
-	@printf "\n\033[92mSTARTED!\033[0m\n"
+	@printf "\n\033[92m[DONE] Started production compose containers\033[0m\n"
 
 prod-status:  ## Get production containers status
 	@printf "\n\033[92mGetting production compose containers status\033[0m\n"
@@ -60,7 +60,7 @@ prod-stop:  ## Stop production compose containers
 	@printf "\n\033[92mStopping production compose containers\033[0m\n"
 	cd $(HERE)
 	docker compose -f ./docker-compose.yml down
-	@printf "\n\033[92mContainers stopped\033[0m\n"
+	@printf "\n\033[92m[DONE] Stopped production compose containers\033[0m\n"
 
 ##@ Dev containers
 
@@ -68,7 +68,7 @@ dev-build:  ## Build dev compose containers
 	@printf "\n\033[92mBuilding dev compose containers\033[0m\n"
 	cd $(HERE)
 	docker compose -f ./docker-compose.dev.yml build
-	@printf "\n\033[92mDONE!\033[0m\n"
+	@printf "\n\033[92m[DONE] Built dev compose containers\033[0m\n"
 
 dev-run:  ## Run dev compose containers
 	@printf "\n\033[92mStarting dev compose containers\033[0m\n"
@@ -81,6 +81,7 @@ dev-status:  ## Get dev containers status
 	docker compose -f ./docker-compose.dev.yml ps
 
 dev-stop:  ## Stop dev compose containers
-	@printf "\n\033[92mStarting dev compose containers\033[0m\n"
+	@printf "\n\033[92mStopping dev compose containers\033[0m\n"
 	cd $(HERE)
 	docker compose -f ./docker-compose.dev.yml down
+	@printf "\n\033[92m[DONE] Stopped dev compose containers\033[0m\n"
