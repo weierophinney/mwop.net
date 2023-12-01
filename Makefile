@@ -39,13 +39,20 @@ pull-images:  ## Pull new versions of all base images
 
 ##@ Production containers
 
+prod-volumes:  ## Create the production shared volumes
+	@printf "\n\033[92mCreating the production shared volumes\033[0m\n"
+	if ! docker volume ls | grep -q "mwop_net_redis";then docker volume create mwop_net_redis; fi
+	if ! docker volume ls | grep -q "mwop_net_shared_data";then docker volume create mwop_net_shared_data; fi
+	if ! docker volume ls | grep -q "mwop_net_zendhq_db";then docker volume create mwop_net_zendhq_db; fi
+	@printf "\n\033[92m[DONE] Created production shared volumes\033[0m\n"
+
 prod-build: prod-dockerfiles pull-images ## Build production compose containers
 	@printf "\n\033[92mBuilding production compose containers\033[0m\n"
 	cd $(HERE)
 	docker compose -f ./docker-compose.yml build --no-cache
 	@printf "\n\033[92m[DONE] Built production compose containers\033[0m\n"
 
-prod-run:  ## Run production compose containers
+prod-run: prod-volumes  ## Run production compose containers
 	@printf "\n\033[92mStarting production compose containers\033[0m\n"
 	cd $(HERE)
 	docker compose -f ./docker-compose.yml up -d
