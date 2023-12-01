@@ -55,7 +55,7 @@
         "mezzio/mezzio-session-cache": "^1.6",
         "middlewares/csp": "^3.0",
         "mnapoli/front-yaml": "^2.0.2",
-        "monolog/monolog": "^1.23",
+        "monolog/monolog": "^3.4",
         "phly/phly-comic": "^2.4.8",
         "phly/phly-configfactory": "^1.1",
         "phly/phly-event-dispatcher": "^1.1",
@@ -65,7 +65,8 @@
         "psr/http-message": "^1.0",
         "psr/simple-cache": "^1.0",
         "ramsey/uuid": "^4.2",
-        "sendgrid/sendgrid": "^7.11"
+        "sendgrid/sendgrid": "^7.11",
+        "zendtech/zendhq-monolog-handler": "^0.1.1"
     },
     "require-dev": {
         "filp/whoops": "^2.1.3",

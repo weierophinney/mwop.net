@@ -43,7 +43,7 @@ jobs:
           tools: cs2pr, composer:v2
 
       - name: Install dependencies
-        run: composer install --ignore-platform-req=php
+        run: composer install --ignore-platform-req=php --ignore-platform-req=ext-zendhq
 
       - name: Setup PHPUnit problem matchers
         run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
