@@ -50,7 +50,7 @@ prod-volumes:  ## Create the production shared volumes
 prod-build: prod-dockerfiles pull-images ## Build production compose containers
 	@printf "\n\033[92mBuilding production compose containers\033[0m\n"
 	cd $(HERE)
-	docker compose -f ./docker-compose.yml build --no-cache
+	docker compose -f ./docker-compose.yml build
 	@printf "\n\033[92m[DONE] Built production compose containers\033[0m\n"
 
 prod-run: prod-volumes  ## Run production compose containers
