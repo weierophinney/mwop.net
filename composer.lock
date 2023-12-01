@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "30246baa49a6f3e48ae411ada95f5529",
+    "content-hash": "f6150c8877035e158acbd243b7f3a46a",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -7934,6 +7934,52 @@
                 "source": "https://github.com/willdurand/Negotiation/tree/3.1.0"
             },
             "time": "2022-01-30T20:08:53+00:00"
+        },
+        {
+            "name": "zendtech/zendhq-monolog-handler",
+            "version": "0.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zendtech/zendhq-monolog-handler.git",
+                "reference": "3cb4ca6667d9e2b1b20aeb7bfecc0e9a5f63e8f1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zendtech/zendhq-monolog-handler/zipball/3cb4ca6667d9e2b1b20aeb7bfecc0e9a5f63e8f1",
+                "reference": "3cb4ca6667d9e2b1b20aeb7bfecc0e9a5f63e8f1",
+                "shasum": ""
+            },
+            "require": {
+                "ext-zendhq": "*",
+                "monolog/monolog": "^2.4 || ^3.4",
+                "php": "^7.3.0 || ~8.0.0 || ~8.1.0 || ~8.2.0 || ~8.3.0"
+            },
+            "require-dev": {
+                "laminas/laminas-coding-standard": "~2.3.0",
+                "phpcompatibility/php-compatibility": "^9.3",
+                "phpunit/phpunit": "^9.5.11"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "ZendTech\\ZendHQ\\MonologHandler\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Monolog handler that writes to ZendHQ monitoring",
+            "keywords": [
+                "monolog",
+                "psr-3",
+                "zendhq"
+            ],
+            "support": {
+                "issues": "https://github.com/zendtech/zendhq-monolog-handler/issues",
+                "source": "https://github.com/zendtech/zendhq-monolog-handler/tree/0.1.1"
+            },
+            "time": "2023-12-01T14:41:40+00:00"
         }
     ],
     "packages-dev": [

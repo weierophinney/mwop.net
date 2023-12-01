@@ -9,9 +9,11 @@ use Monolog\Logger;
 use Monolog\Processor\PsrLogMessageProcessor;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
+use ZendTech\ZendHQ\MonologHandler\ZendHQHandler;
 
 use function assert;
 use function fopen;
+use function function_exists;
 use function is_array;
 
 final class LoggerFactory
@@ -31,8 +33,18 @@ final class LoggerFactory
             bubble: true,
             useLocking: false,
         ));
+        $this->registerZendHQHandler($logger);
         $logger->pushProcessor(new PsrLogMessageProcessor());
 
         return $logger;
+    }
+
+    private function registerZendHQHandler(Logger $logger): void
+    {
+        if (! function_exists('monitor_custom_event')) {
+            return;
+        }
+
+        $logger->pushHandler(new ZendHQHandler(level: Logger::ERROR));
     }
 }
