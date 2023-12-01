@@ -22,12 +22,12 @@ clean:  ## Cleanup and remove any generated files
 
 .docker/nginx.prod.Dockerfile:  ## Build the production nginx Dockerfile
 	@printf "\n\033[92mCreating .docker/nginx.prod.Dockerfile...\033[0m\n"
-	awk -v "template=$(cat "./.docker/nginx.prod-template.Dockerfile")" "{sub(/## TEMPLATED ##/,template)}1" "./.docker/nginx.Dockerfile" > "./.docker/nginx.prod.Dockerfile"
+	awk -v "template=$$(cat "./.docker/nginx.prod-template.Dockerfile")" "{sub(/## TEMPLATED ##/,template)}1" "./.docker/nginx.Dockerfile" > "./.docker/nginx.prod.Dockerfile"
 	@printf "\n\033[92m[DONE] Created .docker/nginx.prod.Dockerfile\033[0m\n"
 
 .docker/php.prod.Dockerfile:  ## Build the production php Dockerfile
 	@printf "\n\033[92mCreating .docker/php.prod.Dockerfile...\033[0m\n"
-	awk -v "template=$(cat "./.docker/php.prod-template.Dockerfile")" "{sub(/## TEMPLATED ##/,template)}1" "./.docker/php.Dockerfile" > "./.docker/php.prod.Dockerfile"
+	awk -v "template=$$(cat "./.docker/php.prod-template.Dockerfile")" "{sub(/## TEMPLATED ##/,template)}1" "./.docker/php.Dockerfile" > "./.docker/php.prod.Dockerfile"
 	@printf "\n\033[92m[DONE] Created .docker/php.prod.Dockerfile\033[0m\n"
 
 prod-dockerfiles:  clean .docker/nginx.prod.Dockerfile .docker/php.prod.Dockerfile ## Build the production dockerfiles
