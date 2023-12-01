@@ -55,7 +55,7 @@
         "mezzio/mezzio-session-cache": "^1.6",
         "middlewares/csp": "^3.0",
         "mnapoli/front-yaml": "^2.0.2",
-        "monolog/monolog": "^1.23",
+        "monolog/monolog": "^3.4",
         "phly/phly-comic": "^2.4.8",
         "phly/phly-configfactory": "^1.1",
         "phly/phly-event-dispatcher": "^1.1",
