@@ -10,6 +10,9 @@ use Phly\RuleValidation\RuleSet\RuleSet;
 use Phly\RuleValidation\RuleSet\RuleSetOptions;
 use Phly\RuleValidation\ValidationResult;
 
+use function is_string;
+use function preg_match;
+
 /** @template-extends RuleSet<UploadResultSet> */
 class UploadRuleSet extends RuleSet
 {
@@ -18,14 +21,22 @@ class UploadRuleSet extends RuleSet
         $options = new RuleSetOptions();
         $options->setResultSetClass(UploadResultSet::class);
         $options->addRule(new CallbackRule(
-            'description', 
+            'description',
             function (mixed $value, array $context): ValidationResult {
                 return is_string($value) && ! preg_match('/^\s+$/s', $value)
                     ? Result::forValidValue('description', $value)
-                    : Result::forInvalidValue('description', '', 'Please submit a non-empty description');)
+                    : Result::forInvalidValue(
+                        'description',
+                        '',
+                        'Please submit a non-empty description'
+                    );
             },
-            Result::forValidValue('description', ''),
-            Result::forMissingValue('description', 'Missing description! Please resubmit with a non-empty description.'),
+            required: true,
+            default: Result::forValidValue('description', ''),
+            missing: Result::forMissingValue(
+                'description',
+                'Missing description! Please resubmit with a non-empty description.'
+            ),
         ));
 
         parent::__construct($options);
