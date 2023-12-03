@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f6150c8877035e158acbd243b7f3a46a",
+    "content-hash": "8fe0fa966feb942b33c387d677b1d8ba",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -62,16 +62,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.293.1",
+            "version": "3.293.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "a87d99b181c95c0bffb2869dfb26243a9c8c9ee7"
+                "reference": "1d3e952ea2f45bb0d42d7f873d1b4957bb6362c4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/a87d99b181c95c0bffb2869dfb26243a9c8c9ee7",
-                "reference": "a87d99b181c95c0bffb2869dfb26243a9c8c9ee7",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/1d3e952ea2f45bb0d42d7f873d1b4957bb6362c4",
+                "reference": "1d3e952ea2f45bb0d42d7f873d1b4957bb6362c4",
                 "shasum": ""
             },
             "require": {
@@ -151,9 +151,9 @@
             "support": {
                 "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.293.1"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.293.2"
             },
-            "time": "2023-11-30T18:56:27+00:00"
+            "time": "2023-12-01T19:06:15+00:00"
         },
         {
             "name": "brick/math",
@@ -5186,6 +5186,51 @@
             "time": "2023-01-10T19:15:49+00:00"
         },
         {
+            "name": "phly/phly-rule-validation",
+            "version": "0.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phly/phly-rule-validation.git",
+                "reference": "50598249b69c699f7fbf43d51357333d03ed0d11"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phly/phly-rule-validation/zipball/50598249b69c699f7fbf43d51357333d03ed0d11",
+                "reference": "50598249b69c699f7fbf43d51357333d03ed0d11",
+                "shasum": ""
+            },
+            "require": {
+                "php": "~8.2.0 || ~8.3.0"
+            },
+            "require-dev": {
+                "laminas/laminas-coding-standard": "~2.5.0",
+                "phpunit/phpunit": "^10.1",
+                "psalm/plugin-phpunit": "^0.18.4",
+                "roave/security-advisories": "dev-master",
+                "vimeo/psalm": "^5.7.7"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Phly\\RuleValidation\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-2-Clause"
+            ],
+            "description": "Simple rule-based validation framework",
+            "keywords": [
+                "validation"
+            ],
+            "support": {
+                "issues": "https://github.com/phly/phly-rule-validation/issues",
+                "rss": "https://github.com/phly/phly-rule-validation/releases.atom",
+                "source": "https://github.com/phly/phly-rule-validation"
+            },
+            "time": "2023-11-20T22:02:46+00:00"
+        },
+        {
             "name": "php-http/curl-client",
             "version": "v1.4.2",
             "source": {
@@ -6732,16 +6777,16 @@
         },
         {
             "name": "symfony/console",
-            "version": "v6.4.0",
+            "version": "v6.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "cd9864b47c367450e14ab32f78fdbf98c44c26b6"
+                "reference": "a550a7c99daeedef3f9d23fb82e3531525ff11fd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/cd9864b47c367450e14ab32f78fdbf98c44c26b6",
-                "reference": "cd9864b47c367450e14ab32f78fdbf98c44c26b6",
+                "url": "https://api.github.com/repos/symfony/console/zipball/a550a7c99daeedef3f9d23fb82e3531525ff11fd",
+                "reference": "a550a7c99daeedef3f9d23fb82e3531525ff11fd",
                 "shasum": ""
             },
             "require": {
@@ -6806,7 +6851,7 @@
                 "terminal"
             ],
             "support": {
-                "source": "https://github.com/symfony/console/tree/v6.4.0"
+                "source": "https://github.com/symfony/console/tree/v6.4.1"
             },
             "funding": [
                 {
@@ -6822,7 +6867,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-11-20T16:41:16+00:00"
+            "time": "2023-11-30T10:54:28+00:00"
         },
         {
             "name": "symfony/deprecation-contracts",
@@ -9059,16 +9104,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "9.6.14",
+            "version": "9.6.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "43653e6ad7adc22e7b667dd561bf8fcb74c10cf0"
+                "reference": "05017b80304e0eb3f31d90194a563fd53a6021f1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/43653e6ad7adc22e7b667dd561bf8fcb74c10cf0",
-                "reference": "43653e6ad7adc22e7b667dd561bf8fcb74c10cf0",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/05017b80304e0eb3f31d90194a563fd53a6021f1",
+                "reference": "05017b80304e0eb3f31d90194a563fd53a6021f1",
                 "shasum": ""
             },
             "require": {
@@ -9142,7 +9187,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/9.6.14"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/9.6.15"
             },
             "funding": [
                 {
@@ -9158,7 +9203,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-12-01T06:10:48+00:00"
+            "time": "2023-12-01T16:55:19+00:00"
         },
         {
             "name": "sebastian/cli-parser",

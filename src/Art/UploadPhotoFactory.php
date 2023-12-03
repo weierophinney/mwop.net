@@ -16,6 +16,7 @@ class UploadPhotoFactory
             storage: $container->get(PhotoStorage::class),
             mapper: $container->get(PhotoMapper::class),
             backup: $container->get(Webhook\DatabaseBackup::class),
+            form: new Form\UploadRuleSet(),
         );
     }
 }
