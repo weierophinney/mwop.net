@@ -65,7 +65,7 @@ ego, and using *other* people's code.
 most cases, we try and offer at least a new approach to the problem — but we
 could do better.)
 
-Fabien also made an interesting announcement. During a Q&A session with the
+Fabien also made an interesting announcement. During a Q&amp;A session with the
 Symfony core team, he said that Symfony 2 will not write re-invent the wheel
 when it doesn't need to — and announced that Symfony 2 will be using `Zend_Log`
 and `Zend_Cache` instead of rewriting the current Symfony components. I find

@@ -127,10 +127,10 @@ definitions prior to emitting the notification.
 Something else I needed to do was configure compiz to ensure that the
 notifications actually popped *above* my windows. I did this by going into the
 compiz configuration manager, selecting "General Options", selecting the "Focus
-& Raise Behaviour" tab, and modifying the "Focus Prevention Windows" to read as
+&amp; Raise Behaviour" tab, and modifying the "Focus Prevention Windows" to read as
 follows:
 
-```
+```text
 (any) & !(class=Mumbles)
 ```
 

@@ -46,7 +46,7 @@ I'll also be involved in two panel sessions:
   about this session, in which we get myself, representing Zend Framework;
   Fabien Potencier, representing Symfony; David Zuilke, representing Agavi; Nate
   Abele, representing CakePHP; and Edward Finkler, representing CodeIgniter. Eli
-  White will be moderating a Q&A style session in which you, the audience, get
+  White will be moderating a Q&amp;A style session in which you, the audience, get
   to ask us about our respective frameworks and where we compare (or don't!) in
   various functional areas. I did a similar panel to this at PHP Quebec this
   year, and it was a great time.

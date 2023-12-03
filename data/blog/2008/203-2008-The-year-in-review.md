@@ -61,14 +61,14 @@ I also began what I envisioned as a series of Vim posts, but, alas, it has resul
 April
 -----
 
-Following the 1.5 release, I did weekly posts for a month or so covering various features of Zend Framework, including Front Controller plugins, Action Controller helpers, and View helpers. Towards the end of the month, the entire team participated in a Q&A webinar to discuss the 1.5 release.
+Following the 1.5 release, I did weekly posts for a month or so covering various features of Zend Framework, including Front Controller plugins, Action Controller helpers, and View helpers. Towards the end of the month, the entire team participated in a Q&amp;A webinar to discuss the 1.5 release.
 
 May
 ---
 
 At the beginning of the month, I released the last in my series of 1.5 tutorials on [DevZone](http://devzone.zend.com/), covering Form decorators. This has saved me countless hours on IRC and in the mailing lists explaining how this aspect of forms work.
 
-During this month, we also finally announced that Zend Framework would be partnering with [Dojo](http://dojotoolkit.org/) to provide an out-of-the-box RIA solution. I began work identifying the various integration points and creating proposals for implementation. I also did a Q&A webinar with the Dojo team outlining the proposed integration.
+During this month, we also finally announced that Zend Framework would be partnering with [Dojo](http://dojotoolkit.org/) to provide an out-of-the-box RIA solution. I began work identifying the various integration points and creating proposals for implementation. I also did a Q&amp;A webinar with the Dojo team outlining the proposed integration.
 
 At the end of the month, the ZF team reorganized the subversion repository to allow for an "Extras" repository, and also to ensure that projects originating in the laboratory or extras and migrating to the standard library retain all history. Even with the big notices we put on the ZF site, articles on DevZone, and posts on various blogs, we still get questions on this seven months later. Let this be a lesson to you: plan your repositories for any contingency as early as you can!
 

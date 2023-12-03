@@ -21,7 +21,7 @@ What this is really about is telcos wanting more money, and wanting to push thei
 
 Here's another idea: your ISP is MSN. You want to use Google… but MSN has limited the bandwidth to Google because it's a competitor, and won't accept any amount of money to increase that bandwidth. They do the same with Yahoo! So, now you're limited to MSN search, because that's the only one that responds reliably — regardless of whether or not you like their search results. By doing so, they've just artificially inflated the value of their search engine — without needing to compete based on merit.
 
-Additionally, let's say Barnes and Noble has paid MSN to ensure good bandwidth, but part of that agreement is a non-compete clause. Now you find your connections to Amazon timing out, meaning that you can't even see which book provider has the better price on the book you want; you're stuck looking and buying from B&N.
+Additionally, let's say Barnes and Noble has paid MSN to ensure good bandwidth, but part of that agreement is a non-compete clause. Now you find your connections to Amazon timing out, meaning that you can't even see which book provider has the better price on the book you want; you're stuck looking and buying from B&amp;N.
 
 Now, let's look at something a little more close to home for those of us developing web applications. There have been a number of success stories the last few years: MySpace, Digg, and Flickr all come to mind. Would these endeavors have been as successful had they needed to pay multiple times for bandwidth, once to their ISP and once each to each telco charging for content providers? Indeed, some of these are still free services — how would they ever have been able to pay the extra amounts to the telcos in the first place?
 

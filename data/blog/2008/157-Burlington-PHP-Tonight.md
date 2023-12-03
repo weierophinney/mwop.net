@@ -11,7 +11,7 @@ tags:
     2: 'zend framework'
 ---
 The [Burlington PHP User Group](http://groups.google.com/group/Burlington-VT-PHP)
-is having another meeting tonight at 5:30pm at Brown & Jenkins Coffee Roasters.
+is having another meeting tonight at 5:30pm at Brown &amp; Jenkins Coffee Roasters.
 From the announcement:
 
 > Bradley Holt will be giving a presentation on developing a web application

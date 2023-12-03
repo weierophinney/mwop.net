@@ -15,7 +15,7 @@ image:
     url: https://live.staticflickr.com/7030/6812481635_ed463ae1fa_b.jpg
     creator: 'photosteve101'
     attribution_url: https://www.flickr.com/photos/42931449@N07/6812481635
-    alt_text: 'Business Calendar & Schedule'
+    alt_text: 'Business Calendar &amp; Schedule'
     license: 'BY'
     license_url: https://creativecommons.org/licenses/by/2.0/
 ---

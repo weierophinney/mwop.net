@@ -90,7 +90,7 @@ following:
 The scheme, when doing HTTP requests, will be one of `http` or `https`. The
 path is a well-known format as well. But what about authority?
 
-```
+```text
 [user-info@]host[:port]
 ```
 
@@ -99,7 +99,7 @@ address. The port is optional, and only needs to be included if it's
 non-standard for the current scheme (or if the scheme is unknown). user-info is
 of the form:
 
-```
+```text
 user[:pass]
 ```
 
@@ -109,13 +109,13 @@ for the value by the client.
 
 The query string is a set of key-value pairs delimited by ampersands:
 
-```
+```text
 ?foo=bar&baz&quz=1
 ```
 
 Depending on the language implementation, it can also model lists and hashes:
 
-```
+```text
 ?sort[]=ASC&sort[]=date&filter[product]=name
 ```
 
