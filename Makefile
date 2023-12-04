@@ -98,6 +98,6 @@ dev-stop:  ## Stop dev compose containers
 
 zendhq-connect:  ## Setup SSH tunnel for ZendHQ
 	@printf "\n\033[92mStarting port forwarding session to allow using ZendHQ\033[0m\n"
-	@printf "\n\033[92mType exit to disconnect\033[0m\n"
-	ssh -L 10091:mwop.net:10091 mwop.net
+	@printf "\n\033[92mType Ctrl-C to disconnect\033[0m\n"
+	ssh -N -L 10091:mwop.net:10091 mwop.net
 
