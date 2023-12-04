@@ -14,6 +14,8 @@ use function array_keys;
 use function file_put_contents;
 use function in_array;
 use function ksort;
+use function ob_end_clean;
+use function ob_start;
 use function sprintf;
 
 class FetchComics
@@ -60,6 +62,7 @@ class FetchComics
     private function fetchComics(array $comics): string
     {
         $html = '';
+        ob_start();
         foreach ($comics as $name) {
             $this->logger->info(sprintf('Attempting to fetch comic "%s"', $name));
 
@@ -83,6 +86,7 @@ class FetchComics
             $this->logger->info(sprintf('SUCCEEDED fetching comic "%s"', $name));
             $html .= $this->createComicOutput($comic);
         }
+        ob_end_clean();
         return $html;
     }
 
