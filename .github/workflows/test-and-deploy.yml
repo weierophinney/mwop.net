@@ -9,7 +9,7 @@ jobs:
   run:
     runs-on: ubuntu-22.04
     env:
-      extensions: bcmath, bz2, curl, gd, intl, ldap, mbstring, opcache, readline, sqlite3, tidy, xml, xsl, zip
+      extensions: bcmath, bz2, curl, gd, intl, ldap, mbstring, opcache, readline, sqlite3, tidy, xml, xsl, zip, :php-psr
       ini-values: memory_limit=-1
       key: mwop_net
     steps:
