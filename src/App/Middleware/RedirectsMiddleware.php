@@ -127,6 +127,11 @@ class RedirectsMiddleware implements MiddlewareInterface
             return $this->redirect('/blog', $url);
         }
 
+        // Redirects for pages I renamed 
+        if (isset($this->redirectedPages[$path])) {
+            return $this->redirect($this->redirectedPages[$path], $url);
+        }
+
         return $handler->handle($request);
     }
 
@@ -140,4 +145,9 @@ class RedirectsMiddleware implements MiddlewareInterface
 
         return new RedirectResponse((string) $url, 301);
     }
+
+    /** @var array<non-empty-string, non-empty-string> */
+    private array $redirectedPages = [
+        '/blog/2023-12-06-advent-focusme.html' => '/blog/2023-12-07-advent-focusme.html',
+    ];
 }

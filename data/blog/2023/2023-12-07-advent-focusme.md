@@ -1,11 +1,11 @@
 ---
-id: 2023-12-06-advent-focusme
+id: 2023-12-07-advent-focusme
 author: matthew
 title: 'Advent 2023: FocusMe'
 draft: false
 public: true
 created: '2023-12-07T16:20:00-06:00'
-updated: '2023-12-07T16:20:00-06:00'
+updated: '2023-12-08T08:20:00-06:00'
 tags:
     - advent2023
     - focusme
