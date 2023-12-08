@@ -127,7 +127,7 @@ class RedirectsMiddleware implements MiddlewareInterface
             return $this->redirect('/blog', $url);
         }
 
-        // Redirects for pages I renamed 
+        // Redirects for pages I renamed
         if (isset($this->redirectedPages[$path])) {
             return $this->redirect($this->redirectedPages[$path], $url);
         }
