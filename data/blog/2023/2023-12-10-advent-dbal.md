@@ -5,7 +5,7 @@ title: 'Advent 2023: Doctrine DBAL'
 draft: false
 public: true
 created: '2023-12-10T11:00:00-06:00'
-updated: '2023-12-10T11:00:00-06:00'
+updated: '2023-12-11T09:21:00-06:00'
 tags:
     - advent2023
     - dbal
@@ -157,6 +157,23 @@ This also allows you to do `IN()` operations, and each value will be quoted corr
 Once you know this approach, it's easy to remember and use, but it took me a few times through the docs before I stumbled across it.
 
 The SQL it generates, though, is great, and when I've used tools like ZendHQ's Z-Ray to introspect queries, I'm always impressed by what was actually sent over the wire.
+
+> #### 2023-12-11 Update
+>
+> [Alexander Kim](https://mastodon.social/@nesl247) pointed out to me that you can use named parameters within the query builder, along with the `setParameter()` method.
+> That usage looks like this:
+>
+> ```php
+> use Doctrine\DBAL\ParameterType;
+>
+> $queryBuilder
+>     ->select('id', 'name')
+>     ->from('users')
+>     ->where('email = :email')
+>     ->setParameter('email', $userInputEmail, ParameterType::STRING);
+> ```
+>
+> You can also specify named parameters when using `set()` and `setValue()`, though I'd argue that using `createNamedParameter()` is easier in those contexts.
 
 But for all these issues, the fact is that the docs generally give you _enough_, and the API is so clean and reasonably documented that you can generally figure out how things work just from your IDE hints and autocompletion.
 Yes, I have gripes, but the library is _very_ solid, _very_ well written, and absolutely something I can depend on.
