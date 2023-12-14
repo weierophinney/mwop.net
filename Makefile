@@ -2,9 +2,45 @@
 ########################## Variables #####################
 HERE := $(dir $(realpath $(firstword $(MAKEFILE_LIST))))
 SHELL := /bin/bash
+COMPOSER_ACTION ?= update
 ##########################################################
 
-.PHONY:
+############################### Colors ################################
+# Call these using the construct @$(call {VAR},"text to display")
+MK_RED = echo -e "\e[31m"$(1)"\e[0m"
+MK_GREEN = echo -e "\e[32m"$(1)"\e[0m"
+MK_YELLOW = echo -e "\e[33m"$(1)"\e[0m"
+MK_BLUE = echo -e "\e[34m"$(1)"\e[0m"
+MK_MAGENTA = echo -e "\e[35m"$(1)"\e[0m"
+MK_CYAN = echo -e "\e[36m"$(1)"\e[0m"
+MK_BOLD = echo -e "\e[1m"$(1)"\e[0m"
+MK_UNDERLINE = echo -e "\e[4m"$(1)"\e[0m"
+MK_RED_BOLD = echo -e "\e[1;31m"$(1)"\e[0m"
+MK_GREEN_BOLD = echo -e "\e[1;32m"$(1)"\e[0m"
+MK_YELLOW_BOLD = echo -e "\e[1;33m"$(1)"\e[0m"
+MK_BLUE_BOLD = echo -e "\e[1;34m"$(1)"\e[0m"
+MK_MAGENTA_BOLD = echo -e "\e[1;35m"$(1)"\e[0m"
+MK_CYAN_BOLD = echo -e "\e[1;36m"$(1)"\e[0m"
+MK_RED_UNDERLINE = echo -e "\e[4;31m"$(1)"\e[0m"
+MK_GREEN_UNDERLINE = echo -e "\e[4;32m"$(1)"\e[0m"
+MK_YELLOW_UNDERLINE = echo -e "\e[4;33m"$(1)"\e[0m"
+MK_BLUE_UNDERLINE = echo -e "\e[4;34m"$(1)"\e[0m"
+MK_MAGENTA_UNDERLINE = echo -e "\e[4;35m"$(1)"\e[0m"
+MK_CYAN_UNDERLINE = echo -e "\e[4;36m"$(1)"\e[0m"
+
+# Semantic names
+MK_ERROR = $(call MK_RED,$1)
+MK_ERROR_BOLD = $(call MK_RED_BOLD,$1)
+MK_ERROR_UNDERLINE = $(call MK_RED_UNDERLINE,$1)
+MK_INFO = $(call MK_BLUE,$1)
+MK_INFO_BOLD = $(call MK_BLUE_BOLD,$1)
+MK_INFO_UNDERLINE = $(call MK_BLUE_UNDERLINE,$1)
+MK_SUCCESS = $(call MK_GREEN,$1)
+MK_SUCCESS_BOLD = $(call MK_GREEN_BOLD,$1)
+MK_SUCCESS_UNDERLINE = $(call MK_GREEN_UNDERLINE,$1)
+######################################################################
+
+.PHONY: help clean deps prod-dockerfiles pull-images prod-volumes prod-build prod-run prod-status prod-build dev-build dev-run dev-status dev-stop zendhq-connect
 
 date := $(shell date +%Y-%m-%d)
 
@@ -18,86 +54,88 @@ help:  ## Display this help
 ##@ Build tasks
 
 clean:  ## Cleanup and remove any generated files
-	@printf "\n\033[92mRemoving any previously generated files...\033[0m\n"
+	@$(call MK_INFO,"Removing any previously generated files...")
 	rm -f $(HERE)/.docker/*.prod.Dockerfile
 
+deps: ## Install/update dependencies - use COMPOSER_ACTION to switch between "update" (default) and "install"
+	composer $(COMPOSER_ACTION) --ignore-platform-req=ext-zendhq
+
 .docker/nginx.prod.Dockerfile:  ## Build the production nginx Dockerfile
-	@printf "\n\033[92mCreating .docker/nginx.prod.Dockerfile...\033[0m\n"
+	@$(call MK_INFO,"Creating .docker/nginx.prod.Dockerfile...")
 	awk -v "template=$$(cat "./.docker/nginx.prod-template.Dockerfile")" "{sub(/## TEMPLATED ##/,template)}1" "./.docker/nginx.Dockerfile" > "./.docker/nginx.prod.Dockerfile"
-	@printf "\n\033[92m[DONE] Created .docker/nginx.prod.Dockerfile\033[0m\n"
+	@$(call MK_SUCCESS,"[DONE] Created .docker/nginx.prod.Dockerfile")
 
 .docker/php.prod.Dockerfile:  ## Build the production php Dockerfile
-	@printf "\n\033[92mCreating .docker/php.prod.Dockerfile...\033[0m\n"
+	@$(call MK_INFO,"Creating .docker/php.prod.Dockerfile...")
 	awk -v "template=$$(cat "./.docker/php.prod-template.Dockerfile")" "{sub(/## TEMPLATED ##/,template)}1" "./.docker/php.Dockerfile" > "./.docker/php.prod.Dockerfile"
-	@printf "\n\033[92m[DONE] Created .docker/php.prod.Dockerfile\033[0m\n"
+	@$(call MK_SUCCESS,"[DONE] Created .docker/php.prod.Dockerfile")
 
 prod-dockerfiles:  clean .docker/nginx.prod.Dockerfile .docker/php.prod.Dockerfile ## Build the production dockerfiles
 
 pull-images:  ## Pull new versions of all base images
-	@printf "\n\033[92mPulling updates for base images\033[0m\n"
+	@$(call MK_INFO,"Pulling updates for base images")
 	bin/pull-images.sh
-	@printf "\n\033[92m[DONE] Pulled updates for base images\033[0m\n"
+	@$(call MK_SUCCESS,"[DONE] Pulled updates for base images")
 
 ##@ Production containers
 
 prod-volumes:  ## Create the production shared volumes
-	@printf "\n\033[92mCreating the production shared volumes\033[0m\n"
+	@$(call MK_INFO,"Creating the production shared volumes")
 	if ! docker volume ls | grep -q "mwop_net_redis";then docker volume create mwop_net_redis; fi
 	if ! docker volume ls | grep -q "mwop_net_shared_data";then docker volume create mwop_net_shared_data; fi
 	if ! docker volume ls | grep -q "mwop_net_zendhq_db";then docker volume create mwop_net_zendhq_db; fi
-	@printf "\n\033[92m[DONE] Created production shared volumes\033[0m\n"
+	@$(call MK_SUCCESS,"[DONE] Created production shared volumes")
 
 prod-build: prod-dockerfiles pull-images ## Build production compose containers
-	@printf "\n\033[92mBuilding production compose containers\033[0m\n"
+	@$(call MK_INFO,"Building production compose containers")
 	cd $(HERE)
 	docker compose -f ./docker-compose.yml build
-	@printf "\n\033[92m[DONE] Built production compose containers\033[0m\n"
+	@$(call MK_SUCCESS,"[DONE] Built production compose containers")
 
 prod-run: prod-volumes  ## Run production compose containers
-	@printf "\n\033[92mStarting production compose containers\033[0m\n"
+	@$(call MK_INFO,"Starting production compose containers")
 	cd $(HERE)
 	docker compose -f ./docker-compose.yml up -d
-	@printf "\n\033[92m[DONE] Started production compose containers\033[0m\n"
+	@$(call MK_SUCCESS,"[DONE] Started production compose containers")
 
 prod-status:  ## Get production containers status
-	@printf "\n\033[92mGetting production compose containers status\033[0m\n"
+	@$(call MK_INFO,"Getting production compose container status")
 	cd $(HERE)
 	docker compose -f ./docker-compose.yml ps
 
 prod-stop:  ## Stop production compose containers
-	@printf "\n\033[92mStopping production compose containers\033[0m\n"
+	@$(call MK_INFO,"Stopping production compose containers")
 	cd $(HERE)
 	docker compose -f ./docker-compose.yml down
-	@printf "\n\033[92m[DONE] Stopped production compose containers\033[0m\n"
+	@$(call MK_SUCCESS,"[DONE] Stopped production compose containers")
 
 ##@ Dev containers
 
 dev-build:  ## Build dev compose containers
-	@printf "\n\033[92mBuilding dev compose containers\033[0m\n"
+	@$(call MK_INFO,"Building dev compose containers")
 	cd $(HERE)
 	docker compose -f ./docker-compose.dev.yml build
-	@printf "\n\033[92m[DONE] Built dev compose containers\033[0m\n"
+	@$(call MK_SUCCESS,"[DONE] Built dev compose containers")
 
 dev-run:  ## Run dev compose containers
-	@printf "\n\033[92mStarting dev compose containers\033[0m\n"
+	@$(call MK_INFO,"Starting dev compose containers")
 	cd $(HERE)
 	docker compose -f ./docker-compose.dev.yml up
 
 dev-status:  ## Get dev containers status
-	@printf "\n\033[92mGetting dev compose container status\033[0m\n"
+	@$(call MK_INFO,"Getting dev compose container status")
 	cd $(HERE)
 	docker compose -f ./docker-compose.dev.yml ps
 
 dev-stop:  ## Stop dev compose containers
-	@printf "\n\033[92mStopping dev compose containers\033[0m\n"
+	@$(call MK_INFO,"Stopping dev compose containers")
 	cd $(HERE)
 	docker compose -f ./docker-compose.dev.yml down
-	@printf "\n\033[92m[DONE] Stopped dev compose containers\033[0m\n"
+	@$(call MK_SUCCESS,"[DONE] Stopped dev compose containers")
 
 ##@ Monitoring
 
 zendhq-connect:  ## Setup SSH tunnel for ZendHQ
-	@printf "\n\033[92mStarting port forwarding session to allow using ZendHQ\033[0m\n"
-	@printf "\n\033[92mType Ctrl-C to disconnect\033[0m\n"
+	@$(call MK_INFO,"Starting port forwarding session to allow using ZendHQ")
+	@$(call MK_CYAN,"Type Ctrl-C to disconnect")
 	ssh -N -L 10091:mwop.net:10091 mwop.net
-
