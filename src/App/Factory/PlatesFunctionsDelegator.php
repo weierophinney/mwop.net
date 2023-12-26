@@ -10,7 +10,6 @@ use League\Plates\Extension\ExtensionInterface;
 use League\Plates\Template\Template;
 use Mwop\Blog\BlogPost;
 use Psr\Container\ContainerInterface;
-use Psr\Log\LoggerInterface;
 
 use function array_map;
 use function preg_replace;
@@ -30,8 +29,6 @@ class PlatesFunctionsDelegator implements ExtensionInterface
         string $name,
         callable $factory
     ): Engine {
-        $this->logger = $container->get(LoggerInterface::class);
-
         /** @var Engine $engine */
         $engine = $factory();
         $engine->loadExtension($this);

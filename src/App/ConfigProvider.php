@@ -75,6 +75,7 @@ class ConfigProvider
                 FeedReaderHttpClientInterface::class         => Feed\HttpPlugClientFactory::class,
                 Handler\AdminPageHandler::class              => Handler\PageHandlerFactory::class,
                 Handler\ClearResponseCacheHandler::class     => Handler\ClearResponseCacheHandlerFactory::class,
+                Handler\FetchComicsHandler::class            => ReflectionBasedAbstractFactory::class,
                 Handler\HealthHandler::class                 => ReflectionBasedAbstractFactory::class,
                 Handler\HomePageHandler::class               => Handler\HomePageHandlerFactory::class,
                 Handler\LoginHandler::class                  => Handler\LoginHandlerFactory::class,
@@ -136,6 +137,7 @@ class ConfigProvider
                 'admin' => [
                     'admin',
                     'admin.clear-response-cache',
+                    'admin.fetch-comics',
                 ],
             ],
         ];
@@ -215,6 +217,11 @@ class ConfigProvider
             '/admin/clear-response-cache',
             [...$adminMiddleware, Handler\ClearResponseCacheHandler::class],
             'admin.clear-response-cache'
+        );
+        $app->get(
+            '/admin/fetch-comics',
+            [...$adminMiddleware, Handler\FetchComicsHandler::class],
+            'admin.fetch-comics',
         );
 
         // Authentication
