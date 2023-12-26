@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Mwop\App\Handler;
 
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Server\RequestHandlerInterface;
 use Mezzio\Template\TemplateRendererInterface;
 use Mwop\App\EventDispatcher\DeferredEvent;
 use Mwop\Comics\ComicsEvent;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
 class FetchComicsHandler implements RequestHandlerInterface
 {
@@ -22,7 +22,7 @@ class FetchComicsHandler implements RequestHandlerInterface
     ) {
     }
 
-    public function handle(ServerRequestInterface $request) : ResponseInterface
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $this->dispatcher->dispatch(new DeferredEvent(new ComicsEvent()));
 
