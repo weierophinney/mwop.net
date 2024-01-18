@@ -33,7 +33,7 @@ I could mute them, or take their volume down completely, but test recordings wou
 
 I dug around, and I found the "Settings | Audio | Global Audio Devices" panel:
 
-![OBS Studio Global Audio Devices settings][/images/blog/2024-01-18-obs-studio-settings-audio-devices.png]
+![OBS Studio Global Audio Devices settings](/images/blog/2024-01-18-obs-studio-settings-audio-devices.png)
 
 When I disabled everything in this panel, it disabled the extra items in the audio mixer.
 Subsequent recordings no longer exhibited audio choppiness!
