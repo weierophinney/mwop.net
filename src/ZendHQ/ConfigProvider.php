@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Mwop\ZendHQ;
 
-use Aws\Middleware;
 use Laminas\ServiceManager\Factory\InvokableFactory;
 use Mezzio\Application;
 
@@ -14,6 +13,16 @@ class ConfigProvider
     {
         return [
             'dependencies' => $this->getDependencies(),
+            'laminas-cli'  => $this->getConsoleConfig(),
+        ];
+    }
+
+    public function getConsoleConfig(): array
+    {
+        return [
+            'commands' => [
+                'zendhq:jq:setup-recurring-jobs' => Console\SetupRecurringJobs::class,
+            ],
         ];
     }
 
@@ -26,6 +35,7 @@ class ConfigProvider
                 ],
             ],
             'factories'  => [
+                Console\SetupRecurringJobs::class       => Console\SetupRecurringJobsFactory::class,
                 Handler\WorkerHandler::class            => Handler\WorkerHandlerFactory::class,
                 Middleware\ContentTypeMiddleware::class => InvokableFactory::class,
                 Middleware\HostNameMiddleware::class    => InvokableFactory::class,
