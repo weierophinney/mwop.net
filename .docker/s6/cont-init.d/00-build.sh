@@ -22,7 +22,8 @@ mkdir -p data/shared/feeds
 if [[ "${deploy_env}" == "prod" ]]; then
     # Always rebuild blog, homepage, and comics on production deployment
     "${composer}" build:blog
-    "${composer}" build:homepage
+    ./vendor/bin/laminas github:fetch-activity
+    ./vendor/bin/laminas homepage-feeds
     "${composer}" build:comics
 else
     # In other environments, only build when missing
@@ -34,7 +35,8 @@ else
 
     # Build homepage assets
     if [[ ! -f "data/shared/homepage.posts.php" || ! -f "data/shared/github-feed.json" ]];then
-        "${composer}" build:homepage
+        ./vendor/bin/laminas github:fetch-activity
+        ./vendor/bin/laminas homepage-feeds
     fi
 
     # Prepare initial comics
@@ -60,3 +62,4 @@ chmod -R u+rw data/cache
 
 # Setup default queues and recurring jobs
 ./vendor/bin/laminas zendhq:jq:setup-recurring-jobs
+./vendor/bin/laminas zendhq:jq:queue-startup-jobs
