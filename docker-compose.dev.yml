@@ -3,6 +3,7 @@ version: '3.3'
 volumes:
   mwop_net_redis:
   mwop_net_shared_data:
+  mwop_net_zendhq_db:
 
 services:
   redis:
@@ -60,6 +61,7 @@ services:
     user: zendphp
     volumes:
       - ./.docker/etc/zendhq/license:/opt/zend/zendphp/etc/license
+      - mwop_net_zendhq_db:/opt/zend/zendphp/var/db
     ports:
       - "10091:10091"
 
