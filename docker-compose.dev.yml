@@ -33,7 +33,8 @@ services:
       - redis
       - zendhq
     volumes:
-      - mwop_net_shared_data:/var/www/data/shared
+      # This did not work as the entire data subdir is being mapped in in this file
+      # - mwop_net_shared_data:/var/www/data/shared
       - ./.docker/etc/zendphp/conf.d/mwop.ini:/entrypoint.d/conf.d/zzz-mwop.ini
       - ./.docker/s6/cont-init.d/00-build.sh:/entrypoint.d/00-build.sh
       - ./.docker/s6/cont-init.d/01-std-stream-permissions.sh:/etc/cont-init.d/01-std-stream-permissions.sh

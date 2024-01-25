@@ -56,9 +56,9 @@ fi
 # Fix permissions for files that will be touched by the web user (data directory).
 # The directory needs to be owned by the web user, and allow r/w privileges to
 # allow writing (particularly for SQLite databases).
-chown -R zendphp:zendphp data/cache
-chmod 0775 data/cache
-chmod -R u+rw data/cache
+chown -R zendphp:zendphp data/cache data/shared
+chmod 0775 data/cache data/shared
+chmod -R u+rw data/cache data/shared
 
 # Setup default queues and recurring jobs
 ./vendor/bin/laminas zendhq:jq:setup-recurring-jobs
