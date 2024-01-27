@@ -34,8 +34,9 @@ $contentDiv = match($layout ?? null) {
   ?>
 
    <meta name="ocs-site-verification" content="c4b02f596a79a562778389766296d956" />
+   <script src="/assets/js/htmx.min.js"></script>
 </head>
-<body class="bg-mwop-bg flex flex-col h-screen">
+<body hx-boost="true" class="bg-mwop-bg flex flex-col h-screen">
 <?php $this->insert('layout::header') ?>
 
 <?= $contentDiv ?>
