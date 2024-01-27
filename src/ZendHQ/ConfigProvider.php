@@ -22,7 +22,6 @@ class ConfigProvider
         return [
             'commands' => [
                 'zendhq:jq:setup-recurring-jobs' => Console\SetupRecurringJobs::class,
-                'zendhq:jq:queue-startup-jobs'   => Console\QueueStartupJobs::class,
             ],
         ];
     }
@@ -36,7 +35,6 @@ class ConfigProvider
                 ],
             ],
             'factories'  => [
-                Console\QueueStartupJobs::class         => Console\QueueStartupJobsFactory::class,
                 Console\SetupRecurringJobs::class       => Console\SetupRecurringJobsFactory::class,
                 Handler\WorkerHandler::class            => Handler\WorkerHandlerFactory::class,
                 Middleware\ContentTypeMiddleware::class => InvokableFactory::class,
