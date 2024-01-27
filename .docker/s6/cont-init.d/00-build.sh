@@ -57,6 +57,3 @@ fi
 chown -R zendphp:zendphp data/cache data/shared
 chmod 0775 data/cache data/shared
 chmod -R u+rw data/cache data/shared
-
-# Setup default queues and recurring jobs
-./vendor/bin/laminas zendhq:jq:setup-recurring-jobs
